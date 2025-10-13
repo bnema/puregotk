@@ -185,9 +185,7 @@ func SimpleProxyResolverNew(DefaultProxyVar string, IgnoreHostsVar []string) *Pr
 }
 
 func init() {
-
 	core.SetPackageName("GIO", "gio-2.0")
-
 	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {

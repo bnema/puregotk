@@ -240,9 +240,7 @@ func AccessibleStateInitValue(StateVar AccessibleState, ValueVar *gobject.Value)
 }
 
 func init() {
-
 	core.SetPackageName("GTK", "gtk4")
-
 	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
 	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
