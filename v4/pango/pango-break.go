@@ -6,7 +6,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
 // The `PangoLogAttr` structure stores information about the attributes of a
@@ -127,6 +127,10 @@ func TailorBreak(TextVar string, LengthVar int, AnalysisVar *Analysis, OffsetVar
 }
 
 func init() {
+
+	core.SetPackageName("PANGO", "pango")
+
+	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

@@ -3,7 +3,7 @@ package pango
 
 import (
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -122,6 +122,10 @@ func UnicharDirection(ChVar uint32) Direction {
 }
 
 func init() {
+
+	core.SetPackageName("PANGO", "pango")
+
+	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

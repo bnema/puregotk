@@ -6,7 +6,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -207,6 +207,10 @@ func (x *TypeModule) CompleteTypeInfo(GTypeVar types.GType, InfoVar *TypeInfo, V
 }
 
 func init() {
+
+	core.SetPackageName("GOBJECT", "gobject-2.0")
+
+	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

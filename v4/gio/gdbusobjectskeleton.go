@@ -6,7 +6,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
@@ -194,6 +194,10 @@ func (x *DBusObjectSkeleton) GetObjectPath() string {
 }
 
 func init() {
+
+	core.SetPackageName("GIO", "gio-2.0")
+
+	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

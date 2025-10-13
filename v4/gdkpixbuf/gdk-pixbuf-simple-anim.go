@@ -6,7 +6,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -92,6 +92,10 @@ func (c *PixbufSimpleAnim) SetGoPointer(ptr uintptr) {
 }
 
 func init() {
+
+	core.SetPackageName("GDKPIXBUF", "gdk-pixbuf-2.0")
+
+	core.SetSharedLibrary("GDKPIXBUF", "libgdk_pixbuf-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GDKPIXBUF"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

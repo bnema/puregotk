@@ -6,7 +6,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -106,6 +106,10 @@ func (x *Quad) InitFromRect(RVar *Rect) *Quad {
 }
 
 func init() {
+
+	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
+
+	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

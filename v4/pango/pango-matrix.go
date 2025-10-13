@@ -6,7 +6,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -213,6 +213,10 @@ func (x *Matrix) Translate(TxVar float64, TyVar float64) {
 }
 
 func init() {
+
+	core.SetPackageName("PANGO", "pango")
+
+	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

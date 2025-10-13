@@ -3,7 +3,7 @@ package glib
 
 import (
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
 // Flags to pass to g_file_set_contents_full() to affect its safety and
@@ -713,6 +713,10 @@ func PathSkipRoot(FileNameVar string) string {
 }
 
 func init() {
+
+	core.SetPackageName("GLIB", "glib-2.0")
+
+	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

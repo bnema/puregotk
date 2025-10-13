@@ -6,7 +6,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/graphene"
 )
 
@@ -150,6 +150,10 @@ func (x *RoundedRect) Shrink(TopVar float32, RightVar float32, BottomVar float32
 }
 
 func init() {
+
+	core.SetPackageName("GSK", "gtk4")
+
+	core.SetSharedLibrary("GSK", "libgtk-4.so.1")
 	lib, err := purego.Dlopen(core.GetPath("GSK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

@@ -3,7 +3,7 @@ package gtk
 
 import (
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
 var xTestInit func(int, []string, ...interface{})
@@ -62,6 +62,10 @@ func TestWidgetWaitForDraw(WidgetVar *Widget) {
 }
 
 func init() {
+
+	core.SetPackageName("GTK", "gtk4")
+
+	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
 	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

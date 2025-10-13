@@ -6,7 +6,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -759,6 +759,10 @@ func ImageSurfaceCreate() {
 }
 
 func init() {
+
+	core.SetPackageName("CAIRO", "cairo-gobject")
+
+	core.SetSharedLibrary("CAIRO", "libcairo-gobject.so.2")
 	lib, err := purego.Dlopen(core.GetPath("CAIRO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

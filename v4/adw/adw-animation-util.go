@@ -3,7 +3,7 @@ package adw
 
 import (
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gtk"
 )
 
@@ -29,6 +29,10 @@ func Lerp(AVar float64, BVar float64, TVar float64) float64 {
 }
 
 func init() {
+
+	core.SetPackageName("ADW", "libadwaita-1")
+
+	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
 	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

@@ -3,7 +3,7 @@ package glib
 
 import (
 	"github.com/jwijenbergh/purego"
-	"github.com/jwijenbergh/puregotk/internal/core"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
 // Specifies the type of the setup function passed to g_spawn_async(),
@@ -577,6 +577,10 @@ func SpawnSync(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, F
 }
 
 func init() {
+
+	core.SetPackageName("GLIB", "glib-2.0")
+
+	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
