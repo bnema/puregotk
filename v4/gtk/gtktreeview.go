@@ -958,7 +958,7 @@ var xTreeViewSetColumnDragFunction func(uintptr, uintptr, uintptr, uintptr)
 // dropped everywhere.
 func (x *TreeView) SetColumnDragFunction(FuncVar *TreeViewColumnDropFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xTreeViewSetColumnDragFunction(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xTreeViewSetColumnDragFunction(x.GoPointer(), glib.NewCallbackNullable(FuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 
@@ -1166,7 +1166,7 @@ var xTreeViewSetRowSeparatorFunc func(uintptr, uintptr, uintptr, uintptr)
 // function is %NULL, no separators are drawn. This is the default value.
 func (x *TreeView) SetRowSeparatorFunc(FuncVar *TreeViewRowSeparatorFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xTreeViewSetRowSeparatorFunc(x.GoPointer(), glib.NewCallback(FuncVar), DataVar, glib.NewCallback(DestroyVar))
+	xTreeViewSetRowSeparatorFunc(x.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 
@@ -1218,7 +1218,7 @@ var xTreeViewSetSearchEqualFunc func(uintptr, uintptr, uintptr, uintptr)
 // `GtkTreeView`SearchEqualFunc returns %FALSE on matches.
 func (x *TreeView) SetSearchEqualFunc(SearchEqualFuncVar *TreeViewSearchEqualFunc, SearchUserDataVar uintptr, SearchDestroyVar *glib.DestroyNotify) {
 
-	xTreeViewSetSearchEqualFunc(x.GoPointer(), glib.NewCallback(SearchEqualFuncVar), SearchUserDataVar, glib.NewCallback(SearchDestroyVar))
+	xTreeViewSetSearchEqualFunc(x.GoPointer(), glib.NewCallback(SearchEqualFuncVar), SearchUserDataVar, glib.NewCallbackNullable(SearchDestroyVar))
 
 }
 

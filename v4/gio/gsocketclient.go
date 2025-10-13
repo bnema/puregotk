@@ -158,7 +158,7 @@ var xSocketClientConnectAsync func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // the result of the operation.
 func (x *SocketClient) ConnectAsync(ConnectableVar SocketConnectable, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSocketClientConnectAsync(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xSocketClientConnectAsync(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -242,7 +242,7 @@ var xSocketClientConnectToHostAsync func(uintptr, string, uint16, uintptr, uintp
 // the result of the operation.
 func (x *SocketClient) ConnectToHostAsync(HostAndPortVar string, DefaultPortVar uint16, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSocketClientConnectToHostAsync(x.GoPointer(), HostAndPortVar, DefaultPortVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xSocketClientConnectToHostAsync(x.GoPointer(), HostAndPortVar, DefaultPortVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -307,7 +307,7 @@ var xSocketClientConnectToServiceAsync func(uintptr, string, string, uintptr, ui
 // g_socket_client_connect_to_service().
 func (x *SocketClient) ConnectToServiceAsync(DomainVar string, ServiceVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSocketClientConnectToServiceAsync(x.GoPointer(), DomainVar, ServiceVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xSocketClientConnectToServiceAsync(x.GoPointer(), DomainVar, ServiceVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -382,7 +382,7 @@ var xSocketClientConnectToUriAsync func(uintptr, string, uint16, uintptr, uintpt
 // the result of the operation.
 func (x *SocketClient) ConnectToUriAsync(UriVar string, DefaultPortVar uint16, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSocketClientConnectToUriAsync(x.GoPointer(), UriVar, DefaultPortVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xSocketClientConnectToUriAsync(x.GoPointer(), UriVar, DefaultPortVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

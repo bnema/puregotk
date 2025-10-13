@@ -154,7 +154,7 @@ var xTlsPasswordSetValueFull func(uintptr, []byte, int, uintptr)
 // considered part of the password in this case.)
 func (x *TlsPassword) SetValueFull(ValueVar []byte, LengthVar int, DestroyVar *glib.DestroyNotify) {
 
-	xTlsPasswordSetValueFull(x.GoPointer(), ValueVar, LengthVar, glib.NewCallback(DestroyVar))
+	xTlsPasswordSetValueFull(x.GoPointer(), ValueVar, LengthVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 

@@ -348,7 +348,7 @@ func (x *FontChooserWidget) GetShowPreviewEntry() bool {
 // in the font chooser.
 func (x *FontChooserWidget) SetFilterFunc(FilterVar *FontFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallback(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
+	XGtkFontChooserSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
 
 }
 

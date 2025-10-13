@@ -30,7 +30,7 @@ var xShowUriFull func(uintptr, string, uint32, uintptr, uintptr, uintptr)
 // necessary for sandbox helpers to parent their dialogs properly.
 func ShowUriFull(ParentVar *Window, UriVar string, TimestampVar uint32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xShowUriFull(ParentVar.GoPointer(), UriVar, TimestampVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xShowUriFull(ParentVar.GoPointer(), UriVar, TimestampVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

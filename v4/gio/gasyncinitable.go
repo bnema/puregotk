@@ -199,7 +199,7 @@ func (x *AsyncInitableBase) SetGoPointer(ptr uintptr) {
 // any interface methods.
 func (x *AsyncInitableBase) InitAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -250,7 +250,7 @@ var xAsyncInitableNewvAsync func(types.GType, uint, *gobject.Parameter, int, uin
 // for any errors.
 func AsyncInitableNewvAsync(ObjectTypeVar types.GType, NParametersVar uint, ParametersVar *gobject.Parameter, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xAsyncInitableNewvAsync(ObjectTypeVar, NParametersVar, ParametersVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xAsyncInitableNewvAsync(ObjectTypeVar, NParametersVar, ParametersVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

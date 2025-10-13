@@ -149,7 +149,7 @@ var xVfsRegisterUriScheme func(uintptr, string, uintptr, uintptr, uintptr, uintp
 // a custom URI scheme, use g_vfs_unregister_uri_scheme().
 func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc, UriDataVar uintptr, UriDestroyVar *glib.DestroyNotify, ParseNameFuncVar *VfsFileLookupFunc, ParseNameDataVar uintptr, ParseNameDestroyVar *glib.DestroyNotify) bool {
 
-	cret := xVfsRegisterUriScheme(x.GoPointer(), SchemeVar, glib.NewCallback(UriFuncVar), UriDataVar, glib.NewCallback(UriDestroyVar), glib.NewCallback(ParseNameFuncVar), ParseNameDataVar, glib.NewCallback(ParseNameDestroyVar))
+	cret := xVfsRegisterUriScheme(x.GoPointer(), SchemeVar, glib.NewCallbackNullable(UriFuncVar), UriDataVar, glib.NewCallbackNullable(UriDestroyVar), glib.NewCallbackNullable(ParseNameFuncVar), ParseNameDataVar, glib.NewCallbackNullable(ParseNameDestroyVar))
 	return cret
 }
 

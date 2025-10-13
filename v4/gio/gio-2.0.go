@@ -267,7 +267,7 @@ func (x *BytesIcon) Load(SizeVar int, TypeVar string, CancellableVar *Cancellabl
 // version of this function, see g_loadable_icon_load().
 func (x *BytesIcon) LoadAsync(SizeVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1044,7 +1044,7 @@ var xDBusConnectionCall func(uintptr, string, string, string, string, *glib.Vari
 // the %G_DBUS_MESSAGE_FLAGS_NO_REPLY_EXPECTED flag set.
 func (x *DBusConnection) Call(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionCall(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDBusConnectionCall(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1132,7 +1132,7 @@ var xDBusConnectionCallWithUnixFdList func(uintptr, string, string, string, stri
 // This method is only available on UNIX.
 func (x *DBusConnection) CallWithUnixFdList(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionCallWithUnixFdList(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDBusConnectionCallWithUnixFdList(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1207,7 +1207,7 @@ var xDBusConnectionClose func(uintptr, uintptr, uintptr, uintptr)
 // version.
 func (x *DBusConnection) Close(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionClose(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDBusConnectionClose(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1339,7 +1339,7 @@ var xDBusConnectionFlush func(uintptr, uintptr, uintptr, uintptr)
 // version.
 func (x *DBusConnection) Flush(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionFlush(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDBusConnectionFlush(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1688,7 +1688,7 @@ var xDBusConnectionSendMessageWithReply func(uintptr, uintptr, DBusSendMessageFl
 // UNIX file descriptors.
 func (x *DBusConnection) SendMessageWithReply(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, TimeoutMsecVar int, OutSerialVar uint32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionSendMessageWithReply(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDBusConnectionSendMessageWithReply(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -1843,7 +1843,7 @@ var xDBusConnectionSignalSubscribe func(uintptr, string, string, string, string,
 // This function can never fail.
 func (x *DBusConnection) SignalSubscribe(SenderVar string, InterfaceNameVar string, MemberVar string, ObjectPathVar string, Arg0Var string, FlagsVar DBusSignalFlags, CallbackVar *DBusSignalCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	cret := xDBusConnectionSignalSubscribe(x.GoPointer(), SenderVar, InterfaceNameVar, MemberVar, ObjectPathVar, Arg0Var, FlagsVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	cret := xDBusConnectionSignalSubscribe(x.GoPointer(), SenderVar, InterfaceNameVar, MemberVar, ObjectPathVar, Arg0Var, FlagsVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
 	return cret
 }
 
@@ -2009,7 +2009,7 @@ func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, uintptr)) 
 // any interface methods.
 func (x *DBusConnection) InitAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -2119,7 +2119,7 @@ var xDBusConnectionNew func(uintptr, string, DBusConnectionFlags, uintptr, uintp
 // version.
 func DBusConnectionNew(StreamVar *IOStream, GuidVar string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionNew(StreamVar.GoPointer(), GuidVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDBusConnectionNew(StreamVar.GoPointer(), GuidVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -2149,7 +2149,7 @@ var xDBusConnectionNewForAddress func(string, DBusConnectionFlags, uintptr, uint
 // version.
 func DBusConnectionNewForAddress(AddressVar string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionNewForAddress(AddressVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDBusConnectionNewForAddress(AddressVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -5163,7 +5163,7 @@ var xSubprocessCommunicateAsync func(uintptr, *glib.Bytes, uintptr, uintptr, uin
 // invocation with g_subprocess_communicate_finish().
 func (x *Subprocess) CommunicateAsync(StdinBufVar *glib.Bytes, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSubprocessCommunicateAsync(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xSubprocessCommunicateAsync(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -5205,7 +5205,7 @@ var xSubprocessCommunicateUtf8Async func(uintptr, string, uintptr, uintptr, uint
 // invocation with g_subprocess_communicate_utf8_finish().
 func (x *Subprocess) CommunicateUtf8Async(StdinBufVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -5451,7 +5451,7 @@ var xSubprocessWaitAsync func(uintptr, uintptr, uintptr, uintptr)
 // This is the asynchronous version of g_subprocess_wait().
 func (x *Subprocess) WaitAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSubprocessWaitAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xSubprocessWaitAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -5476,7 +5476,7 @@ var xSubprocessWaitCheckAsync func(uintptr, uintptr, uintptr, uintptr)
 // This is the asynchronous version of g_subprocess_wait_check().
 func (x *Subprocess) WaitCheckAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSubprocessWaitCheckAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xSubprocessWaitCheckAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

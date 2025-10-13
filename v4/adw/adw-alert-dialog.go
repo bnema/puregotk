@@ -296,7 +296,7 @@ var xAlertDialogChoose func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // will be shown within it. Otherwise, it will be a separate window.
 func (x *AlertDialog) Choose(ParentVar *gtk.Widget, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xAlertDialogChoose(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xAlertDialogChoose(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

@@ -122,7 +122,7 @@ var xOutputStreamCloseAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // classes. However, if you override one you must override all.
 func (x *OutputStream) CloseAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xOutputStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xOutputStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -173,7 +173,7 @@ var xOutputStreamFlushAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // result of the operation.
 func (x *OutputStream) FlushAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xOutputStreamFlushAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xOutputStreamFlushAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -282,7 +282,7 @@ var xOutputStreamSpliceAsync func(uintptr, uintptr, OutputStreamSpliceFlags, int
 // g_output_stream_splice().
 func (x *OutputStream) SpliceAsync(SourceVar *InputStream, FlagsVar OutputStreamSpliceFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xOutputStreamSpliceAsync(x.GoPointer(), SourceVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xOutputStreamSpliceAsync(x.GoPointer(), SourceVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -404,7 +404,7 @@ var xOutputStreamWriteAllAsync func(uintptr, []byte, uint, int, uintptr, uintptr
 // until @callback is called.
 func (x *OutputStream) WriteAllAsync(BufferVar []byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xOutputStreamWriteAllAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xOutputStreamWriteAllAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -470,7 +470,7 @@ var xOutputStreamWriteAsync func(uintptr, []byte, uint, int, uintptr, uintptr, u
 // the contents (without copying) for the duration of the call.
 func (x *OutputStream) WriteAsync(BufferVar []byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xOutputStreamWriteAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xOutputStreamWriteAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -515,7 +515,7 @@ var xOutputStreamWriteBytesAsync func(uintptr, *glib.Bytes, int, uintptr, uintpt
 // g_output_stream_write_bytes().
 func (x *OutputStream) WriteBytesAsync(BytesVar *glib.Bytes, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xOutputStreamWriteBytesAsync(x.GoPointer(), BytesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xOutputStreamWriteBytesAsync(x.GoPointer(), BytesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -638,7 +638,7 @@ var xOutputStreamWritevAllAsync func(uintptr, []OutputVector, uint, int, uintptr
 // of @vectors might be changed by this function.
 func (x *OutputStream) WritevAllAsync(VectorsVar []OutputVector, NVectorsVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xOutputStreamWritevAllAsync(x.GoPointer(), VectorsVar, NVectorsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xOutputStreamWritevAllAsync(x.GoPointer(), VectorsVar, NVectorsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -699,7 +699,7 @@ var xOutputStreamWritevAsync func(uintptr, []OutputVector, uint, int, uintptr, u
 // until @callback is called.
 func (x *OutputStream) WritevAsync(VectorsVar []OutputVector, NVectorsVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xOutputStreamWritevAsync(x.GoPointer(), VectorsVar, NVectorsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xOutputStreamWritevAsync(x.GoPointer(), VectorsVar, NVectorsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

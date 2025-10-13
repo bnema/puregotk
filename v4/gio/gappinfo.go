@@ -350,7 +350,7 @@ func (x *AppInfoBase) LaunchUris(UrisVar *glib.List, ContextVar *AppLaunchContex
 // g_app_info_launch_default_for_uri_async().
 func (x *AppInfoBase) LaunchUrisAsync(UrisVar *glib.List, ContextVar *AppLaunchContext, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGAppInfoLaunchUrisAsync(x.GoPointer(), UrisVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGAppInfoLaunchUrisAsync(x.GoPointer(), UrisVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -615,7 +615,7 @@ var xAppInfoLaunchDefaultForUriAsync func(string, uintptr, uintptr, uintptr, uin
 // in receiving error information from their activation.
 func AppInfoLaunchDefaultForUriAsync(UriVar string, ContextVar *AppLaunchContext, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xAppInfoLaunchDefaultForUriAsync(UriVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xAppInfoLaunchDefaultForUriAsync(UriVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

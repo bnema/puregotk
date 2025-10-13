@@ -27,7 +27,7 @@ var xSimpleAsyncReportErrorInIdle func(uintptr, uintptr, uintptr, glib.Quark, in
 // information.
 func SimpleAsyncReportErrorInIdle(ObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, DomainVar glib.Quark, CodeVar int, FormatVar string, varArgs ...interface{}) {
 
-	xSimpleAsyncReportErrorInIdle(ObjectVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
+	xSimpleAsyncReportErrorInIdle(ObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
 
 }
 
@@ -38,7 +38,7 @@ var xSimpleAsyncReportGerrorInIdle func(uintptr, uintptr, uintptr, *glib.Error)
 // than building a new one.
 func SimpleAsyncReportGerrorInIdle(ObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, ErrorVar *glib.Error) {
 
-	xSimpleAsyncReportGerrorInIdle(ObjectVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, ErrorVar)
+	xSimpleAsyncReportGerrorInIdle(ObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, ErrorVar)
 
 }
 
@@ -49,7 +49,7 @@ var xSimpleAsyncReportTakeGerrorInIdle func(uintptr, uintptr, uintptr, *glib.Err
 // ownership of @error, so the caller does not have to free it any more.
 func SimpleAsyncReportTakeGerrorInIdle(ObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, ErrorVar *glib.Error) {
 
-	xSimpleAsyncReportTakeGerrorInIdle(ObjectVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, ErrorVar)
+	xSimpleAsyncReportTakeGerrorInIdle(ObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, ErrorVar)
 
 }
 
@@ -256,7 +256,7 @@ var xNewSimpleAsyncResult func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewSimpleAsyncResult(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, SourceTagVar uintptr) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	cret := xNewSimpleAsyncResult(SourceObjectVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, SourceTagVar)
+	cret := xNewSimpleAsyncResult(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, SourceTagVar)
 
 	if cret == 0 {
 		return nil
@@ -272,7 +272,7 @@ var xNewSimpleAsyncResultError func(uintptr, uintptr, uintptr, glib.Quark, int, 
 func NewSimpleAsyncResultError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, DomainVar glib.Quark, CodeVar int, FormatVar string, varArgs ...interface{}) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	cret := xNewSimpleAsyncResultError(SourceObjectVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
+	cret := xNewSimpleAsyncResultError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -288,7 +288,7 @@ var xNewSimpleAsyncResultFromError func(uintptr, uintptr, uintptr, *glib.Error) 
 func NewSimpleAsyncResultFromError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, ErrorVar *glib.Error) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	cret := xNewSimpleAsyncResultFromError(SourceObjectVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, ErrorVar)
+	cret := xNewSimpleAsyncResultFromError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, ErrorVar)
 
 	if cret == 0 {
 		return nil
@@ -305,7 +305,7 @@ var xNewSimpleAsyncResultTakeError func(uintptr, uintptr, uintptr, *glib.Error) 
 func NewSimpleAsyncResultTakeError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, ErrorVar *glib.Error) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	cret := xNewSimpleAsyncResultTakeError(SourceObjectVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, ErrorVar)
+	cret := xNewSimpleAsyncResultTakeError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, ErrorVar)
 
 	if cret == 0 {
 		return nil

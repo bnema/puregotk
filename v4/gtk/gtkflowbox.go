@@ -402,7 +402,7 @@ var xFlowBoxSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // (see [method@Gtk.FlowBox.bind_model]).
 func (x *FlowBox) SetFilterFunc(FilterFuncVar *FlowBoxFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xFlowBoxSetFilterFunc(x.GoPointer(), glib.NewCallback(FilterFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xFlowBoxSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
 
 }
 
@@ -492,7 +492,7 @@ var xFlowBoxSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // (see [method@Gtk.FlowBox.bind_model]).
 func (x *FlowBox) SetSortFunc(SortFuncVar *FlowBoxSortFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xFlowBoxSetSortFunc(x.GoPointer(), glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xFlowBoxSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
 
 }
 

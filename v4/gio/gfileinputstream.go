@@ -94,7 +94,7 @@ var xFileInputStreamQueryInfoAsync func(uintptr, string, int, uintptr, uintptr, 
 // was cancelled, the error %G_IO_ERROR_CANCELLED will be set
 func (x *FileInputStream) QueryInfoAsync(AttributesVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xFileInputStreamQueryInfoAsync(x.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xFileInputStreamQueryInfoAsync(x.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

@@ -299,7 +299,7 @@ var xMenuButtonSetCreatePopupFunc func(uintptr, uintptr, uintptr, uintptr)
 // @menu_button. Instead, this can be done manually in @func.
 func (x *MenuButton) SetCreatePopupFunc(FuncVar *MenuButtonCreatePopupFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
 
-	xMenuButtonSetCreatePopupFunc(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallback(DestroyNotifyVar))
+	xMenuButtonSetCreatePopupFunc(x.GoPointer(), glib.NewCallbackNullable(FuncVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
 
 }
 

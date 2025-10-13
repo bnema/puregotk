@@ -377,7 +377,7 @@ var xDesktopAppInfoLaunchUrisAsManager func(uintptr, *glib.List, uintptr, glib.S
 func (x *DesktopAppInfo) LaunchUrisAsManager(UrisVar *glib.List, LaunchContextVar *AppLaunchContext, SpawnFlagsVar glib.SpawnFlags, UserSetupVar *glib.SpawnChildSetupFunc, UserSetupDataVar uintptr, PidCallbackVar *DesktopAppLaunchCallback, PidCallbackDataVar uintptr) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDesktopAppInfoLaunchUrisAsManager(x.GoPointer(), UrisVar, LaunchContextVar.GoPointer(), SpawnFlagsVar, glib.NewCallback(UserSetupVar), UserSetupDataVar, glib.NewCallback(PidCallbackVar), PidCallbackDataVar, &cerr)
+	cret := xDesktopAppInfoLaunchUrisAsManager(x.GoPointer(), UrisVar, LaunchContextVar.GoPointer(), SpawnFlagsVar, glib.NewCallbackNullable(UserSetupVar), UserSetupDataVar, glib.NewCallbackNullable(PidCallbackVar), PidCallbackDataVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -396,7 +396,7 @@ var xDesktopAppInfoLaunchUrisAsManagerWithFds func(uintptr, *glib.List, uintptr,
 func (x *DesktopAppInfo) LaunchUrisAsManagerWithFds(UrisVar *glib.List, LaunchContextVar *AppLaunchContext, SpawnFlagsVar glib.SpawnFlags, UserSetupVar *glib.SpawnChildSetupFunc, UserSetupDataVar uintptr, PidCallbackVar *DesktopAppLaunchCallback, PidCallbackDataVar uintptr, StdinFdVar int, StdoutFdVar int, StderrFdVar int) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDesktopAppInfoLaunchUrisAsManagerWithFds(x.GoPointer(), UrisVar, LaunchContextVar.GoPointer(), SpawnFlagsVar, glib.NewCallback(UserSetupVar), UserSetupDataVar, glib.NewCallback(PidCallbackVar), PidCallbackDataVar, StdinFdVar, StdoutFdVar, StderrFdVar, &cerr)
+	cret := xDesktopAppInfoLaunchUrisAsManagerWithFds(x.GoPointer(), UrisVar, LaunchContextVar.GoPointer(), SpawnFlagsVar, glib.NewCallbackNullable(UserSetupVar), UserSetupDataVar, glib.NewCallbackNullable(PidCallbackVar), PidCallbackDataVar, StdinFdVar, StdoutFdVar, StderrFdVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -636,7 +636,7 @@ func (x *DesktopAppInfo) LaunchUris(UrisVar *glib.List, ContextVar *AppLaunchCon
 // g_app_info_launch_default_for_uri_async().
 func (x *DesktopAppInfo) LaunchUrisAsync(UrisVar *glib.List, ContextVar *AppLaunchContext, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGAppInfoLaunchUrisAsync(x.GoPointer(), UrisVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGAppInfoLaunchUrisAsync(x.GoPointer(), UrisVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

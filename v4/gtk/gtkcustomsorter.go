@@ -48,7 +48,7 @@ var xNewCustomSorter func(uintptr, uintptr, uintptr) uintptr
 func NewCustomSorter(SortFuncVar *glib.CompareDataFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *CustomSorter {
 	var cls *CustomSorter
 
-	cret := xNewCustomSorter(glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	cret := xNewCustomSorter(glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 
 	if cret == 0 {
 		return nil
@@ -71,7 +71,7 @@ var xCustomSorterSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // called now.
 func (x *CustomSorter) SetSortFunc(SortFuncVar *glib.CompareDataFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
 
-	xCustomSorterSetSortFunc(x.GoPointer(), glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	xCustomSorterSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
 
 }
 

@@ -129,7 +129,7 @@ func (x *DtlsConnectionBase) Close(CancellableVar *Cancellable) (bool, error) {
 // more information.
 func (x *DtlsConnectionBase) CloseAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDtlsConnectionCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGDtlsConnectionCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -348,7 +348,7 @@ func (x *DtlsConnectionBase) Handshake(CancellableVar *Cancellable) (bool, error
 // g_dtls_connection_handshake() for more information.
 func (x *DtlsConnectionBase) HandshakeAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDtlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGDtlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -506,7 +506,7 @@ func (x *DtlsConnectionBase) Shutdown(ShutdownReadVar bool, ShutdownWriteVar boo
 // g_dtls_connection_shutdown() for more information.
 func (x *DtlsConnectionBase) ShutdownAsync(ShutdownReadVar bool, ShutdownWriteVar bool, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGDtlsConnectionShutdownAsync(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGDtlsConnectionShutdownAsync(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

@@ -161,7 +161,7 @@ var xIOStreamCloseAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // classes. However, if you override one you must override all.
 func (x *IOStream) CloseAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xIOStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xIOStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -260,7 +260,7 @@ var xIOStreamSpliceAsync func(uintptr, uintptr, IOStreamSpliceFlags, int, uintpt
 // result of the operation.
 func (x *IOStream) SpliceAsync(Stream2Var *IOStream, FlagsVar IOStreamSpliceFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xIOStreamSpliceAsync(x.GoPointer(), Stream2Var.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xIOStreamSpliceAsync(x.GoPointer(), Stream2Var.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

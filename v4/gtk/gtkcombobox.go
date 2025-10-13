@@ -477,7 +477,7 @@ var xComboBoxSetRowSeparatorFunc func(uintptr, uintptr, uintptr, uintptr)
 // This is the default value.
 func (x *ComboBox) SetRowSeparatorFunc(FuncVar *TreeViewRowSeparatorFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xComboBoxSetRowSeparatorFunc(x.GoPointer(), glib.NewCallback(FuncVar), DataVar, glib.NewCallback(DestroyVar))
+	xComboBoxSetRowSeparatorFunc(x.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 
@@ -943,7 +943,7 @@ func (x *ComboBox) SetAttributes(CellVar *CellRenderer, varArgs ...interface{}) 
 // @func may be %NULL to remove a previously set function.
 func (x *ComboBox) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallback(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+	XGtkCellLayoutSetCellDataFunc(x.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
 
 }
 

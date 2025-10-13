@@ -707,7 +707,7 @@ var xObjectBindPropertyFull func(uintptr, string, uintptr, string, BindingFlags,
 func (x *Object) BindPropertyFull(SourcePropertyVar string, TargetVar *Object, TargetPropertyVar string, FlagsVar BindingFlags, TransformToVar *BindingTransformFunc, TransformFromVar *BindingTransformFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) *Binding {
 	var cls *Binding
 
-	cret := xObjectBindPropertyFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, glib.NewCallback(TransformToVar), glib.NewCallback(TransformFromVar), UserDataVar, glib.NewCallback(NotifyVar))
+	cret := xObjectBindPropertyFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, glib.NewCallbackNullable(TransformToVar), glib.NewCallbackNullable(TransformFromVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
 
 	if cret == 0 {
 		return nil
@@ -814,7 +814,7 @@ var xObjectDupData func(uintptr, string, uintptr, uintptr) uintptr
 // object.
 func (x *Object) DupData(KeyVar string, DupFuncVar *glib.DuplicateFunc, UserDataVar uintptr) uintptr {
 
-	cret := xObjectDupData(x.GoPointer(), KeyVar, glib.NewCallback(DupFuncVar), UserDataVar)
+	cret := xObjectDupData(x.GoPointer(), KeyVar, glib.NewCallbackNullable(DupFuncVar), UserDataVar)
 	return cret
 }
 
@@ -836,7 +836,7 @@ var xObjectDupQdata func(uintptr, glib.Quark, uintptr, uintptr) uintptr
 // object.
 func (x *Object) DupQdata(QuarkVar glib.Quark, DupFuncVar *glib.DuplicateFunc, UserDataVar uintptr) uintptr {
 
-	cret := xObjectDupQdata(x.GoPointer(), QuarkVar, glib.NewCallback(DupFuncVar), UserDataVar)
+	cret := xObjectDupQdata(x.GoPointer(), QuarkVar, glib.NewCallbackNullable(DupFuncVar), UserDataVar)
 	return cret
 }
 
@@ -1142,7 +1142,7 @@ var xObjectReplaceData func(uintptr, string, uintptr, uintptr, uintptr, uintptr)
 // for @key.
 func (x *Object) ReplaceData(KeyVar string, OldvalVar uintptr, NewvalVar uintptr, DestroyVar *glib.DestroyNotify, OldDestroyVar *glib.DestroyNotify) bool {
 
-	cret := xObjectReplaceData(x.GoPointer(), KeyVar, OldvalVar, NewvalVar, glib.NewCallback(DestroyVar), glib.NewCallback(OldDestroyVar))
+	cret := xObjectReplaceData(x.GoPointer(), KeyVar, OldvalVar, NewvalVar, glib.NewCallbackNullable(DestroyVar), glib.NewCallback(OldDestroyVar))
 	return cret
 }
 
@@ -1163,7 +1163,7 @@ var xObjectReplaceQdata func(uintptr, glib.Quark, uintptr, uintptr, uintptr, uin
 // should not destroy the object in the normal way.
 func (x *Object) ReplaceQdata(QuarkVar glib.Quark, OldvalVar uintptr, NewvalVar uintptr, DestroyVar *glib.DestroyNotify, OldDestroyVar *glib.DestroyNotify) bool {
 
-	cret := xObjectReplaceQdata(x.GoPointer(), QuarkVar, OldvalVar, NewvalVar, glib.NewCallback(DestroyVar), glib.NewCallback(OldDestroyVar))
+	cret := xObjectReplaceQdata(x.GoPointer(), QuarkVar, OldvalVar, NewvalVar, glib.NewCallbackNullable(DestroyVar), glib.NewCallback(OldDestroyVar))
 	return cret
 }
 
@@ -1224,7 +1224,7 @@ var xObjectSetDataFull func(uintptr, string, uintptr, uintptr)
 // Note that the @destroy callback is not called if @data is %NULL.
 func (x *Object) SetDataFull(KeyVar string, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xObjectSetDataFull(x.GoPointer(), KeyVar, DataVar, glib.NewCallback(DestroyVar))
+	xObjectSetDataFull(x.GoPointer(), KeyVar, DataVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 
@@ -1262,7 +1262,7 @@ var xObjectSetQdataFull func(uintptr, glib.Quark, uintptr, uintptr)
 // with the same @quark.
 func (x *Object) SetQdataFull(QuarkVar glib.Quark, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xObjectSetQdataFull(x.GoPointer(), QuarkVar, DataVar, glib.NewCallback(DestroyVar))
+	xObjectSetQdataFull(x.GoPointer(), QuarkVar, DataVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 

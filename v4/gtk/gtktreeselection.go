@@ -237,7 +237,7 @@ var xTreeSelectionSetSelectFunction func(uintptr, uintptr, uintptr, uintptr)
 // if the state of the node should be left unchanged.
 func (x *TreeSelection) SetSelectFunction(FuncVar *TreeSelectionFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xTreeSelectionSetSelectFunction(x.GoPointer(), glib.NewCallback(FuncVar), DataVar, glib.NewCallback(DestroyVar))
+	xTreeSelectionSetSelectFunction(x.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallback(DestroyVar))
 
 }
 

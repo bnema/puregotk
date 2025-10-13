@@ -181,7 +181,7 @@ var xNewCClosureExpression func(types.GType, uintptr, uint, uintptr, uintptr, ui
 func NewCClosureExpression(ValueTypeVar types.GType, MarshalVar *gobject.ClosureMarshal, NParamsVar uint, ParamsVar uintptr, CallbackFuncVar *gobject.Callback, UserDataVar uintptr, UserDestroyVar *gobject.ClosureNotify) *CClosureExpression {
 	var cls *CClosureExpression
 
-	cret := xNewCClosureExpression(ValueTypeVar, glib.NewCallback(MarshalVar), NParamsVar, ParamsVar, glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	cret := xNewCClosureExpression(ValueTypeVar, glib.NewCallbackNullable(MarshalVar), NParamsVar, ParamsVar, glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
 
 	if cret == 0 {
 		return nil

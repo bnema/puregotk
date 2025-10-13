@@ -1198,7 +1198,7 @@ var xAttrShapeNewWithData func(*Rectangle, *Rectangle, uintptr, uintptr, uintptr
 // rendering the glyph.
 func AttrShapeNewWithData(InkRectVar *Rectangle, LogicalRectVar *Rectangle, DataVar uintptr, CopyFuncVar *AttrDataCopyFunc, DestroyFuncVar *glib.DestroyNotify) *Attribute {
 
-	cret := xAttrShapeNewWithData(InkRectVar, LogicalRectVar, DataVar, glib.NewCallback(CopyFuncVar), glib.NewCallback(DestroyFuncVar))
+	cret := xAttrShapeNewWithData(InkRectVar, LogicalRectVar, DataVar, glib.NewCallbackNullable(CopyFuncVar), glib.NewCallbackNullable(DestroyFuncVar))
 	return cret
 }
 

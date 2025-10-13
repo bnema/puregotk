@@ -217,7 +217,7 @@ var xDrawingAreaSetDrawFunc func(uintptr, uintptr, uintptr, uintptr)
 // on the drawing area. This will cause a redraw and will call @draw_func again.
 func (x *DrawingArea) SetDrawFunc(DrawFuncVar *DrawingAreaDrawFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xDrawingAreaSetDrawFunc(x.GoPointer(), glib.NewCallback(DrawFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xDrawingAreaSetDrawFunc(x.GoPointer(), glib.NewCallbackNullable(DrawFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
 
 }
 

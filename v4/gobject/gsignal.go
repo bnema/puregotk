@@ -222,7 +222,7 @@ var xSignalAddEmissionHook func(uint, glib.Quark, uintptr, uintptr, uintptr) uin
 // for signals which don't have %G_SIGNAL_NO_HOOKS flag set.
 func SignalAddEmissionHook(SignalIdVar uint, DetailVar glib.Quark, HookFuncVar *SignalEmissionHook, HookDataVar uintptr, DataDestroyVar *glib.DestroyNotify) uint32 {
 
-	cret := xSignalAddEmissionHook(SignalIdVar, DetailVar, glib.NewCallback(HookFuncVar), HookDataVar, glib.NewCallback(DataDestroyVar))
+	cret := xSignalAddEmissionHook(SignalIdVar, DetailVar, glib.NewCallback(HookFuncVar), HookDataVar, glib.NewCallbackNullable(DataDestroyVar))
 	return cret
 }
 
@@ -277,7 +277,7 @@ var xSignalConnectData func(uintptr, string, uintptr, uintptr, uintptr, ConnectF
 // `..._swapped()` variants of this function.
 func SignalConnectData(InstanceVar *Object, DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr, DestroyDataVar *ClosureNotify, ConnectFlagsVar ConnectFlags) uint32 {
 
-	cret := xSignalConnectData(InstanceVar.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), DataVar, glib.NewCallback(DestroyDataVar), ConnectFlagsVar)
+	cret := xSignalConnectData(InstanceVar.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), DataVar, glib.NewCallbackNullable(DestroyDataVar), ConnectFlagsVar)
 	return cret
 }
 
@@ -552,7 +552,7 @@ func SignalName(SignalIdVar uint) string {
 	return cret
 }
 
-var xSignalNew func(string, types.GType, SignalFlags, uint, uintptr, uintptr, SignalCMarshaller, types.GType, uint, ...interface{}) uint
+var xSignalNew func(string, types.GType, SignalFlags, uint, uintptr, uintptr, uintptr, types.GType, uint, ...interface{}) uint
 
 // Creates a new signal. (This is usually done in the class initializer.)
 //
@@ -578,13 +578,13 @@ var xSignalNew func(string, types.GType, SignalFlags, uint, uintptr, uintptr, Si
 // If @c_marshaller is non-%NULL, you need to also specify a va_marshaller
 // using g_signal_set_va_marshaller() or the generic va_marshaller will
 // be used.
-func SignalNew(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassOffsetVar uint, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, varArgs ...interface{}) uint {
+func SignalNew(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassOffsetVar uint, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar *SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, varArgs ...interface{}) uint {
 
-	cret := xSignalNew(SignalNameVar, ItypeVar, SignalFlagsVar, ClassOffsetVar, glib.NewCallback(AccumulatorVar), AccuDataVar, CMarshallerVar, ReturnTypeVar, NParamsVar, varArgs...)
+	cret := xSignalNew(SignalNameVar, ItypeVar, SignalFlagsVar, ClassOffsetVar, glib.NewCallbackNullable(AccumulatorVar), AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, varArgs...)
 	return cret
 }
 
-var xSignalNewClassHandler func(string, types.GType, SignalFlags, uintptr, uintptr, uintptr, SignalCMarshaller, types.GType, uint, ...interface{}) uint
+var xSignalNewClassHandler func(string, types.GType, SignalFlags, uintptr, uintptr, uintptr, uintptr, types.GType, uint, ...interface{}) uint
 
 // Creates a new signal. (This is usually done in the class initializer.)
 //
@@ -602,13 +602,13 @@ var xSignalNewClassHandler func(string, types.GType, SignalFlags, uintptr, uintp
 //
 // If c_marshaller is %NULL, g_cclosure_marshal_generic() will be used as
 // the marshaller for this signal.
-func SignalNewClassHandler(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassHandlerVar *Callback, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, varArgs ...interface{}) uint {
+func SignalNewClassHandler(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassHandlerVar *Callback, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar *SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, varArgs ...interface{}) uint {
 
-	cret := xSignalNewClassHandler(SignalNameVar, ItypeVar, SignalFlagsVar, glib.NewCallback(ClassHandlerVar), glib.NewCallback(AccumulatorVar), AccuDataVar, CMarshallerVar, ReturnTypeVar, NParamsVar, varArgs...)
+	cret := xSignalNewClassHandler(SignalNameVar, ItypeVar, SignalFlagsVar, glib.NewCallbackNullable(ClassHandlerVar), glib.NewCallbackNullable(AccumulatorVar), AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, varArgs...)
 	return cret
 }
 
-var xSignalNewValist func(string, types.GType, SignalFlags, *Closure, uintptr, uintptr, SignalCMarshaller, types.GType, uint, []interface{}) uint
+var xSignalNewValist func(string, types.GType, SignalFlags, *Closure, uintptr, uintptr, uintptr, types.GType, uint, []interface{}) uint
 
 // Creates a new signal. (This is usually done in the class initializer.)
 //
@@ -616,13 +616,13 @@ var xSignalNewValist func(string, types.GType, SignalFlags, *Closure, uintptr, u
 //
 // If c_marshaller is %NULL, g_cclosure_marshal_generic() will be used as
 // the marshaller for this signal.
-func SignalNewValist(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassClosureVar *Closure, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, ArgsVar []interface{}) uint {
+func SignalNewValist(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassClosureVar *Closure, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar *SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, ArgsVar []interface{}) uint {
 
-	cret := xSignalNewValist(SignalNameVar, ItypeVar, SignalFlagsVar, ClassClosureVar, glib.NewCallback(AccumulatorVar), AccuDataVar, CMarshallerVar, ReturnTypeVar, NParamsVar, ArgsVar)
+	cret := xSignalNewValist(SignalNameVar, ItypeVar, SignalFlagsVar, ClassClosureVar, glib.NewCallbackNullable(AccumulatorVar), AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, ArgsVar)
 	return cret
 }
 
-var xSignalNewv func(string, types.GType, SignalFlags, *Closure, uintptr, uintptr, SignalCMarshaller, types.GType, uint, []types.GType) uint
+var xSignalNewv func(string, types.GType, SignalFlags, *Closure, uintptr, uintptr, uintptr, types.GType, uint, []types.GType) uint
 
 // Creates a new signal. (This is usually done in the class initializer.)
 //
@@ -630,9 +630,9 @@ var xSignalNewv func(string, types.GType, SignalFlags, *Closure, uintptr, uintpt
 //
 // If c_marshaller is %NULL, g_cclosure_marshal_generic() will be used as
 // the marshaller for this signal.
-func SignalNewv(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassClosureVar *Closure, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, ParamTypesVar []types.GType) uint {
+func SignalNewv(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar SignalFlags, ClassClosureVar *Closure, AccumulatorVar *SignalAccumulator, AccuDataVar uintptr, CMarshallerVar *SignalCMarshaller, ReturnTypeVar types.GType, NParamsVar uint, ParamTypesVar []types.GType) uint {
 
-	cret := xSignalNewv(SignalNameVar, ItypeVar, SignalFlagsVar, ClassClosureVar, glib.NewCallback(AccumulatorVar), AccuDataVar, CMarshallerVar, ReturnTypeVar, NParamsVar, ParamTypesVar)
+	cret := xSignalNewv(SignalNameVar, ItypeVar, SignalFlagsVar, ClassClosureVar, glib.NewCallbackNullable(AccumulatorVar), AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, ParamTypesVar)
 	return cret
 }
 
@@ -700,15 +700,15 @@ func SignalRemoveEmissionHook(SignalIdVar uint, HookIdVar uint32) {
 
 }
 
-var xSignalSetVaMarshaller func(uint, types.GType, SignalCVaMarshaller)
+var xSignalSetVaMarshaller func(uint, types.GType, uintptr)
 
 // Change the #GSignalCVaMarshaller used for a given signal.  This is a
 // specialised form of the marshaller that can often be used for the
 // common case of a single connected signal handler and avoids the
 // overhead of #GValue.  Its use is optional.
-func SignalSetVaMarshaller(SignalIdVar uint, InstanceTypeVar types.GType, VaMarshallerVar SignalCVaMarshaller) {
+func SignalSetVaMarshaller(SignalIdVar uint, InstanceTypeVar types.GType, VaMarshallerVar *SignalCVaMarshaller) {
 
-	xSignalSetVaMarshaller(SignalIdVar, InstanceTypeVar, VaMarshallerVar)
+	xSignalSetVaMarshaller(SignalIdVar, InstanceTypeVar, glib.NewCallback(VaMarshallerVar))
 
 }
 

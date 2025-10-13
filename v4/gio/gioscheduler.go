@@ -31,7 +31,7 @@ var xIoSchedulerPushJob func(uintptr, uintptr, uintptr, int, uintptr)
 // g_io_scheduler_cancel_all_jobs().
 func IoSchedulerPushJob(JobFuncVar *IOSchedulerJobFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify, IoPriorityVar int, CancellableVar *Cancellable) {
 
-	xIoSchedulerPushJob(glib.NewCallback(JobFuncVar), UserDataVar, glib.NewCallback(NotifyVar), IoPriorityVar, CancellableVar.GoPointer())
+	xIoSchedulerPushJob(glib.NewCallback(JobFuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar), IoPriorityVar, CancellableVar.GoPointer())
 
 }
 

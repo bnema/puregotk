@@ -104,7 +104,7 @@ var xDatalistIdDupData func(**Data, Quark, uintptr, uintptr) uintptr
 // threads are using the same datalist and the same key.
 func DatalistIdDupData(DatalistVar **Data, KeyIdVar Quark, DupFuncVar *DuplicateFunc, UserDataVar uintptr) uintptr {
 
-	cret := xDatalistIdDupData(DatalistVar, KeyIdVar, NewCallback(DupFuncVar), UserDataVar)
+	cret := xDatalistIdDupData(DatalistVar, KeyIdVar, NewCallbackNullable(DupFuncVar), UserDataVar)
 	return cret
 }
 
@@ -144,7 +144,7 @@ var xDatalistIdReplaceData func(**Data, Quark, uintptr, uintptr, uintptr, uintpt
 // should not destroy the object in the normal way.
 func DatalistIdReplaceData(DatalistVar **Data, KeyIdVar Quark, OldvalVar uintptr, NewvalVar uintptr, DestroyVar *DestroyNotify, OldDestroyVar *DestroyNotify) bool {
 
-	cret := xDatalistIdReplaceData(DatalistVar, KeyIdVar, OldvalVar, NewvalVar, NewCallback(DestroyVar), NewCallback(OldDestroyVar))
+	cret := xDatalistIdReplaceData(DatalistVar, KeyIdVar, OldvalVar, NewvalVar, NewCallbackNullable(DestroyVar), NewCallback(OldDestroyVar))
 	return cret
 }
 
@@ -156,7 +156,7 @@ var xDatalistIdSetDataFull func(**Data, Quark, uintptr, uintptr)
 // function is called.
 func DatalistIdSetDataFull(DatalistVar **Data, KeyIdVar Quark, DataVar uintptr, DestroyFuncVar *DestroyNotify) {
 
-	xDatalistIdSetDataFull(DatalistVar, KeyIdVar, DataVar, NewCallback(DestroyFuncVar))
+	xDatalistIdSetDataFull(DatalistVar, KeyIdVar, DataVar, NewCallbackNullable(DestroyFuncVar))
 
 }
 

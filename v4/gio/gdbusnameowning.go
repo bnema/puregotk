@@ -70,7 +70,7 @@ var xBusOwnName func(BusType, string, BusNameOwnerFlags, uintptr, uintptr, uintp
 // unregister the objects (if any) in @name_lost_handler.
 func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, BusAcquiredHandlerVar *BusAcquiredCallback, NameAcquiredHandlerVar *BusNameAcquiredCallback, NameLostHandlerVar *BusNameLostCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	cret := xBusOwnName(BusTypeVar, NameVar, FlagsVar, glib.NewCallback(BusAcquiredHandlerVar), glib.NewCallback(NameAcquiredHandlerVar), glib.NewCallback(NameLostHandlerVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	cret := xBusOwnName(BusTypeVar, NameVar, FlagsVar, glib.NewCallbackNullable(BusAcquiredHandlerVar), glib.NewCallbackNullable(NameAcquiredHandlerVar), glib.NewCallbackNullable(NameLostHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
 	return cret
 }
 
@@ -80,7 +80,7 @@ var xBusOwnNameOnConnection func(uintptr, string, BusNameOwnerFlags, uintptr, ui
 // #GBusType.
 func BusOwnNameOnConnection(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameOwnerFlags, NameAcquiredHandlerVar *BusNameAcquiredCallback, NameLostHandlerVar *BusNameLostCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	cret := xBusOwnNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, glib.NewCallback(NameAcquiredHandlerVar), glib.NewCallback(NameLostHandlerVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	cret := xBusOwnNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, glib.NewCallbackNullable(NameAcquiredHandlerVar), glib.NewCallbackNullable(NameLostHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
 	return cret
 }
 

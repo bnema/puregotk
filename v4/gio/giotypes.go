@@ -349,7 +349,7 @@ var xIOSchedulerJobSendToMainloop func(uintptr, uintptr, uintptr, uintptr) bool
 // blocking the I/O job).
 func (x *IOSchedulerJob) SendToMainloop(FuncVar *glib.SourceFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) bool {
 
-	cret := xIOSchedulerJobSendToMainloop(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallback(NotifyVar))
+	cret := xIOSchedulerJobSendToMainloop(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
 	return cret
 }
 
@@ -366,7 +366,7 @@ var xIOSchedulerJobSendToMainloopAsync func(uintptr, uintptr, uintptr, uintptr)
 // g_io_scheduler_push_job() or by using refcounting for @user_data.
 func (x *IOSchedulerJob) SendToMainloopAsync(FuncVar *glib.SourceFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) {
 
-	xIOSchedulerJobSendToMainloopAsync(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallback(NotifyVar))
+	xIOSchedulerJobSendToMainloopAsync(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
 
 }
 

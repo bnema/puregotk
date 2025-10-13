@@ -216,7 +216,7 @@ var xBusGet func(BusType, uintptr, uintptr, uintptr)
 // the synchronous version.
 func BusGet(BusTypeVar BusType, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xBusGet(BusTypeVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xBusGet(BusTypeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

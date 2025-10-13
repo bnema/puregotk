@@ -314,7 +314,7 @@ var xOptionContextSetTranslateFunc func(uintptr, uintptr, uintptr, uintptr)
 // domain, see g_option_context_set_translation_domain().
 func (x *OptionContext) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr, DestroyNotifyVar *DestroyNotify) {
 
-	xOptionContextSetTranslateFunc(x.GoPointer(), NewCallback(FuncVar), DataVar, NewCallback(DestroyNotifyVar))
+	xOptionContextSetTranslateFunc(x.GoPointer(), NewCallbackNullable(FuncVar), DataVar, NewCallbackNullable(DestroyNotifyVar))
 
 }
 
@@ -379,7 +379,7 @@ var xNewOptionGroup func(string, string, string, uintptr, uintptr) *OptionGroup
 // Creates a new #GOptionGroup.
 func NewOptionGroup(NameVar string, DescriptionVar string, HelpDescriptionVar string, UserDataVar uintptr, DestroyVar *DestroyNotify) *OptionGroup {
 
-	cret := xNewOptionGroup(NameVar, DescriptionVar, HelpDescriptionVar, UserDataVar, NewCallback(DestroyVar))
+	cret := xNewOptionGroup(NameVar, DescriptionVar, HelpDescriptionVar, UserDataVar, NewCallbackNullable(DestroyVar))
 	return cret
 }
 
@@ -435,7 +435,7 @@ var xOptionGroupSetParseHooks func(uintptr, uintptr, uintptr)
 // with g_option_group_new().
 func (x *OptionGroup) SetParseHooks(PreParseFuncVar *OptionParseFunc, PostParseFuncVar *OptionParseFunc) {
 
-	xOptionGroupSetParseHooks(x.GoPointer(), NewCallback(PreParseFuncVar), NewCallback(PostParseFuncVar))
+	xOptionGroupSetParseHooks(x.GoPointer(), NewCallbackNullable(PreParseFuncVar), NewCallbackNullable(PostParseFuncVar))
 
 }
 
@@ -449,7 +449,7 @@ var xOptionGroupSetTranslateFunc func(uintptr, uintptr, uintptr, uintptr)
 // domain, see g_option_group_set_translation_domain().
 func (x *OptionGroup) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr, DestroyNotifyVar *DestroyNotify) {
 
-	xOptionGroupSetTranslateFunc(x.GoPointer(), NewCallback(FuncVar), DataVar, NewCallback(DestroyNotifyVar))
+	xOptionGroupSetTranslateFunc(x.GoPointer(), NewCallbackNullable(FuncVar), DataVar, NewCallbackNullable(DestroyNotifyVar))
 
 }
 

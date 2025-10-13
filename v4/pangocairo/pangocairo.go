@@ -236,7 +236,7 @@ var xContextSetShapeRenderer func(uintptr, uintptr, uintptr, uintptr)
 // See `PangoCairoShapeRendererFunc` for details.
 func ContextSetShapeRenderer(ContextVar *pango.Context, FuncVar *ShapeRendererFunc, DataVar uintptr, DnotifyVar *glib.DestroyNotify) {
 
-	xContextSetShapeRenderer(ContextVar.GoPointer(), glib.NewCallback(FuncVar), DataVar, glib.NewCallback(DnotifyVar))
+	xContextSetShapeRenderer(ContextVar.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallbackNullable(DnotifyVar))
 
 }
 

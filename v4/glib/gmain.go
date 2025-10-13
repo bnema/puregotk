@@ -224,7 +224,7 @@ var xMainContextInvokeFull func(uintptr, int, uintptr, uintptr, uintptr)
 // thread or with any particular context acquired.
 func (x *MainContext) InvokeFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) {
 
-	xMainContextInvokeFull(x.GoPointer(), PriorityVar, NewCallback(FunctionVar), DataVar, NewCallback(NotifyVar))
+	xMainContextInvokeFull(x.GoPointer(), PriorityVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
 
 }
 
@@ -1014,7 +1014,7 @@ var xSourceSetCallback func(uintptr, uintptr, uintptr, uintptr)
 // of also unsetting the callback.
 func (x *Source) SetCallback(FuncVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) {
 
-	xSourceSetCallback(x.GoPointer(), NewCallback(FuncVar), DataVar, NewCallback(NotifyVar))
+	xSourceSetCallback(x.GoPointer(), NewCallback(FuncVar), DataVar, NewCallbackNullable(NotifyVar))
 
 }
 
@@ -1335,7 +1335,7 @@ var xChildWatchAddFull func(int, Pid, uintptr, uintptr, uintptr) uint
 // need greater control.
 func ChildWatchAddFull(PriorityVar int, PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xChildWatchAddFull(PriorityVar, PidVar, NewCallback(FunctionVar), DataVar, NewCallback(NotifyVar))
+	cret := xChildWatchAddFull(PriorityVar, PidVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
 	return cret
 }
 
@@ -1483,7 +1483,7 @@ var xIdleAddFull func(int, uintptr, uintptr, uintptr) uint
 // use a custom main context.
 func IdleAddFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xIdleAddFull(PriorityVar, NewCallback(FunctionVar), DataVar, NewCallback(NotifyVar))
+	cret := xIdleAddFull(PriorityVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
 	return cret
 }
 
@@ -1824,7 +1824,7 @@ var xTimeoutAddFull func(int, uint, uintptr, uintptr, uintptr) uint
 // See g_get_monotonic_time().
 func TimeoutAddFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xTimeoutAddFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallback(NotifyVar))
+	cret := xTimeoutAddFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
 	return cret
 }
 
@@ -1902,7 +1902,7 @@ var xTimeoutAddSecondsFull func(int, uint, uintptr, uintptr, uintptr) uint
 // time.  See g_get_monotonic_time().
 func TimeoutAddSecondsFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallback(NotifyVar))
+	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
 	return cret
 }
 

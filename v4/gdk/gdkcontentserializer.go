@@ -37,7 +37,7 @@ var xContentSerializeAsync func(uintptr, string, *gobject.Value, int, uintptr, u
 // call [func@Gdk.content_serialize_finish] to get the result of the operation.
 func ContentSerializeAsync(StreamVar *gio.OutputStream, MimeTypeVar string, ValueVar *gobject.Value, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xContentSerializeAsync(StreamVar.GoPointer(), MimeTypeVar, ValueVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xContentSerializeAsync(StreamVar.GoPointer(), MimeTypeVar, ValueVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

@@ -522,7 +522,7 @@ var xTreeViewColumnSetCellDataFunc func(uintptr, uintptr, uintptr, uintptr, uint
 // older one.
 func (x *TreeViewColumn) SetCellDataFunc(CellRendererVar *CellRenderer, FuncVar *TreeCellDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xTreeViewColumnSetCellDataFunc(x.GoPointer(), CellRendererVar.GoPointer(), glib.NewCallback(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+	xTreeViewColumnSetCellDataFunc(x.GoPointer(), CellRendererVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
 
 }
 

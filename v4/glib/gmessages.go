@@ -386,7 +386,7 @@ var xLogSetWriterFunc func(uintptr, uintptr, uintptr)
 // There can only be one writer function. It is an error to set more than one.
 func LogSetWriterFunc(FuncVar *LogWriterFunc, UserDataVar uintptr, UserDataFreeVar *DestroyNotify) {
 
-	xLogSetWriterFunc(NewCallback(FuncVar), UserDataVar, NewCallback(UserDataFreeVar))
+	xLogSetWriterFunc(NewCallbackNullable(FuncVar), UserDataVar, NewCallback(UserDataFreeVar))
 
 }
 

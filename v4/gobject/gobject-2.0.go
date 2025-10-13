@@ -443,7 +443,7 @@ var xBindingGroupBindFull func(uintptr, string, uintptr, string, BindingFlags, u
 // See g_object_bind_property_full() for more information.
 func (x *BindingGroup) BindFull(SourcePropertyVar string, TargetVar *Object, TargetPropertyVar string, FlagsVar BindingFlags, TransformToVar *BindingTransformFunc, TransformFromVar *BindingTransformFunc, UserDataVar uintptr, UserDataDestroyVar *glib.DestroyNotify) {
 
-	xBindingGroupBindFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, glib.NewCallback(TransformToVar), glib.NewCallback(TransformFromVar), UserDataVar, glib.NewCallback(UserDataDestroyVar))
+	xBindingGroupBindFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, glib.NewCallbackNullable(TransformToVar), glib.NewCallbackNullable(TransformFromVar), UserDataVar, glib.NewCallback(UserDataDestroyVar))
 
 }
 

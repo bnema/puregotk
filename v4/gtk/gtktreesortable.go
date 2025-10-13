@@ -102,7 +102,7 @@ func (x *TreeSortableBase) HasDefaultSortFunc() bool {
 // is %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, the model will be unsorted.
 func (x *TreeSortableBase) SetDefaultSortFunc(SortFuncVar *TreeIterCompareFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	XGtkTreeSortableSetDefaultSortFunc(x.GoPointer(), glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	XGtkTreeSortableSetDefaultSortFunc(x.GoPointer(), glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 
@@ -126,7 +126,7 @@ func (x *TreeSortableBase) SetSortColumnId(SortColumnIdVar int, OrderVar SortTyp
 // the model will sort using this function.
 func (x *TreeSortableBase) SetSortFunc(SortColumnIdVar int, SortFuncVar *TreeIterCompareFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	XGtkTreeSortableSetSortFunc(x.GoPointer(), SortColumnIdVar, glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	XGtkTreeSortableSetSortFunc(x.GoPointer(), SortColumnIdVar, glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 

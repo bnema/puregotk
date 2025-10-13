@@ -435,7 +435,7 @@ var xPtrArrayFindWithEqualFunc func([]uintptr, uintptr, uintptr, uint) bool
 // equality is used.
 func PtrArrayFindWithEqualFunc(HaystackVar []uintptr, NeedleVar uintptr, EqualFuncVar *EqualFunc, IndexVar uint) bool {
 
-	cret := xPtrArrayFindWithEqualFunc(HaystackVar, NeedleVar, NewCallback(EqualFuncVar), IndexVar)
+	cret := xPtrArrayFindWithEqualFunc(HaystackVar, NeedleVar, NewCallbackNullable(EqualFuncVar), IndexVar)
 	return cret
 }
 

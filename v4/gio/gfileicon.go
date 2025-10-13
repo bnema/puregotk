@@ -147,7 +147,7 @@ func (x *FileIcon) Load(SizeVar int, TypeVar string, CancellableVar *Cancellable
 // version of this function, see g_loadable_icon_load().
 func (x *FileIcon) LoadAsync(SizeVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGLoadableIconLoadAsync(x.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

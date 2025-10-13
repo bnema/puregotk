@@ -41,7 +41,7 @@ var xQueueClearFull func(uintptr, uintptr)
 // and calls the provided @free_func on each item in the #GQueue.
 func (x *Queue) ClearFull(FreeFuncVar *DestroyNotify) {
 
-	xQueueClearFull(x.GoPointer(), NewCallback(FreeFuncVar))
+	xQueueClearFull(x.GoPointer(), NewCallbackNullable(FreeFuncVar))
 
 }
 

@@ -178,7 +178,7 @@ func NewDBusObjectManagerClientForBusSync(BusTypeVar BusType, FlagsVar DBusObjec
 	var cls *DBusObjectManagerClient
 	var cerr *glib.Error
 
-	cret := xNewDBusObjectManagerClientForBusSync(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, glib.NewCallback(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallback(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), &cerr)
+	cret := xNewDBusObjectManagerClientForBusSync(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -203,7 +203,7 @@ func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBus
 	var cls *DBusObjectManagerClient
 	var cerr *glib.Error
 
-	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, glib.NewCallback(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallback(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), &cerr)
+	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -371,7 +371,7 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjec
 // any interface methods.
 func (x *DBusObjectManagerClient) InitAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGAsyncInitableInitAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -512,7 +512,7 @@ var xDBusObjectManagerClientNew func(uintptr, DBusObjectManagerClientFlags, stri
 // g_dbus_object_manager_client_new_sync() for the synchronous version.
 func DBusObjectManagerClientNew(ConnectionVar *DBusConnection, FlagsVar DBusObjectManagerClientFlags, NameVar string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusObjectManagerClientNew(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, glib.NewCallback(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallback(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDBusObjectManagerClientNew(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -529,7 +529,7 @@ var xDBusObjectManagerClientNewForBus func(BusType, DBusObjectManagerClientFlags
 // g_dbus_object_manager_client_new_for_bus_sync() for the synchronous version.
 func DBusObjectManagerClientNewForBus(BusTypeVar BusType, FlagsVar DBusObjectManagerClientFlags, NameVar string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusObjectManagerClientNewForBus(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, glib.NewCallback(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallback(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDBusObjectManagerClientNewForBus(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

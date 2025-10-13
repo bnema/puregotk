@@ -116,7 +116,7 @@ var xInputStreamCloseAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // override one you must override all.
 func (x *InputStream) CloseAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xInputStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xInputStreamCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -232,7 +232,7 @@ var xInputStreamReadAllAsync func(uintptr, []byte, uint, int, uintptr, uintptr, 
 // priority. Default priority is %G_PRIORITY_DEFAULT.
 func (x *InputStream) ReadAllAsync(BufferVar []byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xInputStreamReadAllAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xInputStreamReadAllAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -285,7 +285,7 @@ var xInputStreamReadAsync func(uintptr, []byte, uint, int, uintptr, uintptr, uin
 // override one you must override all.
 func (x *InputStream) ReadAsync(BufferVar []byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xInputStreamReadAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xInputStreamReadAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -349,7 +349,7 @@ var xInputStreamReadBytesAsync func(uintptr, uint, int, uintptr, uintptr, uintpt
 // priority. Default priority is %G_PRIORITY_DEFAULT.
 func (x *InputStream) ReadBytesAsync(CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xInputStreamReadBytesAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xInputStreamReadBytesAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -451,7 +451,7 @@ var xInputStreamSkipAsync func(uintptr, uint, int, uintptr, uintptr, uintptr)
 // However, if you override one, you must override all.
 func (x *InputStream) SkipAsync(CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xInputStreamSkipAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xInputStreamSkipAsync(x.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

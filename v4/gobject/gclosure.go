@@ -201,7 +201,7 @@ var xClosureAddFinalizeNotifier func(uintptr, uintptr, uintptr)
 // notifiers will be run before the finalize notifiers.
 func (x *Closure) AddFinalizeNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
 
-	xClosureAddFinalizeNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallback(NotifyFuncVar))
+	xClosureAddFinalizeNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallbackNullable(NotifyFuncVar))
 
 }
 
@@ -214,7 +214,7 @@ var xClosureAddInvalidateNotifier func(uintptr, uintptr, uintptr)
 // in an unspecified order.
 func (x *Closure) AddInvalidateNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
 
-	xClosureAddInvalidateNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallback(NotifyFuncVar))
+	xClosureAddInvalidateNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallbackNullable(NotifyFuncVar))
 
 }
 
@@ -228,7 +228,7 @@ var xClosureAddMarshalGuards func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // example of marshal guards.
 func (x *Closure) AddMarshalGuards(PreMarshalDataVar uintptr, PreMarshalNotifyVar *ClosureNotify, PostMarshalDataVar uintptr, PostMarshalNotifyVar *ClosureNotify) {
 
-	xClosureAddMarshalGuards(x.GoPointer(), PreMarshalDataVar, glib.NewCallback(PreMarshalNotifyVar), PostMarshalDataVar, glib.NewCallback(PostMarshalNotifyVar))
+	xClosureAddMarshalGuards(x.GoPointer(), PreMarshalDataVar, glib.NewCallbackNullable(PreMarshalNotifyVar), PostMarshalDataVar, glib.NewCallbackNullable(PostMarshalNotifyVar))
 
 }
 
@@ -335,7 +335,7 @@ var xClosureSetMetaMarshal func(uintptr, uintptr, uintptr)
 // @marshal_data argument.
 func (x *Closure) SetMetaMarshal(MarshalDataVar uintptr, MetaMarshalVar *ClosureMarshal) {
 
-	xClosureSetMetaMarshal(x.GoPointer(), MarshalDataVar, glib.NewCallback(MetaMarshalVar))
+	xClosureSetMetaMarshal(x.GoPointer(), MarshalDataVar, glib.NewCallbackNullable(MetaMarshalVar))
 
 }
 
@@ -442,7 +442,7 @@ var xCclosureNew func(uintptr, uintptr, uintptr) *Closure
 // @destroy_data will be called as a finalize notifier on the #GClosure.
 func CclosureNew(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar *ClosureNotify) *Closure {
 
-	cret := xCclosureNew(glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallback(DestroyDataVar))
+	cret := xCclosureNew(glib.NewCallbackNullable(CallbackFuncVar), UserDataVar, glib.NewCallback(DestroyDataVar))
 	return cret
 }
 
@@ -454,7 +454,7 @@ var xCclosureNewSwap func(uintptr, uintptr, uintptr) *Closure
 // @destroy_data will be called as a finalize notifier on the #GClosure.
 func CclosureNewSwap(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar *ClosureNotify) *Closure {
 
-	cret := xCclosureNewSwap(glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallback(DestroyDataVar))
+	cret := xCclosureNewSwap(glib.NewCallbackNullable(CallbackFuncVar), UserDataVar, glib.NewCallback(DestroyDataVar))
 	return cret
 }
 

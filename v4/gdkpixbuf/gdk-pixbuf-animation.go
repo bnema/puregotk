@@ -330,7 +330,7 @@ var xPixbufAnimationNewFromStreamAsync func(uintptr, uintptr, uintptr, uintptr)
 // result of the operation.
 func PixbufAnimationNewFromStreamAsync(StreamVar *gio.InputStream, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xPixbufAnimationNewFromStreamAsync(StreamVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xPixbufAnimationNewFromStreamAsync(StreamVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

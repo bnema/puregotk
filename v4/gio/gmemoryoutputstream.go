@@ -102,7 +102,7 @@ var xNewMemoryOutputStream func(uintptr, uint, uintptr, uintptr) uintptr
 func NewMemoryOutputStream(DataVar uintptr, SizeVar uint, ReallocFunctionVar *ReallocFunc, DestroyFunctionVar *glib.DestroyNotify) *MemoryOutputStream {
 	var cls *MemoryOutputStream
 
-	cret := xNewMemoryOutputStream(DataVar, SizeVar, glib.NewCallback(ReallocFunctionVar), glib.NewCallback(DestroyFunctionVar))
+	cret := xNewMemoryOutputStream(DataVar, SizeVar, glib.NewCallbackNullable(ReallocFunctionVar), glib.NewCallbackNullable(DestroyFunctionVar))
 
 	if cret == 0 {
 		return nil

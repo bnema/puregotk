@@ -100,7 +100,7 @@ func (x *NetworkMonitorBase) CanReach(ConnectableVar SocketConnectable, Cancella
 // to get the result of the operation.
 func (x *NetworkMonitorBase) CanReachAsync(ConnectableVar SocketConnectable, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGNetworkMonitorCanReachAsync(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGNetworkMonitorCanReachAsync(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

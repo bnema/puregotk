@@ -581,7 +581,7 @@ var xNewTask func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewTask(SourceObjectVar *gobject.Object, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, CallbackDataVar uintptr) *Task {
 	var cls *Task
 
-	cret := xNewTask(SourceObjectVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), CallbackDataVar)
+	cret := xNewTask(SourceObjectVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), CallbackDataVar)
 
 	if cret == 0 {
 		return nil
@@ -907,7 +907,7 @@ var xTaskReturnPointer func(uintptr, uintptr, uintptr)
 // reference on it.
 func (x *Task) ReturnPointer(ResultVar uintptr, ResultDestroyVar *glib.DestroyNotify) {
 
-	xTaskReturnPointer(x.GoPointer(), ResultVar, glib.NewCallback(ResultDestroyVar))
+	xTaskReturnPointer(x.GoPointer(), ResultVar, glib.NewCallbackNullable(ResultDestroyVar))
 
 }
 
@@ -1087,7 +1087,7 @@ var xTaskSetTaskData func(uintptr, uintptr, uintptr)
 // Sets @task's task data (freeing the existing task data, if any).
 func (x *Task) SetTaskData(TaskDataVar uintptr, TaskDataDestroyVar *glib.DestroyNotify) {
 
-	xTaskSetTaskData(x.GoPointer(), TaskDataVar, glib.NewCallback(TaskDataDestroyVar))
+	xTaskSetTaskData(x.GoPointer(), TaskDataVar, glib.NewCallbackNullable(TaskDataDestroyVar))
 
 }
 
@@ -1161,7 +1161,7 @@ var xTaskReportError func(uintptr, uintptr, uintptr, uintptr, *glib.Error)
 // See also g_task_report_new_error().
 func TaskReportError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, CallbackDataVar uintptr, SourceTagVar uintptr, ErrorVar *glib.Error) {
 
-	xTaskReportError(SourceObjectVar.GoPointer(), glib.NewCallback(CallbackVar), CallbackDataVar, SourceTagVar, ErrorVar)
+	xTaskReportError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), CallbackDataVar, SourceTagVar, ErrorVar)
 
 }
 
@@ -1178,7 +1178,7 @@ var xTaskReportNewError func(uintptr, uintptr, uintptr, uintptr, glib.Quark, int
 // See also g_task_report_error().
 func TaskReportNewError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, CallbackDataVar uintptr, SourceTagVar uintptr, DomainVar glib.Quark, CodeVar int, FormatVar string, varArgs ...interface{}) {
 
-	xTaskReportNewError(SourceObjectVar.GoPointer(), glib.NewCallback(CallbackVar), CallbackDataVar, SourceTagVar, DomainVar, CodeVar, FormatVar, varArgs...)
+	xTaskReportNewError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), CallbackDataVar, SourceTagVar, DomainVar, CodeVar, FormatVar, varArgs...)
 
 }
 

@@ -56,7 +56,7 @@ var xNewCustomFilter func(uintptr, uintptr, uintptr) uintptr
 func NewCustomFilter(MatchFuncVar *CustomFilterFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *CustomFilter {
 	var cls *CustomFilter
 
-	cret := xNewCustomFilter(glib.NewCallback(MatchFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	cret := xNewCustomFilter(glib.NewCallbackNullable(MatchFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
 
 	if cret == 0 {
 		return nil
@@ -79,7 +79,7 @@ var xCustomFilterSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // called now.
 func (x *CustomFilter) SetFilterFunc(MatchFuncVar *CustomFilterFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
 
-	xCustomFilterSetFilterFunc(x.GoPointer(), glib.NewCallback(MatchFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	xCustomFilterSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(MatchFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
 
 }
 

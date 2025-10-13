@@ -147,7 +147,7 @@ func (x *SimpleProxyResolver) Lookup(UriVar string, CancellableVar *Cancellable)
 // details.
 func (x *SimpleProxyResolver) LookupAsync(UriVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGProxyResolverLookupAsync(x.GoPointer(), UriVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGProxyResolverLookupAsync(x.GoPointer(), UriVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

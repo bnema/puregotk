@@ -272,7 +272,7 @@ var xRenderNodeDeserialize func(*glib.Bytes, uintptr, uintptr) uintptr
 func RenderNodeDeserialize(BytesVar *glib.Bytes, ErrorFuncVar *ParseErrorFunc, UserDataVar uintptr) *RenderNode {
 	var cls *RenderNode
 
-	cret := xRenderNodeDeserialize(BytesVar, glib.NewCallback(ErrorFuncVar), UserDataVar)
+	cret := xRenderNodeDeserialize(BytesVar, glib.NewCallbackNullable(ErrorFuncVar), UserDataVar)
 
 	if cret == 0 {
 		return nil

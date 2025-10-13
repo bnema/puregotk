@@ -62,7 +62,7 @@ var xNewCustomLayout func(uintptr, uintptr, uintptr) uintptr
 func NewCustomLayout(RequestModeVar *CustomRequestModeFunc, MeasureVar *CustomMeasureFunc, AllocateVar *CustomAllocateFunc) *CustomLayout {
 	var cls *CustomLayout
 
-	cret := xNewCustomLayout(glib.NewCallback(RequestModeVar), glib.NewCallback(MeasureVar), glib.NewCallback(AllocateVar))
+	cret := xNewCustomLayout(glib.NewCallbackNullable(RequestModeVar), glib.NewCallback(MeasureVar), glib.NewCallback(AllocateVar))
 
 	if cret == 0 {
 		return nil

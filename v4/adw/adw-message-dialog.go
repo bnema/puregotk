@@ -269,7 +269,7 @@ var xMessageDialogChoose func(uintptr, uintptr, uintptr, uintptr)
 // This function shows @self to the user.
 func (x *MessageDialog) Choose(CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xMessageDialogChoose(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xMessageDialogChoose(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

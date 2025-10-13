@@ -56,7 +56,7 @@ var xDbusAddressGetStream func(string, uintptr, uintptr, uintptr)
 // g_dbus_address_get_stream_sync() for the synchronous version.
 func DbusAddressGetStream(AddressVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDbusAddressGetStream(AddressVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDbusAddressGetStream(AddressVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

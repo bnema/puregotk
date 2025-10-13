@@ -123,7 +123,7 @@ var xTlsDatabaseLookupCertificateForHandleAsync func(uintptr, string, uintptr, T
 // g_tls_database_lookup_certificate_for_handle() for more information.
 func (x *TlsDatabase) LookupCertificateForHandleAsync(HandleVar string, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseLookupFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xTlsDatabaseLookupCertificateForHandleAsync(x.GoPointer(), HandleVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xTlsDatabaseLookupCertificateForHandleAsync(x.GoPointer(), HandleVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -198,7 +198,7 @@ var xTlsDatabaseLookupCertificateIssuerAsync func(uintptr, uintptr, uintptr, Tls
 // g_tls_database_lookup_certificate_issuer() for more information.
 func (x *TlsDatabase) LookupCertificateIssuerAsync(CertificateVar *TlsCertificate, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseLookupFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xTlsDatabaseLookupCertificateIssuerAsync(x.GoPointer(), CertificateVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xTlsDatabaseLookupCertificateIssuerAsync(x.GoPointer(), CertificateVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -251,7 +251,7 @@ var xTlsDatabaseLookupCertificatesIssuedByAsync func(uintptr, []byte, uintptr, T
 // this time.
 func (x *TlsDatabase) LookupCertificatesIssuedByAsync(IssuerRawDnVar []byte, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseLookupFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xTlsDatabaseLookupCertificatesIssuedByAsync(x.GoPointer(), IssuerRawDnVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xTlsDatabaseLookupCertificatesIssuedByAsync(x.GoPointer(), IssuerRawDnVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -350,7 +350,7 @@ var xTlsDatabaseVerifyChainAsync func(uintptr, uintptr, string, uintptr, uintptr
 // g_tls_database_verify_chain() for more information.
 func (x *TlsDatabase) VerifyChainAsync(ChainVar *TlsCertificate, PurposeVar string, IdentityVar SocketConnectable, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseVerifyFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xTlsDatabaseVerifyChainAsync(x.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xTlsDatabaseVerifyChainAsync(x.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

@@ -101,7 +101,7 @@ var xFileEnumeratorCloseAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // g_file_enumerator_close_finish().
 func (x *FileEnumerator) CloseAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xFileEnumeratorCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xFileEnumeratorCloseAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -301,7 +301,7 @@ var xFileEnumeratorNextFilesAsync func(uintptr, int, int, uintptr, uintptr, uint
 // priority is %G_PRIORITY_DEFAULT.
 func (x *FileEnumerator) NextFilesAsync(NumFilesVar int, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xFileEnumeratorNextFilesAsync(x.GoPointer(), NumFilesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xFileEnumeratorNextFilesAsync(x.GoPointer(), NumFilesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

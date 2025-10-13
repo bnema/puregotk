@@ -184,7 +184,7 @@ var xDataInputStreamReadLineAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // the result of the operation.
 func (x *DataInputStream) ReadLineAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDataInputStreamReadLineAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDataInputStreamReadLineAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -340,7 +340,7 @@ var xDataInputStreamReadUntilAsync func(uintptr, string, int, uintptr, uintptr, 
 // g_data_input_stream_read_upto_async() instead.
 func (x *DataInputStream) ReadUntilAsync(StopCharsVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDataInputStreamReadUntilAsync(x.GoPointer(), StopCharsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDataInputStreamReadUntilAsync(x.GoPointer(), StopCharsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -402,7 +402,7 @@ var xDataInputStreamReadUptoAsync func(uintptr, string, int, int, uintptr, uintp
 // the result of the operation.
 func (x *DataInputStream) ReadUptoAsync(StopCharsVar string, StopCharsLenVar int, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDataInputStreamReadUptoAsync(x.GoPointer(), StopCharsVar, StopCharsLenVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xDataInputStreamReadUptoAsync(x.GoPointer(), StopCharsVar, StopCharsLenVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

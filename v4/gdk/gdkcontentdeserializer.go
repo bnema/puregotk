@@ -28,7 +28,7 @@ var xContentDeserializeAsync func(uintptr, string, types.GType, int, uintptr, ui
 // call [func@Gdk.content_deserialize_finish] to get the result of the operation.
 func ContentDeserializeAsync(StreamVar *gio.InputStream, MimeTypeVar string, TypeVar types.GType, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xContentDeserializeAsync(StreamVar.GoPointer(), MimeTypeVar, TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xContentDeserializeAsync(StreamVar.GoPointer(), MimeTypeVar, TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

@@ -149,7 +149,7 @@ var xSpawnAsync func(string, []string, []string, SpawnFlags, uintptr, uintptr, *
 func SpawnAsync(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, ChildPidVar *Pid) (bool, error) {
 	var cerr *Error
 
-	cret := xSpawnAsync(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallback(ChildSetupVar), UserDataVar, ChildPidVar, &cerr)
+	cret := xSpawnAsync(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, ChildPidVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -166,7 +166,7 @@ var xSpawnAsyncWithFds func(string, []string, []string, SpawnFlags, uintptr, uin
 func SpawnAsyncWithFds(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, ChildPidVar *Pid, StdinFdVar int, StdoutFdVar int, StderrFdVar int) (bool, error) {
 	var cerr *Error
 
-	cret := xSpawnAsyncWithFds(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallback(ChildSetupVar), UserDataVar, ChildPidVar, StdinFdVar, StdoutFdVar, StderrFdVar, &cerr)
+	cret := xSpawnAsyncWithFds(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, ChildPidVar, StdinFdVar, StdoutFdVar, StderrFdVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -181,7 +181,7 @@ var xSpawnAsyncWithPipes func(string, []string, []string, SpawnFlags, uintptr, u
 func SpawnAsyncWithPipes(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, ChildPidVar *Pid, StandardInputVar int, StandardOutputVar int, StandardErrorVar int) (bool, error) {
 	var cerr *Error
 
-	cret := xSpawnAsyncWithPipes(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallback(ChildSetupVar), UserDataVar, ChildPidVar, StandardInputVar, StandardOutputVar, StandardErrorVar, &cerr)
+	cret := xSpawnAsyncWithPipes(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, ChildPidVar, StandardInputVar, StandardOutputVar, StandardErrorVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -382,7 +382,7 @@ var xSpawnAsyncWithPipesAndFds func(string, []string, []string, SpawnFlags, uint
 func SpawnAsyncWithPipesAndFds(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, StdinFdVar int, StdoutFdVar int, StderrFdVar int, SourceFdsVar []int, TargetFdsVar []int, NFdsVar uint, ChildPidOutVar *Pid, StdinPipeOutVar int, StdoutPipeOutVar int, StderrPipeOutVar int) (bool, error) {
 	var cerr *Error
 
-	cret := xSpawnAsyncWithPipesAndFds(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallback(ChildSetupVar), UserDataVar, StdinFdVar, StdoutFdVar, StderrFdVar, SourceFdsVar, TargetFdsVar, NFdsVar, ChildPidOutVar, StdinPipeOutVar, StdoutPipeOutVar, StderrPipeOutVar, &cerr)
+	cret := xSpawnAsyncWithPipesAndFds(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, StdinFdVar, StdoutFdVar, StderrFdVar, SourceFdsVar, TargetFdsVar, NFdsVar, ChildPidOutVar, StdinPipeOutVar, StdoutPipeOutVar, StderrPipeOutVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -568,7 +568,7 @@ var xSpawnSync func(string, []string, []string, SpawnFlags, uintptr, uintptr, []
 func SpawnSync(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, StandardOutputVar []byte, StandardErrorVar []byte, WaitStatusVar int) (bool, error) {
 	var cerr *Error
 
-	cret := xSpawnSync(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallback(ChildSetupVar), UserDataVar, StandardOutputVar, StandardErrorVar, WaitStatusVar, &cerr)
+	cret := xSpawnSync(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, StandardOutputVar, StandardErrorVar, WaitStatusVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

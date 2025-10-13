@@ -165,7 +165,7 @@ var xListBoxBindModel func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // should be implemented by the model.
 func (x *ListBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *ListBoxCreateWidgetFunc, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) {
 
-	xListBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), glib.NewCallback(CreateWidgetFuncVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	xListBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), glib.NewCallbackNullable(CreateWidgetFuncVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
 
 }
 
@@ -460,7 +460,7 @@ var xListBoxSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // (see [method@Gtk.ListBox.bind_model]).
 func (x *ListBox) SetFilterFunc(FilterFuncVar *ListBoxFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xListBoxSetFilterFunc(x.GoPointer(), glib.NewCallback(FilterFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xListBoxSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
 
 }
 
@@ -493,7 +493,7 @@ var xListBoxSetHeaderFunc func(uintptr, uintptr, uintptr, uintptr)
 // [method@Gtk.ListBox.invalidate_headers] is called.
 func (x *ListBox) SetHeaderFunc(UpdateHeaderVar *ListBoxUpdateHeaderFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xListBoxSetHeaderFunc(x.GoPointer(), glib.NewCallback(UpdateHeaderVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xListBoxSetHeaderFunc(x.GoPointer(), glib.NewCallbackNullable(UpdateHeaderVar), UserDataVar, glib.NewCallback(DestroyVar))
 
 }
 
@@ -542,7 +542,7 @@ var xListBoxSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // (see [method@Gtk.ListBox.bind_model]).
 func (x *ListBox) SetSortFunc(SortFuncVar *ListBoxSortFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xListBoxSetSortFunc(x.GoPointer(), glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xListBoxSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
 
 }
 

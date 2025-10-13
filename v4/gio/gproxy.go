@@ -83,7 +83,7 @@ func (x *ProxyBase) Connect(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddre
 // Asynchronous version of g_proxy_connect().
 func (x *ProxyBase) ConnectAsync(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGProxyConnectAsync(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	XGProxyConnectAsync(x.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

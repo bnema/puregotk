@@ -118,7 +118,7 @@ var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint32
 // code that unconditionally invokes e.g. g_cancellable_cancel().
 func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, DataDestroyFuncVar *glib.DestroyNotify) uint32 {
 
-	cret := xCancellableConnect(x.GoPointer(), glib.NewCallback(CallbackVar), DataVar, glib.NewCallback(DataDestroyFuncVar))
+	cret := xCancellableConnect(x.GoPointer(), glib.NewCallback(CallbackVar), DataVar, glib.NewCallbackNullable(DataDestroyFuncVar))
 	return cret
 }
 

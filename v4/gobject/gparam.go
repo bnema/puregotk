@@ -432,7 +432,7 @@ var xParamSpecSetQdataFull func(uintptr, glib.Quark, uintptr, uintptr)
 // g_param_spec_set_qdata() with the same @quark.
 func (x *ParamSpec) SetQdataFull(QuarkVar glib.Quark, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xParamSpecSetQdataFull(x.GoPointer(), QuarkVar, DataVar, glib.NewCallback(DestroyVar))
+	xParamSpecSetQdataFull(x.GoPointer(), QuarkVar, DataVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 

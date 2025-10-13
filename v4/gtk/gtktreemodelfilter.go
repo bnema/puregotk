@@ -227,7 +227,7 @@ var xTreeModelFilterSetModifyFunc func(uintptr, int, []types.GType, uintptr, uin
 // can only be called once for a given filter model.
 func (x *TreeModelFilter) SetModifyFunc(NColumnsVar int, TypesVar []types.GType, FuncVar *TreeModelFilterModifyFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xTreeModelFilterSetModifyFunc(x.GoPointer(), NColumnsVar, TypesVar, glib.NewCallback(FuncVar), DataVar, glib.NewCallback(DestroyVar))
+	xTreeModelFilterSetModifyFunc(x.GoPointer(), NColumnsVar, TypesVar, glib.NewCallback(FuncVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 
@@ -289,7 +289,7 @@ var xTreeModelFilterSetVisibleFunc func(uintptr, uintptr, uintptr, uintptr)
 // once for a given filter model.
 func (x *TreeModelFilter) SetVisibleFunc(FuncVar *TreeModelFilterVisibleFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xTreeModelFilterSetVisibleFunc(x.GoPointer(), glib.NewCallback(FuncVar), DataVar, glib.NewCallback(DestroyVar))
+	xTreeModelFilterSetVisibleFunc(x.GoPointer(), glib.NewCallback(FuncVar), DataVar, glib.NewCallbackNullable(DestroyVar))
 
 }
 

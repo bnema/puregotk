@@ -127,7 +127,7 @@ var xTlsInteractionAskPasswordAsync func(uintptr, uintptr, uintptr, uintptr, uin
 // Certain implementations may not support immediate cancellation.
 func (x *TlsInteraction) AskPasswordAsync(PasswordVar *TlsPassword, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xTlsInteractionAskPasswordAsync(x.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xTlsInteractionAskPasswordAsync(x.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -259,7 +259,7 @@ var xTlsInteractionRequestCertificateAsync func(uintptr, uintptr, TlsCertificate
 // request, which will usually abort the TLS connection.
 func (x *TlsInteraction) RequestCertificateAsync(ConnectionVar *TlsConnection, FlagsVar TlsCertificateRequestFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xTlsInteractionRequestCertificateAsync(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xTlsInteractionRequestCertificateAsync(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

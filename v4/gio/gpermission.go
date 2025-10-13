@@ -99,7 +99,7 @@ var xPermissionAcquireAsync func(uintptr, uintptr, uintptr, uintptr)
 // g_permission_acquire().
 func (x *Permission) AcquireAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xPermissionAcquireAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xPermissionAcquireAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -203,7 +203,7 @@ var xPermissionReleaseAsync func(uintptr, uintptr, uintptr, uintptr)
 // g_permission_release().
 func (x *Permission) ReleaseAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xPermissionReleaseAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xPermissionReleaseAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

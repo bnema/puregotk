@@ -310,7 +310,7 @@ var xScaleSetFormatValueFunc func(uintptr, uintptr, uintptr, uintptr)
 // [property@GtkScale:digits] property.
 func (x *Scale) SetFormatValueFunc(FuncVar *ScaleFormatValueFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
 
-	xScaleSetFormatValueFunc(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallback(DestroyNotifyVar))
+	xScaleSetFormatValueFunc(x.GoPointer(), glib.NewCallbackNullable(FuncVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
 
 }
 

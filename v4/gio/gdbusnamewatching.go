@@ -67,7 +67,7 @@ var xBusWatchName func(BusType, string, BusNameWatcherFlags, uintptr, uintptr, u
 // @name_vanished_handler.
 func BusWatchName(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedHandlerVar *BusNameAppearedCallback, NameVanishedHandlerVar *BusNameVanishedCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	cret := xBusWatchName(BusTypeVar, NameVar, FlagsVar, glib.NewCallback(NameAppearedHandlerVar), glib.NewCallback(NameVanishedHandlerVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	cret := xBusWatchName(BusTypeVar, NameVar, FlagsVar, glib.NewCallbackNullable(NameAppearedHandlerVar), glib.NewCallbackNullable(NameVanishedHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
 	return cret
 }
 
@@ -77,7 +77,7 @@ var xBusWatchNameOnConnection func(uintptr, string, BusNameWatcherFlags, uintptr
 // #GBusType.
 func BusWatchNameOnConnection(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedHandlerVar *BusNameAppearedCallback, NameVanishedHandlerVar *BusNameVanishedCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	cret := xBusWatchNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, glib.NewCallback(NameAppearedHandlerVar), glib.NewCallback(NameVanishedHandlerVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	cret := xBusWatchNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, glib.NewCallbackNullable(NameAppearedHandlerVar), glib.NewCallbackNullable(NameVanishedHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
 	return cret
 }
 

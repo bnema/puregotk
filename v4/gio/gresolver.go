@@ -102,7 +102,7 @@ var xResolverLookupByAddressAsync func(uintptr, uintptr, uintptr, uintptr, uintp
 // call g_resolver_lookup_by_address_finish() to get the final result.
 func (x *Resolver) LookupByAddressAsync(AddressVar *InetAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xResolverLookupByAddressAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xResolverLookupByAddressAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -169,7 +169,7 @@ var xResolverLookupByNameAsync func(uintptr, string, uintptr, uintptr, uintptr)
 // See g_resolver_lookup_by_name() for more details.
 func (x *Resolver) LookupByNameAsync(HostnameVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xResolverLookupByNameAsync(x.GoPointer(), HostnameVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xResolverLookupByNameAsync(x.GoPointer(), HostnameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -216,7 +216,7 @@ var xResolverLookupByNameWithFlagsAsync func(uintptr, string, ResolverNameLookup
 // See g_resolver_lookup_by_name() for more details.
 func (x *Resolver) LookupByNameWithFlagsAsync(HostnameVar string, FlagsVar ResolverNameLookupFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xResolverLookupByNameWithFlagsAsync(x.GoPointer(), HostnameVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xResolverLookupByNameWithFlagsAsync(x.GoPointer(), HostnameVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -270,7 +270,7 @@ var xResolverLookupRecordsAsync func(uintptr, string, ResolverRecordType, uintpt
 // g_resolver_lookup_records() for more details.
 func (x *Resolver) LookupRecordsAsync(RrnameVar string, RecordTypeVar ResolverRecordType, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xResolverLookupRecordsAsync(x.GoPointer(), RrnameVar, RecordTypeVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xResolverLookupRecordsAsync(x.GoPointer(), RrnameVar, RecordTypeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -338,7 +338,7 @@ var xResolverLookupServiceAsync func(uintptr, string, string, string, uintptr, u
 // details.
 func (x *Resolver) LookupServiceAsync(ServiceVar string, ProtocolVar string, DomainVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xResolverLookupServiceAsync(x.GoPointer(), ServiceVar, ProtocolVar, DomainVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xResolverLookupServiceAsync(x.GoPointer(), ServiceVar, ProtocolVar, DomainVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

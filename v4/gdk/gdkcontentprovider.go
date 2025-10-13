@@ -204,7 +204,7 @@ var xContentProviderWriteMimeTypeAsync func(uintptr, string, uintptr, int, uintp
 // The given @stream will not be closed.
 func (x *ContentProvider) WriteMimeTypeAsync(MimeTypeVar string, StreamVar *gio.OutputStream, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xContentProviderWriteMimeTypeAsync(x.GoPointer(), MimeTypeVar, StreamVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xContentProviderWriteMimeTypeAsync(x.GoPointer(), MimeTypeVar, StreamVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 

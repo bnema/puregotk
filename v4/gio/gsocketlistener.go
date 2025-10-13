@@ -119,7 +119,7 @@ var xSocketListenerAcceptAsync func(uintptr, uintptr, uintptr, uintptr)
 // to get the result of the operation.
 func (x *SocketListener) AcceptAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSocketListenerAcceptAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xSocketListenerAcceptAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -187,7 +187,7 @@ var xSocketListenerAcceptSocketAsync func(uintptr, uintptr, uintptr, uintptr)
 // to get the result of the operation.
 func (x *SocketListener) AcceptSocketAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSocketListenerAcceptSocketAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar)
+	xSocketListenerAcceptSocketAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
