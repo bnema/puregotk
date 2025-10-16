@@ -35,6 +35,9 @@ func (x *TypeModuleClass) GoPointer() uintptr {
 }
 
 // OverrideLoad sets the callback function.
+// loads the module and registers one or more types using
+//
+//	g_type_module_register_type().
 func (x *TypeModuleClass) OverrideLoad(cb func(*TypeModule) bool) {
 	if cb == nil {
 		x.xLoad = 0
@@ -46,6 +49,9 @@ func (x *TypeModuleClass) OverrideLoad(cb func(*TypeModule) bool) {
 }
 
 // GetLoad gets the callback function.
+// loads the module and registers one or more types using
+//
+//	g_type_module_register_type().
 func (x *TypeModuleClass) GetLoad() func(*TypeModule) bool {
 	if x.xLoad == 0 {
 		return nil
@@ -58,6 +64,7 @@ func (x *TypeModuleClass) GetLoad() func(*TypeModule) bool {
 }
 
 // OverrideUnload sets the callback function.
+// unloads the module
 func (x *TypeModuleClass) OverrideUnload(cb func(*TypeModule)) {
 	if cb == nil {
 		x.xUnload = 0
@@ -69,6 +76,7 @@ func (x *TypeModuleClass) OverrideUnload(cb func(*TypeModule)) {
 }
 
 // GetUnload gets the callback function.
+// unloads the module
 func (x *TypeModuleClass) GetUnload() func(*TypeModule) {
 	if x.xUnload == 0 {
 		return nil
@@ -172,36 +180,37 @@ func (x *TypeModuleClass) GetReserved4() func() {
 	}
 }
 
-// #GTypeModule provides a simple implementation of the #GTypePlugin
+// `GTypeModule` provides a simple implementation of the `GTypePlugin`
 // interface.
 //
-// The model of #GTypeModule is a dynamically loaded module which
+// The model of `GTypeModule` is a dynamically loaded module which
 // implements some number of types and interface implementations.
 //
 // When the module is loaded, it registers its types and interfaces
-// using g_type_module_register_type() and g_type_module_add_interface().
+// using [method@GObject.TypeModule.register_type] and
+// [method@GObject.TypeModule.add_interface].
 // As long as any instances of these types and interface implementations
 // are in use, the module is kept loaded. When the types and interfaces
 // are gone, the module may be unloaded. If the types and interfaces
 // become used again, the module will be reloaded. Note that the last
 // reference cannot be released from within the module code, since that
-// would lead to the caller's code being unloaded before g_object_unref()
+// would lead to the caller's code being unloaded before `g_object_unref()`
 // returns to it.
 //
 // Keeping track of whether the module should be loaded or not is done by
 // using a use count - it starts at zero, and whenever it is greater than
 // zero, the module is loaded. The use count is maintained internally by
 // the type system, but also can be explicitly controlled by
-// g_type_module_use() and g_type_module_unuse(). Typically, when loading
-// a module for the first type, g_type_module_use() will be used to load
-// it so that it can initialize its types. At some later point, when the
-// module no longer needs to be loaded except for the type
-// implementations it contains, g_type_module_unuse() is called.
+// [method@GObject.TypeModule.use] and [method@GObject.TypeModule.unuse].
+// Typically, when loading a module for the first type, `g_type_module_use()`
+// will be used to load it so that it can initialize its types. At some later
+// point, when the module no longer needs to be loaded except for the type
+// implementations it contains, `g_type_module_unuse()` is called.
 //
-// #GTypeModule does not actually provide any implementation of module
+// `GTypeModule` does not actually provide any implementation of module
 // loading and unloading. To create a particular module type you must
-// derive from #GTypeModule and implement the load and unload functions
-// in #GTypeModuleClass.
+// derive from `GTypeModule` and implement the load and unload functions
+// in `GTypeModuleClass`.
 type TypeModule struct {
 	Object
 }

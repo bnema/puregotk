@@ -155,11 +155,11 @@ func (x *ConverterInputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// Converter input stream implements #GInputStream and allows
+// Converter input stream implements [class@Gio.InputStream] and allows
 // conversion of data of various types during reading.
 //
-// As of GLib 2.34, #GConverterInputStream implements
-// #GPollableInputStream.
+// As of GLib 2.34, `GConverterInputStream` implements
+// [iface@Gio.PollableInputStream].
 type ConverterInputStream struct {
 	FilterInputStream
 }
@@ -241,6 +241,9 @@ func (x *ConverterInputStream) CanPoll() bool {
 // the stream may not actually be readable even after the source
 // triggers, so you should use g_pollable_input_stream_read_nonblocking()
 // rather than g_input_stream_read() from the callback.
+//
+// The behaviour of this method is undefined if
+// g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterInputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 
 	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
@@ -255,6 +258,9 @@ func (x *ConverterInputStream) CreateSource(CancellableVar *Cancellable) *glib.S
 // non-blocking behavior, you should always use
 // g_pollable_input_stream_read_nonblocking(), which will return a
 // %G_IO_ERROR_WOULD_BLOCK error rather than blocking.
+//
+// The behaviour of this method is undefined if
+// g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterInputStream) IsReadable() bool {
 
 	cret := XGPollableInputStreamIsReadable(x.GoPointer())
@@ -272,6 +278,9 @@ func (x *ConverterInputStream) IsReadable() bool {
 // if @cancellable has already been cancelled when you call, which
 // may happen if you call this method after a source triggers due
 // to having been cancelled.
+//
+// The behaviour of this method is undefined if
+// g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterInputStream) ReadNonblocking(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 

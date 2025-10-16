@@ -24,6 +24,9 @@ func (x *MemoryMonitorInterface) GoPointer() uintptr {
 }
 
 // OverrideLowMemoryWarning sets the callback function.
+// the virtual function pointer for the
+//
+//	#GMemoryMonitor::low-memory-warning signal.
 func (x *MemoryMonitorInterface) OverrideLowMemoryWarning(cb func(MemoryMonitor, MemoryMonitorWarningLevel)) {
 	if cb == nil {
 		x.xLowMemoryWarning = 0
@@ -35,6 +38,9 @@ func (x *MemoryMonitorInterface) OverrideLowMemoryWarning(cb func(MemoryMonitor,
 }
 
 // GetLowMemoryWarning gets the callback function.
+// the virtual function pointer for the
+//
+//	#GMemoryMonitor::low-memory-warning signal.
 func (x *MemoryMonitorInterface) GetLowMemoryWarning() func(MemoryMonitor, MemoryMonitorWarningLevel) {
 	if x.xLowMemoryWarning == 0 {
 		return nil
@@ -46,9 +52,10 @@ func (x *MemoryMonitorInterface) GetLowMemoryWarning() func(MemoryMonitor, Memor
 	}
 }
 
-// #GMemoryMonitor will monitor system memory and suggest to the application
+// `GMemoryMonitor` will monitor system memory and suggest to the application
 // when to free memory so as to leave more room for other applications.
-// It is implemented on Linux using the [Low Memory Monitor](https://gitlab.freedesktop.org/hadess/low-memory-monitor/)
+// It is implemented on Linux using the
+// [Low Memory Monitor](https://gitlab.freedesktop.org/hadess/low-memory-monitor/)
 // ([API documentation](https://hadess.pages.freedesktop.org/low-memory-monitor/)).
 //
 // There is also an implementation for use inside Flatpak sandboxes.
@@ -56,11 +63,11 @@ func (x *MemoryMonitorInterface) GetLowMemoryWarning() func(MemoryMonitor, Memor
 // Possible actions to take when the signal is received are:
 //
 //   - Free caches
-//   - Save files that haven't been looked at in a while to disk, ready to be reopened when needed
+//   - Save files that haven’t been looked at in a while to disk, ready to be reopened when needed
 //   - Run a garbage collection cycle
 //   - Try and compress fragmented allocations
 //   - Exit on idle if the process has no reason to stay around
-//   - Call [`malloc_trim(3)`](man:malloc_trim) to return cached heap pages to
+//   - Call [`malloc_trim(3)`](man:malloc_trim(3)) to return cached heap pages to
 //     the kernel (if supported by your libc)
 //
 // Note that some actions may not always improve system performance, and so
@@ -68,9 +75,10 @@ func (x *MemoryMonitorInterface) GetLowMemoryWarning() func(MemoryMonitor, Memor
 // make future heap allocations slower (due to releasing cached heap pages back
 // to the kernel).
 //
-// See #GMemoryMonitorWarningLevel for details on the various warning levels.
+// See [type@Gio.MemoryMonitorWarningLevel] for details on the various warning
+// levels.
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 // static void
 // warning_cb (GMemoryMonitor *m, GMemoryMonitorWarningLevel level)
 //
@@ -91,10 +99,10 @@ func (x *MemoryMonitorInterface) GetLowMemoryWarning() func(MemoryMonitor, Memor
 //	  return m;
 //	}
 //
-// ]|
+// ```
 //
-// Don't forget to disconnect the #GMemoryMonitor::low-memory-warning
-// signal, and unref the #GMemoryMonitor itself when exiting.
+// Don’t forget to disconnect the [signal@Gio.MemoryMonitor::low-memory-warning]
+// signal, and unref the `GMemoryMonitor` itself when exiting.
 type MemoryMonitor interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
@@ -123,7 +131,7 @@ func (x *MemoryMonitorBase) SetGoPointer(ptr uintptr) {
 
 const (
 	// Extension point for memory usage monitoring functionality.
-	// See [Extending GIO][extending-gio].
+	// See [Extending GIO](overview.html#extending-gio).
 	MEMORY_MONITOR_EXTENSION_POINT_NAME string = "gio-memory-monitor"
 )
 

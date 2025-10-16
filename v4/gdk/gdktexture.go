@@ -44,20 +44,41 @@ const (
 	TextureErrorUnsupportedFormatValue TextureError = 3
 )
 
-// `GdkTexture` is the basic element used to refer to pixel data.
+var xTextureErrorQuark func() glib.Quark
+
+// Registers an error quark for [class@Gdk.Texture] errors.
+func TextureErrorQuark() glib.Quark {
+
+	cret := xTextureErrorQuark()
+	return cret
+}
+
+// Refers to pixel data in various forms.
 //
 // It is primarily meant for pixel data that will not change over
 // multiple frames, and will be used for a long time.
 //
 // There are various ways to create `GdkTexture` objects from a
-// [class@GdkPixbuf.Pixbuf], or a Cairo surface, or other pixel data.
+// [class@GdkPixbuf.Pixbuf], or from bytes stored in memory, a file, or a
+// [struct@Gio.Resource].
 //
 // The ownership of the pixel data is transferred to the `GdkTexture`
 // instance; you can only make a copy of it, via [method@Gdk.Texture.download].
 //
 // `GdkTexture` is an immutable object: That means you cannot change
 // anything about it other than increasing the reference count via
-// [method@GObject.Object.ref], and consequently, it is a thread-safe object.
+// [method@GObject.Object.ref], and consequently, it is a threadsafe object.
+//
+// GDK provides a number of threadsafe texture loading functions:
+// [ctor@Gdk.Texture.new_from_resource],
+// [ctor@Gdk.Texture.new_from_bytes],
+// [ctor@Gdk.Texture.new_from_file],
+// [ctor@Gdk.Texture.new_from_filename],
+// [ctor@Gdk.Texture.new_for_pixbuf]. Note that these are meant for loading
+// icons and resources that are shipped with the toolkit or application. It
+// is recommended that you use a dedicated image loading framework such as
+// [glycin](https://lib.rs/crates/glycin), if you need to load untrusted image
+// data.
 type Texture struct {
 	gobject.Object
 }
@@ -99,7 +120,7 @@ var xNewTextureFromBytes func(*glib.Bytes, **glib.Error) uintptr
 // Creates a new texture by loading an image from memory,
 //
 // The file format is detected automatically. The supported formats
-// are PNG and JPEG, though more formats might be available.
+// are PNG, JPEG and TIFF, though more formats might be available.
 //
 // If %NULL is returned, then @error will be set.
 //
@@ -129,7 +150,7 @@ var xNewTextureFromFile func(uintptr, **glib.Error) uintptr
 // Creates a new texture by loading an image from a file.
 //
 // The file format is detected automatically. The supported formats
-// are PNG and JPEG, though more formats might be available.
+// are PNG, JPEG and TIFF, though more formats might be available.
 //
 // If %NULL is returned, then @error will be set.
 //
@@ -159,7 +180,7 @@ var xNewTextureFromFilename func(string, **glib.Error) uintptr
 // Creates a new texture by loading an image from a file.
 //
 // The file format is detected automatically. The supported formats
-// are PNG and JPEG, though more formats might be available.
+// are PNG, JPEG and TIFF, though more formats might be available.
 //
 // If %NULL is returned, then @error will be set.
 //
@@ -237,10 +258,39 @@ var xTextureDownload func(uintptr, []byte, uint)
 //
 // cairo_surface_mark_dirty (surface);
 // ```
+//
+// For more flexible download capabilities, see
+// [struct@Gdk.TextureDownloader].
 func (x *Texture) Download(DataVar []byte, StrideVar uint) {
 
 	xTextureDownload(x.GoPointer(), DataVar, StrideVar)
 
+}
+
+var xTextureGetColorState func(uintptr) *ColorState
+
+// Returns the color state associated with the texture.
+func (x *Texture) GetColorState() *ColorState {
+
+	cret := xTextureGetColorState(x.GoPointer())
+	return cret
+}
+
+var xTextureGetFormat func(uintptr) MemoryFormat
+
+// Gets the memory format most closely associated with the data of
+// the texture.
+//
+// Note that it may not be an exact match for texture data
+// stored on the GPU or with compression.
+//
+// The format can give an indication about the bit depth and opacity
+// of the texture and is useful to determine the best format for
+// downloading the texture.
+func (x *Texture) GetFormat() MemoryFormat {
+
+	cret := xTextureGetFormat(x.GoPointer())
+	return cret
 }
 
 var xTextureGetHeight func(uintptr) int
@@ -491,6 +541,13 @@ func (x *Texture) Equal(Icon2Var gio.Icon) bool {
 	return cret
 }
 
+// Gets a hash for an icon.
+func (x *Texture) Hash() uint {
+
+	cret := gio.XGIconHash(x.GoPointer())
+	return cret
+}
+
 // Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
 // back by calling g_icon_deserialize() on the returned value.
 // As serialization will avoid using raw icon data when possible, it only
@@ -582,6 +639,8 @@ func init() {
 
 	core.PuregoSafeRegister(&xTextureErrorGLibType, lib, "gdk_texture_error_get_type")
 
+	core.PuregoSafeRegister(&xTextureErrorQuark, lib, "gdk_texture_error_quark")
+
 	core.PuregoSafeRegister(&xTextureGLibType, lib, "gdk_texture_get_type")
 
 	core.PuregoSafeRegister(&xNewTextureForPixbuf, lib, "gdk_texture_new_for_pixbuf")
@@ -591,6 +650,8 @@ func init() {
 	core.PuregoSafeRegister(&xNewTextureFromResource, lib, "gdk_texture_new_from_resource")
 
 	core.PuregoSafeRegister(&xTextureDownload, lib, "gdk_texture_download")
+	core.PuregoSafeRegister(&xTextureGetColorState, lib, "gdk_texture_get_color_state")
+	core.PuregoSafeRegister(&xTextureGetFormat, lib, "gdk_texture_get_format")
 	core.PuregoSafeRegister(&xTextureGetHeight, lib, "gdk_texture_get_height")
 	core.PuregoSafeRegister(&xTextureGetWidth, lib, "gdk_texture_get_width")
 	core.PuregoSafeRegister(&xTextureSaveToPng, lib, "gdk_texture_save_to_png")

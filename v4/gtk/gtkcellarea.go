@@ -108,6 +108,7 @@ func (x *CellAreaClass) ListCellProperties(NPropertiesVar uint) uintptr {
 }
 
 // OverrideAdd sets the callback function.
+// adds a `GtkCellRenderer` to the area.
 func (x *CellAreaClass) OverrideAdd(cb func(*CellArea, *CellRenderer)) {
 	if cb == nil {
 		x.xAdd = 0
@@ -119,6 +120,7 @@ func (x *CellAreaClass) OverrideAdd(cb func(*CellArea, *CellRenderer)) {
 }
 
 // GetAdd gets the callback function.
+// adds a `GtkCellRenderer` to the area.
 func (x *CellAreaClass) GetAdd() func(*CellArea, *CellRenderer) {
 	if x.xAdd == 0 {
 		return nil
@@ -131,6 +133,7 @@ func (x *CellAreaClass) GetAdd() func(*CellArea, *CellRenderer) {
 }
 
 // OverrideRemove sets the callback function.
+// removes a `GtkCellRenderer` from the area.
 func (x *CellAreaClass) OverrideRemove(cb func(*CellArea, *CellRenderer)) {
 	if cb == nil {
 		x.xRemove = 0
@@ -142,6 +145,7 @@ func (x *CellAreaClass) OverrideRemove(cb func(*CellArea, *CellRenderer)) {
 }
 
 // GetRemove gets the callback function.
+// removes a `GtkCellRenderer` from the area.
 func (x *CellAreaClass) GetRemove() func(*CellArea, *CellRenderer) {
 	if x.xRemove == 0 {
 		return nil
@@ -154,6 +158,9 @@ func (x *CellAreaClass) GetRemove() func(*CellArea, *CellRenderer) {
 }
 
 // OverrideForeach sets the callback function.
+// calls the `GtkCellCallback` function on every `GtkCellRenderer` in
+//
+//	the area with the provided user data until the callback returns %TRUE.
 func (x *CellAreaClass) OverrideForeach(cb func(*CellArea, *CellCallback, uintptr)) {
 	if cb == nil {
 		x.xForeach = 0
@@ -165,6 +172,9 @@ func (x *CellAreaClass) OverrideForeach(cb func(*CellArea, *CellCallback, uintpt
 }
 
 // GetForeach gets the callback function.
+// calls the `GtkCellCallback` function on every `GtkCellRenderer` in
+//
+//	the area with the provided user data until the callback returns %TRUE.
 func (x *CellAreaClass) GetForeach() func(*CellArea, *CellCallback, uintptr) {
 	if x.xForeach == 0 {
 		return nil
@@ -177,6 +187,10 @@ func (x *CellAreaClass) GetForeach() func(*CellArea, *CellCallback, uintptr) {
 }
 
 // OverrideForeachAlloc sets the callback function.
+// Calls the `GtkCellAllocCallback` function on every
+//
+//	`GtkCellRenderer` in the area with the allocated area for the cell
+//	and the provided user data until the callback returns %TRUE.
 func (x *CellAreaClass) OverrideForeachAlloc(cb func(*CellArea, *CellAreaContext, *Widget, *gdk.Rectangle, *gdk.Rectangle, *CellAllocCallback, uintptr)) {
 	if cb == nil {
 		x.xForeachAlloc = 0
@@ -188,6 +202,10 @@ func (x *CellAreaClass) OverrideForeachAlloc(cb func(*CellArea, *CellAreaContext
 }
 
 // GetForeachAlloc gets the callback function.
+// Calls the `GtkCellAllocCallback` function on every
+//
+//	`GtkCellRenderer` in the area with the allocated area for the cell
+//	and the provided user data until the callback returns %TRUE.
 func (x *CellAreaClass) GetForeachAlloc() func(*CellArea, *CellAreaContext, *Widget, *gdk.Rectangle, *gdk.Rectangle, *CellAllocCallback, uintptr) {
 	if x.xForeachAlloc == 0 {
 		return nil
@@ -200,6 +218,10 @@ func (x *CellAreaClass) GetForeachAlloc() func(*CellArea, *CellAreaContext, *Wid
 }
 
 // OverrideEvent sets the callback function.
+// Handle an event in the area, this is generally used to activate
+//
+//	a cell at the event location for button events but can also be used
+//	to generically pass events to `GtkWidget`s drawn onto the area.
 func (x *CellAreaClass) OverrideEvent(cb func(*CellArea, *CellAreaContext, *Widget, *gdk.Event, *gdk.Rectangle, CellRendererState) int) {
 	if cb == nil {
 		x.xEvent = 0
@@ -211,6 +233,10 @@ func (x *CellAreaClass) OverrideEvent(cb func(*CellArea, *CellAreaContext, *Widg
 }
 
 // GetEvent gets the callback function.
+// Handle an event in the area, this is generally used to activate
+//
+//	a cell at the event location for button events but can also be used
+//	to generically pass events to `GtkWidget`s drawn onto the area.
 func (x *CellAreaClass) GetEvent() func(*CellArea, *CellAreaContext, *Widget, *gdk.Event, *gdk.Rectangle, CellRendererState) int {
 	if x.xEvent == 0 {
 		return nil
@@ -223,6 +249,10 @@ func (x *CellAreaClass) GetEvent() func(*CellArea, *CellAreaContext, *Widget, *g
 }
 
 // OverrideSnapshot sets the callback function.
+// Actually snapshot the area’s cells to the specified rectangle,
+//
+//	@background_area should be correctly distributed to the cells
+//	corresponding background areas.
 func (x *CellAreaClass) OverrideSnapshot(cb func(*CellArea, *CellAreaContext, *Widget, *Snapshot, *gdk.Rectangle, *gdk.Rectangle, CellRendererState, bool)) {
 	if cb == nil {
 		x.xSnapshot = 0
@@ -234,6 +264,10 @@ func (x *CellAreaClass) OverrideSnapshot(cb func(*CellArea, *CellAreaContext, *W
 }
 
 // GetSnapshot gets the callback function.
+// Actually snapshot the area’s cells to the specified rectangle,
+//
+//	@background_area should be correctly distributed to the cells
+//	corresponding background areas.
 func (x *CellAreaClass) GetSnapshot() func(*CellArea, *CellAreaContext, *Widget, *Snapshot, *gdk.Rectangle, *gdk.Rectangle, CellRendererState, bool) {
 	if x.xSnapshot == 0 {
 		return nil
@@ -246,6 +280,10 @@ func (x *CellAreaClass) GetSnapshot() func(*CellArea, *CellAreaContext, *Widget,
 }
 
 // OverrideApplyAttributes sets the callback function.
+// Apply the cell attributes to the cells. This is
+//
+//	implemented as a signal and generally `GtkCellArea` subclasses don't
+//	need to implement it since it is handled by the base class.
 func (x *CellAreaClass) OverrideApplyAttributes(cb func(*CellArea, TreeModel, *TreeIter, bool, bool)) {
 	if cb == nil {
 		x.xApplyAttributes = 0
@@ -257,6 +295,10 @@ func (x *CellAreaClass) OverrideApplyAttributes(cb func(*CellArea, TreeModel, *T
 }
 
 // GetApplyAttributes gets the callback function.
+// Apply the cell attributes to the cells. This is
+//
+//	implemented as a signal and generally `GtkCellArea` subclasses don't
+//	need to implement it since it is handled by the base class.
 func (x *CellAreaClass) GetApplyAttributes() func(*CellArea, TreeModel, *TreeIter, bool, bool) {
 	if x.xApplyAttributes == 0 {
 		return nil
@@ -269,6 +311,10 @@ func (x *CellAreaClass) GetApplyAttributes() func(*CellArea, TreeModel, *TreeIte
 }
 
 // OverrideCreateContext sets the callback function.
+// Creates and returns a class specific `GtkCellAreaContext`
+//
+//	to store cell alignment and allocation details for a said `GtkCellArea`
+//	class.
 func (x *CellAreaClass) OverrideCreateContext(cb func(*CellArea) *CellAreaContext) {
 	if cb == nil {
 		x.xCreateContext = 0
@@ -284,6 +330,10 @@ func (x *CellAreaClass) OverrideCreateContext(cb func(*CellArea) *CellAreaContex
 }
 
 // GetCreateContext gets the callback function.
+// Creates and returns a class specific `GtkCellAreaContext`
+//
+//	to store cell alignment and allocation details for a said `GtkCellArea`
+//	class.
 func (x *CellAreaClass) GetCreateContext() func(*CellArea) *CellAreaContext {
 	if x.xCreateContext == 0 {
 		return nil
@@ -302,6 +352,9 @@ func (x *CellAreaClass) GetCreateContext() func(*CellArea) *CellAreaContext {
 }
 
 // OverrideCopyContext sets the callback function.
+// Creates a new `GtkCellAreaContext` in the same state as
+//
+//	the passed @context with any cell alignment data and allocations intact.
 func (x *CellAreaClass) OverrideCopyContext(cb func(*CellArea, *CellAreaContext) *CellAreaContext) {
 	if cb == nil {
 		x.xCopyContext = 0
@@ -317,6 +370,9 @@ func (x *CellAreaClass) OverrideCopyContext(cb func(*CellArea, *CellAreaContext)
 }
 
 // GetCopyContext gets the callback function.
+// Creates a new `GtkCellAreaContext` in the same state as
+//
+//	the passed @context with any cell alignment data and allocations intact.
 func (x *CellAreaClass) GetCopyContext() func(*CellArea, *CellAreaContext) *CellAreaContext {
 	if x.xCopyContext == 0 {
 		return nil
@@ -335,6 +391,10 @@ func (x *CellAreaClass) GetCopyContext() func(*CellArea, *CellAreaContext) *Cell
 }
 
 // OverrideGetRequestMode sets the callback function.
+// This allows an area to tell its layouting widget whether
+//
+//	it prefers to be allocated in %GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH or
+//	%GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT mode.
 func (x *CellAreaClass) OverrideGetRequestMode(cb func(*CellArea) SizeRequestMode) {
 	if cb == nil {
 		x.xGetRequestMode = 0
@@ -346,6 +406,10 @@ func (x *CellAreaClass) OverrideGetRequestMode(cb func(*CellArea) SizeRequestMod
 }
 
 // GetGetRequestMode gets the callback function.
+// This allows an area to tell its layouting widget whether
+//
+//	it prefers to be allocated in %GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH or
+//	%GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT mode.
 func (x *CellAreaClass) GetGetRequestMode() func(*CellArea) SizeRequestMode {
 	if x.xGetRequestMode == 0 {
 		return nil
@@ -358,6 +422,13 @@ func (x *CellAreaClass) GetGetRequestMode() func(*CellArea) SizeRequestMode {
 }
 
 // OverrideGetPreferredWidth sets the callback function.
+// Calculates the minimum and natural width of the
+//
+//	areas cells with the current attributes applied while considering
+//	the particular layouting details of the said `GtkCellArea`. While
+//	requests are performed over a series of rows, alignments and overall
+//	minimum and natural sizes should be stored in the corresponding
+//	`GtkCellAreaContext`.
 func (x *CellAreaClass) OverrideGetPreferredWidth(cb func(*CellArea, *CellAreaContext, *Widget, int, int)) {
 	if cb == nil {
 		x.xGetPreferredWidth = 0
@@ -369,6 +440,13 @@ func (x *CellAreaClass) OverrideGetPreferredWidth(cb func(*CellArea, *CellAreaCo
 }
 
 // GetGetPreferredWidth gets the callback function.
+// Calculates the minimum and natural width of the
+//
+//	areas cells with the current attributes applied while considering
+//	the particular layouting details of the said `GtkCellArea`. While
+//	requests are performed over a series of rows, alignments and overall
+//	minimum and natural sizes should be stored in the corresponding
+//	`GtkCellAreaContext`.
 func (x *CellAreaClass) GetGetPreferredWidth() func(*CellArea, *CellAreaContext, *Widget, int, int) {
 	if x.xGetPreferredWidth == 0 {
 		return nil
@@ -381,6 +459,15 @@ func (x *CellAreaClass) GetGetPreferredWidth() func(*CellArea, *CellAreaContext,
 }
 
 // OverrideGetPreferredHeightForWidth sets the callback function.
+// Calculates the minimum and natural height
+//
+//	for the area if the passed @context would be allocated the given width.
+//	When implementing this virtual method it is safe to assume that @context
+//	has already stored the aligned cell widths for every `GtkTreeModel` row
+//	that @context will be allocated for since this information was stored
+//	at `GtkCellAreaClass.get_preferred_width()` time. This virtual method
+//	should also store any necessary alignments of cell heights for the
+//	case that the context is allocated a height.
 func (x *CellAreaClass) OverrideGetPreferredHeightForWidth(cb func(*CellArea, *CellAreaContext, *Widget, int, int, int)) {
 	if cb == nil {
 		x.xGetPreferredHeightForWidth = 0
@@ -392,6 +479,15 @@ func (x *CellAreaClass) OverrideGetPreferredHeightForWidth(cb func(*CellArea, *C
 }
 
 // GetGetPreferredHeightForWidth gets the callback function.
+// Calculates the minimum and natural height
+//
+//	for the area if the passed @context would be allocated the given width.
+//	When implementing this virtual method it is safe to assume that @context
+//	has already stored the aligned cell widths for every `GtkTreeModel` row
+//	that @context will be allocated for since this information was stored
+//	at `GtkCellAreaClass.get_preferred_width()` time. This virtual method
+//	should also store any necessary alignments of cell heights for the
+//	case that the context is allocated a height.
 func (x *CellAreaClass) GetGetPreferredHeightForWidth() func(*CellArea, *CellAreaContext, *Widget, int, int, int) {
 	if x.xGetPreferredHeightForWidth == 0 {
 		return nil
@@ -404,6 +500,11 @@ func (x *CellAreaClass) GetGetPreferredHeightForWidth() func(*CellArea, *CellAre
 }
 
 // OverrideGetPreferredHeight sets the callback function.
+// Calculates the minimum and natural height of the
+//
+//	areas cells with the current attributes applied. Essentially this is
+//	the same as `GtkCellAreaClass.get_preferred_width()` only for areas
+//	that are being requested as %GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT.
 func (x *CellAreaClass) OverrideGetPreferredHeight(cb func(*CellArea, *CellAreaContext, *Widget, int, int)) {
 	if cb == nil {
 		x.xGetPreferredHeight = 0
@@ -415,6 +516,11 @@ func (x *CellAreaClass) OverrideGetPreferredHeight(cb func(*CellArea, *CellAreaC
 }
 
 // GetGetPreferredHeight gets the callback function.
+// Calculates the minimum and natural height of the
+//
+//	areas cells with the current attributes applied. Essentially this is
+//	the same as `GtkCellAreaClass.get_preferred_width()` only for areas
+//	that are being requested as %GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT.
 func (x *CellAreaClass) GetGetPreferredHeight() func(*CellArea, *CellAreaContext, *Widget, int, int) {
 	if x.xGetPreferredHeight == 0 {
 		return nil
@@ -427,6 +533,12 @@ func (x *CellAreaClass) GetGetPreferredHeight() func(*CellArea, *CellAreaContext
 }
 
 // OverrideGetPreferredWidthForHeight sets the callback function.
+// Calculates the minimum and natural width
+//
+//	for the area if the passed @context would be allocated the given
+//	height. The same as `GtkCellAreaClass.get_preferred_height_for_width()`
+//	only for handling requests in the %GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT
+//	mode.
 func (x *CellAreaClass) OverrideGetPreferredWidthForHeight(cb func(*CellArea, *CellAreaContext, *Widget, int, int, int)) {
 	if cb == nil {
 		x.xGetPreferredWidthForHeight = 0
@@ -438,6 +550,12 @@ func (x *CellAreaClass) OverrideGetPreferredWidthForHeight(cb func(*CellArea, *C
 }
 
 // GetGetPreferredWidthForHeight gets the callback function.
+// Calculates the minimum and natural width
+//
+//	for the area if the passed @context would be allocated the given
+//	height. The same as `GtkCellAreaClass.get_preferred_height_for_width()`
+//	only for handling requests in the %GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT
+//	mode.
 func (x *CellAreaClass) GetGetPreferredWidthForHeight() func(*CellArea, *CellAreaContext, *Widget, int, int, int) {
 	if x.xGetPreferredWidthForHeight == 0 {
 		return nil
@@ -450,6 +568,10 @@ func (x *CellAreaClass) GetGetPreferredWidthForHeight() func(*CellArea, *CellAre
 }
 
 // OverrideSetCellProperty sets the callback function.
+// This should be implemented to handle changes in child
+//
+//	cell properties for a given `GtkCellRenderer` that were previously
+//	installed on the `GtkCellAreaClass` with gtk_cell_area_class_install_cell_property().
 func (x *CellAreaClass) OverrideSetCellProperty(cb func(*CellArea, *CellRenderer, uint, *gobject.Value, *gobject.ParamSpec)) {
 	if cb == nil {
 		x.xSetCellProperty = 0
@@ -461,6 +583,10 @@ func (x *CellAreaClass) OverrideSetCellProperty(cb func(*CellArea, *CellRenderer
 }
 
 // GetSetCellProperty gets the callback function.
+// This should be implemented to handle changes in child
+//
+//	cell properties for a given `GtkCellRenderer` that were previously
+//	installed on the `GtkCellAreaClass` with gtk_cell_area_class_install_cell_property().
 func (x *CellAreaClass) GetSetCellProperty() func(*CellArea, *CellRenderer, uint, *gobject.Value, *gobject.ParamSpec) {
 	if x.xSetCellProperty == 0 {
 		return nil
@@ -473,6 +599,9 @@ func (x *CellAreaClass) GetSetCellProperty() func(*CellArea, *CellRenderer, uint
 }
 
 // OverrideGetCellProperty sets the callback function.
+// This should be implemented to report the values of
+//
+//	child cell properties for a given child `GtkCellRenderer`.
 func (x *CellAreaClass) OverrideGetCellProperty(cb func(*CellArea, *CellRenderer, uint, *gobject.Value, *gobject.ParamSpec)) {
 	if cb == nil {
 		x.xGetCellProperty = 0
@@ -484,6 +613,9 @@ func (x *CellAreaClass) OverrideGetCellProperty(cb func(*CellArea, *CellRenderer
 }
 
 // GetGetCellProperty gets the callback function.
+// This should be implemented to report the values of
+//
+//	child cell properties for a given child `GtkCellRenderer`.
 func (x *CellAreaClass) GetGetCellProperty() func(*CellArea, *CellRenderer, uint, *gobject.Value, *gobject.ParamSpec) {
 	if x.xGetCellProperty == 0 {
 		return nil
@@ -496,6 +628,15 @@ func (x *CellAreaClass) GetGetCellProperty() func(*CellArea, *CellRenderer, uint
 }
 
 // OverrideFocus sets the callback function.
+// This virtual method should be implemented to navigate focus from
+//
+//	cell to cell inside the `GtkCellArea`. The `GtkCellArea` should move
+//	focus from cell to cell inside the area and return %FALSE if focus
+//	logically leaves the area with the following exceptions: When the
+//	area contains no activatable cells, the entire area receives focus.
+//	Focus should not be given to cells that are actually “focus siblings”
+//	of other sibling cells (see gtk_cell_area_get_focus_from_sibling()).
+//	Focus is set by calling gtk_cell_area_set_focus_cell().
 func (x *CellAreaClass) OverrideFocus(cb func(*CellArea, DirectionType) bool) {
 	if cb == nil {
 		x.xFocus = 0
@@ -507,6 +648,15 @@ func (x *CellAreaClass) OverrideFocus(cb func(*CellArea, DirectionType) bool) {
 }
 
 // GetFocus gets the callback function.
+// This virtual method should be implemented to navigate focus from
+//
+//	cell to cell inside the `GtkCellArea`. The `GtkCellArea` should move
+//	focus from cell to cell inside the area and return %FALSE if focus
+//	logically leaves the area with the following exceptions: When the
+//	area contains no activatable cells, the entire area receives focus.
+//	Focus should not be given to cells that are actually “focus siblings”
+//	of other sibling cells (see gtk_cell_area_get_focus_from_sibling()).
+//	Focus is set by calling gtk_cell_area_set_focus_cell().
 func (x *CellAreaClass) GetFocus() func(*CellArea, DirectionType) bool {
 	if x.xFocus == 0 {
 		return nil
@@ -519,6 +669,12 @@ func (x *CellAreaClass) GetFocus() func(*CellArea, DirectionType) bool {
 }
 
 // OverrideIsActivatable sets the callback function.
+// Returns whether the `GtkCellArea` can respond to
+//
+//	`GtkCellAreaClass.activate()`, usually this does not need to be
+//	implemented since the base class takes care of this however it can
+//	be enhanced if the `GtkCellArea` subclass can handle activation in
+//	other ways than activating its `GtkCellRenderers`.
 func (x *CellAreaClass) OverrideIsActivatable(cb func(*CellArea) bool) {
 	if cb == nil {
 		x.xIsActivatable = 0
@@ -530,6 +686,12 @@ func (x *CellAreaClass) OverrideIsActivatable(cb func(*CellArea) bool) {
 }
 
 // GetIsActivatable gets the callback function.
+// Returns whether the `GtkCellArea` can respond to
+//
+//	`GtkCellAreaClass.activate()`, usually this does not need to be
+//	implemented since the base class takes care of this however it can
+//	be enhanced if the `GtkCellArea` subclass can handle activation in
+//	other ways than activating its `GtkCellRenderers`.
 func (x *CellAreaClass) GetIsActivatable() func(*CellArea) bool {
 	if x.xIsActivatable == 0 {
 		return nil
@@ -542,6 +704,9 @@ func (x *CellAreaClass) GetIsActivatable() func(*CellArea) bool {
 }
 
 // OverrideActivate sets the callback function.
+// This is called when the layouting widget rendering the
+//
+//	`GtkCellArea` activates the focus cell (see gtk_cell_area_get_focus_cell()).
 func (x *CellAreaClass) OverrideActivate(cb func(*CellArea, *CellAreaContext, *Widget, *gdk.Rectangle, CellRendererState, bool) bool) {
 	if cb == nil {
 		x.xActivate = 0
@@ -553,6 +718,9 @@ func (x *CellAreaClass) OverrideActivate(cb func(*CellArea, *CellAreaContext, *W
 }
 
 // GetActivate gets the callback function.
+// This is called when the layouting widget rendering the
+//
+//	`GtkCellArea` activates the focus cell (see gtk_cell_area_get_focus_cell()).
 func (x *CellAreaClass) GetActivate() func(*CellArea, *CellAreaContext, *Widget, *gdk.Rectangle, CellRendererState, bool) bool {
 	if x.xActivate == 0 {
 		return nil
@@ -577,7 +745,7 @@ func (x *CellAreaClass) GetActivate() func(*CellArea, *CellAreaContext, *Widget,
 // Usually users dont have to interact with the `GtkCellArea` directly
 // unless they are implementing a cell-layouting widget themselves.
 //
-// # Requesting area sizes
+// ## Requesting area sizes
 //
 // As outlined in
 // [GtkWidget’s geometry management section](class.Widget.html#height-for-width-geometry-management),
@@ -734,7 +902,7 @@ func (x *CellAreaClass) GetActivate() func(*CellArea, *CellAreaContext, *Widget,
 // values while more and more height is required for the row heights
 // that are calculated in the background.
 //
-// # Rendering Areas
+// ## Rendering Areas
 //
 // Once area sizes have been acquired at least for the rows in the
 // visible area of the layouting widget they can be rendered at
@@ -777,15 +945,15 @@ func (x *CellAreaClass) GetActivate() func(*CellArea, *CellAreaContext, *Widget,
 // would make sense to calculate the allocation for each row at
 // the time the widget is allocated using [func@Gtk.distribute_natural_allocation].
 //
-// # Handling Events and Driving Keyboard Focus
+// ## Handling Events and Driving Keyboard Focus
 //
 // Passing events to the area is as simple as handling events on any
 // normal widget and then passing them to the [method@Gtk.CellArea.event]
 // API as they come in. Usually `GtkCellArea` is only interested in
 // button events, however some customized derived areas can be implemented
 // who are interested in handling other events. Handling an event can
-// trigger the [`signal@Gtk.CellArea::focus-changed`] signal to fire; as well
-// as [`signal@GtkCellArea::add-editable`] in the case that an editable cell
+// trigger the [signal@Gtk.CellArea::focus-changed] signal to fire; as well
+// as [signal@Gtk.CellArea::add-editable] in the case that an editable cell
 // was clicked and needs to start editing. You can call
 // [method@Gtk.CellArea.stop_editing] at any time to cancel any cell editing
 // that is currently in progress.
@@ -869,7 +1037,7 @@ func (x *CellAreaClass) GetActivate() func(*CellArea, *CellAreaContext, *Widget,
 // Note that the layouting widget is responsible for matching the
 // `GtkDirectionType` values to the way it lays out its cells.
 //
-// # Cell Properties
+// ## Cell Properties
 //
 // The `GtkCellArea` introduces cell properties for `GtkCellRenderer`s.
 // This provides some general interfaces for defining the relationship
@@ -1148,7 +1316,7 @@ func (x *CellArea) ForeachAlloc(ContextVar *CellAreaContext, WidgetVar *Widget, 
 var xCellAreaGetCellAllocation func(uintptr, uintptr, uintptr, uintptr, *gdk.Rectangle, *gdk.Rectangle)
 
 // Derives the allocation of @renderer inside @area if @area
-// were to be renderered in @cell_area.
+// were to be rendered in @cell_area.
 func (x *CellArea) GetCellAllocation(ContextVar *CellAreaContext, WidgetVar *Widget, RendererVar *CellRenderer, CellAreaVar *gdk.Rectangle, AllocationVar *gdk.Rectangle) {
 
 	xCellAreaGetCellAllocation(x.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), RendererVar.GoPointer(), CellAreaVar, AllocationVar)
@@ -1570,7 +1738,7 @@ func (x *CellArea) ConnectRemoveEditable(cb *func(CellArea, uintptr, uintptr)) u
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *CellArea) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

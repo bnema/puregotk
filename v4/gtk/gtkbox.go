@@ -23,15 +23,20 @@ func (x *BoxClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// The `GtkBox` widget arranges child widgets into a single row or column.
+// Arranges child widgets into a single row or column.
 //
-// ![An example GtkBox](box.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="box-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkBox" src="box.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // Whether it is a row or column depends on the value of its
 // [property@Gtk.Orientable:orientation] property. Within the other
-// dimension, all children are allocated the same size. Of course, the
-// [property@Gtk.Widget:halign] and [property@Gtk.Widget:valign] properties
-// can be used on the children to influence their allocation.
+// dimension, all children are allocated the same size. The
+// [property@Gtk.Widget:halign] and [property@Gtk.Widget:valign]
+// properties can be used on the children to influence their allocation.
 //
 // Use repeated calls to [method@Gtk.Box.append] to pack widgets into a
 // `GtkBox` from start to end. Use [method@Gtk.Box.remove] to remove widgets
@@ -54,7 +59,9 @@ func (x *BoxClass) GoPointer() uintptr {
 //
 // # Accessibility
 //
-// `GtkBox` uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
+// Until GTK 4.10, `GtkBox` used the [enum@Gtk.AccessibleRole.group] role.
+//
+// Starting from GTK 4.12, `GtkBox` uses the [enum@Gtk.AccessibleRole.generic] role.
 type Box struct {
 	Widget
 }
@@ -73,7 +80,7 @@ func BoxNewFromInternalPtr(ptr uintptr) *Box {
 
 var xNewBox func(Orientation, int) uintptr
 
-// Creates a new `GtkBox`.
+// Creates a new box.
 func NewBox(OrientationVar Orientation, SpacingVar int) *Box {
 	var cls *Box
 
@@ -90,16 +97,25 @@ func NewBox(OrientationVar Orientation, SpacingVar int) *Box {
 
 var xBoxAppend func(uintptr, uintptr)
 
-// Adds @child as the last child to @box.
+// Adds a child at the end.
 func (x *Box) Append(ChildVar *Widget) {
 
 	xBoxAppend(x.GoPointer(), ChildVar.GoPointer())
 
 }
 
+var xBoxGetBaselineChild func(uintptr) int
+
+// Gets the value set by [method@Gtk.Box.set_baseline_child].
+func (x *Box) GetBaselineChild() int {
+
+	cret := xBoxGetBaselineChild(x.GoPointer())
+	return cret
+}
+
 var xBoxGetBaselinePosition func(uintptr) BaselinePosition
 
-// Gets the value set by gtk_box_set_baseline_position().
+// Gets the value set by [method@Gtk.Box.set_baseline_position].
 func (x *Box) GetBaselinePosition() BaselinePosition {
 
 	cret := xBoxGetBaselinePosition(x.GoPointer())
@@ -108,8 +124,9 @@ func (x *Box) GetBaselinePosition() BaselinePosition {
 
 var xBoxGetHomogeneous func(uintptr) bool
 
-// Returns whether the box is homogeneous (all children are the
-// same size).
+// Returns whether the box is homogeneous.
+//
+// In a homogeneous box all children are the same size.
 func (x *Box) GetHomogeneous() bool {
 
 	cret := xBoxGetHomogeneous(x.GoPointer())
@@ -118,7 +135,7 @@ func (x *Box) GetHomogeneous() bool {
 
 var xBoxGetSpacing func(uintptr) int
 
-// Gets the value set by gtk_box_set_spacing().
+// Gets the value set by [method@Gtk.Box.set_spacing].
 func (x *Box) GetSpacing() int {
 
 	cret := xBoxGetSpacing(x.GoPointer())
@@ -127,10 +144,11 @@ func (x *Box) GetSpacing() int {
 
 var xBoxInsertChildAfter func(uintptr, uintptr, uintptr)
 
-// Inserts @child in the position after @sibling in the list
-// of @box children.
+// Inserts a child at a specific position.
 //
-// If @sibling is %NULL, insert @child at the first position.
+// The child is added after @sibling in the list of @box children.
+//
+// If @sibling is `NULL`, the @child is placed at the beginning.
 func (x *Box) InsertChildAfter(ChildVar *Widget, SiblingVar *Widget) {
 
 	xBoxInsertChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
@@ -139,7 +157,7 @@ func (x *Box) InsertChildAfter(ChildVar *Widget, SiblingVar *Widget) {
 
 var xBoxPrepend func(uintptr, uintptr)
 
-// Adds @child as the first child to @box.
+// Adds a child at the beginning.
 func (x *Box) Prepend(ChildVar *Widget) {
 
 	xBoxPrepend(x.GoPointer(), ChildVar.GoPointer())
@@ -148,7 +166,7 @@ func (x *Box) Prepend(ChildVar *Widget) {
 
 var xBoxRemove func(uintptr, uintptr)
 
-// Removes a child widget from @box.
+// Removes a child widget from the box.
 //
 // The child must have been added before with
 // [method@Gtk.Box.append], [method@Gtk.Box.prepend], or
@@ -161,13 +179,26 @@ func (x *Box) Remove(ChildVar *Widget) {
 
 var xBoxReorderChildAfter func(uintptr, uintptr, uintptr)
 
-// Moves @child to the position after @sibling in the list
+// Moves a child to a different position.
+//
+// The child is moved to the position after @sibling in the list
 // of @box children.
 //
-// If @sibling is %NULL, move @child to the first position.
+// If @sibling is `NULL`, the child is placed at the beginning.
 func (x *Box) ReorderChildAfter(ChildVar *Widget, SiblingVar *Widget) {
 
 	xBoxReorderChildAfter(x.GoPointer(), ChildVar.GoPointer(), SiblingVar.GoPointer())
+
+}
+
+var xBoxSetBaselineChild func(uintptr, int)
+
+// Sets the baseline child of a box.
+//
+// This affects only vertical boxes.
+func (x *Box) SetBaselineChild(ChildVar int) {
+
+	xBoxSetBaselineChild(x.GoPointer(), ChildVar)
 
 }
 
@@ -188,7 +219,7 @@ func (x *Box) SetBaselinePosition(PositionVar BaselinePosition) {
 
 var xBoxSetHomogeneous func(uintptr, bool)
 
-// Sets whether or not all children of @box are given equal space
+// Sets whether or not all children are given equal space
 // in the box.
 func (x *Box) SetHomogeneous(HomogeneousVar bool) {
 
@@ -198,7 +229,7 @@ func (x *Box) SetHomogeneous(HomogeneousVar bool) {
 
 var xBoxSetSpacing func(uintptr, int)
 
-// Sets the number of pixels to place between children of @box.
+// Sets the number of pixels to place between children.
 func (x *Box) SetSpacing(SpacingVar int) {
 
 	xBoxSetSpacing(x.GoPointer(), SpacingVar)
@@ -216,31 +247,162 @@ func (c *Box) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *Box) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *Box) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *Box) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *Box) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *Box) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *Box) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *Box) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *Box) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *Box) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *Box) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *Box) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *Box) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *Box) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *Box) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -286,7 +448,7 @@ func (x *Box) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessible
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -316,13 +478,17 @@ func (x *Box) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleRe
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -352,7 +518,7 @@ func (x *Box) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Valu
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Box) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -386,6 +552,7 @@ func init() {
 	core.PuregoSafeRegister(&xNewBox, lib, "gtk_box_new")
 
 	core.PuregoSafeRegister(&xBoxAppend, lib, "gtk_box_append")
+	core.PuregoSafeRegister(&xBoxGetBaselineChild, lib, "gtk_box_get_baseline_child")
 	core.PuregoSafeRegister(&xBoxGetBaselinePosition, lib, "gtk_box_get_baseline_position")
 	core.PuregoSafeRegister(&xBoxGetHomogeneous, lib, "gtk_box_get_homogeneous")
 	core.PuregoSafeRegister(&xBoxGetSpacing, lib, "gtk_box_get_spacing")
@@ -393,6 +560,7 @@ func init() {
 	core.PuregoSafeRegister(&xBoxPrepend, lib, "gtk_box_prepend")
 	core.PuregoSafeRegister(&xBoxRemove, lib, "gtk_box_remove")
 	core.PuregoSafeRegister(&xBoxReorderChildAfter, lib, "gtk_box_reorder_child_after")
+	core.PuregoSafeRegister(&xBoxSetBaselineChild, lib, "gtk_box_set_baseline_child")
 	core.PuregoSafeRegister(&xBoxSetBaselinePosition, lib, "gtk_box_set_baseline_position")
 	core.PuregoSafeRegister(&xBoxSetHomogeneous, lib, "gtk_box_set_homogeneous")
 	core.PuregoSafeRegister(&xBoxSetSpacing, lib, "gtk_box_set_spacing")

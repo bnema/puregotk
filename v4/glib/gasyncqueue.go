@@ -95,7 +95,9 @@ func (x *AsyncQueue) PopUnlocked() uintptr {
 
 var xAsyncQueuePush func(uintptr, uintptr)
 
-// Pushes the @data into the @queue. @data must not be %NULL.
+// Pushes the @data into the @queue.
+//
+// The @data parameter must not be %NULL.
 func (x *AsyncQueue) Push(DataVar uintptr) {
 
 	xAsyncQueuePush(x.GoPointer(), DataVar)
@@ -171,7 +173,9 @@ func (x *AsyncQueue) PushSortedUnlocked(DataVar uintptr, FuncVar *CompareDataFun
 
 var xAsyncQueuePushUnlocked func(uintptr, uintptr)
 
-// Pushes the @data into the @queue. @data must not be %NULL.
+// Pushes the @data into the @queue.
+//
+// The @data parameter must not be %NULL.
 //
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) PushUnlocked(DataVar uintptr) {
@@ -387,13 +391,36 @@ func (x *AsyncQueue) UnrefAndUnlock() {
 
 }
 
+var xAsyncQueueNew func() *AsyncQueue
+
+// Creates a new asynchronous queue.
+func AsyncQueueNew() *AsyncQueue {
+
+	cret := xAsyncQueueNew()
+	return cret
+}
+
+var xAsyncQueueNewFull func(uintptr) *AsyncQueue
+
+// Creates a new asynchronous queue and sets up a destroy notify
+// function that is used to free any remaining queue items when
+// the queue is destroyed after the final unref.
+func AsyncQueueNewFull(ItemFreeFuncVar *DestroyNotify) *AsyncQueue {
+
+	cret := xAsyncQueueNewFull(NewCallbackNullable(ItemFreeFuncVar))
+	return cret
+}
+
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
+
+	core.PuregoSafeRegister(&xAsyncQueueNew, lib, "g_async_queue_new")
+	core.PuregoSafeRegister(&xAsyncQueueNewFull, lib, "g_async_queue_new_full")
 
 	core.PuregoSafeRegister(&xAsyncQueueLength, lib, "g_async_queue_length")
 	core.PuregoSafeRegister(&xAsyncQueueLengthUnlocked, lib, "g_async_queue_length_unlocked")

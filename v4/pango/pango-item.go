@@ -111,6 +111,20 @@ func (x *Item) Free() {
 
 }
 
+var xItemGetCharOffset func(uintptr) int
+
+// Returns the character offset of the item from the beginning
+// of the itemized text.
+//
+// If the item has not been obtained from Pango's itemization
+// machinery, then the character offset is not available. In
+// that case, this function returns -1.
+func (x *Item) GetCharOffset() int {
+
+	cret := xItemGetCharOffset(x.GoPointer())
+	return cret
+}
+
 var xItemSplit func(uintptr, int, int) *Item
 
 // Modifies @orig to cover only the text after @split_index, and
@@ -211,6 +225,7 @@ func init() {
 	core.PuregoSafeRegister(&xItemApplyAttrs, lib, "pango_item_apply_attrs")
 	core.PuregoSafeRegister(&xItemCopy, lib, "pango_item_copy")
 	core.PuregoSafeRegister(&xItemFree, lib, "pango_item_free")
+	core.PuregoSafeRegister(&xItemGetCharOffset, lib, "pango_item_get_char_offset")
 	core.PuregoSafeRegister(&xItemSplit, lib, "pango_item_split")
 
 }

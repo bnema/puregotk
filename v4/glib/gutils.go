@@ -44,8 +44,16 @@ const (
 	//     Network and storage sizes should be reported in the normal SI units.
 	GFormatSizeIecUnitsValue FormatSizeFlags = 2
 	// set the size as a quantity in bits, rather than
-	//     bytes, and return units in bits. For example, ‘Mb’ rather than ‘MB’.
+	//     bytes, and return units in bits. For example, ‘Mbit’ rather than ‘MB’.
 	GFormatSizeBitsValue FormatSizeFlags = 4
+	// return only value, without unit; this should
+	//     not be used together with @G_FORMAT_SIZE_LONG_FORMAT
+	//     nor @G_FORMAT_SIZE_ONLY_UNIT. Since: 2.74
+	GFormatSizeOnlyValueValue FormatSizeFlags = 8
+	// return only unit, without value; this should
+	//     not be used together with @G_FORMAT_SIZE_LONG_FORMAT
+	//     nor @G_FORMAT_SIZE_ONLY_VALUE. Since: 2.74
+	GFormatSizeOnlyUnitValue FormatSizeFlags = 16
 )
 
 // These are logical ids for special directories which are defined
@@ -314,7 +322,7 @@ var xGetPrgname func() string
 // in contrast to g_get_application_name().
 //
 // If you are using #GApplication the program name is set in
-// g_application_run(). In case of GDK or GTK+ it is set in
+// g_application_run(). In case of GDK or GTK it is set in
 // gdk_init(), which is called by gtk_init() and the
 // #GtkApplication::startup handler. The program name is found by
 // taking the last component of @argv[0].
@@ -592,7 +600,7 @@ var xParseDebugString func(string, []DebugKey, uint) uint
 
 // Parses a string containing debugging options
 // into a %guint containing bit flags. This is used
-// within GDK and GTK+ to parse the debug options passed on the
+// within GDK and GTK to parse the debug options passed on the
 // command line or through environment variables.
 //
 // If @string is equal to "all", all flags are set. Any flags
@@ -649,14 +657,17 @@ var xSetPrgname func(string)
 // in contrast to g_set_application_name().
 //
 // If you are using #GApplication the program name is set in
-// g_application_run(). In case of GDK or GTK+ it is set in
+// g_application_run(). In case of GDK or GTK it is set in
 // gdk_init(), which is called by gtk_init() and the
-// #GtkApplication::startup handler. The program name is found by
-// taking the last component of @argv[0].
+// #GtkApplication::startup handler. By default, the program name is
+// found by taking the last component of @argv[0].
 //
 // Since GLib 2.72, this function can be called multiple times
 // and is fully thread safe. Prior to GLib 2.72, this function
 // could only be called once per process.
+//
+// See the [GTK documentation](https://docs.gtk.org/gtk4/migrating-3to4.html#set-a-proper-application-id)
+// for requirements on integrating g_set_prgname() with GTK applications.
 func SetPrgname(PrgnameVar string) {
 
 	xSetPrgname(PrgnameVar)
@@ -669,7 +680,7 @@ var xSnprintf func(string, uint32, string, ...interface{}) int
 // to not exceed @n characters (including the terminating nul character), so
 // it is easy to ensure that a buffer overflow cannot occur.
 //
-// See also g_strdup_printf().
+// See also [func@GLib.strdup_printf].
 //
 // In versions of GLib prior to 1.2.3, this function may return -1 if the
 // output was truncated, and the truncated string may not be nul-terminated.
@@ -678,7 +689,7 @@ var xSnprintf func(string, uint32, string, ...interface{}) int
 //
 // The return value of g_snprintf() conforms to the snprintf()
 // function as standardized in ISO C99. Note that this is different from
-// traditional snprintf(), which returns the length of the output string.
+// traditional `snprintf()`, which returns the length of the output string.
 //
 // The format string may contain positional parameters, as specified in
 // the Single Unix Specification.
@@ -690,20 +701,20 @@ func Snprintf(StringVar string, NVar uint32, FormatVar string, varArgs ...interf
 
 var xVsnprintf func(string, uint32, string, []interface{}) int
 
-// A safer form of the standard vsprintf() function. The output is guaranteed
+// A safer form of the standard `vsprintf()` function. The output is guaranteed
 // to not exceed @n characters (including the terminating nul character), so
 // it is easy to ensure that a buffer overflow cannot occur.
 //
-// See also g_strdup_vprintf().
+// See also [func@GLib.strdup_vprintf].
 //
 // In versions of GLib prior to 1.2.3, this function may return -1 if the
 // output was truncated, and the truncated string may not be nul-terminated.
 // In versions prior to 1.3.12, this function returns the length of the output
 // string.
 //
-// The return value of g_vsnprintf() conforms to the vsnprintf() function
+// The return value of `g_vsnprintf()` conforms to the `vsnprintf()` function
 // as standardized in ISO C99. Note that this is different from traditional
-// vsnprintf(), which returns the length of the output string.
+// `vsnprintf()`, which returns the length of the output string.
 //
 // The format string may contain positional parameters, as specified in
 // the Single Unix Specification.
@@ -715,7 +726,7 @@ func Vsnprintf(StringVar string, NVar uint32, FormatVar string, ArgsVar []interf
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

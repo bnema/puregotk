@@ -43,6 +43,7 @@ func (x *ContentProviderClass) GoPointer() uintptr {
 }
 
 // OverrideContentChanged sets the callback function.
+// Signal class closure for `GdkContentProvider::content-changed`
 func (x *ContentProviderClass) OverrideContentChanged(cb func(*ContentProvider)) {
 	if cb == nil {
 		x.xContentChanged = 0
@@ -54,6 +55,7 @@ func (x *ContentProviderClass) OverrideContentChanged(cb func(*ContentProvider))
 }
 
 // GetContentChanged gets the callback function.
+// Signal class closure for `GdkContentProvider::content-changed`
 func (x *ContentProviderClass) GetContentChanged() func(*ContentProvider) {
 	if x.xContentChanged == 0 {
 		return nil
@@ -226,8 +228,8 @@ func (x *ContentProviderClass) GetGetValue() func(*ContentProvider, *gobject.Val
 	}
 }
 
-// A `GdkContentProvider` is used to provide content for the clipboard or
-// for drag-and-drop operations in a number of formats.
+// Provides content for the clipboard or for drag-and-drop operations
+// in a number of formats.
 //
 // To create a `GdkContentProvider`, use [ctor@Gdk.ContentProvider.new_for_value]
 // or [ctor@Gdk.ContentProvider.new_for_bytes].
@@ -319,7 +321,7 @@ var xNewContentProviderUnion func(uintptr, uint) uintptr
 //
 //	gdk_content_provider_new_union ((GdkContentProvider *[2]) {
 //	                                  gdk_content_provider_new_typed (G_TYPE_FILE, file),
-//	                                  gdk_content_provider_new_typed (G_TYPE_TEXTURE, texture)
+//	                                  gdk_content_provider_new_typed (GDK_TYPE_TEXTURE, texture)
 //	                                }, 2);
 //
 // ```
@@ -392,10 +394,6 @@ var xContentProviderWriteMimeTypeAsync func(uintptr, string, uintptr, int, uintp
 
 // Asynchronously writes the contents of @provider to @stream in the given
 // @mime_type.
-//
-// When the operation is finished @callback will be called. You must then call
-// [method@Gdk.ContentProvider.write_mime_type_finish] to get the result
-// of the operation.
 //
 // The given mime type does not need to be listed in the formats returned by
 // [method@Gdk.ContentProvider.ref_formats]. However, if the given `GType` is

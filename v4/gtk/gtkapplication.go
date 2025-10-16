@@ -30,6 +30,9 @@ func (x *ApplicationClass) GoPointer() uintptr {
 }
 
 // OverrideWindowAdded sets the callback function.
+// Signal emitted when a `GtkWindow` is added to
+//
+//	application through gtk_application_add_window().
 func (x *ApplicationClass) OverrideWindowAdded(cb func(*Application, *Window)) {
 	if cb == nil {
 		x.xWindowAdded = 0
@@ -41,6 +44,9 @@ func (x *ApplicationClass) OverrideWindowAdded(cb func(*Application, *Window)) {
 }
 
 // GetWindowAdded gets the callback function.
+// Signal emitted when a `GtkWindow` is added to
+//
+//	application through gtk_application_add_window().
 func (x *ApplicationClass) GetWindowAdded() func(*Application, *Window) {
 	if x.xWindowAdded == 0 {
 		return nil
@@ -53,6 +59,10 @@ func (x *ApplicationClass) GetWindowAdded() func(*Application, *Window) {
 }
 
 // OverrideWindowRemoved sets the callback function.
+// Signal emitted when a `GtkWindow` is removed from
+//
+//	application, either as a side-effect of being destroyed or
+//	explicitly through gtk_application_remove_window().
 func (x *ApplicationClass) OverrideWindowRemoved(cb func(*Application, *Window)) {
 	if cb == nil {
 		x.xWindowRemoved = 0
@@ -64,6 +74,10 @@ func (x *ApplicationClass) OverrideWindowRemoved(cb func(*Application, *Window))
 }
 
 // GetWindowRemoved gets the callback function.
+// Signal emitted when a `GtkWindow` is removed from
+//
+//	application, either as a side-effect of being destroyed or
+//	explicitly through gtk_application_remove_window().
 func (x *ApplicationClass) GetWindowRemoved() func(*Application, *Window) {
 	if x.xWindowRemoved == 0 {
 		return nil
@@ -101,19 +115,18 @@ const (
 	ApplicationInhibitIdleValue ApplicationInhibitFlags = 8
 )
 
-// `GtkApplication` is a high-level API for writing applications.
+// A high-level API for writing applications.
 //
-// It supports many aspects of writing a GTK application in a convenient
-// fashion, without enforcing a one-size-fits-all model.
+// `GtkApplication` supports many aspects of writing a GTK application
+// in a convenient fashion, without enforcing a one-size-fits-all model.
 //
-// Currently, `GtkApplication` handles GTK initialization, application
-// uniqueness, session management, provides some basic scriptability and
-// desktop shell integration by exporting actions and menus and manages a
-// list of toplevel windows whose life-cycle is automatically tied to the
-// life-cycle of your application.
+// Currently, it handles GTK initialization, application uniqueness, session
+// management, provides some basic scriptability and desktop shell integration
+// by exporting actions and menus and manages a list of toplevel windows whose
+// life-cycle is automatically tied to the life-cycle of your application.
 //
-// While `GtkApplication` works fine with plain [class@Gtk.Window]s, it is
-// recommended to use it together with [class@Gtk.ApplicationWindow].
+// While `GtkApplication` works fine with plain [class@Gtk.Window]s,
+// it is recommended to use it together with [class@Gtk.ApplicationWindow].
 //
 // ## Automatic resources
 //
@@ -124,6 +137,10 @@ const (
 // menubar. Additional menus (most interesting submenus) can be named
 // and accessed via [method@Gtk.Application.get_menu_by_id] which allows for
 // dynamic population of a part of the menu structure.
+//
+// Note that automatic resource loading uses the resource base path
+// that is set at construction time and will not work if the resource
+// base path is changed at a later time.
 //
 // It is also possible to provide the menubar manually using
 // [method@Gtk.Application.set_menubar].
@@ -141,6 +158,10 @@ const (
 // &lt;kbd&gt;Control&lt;/kbd&gt;+&lt;kbd&gt;?&lt;/kbd&gt; to open it. To create a menu item that
 // displays the shortcuts window, associate the item with the action
 // `win.show-help-overlay`.
+//
+// `GtkApplication` will also automatically set the application id as the
+// default window icon. Use [func@Gtk.Window.set_default_icon_name] or
+// [property@Gtk.Window:icon-name] to override that behavior.
 //
 // ## A simple application
 //
@@ -162,8 +183,8 @@ const (
 //
 // ## See Also
 //
-// [HowDoI: Using GtkApplication](https://wiki.gnome.org/HowDoI/GtkApplication),
-// [Getting Started with GTK: Basics](getting_started.html#basics)
+// - [Using GtkApplication](https://developer.gnome.org/documentation/tutorials/application.html)
+// - [Getting Started with GTK: Basics](getting_started.html#basics)
 type Application struct {
 	gio.Application
 }
@@ -182,21 +203,21 @@ func ApplicationNewFromInternalPtr(ptr uintptr) *Application {
 
 var xNewApplication func(string, gio.ApplicationFlags) uintptr
 
-// Creates a new `GtkApplication` instance.
+// Creates a new application instance.
 //
 // When using `GtkApplication`, it is not necessary to call [func@Gtk.init]
 // manually. It is called as soon as the application gets registered as
 // the primary instance.
 //
 // Concretely, [func@Gtk.init] is called in the default handler for the
-// `GApplication::startup` signal. Therefore, `GtkApplication` subclasses should
-// always chain up in their `GApplication::startup` handler before using any GTK
-// API.
+// `GApplication::startup` signal. Therefore, `GtkApplication` subclasses
+// should always chain up in their [vfunc@GIO.Application.startup] handler
+// before using any GTK API.
 //
 // Note that commandline arguments are not passed to [func@Gtk.init].
 //
-// If `application_id` is not %NULL, then it must be valid. See
-// `g_application_id_is_valid()`.
+// If `application_id` is not `NULL`, then it must be valid. See
+// [func@Gio.Application.id_is_valid].
 //
 // If no application ID is given then some features (most notably application
 // uniqueness) will be disabled.
@@ -215,21 +236,20 @@ func NewApplication(ApplicationIdVar string, FlagsVar gio.ApplicationFlags) *App
 
 var xApplicationAddWindow func(uintptr, uintptr)
 
-// Adds a window to `application`.
+// Adds a window to the application.
 //
-// This call can only happen after the `application` has started;
+// This call can only happen after the application has started;
 // typically, you should add new application windows in response
-// to the emission of the `GApplication::activate` signal.
+// to the emission of the [signal@GIO.Application::activate] signal.
 //
 // This call is equivalent to setting the [property@Gtk.Window:application]
-// property of `window` to `application`.
+// property of the window to @application.
 //
 // Normally, the connection between the application and the window
 // will remain until the window is destroyed, but you can explicitly
 // remove it with [method@Gtk.Application.remove_window].
 //
-// GTK will keep the `application` running as long as it has
-// any windows.
+// GTK will keep the application running as long as it has any windows.
 func (x *Application) AddWindow(WindowVar *Window) {
 
 	xApplicationAddWindow(x.GoPointer(), WindowVar.GoPointer())
@@ -248,7 +268,7 @@ func (x *Application) GetAccelsForAction(DetailedActionNameVar string) []string 
 
 var xApplicationGetActionsForAccel func(uintptr, string) []string
 
-// Returns the list of actions (possibly empty) that `accel` maps to.
+// Returns the list of actions (possibly empty) that the accelerator maps to.
 //
 // Each item in the list is a detailed action name in the usual form.
 //
@@ -275,10 +295,10 @@ var xApplicationGetActiveWindow func(uintptr) uintptr
 
 // Gets the “active” window for the application.
 //
-// The active window is the one that was most recently focused (within
-// the application).  This window may not have the focus at the moment
-// if another application has it — this is just the most
-// recently-focused window within this application.
+// The active window is the one that was most recently focused
+// (within the application). This window may not have the focus
+// at the moment if another application has it — this is just
+// the most recently-focused window within this application.
 func (x *Application) GetActiveWindow() *Window {
 	var cls *Window
 
@@ -315,8 +335,7 @@ func (x *Application) GetMenuById(IdVar string) *gio.Menu {
 
 var xApplicationGetMenubar func(uintptr) uintptr
 
-// Returns the menu model that has been set with
-// [method@Gtk.Application.set_menubar].
+// Returns the menu model for the menu bar of the application.
 func (x *Application) GetMenubar() *gio.MenuModel {
 	var cls *gio.MenuModel
 
@@ -333,7 +352,7 @@ func (x *Application) GetMenubar() *gio.MenuModel {
 
 var xApplicationGetWindowById func(uintptr, uint) uintptr
 
-// Returns the [class@Gtk.ApplicationWindow] with the given ID.
+// Returns the window with the given ID.
 //
 // The ID of a `GtkApplicationWindow` can be retrieved with
 // [method@Gtk.ApplicationWindow.get_id].
@@ -353,7 +372,7 @@ func (x *Application) GetWindowById(IdVar uint) *Window {
 
 var xApplicationGetWindows func(uintptr) *glib.List
 
-// Gets a list of the [class@Gtk.Window] instances associated with `application`.
+// Gets a list of the window associated with the application.
 //
 // The list is sorted by most recently focused window, such that the first
 // element is the currently focused window. (Useful for choosing a parent
@@ -370,7 +389,7 @@ func (x *Application) GetWindows() *glib.List {
 
 var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, string) uint
 
-// Inform the session manager that certain types of actions should be
+// Informs the session manager that certain types of actions should be
 // inhibited.
 //
 // This is not guaranteed to work on all platforms and for all types of
@@ -378,7 +397,7 @@ var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, string) 
 //
 // Applications should invoke this method when they begin an operation
 // that should not be interrupted, such as creating a CD or DVD. The
-// types of actions that may be blocked are specified by the `flags`
+// types of actions that may be blocked are specified by the @flags
 // parameter. When the application completes the operation it should
 // call [method@Gtk.Application.uninhibit] to remove the inhibitor. Note
 // that an application can have multiple inhibitors, and all of them must
@@ -389,10 +408,14 @@ var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, string) 
 // the action. In most cases, users will be given the option to force
 // the action to take place.
 //
-// The `reason` message should be short and to the point.
+// The @reason message should be short and to the point.
 //
-// If `window` is given, the session manager may point the user to
+// If a window is given, the session manager may point the user to
 // this window to find out more about why the action is inhibited.
+//
+// The cookie that is returned by this function  should be used as an
+// argument to [method@Gtk.Application.uninhibit] in order to remove
+// the request.
 func (x *Application) Inhibit(WindowVar *Window, FlagsVar ApplicationInhibitFlags, ReasonVar string) uint {
 
 	cret := xApplicationInhibit(x.GoPointer(), WindowVar.GoPointer(), FlagsVar, ReasonVar)
@@ -412,14 +435,14 @@ func (x *Application) ListActionDescriptions() []string {
 
 var xApplicationRemoveWindow func(uintptr, uintptr)
 
-// Remove a window from `application`.
+// Remove a window from the application.
 //
-// If `window` belongs to `application` then this call is equivalent to
-// setting the [property@Gtk.Window:application] property of `window` to
-// `NULL`.
+// If the window belongs to the application then this call is
+// equivalent to setting the [property@Gtk.Window:application]
+// property of the window to `NULL`.
 //
 // The application may stop running as a result of a call to this
-// function, if `window` was the last window of the `application`.
+// function, if the window was the last window of the application.
 func (x *Application) RemoveWindow(WindowVar *Window) {
 
 	xApplicationRemoveWindow(x.GoPointer(), WindowVar.GoPointer())
@@ -431,14 +454,14 @@ var xApplicationSetAccelsForAction func(uintptr, string, []string)
 // Sets zero or more keyboard accelerators that will trigger the
 // given action.
 //
-// The first item in `accels` will be the primary accelerator, which may be
-// displayed in the UI.
+// The first item in @accels will be the primary accelerator,
+// which may be displayed in the UI.
 //
-// To remove all accelerators for an action, use an empty, zero-terminated
-// array for `accels`.
+// To remove all accelerators for an action, use an empty,
+// zero-terminated array for @accels.
 //
-// For the `detailed_action_name`, see `g_action_parse_detailed_name()` and
-// `g_action_print_detailed_name()`.
+// For the @detailed_action_name, see [func@Gio.Action.parse_detailed_name]
+// and [Gio.Action.print_detailed_name].
 func (x *Application) SetAccelsForAction(DetailedActionNameVar string, AccelsVar []string) {
 
 	xApplicationSetAccelsForAction(x.GoPointer(), DetailedActionNameVar, AccelsVar)
@@ -447,16 +470,16 @@ func (x *Application) SetAccelsForAction(DetailedActionNameVar string, AccelsVar
 
 var xApplicationSetMenubar func(uintptr, uintptr)
 
-// Sets or unsets the menubar for windows of `application`.
+// Sets or unsets the menubar for windows of the application.
 //
 // This is a menubar in the traditional sense.
 //
 // This can only be done in the primary instance of the application,
-// after it has been registered. `GApplication::startup` is a good place
-// to call this.
+// after it has been registered. [vfunc@GIO.Application.startup] is
+// a good place to call this.
 //
 // Depending on the desktop environment, this may appear at the top of
-// each window, or at the top of the screen.  In some environments, if
+// each window, or at the top of the screen. In some environments, if
 // both the application menu and the menubar are set, the application
 // menu will be presented as if it were the first item of the menubar.
 // Other environments treat the two as completely separate — for example,
@@ -498,8 +521,8 @@ func (c *Application) SetGoPointer(ptr uintptr) {
 // Emitted when the session manager is about to end the session.
 //
 // This signal is only emitted if [property@Gtk.Application:register-session]
-// is `TRUE`. Applications can connect to this signal and call
-// [method@Gtk.Application.inhibit] with `GTK_APPLICATION_INHIBIT_LOGOUT`
+// is true. Applications can connect to this signal and call
+// [method@Gtk.Application.inhibit] with [flags@Gtk.ApplicationInhibitFlags.logout]
 // to delay the end of the session until state has been saved.
 func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -520,8 +543,9 @@ func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
 }
 
-// Emitted when a [class@Gtk.Window] is added to `application` through
-// [method@Gtk.Application.add_window].
+// Emitted when a window is added to an application.
+//
+// See [method@Gtk.Application.add_window].
 func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -541,7 +565,7 @@ func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint32 
 	return gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
 }
 
-// Emitted when a [class@Gtk.Window] is removed from `application`.
+// Emitted when a window is removed from an application.
 //
 // This can happen as a side-effect of the window being destroyed
 // or explicitly through [method@Gtk.Application.remove_window].
@@ -564,36 +588,36 @@ func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint3
 	return gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
 }
 
-// Emits the #GActionGroup::action-added signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-added] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionAdded(ActionNameVar string) {
 
 	gio.XGActionGroupActionAdded(x.GoPointer(), ActionNameVar)
 
 }
 
-// Emits the #GActionGroup::action-enabled-changed signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-enabled-changed] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionEnabledChanged(ActionNameVar string, EnabledVar bool) {
 
 	gio.XGActionGroupActionEnabledChanged(x.GoPointer(), ActionNameVar, EnabledVar)
 
 }
 
-// Emits the #GActionGroup::action-removed signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-removed] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionRemoved(ActionNameVar string) {
 
 	gio.XGActionGroupActionRemoved(x.GoPointer(), ActionNameVar)
 
 }
 
-// Emits the #GActionGroup::action-state-changed signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-state-changed] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionStateChanged(ActionNameVar string, StateVar *glib.Variant) {
 
 	gio.XGActionGroupActionStateChanged(x.GoPointer(), ActionNameVar, StateVar)
@@ -604,35 +628,35 @@ func (x *Application) ActionStateChanged(ActionNameVar string, StateVar *glib.Va
 //
 // If the action is expecting a parameter, then the correct type of
 // parameter must be given as @parameter.  If the action is expecting no
-// parameters then @parameter must be %NULL.  See
-// g_action_group_get_action_parameter_type().
+// parameters then @parameter must be `NULL`.  See
+// [method@Gio.ActionGroup.get_action_parameter_type].
 //
-// If the #GActionGroup implementation supports asynchronous remote
+// If the [type@Gio.ActionGroup] implementation supports asynchronous remote
 // activation over D-Bus, this call may return before the relevant
 // D-Bus traffic has been sent, or any replies have been received. In
 // order to block on such asynchronous activation calls,
-// g_dbus_connection_flush() should be called prior to the code, which
+// [method@Gio.DBusConnection.flush] should be called prior to the code, which
 // depends on the result of the action activation. Without flushing
 // the D-Bus connection, there is no guarantee that the action would
 // have been activated.
 //
 // The following code which runs in a remote app instance, shows an
-// example of a "quit" action being activated on the primary app
-// instance over D-Bus. Here g_dbus_connection_flush() is called
-// before `exit()`. Without g_dbus_connection_flush(), the "quit" action
+// example of a ‘quit’ action being activated on the primary app
+// instance over D-Bus. Here [method@Gio.DBusConnection.flush] is called
+// before `exit()`. Without `g_dbus_connection_flush()`, the ‘quit’ action
 // may fail to be activated on the primary instance.
 //
-// |[&lt;!-- language="C" --&gt;
-// // call "quit" action on primary instance
+// ```c
+// // call ‘quit’ action on primary instance
 // g_action_group_activate_action (G_ACTION_GROUP (app), "quit", NULL);
 //
 // // make sure the action is activated now
-// g_dbus_connection_flush (...);
+// g_dbus_connection_flush (…);
 //
-// g_debug ("application has been terminated. exiting.");
+// g_debug ("Application has been terminated. Exiting.");
 //
 // exit (0);
-// ]|
+// ```
 func (x *Application) ActivateAction(ActionNameVar string, ParameterVar *glib.Variant) {
 
 	gio.XGActionGroupActivateAction(x.GoPointer(), ActionNameVar, ParameterVar)
@@ -643,11 +667,11 @@ func (x *Application) ActivateAction(ActionNameVar string, ParameterVar *glib.Va
 // changed to @value.
 //
 // The action must be stateful and @value must be of the correct type.
-// See g_action_group_get_action_state_type().
+// See [method@Gio.ActionGroup.get_action_state_type].
 //
 // This call merely requests a change.  The action may refuse to change
 // its state or may change its state to something other than @value.
-// See g_action_group_get_action_state_hint().
+// See [method@Gio.ActionGroup.get_action_state_hint].
 //
 // If the @value GVariant is floating, it is consumed.
 func (x *Application) ChangeActionState(ActionNameVar string, ValueVar *glib.Variant) {
@@ -669,12 +693,12 @@ func (x *Application) GetActionEnabled(ActionNameVar string) bool {
 // Queries the type of the parameter that must be given when activating
 // the named action within @action_group.
 //
-// When activating the action using g_action_group_activate_action(),
-// the #GVariant given to that function must be of the type returned
+// When activating the action using [method@Gio.ActionGroup.activate_action],
+// the [type@GLib.Variant] given to that function must be of the type returned
 // by this function.
 //
-// In the case that this function returns %NULL, you must not give any
-// #GVariant, but %NULL instead.
+// In the case that this function returns `NULL`, you must not give any
+// [type@GLib.Variant], but `NULL` instead.
 //
 // The parameter type of a particular action will never change but it is
 // possible for an action to be removed and for a new action to be added
@@ -687,12 +711,12 @@ func (x *Application) GetActionParameterType(ActionNameVar string) *glib.Variant
 
 // Queries the current state of the named action within @action_group.
 //
-// If the action is not stateful then %NULL will be returned.  If the
+// If the action is not stateful then `NULL` will be returned.  If the
 // action is stateful then the type of the return value is the type
-// given by g_action_group_get_action_state_type().
+// given by [method@Gio.ActionGroup.get_action_state_type].
 //
-// The return value (if non-%NULL) should be freed with
-// g_variant_unref() when it is no longer required.
+// The return value (if non-`NULL`) should be freed with
+// [method@GLib.Variant.unref] when it is no longer required.
 func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 
 	cret := gio.XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
@@ -702,12 +726,12 @@ func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 // Requests a hint about the valid range of values for the state of the
 // named action within @action_group.
 //
-// If %NULL is returned it either means that the action is not stateful
+// If `NULL` is returned it either means that the action is not stateful
 // or that there is no hint about the valid range of values for the
 // state of the action.
 //
-// If a #GVariant array is returned then each item in the array is a
-// possible value for the state.  If a #GVariant pair (ie: two-tuple) is
+// If a [type@GLib.Variant] array is returned then each item in the array is a
+// possible value for the state.  If a [type@GLib.Variant] pair (ie: two-tuple) is
 // returned then the tuple specifies the inclusive lower and upper bound
 // of valid values for the state.
 //
@@ -715,8 +739,8 @@ func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 // have a state value outside of the hinted range and setting a value
 // within the range may fail.
 //
-// The return value (if non-%NULL) should be freed with
-// g_variant_unref() when it is no longer required.
+// The return value (if non-`NULL`) should be freed with
+// [method@GLib.Variant.unref] when it is no longer required.
 func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 
 	cret := gio.XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
@@ -727,14 +751,14 @@ func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 // @action_group.
 //
 // If the action is stateful then this function returns the
-// #GVariantType of the state.  All calls to
-// g_action_group_change_action_state() must give a #GVariant of this
-// type and g_action_group_get_action_state() will return a #GVariant
+// [type@GLib.VariantType] of the state.  All calls to
+// [method@Gio.ActionGroup.change_action_state] must give a [type@GLib.Variant] of this
+// type and [method@Gio.ActionGroup.get_action_state] will return a [type@GLib.Variant]
 // of the same type.
 //
-// If the action is not stateful then this function will return %NULL.
-// In that case, g_action_group_get_action_state() will return %NULL
-// and you must not call g_action_group_change_action_state().
+// If the action is not stateful then this function will return `NULL`.
+// In that case, [method@Gio.ActionGroup.get_action_state] will return `NULL`
+// and you must not call [method@Gio.ActionGroup.change_action_state].
 //
 // The state type of a particular action will never change but it is
 // possible for an action to be removed and for a new action to be added
@@ -754,7 +778,7 @@ func (x *Application) HasAction(ActionNameVar string) bool {
 
 // Lists the actions contained within @action_group.
 //
-// The caller is responsible for freeing the list with g_strfreev() when
+// The caller is responsible for freeing the list with [func@GLib.strfreev] when
 // it is no longer required.
 func (x *Application) ListActions() []string {
 
@@ -765,18 +789,18 @@ func (x *Application) ListActions() []string {
 // Queries all aspects of the named action within an @action_group.
 //
 // This function acquires the information available from
-// g_action_group_has_action(), g_action_group_get_action_enabled(),
-// g_action_group_get_action_parameter_type(),
-// g_action_group_get_action_state_type(),
-// g_action_group_get_action_state_hint() and
-// g_action_group_get_action_state() with a single function call.
+// [method@Gio.ActionGroup.has_action], [method@Gio.ActionGroup.get_action_enabled],
+// [method@Gio.ActionGroup.get_action_parameter_type],
+// [method@Gio.ActionGroup.get_action_state_type],
+// [method@Gio.ActionGroup.get_action_state_hint] and
+// [method@Gio.ActionGroup.get_action_state] with a single function call.
 //
 // This provides two main benefits.
 //
 // The first is the improvement in efficiency that comes with not having
 // to perform repeated lookups of the action in order to discover
 // different things about it.  The second is that implementing
-// #GActionGroup can now be done by only overriding this one virtual
+// [type@Gio.ActionGroup] can now be done by only overriding this one virtual
 // function.
 //
 // The interface provides a default implementation of this function that
@@ -785,9 +809,9 @@ func (x *Application) ListActions() []string {
 // those functions that call this function.  All implementations,
 // therefore, must override either this function or all of the others.
 //
-// If the action exists, %TRUE is returned and any of the requested
-// fields (as indicated by having a non-%NULL reference passed in) are
-// filled.  If the action doesn't exist, %FALSE is returned and the
+// If the action exists, `TRUE` is returned and any of the requested
+// fields (as indicated by having a non-`NULL` reference passed in) are
+// filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
 func (x *Application) QueryAction(ActionNameVar string, EnabledVar bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
@@ -807,12 +831,12 @@ func (x *Application) AddAction(ActionVar gio.Action) {
 
 }
 
-// A convenience function for creating multiple #GSimpleAction instances
-// and adding them to a #GActionMap.
+// A convenience function for creating multiple [class@Gio.SimpleAction]
+// instances and adding them to a [iface@Gio.ActionMap].
 //
-// Each action is constructed as per one #GActionEntry.
+// Each action is constructed as per one [struct@Gio.ActionEntry].
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 // static void
 // activate_quit (GSimpleAction *simple,
 //
@@ -849,7 +873,7 @@ func (x *Application) AddAction(ActionVar gio.Action) {
 //	  return G_ACTION_GROUP (group);
 //	}
 //
-// ]|
+// ```
 func (x *Application) AddActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int, UserDataVar uintptr) {
 
 	gio.XGActionMapAddActionEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
@@ -858,7 +882,7 @@ func (x *Application) AddActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar
 
 // Looks up the action with the name @action_name in @action_map.
 //
-// If no such action exists, returns %NULL.
+// If no such action exists, returns `NULL`.
 func (x *Application) LookupAction(ActionNameVar string) *gio.ActionBase {
 	var cls *gio.ActionBase
 
@@ -879,6 +903,37 @@ func (x *Application) LookupAction(ActionNameVar string) *gio.ActionBase {
 func (x *Application) RemoveAction(ActionNameVar string) {
 
 	gio.XGActionMapRemoveAction(x.GoPointer(), ActionNameVar)
+
+}
+
+// Remove actions from a [iface@Gio.ActionMap]. This is meant as the reverse of
+// [method@Gio.ActionMap.add_action_entries].
+//
+// ```c
+//
+//	static const GActionEntry entries[] = {
+//	    { "quit",         activate_quit              },
+//	    { "print-string", activate_print_string, "s" }
+//	};
+//
+// void
+// add_actions (GActionMap *map)
+//
+//	{
+//	  g_action_map_add_action_entries (map, entries, G_N_ELEMENTS (entries), NULL);
+//	}
+//
+// void
+// remove_actions (GActionMap *map)
+//
+//	{
+//	  g_action_map_remove_action_entries (map, entries, G_N_ELEMENTS (entries));
+//	}
+//
+// ```
+func (x *Application) RemoveActionEntries(EntriesVar []gio.ActionEntry, NEntriesVar int) {
+
+	gio.XGActionMapRemoveActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
 
 }
 

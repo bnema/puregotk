@@ -372,7 +372,7 @@ func (x *EntryBufferClass) GetGtkReserved8() func() {
 	}
 }
 
-// A `GtkEntryBuffer` hold the text displayed in a `GtkText` widget.
+// Holds the text that is displayed in a single-line text entry widget.
 //
 // A single `GtkEntryBuffer` object can be shared by multiple widgets
 // which will then share the same text content, but not the cursor

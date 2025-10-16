@@ -4,6 +4,7 @@ package glib
 import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
 const (
@@ -20,6 +21,12 @@ const (
 // accent or as a single precomposed character. Unicode strings
 // should generally be normalized before comparing them.
 type NormalizeMode int
+
+var xNormalizeModeGLibType func() types.GType
+
+func NormalizeModeGLibType() types.GType {
+	return xNormalizeModeGLibType()
+}
 
 const (
 
@@ -50,11 +57,17 @@ const (
 
 // These are the possible line break classifications.
 //
-// Since new unicode versions may add new types here, applications should be ready
+// Since new Unicode versions may add new types here, applications should be ready
 // to handle unknown values. They may be regarded as %G_UNICODE_BREAK_UNKNOWN.
 //
-// See [Unicode Line Breaking Algorithm](http://www.unicode.org/unicode/reports/tr14/).
+// See [Unicode Line Breaking Algorithm](https://www.unicode.org/reports/tr14/).
 type UnicodeBreakType int
+
+var xUnicodeBreakTypeGLibType func() types.GType
+
+func UnicodeBreakTypeGLibType() types.GType {
+	return xUnicodeBreakTypeGLibType()
+}
 
 const (
 
@@ -146,6 +159,16 @@ const (
 	GUnicodeBreakEmojiModifierValue UnicodeBreakType = 41
 	// Zero Width Joiner (ZWJ). Since: 2.50
 	GUnicodeBreakZeroWidthJoinerValue UnicodeBreakType = 42
+	// Aksara (AK). Since: 2.80
+	GUnicodeBreakAksaraValue UnicodeBreakType = 43
+	// Aksara Pre-Base (AP). Since: 2.80
+	GUnicodeBreakAksaraPreBaseValue UnicodeBreakType = 44
+	// Aksara Start (AS). Since: 2.80
+	GUnicodeBreakAksaraStartValue UnicodeBreakType = 45
+	// Virama Final (VF). Since: 2.80
+	GUnicodeBreakViramaFinalValue UnicodeBreakType = 46
+	// Virama (VI). Since: 2.80
+	GUnicodeBreakViramaValue UnicodeBreakType = 47
 )
 
 // The #GUnicodeScript enumeration identifies different writing
@@ -157,6 +180,12 @@ const (
 // should be ready to handle unknown values.
 // See [Unicode Standard Annex #24: Script names](http://www.unicode.org/reports/tr24/).
 type UnicodeScript int
+
+var xUnicodeScriptGLibType func() types.GType
+
+func UnicodeScriptGLibType() types.GType {
+	return xUnicodeScriptGLibType()
+}
 
 const (
 
@@ -489,12 +518,36 @@ const (
 	GUnicodeScriptVithkuqiValue UnicodeScript = 161
 	// Mathematical notation. Since: 2.72
 	GUnicodeScriptMathValue UnicodeScript = 162
+	// Kawi. Since 2.74
+	GUnicodeScriptKawiValue UnicodeScript = 163
+	// Nag Mundari. Since 2.74
+	GUnicodeScriptNagMundariValue UnicodeScript = 164
+	// Todhri. Since: 2.84
+	GUnicodeScriptTodhriValue UnicodeScript = 165
+	// Garay. Since: 2.84
+	GUnicodeScriptGarayValue UnicodeScript = 166
+	// Tulu-Tigalari. Since: 2.84
+	GUnicodeScriptTuluTigalariValue UnicodeScript = 167
+	// Sunuwar. Since: 2.84
+	GUnicodeScriptSunuwarValue UnicodeScript = 168
+	// Gurung Khema. Since: 2.84
+	GUnicodeScriptGurungKhemaValue UnicodeScript = 169
+	// Kirat Rai. Since: 2.84
+	GUnicodeScriptKiratRaiValue UnicodeScript = 170
+	// Ol Onal. Since: 2.84
+	GUnicodeScriptOlOnalValue UnicodeScript = 171
 )
 
 // These are the possible character classifications from the
 // Unicode specification.
 // See [Unicode Character Database](http://www.unicode.org/reports/tr44/#General_Category_Values).
 type UnicodeType int
+
+var xUnicodeTypeGLibType func() types.GType
+
+func UnicodeTypeGLibType() types.GType {
+	return xUnicodeTypeGLibType()
+}
 
 const (
 
@@ -560,11 +613,12 @@ const (
 	GUnicodeSpaceSeparatorValue UnicodeType = 29
 )
 
-var xUcs4ToUtf16 func(uint32, int32, int32, int32, **Error) uint16
+var xUcs4ToUtf16 func([]uint32, int32, int32, int32, **Error) uint16
 
-// Convert a string from UCS-4 to UTF-16. A 0 character will be
-// added to the result after the converted text.
-func Ucs4ToUtf16(StrVar uint32, LenVar int32, ItemsReadVar int32, ItemsWrittenVar int32) (uint16, error) {
+// Convert a string from UCS-4 to UTF-16.
+//
+// A nul character (U+0000) will be added to the result after the converted text.
+func Ucs4ToUtf16(StrVar []uint32, LenVar int32, ItemsReadVar int32, ItemsWrittenVar int32) (uint16, error) {
 	var cerr *Error
 
 	cret := xUcs4ToUtf16(StrVar, LenVar, ItemsReadVar, ItemsWrittenVar, &cerr)
@@ -575,11 +629,13 @@ func Ucs4ToUtf16(StrVar uint32, LenVar int32, ItemsReadVar int32, ItemsWrittenVa
 
 }
 
-var xUcs4ToUtf8 func(uint32, int32, int32, int32, **Error) string
+var xUcs4ToUtf8 func([]uint32, int32, int32, int32, **Error) string
 
 // Convert a string from a 32-bit fixed width representation as UCS-4.
-// to UTF-8. The result will be terminated with a 0 byte.
-func Ucs4ToUtf8(StrVar uint32, LenVar int32, ItemsReadVar int32, ItemsWrittenVar int32) (string, error) {
+// to UTF-8.
+//
+// The result will be terminated with a nul byte.
+func Ucs4ToUtf8(StrVar []uint32, LenVar int32, ItemsReadVar int32, ItemsWrittenVar int32) (string, error) {
 	var cerr *Error
 
 	cret := xUcs4ToUtf8(StrVar, LenVar, ItemsReadVar, ItemsWrittenVar, &cerr)
@@ -646,10 +702,10 @@ var xUnicharDecompose func(uint32, uint32, uint32) bool
 // decompositions. It does, however, include algorithmic
 // Hangul Jamo decomposition, as well as 'singleton'
 // decompositions which replace a character by a single
-// other character. In the case of singletons *@b will
+// other character. In the case of singletons `*b` will
 // be set to zero.
 //
-// If @ch is not decomposable, *@a is set to @ch and *@b
+// If @ch is not decomposable, `*a` is set to @ch and `*b`
 // is set to zero.
 //
 // Note that the way Unicode decomposition pairs are
@@ -994,9 +1050,10 @@ func UnicharType(CVar uint32) UnicodeType {
 
 var xUnicharValidate func(uint32) bool
 
-// Checks whether @ch is a valid Unicode character. Some possible
-// integer values of @ch will not be valid. 0 is considered a valid
-// character, though it's normally a string terminator.
+// Checks whether @ch is a valid Unicode character.
+//
+// Some possible integer values of @ch will not be valid. U+0000 is considered a
+// valid character, though it’s normally a string terminator.
 func UnicharValidate(ChVar uint32) bool {
 
 	cret := xUnicharValidate(ChVar)
@@ -1022,13 +1079,13 @@ func UnicodeCanonicalDecomposition(ChVar uint32, ResultLenVar uint) uint32 {
 	return cret
 }
 
-var xUnicodeCanonicalOrdering func(uint32, uint)
+var xUnicodeCanonicalOrdering func([]uint32, uint)
 
 // Computes the canonical ordering of a string in-place.
 // This rearranges decomposed characters in the string
 // according to their combining classes.  See the Unicode
 // manual for more information.
-func UnicodeCanonicalOrdering(StringVar uint32, LenVar uint) {
+func UnicodeCanonicalOrdering(StringVar []uint32, LenVar uint) {
 
 	xUnicodeCanonicalOrdering(StringVar, LenVar)
 
@@ -1068,11 +1125,12 @@ func UnicodeScriptToIso15924(ScriptVar UnicodeScript) uint32 {
 	return cret
 }
 
-var xUtf16ToUcs4 func(uint16, int32, int32, int32, **Error) uint32
+var xUtf16ToUcs4 func([]uint16, int32, int32, int32, **Error) uint32
 
-// Convert a string from UTF-16 to UCS-4. The result will be
-// nul-terminated.
-func Utf16ToUcs4(StrVar uint16, LenVar int32, ItemsReadVar int32, ItemsWrittenVar int32) (uint32, error) {
+// Convert a string from UTF-16 to UCS-4.
+//
+// The result will be nul-terminated.
+func Utf16ToUcs4(StrVar []uint16, LenVar int32, ItemsReadVar int32, ItemsWrittenVar int32) (uint32, error) {
 	var cerr *Error
 
 	cret := xUtf16ToUcs4(StrVar, LenVar, ItemsReadVar, ItemsWrittenVar, &cerr)
@@ -1083,22 +1141,23 @@ func Utf16ToUcs4(StrVar uint16, LenVar int32, ItemsReadVar int32, ItemsWrittenVa
 
 }
 
-var xUtf16ToUtf8 func(uint16, int32, int32, int32, **Error) string
+var xUtf16ToUtf8 func([]uint16, int32, int32, int32, **Error) string
 
-// Convert a string from UTF-16 to UTF-8. The result will be
-// terminated with a 0 byte.
+// Convert a string from UTF-16 to UTF-8.
+//
+// The result will be terminated with a nul byte.
 //
 // Note that the input is expected to be already in native endianness,
 // an initial byte-order-mark character is not handled specially.
-// g_convert() can be used to convert a byte buffer of UTF-16 data of
+// [func@GLib.convert] can be used to convert a byte buffer of UTF-16 data of
 // ambiguous endianness.
 //
 // Further note that this function does not validate the result
-// string; it may e.g. include embedded NUL characters. The only
+// string; it may (for example) include embedded nul characters. The only
 // validation done by this function is to ensure that the input can
-// be correctly interpreted as UTF-16, i.e. it doesn't contain
+// be correctly interpreted as UTF-16, i.e. it doesn’t contain
 // unpaired surrogates or partial character sequences.
-func Utf16ToUtf8(StrVar uint16, LenVar int32, ItemsReadVar int32, ItemsWrittenVar int32) (string, error) {
+func Utf16ToUtf8(StrVar []uint16, LenVar int32, ItemsReadVar int32, ItemsWrittenVar int32) (string, error) {
 	var cerr *Error
 
 	cret := xUtf16ToUtf8(StrVar, LenVar, ItemsReadVar, ItemsWrittenVar, &cerr)
@@ -1131,7 +1190,7 @@ func Utf8Casefold(StrVar string, LenVar int) string {
 var xUtf8Collate func(string, string) int
 
 // Compares two strings for ordering using the linguistically
-// correct rules for the [current locale][setlocale].
+// correct rules for the [current locale](running.html#locale).
 // When sorting a large number of strings, it will be significantly
 // faster to obtain collation keys with g_utf8_collate_key() and
 // compare the keys with strcmp() when sorting instead of sorting
@@ -1156,7 +1215,11 @@ var xUtf8CollateKey func(string, int) string
 // with strcmp() will always be the same as comparing the two
 // original keys with g_utf8_collate().
 //
-// Note that this function depends on the [current locale][setlocale].
+// Note that this function depends on the [current locale](running.html#locale).
+//
+// Note that the returned string is not guaranteed to be in any
+// encoding, especially UTF-8. The returned value is meant to be
+// used only for comparisons.
 func Utf8CollateKey(StrVar string, LenVar int) string {
 
 	cret := xUtf8CollateKey(StrVar, LenVar)
@@ -1175,7 +1238,11 @@ var xUtf8CollateKeyForFilename func(string, int) string
 // would like to treat numbers intelligently so that "file1" "file10" "file5"
 // is sorted as "file1" "file5" "file10".
 //
-// Note that this function depends on the [current locale][setlocale].
+// Note that this function depends on the [current locale](running.html#locale).
+//
+// Note that the returned string is not guaranteed to be in any
+// encoding, especially UTF-8. The returned value is meant to be
+// used only for comparisons.
 func Utf8CollateKeyForFilename(StrVar string, LenVar int) string {
 
 	cret := xUtf8CollateKeyForFilename(StrVar, LenVar)
@@ -1190,9 +1257,9 @@ var xUtf8FindNextChar func(string, string) string
 // is made to see if the character found is actually valid other than
 // it starts with an appropriate byte.
 //
-// If @end is %NULL, the return value will never be %NULL: if the end of the
+// If @end is `NULL`, the return value will never be `NULL`: if the end of the
 // string is reached, a pointer to the terminating nul byte is returned. If
-// @end is non-%NULL, the return value will be %NULL if the end of the string
+// @end is non-`NULL`, the return value will be `NULL` if the end of the string
 // is reached.
 func Utf8FindNextChar(PVar string, EndVar string) string {
 
@@ -1203,7 +1270,7 @@ func Utf8FindNextChar(PVar string, EndVar string) string {
 var xUtf8FindPrevChar func(string, string) string
 
 // Given a position @p with a UTF-8 encoded string @str, find the start
-// of the previous UTF-8 character starting before @p. Returns %NULL if no
+// of the previous UTF-8 character starting before @p. Returns `NULL` if no
 // UTF-8 characters are present in @str before @p.
 //
 // @p does not have to be at the beginning of a UTF-8 character. No check
@@ -1221,7 +1288,7 @@ var xUtf8GetChar func(string) uint32
 //
 // If @p does not point to a valid UTF-8 encoded character, results
 // are undefined. If you are not sure that the bytes are complete
-// valid Unicode characters, you should use g_utf8_get_char_validated()
+// valid Unicode characters, you should use [func@GLib.utf8_get_char_validated]
 // instead.
 func Utf8GetChar(PVar string) uint32 {
 
@@ -1232,11 +1299,12 @@ func Utf8GetChar(PVar string) uint32 {
 var xUtf8GetCharValidated func(string, int) uint32
 
 // Convert a sequence of bytes encoded as UTF-8 to a Unicode character.
+//
 // This function checks for incomplete characters, for invalid characters
 // such as characters that are out of the range of Unicode, and for
 // overlong encodings of valid characters.
 //
-// Note that g_utf8_get_char_validated() returns (gunichar)-2 if
+// Note that [func@GLib.utf8_get_char_validated] returns `(gunichar)-2` if
 // @max_len is positive and any of the bytes in the first UTF-8 character
 // sequence are nul.
 func Utf8GetCharValidated(PVar string, MaxLenVar int) uint32 {
@@ -1305,9 +1373,9 @@ var xUtf8OffsetToPointer func(string, int32) string
 // instead of forwards if @offset is in the last fourth of the string,
 // since moving forward is about 3 times faster than moving backward.
 //
-// Note that this function doesn't abort when reaching the end of @str.
+// Note that this function doesn’t abort when reaching the end of @str.
 // Therefore you should be sure that @offset is within string boundaries
-// before calling that function. Call g_utf8_strlen() when unsure.
+// before calling that function. Call [func@GLib.utf8_strlen] when unsure.
 // This limitation exists as this function is called frequently during
 // text rendering and therefore has to be as fast as possible.
 func Utf8OffsetToPointer(StrVar string, OffsetVar int32) string {
@@ -1336,7 +1404,8 @@ var xUtf8PrevChar func(string) string
 // @p does not have to be at the beginning of a UTF-8 character. No check
 // is made to see if the character found is actually valid other than
 // it starts with an appropriate byte. If @p might be the first
-// character of the string, you must use g_utf8_find_prev_char() instead.
+// character of the string, you must use [func@GLib.utf8_find_prev_char]
+// instead.
 func Utf8PrevChar(PVar string) string {
 
 	cret := xUtf8PrevChar(PVar)
@@ -1347,7 +1416,8 @@ var xUtf8Strchr func(string, int, uint32) string
 
 // Finds the leftmost occurrence of the given Unicode character
 // in a UTF-8 encoded string, while limiting the search to @len bytes.
-// If @len is -1, allow unbounded search.
+//
+// If @len is `-1`, allow unbounded search.
 func Utf8Strchr(PVar string, LenVar int, CVar uint32) string {
 
 	cret := xUtf8Strchr(PVar, LenVar, CVar)
@@ -1369,7 +1439,7 @@ func Utf8Strdown(StrVar string, LenVar int) string {
 var xUtf8Strlen func(string, int) int32
 
 // Computes the length of the string in characters, not including
-// the terminating nul character. If the @max'th byte falls in the
+// the terminating nul character. If the @max’th byte falls in the
 // middle of a character, the last (partial) character is not counted.
 func Utf8Strlen(PVar string, MaxVar int) int32 {
 
@@ -1379,12 +1449,14 @@ func Utf8Strlen(PVar string, MaxVar int) int32 {
 
 var xUtf8Strncpy func(string, string, uint) string
 
-// Like the standard C strncpy() function, but copies a given number
-// of characters instead of a given number of bytes. The @src string
-// must be valid UTF-8 encoded text. (Use g_utf8_validate() on all
-// text before trying to use UTF-8 utility functions with it.)
+// Like the standard C [`strncpy()`](man:strncpy) function, but copies a given
+// number of characters instead of a given number of bytes.
 //
-// Note you must ensure @dest is at least 4 * @n to fit the
+// The @src string must be valid UTF-8 encoded text. (Use
+// [func@GLib.utf8_validate] on all text before trying to use UTF-8 utility
+// functions with it.)
+//
+// Note you must ensure @dest is at least 4 * @n + 1 to fit the
 // largest possible UTF-8 characters
 func Utf8Strncpy(DestVar string, SrcVar string, NVar uint) string {
 
@@ -1396,7 +1468,8 @@ var xUtf8Strrchr func(string, int, uint32) string
 
 // Find the rightmost occurrence of the given Unicode character
 // in a UTF-8 encoded string, while limiting the search to @len bytes.
-// If @len is -1, allow unbounded search.
+//
+// If @len is `-1`, allow unbounded search.
 func Utf8Strrchr(PVar string, LenVar int, CVar uint32) string {
 
 	cret := xUtf8Strrchr(PVar, LenVar, CVar)
@@ -1405,9 +1478,10 @@ func Utf8Strrchr(PVar string, LenVar int, CVar uint32) string {
 
 var xUtf8Strreverse func(string, int) string
 
-// Reverses a UTF-8 string. @str must be valid UTF-8 encoded text.
-// (Use g_utf8_validate() on all text before trying to use UTF-8
-// utility functions with it.)
+// Reverses a UTF-8 string.
+//
+// @str must be valid UTF-8 encoded text. (Use [func@GLib.utf8_validate] on all
+// text before trying to use UTF-8 utility functions with it.)
 //
 // This function is intended for programmatic uses of reversed strings.
 // It pays no attention to decomposed characters, combining marks, byte
@@ -1415,8 +1489,8 @@ var xUtf8Strreverse func(string, int) string
 // characters which might need special handling when reversing a string
 // for display purposes.
 //
-// Note that unlike g_strreverse(), this function returns
-// newly-allocated memory, which should be freed with g_free() when
+// Note that unlike [func@GLib.strreverse], this function returns
+// newly-allocated memory, which should be freed with [func@GLib.free] when
 // no longer needed.
 func Utf8Strreverse(StrVar string, LenVar int) string {
 
@@ -1452,9 +1526,10 @@ func Utf8Substring(StrVar string, StartPosVar int32, EndPosVar int32) string {
 
 var xUtf8ToUcs4 func(string, int32, int32, int32, **Error) uint32
 
-// Convert a string from UTF-8 to a 32-bit fixed width
-// representation as UCS-4. A trailing 0 character will be added to the
-// string after the converted text.
+// Convert a string from UTF-8 to a 32-bit fixed width representation as UCS-4.
+//
+// A trailing nul character (U+0000) will be added to the string after the
+// converted text.
 func Utf8ToUcs4(StrVar string, LenVar int32, ItemsReadVar int32, ItemsWrittenVar int32) (uint32, error) {
 	var cerr *Error
 
@@ -1470,8 +1545,9 @@ var xUtf8ToUcs4Fast func(string, int32, int32) uint32
 
 // Convert a string from UTF-8 to a 32-bit fixed width
 // representation as UCS-4, assuming valid UTF-8 input.
-// This function is roughly twice as fast as g_utf8_to_ucs4()
-// but does no error checking on the input. A trailing 0 character
+//
+// This function is roughly twice as fast as [func@GLib.utf8_to_ucs4]
+// but does no error checking on the input. A trailing nul character (U+0000)
 // will be added to the string after the converted text.
 func Utf8ToUcs4Fast(StrVar string, LenVar int32, ItemsWrittenVar int32) uint32 {
 
@@ -1481,8 +1557,9 @@ func Utf8ToUcs4Fast(StrVar string, LenVar int32, ItemsWrittenVar int32) uint32 {
 
 var xUtf8ToUtf16 func(string, int32, int32, int32, **Error) uint16
 
-// Convert a string from UTF-8 to UTF-16. A 0 character will be
-// added to the result after the converted text.
+// Convert a string from UTF-8 to UTF-16.
+//
+// A nul character (U+0000) will be added to the result after the converted text.
 func Utf8ToUtf16(StrVar string, LenVar int32, ItemsReadVar int32, ItemsWrittenVar int32) (uint16, error) {
 	var cerr *Error
 
@@ -1494,22 +1571,37 @@ func Utf8ToUtf16(StrVar string, LenVar int32, ItemsReadVar int32, ItemsWrittenVa
 
 }
 
+var xUtf8TruncateMiddle func(string, uint) string
+
+// Cuts off the middle of the string, preserving half of @truncate_length
+// characters at the beginning and half at the end.
+//
+// If @string is already short enough, this returns a copy of @string.
+// If @truncate_length is `0`, an empty string is returned.
+func Utf8TruncateMiddle(StringVar string, TruncateLengthVar uint) string {
+
+	cret := xUtf8TruncateMiddle(StringVar, TruncateLengthVar)
+	return cret
+}
+
 var xUtf8Validate func([]byte, int, string) bool
 
-// Validates UTF-8 encoded text. @str is the text to validate;
-// if @str is nul-terminated, then @max_len can be -1, otherwise
-// @max_len should be the number of bytes to validate.
-// If @end is non-%NULL, then the end of the valid range
-// will be stored there (i.e. the start of the first invalid
-// character if some bytes were invalid, or the end of the text
-// being validated otherwise).
+// Validates UTF-8 encoded text.
 //
-// Note that g_utf8_validate() returns %FALSE if @max_len is
-// positive and any of the @max_len bytes are nul.
+// @str is the text to validate; if @str is nul-terminated, then @max_len can be
+// `-1`, otherwise @max_len should be the number of bytes to validate.
 //
-// Returns %TRUE if all of @str was valid. Many GLib and GTK+
+// If @end is non-`NULL`, then the end of the valid range will be stored there.
+// This is the first byte of the first invalid character if some bytes were
+// invalid, or the end of the text being validated otherwise — either the
+// trailing nul byte, or the first byte beyond @max_len (if it’s positive).
+//
+// Note that `g_utf8_validate()` returns `FALSE` if @max_len is  positive and
+// any of the @max_len bytes are nul.
+//
+// Returns `TRUE` if all of @str was valid. Many GLib and GTK
 // routines require valid UTF-8 as input; so data read from a file
-// or the network should be checked with g_utf8_validate() before
+// or the network should be checked with `g_utf8_validate()` before
 // doing anything else with it.
 func Utf8Validate(StrVar []byte, MaxLenVar int, EndVar string) bool {
 
@@ -1521,8 +1613,8 @@ var xUtf8ValidateLen func([]byte, uint, string) bool
 
 // Validates UTF-8 encoded text.
 //
-// As with g_utf8_validate(), but @max_len must be set, and hence this function
-// will always return %FALSE if any of the bytes of @str are nul.
+// As with [func@GLib.utf8_validate], but @max_len must be set, and hence this
+// function will always return `FALSE` if any of the bytes of @str are nul.
 func Utf8ValidateLen(StrVar []byte, MaxLenVar uint, EndVar string) bool {
 
 	cret := xUtf8ValidateLen(StrVar, MaxLenVar, EndVar)
@@ -1531,11 +1623,19 @@ func Utf8ValidateLen(StrVar []byte, MaxLenVar uint, EndVar string) bool {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
+
+	core.PuregoSafeRegister(&xNormalizeModeGLibType, lib, "g_normalize_mode_get_type")
+
+	core.PuregoSafeRegister(&xUnicodeBreakTypeGLibType, lib, "g_unicode_break_type_get_type")
+
+	core.PuregoSafeRegister(&xUnicodeScriptGLibType, lib, "g_unicode_script_get_type")
+
+	core.PuregoSafeRegister(&xUnicodeTypeGLibType, lib, "g_unicode_type_get_type")
 
 	core.PuregoSafeRegister(&xUcs4ToUtf16, lib, "g_ucs4_to_utf16")
 	core.PuregoSafeRegister(&xUcs4ToUtf8, lib, "g_ucs4_to_utf8")
@@ -1601,6 +1701,7 @@ func init() {
 	core.PuregoSafeRegister(&xUtf8ToUcs4, lib, "g_utf8_to_ucs4")
 	core.PuregoSafeRegister(&xUtf8ToUcs4Fast, lib, "g_utf8_to_ucs4_fast")
 	core.PuregoSafeRegister(&xUtf8ToUtf16, lib, "g_utf8_to_utf16")
+	core.PuregoSafeRegister(&xUtf8TruncateMiddle, lib, "g_utf8_truncate_middle")
 	core.PuregoSafeRegister(&xUtf8Validate, lib, "g_utf8_validate")
 	core.PuregoSafeRegister(&xUtf8ValidateLen, lib, "g_utf8_validate_len")
 

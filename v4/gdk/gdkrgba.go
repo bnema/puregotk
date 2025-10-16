@@ -10,8 +10,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// A `GdkRGBA` is used to represent a color, in a way that is compatible
-// with cairo’s notion of color.
+// Represents a color, in a way that is compatible with cairo’s notion of color.
 //
 // `GdkRGBA` is a convenient way to pass colors around. It’s based on
 // cairo’s way to deal with colors and mirrors its behavior. All values
@@ -109,7 +108,7 @@ var xRGBAParse func(uintptr, string) bool
 //
 // The string can be either one of:
 //
-//   - A standard name (Taken from the Css specification).
+//   - A standard name (Taken from the CSS specification).
 //   - A hexadecimal value in the form “\#rgb”, “\#rrggbb”,
 //     “\#rrrgggbbb” or ”\#rrrrggggbbbb”
 //   - A hexadecimal value in the form “\#rgba”, “\#rrggbbaa”,
@@ -117,6 +116,8 @@ var xRGBAParse func(uintptr, string) bool
 //   - A RGB color in the form “rgb(r,g,b)” (In this case the color
 //     will have full opacity)
 //   - A RGBA color in the form “rgba(r,g,b,a)”
+//   - A HSL color in the form "hsl(hue, saturation, lightness)"
+//   - A HSLA color in the form "hsla(hue, saturation, lightness, alpha)"
 //
 // Where “r”, “g”, “b” and “a” are respectively the red, green,
 // blue and alpha color values. In the last two cases, “r”, “g”,

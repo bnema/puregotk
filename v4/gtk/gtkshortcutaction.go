@@ -12,7 +12,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// Prototype for shortcuts based on user callbacks.
+// Type for shortcuts based on user callbacks.
 type ShortcutFunc func(uintptr, *glib.Variant, uintptr) bool
 
 type ActivateActionClass struct {
@@ -71,7 +71,7 @@ func (x *SignalActionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// List of flags that can be passed to action activation.
+// Flags that can be passed to action activation.
 //
 // More flags may be added in the future.
 type ShortcutActionFlags int
@@ -90,7 +90,9 @@ const (
 	ShortcutActionExclusiveValue ShortcutActionFlags = 1
 )
 
-// A `GtkShortcutAction` that calls gtk_widget_activate().
+// Activates a widget.
+//
+// Widgets are activated by calling [method@Gtk.Widget.activate].
 type ActivateAction struct {
 	ShortcutAction
 }
@@ -138,7 +140,7 @@ func ActivateActionGet() *ActivateAction {
 	return cls
 }
 
-// A `GtkShortcutAction` that invokes a callback.
+// Invokes a callback.
 type CallbackAction struct {
 	ShortcutAction
 }
@@ -162,7 +164,7 @@ var xNewCallbackAction func(uintptr, uintptr, uintptr) uintptr
 func NewCallbackAction(CallbackVar *ShortcutFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) *CallbackAction {
 	var cls *CallbackAction
 
-	cret := xNewCallbackAction(glib.NewCallbackNullable(CallbackVar), DataVar, glib.NewCallback(DestroyVar))
+	cret := xNewCallbackAction(glib.NewCallback(CallbackVar), DataVar, glib.NewCallback(DestroyVar))
 
 	if cret == 0 {
 		return nil
@@ -183,7 +185,9 @@ func (c *CallbackAction) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// A `GtkShortcutAction` that calls gtk_widget_mnemonic_activate().
+// Activates a widget with a mnemonic.
+//
+// This means that [method@Gtk.Widget.mnemonic_activate] is called.
 type MnemonicAction struct {
 	ShortcutAction
 }
@@ -231,7 +235,11 @@ func MnemonicActionGet() *MnemonicAction {
 	return cls
 }
 
-// A `GtkShortcutAction` that activates an action by name.
+// Activates a named action.
+//
+// See [method@Gtk.WidgetClass.install_action] and
+// [method@Gtk.Widget.insert_action_group] for ways
+// to associate named actions with widgets.
 type NamedAction struct {
 	ShortcutAction
 }
@@ -290,7 +298,7 @@ func (c *NamedAction) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// A `GtkShortcutAction` that does nothing.
+// Does nothing.
 type NothingAction struct {
 	ShortcutAction
 }
@@ -338,8 +346,7 @@ func NothingActionGet() *NothingAction {
 	return cls
 }
 
-// `GtkShortcutAction` encodes an action that can be triggered by a
-// keyboard shortcut.
+// Encodes an action that can be triggered by a keyboard shortcut.
 //
 // `GtkShortcutActions` contain functions that allow easy presentation
 // to end users as well as being printed for debugging.
@@ -460,10 +467,10 @@ func (c *ShortcutAction) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// A `GtkShortcut`Action that emits a signal.
+// Emits a signal on a widget.
 //
 // Signals that are used in this way are referred to as keybinding signals,
-// and they are expected to be defined with the %G_SIGNAL_ACTION flag.
+// and they are expected to be defined with the `G_SIGNAL_ACTION` flag.
 type SignalAction struct {
 	ShortcutAction
 }

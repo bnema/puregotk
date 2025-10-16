@@ -40,6 +40,7 @@ func (x *PollableInputStreamInterface) GoPointer() uintptr {
 }
 
 // OverrideCanPoll sets the callback function.
+// Checks if the #GPollableInputStream instance is actually pollable
 func (x *PollableInputStreamInterface) OverrideCanPoll(cb func(PollableInputStream) bool) {
 	if cb == nil {
 		x.xCanPoll = 0
@@ -51,6 +52,7 @@ func (x *PollableInputStreamInterface) OverrideCanPoll(cb func(PollableInputStre
 }
 
 // GetCanPoll gets the callback function.
+// Checks if the #GPollableInputStream instance is actually pollable
 func (x *PollableInputStreamInterface) GetCanPoll() func(PollableInputStream) bool {
 	if x.xCanPoll == 0 {
 		return nil
@@ -63,6 +65,7 @@ func (x *PollableInputStreamInterface) GetCanPoll() func(PollableInputStream) bo
 }
 
 // OverrideIsReadable sets the callback function.
+// Checks if the stream is readable
 func (x *PollableInputStreamInterface) OverrideIsReadable(cb func(PollableInputStream) bool) {
 	if cb == nil {
 		x.xIsReadable = 0
@@ -74,6 +77,7 @@ func (x *PollableInputStreamInterface) OverrideIsReadable(cb func(PollableInputS
 }
 
 // GetIsReadable gets the callback function.
+// Checks if the stream is readable
 func (x *PollableInputStreamInterface) GetIsReadable() func(PollableInputStream) bool {
 	if x.xIsReadable == 0 {
 		return nil
@@ -86,6 +90,7 @@ func (x *PollableInputStreamInterface) GetIsReadable() func(PollableInputStream)
 }
 
 // OverrideCreateSource sets the callback function.
+// Creates a #GSource to poll the stream
 func (x *PollableInputStreamInterface) OverrideCreateSource(cb func(PollableInputStream, *Cancellable) *glib.Source) {
 	if cb == nil {
 		x.xCreateSource = 0
@@ -97,6 +102,7 @@ func (x *PollableInputStreamInterface) OverrideCreateSource(cb func(PollableInpu
 }
 
 // GetCreateSource gets the callback function.
+// Creates a #GSource to poll the stream
 func (x *PollableInputStreamInterface) GetCreateSource() func(PollableInputStream, *Cancellable) *glib.Source {
 	if x.xCreateSource == 0 {
 		return nil
@@ -109,6 +115,9 @@ func (x *PollableInputStreamInterface) GetCreateSource() func(PollableInputStrea
 }
 
 // OverrideReadNonblocking sets the callback function.
+// Does a non-blocking read or returns
+//
+//	%G_IO_ERROR_WOULD_BLOCK
 func (x *PollableInputStreamInterface) OverrideReadNonblocking(cb func(PollableInputStream, []byte, uint) int) {
 	if cb == nil {
 		x.xReadNonblocking = 0
@@ -120,6 +129,9 @@ func (x *PollableInputStreamInterface) OverrideReadNonblocking(cb func(PollableI
 }
 
 // GetReadNonblocking gets the callback function.
+// Does a non-blocking read or returns
+//
+//	%G_IO_ERROR_WOULD_BLOCK
 func (x *PollableInputStreamInterface) GetReadNonblocking() func(PollableInputStream, []byte, uint) int {
 	if x.xReadNonblocking == 0 {
 		return nil
@@ -131,10 +143,15 @@ func (x *PollableInputStreamInterface) GetReadNonblocking() func(PollableInputSt
 	}
 }
 
-// #GPollableInputStream is implemented by #GInputStreams that
+// `GPollableInputStream` is implemented by [class@Gio.InputStream]s that
 // can be polled for readiness to read. This can be used when
 // interfacing with a non-GIO API that expects
 // UNIX-file-descriptor-style asynchronous I/O rather than GIO-style.
+//
+// Some classes may implement `GPollableInputStream` but have only certain
+// instances of that class be pollable. If [method@Gio.PollableInputStream.can_poll]
+// returns false, then the behavior of other `GPollableInputStream` methods is
+// undefined.
 type PollableInputStream interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
@@ -186,6 +203,9 @@ func (x *PollableInputStreamBase) CanPoll() bool {
 // the stream may not actually be readable even after the source
 // triggers, so you should use g_pollable_input_stream_read_nonblocking()
 // rather than g_input_stream_read() from the callback.
+//
+// The behaviour of this method is undefined if
+// g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *PollableInputStreamBase) CreateSource(CancellableVar *Cancellable) *glib.Source {
 
 	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
@@ -200,6 +220,9 @@ func (x *PollableInputStreamBase) CreateSource(CancellableVar *Cancellable) *gli
 // non-blocking behavior, you should always use
 // g_pollable_input_stream_read_nonblocking(), which will return a
 // %G_IO_ERROR_WOULD_BLOCK error rather than blocking.
+//
+// The behaviour of this method is undefined if
+// g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *PollableInputStreamBase) IsReadable() bool {
 
 	cret := XGPollableInputStreamIsReadable(x.GoPointer())
@@ -217,6 +240,9 @@ func (x *PollableInputStreamBase) IsReadable() bool {
 // if @cancellable has already been cancelled when you call, which
 // may happen if you call this method after a source triggers due
 // to having been cancelled.
+//
+// The behaviour of this method is undefined if
+// g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *PollableInputStreamBase) ReadNonblocking(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 

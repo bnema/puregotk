@@ -13,7 +13,7 @@ var xAcceleratorGetDefaultModMask func() gdk.ModifierType
 //
 // The modifier mask determines which modifiers are considered significant
 // for keyboard accelerators. This includes all keyboard modifiers except
-// for %GDK_LOCK_MASK.
+// for `GDK_LOCK_MASK`.
 func AcceleratorGetDefaultModMask() gdk.ModifierType {
 
 	cret := xAcceleratorGetDefaultModMask()
@@ -50,9 +50,9 @@ func AcceleratorGetLabelWithKeycode(DisplayVar *gdk.Display, AcceleratorKeyVar u
 var xAcceleratorName func(uint, gdk.ModifierType) string
 
 // Converts an accelerator keyval and modifier mask into a string
-// parseable by gtk_accelerator_parse().
+// that can be parsed by [func@Gtk.accelerator_parse].
 //
-// For example, if you pass in %GDK_KEY_q and %GDK_CONTROL_MASK,
+// For example, if you pass in `GDK_KEY_q` and `GDK_CONTROL_MASK`,
 // this function returns `&lt;Control&gt;q`.
 //
 // If you need to display accelerators in the user interface,
@@ -66,7 +66,7 @@ func AcceleratorName(AcceleratorKeyVar uint, AcceleratorModsVar gdk.ModifierType
 var xAcceleratorNameWithKeycode func(uintptr, uint, uint, gdk.ModifierType) string
 
 // Converts an accelerator keyval and modifier mask
-// into a string parseable by gtk_accelerator_parse_with_keycode().
+// into a string that can be parsed by [func@Gtk.accelerator_parse_with_keycode].
 //
 // This is similar to [func@Gtk.accelerator_name] but handling keycodes.
 // This is only useful for system-level components, applications
@@ -135,9 +135,9 @@ var xAcceleratorValid func(uint, gdk.ModifierType) bool
 // Determines whether a given keyval and modifier mask constitute
 // a valid keyboard accelerator.
 //
-// For example, the %GDK_KEY_a keyval plus %GDK_CONTROL_MASK mark is valid,
+// For example, the `GDK_KEY_a` keyval plus `GDK_CONTROL_MASK` mask is valid,
 // and matches the “Ctrl+a” accelerator. But, you can't, for instance, use
-// the %GDK_KEY_Control_L keyval as an accelerator.
+// the `GDK_KEY_Control_L` keyval as an accelerator.
 func AcceleratorValid(KeyvalVar uint, ModifiersVar gdk.ModifierType) bool {
 
 	cret := xAcceleratorValid(KeyvalVar, ModifiersVar)

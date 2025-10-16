@@ -30,7 +30,7 @@ func (x *NetworkAddressPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GNetworkAddress provides an easy way to resolve a hostname and
+// `GNetworkAddress` provides an easy way to resolve a hostname and
 // then attempt to connect to that host, handling the possibility of
 // multiple IP addresses and multiple address families.
 //
@@ -38,7 +38,7 @@ func (x *NetworkAddressPrivate) GoPointer() uintptr {
 // as this object is kept alive which may have unexpected results if
 // alive for too long.
 //
-// See #GSocketConnectable for an example of using the connectable
+// See [iface@Gio.SocketConnectable] for an example of using the connectable
 // interface.
 type NetworkAddress struct {
 	gobject.Object

@@ -22,8 +22,7 @@ func (x *SingleSelectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkSingleSelection` is a `GtkSelectionModel` that allows selecting a single
-// item.
+// A selection model that allows selecting a single item.
 //
 // Note that the selection is *persistent* -- if the selected item is removed
 // and re-added in the same [signal@Gio.ListModel::items-changed] emission, it
@@ -148,7 +147,7 @@ var xSingleSelectionSetCanUnselect func(uintptr, bool)
 //
 // Note that setting [property@Gtk.SingleSelection:autoselect] will
 // cause unselecting to not work, so it practically makes no sense
-// to set both at the same time the same time.
+// to set both at the same time.
 func (x *SingleSelection) SetCanUnselect(CanUnselectVar bool) {
 
 	xSingleSelectionSetCanUnselect(x.GoPointer(), CanUnselectVar)
@@ -175,7 +174,8 @@ var xSingleSelectionSetSelected func(uintptr, uint)
 // value of the [property@Gtk.SingleSelection:autoselect] property:
 // If it is set, no change will occur and the old item will stay
 // selected. If it is unset, the selection will be unset and no item
-// will be selected.
+// will be selected. This also applies if [property@Gtk.SingleSelection:can-unselect]
+// is set to %FALSE.
 func (x *SingleSelection) SetSelected(PositionVar uint) {
 
 	xSingleSelectionSetSelected(x.GoPointer(), PositionVar)
@@ -284,6 +284,38 @@ func (x *SingleSelection) ItemsChanged(PositionVar uint, RemovedVar uint, AddedV
 
 }
 
+// Query the section that covers the given position. The number of
+// items in the section can be computed by `out_end - out_start`.
+//
+// If the position is larger than the number of items, a single
+// range from n_items to G_MAXUINT will be returned.
+func (x *SingleSelection) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+
+	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
+
+}
+
+// This function emits the [signal@Gtk.SectionModel::sections-changed]
+// signal to notify about changes to sections.
+//
+// It must cover all positions that used to be a section start or that
+// are now a section start. It does not have to cover all positions for
+// which the section has changed.
+//
+// The [signal@Gio.ListModel::items-changed] implies the effect of the
+// [signal@Gtk.SectionModel::sections-changed] signal for all the items
+// it covers.
+//
+// It is recommended that when changes to the items cause section changes
+// in a larger range, that the larger range is included in the emission
+// of the [signal@Gio.ListModel::items-changed] instead of emitting
+// two signals.
+func (x *SingleSelection) SectionsChanged(PositionVar uint, NItemsVar uint) {
+
+	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
+
+}
+
 // Gets the set containing all currently selected items in the model.
 //
 // This function may be slow, so if you are only interested in single item,
@@ -338,7 +370,7 @@ func (x *SingleSelection) SelectRange(PositionVar uint, NItemsVar uint, Unselect
 
 // Helper function for implementations of `GtkSelectionModel`.
 //
-// Call this when a the selection changes to emit the
+// Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
 func (x *SingleSelection) SelectionChanged(PositionVar uint, NItemsVar uint) {
 

@@ -13,6 +13,9 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/pango"
 )
 
+// Function that formats the value of a scale.
+//
+// See [method@Gtk.Scale.set_format_value_func].
 type ScaleFormatValueFunc func(uintptr, float64, uintptr) string
 
 type ScaleClass struct {
@@ -52,12 +55,17 @@ func (x *ScaleClass) GetGetLayoutOffsets() func(*Scale, int, int) {
 	}
 }
 
-// A `GtkScale` is a slider control used to select a numeric value.
+// Allows to select a numeric value with a slider control.
 //
-// ![An example GtkScale](scales.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="scales-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkScale" src="scales.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // To use it, you’ll probably want to investigate the methods on its base
-// class, [class@GtkRange], in addition to the methods for `GtkScale` itself.
+// class, [class@Gtk.Range], in addition to the methods for `GtkScale` itself.
 // To set the value of a scale, you would normally use [method@Gtk.Range.set_value].
 // To detect changes to the value, you would normally use the
 // [signal@Gtk.Range::value-changed] signal.
@@ -69,12 +77,21 @@ func (x *ScaleClass) GetGetLayoutOffsets() func(*Scale, int, int) {
 //
 // # GtkScale as GtkBuildable
 //
-// `GtkScale` supports a custom &lt;marks&gt; element, which can contain multiple
-// &lt;mark\&gt; elements. The “value” and “position” attributes have the same
+// `GtkScale` supports a custom `&lt;marks&gt;` element, which can contain multiple
+// `&lt;mark\&gt;` elements. The “value” and “position” attributes have the same
 // meaning as [method@Gtk.Scale.add_mark] parameters of the same name. If
 // the element is not empty, its content is taken as the markup to show at
 // the mark. It can be translated with the usual ”translatable” and
 // “context” attributes.
+//
+// # Shortcuts and Gestures
+//
+// `GtkPopoverMenu` supports the following keyboard shortcuts:
+//
+//   - Arrow keys, &lt;kbd&gt;+&lt;/kbd&gt; and &lt;kbd&gt;-&lt;/kbd&gt; will increment or decrement
+//     by step, or by page when combined with &lt;kbd&gt;Ctrl&lt;/kbd&gt;.
+//   - &lt;kbd&gt;PgUp&lt;/kbd&gt; and &lt;kbd&gt;PgDn&lt;/kbd&gt; will increment or decrement by page.
+//   - &lt;kbd&gt;Home&lt;/kbd&gt; and &lt;kbd&gt;End&lt;/kbd&gt; will set the minimum or maximum value.
 //
 // # CSS nodes
 //
@@ -133,7 +150,7 @@ func (x *ScaleClass) GetGetLayoutOffsets() func(*Scale, int, int) {
 //
 // # Accessibility
 //
-// `GtkScale` uses the %GTK_ACCESSIBLE_ROLE_SLIDER role.
+// `GtkScale` uses the [enum@Gtk.AccessibleRole.slider] role.
 type Scale struct {
 	Range
 }
@@ -276,7 +293,7 @@ var xScaleGetLayoutOffsets func(uintptr, int, int)
 // Remember when using the `PangoLayout` function you need to
 // convert to and from pixels using `PANGO_PIXELS()` or `PANGO_SCALE`.
 //
-// If the [property@GtkScale:draw-value] property is %FALSE, the return
+// If the [property@Gtk.Scale:draw-value] property is %FALSE, the return
 // values are undefined.
 func (x *Scale) GetLayoutOffsets(XVar int, YVar int) {
 
@@ -299,9 +316,9 @@ var xScaleSetDigits func(uintptr, int)
 //
 // Also causes the value of the adjustment to be rounded to this number
 // of digits, so the retrieved value matches the displayed one, if
-// [property@GtkScale:draw-value] is %TRUE when the value changes. If
-// you want to enforce rounding the value when [property@GtkScale:draw-value]
-// is %FALSE, you can set [property@GtkRange:round-digits] instead.
+// [property@Gtk.Scale:draw-value] is %TRUE when the value changes. If
+// you want to enforce rounding the value when [property@Gtk.Scale:draw-value]
+// is %FALSE, you can set [property@Gtk.Range:round-digits] instead.
 //
 // Note that rounding to a small number of digits can interfere with
 // the smooth autoscrolling that is built into `GtkScale`. As an alternative,
@@ -332,7 +349,7 @@ var xScaleSetFormatValueFunc func(uintptr, uintptr, uintptr, uintptr)
 //
 // If #NULL is passed as @func, the value will be displayed on
 // its own, rounded according to the value of the
-// [property@GtkScale:digits] property.
+// [property@Gtk.Scale:digits] property.
 func (x *Scale) SetFormatValueFunc(FuncVar *ScaleFormatValueFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
 
 	xScaleSetFormatValueFunc(x.GoPointer(), glib.NewCallbackNullable(FuncVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
@@ -343,7 +360,7 @@ var xScaleSetHasOrigin func(uintptr, bool)
 
 // Sets whether the scale has an origin.
 //
-// If [property@GtkScale:has-origin] is set to %TRUE (the default),
+// If [property@Gtk.Scale:has-origin] is set to %TRUE (the default),
 // the scale will highlight the part of the trough between the origin
 // (bottom or left side) and the current value.
 func (x *Scale) SetHasOrigin(HasOriginVar bool) {
@@ -372,31 +389,162 @@ func (c *Scale) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *Scale) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *Scale) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *Scale) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *Scale) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *Scale) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *Scale) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *Scale) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *Scale) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *Scale) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *Scale) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *Scale) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *Scale) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *Scale) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *Scale) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -442,7 +590,7 @@ func (x *Scale) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessib
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -472,13 +620,17 @@ func (x *Scale) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessible
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -508,7 +660,7 @@ func (x *Scale) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Scale) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

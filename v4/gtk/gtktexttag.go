@@ -31,7 +31,7 @@ func (x *TextTagPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A tag that can be applied to text contained in a `GtkTextBuffer`.
+// Can be applied to text contained in a `GtkTextBuffer`.
 //
 // You may wish to begin by reading the
 // [text widget conceptual overview](section-text-widget.html),

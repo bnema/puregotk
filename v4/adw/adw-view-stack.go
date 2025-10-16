@@ -59,7 +59,9 @@ func (x *ViewStackPagesClass) GoPointer() uintptr {
 // [property@ViewStackPage:needs-attention], and
 // [property@ViewStackPage:badge-number] properties.
 //
-// Unlike [class@Gtk.Stack], transitions between views are not animated.
+// Unlike [class@Gtk.Stack], transitions between views can only be animated via
+// a crossfade and size changes are always interpolated. Animations are disabled
+// by default. Use [property@ViewStack:enable-transitions] to enable them.
 //
 // `AdwViewStack` maintains a [class@ViewStackPage] object for each added child,
 // which holds additional per-child properties. You obtain the
@@ -225,6 +227,19 @@ func (x *ViewStack) GetChildByName(NameVar string) *gtk.Widget {
 	return cls
 }
 
+var xViewStackGetEnableTransitions func(uintptr) bool
+
+// Gets whether @self uses a crossfade transition between pages.
+//
+// Use [property@ViewStack:transition-duration] to control the duration, and
+// [property@ViewStack:transition-running] to know when the transition is
+// running.
+func (x *ViewStack) GetEnableTransitions() bool {
+
+	cret := xViewStackGetEnableTransitions(x.GoPointer())
+	return cret
+}
+
 var xViewStackGetHhomogeneous func(uintptr) bool
 
 // Gets whether @self is horizontally homogeneous.
@@ -271,6 +286,28 @@ func (x *ViewStack) GetPages() *gtk.SelectionModelBase {
 	return cls
 }
 
+var xViewStackGetTransitionDuration func(uintptr) uint
+
+// Gets the transition animation duration for @self.
+func (x *ViewStack) GetTransitionDuration() uint {
+
+	cret := xViewStackGetTransitionDuration(x.GoPointer())
+	return cret
+}
+
+var xViewStackGetTransitionRunning func(uintptr) bool
+
+// Gets whether a transition is currently running for @self.
+//
+// If a transition is impossible, the property value will be set to `TRUE` and
+// then immediately to `FALSE`, so it's possible to rely on its notifications
+// to know that a transition has happened.
+func (x *ViewStack) GetTransitionRunning() bool {
+
+	cret := xViewStackGetTransitionRunning(x.GoPointer())
+	return cret
+}
+
 var xViewStackGetVhomogeneous func(uintptr) bool
 
 // Gets whether @self is vertically homogeneous.
@@ -315,6 +352,15 @@ func (x *ViewStack) Remove(ChildVar *gtk.Widget) {
 
 }
 
+var xViewStackSetEnableTransitions func(uintptr, bool)
+
+// Sets whether @self uses a crossfade transition between pages.
+func (x *ViewStack) SetEnableTransitions(EnableTransitionsVar bool) {
+
+	xViewStackSetEnableTransitions(x.GoPointer(), EnableTransitionsVar)
+
+}
+
 var xViewStackSetHhomogeneous func(uintptr, bool)
 
 // Sets @self to be horizontally homogeneous or not.
@@ -327,6 +373,17 @@ var xViewStackSetHhomogeneous func(uintptr, bool)
 func (x *ViewStack) SetHhomogeneous(HhomogeneousVar bool) {
 
 	xViewStackSetHhomogeneous(x.GoPointer(), HhomogeneousVar)
+
+}
+
+var xViewStackSetTransitionDuration func(uintptr, uint)
+
+// Sets the transition animation duration for @self.
+//
+// Only used when [property@ViewStack:enable-transitions] is set to `TRUE`.
+func (x *ViewStack) SetTransitionDuration(DurationVar uint) {
+
+	xViewStackSetTransitionDuration(x.GoPointer(), DurationVar)
 
 }
 
@@ -376,31 +433,162 @@ func (c *ViewStack) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *ViewStack) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
+
+	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *ViewStack) GetAccessibleParent() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *ViewStack) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *ViewStack) GetAtContext() *gtk.ATContext {
+	var cls *gtk.ATContext
+
+	cret := gtk.XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *ViewStack) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *ViewStack) GetFirstAccessibleChild() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *ViewStack) GetNextAccessibleSibling() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *ViewStack) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
+
+	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *ViewStack) ResetProperty(PropertyVar gtk.AccessibleProperty) {
 
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *ViewStack) ResetRelation(RelationVar gtk.AccessibleRelation) {
 
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *ViewStack) ResetState(StateVar gtk.AccessibleState) {
 
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *ViewStack) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *ViewStack) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *ViewStack) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
+
+	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -446,7 +634,7 @@ func (x *ViewStack) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -476,13 +664,17 @@ func (x *ViewStack) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Ac
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -512,7 +704,7 @@ func (x *ViewStack) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleS
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ViewStack) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
@@ -703,31 +895,162 @@ func (c *ViewStackPage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *ViewStackPage) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
+
+	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *ViewStackPage) GetAccessibleParent() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *ViewStackPage) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *ViewStackPage) GetAtContext() *gtk.ATContext {
+	var cls *gtk.ATContext
+
+	cret := gtk.XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *ViewStackPage) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *ViewStackPage) GetFirstAccessibleChild() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *ViewStackPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *ViewStackPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
+
+	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *ViewStackPage) ResetProperty(PropertyVar gtk.AccessibleProperty) {
 
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *ViewStackPage) ResetRelation(RelationVar gtk.AccessibleRelation) {
 
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *ViewStackPage) ResetState(StateVar gtk.AccessibleState) {
 
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *ViewStackPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *ViewStackPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *ViewStackPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
+
+	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -773,7 +1096,7 @@ func (x *ViewStackPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -803,13 +1126,17 @@ func (x *ViewStackPage) UpdateRelationValue(NRelationsVar int, RelationsVar []gt
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -1043,7 +1370,7 @@ func (x *ViewStackPages) SelectRange(PositionVar uint, NItemsVar uint, UnselectR
 
 // Helper function for implementations of `GtkSelectionModel`.
 //
-// Call this when a the selection changes to emit the
+// Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
 func (x *ViewStackPages) SelectionChanged(PositionVar uint, NItemsVar uint) {
 
@@ -1131,14 +1458,19 @@ func init() {
 	core.PuregoSafeRegister(&xViewStackAddTitled, lib, "adw_view_stack_add_titled")
 	core.PuregoSafeRegister(&xViewStackAddTitledWithIcon, lib, "adw_view_stack_add_titled_with_icon")
 	core.PuregoSafeRegister(&xViewStackGetChildByName, lib, "adw_view_stack_get_child_by_name")
+	core.PuregoSafeRegister(&xViewStackGetEnableTransitions, lib, "adw_view_stack_get_enable_transitions")
 	core.PuregoSafeRegister(&xViewStackGetHhomogeneous, lib, "adw_view_stack_get_hhomogeneous")
 	core.PuregoSafeRegister(&xViewStackGetPage, lib, "adw_view_stack_get_page")
 	core.PuregoSafeRegister(&xViewStackGetPages, lib, "adw_view_stack_get_pages")
+	core.PuregoSafeRegister(&xViewStackGetTransitionDuration, lib, "adw_view_stack_get_transition_duration")
+	core.PuregoSafeRegister(&xViewStackGetTransitionRunning, lib, "adw_view_stack_get_transition_running")
 	core.PuregoSafeRegister(&xViewStackGetVhomogeneous, lib, "adw_view_stack_get_vhomogeneous")
 	core.PuregoSafeRegister(&xViewStackGetVisibleChild, lib, "adw_view_stack_get_visible_child")
 	core.PuregoSafeRegister(&xViewStackGetVisibleChildName, lib, "adw_view_stack_get_visible_child_name")
 	core.PuregoSafeRegister(&xViewStackRemove, lib, "adw_view_stack_remove")
+	core.PuregoSafeRegister(&xViewStackSetEnableTransitions, lib, "adw_view_stack_set_enable_transitions")
 	core.PuregoSafeRegister(&xViewStackSetHhomogeneous, lib, "adw_view_stack_set_hhomogeneous")
+	core.PuregoSafeRegister(&xViewStackSetTransitionDuration, lib, "adw_view_stack_set_transition_duration")
 	core.PuregoSafeRegister(&xViewStackSetVhomogeneous, lib, "adw_view_stack_set_vhomogeneous")
 	core.PuregoSafeRegister(&xViewStackSetVisibleChild, lib, "adw_view_stack_set_visible_child")
 	core.PuregoSafeRegister(&xViewStackSetVisibleChildName, lib, "adw_view_stack_set_visible_child_name")

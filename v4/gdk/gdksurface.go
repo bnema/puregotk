@@ -21,10 +21,10 @@ func (x *SurfaceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A `GdkSurface` is a rectangular region on the screen.
+// Represents a rectangular region on the screen.
 //
 // It’s a low-level object, used to implement high-level objects
-// such as [class@Gtk.Window] or [class@Gtk.Dialog] in GTK.
+// such as [GtkWindow](../gtk4/class.Window.html).
 //
 // The surfaces you see in practice are either [iface@Gdk.Toplevel] or
 // [iface@Gdk.Popup], and those interfaces provide much of the required
@@ -160,9 +160,7 @@ func (x *Surface) CreateSimilarSurface(ContentVar cairo.Content, WidthVar int, H
 
 var xSurfaceCreateVulkanContext func(uintptr) uintptr
 
-// Creates a new `GdkVulkanContext` for rendering on @surface.
-//
-// If the creation of the `GdkVulkanContext` failed, @error will be set.
+// Sets an error and returns %NULL.
 func (x *Surface) CreateVulkanContext() (*VulkanContext, error) {
 	var cls *VulkanContext
 	var cerr *glib.Error
@@ -317,6 +315,25 @@ func (x *Surface) GetMapped() bool {
 	return cret
 }
 
+var xSurfaceGetScale func(uintptr) float64
+
+// Returns the internal scale that maps from surface coordinates
+// to the actual device pixels.
+//
+// When the scale is bigger than 1, the windowing system prefers to get
+// buffers with a resolution that is bigger than the surface size (e.g.
+// to show the surface on a high-resolution display, or in a magnifier).
+//
+// Compare with [method@Gdk.Surface.get_scale_factor], which returns the
+// next larger integer.
+//
+// The scale may change during the lifetime of the surface.
+func (x *Surface) GetScale() float64 {
+
+	cret := xSurfaceGetScale(x.GoPointer())
+	return cret
+}
+
 var xSurfaceGetScaleFactor func(uintptr) int
 
 // Returns the internal scale factor that maps from surface coordinates
@@ -329,7 +346,7 @@ var xSurfaceGetScaleFactor func(uintptr) int
 // pixel-based data the scale value can be used to determine whether to
 // use a pixel resource with higher resolution data.
 //
-// The scale of a surface may change during runtime.
+// The scale factor may change during the lifetime of the surface.
 func (x *Surface) GetScaleFactor() int {
 
 	cret := xSurfaceGetScaleFactor(x.GoPointer())
@@ -355,7 +372,7 @@ var xSurfaceHide func(uintptr)
 // For toplevel surfaces, withdraws them, so they will no longer be
 // known to the window manager; for all surfaces, unmaps them, so
 // they won’t be displayed. Normally done automatically as
-// part of [method@Gtk.Widget.hide].
+// part of [gtk_widget_hide()](../gtk4/method.Widget.hide.html).
 func (x *Surface) Hide() {
 
 	xSurfaceHide(x.GoPointer())
@@ -464,7 +481,7 @@ var xSurfaceSetOpaqueRegion func(uintptr, *cairo.Region)
 // GTK will update this property automatically if the @surface background
 // is opaque, as we know where the opaque regions are. If your surface
 // background is not opaque, please update this property in your
-// [vfunc@Gtk.Widget.css_changed] handler.
+// [GtkWidgetClass.css_changed](../gtk4/vfunc.Widget.css_changed.html) handler.
 func (x *Surface) SetOpaqueRegion(RegionVar *cairo.Region) {
 
 	xSurfaceSetOpaqueRegion(x.GoPointer(), RegionVar)
@@ -624,6 +641,7 @@ func init() {
 	core.PuregoSafeRegister(&xSurfaceGetFrameClock, lib, "gdk_surface_get_frame_clock")
 	core.PuregoSafeRegister(&xSurfaceGetHeight, lib, "gdk_surface_get_height")
 	core.PuregoSafeRegister(&xSurfaceGetMapped, lib, "gdk_surface_get_mapped")
+	core.PuregoSafeRegister(&xSurfaceGetScale, lib, "gdk_surface_get_scale")
 	core.PuregoSafeRegister(&xSurfaceGetScaleFactor, lib, "gdk_surface_get_scale_factor")
 	core.PuregoSafeRegister(&xSurfaceGetWidth, lib, "gdk_surface_get_width")
 	core.PuregoSafeRegister(&xSurfaceHide, lib, "gdk_surface_hide")

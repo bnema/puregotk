@@ -226,7 +226,7 @@ func (x *DBusInterfaceInfo) Unref() {
 
 }
 
-// Information about a method on an D-Bus interface.
+// Information about a method on a D-Bus interface.
 type DBusMethodInfo struct {
 	_ structs.HostLayout
 
@@ -302,10 +302,10 @@ var xNewDBusNodeInfoForXml func(string, **glib.Error) *DBusNodeInfo
 // Parses @xml_data and returns a #GDBusNodeInfo representing the data.
 //
 // The introspection XML must contain exactly one top-level
-// &lt;node&gt; element.
+// `&lt;node&gt;` element.
 //
 // Note that this routine is using a
-// [GMarkup][glib-Simple-XML-Subset-Parser.description]-based
+// [GMarkup](../glib/markup.html)-based
 // parser that only accepts a subset of valid XML documents.
 func NewDBusNodeInfoForXml(XmlDataVar string) (*DBusNodeInfo, error) {
 	var cerr *glib.Error

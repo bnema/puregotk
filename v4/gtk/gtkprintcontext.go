@@ -10,7 +10,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/pango"
 )
 
-// A `GtkPrintContext` encapsulates context information that is required when
+// Encapsulates context information that is required when
 // drawing pages for printing.
 //
 // This includes the cairo context and important parameters like page size

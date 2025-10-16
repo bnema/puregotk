@@ -269,6 +269,15 @@ func (x *NavigationSplitView) GetSidebar() *NavigationPage {
 	return cls
 }
 
+var xNavigationSplitViewGetSidebarPosition func(uintptr) gtk.PackType
+
+// Gets the sidebar position for @self.
+func (x *NavigationSplitView) GetSidebarPosition() gtk.PackType {
+
+	cret := xNavigationSplitViewGetSidebarPosition(x.GoPointer())
+	return cret
+}
+
 var xNavigationSplitViewGetSidebarWidthFraction func(uintptr) float64
 
 // Gets the preferred sidebar width fraction for @self.
@@ -365,6 +374,21 @@ func (x *NavigationSplitView) SetSidebar(SidebarVar *NavigationPage) {
 
 }
 
+var xNavigationSplitViewSetSidebarPosition func(uintptr, gtk.PackType)
+
+// Sets the sidebar position for @self.
+//
+// If set to `GTK_PACK_START`, the sidebar is displayed before the content,
+// and the sidebar will be the root page when collapsed.
+//
+// If set to `GTK_PACK_END`, the sidebar is displayed after the content,
+// and the content will be the root page.
+func (x *NavigationSplitView) SetSidebarPosition(PositionVar gtk.PackType) {
+
+	xNavigationSplitViewSetSidebarPosition(x.GoPointer(), PositionVar)
+
+}
+
 var xNavigationSplitViewSetSidebarWidthFraction func(uintptr, float64)
 
 // Sets the preferred sidebar width as a fraction of the total width of @self.
@@ -404,31 +428,162 @@ func (c *NavigationSplitView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *NavigationSplitView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
+
+	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *NavigationSplitView) GetAccessibleParent() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *NavigationSplitView) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *NavigationSplitView) GetAtContext() *gtk.ATContext {
+	var cls *gtk.ATContext
+
+	cret := gtk.XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *NavigationSplitView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *NavigationSplitView) GetFirstAccessibleChild() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *NavigationSplitView) GetNextAccessibleSibling() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *NavigationSplitView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
+
+	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *NavigationSplitView) ResetProperty(PropertyVar gtk.AccessibleProperty) {
 
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *NavigationSplitView) ResetRelation(RelationVar gtk.AccessibleRelation) {
 
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *NavigationSplitView) ResetState(StateVar gtk.AccessibleState) {
 
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *NavigationSplitView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *NavigationSplitView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *NavigationSplitView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
+
+	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -474,7 +629,7 @@ func (x *NavigationSplitView) UpdatePropertyValue(NPropertiesVar int, Properties
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -504,13 +659,17 @@ func (x *NavigationSplitView) UpdateRelationValue(NRelationsVar int, RelationsVa
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -540,7 +699,7 @@ func (x *NavigationSplitView) UpdateStateValue(NStatesVar int, StatesVar []gtk.A
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *NavigationSplitView) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
@@ -565,6 +724,7 @@ func init() {
 	core.PuregoSafeRegister(&xNavigationSplitViewGetMinSidebarWidth, lib, "adw_navigation_split_view_get_min_sidebar_width")
 	core.PuregoSafeRegister(&xNavigationSplitViewGetShowContent, lib, "adw_navigation_split_view_get_show_content")
 	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebar, lib, "adw_navigation_split_view_get_sidebar")
+	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebarPosition, lib, "adw_navigation_split_view_get_sidebar_position")
 	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebarWidthFraction, lib, "adw_navigation_split_view_get_sidebar_width_fraction")
 	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebarWidthUnit, lib, "adw_navigation_split_view_get_sidebar_width_unit")
 	core.PuregoSafeRegister(&xNavigationSplitViewSetCollapsed, lib, "adw_navigation_split_view_set_collapsed")
@@ -573,6 +733,7 @@ func init() {
 	core.PuregoSafeRegister(&xNavigationSplitViewSetMinSidebarWidth, lib, "adw_navigation_split_view_set_min_sidebar_width")
 	core.PuregoSafeRegister(&xNavigationSplitViewSetShowContent, lib, "adw_navigation_split_view_set_show_content")
 	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebar, lib, "adw_navigation_split_view_set_sidebar")
+	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarPosition, lib, "adw_navigation_split_view_set_sidebar_position")
 	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarWidthFraction, lib, "adw_navigation_split_view_set_sidebar_width_fraction")
 	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarWidthUnit, lib, "adw_navigation_split_view_set_sidebar_width_unit")
 

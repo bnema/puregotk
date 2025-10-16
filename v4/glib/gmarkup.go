@@ -353,6 +353,10 @@ func (x *MarkupParser) GoPointer() uintptr {
 }
 
 // OverrideStartElement sets the callback function.
+// Callback to invoke when the opening tag of an element
+//
+//	is seen. The callback's @attribute_names and @attribute_values parameters
+//	are %NULL-terminated.
 func (x *MarkupParser) OverrideStartElement(cb func(*MarkupParseContext, string, string, string, uintptr)) {
 	if cb == nil {
 		x.xStartElement = 0
@@ -364,6 +368,10 @@ func (x *MarkupParser) OverrideStartElement(cb func(*MarkupParseContext, string,
 }
 
 // GetStartElement gets the callback function.
+// Callback to invoke when the opening tag of an element
+//
+//	is seen. The callback's @attribute_names and @attribute_values parameters
+//	are %NULL-terminated.
 func (x *MarkupParser) GetStartElement() func(*MarkupParseContext, string, string, string, uintptr) {
 	if x.xStartElement == 0 {
 		return nil
@@ -376,6 +384,10 @@ func (x *MarkupParser) GetStartElement() func(*MarkupParseContext, string, strin
 }
 
 // OverrideEndElement sets the callback function.
+// Callback to invoke when the closing tag of an element
+//
+//	is seen. Note that this is also called for empty tags like
+//	`&lt;empty/&gt;`.
 func (x *MarkupParser) OverrideEndElement(cb func(*MarkupParseContext, string, uintptr)) {
 	if cb == nil {
 		x.xEndElement = 0
@@ -387,6 +399,10 @@ func (x *MarkupParser) OverrideEndElement(cb func(*MarkupParseContext, string, u
 }
 
 // GetEndElement gets the callback function.
+// Callback to invoke when the closing tag of an element
+//
+//	is seen. Note that this is also called for empty tags like
+//	`&lt;empty/&gt;`.
 func (x *MarkupParser) GetEndElement() func(*MarkupParseContext, string, uintptr) {
 	if x.xEndElement == 0 {
 		return nil
@@ -399,6 +415,12 @@ func (x *MarkupParser) GetEndElement() func(*MarkupParseContext, string, uintptr
 }
 
 // OverrideText sets the callback function.
+// Callback to invoke when some text is seen (text is always
+//
+//	inside an element). Note that the text of an element may be spread
+//	over multiple calls of this function. If the
+//	%G_MARKUP_TREAT_CDATA_AS_TEXT flag is set, this function is also
+//	called for the content of CDATA marked sections.
 func (x *MarkupParser) OverrideText(cb func(*MarkupParseContext, string, uint, uintptr)) {
 	if cb == nil {
 		x.xText = 0
@@ -410,6 +432,12 @@ func (x *MarkupParser) OverrideText(cb func(*MarkupParseContext, string, uint, u
 }
 
 // GetText gets the callback function.
+// Callback to invoke when some text is seen (text is always
+//
+//	inside an element). Note that the text of an element may be spread
+//	over multiple calls of this function. If the
+//	%G_MARKUP_TREAT_CDATA_AS_TEXT flag is set, this function is also
+//	called for the content of CDATA marked sections.
 func (x *MarkupParser) GetText() func(*MarkupParseContext, string, uint, uintptr) {
 	if x.xText == 0 {
 		return nil
@@ -422,6 +450,12 @@ func (x *MarkupParser) GetText() func(*MarkupParseContext, string, uint, uintptr
 }
 
 // OverridePassthrough sets the callback function.
+// Callback to invoke for comments, processing instructions
+//
+//	and doctype declarations; if you're re-writing the parsed document,
+//	write the passthrough text back out in the same position. If the
+//	%G_MARKUP_TREAT_CDATA_AS_TEXT flag is not set, this function is also
+//	called for CDATA marked sections.
 func (x *MarkupParser) OverridePassthrough(cb func(*MarkupParseContext, string, uint, uintptr)) {
 	if cb == nil {
 		x.xPassthrough = 0
@@ -433,6 +467,12 @@ func (x *MarkupParser) OverridePassthrough(cb func(*MarkupParseContext, string, 
 }
 
 // GetPassthrough gets the callback function.
+// Callback to invoke for comments, processing instructions
+//
+//	and doctype declarations; if you're re-writing the parsed document,
+//	write the passthrough text back out in the same position. If the
+//	%G_MARKUP_TREAT_CDATA_AS_TEXT flag is not set, this function is also
+//	called for CDATA marked sections.
 func (x *MarkupParser) GetPassthrough() func(*MarkupParseContext, string, uint, uintptr) {
 	if x.xPassthrough == 0 {
 		return nil
@@ -445,6 +485,7 @@ func (x *MarkupParser) GetPassthrough() func(*MarkupParseContext, string, uint, 
 }
 
 // OverrideError sets the callback function.
+// Callback to invoke when an error occurs.
 func (x *MarkupParser) OverrideError(cb func(*MarkupParseContext, *Error, uintptr)) {
 	if cb == nil {
 		x.xError = 0
@@ -456,6 +497,7 @@ func (x *MarkupParser) OverrideError(cb func(*MarkupParseContext, *Error, uintpt
 }
 
 // GetError gets the callback function.
+// Callback to invoke when an error occurs.
 func (x *MarkupParser) GetError() func(*MarkupParseContext, *Error, uintptr) {
 	if x.xError == 0 {
 		return nil
@@ -489,7 +531,7 @@ const (
 	//     expects a parameter of type (char **) and g_strdup()s the
 	//     returned pointer. The pointer must be freed with g_free()
 	GMarkupCollectStrdupValue MarkupCollectType = 2
-	// expects a parameter of type (gboolean *)
+	// expects a parameter of type (`gboolean *`)
 	//     and parses the attribute value as a boolean. Sets %FALSE if the
 	//     attribute isn't present. Valid boolean values consist of
 	//     (case-insensitive) "false", "f", "no", "n", "0" and "true", "t",
@@ -497,7 +539,7 @@ const (
 	GMarkupCollectBooleanValue MarkupCollectType = 3
 	// as with %G_MARKUP_COLLECT_BOOLEAN, but
 	//     in the case of a missing attribute a value is set that compares
-	//     equal to neither %FALSE nor %TRUE G_MARKUP_COLLECT_OPTIONAL is
+	//     equal to neither %FALSE nor %TRUE %G_MARKUP_COLLECT_OPTIONAL is
 	//     implied
 	GMarkupCollectTristateValue MarkupCollectType = 4
 	// can be bitwise ORed with the other fields.
@@ -511,6 +553,8 @@ type MarkupParseFlags int
 
 const (
 
+	// No special behaviour. Since: 2.74
+	GMarkupDefaultFlagsValue MarkupParseFlags = 0
 	// flag you should not use
 	GMarkupDoNotUseThisUnsupportedFlagValue MarkupParseFlags = 1
 	// When this flag is set, CDATA marked
@@ -660,7 +704,7 @@ func MarkupVprintfEscaped(FormatVar string, ArgsVar []interface{}) string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

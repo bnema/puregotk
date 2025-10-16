@@ -24,6 +24,8 @@ func IconLookupFlagsGLibType() types.GType {
 
 const (
 
+	// Perform a regular lookup.
+	IconLookupNoneValue IconLookupFlags = 0
 	// Try to always load regular icons, even
 	//   when symbolic icon names are given
 	IconLookupForceRegularValue IconLookupFlags = 1
@@ -51,6 +53,15 @@ const (
 	// An unspecified error occurred.
 	IconThemeFailedValue IconThemeError = 1
 )
+
+var xIconThemeErrorQuark func() glib.Quark
+
+// Registers an error quark for [class@Gtk.IconTheme] errors.
+func IconThemeErrorQuark() glib.Quark {
+
+	cret := xIconThemeErrorQuark()
+	return cret
+}
 
 // Contains information found when looking up an icon in `GtkIconTheme`.
 //
@@ -130,9 +141,6 @@ var xIconPaintableIsSymbolic func(uintptr) bool
 //
 // This currently uses only the file name and not the file contents
 // for determining this. This behaviour may change in the future.
-//
-// Note that to render a symbolic `GtkIconPaintable` properly (with
-// recoloring), you have to set its icon name on a `GtkImage`.
 func (x *IconPaintable) IsSymbolic() bool {
 
 	cret := xIconPaintableIsSymbolic(x.GoPointer())
@@ -304,7 +312,7 @@ func (x *IconPaintable) SnapshotSymbolic(SnapshotVar *gdk.Snapshot, WidthVar flo
 
 }
 
-// `GtkIconTheme` provides a facility for loading themed icons.
+// Loads themed icons.
 //
 // The main reason for using a name rather than simply providing a filename
 // is to allow different icons to be used depending on what “icon theme” is
@@ -466,8 +474,6 @@ func (x *IconTheme) GetSearchPath() []string {
 var xIconThemeGetThemeName func(uintptr) string
 
 // Gets the current icon theme name.
-//
-// Returns (transfer full): the current icon theme name,
 func (x *IconTheme) GetThemeName() string {
 
 	cret := xIconThemeGetThemeName(x.GoPointer())
@@ -612,7 +618,7 @@ func (c *IconTheme) SetGoPointer(ptr uintptr) {
 
 // Emitted when the icon theme changes.
 //
-// This can happen becuase current icon theme is switched or
+// This can happen because current icon theme is switched or
 // because GTK detects that a change has occurred in the
 // contents of the current icon theme.
 func (x *IconTheme) ConnectChanged(cb *func(IconTheme)) uint32 {
@@ -669,6 +675,8 @@ func init() {
 	core.PuregoSafeRegister(&xIconLookupFlagsGLibType, lib, "gtk_icon_lookup_flags_get_type")
 
 	core.PuregoSafeRegister(&xIconThemeErrorGLibType, lib, "gtk_icon_theme_error_get_type")
+
+	core.PuregoSafeRegister(&xIconThemeErrorQuark, lib, "gtk_icon_theme_error_quark")
 
 	core.PuregoSafeRegister(&xIconPaintableGLibType, lib, "gtk_icon_paintable_get_type")
 

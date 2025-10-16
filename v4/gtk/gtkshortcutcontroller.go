@@ -21,22 +21,22 @@ func (x *ShortcutControllerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkShortcutController` is an event controller that manages shortcuts.
+// Manages keyboard shortcuts and their activation.
 //
 // Most common shortcuts are using this controller implicitly, e.g. by
-// adding a mnemonic underline to a `GtkLabel`, or by installing a key
+// adding a mnemonic underline to a [class@Gtk.Label], or by installing a key
 // binding using [method@Gtk.WidgetClass.add_binding], or by adding accelerators
 // to global actions using [method@Gtk.Application.set_accels_for_action].
 //
 // But it is possible to create your own shortcut controller, and add
 // shortcuts to it.
 //
-// `GtkShortcutController` implements `GListModel` for querying the
+// `GtkShortcutController` implements [iface@Gio.ListModel] for querying the
 // shortcuts that have been added to it.
 //
-// # GtkShortcutController as a GtkBuildable
+// # GtkShortcutController as GtkBuildable
 //
-// `GtkShortcutControllers` can be creates in ui files to set up
+// `GtkShortcutController`s can be created in [class@Gtk.Builder] ui files, to set up
 // shortcuts in the same place as the widgets.
 //
 // An example of a UI definition fragment with `GtkShortcutController`:
@@ -59,8 +59,8 @@ func (x *ShortcutControllerClass) GoPointer() uintptr {
 // ```
 //
 // This example creates a [class@Gtk.ActivateAction] for triggering the
-// `activate` signal of the `GtkButton`. See [ctor@Gtk.ShortcutAction.parse_string]
-// for the syntax for other kinds of `GtkShortcutAction`. See
+// `activate` signal of the [class@Gtk.Button]. See [ctor@Gtk.ShortcutAction.parse_string]
+// for the syntax for other kinds of [class@Gtk.ShortcutAction]. See
 // [ctor@Gtk.ShortcutTrigger.parse_string] to learn more about the syntax
 // for triggers.
 type ShortcutController struct {
@@ -303,7 +303,7 @@ func (x *ShortcutController) ItemsChanged(PositionVar uint, RemovedVar uint, Add
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ShortcutController) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

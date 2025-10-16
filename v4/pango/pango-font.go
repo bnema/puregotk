@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gio"
 	"github.com/jwijenbergh/puregotk/v4/glib"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
@@ -348,6 +349,17 @@ func (x *FontDescription) GetFamily() string {
 	return cret
 }
 
+var xFontDescriptionGetFeatures func(uintptr) string
+
+// Gets the features field of a font description.
+//
+// See [method@Pango.FontDescription.set_features].
+func (x *FontDescription) GetFeatures() string {
+
+	cret := xFontDescriptionGetFeatures(x.GoPointer())
+	return cret
+}
+
 var xFontDescriptionGetGravity func(uintptr) Gravity
 
 // Gets the gravity field of a font description.
@@ -529,6 +541,54 @@ var xFontDescriptionSetFamilyStatic func(uintptr, string)
 func (x *FontDescription) SetFamilyStatic(FamilyVar string) {
 
 	xFontDescriptionSetFamilyStatic(x.GoPointer(), FamilyVar)
+
+}
+
+var xFontDescriptionSetFeatures func(uintptr, string)
+
+// Sets the features field of a font description.
+//
+// OpenType font features allow to enable or disable certain optional
+// features of a font, such as tabular numbers.
+//
+// The format of the features string is comma-separated list of
+// feature assignments, with each assignment being one of these forms:
+//
+//	FEATURE=n
+//
+// where FEATURE must be a 4 character tag that identifies and OpenType
+// feature, and n an integer (depending on the feature, the allowed
+// values may be 0, 1 or bigger numbers). Unknown features are ignored.
+//
+// Note that font features set in this way are enabled for the entire text
+// that is using the font, which is not appropriate for all OpenType features.
+// The intended use case is to select character variations (features cv01 - c99),
+// style sets (ss01 - ss20) and the like.
+//
+// Pango does not currently have a way to find supported OpenType features
+// of a font. Both harfbuzz and freetype have API for this. See for example
+// [hb_ot_layout_table_get_feature_tags](https://harfbuzz.github.io/harfbuzz-hb-ot-layout.html#hb-ot-layout-table-get-feature-tags).
+//
+// Features that are not supported by the font are silently ignored.
+func (x *FontDescription) SetFeatures(FeaturesVar string) {
+
+	xFontDescriptionSetFeatures(x.GoPointer(), FeaturesVar)
+
+}
+
+var xFontDescriptionSetFeaturesStatic func(uintptr, string)
+
+// Sets the features field of a font description.
+//
+// This is like [method@Pango.FontDescription.set_features], except
+// that no copy of @featuresis made. The caller must make sure that
+// the string passed in stays around until @desc has been freed
+// or the name is set again. This function can be used if
+// @features is a static string such as a C string literal,
+// or if @desc is only needed temporarily.
+func (x *FontDescription) SetFeaturesStatic(FeaturesVar string) {
+
+	xFontDescriptionSetFeaturesStatic(x.GoPointer(), FeaturesVar)
 
 }
 
@@ -1289,10 +1349,12 @@ const (
 	FontMaskStretchValue FontMask = 16
 	// the font size is specified.
 	FontMaskSizeValue FontMask = 32
-	// the font gravity is specified (Since: 1.16.)
+	// The font gravity is specified.
 	FontMaskGravityValue FontMask = 64
-	// OpenType font variations are specified (Since: 1.42)
+	// OpenType font variations are specified.
 	FontMaskVariationsValue FontMask = 128
+	// OpenType font features are specified.
+	FontMaskFeaturesValue FontMask = 256
 )
 
 // An enumeration specifying the width of the font relative to other designs
@@ -1347,9 +1409,6 @@ const (
 )
 
 // An enumeration specifying capitalization variant of the font.
-//
-// Values other than `PANGO_VARIANT_NORMAL` and `PANGO_VARIANT_SMALL_CAPS` are
-// available since 1.50.
 type Variant int
 
 var xVariantGLibType func() types.GType
@@ -1366,21 +1425,21 @@ const (
 	//   replaced by smaller variants of the capital characters.
 	VariantSmallCapsValue Variant = 1
 	// A font with all characters
-	//   replaced by smaller variants of the capital characters.
+	//   replaced by smaller variants of the capital characters. Since: 1.50
 	VariantAllSmallCapsValue Variant = 2
 	// A font with the lower case characters
 	//   replaced by smaller variants of the capital characters.
-	//   Petite Caps can be even smaller than Small Caps.
+	//   Petite Caps can be even smaller than Small Caps. Since: 1.50
 	VariantPetiteCapsValue Variant = 3
 	// A font with all characters
 	//   replaced by smaller variants of the capital characters.
-	//   Petite Caps can be even smaller than Small Caps.
+	//   Petite Caps can be even smaller than Small Caps. Since: 1.50
 	VariantAllPetiteCapsValue Variant = 4
 	// A font with the upper case characters
-	//   replaced by smaller variants of the capital letters.
+	//   replaced by smaller variants of the capital letters. Since: 1.50
 	VariantUnicaseValue Variant = 5
 	// A font with capital letters that
-	//   are more suitable for all-uppercase titles.
+	//   are more suitable for all-uppercase titles. Since: 1.50
 	VariantTitleCapsValue Variant = 6
 )
 
@@ -1410,7 +1469,7 @@ const (
 	WeightBookValue Weight = 380
 	// the default weight (= 400)
 	WeightNormalValue Weight = 400
-	// the normal weight (= 500) Since: 1.24
+	// the medium weight (= 500) Since: 1.24
 	WeightMediumValue Weight = 500
 	// the semibold weight (= 600)
 	WeightSemiboldValue Weight = 600
@@ -1430,15 +1489,13 @@ var xFontDescriptionFromString func(string) *FontDescription
 //
 // The string must have the form
 //
-//	"\[FAMILY-LIST] \[STYLE-OPTIONS] \[SIZE] \[VARIATIONS]",
+//	[FAMILY-LIST] [STYLE-OPTIONS] [SIZE] [VARIATIONS] [FEATURES]
 //
 // where FAMILY-LIST is a comma-separated list of families optionally
 // terminated by a comma, STYLE_OPTIONS is a whitespace-separated list
 // of words where each word describes one of style, variant, weight,
 // stretch, or gravity, and SIZE is a decimal number (size in points)
 // or optionally followed by the unit modifier "px" for absolute size.
-// VARIATIONS is a comma-separated list of font variation
-// specifications of the form "\@axis=value" (the = sign is optional).
 //
 // The following words are understood as styles:
 // "Normal", "Roman", "Oblique", "Italic".
@@ -1461,6 +1518,13 @@ var xFontDescriptionFromString func(string) *FontDescription
 // "Not-Rotated", "South", "Upside-Down", "North", "Rotated-Left",
 // "East", "Rotated-Right", "West".
 //
+// VARIATIONS is a comma-separated list of font variations
+// of the form @‍axis1=value,axis2=value,...
+//
+// FEATURES is a comma-separated list of font features of the form
+// \#‍feature1=value,feature2=value,...
+// The =value part can be ommitted if the value is 1.
+//
 // Any one of the options may be absent. If FAMILY-LIST is absent, then
 // the family_name field of the resulting font description will be
 // initialized to %NULL. If STYLE-OPTIONS is missing, then all style
@@ -1469,7 +1533,7 @@ var xFontDescriptionFromString func(string) *FontDescription
 //
 // A typical example:
 //
-//	"Cantarell Italic Light 15 \@wght=200"
+//	Cantarell Italic Light 15 @‍wght=200 #‍tnum=1
 func FontDescriptionFromString(StrVar string) *FontDescription {
 
 	cret := xFontDescriptionFromString(StrVar)
@@ -1660,8 +1724,6 @@ func (x *Font) GetMetrics(LanguageVar *Language) *FontMetrics {
 var xFontHasChar func(uintptr, uint32) bool
 
 // Returns whether the font provides a glyph for this character.
-//
-// Returns %TRUE if @font can render @wc
 func (x *Font) HasChar(WcVar uint32) bool {
 
 	cret := xFontHasChar(x.GoPointer(), WcVar)
@@ -1767,9 +1829,9 @@ var xFontFaceGetFaceName func(uintptr) string
 
 // Gets a name representing the style of this face.
 //
-// The name identifies the face among the different faces
-// in the `PangoFontFamily` for the face. It is suitable
-// for displaying to users.
+// Note that a font family may contain multiple faces
+// with the same name (e.g. a variable and a non-variable
+// face for the same style).
 func (x *FontFace) GetFaceName() string {
 
 	cret := xFontFaceGetFaceName(x.GoPointer())
@@ -1923,6 +1985,12 @@ var xFontFamilyListFaces func(uintptr, uintptr, int)
 //
 // The faces in a family share a common design, but differ in slant, weight,
 // width and other aspects.
+//
+// Note that the returned faces are not in any particular order, and
+// multiple faces may have the same name or characteristics.
+//
+// `PangoFontFamily` also implemented the [iface@Gio.ListModel] interface
+// for enumerating faces.
 func (x *FontFamily) ListFaces(FacesVar uintptr, NFacesVar int) {
 
 	xFontFamilyListFaces(x.GoPointer(), FacesVar, NFacesVar)
@@ -1938,6 +2006,97 @@ func (c *FontFamily) GoPointer() uintptr {
 
 func (c *FontFamily) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// Get the item at @position.
+//
+// If @position is greater than the number of items in @list, %NULL is
+// returned.
+//
+// %NULL is never returned for an index that is smaller than the length
+// of the list.
+//
+// See also: g_list_model_get_n_items()
+func (x *FontFamily) GetItem(PositionVar uint) uintptr {
+
+	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+	return cret
+}
+
+// Gets the type of the items in @list.
+//
+// All items returned from g_list_model_get_item() are of the type
+// returned by this function, or a subtype, or if the type is an
+// interface, they are an implementation of that interface.
+//
+// The item type of a #GListModel can not change during the life of the
+// model.
+func (x *FontFamily) GetItemType() types.GType {
+
+	cret := gio.XGListModelGetItemType(x.GoPointer())
+	return cret
+}
+
+// Gets the number of items in @list.
+//
+// Depending on the model implementation, calling this function may be
+// less efficient than iterating the list with increasing values for
+// @position until g_list_model_get_item() returns %NULL.
+func (x *FontFamily) GetNItems() uint {
+
+	cret := gio.XGListModelGetNItems(x.GoPointer())
+	return cret
+}
+
+// Get the item at @position.
+//
+// If @position is greater than the number of items in @list, %NULL is
+// returned.
+//
+// %NULL is never returned for an index that is smaller than the length
+// of the list.
+//
+// This function is meant to be used by language bindings in place
+// of g_list_model_get_item().
+//
+// See also: g_list_model_get_n_items()
+func (x *FontFamily) GetObject(PositionVar uint) *gobject.Object {
+	var cls *gobject.Object
+
+	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gobject.Object{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Emits the #GListModel::items-changed signal on @list.
+//
+// This function should only be called by classes implementing
+// #GListModel. It has to be called after the internal representation
+// of @list has been updated, because handlers connected to this signal
+// might query the new state of the list.
+//
+// Implementations must only make changes to the model (as visible to
+// its consumer) in places that will not cause problems for that
+// consumer.  For models that are driven directly by a write API (such
+// as #GListStore), changes can be reported in response to uses of that
+// API.  For models that represent remote data, changes should only be
+// made from a fresh mainloop dispatch.  It is particularly not
+// permitted to make changes in response to a call to the #GListModel
+// consumer API.
+//
+// Stated another way: in general, it is assumed that code making a
+// series of accesses to the model via the API, without returning to the
+// mainloop, and without calling other code, will continue to view the
+// same contents of the model.
+func (x *FontFamily) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
+
+	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
+
 }
 
 func init() {
@@ -1970,6 +2129,7 @@ func init() {
 	core.PuregoSafeRegister(&xFontDescriptionEqual, lib, "pango_font_description_equal")
 	core.PuregoSafeRegister(&xFontDescriptionFree, lib, "pango_font_description_free")
 	core.PuregoSafeRegister(&xFontDescriptionGetFamily, lib, "pango_font_description_get_family")
+	core.PuregoSafeRegister(&xFontDescriptionGetFeatures, lib, "pango_font_description_get_features")
 	core.PuregoSafeRegister(&xFontDescriptionGetGravity, lib, "pango_font_description_get_gravity")
 	core.PuregoSafeRegister(&xFontDescriptionGetSetFields, lib, "pango_font_description_get_set_fields")
 	core.PuregoSafeRegister(&xFontDescriptionGetSize, lib, "pango_font_description_get_size")
@@ -1985,6 +2145,8 @@ func init() {
 	core.PuregoSafeRegister(&xFontDescriptionSetAbsoluteSize, lib, "pango_font_description_set_absolute_size")
 	core.PuregoSafeRegister(&xFontDescriptionSetFamily, lib, "pango_font_description_set_family")
 	core.PuregoSafeRegister(&xFontDescriptionSetFamilyStatic, lib, "pango_font_description_set_family_static")
+	core.PuregoSafeRegister(&xFontDescriptionSetFeatures, lib, "pango_font_description_set_features")
+	core.PuregoSafeRegister(&xFontDescriptionSetFeaturesStatic, lib, "pango_font_description_set_features_static")
 	core.PuregoSafeRegister(&xFontDescriptionSetGravity, lib, "pango_font_description_set_gravity")
 	core.PuregoSafeRegister(&xFontDescriptionSetSize, lib, "pango_font_description_set_size")
 	core.PuregoSafeRegister(&xFontDescriptionSetStretch, lib, "pango_font_description_set_stretch")

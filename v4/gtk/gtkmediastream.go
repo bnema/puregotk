@@ -373,7 +373,7 @@ func (x *MediaStreamClass) GetGtkReserved8() func() {
 	}
 }
 
-// `GtkMediaStream` is the integration point for media playback inside GTK.
+// The integration point for media playback inside GTK.
 //
 // GTK provides an implementation of the `GtkMediaStream` interface that
 // is called [class@Gtk.MediaFile].

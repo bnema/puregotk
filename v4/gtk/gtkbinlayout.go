@@ -20,8 +20,7 @@ func (x *BinLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkBinLayout` is a `GtkLayoutManager` subclass useful for create "bins" of
-// widgets.
+// A layout manager for widgets with a single child.
 //
 // `GtkBinLayout` will stack each child of a widget on top of each other,
 // using the [property@Gtk.Widget:hexpand], [property@Gtk.Widget:vexpand],

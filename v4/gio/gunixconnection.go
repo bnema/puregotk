@@ -29,13 +29,13 @@ func (x *UnixConnectionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// This is the subclass of #GSocketConnection that is created
+// This is the subclass of [class@Gio.SocketConnection] that is created
 // for UNIX domain sockets.
 //
 // It contains functions to do some of the UNIX socket specific
 // functionality like passing file descriptors.
 //
-// Since GLib 2.72, #GUnixConnection is available on all platforms. It requires
+// Since GLib 2.72, `GUnixConnection` is available on all platforms. It requires
 // underlying system support (such as Windows 10 with `AF_UNIX`) at run time.
 //
 // Before GLib 2.72, `&lt;gio/gunixconnection.h&gt;` belonged to the UNIX-specific GIO

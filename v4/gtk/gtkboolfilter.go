@@ -21,8 +21,7 @@ func (x *BoolFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkBoolFilter` evaluates a boolean `GtkExpression`
-// to determine whether to include items.
+// Evaluates a boolean expression to determine whether to include items.
 type BoolFilter struct {
 	Filter
 }
@@ -57,8 +56,8 @@ func NewBoolFilter(ExpressionVar *Expression) *BoolFilter {
 
 var xBoolFilterGetExpression func(uintptr) uintptr
 
-// Gets the expression that the filter uses to evaluate if
-// an item should be filtered.
+// Gets the expression that the filter evaluates for
+// each item.
 func (x *BoolFilter) GetExpression() *Expression {
 	var cls *Expression
 
@@ -87,7 +86,7 @@ var xBoolFilterSetExpression func(uintptr, uintptr)
 // Sets the expression that the filter uses to check if items
 // should be filtered.
 //
-// The expression must have a value type of %G_TYPE_BOOLEAN.
+// The expression must have a value type of `G_TYPE_BOOLEAN`.
 func (x *BoolFilter) SetExpression(ExpressionVar *Expression) {
 
 	xBoolFilterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())

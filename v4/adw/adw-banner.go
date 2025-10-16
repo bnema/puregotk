@@ -23,6 +23,27 @@ func (x *BannerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+// Describes the available button styles for [class@Banner].
+//
+// New values may be added to this enumeration over time.
+//
+// See [property@Banner:button-style].
+type BannerButtonStyle int
+
+var xBannerButtonStyleGLibType func() types.GType
+
+func BannerButtonStyleGLibType() types.GType {
+	return xBannerButtonStyleGLibType()
+}
+
+const (
+
+	// The default button style.
+	BannerButtonDefaultValue BannerButtonStyle = 0
+	// A button in the suggested action style.
+	BannerButtonSuggestedValue BannerButtonStyle = 1
+)
+
 // A bar with contextual information.
 //
 // &lt;picture&gt;
@@ -42,7 +63,15 @@ func (x *BannerClass) GoPointer() uintptr {
 //
 // Banners can optionally have a button with text on it, set through
 // [property@Banner:button-label]. The button can be used with a `GAction`,
-// or with the [signal@Banner::button-clicked] signal.
+// or with the [signal@Banner::button-clicked] signal. The button can have
+// different styles, a gray style and a suggested style.
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="banner-suggested-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img src="banner-suggested.png" alt="banner with suggested button style"&gt;
+//
+// &lt;/picture&gt;
 //
 // ## CSS nodes
 //
@@ -89,6 +118,15 @@ func (x *Banner) GetButtonLabel() string {
 	return cret
 }
 
+var xBannerGetButtonStyle func(uintptr) BannerButtonStyle
+
+// Gets the style class in use for the banner button.
+func (x *Banner) GetButtonStyle() BannerButtonStyle {
+
+	cret := xBannerGetButtonStyle(x.GoPointer())
+	return cret
+}
+
 var xBannerGetRevealed func(uintptr) bool
 
 // Gets if a banner is revealed
@@ -127,6 +165,25 @@ var xBannerSetButtonLabel func(uintptr, string)
 func (x *Banner) SetButtonLabel(LabelVar string) {
 
 	xBannerSetButtonLabel(x.GoPointer(), LabelVar)
+
+}
+
+var xBannerSetButtonStyle func(uintptr, BannerButtonStyle)
+
+// Sets the style class to use for the banner button.
+//
+// When set to `ADW_BANNER_BUTTON_DEFAULT`, the button stays grey.
+// When set to `ADW_BANNER_BUTTON_SUGGESTED`, the button follows the [`.suggested-action`](style-classes.html#suggested-action) style
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="banner-suggested-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img src="banner-suggested.png" alt="banner with suggested button style"&gt;
+//
+// &lt;/picture&gt;
+func (x *Banner) SetButtonStyle(StyleVar BannerButtonStyle) {
+
+	xBannerSetButtonStyle(x.GoPointer(), StyleVar)
 
 }
 
@@ -194,31 +251,162 @@ func (x *Banner) ConnectButtonClicked(cb *func(Banner)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *Banner) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
+
+	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *Banner) GetAccessibleParent() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *Banner) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *Banner) GetAtContext() *gtk.ATContext {
+	var cls *gtk.ATContext
+
+	cret := gtk.XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *Banner) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *Banner) GetFirstAccessibleChild() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *Banner) GetNextAccessibleSibling() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *Banner) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
+
+	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *Banner) ResetProperty(PropertyVar gtk.AccessibleProperty) {
 
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *Banner) ResetRelation(RelationVar gtk.AccessibleRelation) {
 
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *Banner) ResetState(StateVar gtk.AccessibleState) {
 
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *Banner) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *Banner) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *Banner) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
+
+	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -264,7 +452,7 @@ func (x *Banner) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []gtk.Acc
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -294,13 +482,17 @@ func (x *Banner) UpdateRelationValue(NRelationsVar int, RelationsVar []gtk.Acces
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -413,7 +605,7 @@ func (x *Banner) SetDetailedActionName(DetailedActionNameVar string) {
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Banner) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
@@ -428,15 +620,19 @@ func init() {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xBannerButtonStyleGLibType, lib, "adw_banner_button_style_get_type")
+
 	core.PuregoSafeRegister(&xBannerGLibType, lib, "adw_banner_get_type")
 
 	core.PuregoSafeRegister(&xNewBanner, lib, "adw_banner_new")
 
 	core.PuregoSafeRegister(&xBannerGetButtonLabel, lib, "adw_banner_get_button_label")
+	core.PuregoSafeRegister(&xBannerGetButtonStyle, lib, "adw_banner_get_button_style")
 	core.PuregoSafeRegister(&xBannerGetRevealed, lib, "adw_banner_get_revealed")
 	core.PuregoSafeRegister(&xBannerGetTitle, lib, "adw_banner_get_title")
 	core.PuregoSafeRegister(&xBannerGetUseMarkup, lib, "adw_banner_get_use_markup")
 	core.PuregoSafeRegister(&xBannerSetButtonLabel, lib, "adw_banner_set_button_label")
+	core.PuregoSafeRegister(&xBannerSetButtonStyle, lib, "adw_banner_set_button_style")
 	core.PuregoSafeRegister(&xBannerSetRevealed, lib, "adw_banner_set_revealed")
 	core.PuregoSafeRegister(&xBannerSetTitle, lib, "adw_banner_set_title")
 	core.PuregoSafeRegister(&xBannerSetUseMarkup, lib, "adw_banner_set_use_markup")

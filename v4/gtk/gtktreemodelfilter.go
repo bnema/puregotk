@@ -326,7 +326,7 @@ var xTreeModelFilterSetVisibleFunc func(uintptr, uintptr, uintptr, uintptr)
 // be empty. The visible function should therefore take special care of empty
 // rows, like in the example below.
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 // static gboolean
 // visible_func (GtkTreeModel *model,
 //
@@ -346,7 +346,7 @@ var xTreeModelFilterSetVisibleFunc func(uintptr, uintptr, uintptr, uintptr)
 //	  return visible;
 //	}
 //
-// ]|
+// ```
 //
 // Note that gtk_tree_model_filter_set_visible_func() or
 // gtk_tree_model_filter_set_visible_column() can only be called

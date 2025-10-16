@@ -32,6 +32,9 @@ func (x *NetworkMonitorInterface) GoPointer() uintptr {
 }
 
 // OverrideNetworkChanged sets the callback function.
+// the virtual function pointer for the
+//
+//	GNetworkMonitor::network-changed signal.
 func (x *NetworkMonitorInterface) OverrideNetworkChanged(cb func(NetworkMonitor, bool)) {
 	if cb == nil {
 		x.xNetworkChanged = 0
@@ -43,6 +46,9 @@ func (x *NetworkMonitorInterface) OverrideNetworkChanged(cb func(NetworkMonitor,
 }
 
 // GetNetworkChanged gets the callback function.
+// the virtual function pointer for the
+//
+//	GNetworkMonitor::network-changed signal.
 func (x *NetworkMonitorInterface) GetNetworkChanged() func(NetworkMonitor, bool) {
 	if x.xNetworkChanged == 0 {
 		return nil
@@ -55,6 +61,7 @@ func (x *NetworkMonitorInterface) GetNetworkChanged() func(NetworkMonitor, bool)
 }
 
 // OverrideCanReach sets the callback function.
+// the virtual function pointer for g_network_monitor_can_reach()
 func (x *NetworkMonitorInterface) OverrideCanReach(cb func(NetworkMonitor, SocketConnectable, *Cancellable) bool) {
 	if cb == nil {
 		x.xCanReach = 0
@@ -66,6 +73,7 @@ func (x *NetworkMonitorInterface) OverrideCanReach(cb func(NetworkMonitor, Socke
 }
 
 // GetCanReach gets the callback function.
+// the virtual function pointer for g_network_monitor_can_reach()
 func (x *NetworkMonitorInterface) GetCanReach() func(NetworkMonitor, SocketConnectable, *Cancellable) bool {
 	if x.xCanReach == 0 {
 		return nil
@@ -78,6 +86,9 @@ func (x *NetworkMonitorInterface) GetCanReach() func(NetworkMonitor, SocketConne
 }
 
 // OverrideCanReachAsync sets the callback function.
+// the virtual function pointer for
+//
+//	g_network_monitor_can_reach_async()
 func (x *NetworkMonitorInterface) OverrideCanReachAsync(cb func(NetworkMonitor, SocketConnectable, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xCanReachAsync = 0
@@ -89,6 +100,9 @@ func (x *NetworkMonitorInterface) OverrideCanReachAsync(cb func(NetworkMonitor, 
 }
 
 // GetCanReachAsync gets the callback function.
+// the virtual function pointer for
+//
+//	g_network_monitor_can_reach_async()
 func (x *NetworkMonitorInterface) GetCanReachAsync() func(NetworkMonitor, SocketConnectable, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xCanReachAsync == 0 {
 		return nil
@@ -101,6 +115,9 @@ func (x *NetworkMonitorInterface) GetCanReachAsync() func(NetworkMonitor, Socket
 }
 
 // OverrideCanReachFinish sets the callback function.
+// the virtual function pointer for
+//
+//	g_network_monitor_can_reach_finish()
 func (x *NetworkMonitorInterface) OverrideCanReachFinish(cb func(NetworkMonitor, AsyncResult) bool) {
 	if cb == nil {
 		x.xCanReachFinish = 0
@@ -112,6 +129,9 @@ func (x *NetworkMonitorInterface) OverrideCanReachFinish(cb func(NetworkMonitor,
 }
 
 // GetCanReachFinish gets the callback function.
+// the virtual function pointer for
+//
+//	g_network_monitor_can_reach_finish()
 func (x *NetworkMonitorInterface) GetCanReachFinish() func(NetworkMonitor, AsyncResult) bool {
 	if x.xCanReachFinish == 0 {
 		return nil
@@ -123,7 +143,7 @@ func (x *NetworkMonitorInterface) GetCanReachFinish() func(NetworkMonitor, Async
 	}
 }
 
-// #GNetworkMonitor provides an easy-to-use cross-platform API
+// `GNetworkMonitor` provides an easy-to-use cross-platform API
 // for monitoring network connectivity. On Linux, the available
 // implementations are based on the kernel's netlink interface and
 // on NetworkManager.
@@ -269,7 +289,7 @@ var XGNetworkMonitorGetNetworkMetered func(uintptr) bool
 
 const (
 	// Extension point for network status monitoring functionality.
-	// See [Extending GIO][extending-gio].
+	// See [Extending GIO](overview.html#extending-gio).
 	NETWORK_MONITOR_EXTENSION_POINT_NAME string = "gio-network-monitor"
 )
 

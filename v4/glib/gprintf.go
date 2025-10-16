@@ -8,7 +8,7 @@ import (
 
 var xFprintf func(uintptr, string, ...interface{}) int
 
-// An implementation of the standard fprintf() function which supports
+// An implementation of the standard `fprintf()` function which supports
 // positional parameters, as specified in the Single Unix Specification.
 //
 // `glib/gprintf.h` must be explicitly included in order to use this function.
@@ -20,10 +20,10 @@ func Fprintf(FileVar uintptr, FormatVar string, varArgs ...interface{}) int {
 
 var xPrintf func(string, ...interface{}) int
 
-// An implementation of the standard printf() function which supports
+// An implementation of the standard `printf()` function which supports
 // positional parameters, as specified in the Single Unix Specification.
 //
-// As with the standard printf(), this does not automatically append a trailing
+// As with the standard `printf()`, this does not automatically append a trailing
 // new-line character to the message, so typically @format should end with its
 // own new-line character.
 //
@@ -36,15 +36,15 @@ func Printf(FormatVar string, varArgs ...interface{}) int {
 
 var xSprintf func(string, string, ...interface{}) int
 
-// An implementation of the standard sprintf() function which supports
+// An implementation of the standard `sprintf()` function which supports
 // positional parameters, as specified in the Single Unix Specification.
 //
-// Note that it is usually better to use g_snprintf(), to avoid the
+// Note that it is usually better to use [func@GLib.snprintf], to avoid the
 // risk of buffer overflow.
 //
 // `glib/gprintf.h` must be explicitly included in order to use this function.
 //
-// See also g_strdup_printf().
+// See also [func@GLib.strdup_printf].
 func Sprintf(StringVar string, FormatVar string, varArgs ...interface{}) int {
 
 	cret := xSprintf(StringVar, FormatVar, varArgs...)
@@ -53,13 +53,13 @@ func Sprintf(StringVar string, FormatVar string, varArgs ...interface{}) int {
 
 var xVasprintf func(string, string, []interface{}) int
 
-// An implementation of the GNU vasprintf() function which supports
+// An implementation of the GNU `vasprintf()` function which supports
 // positional parameters, as specified in the Single Unix Specification.
-// This function is similar to g_vsprintf(), except that it allocates a
+// This function is similar to [func@GLib.vsprintf], except that it allocates a
 // string to hold the output, instead of putting the output in a buffer
 // you allocate in advance.
 //
-// The returned value in @string is guaranteed to be non-NULL, unless
+// The returned value in @string is guaranteed to be non-`NULL`, unless
 // @format contains `%lc` or `%ls` conversions, which can fail if no
 // multibyte representation is available for the given character.
 //
@@ -72,7 +72,7 @@ func Vasprintf(StringVar string, FormatVar string, ArgsVar []interface{}) int {
 
 var xVfprintf func(uintptr, string, []interface{}) int
 
-// An implementation of the standard fprintf() function which supports
+// An implementation of the standard `fprintf()` function which supports
 // positional parameters, as specified in the Single Unix Specification.
 //
 // `glib/gprintf.h` must be explicitly included in order to use this function.
@@ -84,7 +84,7 @@ func Vfprintf(FileVar uintptr, FormatVar string, ArgsVar []interface{}) int {
 
 var xVprintf func(string, []interface{}) int
 
-// An implementation of the standard vprintf() function which supports
+// An implementation of the standard `vprintf()` function which supports
 // positional parameters, as specified in the Single Unix Specification.
 //
 // `glib/gprintf.h` must be explicitly included in order to use this function.
@@ -96,7 +96,7 @@ func Vprintf(FormatVar string, ArgsVar []interface{}) int {
 
 var xVsprintf func(string, string, []interface{}) int
 
-// An implementation of the standard vsprintf() function which supports
+// An implementation of the standard `vsprintf()` function which supports
 // positional parameters, as specified in the Single Unix Specification.
 //
 // `glib/gprintf.h` must be explicitly included in order to use this function.
@@ -108,7 +108,7 @@ func Vsprintf(StringVar string, FormatVar string, ArgsVar []interface{}) int {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

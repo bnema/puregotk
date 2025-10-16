@@ -22,8 +22,8 @@ func (x *CharsetConverterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GCharsetConverter is an implementation of #GConverter based on
-// GIConv.
+// `GCharsetConverter` is an implementation of [iface@Gio.Converter] based on
+// [struct@GLib.IConv].
 type CharsetConverter struct {
 	gobject.Object
 }
@@ -192,6 +192,18 @@ func (x *CharsetConverter) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar
 
 }
 
+// Applies @converter to the data in @bytes.
+func (x *CharsetConverter) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error) {
+	var cerr *glib.Error
+
+	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
+	if cerr == nil {
+		return cret, nil
+	}
+	return cret, cerr
+
+}
+
 // Resets all internal state in the converter, making it behave
 // as if it was just created. If the converter has any internal
 // state that would produce output then that output is lost.
@@ -219,7 +231,7 @@ func (x *CharsetConverter) Reset() {
 // If the object is not initialized, or initialization returns with an
 // error, then all operations on the object except g_object_ref() and
 // g_object_unref() are considered to be invalid, and have undefined
-// behaviour. See the [introduction][ginitable] for more details.
+// behaviour. See the [description][iface@Gio.Initable#description] for more details.
 //
 // Callers should not assume that a class which implements #GInitable can be
 // initialized multiple times, unless the class explicitly documents itself as

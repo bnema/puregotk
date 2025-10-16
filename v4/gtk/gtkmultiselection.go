@@ -22,8 +22,7 @@ func (x *MultiSelectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkMultiSelection` is a `GtkSelectionModel` that allows selecting multiple
-// elements.
+// A selection model that allows selecting multiple elements.
 type MultiSelection struct {
 	gobject.Object
 }
@@ -186,6 +185,38 @@ func (x *MultiSelection) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVa
 
 }
 
+// Query the section that covers the given position. The number of
+// items in the section can be computed by `out_end - out_start`.
+//
+// If the position is larger than the number of items, a single
+// range from n_items to G_MAXUINT will be returned.
+func (x *MultiSelection) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+
+	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
+
+}
+
+// This function emits the [signal@Gtk.SectionModel::sections-changed]
+// signal to notify about changes to sections.
+//
+// It must cover all positions that used to be a section start or that
+// are now a section start. It does not have to cover all positions for
+// which the section has changed.
+//
+// The [signal@Gio.ListModel::items-changed] implies the effect of the
+// [signal@Gtk.SectionModel::sections-changed] signal for all the items
+// it covers.
+//
+// It is recommended that when changes to the items cause section changes
+// in a larger range, that the larger range is included in the emission
+// of the [signal@Gio.ListModel::items-changed] instead of emitting
+// two signals.
+func (x *MultiSelection) SectionsChanged(PositionVar uint, NItemsVar uint) {
+
+	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
+
+}
+
 // Gets the set containing all currently selected items in the model.
 //
 // This function may be slow, so if you are only interested in single item,
@@ -240,7 +271,7 @@ func (x *MultiSelection) SelectRange(PositionVar uint, NItemsVar uint, UnselectR
 
 // Helper function for implementations of `GtkSelectionModel`.
 //
-// Call this when a the selection changes to emit the
+// Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
 func (x *MultiSelection) SelectionChanged(PositionVar uint, NItemsVar uint) {
 

@@ -18,6 +18,9 @@ func (x *BroadwayRendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+// A Broadway based renderer.
+//
+// See [class@Gsk.Renderer].
 type BroadwayRenderer struct {
 	Renderer
 }

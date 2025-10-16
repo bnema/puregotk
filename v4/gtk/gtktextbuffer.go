@@ -13,6 +13,40 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
+// A notification callback used by [method@Gtk.TextBuffer.add_commit_notify].
+//
+// You may not modify the [class@Gtk.TextBuffer] from a
+// [callback@Gtk.TextBufferCommitNotify] callback and that is enforced
+// by the [class@Gtk.TextBuffer] API.
+//
+// [callback@Gtk.TextBufferCommitNotify] may be used to be notified about
+// changes to the underlying buffer right before-or-after the changes are
+// committed to the underlying B-Tree. This is useful if you want to observe
+// changes to the buffer without other signal handlers potentially modifying
+// state on the way to the default signal handler.
+//
+// When @flags is `GTK_TEXT_BUFFER_NOTIFY_BEFORE_INSERT`, `position` is set to
+// the offset in characters from the start of the buffer where the insertion
+// will occur. `length` is set to the number of characters to be inserted.  You
+// may not yet retrieve the text until it has been inserted. You may access the
+// text from `GTK_TEXT_BUFFER_NOTIFY_AFTER_INSERT` using
+// [method@Gtk.TextBuffer.get_slice].
+//
+// When @flags is `GTK_TEXT_BUFFER_NOTIFY_AFTER_INSERT`, `position` is set to
+// offset in characters where the insertion occurred and `length` is set
+// to the number of characters inserted.
+//
+// When @flags is `GTK_TEXT_BUFFER_NOTIFY_BEFORE_DELETE`, `position` is set to
+// offset in characters where the deletion will occur and `length` is set
+// to the number of characters that will be removed. You may still retrieve
+// the text from this handler using `position` and `length`.
+//
+// When @flags is `GTK_TEXT_BUFFER_NOTIFY_AFTER_DELETE`, `length` is set to
+// zero to denote that the delete-range has already been committed to the
+// underlying B-Tree. You may no longer retrieve the text that has been
+// deleted from the [class@Gtk.TextBuffer].
+type TextBufferCommitNotify func(uintptr, TextBufferNotifyFlags, uint, uint, uintptr)
+
 // The class structure for `GtkTextBuffer`.
 type TextBufferClass struct {
 	_ structs.HostLayout
@@ -63,6 +97,7 @@ func (x *TextBufferClass) GoPointer() uintptr {
 }
 
 // OverrideInsertText sets the callback function.
+// The class handler for the `GtkTextBuffer::insert-text` signal.
 func (x *TextBufferClass) OverrideInsertText(cb func(*TextBuffer, *TextIter, string, int)) {
 	if cb == nil {
 		x.xInsertText = 0
@@ -74,6 +109,7 @@ func (x *TextBufferClass) OverrideInsertText(cb func(*TextBuffer, *TextIter, str
 }
 
 // GetInsertText gets the callback function.
+// The class handler for the `GtkTextBuffer::insert-text` signal.
 func (x *TextBufferClass) GetInsertText() func(*TextBuffer, *TextIter, string, int) {
 	if x.xInsertText == 0 {
 		return nil
@@ -86,6 +122,7 @@ func (x *TextBufferClass) GetInsertText() func(*TextBuffer, *TextIter, string, i
 }
 
 // OverrideInsertPaintable sets the callback function.
+// The class handler for the `GtkTextBuffer::insert-paintable` signal.
 func (x *TextBufferClass) OverrideInsertPaintable(cb func(*TextBuffer, *TextIter, gdk.Paintable)) {
 	if cb == nil {
 		x.xInsertPaintable = 0
@@ -97,6 +134,7 @@ func (x *TextBufferClass) OverrideInsertPaintable(cb func(*TextBuffer, *TextIter
 }
 
 // GetInsertPaintable gets the callback function.
+// The class handler for the `GtkTextBuffer::insert-paintable` signal.
 func (x *TextBufferClass) GetInsertPaintable() func(*TextBuffer, *TextIter, gdk.Paintable) {
 	if x.xInsertPaintable == 0 {
 		return nil
@@ -109,6 +147,7 @@ func (x *TextBufferClass) GetInsertPaintable() func(*TextBuffer, *TextIter, gdk.
 }
 
 // OverrideInsertChildAnchor sets the callback function.
+// The class handler for the `GtkTextBuffer::insert-child-anchor` signal.
 func (x *TextBufferClass) OverrideInsertChildAnchor(cb func(*TextBuffer, *TextIter, *TextChildAnchor)) {
 	if cb == nil {
 		x.xInsertChildAnchor = 0
@@ -120,6 +159,7 @@ func (x *TextBufferClass) OverrideInsertChildAnchor(cb func(*TextBuffer, *TextIt
 }
 
 // GetInsertChildAnchor gets the callback function.
+// The class handler for the `GtkTextBuffer::insert-child-anchor` signal.
 func (x *TextBufferClass) GetInsertChildAnchor() func(*TextBuffer, *TextIter, *TextChildAnchor) {
 	if x.xInsertChildAnchor == 0 {
 		return nil
@@ -132,6 +172,7 @@ func (x *TextBufferClass) GetInsertChildAnchor() func(*TextBuffer, *TextIter, *T
 }
 
 // OverrideDeleteRange sets the callback function.
+// The class handler for the `GtkTextBuffer::delete-range` signal.
 func (x *TextBufferClass) OverrideDeleteRange(cb func(*TextBuffer, *TextIter, *TextIter)) {
 	if cb == nil {
 		x.xDeleteRange = 0
@@ -143,6 +184,7 @@ func (x *TextBufferClass) OverrideDeleteRange(cb func(*TextBuffer, *TextIter, *T
 }
 
 // GetDeleteRange gets the callback function.
+// The class handler for the `GtkTextBuffer::delete-range` signal.
 func (x *TextBufferClass) GetDeleteRange() func(*TextBuffer, *TextIter, *TextIter) {
 	if x.xDeleteRange == 0 {
 		return nil
@@ -155,6 +197,7 @@ func (x *TextBufferClass) GetDeleteRange() func(*TextBuffer, *TextIter, *TextIte
 }
 
 // OverrideChanged sets the callback function.
+// The class handler for the `GtkTextBuffer::changed` signal.
 func (x *TextBufferClass) OverrideChanged(cb func(*TextBuffer)) {
 	if cb == nil {
 		x.xChanged = 0
@@ -166,6 +209,7 @@ func (x *TextBufferClass) OverrideChanged(cb func(*TextBuffer)) {
 }
 
 // GetChanged gets the callback function.
+// The class handler for the `GtkTextBuffer::changed` signal.
 func (x *TextBufferClass) GetChanged() func(*TextBuffer) {
 	if x.xChanged == 0 {
 		return nil
@@ -178,6 +222,7 @@ func (x *TextBufferClass) GetChanged() func(*TextBuffer) {
 }
 
 // OverrideModifiedChanged sets the callback function.
+// The class handler for the `GtkTextBuffer::modified-changed` signal.
 func (x *TextBufferClass) OverrideModifiedChanged(cb func(*TextBuffer)) {
 	if cb == nil {
 		x.xModifiedChanged = 0
@@ -189,6 +234,7 @@ func (x *TextBufferClass) OverrideModifiedChanged(cb func(*TextBuffer)) {
 }
 
 // GetModifiedChanged gets the callback function.
+// The class handler for the `GtkTextBuffer::modified-changed` signal.
 func (x *TextBufferClass) GetModifiedChanged() func(*TextBuffer) {
 	if x.xModifiedChanged == 0 {
 		return nil
@@ -201,6 +247,7 @@ func (x *TextBufferClass) GetModifiedChanged() func(*TextBuffer) {
 }
 
 // OverrideMarkSet sets the callback function.
+// The class handler for the `GtkTextBuffer::mark-set` signal.
 func (x *TextBufferClass) OverrideMarkSet(cb func(*TextBuffer, *TextIter, *TextMark)) {
 	if cb == nil {
 		x.xMarkSet = 0
@@ -212,6 +259,7 @@ func (x *TextBufferClass) OverrideMarkSet(cb func(*TextBuffer, *TextIter, *TextM
 }
 
 // GetMarkSet gets the callback function.
+// The class handler for the `GtkTextBuffer::mark-set` signal.
 func (x *TextBufferClass) GetMarkSet() func(*TextBuffer, *TextIter, *TextMark) {
 	if x.xMarkSet == 0 {
 		return nil
@@ -224,6 +272,7 @@ func (x *TextBufferClass) GetMarkSet() func(*TextBuffer, *TextIter, *TextMark) {
 }
 
 // OverrideMarkDeleted sets the callback function.
+// The class handler for the `GtkTextBuffer::mark-deleted` signal.
 func (x *TextBufferClass) OverrideMarkDeleted(cb func(*TextBuffer, *TextMark)) {
 	if cb == nil {
 		x.xMarkDeleted = 0
@@ -235,6 +284,7 @@ func (x *TextBufferClass) OverrideMarkDeleted(cb func(*TextBuffer, *TextMark)) {
 }
 
 // GetMarkDeleted gets the callback function.
+// The class handler for the `GtkTextBuffer::mark-deleted` signal.
 func (x *TextBufferClass) GetMarkDeleted() func(*TextBuffer, *TextMark) {
 	if x.xMarkDeleted == 0 {
 		return nil
@@ -247,6 +297,7 @@ func (x *TextBufferClass) GetMarkDeleted() func(*TextBuffer, *TextMark) {
 }
 
 // OverrideApplyTag sets the callback function.
+// The class handler for the `GtkTextBuffer::apply-tag` signal.
 func (x *TextBufferClass) OverrideApplyTag(cb func(*TextBuffer, *TextTag, *TextIter, *TextIter)) {
 	if cb == nil {
 		x.xApplyTag = 0
@@ -258,6 +309,7 @@ func (x *TextBufferClass) OverrideApplyTag(cb func(*TextBuffer, *TextTag, *TextI
 }
 
 // GetApplyTag gets the callback function.
+// The class handler for the `GtkTextBuffer::apply-tag` signal.
 func (x *TextBufferClass) GetApplyTag() func(*TextBuffer, *TextTag, *TextIter, *TextIter) {
 	if x.xApplyTag == 0 {
 		return nil
@@ -270,6 +322,7 @@ func (x *TextBufferClass) GetApplyTag() func(*TextBuffer, *TextTag, *TextIter, *
 }
 
 // OverrideRemoveTag sets the callback function.
+// The class handler for the `GtkTextBuffer::remove-tag` signal.
 func (x *TextBufferClass) OverrideRemoveTag(cb func(*TextBuffer, *TextTag, *TextIter, *TextIter)) {
 	if cb == nil {
 		x.xRemoveTag = 0
@@ -281,6 +334,7 @@ func (x *TextBufferClass) OverrideRemoveTag(cb func(*TextBuffer, *TextTag, *Text
 }
 
 // GetRemoveTag gets the callback function.
+// The class handler for the `GtkTextBuffer::remove-tag` signal.
 func (x *TextBufferClass) GetRemoveTag() func(*TextBuffer, *TextTag, *TextIter, *TextIter) {
 	if x.xRemoveTag == 0 {
 		return nil
@@ -293,6 +347,7 @@ func (x *TextBufferClass) GetRemoveTag() func(*TextBuffer, *TextTag, *TextIter, 
 }
 
 // OverrideBeginUserAction sets the callback function.
+// The class handler for the `GtkTextBuffer::begin-user-action` signal.
 func (x *TextBufferClass) OverrideBeginUserAction(cb func(*TextBuffer)) {
 	if cb == nil {
 		x.xBeginUserAction = 0
@@ -304,6 +359,7 @@ func (x *TextBufferClass) OverrideBeginUserAction(cb func(*TextBuffer)) {
 }
 
 // GetBeginUserAction gets the callback function.
+// The class handler for the `GtkTextBuffer::begin-user-action` signal.
 func (x *TextBufferClass) GetBeginUserAction() func(*TextBuffer) {
 	if x.xBeginUserAction == 0 {
 		return nil
@@ -316,6 +372,7 @@ func (x *TextBufferClass) GetBeginUserAction() func(*TextBuffer) {
 }
 
 // OverrideEndUserAction sets the callback function.
+// The class handler for the `GtkTextBuffer::end-user-action` signal.
 func (x *TextBufferClass) OverrideEndUserAction(cb func(*TextBuffer)) {
 	if cb == nil {
 		x.xEndUserAction = 0
@@ -327,6 +384,7 @@ func (x *TextBufferClass) OverrideEndUserAction(cb func(*TextBuffer)) {
 }
 
 // GetEndUserAction gets the callback function.
+// The class handler for the `GtkTextBuffer::end-user-action` signal.
 func (x *TextBufferClass) GetEndUserAction() func(*TextBuffer) {
 	if x.xEndUserAction == 0 {
 		return nil
@@ -339,6 +397,7 @@ func (x *TextBufferClass) GetEndUserAction() func(*TextBuffer) {
 }
 
 // OverridePasteDone sets the callback function.
+// The class handler for the `GtkTextBuffer::paste-done` signal.
 func (x *TextBufferClass) OverridePasteDone(cb func(*TextBuffer, *gdk.Clipboard)) {
 	if cb == nil {
 		x.xPasteDone = 0
@@ -350,6 +409,7 @@ func (x *TextBufferClass) OverridePasteDone(cb func(*TextBuffer, *gdk.Clipboard)
 }
 
 // GetPasteDone gets the callback function.
+// The class handler for the `GtkTextBuffer::paste-done` signal.
 func (x *TextBufferClass) GetPasteDone() func(*TextBuffer, *gdk.Clipboard) {
 	if x.xPasteDone == 0 {
 		return nil
@@ -362,6 +422,7 @@ func (x *TextBufferClass) GetPasteDone() func(*TextBuffer, *gdk.Clipboard) {
 }
 
 // OverrideUndo sets the callback function.
+// The class handler for the `GtkTextBuffer::undo` signal
 func (x *TextBufferClass) OverrideUndo(cb func(*TextBuffer)) {
 	if cb == nil {
 		x.xUndo = 0
@@ -373,6 +434,7 @@ func (x *TextBufferClass) OverrideUndo(cb func(*TextBuffer)) {
 }
 
 // GetUndo gets the callback function.
+// The class handler for the `GtkTextBuffer::undo` signal
 func (x *TextBufferClass) GetUndo() func(*TextBuffer) {
 	if x.xUndo == 0 {
 		return nil
@@ -385,6 +447,7 @@ func (x *TextBufferClass) GetUndo() func(*TextBuffer) {
 }
 
 // OverrideRedo sets the callback function.
+// The class handler for the `GtkTextBuffer::redo` signal
 func (x *TextBufferClass) OverrideRedo(cb func(*TextBuffer)) {
 	if cb == nil {
 		x.xRedo = 0
@@ -396,6 +459,7 @@ func (x *TextBufferClass) OverrideRedo(cb func(*TextBuffer)) {
 }
 
 // GetRedo gets the callback function.
+// The class handler for the `GtkTextBuffer::redo` signal
 func (x *TextBufferClass) GetRedo() func(*TextBuffer) {
 	if x.xRedo == 0 {
 		return nil
@@ -546,6 +610,25 @@ func NewTextBuffer(TableVar *TextTagTable) *TextBuffer {
 	cls = &TextBuffer{}
 	cls.Ptr = cret
 	return cls
+}
+
+var xTextBufferAddCommitNotify func(uintptr, TextBufferNotifyFlags, uintptr, uintptr, uintptr) uint
+
+// Adds a [callback@Gtk.TextBufferCommitNotify] to be called when a change
+// is to be made to the [type@Gtk.TextBuffer].
+//
+// Functions are explicitly forbidden from making changes to the
+// [type@Gtk.TextBuffer] from this callback. It is intended for tracking
+// changes to the buffer only.
+//
+// It may be advantageous to use [callback@Gtk.TextBufferCommitNotify] over
+// connecting to the [signal@Gtk.TextBuffer::insert-text] or
+// [signal@Gtk.TextBuffer::delete-range] signals to avoid ordering issues with
+// other signal handlers which may further modify the [type@Gtk.TextBuffer].
+func (x *TextBuffer) AddCommitNotify(FlagsVar TextBufferNotifyFlags, CommitNotifyVar *TextBufferCommitNotify, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) uint {
+
+	cret := xTextBufferAddCommitNotify(x.GoPointer(), FlagsVar, glib.NewCallback(CommitNotifyVar), UserDataVar, glib.NewCallback(DestroyVar))
+	return cret
 }
 
 var xTextBufferAddMark func(uintptr, uintptr, *TextIter)
@@ -1498,10 +1581,23 @@ func (x *TextBuffer) RemoveAllTags(StartVar *TextIter, EndVar *TextIter) {
 
 }
 
+var xTextBufferRemoveCommitNotify func(uintptr, uint)
+
+// Removes the `GtkTextBufferCommitNotify` handler previously registered
+// with [method@Gtk.TextBuffer.add_commit_notify].
+//
+// This may result in the `user_data_destroy` being called that was passed when registering
+// the commit notify functions.
+func (x *TextBuffer) RemoveCommitNotify(CommitNotifyHandlerVar uint) {
+
+	xTextBufferRemoveCommitNotify(x.GoPointer(), CommitNotifyHandlerVar)
+
+}
+
 var xTextBufferRemoveSelectionClipboard func(uintptr, uintptr)
 
 // Removes a `GdkClipboard` added with
-// gtk_text_buffer_add_selection_clipboard().
+// [method@Gtk.TextBuffer.add_selection_clipboard]
 func (x *TextBuffer) RemoveSelectionClipboard(ClipboardVar *gdk.Clipboard) {
 
 	xTextBufferRemoveSelectionClipboard(x.GoPointer(), ClipboardVar.GoPointer())
@@ -1591,7 +1687,7 @@ var xTextBufferSetModified func(uintptr, bool)
 // Whenever the buffer is saved to disk, call
 // `gtk_text_buffer_set_modified (@buffer, FALSE)`.
 // When the buffer is modified, it will automatically
-// toggled on the modified bit again. When the modified
+// toggle on the modified bit again. When the modified
 // bit flips, the buffer emits the
 // [signal@Gtk.TextBuffer::modified-changed] signal.
 func (x *TextBuffer) SetModified(SettingVar bool) {
@@ -2039,6 +2135,7 @@ func init() {
 
 	core.PuregoSafeRegister(&xNewTextBuffer, lib, "gtk_text_buffer_new")
 
+	core.PuregoSafeRegister(&xTextBufferAddCommitNotify, lib, "gtk_text_buffer_add_commit_notify")
 	core.PuregoSafeRegister(&xTextBufferAddMark, lib, "gtk_text_buffer_add_mark")
 	core.PuregoSafeRegister(&xTextBufferAddSelectionClipboard, lib, "gtk_text_buffer_add_selection_clipboard")
 	core.PuregoSafeRegister(&xTextBufferApplyTag, lib, "gtk_text_buffer_apply_tag")
@@ -2100,6 +2197,7 @@ func init() {
 	core.PuregoSafeRegister(&xTextBufferPlaceCursor, lib, "gtk_text_buffer_place_cursor")
 	core.PuregoSafeRegister(&xTextBufferRedo, lib, "gtk_text_buffer_redo")
 	core.PuregoSafeRegister(&xTextBufferRemoveAllTags, lib, "gtk_text_buffer_remove_all_tags")
+	core.PuregoSafeRegister(&xTextBufferRemoveCommitNotify, lib, "gtk_text_buffer_remove_commit_notify")
 	core.PuregoSafeRegister(&xTextBufferRemoveSelectionClipboard, lib, "gtk_text_buffer_remove_selection_clipboard")
 	core.PuregoSafeRegister(&xTextBufferRemoveTag, lib, "gtk_text_buffer_remove_tag")
 	core.PuregoSafeRegister(&xTextBufferRemoveTagByName, lib, "gtk_text_buffer_remove_tag_by_name")

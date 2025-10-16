@@ -9,8 +9,29 @@ import (
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
-// An opaque data structure representing String Chunks.
-// It should only be accessed by using the following functions.
+// `GStringChunk` provides efficient storage of groups of strings
+//
+// String chunks are used to store groups of strings. Memory is
+// allocated in blocks, and as strings are added to the `GStringChunk`
+// they are copied into the next free position in a block. When a block
+// is full a new block is allocated.
+//
+// When storing a large number of strings, string chunks are more
+// efficient than using [func@GLib.strdup] since fewer calls to `malloc()`
+// are needed, and less memory is wasted in memory allocation overheads.
+//
+// By adding strings with [method@GLib.StringChunk.insert_const] it is also
+// possible to remove duplicates.
+//
+// To create a new `GStringChunk` use [func@GLib.StringChunk.new].
+//
+// To add strings to a `GStringChunk` use [method@GLib.StringChunk.insert].
+//
+// To add strings to a `GStringChunk`, but without duplicating strings
+// which are already in the `GStringChunk`, use [method@GLib.StringChunk.insert_const].
+//
+// To free the entire `GStringChunk` use [method@GLib.StringChunk.free].
+// It is not possible to free individual strings.
 type StringChunk struct {
 	_ structs.HostLayout
 }
@@ -100,7 +121,7 @@ func (x *StringChunk) InsertLen(StringVar string, LenVar int) string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

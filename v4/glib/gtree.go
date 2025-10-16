@@ -23,7 +23,7 @@ type TraverseFunc func(uintptr, uintptr, uintptr) bool
 type TraverseNodeFunc func(*TreeNode, uintptr) bool
 
 // The GTree struct is an opaque data structure representing a
-// [balanced binary tree][glib-Balanced-Binary-Trees]. It should be
+// [balanced binary tree](data-structures.html#binary-trees). It should be
 // accessed only by using the following functions.
 type Tree struct {
 	_ structs.HostLayout
@@ -436,7 +436,7 @@ func (x *TreeNode) Value() uintptr {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

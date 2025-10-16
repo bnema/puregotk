@@ -29,6 +29,7 @@ func (x *ButtonClass) GoPointer() uintptr {
 }
 
 // OverrideClicked sets the callback function.
+// Signal emitted when the button has been activated (pressed and released).
 func (x *ButtonClass) OverrideClicked(cb func(*Button)) {
 	if cb == nil {
 		x.xClicked = 0
@@ -40,6 +41,7 @@ func (x *ButtonClass) OverrideClicked(cb func(*Button)) {
 }
 
 // GetClicked gets the callback function.
+// Signal emitted when the button has been activated (pressed and released).
 func (x *ButtonClass) GetClicked() func(*Button) {
 	if x.xClicked == 0 {
 		return nil
@@ -52,6 +54,10 @@ func (x *ButtonClass) GetClicked() func(*Button) {
 }
 
 // OverrideActivate sets the callback function.
+// Signal that causes the button to animate press then
+//
+//	release. Applications should never connect to this signal, but use
+//	the @clicked signal.
 func (x *ButtonClass) OverrideActivate(cb func(*Button)) {
 	if cb == nil {
 		x.xActivate = 0
@@ -63,6 +69,10 @@ func (x *ButtonClass) OverrideActivate(cb func(*Button)) {
 }
 
 // GetActivate gets the callback function.
+// Signal that causes the button to animate press then
+//
+//	release. Applications should never connect to this signal, but use
+//	the @clicked signal.
 func (x *ButtonClass) GetActivate() func(*Button) {
 	if x.xActivate == 0 {
 		return nil
@@ -82,14 +92,24 @@ func (x *ButtonPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// The `GtkButton` widget is generally used to trigger a callback function that is
-// called when the button is pressed.
+// Calls a callback function when the button is clicked.
 //
-// ![An example GtkButton](button.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="button-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkButton" src="button.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // The `GtkButton` widget can hold any valid child widget. That is, it can hold
 // almost any other standard `GtkWidget`. The most commonly used child is the
 // `GtkLabel`.
+//
+// # Shortcuts and Gestures
+//
+// The following signals have default keybindings:
+//
+// - [signal@Gtk.Button::activate]
 //
 // # CSS nodes
 //
@@ -111,7 +131,7 @@ func (x *ButtonPrivate) GoPointer() uintptr {
 //
 // # Accessibility
 //
-// `GtkButton` uses the %GTK_ACCESSIBLE_ROLE_BUTTON role.
+// `GtkButton` uses the [enum@Gtk.AccessibleRole.button] role.
 type Button struct {
 	Widget
 }
@@ -192,7 +212,8 @@ var xNewButtonWithMnemonic func(string) uintptr
 // If characters in @label are preceded by an underscore, they are underlined.
 // If you need a literal underscore character in a label, use “__” (two
 // underscores). The first underlined character represents a keyboard
-// accelerator called a mnemonic. Pressing Alt and that key activates the button.
+// accelerator called a mnemonic. Pressing &lt;kbd&gt;Alt&lt;/kbd&gt; and that key
+// activates the button.
 func NewButtonWithMnemonic(LabelVar string) *Button {
 	var cls *Button
 
@@ -205,6 +226,16 @@ func NewButtonWithMnemonic(LabelVar string) *Button {
 	cls = &Button{}
 	cls.Ptr = cret
 	return cls
+}
+
+var xButtonGetCanShrink func(uintptr) bool
+
+// Retrieves whether the button can be smaller than the natural
+// size of its contents.
+func (x *Button) GetCanShrink() bool {
+
+	cret := xButtonGetCanShrink(x.GoPointer())
+	return cret
 }
 
 var xButtonGetChild func(uintptr) uintptr
@@ -270,6 +301,20 @@ func (x *Button) GetUseUnderline() bool {
 	return cret
 }
 
+var xButtonSetCanShrink func(uintptr, bool)
+
+// Sets whether the button size can be smaller than the natural size of
+// its contents.
+//
+// For text buttons, setting @can_shrink to true will ellipsize the label.
+//
+// For icons and custom children, this function has no effect.
+func (x *Button) SetCanShrink(CanShrinkVar bool) {
+
+	xButtonSetCanShrink(x.GoPointer(), CanShrinkVar)
+
+}
+
 var xButtonSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @button.
@@ -289,7 +334,7 @@ var xButtonSetHasFrame func(uintptr, bool)
 
 // Sets the style of the button.
 //
-// Buttons can has a flat appearance or have a frame drawn around them.
+// Buttons can have a flat appearance or have a frame drawn around them.
 func (x *Button) SetHasFrame(HasFrameVar bool) {
 
 	xButtonSetHasFrame(x.GoPointer(), HasFrameVar)
@@ -346,6 +391,9 @@ func (c *Button) SetGoPointer(ptr uintptr) {
 //
 // This is an action signal. Applications should never connect
 // to this signal, but use the [signal@Gtk.Button::clicked] signal.
+//
+// The default bindings for this signal are all forms of the
+// &lt;kbd&gt;␣&lt;/kbd&gt; and &lt;kbd&gt;Enter&lt;/kbd&gt; keys.
 func (x *Button) ConnectActivate(cb *func(Button)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -385,31 +433,162 @@ func (x *Button) ConnectClicked(cb *func(Button)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *Button) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *Button) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *Button) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *Button) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *Button) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *Button) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *Button) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *Button) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *Button) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *Button) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *Button) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *Button) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *Button) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *Button) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -455,7 +634,7 @@ func (x *Button) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessi
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -485,13 +664,17 @@ func (x *Button) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessibl
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -604,7 +787,7 @@ func (x *Button) SetDetailedActionName(DetailedActionNameVar string) {
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Button) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -626,11 +809,13 @@ func init() {
 	core.PuregoSafeRegister(&xNewButtonWithLabel, lib, "gtk_button_new_with_label")
 	core.PuregoSafeRegister(&xNewButtonWithMnemonic, lib, "gtk_button_new_with_mnemonic")
 
+	core.PuregoSafeRegister(&xButtonGetCanShrink, lib, "gtk_button_get_can_shrink")
 	core.PuregoSafeRegister(&xButtonGetChild, lib, "gtk_button_get_child")
 	core.PuregoSafeRegister(&xButtonGetHasFrame, lib, "gtk_button_get_has_frame")
 	core.PuregoSafeRegister(&xButtonGetIconName, lib, "gtk_button_get_icon_name")
 	core.PuregoSafeRegister(&xButtonGetLabel, lib, "gtk_button_get_label")
 	core.PuregoSafeRegister(&xButtonGetUseUnderline, lib, "gtk_button_get_use_underline")
+	core.PuregoSafeRegister(&xButtonSetCanShrink, lib, "gtk_button_set_can_shrink")
 	core.PuregoSafeRegister(&xButtonSetChild, lib, "gtk_button_set_child")
 	core.PuregoSafeRegister(&xButtonSetHasFrame, lib, "gtk_button_set_has_frame")
 	core.PuregoSafeRegister(&xButtonSetIconName, lib, "gtk_button_set_icon_name")

@@ -29,18 +29,22 @@ func (x *IMContextSimplePrivate) GoPointer() uintptr {
 }
 
 const (
+	// Evaluates to the maximum length of a compose sequence.
+	//
+	// This macro is longer used by GTK.
 	MAX_COMPOSE_LEN int = 7
 )
 
-// `GtkIMContextSimple` is an input method supporting table-based input methods.
+// Supports compose sequences, dead keys and numeric Unicode input.
 //
 // ## Compose sequences
 //
 // `GtkIMContextSimple` reads compose sequences from the first of the
 // following files that is found: ~/.config/gtk-4.0/Compose, ~/.XCompose,
 // /usr/share/X11/locale/$locale/Compose (for locales that have a nontrivial
-// Compose file). The syntax of these files is described in the Compose(5)
-// manual page.
+// Compose file). A subset of the file syntax described in the Compose(5)
+// manual page is supported. Additionally, `include "%L"` loads GTK’s built-in
+// table of compose sequences rather than the locale-specific one from X11.
 //
 // If none of these files is found, `GtkIMContextSimple` uses a built-in table
 // of compose sequences that is derived from the X11 Compose files.

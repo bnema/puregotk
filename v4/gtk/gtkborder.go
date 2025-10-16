@@ -10,9 +10,9 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// A struct that specifies a border around a rectangular area.
+// Specifies a border around a rectangular area.
 //
-// Each side can have different width.
+// Each side can have a different width.
 type Border struct {
 	_ structs.HostLayout
 

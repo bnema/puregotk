@@ -128,8 +128,7 @@ func (x *IMMulticontextPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkIMMulticontext` is an input method context supporting multiple,
-// switchable input methods.
+// Supports switching between multiple input methods.
 //
 // Text widgets such as `GtkText` or `GtkTextView` use a `GtkIMMultiContext`
 // to implement their `im-module` property for switching between different

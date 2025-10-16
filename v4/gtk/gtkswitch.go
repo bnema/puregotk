@@ -11,32 +11,53 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// `GtkSwitch` is a "light switch" that has two states: on or off.
+// Shows a "light switch" that has two states: on or off.
 //
-// ![An example GtkSwitch](switch.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="switch-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkSwitch" src="switch.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // The user can control which state should be active by clicking the
-// empty area, or by dragging the handle.
+// empty area, or by dragging the slider.
 //
-// `GtkSwitch` can also handle situations where the underlying state
-// changes with a delay. See [signal@GtkSwitch::state-set] for details.
+// `GtkSwitch` can also express situations where the underlying state changes
+// with a delay. In this case, the slider position indicates the user's recent
+// change (represented by the [property@Gtk.Switch:active] property), while the
+// trough color indicates the present underlying state (represented by the
+// [property@Gtk.Switch:state] property).
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="switch-state-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="GtkSwitch with delayed state change" src="switch-state.png"&gt;
+//
+// &lt;/picture&gt;
+//
+// See [signal@Gtk.Switch::state-set] for details.
+//
+// # Shortcuts and Gestures
+//
+// `GtkSwitch` supports pan and drag gestures to move the slider.
 //
 // # CSS nodes
 //
 // ```
 // switch
-// ├── label
-// ├── label
+// ├── image
+// ├── image
 // ╰── slider
 // ```
 //
 // `GtkSwitch` has four css nodes, the main node with the name switch and
-// subnodes for the slider and the on and off labels. Neither of them is
+// subnodes for the slider and the on and off images. Neither of them is
 // using any style classes.
 //
 // # Accessibility
 //
-// `GtkSwitch` uses the %GTK_ACCESSIBLE_ROLE_SWITCH role.
+// `GtkSwitch` uses the [enum@Gtk.AccessibleRole.switch] role.
 type Switch struct {
 	Widget
 }
@@ -101,9 +122,8 @@ var xSwitchSetState func(uintptr, bool)
 
 // Sets the underlying state of the `GtkSwitch`.
 //
-// Normally, this is the same as [property@Gtk.Switch:active], unless
-// the switch is set up for delayed state changes. This function is
-// typically called from a [signal@Gtk.Switch::state-set] signal handler.
+// This function is typically called from a [signal@Gtk.Switch::state-set]
+// signal handler in order to set up delayed state changes.
 //
 // See [signal@Gtk.Switch::state-set] for details.
 func (x *Switch) SetState(StateVar bool) {
@@ -149,18 +169,14 @@ func (x *Switch) ConnectActivate(cb *func(Switch)) uint32 {
 // Emitted to change the underlying state.
 //
 // The ::state-set signal is emitted when the user changes the switch
-// position. The default handler keeps the state in sync with the
-// [property@Gtk.Switch:active] property.
+// position. The default handler calls [method@Gtk.Switch.set_state] with the
+// value of @state.
 //
 // To implement delayed state change, applications can connect to this
 // signal, initiate the change of the underlying state, and call
 // [method@Gtk.Switch.set_state] when the underlying state change is
 // complete. The signal handler should return %TRUE to prevent the
 // default handler from running.
-//
-// Visually, the underlying state is represented by the trough color of
-// the switch, while the [property@Gtk.Switch:active] property is
-// represented by the position of the switch.
 func (x *Switch) ConnectStateSet(cb *func(Switch, bool) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -180,31 +196,162 @@ func (x *Switch) ConnectStateSet(cb *func(Switch, bool) bool) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "state-set", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *Switch) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *Switch) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *Switch) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *Switch) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *Switch) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *Switch) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *Switch) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *Switch) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *Switch) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *Switch) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *Switch) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *Switch) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *Switch) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *Switch) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -250,7 +397,7 @@ func (x *Switch) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessi
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -280,13 +427,17 @@ func (x *Switch) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessibl
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -399,7 +550,7 @@ func (x *Switch) SetDetailedActionName(DetailedActionNameVar string) {
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Switch) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

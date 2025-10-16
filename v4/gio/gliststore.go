@@ -22,8 +22,8 @@ func (x *ListStoreClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GListStore is a simple implementation of #GListModel that stores all
-// items in memory.
+// `GListStore` is a simple implementation of [iface@Gio.ListModel] that stores
+// all items in memory.
 //
 // It provides insertions, deletions, and lookups in logarithmic time
 // with a fast path for the common case of iterating the list linearly.
@@ -91,12 +91,30 @@ func (x *ListStore) Find(ItemVar *gobject.Object, PositionVar uint) bool {
 var xListStoreFindWithEqualFunc func(uintptr, uintptr, uintptr, uint) bool
 
 // Looks up the given @item in the list store by looping over the items and
-// comparing them with @compare_func until the first occurrence of @item which
+// comparing them with @equal_func until the first occurrence of @item which
 // matches. If @item was not found, then @position will not be set, and this
 // method will return %FALSE.
+//
+// @item is always passed as second parameter to @equal_func.
+//
+// Since GLib 2.76 it is possible to pass `NULL` for @item.
 func (x *ListStore) FindWithEqualFunc(ItemVar *gobject.Object, EqualFuncVar *glib.EqualFunc, PositionVar uint) bool {
 
 	cret := xListStoreFindWithEqualFunc(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(EqualFuncVar), PositionVar)
+	return cret
+}
+
+var xListStoreFindWithEqualFuncFull func(uintptr, uintptr, uintptr, uintptr, uint) bool
+
+// Like g_list_store_find_with_equal_func() but with an additional @user_data
+// that is passed to @equal_func.
+//
+// @item is always passed as second parameter to @equal_func.
+//
+// Since GLib 2.76 it is possible to pass `NULL` for @item.
+func (x *ListStore) FindWithEqualFuncFull(ItemVar *gobject.Object, EqualFuncVar *glib.EqualFuncFull, UserDataVar uintptr, PositionVar uint) bool {
+
+	cret := xListStoreFindWithEqualFuncFull(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(EqualFuncVar), UserDataVar, PositionVar)
 	return cret
 }
 
@@ -301,6 +319,7 @@ func init() {
 	core.PuregoSafeRegister(&xListStoreAppend, lib, "g_list_store_append")
 	core.PuregoSafeRegister(&xListStoreFind, lib, "g_list_store_find")
 	core.PuregoSafeRegister(&xListStoreFindWithEqualFunc, lib, "g_list_store_find_with_equal_func")
+	core.PuregoSafeRegister(&xListStoreFindWithEqualFuncFull, lib, "g_list_store_find_with_equal_func_full")
 	core.PuregoSafeRegister(&xListStoreInsert, lib, "g_list_store_insert")
 	core.PuregoSafeRegister(&xListStoreInsertSorted, lib, "g_list_store_insert_sorted")
 	core.PuregoSafeRegister(&xListStoreRemove, lib, "g_list_store_remove")

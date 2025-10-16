@@ -64,6 +64,26 @@ func AtomicIntCompareAndExchange(AtomicVar int, OldvalVar int, NewvalVar int) bo
 	return cret
 }
 
+var xAtomicIntCompareAndExchangeFull func(int, int, int, int) bool
+
+// Compares @atomic to @oldval and, if equal, sets it to @newval.
+// If @atomic was not equal to @oldval then no change occurs.
+// In any case the value of @atomic before this operation is stored in @preval.
+//
+// This compare and exchange is done atomically.
+//
+// Think of this operation as an atomic version of
+// `{ *preval = *atomic; if (*atomic == oldval) { *atomic = newval; return TRUE; } else return FALSE; }`.
+//
+// This call acts as a full compiler and hardware memory barrier.
+//
+// See also g_atomic_int_compare_and_exchange()
+func AtomicIntCompareAndExchangeFull(AtomicVar int, OldvalVar int, NewvalVar int, PrevalVar int) bool {
+
+	cret := xAtomicIntCompareAndExchangeFull(AtomicVar, OldvalVar, NewvalVar, PrevalVar)
+	return cret
+}
+
 var xAtomicIntDecAndTest func(int) bool
 
 // Decrements the value of @atomic by 1.
@@ -78,6 +98,22 @@ var xAtomicIntDecAndTest func(int) bool
 func AtomicIntDecAndTest(AtomicVar int) bool {
 
 	cret := xAtomicIntDecAndTest(AtomicVar)
+	return cret
+}
+
+var xAtomicIntExchange func(int, int) int
+
+// Sets the @atomic to @newval and returns the old value from @atomic.
+//
+// This exchange is done atomically.
+//
+// Think of this operation as an atomic version of
+// `{ tmp = *atomic; *atomic = val; return tmp; }`.
+//
+// This call acts as a full compiler and hardware memory barrier.
+func AtomicIntExchange(AtomicVar int, NewvalVar int) int {
+
+	cret := xAtomicIntExchange(AtomicVar, NewvalVar)
 	return cret
 }
 
@@ -174,7 +210,7 @@ func AtomicIntXor(AtomicVar uint, ValVar uint) uint {
 	return cret
 }
 
-var xAtomicPointerAdd func(uintptr, int) int
+var xAtomicPointerAdd func(uintptr, int) gintptr
 
 // Atomically adds @val to the value of @atomic.
 //
@@ -185,13 +221,17 @@ var xAtomicPointerAdd func(uintptr, int) int
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicPointerAdd(AtomicVar uintptr, ValVar int) int {
+//
+// In GLib 2.80, the return type was changed from #gssize to #gintptr to add
+// support for platforms with 128-bit pointers. This should not affect existing
+// code.
+func AtomicPointerAdd(AtomicVar uintptr, ValVar int) gintptr {
 
 	cret := xAtomicPointerAdd(AtomicVar, ValVar)
 	return cret
 }
 
-var xAtomicPointerAnd func(uintptr, uint) uint
+var xAtomicPointerAnd func(uintptr, uint) uintptr
 
 // Performs an atomic bitwise 'and' of the value of @atomic and @val,
 // storing the result back in @atomic.
@@ -203,7 +243,11 @@ var xAtomicPointerAnd func(uintptr, uint) uint
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicPointerAnd(AtomicVar uintptr, ValVar uint) uint {
+//
+// In GLib 2.80, the return type was changed from #gsize to #guintptr to add
+// support for platforms with 128-bit pointers. This should not affect existing
+// code.
+func AtomicPointerAnd(AtomicVar uintptr, ValVar uint) uintptr {
 
 	cret := xAtomicPointerAnd(AtomicVar, ValVar)
 	return cret
@@ -229,6 +273,42 @@ func AtomicPointerCompareAndExchange(AtomicVar uintptr, OldvalVar uintptr, Newva
 	return cret
 }
 
+var xAtomicPointerCompareAndExchangeFull func(uintptr, uintptr, uintptr, uintptr) bool
+
+// Compares @atomic to @oldval and, if equal, sets it to @newval.
+// If @atomic was not equal to @oldval then no change occurs.
+// In any case the value of @atomic before this operation is stored in @preval.
+//
+// This compare and exchange is done atomically.
+//
+// Think of this operation as an atomic version of
+// `{ *preval = *atomic; if (*atomic == oldval) { *atomic = newval; return TRUE; } else return FALSE; }`.
+//
+// This call acts as a full compiler and hardware memory barrier.
+//
+// See also g_atomic_pointer_compare_and_exchange()
+func AtomicPointerCompareAndExchangeFull(AtomicVar uintptr, OldvalVar uintptr, NewvalVar uintptr, PrevalVar uintptr) bool {
+
+	cret := xAtomicPointerCompareAndExchangeFull(AtomicVar, OldvalVar, NewvalVar, PrevalVar)
+	return cret
+}
+
+var xAtomicPointerExchange func(uintptr, uintptr) uintptr
+
+// Sets the @atomic to @newval and returns the old value from @atomic.
+//
+// This exchange is done atomically.
+//
+// Think of this operation as an atomic version of
+// `{ tmp = *atomic; *atomic = val; return tmp; }`.
+//
+// This call acts as a full compiler and hardware memory barrier.
+func AtomicPointerExchange(AtomicVar uintptr, NewvalVar uintptr) uintptr {
+
+	cret := xAtomicPointerExchange(AtomicVar, NewvalVar)
+	return cret
+}
+
 var xAtomicPointerGet func(uintptr) uintptr
 
 // Gets the current value of @atomic.
@@ -244,7 +324,7 @@ func AtomicPointerGet(AtomicVar uintptr) uintptr {
 	return cret
 }
 
-var xAtomicPointerOr func(uintptr, uint) uint
+var xAtomicPointerOr func(uintptr, uint) uintptr
 
 // Performs an atomic bitwise 'or' of the value of @atomic and @val,
 // storing the result back in @atomic.
@@ -256,7 +336,11 @@ var xAtomicPointerOr func(uintptr, uint) uint
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicPointerOr(AtomicVar uintptr, ValVar uint) uint {
+//
+// In GLib 2.80, the return type was changed from #gsize to #guintptr to add
+// support for platforms with 128-bit pointers. This should not affect existing
+// code.
+func AtomicPointerOr(AtomicVar uintptr, ValVar uint) uintptr {
 
 	cret := xAtomicPointerOr(AtomicVar, ValVar)
 	return cret
@@ -277,7 +361,7 @@ func AtomicPointerSet(AtomicVar uintptr, NewvalVar uintptr) {
 
 }
 
-var xAtomicPointerXor func(uintptr, uint) uint
+var xAtomicPointerXor func(uintptr, uint) uintptr
 
 // Performs an atomic bitwise 'xor' of the value of @atomic and @val,
 // storing the result back in @atomic.
@@ -289,7 +373,11 @@ var xAtomicPointerXor func(uintptr, uint) uint
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicPointerXor(AtomicVar uintptr, ValVar uint) uint {
+//
+// In GLib 2.80, the return type was changed from #gsize to #guintptr to add
+// support for platforms with 128-bit pointers. This should not affect existing
+// code.
+func AtomicPointerXor(AtomicVar uintptr, ValVar uint) uintptr {
 
 	cret := xAtomicPointerXor(AtomicVar, ValVar)
 	return cret
@@ -297,7 +385,7 @@ func AtomicPointerXor(AtomicVar uintptr, ValVar uint) uint {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -306,7 +394,9 @@ func init() {
 	core.PuregoSafeRegister(&xAtomicIntAdd, lib, "g_atomic_int_add")
 	core.PuregoSafeRegister(&xAtomicIntAnd, lib, "g_atomic_int_and")
 	core.PuregoSafeRegister(&xAtomicIntCompareAndExchange, lib, "g_atomic_int_compare_and_exchange")
+	core.PuregoSafeRegister(&xAtomicIntCompareAndExchangeFull, lib, "g_atomic_int_compare_and_exchange_full")
 	core.PuregoSafeRegister(&xAtomicIntDecAndTest, lib, "g_atomic_int_dec_and_test")
+	core.PuregoSafeRegister(&xAtomicIntExchange, lib, "g_atomic_int_exchange")
 	core.PuregoSafeRegister(&xAtomicIntExchangeAndAdd, lib, "g_atomic_int_exchange_and_add")
 	core.PuregoSafeRegister(&xAtomicIntGet, lib, "g_atomic_int_get")
 	core.PuregoSafeRegister(&xAtomicIntInc, lib, "g_atomic_int_inc")
@@ -316,6 +406,8 @@ func init() {
 	core.PuregoSafeRegister(&xAtomicPointerAdd, lib, "g_atomic_pointer_add")
 	core.PuregoSafeRegister(&xAtomicPointerAnd, lib, "g_atomic_pointer_and")
 	core.PuregoSafeRegister(&xAtomicPointerCompareAndExchange, lib, "g_atomic_pointer_compare_and_exchange")
+	core.PuregoSafeRegister(&xAtomicPointerCompareAndExchangeFull, lib, "g_atomic_pointer_compare_and_exchange_full")
+	core.PuregoSafeRegister(&xAtomicPointerExchange, lib, "g_atomic_pointer_exchange")
 	core.PuregoSafeRegister(&xAtomicPointerGet, lib, "g_atomic_pointer_get")
 	core.PuregoSafeRegister(&xAtomicPointerOr, lib, "g_atomic_pointer_or")
 	core.PuregoSafeRegister(&xAtomicPointerSet, lib, "g_atomic_pointer_set")

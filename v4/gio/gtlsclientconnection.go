@@ -26,6 +26,7 @@ func (x *TlsClientConnectionInterface) GoPointer() uintptr {
 }
 
 // OverrideCopySessionState sets the callback function.
+// Copies session state from one #GTlsClientConnection to another.
 func (x *TlsClientConnectionInterface) OverrideCopySessionState(cb func(TlsClientConnection, TlsClientConnection)) {
 	if cb == nil {
 		x.xCopySessionState = 0
@@ -37,6 +38,7 @@ func (x *TlsClientConnectionInterface) OverrideCopySessionState(cb func(TlsClien
 }
 
 // GetCopySessionState gets the callback function.
+// Copies session state from one #GTlsClientConnection to another.
 func (x *TlsClientConnectionInterface) GetCopySessionState() func(TlsClientConnection, TlsClientConnection) {
 	if x.xCopySessionState == 0 {
 		return nil
@@ -48,8 +50,8 @@ func (x *TlsClientConnectionInterface) GetCopySessionState() func(TlsClientConne
 	}
 }
 
-// #GTlsClientConnection is the client-side subclass of
-// #GTlsConnection, representing a client-side TLS connection.
+// `GTlsClientConnection` is the client-side subclass of
+// [class@Gio.TlsConnection], representing a client-side TLS connection.
 type TlsClientConnection interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

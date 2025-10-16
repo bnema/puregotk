@@ -17,9 +17,9 @@ var xFindParagraphBoundary func(string, int, int, int)
 // or Unicode paragraph separator character.
 //
 // The index of the run of delimiters is returned in
-// @paragraph_delimiter_index. The index of the start
-// of the paragrap (index after all delimiters) is stored
-// in @next_paragraph_start.
+// @paragraph_delimiter_index. The index of the start of the
+// next paragraph (index after all delimiters) is stored n
+// @next_paragraph_start.
 //
 // If no delimiters are found, both @paragraph_delimiter_index
 // and @next_paragraph_start are filled with the length of @text
@@ -44,7 +44,7 @@ func IsZeroWidth(ChVar uint32) bool {
 	return cret
 }
 
-var xLog2visGetEmbeddingLevels func(string, int, *Direction) byte
+var xLog2visGetEmbeddingLevels func(string, int, *Direction) uintptr
 
 // Return the bidirectional embedding levels of the input paragraph.
 //
@@ -53,7 +53,7 @@ var xLog2visGetEmbeddingLevels func(string, int, *Direction) byte
 //
 // If the input base direction is a weak direction, the direction of the
 // characters in the text will determine the final resolved direction.
-func Log2visGetEmbeddingLevels(TextVar string, LengthVar int, PbaseDirVar *Direction) byte {
+func Log2visGetEmbeddingLevels(TextVar string, LengthVar int, PbaseDirVar *Direction) uintptr {
 
 	cret := xLog2visGetEmbeddingLevels(TextVar, LengthVar, PbaseDirVar)
 	return cret

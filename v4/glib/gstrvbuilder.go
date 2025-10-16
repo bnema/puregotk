@@ -7,27 +7,46 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// #GStrvBuilder is a method of easily building dynamically sized
-// NULL-terminated string arrays.
+// `GStrvBuilder` is a helper object to build a %NULL-terminated string arrays.
 //
 // The following example shows how to build a two element array:
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 //
 //	g_autoptr(GStrvBuilder) builder = g_strv_builder_new ();
 //	g_strv_builder_add (builder, "hello");
 //	g_strv_builder_add (builder, "world");
+//
 //	g_auto(GStrv) array = g_strv_builder_end (builder);
 //
-// ]|
+//	g_assert_true (g_strv_equal (array, (const char *[]) { "hello", "world", NULL }));
+//
+// ```
 type StrvBuilder struct {
 	_ structs.HostLayout
 }
 
+var xStrvBuilderGLibType func() types.GType
+
+func StrvBuilderGLibType() types.GType {
+	return xStrvBuilderGLibType()
+}
+
 func (x *StrvBuilder) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewStrvBuilder func() *StrvBuilder
+
+// Creates a new #GStrvBuilder with a reference count of 1.
+// Use g_strv_builder_unref() on the returned value when no longer needed.
+func NewStrvBuilder() *StrvBuilder {
+
+	cret := xNewStrvBuilder()
+	return cret
 }
 
 var xStrvBuilderAdd func(uintptr, string)
@@ -84,6 +103,18 @@ func (x *StrvBuilder) Ref() *StrvBuilder {
 	return cret
 }
 
+var xStrvBuilderTake func(uintptr, string)
+
+// Add a string to the end of the array. After @value belongs to the
+// #GStrvBuilder and may no longer be modified by the caller.
+//
+// Since 2.80
+func (x *StrvBuilder) Take(ValueVar string) {
+
+	xStrvBuilderTake(x.GoPointer(), ValueVar)
+
+}
+
 var xStrvBuilderUnref func(uintptr)
 
 // Decreases the reference count on @builder.
@@ -96,19 +127,50 @@ func (x *StrvBuilder) Unref() {
 
 }
 
+var xStrvBuilderUnrefToStrv func(uintptr) []string
+
+// Decreases the reference count on the string vector builder, and returns
+// its contents as a `NULL`-terminated string array.
+//
+// This function is especially useful for cases where it's not possible
+// to use `g_autoptr()`.
+//
+// ```c
+// GStrvBuilder *builder = g_strv_builder_new ();
+// g_strv_builder_add (builder, "hello");
+// g_strv_builder_add (builder, "world");
+//
+// GStrv array = g_strv_builder_unref_to_strv (builder);
+//
+// g_assert_true (g_strv_equal (array, (const char *[]) { "hello", "world", NULL }));
+//
+// g_strfreev (array);
+// ```
+func (x *StrvBuilder) UnrefToStrv() []string {
+
+	cret := xStrvBuilderUnrefToStrv(x.GoPointer())
+	return cret
+}
+
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
+
+	core.PuregoSafeRegister(&xStrvBuilderGLibType, lib, "g_strv_builder_get_type")
+
+	core.PuregoSafeRegister(&xNewStrvBuilder, lib, "g_strv_builder_new")
 
 	core.PuregoSafeRegister(&xStrvBuilderAdd, lib, "g_strv_builder_add")
 	core.PuregoSafeRegister(&xStrvBuilderAddMany, lib, "g_strv_builder_add_many")
 	core.PuregoSafeRegister(&xStrvBuilderAddv, lib, "g_strv_builder_addv")
 	core.PuregoSafeRegister(&xStrvBuilderEnd, lib, "g_strv_builder_end")
 	core.PuregoSafeRegister(&xStrvBuilderRef, lib, "g_strv_builder_ref")
+	core.PuregoSafeRegister(&xStrvBuilderTake, lib, "g_strv_builder_take")
 	core.PuregoSafeRegister(&xStrvBuilderUnref, lib, "g_strv_builder_unref")
+	core.PuregoSafeRegister(&xStrvBuilderUnrefToStrv, lib, "g_strv_builder_unref_to_strv")
 
 }

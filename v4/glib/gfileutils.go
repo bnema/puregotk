@@ -178,7 +178,7 @@ func Basename(FileNameVar string) string {
 var xBuildFilename func(string, ...interface{}) string
 
 // Creates a filename from a series of elements using the correct
-// separator for filenames.
+// separator for the current platform.
 //
 // On Unix, this function behaves identically to `g_build_path
 // (G_DIR_SEPARATOR_S, first_element, ....)`.
@@ -192,6 +192,9 @@ var xBuildFilename func(string, ...interface{}) string
 // No attempt is made to force the resulting filename to be an absolute
 // path. If the first element is a relative path, the result will
 // be a relative path.
+//
+// If you are building a path programmatically you may want to use
+// #GPathBuf instead.
 func BuildFilename(FirstElementVar string, varArgs ...interface{}) string {
 
 	cret := xBuildFilename(FirstElementVar, varArgs...)
@@ -200,8 +203,14 @@ func BuildFilename(FirstElementVar string, varArgs ...interface{}) string {
 
 var xBuildFilenameValist func(string, []interface{}) string
 
+// Creates a filename from a list of elements using the correct
+// separator for the current platform.
+//
 // Behaves exactly like g_build_filename(), but takes the path elements
-// as a va_list. This function is mainly meant for language bindings.
+// as a va_list.
+//
+// This function is mainly meant for implementing other variadic arguments
+// functions.
 func BuildFilenameValist(FirstElementVar string, ArgsVar []interface{}) string {
 
 	cret := xBuildFilenameValist(FirstElementVar, ArgsVar)
@@ -210,9 +219,15 @@ func BuildFilenameValist(FirstElementVar string, ArgsVar []interface{}) string {
 
 var xBuildFilenamev func([]string) string
 
-// Behaves exactly like g_build_filename(), but takes the path elements
-// as a string array, instead of varargs. This function is mainly
+// Creates a filename from a vector of elements using the correct
+// separator for the current platform.
+//
+// This function behaves exactly like g_build_filename(), but takes the path
+// elements as a string array, instead of varargs. This function is mainly
 // meant for language bindings.
+//
+// If you are building a path programmatically you may want to use
+// #GPathBuf instead.
 func BuildFilenamev(ArgsVar []string) string {
 
 	cret := xBuildFilenamev(ArgsVar)
@@ -222,10 +237,12 @@ func BuildFilenamev(ArgsVar []string) string {
 var xBuildPath func(string, string, ...interface{}) string
 
 // Creates a path from a series of elements using @separator as the
-// separator between elements. At the boundary between two elements,
-// any trailing occurrences of separator in the first element, or
-// leading occurrences of separator in the second element are removed
-// and exactly one copy of the separator is inserted.
+// separator between elements.
+//
+// At the boundary between two elements, any trailing occurrences of
+// separator in the first element, or leading occurrences of separator
+// in the second element are removed and exactly one copy of the
+// separator is inserted.
 //
 // Empty elements are ignored.
 //
@@ -256,8 +273,9 @@ func BuildPath(SeparatorVar string, FirstElementVar string, varArgs ...interface
 var xBuildPathv func(string, []string) string
 
 // Behaves exactly like g_build_path(), but takes the path elements
-// as a string array, instead of varargs. This function is mainly
-// meant for language bindings.
+// as a string array, instead of variadic arguments.
+//
+// This function is mainly meant for language bindings.
 func BuildPathv(SeparatorVar string, ArgsVar []string) string {
 
 	cret := xBuildPathv(SeparatorVar, ArgsVar)
@@ -382,8 +400,31 @@ func FileOpenTmp(TmplVar string, NameUsedVar string) (int, error) {
 var xFileReadLink func(string, **Error) string
 
 // Reads the contents of the symbolic link @filename like the POSIX
-// readlink() function.  The returned string is in the encoding used
-// for filenames. Use g_filename_to_utf8() to convert it to UTF-8.
+// `readlink()` function.
+//
+// The returned string is in the encoding used for filenames. Use
+// g_filename_to_utf8() to convert it to UTF-8.
+//
+// The returned string may also be a relative path. Use g_build_filename()
+// to convert it to an absolute path:
+//
+// |[&lt;!-- language="C" --&gt;
+// g_autoptr(GError) local_error = NULL;
+// g_autofree gchar *link_target = g_file_read_link ("/etc/localtime", &amp;local_error);
+//
+// if (local_error != NULL)
+//
+//	g_error ("Error reading link: %s", local_error-&gt;message);
+//
+// if (!g_path_is_absolute (link_target))
+//
+//	{
+//	  g_autofree gchar *absolute_link_target = g_build_filename ("/etc", link_target, NULL);
+//	  g_free (link_target);
+//	  link_target = g_steal_pointer (&amp;absolute_link_target);
+//	}
+//
+// ]|
 func FileReadLink(FilenameVar string) (string, error) {
 	var cerr *Error
 
@@ -497,16 +538,34 @@ var xNewFileTest func(string, FileTest) bool
 //
 // You should never use g_file_test() to test whether it is safe
 // to perform an operation, because there is always the possibility
-// of the condition changing before you actually perform the operation.
+// of the condition changing before you actually perform the operation,
+// see [TOCTOU](https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use).
+//
 // For example, you might think you could use %G_FILE_TEST_IS_SYMLINK
 // to know whether it is safe to write to a file without being
 // tricked into writing into a different location. It doesn't work!
+//
 // |[&lt;!-- language="C" --&gt;
 //
 //	// DON'T DO THIS
 //	if (!g_file_test (filename, G_FILE_TEST_IS_SYMLINK))
 //	  {
 //	    fd = g_open (filename, O_WRONLY);
+//	    // write to fd
+//	  }
+//
+//	// DO THIS INSTEAD
+//	fd = g_open (filename, O_WRONLY | O_NOFOLLOW | O_CLOEXEC);
+//	if (fd == -1)
+//	  {
+//	    // check error
+//	    if (errno == ELOOP)
+//	      // file is a symlink and can be ignored
+//	    else
+//	      // handle errors as before
+//	  }
+//	else
+//	  {
 //	    // write to fd
 //	  }
 //
@@ -560,8 +619,9 @@ func MkdirWithParents(PathnameVar string, ModeVar int) int {
 
 var xMkdtemp func(string) string
 
-// Creates a temporary directory. See the mkdtemp() documentation
-// on most UNIX-like systems.
+// Creates a temporary directory in the current directory.
+//
+// See the [`mkdtemp()`](man:mkdtemp(3)) documentation on most UNIX-like systems.
 //
 // The parameter is a string that should follow the rules for
 // mkdtemp() templates, i.e. contain the string "XXXXXX".
@@ -583,8 +643,9 @@ func Mkdtemp(TmplVar string) string {
 
 var xMkdtempFull func(string, int) string
 
-// Creates a temporary directory. See the mkdtemp() documentation
-// on most UNIX-like systems.
+// Creates a temporary directory in the current directory.
+//
+// See the [`mkdtemp()`](man:mkdtemp(3)) documentation on most UNIX-like systems.
 //
 // The parameter is a string that should follow the rules for
 // mkdtemp() templates, i.e. contain the string "XXXXXX".
@@ -606,8 +667,9 @@ func MkdtempFull(TmplVar string, ModeVar int) string {
 
 var xMkstemp func(string) int
 
-// Opens a temporary file. See the mkstemp() documentation
-// on most UNIX-like systems.
+// Opens a temporary file in the current directory.
+//
+// See the [`mkstemp()`](man:mkstemp(3)) documentation on most UNIX-like systems.
 //
 // The parameter is a string that should follow the rules for
 // mkstemp() templates, i.e. contain the string "XXXXXX".
@@ -624,8 +686,9 @@ func Mkstemp(TmplVar string) int {
 
 var xMkstempFull func(string, int, int) int
 
-// Opens a temporary file. See the mkstemp() documentation
-// on most UNIX-like systems.
+// Opens a temporary file in the current directory.
+//
+// See the [`mkstemp()`](man:mkstemp(3)) documentation on most UNIX-like systems.
 //
 // The parameter is a string that should follow the rules for
 // mkstemp() templates, i.e. contain the string "XXXXXX".
@@ -714,7 +777,7 @@ func PathSkipRoot(FileNameVar string) string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

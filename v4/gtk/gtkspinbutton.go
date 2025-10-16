@@ -71,10 +71,14 @@ const (
 	SpinUserDefinedValue SpinType = 6
 )
 
-// A `GtkSpinButton` is an ideal way to allow the user to set the
-// value of some attribute.
+// Allows to enter or change numeric values.
 //
-// ![An example GtkSpinButton](spinbutton.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="spinbutton-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkSpinButton" src="spinbutton.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // Rather than having to directly type a number into a `GtkEntry`,
 // `GtkSpinButton` allows the user to click on one of two arrows
@@ -121,7 +125,7 @@ const (
 //	  button = gtk_spin_button_new (adjustment, 1.0, 0);
 //	  gtk_window_set_child (GTK_WINDOW (window), button);
 //
-//	  gtk_widget_show (window);
+//	  gtk_window_present (GTK_WINDOW (window));
 //	}
 //
 // ```
@@ -156,10 +160,16 @@ const (
 //	  button = gtk_spin_button_new (adjustment, 0.001, 3);
 //	  gtk_window_set_child (GTK_WINDOW (window), button);
 //
-//	  gtk_widget_show (window);
+//	  gtk_window_present (GTK_WINDOW (window));
 //	}
 //
 // ```
+//
+// # Shortcuts and Gestures
+//
+// The following signals have default keybindings:
+//
+// - [signal@Gtk.SpinButton::change-value]
 //
 // # CSS nodes
 //
@@ -187,9 +197,9 @@ const (
 // below the text node. The orientation of the spin button is reflected in
 // the .vertical or .horizontal style class on the main node.
 //
-// # Accessiblity
+// # Accessibility
 //
-// `GtkSpinButton` uses the %GTK_ACCESSIBLE_ROLE_SPIN_BUTTON role.
+// `GtkSpinButton` uses the [enum@Gtk.AccessibleRole.spin_button] role.
 type SpinButton struct {
 	Widget
 }
@@ -262,6 +272,15 @@ func (x *SpinButton) Configure(AdjustmentVar *Adjustment, ClimbRateVar float64, 
 
 	xSpinButtonConfigure(x.GoPointer(), AdjustmentVar.GoPointer(), ClimbRateVar, DigitsVar)
 
+}
+
+var xSpinButtonGetActivatesDefault func(uintptr) bool
+
+// Retrieves the value set by [method@Gtk.SpinButton.set_activates_default].
+func (x *SpinButton) GetActivatesDefault() bool {
+
+	cret := xSpinButtonGetActivatesDefault(x.GoPointer())
+	return cret
 }
 
 var xSpinButtonGetAdjustment func(uintptr) uintptr
@@ -378,6 +397,18 @@ func (x *SpinButton) GetWrap() bool {
 
 	cret := xSpinButtonGetWrap(x.GoPointer())
 	return cret
+}
+
+var xSpinButtonSetActivatesDefault func(uintptr, bool)
+
+// Sets whether activating the spin button will activate the default
+// widget for the window containing the spin button.
+//
+// See [signal@Gtk.SpinButton::activate] for what counts as activation.
+func (x *SpinButton) SetActivatesDefault(ActivatesDefaultVar bool) {
+
+	xSpinButtonSetActivatesDefault(x.GoPointer(), ActivatesDefaultVar)
+
 }
 
 var xSpinButtonSetAdjustment func(uintptr, uintptr)
@@ -517,6 +548,32 @@ func (c *SpinButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// Emitted when the spin button is activated.
+//
+// The keybindings for this signal are all forms of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
+//
+// If the &lt;kbd&gt;Enter&lt;/kbd&gt; key results in the value being committed to the
+// spin button, then activation does not occur until &lt;kbd&gt;Enter&lt;/kbd&gt; is
+// pressed again.
+func (x *SpinButton) ConnectActivate(cb *func(SpinButton)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr) {
+		fa := SpinButton{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+}
+
 // Emitted when the user initiates a value change.
 //
 // This is a [keybinding signal](class.SignalAction.html).
@@ -581,12 +638,10 @@ func (x *SpinButton) ConnectInput(cb *func(SpinButton, float64) int) uint32 {
 //	gpointer       data)
 //
 //	{
-//	   GtkAdjustment *adjustment;
 //	   char *text;
 //	   int value;
 //
-//	   adjustment = gtk_spin_button_get_adjustment (spin);
-//	   value = (int)gtk_adjustment_get_value (adjustment);
+//	   value = gtk_spin_button_get_value_as_int (spin);
 //	   text = g_strdup_printf ("%02d", value);
 //	   gtk_editable_set_text (GTK_EDITABLE (spin), text):
 //	   g_free (text);
@@ -657,31 +712,162 @@ func (x *SpinButton) ConnectWrapped(cb *func(SpinButton)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *SpinButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *SpinButton) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *SpinButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *SpinButton) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *SpinButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *SpinButton) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *SpinButton) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *SpinButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *SpinButton) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *SpinButton) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *SpinButton) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *SpinButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *SpinButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *SpinButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -727,7 +913,7 @@ func (x *SpinButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acc
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -757,13 +943,17 @@ func (x *SpinButton) UpdateRelationValue(NRelationsVar int, RelationsVar []Acces
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -793,7 +983,7 @@ func (x *SpinButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *SpinButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -828,6 +1018,48 @@ func (x *SpinButton) StartEditing(EventVar *gdk.Event) {
 
 	XGtkCellEditableStartEditing(x.GoPointer(), EventVar.GoPointer())
 
+}
+
+// Retrieves the accessible platform state from the editable delegate.
+//
+// This is an helper function to retrieve the accessible state for
+// `GtkEditable` interface implementations using a delegate pattern.
+//
+// You should call this function in your editable widget implementation
+// of the [vfunc@Gtk.Accessible.get_platform_state] virtual function, for
+// instance:
+//
+// ```c
+// static void
+// accessible_interface_init (GtkAccessibleInterface *iface)
+//
+//	{
+//	  iface-&gt;get_platform_state = your_editable_get_accessible_platform_state;
+//	}
+//
+// static gboolean
+// your_editable_get_accessible_platform_state (GtkAccessible *accessible,
+//
+//	GtkAccessiblePlatformState state)
+//
+//	{
+//	  return gtk_editable_delegate_get_accessible_platform_state (GTK_EDITABLE (accessible), state);
+//	}
+//
+// ```
+//
+// Note that the widget which is the delegate *must* be a direct child of
+// this widget, otherwise your implementation of [vfunc@Gtk.Accessible.get_platform_state]
+// might not even be called, as the platform change will originate from
+// the parent of the delegate, and, as a result, will not work properly.
+//
+// So, if you can't ensure the direct child condition, you should give the
+// delegate the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role, or you can
+// change your tree to allow this function to work.
+func (x *SpinButton) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
+	return cret
 }
 
 // Deletes the currently selected text of the editable.
@@ -1104,6 +1336,7 @@ func init() {
 	core.PuregoSafeRegister(&xNewSpinButtonWithRange, lib, "gtk_spin_button_new_with_range")
 
 	core.PuregoSafeRegister(&xSpinButtonConfigure, lib, "gtk_spin_button_configure")
+	core.PuregoSafeRegister(&xSpinButtonGetActivatesDefault, lib, "gtk_spin_button_get_activates_default")
 	core.PuregoSafeRegister(&xSpinButtonGetAdjustment, lib, "gtk_spin_button_get_adjustment")
 	core.PuregoSafeRegister(&xSpinButtonGetClimbRate, lib, "gtk_spin_button_get_climb_rate")
 	core.PuregoSafeRegister(&xSpinButtonGetDigits, lib, "gtk_spin_button_get_digits")
@@ -1115,6 +1348,7 @@ func init() {
 	core.PuregoSafeRegister(&xSpinButtonGetValue, lib, "gtk_spin_button_get_value")
 	core.PuregoSafeRegister(&xSpinButtonGetValueAsInt, lib, "gtk_spin_button_get_value_as_int")
 	core.PuregoSafeRegister(&xSpinButtonGetWrap, lib, "gtk_spin_button_get_wrap")
+	core.PuregoSafeRegister(&xSpinButtonSetActivatesDefault, lib, "gtk_spin_button_set_activates_default")
 	core.PuregoSafeRegister(&xSpinButtonSetAdjustment, lib, "gtk_spin_button_set_adjustment")
 	core.PuregoSafeRegister(&xSpinButtonSetClimbRate, lib, "gtk_spin_button_set_climb_rate")
 	core.PuregoSafeRegister(&xSpinButtonSetDigits, lib, "gtk_spin_button_set_digits")

@@ -180,7 +180,9 @@ func (x *CancellablePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// GCancellable is a thread-safe operation cancellation stack used
+// `GCancellable` allows operations to be cancelled.
+//
+// `GCancellable` is a thread-safe operation cancellation stack used
 // throughout GIO to allow for cancellation of synchronous and
 // asynchronous operations.
 type Cancellable struct {
@@ -240,6 +242,9 @@ var xCancellableCancel func(uintptr)
 // cancel the operation from the same thread in which it is running,
 // then the operation's #GAsyncReadyCallback will not be invoked until
 // the application returns to the main loop.
+//
+// It is safe (although useless, since it will be a no-op) to call
+// this function from a [signal@Gio.Cancellable::cancelled] signal handler.
 func (x *Cancellable) Cancel() {
 
 	xCancellableCancel(x.GoPointer())
@@ -252,9 +257,14 @@ var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint32
 // signal. Also handles the race condition that may happen
 // if the cancellable is cancelled right before connecting.
 //
-// @callback is called at most once, either directly at the
-// time of the connect if @cancellable is already cancelled,
-// or when @cancellable is cancelled in some thread.
+// @callback is called exactly once each time @cancellable is cancelled,
+// either directly at the time of the connect if @cancellable is already
+// cancelled, or when @cancellable is cancelled in some thread.
+// In case the cancellable is reset via [method@Gio.Cancellable.reset]
+// then the callback can be called again if the @cancellable is cancelled and
+// if it had not been previously cancelled at the time
+// [method@Gio.Cancellable.connect] was called (e.g. if the connection actually
+// took place, returning a non-zero value).
 //
 // @data_destroy_func will be called when the handler is
 // disconnected, or immediately if the cancellable is already
@@ -263,9 +273,21 @@ var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint32
 // See #GCancellable::cancelled for details on how to use this.
 //
 // Since GLib 2.40, the lock protecting @cancellable is not held when
-// @callback is invoked.  This lifts a restriction in place for
+// @callback is invoked. This lifts a restriction in place for
 // earlier GLib versions which now makes it easier to write cleanup
-// code that unconditionally invokes e.g. g_cancellable_cancel().
+// code that unconditionally invokes e.g. [method@Gio.Cancellable.cancel].
+// Note that since 2.82 GLib still holds a lock during the callback but it’s
+// designed in a way that most of the [class@Gio.Cancellable] methods can be
+// called, including [method@Gio.Cancellable.cancel] or
+// [method@GObject.Object.unref].
+//
+// There are still some methods that will deadlock (by design) when
+// called from the [signal@Gio.Cancellable::cancelled] callbacks:
+//   - [method@Gio.Cancellable.connect]
+//   - [method@Gio.Cancellable.disconnect]
+//   - [method@Gio.Cancellable.reset]
+//   - [method@Gio.Cancellable.make_pollfd]
+//   - [method@Gio.Cancellable.release_fd]
 func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, DataDestroyFuncVar *glib.DestroyNotify) uint32 {
 
 	cret := xCancellableConnect(x.GoPointer(), glib.NewCallback(CallbackVar), DataVar, glib.NewCallbackNullable(DataDestroyFuncVar))
@@ -344,6 +366,11 @@ var xCancellableMakePollfd func(uintptr, *glib.PollFD) bool
 // You are not supposed to read from the fd yourself, just check for
 // readable status. Reading to unset the readable status is done
 // with g_cancellable_reset().
+//
+// Note that in the event that a [signal@Gio.Cancellable::cancelled] signal handler is
+// currently running, this call will block until the handler has finished.
+// Calling this function from a signal handler will therefore result in a
+// deadlock.
 func (x *Cancellable) MakePollfd(PollfdVar *glib.PollFD) bool {
 
 	cret := xCancellableMakePollfd(x.GoPointer(), PollfdVar)
@@ -387,6 +414,11 @@ var xCancellableReleaseFd func(uintptr)
 // block scarce file descriptors until it is finalized if this function
 // is not called. This can cause the application to run out of file
 // descriptors when many #GCancellables are used at the same time.
+//
+// Note that in the event that a [signal@Gio.Cancellable::cancelled] signal handler is
+// currently running, this call will block until the handler has finished.
+// Calling this function from a signal handler will therefore result in a
+// deadlock.
 func (x *Cancellable) ReleaseFd() {
 
 	xCancellableReleaseFd(x.GoPointer())
@@ -406,6 +438,11 @@ var xCancellableReset func(uintptr)
 // is to drop the reference to a cancellable after cancelling it,
 // and let it die with the outstanding async operations. You should
 // create a fresh cancellable for further async operations.
+//
+// In the event that a [signal@Gio.Cancellable::cancelled] signal handler is currently
+// running, this call will block until the handler has finished.
+// Calling this function from a signal handler will therefore result in a
+// deadlock.
 func (x *Cancellable) Reset() {
 
 	xCancellableReset(x.GoPointer())

@@ -37,7 +37,7 @@ func (x *RecentData) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkRecentInfo` contains the metadata associated with an item in the
+// Contains the metadata associated with an item in the
 // recently used files list.
 type RecentInfo struct {
 	_ structs.HostLayout
@@ -501,7 +501,16 @@ const (
 	RecentManagerErrorUnknownValue RecentManagerError = 6
 )
 
-// `GtkRecentManager` manages and looks up recently used files.
+var xRecentManagerErrorQuark func() glib.Quark
+
+// Registers an error quark for [class@RecentManager] errors.
+func RecentManagerErrorQuark() glib.Quark {
+
+	cret := xRecentManagerErrorQuark()
+	return cret
+}
+
+// Manages and looks up recently used files.
 //
 // Each recently used file is identified by its URI, and has meta-data
 // associated to it, like the names and command lines of the applications
@@ -789,6 +798,8 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xRecentManagerErrorGLibType, lib, "gtk_recent_manager_error_get_type")
+
+	core.PuregoSafeRegister(&xRecentManagerErrorQuark, lib, "gtk_recent_manager_error_quark")
 
 	core.PuregoSafeRegister(&xRecentInfoGLibType, lib, "gtk_recent_info_get_type")
 

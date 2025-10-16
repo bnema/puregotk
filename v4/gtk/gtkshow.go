@@ -24,7 +24,6 @@ var xShowUriFull func(uintptr, string, uint32, uintptr, uintptr, uintptr)
 // a given uri.
 //
 // The @callback will be called when the launch is completed.
-// It should call gtk_show_uri_full_finish() to obtain the result.
 //
 // This is the recommended call to be used as it passes information
 // necessary for sandbox helpers to parent their dialogs properly.

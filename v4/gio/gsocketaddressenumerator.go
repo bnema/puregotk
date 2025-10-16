@@ -30,6 +30,7 @@ func (x *SocketAddressEnumeratorClass) GoPointer() uintptr {
 }
 
 // OverrideNext sets the callback function.
+// Virtual method for g_socket_address_enumerator_next().
 func (x *SocketAddressEnumeratorClass) OverrideNext(cb func(*SocketAddressEnumerator, *Cancellable) *SocketAddress) {
 	if cb == nil {
 		x.xNext = 0
@@ -45,6 +46,7 @@ func (x *SocketAddressEnumeratorClass) OverrideNext(cb func(*SocketAddressEnumer
 }
 
 // GetNext gets the callback function.
+// Virtual method for g_socket_address_enumerator_next().
 func (x *SocketAddressEnumeratorClass) GetNext() func(*SocketAddressEnumerator, *Cancellable) *SocketAddress {
 	if x.xNext == 0 {
 		return nil
@@ -63,6 +65,7 @@ func (x *SocketAddressEnumeratorClass) GetNext() func(*SocketAddressEnumerator, 
 }
 
 // OverrideNextAsync sets the callback function.
+// Virtual method for g_socket_address_enumerator_next_async().
 func (x *SocketAddressEnumeratorClass) OverrideNextAsync(cb func(*SocketAddressEnumerator, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xNextAsync = 0
@@ -74,6 +77,7 @@ func (x *SocketAddressEnumeratorClass) OverrideNextAsync(cb func(*SocketAddressE
 }
 
 // GetNextAsync gets the callback function.
+// Virtual method for g_socket_address_enumerator_next_async().
 func (x *SocketAddressEnumeratorClass) GetNextAsync() func(*SocketAddressEnumerator, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xNextAsync == 0 {
 		return nil
@@ -86,6 +90,7 @@ func (x *SocketAddressEnumeratorClass) GetNextAsync() func(*SocketAddressEnumera
 }
 
 // OverrideNextFinish sets the callback function.
+// Virtual method for g_socket_address_enumerator_next_finish().
 func (x *SocketAddressEnumeratorClass) OverrideNextFinish(cb func(*SocketAddressEnumerator, AsyncResult) *SocketAddress) {
 	if cb == nil {
 		x.xNextFinish = 0
@@ -101,6 +106,7 @@ func (x *SocketAddressEnumeratorClass) OverrideNextFinish(cb func(*SocketAddress
 }
 
 // GetNextFinish gets the callback function.
+// Virtual method for g_socket_address_enumerator_next_finish().
 func (x *SocketAddressEnumeratorClass) GetNextFinish() func(*SocketAddressEnumerator, AsyncResult) *SocketAddress {
 	if x.xNextFinish == 0 {
 		return nil
@@ -118,19 +124,20 @@ func (x *SocketAddressEnumeratorClass) GetNextFinish() func(*SocketAddressEnumer
 	}
 }
 
-// #GSocketAddressEnumerator is an enumerator type for #GSocketAddress
-// instances. It is returned by enumeration functions such as
-// g_socket_connectable_enumerate(), which returns a #GSocketAddressEnumerator
-// to list each #GSocketAddress which could be used to connect to that
-// #GSocketConnectable.
+// `GSocketAddressEnumerator` is an enumerator type for
+// [class@Gio.SocketAddress] instances. It is returned by enumeration functions
+// such as [method@Gio.SocketConnectable.enumerate], which returns a
+// `GSocketAddressEnumerator` to list each [class@Gio.SocketAddress] which could
+// be used to connect to that [iface@Gio.SocketConnectable].
 //
 // Enumeration is typically a blocking operation, so the asynchronous methods
-// g_socket_address_enumerator_next_async() and
-// g_socket_address_enumerator_next_finish() should be used where possible.
+// [method@Gio.SocketAddressEnumerator.next_async] and
+// [method@Gio.SocketAddressEnumerator.next_finish] should be used where
+// possible.
 //
-// Each #GSocketAddressEnumerator can only be enumerated once. Once
-// g_socket_address_enumerator_next() has returned %NULL, further
-// enumeration with that #GSocketAddressEnumerator is not possible, and it can
+// Each `GSocketAddressEnumerator` can only be enumerated once. Once
+// [method@Gio.SocketAddressEnumerator.next] has returned `NULL`, further
+// enumeration with that `GSocketAddressEnumerator` is not possible, and it can
 // be unreffed.
 type SocketAddressEnumerator struct {
 	gobject.Object
@@ -159,7 +166,7 @@ var xSocketAddressEnumeratorNext func(uintptr, uintptr, **glib.Error) uintptr
 // If @enumerator is expected to yield addresses, but for some reason
 // is unable to (eg, because of a DNS error), then the first call to
 // g_socket_address_enumerator_next() will return an appropriate error
-// in *@error. However, if the first call to
+// in `*error`. However, if the first call to
 // g_socket_address_enumerator_next() succeeds, then any further
 // internal errors (other than @cancellable being triggered) will be
 // ignored.

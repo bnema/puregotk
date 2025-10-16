@@ -97,10 +97,13 @@ type ConnectFlags int
 
 const (
 
-	// whether the handler should be called before or after the
-	//  default handler of the signal.
+	// Default behaviour (no special flags). Since: 2.74
+	GConnectDefaultValue ConnectFlags = 0
+	// If set, the handler should be called after the
+	//  default handler of the signal. Normally, the handler is called before
+	//  the default handler.
 	GConnectAfterValue ConnectFlags = 1
-	// whether the instance and data should be swapped when
+	// If set, the instance and data should be swapped when
 	//  calling the handler; see g_signal_connect_swapped() for an example.
 	GConnectSwappedValue ConnectFlags = 2
 )
@@ -132,16 +135,19 @@ const (
 	GSignalActionValue SignalFlags = 32
 	// No emissions hooks are supported for this signal.
 	GSignalNoHooksValue SignalFlags = 64
-	// Varargs signal emission will always collect the
-	//   arguments, even if there are no signal handlers connected.  Since 2.30.
+	// Varargs signal emission will always collect the arguments, even if there
+	// are no signal handlers connected.
 	GSignalMustCollectValue SignalFlags = 128
-	// The signal is deprecated and will be removed
-	//   in a future version. A warning will be generated if it is connected while
-	//   running with G_ENABLE_DIAGNOSTIC=1.  Since 2.32.
+	// The signal is deprecated and will be removed in a future version.
+	//
+	// A warning will be generated if it is connected while running with
+	// `G_ENABLE_DIAGNOSTIC=1`.
 	GSignalDeprecatedValue SignalFlags = 256
-	// Only used in #GSignalAccumulator accumulator
-	//   functions for the #GSignalInvocationHint::run_type field to mark the first
-	//   call to the accumulator function for a signal emission.  Since 2.68.
+	// The signal accumulator was invoked for the first time.
+	//
+	// This flag is only used in [callback@GObject.SignalAccumulator][accumulator functions]
+	// for the `run_type` field of the [struct@GObject.SignalInvocationHint], to
+	// mark the first call to the accumulator function for a signal emission.
 	GSignalAccumulatorFirstRunValue SignalFlags = 131072
 )
 
@@ -253,6 +259,17 @@ func SignalChainFromOverriddenHandler(InstanceVar *TypeInstance, varArgs ...inte
 var xSignalConnectClosure func(uintptr, string, *Closure, bool) uint32
 
 // Connects a closure to a signal for a particular object.
+//
+// If @closure is a floating reference (see g_closure_sink()), this function
+// takes ownership of @closure.
+//
+// This function cannot fail. If the given signal name doesn’t exist,
+// a critical warning is emitted. No validation is performed on the
+// ‘detail’ string when specified in @detailed_signal, other than a
+// non-empty check.
+//
+// Refer to the [signals documentation](signals.html) for more
+// details.
 func SignalConnectClosure(InstanceVar *Object, DetailedSignalVar string, ClosureVar *Closure, AfterVar bool) uint32 {
 
 	cret := xSignalConnectClosure(InstanceVar.GoPointer(), DetailedSignalVar, ClosureVar, AfterVar)
@@ -262,6 +279,17 @@ func SignalConnectClosure(InstanceVar *Object, DetailedSignalVar string, Closure
 var xSignalConnectClosureById func(uintptr, uint, glib.Quark, *Closure, bool) uint32
 
 // Connects a closure to a signal for a particular object.
+//
+// If @closure is a floating reference (see g_closure_sink()), this function
+// takes ownership of @closure.
+//
+// This function cannot fail. If the given signal name doesn’t exist,
+// a critical warning is emitted. No validation is performed on the
+// ‘detail’ string when specified in @detailed_signal, other than a
+// non-empty check.
+//
+// Refer to the [signals documentation](signals.html) for more
+// details.
 func SignalConnectClosureById(InstanceVar *Object, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, AfterVar bool) uint32 {
 
 	cret := xSignalConnectClosureById(InstanceVar.GoPointer(), SignalIdVar, DetailVar, ClosureVar, AfterVar)
@@ -275,6 +303,14 @@ var xSignalConnectData func(uintptr, string, uintptr, uintptr, uintptr, ConnectF
 // which will be called when the signal handler is disconnected and no longer
 // used. Specify @connect_flags if you need `..._after()` or
 // `..._swapped()` variants of this function.
+//
+// This function cannot fail. If the given signal name doesn’t exist,
+// a critical warning is emitted. No validation is performed on the
+// ‘detail’ string when specified in @detailed_signal, other than a
+// non-empty check.
+//
+// Refer to the [signals documentation](signals.html) for more
+// details.
 func SignalConnectData(InstanceVar *Object, DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr, DestroyDataVar *ClosureNotify, ConnectFlagsVar ConnectFlags) uint32 {
 
 	cret := xSignalConnectData(InstanceVar.GoPointer(), DetailedSignalVar, glib.NewCallback(CHandlerVar), DataVar, glib.NewCallbackNullable(DestroyDataVar), ConnectFlagsVar)
@@ -418,12 +454,18 @@ func SignalHandlerUnblock(InstanceVar *Object, HandlerIdVar uint32) {
 var xSignalHandlersBlockMatched func(uintptr, SignalMatchType, uint, glib.Quark, *Closure, uintptr, uintptr) uint
 
 // Blocks all handlers on an instance that match a certain selection criteria.
-// The criteria mask is passed as an OR-ed combination of #GSignalMatchType
-// flags, and the criteria values are passed as arguments.
-// Passing at least one of the %G_SIGNAL_MATCH_CLOSURE, %G_SIGNAL_MATCH_FUNC
+//
+// The criteria mask is passed as a combination of #GSignalMatchType flags, and
+// the criteria values are passed as arguments. A handler must match on all
+// flags set in @mask to be blocked (i.e. the match is conjunctive).
+//
+// Passing at least one of the %G_SIGNAL_MATCH_ID, %G_SIGNAL_MATCH_CLOSURE,
+// %G_SIGNAL_MATCH_FUNC
 // or %G_SIGNAL_MATCH_DATA match flags is required for successful matches.
 // If no handlers were found, 0 is returned, the number of blocked handlers
 // otherwise.
+//
+// Support for %G_SIGNAL_MATCH_ID was added in GLib 2.78.
 func SignalHandlersBlockMatched(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
 
 	cret := xSignalHandlersBlockMatched(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
@@ -444,13 +486,19 @@ func SignalHandlersDestroy(InstanceVar *Object) {
 var xSignalHandlersDisconnectMatched func(uintptr, SignalMatchType, uint, glib.Quark, *Closure, uintptr, uintptr) uint
 
 // Disconnects all handlers on an instance that match a certain
-// selection criteria. The criteria mask is passed as an OR-ed
-// combination of #GSignalMatchType flags, and the criteria values are
-// passed as arguments.  Passing at least one of the
-// %G_SIGNAL_MATCH_CLOSURE, %G_SIGNAL_MATCH_FUNC or
+// selection criteria.
+//
+// The criteria mask is passed as a combination of #GSignalMatchType flags, and
+// the criteria values are passed as arguments. A handler must match on all
+// flags set in @mask to be disconnected (i.e. the match is conjunctive).
+//
+// Passing at least one of the %G_SIGNAL_MATCH_ID, %G_SIGNAL_MATCH_CLOSURE,
+// %G_SIGNAL_MATCH_FUNC or
 // %G_SIGNAL_MATCH_DATA match flags is required for successful
 // matches.  If no handlers were found, 0 is returned, the number of
 // disconnected handlers otherwise.
+//
+// Support for %G_SIGNAL_MATCH_ID was added in GLib 2.78.
 func SignalHandlersDisconnectMatched(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
 
 	cret := xSignalHandlersDisconnectMatched(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
@@ -460,13 +508,20 @@ func SignalHandlersDisconnectMatched(InstanceVar *Object, MaskVar SignalMatchTyp
 var xSignalHandlersUnblockMatched func(uintptr, SignalMatchType, uint, glib.Quark, *Closure, uintptr, uintptr) uint
 
 // Unblocks all handlers on an instance that match a certain selection
-// criteria. The criteria mask is passed as an OR-ed combination of
-// #GSignalMatchType flags, and the criteria values are passed as arguments.
-// Passing at least one of the %G_SIGNAL_MATCH_CLOSURE, %G_SIGNAL_MATCH_FUNC
+// criteria.
+//
+// The criteria mask is passed as a combination of #GSignalMatchType flags, and
+// the criteria values are passed as arguments. A handler must match on all
+// flags set in @mask to be unblocked (i.e. the match is conjunctive).
+//
+// Passing at least one of the %G_SIGNAL_MATCH_ID, %G_SIGNAL_MATCH_CLOSURE,
+// %G_SIGNAL_MATCH_FUNC
 // or %G_SIGNAL_MATCH_DATA match flags is required for successful matches.
 // If no handlers were found, 0 is returned, the number of unblocked handlers
 // otherwise. The match criteria should not apply to any handlers that are
 // not currently blocked.
+//
+// Support for %G_SIGNAL_MATCH_ID was added in GLib 2.78.
 func SignalHandlersUnblockMatched(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
 
 	cret := xSignalHandlersUnblockMatched(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
@@ -502,9 +557,8 @@ var xSignalIsValidName func(string) bool
 // Validate a signal name. This can be useful for dynamically-generated signals
 // which need to be validated at run-time before actually trying to create them.
 //
-// See [canonical parameter names][canonical-parameter-names] for details of
-// the rules for valid names. The rules for signal names are the same as those
-// for property names.
+// See [func@GObject.signal_new] for details of the rules for valid names.
+// The rules for signal names are the same as those for property names.
 func SignalIsValidName(NameVar string) bool {
 
 	cret := xSignalIsValidName(NameVar)
@@ -594,7 +648,7 @@ var xSignalNewClassHandler func(string, types.GType, SignalFlags, uintptr, uintp
 // an object definition, instead the function pointer is passed
 // directly and can be overridden by derived classes with
 // g_signal_override_class_closure() or
-// g_signal_override_class_handler()and chained to with
+// g_signal_override_class_handler() and chained to with
 // g_signal_chain_from_overridden() or
 // g_signal_chain_from_overridden_handler().
 //

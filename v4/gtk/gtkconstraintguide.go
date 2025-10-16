@@ -21,8 +21,7 @@ func (x *ConstraintGuideClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A `GtkConstraintGuide` is an invisible layout element in a
-// `GtkConstraintLayout`.
+// An invisible layout element in a `GtkConstraintLayout`.
 //
 // The `GtkConstraintLayout` treats guides like widgets. They
 // can be used as the source or target of a `GtkConstraint`.

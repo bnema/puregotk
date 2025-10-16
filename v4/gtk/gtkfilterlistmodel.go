@@ -22,15 +22,16 @@ func (x *FilterListModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkFilterListModel` is a list model that filters the elements of
-// the underlying model according to a `GtkFilter`.
+// A list model that filters the elements of another model.
 //
-// It hides some elements from the other model according to
+// It hides some elements from the underlying model according to
 // criteria given by a `GtkFilter`.
 //
-// The model can be set up to do incremental searching, so that
+// The model can be set up to do incremental filtering, so that
 // filtering long lists doesn't block the UI. See
 // [method@Gtk.FilterListModel.set_incremental] for details.
+//
+// `GtkFilterListModel` passes through sections from the underlying model.
 type FilterListModel struct {
 	gobject.Object
 }
@@ -279,6 +280,38 @@ func (x *FilterListModel) GetObject(PositionVar uint) *gobject.Object {
 func (x *FilterListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
 
 	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
+
+}
+
+// Query the section that covers the given position. The number of
+// items in the section can be computed by `out_end - out_start`.
+//
+// If the position is larger than the number of items, a single
+// range from n_items to G_MAXUINT will be returned.
+func (x *FilterListModel) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+
+	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
+
+}
+
+// This function emits the [signal@Gtk.SectionModel::sections-changed]
+// signal to notify about changes to sections.
+//
+// It must cover all positions that used to be a section start or that
+// are now a section start. It does not have to cover all positions for
+// which the section has changed.
+//
+// The [signal@Gio.ListModel::items-changed] implies the effect of the
+// [signal@Gtk.SectionModel::sections-changed] signal for all the items
+// it covers.
+//
+// It is recommended that when changes to the items cause section changes
+// in a larger range, that the larger range is included in the emission
+// of the [signal@Gio.ListModel::items-changed] instead of emitting
+// two signals.
+func (x *FilterListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
+
+	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
 
 }
 

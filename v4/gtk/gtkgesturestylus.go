@@ -21,7 +21,7 @@ func (x *GestureStylusClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkGestureStylus` is a `GtkGesture` specific to stylus input.
+// Recognizes tablet stylus input.
 //
 // The provided signals just relay the basic information of the
 // stylus events.
@@ -126,6 +126,30 @@ func (x *GestureStylus) GetDeviceTool() *gdk.DeviceTool {
 	cls = &gdk.DeviceTool{}
 	cls.Ptr = cret
 	return cls
+}
+
+var xGestureStylusGetStylusOnly func(uintptr) bool
+
+// Checks whether the gesture is for styluses only.
+//
+// Stylus-only gestures will signal events exclusively from stylus
+// input devices.
+func (x *GestureStylus) GetStylusOnly() bool {
+
+	cret := xGestureStylusGetStylusOnly(x.GoPointer())
+	return cret
+}
+
+var xGestureStylusSetStylusOnly func(uintptr, bool)
+
+// Sets the state of stylus-only
+//
+// If true, the gesture will exclusively handle events from stylus input devices,
+// otherwise it'll handle events from any pointing device.
+func (x *GestureStylus) SetStylusOnly(StylusOnlyVar bool) {
+
+	xGestureStylusSetStylusOnly(x.GoPointer(), StylusOnlyVar)
+
 }
 
 func (c *GestureStylus) GoPointer() uintptr {
@@ -235,5 +259,7 @@ func init() {
 	core.PuregoSafeRegister(&xGestureStylusGetAxis, lib, "gtk_gesture_stylus_get_axis")
 	core.PuregoSafeRegister(&xGestureStylusGetBacklog, lib, "gtk_gesture_stylus_get_backlog")
 	core.PuregoSafeRegister(&xGestureStylusGetDeviceTool, lib, "gtk_gesture_stylus_get_device_tool")
+	core.PuregoSafeRegister(&xGestureStylusGetStylusOnly, lib, "gtk_gesture_stylus_get_stylus_only")
+	core.PuregoSafeRegister(&xGestureStylusSetStylusOnly, lib, "gtk_gesture_stylus_set_stylus_only")
 
 }

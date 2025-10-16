@@ -209,6 +209,15 @@ func HookInsertBefore(HookListVar *HookList, SiblingVar *Hook, HookVar *Hook) {
 
 }
 
+var xHookInsertSorted func(*HookList, *Hook, uintptr)
+
+// Inserts a #GHook into a #GHookList, sorted by the given function.
+func HookInsertSorted(HookListVar *HookList, HookVar *Hook, FuncVar *HookCompareFunc) {
+
+	xHookInsertSorted(HookListVar, HookVar, NewCallback(FuncVar))
+
+}
+
 var xHookPrepend func(*HookList, *Hook)
 
 // Prepends a #GHook on the start of a #GHookList.
@@ -231,7 +240,7 @@ func HookUnref(HookListVar *HookList, HookVar *Hook) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -241,6 +250,7 @@ func init() {
 	core.PuregoSafeRegister(&xHookDestroyLink, lib, "g_hook_destroy_link")
 	core.PuregoSafeRegister(&xHookFree, lib, "g_hook_free")
 	core.PuregoSafeRegister(&xHookInsertBefore, lib, "g_hook_insert_before")
+	core.PuregoSafeRegister(&xHookInsertSorted, lib, "g_hook_insert_sorted")
 	core.PuregoSafeRegister(&xHookPrepend, lib, "g_hook_prepend")
 	core.PuregoSafeRegister(&xHookUnref, lib, "g_hook_unref")
 

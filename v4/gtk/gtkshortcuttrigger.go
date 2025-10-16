@@ -53,9 +53,9 @@ func (x *ShortcutTriggerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A `GtkShortcutTrigger` that combines two triggers.
+// Combines two shortcut triggers.
 //
-// The `GtkAlternativeTrigger` triggers when either of two trigger.
+// The `GtkAlternativeTrigger` triggers when either of the two trigger.
 //
 // This can be cascaded to combine more than two triggers.
 type AlternativeTrigger struct {
@@ -147,7 +147,7 @@ func (c *AlternativeTrigger) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// A `GtkShortcutTrigger` that triggers when a specific keyval and modifiers are pressed.
+// Triggers when a specific keyval and modifiers are pressed.
 type KeyvalTrigger struct {
 	ShortcutTrigger
 }
@@ -212,7 +212,7 @@ func (c *KeyvalTrigger) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// A `GtkShortcutTrigger` that triggers when a specific mnemonic is pressed.
+// Triggers when a specific mnemonic is pressed.
 //
 // Mnemonics require a *mnemonic modifier* (typically &lt;kbd&gt;Alt&lt;/kbd&gt;) to be
 // pressed together with the mnemonic key.
@@ -321,7 +321,7 @@ func NeverTriggerGet() *NeverTrigger {
 	return cls
 }
 
-// `GtkShortcutTrigger` tracks how a `GtkShortcut` should be activated.
+// Tracks how a `GtkShortcut` can be activated.
 //
 // To find out if a `GtkShortcutTrigger` triggers, you can call
 // [method@Gtk.ShortcutTrigger.trigger] on a `GdkEvent`.

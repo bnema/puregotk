@@ -10,8 +10,147 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The GKeyFile struct contains only private data
-// and should not be accessed directly.
+// `GKeyFile` parses .ini-like config files.
+//
+// `GKeyFile` lets you parse, edit or create files containing groups of
+// key-value pairs, which we call ‘key files’ for lack of a better name.
+// Several freedesktop.org specifications use key files. For example, the
+// [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/)
+// and the [Icon Theme Specification](https://specifications.freedesktop.org/icon-theme-spec/latest/).
+//
+// The syntax of key files is described in detail in the
+// [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/),
+// here is a quick summary: Key files consists of groups of key-value pairs, interspersed
+// with comments.
+//
+// ```txt
+// # this is just an example
+// # there can be comments before the first group
+//
+// [First Group]
+//
+// Name=Key File Example\tthis value shows\nescaping
+//
+// # localized strings are stored in multiple key-value pairs
+// Welcome=Hello
+// Welcome[de]=Hallo
+// Welcome[fr_FR]=Bonjour
+// Welcome[it]=Ciao
+//
+// [Another Group]
+//
+// Numbers=2;20;-200;0
+//
+// Booleans=true;false;true;true
+// ```
+//
+// Lines beginning with a `#` and blank lines are considered comments.
+//
+// Groups are started by a header line containing the group name enclosed
+// in `[` and `]`, and ended implicitly by the start of the next group or
+// the end of the file. Each key-value pair must be contained in a group.
+//
+// Key-value pairs generally have the form `key=value`, with the exception
+// of localized strings, which have the form `key[locale]=value`, with a
+// locale identifier of the form `lang_COUNTRY@MODIFIER` where `COUNTRY`
+// and `MODIFIER` are optional. As a special case, the locale `C` is associated
+// with the untranslated pair `key=value` (since GLib 2.84). Space before and
+// after the `=` character is ignored. Newline, tab, carriage return and
+// backslash characters in value are escaped as `\n`, `\t`, `\r`, and `\\\\`,
+// respectively. To preserve leading spaces in values, these can also be escaped
+// as `\s`.
+//
+// Key files can store strings (possibly with localized variants), integers,
+// booleans and lists of these. Lists are separated by a separator character,
+// typically `;` or `,`. To use the list separator character in a value in
+// a list, it has to be escaped by prefixing it with a backslash.
+//
+// This syntax is obviously inspired by the .ini files commonly met
+// on Windows, but there are some important differences:
+//
+//   - .ini files use the `;` character to begin comments,
+//     key files use the `#` character.
+//
+//   - Key files do not allow for ungrouped keys meaning only
+//     comments can precede the first group.
+//
+// - Key files are always encoded in UTF-8.
+//
+//   - Key and Group names are case-sensitive. For example, a group called
+//     `[GROUP]` is a different from `[group]`.
+//
+//   - .ini files don’t have a strongly typed boolean entry type,
+//     they only have `GetProfileInt()`. In key files, only
+//     `true` and `false` (in lower case) are allowed.
+//
+// Note that in contrast to the
+// [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/),
+// groups in key files may contain the same key multiple times; the last entry wins.
+// Key files may also contain multiple groups with the same name; they are merged
+// together. Another difference is that keys and group names in key files are not
+// restricted to ASCII characters.
+//
+// Here is an example of loading a key file and reading a value:
+//
+// ```c
+// g_autoptr(GError) error = NULL;
+// g_autoptr(GKeyFile) key_file = g_key_file_new ();
+//
+// if (!g_key_file_load_from_file (key_file, "key-file.ini", flags, &amp;error))
+//
+//	{
+//	  if (!g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_NOENT))
+//	    g_warning ("Error loading key file: %s", error-&gt;message);
+//	  return;
+//	}
+//
+// g_autofree gchar *val = g_key_file_get_string (key_file, "Group Name", "SomeKey", &amp;error);
+// if (val == NULL &amp;&amp;
+//
+//	  !g_error_matches (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_KEY_NOT_FOUND))
+//	{
+//	  g_warning ("Error finding key in key file: %s", error-&gt;message);
+//	  return;
+//	}
+//
+// else if (val == NULL)
+//
+//	{
+//	  // Fall back to a default value.
+//	  val = g_strdup ("default-value");
+//	}
+//
+// ```
+//
+// Here is an example of creating and saving a key file:
+//
+// ```c
+// g_autoptr(GKeyFile) key_file = g_key_file_new ();
+// const gchar *val = …;
+// g_autoptr(GError) error = NULL;
+//
+// g_key_file_set_string (key_file, "Group Name", "SomeKey", val);
+//
+// // Save as a file.
+// if (!g_key_file_save_to_file (key_file, "key-file.ini", &amp;error))
+//
+//	{
+//	  g_warning ("Error saving key file: %s", error-&gt;message);
+//	  return;
+//	}
+//
+// // Or store to a GBytes for use elsewhere.
+// gsize data_len;
+// g_autofree guint8 *data = (guint8 *) g_key_file_to_data (key_file, &amp;data_len, &amp;error);
+// if (data == NULL)
+//
+//	{
+//	  g_warning ("Error saving key file: %s", error-&gt;message);
+//	  return;
+//	}
+//
+// g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&amp;data), data_len);
+// ```
 type KeyFile struct {
 	_ structs.HostLayout
 }
@@ -28,9 +167,11 @@ func (x *KeyFile) GoPointer() uintptr {
 
 var xNewKeyFile func() *KeyFile
 
-// Creates a new empty #GKeyFile object. Use
-// g_key_file_load_from_file(), g_key_file_load_from_data(),
-// g_key_file_load_from_dirs() or g_key_file_load_from_data_dirs() to
+// Creates a new empty [struct@GLib.KeyFile] object.
+//
+// Use [method@GLib.KeyFile.load_from_file],
+// [method@GLib.KeyFile.load_from_data], [method@GLib.KeyFile.load_from_dirs] or
+// [method@GLib.KeyFile.load_from_data_dirs] to
 // read an existing key file.
 func NewKeyFile() *KeyFile {
 
@@ -41,8 +182,10 @@ func NewKeyFile() *KeyFile {
 var xKeyFileFree func(uintptr)
 
 // Clears all keys and groups from @key_file, and decreases the
-// reference count by 1. If the reference count reaches zero,
-// frees the key file and all its allocated memory.
+// reference count by 1.
+//
+// If the reference count reaches zero, frees the key file and all its allocated
+// memory.
 func (x *KeyFile) Free() {
 
 	xKeyFileFree(x.GoPointer())
@@ -54,10 +197,9 @@ var xKeyFileGetBoolean func(uintptr, string, string, **Error) bool
 // Returns the value associated with @key under @group_name as a
 // boolean.
 //
-// If @key cannot be found then %FALSE is returned and @error is set
-// to %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value
-// associated with @key cannot be interpreted as a boolean then %FALSE
-// is returned and @error is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
+// If @key cannot be found then [error@GLib.KeyFileError.KEY_NOT_FOUND] is
+// returned. Likewise, if the value associated with @key cannot be interpreted
+// as a boolean then [error@GLib.KeyFileError.INVALID_VALUE] is returned.
 func (x *KeyFile) GetBoolean(GroupNameVar string, KeyVar string) (bool, error) {
 	var cerr *Error
 
@@ -74,10 +216,9 @@ var xKeyFileGetBooleanList func(uintptr, string, string, uint, **Error) uintptr
 // Returns the values associated with @key under @group_name as
 // booleans.
 //
-// If @key cannot be found then %NULL is returned and @error is set to
-// %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
-// with @key cannot be interpreted as booleans then %NULL is returned
-// and @error is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
+// If @key cannot be found then [error@GLib.KeyFileError.KEY_NOT_FOUND] is
+// returned. Likewise, if the values associated with @key cannot be interpreted
+// as booleans then [error@GLib.KeyFileError.INVALID_VALUE] is returned.
 func (x *KeyFile) GetBooleanList(GroupNameVar string, KeyVar string, LengthVar uint) (uintptr, error) {
 	var cerr *Error
 
@@ -92,11 +233,12 @@ func (x *KeyFile) GetBooleanList(GroupNameVar string, KeyVar string, LengthVar u
 var xKeyFileGetComment func(uintptr, string, string, **Error) string
 
 // Retrieves a comment above @key from @group_name.
-// If @key is %NULL then @comment will be read from above
-// @group_name. If both @key and @group_name are %NULL, then
+//
+// If @key is `NULL` then @comment will be read from above
+// @group_name. If both @key and @group_name are `NULL`, then
 // @comment will be read from above the first group in the file.
 //
-// Note that the returned string does not include the '#' comment markers,
+// Note that the returned string does not include the `#` comment markers,
 // but does include any whitespace after them (on each line). It includes
 // the line breaks between lines, but does not include the final line break.
 func (x *KeyFile) GetComment(GroupNameVar string, KeyVar string) (string, error) {
@@ -112,13 +254,11 @@ func (x *KeyFile) GetComment(GroupNameVar string, KeyVar string) (string, error)
 
 var xKeyFileGetDouble func(uintptr, string, string, **Error) float64
 
-// Returns the value associated with @key under @group_name as a
-// double. If @group_name is %NULL, the start_group is used.
+// Returns the value associated with @key under @group_name as a double.
 //
-// If @key cannot be found then 0.0 is returned and @error is set to
-// %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value associated
-// with @key cannot be interpreted as a double then 0.0 is returned
-// and @error is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
+// If @key cannot be found then [error@GLib.KeyFileError.KEY_NOT_FOUND] is
+// returned. Likewise, if the value associated with @key cannot be interpreted
+// as a double then [error@GLib.KeyFileError.INVALID_VALUE] is returned.
 func (x *KeyFile) GetDouble(GroupNameVar string, KeyVar string) (float64, error) {
 	var cerr *Error
 
@@ -135,10 +275,9 @@ var xKeyFileGetDoubleList func(uintptr, string, string, uint, **Error) uintptr
 // Returns the values associated with @key under @group_name as
 // doubles.
 //
-// If @key cannot be found then %NULL is returned and @error is set to
-// %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
-// with @key cannot be interpreted as doubles then %NULL is returned
-// and @error is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
+// If @key cannot be found then [error@GLib.KeyFileError.KEY_NOT_FOUND] is
+// returned. Likewise, if the values associated with @key cannot be interpreted
+// as doubles then [error@GLib.KeyFileError.INVALID_VALUE] is returned.
 func (x *KeyFile) GetDoubleList(GroupNameVar string, KeyVar string, LengthVar uint) (uintptr, error) {
 	var cerr *Error
 
@@ -153,8 +292,9 @@ func (x *KeyFile) GetDoubleList(GroupNameVar string, KeyVar string, LengthVar ui
 var xKeyFileGetGroups func(uintptr, uint) []string
 
 // Returns all groups in the key file loaded with @key_file.
-// The array of returned groups will be %NULL-terminated, so
-// @length may optionally be %NULL.
+//
+// The array of returned groups will be `NULL`-terminated, so
+// @length may optionally be `NULL`.
 func (x *KeyFile) GetGroups(LengthVar uint) []string {
 
 	cret := xKeyFileGetGroups(x.GoPointer(), LengthVar)
@@ -164,7 +304,9 @@ func (x *KeyFile) GetGroups(LengthVar uint) []string {
 var xKeyFileGetInt64 func(uintptr, string, string, **Error) int64
 
 // Returns the value associated with @key under @group_name as a signed
-// 64-bit integer. This is similar to g_key_file_get_integer() but can return
+// 64-bit integer.
+//
+// This is similar to [method@GLib.KeyFile.get_integer] but can return
 // 64-bit results without truncation.
 func (x *KeyFile) GetInt64(GroupNameVar string, KeyVar string) (int64, error) {
 	var cerr *Error
@@ -182,11 +324,10 @@ var xKeyFileGetInteger func(uintptr, string, string, **Error) int
 // Returns the value associated with @key under @group_name as an
 // integer.
 //
-// If @key cannot be found then 0 is returned and @error is set to
-// %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value associated
-// with @key cannot be interpreted as an integer, or is out of range
-// for a #gint, then 0 is returned
-// and @error is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
+// If @key cannot be found then [error@GLib.KeyFileError.KEY_NOT_FOUND] is
+// returned. Likewise, if the value associated with @key cannot be interpreted
+// as an integer, or is out of range for a `gint`, then
+// [error@GLib.KeyFileError.INVALID_VALUE] is returned.
 func (x *KeyFile) GetInteger(GroupNameVar string, KeyVar string) (int, error) {
 	var cerr *Error
 
@@ -203,11 +344,10 @@ var xKeyFileGetIntegerList func(uintptr, string, string, uint, **Error) uintptr
 // Returns the values associated with @key under @group_name as
 // integers.
 //
-// If @key cannot be found then %NULL is returned and @error is set to
-// %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
-// with @key cannot be interpreted as integers, or are out of range for
-// #gint, then %NULL is returned
-// and @error is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
+// If @key cannot be found then [error@GLib.KeyFileError.KEY_NOT_FOUND] is
+// returned. Likewise, if the values associated with @key cannot be interpreted
+// as integers, or are out of range for `gint`, then
+// [error@GLib.KeyFileError.INVALID_VALUE] is returned.
 func (x *KeyFile) GetIntegerList(GroupNameVar string, KeyVar string, LengthVar uint) (uintptr, error) {
 	var cerr *Error
 
@@ -221,11 +361,11 @@ func (x *KeyFile) GetIntegerList(GroupNameVar string, KeyVar string, LengthVar u
 
 var xKeyFileGetKeys func(uintptr, string, uint, **Error) []string
 
-// Returns all keys for the group name @group_name.  The array of
-// returned keys will be %NULL-terminated, so @length may
-// optionally be %NULL. In the event that the @group_name cannot
-// be found, %NULL is returned and @error is set to
-// %G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
+// Returns all keys for the group name @group_name.
+//
+// The array of returned keys will be `NULL`-terminated, so @length may
+// optionally be `NULL`. If the @group_name cannot be found,
+// [error@GLib.KeyFileError.GROUP_NOT_FOUND] is returned.
 func (x *KeyFile) GetKeys(GroupNameVar string, LengthVar uint) ([]string, error) {
 	var cerr *Error
 
@@ -240,11 +380,11 @@ func (x *KeyFile) GetKeys(GroupNameVar string, LengthVar uint) ([]string, error)
 var xKeyFileGetLocaleForKey func(uintptr, string, string, string) string
 
 // Returns the actual locale which the result of
-// g_key_file_get_locale_string() or g_key_file_get_locale_string_list()
-// came from.
+// [method@GLib.KeyFile.get_locale_string] or
+// [method@GLib.KeyFile.get_locale_string_list] came from.
 //
-// If calling g_key_file_get_locale_string() or
-// g_key_file_get_locale_string_list() with exactly the same @key_file,
+// If calling [method@GLib.KeyFile.get_locale_string] or
+// [method@GLib.KeyFile.get_locale_string_list] with exactly the same @key_file,
 // @group_name, @key and @locale, the result of those functions will
 // have originally been tagged with the locale that is the result of
 // this function.
@@ -257,15 +397,19 @@ func (x *KeyFile) GetLocaleForKey(GroupNameVar string, KeyVar string, LocaleVar 
 var xKeyFileGetLocaleString func(uintptr, string, string, string, **Error) string
 
 // Returns the value associated with @key under @group_name
-// translated in the given @locale if available.  If @locale is
-// %NULL then the current locale is assumed.
+// translated in the given @locale if available.
 //
-// If @locale is to be non-%NULL, or if the current locale will change over
-// the lifetime of the #GKeyFile, it must be loaded with
-// %G_KEY_FILE_KEEP_TRANSLATIONS in order to load strings for all locales.
+// If @locale is `C` then the untranslated value is returned (since GLib 2.84).
 //
-// If @key cannot be found then %NULL is returned and @error is set
-// to %G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the value associated
+// If @locale is `NULL` then the current locale is assumed.
+//
+// If @locale is to be non-`NULL`, or if the current locale will change over
+// the lifetime of the [struct@GLib.KeyFile], it must be loaded with
+// [flags@GLib.KeyFileFlags.KEEP_TRANSLATIONS] in order to load strings for all
+// locales.
+//
+// If @key cannot be found then [error@GLib.KeyFileError.KEY_NOT_FOUND] is
+// returned. If the value associated
 // with @key cannot be interpreted or no suitable translation can
 // be found then the untranslated value is returned.
 func (x *KeyFile) GetLocaleString(GroupNameVar string, KeyVar string, LocaleVar string) (string, error) {
@@ -282,19 +426,23 @@ func (x *KeyFile) GetLocaleString(GroupNameVar string, KeyVar string, LocaleVar 
 var xKeyFileGetLocaleStringList func(uintptr, string, string, string, uint, **Error) []string
 
 // Returns the values associated with @key under @group_name
-// translated in the given @locale if available.  If @locale is
-// %NULL then the current locale is assumed.
+// translated in the given @locale if available.
 //
-// If @locale is to be non-%NULL, or if the current locale will change over
-// the lifetime of the #GKeyFile, it must be loaded with
-// %G_KEY_FILE_KEEP_TRANSLATIONS in order to load strings for all locales.
+// If @locale is `C` then the untranslated value is returned (since GLib 2.84).
 //
-// If @key cannot be found then %NULL is returned and @error is set
-// to %G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the values associated
+// If @locale is `NULL` then the current locale is assumed.
+//
+// If @locale is to be non-`NULL`, or if the current locale will change over
+// the lifetime of the [struct@GLib.KeyFile], it must be loaded with
+// [flags@GLib.KeyFileFlags.KEEP_TRANSLATIONS] in order to load strings for all
+// locales.
+//
+// If @key cannot be found then [error@GLib.KeyFileError.KEY_NOT_FOUND] is
+// returned. If the values associated
 // with @key cannot be interpreted or no suitable translations
 // can be found then the untranslated values are returned. The
-// returned array is %NULL-terminated, so @length may optionally
-// be %NULL.
+// returned array is `NULL`-terminated, so @length may optionally
+// be `NULL`.
 func (x *KeyFile) GetLocaleStringList(GroupNameVar string, KeyVar string, LocaleVar string, LengthVar uint) ([]string, error) {
 	var cerr *Error
 
@@ -318,13 +466,13 @@ func (x *KeyFile) GetStartGroup() string {
 var xKeyFileGetString func(uintptr, string, string, **Error) string
 
 // Returns the string value associated with @key under @group_name.
-// Unlike g_key_file_get_value(), this function handles escape sequences
-// like \s.
 //
-// In the event the key cannot be found, %NULL is returned and
-// @error is set to %G_KEY_FILE_ERROR_KEY_NOT_FOUND.  In the
-// event that the @group_name cannot be found, %NULL is returned
-// and @error is set to %G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
+// Unlike [method@GLib.KeyFile.get_value], this function handles escape
+// sequences like `\s`.
+//
+// If the key cannot be found, [error@GLib.KeyFileError.KEY_NOT_FOUND] is
+// returned. If the @group_name cannot be found,
+// [error@GLib.KeyFileError.GROUP_NOT_FOUND] is returned.
 func (x *KeyFile) GetString(GroupNameVar string, KeyVar string) (string, error) {
 	var cerr *Error
 
@@ -340,10 +488,9 @@ var xKeyFileGetStringList func(uintptr, string, string, uint, **Error) []string
 
 // Returns the values associated with @key under @group_name.
 //
-// In the event the key cannot be found, %NULL is returned and
-// @error is set to %G_KEY_FILE_ERROR_KEY_NOT_FOUND.  In the
-// event that the @group_name cannot be found, %NULL is returned
-// and @error is set to %G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
+// If the key cannot be found, [error@GLib.KeyFileError.KEY_NOT_FOUND] is
+// returned. If the @group_name cannot be found,
+// [error@GLib.KeyFileError.GROUP_NOT_FOUND] is returned.
 func (x *KeyFile) GetStringList(GroupNameVar string, KeyVar string, LengthVar uint) ([]string, error) {
 	var cerr *Error
 
@@ -358,7 +505,9 @@ func (x *KeyFile) GetStringList(GroupNameVar string, KeyVar string, LengthVar ui
 var xKeyFileGetUint64 func(uintptr, string, string, **Error) uint64
 
 // Returns the value associated with @key under @group_name as an unsigned
-// 64-bit integer. This is similar to g_key_file_get_integer() but can return
+// 64-bit integer.
+//
+// This is similar to [method@GLib.KeyFile.get_integer] but can return
 // large positive results without truncation.
 func (x *KeyFile) GetUint64(GroupNameVar string, KeyVar string) (uint64, error) {
 	var cerr *Error
@@ -374,12 +523,12 @@ func (x *KeyFile) GetUint64(GroupNameVar string, KeyVar string) (uint64, error) 
 var xKeyFileGetValue func(uintptr, string, string, **Error) string
 
 // Returns the raw value associated with @key under @group_name.
-// Use g_key_file_get_string() to retrieve an unescaped UTF-8 string.
 //
-// In the event the key cannot be found, %NULL is returned and
-// @error is set to %G_KEY_FILE_ERROR_KEY_NOT_FOUND.  In the
-// event that the @group_name cannot be found, %NULL is returned
-// and @error is set to %G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
+// Use [method@GLib.KeyFile.get_string] to retrieve an unescaped UTF-8 string.
+//
+// If the key cannot be found, [error@GLib.KeyFileError.KEY_NOT_FOUND]
+// is returned.  If the @group_name cannot be found,
+// [error@GLib.KeyFileError.GROUP_NOT_FOUND] is returned.
 func (x *KeyFile) GetValue(GroupNameVar string, KeyVar string) (string, error) {
 	var cerr *Error
 
@@ -405,13 +554,14 @@ var xKeyFileHasKey func(uintptr, string, string, **Error) bool
 // Looks whether the key file has the key @key in the group
 // @group_name.
 //
-// Note that this function does not follow the rules for #GError strictly;
+// Note that this function does not follow the rules for [struct@GLib.Error]
+// strictly;
 // the return value both carries meaning and signals an error.  To use
-// this function, you must pass a #GError pointer in @error, and check
-// whether it is not %NULL to see if an error occurred.
+// this function, you must pass a [struct@GLib.Error] pointer in @error, and
+// check whether it is not `NULL` to see if an error occurred.
 //
-// Language bindings should use g_key_file_get_value() to test whether
-// or not a key exists.
+// Language bindings should use [method@GLib.KeyFile.get_value] to test whether
+// a key exists.
 func (x *KeyFile) HasKey(GroupNameVar string, KeyVar string) (bool, error) {
 	var cerr *Error
 
@@ -425,8 +575,10 @@ func (x *KeyFile) HasKey(GroupNameVar string, KeyVar string) (bool, error) {
 
 var xKeyFileLoadFromBytes func(uintptr, *Bytes, KeyFileFlags, **Error) bool
 
-// Loads a key file from the data in @bytes into an empty #GKeyFile structure.
-// If the object cannot be created then %error is set to a #GKeyFileError.
+// Loads a key file from the data in @bytes into an empty [struct@GLib.KeyFile]
+// structure.
+//
+// If the object cannot be created then a [error@GLib.KeyFileError] is returned.
 func (x *KeyFile) LoadFromBytes(BytesVar *Bytes, FlagsVar KeyFileFlags) (bool, error) {
 	var cerr *Error
 
@@ -440,8 +592,9 @@ func (x *KeyFile) LoadFromBytes(BytesVar *Bytes, FlagsVar KeyFileFlags) (bool, e
 
 var xKeyFileLoadFromData func(uintptr, string, uint, KeyFileFlags, **Error) bool
 
-// Loads a key file from memory into an empty #GKeyFile structure.
-// If the object cannot be created then %error is set to a #GKeyFileError.
+// Loads a key file from memory into an empty [struct@GLib.KeyFile] structure.
+//
+// If the object cannot be created then a [error@GLib.KeyFileError is returned.
 func (x *KeyFile) LoadFromData(DataVar string, LengthVar uint, FlagsVar KeyFileFlags) (bool, error) {
 	var cerr *Error
 
@@ -455,11 +608,15 @@ func (x *KeyFile) LoadFromData(DataVar string, LengthVar uint, FlagsVar KeyFileF
 
 var xKeyFileLoadFromDataDirs func(uintptr, string, string, KeyFileFlags, **Error) bool
 
-// This function looks for a key file named @file in the paths
-// returned from g_get_user_data_dir() and g_get_system_data_dirs(),
-// loads the file into @key_file and returns the file's full path in
-// @full_path.  If the file could not be loaded then an %error is
-// set to either a #GFileError or #GKeyFileError.
+// Looks for a key file named @file in the paths returned from
+// [func@GLib.get_user_data_dir] and [func@GLib.get_system_data_dirs].
+//
+// The search algorithm from [method@GLib.KeyFile.load_from_dirs] is used. If
+// @file is found, it’s loaded into @key_file and its full path is returned in
+// @full_path.
+//
+// If the file could not be loaded then either a [error@GLib.FileError] or
+// [error@GLib.KeyFileError] is returned.
 func (x *KeyFile) LoadFromDataDirs(FileVar string, FullPathVar string, FlagsVar KeyFileFlags) (bool, error) {
 	var cerr *Error
 
@@ -473,15 +630,21 @@ func (x *KeyFile) LoadFromDataDirs(FileVar string, FullPathVar string, FlagsVar 
 
 var xKeyFileLoadFromDirs func(uintptr, string, []string, string, KeyFileFlags, **Error) bool
 
-// This function looks for a key file named @file in the paths
-// specified in @search_dirs, loads the file into @key_file and
-// returns the file's full path in @full_path.
+// Looks for a key file named @file in the paths specified in @search_dirs,
+// loads the file into @key_file and returns the file’s full path in @full_path.
+//
+// @search_dirs are checked in the order listed in the array, with the highest
+// priority directory listed first. Within each directory, @file is looked for.
+// If it’s not found, `-` characters in @file are progressively replaced with
+// directory separators to search subdirectories of the search directory. If the
+// file has not been found after all `-` characters have been replaced, the next
+// search directory in @search_dirs is checked.
 //
 // If the file could not be found in any of the @search_dirs,
-// %G_KEY_FILE_ERROR_NOT_FOUND is returned. If
+// [error@GLib.KeyFileError.NOT_FOUND] is returned. If
 // the file is found but the OS returns an error when opening or reading the
-// file, a %G_FILE_ERROR is returned. If there is a problem parsing the file, a
-// %G_KEY_FILE_ERROR is returned.
+// file, a [error@GLib.FileError] is returned. If there is a problem parsing the
+// file, a [error@GLib.KeyFileError] is returned.
 func (x *KeyFile) LoadFromDirs(FileVar string, SearchDirsVar []string, FullPathVar string, FlagsVar KeyFileFlags) (bool, error) {
 	var cerr *Error
 
@@ -495,14 +658,14 @@ func (x *KeyFile) LoadFromDirs(FileVar string, SearchDirsVar []string, FullPathV
 
 var xKeyFileLoadFromFile func(uintptr, string, KeyFileFlags, **Error) bool
 
-// Loads a key file into an empty #GKeyFile structure.
+// Loads a key file into an empty [struct@GLib.KeyFile] structure.
 //
 // If the OS returns an error when opening or reading the file, a
-// %G_FILE_ERROR is returned. If there is a problem parsing the file, a
-// %G_KEY_FILE_ERROR is returned.
+// [error@GLib.FileError] is returned. If there is a problem parsing the file,
+// a [error@GLib.KeyFileError] is returned.
 //
-// This function will never return a %G_KEY_FILE_ERROR_NOT_FOUND error. If the
-// @file is not found, %G_FILE_ERROR_NOENT is returned.
+// This function will never return a [error@GLib.KeyFileError.NOT_FOUND]
+// error. If the @file is not found, [error@GLib.FileError.NOENT] is returned.
 func (x *KeyFile) LoadFromFile(FileVar string, FlagsVar KeyFileFlags) (bool, error) {
 	var cerr *Error
 
@@ -526,8 +689,9 @@ func (x *KeyFile) Ref() *KeyFile {
 var xKeyFileRemoveComment func(uintptr, string, string, **Error) bool
 
 // Removes a comment above @key from @group_name.
-// If @key is %NULL then @comment will be removed above @group_name.
-// If both @key and @group_name are %NULL, then @comment will
+//
+// If @key is `NULL` then @comment will be removed above @group_name.
+// If both @key and @group_name are `NULL`, then @comment will
 // be removed above the first group in the file.
 func (x *KeyFile) RemoveComment(GroupNameVar string, KeyVar string) (bool, error) {
 	var cerr *Error
@@ -572,12 +736,15 @@ func (x *KeyFile) RemoveKey(GroupNameVar string, KeyVar string) (bool, error) {
 var xKeyFileSaveToFile func(uintptr, string, **Error) bool
 
 // Writes the contents of @key_file to @filename using
-// g_file_set_contents(). If you need stricter guarantees about durability of
-// the written file than are provided by g_file_set_contents(), use
-// g_file_set_contents_full() with the return value of g_key_file_to_data().
+// [func@GLib.file_set_contents].
+//
+// If you need stricter guarantees about durability of
+// the written file than are provided by [func@GLib.file_set_contents], use
+// [func@GLib.file_set_contents_full] with the return value of
+// [method@GLib.KeyFile.to_data].
 //
 // This function can fail for any of the reasons that
-// g_file_set_contents() may fail.
+// [func@GLib.file_set_contents] may fail.
 func (x *KeyFile) SaveToFile(FilenameVar string) (bool, error) {
 	var cerr *Error
 
@@ -592,6 +759,7 @@ func (x *KeyFile) SaveToFile(FilenameVar string) (bool, error) {
 var xKeyFileSetBoolean func(uintptr, string, string, bool)
 
 // Associates a new boolean value with @key under @group_name.
+//
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetBoolean(GroupNameVar string, KeyVar string, ValueVar bool) {
 
@@ -602,8 +770,8 @@ func (x *KeyFile) SetBoolean(GroupNameVar string, KeyVar string, ValueVar bool) 
 var xKeyFileSetBooleanList func(uintptr, string, string, []bool, uint)
 
 // Associates a list of boolean values with @key under @group_name.
+//
 // If @key cannot be found then it is created.
-// If @group_name is %NULL, the start_group is used.
 func (x *KeyFile) SetBooleanList(GroupNameVar string, KeyVar string, ListVar []bool, LengthVar uint) {
 
 	xKeyFileSetBooleanList(x.GoPointer(), GroupNameVar, KeyVar, ListVar, LengthVar)
@@ -614,11 +782,11 @@ var xKeyFileSetComment func(uintptr, string, string, string, **Error) bool
 
 // Places a comment above @key from @group_name.
 //
-// If @key is %NULL then @comment will be written above @group_name.
-// If both @key and @group_name  are %NULL, then @comment will be
+// If @key is `NULL` then @comment will be written above @group_name.
+// If both @key and @group_name are `NULL`, then @comment will be
 // written above the first group in the file.
 //
-// Note that this function prepends a '#' comment marker to
+// Note that this function prepends a `#` comment marker to
 // each line of @comment.
 func (x *KeyFile) SetComment(GroupNameVar string, KeyVar string, CommentVar string) (bool, error) {
 	var cerr *Error
@@ -634,6 +802,7 @@ func (x *KeyFile) SetComment(GroupNameVar string, KeyVar string, CommentVar stri
 var xKeyFileSetDouble func(uintptr, string, string, float64)
 
 // Associates a new double value with @key under @group_name.
+//
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetDouble(GroupNameVar string, KeyVar string, ValueVar float64) {
 
@@ -643,8 +812,9 @@ func (x *KeyFile) SetDouble(GroupNameVar string, KeyVar string, ValueVar float64
 
 var xKeyFileSetDoubleList func(uintptr, string, string, []float64, uint)
 
-// Associates a list of double values with @key under
-// @group_name.  If @key cannot be found then it is created.
+// Associates a list of double values with @key under @group_name.
+//
+// If @key cannot be found then it is created.
 func (x *KeyFile) SetDoubleList(GroupNameVar string, KeyVar string, ListVar []float64, LengthVar uint) {
 
 	xKeyFileSetDoubleList(x.GoPointer(), GroupNameVar, KeyVar, ListVar, LengthVar)
@@ -654,6 +824,7 @@ func (x *KeyFile) SetDoubleList(GroupNameVar string, KeyVar string, ListVar []fl
 var xKeyFileSetInt64 func(uintptr, string, string, int64)
 
 // Associates a new integer value with @key under @group_name.
+//
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetInt64(GroupNameVar string, KeyVar string, ValueVar int64) {
 
@@ -664,6 +835,7 @@ func (x *KeyFile) SetInt64(GroupNameVar string, KeyVar string, ValueVar int64) {
 var xKeyFileSetInteger func(uintptr, string, string, int)
 
 // Associates a new integer value with @key under @group_name.
+//
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetInteger(GroupNameVar string, KeyVar string, ValueVar int) {
 
@@ -674,6 +846,7 @@ func (x *KeyFile) SetInteger(GroupNameVar string, KeyVar string, ValueVar int) {
 var xKeyFileSetIntegerList func(uintptr, string, string, []int, uint)
 
 // Associates a list of integer values with @key under @group_name.
+//
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetIntegerList(GroupNameVar string, KeyVar string, ListVar []int, LengthVar uint) {
 
@@ -683,9 +856,10 @@ func (x *KeyFile) SetIntegerList(GroupNameVar string, KeyVar string, ListVar []i
 
 var xKeyFileSetListSeparator func(uintptr, byte)
 
-// Sets the character which is used to separate
-// values in lists. Typically ';' or ',' are used
-// as separators. The default list separator is ';'.
+// Sets the character which is used to separate values in lists.
+//
+// Typically `;` or `,` are used as separators. The default list separator
+// is `;`.
 func (x *KeyFile) SetListSeparator(SeparatorVar byte) {
 
 	xKeyFileSetListSeparator(x.GoPointer(), SeparatorVar)
@@ -695,7 +869,10 @@ func (x *KeyFile) SetListSeparator(SeparatorVar byte) {
 var xKeyFileSetLocaleString func(uintptr, string, string, string, string)
 
 // Associates a string value for @key and @locale under @group_name.
+//
 // If the translation for @key cannot be found then it is created.
+//
+// If @locale is `C` then the untranslated value is set (since GLib 2.84).
 func (x *KeyFile) SetLocaleString(GroupNameVar string, KeyVar string, LocaleVar string, StringVar string) {
 
 	xKeyFileSetLocaleString(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar, StringVar)
@@ -705,8 +882,11 @@ func (x *KeyFile) SetLocaleString(GroupNameVar string, KeyVar string, LocaleVar 
 var xKeyFileSetLocaleStringList func(uintptr, string, string, string, []string, uint)
 
 // Associates a list of string values for @key and @locale under
-// @group_name.  If the translation for @key cannot be found then
-// it is created.
+// @group_name.
+//
+// If @locale is `C` then the untranslated value is set (since GLib 2.84).
+//
+// If the translation for @key cannot be found then it is created.
 func (x *KeyFile) SetLocaleStringList(GroupNameVar string, KeyVar string, LocaleVar string, ListVar []string, LengthVar uint) {
 
 	xKeyFileSetLocaleStringList(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar, ListVar, LengthVar)
@@ -716,9 +896,10 @@ func (x *KeyFile) SetLocaleStringList(GroupNameVar string, KeyVar string, Locale
 var xKeyFileSetString func(uintptr, string, string, string)
 
 // Associates a new string value with @key under @group_name.
+//
 // If @key cannot be found then it is created.
 // If @group_name cannot be found then it is created.
-// Unlike g_key_file_set_value(), this function handles characters
+// Unlike [method@GLib.KeyFile.set_value], this function handles characters
 // that need escaping, such as newlines.
 func (x *KeyFile) SetString(GroupNameVar string, KeyVar string, StringVar string) {
 
@@ -729,6 +910,7 @@ func (x *KeyFile) SetString(GroupNameVar string, KeyVar string, StringVar string
 var xKeyFileSetStringList func(uintptr, string, string, []string, uint)
 
 // Associates a list of string values for @key under @group_name.
+//
 // If @key cannot be found then it is created.
 // If @group_name cannot be found then it is created.
 func (x *KeyFile) SetStringList(GroupNameVar string, KeyVar string, ListVar []string, LengthVar uint) {
@@ -740,6 +922,7 @@ func (x *KeyFile) SetStringList(GroupNameVar string, KeyVar string, ListVar []st
 var xKeyFileSetUint64 func(uintptr, string, string, uint64)
 
 // Associates a new integer value with @key under @group_name.
+//
 // If @key cannot be found then it is created.
 func (x *KeyFile) SetUint64(GroupNameVar string, KeyVar string, ValueVar uint64) {
 
@@ -754,7 +937,7 @@ var xKeyFileSetValue func(uintptr, string, string, string)
 // If @key cannot be found then it is created. If @group_name cannot
 // be found then it is created. To set an UTF-8 string which may contain
 // characters that need escaping (such as newlines or spaces), use
-// g_key_file_set_string().
+// [method@GLib.KeyFile.set_string].
 func (x *KeyFile) SetValue(GroupNameVar string, KeyVar string, ValueVar string) {
 
 	xKeyFileSetValue(x.GoPointer(), GroupNameVar, KeyVar, ValueVar)
@@ -763,10 +946,9 @@ func (x *KeyFile) SetValue(GroupNameVar string, KeyVar string, ValueVar string) 
 
 var xKeyFileToData func(uintptr, uint, **Error) string
 
-// This function outputs @key_file as a string.
+// Outputs @key_file as a string.
 //
-// Note that this function never reports an error,
-// so it is safe to pass %NULL as @error.
+// Note that this function never reports an error.
 func (x *KeyFile) ToData(LengthVar uint) (string, error) {
 	var cerr *Error
 
@@ -780,8 +962,10 @@ func (x *KeyFile) ToData(LengthVar uint) (string, error) {
 
 var xKeyFileUnref func(uintptr)
 
-// Decreases the reference count of @key_file by 1. If the reference count
-// reaches zero, frees the key file and all its allocated memory.
+// Decreases the reference count of @key_file by 1.
+//
+// If the reference count reaches zero, frees the key file and all its allocated
+// memory.
 func (x *KeyFile) Unref() {
 
 	xKeyFileUnref(x.GoPointer())
@@ -790,99 +974,105 @@ func (x *KeyFile) Unref() {
 
 const (
 	// The name of the main group of a desktop entry file, as defined in the
-	// [Desktop Entry Specification](http://freedesktop.org/Standards/desktop-entry-spec).
+	// [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/).
+	//
 	// Consult the specification for more
 	// details about the meanings of the keys below.
 	KEY_FILE_DESKTOP_GROUP string = "Desktop Entry"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string list
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a string list
 	// giving the available application actions.
 	KEY_FILE_DESKTOP_KEY_ACTIONS string = "Actions"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a list
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a list
 	// of strings giving the categories in which the desktop entry
 	// should be shown in a menu.
 	KEY_FILE_DESKTOP_KEY_CATEGORIES string = "Categories"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a localized
 	// string giving the tooltip for the desktop entry.
 	KEY_FILE_DESKTOP_KEY_COMMENT string = "Comment"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a boolean
 	// set to true if the application is D-Bus activatable.
 	KEY_FILE_DESKTOP_KEY_DBUS_ACTIVATABLE string = "DBusActivatable"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
-	// giving the command line to execute. It is only valid for desktop
-	// entries with the `Application` type.
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a string
+	// giving the command line to execute.
+	//
+	// It is only valid for desktop entries with the `Application` type.
 	KEY_FILE_DESKTOP_KEY_EXEC string = "Exec"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a localized
 	// string giving the generic name of the desktop entry.
 	KEY_FILE_DESKTOP_KEY_GENERIC_NAME string = "GenericName"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a boolean
 	// stating whether the desktop entry has been deleted by the user.
 	KEY_FILE_DESKTOP_KEY_HIDDEN string = "Hidden"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a localized
 	// string giving the name of the icon to be displayed for the desktop
 	// entry.
 	KEY_FILE_DESKTOP_KEY_ICON string = "Icon"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a list
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a list
 	// of strings giving the MIME types supported by this desktop entry.
 	KEY_FILE_DESKTOP_KEY_MIME_TYPE string = "MimeType"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a localized
 	// string giving the specific name of the desktop entry.
 	KEY_FILE_DESKTOP_KEY_NAME string = "Name"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a list of
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a list of
 	// strings identifying the environments that should not display the
 	// desktop entry.
 	KEY_FILE_DESKTOP_KEY_NOT_SHOW_IN string = "NotShowIn"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a boolean
 	// stating whether the desktop entry should be shown in menus.
 	KEY_FILE_DESKTOP_KEY_NO_DISPLAY string = "NoDisplay"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a list of
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a list of
 	// strings identifying the environments that should display the
 	// desktop entry.
 	KEY_FILE_DESKTOP_KEY_ONLY_SHOW_IN string = "OnlyShowIn"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
-	// containing the working directory to run the program in. It is only
-	// valid for desktop entries with the `Application` type.
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a string
+	// containing the working directory to run the program in.
+	//
+	// It is only valid for desktop entries with the `Application` type.
 	KEY_FILE_DESKTOP_KEY_PATH string = "Path"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a boolean
 	// stating whether the application supports the
-	// [Startup Notification Protocol Specification](http://www.freedesktop.org/Standards/startup-notification-spec).
+	// [Startup Notification Protocol Specification](https://specifications.freedesktop.org/startup-notification-spec/latest/).
 	KEY_FILE_DESKTOP_KEY_STARTUP_NOTIFY string = "StartupNotify"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is string
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is string
 	// identifying the WM class or name hint of a window that the application
-	// will create, which can be used to emulate Startup Notification with
-	// older applications.
+	// will create, which can be used to emulate
+	// [Startup Notification](https://specifications.freedesktop.org/startup-notification-spec/latest/)
+	// with older applications.
 	KEY_FILE_DESKTOP_KEY_STARTUP_WM_CLASS string = "StartupWMClass"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a boolean
 	// stating whether the program should be run in a terminal window.
 	//
 	// It is only valid for desktop entries with the `Application` type.
 	KEY_FILE_DESKTOP_KEY_TERMINAL string = "Terminal"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a string
 	// giving the file name of a binary on disk used to determine if the
-	// program is actually installed. It is only valid for desktop entries
-	// with the `Application` type.
+	// program is actually installed.
+	//
+	// It is only valid for desktop entries with the `Application` type.
 	KEY_FILE_DESKTOP_KEY_TRY_EXEC string = "TryExec"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a string
 	// giving the type of the desktop entry.
 	//
-	// Usually %G_KEY_FILE_DESKTOP_TYPE_APPLICATION,
-	// %G_KEY_FILE_DESKTOP_TYPE_LINK, or
-	// %G_KEY_FILE_DESKTOP_TYPE_DIRECTORY.
+	// Usually [const@GLib.KEY_FILE_DESKTOP_TYPE_APPLICATION],
+	// [const@GLib.KEY_FILE_DESKTOP_TYPE_LINK], or
+	// [const@GLib.KEY_FILE_DESKTOP_TYPE_DIRECTORY].
 	KEY_FILE_DESKTOP_KEY_TYPE string = "Type"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
-	// giving the URL to access. It is only valid for desktop entries
-	// with the `Link` type.
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a string
+	// giving the URL to access.
+	//
+	// It is only valid for desktop entries with the `Link` type.
 	KEY_FILE_DESKTOP_KEY_URL string = "URL"
-	// A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+	// A key under [const@GLib.KEY_FILE_DESKTOP_GROUP], whose value is a string
 	// giving the version of the Desktop Entry Specification used for
 	// the desktop entry file.
 	KEY_FILE_DESKTOP_KEY_VERSION string = "Version"
-	// The value of the %G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
+	// The value of the [const@GLib.KEY_FILE_DESKTOP_KEY_TYPE], key for desktop
 	// entries representing applications.
 	KEY_FILE_DESKTOP_TYPE_APPLICATION string = "Application"
-	// The value of the %G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
+	// The value of the [const@GLib.KEY_FILE_DESKTOP_KEY_TYPE], key for desktop
 	// entries representing directories.
 	KEY_FILE_DESKTOP_TYPE_DIRECTORY string = "Directory"
-	// The value of the %G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
+	// The value of the [const@GLib.KEY_FILE_DESKTOP_KEY_TYPE], key for desktop
 	// entries representing links to documents.
 	KEY_FILE_DESKTOP_TYPE_LINK string = "Link"
 )
@@ -928,7 +1118,7 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

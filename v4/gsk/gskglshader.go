@@ -23,7 +23,7 @@ func (x *GLShaderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// An object to build the uniforms data for a `GskGLShader`.
+// Builds the uniforms data for a `GskGLShader`.
 type ShaderArgsBuilder struct {
 	_ structs.HostLayout
 }
@@ -177,8 +177,7 @@ func (x *ShaderArgsBuilder) Unref() {
 
 }
 
-// A `GskGLShader` is a snippet of GLSL that is meant to run in the
-// fragment shader of the rendering pipeline.
+// Implements a fragment shader using GLSL.
 //
 // A fragment shader gets the coordinates being rendered as input and
 // produces the pixel values for that particular pixel. Additionally,
@@ -265,7 +264,7 @@ func (x *ShaderArgsBuilder) Unref() {
 // ```
 //
 // This samples a texture (e.g. u_texture1) at the specified
-// coordinates, and containes some helper ifdefs to ensure that
+// coordinates, and contains some helper ifdefs to ensure that
 // it works on all OpenGL versions.
 //
 // You can compile the shader yourself using [method@Gsk.GLShader.compile],

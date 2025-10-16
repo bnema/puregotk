@@ -7,6 +7,8 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gio"
+	"github.com/jwijenbergh/puregotk/v4/glib"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
@@ -40,6 +42,8 @@ func (x *FontMapClass) GoPointer() uintptr {
 }
 
 // OverrideLoadFont sets the callback function.
+// a function to load a font with a given description. See
+// pango_font_map_load_font().
 func (x *FontMapClass) OverrideLoadFont(cb func(*FontMap, *Context, *FontDescription) *Font) {
 	if cb == nil {
 		x.xLoadFont = 0
@@ -55,6 +59,8 @@ func (x *FontMapClass) OverrideLoadFont(cb func(*FontMap, *Context, *FontDescrip
 }
 
 // GetLoadFont gets the callback function.
+// a function to load a font with a given description. See
+// pango_font_map_load_font().
 func (x *FontMapClass) GetLoadFont() func(*FontMap, *Context, *FontDescription) *Font {
 	if x.xLoadFont == 0 {
 		return nil
@@ -73,6 +79,8 @@ func (x *FontMapClass) GetLoadFont() func(*FontMap, *Context, *FontDescription) 
 }
 
 // OverrideListFamilies sets the callback function.
+// A function to list available font families. See
+// pango_font_map_list_families().
 func (x *FontMapClass) OverrideListFamilies(cb func(*FontMap, uintptr, int)) {
 	if cb == nil {
 		x.xListFamilies = 0
@@ -84,6 +92,8 @@ func (x *FontMapClass) OverrideListFamilies(cb func(*FontMap, uintptr, int)) {
 }
 
 // GetListFamilies gets the callback function.
+// A function to list available font families. See
+// pango_font_map_list_families().
 func (x *FontMapClass) GetListFamilies() func(*FontMap, uintptr, int) {
 	if x.xListFamilies == 0 {
 		return nil
@@ -96,6 +106,8 @@ func (x *FontMapClass) GetListFamilies() func(*FontMap, uintptr, int) {
 }
 
 // OverrideLoadFontset sets the callback function.
+// a function to load a fontset with a given given description
+// suitable for a particular language. See pango_font_map_load_fontset().
 func (x *FontMapClass) OverrideLoadFontset(cb func(*FontMap, *Context, *FontDescription, *Language) *Fontset) {
 	if cb == nil {
 		x.xLoadFontset = 0
@@ -111,6 +123,8 @@ func (x *FontMapClass) OverrideLoadFontset(cb func(*FontMap, *Context, *FontDesc
 }
 
 // GetLoadFontset gets the callback function.
+// a function to load a fontset with a given given description
+// suitable for a particular language. See pango_font_map_load_fontset().
 func (x *FontMapClass) GetLoadFontset() func(*FontMap, *Context, *FontDescription, *Language) *Fontset {
 	if x.xLoadFontset == 0 {
 		return nil
@@ -129,6 +143,8 @@ func (x *FontMapClass) GetLoadFontset() func(*FontMap, *Context, *FontDescriptio
 }
 
 // OverrideGetSerial sets the callback function.
+// a function to get the serial number of the fontmap.
+// See pango_font_map_get_serial().
 func (x *FontMapClass) OverrideGetSerial(cb func(*FontMap) uint) {
 	if cb == nil {
 		x.xGetSerial = 0
@@ -140,6 +156,8 @@ func (x *FontMapClass) OverrideGetSerial(cb func(*FontMap) uint) {
 }
 
 // GetGetSerial gets the callback function.
+// a function to get the serial number of the fontmap.
+// See pango_font_map_get_serial().
 func (x *FontMapClass) GetGetSerial() func(*FontMap) uint {
 	if x.xGetSerial == 0 {
 		return nil
@@ -152,6 +170,7 @@ func (x *FontMapClass) GetGetSerial() func(*FontMap) uint {
 }
 
 // OverrideChanged sets the callback function.
+// See pango_font_map_changed()
 func (x *FontMapClass) OverrideChanged(cb func(*FontMap)) {
 	if cb == nil {
 		x.xChanged = 0
@@ -163,6 +182,7 @@ func (x *FontMapClass) OverrideChanged(cb func(*FontMap)) {
 }
 
 // GetChanged gets the callback function.
+// See pango_font_map_changed()
 func (x *FontMapClass) GetChanged() func(*FontMap) {
 	if x.xChanged == 0 {
 		return nil
@@ -261,6 +281,23 @@ func FontMapNewFromInternalPtr(ptr uintptr) *FontMap {
 	return cls
 }
 
+var xFontMapAddFontFile func(uintptr, string, **glib.Error) bool
+
+// Loads a font file with one or more fonts into the `PangoFontMap`.
+//
+// The added fonts will take precedence over preexisting
+// fonts with the same name.
+func (x *FontMap) AddFontFile(FilenameVar string) (bool, error) {
+	var cerr *glib.Error
+
+	cret := xFontMapAddFontFile(x.GoPointer(), FilenameVar, &cerr)
+	if cerr == nil {
+		return cret, nil
+	}
+	return cret, cerr
+
+}
+
 var xFontMapChanged func(uintptr)
 
 // Forces a change in the context, which will cause any `PangoContext`
@@ -340,6 +377,11 @@ func (x *FontMap) GetSerial() uint {
 var xFontMapListFamilies func(uintptr, uintptr, int)
 
 // List all families for a fontmap.
+//
+// Note that the returned families are not in any particular order.
+//
+// `PangoFontMap` also implemented the [iface@Gio.ListModel] interface
+// for enumerating families.
 func (x *FontMap) ListFamilies(FamiliesVar uintptr, NFamiliesVar int) {
 
 	xFontMapListFamilies(x.GoPointer(), FamiliesVar, NFamiliesVar)
@@ -379,6 +421,29 @@ func (x *FontMap) LoadFontset(ContextVar *Context, DescVar *FontDescription, Lan
 	return cls
 }
 
+var xFontMapReloadFont func(uintptr, uintptr, float64, uintptr, string) uintptr
+
+// Returns a new font that is like @font, except that it is scaled
+// by @scale, its backend-dependent configuration (e.g. cairo font options)
+// is replaced by the one in @context, and its variations are replaced
+// by @variations.
+//
+// Note that the scaling here is meant to be linear, so this
+// scaling can be used to render a font on a hi-dpi display
+// without changing its optical size.
+func (x *FontMap) ReloadFont(FontVar *Font, ScaleVar float64, ContextVar *Context, VariationsVar string) *Font {
+	var cls *Font
+
+	cret := xFontMapReloadFont(x.GoPointer(), FontVar.GoPointer(), ScaleVar, ContextVar.GoPointer(), VariationsVar)
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &Font{}
+	cls.Ptr = cret
+	return cls
+}
+
 func (c *FontMap) GoPointer() uintptr {
 	if c == nil {
 		return 0
@@ -388,6 +453,97 @@ func (c *FontMap) GoPointer() uintptr {
 
 func (c *FontMap) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// Get the item at @position.
+//
+// If @position is greater than the number of items in @list, %NULL is
+// returned.
+//
+// %NULL is never returned for an index that is smaller than the length
+// of the list.
+//
+// See also: g_list_model_get_n_items()
+func (x *FontMap) GetItem(PositionVar uint) uintptr {
+
+	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+	return cret
+}
+
+// Gets the type of the items in @list.
+//
+// All items returned from g_list_model_get_item() are of the type
+// returned by this function, or a subtype, or if the type is an
+// interface, they are an implementation of that interface.
+//
+// The item type of a #GListModel can not change during the life of the
+// model.
+func (x *FontMap) GetItemType() types.GType {
+
+	cret := gio.XGListModelGetItemType(x.GoPointer())
+	return cret
+}
+
+// Gets the number of items in @list.
+//
+// Depending on the model implementation, calling this function may be
+// less efficient than iterating the list with increasing values for
+// @position until g_list_model_get_item() returns %NULL.
+func (x *FontMap) GetNItems() uint {
+
+	cret := gio.XGListModelGetNItems(x.GoPointer())
+	return cret
+}
+
+// Get the item at @position.
+//
+// If @position is greater than the number of items in @list, %NULL is
+// returned.
+//
+// %NULL is never returned for an index that is smaller than the length
+// of the list.
+//
+// This function is meant to be used by language bindings in place
+// of g_list_model_get_item().
+//
+// See also: g_list_model_get_n_items()
+func (x *FontMap) GetObject(PositionVar uint) *gobject.Object {
+	var cls *gobject.Object
+
+	cret := gio.XGListModelGetObject(x.GoPointer(), PositionVar)
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gobject.Object{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Emits the #GListModel::items-changed signal on @list.
+//
+// This function should only be called by classes implementing
+// #GListModel. It has to be called after the internal representation
+// of @list has been updated, because handlers connected to this signal
+// might query the new state of the list.
+//
+// Implementations must only make changes to the model (as visible to
+// its consumer) in places that will not cause problems for that
+// consumer.  For models that are driven directly by a write API (such
+// as #GListStore), changes can be reported in response to uses of that
+// API.  For models that represent remote data, changes should only be
+// made from a fresh mainloop dispatch.  It is particularly not
+// permitted to make changes in response to a call to the #GListModel
+// consumer API.
+//
+// Stated another way: in general, it is assumed that code making a
+// series of accesses to the model via the API, without returning to the
+// mainloop, and without calling other code, will continue to view the
+// same contents of the model.
+func (x *FontMap) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint) {
+
+	gio.XGListModelItemsChanged(x.GoPointer(), PositionVar, RemovedVar, AddedVar)
+
 }
 
 func init() {
@@ -400,6 +556,7 @@ func init() {
 
 	core.PuregoSafeRegister(&xFontMapGLibType, lib, "pango_font_map_get_type")
 
+	core.PuregoSafeRegister(&xFontMapAddFontFile, lib, "pango_font_map_add_font_file")
 	core.PuregoSafeRegister(&xFontMapChanged, lib, "pango_font_map_changed")
 	core.PuregoSafeRegister(&xFontMapCreateContext, lib, "pango_font_map_create_context")
 	core.PuregoSafeRegister(&xFontMapGetFamily, lib, "pango_font_map_get_family")
@@ -407,5 +564,6 @@ func init() {
 	core.PuregoSafeRegister(&xFontMapListFamilies, lib, "pango_font_map_list_families")
 	core.PuregoSafeRegister(&xFontMapLoadFont, lib, "pango_font_map_load_font")
 	core.PuregoSafeRegister(&xFontMapLoadFontset, lib, "pango_font_map_load_fontset")
+	core.PuregoSafeRegister(&xFontMapReloadFont, lib, "pango_font_map_reload_font")
 
 }

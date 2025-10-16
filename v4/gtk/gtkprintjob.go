@@ -17,7 +17,7 @@ import (
 // It is called when the print job has been completely sent.
 type PrintJobCompleteFunc func(uintptr, uintptr, *glib.Error)
 
-// A `GtkPrintJob` object represents a job that is sent to a printer.
+// Represents a job that is sent to a printer.
 //
 // You only need to deal directly with print jobs if you use the
 // non-portable [class@Gtk.PrintUnixDialog] API.

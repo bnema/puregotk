@@ -9,8 +9,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// `GtkSettings` provides a mechanism to share global settings between
-// applications.
+// Provides a mechanism to share global settings between applications.
 //
 // On the X window system, this sharing is realized by an
 // [XSettings](http://www.freedesktop.org/wiki/Specifications/xsettings-spec)
@@ -18,7 +17,9 @@ import (
 // utilities that let the user change these settings.
 //
 // On Wayland, the settings are obtained either via a settings portal,
-// or by reading desktop settings from DConf.
+// or by reading desktop settings from [class@Gio.Settings].
+//
+// On macOS, the settings are obtained from `NSUserDefaults`.
 //
 // In the absence of these sharing mechanisms, GTK reads default values for
 // settings from `settings.ini` files in `/etc/gtk-4.0`, `$XDG_CONFIG_DIRS/gtk-4.0`

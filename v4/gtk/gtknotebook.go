@@ -29,10 +29,14 @@ const (
 	NotebookTabLastValue NotebookTab = 1
 )
 
-// `GtkNotebook` is a container whose children are pages switched
-// between using tabs.
+// Switches between children using tabs.
 //
-// ![An example GtkNotebook](notebook.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="notebook-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkNotebook" src="notebook.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // There are many configuration options for `GtkNotebook`. Among
 // other things, you can choose on which edge the tabs appear
@@ -46,14 +50,14 @@ const (
 //
 // The `GtkNotebook` implementation of the `GtkBuildable` interface
 // supports placing children into tabs by specifying “tab” as the
-// “type” attribute of a &lt;child&gt; element. Note that the content
+// “type” attribute of a `&lt;child&gt;` element. Note that the content
 // of the tab must be created before the tab can be filled.
-// A tab child can be specified without specifying a &lt;child&gt;
+// A tab child can be specified without specifying a `&lt;child&gt;`
 // type attribute.
 //
 // To add a child widget in the notebooks action area, specify
 // "action-start" or “action-end” as the “type” attribute of the
-// &lt;child&gt; element.
+// `&lt;child&gt;` element.
 //
 // An example of a UI definition fragment with `GtkNotebook`:
 //
@@ -73,6 +77,31 @@ const (
 //
 // &lt;/object&gt;
 // ```
+//
+// # Shortcuts and Gestures
+//
+// `GtkNotebook` supports the following keyboard shortcuts:
+//
+// - &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;F10&lt;/kbd&gt; or &lt;kbd&gt;Menu&lt;/kbd&gt; opens the context menu.
+// - &lt;kbd&gt;Home&lt;/kbd&gt; moves the focus to the first tab.
+// - &lt;kbd&gt;End&lt;/kbd&gt; moves the focus to the last tab.
+//
+// Additionally, the following signals have default keybindings:
+//
+// - [signal@Gtk.Notebook::change-current-page]
+// - [signal@Gtk.Notebook::focus-tab]
+// - [signal@Gtk.Notebook::move-focus-out]
+// - [signal@Gtk.Notebook::reorder-tab]
+// - [signal@Gtk.Notebook::select-page]
+//
+// Tabs support drag-and-drop between notebooks sharing the same `group-name`,
+// or to new windows by handling the `::create-window` signal.
+//
+// # Actions
+//
+// `GtkNotebook` defines a set of built-in actions:
+//
+// - `menu.popup` opens the tabs context menu.
 //
 // # CSS nodes
 //
@@ -121,10 +150,10 @@ const (
 //
 // `GtkNotebook` uses the following roles:
 //
-//   - %GTK_ACCESSIBLE_ROLE_GROUP for the notebook widget
-//   - %GTK_ACCESSIBLE_ROLE_TAB_LIST for the list of tabs
-//   - %GTK_ACCESSIBLE_ROLE_TAB role for each tab
-//   - %GTK_ACCESSIBLE_ROLE_TAB_PANEL for each page
+//   - [enum@Gtk.AccessibleRole.group] for the notebook widget
+//   - [enum@Gtk.AccessibleRole.tab_list] for the list of tabs
+//   - [enum@Gtk.AccessibleRole.tab] role for each tab
+//   - [enum@Gtk.AccessibleRole.tab_panel] for each page
 type Notebook struct {
 	Widget
 }
@@ -609,15 +638,16 @@ var xNotebookSetTabDetachable func(uintptr, uintptr, bool)
 // Sets whether the tab can be detached from @notebook to another
 // notebook or widget.
 //
-// Note that two notebooks must share a common group identificator
+// Note that two notebooks must share a common group identifier
 // (see [method@Gtk.Notebook.set_group_name]) to allow automatic tabs
 // interchange between them.
 //
 // If you want a widget to interact with a notebook through DnD
 // (i.e.: accept dragged tabs from it) it must be set as a drop
-// destination and accept the target “GTK_NOTEBOOK_TAB”. The notebook
-// will fill the selection with a GtkWidget** pointing to the child
-// widget that corresponds to the dropped tab.
+// destination by adding to it a [class@Gtk.DropTarget] controller that accepts
+// the GType `GTK_TYPE_NOTEBOOK_PAGE`. The `:value` of said drop target will be
+// preloaded with a [class@Gtk.NotebookPage] object that corresponds to the
+// dropped tab, so you can process the value via `::accept` or `::drop` signals.
 //
 // Note that you should use [method@Gtk.Notebook.detach_tab] instead
 // of [method@Gtk.Notebook.remove_page] if you want to remove the tab
@@ -711,18 +741,24 @@ func (c *Notebook) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// Emitted when the current page should be changed.
+//
+// The default bindings for this signal are
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt;,
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;,
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt; and &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;.
 func (x *Notebook) ConnectChangeCurrentPage(cb *func(Notebook, int) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		return gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
 	}
 
-	fcb := func(clsPtr uintptr, ObjectVarp int) bool {
+	fcb := func(clsPtr uintptr, PageVarp int) bool {
 		fa := Notebook{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, ObjectVarp)
+		return cbFn(fa, PageVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -758,18 +794,19 @@ func (x *Notebook) ConnectCreateWindow(cb *func(Notebook, uintptr) Notebook) uin
 	return gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
 }
 
+// Emitted when a tab should be focused.
 func (x *Notebook) ConnectFocusTab(cb *func(Notebook, NotebookTab) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		return gobject.SignalConnect(x.GoPointer(), "focus-tab", cbRefPtr)
 	}
 
-	fcb := func(clsPtr uintptr, ObjectVarp NotebookTab) bool {
+	fcb := func(clsPtr uintptr, TabVarp NotebookTab) bool {
 		fa := Notebook{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, ObjectVarp)
+		return cbFn(fa, TabVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -777,18 +814,25 @@ func (x *Notebook) ConnectFocusTab(cb *func(Notebook, NotebookTab) bool) uint32 
 	return gobject.SignalConnect(x.GoPointer(), "focus-tab", cbRefPtr)
 }
 
+// Emitted when focus was moved out.
+//
+// The default bindings for this signal are
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt;,
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt;,
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt;, &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;→&lt;/kbd&gt;,
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;↑&lt;/kbd&gt; and &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;↓&lt;/kbd&gt;.
 func (x *Notebook) ConnectMoveFocusOut(cb *func(Notebook, DirectionType)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		return gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
 	}
 
-	fcb := func(clsPtr uintptr, ObjectVarp DirectionType) {
+	fcb := func(clsPtr uintptr, DirectionVarp DirectionType) {
 		fa := Notebook{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		cbFn(fa, ObjectVarp)
+		cbFn(fa, DirectionVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -859,18 +903,25 @@ func (x *Notebook) ConnectPageReordered(cb *func(Notebook, uintptr, uint)) uint3
 	return gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
 }
 
+// Emitted when the tab should be reordered.
+//
+// The default bindings for this signal are
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;Home&lt;/kbd&gt;, &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;End&lt;/kbd&gt;,
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;,
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt;, &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;→&lt;/kbd&gt;,
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;↑&lt;/kbd&gt; and &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;↓&lt;/kbd&gt;.
 func (x *Notebook) ConnectReorderTab(cb *func(Notebook, DirectionType, bool) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		return gobject.SignalConnect(x.GoPointer(), "reorder-tab", cbRefPtr)
 	}
 
-	fcb := func(clsPtr uintptr, ObjectVarp DirectionType, P0Varp bool) bool {
+	fcb := func(clsPtr uintptr, DirectionVarp DirectionType, MoveToLastVarp bool) bool {
 		fa := Notebook{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, ObjectVarp, P0Varp)
+		return cbFn(fa, DirectionVarp, MoveToLastVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -878,18 +929,21 @@ func (x *Notebook) ConnectReorderTab(cb *func(Notebook, DirectionType, bool) boo
 	return gobject.SignalConnect(x.GoPointer(), "reorder-tab", cbRefPtr)
 }
 
+// Emitted when a page should be selected.
+//
+// The default binding for this signal is &lt;kbd&gt;␣&lt;/kbd&gt;.
 func (x *Notebook) ConnectSelectPage(cb *func(Notebook, bool) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		return gobject.SignalConnect(x.GoPointer(), "select-page", cbRefPtr)
 	}
 
-	fcb := func(clsPtr uintptr, ObjectVarp bool) bool {
+	fcb := func(clsPtr uintptr, MoveFocusVarp bool) bool {
 		fa := Notebook{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, ObjectVarp)
+		return cbFn(fa, MoveFocusVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -917,31 +971,162 @@ func (x *Notebook) ConnectSwitchPage(cb *func(Notebook, uintptr, uint)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "switch-page", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *Notebook) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *Notebook) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *Notebook) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *Notebook) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *Notebook) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *Notebook) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *Notebook) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *Notebook) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *Notebook) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *Notebook) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *Notebook) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *Notebook) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *Notebook) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *Notebook) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -987,7 +1172,7 @@ func (x *Notebook) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -1017,13 +1202,17 @@ func (x *Notebook) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -1053,14 +1242,14 @@ func (x *Notebook) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Notebook) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
-// `GtkNotebookPage` is an auxiliary object used by `GtkNotebook`.
+// An auxiliary object used by `GtkNotebook`.
 type NotebookPage struct {
 	gobject.Object
 }

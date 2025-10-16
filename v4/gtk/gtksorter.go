@@ -44,6 +44,7 @@ func (x *SorterClass) GoPointer() uintptr {
 }
 
 // OverrideCompare sets the callback function.
+// Compare two items. See gtk_sorter_compare() for details.
 func (x *SorterClass) OverrideCompare(cb func(*Sorter, *gobject.Object, *gobject.Object) Ordering) {
 	if cb == nil {
 		x.xCompare = 0
@@ -55,6 +56,7 @@ func (x *SorterClass) OverrideCompare(cb func(*Sorter, *gobject.Object, *gobject
 }
 
 // GetCompare gets the callback function.
+// Compare two items. See gtk_sorter_compare() for details.
 func (x *SorterClass) GetCompare() func(*Sorter, *gobject.Object, *gobject.Object) Ordering {
 	if x.xCompare == 0 {
 		return nil
@@ -67,6 +69,9 @@ func (x *SorterClass) GetCompare() func(*Sorter, *gobject.Object, *gobject.Objec
 }
 
 // OverrideGetOrder sets the callback function.
+// Get the `GtkSorderOrder` that applies to the current sorter.
+//
+//	If unimplemented, it returns %GTK_SORTER_ORDER_PARTIAL.
 func (x *SorterClass) OverrideGetOrder(cb func(*Sorter) SorterOrder) {
 	if cb == nil {
 		x.xGetOrder = 0
@@ -78,6 +83,9 @@ func (x *SorterClass) OverrideGetOrder(cb func(*Sorter) SorterOrder) {
 }
 
 // GetGetOrder gets the callback function.
+// Get the `GtkSorderOrder` that applies to the current sorter.
+//
+//	If unimplemented, it returns %GTK_SORTER_ORDER_PARTIAL.
 func (x *SorterClass) GetGetOrder() func(*Sorter) SorterOrder {
 	if x.xGetOrder == 0 {
 		return nil
@@ -322,7 +330,7 @@ const (
 	SorterOrderTotalValue SorterOrder = 2
 )
 
-// `GtkSorter` is an object to describe sorting criteria.
+// Describes sorting criteria for a [class@Gtk.SortListModel].
 //
 // Its primary user is [class@Gtk.SortListModel]
 //
@@ -370,7 +378,7 @@ var xSorterChanged func(uintptr, SorterChange)
 // update the sort order without a full resorting. Refer to
 // the [enum@Gtk.SorterChange] documentation for details.
 //
-// This function is intended for implementors of `GtkSorter`
+// This function is intended for implementers of `GtkSorter`
 // subclasses and should not be called from other functions.
 func (x *Sorter) Changed(ChangeVar SorterChange) {
 

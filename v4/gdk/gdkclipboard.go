@@ -12,8 +12,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The `GdkClipboard` object represents data shared between applications or
-// inside an application.
+// Represents data shared between applications or inside an application.
 //
 // To get a `GdkClipboard` object, use [method@Gdk.Display.get_clipboard] or
 // [method@Gdk.Display.get_primary_clipboard]. You can find out about the data
@@ -111,9 +110,6 @@ var xClipboardReadAsync func(uintptr, []string, int, uintptr, uintptr, uintptr)
 // Asynchronously requests an input stream to read the @clipboard's
 // contents from.
 //
-// When the operation is finished @callback will be called. You must then
-// call [method@Gdk.Clipboard.read_finish] to get the result of the operation.
-//
 // The clipboard will choose the most suitable mime type from the given list
 // to fulfill the request, preferring the ones listed first.
 func (x *Clipboard) ReadAsync(MimeTypesVar []string, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
@@ -149,9 +145,6 @@ var xClipboardReadTextAsync func(uintptr, uintptr, uintptr, uintptr)
 
 // Asynchronously request the @clipboard contents converted to a string.
 //
-// When the operation is finished @callback will be called. You must then
-// call [method@Gdk.Clipboard.read_text_finish] to get the result.
-//
 // This is a simple wrapper around [method@Gdk.Clipboard.read_value_async].
 // Use that function or [method@Gdk.Clipboard.read_async] directly if you
 // need more control over the operation.
@@ -180,9 +173,6 @@ func (x *Clipboard) ReadTextFinish(ResultVar gio.AsyncResult) (string, error) {
 var xClipboardReadTextureAsync func(uintptr, uintptr, uintptr, uintptr)
 
 // Asynchronously request the @clipboard contents converted to a `GdkPixbuf`.
-//
-// When the operation is finished @callback will be called. You must then
-// call [method@Gdk.Clipboard.read_texture_finish] to get the result.
 //
 // This is a simple wrapper around [method@Gdk.Clipboard.read_value_async].
 // Use that function or [method@Gdk.Clipboard.read_async] directly if you
@@ -221,9 +211,6 @@ var xClipboardReadValueAsync func(uintptr, types.GType, int, uintptr, uintptr, u
 // Asynchronously request the @clipboard contents converted to the given
 // @type.
 //
-// When the operation is finished @callback will be called. You must then call
-// [method@Gdk.Clipboard.read_value_finish] to get the resulting `GValue`.
-//
 // For local clipboard contents that are available in the given `GType`,
 // the value will be copied directly. Otherwise, GDK will try to use
 // [func@content_deserialize_async] to convert the clipboard's data.
@@ -254,8 +241,8 @@ var xClipboardSet func(uintptr, types.GType, ...interface{})
 // Sets the clipboard to contain the value collected from the given varargs.
 //
 // Values should be passed the same way they are passed to other value
-// collecting APIs, such as [`method@GObject.Object.set`] or
-// [`func@GObject.signal_emit`].
+// collecting APIs, such as [method@GObject.Object.set] or
+// [func@GObject.signal_emit].
 //
 // ```c
 // gdk_clipboard_set (clipboard, GTK_TYPE_STRING, "Hello World");
@@ -330,15 +317,14 @@ var xClipboardStoreAsync func(uintptr, int, uintptr, uintptr, uintptr)
 //
 // If the clipboard is not local, this function does nothing but report success.
 //
-// The @callback must call [method@Gdk.Clipboard.store_finish].
-//
 // The purpose of this call is to preserve clipboard contents beyond the
 // lifetime of an application, so this function is typically called on
 // exit. Depending on the platform, the functionality may not be available
 // unless a "clipboard manager" is running.
 //
-// This function is called automatically when a [class@Gtk.Application] is
-// shut down, so you likely don't need to call it.
+// This function is called automatically when a
+// [GtkApplication](../gtk4/class.Application.html)
+// is shut down, so you likely don't need to call it.
 func (x *Clipboard) StoreAsync(IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xClipboardStoreAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)

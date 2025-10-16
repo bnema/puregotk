@@ -13,33 +13,88 @@ import (
 // Prototype of a #GChildWatchSource callback, called when a child
 // process has exited.
 //
-// To interpret @wait_status, see the documentation
-// for g_spawn_check_wait_status(). In particular,
+// To interpret @wait_status, see the documentation for
+// [func@GLib.spawn_check_wait_status]. In particular,
 // on Unix platforms, note that it is usually not equal
 // to the integer passed to `exit()` or returned from `main()`.
 type ChildWatchFunc func(Pid, int, uintptr)
 
-// Specifies the type of function passed to g_clear_handle_id().
-// The implementation is expected to free the resource identified
-// by @handle_id; for instance, if @handle_id is a #GSource ID,
-// g_source_remove() can be used.
+// Specifies the type of function passed to [func@GLib.clear_handle_id] The
+// implementation is expected to free the resource identified by @handle_id;
+// for instance, if @handle_id is a [struct@GLib.Source] ID,
+// [func@GLib.Source.remove] can be used.
 type ClearHandleFunc func(uint)
 
-// Dispose function for @source. See g_source_set_dispose_function() for
-// details.
+// Dispose function for @source. See [method@GLib.Source.set_dispose_function]
+// for details.
 type SourceDisposeFunc func(*Source)
 
 // This is just a placeholder for #GClosureMarshal,
 // which cannot be used here for dependency reasons.
 type SourceDummyMarshal func()
 
-// Specifies the type of function passed to g_timeout_add(),
-// g_timeout_add_full(), g_idle_add(), and g_idle_add_full().
+// Specifies the type of function passed to [func@GLib.timeout_add],
+// [func@GLib.timeout_add_full], [func@GLib.idle_add], and
+// [func@GLib.idle_add_full].
 //
-// When calling g_source_set_callback(), you may need to cast a function of a
-// different type to this type. Use G_SOURCE_FUNC() to avoid warnings about
-// incompatible function types.
+// When calling [method@GLib.Source.set_callback], you may need to cast a
+// function of a different type to this type. Use [func@GLib.SOURCE_FUNC] to
+// avoid warnings about incompatible function types.
 type SourceFunc func(uintptr) bool
+
+// Checks if the source is ready to be dispatched.
+//
+// Called after all the file descriptors are polled. The source
+// should return %TRUE if it is ready to be dispatched. Note that some
+// time may have passed since the previous prepare function was called,
+// so the source should be checked again here.
+//
+// Since 2.36 this may be `NULL`, in which case the effect is
+// as if the function always returns `FALSE`.
+type SourceFuncsCheckFunc func(*Source) bool
+
+// Dispatches the source callback.
+//
+// Called to dispatch the event source, after it has returned
+// `TRUE` in either its prepare or its check function, or if a ready time
+// has been reached. The dispatch function receives a callback function and
+// user data. The callback function may be `NULL` if the source was never
+// connected to a callback using [method@GLib.Source.set_callback]. The dispatch
+// function should call the callback function with @user_data and whatever
+// additional parameters are needed for this type of event source. The
+// return value of the dispatch function should be [const@GLib.SOURCE_REMOVE]
+// if the source should be removed or [const@GLib.SOURCE_CONTINUE] to keep it.
+type SourceFuncsDispatchFunc func(*Source, uintptr, uintptr) bool
+
+// Finalizes the source.
+//
+// Called when the source is finalized. At this point, the source
+// will have been destroyed, had its callback cleared, and have been removed
+// from its [type@GLib.MainContext], but it will still have its final reference
+// count, so methods can be called on it from within this function.
+type SourceFuncsFinalizeFunc func(*Source)
+
+// Checks the source for readiness.
+//
+// Called before all the file descriptors are polled. If the
+// source can determine that it is ready here (without waiting for the
+// results of the poll call) it should return %TRUE. It can also return
+// a @timeout_ value which should be the maximum timeout (in milliseconds)
+// which should be passed to the poll call. The actual timeout used will
+// be `-1` if all sources returned `-1`, or it will be the minimum of all
+// the @timeout_ values returned which were greater than or equal to `0`.
+// If the prepare function returns a timeout and the source also has a
+// ready time set, then the lower of the two will be used.
+//
+// Since 2.36 this may be `NULL`, in which case the effect is as if the
+// function always returns `FALSE` with a timeout of `-1`.
+type SourceFuncsPrepareFunc func(*Source, int) bool
+
+// A source function that is only called once before being removed from the main
+// context automatically.
+//
+// See: [func@GLib.idle_add_once], [func@GLib.timeout_add_once]
+type SourceOnceFunc func(uintptr)
 
 // The `GMainContext` struct is an opaque data
 // type representing a set of sources to be handled in a main loop.
@@ -59,7 +114,7 @@ func (x *MainContext) GoPointer() uintptr {
 
 var xNewMainContext func() *MainContext
 
-// Creates a new #GMainContext structure.
+// Creates a new [struct@GLib.MainContext] structure.
 func NewMainContext() *MainContext {
 
 	cret := xNewMainContext()
@@ -68,7 +123,7 @@ func NewMainContext() *MainContext {
 
 var xNewMainContextWithFlags func(MainContextFlags) *MainContext
 
-// Creates a new #GMainContext structure.
+// Creates a new [struct@GLib.MainContext] structure.
 func NewMainContextWithFlags(FlagsVar MainContextFlags) *MainContext {
 
 	cret := xNewMainContextWithFlags(FlagsVar)
@@ -81,12 +136,16 @@ var xMainContextAcquire func(uintptr) bool
 // If some other thread is the owner of the context,
 // returns %FALSE immediately. Ownership is properly
 // recursive: the owner can require ownership again
-// and will release ownership when g_main_context_release()
-// is called as many times as g_main_context_acquire().
+// and will release ownership when [method@GLib.MainContext.release]
+// is called as many times as [method@GLib.MainContext.acquire].
 //
 // You must be the owner of a context before you
-// can call g_main_context_prepare(), g_main_context_query(),
-// g_main_context_check(), g_main_context_dispatch().
+// can call [method@GLib.MainContext.prepare], [method@GLib.MainContext.query],
+// [method@GLib.MainContext.check], [method@GLib.MainContext.dispatch],
+// [method@GLib.MainContext.release].
+//
+// Since 2.76 @context can be %NULL to use the global-default
+// main context.
 func (x *MainContext) Acquire() bool {
 
 	cret := xMainContextAcquire(x.GoPointer())
@@ -97,7 +156,7 @@ var xMainContextAddPoll func(uintptr, *PollFD, int)
 
 // Adds a file descriptor to the set of file descriptors polled for
 // this context. This will very seldom be used directly. Instead
-// a typical event source will use g_source_add_unix_fd() instead.
+// a typical event source will use `g_source_add_unix_fd` instead.
 func (x *MainContext) AddPoll(FdVar *PollFD, PriorityVar int) {
 
 	xMainContextAddPoll(x.GoPointer(), FdVar, PriorityVar)
@@ -108,11 +167,14 @@ var xMainContextCheck func(uintptr, int, []PollFD, int) bool
 
 // Passes the results of polling back to the main loop. You should be
 // careful to pass @fds and its length @n_fds as received from
-// g_main_context_query(), as this functions relies on assumptions
+// [method@GLib.MainContext.query], as this functions relies on assumptions
 // on how @fds is filled.
 //
 // You must have successfully acquired the context with
-// g_main_context_acquire() before you may call this function.
+// [method@GLib.MainContext.acquire] before you may call this function.
+//
+// Since 2.76 @context can be %NULL to use the global-default
+// main context.
 func (x *MainContext) Check(MaxPriorityVar int, FdsVar []PollFD, NFdsVar int) bool {
 
 	cret := xMainContextCheck(x.GoPointer(), MaxPriorityVar, FdsVar, NFdsVar)
@@ -124,7 +186,10 @@ var xMainContextDispatch func(uintptr)
 // Dispatches all pending sources.
 //
 // You must have successfully acquired the context with
-// g_main_context_acquire() before you may call this function.
+// [method@GLib.MainContext.acquire] before you may call this function.
+//
+// Since 2.76 @context can be %NULL to use the global-default
+// main context.
 func (x *MainContext) Dispatch() {
 
 	xMainContextDispatch(x.GoPointer())
@@ -151,7 +216,7 @@ var xMainContextFindSourceById func(uintptr, uint) *Source
 // More specifically: source IDs can be reissued after a source has been
 // destroyed and therefore it is never valid to use this function with a
 // source ID which may have already been removed.  An example is when
-// scheduling an idle to run in another thread with g_idle_add(): the
+// scheduling an idle to run in another thread with [func@GLib.idle_add]: the
 // idle may already have run and been removed by the time this function
 // is called on its (now invalid) source ID.  This source ID may have
 // been reissued, leading to the operation being performed against the
@@ -175,7 +240,7 @@ func (x *MainContext) FindSourceByUserData(UserDataVar uintptr) *Source {
 
 var xMainContextGetPollFunc func(uintptr) uintptr
 
-// Gets the poll function set by g_main_context_set_poll_func().
+// Gets the poll function set by [method@GLib.MainContext.set_poll_func].
 func (x *MainContext) GetPollFunc() uintptr {
 
 	cret := xMainContextGetPollFunc(x.GoPointer())
@@ -187,20 +252,20 @@ var xMainContextInvoke func(uintptr, uintptr, uintptr)
 // Invokes a function in such a way that @context is owned during the
 // invocation of @function.
 //
-// If @context is %NULL then the global default main context — as
-// returned by g_main_context_default() — is used.
+// If @context is %NULL then the global-default main context — as
+// returned by [func@GLib.MainContext.default] — is used.
 //
 // If @context is owned by the current thread, @function is called
 // directly.  Otherwise, if @context is the thread-default main context
-// of the current thread and g_main_context_acquire() succeeds, then
-// @function is called and g_main_context_release() is called
+// of the current thread and [method@GLib.MainContext.acquire] succeeds, then
+// @function is called and [method@GLib.MainContext.release] is called
 // afterwards.
 //
 // In any other case, an idle source is created to call @function and
 // that source is attached to @context (presumably to be run in another
-// thread).  The idle source is attached with %G_PRIORITY_DEFAULT
+// thread).  The idle source is attached with [const@GLib.PRIORITY_DEFAULT]
 // priority.  If you want a different priority, use
-// g_main_context_invoke_full().
+// [method@GLib.MainContext.invoke_full].
 //
 // Note that, as with normal idle functions, @function should probably
 // return %FALSE.  If it returns %TRUE, it will be continuously run in a
@@ -216,7 +281,7 @@ var xMainContextInvokeFull func(uintptr, int, uintptr, uintptr, uintptr)
 // Invokes a function in such a way that @context is owned during the
 // invocation of @function.
 //
-// This function is the same as g_main_context_invoke() except that it
+// This function is the same as [method@GLib.MainContext.invoke] except that it
 // lets you specify the priority in case @function ends up being
 // scheduled as an idle and also lets you give a #GDestroyNotify for @data.
 //
@@ -231,7 +296,7 @@ func (x *MainContext) InvokeFull(PriorityVar int, FunctionVar *SourceFunc, DataV
 var xMainContextIsOwner func(uintptr) bool
 
 // Determines whether this thread holds the (recursive)
-// ownership of this #GMainContext. This is useful to
+// ownership of this [struct@GLib.MainContext]. This is useful to
 // know before waiting on another thread that may be
 // blocking to get ownership of @context.
 func (x *MainContext) IsOwner() bool {
@@ -252,7 +317,7 @@ var xMainContextIteration func(uintptr, bool) bool
 // given moment without further waiting.
 //
 // Note that even when @may_block is %TRUE, it is still possible for
-// g_main_context_iteration() to return %FALSE, since the wait may
+// [method@GLib.MainContext.iteration] to return %FALSE, since the wait may
 // be interrupted for other reasons than an event source becoming ready.
 func (x *MainContext) Iteration(MayBlockVar bool) bool {
 
@@ -282,10 +347,10 @@ func (x *MainContext) PopThreadDefault() {
 var xMainContextPrepare func(uintptr, int) bool
 
 // Prepares to poll sources within a main loop. The resulting information
-// for polling is determined by calling g_main_context_query ().
+// for polling is determined by calling [method@GLib.MainContext.query].
 //
 // You must have successfully acquired the context with
-// g_main_context_acquire() before you may call this function.
+// [method@GLib.MainContext.acquire] before you may call this function.
 func (x *MainContext) Prepare(PriorityVar int) bool {
 
 	cret := xMainContextPrepare(x.GoPointer(), PriorityVar)
@@ -296,36 +361,37 @@ var xMainContextPushThreadDefault func(uintptr)
 
 // Acquires @context and sets it as the thread-default context for the
 // current thread. This will cause certain asynchronous operations
-// (such as most [gio][gio]-based I/O) which are
+// (such as most [Gio](../gio/index.html)-based I/O) which are
 // started in this thread to run under @context and deliver their
 // results to its main loop, rather than running under the global
-// default context in the main thread. Note that calling this function
-// changes the context returned by g_main_context_get_thread_default(),
-// not the one returned by g_main_context_default(), so it does not affect
-// the context used by functions like g_idle_add().
+// default main context in the main thread. Note that calling this function
+// changes the context returned by [func@GLib.MainContext.get_thread_default],
+// not the one returned by [func@GLib.MainContext.default], so it does not
+// affect the context used by functions like [func@GLib.idle_add].
 //
 // Normally you would call this function shortly after creating a new
-// thread, passing it a #GMainContext which will be run by a
-// #GMainLoop in that thread, to set a new default context for all
+// thread, passing it a [struct@GLib.MainContext] which will be run by a
+// [struct@GLib.MainLoop] in that thread, to set a new default context for all
 // async operations in that thread. In this case you may not need to
-// ever call g_main_context_pop_thread_default(), assuming you want the
-// new #GMainContext to be the default for the whole lifecycle of the
-// thread.
+// ever call [method@GLib.MainContext.pop_thread_default], assuming you want
+// the new [struct@GLib.MainContext] to be the default for the whole lifecycle
+// of the thread.
 //
 // If you don't have control over how the new thread was created (e.g.
 // in the new thread isn't newly created, or if the thread life
 // cycle is managed by a #GThreadPool), it is always suggested to wrap
-// the logic that needs to use the new #GMainContext inside a
-// g_main_context_push_thread_default() / g_main_context_pop_thread_default()
-// pair, otherwise threads that are re-used will end up never explicitly
-// releasing the #GMainContext reference they hold.
+// the logic that needs to use the new [struct@GLib.MainContext] inside a
+// [method@GLib.MainContext.push_thread_default] /
+// [method@GLib.MainContext.pop_thread_default] pair, otherwise threads that
+// are re-used will end up never explicitly releasing the
+// [struct@GLib.MainContext] reference they hold.
 //
 // In some cases you may want to schedule a single operation in a
 // non-default context, or temporarily use a non-default context in
 // the main thread. In that case, you can wrap the call to the
 // asynchronous operation inside a
-// g_main_context_push_thread_default() /
-// g_main_context_pop_thread_default() pair, but it is up to you to
+// [method@GLib.MainContext.push_thread_default] /
+// [method@GLib.MainContext.pop_thread_default] pair, but it is up to you to
 // ensure that no other asynchronous operations accidentally get
 // started while the non-default context is active.
 //
@@ -338,15 +404,63 @@ func (x *MainContext) PushThreadDefault() {
 
 }
 
+var xMainContextPusherNew func(uintptr) *MainContextPusher
+
+// Push @main_context as the new thread-default main context for the current
+// thread, using [method@GLib.MainContext.push_thread_default], and return a
+// new [alias@GLib.MainContextPusher]. Pop with g_main_context_pusher_free().
+// Using [method@GLib.MainContext.pop_thread_default] on @main_context while a
+// [alias@GLib.MainContextPusher] exists for it can lead to undefined behaviour.
+//
+// Using two [alias@GLib.MainContextPusher]s in the same scope is not allowed,
+// as it leads to an undefined pop order.
+//
+// This is intended to be used with g_autoptr().  Note that g_autoptr()
+// is only available when using GCC or clang, so the following example
+// will only work with those compilers:
+// |[
+// typedef struct
+//
+//	{
+//	  ...
+//	  GMainContext *context;
+//	  ...
+//	} MyObject;
+//
+// static void
+// my_object_do_stuff (MyObject *self)
+//
+//	{
+//	  g_autoptr(GMainContextPusher) pusher = g_main_context_pusher_new (self-&gt;context);
+//
+//	  // Code with main context as the thread default here
+//
+//	  if (cond)
+//	    // No need to pop
+//	    return;
+//
+//	  // Optionally early pop
+//	  g_clear_pointer (&amp;pusher, g_main_context_pusher_free);
+//
+//	  // Code with main context no longer the thread default here
+//	}
+//
+// ]|
+func (x *MainContext) PusherNew() *MainContextPusher {
+
+	cret := xMainContextPusherNew(x.GoPointer())
+	return cret
+}
+
 var xMainContextQuery func(uintptr, int, int, []PollFD, int) int
 
 // Determines information necessary to poll this main loop. You should
 // be careful to pass the resulting @fds array and its length @n_fds
-// as is when calling g_main_context_check(), as this function relies
+// as is when calling [method@GLib.MainContext.check], as this function relies
 // on assumptions made when the array is filled.
 //
 // You must have successfully acquired the context with
-// g_main_context_acquire() before you may call this function.
+// [method@GLib.MainContext.acquire] before you may call this function.
 func (x *MainContext) Query(MaxPriorityVar int, TimeoutVar int, FdsVar []PollFD, NFdsVar int) int {
 
 	cret := xMainContextQuery(x.GoPointer(), MaxPriorityVar, TimeoutVar, FdsVar, NFdsVar)
@@ -355,7 +469,7 @@ func (x *MainContext) Query(MaxPriorityVar int, TimeoutVar int, FdsVar []PollFD,
 
 var xMainContextRef func(uintptr) *MainContext
 
-// Increases the reference count on a #GMainContext object by one.
+// Increases the reference count on a [struct@GLib.MainContext] object by one.
 func (x *MainContext) Ref() *MainContext {
 
 	cret := xMainContextRef(x.GoPointer())
@@ -365,9 +479,12 @@ func (x *MainContext) Ref() *MainContext {
 var xMainContextRelease func(uintptr)
 
 // Releases ownership of a context previously acquired by this thread
-// with g_main_context_acquire(). If the context was acquired multiple
-// times, the ownership will be released only when g_main_context_release()
+// with [method@GLib.MainContext.acquire]. If the context was acquired multiple
+// times, the ownership will be released only when [method@GLib.MainContext.release]
 // is called as many times as it was acquired.
+//
+// You must have successfully acquired the context with
+// [method@GLib.MainContext.acquire] before you may call this function.
 func (x *MainContext) Release() {
 
 	xMainContextRelease(x.GoPointer())
@@ -401,7 +518,8 @@ func (x *MainContext) SetPollFunc(FuncVar *PollFunc) {
 
 var xMainContextUnref func(uintptr)
 
-// Decreases the reference count on a #GMainContext object by one. If
+// Decreases the reference count on a [struct@GLib.MainContext] object by one.
+// If
 // the result is zero, free the context and free all associated memory.
 func (x *MainContext) Unref() {
 
@@ -412,7 +530,7 @@ func (x *MainContext) Unref() {
 var xMainContextWait func(uintptr, *Cond, *Mutex) bool
 
 // Tries to become the owner of the specified context,
-// as with g_main_context_acquire(). But if another thread
+// as with [method@GLib.MainContext.acquire]. But if another thread
 // is the owner, atomically drop @mutex and wait on @cond until
 // that owner releases ownership or until @cond is signaled, then
 // try again (once) to become the owner.
@@ -424,14 +542,14 @@ func (x *MainContext) Wait(CondVar *Cond, MutexVar *Mutex) bool {
 
 var xMainContextWakeup func(uintptr)
 
-// If @context is currently blocking in g_main_context_iteration()
+// If @context is currently blocking in [method@GLib.MainContext.iteration]
 // waiting for a source to become ready, cause it to stop blocking
 // and return.  Otherwise, cause the next invocation of
-// g_main_context_iteration() to return without blocking.
+// [method@GLib.MainContext.iteration] to return without blocking.
 //
-// This API is useful for low-level control over #GMainContext; for
+// This API is useful for low-level control over [struct@GLib.MainContext]; for
 // example, integrating it with main loop implementations such as
-// #GMainLoop.
+// [struct@GLib.MainLoop].
 //
 // Another related use for this function is when implementing a main
 // loop with a termination condition, computed from multiple threads:
@@ -463,7 +581,7 @@ func (x *MainContext) Wakeup() {
 }
 
 // The `GMainLoop` struct is an opaque data type
-// representing the main event loop of a GLib or GTK+ application.
+// representing the main event loop of a GLib or GTK application.
 type MainLoop struct {
 	_ structs.HostLayout
 }
@@ -480,7 +598,7 @@ func (x *MainLoop) GoPointer() uintptr {
 
 var xNewMainLoop func(*MainContext, bool) *MainLoop
 
-// Creates a new #GMainLoop structure.
+// Creates a new [struct@GLib.MainLoop] structure.
 func NewMainLoop(ContextVar *MainContext, IsRunningVar bool) *MainLoop {
 
 	cret := xNewMainLoop(ContextVar, IsRunningVar)
@@ -489,7 +607,7 @@ func NewMainLoop(ContextVar *MainContext, IsRunningVar bool) *MainLoop {
 
 var xMainLoopGetContext func(uintptr) *MainContext
 
-// Returns the #GMainContext of @loop.
+// Returns the [struct@GLib.MainContext] of @loop.
 func (x *MainLoop) GetContext() *MainContext {
 
 	cret := xMainLoopGetContext(x.GoPointer())
@@ -498,7 +616,8 @@ func (x *MainLoop) GetContext() *MainContext {
 
 var xMainLoopIsRunning func(uintptr) bool
 
-// Checks to see if the main loop is currently being run via g_main_loop_run().
+// Checks to see if the main loop is currently being run via
+// [method@GLib.MainLoop.run].
 func (x *MainLoop) IsRunning() bool {
 
 	cret := xMainLoopIsRunning(x.GoPointer())
@@ -507,11 +626,11 @@ func (x *MainLoop) IsRunning() bool {
 
 var xMainLoopQuit func(uintptr)
 
-// Stops a #GMainLoop from running. Any calls to g_main_loop_run()
-// for the loop will return.
+// Stops a [struct@GLib.MainLoop] from running. Any calls to
+// [method@GLib.MainLoop.run] for the loop will return.
 //
 // Note that sources that have already been dispatched when
-// g_main_loop_quit() is called will still be executed.
+// [method@GLib.MainLoop.quit] is called will still be executed.
 func (x *MainLoop) Quit() {
 
 	xMainLoopQuit(x.GoPointer())
@@ -520,7 +639,7 @@ func (x *MainLoop) Quit() {
 
 var xMainLoopRef func(uintptr) *MainLoop
 
-// Increases the reference count on a #GMainLoop object by one.
+// Increases the reference count on a [struct@GLib.MainLoop] object by one.
 func (x *MainLoop) Ref() *MainLoop {
 
 	cret := xMainLoopRef(x.GoPointer())
@@ -529,7 +648,7 @@ func (x *MainLoop) Ref() *MainLoop {
 
 var xMainLoopRun func(uintptr)
 
-// Runs a main loop until g_main_loop_quit() is called on the loop.
+// Runs a main loop until [method@GLib.MainLoop.quit] is called on the loop.
 // If this is called for the thread of the loop's #GMainContext,
 // it will process events from the loop, otherwise it will
 // simply wait.
@@ -541,7 +660,7 @@ func (x *MainLoop) Run() {
 
 var xMainLoopUnref func(uintptr)
 
-// Decreases the reference count on a #GMainLoop object by one. If
+// Decreases the reference count on a [struct@GLib.MainLoop] object by one. If
 // the result is zero, free the loop and free all associated memory.
 func (x *MainLoop) Unref() {
 
@@ -593,13 +712,13 @@ func (x *Source) GoPointer() uintptr {
 
 var xNewSource func(*SourceFuncs, uint) *Source
 
-// Creates a new #GSource structure. The size is specified to
-// allow creating structures derived from #GSource that contain
+// Creates a new [struct@GLib.Source] structure. The size is specified to
+// allow creating structures derived from [struct@GLib.Source] that contain
 // additional data. The size passed in must be at least
 // `sizeof (GSource)`.
 //
 // The source will not initially be associated with any #GMainContext
-// and must be added to one with g_source_attach() before it will be
+// and must be added to one with [method@GLib.Source.attach] before it will be
 // executed.
 func NewSource(SourceFuncsVar *SourceFuncs, StructSizeVar uint) *Source {
 
@@ -610,8 +729,8 @@ func NewSource(SourceFuncsVar *SourceFuncs, StructSizeVar uint) *Source {
 var xSourceAddChildSource func(uintptr, *Source)
 
 // Adds @child_source to @source as a "polled" source; when @source is
-// added to a #GMainContext, @child_source will be automatically added
-// with the same priority, when @child_source is triggered, it will
+// added to a [struct@GLib.MainContext], @child_source will be automatically
+// added with the same priority, when @child_source is triggered, it will
 // cause @source to dispatch (in addition to calling its own
 // callback), and when @source is destroyed, it will destroy
 // @child_source as well. (@source will also still be dispatched if
@@ -624,8 +743,9 @@ var xSourceAddChildSource func(uintptr, *Source)
 // @source will hold a reference on @child_source while @child_source
 // is attached to it.
 //
-// This API is only intended to be used by implementations of #GSource.
-// Do not call this API on a #GSource that you did not create.
+// This API is only intended to be used by implementations of
+// [struct@GLib.Source]. Do not call this API on a [struct@GLib.Source] that
+// you did not create.
 func (x *Source) AddChildSource(ChildSourceVar *Source) {
 
 	xSourceAddChildSource(x.GoPointer(), ChildSourceVar)
@@ -635,17 +755,17 @@ func (x *Source) AddChildSource(ChildSourceVar *Source) {
 var xSourceAddPoll func(uintptr, *PollFD)
 
 // Adds a file descriptor to the set of file descriptors polled for
-// this source. This is usually combined with g_source_new() to add an
+// this source. This is usually combined with [ctor@GLib.Source.new] to add an
 // event source. The event source's check function will typically test
 // the @revents field in the #GPollFD struct and return %TRUE if events need
 // to be processed.
 //
-// This API is only intended to be used by implementations of #GSource.
-// Do not call this API on a #GSource that you did not create.
+// This API is only intended to be used by implementations of [struct@GLib.Source].
+// Do not call this API on a [struct@GLib.Source] that you did not create.
 //
 // Using this API forces the linear scanning of event sources on each
 // main loop iteration.  Newly-written event sources should try to use
-// g_source_add_unix_fd() instead of this API.
+// `g_source_add_unix_fd` instead of this API.
 func (x *Source) AddPoll(FdVar *PollFD) {
 
 	xSourceAddPoll(x.GoPointer(), FdVar)
@@ -657,8 +777,8 @@ var xSourceAddUnixFd func(uintptr, int, IOCondition) uintptr
 // Monitors @fd for the IO events in @events.
 //
 // The tag returned by this function can be used to remove or modify the
-// monitoring of the fd using g_source_remove_unix_fd() or
-// g_source_modify_unix_fd().
+// monitoring of the fd using [method@GLib.Source.remove_unix_fd] or
+// [method@GLib.Source.modify_unix_fd].
 //
 // It is not necessary to remove the fd before destroying the source; it
 // will be cleaned up automatically.
@@ -675,8 +795,8 @@ func (x *Source) AddUnixFd(FdVar int, EventsVar IOCondition) uintptr {
 
 var xSourceAttach func(uintptr, *MainContext) uint
 
-// Adds a #GSource to a @context so that it will be executed within
-// that context. Remove it by calling g_source_destroy().
+// Adds a [struct@GLib.Source] to a @context so that it will be executed within
+// that context. Remove it by calling [method@GLib.Source.destroy].
 //
 // This function is safe to call from any thread, regardless of which thread
 // the @context is running in.
@@ -688,20 +808,21 @@ func (x *Source) Attach(ContextVar *MainContext) uint {
 
 var xSourceDestroy func(uintptr)
 
-// Removes a source from its #GMainContext, if any, and mark it as
+// Removes a source from its [struct@GLib.MainContext], if any, and mark it as
 // destroyed.  The source cannot be subsequently added to another
 // context. It is safe to call this on sources which have already been
 // removed from their context.
 //
-// This does not unref the #GSource: if you still hold a reference, use
-// g_source_unref() to drop it.
+// This does not unref the [struct@GLib.Source]: if you still hold a reference,
+// use [method@GLib.Source.unref] to drop it.
 //
 // This function is safe to call from any thread, regardless of which thread
-// the #GMainContext is running in.
+// the [struct@GLib.MainContext] is running in.
 //
-// If the source is currently attached to a #GMainContext, destroying it
-// will effectively unset the callback similar to calling g_source_set_callback().
-// This can mean, that the data's #GDestroyNotify gets called right away.
+// If the source is currently attached to a [struct@GLib.MainContext],
+// destroying it will effectively unset the callback similar to calling
+// [method@GLib.Source.set_callback]. This can mean, that the data's
+// #GDestroyNotify gets called right away.
 func (x *Source) Destroy() {
 
 	xSourceDestroy(x.GoPointer())
@@ -711,7 +832,7 @@ func (x *Source) Destroy() {
 var xSourceGetCanRecurse func(uintptr) bool
 
 // Checks whether a source is allowed to be called recursively.
-// see g_source_set_can_recurse().
+// see [method@GLib.Source.set_can_recurse].
 func (x *Source) GetCanRecurse() bool {
 
 	cret := xSourceGetCanRecurse(x.GoPointer())
@@ -720,14 +841,14 @@ func (x *Source) GetCanRecurse() bool {
 
 var xSourceGetContext func(uintptr) *MainContext
 
-// Gets the #GMainContext with which the source is associated.
+// Gets the [struct@GLib.MainContext] with which the source is associated.
 //
 // You can call this on a source that has been destroyed, provided
-// that the #GMainContext it was attached to still exists (in which
-// case it will return that #GMainContext). In particular, you can
+// that the [struct@GLib.MainContext] it was attached to still exists (in which
+// case it will return that [struct@GLib.MainContext]). In particular, you can
 // always call this function on the source returned from
-// g_main_current_source(). But calling this function on a source
-// whose #GMainContext has been destroyed is an error.
+// [func@GLib.main_current_source]. But calling this function on a source
+// whose [struct@GLib.MainContext] has been destroyed is an error.
 func (x *Source) GetContext() *MainContext {
 
 	cret := xSourceGetContext(x.GoPointer())
@@ -737,7 +858,7 @@ func (x *Source) GetContext() *MainContext {
 var xSourceGetCurrentTime func(uintptr, *TimeVal)
 
 // This function ignores @source and is otherwise the same as
-// g_get_current_time().
+// [func@GLib.get_current_time].
 func (x *Source) GetCurrentTime(TimevalVar *TimeVal) {
 
 	xSourceGetCurrentTime(x.GoPointer(), TimevalVar)
@@ -748,13 +869,14 @@ var xSourceGetId func(uintptr) uint
 
 // Returns the numeric ID for a particular source. The ID of a source
 // is a positive integer which is unique within a particular main loop
-// context. The reverse
-// mapping from ID to source is done by g_main_context_find_source_by_id().
+// context. The reverse mapping from ID to source is done by
+// [method@GLib.MainContext.find_source_by_id].
 //
 // You can only call this function while the source is associated to a
-// #GMainContext instance; calling this function before g_source_attach()
-// or after g_source_destroy() yields undefined behavior. The ID returned
-// is unique within the #GMainContext instance passed to g_source_attach().
+// [struct@GLib.MainContext] instance; calling this function before
+// [method@GLib.Source.attach] or after [method@GLib.Source.destroy] yields
+// undefined behavior. The ID returned is unique within the
+// [struct@GLib.MainContext] instance passed to [method@GLib.Source.attach].
 func (x *Source) GetId() uint {
 
 	cret := xSourceGetId(x.GoPointer())
@@ -764,7 +886,7 @@ func (x *Source) GetId() uint {
 var xSourceGetName func(uintptr) string
 
 // Gets a name for the source, used in debugging and profiling.  The
-// name may be #NULL if it has never been set with g_source_set_name().
+// name may be #NULL if it has never been set with [method@GLib.Source.set_name].
 func (x *Source) GetName() string {
 
 	cret := xSourceGetName(x.GoPointer())
@@ -783,10 +905,10 @@ func (x *Source) GetPriority() int {
 var xSourceGetReadyTime func(uintptr) int64
 
 // Gets the "ready time" of @source, as set by
-// g_source_set_ready_time().
+// [method@GLib.Source.set_ready_time].
 //
-// Any time before the current monotonic time (including 0) is an
-// indication that the source will fire immediately.
+// Any time before or equal to the current monotonic time (including 0)
+// is an indication that the source will fire immediately.
 func (x *Source) GetReadyTime() int64 {
 
 	cret := xSourceGetReadyTime(x.GoPointer())
@@ -796,12 +918,12 @@ func (x *Source) GetReadyTime() int64 {
 var xSourceGetTime func(uintptr) int64
 
 // Gets the time to be used when checking this source. The advantage of
-// calling this function over calling g_get_monotonic_time() directly is
+// calling this function over calling [func@GLib.get_monotonic_time] directly is
 // that when checking multiple sources, GLib can cache a single value
 // instead of having to repeatedly get the system monotonic time.
 //
 // The time here is the system monotonic time, if available, or some
-// other reasonable alternative otherwise.  See g_get_monotonic_time().
+// other reasonable alternative otherwise.  See [func@GLib.get_monotonic_time].
 func (x *Source) GetTime() int64 {
 
 	cret := xSourceGetTime(x.GoPointer())
@@ -891,10 +1013,10 @@ var xSourceIsDestroyed func(uintptr) bool
 // ]|
 //
 // Calls to this function from a thread other than the one acquired by the
-// #GMainContext the #GSource is attached to are typically redundant, as the
-// source could be destroyed immediately after this function returns. However,
-// once a source is destroyed it cannot be un-destroyed, so this function can be
-// used for opportunistic checks from any thread.
+// [struct@GLib.MainContext] the #GSource is attached to are typically
+// redundant, as the source could be destroyed immediately after this function
+// returns. However, once a source is destroyed it cannot be un-destroyed, so
+// this function can be used for opportunistic checks from any thread.
 func (x *Source) IsDestroyed() bool {
 
 	cret := xSourceIsDestroyed(x.GoPointer())
@@ -905,10 +1027,10 @@ var xSourceModifyUnixFd func(uintptr, uintptr, IOCondition)
 
 // Updates the event mask to watch for the fd identified by @tag.
 //
-// @tag is the tag returned from g_source_add_unix_fd().
+// @tag is the tag returned from [method@GLib.Source.add_unix_fd].
 //
 // If you want to remove a fd, don't set its event mask to zero.
-// Instead, call g_source_remove_unix_fd().
+// Instead, call [method@GLib.Source.remove_unix_fd].
 //
 // This API is only intended to be used by implementations of #GSource.
 // Do not call this API on a #GSource that you did not create.
@@ -964,8 +1086,8 @@ var xSourceRemovePoll func(uintptr, *PollFD)
 // Removes a file descriptor from the set of file descriptors polled for
 // this source.
 //
-// This API is only intended to be used by implementations of #GSource.
-// Do not call this API on a #GSource that you did not create.
+// This API is only intended to be used by implementations of [struct@GLib.Source].
+// Do not call this API on a [struct@GLib.Source] that you did not create.
 func (x *Source) RemovePoll(FdVar *PollFD) {
 
 	xSourceRemovePoll(x.GoPointer(), FdVar)
@@ -974,7 +1096,7 @@ func (x *Source) RemovePoll(FdVar *PollFD) {
 
 var xSourceRemoveUnixFd func(uintptr, uintptr)
 
-// Reverses the effect of a previous call to g_source_add_unix_fd().
+// Reverses the effect of a previous call to [method@GLib.Source.add_unix_fd].
 //
 // You only need to call this if you want to remove an fd from being
 // watched while keeping the same source around.  In the normal case you
@@ -997,20 +1119,21 @@ var xSourceSetCallback func(uintptr, uintptr, uintptr, uintptr)
 //
 // The exact type of @func depends on the type of source; ie. you
 // should not count on @func being called with @data as its first
-// parameter. Cast @func with G_SOURCE_FUNC() to avoid warnings about
+// parameter. Cast @func with [func@GLib.SOURCE_FUNC] to avoid warnings about
 // incompatible function types.
 //
-// See [memory management of sources][mainloop-memory-management] for details
+// See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
 // on how to handle memory management of @data.
 //
 // Typically, you won't use this function. Instead use functions specific
-// to the type of source you are using, such as g_idle_add() or g_timeout_add().
+// to the type of source you are using, such as [func@GLib.idle_add] or
+// [func@GLib.timeout_add].
 //
 // It is safe to call this function multiple times on a source which has already
 // been attached to a context. The changes will take effect for the next time
 // the source is dispatched after this call returns.
 //
-// Note that g_source_destroy() for a currently attached source has the effect
+// Note that [method@GLib.Source.destroy] for a currently attached source has the effect
 // of also unsetting the callback.
 func (x *Source) SetCallback(FuncVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) {
 
@@ -1022,7 +1145,7 @@ var xSourceSetCallbackIndirect func(uintptr, uintptr, *SourceCallbackFuncs)
 
 // Sets the callback function storing the data as a refcounted callback
 // "object". This is used internally. Note that calling
-// g_source_set_callback_indirect() assumes
+// [method@GLib.Source.set_callback_indirect] assumes
 // an initial reference count on @callback_data, and thus
 // @callback_funcs-&gt;unref will eventually be called once more
 // than @callback_funcs-&gt;ref.
@@ -1054,8 +1177,9 @@ var xSourceSetDisposeFunction func(uintptr, uintptr)
 // the reference count of @source reaches 0 but before any of the state of the
 // source is freed, especially before the finalize function is called.
 //
-// This means that at this point @source is still a valid #GSource and it is
-// allow for the reference count to increase again until @dispose returns.
+// This means that at this point @source is still a valid [struct@GLib.Source]
+// and it is allow for the reference count to increase again until @dispose
+// returns.
 //
 // The dispose function can be used to clear any "weak" references to the
 // @source in other data structures in a thread-safe way where it is possible
@@ -1089,7 +1213,7 @@ var xSourceSetName func(uintptr, string)
 //
 // The source name should describe in a human-readable way
 // what the source does. For example, "X11 event queue"
-// or "GTK+ repaint idle handler" or whatever it is.
+// or "GTK repaint idle handler" or whatever it is.
 //
 // It is permitted to call this function multiple times, but is not
 // recommended due to the potential performance impact.  For example,
@@ -1097,11 +1221,11 @@ var xSourceSetName func(uintptr, string)
 // to include details like the event type in the source name.
 //
 // Use caution if changing the name while another thread may be
-// accessing it with g_source_get_name(); that function does not copy
+// accessing it with [method@GLib.Source.get_name]; that function does not copy
 // the value, and changing the value will free it while the other thread
 // may be attempting to use it.
 //
-// Also see g_source_set_static_name().
+// Also see [method@GLib.Source.set_static_name].
 func (x *Source) SetName(NameVar string) {
 
 	xSourceSetName(x.GoPointer(), NameVar)
@@ -1144,7 +1268,7 @@ var xSourceSetReadyTime func(uintptr, int64)
 // then the order of dispatch is undefined.
 //
 // It is a no-op to call this function on a #GSource which has already been
-// destroyed with g_source_destroy().
+// destroyed with [method@GLib.Source.destroy].
 //
 // This API is only intended to be used by implementations of #GSource.
 // Do not call this API on a #GSource that you did not create.
@@ -1156,7 +1280,7 @@ func (x *Source) SetReadyTime(ReadyTimeVar int64) {
 
 var xSourceSetStaticName func(uintptr, string)
 
-// A variant of g_source_set_name() that does not
+// A variant of [method@GLib.Source.set_name] that does not
 // duplicate the @name, and can only be used with
 // string literals.
 func (x *Source) SetStaticName(NameVar string) {
@@ -1193,6 +1317,7 @@ func (x *SourceCallbackFuncs) GoPointer() uintptr {
 }
 
 // OverrideRef sets the callback function.
+// Called when a reference is added to the callback object
 func (x *SourceCallbackFuncs) OverrideRef(cb func(uintptr)) {
 	if cb == nil {
 		x.xRef = 0
@@ -1204,6 +1329,7 @@ func (x *SourceCallbackFuncs) OverrideRef(cb func(uintptr)) {
 }
 
 // GetRef gets the callback function.
+// Called when a reference is added to the callback object
 func (x *SourceCallbackFuncs) GetRef() func(uintptr) {
 	if x.xRef == 0 {
 		return nil
@@ -1216,6 +1342,7 @@ func (x *SourceCallbackFuncs) GetRef() func(uintptr) {
 }
 
 // OverrideUnref sets the callback function.
+// Called when a reference to the callback object is dropped
 func (x *SourceCallbackFuncs) OverrideUnref(cb func(uintptr)) {
 	if cb == nil {
 		x.xUnref = 0
@@ -1227,6 +1354,7 @@ func (x *SourceCallbackFuncs) OverrideUnref(cb func(uintptr)) {
 }
 
 // GetUnref gets the callback function.
+// Called when a reference to the callback object is dropped
 func (x *SourceCallbackFuncs) GetUnref() func(uintptr) {
 	if x.xUnref == 0 {
 		return nil
@@ -1239,6 +1367,9 @@ func (x *SourceCallbackFuncs) GetUnref() func(uintptr) {
 }
 
 // OverrideGet sets the callback function.
+// Called to extract the callback function and data from the
+//
+//	callback object.
 func (x *SourceCallbackFuncs) OverrideGet(cb func(uintptr, *Source, *SourceFunc, uintptr)) {
 	if cb == nil {
 		x.xGet = 0
@@ -1250,6 +1381,9 @@ func (x *SourceCallbackFuncs) OverrideGet(cb func(uintptr, *Source, *SourceFunc,
 }
 
 // GetGet gets the callback function.
+// Called to extract the callback function and data from the
+//
+//	callback object.
 func (x *SourceCallbackFuncs) GetGet() func(uintptr, *Source, *SourceFunc, uintptr) {
 	if x.xGet == 0 {
 		return nil
@@ -1284,13 +1418,13 @@ func (x *SourceCallbackFuncs) GetGet() func(uintptr, *Source, *SourceFunc, uintp
 type SourceFuncs struct {
 	_ structs.HostLayout
 
-	xPrepare uintptr
+	Prepare SourceFuncsPrepareFunc
 
-	xCheck uintptr
+	Check SourceFuncsCheckFunc
 
-	xDispatch uintptr
+	Dispatch SourceFuncsDispatchFunc
 
-	xFinalize uintptr
+	Finalize SourceFuncsFinalizeFunc
 
 	ClosureCallback SourceFunc
 
@@ -1299,98 +1433,6 @@ type SourceFuncs struct {
 
 func (x *SourceFuncs) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
-}
-
-// OverridePrepare sets the callback function.
-func (x *SourceFuncs) OverridePrepare(cb func(*Source, int) bool) {
-	if cb == nil {
-		x.xPrepare = 0
-	} else {
-		x.xPrepare = purego.NewCallback(func(SourceVarp *Source, TimeoutVarp int) bool {
-			return cb(SourceVarp, TimeoutVarp)
-		})
-	}
-}
-
-// GetPrepare gets the callback function.
-func (x *SourceFuncs) GetPrepare() func(*Source, int) bool {
-	if x.xPrepare == 0 {
-		return nil
-	}
-	var rawCallback func(SourceVarp *Source, TimeoutVarp int) bool
-	purego.RegisterFunc(&rawCallback, x.xPrepare)
-	return func(SourceVar *Source, TimeoutVar int) bool {
-		return rawCallback(SourceVar, TimeoutVar)
-	}
-}
-
-// OverrideCheck sets the callback function.
-func (x *SourceFuncs) OverrideCheck(cb func(*Source) bool) {
-	if cb == nil {
-		x.xCheck = 0
-	} else {
-		x.xCheck = purego.NewCallback(func(SourceVarp *Source) bool {
-			return cb(SourceVarp)
-		})
-	}
-}
-
-// GetCheck gets the callback function.
-func (x *SourceFuncs) GetCheck() func(*Source) bool {
-	if x.xCheck == 0 {
-		return nil
-	}
-	var rawCallback func(SourceVarp *Source) bool
-	purego.RegisterFunc(&rawCallback, x.xCheck)
-	return func(SourceVar *Source) bool {
-		return rawCallback(SourceVar)
-	}
-}
-
-// OverrideDispatch sets the callback function.
-func (x *SourceFuncs) OverrideDispatch(cb func(*Source, *SourceFunc, uintptr) bool) {
-	if cb == nil {
-		x.xDispatch = 0
-	} else {
-		x.xDispatch = purego.NewCallback(func(SourceVarp *Source, CallbackVarp uintptr, UserDataVarp uintptr) bool {
-			return cb(SourceVarp, (*SourceFunc)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
-		})
-	}
-}
-
-// GetDispatch gets the callback function.
-func (x *SourceFuncs) GetDispatch() func(*Source, *SourceFunc, uintptr) bool {
-	if x.xDispatch == 0 {
-		return nil
-	}
-	var rawCallback func(SourceVarp *Source, CallbackVarp uintptr, UserDataVarp uintptr) bool
-	purego.RegisterFunc(&rawCallback, x.xDispatch)
-	return func(SourceVar *Source, CallbackVar *SourceFunc, UserDataVar uintptr) bool {
-		return rawCallback(SourceVar, NewCallback(CallbackVar), UserDataVar)
-	}
-}
-
-// OverrideFinalize sets the callback function.
-func (x *SourceFuncs) OverrideFinalize(cb func(*Source)) {
-	if cb == nil {
-		x.xFinalize = 0
-	} else {
-		x.xFinalize = purego.NewCallback(func(SourceVarp *Source) {
-			cb(SourceVarp)
-		})
-	}
-}
-
-// GetFinalize gets the callback function.
-func (x *SourceFuncs) GetFinalize() func(*Source) {
-	if x.xFinalize == 0 {
-		return nil
-	}
-	var rawCallback func(SourceVarp *Source)
-	purego.RegisterFunc(&rawCallback, x.xFinalize)
-	return func(SourceVar *Source) {
-		rawCallback(SourceVar)
-	}
 }
 
 type SourcePrivate struct {
@@ -1408,39 +1450,39 @@ const (
 	// Use this for default priority event sources.
 	//
 	// In GLib this priority is used when adding timeout functions
-	// with g_timeout_add(). In GDK this priority is used for events
+	// with [func@GLib.timeout_add]. In GDK this priority is used for events
 	// from the X server.
 	PRIORITY_DEFAULT int = 0
 	// Use this for default priority idle functions.
 	//
 	// In GLib this priority is used when adding idle functions with
-	// g_idle_add().
+	// [func@GLib.idle_add].
 	PRIORITY_DEFAULT_IDLE int = 200
 	// Use this for high priority event sources.
 	//
-	// It is not used within GLib or GTK+.
+	// It is not used within GLib or GTK.
 	PRIORITY_HIGH int = -100
 	// Use this for high priority idle functions.
 	//
-	// GTK+ uses %G_PRIORITY_HIGH_IDLE + 10 for resizing operations,
+	// GTK uses %G_PRIORITY_HIGH_IDLE + 10 for resizing operations,
 	// and %G_PRIORITY_HIGH_IDLE + 20 for redrawing operations. (This is
 	// done to ensure that any pending resizes are processed before any
 	// pending redraws, so that widgets are not redrawn twice unnecessarily.)
 	PRIORITY_HIGH_IDLE int = 100
 	// Use this for very low priority background tasks.
 	//
-	// It is not used within GLib or GTK+.
+	// It is not used within GLib or GTK.
 	PRIORITY_LOW int = 300
-	// Use this macro as the return value of a #GSourceFunc to leave
-	// the #GSource in the main loop.
+	// Use this macro as the return value of a [callback@GLib.SourceFunc] to leave
+	// the [struct@GLib.Source] in the main loop.
 	SOURCE_CONTINUE bool = true
-	// Use this macro as the return value of a #GSourceFunc to remove
-	// the #GSource from the main loop.
+	// Use this macro as the return value of a [callback@GLib.SourceFunc] to remove
+	// the [struct@GLib.Source] from the main loop.
 	SOURCE_REMOVE bool = false
 )
 
-// Flags to pass to g_main_context_new_with_flags() which affect the behaviour
-// of a #GMainContext.
+// Flags to pass to [ctor@GLib.MainContext.new_with_flags] which affect the
+// behaviour of a [struct@GLib.MainContext].
 type MainContextFlags int
 
 const (
@@ -1457,24 +1499,25 @@ const (
 var xChildWatchAdd func(Pid, uintptr, uintptr) uint
 
 // Sets a function to be called when the child indicated by @pid
-// exits, at a default priority, %G_PRIORITY_DEFAULT.
+// exits, at a default priority, [const@GLib.PRIORITY_DEFAULT].
 //
-// If you obtain @pid from g_spawn_async() or g_spawn_async_with_pipes()
-// you will need to pass %G_SPAWN_DO_NOT_REAP_CHILD as flag to
-// the spawn function for the child watching to work.
+// If you obtain @pid from [func@GLib.spawn_async] or
+// [func@GLib.spawn_async_with_pipes] you will need to pass
+// %G_SPAWN_DO_NOT_REAP_CHILD as flag to the spawn function for the child
+// watching to work.
 //
 // Note that on platforms where #GPid must be explicitly closed
-// (see g_spawn_close_pid()) @pid must not be closed while the
+// (see [func@GLib.spawn_close_pid]) @pid must not be closed while the
 // source is still active. Typically, you will want to call
-// g_spawn_close_pid() in the callback function for the source.
+// [func@GLib.spawn_close_pid] in the callback function for the source.
 //
 // GLib supports only a single callback per process id.
 // On POSIX platforms, the same restrictions mentioned for
-// g_child_watch_source_new() apply to this function.
+// [func@GLib.child_watch_source_new] apply to this function.
 //
 // This internally creates a main loop source using
-// g_child_watch_source_new() and attaches it to the main loop context
-// using g_source_attach(). You can do these steps manually if you
+// [func@GLib.child_watch_source_new] and attaches it to the main loop context
+// using [method@GLib.Source.attach]. You can do these steps manually if you
 // need greater control.
 func ChildWatchAdd(PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr) uint {
 
@@ -1487,26 +1530,27 @@ var xChildWatchAddFull func(int, Pid, uintptr, uintptr, uintptr) uint
 // Sets a function to be called when the child indicated by @pid
 // exits, at the priority @priority.
 //
-// If you obtain @pid from g_spawn_async() or g_spawn_async_with_pipes()
-// you will need to pass %G_SPAWN_DO_NOT_REAP_CHILD as flag to
-// the spawn function for the child watching to work.
+// If you obtain @pid from [func@GLib.spawn_async] or
+// [func@GLib.spawn_async_with_pipes] you will need to pass
+// %G_SPAWN_DO_NOT_REAP_CHILD as flag to the spawn function for the child
+// watching to work.
 //
-// In many programs, you will want to call g_spawn_check_wait_status()
+// In many programs, you will want to call [func@GLib.spawn_check_wait_status]
 // in the callback to determine whether or not the child exited
 // successfully.
 //
 // Also, note that on platforms where #GPid must be explicitly closed
-// (see g_spawn_close_pid()) @pid must not be closed while the source
-// is still active.  Typically, you should invoke g_spawn_close_pid()
+// (see [func@GLib.spawn_close_pid]) @pid must not be closed while the source
+// is still active.  Typically, you should invoke [func@GLib.spawn_close_pid]
 // in the callback function for the source.
 //
 // GLib supports only a single callback per process id.
 // On POSIX platforms, the same restrictions mentioned for
-// g_child_watch_source_new() apply to this function.
+// [func@GLib.child_watch_source_new] apply to this function.
 //
 // This internally creates a main loop source using
-// g_child_watch_source_new() and attaches it to the main loop context
-// using g_source_attach(). You can do these steps manually if you
+// [func@GLib.child_watch_source_new] and attaches it to the main loop context
+// using [method@GLib.Source.attach]. You can do these steps manually if you
 // need greater control.
 func ChildWatchAddFull(PriorityVar int, PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
@@ -1518,17 +1562,17 @@ var xChildWatchSourceNew func(Pid) *Source
 
 // Creates a new child_watch source.
 //
-// The source will not initially be associated with any #GMainContext
-// and must be added to one with g_source_attach() before it will be
-// executed.
+// The source will not initially be associated with any
+// [struct@GLib.MainContext] and must be added to one with
+// [method@GLib.Source.attach] before it will be executed.
 //
 // Note that child watch sources can only be used in conjunction with
 // `g_spawn...` when the %G_SPAWN_DO_NOT_REAP_CHILD flag is used.
 //
 // Note that on platforms where #GPid must be explicitly closed
-// (see g_spawn_close_pid()) @pid must not be closed while the
+// (see [func@GLib.spawn_close_pid]) @pid must not be closed while the
 // source is still active. Typically, you will want to call
-// g_spawn_close_pid() in the callback function for the source.
+// [func@GLib.spawn_close_pid] in the callback function for the source.
 //
 // On POSIX platforms, the following restrictions apply to this API
 // due to limitations in POSIX process interfaces:
@@ -1541,6 +1585,14 @@ var xChildWatchSourceNew func(Pid) *Source
 //     mechanism, including `waitpid(pid, ...)` or a second child-watch
 //     source for the same @pid
 //   - the application must not ignore `SIGCHLD`
+//   - Before 2.78, the application could not send a signal (`kill()`) to the
+//     watched @pid in a race free manner. Since 2.78, you can do that while the
+//     associated [struct@GLib.MainContext] is acquired.
+//   - Before 2.78, even after destroying the [struct@GLib.Source], you could not
+//     be sure that @pid wasn't already reaped. Hence, it was also not
+//     safe to `kill()` or `waitpid()` on the process ID after the child watch
+//     source was gone. Destroying the source before it fired made it
+//     impossible to reliably reap the process.
 //
 // If any of those conditions are not met, this and related APIs will
 // not work correctly. This can often be diagnosed via a GLib warning
@@ -1561,7 +1613,7 @@ var xClearHandleId func(uint, uintptr)
 // @tag_ptr must be a valid pointer to the variable holding the handler.
 //
 // If the ID is zero then this function does nothing.
-// Otherwise, clear_func() is called with the ID as a parameter, and the tag is
+// Otherwise, @clear_func is called with the ID as a parameter, and the tag is
 // set to zero.
 //
 // A macro is also included that allows this function to be used without
@@ -1576,7 +1628,7 @@ var xGetCurrentTime func(*TimeVal)
 
 // Equivalent to the UNIX gettimeofday() function, but portable.
 //
-// You may find g_get_real_time() to be more convenient.
+// You may find [func@GLib.get_real_time] to be more convenient.
 func GetCurrentTime(ResultVar *TimeVal) {
 
 	xGetCurrentTime(ResultVar)
@@ -1605,12 +1657,12 @@ var xGetRealTime func() int64
 
 // Queries the system wall-clock time.
 //
-// This call is functionally equivalent to g_get_current_time() except
+// This call is functionally equivalent to [func@GLib.get_current_time] except
 // that the return value is often more convenient than dealing with a
 // #GTimeVal.
 //
 // You should only use this call if you are actually interested in the real
-// wall-clock time.  g_get_monotonic_time() is probably more useful for
+// wall-clock time. [func@GLib.get_monotonic_time] is probably more useful for
 // measuring intervals.
 func GetRealTime() int64 {
 
@@ -1622,18 +1674,18 @@ var xIdleAdd func(uintptr, uintptr) uint
 
 // Adds a function to be called whenever there are no higher priority
 // events pending to the default main loop. The function is given the
-// default idle priority, %G_PRIORITY_DEFAULT_IDLE.  If the function
+// default idle priority, [const@GLib.PRIORITY_DEFAULT_IDLE].  If the function
 // returns %FALSE it is automatically removed from the list of event
 // sources and will not be called again.
 //
-// See [memory management of sources][mainloop-memory-management] for details
+// See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
 // on how to handle the return value and memory management of @data.
 //
-// This internally creates a main loop source using g_idle_source_new()
-// and attaches it to the global #GMainContext using g_source_attach(), so
-// the callback will be invoked in whichever thread is running that main
-// context. You can do these steps manually if you need greater control or to
-// use a custom main context.
+// This internally creates a main loop source using [func@GLib.idle_source_new]
+// and attaches it to the global [struct@GLib.MainContext] using
+// [method@GLib.Source.attach], so the callback will be invoked in whichever
+// thread is running that main context. You can do these steps manually if you
+// need greater control or to use a custom main context.
 func IdleAdd(FunctionVar *SourceFunc, DataVar uintptr) uint {
 
 	cret := xIdleAdd(NewCallback(FunctionVar), DataVar)
@@ -1645,20 +1697,36 @@ var xIdleAddFull func(int, uintptr, uintptr, uintptr) uint
 // Adds a function to be called whenever there are no higher priority
 // events pending.
 //
-// If the function returns %G_SOURCE_REMOVE or %FALSE it is automatically
+// If the function returns [const@GLib.SOURCE_REMOVE] or %FALSE it is automatically
 // removed from the list of event sources and will not be called again.
 //
-// See [memory management of sources][mainloop-memory-management] for details
+// See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
 // on how to handle the return value and memory management of @data.
 //
-// This internally creates a main loop source using g_idle_source_new()
-// and attaches it to the global #GMainContext using g_source_attach(), so
-// the callback will be invoked in whichever thread is running that main
-// context. You can do these steps manually if you need greater control or to
-// use a custom main context.
+// This internally creates a main loop source using [func@GLib.idle_source_new]
+// and attaches it to the global [struct@GLib.MainContext] using
+// [method@GLib.Source.attach], so the callback will be invoked in whichever
+// thread is running that main context. You can do these steps manually if you
+// need greater control or to use a custom main context.
 func IdleAddFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
 	cret := xIdleAddFull(PriorityVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	return cret
+}
+
+var xIdleAddOnce func(uintptr, uintptr) uint
+
+// Adds a function to be called whenever there are no higher priority
+// events pending to the default main loop. The function is given the
+// default idle priority, [const@GLib.PRIORITY_DEFAULT_IDLE].
+//
+// The function will only be called once and then the source will be
+// automatically removed from the main context.
+//
+// This function otherwise behaves like [func@GLib.idle_add].
+func IdleAddOnce(FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
+
+	cret := xIdleAddOnce(NewCallback(FunctionVar), DataVar)
 	return cret
 }
 
@@ -1675,11 +1743,12 @@ var xIdleSourceNew func() *Source
 
 // Creates a new idle source.
 //
-// The source will not initially be associated with any #GMainContext
-// and must be added to one with g_source_attach() before it will be
-// executed. Note that the default priority for idle sources is
-// %G_PRIORITY_DEFAULT_IDLE, as compared to other sources which
-// have a default priority of %G_PRIORITY_DEFAULT.
+// The source will not initially be associated with any
+// [struct@GLib.MainContext] and must be added to one with
+// [method@GLib.Source.attach] before it will be executed. Note that the
+// default priority for idle sources is [const@GLib.PRIORITY_DEFAULT_IDLE], as
+// compared to other sources which have a default priority of
+// [const@GLib.PRIORITY_DEFAULT].
 func IdleSourceNew() *Source {
 
 	cret := xIdleSourceNew()
@@ -1688,10 +1757,10 @@ func IdleSourceNew() *Source {
 
 var xMainContextDefault func() *MainContext
 
-// Returns the global default main context. This is the main context
+// Returns the global-default main context. This is the main context
 // used for main loop functions when a main loop is not explicitly
 // specified, and corresponds to the "main" main loop. See also
-// g_main_context_get_thread_default().
+// [func@GLib.MainContext.get_thread_default].
 func MainContextDefault() *MainContext {
 
 	cret := xMainContextDefault()
@@ -1703,14 +1772,14 @@ var xMainContextGetThreadDefault func() *MainContext
 // Gets the thread-default #GMainContext for this thread. Asynchronous
 // operations that want to be able to be run in contexts other than
 // the default one should call this method or
-// g_main_context_ref_thread_default() to get a #GMainContext to add
-// their #GSources to. (Note that even in single-threaded
-// programs applications may sometimes want to temporarily push a
-// non-default context, so it is not safe to assume that this will
-// always return %NULL if you are running in the default thread.)
+// [func@GLib.MainContext.ref_thread_default] to get a
+// [struct@GLib.MainContext] to add their [struct@GLib.Source]s to. (Note that
+// even in single-threaded programs applications may sometimes want to
+// temporarily push a non-default context, so it is not safe to assume that
+// this will always return %NULL if you are running in the default thread.)
 //
 // If you need to hold a reference on the context, use
-// g_main_context_ref_thread_default() instead.
+// [func@GLib.MainContext.ref_thread_default] instead.
 func MainContextGetThreadDefault() *MainContext {
 
 	cret := xMainContextGetThreadDefault()
@@ -1719,12 +1788,13 @@ func MainContextGetThreadDefault() *MainContext {
 
 var xMainContextRefThreadDefault func() *MainContext
 
-// Gets the thread-default #GMainContext for this thread, as with
-// g_main_context_get_thread_default(), but also adds a reference to
-// it with g_main_context_ref(). In addition, unlike
-// g_main_context_get_thread_default(), if the thread-default context
-// is the global default context, this will return that #GMainContext
-// (with a ref added to it) rather than returning %NULL.
+// Gets the thread-default [struct@GLib.MainContext] for this thread, as with
+// [func@GLib.MainContext.get_thread_default], but also adds a reference to
+// it with [method@GLib.MainContext.ref]. In addition, unlike
+// [func@GLib.MainContext.get_thread_default], if the thread-default context
+// is the global-default context, this will return that
+// [struct@GLib.MainContext] (with a ref added to it) rather than returning
+// %NULL.
 func MainContextRefThreadDefault() *MainContext {
 
 	cret := xMainContextRefThreadDefault()
@@ -1743,13 +1813,11 @@ func MainCurrentSource() *Source {
 var xMainDepth func() int
 
 // Returns the depth of the stack of calls to
-// g_main_context_dispatch() on any #GMainContext in the current thread.
-//
-//	That is, when called from the toplevel, it gives 0. When
-//
-// called from within a callback from g_main_context_iteration()
-// (or g_main_loop_run(), etc.) it returns 1. When called from within
-// a callback to a recursive call to g_main_context_iteration(),
+// [method@GLib.MainContext.dispatch] on any #GMainContext in the current thread.
+// That is, when called from the toplevel, it gives 0. When
+// called from within a callback from [method@GLib.MainContext.iteration]
+// (or [method@GLib.MainLoop.run], etc.) it returns 1. When called from within
+// a callback to a recursive call to [method@GLib.MainContext.iteration],
 // it returns 2. And so forth.
 //
 // This function is useful in a situation like the following:
@@ -1794,7 +1862,7 @@ var xMainDepth func() int
 // control the main loop. You might think you can simply use an idle
 // function to make the call to free_allocated_memory(), but that
 // doesn't work, since the idle function could be called from a
-// recursive callback. This can be fixed by using g_main_depth()
+// recursive callback. This can be fixed by using [func@GLib.main_depth]
 //
 // |[&lt;!-- language="C" --&gt;
 // gpointer
@@ -1832,12 +1900,12 @@ var xMainDepth func() int
 //
 // ]|
 //
-// There is a temptation to use g_main_depth() to solve
+// There is a temptation to use [func@GLib.main_depth] to solve
 // problems with reentrancy. For instance, while waiting for data
 // to be received from the network in response to a menu item,
 // the menu item might be selected again. It might seem that
 // one could make the menu item's callback return immediately
-// and do nothing if g_main_depth() returns a value greater than 1.
+// and do nothing if [func@GLib.main_depth] returns a value greater than 1.
 // However, this should be avoided since the user then sees selecting
 // the menu item do nothing. Furthermore, you'll find yourself adding
 // these checks all over your code, since there are doubtless many,
@@ -1861,20 +1929,21 @@ func MainDepth() int {
 var xSourceRemove func(uint) bool
 
 // Removes the source with the given ID from the default main context. You must
-// use g_source_destroy() for sources added to a non-default main context.
+// use [method@GLib.Source.destroy] for sources added to a non-default main context.
 //
-// The ID of a #GSource is given by g_source_get_id(), or will be
-// returned by the functions g_source_attach(), g_idle_add(),
-// g_idle_add_full(), g_timeout_add(), g_timeout_add_full(),
-// g_child_watch_add(), g_child_watch_add_full(), g_io_add_watch(), and
-// g_io_add_watch_full().
+// The ID of a #GSource is given by [method@GLib.Source.get_id], or will be
+// returned by the functions [method@GLib.Source.attach], [func@GLib.idle_add],
+// [func@GLib.idle_add_full], [func@GLib.timeout_add],
+// [func@GLib.timeout_add_full], [func@GLib.child_watch_add],
+// [func@GLib.child_watch_add_full], [func@GLib.io_add_watch], and
+// [func@GLib.io_add_watch_full].
 //
 // It is a programmer error to attempt to remove a non-existent source.
 //
 // More specifically: source IDs can be reissued after a source has been
 // destroyed and therefore it is never valid to use this function with a
 // source ID which may have already been removed.  An example is when
-// scheduling an idle to run in another thread with g_idle_add(): the
+// scheduling an idle to run in another thread with [func@GLib.idle_add]: the
 // idle may already have run and been removed by the time this function
 // is called on its (now invalid) source ID.  This source ID may have
 // been reissued, leading to the operation being performed against the
@@ -1912,7 +1981,7 @@ var xSourceSetNameById func(uint, string)
 // Sets the name of a source using its ID.
 //
 // This is a convenience utility to set source names from the return
-// value of g_idle_add(), g_timeout_add(), etc.
+// value of [func@GLib.idle_add], [func@GLib.timeout_add], etc.
 //
 // It is a programmer error to attempt to set the name of a non-existent
 // source.
@@ -1920,7 +1989,7 @@ var xSourceSetNameById func(uint, string)
 // More specifically: source IDs can be reissued after a source has been
 // destroyed and therefore it is never valid to use this function with a
 // source ID which may have already been removed.  An example is when
-// scheduling an idle to run in another thread with g_idle_add(): the
+// scheduling an idle to run in another thread with [func@GLib.idle_add]: the
 // idle may already have run and been removed by the time this function
 // is called on its (now invalid) source ID.  This source ID may have
 // been reissued, leading to the operation being performed against the
@@ -1934,12 +2003,12 @@ func SourceSetNameById(TagVar uint, NameVar string) {
 var xTimeoutAdd func(uint, uintptr, uintptr) uint
 
 // Sets a function to be called at regular intervals, with the default
-// priority, %G_PRIORITY_DEFAULT.
+// priority, [const@GLib.PRIORITY_DEFAULT].
 //
-// The given @function is called repeatedly until it returns %G_SOURCE_REMOVE
-// or %FALSE, at which point the timeout is automatically destroyed and the
-// function will not be called again. The first call to the function will be
-// at the end of the first @interval.
+// The given @function is called repeatedly until it returns
+// [const@GLib.SOURCE_REMOVE] or %FALSE, at which point the timeout is
+// automatically destroyed and the function will not be called again. The first
+// call to the function will be at the end of the first @interval.
 //
 // Note that timeout functions may be delayed, due to the processing of other
 // event sources. Thus they should not be relied on for precise timing.
@@ -1947,24 +2016,25 @@ var xTimeoutAdd func(uint, uintptr, uintptr) uint
 // timeout is recalculated based on the current time and the given interval
 // (it does not try to 'catch up' time lost in delays).
 //
-// See [memory management of sources][mainloop-memory-management] for details
+// See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
 // on how to handle the return value and memory management of @data.
 //
 // If you want to have a timer in the "seconds" range and do not care
 // about the exact time of the first call of the timer, use the
-// g_timeout_add_seconds() function; this function allows for more
+// [func@GLib.timeout_add_seconds] function; this function allows for more
 // optimizations and more efficient system power usage.
 //
-// This internally creates a main loop source using g_timeout_source_new()
-// and attaches it to the global #GMainContext using g_source_attach(), so
-// the callback will be invoked in whichever thread is running that main
-// context. You can do these steps manually if you need greater control or to
-// use a custom main context.
+// This internally creates a main loop source using
+// [func@GLib.timeout_source_new] and attaches it to the global
+// [struct@GLib.MainContext] using [method@GLib.Source.attach], so the callback
+// will be invoked in whichever thread is running that main context. You can do
+// these steps manually if you need greater control or to use a custom main
+// context.
 //
 // It is safe to call this function from any thread.
 //
 // The interval given is in terms of monotonic time, not wall clock
-// time.  See g_get_monotonic_time().
+// time. See [func@GLib.get_monotonic_time].
 func TimeoutAdd(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint {
 
 	cret := xTimeoutAdd(IntervalVar, NewCallback(FunctionVar), DataVar)
@@ -1986,48 +2056,64 @@ var xTimeoutAddFull func(int, uint, uintptr, uintptr, uintptr) uint
 // timeout is recalculated based on the current time and the given interval
 // (it does not try to 'catch up' time lost in delays).
 //
-// See [memory management of sources][mainloop-memory-management] for details
+// See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
 // on how to handle the return value and memory management of @data.
 //
-// This internally creates a main loop source using g_timeout_source_new()
-// and attaches it to the global #GMainContext using g_source_attach(), so
-// the callback will be invoked in whichever thread is running that main
-// context. You can do these steps manually if you need greater control or to
-// use a custom main context.
+// This internally creates a main loop source using
+// [func@GLib.timeout_source_new] and attaches it to the global
+// [struct@GLib.MainContext] using [method@GLib.Source.attach], so the callback
+// will be invoked in whichever thread is running that main context. You can do
+// these steps manually if you need greater control or to use a custom main
+// context.
 //
 // The interval given is in terms of monotonic time, not wall clock time.
-// See g_get_monotonic_time().
+// See [func@GLib.get_monotonic_time].
 func TimeoutAddFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
 	cret := xTimeoutAddFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
 	return cret
 }
 
+var xTimeoutAddOnce func(uint, uintptr, uintptr) uint
+
+// Sets a function to be called after @interval milliseconds have elapsed,
+// with the default priority, [const@GLib.PRIORITY_DEFAULT].
+//
+// The given @function is called once and then the source will be automatically
+// removed from the main context.
+//
+// This function otherwise behaves like [func@GLib.timeout_add].
+func TimeoutAddOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
+
+	cret := xTimeoutAddOnce(IntervalVar, NewCallback(FunctionVar), DataVar)
+	return cret
+}
+
 var xTimeoutAddSeconds func(uint, uintptr, uintptr) uint
 
 // Sets a function to be called at regular intervals with the default
-// priority, %G_PRIORITY_DEFAULT.
+// priority, [const@GLib.PRIORITY_DEFAULT].
 //
-// The function is called repeatedly until it returns %G_SOURCE_REMOVE
+// The function is called repeatedly until it returns [const@GLib.SOURCE_REMOVE]
 // or %FALSE, at which point the timeout is automatically destroyed
 // and the function will not be called again.
 //
 // This internally creates a main loop source using
-// g_timeout_source_new_seconds() and attaches it to the main loop context
-// using g_source_attach(). You can do these steps manually if you need
-// greater control. Also see g_timeout_add_seconds_full().
+// [func@GLib.timeout_source_new_seconds] and attaches it to the main loop context
+// using [method@GLib.Source.attach]. You can do these steps manually if you need
+// greater control. Also see [func@GLib.timeout_add_seconds_full].
 //
 // It is safe to call this function from any thread.
 //
 // Note that the first call of the timer may not be precise for timeouts
 // of one second. If you need finer precision and have such a timeout,
-// you may want to use g_timeout_add() instead.
+// you may want to use [func@GLib.timeout_add] instead.
 //
-// See [memory management of sources][mainloop-memory-management] for details
+// See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
 // on how to handle the return value and memory management of @data.
 //
 // The interval given is in terms of monotonic time, not wall clock
-// time.  See g_get_monotonic_time().
+// time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSeconds(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint {
 
 	cret := xTimeoutAddSeconds(IntervalVar, NewCallback(FunctionVar), DataVar)
@@ -2038,46 +2124,57 @@ var xTimeoutAddSecondsFull func(int, uint, uintptr, uintptr, uintptr) uint
 
 // Sets a function to be called at regular intervals, with @priority.
 //
-// The function is called repeatedly until it returns %G_SOURCE_REMOVE
+// The function is called repeatedly until it returns [const@GLib.SOURCE_REMOVE]
 // or %FALSE, at which point the timeout is automatically destroyed and
 // the function will not be called again.
 //
-// Unlike g_timeout_add(), this function operates at whole second granularity.
-// The initial starting point of the timer is determined by the implementation
-// and the implementation is expected to group multiple timers together so that
-// they fire all at the same time. To allow this grouping, the @interval to the
-// first timer is rounded and can deviate up to one second from the specified
-// interval. Subsequent timer iterations will generally run at the specified
-// interval.
+// Unlike [func@GLib.timeout_add], this function operates at whole second
+// granularity. The initial starting point of the timer is determined by the
+// implementation and the implementation is expected to group multiple timers
+// together so that they fire all at the same time. To allow this grouping, the
+// @interval to the first timer is rounded and can deviate up to one second
+// from the specified interval. Subsequent timer iterations will generally run
+// at the specified interval.
 //
 // Note that timeout functions may be delayed, due to the processing of other
 // event sources. Thus they should not be relied on for precise timing.
 // After each call to the timeout function, the time of the next
 // timeout is recalculated based on the current time and the given @interval
 //
-// See [memory management of sources][mainloop-memory-management] for details
+// See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
 // on how to handle the return value and memory management of @data.
 //
-// If you want timing more precise than whole seconds, use g_timeout_add()
-// instead.
+// If you want timing more precise than whole seconds, use
+// [func@GLib.timeout_add] instead.
 //
 // The grouping of timers to fire at the same time results in a more power
 // and CPU efficient behavior so if your timer is in multiples of seconds
 // and you don't require the first timer exactly one second from now, the
-// use of g_timeout_add_seconds() is preferred over g_timeout_add().
+// use of [func@GLib.timeout_add_seconds] is preferred over
+// [func@GLib.timeout_add].
 //
 // This internally creates a main loop source using
-// g_timeout_source_new_seconds() and attaches it to the main loop context
-// using g_source_attach(). You can do these steps manually if you need
-// greater control.
+// [func@GLib.timeout_source_new_seconds] and attaches it to the main loop
+// context using [method@GLib.Source.attach]. You can do these steps manually
+// if you need greater control.
 //
 // It is safe to call this function from any thread.
 //
 // The interval given is in terms of monotonic time, not wall clock
-// time.  See g_get_monotonic_time().
+// time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSecondsFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
 	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	return cret
+}
+
+var xTimeoutAddSecondsOnce func(uint, uintptr, uintptr) uint
+
+// This function behaves like [func@GLib.timeout_add_once] but with a range in
+// seconds.
+func TimeoutAddSecondsOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
+
+	cret := xTimeoutAddSecondsOnce(IntervalVar, NewCallback(FunctionVar), DataVar)
 	return cret
 }
 
@@ -2085,12 +2182,12 @@ var xTimeoutSourceNew func(uint) *Source
 
 // Creates a new timeout source.
 //
-// The source will not initially be associated with any #GMainContext
-// and must be added to one with g_source_attach() before it will be
+// The source will not initially be associated with any [struct@GLib.MainContext]
+// and must be added to one with [method@GLib.Source.attach] before it will be
 // executed.
 //
 // The interval given is in terms of monotonic time, not wall clock
-// time.  See g_get_monotonic_time().
+// time.  See [func@GLib.get_monotonic_time].
 func TimeoutSourceNew(IntervalVar uint) *Source {
 
 	cret := xTimeoutSourceNew(IntervalVar)
@@ -2101,15 +2198,15 @@ var xTimeoutSourceNewSeconds func(uint) *Source
 
 // Creates a new timeout source.
 //
-// The source will not initially be associated with any #GMainContext
-// and must be added to one with g_source_attach() before it will be
-// executed.
+// The source will not initially be associated with any
+// [struct@GLib.MainContext] and must be added to one with
+// [method@GLib.Source.attach] before it will be executed.
 //
 // The scheduling granularity/accuracy of this timeout source will be
 // in seconds.
 //
 // The interval given is in terms of monotonic time, not wall clock time.
-// See g_get_monotonic_time().
+// See [func@GLib.get_monotonic_time].
 func TimeoutSourceNewSeconds(IntervalVar uint) *Source {
 
 	cret := xTimeoutSourceNewSeconds(IntervalVar)
@@ -2118,7 +2215,7 @@ func TimeoutSourceNewSeconds(IntervalVar uint) *Source {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -2133,6 +2230,7 @@ func init() {
 	core.PuregoSafeRegister(&xGetRealTime, lib, "g_get_real_time")
 	core.PuregoSafeRegister(&xIdleAdd, lib, "g_idle_add")
 	core.PuregoSafeRegister(&xIdleAddFull, lib, "g_idle_add_full")
+	core.PuregoSafeRegister(&xIdleAddOnce, lib, "g_idle_add_once")
 	core.PuregoSafeRegister(&xIdleRemoveByData, lib, "g_idle_remove_by_data")
 	core.PuregoSafeRegister(&xIdleSourceNew, lib, "g_idle_source_new")
 	core.PuregoSafeRegister(&xMainContextDefault, lib, "g_main_context_default")
@@ -2146,8 +2244,10 @@ func init() {
 	core.PuregoSafeRegister(&xSourceSetNameById, lib, "g_source_set_name_by_id")
 	core.PuregoSafeRegister(&xTimeoutAdd, lib, "g_timeout_add")
 	core.PuregoSafeRegister(&xTimeoutAddFull, lib, "g_timeout_add_full")
+	core.PuregoSafeRegister(&xTimeoutAddOnce, lib, "g_timeout_add_once")
 	core.PuregoSafeRegister(&xTimeoutAddSeconds, lib, "g_timeout_add_seconds")
 	core.PuregoSafeRegister(&xTimeoutAddSecondsFull, lib, "g_timeout_add_seconds_full")
+	core.PuregoSafeRegister(&xTimeoutAddSecondsOnce, lib, "g_timeout_add_seconds_once")
 	core.PuregoSafeRegister(&xTimeoutSourceNew, lib, "g_timeout_source_new")
 	core.PuregoSafeRegister(&xTimeoutSourceNewSeconds, lib, "g_timeout_source_new_seconds")
 
@@ -2172,6 +2272,7 @@ func init() {
 	core.PuregoSafeRegister(&xMainContextPopThreadDefault, lib, "g_main_context_pop_thread_default")
 	core.PuregoSafeRegister(&xMainContextPrepare, lib, "g_main_context_prepare")
 	core.PuregoSafeRegister(&xMainContextPushThreadDefault, lib, "g_main_context_push_thread_default")
+	core.PuregoSafeRegister(&xMainContextPusherNew, lib, "g_main_context_pusher_new")
 	core.PuregoSafeRegister(&xMainContextQuery, lib, "g_main_context_query")
 	core.PuregoSafeRegister(&xMainContextRef, lib, "g_main_context_ref")
 	core.PuregoSafeRegister(&xMainContextRelease, lib, "g_main_context_release")

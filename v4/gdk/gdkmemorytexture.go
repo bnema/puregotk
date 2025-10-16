@@ -218,6 +218,13 @@ func (x *MemoryTexture) Equal(Icon2Var gio.Icon) bool {
 	return cret
 }
 
+// Gets a hash for an icon.
+func (x *MemoryTexture) Hash() uint {
+
+	cret := gio.XGIconHash(x.GoPointer())
+	return cret
+}
+
 // Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
 // back by calling g_icon_deserialize() on the returned value.
 // As serialization will avoid using raw icon data when possible, it only

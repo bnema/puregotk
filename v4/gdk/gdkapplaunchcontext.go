@@ -9,7 +9,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// `GdkAppLaunchContext` handles launching an application in a graphical context.
+// Handles launching an application in a graphical context.
 //
 // It is an implementation of `GAppLaunchContext` that provides startup
 // notification and allows to launch applications on a specific workspace.

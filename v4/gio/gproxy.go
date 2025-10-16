@@ -31,6 +31,9 @@ func (x *ProxyInterface) GoPointer() uintptr {
 }
 
 // OverrideConnect sets the callback function.
+// Connect to proxy server and wrap (if required) the #connection
+//
+//	to handle payload.
 func (x *ProxyInterface) OverrideConnect(cb func(Proxy, *IOStream, *ProxyAddress, *Cancellable) *IOStream) {
 	if cb == nil {
 		x.xConnect = 0
@@ -46,6 +49,9 @@ func (x *ProxyInterface) OverrideConnect(cb func(Proxy, *IOStream, *ProxyAddress
 }
 
 // GetConnect gets the callback function.
+// Connect to proxy server and wrap (if required) the #connection
+//
+//	to handle payload.
 func (x *ProxyInterface) GetConnect() func(Proxy, *IOStream, *ProxyAddress, *Cancellable) *IOStream {
 	if x.xConnect == 0 {
 		return nil
@@ -64,6 +70,7 @@ func (x *ProxyInterface) GetConnect() func(Proxy, *IOStream, *ProxyAddress, *Can
 }
 
 // OverrideConnectAsync sets the callback function.
+// Same as connect() but asynchronous.
 func (x *ProxyInterface) OverrideConnectAsync(cb func(Proxy, *IOStream, *ProxyAddress, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xConnectAsync = 0
@@ -75,6 +82,7 @@ func (x *ProxyInterface) OverrideConnectAsync(cb func(Proxy, *IOStream, *ProxyAd
 }
 
 // GetConnectAsync gets the callback function.
+// Same as connect() but asynchronous.
 func (x *ProxyInterface) GetConnectAsync() func(Proxy, *IOStream, *ProxyAddress, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xConnectAsync == 0 {
 		return nil
@@ -87,6 +95,7 @@ func (x *ProxyInterface) GetConnectAsync() func(Proxy, *IOStream, *ProxyAddress,
 }
 
 // OverrideConnectFinish sets the callback function.
+// Returns the result of connect_async()
 func (x *ProxyInterface) OverrideConnectFinish(cb func(Proxy, AsyncResult) *IOStream) {
 	if cb == nil {
 		x.xConnectFinish = 0
@@ -102,6 +111,7 @@ func (x *ProxyInterface) OverrideConnectFinish(cb func(Proxy, AsyncResult) *IOSt
 }
 
 // GetConnectFinish gets the callback function.
+// Returns the result of connect_async()
 func (x *ProxyInterface) GetConnectFinish() func(Proxy, AsyncResult) *IOStream {
 	if x.xConnectFinish == 0 {
 		return nil
@@ -120,6 +130,7 @@ func (x *ProxyInterface) GetConnectFinish() func(Proxy, AsyncResult) *IOStream {
 }
 
 // OverrideSupportsHostname sets the callback function.
+// Returns whether the proxy supports hostname lookups.
 func (x *ProxyInterface) OverrideSupportsHostname(cb func(Proxy) bool) {
 	if cb == nil {
 		x.xSupportsHostname = 0
@@ -131,6 +142,7 @@ func (x *ProxyInterface) OverrideSupportsHostname(cb func(Proxy) bool) {
 }
 
 // GetSupportsHostname gets the callback function.
+// Returns whether the proxy supports hostname lookups.
 func (x *ProxyInterface) GetSupportsHostname() func(Proxy) bool {
 	if x.xSupportsHostname == 0 {
 		return nil
@@ -142,12 +154,12 @@ func (x *ProxyInterface) GetSupportsHostname() func(Proxy) bool {
 	}
 }
 
-// A #GProxy handles connecting to a remote host via a given type of
-// proxy server. It is implemented by the 'gio-proxy' extension point.
+// A `GProxy` handles connecting to a remote host via a given type of
+// proxy server. It is implemented by the `gio-proxy` extension point.
 // The extensions are named after their proxy protocol name. As an
 // example, a SOCKS5 proxy implementation can be retrieved with the
-// name 'socks5' using the function
-// g_io_extension_point_get_extension_by_name().
+// name `socks5` using the function
+// [method@Gio.IOExtensionPoint.get_extension_by_name].
 type Proxy interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
@@ -246,7 +258,7 @@ var XGProxySupportsHostname func(uintptr) bool
 
 const (
 	// Extension point for proxy functionality.
-	// See [Extending GIO][extending-gio].
+	// See [Extending GIO](overview.html#extending-gio).
 	PROXY_EXTENSION_POINT_NAME string = "gio-proxy"
 )
 

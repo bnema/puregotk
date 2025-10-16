@@ -23,8 +23,7 @@ func (x *RendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GskRenderer` is a class that renders a scene graph defined via a
-// tree of [class@Gsk.RenderNode] instances.
+// Renders a scene graph defined via a tree of [class@Gsk.RenderNode] instances.
 //
 // Typically you will use a `GskRenderer` instance to repeatedly call
 // [method@Gsk.Renderer.render] to update the contents of its associated
@@ -52,7 +51,7 @@ func RendererNewFromInternalPtr(ptr uintptr) *Renderer {
 
 var xNewRendererForSurface func(uintptr) uintptr
 
-// Creates an appropriate `GskRenderer` instance for the given @surface.
+// Creates an appropriate `GskRenderer` instance for the given surface.
 //
 // If the `GSK_RENDERER` environment variable is set, GSK will
 // try that renderer first, before trying the backend-specific
@@ -74,9 +73,9 @@ func NewRendererForSurface(SurfaceVar *gdk.Surface) *Renderer {
 
 var xRendererGetSurface func(uintptr) uintptr
 
-// Retrieves the `GdkSurface` set using gsk_enderer_realize().
+// Retrieves the surface that the renderer is associated with.
 //
-// If the renderer has not been realized yet, %NULL will be returned.
+// If the renderer has not been realized yet, `NULL` will be returned.
 func (x *Renderer) GetSurface() *gdk.Surface {
 	var cls *gdk.Surface
 
@@ -93,7 +92,7 @@ func (x *Renderer) GetSurface() *gdk.Surface {
 
 var xRendererIsRealized func(uintptr) bool
 
-// Checks whether the @renderer is realized or not.
+// Checks whether the renderer is realized or not.
 func (x *Renderer) IsRealized() bool {
 
 	cret := xRendererIsRealized(x.GoPointer())
@@ -102,14 +101,15 @@ func (x *Renderer) IsRealized() bool {
 
 var xRendererRealize func(uintptr, uintptr, **glib.Error) bool
 
-// Creates the resources needed by the @renderer to render the scene
-// graph.
+// Creates the resources needed by the renderer.
 //
 // Since GTK 4.6, the surface may be `NULL`, which allows using
-// renderers without having to create a surface.
+// renderers without having to create a surface. Since GTK 4.14,
+// it is recommended to use [method@Gsk.Renderer.realize_for_display]
+// for this case.
 //
-// Note that it is mandatory to call [method@Gsk.Renderer.unrealize] before
-// destroying the renderer.
+// Note that it is mandatory to call [method@Gsk.Renderer.unrealize]
+// before destroying the renderer.
 func (x *Renderer) Realize(SurfaceVar *gdk.Surface) (bool, error) {
 	var cerr *glib.Error
 
@@ -121,10 +121,27 @@ func (x *Renderer) Realize(SurfaceVar *gdk.Surface) (bool, error) {
 
 }
 
+var xRendererRealizeForDisplay func(uintptr, uintptr, **glib.Error) bool
+
+// Creates the resources needed by the renderer.
+//
+// Note that it is mandatory to call [method@Gsk.Renderer.unrealize]
+// before destroying the renderer.
+func (x *Renderer) RealizeForDisplay(DisplayVar *gdk.Display) (bool, error) {
+	var cerr *glib.Error
+
+	cret := xRendererRealizeForDisplay(x.GoPointer(), DisplayVar.GoPointer(), &cerr)
+	if cerr == nil {
+		return cret, nil
+	}
+	return cret, cerr
+
+}
+
 var xRendererRender func(uintptr, uintptr, *cairo.Region)
 
 // Renders the scene graph, described by a tree of `GskRenderNode` instances
-// to the renderer's surface,  ensuring that the given @region gets redrawn.
+// to the renderer's surface, ensuring that the given region gets redrawn.
 //
 // If the renderer has no associated surface, this function does nothing.
 //
@@ -133,7 +150,7 @@ var xRendererRender func(uintptr, uintptr, *cairo.Region)
 // free to not redraw any pixel outside of @region if they can guarantee that
 // it didn't change.
 //
-// The @renderer will acquire a reference on the `GskRenderNode` tree while
+// The renderer will acquire a reference on the `GskRenderNode` tree while
 // the rendering is in progress.
 func (x *Renderer) Render(RootVar *RenderNode, RegionVar *cairo.Region) {
 
@@ -143,10 +160,10 @@ func (x *Renderer) Render(RootVar *RenderNode, RegionVar *cairo.Region) {
 
 var xRendererRenderTexture func(uintptr, uintptr, *graphene.Rect) uintptr
 
-// Renders the scene graph, described by a tree of `GskRenderNode` instances,
-// to a `GdkTexture`.
+// Renders a scene graph, described by a tree of `GskRenderNode` instances,
+// to a texture.
 //
-// The @renderer will acquire a reference on the `GskRenderNode` tree while
+// The renderer will acquire a reference on the `GskRenderNode` tree while
 // the rendering is in progress.
 //
 // If you want to apply any transformations to @root, you should put it into a
@@ -166,7 +183,7 @@ func (x *Renderer) RenderTexture(RootVar *RenderNode, ViewportVar *graphene.Rect
 
 var xRendererUnrealize func(uintptr)
 
-// Releases all the resources created by gsk_renderer_realize().
+// Releases all the resources created by [method@Gsk.Renderer.realize].
 func (x *Renderer) Unrealize() {
 
 	xRendererUnrealize(x.GoPointer())
@@ -199,6 +216,7 @@ func init() {
 	core.PuregoSafeRegister(&xRendererGetSurface, lib, "gsk_renderer_get_surface")
 	core.PuregoSafeRegister(&xRendererIsRealized, lib, "gsk_renderer_is_realized")
 	core.PuregoSafeRegister(&xRendererRealize, lib, "gsk_renderer_realize")
+	core.PuregoSafeRegister(&xRendererRealizeForDisplay, lib, "gsk_renderer_realize_for_display")
 	core.PuregoSafeRegister(&xRendererRender, lib, "gsk_renderer_render")
 	core.PuregoSafeRegister(&xRendererRenderTexture, lib, "gsk_renderer_render_texture")
 	core.PuregoSafeRegister(&xRendererUnrealize, lib, "gsk_renderer_unrealize")

@@ -22,7 +22,7 @@ type DuplicateFunc func(uintptr, uintptr) uintptr
 
 // An opaque data structure that represents a keyed data list.
 //
-// See also: [Keyed data lists][glib-Keyed-Data-Lists].
+// See also: [Keyed data lists](datalist-and-dataset.html).
 type Data struct {
 	_ structs.HostLayout
 }
@@ -115,6 +115,21 @@ func DatalistIdGetData(DatalistVar **Data, KeyIdVar Quark) uintptr {
 
 	cret := xDatalistIdGetData(DatalistVar, KeyIdVar)
 	return cret
+}
+
+var xDatalistIdRemoveMultiple func(**Data, []Quark, uint)
+
+// Removes multiple keys from a datalist.
+//
+// This is more efficient than calling g_datalist_id_remove_data()
+// multiple times in a row.
+//
+// Before 2.80, @n_keys had to be not larger than 16.
+// Since 2.84, performance is improved for larger number of keys.
+func DatalistIdRemoveMultiple(DatalistVar **Data, KeysVar []Quark, NKeysVar uint) {
+
+	xDatalistIdRemoveMultiple(DatalistVar, KeysVar, NKeysVar)
+
 }
 
 var xDatalistIdRemoveNoNotify func(**Data, Quark) uintptr
@@ -252,7 +267,7 @@ func DatasetIdSetDataFull(DatasetLocationVar uintptr, KeyIdVar Quark, DataVar ui
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -264,6 +279,7 @@ func init() {
 	core.PuregoSafeRegister(&xDatalistGetFlags, lib, "g_datalist_get_flags")
 	core.PuregoSafeRegister(&xDatalistIdDupData, lib, "g_datalist_id_dup_data")
 	core.PuregoSafeRegister(&xDatalistIdGetData, lib, "g_datalist_id_get_data")
+	core.PuregoSafeRegister(&xDatalistIdRemoveMultiple, lib, "g_datalist_id_remove_multiple")
 	core.PuregoSafeRegister(&xDatalistIdRemoveNoNotify, lib, "g_datalist_id_remove_no_notify")
 	core.PuregoSafeRegister(&xDatalistIdReplaceData, lib, "g_datalist_id_replace_data")
 	core.PuregoSafeRegister(&xDatalistIdSetDataFull, lib, "g_datalist_id_set_data_full")

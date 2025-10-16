@@ -9,25 +9,16 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The list of the different APIs that GdkGLContext can potentially support.
-type GLAPI int
+var xGlErrorQuark func() glib.Quark
 
-var xGLAPIGLibType func() types.GType
+// Registers an error quark for [class@Gdk.GLContext] errors.
+func GlErrorQuark() glib.Quark {
 
-func GLAPIGLibType() types.GType {
-	return xGLAPIGLibType()
+	cret := xGlErrorQuark()
+	return cret
 }
 
-const (
-
-	// The OpenGL API
-	GlApiGlValue GLAPI = 1
-	// The OpenGL ES API
-	GlApiGlesValue GLAPI = 2
-)
-
-// `GdkGLContext` is an object representing a platform-specific
-// OpenGL draw context.
+// Represents a platform-specific OpenGL draw context.
 //
 // `GdkGLContext`s are created for a surface using
 // [method@Gdk.Surface.create_gl_context], and the context will match
@@ -215,9 +206,6 @@ var xGLContextGetVersion func(uintptr, int, int)
 // Retrieves the OpenGL version of the @context.
 //
 // The @context must be realized prior to calling this function.
-//
-// If the @context has never been made current, the version cannot
-// be known and it will return 0 for both @major and @minor.
 func (x *GLContext) GetVersion(MajorVar int, MinorVar int) {
 
 	xGLContextGetVersion(x.GoPointer(), MajorVar, MinorVar)
@@ -426,7 +414,7 @@ func init() {
 		panic(err)
 	}
 
-	core.PuregoSafeRegister(&xGLAPIGLibType, lib, "gdk_gl_api_get_type")
+	core.PuregoSafeRegister(&xGlErrorQuark, lib, "gdk_gl_error_quark")
 
 	core.PuregoSafeRegister(&xGLContextGLibType, lib, "gdk_gl_context_get_type")
 

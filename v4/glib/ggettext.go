@@ -25,12 +25,12 @@ var xDgettext func(string, string) string
 // translations for the current locale.
 //
 // The advantage of using this function over dgettext() proper is that
-// libraries using this function (like GTK+) will not use translations
+// libraries using this function (like GTK) will not use translations
 // if the application using the library does not have translations for
 // the current locale.  This results in a consistent English-only
 // interface instead of one having partial translations.  For this
 // feature to work, the call to textdomain() and setlocale() should
-// precede any g_dgettext() invocations.  For GTK+, it means calling
+// precede any g_dgettext() invocations.  For GTK, it means calling
 // textdomain() before gtk_init or its variants.
 //
 // This function disables translations if and only if upon its first
@@ -48,7 +48,7 @@ var xDgettext func(string, string) string
 //
 // Note that this behavior may not be desired for example if an application
 // has its untranslated messages in a language other than English. In those
-// cases the application should call textdomain() after initializing GTK+.
+// cases the application should call textdomain() after initializing GTK.
 //
 // Applications should normally not use this function directly,
 // but use the _() macro for translations.
@@ -122,7 +122,7 @@ func StripContext(MsgidVar string, MsgvalVar string) string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

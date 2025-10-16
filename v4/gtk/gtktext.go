@@ -14,29 +14,72 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/pango"
 )
 
-// The `GtkText` widget is a single-line text entry widget.
+// A single-line text entry.
 //
 // `GtkText` is the common implementation of single-line text editing
-// that is shared between `GtkEntry`, `GtkPasswordEntry`, `GtkSpinButton`
-// and other widgets. In all of these, `GtkText` is used as the delegate
-// for the [iface@Gtk.Editable] implementation.
+// that is shared between [class@Gtk.Entry], [class@Gtk.PasswordEntry],
+// [class@Gtk.SpinButton], and other widgets. In all of these, a `GtkText`
+// instance is used as the delegate for the [iface@Gtk.Editable] implementation.
 //
-// A fairly large set of key bindings are supported by default. If the
-// entered text is longer than the allocation of the widget, the widget
-// will scroll so that the cursor position is visible.
+// A large number of key bindings s supported by default. If the entered
+// text is longer than the allocation of the widget, the widget will scroll
+// so that the cursor position is visible.
 //
 // When using an entry for passwords and other sensitive information,
 // it can be put into “password mode” using [method@Gtk.Text.set_visibility].
-// In this mode, entered text is displayed using a “invisible” character.
+// In this mode, entered text is displayed using an “invisible” character.
 // By default, GTK picks the best invisible character that is available
 // in the current font, but it can be changed with
 // [method@Gtk.Text.set_invisible_char].
 //
-// If you are looking to add icons or progress display in an entry, look
-// at `GtkEntry`. There other alternatives for more specialized use cases,
-// such as `GtkSearchEntry`.
+// If you want to add icons or progress display in an entry, look at
+// [class@Gtk.Entry]. There are other alternatives for more specialized
+// use cases, such as [class@Gtk.SearchEntry].
 //
-// If you need multi-line editable text, look at `GtkTextView`.
+// If you need multi-line editable text, use [class@Gtk.TextView].
+//
+// # Shortcuts and Gestures
+//
+// `GtkText` supports the following keyboard shortcuts:
+//
+//   - &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;F10&lt;/kbd&gt; or &lt;kbd&gt;Menu&lt;/kbd&gt; opens the context menu.
+//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;A&lt;/kbd&gt; or &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;&amp;sol;&lt;/kbd&gt;
+//     selects all the text.
+//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;A&lt;/kbd&gt; or
+//     &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;&amp;bsol;&lt;/kbd&gt; unselects all.
+//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Z&lt;/kbd&gt; undoes the last modification.
+//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Y&lt;/kbd&gt; or &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Z&lt;/kbd&gt;
+//     redoes the last undone modification.
+//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;T&lt;/kbd&gt; toggles the text direction.
+//
+// Additionally, the following signals have default keybindings:
+//
+// - [signal@Gtk.Text::activate]
+// - [signal@Gtk.Text::backspace]
+// - [signal@Gtk.Text::copy-clipboard]
+// - [signal@Gtk.Text::cut-clipboard]
+// - [signal@Gtk.Text::delete-from-cursor]
+// - [signal@Gtk.Text::insert-emoji]
+// - [signal@Gtk.Text::move-cursor]
+// - [signal@Gtk.Text::paste-clipboard]
+// - [signal@Gtk.Text::toggle-overwrite]
+//
+// # Actions
+//
+// `GtkText` defines a set of built-in actions:
+//
+//   - `clipboard.copy` copies the contents to the clipboard.
+//   - `clipboard.cut` copies the contents to the clipboard and deletes it from
+//     the widget.
+//   - `clipboard.paste` inserts the contents of the clipboard into the widget.
+//   - `menu.popup` opens the context menu.
+//   - `misc.insert-emoji` opens the Emoji chooser.
+//   - `misc.toggle-visibility` toggles the `GtkText`:visibility property.
+//   - `misc.toggle-direction` toggles the text direction.
+//   - `selection.delete` deletes the current selection.
+//   - `selection.select-all` selects all of the widgets content.
+//   - `text.redo` redoes the last change to the contents.
+//   - `text.undo` undoes the last change to the contents.
 //
 // # CSS nodes
 //
@@ -46,33 +89,36 @@ import (
 // ├── undershoot.left
 // ├── undershoot.right
 // ├── [selection]
+// ├── [cursor-handle[.top]
+// ├── [cursor-handle.bottom]
 // ├── [block-cursor]
+// ├── [cursor-handle[.top/.bottom][.insertion-cursor]]
 // ╰── [window.popup]
 // ```
 //
-// `GtkText` has a main node with the name text. Depending on the properties
-// of the widget, the .read-only style class may appear.
+// `GtkText` has a main node with the name `text`. Depending on the properties
+// of the widget, the `.read-only` style class may appear.
 //
-// When the entry has a selection, it adds a subnode with the name selection.
+// When the entry has a selection, it adds a subnode with the name `selection`.
 //
 // When the entry is in overwrite mode, it adds a subnode with the name
-// block-cursor that determines how the block cursor is drawn.
+// `block-cursor` that determines how the block cursor is drawn.
 //
-// The CSS node for a context menu is added as a subnode below text as well.
+// The CSS node for a context menu is added as a subnode with the name `popup`.
 //
-// The undershoot nodes are used to draw the underflow indication when content
-// is scrolled out of view. These nodes get the .left and .right style classes
+// The `undershoot` nodes are used to draw the underflow indication when content
+// is scrolled out of view. These nodes get the `.left` or `.right` style class
 // added depending on where the indication is drawn.
 //
 // When touch is used and touch selection handles are shown, they are using
-// CSS nodes with name cursor-handle. They get the .top or .bottom style class
-// depending on where they are shown in relation to the selection. If there is
-// just a single handle for the text cursor, it gets the style class
-// .insertion-cursor.
+// CSS nodes with name `cursor-handle`. They get the `.top` or `.bottom` style
+// class depending on where they are shown in relation to the selection. If
+// there is just a single handle for the text cursor, it gets the style class
+// `.insertion-cursor`.
 //
 // # Accessibility
 //
-// `GtkText` uses the %GTK_ACCESSIBLE_ROLE_NONE role, which causes it to be
+// `GtkText` uses the [enum@Gtk.AccessibleRole.none] role, which causes it to be
 // skipped for accessibility. This is because `GtkText` is expected to be used
 // as a delegate for a `GtkEditable` implementation that will be represented
 // to accessibility.
@@ -111,7 +157,7 @@ func NewText() *Text {
 
 var xNewTextWithBuffer func(uintptr) uintptr
 
-// Creates a new `GtkText` with the specified text buffer.
+// Creates a new `GtkText` with the specified buffer.
 func NewTextWithBuffer(BufferVar *EntryBuffer) *Text {
 	var cls *Text
 
@@ -128,8 +174,8 @@ func NewTextWithBuffer(BufferVar *EntryBuffer) *Text {
 
 var xTextComputeCursorExtents func(uintptr, uint, *graphene.Rect, *graphene.Rect)
 
-// Determine the positions of the strong and weak cursors if the
-// insertion point in the layout is at @position.
+// Determines the positions of the strong and weak cursors for a
+// given character position.
 //
 // The position of each cursor is stored as a zero-width rectangle.
 // The strong cursor location is the location where characters of
@@ -146,8 +192,8 @@ func (x *Text) ComputeCursorExtents(PositionVar uint, StrongVar *graphene.Rect, 
 
 var xTextGetActivatesDefault func(uintptr) bool
 
-// Returns whether pressing Enter will activate
-// the default widget for the window containing @self.
+// Returns whether pressing &lt;kbd&gt;Enter&lt;/kbd&gt; will activate
+// the default widget for the window containing the widget.
 //
 // See [method@Gtk.Text.set_activates_default].
 func (x *Text) GetActivatesDefault() bool {
@@ -158,7 +204,7 @@ func (x *Text) GetActivatesDefault() bool {
 
 var xTextGetAttributes func(uintptr) *pango.AttrList
 
-// Gets the attribute list that was set on the `GtkText`.
+// Gets the attribute list that was set on the text widget.
 //
 // See [method@Gtk.Text.set_attributes].
 func (x *Text) GetAttributes() *pango.AttrList {
@@ -169,7 +215,7 @@ func (x *Text) GetAttributes() *pango.AttrList {
 
 var xTextGetBuffer func(uintptr) uintptr
 
-// Get the `GtkEntryBuffer` object which holds the text for
+// Get the entry buffer object which holds the text for
 // this widget.
 func (x *Text) GetBuffer() *EntryBuffer {
 	var cls *EntryBuffer
@@ -187,8 +233,7 @@ func (x *Text) GetBuffer() *EntryBuffer {
 
 var xTextGetEnableEmojiCompletion func(uintptr) bool
 
-// Returns whether Emoji completion is enabled for this
-// `GtkText` widget.
+// Returns whether Emoji completion is enabled.
 func (x *Text) GetEnableEmojiCompletion() bool {
 
 	cret := xTextGetEnableEmojiCompletion(x.GoPointer())
@@ -197,7 +242,7 @@ func (x *Text) GetEnableEmojiCompletion() bool {
 
 var xTextGetExtraMenu func(uintptr) uintptr
 
-// Gets the menu model for extra items in the context menu.
+// Gets the extra menu model of the text widget.
 //
 // See [method@Gtk.Text.set_extra_menu].
 func (x *Text) GetExtraMenu() *gio.MenuModel {
@@ -216,7 +261,7 @@ func (x *Text) GetExtraMenu() *gio.MenuModel {
 
 var xTextGetInputHints func(uintptr) InputHints
 
-// Gets the input hints of the `GtkText`.
+// Gets the input hints of the text widget.
 func (x *Text) GetInputHints() InputHints {
 
 	cret := xTextGetInputHints(x.GoPointer())
@@ -225,7 +270,7 @@ func (x *Text) GetInputHints() InputHints {
 
 var xTextGetInputPurpose func(uintptr) InputPurpose
 
-// Gets the input purpose of the `GtkText`.
+// Gets the input purpose of the text widget.
 func (x *Text) GetInputPurpose() InputPurpose {
 
 	cret := xTextGetInputPurpose(x.GoPointer())
@@ -247,7 +292,7 @@ func (x *Text) GetInvisibleChar() uint32 {
 
 var xTextGetMaxLength func(uintptr) int
 
-// Retrieves the maximum allowed length of the text in @self.
+// Retrieves the maximum allowed length of the contents.
 //
 // See [method@Gtk.Text.set_max_length].
 //
@@ -261,7 +306,7 @@ func (x *Text) GetMaxLength() int {
 
 var xTextGetOverwriteMode func(uintptr) bool
 
-// Gets whether text is overwritten when typing in the `GtkText`.
+// Gets whether text is overwritten when typing.
 //
 // See [method@Gtk.Text.set_overwrite_mode].
 func (x *Text) GetOverwriteMode() bool {
@@ -272,10 +317,10 @@ func (x *Text) GetOverwriteMode() bool {
 
 var xTextGetPlaceholderText func(uintptr) string
 
-// Retrieves the text that will be displayed when
-// @self is empty and unfocused
+// Retrieves the text that will be displayed when the text widget
+// is empty and unfocused
 //
-// If no placeholder text has been set, %NULL will be returned.
+// See [method@Gtk.Text.set_placeholder_text].
 func (x *Text) GetPlaceholderText() string {
 
 	cret := xTextGetPlaceholderText(x.GoPointer())
@@ -284,7 +329,7 @@ func (x *Text) GetPlaceholderText() string {
 
 var xTextGetPropagateTextWidth func(uintptr) bool
 
-// Returns whether the `GtkText` will grow and shrink
+// Returns whether the text widget will grow and shrink
 // with the content.
 func (x *Text) GetPropagateTextWidth() bool {
 
@@ -294,7 +339,7 @@ func (x *Text) GetPropagateTextWidth() bool {
 
 var xTextGetTabs func(uintptr) *pango.TabArray
 
-// Gets the tabstops that were set on the `GtkText`.
+// Gets the tab stops for the text widget.
 //
 // See [method@Gtk.Text.set_tabs].
 func (x *Text) GetTabs() *pango.TabArray {
@@ -305,7 +350,7 @@ func (x *Text) GetTabs() *pango.TabArray {
 
 var xTextGetTextLength func(uintptr) uint16
 
-// Retrieves the current length of the text in @self.
+// Retrieves the length of the contents.
 //
 // This is equivalent to getting @self's `GtkEntryBuffer`
 // and calling [method@Gtk.EntryBuffer.get_length] on it.
@@ -317,8 +362,7 @@ func (x *Text) GetTextLength() uint16 {
 
 var xTextGetTruncateMultiline func(uintptr) bool
 
-// Returns whether the `GtkText` will truncate multi-line text
-// that is pasted into the widget
+// Returns whether pasted text will be truncated to the first line.
 func (x *Text) GetTruncateMultiline() bool {
 
 	cret := xTextGetTruncateMultiline(x.GoPointer())
@@ -327,7 +371,7 @@ func (x *Text) GetTruncateMultiline() bool {
 
 var xTextGetVisibility func(uintptr) bool
 
-// Retrieves whether the text in @self is visible.
+// Retrieves whether the text is visible.
 func (x *Text) GetVisibility() bool {
 
 	cret := xTextGetVisibility(x.GoPointer())
@@ -336,13 +380,14 @@ func (x *Text) GetVisibility() bool {
 
 var xTextGrabFocusWithoutSelecting func(uintptr) bool
 
-// Causes @self to have keyboard focus.
+// Causes the text widget to have the keyboard focus.
 //
 // It behaves like [method@Gtk.Widget.grab_focus],
-// except that it doesn't select the contents of @self.
+// except that it does not select the contents of @self.
+//
 // You only want to call this on some special entries
-// which the user usually doesn't want to replace all text in,
-// such as search-as-you-type entries.
+// which the user usually doesn't want to replace all
+// text in, such as search-as-you-type entries.
 func (x *Text) GrabFocusWithoutSelecting() bool {
 
 	cret := xTextGrabFocusWithoutSelecting(x.GoPointer())
@@ -351,11 +396,11 @@ func (x *Text) GrabFocusWithoutSelecting() bool {
 
 var xTextSetActivatesDefault func(uintptr, bool)
 
-// If @activates is %TRUE, pressing Enter will activate
-// the default widget for the window containing @self.
+// Sets whether pressing &lt;kbd&gt;Enter&lt;/kbd&gt; will activate
+// the default widget.
 //
-// This usually means that the dialog containing the `GtkText`
-// will be closed, since the default widget is usually one of
+// This usually means that the dialog containing @self will
+// be closed, since the default widget is usually one of
 // the dialog buttons.
 func (x *Text) SetActivatesDefault(ActivatesVar bool) {
 
@@ -365,7 +410,7 @@ func (x *Text) SetActivatesDefault(ActivatesVar bool) {
 
 var xTextSetAttributes func(uintptr, *pango.AttrList)
 
-// Sets attributes that are applied to the text.
+// Apply attributes to the contents of the text widget.
 func (x *Text) SetAttributes(AttrsVar *pango.AttrList) {
 
 	xTextSetAttributes(x.GoPointer(), AttrsVar)
@@ -374,7 +419,7 @@ func (x *Text) SetAttributes(AttrsVar *pango.AttrList) {
 
 var xTextSetBuffer func(uintptr, uintptr)
 
-// Set the `GtkEntryBuffer` object which holds the text for
+// Set the entry buffer object which holds the text for
 // this widget.
 func (x *Text) SetBuffer(BufferVar *EntryBuffer) {
 
@@ -397,8 +442,7 @@ func (x *Text) SetEnableEmojiCompletion(EnableEmojiCompletionVar bool) {
 
 var xTextSetExtraMenu func(uintptr, uintptr)
 
-// Sets a menu model to add when constructing
-// the context menu for @self.
+// Sets a menu model to add to the context menu of the text widget.
 func (x *Text) SetExtraMenu(ModelVar *gio.MenuModel) {
 
 	xTextSetExtraMenu(x.GoPointer(), ModelVar.GoPointer())
@@ -407,8 +451,7 @@ func (x *Text) SetExtraMenu(ModelVar *gio.MenuModel) {
 
 var xTextSetInputHints func(uintptr, InputHints)
 
-// Sets input hints that allow input methods
-// to fine-tune their behaviour.
+// Sets hints that allow input methods to fine-tune their behaviour.
 func (x *Text) SetInputHints(HintsVar InputHints) {
 
 	xTextSetInputHints(x.GoPointer(), HintsVar)
@@ -417,10 +460,10 @@ func (x *Text) SetInputHints(HintsVar InputHints) {
 
 var xTextSetInputPurpose func(uintptr, InputPurpose)
 
-// Sets the input purpose of the `GtkText`.
+// Sets the input purpose of the text widget.
 //
-// This can be used by on-screen keyboards and other
-// input methods to adjust their behaviour.
+// The input purpose can be used by on-screen keyboards
+// and other input methods to adjust their behaviour.
 func (x *Text) SetInputPurpose(PurposeVar InputPurpose) {
 
 	xTextSetInputPurpose(x.GoPointer(), PurposeVar)
@@ -443,9 +486,9 @@ func (x *Text) SetInvisibleChar(ChVar uint32) {
 
 var xTextSetMaxLength func(uintptr, int)
 
-// Sets the maximum allowed length of the contents of the widget.
+// Sets the maximum allowed length of the contents.
 //
-// If the current contents are longer than the given length, then
+// If the current contents are longer than the given length,
 // they will be truncated to fit.
 //
 // This is equivalent to getting @self's `GtkEntryBuffer` and
@@ -458,8 +501,7 @@ func (x *Text) SetMaxLength(LengthVar int) {
 
 var xTextSetOverwriteMode func(uintptr, bool)
 
-// Sets whether the text is overwritten when typing
-// in the `GtkText`.
+// Sets whether the text is overwritten when typing.
 func (x *Text) SetOverwriteMode(OverwriteVar bool) {
 
 	xTextSetOverwriteMode(x.GoPointer(), OverwriteVar)
@@ -468,10 +510,11 @@ func (x *Text) SetOverwriteMode(OverwriteVar bool) {
 
 var xTextSetPlaceholderText func(uintptr, string)
 
-// Sets text to be displayed in @self when it is empty.
+// Sets the text to be displayed when the text widget is
+// empty and unfocused.
 //
 // This can be used to give a visual hint of the expected
-// contents of the `GtkText`.
+// contents of the text widget.
 func (x *Text) SetPlaceholderText(TextVar string) {
 
 	xTextSetPlaceholderText(x.GoPointer(), TextVar)
@@ -480,7 +523,7 @@ func (x *Text) SetPlaceholderText(TextVar string) {
 
 var xTextSetPropagateTextWidth func(uintptr, bool)
 
-// Sets whether the `GtkText` should grow and shrink with the content.
+// Sets whether the text widget should grow and shrink with the content.
 func (x *Text) SetPropagateTextWidth(PropagateTextWidthVar bool) {
 
 	xTextSetPropagateTextWidth(x.GoPointer(), PropagateTextWidthVar)
@@ -489,7 +532,7 @@ func (x *Text) SetPropagateTextWidth(PropagateTextWidthVar bool) {
 
 var xTextSetTabs func(uintptr, *pango.TabArray)
 
-// Sets tabstops that are applied to the text.
+// Sets tab stops for the text widget.
 func (x *Text) SetTabs(TabsVar *pango.TabArray) {
 
 	xTextSetTabs(x.GoPointer(), TabsVar)
@@ -498,8 +541,7 @@ func (x *Text) SetTabs(TabsVar *pango.TabArray) {
 
 var xTextSetTruncateMultiline func(uintptr, bool)
 
-// Sets whether the `GtkText` should truncate multi-line text
-// that is pasted into the widget.
+// Sets whether pasted text should be truncated to the first line.
 func (x *Text) SetTruncateMultiline(TruncateMultilineVar bool) {
 
 	xTextSetTruncateMultiline(x.GoPointer(), TruncateMultilineVar)
@@ -508,10 +550,10 @@ func (x *Text) SetTruncateMultiline(TruncateMultilineVar bool) {
 
 var xTextSetVisibility func(uintptr, bool)
 
-// Sets whether the contents of the `GtkText` are visible or not.
+// Sets whether the contents of the text widget are visible or not.
 //
-// When visibility is set to %FALSE, characters are displayed
-// as the invisible char, and will also appear that way when
+// When visibility is set to false, characters are displayed
+// as the invisible char, and it will also appear that way when
 // the text in the widget is copied to the clipboard.
 //
 // By default, GTK picks the best invisible character available
@@ -519,9 +561,9 @@ var xTextSetVisibility func(uintptr, bool)
 // [method@Gtk.Text.set_invisible_char].
 //
 // Note that you probably want to set [property@Gtk.Text:input-purpose]
-// to %GTK_INPUT_PURPOSE_PASSWORD or %GTK_INPUT_PURPOSE_PIN to
-// inform input methods about the purpose of this self,
-// in addition to setting visibility to %FALSE.
+// to [enum@Gtk.InputPurpose.password] or [enum@Gtk.InputPurpose.pin]
+// to inform input methods about the purpose of this widget, in addition
+// to setting visibility to false.
 func (x *Text) SetVisibility(VisibleVar bool) {
 
 	xTextSetVisibility(x.GoPointer(), VisibleVar)
@@ -532,8 +574,7 @@ var xTextUnsetInvisibleChar func(uintptr)
 
 // Unsets the invisible char.
 //
-// After calling this, the default invisible
-// char is used again.
+// After calling this, the default invisible char is used again.
 func (x *Text) UnsetInvisibleChar() {
 
 	xTextUnsetInvisibleChar(x.GoPointer())
@@ -551,7 +592,7 @@ func (c *Text) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Emitted when the user hits the Enter key.
+// Emitted when the user hits the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
 //
 // The default bindings for this signal are all forms
 // of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
@@ -579,7 +620,7 @@ func (x *Text) ConnectActivate(cb *func(Text)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Backspace&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;-&lt;kbd&gt;Backspace&lt;/kbd&gt;.
+// &lt;kbd&gt;Backspace&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Backspace&lt;/kbd&gt;.
 func (x *Text) ConnectBackspace(cb *func(Text)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -604,8 +645,8 @@ func (x *Text) ConnectBackspace(cb *func(Text)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;c&lt;/kbd&gt; and
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;Insert&lt;/kbd&gt;.
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;c&lt;/kbd&gt; and
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Insert&lt;/kbd&gt;.
 func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -630,8 +671,8 @@ func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;x&lt;/kbd&gt; and
-// &lt;kbd&gt;Shift&lt;/kbd&gt;-&lt;kbd&gt;Delete&lt;/kbd&gt;.
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;x&lt;/kbd&gt; and
+// &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Delete&lt;/kbd&gt;.
 func (x *Text) ConnectCutClipboard(cb *func(Text)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -655,12 +696,12 @@ func (x *Text) ConnectCutClipboard(cb *func(Text)) uint32 {
 //
 // This is a [keybinding signal](class.SignalAction.html).
 //
-// If the @type is %GTK_DELETE_CHARS, GTK deletes the selection
-// if there is one, otherwise it deletes the requested number
-// of characters.
+// If the @type is [enum@Gtk.DeleteType.chars], GTK deletes the
+// selection if there is one, otherwise it deletes the requested
+// number of characters.
 //
 // The default bindings for this signal are &lt;kbd&gt;Delete&lt;/kbd&gt;
-// for deleting a character and &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;Delete&lt;/kbd&gt;
+// for deleting a character and &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Delete&lt;/kbd&gt;
 // for deleting a word.
 func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -706,13 +747,13 @@ func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "insert-at-cursor", cbRefPtr)
 }
 
-// Emitted to present the Emoji chooser for the widget.
+// Emitted to present the Emoji chooser.
 //
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;.&lt;/kbd&gt; and
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;;&lt;/kbd&gt;
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;.&lt;/kbd&gt; and
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;;&lt;/kbd&gt;
 func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -740,8 +781,8 @@ func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // Applications should not connect to it, but may emit it with
-// g_signal_emit_by_name() if they need to control the cursor
-// programmatically.
+// [func@GObject.signal_emit_by_name] if they need to control
+// the cursor programmatically.
 //
 // The default bindings for this signal come in two variants,
 // the variant with the &lt;kbd&gt;Shift&lt;/kbd&gt; modifier extends the
@@ -750,8 +791,8 @@ func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint32 {
 //
 //   - &lt;kbd&gt;←&lt;/kbd&gt;, &lt;kbd&gt;→&lt;/kbd&gt;, &lt;kbd&gt;↑&lt;/kbd&gt;, &lt;kbd&gt;↓&lt;/kbd&gt;
 //     move by individual characters/lines
-//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;→&lt;/kbd&gt;, etc. move by words/paragraphs
-//   - &lt;kbd&gt;Home&lt;/kbd&gt;, &lt;kbd&gt;End&lt;/kbd&gt; move to the ends of the buffer
+//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt;, etc. move by words/paragraphs
+//   - &lt;kbd&gt;Home&lt;/kbd&gt; and &lt;kbd&gt;End&lt;/kbd&gt; move to the ends of the buffer
 func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int, bool)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -776,7 +817,7 @@ func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int, bool)) uint32
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;v&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;-&lt;kbd&gt;Insert&lt;/kbd&gt;.
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;v&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Insert&lt;/kbd&gt;.
 func (x *Text) ConnectPasteClipboard(cb *func(Text)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -820,7 +861,7 @@ func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "preedit-changed", cbRefPtr)
 }
 
-// Emitted to toggle the overwrite mode of the `GtkText`.
+// Emitted to toggle the overwrite mode.
 //
 // This is a [keybinding signal](class.SignalAction.html).
 //
@@ -844,31 +885,162 @@ func (x *Text) ConnectToggleOverwrite(cb *func(Text)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "toggle-overwrite", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *Text) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *Text) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *Text) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *Text) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *Text) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *Text) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *Text) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *Text) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *Text) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *Text) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *Text) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *Text) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *Text) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *Text) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -914,7 +1086,7 @@ func (x *Text) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessibl
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -944,13 +1116,17 @@ func (x *Text) UpdateRelationValue(NRelationsVar int, RelationsVar []AccessibleR
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -977,13 +1153,92 @@ func (x *Text) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Val
 
 }
 
+// Updates the position of the caret.
+//
+// Implementations of the `GtkAccessibleText` interface should call this
+// function every time the caret has moved, in order to notify assistive
+// technologies.
+func (x *Text) UpdateCaretPosition() {
+
+	XGtkAccessibleTextUpdateCaretPosition(x.GoPointer())
+
+}
+
+// Notifies assistive technologies of a change in contents.
+//
+// Implementations of the `GtkAccessibleText` interface should call this
+// function every time their contents change as the result of an operation,
+// like an insertion or a removal.
+//
+// Note: If the change is a deletion, this function must be called *before*
+// removing the contents, if it is an insertion, it must be called *after*
+// inserting the new contents.
+func (x *Text) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar uint, EndVar uint) {
+
+	XGtkAccessibleTextUpdateContents(x.GoPointer(), ChangeVar, StartVar, EndVar)
+
+}
+
+// Updates the boundary of the selection.
+//
+// Implementations of the `GtkAccessibleText` interface should call this
+// function every time the selection has moved, in order to notify assistive
+// technologies.
+func (x *Text) UpdateSelectionBound() {
+
+	XGtkAccessibleTextUpdateSelectionBound(x.GoPointer())
+
+}
+
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *Text) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+	return cret
+}
+
+// Retrieves the accessible platform state from the editable delegate.
+//
+// This is an helper function to retrieve the accessible state for
+// `GtkEditable` interface implementations using a delegate pattern.
+//
+// You should call this function in your editable widget implementation
+// of the [vfunc@Gtk.Accessible.get_platform_state] virtual function, for
+// instance:
+//
+// ```c
+// static void
+// accessible_interface_init (GtkAccessibleInterface *iface)
+//
+//	{
+//	  iface-&gt;get_platform_state = your_editable_get_accessible_platform_state;
+//	}
+//
+// static gboolean
+// your_editable_get_accessible_platform_state (GtkAccessible *accessible,
+//
+//	GtkAccessiblePlatformState state)
+//
+//	{
+//	  return gtk_editable_delegate_get_accessible_platform_state (GTK_EDITABLE (accessible), state);
+//	}
+//
+// ```
+//
+// Note that the widget which is the delegate *must* be a direct child of
+// this widget, otherwise your implementation of [vfunc@Gtk.Accessible.get_platform_state]
+// might not even be called, as the platform change will originate from
+// the parent of the delegate, and, as a result, will not work properly.
+//
+// So, if you can't ensure the direct child condition, you should give the
+// delegate the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role, or you can
+// change your tree to allow this function to work.
+func (x *Text) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 

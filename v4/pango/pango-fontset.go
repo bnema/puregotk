@@ -12,8 +12,9 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// Callback used by pango_fontset_foreach() when enumerating
-// fonts in a fontset.
+// Callback used when enumerating fonts in a fontset.
+//
+// See [method@Pango.Fontset.foreach].
 type FontsetForeachFunc func(uintptr, uintptr, uintptr) bool
 
 // The `PangoFontsetClass` structure holds the virtual functions for
@@ -45,6 +46,9 @@ func (x *FontsetClass) GoPointer() uintptr {
 }
 
 // OverrideGetFont sets the callback function.
+// a function to get the font in the fontset that contains the
+//
+//	best glyph for the given Unicode character; see [method@Pango.Fontset.get_font]
 func (x *FontsetClass) OverrideGetFont(cb func(*Fontset, uint) *Font) {
 	if cb == nil {
 		x.xGetFont = 0
@@ -60,6 +64,9 @@ func (x *FontsetClass) OverrideGetFont(cb func(*Fontset, uint) *Font) {
 }
 
 // GetGetFont gets the callback function.
+// a function to get the font in the fontset that contains the
+//
+//	best glyph for the given Unicode character; see [method@Pango.Fontset.get_font]
 func (x *FontsetClass) GetGetFont() func(*Fontset, uint) *Font {
 	if x.xGetFont == 0 {
 		return nil
@@ -78,6 +85,9 @@ func (x *FontsetClass) GetGetFont() func(*Fontset, uint) *Font {
 }
 
 // OverrideGetMetrics sets the callback function.
+// a function to get overall metric information for the fonts
+//
+//	in the fontset; see [method@Pango.Fontset.get_metrics]
 func (x *FontsetClass) OverrideGetMetrics(cb func(*Fontset) *FontMetrics) {
 	if cb == nil {
 		x.xGetMetrics = 0
@@ -89,6 +99,9 @@ func (x *FontsetClass) OverrideGetMetrics(cb func(*Fontset) *FontMetrics) {
 }
 
 // GetGetMetrics gets the callback function.
+// a function to get overall metric information for the fonts
+//
+//	in the fontset; see [method@Pango.Fontset.get_metrics]
 func (x *FontsetClass) GetGetMetrics() func(*Fontset) *FontMetrics {
 	if x.xGetMetrics == 0 {
 		return nil
@@ -101,6 +114,7 @@ func (x *FontsetClass) GetGetMetrics() func(*Fontset) *FontMetrics {
 }
 
 // OverrideGetLanguage sets the callback function.
+// a function to get the language of the fontset.
 func (x *FontsetClass) OverrideGetLanguage(cb func(*Fontset) *Language) {
 	if cb == nil {
 		x.xGetLanguage = 0
@@ -112,6 +126,7 @@ func (x *FontsetClass) OverrideGetLanguage(cb func(*Fontset) *Language) {
 }
 
 // GetGetLanguage gets the callback function.
+// a function to get the language of the fontset.
 func (x *FontsetClass) GetGetLanguage() func(*Fontset) *Language {
 	if x.xGetLanguage == 0 {
 		return nil
@@ -124,8 +139,9 @@ func (x *FontsetClass) GetGetLanguage() func(*Fontset) *Language {
 }
 
 // OverrideForeach sets the callback function.
-// Callback used by pango_fontset_foreach() when enumerating
-// fonts in a fontset.
+// Callback used when enumerating fonts in a fontset.
+//
+// See [method@Pango.Fontset.foreach].
 func (x *FontsetClass) OverrideForeach(cb func(*Fontset, *FontsetForeachFunc, uintptr)) {
 	if cb == nil {
 		x.xForeach = 0
@@ -137,8 +153,9 @@ func (x *FontsetClass) OverrideForeach(cb func(*Fontset, *FontsetForeachFunc, ui
 }
 
 // GetForeach gets the callback function.
-// Callback used by pango_fontset_foreach() when enumerating
-// fonts in a fontset.
+// Callback used when enumerating fonts in a fontset.
+//
+// See [method@Pango.Fontset.foreach].
 func (x *FontsetClass) GetForeach() func(*Fontset, *FontsetForeachFunc, uintptr) {
 	if x.xForeach == 0 {
 		return nil
@@ -242,17 +259,9 @@ func (x *FontsetClass) GetPangoReserved4() func() {
 	}
 }
 
-type FontsetSimpleClass struct {
-	_ structs.HostLayout
-}
-
-func (x *FontsetSimpleClass) GoPointer() uintptr {
-	return uintptr(unsafe.Pointer(x))
-}
-
 // A `PangoFontset` represents a set of `PangoFont` to use when rendering text.
 //
-// A `PAngoFontset` is the result of resolving a `PangoFontDescription`
+// A `PangoFontset` is the result of resolving a `PangoFontDescription`
 // against a particular `PangoContext`. It has operations for finding the
 // component font for a particular Unicode character, and for finding a
 // composite set of metrics for the entire fontset.
@@ -286,8 +295,8 @@ func (x *Fontset) Foreach(FuncVar *FontsetForeachFunc, DataVar uintptr) {
 
 var xFontsetGetFont func(uintptr, uint) uintptr
 
-// Returns the font in the fontset that contains the best glyph for a
-// Unicode character.
+// Returns the font in the fontset that contains the best
+// glyph for a Unicode character.
 func (x *Fontset) GetFont(WcVar uint) *Font {
 	var cls *Font
 
@@ -321,74 +330,6 @@ func (c *Fontset) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// `PangoFontsetSimple` is a implementation of the abstract
-// `PangoFontset` base class as an array of fonts.
-//
-// When creating a `PangoFontsetSimple`, you have to provide
-// the array of fonts that make up the fontset.
-type FontsetSimple struct {
-	Fontset
-}
-
-var xFontsetSimpleGLibType func() types.GType
-
-func FontsetSimpleGLibType() types.GType {
-	return xFontsetSimpleGLibType()
-}
-
-func FontsetSimpleNewFromInternalPtr(ptr uintptr) *FontsetSimple {
-	cls := &FontsetSimple{}
-	cls.Ptr = ptr
-	return cls
-}
-
-var xNewFontsetSimple func(*Language) uintptr
-
-// Creates a new `PangoFontsetSimple` for the given language.
-func NewFontsetSimple(LanguageVar *Language) *FontsetSimple {
-	var cls *FontsetSimple
-
-	cret := xNewFontsetSimple(LanguageVar)
-
-	if cret == 0 {
-		return nil
-	}
-	cls = &FontsetSimple{}
-	cls.Ptr = cret
-	return cls
-}
-
-var xFontsetSimpleAppend func(uintptr, uintptr)
-
-// Adds a font to the fontset.
-//
-// The fontset takes ownership of @font.
-func (x *FontsetSimple) Append(FontVar *Font) {
-
-	xFontsetSimpleAppend(x.GoPointer(), FontVar.GoPointer())
-
-}
-
-var xFontsetSimpleSize func(uintptr) int
-
-// Returns the number of fonts in the fontset.
-func (x *FontsetSimple) Size() int {
-
-	cret := xFontsetSimpleSize(x.GoPointer())
-	return cret
-}
-
-func (c *FontsetSimple) GoPointer() uintptr {
-	if c == nil {
-		return 0
-	}
-	return c.Ptr
-}
-
-func (c *FontsetSimple) SetGoPointer(ptr uintptr) {
-	c.Ptr = ptr
-}
-
 func init() {
 	core.SetPackageName("PANGO", "pango")
 	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
@@ -402,12 +343,5 @@ func init() {
 	core.PuregoSafeRegister(&xFontsetForeach, lib, "pango_fontset_foreach")
 	core.PuregoSafeRegister(&xFontsetGetFont, lib, "pango_fontset_get_font")
 	core.PuregoSafeRegister(&xFontsetGetMetrics, lib, "pango_fontset_get_metrics")
-
-	core.PuregoSafeRegister(&xFontsetSimpleGLibType, lib, "pango_fontset_simple_get_type")
-
-	core.PuregoSafeRegister(&xNewFontsetSimple, lib, "pango_fontset_simple_new")
-
-	core.PuregoSafeRegister(&xFontsetSimpleAppend, lib, "pango_fontset_simple_append")
-	core.PuregoSafeRegister(&xFontsetSimpleSize, lib, "pango_fontset_simple_size")
 
 }

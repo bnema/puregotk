@@ -34,6 +34,9 @@ var xIConvGIconv func(uintptr, string, uint, string, uint) uint
 // positive number of non-reversible conversions as replacement characters were
 // used), or it may return -1 and set an error such as %EILSEQ, in such a
 // situation.
+//
+// See [`iconv(3posix)`](man:iconv(3posix)) and [`iconv(3)`](man:iconv(3)) for more details about behavior when an
+// error occurs.
 func (x *IConv) GIconv(InbufVar string, InbytesLeftVar uint, OutbufVar string, OutbytesLeftVar uint) uint {
 
 	cret := xIConvGIconv(x.GoPointer(), InbufVar, InbytesLeftVar, OutbufVar, OutbytesLeftVar)
@@ -224,6 +227,11 @@ var xFilenameFromUri func(string, string, **Error) string
 
 // Converts an escaped ASCII-encoded URI to a local filename in the
 // encoding used for filenames.
+//
+// Since GLib 2.78, the query string and fragment can be present in the URI,
+// but are not part of the resulting filename.
+// We take inspiration from https://url.spec.whatwg.org/#file-state,
+// but we don't support the entire standard.
 func FilenameFromUri(UriVar string, HostnameVar string) (string, error) {
 	var cerr *Error
 
@@ -240,7 +248,7 @@ var xFilenameFromUtf8 func(string, int, uint, uint, **Error) string
 // Converts a string from UTF-8 to the encoding GLib uses for
 // filenames. Note that on Windows GLib uses UTF-8 for filenames;
 // on other platforms, this function indirectly depends on the
-// [current locale][setlocale].
+// [current locale](running.html#locale).
 //
 // The input string shall not contain nul characters even if the @len
 // argument is positive. A nul character found inside the string will result
@@ -278,7 +286,7 @@ var xFilenameToUtf8 func(string, int, uint, uint, **Error) string
 // Converts a string which is in the encoding used by GLib for
 // filenames into a UTF-8 string. Note that on Windows GLib uses UTF-8
 // for filenames; on other platforms, this function indirectly depends on
-// the [current locale][setlocale].
+// the [current locale](running.html#locale).
 //
 // The input string shall not contain nul characters even if the @len
 // argument is positive. A nul character found inside the string will result
@@ -311,8 +319,8 @@ var xGetFilenameCharsets func([]string) bool
 // and said environment variables have no effect.
 //
 // `G_FILENAME_ENCODING` may be set to a comma-separated list of
-// character set names. The special token "\@locale" is taken
-// to  mean the character set for the [current locale][setlocale].
+// character set names. The special token `@locale` is taken to mean the
+// character set for the [current locale](running.html#locale).
 // If `G_FILENAME_ENCODING` is not set, but `G_BROKEN_FILENAMES` is,
 // the character set of the current locale is taken as the filename
 // encoding. If neither environment variable  is set, UTF-8 is taken
@@ -345,6 +353,9 @@ var xIconv func(uintptr, string, uint, string, uint) uint
 // positive number of non-reversible conversions as replacement characters were
 // used), or it may return -1 and set an error such as %EILSEQ, in such a
 // situation.
+//
+// See [`iconv(3posix)`](man:iconv(3posix)) and [`iconv(3)`](man:iconv(3)) for more details about behavior when an
+// error occurs.
 func Iconv(ConverterVar uintptr, InbufVar string, InbytesLeftVar uint, OutbufVar string, OutbytesLeftVar uint) uint {
 
 	cret := xIconv(ConverterVar, InbufVar, InbytesLeftVar, OutbufVar, OutbytesLeftVar)
@@ -369,8 +380,8 @@ var xLocaleFromUtf8 func(string, int, uint, uint, **Error) uintptr
 
 // Converts a string from UTF-8 to the encoding used for strings by
 // the C runtime (usually the same as that used by the operating
-// system) in the [current locale][setlocale]. On Windows this means
-// the system codepage.
+// system) in the [current locale](running.html#locale).
+// On Windows this means the system codepage.
 //
 // The input string shall not contain nul characters even if the @len
 // argument is positive. A nul character found inside the string will result
@@ -391,7 +402,7 @@ var xLocaleToUtf8 func([]byte, int, uint, uint, **Error) string
 
 // Converts a string which is in the encoding used for strings by
 // the C runtime (usually the same as that used by the operating
-// system) in the [current locale][setlocale] into a UTF-8 string.
+// system) in the [current locale](running.html#locale) into a UTF-8 string.
 //
 // If the source encoding is not UTF-8 and the conversion output contains a
 // nul character, the error %G_CONVERT_ERROR_EMBEDDED_NUL is set and the
@@ -424,7 +435,7 @@ func UriListExtractUris(UriListVar string) []string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

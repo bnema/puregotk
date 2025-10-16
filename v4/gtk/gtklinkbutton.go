@@ -11,9 +11,14 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// A `GtkLinkButton` is a button with a hyperlink.
+// A button with a hyperlink.
 //
-// ![An example GtkLinkButton](link-button.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="link-button-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkLinkButton" src="link-button.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // It is useful to show quick links to resources.
 //
@@ -24,10 +29,23 @@ import (
 // The URI bound to a `GtkLinkButton` can be set specifically using
 // [method@Gtk.LinkButton.set_uri].
 //
-// By default, `GtkLinkButton` calls [func@Gtk.show_uri] when the button
+// By default, `GtkLinkButton` calls [method@Gtk.FileLauncher.launch] when the button
 // is clicked. This behaviour can be overridden by connecting to the
 // [signal@Gtk.LinkButton::activate-link] signal and returning %TRUE from
 // the signal handler.
+//
+// # Shortcuts and Gestures
+//
+// `GtkLinkButton` supports the following keyboard shortcuts:
+//
+// - &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;F10&lt;/kbd&gt; or &lt;kbd&gt;Menu&lt;/kbd&gt; opens the context menu.
+//
+// # Actions
+//
+// `GtkLinkButton` defines a set of built-in actions:
+//
+// - `clipboard.copy` copies the url to the clipboard.
+// - `menu.popup` opens the context menu.
 //
 // # CSS nodes
 //
@@ -36,7 +54,7 @@ import (
 //
 // # Accessibility
 //
-// `GtkLinkButton` uses the %GTK_ACCESSIBLE_ROLE_LINK role.
+// `GtkLinkButton` uses the [enum@Gtk.AccessibleRole.link] role.
 type LinkButton struct {
 	Button
 }
@@ -145,7 +163,7 @@ func (c *LinkButton) SetGoPointer(ptr uintptr) {
 
 // Emitted each time the `GtkLinkButton` is clicked.
 //
-// The default handler will call [func@Gtk.show_uri] with the URI
+// The default handler will call [method@Gtk.FileLauncher.launch] with the URI
 // stored inside the [property@Gtk.LinkButton:uri] property.
 //
 // To override the default behavior, you can connect to the
@@ -170,31 +188,162 @@ func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *LinkButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *LinkButton) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *LinkButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *LinkButton) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *LinkButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *LinkButton) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *LinkButton) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *LinkButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *LinkButton) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *LinkButton) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *LinkButton) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *LinkButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *LinkButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *LinkButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -240,7 +389,7 @@ func (x *LinkButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acc
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -270,13 +419,17 @@ func (x *LinkButton) UpdateRelationValue(NRelationsVar int, RelationsVar []Acces
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -389,7 +542,7 @@ func (x *LinkButton) SetDetailedActionName(DetailedActionNameVar string) {
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *LinkButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

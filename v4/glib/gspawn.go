@@ -76,6 +76,12 @@ const (
 	// create all pipes with the `O_CLOEXEC` flag set.
 	//     Since: 2.40
 	GSpawnCloexecPipesValue SpawnFlags = 256
+	// The child will inherit the parent's standard output.
+	GSpawnChildInheritsStdoutValue SpawnFlags = 512
+	// The child will inherit the parent's standard error.
+	GSpawnChildInheritsStderrValue SpawnFlags = 1024
+	// The child's standard input is attached to `/dev/null`.
+	GSpawnStdinFromDevNullValue SpawnFlags = 2048
 )
 
 // Error codes returned by spawning processes.
@@ -271,17 +277,23 @@ var xSpawnAsyncWithPipesAndFds func(string, []string, []string, SpawnFlags, uint
 // @envp. If both %G_SPAWN_SEARCH_PATH and %G_SPAWN_SEARCH_PATH_FROM_ENVP
 // are used, the value from @envp takes precedence over the environment.
 //
-// %G_SPAWN_STDOUT_TO_DEV_NULL means that the child's standard output
-// will be discarded, instead of going to the same location as the parent's
-// standard output. If you use this flag, @stdout_pipe_out must be %NULL.
-//
-// %G_SPAWN_STDERR_TO_DEV_NULL means that the child's standard error
-// will be discarded, instead of going to the same location as the parent's
-// standard error. If you use this flag, @stderr_pipe_out must be %NULL.
-//
 // %G_SPAWN_CHILD_INHERITS_STDIN means that the child will inherit the parent's
 // standard input (by default, the child's standard input is attached to
-// `/dev/null`). If you use this flag, @stdin_pipe_out must be %NULL.
+// `/dev/null`). %G_SPAWN_STDIN_FROM_DEV_NULL explicitly imposes the default
+// behavior. Both flags cannot be enabled at the same time and, in both cases,
+// the @stdin_pipe_out argument is ignored.
+//
+// %G_SPAWN_STDOUT_TO_DEV_NULL means that the child's standard output
+// will be discarded (by default, it goes to the same location as the parent's
+// standard output). %G_SPAWN_CHILD_INHERITS_STDOUT explicitly imposes the
+// default behavior. Both flags cannot be enabled at the same time and, in
+// both cases, the @stdout_pipe_out argument is ignored.
+//
+// %G_SPAWN_STDERR_TO_DEV_NULL means that the child's standard error
+// will be discarded (by default, it goes to the same location as the parent's
+// standard error). %G_SPAWN_CHILD_INHERITS_STDERR explicitly imposes the
+// default behavior. Both flags cannot be enabled at the same time and, in
+// both cases, the @stderr_pipe_out argument is ignored.
 //
 // It is valid to pass the same FD in multiple parameters (e.g. you can pass
 // a single FD for both @stdout_fd and @stderr_fd, and include it in
@@ -578,7 +590,7 @@ func SpawnSync(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, F
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

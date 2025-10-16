@@ -32,9 +32,6 @@ var xContentSerializeAsync func(uintptr, string, *gobject.Value, int, uintptr, u
 //
 // The default I/O priority is %G_PRIORITY_DEFAULT (i.e. 0), and lower numbers
 // indicate a higher priority.
-//
-// When the operation is finished, @callback will be called. You must then
-// call [func@Gdk.content_serialize_finish] to get the result of the operation.
 func ContentSerializeAsync(StreamVar *gio.OutputStream, MimeTypeVar string, ValueVar *gobject.Value, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xContentSerializeAsync(StreamVar.GoPointer(), MimeTypeVar, ValueVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -55,8 +52,7 @@ func ContentSerializeFinish(ResultVar gio.AsyncResult) (bool, error) {
 
 }
 
-// A `GdkContentSerializer` is used to serialize content for
-// inter-application data transfers.
+// Serializes content for inter-application data transfers.
 //
 // The `GdkContentSerializer` transforms an object that is identified
 // by a GType into a serialized form (i.e. a byte stream) that is
@@ -219,7 +215,7 @@ func (c *ContentSerializer) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Gets the source object from a #GAsyncResult.
+// Gets the source object from a [iface@Gio.AsyncResult].
 func (x *ContentSerializer) GetSourceObject() *gobject.Object {
 	var cls *gobject.Object
 
@@ -241,14 +237,14 @@ func (x *ContentSerializer) IsTagged(SourceTagVar uintptr) bool {
 	return cret
 }
 
-// If @res is a #GSimpleAsyncResult, this is equivalent to
-// g_simple_async_result_propagate_error(). Otherwise it returns
-// %FALSE.
+// If @res is a [class@Gio.SimpleAsyncResult], this is equivalent to
+// [method@Gio.SimpleAsyncResult.propagate_error]. Otherwise it returns
+// `FALSE`.
 //
-// This can be used for legacy error handling in async *_finish()
-// wrapper functions that traditionally handled #GSimpleAsyncResult
+// This can be used for legacy error handling in async `*_finish()`
+// wrapper functions that traditionally handled [class@Gio.SimpleAsyncResult]
 // error returns themselves rather than calling into the virtual method.
-// This should not be used in new code; #GAsyncResult errors that are
+// This should not be used in new code; [iface@Gio.AsyncResult] errors that are
 // set by virtual methods should also be extracted by virtual methods,
 // to enable subclasses to chain up correctly.
 func (x *ContentSerializer) LegacyPropagateError() (bool, error) {

@@ -29,6 +29,9 @@ func (x *NativeSocketAddressPrivate) GoPointer() uintptr {
 }
 
 // A socket address of some unknown native type.
+//
+// This corresponds to a general `struct sockaddr` of a type not otherwise
+// handled by GLib.
 type NativeSocketAddress struct {
 	SocketAddress
 }

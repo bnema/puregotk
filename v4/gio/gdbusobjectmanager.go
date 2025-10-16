@@ -39,6 +39,7 @@ func (x *DBusObjectManagerIface) GoPointer() uintptr {
 }
 
 // OverrideGetObjectPath sets the callback function.
+// Virtual function for g_dbus_object_manager_get_object_path().
 func (x *DBusObjectManagerIface) OverrideGetObjectPath(cb func(DBusObjectManager) string) {
 	if cb == nil {
 		x.xGetObjectPath = 0
@@ -50,6 +51,7 @@ func (x *DBusObjectManagerIface) OverrideGetObjectPath(cb func(DBusObjectManager
 }
 
 // GetGetObjectPath gets the callback function.
+// Virtual function for g_dbus_object_manager_get_object_path().
 func (x *DBusObjectManagerIface) GetGetObjectPath() func(DBusObjectManager) string {
 	if x.xGetObjectPath == 0 {
 		return nil
@@ -62,6 +64,7 @@ func (x *DBusObjectManagerIface) GetGetObjectPath() func(DBusObjectManager) stri
 }
 
 // OverrideGetObjects sets the callback function.
+// Virtual function for g_dbus_object_manager_get_objects().
 func (x *DBusObjectManagerIface) OverrideGetObjects(cb func(DBusObjectManager) *glib.List) {
 	if cb == nil {
 		x.xGetObjects = 0
@@ -73,6 +76,7 @@ func (x *DBusObjectManagerIface) OverrideGetObjects(cb func(DBusObjectManager) *
 }
 
 // GetGetObjects gets the callback function.
+// Virtual function for g_dbus_object_manager_get_objects().
 func (x *DBusObjectManagerIface) GetGetObjects() func(DBusObjectManager) *glib.List {
 	if x.xGetObjects == 0 {
 		return nil
@@ -85,6 +89,7 @@ func (x *DBusObjectManagerIface) GetGetObjects() func(DBusObjectManager) *glib.L
 }
 
 // OverrideGetObject sets the callback function.
+// Virtual function for g_dbus_object_manager_get_object().
 func (x *DBusObjectManagerIface) OverrideGetObject(cb func(DBusObjectManager, string) *DBusObjectBase) {
 	if cb == nil {
 		x.xGetObject = 0
@@ -100,6 +105,7 @@ func (x *DBusObjectManagerIface) OverrideGetObject(cb func(DBusObjectManager, st
 }
 
 // GetGetObject gets the callback function.
+// Virtual function for g_dbus_object_manager_get_object().
 func (x *DBusObjectManagerIface) GetGetObject() func(DBusObjectManager, string) *DBusObjectBase {
 	if x.xGetObject == 0 {
 		return nil
@@ -118,6 +124,7 @@ func (x *DBusObjectManagerIface) GetGetObject() func(DBusObjectManager, string) 
 }
 
 // OverrideGetInterface sets the callback function.
+// Virtual function for g_dbus_object_manager_get_interface().
 func (x *DBusObjectManagerIface) OverrideGetInterface(cb func(DBusObjectManager, string, string) *DBusInterfaceBase) {
 	if cb == nil {
 		x.xGetInterface = 0
@@ -133,6 +140,7 @@ func (x *DBusObjectManagerIface) OverrideGetInterface(cb func(DBusObjectManager,
 }
 
 // GetGetInterface gets the callback function.
+// Virtual function for g_dbus_object_manager_get_interface().
 func (x *DBusObjectManagerIface) GetGetInterface() func(DBusObjectManager, string, string) *DBusInterfaceBase {
 	if x.xGetInterface == 0 {
 		return nil
@@ -151,6 +159,7 @@ func (x *DBusObjectManagerIface) GetGetInterface() func(DBusObjectManager, strin
 }
 
 // OverrideObjectAdded sets the callback function.
+// Signal handler for the #GDBusObjectManager::object-added signal.
 func (x *DBusObjectManagerIface) OverrideObjectAdded(cb func(DBusObjectManager, DBusObject)) {
 	if cb == nil {
 		x.xObjectAdded = 0
@@ -162,6 +171,7 @@ func (x *DBusObjectManagerIface) OverrideObjectAdded(cb func(DBusObjectManager, 
 }
 
 // GetObjectAdded gets the callback function.
+// Signal handler for the #GDBusObjectManager::object-added signal.
 func (x *DBusObjectManagerIface) GetObjectAdded() func(DBusObjectManager, DBusObject) {
 	if x.xObjectAdded == 0 {
 		return nil
@@ -174,6 +184,7 @@ func (x *DBusObjectManagerIface) GetObjectAdded() func(DBusObjectManager, DBusOb
 }
 
 // OverrideObjectRemoved sets the callback function.
+// Signal handler for the #GDBusObjectManager::object-removed signal.
 func (x *DBusObjectManagerIface) OverrideObjectRemoved(cb func(DBusObjectManager, DBusObject)) {
 	if cb == nil {
 		x.xObjectRemoved = 0
@@ -185,6 +196,7 @@ func (x *DBusObjectManagerIface) OverrideObjectRemoved(cb func(DBusObjectManager
 }
 
 // GetObjectRemoved gets the callback function.
+// Signal handler for the #GDBusObjectManager::object-removed signal.
 func (x *DBusObjectManagerIface) GetObjectRemoved() func(DBusObjectManager, DBusObject) {
 	if x.xObjectRemoved == 0 {
 		return nil
@@ -197,6 +209,7 @@ func (x *DBusObjectManagerIface) GetObjectRemoved() func(DBusObjectManager, DBus
 }
 
 // OverrideInterfaceAdded sets the callback function.
+// Signal handler for the #GDBusObjectManager::interface-added signal.
 func (x *DBusObjectManagerIface) OverrideInterfaceAdded(cb func(DBusObjectManager, DBusObject, DBusInterface)) {
 	if cb == nil {
 		x.xInterfaceAdded = 0
@@ -208,6 +221,7 @@ func (x *DBusObjectManagerIface) OverrideInterfaceAdded(cb func(DBusObjectManage
 }
 
 // GetInterfaceAdded gets the callback function.
+// Signal handler for the #GDBusObjectManager::interface-added signal.
 func (x *DBusObjectManagerIface) GetInterfaceAdded() func(DBusObjectManager, DBusObject, DBusInterface) {
 	if x.xInterfaceAdded == 0 {
 		return nil
@@ -220,6 +234,7 @@ func (x *DBusObjectManagerIface) GetInterfaceAdded() func(DBusObjectManager, DBu
 }
 
 // OverrideInterfaceRemoved sets the callback function.
+// Signal handler for the #GDBusObjectManager::interface-removed signal.
 func (x *DBusObjectManagerIface) OverrideInterfaceRemoved(cb func(DBusObjectManager, DBusObject, DBusInterface)) {
 	if cb == nil {
 		x.xInterfaceRemoved = 0
@@ -231,6 +246,7 @@ func (x *DBusObjectManagerIface) OverrideInterfaceRemoved(cb func(DBusObjectMana
 }
 
 // GetInterfaceRemoved gets the callback function.
+// Signal handler for the #GDBusObjectManager::interface-removed signal.
 func (x *DBusObjectManagerIface) GetInterfaceRemoved() func(DBusObjectManager, DBusObject, DBusInterface) {
 	if x.xInterfaceRemoved == 0 {
 		return nil
@@ -242,13 +258,13 @@ func (x *DBusObjectManagerIface) GetInterfaceRemoved() func(DBusObjectManager, D
 	}
 }
 
-// The #GDBusObjectManager type is the base type for service- and
+// The `GDBusObjectManager` type is the base type for service- and
 // client-side implementations of the standardized
-// [org.freedesktop.DBus.ObjectManager](http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-objectmanager)
+// [`org.freedesktop.DBus.ObjectManager`](http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-objectmanager)
 // interface.
 //
-// See #GDBusObjectManagerClient for the client-side implementation
-// and #GDBusObjectManagerServer for the service-side implementation.
+// See [class@Gio.DBusObjectManagerClient] for the client-side implementation
+// and [class@Gio.DBusObjectManagerServer] for the service-side implementation.
 type DBusObjectManager interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

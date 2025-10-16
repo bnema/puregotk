@@ -63,6 +63,8 @@ const (
 	LicenseApache20Value License = 16
 	// The Mozilla Public License, version 2.0
 	LicenseMpl20Value License = 17
+	// Zero-Clause BSD license
+	License0bsdValue License = 18
 )
 
 var xShowAboutDialog func(uintptr, string, ...interface{})
@@ -77,8 +79,7 @@ func ShowAboutDialog(ParentVar *Window, FirstPropertyNameVar string, varArgs ...
 
 }
 
-// The `GtkAboutDialog` offers a simple way to display information about
-// a program.
+// Displays information about a program.
 //
 // The shown information includes the programs' logo, name, copyright,
 // website and license. It is also possible to give credits to the authors,
@@ -87,10 +88,15 @@ func ShowAboutDialog(ParentVar *Window, FirstPropertyNameVar string, varArgs ...
 // An about dialog is typically opened when the user selects the `About`
 // option from the `Help` menu. All parts of the dialog are optional.
 //
-// ![An example GtkAboutDialog](aboutdialog.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="aboutdialot-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkAboutDialog" src="aboutdialog.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // About dialogs often contain links and email addresses. `GtkAboutDialog`
-// displays these as clickable links. By default, it calls [func@Gtk.show_uri]
+// displays these as clickable links. By default, it calls [method@Gtk.FileLauncher.launch]
 // when a user clicks one. The behaviour can be overridden with the
 // [signal@Gtk.AboutDialog::activate-link] signal.
 //
@@ -98,14 +104,14 @@ func ShowAboutDialog(ParentVar *Window, FirstPropertyNameVar string, varArgs ...
 // `Edgar Allan Poe &lt;edgar@poe.com&gt;`. To specify a website with a title,
 // use a string like `GTK team https://www.gtk.org`.
 //
-// To make constructing a `GtkAboutDialog` as convenient as possible, you can
+// To make constructing an about dialog as convenient as possible, you can
 // use the function [func@Gtk.show_about_dialog] which constructs and shows
 // a dialog and keeps it around so that it can be shown again.
 //
 // Note that GTK sets a default title of `_("About %s")` on the dialog
 // window (where `%s` is replaced by the name of the application, but in
 // order to ensure proper translation of the title, applications should
-// set the title property explicitly when constructing a `GtkAboutDialog`,
+// set the title property explicitly when constructing an about dialog,
 // as shown in the following example:
 //
 // ```c
@@ -121,6 +127,12 @@ func ShowAboutDialog(ParentVar *Window, FirstPropertyNameVar string, varArgs ...
 //	NULL);
 //
 // ```
+//
+// ## Shortcuts and Gestures
+//
+// `GtkAboutDialog` supports the following keyboard shortcuts:
+//
+// - &lt;kbd&gt;Escape&lt;/kbd&gt; closes the window.
 //
 // ## CSS nodes
 //
@@ -391,8 +403,8 @@ func (x *AboutDialog) SetLicense(LicenseVar string) {
 
 var xAboutDialogSetLicenseType func(uintptr, License)
 
-// Sets the license of the application showing the about dialog from a
-// list of known licenses.
+// Sets the license of the application showing the about dialog
+// from a list of known licenses.
 //
 // This function overrides the license set using
 // [method@Gtk.AboutDialog.set_license].
@@ -526,7 +538,7 @@ func (c *AboutDialog) SetGoPointer(ptr uintptr) {
 // Emitted every time a URL is activated.
 //
 // Applications may connect to it to override the default behaviour,
-// which is to call [func@Gtk.show_uri].
+// which is to call [method@Gtk.FileLauncher.launch].
 func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -546,31 +558,162 @@ func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) ui
 	return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *AboutDialog) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *AboutDialog) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *AboutDialog) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *AboutDialog) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *AboutDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *AboutDialog) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *AboutDialog) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *AboutDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *AboutDialog) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *AboutDialog) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *AboutDialog) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *AboutDialog) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *AboutDialog) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *AboutDialog) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -616,7 +759,7 @@ func (x *AboutDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Ac
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -646,13 +789,17 @@ func (x *AboutDialog) UpdateRelationValue(NRelationsVar int, RelationsVar []Acce
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -682,7 +829,7 @@ func (x *AboutDialog) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *AboutDialog) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

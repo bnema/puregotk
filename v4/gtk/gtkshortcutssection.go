@@ -6,6 +6,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
@@ -32,6 +33,23 @@ func (x *ShortcutsSectionClass) GoPointer() uintptr {
 // and columns.
 //
 // This widget is only meant to be used with [class@Gtk.ShortcutsWindow].
+//
+// The recommended way to construct a `GtkShortcutsSection` is with
+// [class@Gtk.Builder], by using the `&lt;child&gt;` tag to populate a
+// `GtkShortcutsSection` with one or more [class@Gtk.ShortcutsGroup]
+// instances, which in turn contain one or more [class@Gtk.ShortcutsShortcut]
+// objects.
+//
+// If you need to add a group programmatically, use
+// [method@Gtk.ShortcutsSection.add_group].
+//
+// # Shortcuts and Gestures
+//
+// Pan gestures allow to navigate between sections.
+//
+// The following signals have default keybindings:
+//
+// - [signal@Gtk.ShortcutsSection::change-current-page]
 type ShortcutsSection struct {
 	Box
 }
@@ -48,6 +66,21 @@ func ShortcutsSectionNewFromInternalPtr(ptr uintptr) *ShortcutsSection {
 	return cls
 }
 
+var xShortcutsSectionAddGroup func(uintptr, uintptr)
+
+// Adds a group to the shortcuts section.
+//
+// This is the programmatic equivalent to using [class@Gtk.Builder] and a
+// `&lt;child&gt;` tag to add the child.
+//
+// Adding children with the `GtkBox` API is not appropriate, as
+// `GtkShortcutsSection` manages its children internally.
+func (x *ShortcutsSection) AddGroup(GroupVar *ShortcutsGroup) {
+
+	xShortcutsSectionAddGroup(x.GoPointer(), GroupVar.GoPointer())
+
+}
+
 func (c *ShortcutsSection) GoPointer() uintptr {
 	if c == nil {
 		return 0
@@ -59,18 +92,23 @@ func (c *ShortcutsSection) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// Emitted when we change the current page.
+//
+// The default bindings for this signal are
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;PgUp&lt;/kbd&gt;,
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;, &lt;kbd&gt;PgDn&lt;/kbd&gt;.
 func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, int) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		return gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
 	}
 
-	fcb := func(clsPtr uintptr, ObjectVarp int) bool {
+	fcb := func(clsPtr uintptr, OffsetVarp int) bool {
 		fa := ShortcutsSection{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, ObjectVarp)
+		return cbFn(fa, OffsetVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
@@ -78,31 +116,162 @@ func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, i
 	return gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *ShortcutsSection) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *ShortcutsSection) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *ShortcutsSection) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *ShortcutsSection) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *ShortcutsSection) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *ShortcutsSection) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *ShortcutsSection) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *ShortcutsSection) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *ShortcutsSection) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *ShortcutsSection) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *ShortcutsSection) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *ShortcutsSection) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *ShortcutsSection) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *ShortcutsSection) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -148,7 +317,7 @@ func (x *ShortcutsSection) UpdatePropertyValue(NPropertiesVar int, PropertiesVar
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -178,13 +347,17 @@ func (x *ShortcutsSection) UpdateRelationValue(NRelationsVar int, RelationsVar [
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -214,7 +387,7 @@ func (x *ShortcutsSection) UpdateStateValue(NStatesVar int, StatesVar []Accessib
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ShortcutsSection) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -232,5 +405,19 @@ func (x *ShortcutsSection) GetOrientation() Orientation {
 func (x *ShortcutsSection) SetOrientation(OrientationVar Orientation) {
 
 	XGtkOrientableSetOrientation(x.GoPointer(), OrientationVar)
+
+}
+
+func init() {
+	core.SetPackageName("GTK", "gtk4")
+	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
+	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
+	if err != nil {
+		panic(err)
+	}
+
+	core.PuregoSafeRegister(&xShortcutsSectionGLibType, lib, "gtk_shortcuts_section_get_type")
+
+	core.PuregoSafeRegister(&xShortcutsSectionAddGroup, lib, "gtk_shortcuts_section_add_group")
 
 }

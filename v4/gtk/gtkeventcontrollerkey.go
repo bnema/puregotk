@@ -21,8 +21,7 @@ func (x *EventControllerKeyClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkEventControllerKey` is an event controller that provides access
-// to key events.
+// Provides access to key events.
 type EventControllerKey struct {
 	EventController
 }
@@ -188,12 +187,12 @@ func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.M
 		return gobject.SignalConnect(x.GoPointer(), "modifiers", cbRefPtr)
 	}
 
-	fcb := func(clsPtr uintptr, KeyvalVarp gdk.ModifierType) bool {
+	fcb := func(clsPtr uintptr, StateVarp gdk.ModifierType) bool {
 		fa := EventControllerKey{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
 
-		return cbFn(fa, KeyvalVarp)
+		return cbFn(fa, StateVarp)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)

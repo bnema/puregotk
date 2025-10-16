@@ -15,9 +15,42 @@ import (
 // on a #GIOChannel is satisfied.
 type IOFunc func(*IOChannel, IOCondition, uintptr) bool
 
-// A data structure representing an IO Channel. The fields should be
-// considered private and should only be accessed with the following
-// functions.
+// The `GIOChannel` data type aims to provide a portable method for
+// using file descriptors, pipes, and sockets, and integrating them
+// into the main event loop (see [struct@GLib.MainContext]). Currently,
+// full support is available on UNIX platforms; support for Windows
+// is only partially complete.
+//
+// To create a new `GIOChannel` on UNIX systems use
+// [ctor@GLib.IOChannel.unix_new]. This works for plain file descriptors,
+// pipes and sockets. Alternatively, a channel can be created for a
+// file in a system independent manner using [ctor@GLib.IOChannel.new_file].
+//
+// Once a `GIOChannel` has been created, it can be used in a generic
+// manner with the functions [method@GLib.IOChannel.read_chars],
+// [method@GLib.IOChannel.write_chars], [method@GLib.IOChannel.seek_position],
+// and [method@GLib.IOChannel.shutdown].
+//
+// To add a `GIOChannel` to the main event loop, use [func@GLib.io_add_watch] or
+// [func@GLib.io_add_watch_full]. Here you specify which events you are
+// interested in on the `GIOChannel`, and provide a function to be called
+// whenever these events occur.
+//
+// `GIOChannel` instances are created with an initial reference count of 1.
+// [method@GLib.IOChannel.ref] and [method@GLib.IOChannel.unref] can be used to
+// increment or decrement the reference count respectively. When the
+// reference count falls to 0, the `GIOChannel` is freed. (Though it
+// isn’t closed automatically, unless it was created using
+// [ctor@GLib.IOChannel.new_file].) Using [func@GLib.io_add_watch] or
+// [func@GLib.io_add_watch_full] increments a channel’s reference count.
+//
+// The new functions [method@GLib.IOChannel.read_chars],
+// [method@GLib.IOChannel.read_line], [method@GLib.IOChannel.read_line_string],
+// [method@GLib.IOChannel.read_to_end], [method@GLib.IOChannel.write_chars],
+// [method@GLib.IOChannel.seek_position], and [method@GLib.IOChannel.flush]
+// should not be mixed with the deprecated functions
+// [method@GLib.IOChannel.read], [method@GLib.IOChannel.write], and
+// [method@GLib.IOChannel.seek] on the same channel.
 type IOChannel struct {
 	_ structs.HostLayout
 
@@ -218,7 +251,8 @@ var xIOChannelGetLineTerm func(uintptr, int) string
 
 // This returns the string that #GIOChannel uses to determine
 // where in the file a line break occurs. A value of %NULL
-// indicates autodetection.
+// indicates autodetection. Since 2.84, the return value is always
+// nul-terminated.
 func (x *IOChannel) GetLineTerm(LengthVar int) string {
 
 	cret := xIOChannelGetLineTerm(x.GoPointer(), LengthVar)
@@ -582,6 +616,11 @@ func (x *IOFuncs) GoPointer() uintptr {
 }
 
 // OverrideIoRead sets the callback function.
+// reads raw bytes from the channel.  This is called from
+//
+//	various functions such as g_io_channel_read_chars() to
+//	read raw bytes from the channel.  Encoding and buffering
+//	issues are dealt with at a higher level.
 func (x *IOFuncs) OverrideIoRead(cb func(*IOChannel, string, uint, uint) IOStatus) {
 	if cb == nil {
 		x.xIoRead = 0
@@ -593,6 +632,11 @@ func (x *IOFuncs) OverrideIoRead(cb func(*IOChannel, string, uint, uint) IOStatu
 }
 
 // GetIoRead gets the callback function.
+// reads raw bytes from the channel.  This is called from
+//
+//	various functions such as g_io_channel_read_chars() to
+//	read raw bytes from the channel.  Encoding and buffering
+//	issues are dealt with at a higher level.
 func (x *IOFuncs) GetIoRead() func(*IOChannel, string, uint, uint) IOStatus {
 	if x.xIoRead == 0 {
 		return nil
@@ -605,6 +649,11 @@ func (x *IOFuncs) GetIoRead() func(*IOChannel, string, uint, uint) IOStatus {
 }
 
 // OverrideIoWrite sets the callback function.
+// writes raw bytes to the channel.  This is called from
+//
+//	various functions such as g_io_channel_write_chars() to
+//	write raw bytes to the channel.  Encoding and buffering
+//	issues are dealt with at a higher level.
 func (x *IOFuncs) OverrideIoWrite(cb func(*IOChannel, string, uint, uint) IOStatus) {
 	if cb == nil {
 		x.xIoWrite = 0
@@ -616,6 +665,11 @@ func (x *IOFuncs) OverrideIoWrite(cb func(*IOChannel, string, uint, uint) IOStat
 }
 
 // GetIoWrite gets the callback function.
+// writes raw bytes to the channel.  This is called from
+//
+//	various functions such as g_io_channel_write_chars() to
+//	write raw bytes to the channel.  Encoding and buffering
+//	issues are dealt with at a higher level.
 func (x *IOFuncs) GetIoWrite() func(*IOChannel, string, uint, uint) IOStatus {
 	if x.xIoWrite == 0 {
 		return nil
@@ -628,6 +682,9 @@ func (x *IOFuncs) GetIoWrite() func(*IOChannel, string, uint, uint) IOStatus {
 }
 
 // OverrideIoSeek sets the callback function.
+// seeks the channel.  This is called from
+//
+//	g_io_channel_seek() on channels that support it.
 func (x *IOFuncs) OverrideIoSeek(cb func(*IOChannel, int64, SeekType) IOStatus) {
 	if cb == nil {
 		x.xIoSeek = 0
@@ -639,6 +696,9 @@ func (x *IOFuncs) OverrideIoSeek(cb func(*IOChannel, int64, SeekType) IOStatus) 
 }
 
 // GetIoSeek gets the callback function.
+// seeks the channel.  This is called from
+//
+//	g_io_channel_seek() on channels that support it.
 func (x *IOFuncs) GetIoSeek() func(*IOChannel, int64, SeekType) IOStatus {
 	if x.xIoSeek == 0 {
 		return nil
@@ -651,6 +711,9 @@ func (x *IOFuncs) GetIoSeek() func(*IOChannel, int64, SeekType) IOStatus {
 }
 
 // OverrideIoClose sets the callback function.
+// closes the channel.  This is called from
+//
+//	g_io_channel_close() after flushing the buffers.
 func (x *IOFuncs) OverrideIoClose(cb func(*IOChannel) IOStatus) {
 	if cb == nil {
 		x.xIoClose = 0
@@ -662,6 +725,9 @@ func (x *IOFuncs) OverrideIoClose(cb func(*IOChannel) IOStatus) {
 }
 
 // GetIoClose gets the callback function.
+// closes the channel.  This is called from
+//
+//	g_io_channel_close() after flushing the buffers.
 func (x *IOFuncs) GetIoClose() func(*IOChannel) IOStatus {
 	if x.xIoClose == 0 {
 		return nil
@@ -674,6 +740,9 @@ func (x *IOFuncs) GetIoClose() func(*IOChannel) IOStatus {
 }
 
 // OverrideIoCreateWatch sets the callback function.
+// creates a watch on the channel.  This call
+//
+//	corresponds directly to g_io_create_watch().
 func (x *IOFuncs) OverrideIoCreateWatch(cb func(*IOChannel, IOCondition) *Source) {
 	if cb == nil {
 		x.xIoCreateWatch = 0
@@ -685,6 +754,9 @@ func (x *IOFuncs) OverrideIoCreateWatch(cb func(*IOChannel, IOCondition) *Source
 }
 
 // GetIoCreateWatch gets the callback function.
+// creates a watch on the channel.  This call
+//
+//	corresponds directly to g_io_create_watch().
 func (x *IOFuncs) GetIoCreateWatch() func(*IOChannel, IOCondition) *Source {
 	if x.xIoCreateWatch == 0 {
 		return nil
@@ -697,6 +769,13 @@ func (x *IOFuncs) GetIoCreateWatch() func(*IOChannel, IOCondition) *Source {
 }
 
 // OverrideIoFree sets the callback function.
+// called from g_io_channel_unref() when the channel needs to
+//
+//	be freed.  This function must free the memory associated
+//	with the channel, including freeing the #GIOChannel
+//	structure itself.  The channel buffers have been flushed
+//	and possibly @io_close has been called by the time this
+//	function is called.
 func (x *IOFuncs) OverrideIoFree(cb func(*IOChannel)) {
 	if cb == nil {
 		x.xIoFree = 0
@@ -708,6 +787,13 @@ func (x *IOFuncs) OverrideIoFree(cb func(*IOChannel)) {
 }
 
 // GetIoFree gets the callback function.
+// called from g_io_channel_unref() when the channel needs to
+//
+//	be freed.  This function must free the memory associated
+//	with the channel, including freeing the #GIOChannel
+//	structure itself.  The channel buffers have been flushed
+//	and possibly @io_close has been called by the time this
+//	function is called.
 func (x *IOFuncs) GetIoFree() func(*IOChannel) {
 	if x.xIoFree == 0 {
 		return nil
@@ -720,6 +806,11 @@ func (x *IOFuncs) GetIoFree() func(*IOChannel) {
 }
 
 // OverrideIoSetFlags sets the callback function.
+// sets the #GIOFlags on the channel.  This is called
+//
+//	from g_io_channel_set_flags() with all flags except
+//	for %G_IO_FLAG_APPEND and %G_IO_FLAG_NONBLOCK masked
+//	out.
 func (x *IOFuncs) OverrideIoSetFlags(cb func(*IOChannel, IOFlags) IOStatus) {
 	if cb == nil {
 		x.xIoSetFlags = 0
@@ -731,6 +822,11 @@ func (x *IOFuncs) OverrideIoSetFlags(cb func(*IOChannel, IOFlags) IOStatus) {
 }
 
 // GetIoSetFlags gets the callback function.
+// sets the #GIOFlags on the channel.  This is called
+//
+//	from g_io_channel_set_flags() with all flags except
+//	for %G_IO_FLAG_APPEND and %G_IO_FLAG_NONBLOCK masked
+//	out.
 func (x *IOFuncs) GetIoSetFlags() func(*IOChannel, IOFlags) IOStatus {
 	if x.xIoSetFlags == 0 {
 		return nil
@@ -743,6 +839,11 @@ func (x *IOFuncs) GetIoSetFlags() func(*IOChannel, IOFlags) IOStatus {
 }
 
 // OverrideIoGetFlags sets the callback function.
+// gets the #GIOFlags for the channel.  This function
+//
+//	need only return the %G_IO_FLAG_APPEND and
+//	%G_IO_FLAG_NONBLOCK flags; g_io_channel_get_flags()
+//	automatically adds the others as appropriate.
 func (x *IOFuncs) OverrideIoGetFlags(cb func(*IOChannel) IOFlags) {
 	if cb == nil {
 		x.xIoGetFlags = 0
@@ -754,6 +855,11 @@ func (x *IOFuncs) OverrideIoGetFlags(cb func(*IOChannel) IOFlags) {
 }
 
 // GetIoGetFlags gets the callback function.
+// gets the #GIOFlags for the channel.  This function
+//
+//	need only return the %G_IO_FLAG_APPEND and
+//	%G_IO_FLAG_NONBLOCK flags; g_io_channel_get_flags()
+//	automatically adds the others as appropriate.
 func (x *IOFuncs) GetIoGetFlags() func(*IOChannel) IOFlags {
 	if x.xIoGetFlags == 0 {
 		return nil
@@ -769,6 +875,33 @@ const (
 	WIN32_MSG_HANDLE int = 19981206
 )
 
+// A bitwise combination representing a condition to watch for on an
+// event source.
+type IOCondition int
+
+var xIOConditionGLibType func() types.GType
+
+func IOConditionGLibType() types.GType {
+	return xIOConditionGLibType()
+}
+
+const (
+
+	// There is data to read.
+	GIoInValue IOCondition = 1
+	// Data can be written (without blocking).
+	GIoOutValue IOCondition = 4
+	// There is urgent data to read.
+	GIoPriValue IOCondition = 2
+	// Error condition.
+	GIoErrValue IOCondition = 8
+	// Hung up (the connection has been broken, usually for
+	//            pipes and sockets).
+	GIoHupValue IOCondition = 16
+	// Invalid request. The file descriptor is not open.
+	GIoNvalValue IOCondition = 32
+)
+
 // Specifies properties of a #GIOChannel. Some of the flags can only be
 // read with g_io_channel_get_flags(), but not changed with
 // g_io_channel_set_flags().
@@ -776,6 +909,8 @@ type IOFlags int
 
 const (
 
+	// no special flags set. Since: 2.74
+	GIoFlagNoneValue IOFlags = 0
 	// turns on append mode, corresponds to %O_APPEND
 	//     (see the documentation of the UNIX open() syscall)
 	GIoFlagAppendValue IOFlags = 1
@@ -934,11 +1069,13 @@ func IoCreateWatch(ChannelVar *IOChannel, ConditionVar IOCondition) *Source {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
+
+	core.PuregoSafeRegister(&xIOConditionGLibType, lib, "g_io_condition_get_type")
 
 	core.PuregoSafeRegister(&xIoAddWatch, lib, "g_io_add_watch")
 	core.PuregoSafeRegister(&xIoAddWatchFull, lib, "g_io_add_watch_full")

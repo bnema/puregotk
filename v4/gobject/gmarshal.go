@@ -20,9 +20,10 @@ func CclosureMarshalBOOLEANBOXEDBOXED(ClosureVar *Closure, ReturnValueVar *Value
 
 var xCclosureMarshalBOOLEANFLAGS func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `gboolean (*callback) (gpointer instance, gint arg1, gpointer user_data)` where the #gint parameter
-// denotes a flags type.
+// A #GClosureMarshal function for use with signals with handlers that
+// take a flags type as an argument and return a boolean.  If you have
+// such a signal, you will probably also need to use an accumulator,
+// such as g_signal_accumulator_true_handled().
 func CclosureMarshalBOOLEANFLAGS(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalBOOLEANFLAGS(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -31,8 +32,9 @@ func CclosureMarshalBOOLEANFLAGS(ClosureVar *Closure, ReturnValueVar *Value, NPa
 
 var xCclosureMarshalSTRINGOBJECTPOINTER func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `gchar* (*callback) (gpointer instance, GObject *arg1, gpointer arg2, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with handlers that
+// take a #GObject and a pointer and produce a string.  It is highly
+// unlikely that your signal handler fits this description.
 func CclosureMarshalSTRINGOBJECTPOINTER(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalSTRINGOBJECTPOINTER(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -41,8 +43,8 @@ func CclosureMarshalSTRINGOBJECTPOINTER(ClosureVar *Closure, ReturnValueVar *Val
 
 var xCclosureMarshalVOIDBOOLEAN func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, gboolean arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single
+// boolean argument.
 func CclosureMarshalVOIDBOOLEAN(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDBOOLEAN(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -51,8 +53,8 @@ func CclosureMarshalVOIDBOOLEAN(ClosureVar *Closure, ReturnValueVar *Value, NPar
 
 var xCclosureMarshalVOIDBOXED func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, GBoxed *arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single
+// argument which is any boxed pointer type.
 func CclosureMarshalVOIDBOXED(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDBOXED(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -61,8 +63,8 @@ func CclosureMarshalVOIDBOXED(ClosureVar *Closure, ReturnValueVar *Value, NParam
 
 var xCclosureMarshalVOIDCHAR func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, gchar arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single
+// character argument.
 func CclosureMarshalVOIDCHAR(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDCHAR(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -71,8 +73,8 @@ func CclosureMarshalVOIDCHAR(ClosureVar *Closure, ReturnValueVar *Value, NParamV
 
 var xCclosureMarshalVOIDDOUBLE func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, gdouble arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with one
+// double-precision floating point argument.
 func CclosureMarshalVOIDDOUBLE(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDDOUBLE(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -81,8 +83,8 @@ func CclosureMarshalVOIDDOUBLE(ClosureVar *Closure, ReturnValueVar *Value, NPara
 
 var xCclosureMarshalVOIDENUM func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, gint arg1, gpointer user_data)` where the #gint parameter denotes an enumeration type..
+// A #GClosureMarshal function for use with signals with a single
+// argument with an enumerated type.
 func CclosureMarshalVOIDENUM(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDENUM(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -91,8 +93,8 @@ func CclosureMarshalVOIDENUM(ClosureVar *Closure, ReturnValueVar *Value, NParamV
 
 var xCclosureMarshalVOIDFLAGS func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, gint arg1, gpointer user_data)` where the #gint parameter denotes a flags type.
+// A #GClosureMarshal function for use with signals with a single
+// argument with a flags types.
 func CclosureMarshalVOIDFLAGS(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDFLAGS(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -101,8 +103,8 @@ func CclosureMarshalVOIDFLAGS(ClosureVar *Closure, ReturnValueVar *Value, NParam
 
 var xCclosureMarshalVOIDFLOAT func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, gfloat arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with one
+// single-precision floating point argument.
 func CclosureMarshalVOIDFLOAT(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDFLOAT(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -111,8 +113,8 @@ func CclosureMarshalVOIDFLOAT(ClosureVar *Closure, ReturnValueVar *Value, NParam
 
 var xCclosureMarshalVOIDINT func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, gint arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single
+// integer argument.
 func CclosureMarshalVOIDINT(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDINT(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -121,8 +123,8 @@ func CclosureMarshalVOIDINT(ClosureVar *Closure, ReturnValueVar *Value, NParamVa
 
 var xCclosureMarshalVOIDLONG func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, glong arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with with a single
+// long integer argument.
 func CclosureMarshalVOIDLONG(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDLONG(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -131,8 +133,8 @@ func CclosureMarshalVOIDLONG(ClosureVar *Closure, ReturnValueVar *Value, NParamV
 
 var xCclosureMarshalVOIDOBJECT func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, GObject *arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single
+// #GObject argument.
 func CclosureMarshalVOIDOBJECT(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDOBJECT(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -141,8 +143,8 @@ func CclosureMarshalVOIDOBJECT(ClosureVar *Closure, ReturnValueVar *Value, NPara
 
 var xCclosureMarshalVOIDPARAM func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, GParamSpec *arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single
+// argument of type #GParamSpec.
 func CclosureMarshalVOIDPARAM(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDPARAM(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -151,8 +153,12 @@ func CclosureMarshalVOIDPARAM(ClosureVar *Closure, ReturnValueVar *Value, NParam
 
 var xCclosureMarshalVOIDPOINTER func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, gpointer arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single raw
+// pointer argument type.
+//
+// If it is possible, it is better to use one of the more specific
+// functions such as g_cclosure_marshal_VOID__OBJECT() or
+// g_cclosure_marshal_VOID__OBJECT().
 func CclosureMarshalVOIDPOINTER(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDPOINTER(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -161,8 +167,8 @@ func CclosureMarshalVOIDPOINTER(ClosureVar *Closure, ReturnValueVar *Value, NPar
 
 var xCclosureMarshalVOIDSTRING func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, const gchar *arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single string
+// argument.
 func CclosureMarshalVOIDSTRING(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDSTRING(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -171,8 +177,8 @@ func CclosureMarshalVOIDSTRING(ClosureVar *Closure, ReturnValueVar *Value, NPara
 
 var xCclosureMarshalVOIDUCHAR func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, guchar arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single
+// unsigned character argument.
 func CclosureMarshalVOIDUCHAR(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDUCHAR(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -181,8 +187,8 @@ func CclosureMarshalVOIDUCHAR(ClosureVar *Closure, ReturnValueVar *Value, NParam
 
 var xCclosureMarshalVOIDUINT func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, guint arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with with a single
+// unsigned integer argument.
 func CclosureMarshalVOIDUINT(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDUINT(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -191,8 +197,8 @@ func CclosureMarshalVOIDUINT(ClosureVar *Closure, ReturnValueVar *Value, NParamV
 
 var xCclosureMarshalVOIDUINTPOINTER func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, guint arg1, gpointer arg2, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with an unsigned int
+// and a pointer as arguments.
 func CclosureMarshalVOIDUINTPOINTER(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDUINTPOINTER(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -201,8 +207,8 @@ func CclosureMarshalVOIDUINTPOINTER(ClosureVar *Closure, ReturnValueVar *Value, 
 
 var xCclosureMarshalVOIDULONG func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, gulong arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single
+// unsigned long integer argument.
 func CclosureMarshalVOIDULONG(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDULONG(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -211,8 +217,8 @@ func CclosureMarshalVOIDULONG(ClosureVar *Closure, ReturnValueVar *Value, NParam
 
 var xCclosureMarshalVOIDVARIANT func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, GVariant *arg1, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with a single
+// #GVariant argument.
 func CclosureMarshalVOIDVARIANT(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDVARIANT(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
@@ -221,8 +227,7 @@ func CclosureMarshalVOIDVARIANT(ClosureVar *Closure, ReturnValueVar *Value, NPar
 
 var xCclosureMarshalVOIDVOID func(*Closure, *Value, uint, *Value, uintptr, uintptr)
 
-// A marshaller for a #GCClosure with a callback of type
-// `void (*callback) (gpointer instance, gpointer user_data)`.
+// A #GClosureMarshal function for use with signals with no arguments.
 func CclosureMarshalVOIDVOID(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
 
 	xCclosureMarshalVOIDVOID(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)

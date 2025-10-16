@@ -42,7 +42,7 @@ func (x *TreeListRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkTreeListModel` is a list model that can create child models on demand.
+// A list model that can create child models on demand.
 type TreeListModel struct {
 	gobject.Object
 }
@@ -293,7 +293,7 @@ func (x *TreeListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar
 
 }
 
-// `GtkTreeListRow` is used by `GtkTreeListModel` to represent items.
+// The type of item used by `GtkTreeListModel`.
 //
 // It allows navigating the model as a tree and modify the state of rows.
 //
@@ -367,7 +367,8 @@ var xTreeListRowGetDepth func(uintptr) uint
 // of zero, rows corresponding to items of models of direct children
 // of the root model have a depth of 1 and so on.
 //
-// The depth of a row never changes until the row is destroyed.
+// The depth of a row never changes until the row is removed from its model
+// at which point it will forever return 0.
 func (x *TreeListRow) GetDepth() uint {
 
 	cret := xTreeListRowGetDepth(x.GoPointer())
@@ -386,9 +387,6 @@ func (x *TreeListRow) GetExpanded() bool {
 var xTreeListRowGetItem func(uintptr) uintptr
 
 // Gets the item corresponding to this row,
-//
-// The value returned by this function never changes until the
-// row is destroyed.
 func (x *TreeListRow) GetItem() *gobject.Object {
 	var cls *gobject.Object
 
@@ -413,7 +411,8 @@ var xTreeListRowGetParent func(uintptr) uintptr
 // %NULL is returned.
 //
 // The value returned by this function never changes
-// until the row is destroyed.
+// until the row is removed from its model at which point
+// it will forever return %NULL.
 func (x *TreeListRow) GetParent() *TreeListRow {
 	var cls *TreeListRow
 
@@ -444,7 +443,8 @@ var xTreeListRowIsExpandable func(uintptr) bool
 // This does not mean that the row is actually expanded,
 // this can be checked with [method@Gtk.TreeListRow.get_expanded].
 //
-// If a row is expandable never changes until the row is destroyed.
+// If a row is expandable never changes until the row is removed
+// from its model at which point it will forever return %FALSE.
 func (x *TreeListRow) IsExpandable() bool {
 
 	cret := xTreeListRowIsExpandable(x.GoPointer())

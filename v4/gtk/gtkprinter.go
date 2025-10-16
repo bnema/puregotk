@@ -18,6 +18,7 @@ import (
 // a reference to it after the function has returned.
 type PrinterFunc func(uintptr, uintptr) bool
 
+// A print backend.
 type PrintBackend struct {
 	_ structs.HostLayout
 }
@@ -69,16 +70,16 @@ const (
 
 var xEnumeratePrinters func(uintptr, uintptr, uintptr, bool)
 
-// Calls a function for all `GtkPrinter`s.
+// Calls a function for all printers that are known to GTK.
 //
-// If @func returns %TRUE, the enumeration is stopped.
+// If @func returns true, the enumeration is stopped.
 func EnumeratePrinters(FuncVar *PrinterFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify, WaitVar bool) {
 
 	xEnumeratePrinters(glib.NewCallback(FuncVar), DataVar, glib.NewCallback(DestroyVar), WaitVar)
 
 }
 
-// A `GtkPrinter` object represents a printer.
+// Represents a printer.
 //
 // You only need to deal directly with printers if you use the
 // non-portable [class@Gtk.PrintUnixDialog] API.

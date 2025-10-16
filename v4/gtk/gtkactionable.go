@@ -31,6 +31,7 @@ func (x *ActionableInterface) GoPointer() uintptr {
 }
 
 // OverrideGetActionName sets the callback function.
+// virtual function for [method@Actionable.get_action_name]
 func (x *ActionableInterface) OverrideGetActionName(cb func(Actionable) string) {
 	if cb == nil {
 		x.xGetActionName = 0
@@ -42,6 +43,7 @@ func (x *ActionableInterface) OverrideGetActionName(cb func(Actionable) string) 
 }
 
 // GetGetActionName gets the callback function.
+// virtual function for [method@Actionable.get_action_name]
 func (x *ActionableInterface) GetGetActionName() func(Actionable) string {
 	if x.xGetActionName == 0 {
 		return nil
@@ -54,6 +56,7 @@ func (x *ActionableInterface) GetGetActionName() func(Actionable) string {
 }
 
 // OverrideSetActionName sets the callback function.
+// virtual function for [method@Actionable.set_action_name]
 func (x *ActionableInterface) OverrideSetActionName(cb func(Actionable, string)) {
 	if cb == nil {
 		x.xSetActionName = 0
@@ -65,6 +68,7 @@ func (x *ActionableInterface) OverrideSetActionName(cb func(Actionable, string))
 }
 
 // GetSetActionName gets the callback function.
+// virtual function for [method@Actionable.set_action_name]
 func (x *ActionableInterface) GetSetActionName() func(Actionable, string) {
 	if x.xSetActionName == 0 {
 		return nil
@@ -77,6 +81,7 @@ func (x *ActionableInterface) GetSetActionName() func(Actionable, string) {
 }
 
 // OverrideGetActionTargetValue sets the callback function.
+// virtual function for [method@Actionable.get_action_target_value]
 func (x *ActionableInterface) OverrideGetActionTargetValue(cb func(Actionable) *glib.Variant) {
 	if cb == nil {
 		x.xGetActionTargetValue = 0
@@ -88,6 +93,7 @@ func (x *ActionableInterface) OverrideGetActionTargetValue(cb func(Actionable) *
 }
 
 // GetGetActionTargetValue gets the callback function.
+// virtual function for [method@Actionable.get_action_target_value]
 func (x *ActionableInterface) GetGetActionTargetValue() func(Actionable) *glib.Variant {
 	if x.xGetActionTargetValue == 0 {
 		return nil
@@ -100,6 +106,7 @@ func (x *ActionableInterface) GetGetActionTargetValue() func(Actionable) *glib.V
 }
 
 // OverrideSetActionTargetValue sets the callback function.
+// virtual function for [method@Actionable.set_action_target_value]
 func (x *ActionableInterface) OverrideSetActionTargetValue(cb func(Actionable, *glib.Variant)) {
 	if cb == nil {
 		x.xSetActionTargetValue = 0
@@ -111,6 +118,7 @@ func (x *ActionableInterface) OverrideSetActionTargetValue(cb func(Actionable, *
 }
 
 // GetSetActionTargetValue gets the callback function.
+// virtual function for [method@Actionable.set_action_target_value]
 func (x *ActionableInterface) GetSetActionTargetValue() func(Actionable, *glib.Variant) {
 	if x.xSetActionTargetValue == 0 {
 		return nil
@@ -122,8 +130,7 @@ func (x *ActionableInterface) GetSetActionTargetValue() func(Actionable, *glib.V
 	}
 }
 
-// The `GtkActionable` interface provides a convenient way of asscociating
-// widgets with actions.
+// Provides a way to associate widgets with actions.
 //
 // It primarily consists of two properties: [property@Gtk.Actionable:action-name]
 // and [property@Gtk.Actionable:action-target]. There are also some convenience

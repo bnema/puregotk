@@ -22,8 +22,8 @@ func (x *TlsServerConnectionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GTlsServerConnection is the server-side subclass of #GTlsConnection,
-// representing a server-side TLS connection.
+// `GTlsServerConnection` is the server-side subclass of
+// [class@Gio.TlsConnection], representing a server-side TLS connection.
 type TlsServerConnection interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

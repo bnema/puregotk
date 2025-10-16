@@ -19,7 +19,7 @@ func (x *DragSurfaceInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A `GdkDragSurface` is an interface for surfaces used during DND.
+// A surface that is used during DND.
 type DragSurface interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

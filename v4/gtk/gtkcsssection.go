@@ -42,6 +42,26 @@ func NewCssSection(FileVar gio.File, StartVar *CssLocation, EndVar *CssLocation)
 	return cret
 }
 
+var xNewCssSectionWithBytes func(uintptr, *glib.Bytes, *CssLocation, *CssLocation) *CssSection
+
+// Creates a new `GtkCssSection` referring to the section
+// in the given `file` or the given `bytes` from the `start` location to the
+// `end` location.
+func NewCssSectionWithBytes(FileVar gio.File, BytesVar *glib.Bytes, StartVar *CssLocation, EndVar *CssLocation) *CssSection {
+
+	cret := xNewCssSectionWithBytes(FileVar.GoPointer(), BytesVar, StartVar, EndVar)
+	return cret
+}
+
+var xCssSectionGetBytes func(uintptr) *glib.Bytes
+
+// Gets the bytes that @section was parsed from.
+func (x *CssSection) GetBytes() *glib.Bytes {
+
+	cret := xCssSectionGetBytes(x.GoPointer())
+	return cret
+}
+
 var xCssSectionGetEndLocation func(uintptr) *CssLocation
 
 // Returns the location in the CSS document where this section ends.
@@ -76,7 +96,7 @@ var xCssSectionGetParent func(uintptr) *CssSection
 // Gets the parent section for the given `section`.
 //
 // The parent section is the section that contains this `section`. A special
-// case are sections of  type `GTK_CSS_SECTION_DOCUMEN`T. Their parent will
+// case are sections of  type `GTK_CSS_SECTION_DOCUMENT`. Their parent will
 // either be `NULL` if they are the original CSS document that was loaded by
 // [method@Gtk.CssProvider.load_from_file] or a section of type
 // `GTK_CSS_SECTION_IMPORT` if it was loaded with an `@import` rule from
@@ -148,7 +168,9 @@ func init() {
 	core.PuregoSafeRegister(&xCssSectionGLibType, lib, "gtk_css_section_get_type")
 
 	core.PuregoSafeRegister(&xNewCssSection, lib, "gtk_css_section_new")
+	core.PuregoSafeRegister(&xNewCssSectionWithBytes, lib, "gtk_css_section_new_with_bytes")
 
+	core.PuregoSafeRegister(&xCssSectionGetBytes, lib, "gtk_css_section_get_bytes")
 	core.PuregoSafeRegister(&xCssSectionGetEndLocation, lib, "gtk_css_section_get_end_location")
 	core.PuregoSafeRegister(&xCssSectionGetFile, lib, "gtk_css_section_get_file")
 	core.PuregoSafeRegister(&xCssSectionGetParent, lib, "gtk_css_section_get_parent")

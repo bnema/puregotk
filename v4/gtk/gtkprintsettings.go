@@ -12,6 +12,8 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
+// Function called by [method@Gtk.PrintSettings.foreach] on every key/value pair
+// inside a [class@Gtk.PrintSettings].
 type PrintSettingsFunc func(string, string, uintptr)
 
 // A range of pages to print.
@@ -30,30 +32,37 @@ func (x *PageRange) GoPointer() uintptr {
 }
 
 const (
+	// The key used by the “Print to file” printer to store whether to collate the
+	// printed pages.
 	PRINT_SETTINGS_COLLATE string = "collate"
-
+	// The key used by the “Print to file” printer to store the default source.
 	PRINT_SETTINGS_DEFAULT_SOURCE string = "default-source"
-
+	// The key used by the “Print to file” printer to store the dither used.
 	PRINT_SETTINGS_DITHER string = "dither"
-
+	// The key used by the “Print to file” printer to store whether to print the
+	// output in duplex.
 	PRINT_SETTINGS_DUPLEX string = "duplex"
-
+	// The key used by the “Print to file” printer to store the finishings.
 	PRINT_SETTINGS_FINISHINGS string = "finishings"
-
+	// The key used by the “Print to file” printer to store the media type.
+	//
+	// The set of media types is defined in PWG 5101.1-2002 PWG.
 	PRINT_SETTINGS_MEDIA_TYPE string = "media-type"
-
+	// The key used by the “Print to file” printer to store the number of pages per
+	// sheet.
 	PRINT_SETTINGS_NUMBER_UP string = "number-up"
-
+	// The key used by the “Print to file” printer to store the number of pages per
+	// sheet in number-up mode.
 	PRINT_SETTINGS_NUMBER_UP_LAYOUT string = "number-up-layout"
-
+	// The key used by the “Print to file” printer to store the number of copies.
 	PRINT_SETTINGS_N_COPIES string = "n-copies"
-
+	// The key used by the “Print to file” printer to store the orientation.
 	PRINT_SETTINGS_ORIENTATION string = "orientation"
 	// The key used by the “Print to file” printer to store the file
 	// name of the output without the path to the directory and the
 	// file extension.
 	PRINT_SETTINGS_OUTPUT_BASENAME string = "output-basename"
-
+	// The key used by the “Print to file” printer to store the output bin.
 	PRINT_SETTINGS_OUTPUT_BIN string = "output-bin"
 	// The key used by the “Print to file” printer to store the
 	// directory to which the output should be written.
@@ -65,44 +74,51 @@ const (
 	// to which the output should be written. GTK itself supports
 	// only “file://” URIs.
 	PRINT_SETTINGS_OUTPUT_URI string = "output-uri"
-
+	// The key used by the “Print to file” printer to store the array of page ranges
+	// to print.
 	PRINT_SETTINGS_PAGE_RANGES string = "page-ranges"
-
+	// The key used by the “Print to file” printer to store the set of pages to print.
 	PRINT_SETTINGS_PAGE_SET string = "page-set"
-
+	// The key used by the “Print to file” printer to store the page format.
 	PRINT_SETTINGS_PAPER_FORMAT string = "paper-format"
-
+	// The key used by the “Print to file” printer to store the page height.
 	PRINT_SETTINGS_PAPER_HEIGHT string = "paper-height"
-
+	// The key used by the “Print to file” printer to store the paper width.
 	PRINT_SETTINGS_PAPER_WIDTH string = "paper-width"
-
+	// The key used by the “Print to file” printer to store the printer name.
 	PRINT_SETTINGS_PRINTER string = "printer"
-
+	// The key used by the “Print to file” printer to store the resolution in lines
+	// per inch.
 	PRINT_SETTINGS_PRINTER_LPI string = "printer-lpi"
-
+	// The key used by the “Print to file” printer to store which pages to print.
 	PRINT_SETTINGS_PRINT_PAGES string = "print-pages"
-
+	// The key used by the “Print to file” printer to store the printing quality.
 	PRINT_SETTINGS_QUALITY string = "quality"
-
+	// The key used by the “Print to file” printer to store the resolution in DPI.
 	PRINT_SETTINGS_RESOLUTION string = "resolution"
-
+	// The key used by the “Print to file” printer to store the horizontal
+	// resolution in DPI.
 	PRINT_SETTINGS_RESOLUTION_X string = "resolution-x"
-
+	// The key used by the “Print to file” printer to store the vertical resolution
+	// in DPI.
 	PRINT_SETTINGS_RESOLUTION_Y string = "resolution-y"
-
+	// The key used by the “Print to file” printer to store whether to reverse the
+	// order of the printed pages.
 	PRINT_SETTINGS_REVERSE string = "reverse"
-
+	// The key used by the “Print to file” printer to store the scale.
 	PRINT_SETTINGS_SCALE string = "scale"
-
+	// The key used by the “Print to file” printer to store whether to print with
+	// colors.
 	PRINT_SETTINGS_USE_COLOR string = "use-color"
-
+	// The key used by the “Print to file” printer to store 32-bit Windows extra
+	// driver.
 	PRINT_SETTINGS_WIN32_DRIVER_EXTRA string = "win32-driver-extra"
-
+	// The key used by the “Print to file” printer to store the 32-bit Windows
+	// driver version.
 	PRINT_SETTINGS_WIN32_DRIVER_VERSION string = "win32-driver-version"
 )
 
-// A `GtkPrintSettings` object represents the settings of a print dialog in
-// a system-independent way.
+// Collects the settings of a print dialog in a system-independent way.
 //
 // The main use for this object is that once you’ve printed you can get a
 // settings object that represents the settings the user chose, and the next

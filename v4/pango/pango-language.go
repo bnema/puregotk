@@ -65,7 +65,7 @@ func LanguageGetDefault() *Language {
 	return cret
 }
 
-var xLanguageGetPreferred func() **Language
+var xLanguageGetPreferred func() uintptr
 
 // Returns the list of languages that the user prefers.
 //
@@ -78,7 +78,7 @@ var xLanguageGetPreferred func() **Language
 // text returned by [method@Pango.Language.get_sample_string],
 // you should first try the default language, followed by the
 // languages returned by this function.
-func LanguageGetPreferred() **Language {
+func LanguageGetPreferred() uintptr {
 
 	cret := xLanguageGetPreferred()
 	return cret

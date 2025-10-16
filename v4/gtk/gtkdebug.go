@@ -36,16 +36,14 @@ const (
 	DebugIconthemeValue DebugFlags = 32
 	// Information about printing
 	DebugPrintingValue DebugFlags = 64
-	// Trace GtkBuilder operation
-	DebugBuilderValue DebugFlags = 128
+
+	DebugBuilderTraceValue DebugFlags = 128
 	// Information about size requests
 	DebugSizeRequestValue DebugFlags = 256
 	// Disable the style property cache
 	DebugNoCssCacheValue DebugFlags = 512
 	// Open the GTK inspector
 	DebugInteractiveValue DebugFlags = 1024
-	// Pretend the pointer is a touchscreen
-	DebugTouchscreenValue DebugFlags = 2048
 	// Information about actions and menu models
 	DebugActionsValue DebugFlags = 4096
 	// Information from layout managers
@@ -58,10 +56,14 @@ const (
 	DebugBuilderObjectsValue DebugFlags = 65536
 	// Information about accessibility state changes
 	DebugA11yValue DebugFlags = 131072
-	// Information about icon fallback. Since: 4.2
+	// Information about icon fallback.
 	DebugIconfallbackValue DebugFlags = 262144
-
+	// Inverts the default text-direction.
 	DebugInvertTextDirValue DebugFlags = 524288
+	// Information about deprecated CSS features.
+	DebugCssValue DebugFlags = 1048576
+	// Trace GtkBuilder operation
+	DebugBuilderValue DebugFlags = 2097152
 )
 
 var xGetDebugFlags func() DebugFlags

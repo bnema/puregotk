@@ -19,7 +19,7 @@ func (x *ToplevelInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A `GdkToplevel` is a freestanding toplevel surface.
+// A freestanding toplevel surface.
 //
 // The `GdkToplevel` interface provides useful APIs for interacting with
 // the windowing system, such as controlling maximization and size of the
@@ -89,8 +89,9 @@ func (x *ToplevelBase) BeginResize(EdgeVar SurfaceEdge, DeviceVar *Device, Butto
 
 // Sets keyboard focus to @surface.
 //
-// In most cases, [method@Gtk.Window.present_with_time] should be
-// used on a [class@Gtk.Window], rather than calling this function.
+// In most cases, [gtk_window_present_with_time()](../gtk4/method.Window.present_with_time.html)
+// should be used on a [GtkWindow](../gtk4/class.Window.html), rather than
+// calling this function.
 func (x *ToplevelBase) Focus(TimestampVar uint32) {
 
 	XGdkToplevelFocus(x.GoPointer(), TimestampVar)
@@ -231,8 +232,8 @@ func (x *ToplevelBase) SetModal(ModalVar bool) {
 // Sets the startup notification ID.
 //
 // When using GTK, typically you should use
-// [method@Gtk.Window.set_startup_id] instead of this
-// low-level function.
+// [gtk_window_set_startup_id()](../gtk4/method.Window.set_startup_id.html)
+// instead of this low-level function.
 func (x *ToplevelBase) SetStartupId(StartupIdVar string) {
 
 	XGdkToplevelSetStartupId(x.GoPointer(), StartupIdVar)
@@ -256,8 +257,8 @@ func (x *ToplevelBase) SetTitle(TitleVar string) {
 // allows the window manager to do things like center @surface
 // on @parent and keep @surface above @parent.
 //
-// See [method@Gtk.Window.set_transient_for] if you’re using
-// [class@Gtk.Window] or [class@Gtk.Dialog].
+// See [gtk_window_set_transient_for()](../gtk4/method.Window.set_transient_for.html)
+// if you’re using [GtkWindow](../gtk4/class.Window.html).
 func (x *ToplevelBase) SetTransientFor(ParentVar *Surface) {
 
 	XGdkToplevelSetTransientFor(x.GoPointer(), ParentVar.GoPointer())
@@ -284,6 +285,7 @@ func (x *ToplevelBase) SupportsEdgeConstraints() bool {
 	return cret
 }
 
+// Performs a title bar gesture.
 func (x *ToplevelBase) TitlebarGesture(GestureVar TitlebarGesture) bool {
 
 	cret := XGdkToplevelTitlebarGesture(x.GoPointer(), GestureVar)
@@ -359,6 +361,8 @@ const (
 	ToplevelStateLeftTiledValue ToplevelState = 16384
 	// whether the left edge is resizable
 	ToplevelStateLeftResizableValue ToplevelState = 32768
+	// The surface is not visible to the user.
+	ToplevelStateSuspendedValue ToplevelState = 65536
 )
 
 // Indicates which monitor a surface should span over when in fullscreen mode.
@@ -407,6 +411,26 @@ const (
 	SurfaceEdgeSouthEastValue SurfaceEdge = 7
 )
 
+// The kind of title bar gesture to emit with
+// [method@Gdk.Toplevel.titlebar_gesture].
+type TitlebarGesture int
+
+var xTitlebarGestureGLibType func() types.GType
+
+func TitlebarGestureGLibType() types.GType {
+	return xTitlebarGestureGLibType()
+}
+
+const (
+
+	// double click gesture
+	TitlebarGestureDoubleClickValue TitlebarGesture = 1
+	// right click gesture
+	TitlebarGestureRightClickValue TitlebarGesture = 2
+	// middle click gesture
+	TitlebarGestureMiddleClickValue TitlebarGesture = 3
+)
+
 func init() {
 	core.SetPackageName("GDK", "gtk4")
 	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
@@ -420,6 +444,8 @@ func init() {
 	core.PuregoSafeRegister(&xFullscreenModeGLibType, lib, "gdk_fullscreen_mode_get_type")
 
 	core.PuregoSafeRegister(&xSurfaceEdgeGLibType, lib, "gdk_surface_edge_get_type")
+
+	core.PuregoSafeRegister(&xTitlebarGestureGLibType, lib, "gdk_titlebar_gesture_get_type")
 
 	core.PuregoSafeRegister(&xToplevelGLibType, lib, "gdk_toplevel_get_type")
 

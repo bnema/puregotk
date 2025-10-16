@@ -20,8 +20,7 @@ func (x *EventControllerMotionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkEventControllerMotion` is an event controller tracking the pointer
-// position.
+// Tracks the pointer position.
 //
 // The event controller offers [signal@Gtk.EventControllerMotion::enter]
 // and [signal@Gtk.EventControllerMotion::leave] signals, as well as

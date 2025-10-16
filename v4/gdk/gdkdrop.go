@@ -10,7 +10,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The `GdkDrop` object represents the target of an ongoing DND operation.
+// Represents the target of an ongoing DND operation.
 //
 // Possible drop sites get informed about the status of the ongoing drag
 // operation with events of type %GDK_DRAG_ENTER, %GDK_DRAG_LEAVE,
@@ -197,10 +197,6 @@ var xDropReadValueAsync func(uintptr, types.GType, int, uintptr, uintptr, uintpt
 
 // Asynchronously request the drag operation's contents converted
 // to the given @type.
-//
-// When the operation is finished @callback will be called. You must
-// then call [method@Gdk.Drop.read_value_finish] to get the resulting
-// `GValue`.
 //
 // For local drag-and-drop operations that are available in the given
 // `GType`, the value will be copied directly. Otherwise, GDK will

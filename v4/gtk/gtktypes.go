@@ -10,9 +10,9 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// A `GtkBitset` represents a set of unsigned integers.
+// A set of unsigned integers.
 //
-// Another name for this data structure is "bitmap".
+// Another name for this data structure is “bitmap”.
 //
 // The current implementation is based on [roaring bitmaps](https://roaringbitmap.org/).
 //
@@ -362,12 +362,96 @@ func (x *Bitset) Unref() {
 
 }
 
+// A CSS style change.
 type CssStyleChange struct {
 	_ structs.HostLayout
 }
 
 func (x *CssStyleChange) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// Provides detailed information on how a scroll operation should be performed.
+//
+// Scrolling functions usually allow passing a `NULL` scroll info which will
+// cause the default values to be used and just scroll the element into view.
+type ScrollInfo struct {
+	_ structs.HostLayout
+}
+
+var xScrollInfoGLibType func() types.GType
+
+func ScrollInfoGLibType() types.GType {
+	return xScrollInfoGLibType()
+}
+
+func (x *ScrollInfo) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewScrollInfo func() *ScrollInfo
+
+// Creates a new scroll info for scrolling an element into view.
+func NewScrollInfo() *ScrollInfo {
+
+	cret := xNewScrollInfo()
+	return cret
+}
+
+var xScrollInfoGetEnableHorizontal func(uintptr) bool
+
+// Checks if horizontal scrolling is enabled.
+func (x *ScrollInfo) GetEnableHorizontal() bool {
+
+	cret := xScrollInfoGetEnableHorizontal(x.GoPointer())
+	return cret
+}
+
+var xScrollInfoGetEnableVertical func(uintptr) bool
+
+// Checks if vertical scrolling is enabled.
+func (x *ScrollInfo) GetEnableVertical() bool {
+
+	cret := xScrollInfoGetEnableVertical(x.GoPointer())
+	return cret
+}
+
+var xScrollInfoRef func(uintptr) *ScrollInfo
+
+// Increases the reference count of a `GtkScrollInfo` by one.
+func (x *ScrollInfo) Ref() *ScrollInfo {
+
+	cret := xScrollInfoRef(x.GoPointer())
+	return cret
+}
+
+var xScrollInfoSetEnableHorizontal func(uintptr, bool)
+
+// Turns horizontal scrolling on or off.
+func (x *ScrollInfo) SetEnableHorizontal(HorizontalVar bool) {
+
+	xScrollInfoSetEnableHorizontal(x.GoPointer(), HorizontalVar)
+
+}
+
+var xScrollInfoSetEnableVertical func(uintptr, bool)
+
+// Turns vertical scrolling on or off.
+func (x *ScrollInfo) SetEnableVertical(VerticalVar bool) {
+
+	xScrollInfoSetEnableVertical(x.GoPointer(), VerticalVar)
+
+}
+
+var xScrollInfoUnref func(uintptr)
+
+// Decreases the reference count of a `GtkScrollInfo` by one.
+//
+// If the resulting reference count is zero, frees the self.
+func (x *ScrollInfo) Unref() {
+
+	xScrollInfoUnref(x.GoPointer())
+
 }
 
 const (
@@ -423,5 +507,16 @@ func init() {
 	core.PuregoSafeRegister(&xBitsetSubtract, lib, "gtk_bitset_subtract")
 	core.PuregoSafeRegister(&xBitsetUnion, lib, "gtk_bitset_union")
 	core.PuregoSafeRegister(&xBitsetUnref, lib, "gtk_bitset_unref")
+
+	core.PuregoSafeRegister(&xScrollInfoGLibType, lib, "gtk_scroll_info_get_type")
+
+	core.PuregoSafeRegister(&xNewScrollInfo, lib, "gtk_scroll_info_new")
+
+	core.PuregoSafeRegister(&xScrollInfoGetEnableHorizontal, lib, "gtk_scroll_info_get_enable_horizontal")
+	core.PuregoSafeRegister(&xScrollInfoGetEnableVertical, lib, "gtk_scroll_info_get_enable_vertical")
+	core.PuregoSafeRegister(&xScrollInfoRef, lib, "gtk_scroll_info_ref")
+	core.PuregoSafeRegister(&xScrollInfoSetEnableHorizontal, lib, "gtk_scroll_info_set_enable_horizontal")
+	core.PuregoSafeRegister(&xScrollInfoSetEnableVertical, lib, "gtk_scroll_info_set_enable_vertical")
+	core.PuregoSafeRegister(&xScrollInfoUnref, lib, "gtk_scroll_info_unref")
 
 }

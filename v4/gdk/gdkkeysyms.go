@@ -6,6 +6,10 @@ const (
 
 	KEY_1 int = 49
 
+	KEY_10ChannelsDown int = 268964281
+
+	KEY_10ChannelsUp int = 268964280
+
 	KEY_2 int = 50
 
 	KEY_3 int = 51
@@ -70,6 +74,8 @@ const (
 
 	KEY_3270_Test int = 64781
 
+	KEY_3DMode int = 268964463
+
 	KEY_4 int = 52
 
 	KEY_5 int = 53
@@ -85,6 +91,8 @@ const (
 	KEY_A int = 65
 
 	KEY_AE int = 198
+
+	KEY_ALSToggle int = 268964400
 
 	KEY_Aacute int = 193
 
@@ -106,6 +114,8 @@ const (
 
 	KEY_AccessX_Feedback_Enable int = 65137
 
+	KEY_Accessibility int = 268964430
+
 	KEY_Acircumflex int = 194
 
 	KEY_Acircumflexacute int = 16785060
@@ -120,6 +130,8 @@ const (
 
 	KEY_AddFavorite int = 269025081
 
+	KEY_Addressbook int = 268964269
+
 	KEY_Adiaeresis int = 196
 
 	KEY_Agrave int = 192
@@ -133,6 +145,8 @@ const (
 	KEY_Amacron int = 960
 
 	KEY_Aogonek int = 417
+
+	KEY_AppSelect int = 268964420
 
 	KEY_ApplicationLeft int = 269025104
 
@@ -480,11 +494,25 @@ const (
 
 	KEY_Armenian_zhe int = 16778602
 
+	KEY_AspectRatio int = 268964215
+
+	KEY_Assistant int = 268964423
+
 	KEY_Atilde int = 195
+
+	KEY_AttendantOff int = 268964380
+
+	KEY_AttendantOn int = 268964379
+
+	KEY_AttendantToggle int = 268964381
 
 	KEY_AudibleBell_Enable int = 65146
 
+	KEY_Audio int = 268964232
+
 	KEY_AudioCycleTrack int = 269025179
+
+	KEY_AudioDesc int = 268964462
 
 	KEY_AudioForward int = 269025175
 
@@ -518,6 +546,8 @@ const (
 
 	KEY_AudioStop int = 269025045
 
+	KEY_AutopilotEngageToggle int = 268964477
+
 	KEY_Away int = 269025165
 
 	KEY_B int = 66
@@ -546,6 +576,14 @@ const (
 
 	KEY_BrightnessAdjust int = 269025083
 
+	KEY_BrightnessAuto int = 268964084
+
+	KEY_BrightnessMax int = 268964433
+
+	KEY_BrightnessMin int = 268964432
+
+	KEY_Buttonconfig int = 268964416
+
 	KEY_Byelorussian_SHORTU int = 1726
 
 	KEY_Byelorussian_shortu int = 1710
@@ -568,6 +606,26 @@ const (
 
 	KEY_Calendar int = 269025056
 
+	KEY_CameraAccessDisable int = 268964428
+
+	KEY_CameraAccessEnable int = 268964427
+
+	KEY_CameraAccessToggle int = 268964429
+
+	KEY_CameraDown int = 268964376
+
+	KEY_CameraFocus int = 268964368
+
+	KEY_CameraLeft int = 268964377
+
+	KEY_CameraRight int = 268964378
+
+	KEY_CameraUp int = 268964375
+
+	KEY_CameraZoomIn int = 268964373
+
+	KEY_CameraZoomOut int = 268964374
+
 	KEY_Cancel int = 65385
 
 	KEY_Caps_Lock int = 65509
@@ -580,9 +638,15 @@ const (
 
 	KEY_Ch int = 65185
 
+	KEY_ChannelDown int = 268964243
+
+	KEY_ChannelUp int = 268964242
+
 	KEY_Clear int = 65291
 
 	KEY_ClearGrab int = 269024801
+
+	KEY_ClearvuSonar int = 268964486
 
 	KEY_Close int = 269025110
 
@@ -592,7 +656,11 @@ const (
 
 	KEY_Community int = 269025085
 
+	KEY_ContextMenu int = 268964278
+
 	KEY_ContrastAdjust int = 269025058
+
+	KEY_ControlPanel int = 268964419
 
 	KEY_Control_L int = 65507
 
@@ -818,13 +886,27 @@ const (
 
 	KEY_DOS int = 269025114
 
+	KEY_DVD int = 268964229
+
 	KEY_Dabovedot int = 16784906
+
+	KEY_Data int = 268964471
+
+	KEY_Database int = 268964266
 
 	KEY_Dcaron int = 463
 
 	KEY_Delete int = 65535
 
+	KEY_Dictate int = 268964426
+
 	KEY_Display int = 269025113
+
+	KEY_DisplayOff int = 268964085
+
+	KEY_DisplayToggle int = 268964271
+
+	KEY_DoNotDisturb int = 268964431
 
 	KEY_Documents int = 269025115
 
@@ -833,6 +915,8 @@ const (
 	KEY_Down int = 65364
 
 	KEY_Dstroke int = 464
+
+	KEY_DualRangeRadar int = 268964483
 
 	KEY_E int = 69
 
@@ -866,6 +950,8 @@ const (
 
 	KEY_Ediaeresis int = 203
 
+	KEY_Editor int = 268964262
+
 	KEY_Egrave int = 200
 
 	KEY_Ehook int = 16785082
@@ -877,6 +963,8 @@ const (
 	KEY_Eject int = 269025068
 
 	KEY_Emacron int = 938
+
+	KEY_EmojiPicker int = 268964425
 
 	KEY_End int = 65367
 
@@ -994,6 +1082,8 @@ const (
 
 	KEY_Farsi_yeh int = 16778956
 
+	KEY_FastReverse int = 268964469
+
 	KEY_Favorites int = 269025072
 
 	KEY_Finance int = 269025084
@@ -1002,11 +1092,21 @@ const (
 
 	KEY_First_Virtual_Screen int = 65232
 
+	KEY_FishingChart int = 268964481
+
+	KEY_Fn int = 268964304
+
+	KEY_FnRightShift int = 268964325
+
+	KEY_Fn_Esc int = 268964305
+
 	KEY_Forward int = 269025063
 
 	KEY_FrameBack int = 269025181
 
 	KEY_FrameForward int = 269025182
+
+	KEY_FullScreen int = 269025208
 
 	KEY_G int = 71
 
@@ -1101,6 +1201,8 @@ const (
 	KEY_Georgian_zhar int = 16781535
 
 	KEY_Go int = 269025119
+
+	KEY_GraphicsEditor int = 268964264
 
 	KEY_Greek_ALPHA int = 1985
 
@@ -1468,6 +1570,8 @@ const (
 
 	KEY_Hangul_switch int = 65406
 
+	KEY_HangupPhone int = 268964286
+
 	KEY_Hankaku int = 65321
 
 	KEY_Hcircumflex int = 678
@@ -1600,6 +1704,10 @@ const (
 
 	KEY_Imacron int = 975
 
+	KEY_Images int = 268964282
+
+	KEY_Info int = 268964198
+
 	KEY_Insert int = 65379
 
 	KEY_Iogonek int = 967
@@ -1609,6 +1717,8 @@ const (
 	KEY_J int = 74
 
 	KEY_Jcircumflex int = 684
+
+	KEY_Journal int = 268964418
 
 	KEY_K int = 75
 
@@ -1700,6 +1810,28 @@ const (
 
 	KEY_KbdBrightnessUp int = 269025029
 
+	KEY_KbdInputAssistAccept int = 268964452
+
+	KEY_KbdInputAssistCancel int = 268964453
+
+	KEY_KbdInputAssistNext int = 268964449
+
+	KEY_KbdInputAssistNextgroup int = 268964451
+
+	KEY_KbdInputAssistPrev int = 268964448
+
+	KEY_KbdInputAssistPrevgroup int = 268964450
+
+	KEY_KbdLcdMenu1 int = 268964536
+
+	KEY_KbdLcdMenu2 int = 268964537
+
+	KEY_KbdLcdMenu3 int = 268964538
+
+	KEY_KbdLcdMenu4 int = 268964539
+
+	KEY_KbdLcdMenu5 int = 268964540
+
 	KEY_KbdLightOnOff int = 269025028
 
 	KEY_Kcedilla int = 979
@@ -1774,7 +1906,13 @@ const (
 
 	KEY_Left int = 65361
 
+	KEY_LeftDown int = 268964457
+
+	KEY_LeftUp int = 268964456
+
 	KEY_LightBulb int = 269025077
+
+	KEY_LightsToggle int = 268964382
 
 	KEY_Linefeed int = 65290
 
@@ -1804,15 +1942,93 @@ const (
 
 	KEY_Macedonia_kje int = 1708
 
+	KEY_Macro1 int = 268964496
+
+	KEY_Macro10 int = 268964505
+
+	KEY_Macro11 int = 268964506
+
+	KEY_Macro12 int = 268964507
+
+	KEY_Macro13 int = 268964508
+
+	KEY_Macro14 int = 268964509
+
+	KEY_Macro15 int = 268964510
+
+	KEY_Macro16 int = 268964511
+
+	KEY_Macro17 int = 268964512
+
+	KEY_Macro18 int = 268964513
+
+	KEY_Macro19 int = 268964514
+
+	KEY_Macro2 int = 268964497
+
+	KEY_Macro20 int = 268964515
+
+	KEY_Macro21 int = 268964516
+
+	KEY_Macro22 int = 268964517
+
+	KEY_Macro23 int = 268964518
+
+	KEY_Macro24 int = 268964519
+
+	KEY_Macro25 int = 268964520
+
+	KEY_Macro26 int = 268964521
+
+	KEY_Macro27 int = 268964522
+
+	KEY_Macro28 int = 268964523
+
+	KEY_Macro29 int = 268964524
+
+	KEY_Macro3 int = 268964498
+
+	KEY_Macro30 int = 268964525
+
+	KEY_Macro4 int = 268964499
+
+	KEY_Macro5 int = 268964500
+
+	KEY_Macro6 int = 268964501
+
+	KEY_Macro7 int = 268964502
+
+	KEY_Macro8 int = 268964503
+
+	KEY_Macro9 int = 268964504
+
+	KEY_MacroPreset1 int = 268964531
+
+	KEY_MacroPreset2 int = 268964532
+
+	KEY_MacroPreset3 int = 268964533
+
+	KEY_MacroPresetCycle int = 268964530
+
+	KEY_MacroRecordStart int = 268964528
+
+	KEY_MacroRecordStop int = 268964529
+
 	KEY_Mae_Koho int = 65342
 
 	KEY_Mail int = 269025049
 
 	KEY_MailForward int = 269025168
 
+	KEY_MarkWaypoint int = 268964478
+
 	KEY_Market int = 269025122
 
 	KEY_Massyo int = 65324
+
+	KEY_MediaRepeat int = 268964279
+
+	KEY_MediaTopMenu int = 268964459
 
 	KEY_Meeting int = 269025123
 
@@ -1835,6 +2051,8 @@ const (
 	KEY_ModeLock int = 269025025
 
 	KEY_Mode_switch int = 65406
+
+	KEY_MonBrightnessCycle int = 269025031
 
 	KEY_MonBrightnessDown int = 269025027
 
@@ -1862,6 +2080,10 @@ const (
 
 	KEY_NairaSign int = 16785574
 
+	KEY_NavChart int = 268964480
+
+	KEY_NavInfo int = 268964488
+
 	KEY_Ncaron int = 466
 
 	KEY_Ncedilla int = 977
@@ -1874,13 +2096,55 @@ const (
 
 	KEY_Next int = 65366
 
+	KEY_NextElement int = 268964475
+
+	KEY_NextFavorite int = 268964464
+
 	KEY_Next_VMode int = 269024802
 
 	KEY_Next_Virtual_Screen int = 65234
 
+	KEY_NotificationCenter int = 268964284
+
 	KEY_Ntilde int = 209
 
 	KEY_Num_Lock int = 65407
+
+	KEY_Numeric0 int = 268964352
+
+	KEY_Numeric1 int = 268964353
+
+	KEY_Numeric11 int = 268964460
+
+	KEY_Numeric12 int = 268964461
+
+	KEY_Numeric2 int = 268964354
+
+	KEY_Numeric3 int = 268964355
+
+	KEY_Numeric4 int = 268964356
+
+	KEY_Numeric5 int = 268964357
+
+	KEY_Numeric6 int = 268964358
+
+	KEY_Numeric7 int = 268964359
+
+	KEY_Numeric8 int = 268964360
+
+	KEY_Numeric9 int = 268964361
+
+	KEY_NumericA int = 268964364
+
+	KEY_NumericB int = 268964365
+
+	KEY_NumericC int = 268964366
+
+	KEY_NumericD int = 268964367
+
+	KEY_NumericPound int = 268964363
+
+	KEY_NumericStar int = 268964362
 
 	KEY_O int = 79
 
@@ -1930,6 +2194,8 @@ const (
 
 	KEY_Omacron int = 978
 
+	KEY_OnScreenKeyboard int = 268964472
+
 	KEY_Ooblique int = 216
 
 	KEY_Open int = 269025131
@@ -1958,9 +2224,13 @@ const (
 
 	KEY_Pause int = 65299
 
+	KEY_PauseRecord int = 268964466
+
 	KEY_PesetaSign int = 16785575
 
 	KEY_Phone int = 269025134
+
+	KEY_PickupPhone int = 268964285
 
 	KEY_Pictures int = 269025169
 
@@ -2028,15 +2298,21 @@ const (
 
 	KEY_PowerOff int = 269025066
 
+	KEY_Presentation int = 268964265
+
 	KEY_Prev_VMode int = 269024803
 
 	KEY_Prev_Virtual_Screen int = 65233
 
 	KEY_PreviousCandidate int = 65342
 
+	KEY_PreviousElement int = 268964476
+
 	KEY_Print int = 65377
 
 	KEY_Prior int = 65365
+
+	KEY_PrivacyScreenToggle int = 268964473
 
 	KEY_Q int = 81
 
@@ -2076,6 +2352,8 @@ const (
 
 	KEY_Racute int = 448
 
+	KEY_RadarOverlay int = 268964484
+
 	KEY_Rcaron int = 472
 
 	KEY_Rcedilla int = 931
@@ -2085,6 +2363,8 @@ const (
 	KEY_Redo int = 65382
 
 	KEY_Refresh int = 269025065
+
+	KEY_RefreshRateToggle int = 268964402
 
 	KEY_Reload int = 269025139
 
@@ -2096,6 +2376,10 @@ const (
 
 	KEY_Right int = 65363
 
+	KEY_RightDown int = 268964455
+
+	KEY_RightUp int = 268964454
+
 	KEY_RockerDown int = 269025060
 
 	KEY_RockerEnter int = 269025061
@@ -2104,9 +2388,13 @@ const (
 
 	KEY_Romaji int = 65316
 
+	KEY_RootMenu int = 268964458
+
 	KEY_RotateWindows int = 269025140
 
 	KEY_RotationKB int = 269025142
+
+	KEY_RotationLockToggle int = 269025207
 
 	KEY_RotationPB int = 269025141
 
@@ -2130,6 +2418,8 @@ const (
 
 	KEY_ScreenSaver int = 269025069
 
+	KEY_Screensaver int = 268964421
+
 	KEY_ScrollClick int = 269025146
 
 	KEY_ScrollDown int = 269025145
@@ -2143,6 +2433,8 @@ const (
 	KEY_Select int = 65376
 
 	KEY_SelectButton int = 269025184
+
+	KEY_SelectiveScreenshot int = 268964474
 
 	KEY_Send int = 269025147
 
@@ -2178,7 +2470,11 @@ const (
 
 	KEY_Shop int = 269025078
 
+	KEY_SidevuSonar int = 268964487
+
 	KEY_SingleCandidate int = 65340
+
+	KEY_SingleRangeRadar int = 268964482
 
 	KEY_Sinh_a int = 16780677
 
@@ -2344,7 +2640,13 @@ const (
 
 	KEY_SlowKeys_Enable int = 65139
 
+	KEY_SlowReverse int = 268964470
+
+	KEY_Sos int = 268964479
+
 	KEY_Spell int = 269025148
+
+	KEY_SpellCheck int = 268964272
 
 	KEY_SplitScreen int = 269025149
 
@@ -2355,6 +2657,8 @@ const (
 	KEY_StickyKeys_Enable int = 65141
 
 	KEY_Stop int = 269025064
+
+	KEY_StopRecord int = 268964465
 
 	KEY_Subtitle int = 269025178
 
@@ -2401,6 +2705,8 @@ const (
 	KEY_Tabovedot int = 16785002
 
 	KEY_TaskPane int = 269025151
+
+	KEY_Taskmanager int = 268964417
 
 	KEY_Tcaron int = 427
 
@@ -2596,6 +2902,8 @@ const (
 
 	KEY_Touroku int = 65323
 
+	KEY_TraditionalSonar int = 268964485
+
 	KEY_Travel int = 269025154
 
 	KEY_Tslash int = 940
@@ -2666,6 +2974,8 @@ const (
 
 	KEY_Ungrab int = 269024800
 
+	KEY_Unmute int = 268964468
+
 	KEY_Uogonek int = 985
 
 	KEY_Up int = 65362
@@ -2682,17 +2992,27 @@ const (
 
 	KEY_V int = 86
 
+	KEY_VOD int = 268964467
+
 	KEY_VendorHome int = 269025076
 
 	KEY_Video int = 269025159
 
+	KEY_VideoPhone int = 268964256
+
 	KEY_View int = 269025185
+
+	KEY_VoiceCommand int = 268964422
+
+	KEY_Voicemail int = 268964268
 
 	KEY_VoidSymbol int = 16777215
 
 	KEY_W int = 87
 
 	KEY_WLAN int = 269025173
+
+	KEY_WPSButton int = 268964369
 
 	KEY_WWAN int = 269025204
 
@@ -2759,6 +3079,8 @@ const (
 	KEY_ZoomIn int = 269025163
 
 	KEY_ZoomOut int = 269025164
+
+	KEY_ZoomReset int = 268964260
 
 	KEY_Zstroke int = 16777653
 
@@ -3440,6 +3762,16 @@ const (
 
 	KEY_colon int = 58
 
+	KEY_combining_acute int = 16777985
+
+	KEY_combining_belowdot int = 16778019
+
+	KEY_combining_grave int = 16777984
+
+	KEY_combining_hook int = 16777993
+
+	KEY_combining_tilde int = 16777987
+
 	KEY_comma int = 44
 
 	KEY_containsas int = 16785931
@@ -3471,6 +3803,8 @@ const (
 	KEY_dead_I int = 65157
 
 	KEY_dead_O int = 65159
+
+	KEY_dead_SCHWA int = 65163
 
 	KEY_dead_U int = 65161
 
@@ -3532,6 +3866,8 @@ const (
 
 	KEY_dead_greek int = 65164
 
+	KEY_dead_hamza int = 65165
+
 	KEY_dead_hook int = 65121
 
 	KEY_dead_horn int = 65122
@@ -3555,6 +3891,8 @@ const (
 	KEY_dead_perispomeni int = 65107
 
 	KEY_dead_psili int = 65124
+
+	KEY_dead_schwa int = 65162
 
 	KEY_dead_semivoiced_sound int = 65119
 
@@ -3743,6 +4081,10 @@ const (
 	KEY_greater int = 62
 
 	KEY_greaterthanequal int = 2238
+
+	KEY_guillemetleft int = 171
+
+	KEY_guillemetright int = 187
 
 	KEY_guillemotleft int = 171
 
@@ -4229,6 +4571,8 @@ const (
 	KEY_opentribulletup int = 2787
 
 	KEY_ordfeminine int = 170
+
+	KEY_ordmasculine int = 186
 
 	KEY_oslash int = 248
 

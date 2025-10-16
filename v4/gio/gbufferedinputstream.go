@@ -229,20 +229,19 @@ func (x *BufferedInputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// Buffered input stream implements #GFilterInputStream and provides
+// Buffered input stream implements [class@Gio.FilterInputStream] and provides
 // for buffered reads.
 //
-// By default, #GBufferedInputStream's buffer size is set at 4 kilobytes.
+// By default, `GBufferedInputStream`'s buffer size is set at 4 kilobytes.
 //
-// To create a buffered input stream, use g_buffered_input_stream_new(),
-// or g_buffered_input_stream_new_sized() to specify the buffer's size at
+// To create a buffered input stream, use [ctor@Gio.BufferedInputStream.new],
+// or [ctor@Gio.BufferedInputStream.new_sized] to specify the buffer's size at
 // construction.
 //
 // To get the size of a buffer within a buffered input stream, use
-// g_buffered_input_stream_get_buffer_size(). To change the size of a
-// buffered input stream's buffer, use
-// g_buffered_input_stream_set_buffer_size(). Note that the buffer's size
-// cannot be reduced below the size of the data within the buffer.
+// [method@Gio.BufferedInputStream.get_buffer_size]. To change the size of a
+// buffered input stream's buffer, use [method@Gio.BufferedInputStream.set_buffer_size].
+// Note that the buffer's size cannot be reduced below the size of the data within the buffer.
 type BufferedInputStream struct {
 	FilterInputStream
 }
@@ -261,7 +260,7 @@ func BufferedInputStreamNewFromInternalPtr(ptr uintptr) *BufferedInputStream {
 
 var xNewBufferedInputStream func(uintptr) uintptr
 
-// Creates a new #GInputStream from the given @base_stream, with
+// Creates a new [class@Gio.InputStream] from the given @base_stream, with
 // a buffer set to the default size (4 kilobytes).
 func NewBufferedInputStream(BaseStreamVar *InputStream) *BufferedInputStream {
 	var cls *BufferedInputStream
@@ -278,7 +277,7 @@ func NewBufferedInputStream(BaseStreamVar *InputStream) *BufferedInputStream {
 
 var xNewBufferedInputStreamSized func(uintptr, uint) uintptr
 
-// Creates a new #GBufferedInputStream from the given @base_stream,
+// Creates a new [class@Gio.BufferedInputStream] from the given @base_stream,
 // with a buffer set to @size.
 func NewBufferedInputStreamSized(BaseStreamVar *InputStream, SizeVar uint) *BufferedInputStream {
 	var cls *BufferedInputStream
@@ -299,7 +298,8 @@ var xBufferedInputStreamFill func(uintptr, int, uintptr, **glib.Error) int
 // Will block during this read.
 //
 // If @count is zero, returns zero and does nothing. A value of @count
-// larger than %G_MAXSSIZE will cause a %G_IO_ERROR_INVALID_ARGUMENT error.
+// larger than `G_MAXSSIZE` will cause a
+// [error@Gio.IOErrorEnum.INVALID_ARGUMENT] error.
 //
 // On success, the number of bytes read into the buffer is returned.
 // It is not an error if this is not the same as the requested size, as it
@@ -309,16 +309,16 @@ var xBufferedInputStreamFill func(uintptr, int, uintptr, **glib.Error) int
 // If @count is -1 then the attempted read size is equal to the number of
 // bytes that are required to fill the buffer.
 //
-// If @cancellable is not %NULL, then the operation can be cancelled by
+// If @cancellable is not `NULL`, then the operation can be cancelled by
 // triggering the cancellable object from another thread. If the operation
-// was cancelled, the error %G_IO_ERROR_CANCELLED will be returned. If an
-// operation was partially finished when the operation was cancelled the
+// was cancelled, the error [error@Gio.IOErrorEnum.CANCELLED] will be returned.
+// If an operation was partially finished when the operation was cancelled the
 // partial result will be returned, without an error.
 //
-// On error -1 is returned and @error is set accordingly.
+// On error `-1` is returned and @error is set accordingly.
 //
 // For the asynchronous, non-blocking, version of this function, see
-// g_buffered_input_stream_fill_async().
+// [method@Gio.BufferedInputStream.fill_async].
 func (x *BufferedInputStream) Fill(CountVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
@@ -334,9 +334,9 @@ var xBufferedInputStreamFillAsync func(uintptr, int, int, uintptr, uintptr, uint
 
 // Reads data into @stream's buffer asynchronously, up to @count size.
 // @io_priority can be used to prioritize reads. For the synchronous
-// version of this function, see g_buffered_input_stream_fill().
+// version of this function, see [method@Gio.BufferedInputStream.fill].
 //
-// If @count is -1 then the attempted read size is equal to the number
+// If @count is `-1` then the attempted read size is equal to the number
 // of bytes that are required to fill the buffer.
 func (x *BufferedInputStream) FillAsync(CountVar int, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
@@ -403,15 +403,15 @@ var xBufferedInputStreamReadByte func(uintptr, uintptr, **glib.Error) int
 // during this read.
 //
 // On success, the byte read from the stream is returned. On end of stream
-// -1 is returned but it's not an exceptional error and @error is not set.
+// `-1` is returned but it's not an exceptional error and @error is not set.
 //
-// If @cancellable is not %NULL, then the operation can be cancelled by
+// If @cancellable is not `NULL`, then the operation can be cancelled by
 // triggering the cancellable object from another thread. If the operation
-// was cancelled, the error %G_IO_ERROR_CANCELLED will be returned. If an
-// operation was partially finished when the operation was cancelled the
+// was cancelled, the error [error@Gio.IOErrorEnum.CANCELLED] will be returned.
+// If an operation was partially finished when the operation was cancelled the
 // partial result will be returned, without an error.
 //
-// On error -1 is returned and @error is set accordingly.
+// On error `-1` is returned and @error is set accordingly.
 func (x *BufferedInputStream) ReadByte(CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 

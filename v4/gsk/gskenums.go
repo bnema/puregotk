@@ -78,8 +78,42 @@ const (
 	CornerBottomLeftValue Corner = 3
 )
 
-// This defines the types of the uniforms that `GskGLShaders`
-// declare.
+// Specifies how paths are filled.
+//
+// Whether or not a point is included in the fill is determined by taking
+// a ray from that point to infinity and looking at intersections with the
+// path. The ray can be in any direction, as long as it doesn't pass through
+// the end point of a segment or have a tricky intersection such as
+// intersecting tangent to the path.
+//
+// (Note that filling is not actually implemented in this way. This
+// is just a description of the rule that is applied.)
+//
+// New entries may be added in future versions.
+type FillRule int
+
+var xFillRuleGLibType func() types.GType
+
+func FillRuleGLibType() types.GType {
+	return xFillRuleGLibType()
+}
+
+const (
+
+	// If the path crosses the ray from
+	//   left-to-right, counts +1. If the path crosses the ray
+	//   from right to left, counts -1. (Left and right are determined
+	//   from the perspective of looking along the ray from the starting
+	//   point.) If the total count is non-zero, the point will be filled.
+	FillRuleWindingValue FillRule = 0
+	// Counts the total number of
+	//   intersections, without regard to the orientation of the contour. If
+	//   the total number of intersections is odd, the point will be
+	//   filled.
+	FillRuleEvenOddValue FillRule = 1
+)
+
+// Defines the types of the uniforms that `GskGLShaders` declare.
 //
 // It defines both what the type is called in the GLSL shader
 // code, and what the corresponding C type is on the Gtk side.
@@ -109,6 +143,172 @@ const (
 	GlUniformTypeVec3Value GLUniformType = 6
 	// A GLSL vec4 / graphene_vec4_t uniform
 	GlUniformTypeVec4Value GLUniformType = 7
+)
+
+// Specifies how to render the start and end points of contours or
+// dashes when stroking.
+//
+// The default line cap style is `GSK_LINE_CAP_BUTT`.
+//
+// New entries may be added in future versions.
+//
+// &lt;figure&gt;
+//
+//	&lt;picture&gt;
+//	  &lt;source srcset="caps-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	  &lt;img alt="Line Cap Styles" src="caps-light.png"&gt;
+//	&lt;/picture&gt;
+//	&lt;figcaption&gt;GSK_LINE_CAP_BUTT, GSK_LINE_CAP_ROUND, GSK_LINE_CAP_SQUARE&lt;/figcaption&gt;
+//
+// &lt;/figure&gt;
+type LineCap int
+
+var xLineCapGLibType func() types.GType
+
+func LineCapGLibType() types.GType {
+	return xLineCapGLibType()
+}
+
+const (
+
+	// Start and stop the line exactly at the start
+	//   and end point
+	LineCapButtValue LineCap = 0
+	// Use a round ending, the center of the circle
+	//   is the start or end point
+	LineCapRoundValue LineCap = 1
+	// use squared ending, the center of the square
+	//   is the start or end point
+	LineCapSquareValue LineCap = 2
+)
+
+// Specifies how to render the junction of two lines when stroking.
+//
+// The default line join style is `GSK_LINE_JOIN_MITER`.
+//
+// New entries may be added in future versions.
+//
+// &lt;figure&gt;
+//
+//	&lt;picture&gt;
+//	  &lt;source srcset="join-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	  &lt;img alt="Line Join Styles" src="join-light.png"&gt;
+//	&lt;/picture&gt;
+//	&lt;figcaption&gt;GSK_LINE_JOINT_MITER, GSK_LINE_JOINT_ROUND, GSK_LINE_JOIN_BEVEL&lt;/figcaption&gt;
+//
+// &lt;/figure&gt;
+type LineJoin int
+
+var xLineJoinGLibType func() types.GType
+
+func LineJoinGLibType() types.GType {
+	return xLineJoinGLibType()
+}
+
+const (
+
+	// Use a sharp angled corner
+	LineJoinMiterValue LineJoin = 0
+	// Use a round join, the center of the circle is
+	//   the join point
+	LineJoinRoundValue LineJoin = 1
+	// use a cut-off join, the join is cut off at half
+	//   the line width from the joint point
+	LineJoinBevelValue LineJoin = 2
+)
+
+// The mask modes available for mask nodes.
+type MaskMode int
+
+var xMaskModeGLibType func() types.GType
+
+func MaskModeGLibType() types.GType {
+	return xMaskModeGLibType()
+}
+
+const (
+
+	// Use the alpha channel of the mask
+	MaskModeAlphaValue MaskMode = 0
+	// Use the inverted alpha channel of the mask
+	MaskModeInvertedAlphaValue MaskMode = 1
+	// Use the luminance of the mask,
+	//     multiplied by mask alpha
+	MaskModeLuminanceValue MaskMode = 2
+	// Use the inverted luminance of the mask,
+	//     multiplied by mask alpha
+	MaskModeInvertedLuminanceValue MaskMode = 3
+)
+
+// Used to pick one of the four tangents at a given point on the path.
+//
+// Note that the directions for @GSK_PATH_FROM_START/@GSK_PATH_TO_END and
+// @GSK_PATH_TO_START/@GSK_PATH_FROM_END will coincide for smooth points.
+// Only sharp turns will exhibit four different directions.
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="directions-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="Path Tangents" src="directions-light.png"&gt;
+//
+// &lt;/picture&gt;
+type PathDirection int
+
+var xPathDirectionGLibType func() types.GType
+
+func PathDirectionGLibType() types.GType {
+	return xPathDirectionGLibType()
+}
+
+const (
+
+	// The tangent in path direction of the incoming side
+	//   of the path
+	PathFromStartValue PathDirection = 0
+	// The tangent against path direction of the incoming side
+	//   of the path
+	PathToStartValue PathDirection = 1
+	// The tangent in path direction of the outgoing side
+	//   of the path
+	PathToEndValue PathDirection = 2
+	// The tangent against path direction of the outgoing
+	//   side of the path
+	PathFromEndValue PathDirection = 3
+)
+
+// Describes the segments of a `GskPath`.
+//
+// More values may be added in the future.
+type PathOperation int
+
+var xPathOperationGLibType func() types.GType
+
+func PathOperationGLibType() types.GType {
+	return xPathOperationGLibType()
+}
+
+const (
+
+	// A move-to operation, with 1 point describing the target point.
+	PathMoveValue PathOperation = 0
+	// A close operation ending the current contour with a line back
+	//   to the starting point. Two points describe the start and end of the line.
+	PathCloseValue PathOperation = 1
+	// A line-to operation, with 2 points describing the start and
+	//   end point of a straight line.
+	PathLineValue PathOperation = 2
+	// A curve-to operation describing a quadratic Bézier curve
+	//   with 3 points describing the start point, the control point and the end
+	//   point of the curve.
+	PathQuadValue PathOperation = 3
+	// A curve-to operation describing a cubic Bézier curve with 4
+	//   points describing the start point, the two control points and the end point
+	//   of the curve.
+	PathCubicValue PathOperation = 4
+	// A rational quadratic Bézier curve with 3 points describing
+	//   the start point, control point and end point of the curve. A weight for the
+	//   curve will be passed, too.
+	PathConicValue PathOperation = 5
 )
 
 // The type of a node determines what the node is rendering.
@@ -174,6 +374,16 @@ const (
 	DebugNodeValue RenderNodeType = 24
 	// A node that uses OpenGL fragment shaders to render
 	GlShaderNodeValue RenderNodeType = 25
+	// A node drawing a `GdkTexture` scaled and filtered.
+	TextureScaleNodeValue RenderNodeType = 26
+	// A node that masks one child with another.
+	MaskNodeValue RenderNodeType = 27
+	// A node that fills a path.
+	FillNodeValue RenderNodeType = 28
+	// A node that strokes a path.
+	StrokeNodeValue RenderNodeType = 29
+	// A node that possibly redirects part of the scene graph to a subsurface.
+	SubsurfaceNodeValue RenderNodeType = 30
 )
 
 // The filters used when scaling texture data.

@@ -138,14 +138,14 @@ func EnumGetValueByNick(EnumClassVar *EnumClass, NickVar string) *EnumValue {
 	return cret
 }
 
-var xEnumRegisterStatic func(string, *EnumValue) types.GType
+var xEnumRegisterStatic func(string, []EnumValue) types.GType
 
 // Registers a new static enumeration type with the name @name.
 //
 // It is normally more convenient to let [glib-mkenums][glib-mkenums],
 // generate a my_enum_get_type() function from a usual C enumeration
 // definition  than to write one yourself using g_enum_register_static().
-func EnumRegisterStatic(NameVar string, ConstStaticValuesVar *EnumValue) types.GType {
+func EnumRegisterStatic(NameVar string, ConstStaticValuesVar []EnumValue) types.GType {
 
 	cret := xEnumRegisterStatic(NameVar, ConstStaticValuesVar)
 	return cret
@@ -201,14 +201,14 @@ func FlagsGetValueByNick(FlagsClassVar *FlagsClass, NickVar string) *FlagsValue 
 	return cret
 }
 
-var xFlagsRegisterStatic func(string, *FlagsValue) types.GType
+var xFlagsRegisterStatic func(string, []FlagsValue) types.GType
 
 // Registers a new static flags type with the name @name.
 //
 // It is normally more convenient to let [glib-mkenums][glib-mkenums]
 // generate a my_flags_get_type() function from a usual C enumeration
 // definition than to write one yourself using g_flags_register_static().
-func FlagsRegisterStatic(NameVar string, ConstStaticValuesVar *FlagsValue) types.GType {
+func FlagsRegisterStatic(NameVar string, ConstStaticValuesVar []FlagsValue) types.GType {
 
 	cret := xFlagsRegisterStatic(NameVar, ConstStaticValuesVar)
 	return cret

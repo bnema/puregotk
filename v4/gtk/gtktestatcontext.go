@@ -8,6 +8,7 @@ import (
 
 var xTestAccessibleAssertionMessageRole func(string, string, int, string, string, uintptr, AccessibleRole, AccessibleRole)
 
+// Prints an assertion message for gtk_test_accessible_assert_role().
 func TestAccessibleAssertionMessageRole(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, AccessibleVar Accessible, ExpectedRoleVar AccessibleRole, ActualRoleVar AccessibleRole) {
 
 	xTestAccessibleAssertionMessageRole(DomainVar, FileVar, LineVar, FuncVar, ExprVar, AccessibleVar.GoPointer(), ExpectedRoleVar, ActualRoleVar)

@@ -66,6 +66,27 @@ const (
 	InputHintPrivateValue InputHints = 2048
 )
 
+// List of actions to perform when scrolling to items in
+// a list widget.
+type ListScrollFlags int
+
+var xListScrollFlagsGLibType func() types.GType
+
+func ListScrollFlagsGLibType() types.GType {
+	return xListScrollFlagsGLibType()
+}
+
+const (
+
+	// Don't do anything extra
+	ListScrollNoneValue ListScrollFlags = 0
+	// Focus the target item
+	ListScrollFocusValue ListScrollFlags = 1
+	// Select the target item and
+	//   unselect all other items.
+	ListScrollSelectValue ListScrollFlags = 2
+)
+
 // Flags that influence the behavior of [method@Widget.pick].
 type PickFlags int
 
@@ -83,6 +104,25 @@ const (
 	PickInsensitiveValue PickFlags = 1
 	// Include widgets that are marked as non-targetable. See [property@Widget:can-target]
 	PickNonTargetableValue PickFlags = 2
+)
+
+// Flags that affect how [class@Gtk.PopoverMenu] widgets built from
+// a [class@Gio.MenuModel] are created and displayed.
+type PopoverMenuFlags int
+
+var xPopoverMenuFlagsGLibType func() types.GType
+
+func PopoverMenuFlagsGLibType() types.GType {
+	return xPopoverMenuFlagsGLibType()
+}
+
+const (
+
+	// Submenus are presented as sliding submenus that replace the main menu.
+	PopoverMenuSlidingValue PopoverMenuFlags = 0
+	// Submenus are presented as traditional, nested
+	//   popovers.
+	PopoverMenuNestedValue PopoverMenuFlags = 1
 )
 
 // Describes a widget state.
@@ -132,6 +172,59 @@ const (
 	StateFlagFocusVisibleValue StateFlags = 8192
 	// Widget contains the keyboard focus
 	StateFlagFocusWithinValue StateFlags = 16384
+)
+
+// Values for [callback@Gtk.TextBufferCommitNotify] to denote the
+// point of the notification.
+type TextBufferNotifyFlags int
+
+var xTextBufferNotifyFlagsGLibType func() types.GType
+
+func TextBufferNotifyFlagsGLibType() types.GType {
+	return xTextBufferNotifyFlagsGLibType()
+}
+
+const (
+
+	// Be notified before text
+	//   is inserted into the underlying buffer.
+	TextBufferNotifyBeforeInsertValue TextBufferNotifyFlags = 1
+	// Be notified after text
+	//   has been inserted into the underlying buffer.
+	TextBufferNotifyAfterInsertValue TextBufferNotifyFlags = 2
+	// Be notified before text
+	//   is deleted from the underlying buffer.
+	TextBufferNotifyBeforeDeleteValue TextBufferNotifyFlags = 4
+	// Be notified after text
+	//   has been deleted from the underlying buffer.
+	TextBufferNotifyAfterDeleteValue TextBufferNotifyFlags = 8
+)
+
+// The priority of an accessibility announcement.
+type AccessibleAnnouncementPriority int
+
+var xAccessibleAnnouncementPriorityGLibType func() types.GType
+
+func AccessibleAnnouncementPriorityGLibType() types.GType {
+	return xAccessibleAnnouncementPriorityGLibType()
+}
+
+const (
+
+	// The announcement is low priority,
+	//   and might be read only on the user's request.
+	AccessibleAnnouncementPriorityLowValue AccessibleAnnouncementPriority = 0
+	// The announcement is of medium
+	//   priority, and is usually spoken at the next opportunity, such as at the
+	//   end of speaking the current sentence or when the user pauses typing.
+	AccessibleAnnouncementPriorityMediumValue AccessibleAnnouncementPriority = 1
+	// The announcement is of high
+	//   priority, and is usually spoken immediately. Because an interruption
+	//   might disorient users or cause them to not complete their current task,
+	//   authors SHOULD NOT use high priority announcements unless the
+	//   interruption is imperative. An example would be a notification about a
+	//   critical battery power level.
+	AccessibleAnnouncementPriorityHighValue AccessibleAnnouncementPriority = 2
 )
 
 // The possible values for the %GTK_ACCESSIBLE_PROPERTY_AUTOCOMPLETE
@@ -215,7 +308,10 @@ const (
 	AccessiblePropertyHasPopupValue AccessibleProperty = 2
 	// Indicates keyboard shortcuts that an
 	//    author has implemented to activate or give focus to an element. Value type:
-	//    string
+	//    string. The format of the value is a space-separated list of shortcuts, with
+	//    each shortcut consisting of one or more modifiers (`Control`, `Alt` or `Shift`),
+	//    followed by a non-modifier key, all separated by `+`.
+	//    Examples: `F2`, `Alt-F`, `Control+Shift+N`
 	AccessiblePropertyKeyShortcutsValue AccessibleProperty = 3
 	// Defines a string value that labels the current
 	//    element. Value type: string
@@ -266,6 +362,9 @@ const (
 	// Defines the human readable text alternative
 	//    of aria-valuenow for a range widget. Value type: string
 	AccessiblePropertyValueTextValue AccessibleProperty = 18
+	// Defines a string value that provides a description of non-standard keyboard
+	// interactions of the current element. Value type: string
+	AccessiblePropertyHelpTextValue AccessibleProperty = 19
 )
 
 // The possible accessible relations of a [iface@Accessible].
@@ -308,8 +407,8 @@ const (
 	// Identifies the element (or elements) that
 	//    provide additional information related to the object. Value type: reference
 	AccessibleRelationDetailsValue AccessibleRelation = 7
-	// Identifies the element that provides
-	//    an error message for an object. Value type: reference
+	// Identifies the element (or elements) that
+	//    provide an error message for an object. Value type: reference
 	AccessibleRelationErrorMessageValue AccessibleRelation = 8
 	// Identifies the next element (or elements)
 	//    in an alternate reading order of content which, at the user's discretion,
@@ -343,6 +442,38 @@ const (
 	// Defines the number of items in the current
 	//    set of listitems or treeitems. Value type: integer
 	AccessibleRelationSetSizeValue AccessibleRelation = 17
+	// Identifies the element (or elements) that are labeled by the
+	// current element. Value type: reference
+	//
+	// This relation is managed by GTK and should not be set from application code.
+	AccessibleRelationLabelForValue AccessibleRelation = 18
+	// Identifies the element (or elements) that are described by
+	// the current element. Value type: reference
+	//
+	// This relation is managed by GTK and should not be set from application code.
+	AccessibleRelationDescriptionForValue AccessibleRelation = 19
+	// Identifies the element (or elements) that the current
+	// element is controlled by. Value type: reference
+	//
+	// This relation is managed by GTK and should not be set from application code.
+	AccessibleRelationControlledByValue AccessibleRelation = 20
+	// Identifies the element (or elements) for which the current
+	// element provides additional information. Value type: reference
+	//
+	// This relation is managed by GTK and should not be set from application code.
+	AccessibleRelationDetailsForValue AccessibleRelation = 21
+	// Identifies the element (or elements) for which the current
+	// element provides an error message. Value type: reference
+	//
+	// This relation is managed by GTK and should not be set from application code.
+	AccessibleRelationErrorMessageForValue AccessibleRelation = 22
+	// Identifies the previous element (or elements) in an alternate
+	// reading order of content which, at the user's discretion, allows
+	// assistive technology to override the general default of reading in
+	// document source order. Value type: reference
+	//
+	// This relation is managed by GTK and should not be set from application code.
+	AccessibleRelationFlowFromValue AccessibleRelation = 23
 )
 
 // The accessible role for a [iface@Accessible] implementation.
@@ -388,23 +519,25 @@ const (
 	// Abstract role.
 	AccessibleRoleCompositeValue AccessibleRole = 10
 	// A dialog is a window that is designed to interrupt
-	//    the current processing of an application in order to prompt the user to enter
-	//    information or require a response.
+	//   the current processing of an application in order to prompt the user to enter
+	//   information or require a response.
 	AccessibleRoleDialogValue AccessibleRole = 11
-	// Unused
+	// Content that assistive technology users may want to
+	//   browse in a reading mode.
 	AccessibleRoleDocumentValue AccessibleRole = 12
 	// Unused
 	AccessibleRoleFeedValue AccessibleRole = 13
 	// Unused
 	AccessibleRoleFormValue AccessibleRole = 14
-	// Unused
+	// A nameless container that has no semantic meaning
+	//   of its own. This is the role that GTK uses by default for widgets.
 	AccessibleRoleGenericValue AccessibleRole = 15
 	// A grid of items.
 	AccessibleRoleGridValue AccessibleRole = 16
 	// An item in a grid or tree grid.
 	AccessibleRoleGridCellValue AccessibleRole = 17
-	// An element that groups multiple widgets. GTK uses
-	//   this role for various containers, like [class@Box], [class@Viewport], and [class@HeaderBar].
+	// An element that groups multiple related widgets. GTK uses
+	//   this role for various containers, like [class@Gtk.HeaderBar] or [class@Gtk.Notebook].
 	AccessibleRoleGroupValue AccessibleRole = 18
 	// Unused
 	AccessibleRoleHeadingValue AccessibleRole = 19
@@ -449,18 +582,20 @@ const (
 	// Unused
 	AccessibleRoleNavigationValue AccessibleRole = 39
 	// An element that is not represented to accessibility technologies.
+	//   This role is synonymous to @GTK_ACCESSIBLE_ROLE_PRESENTATION.
 	AccessibleRoleNoneValue AccessibleRole = 40
 	// Unused
 	AccessibleRoleNoteValue AccessibleRole = 41
 	// Unused
 	AccessibleRoleOptionValue AccessibleRole = 42
 	// An element that is not represented to accessibility technologies.
+	//   This role is synonymous to @GTK_ACCESSIBLE_ROLE_NONE.
 	AccessibleRolePresentationValue AccessibleRole = 43
 	// An element that displays the progress
-	//    status for tasks that take a long time.
+	//   status for tasks that take a long time.
 	AccessibleRoleProgressBarValue AccessibleRole = 44
 	// A checkable input in a group of radio roles,
-	//    only one of which can be checked at a time.
+	//   only one of which can be checked at a time.
 	AccessibleRoleRadioValue AccessibleRole = 45
 	// Unused
 	AccessibleRoleRadioGroupValue AccessibleRole = 46
@@ -475,13 +610,13 @@ const (
 	// Unused
 	AccessibleRoleRowHeaderValue AccessibleRole = 51
 	// A graphical object that controls the scrolling
-	//    of content within a viewing area, regardless of whether the content is fully
-	//    displayed within the viewing area.
+	//   of content within a viewing area, regardless of whether the content is fully
+	//   displayed within the viewing area.
 	AccessibleRoleScrollbarValue AccessibleRole = 52
 	// Unused
 	AccessibleRoleSearchValue AccessibleRole = 53
 	// A type of textbox intended for specifying
-	//    search criteria.
+	//   search criteria.
 	AccessibleRoleSearchBoxValue AccessibleRole = 54
 	// Abstract role.
 	AccessibleRoleSectionValue AccessibleRole = 55
@@ -490,20 +625,20 @@ const (
 	// Abstract role.
 	AccessibleRoleSelectValue AccessibleRole = 57
 	// A divider that separates and distinguishes
-	//    sections of content or groups of menuitems.
+	//   sections of content or groups of menuitems.
 	AccessibleRoleSeparatorValue AccessibleRole = 58
 	// A user input where the user selects a value
-	//    from within a given range.
+	//   from within a given range.
 	AccessibleRoleSliderValue AccessibleRole = 59
 	// A form of range that expects the user to
-	//    select from among discrete choices.
+	//   select from among discrete choices.
 	AccessibleRoleSpinButtonValue AccessibleRole = 60
 	// Unused
 	AccessibleRoleStatusValue AccessibleRole = 61
 	// Abstract role.
 	AccessibleRoleStructureValue AccessibleRole = 62
 	// A type of checkbox that represents on/off values,
-	//    as opposed to checked/unchecked values.
+	//   as opposed to checked/unchecked values.
 	AccessibleRoleSwitchValue AccessibleRole = 63
 	// An item in a list of tab used for switching pages.
 	AccessibleRoleTabValue AccessibleRole = 64
@@ -514,7 +649,7 @@ const (
 	// A page in a notebook or stack.
 	AccessibleRoleTabPanelValue AccessibleRole = 67
 	// A type of input that allows free-form text
-	//    as its value.
+	//   as its value.
 	AccessibleRoleTextBoxValue AccessibleRole = 68
 	// Unused
 	AccessibleRoleTimeValue AccessibleRole = 69
@@ -530,11 +665,29 @@ const (
 	AccessibleRoleTreeGridValue AccessibleRole = 74
 	// Unused
 	AccessibleRoleTreeItemValue AccessibleRole = 75
-	// An interactive component of a graphical user
-	//    interface. This is the role that GTK uses by default for widgets.
+	// Abstract role for interactive components of a
+	//   graphical user interface
 	AccessibleRoleWidgetValue AccessibleRole = 76
-	// An application window.
+	// Abstract role for windows.
 	AccessibleRoleWindowValue AccessibleRole = 77
+	// A type of push button which stays pressed until depressed by a second
+	// activation.
+	AccessibleRoleToggleButtonValue AccessibleRole = 78
+	// A toplevel element of a graphical user interface.
+	//
+	// This is the role that GTK uses by default for windows.
+	AccessibleRoleApplicationValue AccessibleRole = 79
+	// A paragraph of content.
+	AccessibleRoleParagraphValue AccessibleRole = 80
+	// A section of content that is quoted from another source.
+	AccessibleRoleBlockQuoteValue AccessibleRole = 81
+	// A section of a page that consists of a composition that forms an independent
+	// part of a document, page, or site.
+	AccessibleRoleArticleValue AccessibleRole = 82
+	// A comment contains content expressing reaction to other content.
+	AccessibleRoleCommentValue AccessibleRole = 83
+	// A virtual terminal.
+	AccessibleRoleTerminalValue AccessibleRole = 84
 )
 
 // The possible values for the %GTK_ACCESSIBLE_PROPERTY_SORT
@@ -600,6 +753,9 @@ const (
 	// A “selected” state; set when a widget
 	//   is selected. Value type: boolean or undefined
 	AccessibleStateSelectedValue AccessibleState = 7
+	// Indicates that a widget with the GTK_ACCESSIBLE_ROLE_LINK has been visited.
+	// Value type: boolean.
+	AccessibleStateVisitedValue AccessibleState = 8
 )
 
 // The possible values for the %GTK_ACCESSIBLE_STATE_PRESSED
@@ -635,12 +791,13 @@ const (
 // could be scaled and stretched, it could be centered, or it could be
 // positioned to one side of the space.
 //
-// Note that in horizontal context %GTK_ALIGN_START and %GTK_ALIGN_END
+// Note that in horizontal context `GTK_ALIGN_START` and `GTK_ALIGN_END`
 // are interpreted relative to text direction.
 //
-// %GTK_ALIGN_BASELINE support is optional for containers and widgets, and
-// it is only supported for vertical alignment.  When it's not supported by
-// a child or a container it is treated as %GTK_ALIGN_FILL.
+// Baseline support is optional for containers and widgets, and is only available
+// for vertical alignment. `GTK_ALIGN_BASELINE_CENTER` and `GTK_ALIGN_BASELINE_FILL`
+// are treated similar to `GTK_ALIGN_CENTER` and `GTK_ALIGN_FILL`, except that it
+// positions the widget to line up the baselines, where that is supported.
 type Align int
 
 var xAlignGLibType func() types.GType
@@ -660,12 +817,15 @@ const (
 	AlignEndValue Align = 2
 	// center natural width of widget inside the allocation
 	AlignCenterValue Align = 3
+	// a different name for `GTK_ALIGN_BASELINE`.
+	AlignBaselineFillValue Align = 4
 	// align the widget according to the baseline.
-	//   See [class@Gtk.Widget].
 	AlignBaselineValue Align = 4
+	// stretch to fill all space, but align the baseline.
+	AlignBaselineCenterValue Align = 5
 )
 
-// Used to indicate the direction in which an arrow should point.
+// Indicates the direction in which an arrow should point.
 type ArrowType int
 
 var xArrowTypeGLibType func() types.GType
@@ -971,6 +1131,26 @@ const (
 	EventSequenceDeniedValue EventSequenceState = 2
 )
 
+// Values for the [property@Gtk.Settings:gtk-font-rendering] setting
+// that influence how GTK renders fonts.
+type FontRendering int
+
+var xFontRenderingGLibType func() types.GType
+
+func FontRenderingGLibType() types.GType {
+	return xFontRenderingGLibType()
+}
+
+const (
+
+	// Set up font rendering automatically,
+	//   taking factors like screen resolution and scale into account
+	FontRenderingAutomaticValue FontRendering = 0
+	// Follow low-level font-related settings
+	//   when configuring font rendering
+	FontRenderingManualValue FontRendering = 1
+)
+
 // Built-in icon sizes.
 //
 // Icon sizes default to being inherited. Where they cannot be
@@ -1090,6 +1270,33 @@ const (
 	LevelBarModeContinuousValue LevelBarMode = 0
 	// the bar has a discrete mode
 	LevelBarModeDiscreteValue LevelBarMode = 1
+)
+
+// Used to configure the focus behavior in the `GTK_DIR_TAB_FORWARD`
+// and `GTK_DIR_TAB_BACKWARD` direction, like the &lt;kbd&gt;Tab&lt;/kbd&gt; key
+// in a [class@Gtk.ListView].
+type ListTabBehavior int
+
+var xListTabBehaviorGLibType func() types.GType
+
+func ListTabBehaviorGLibType() types.GType {
+	return xListTabBehaviorGLibType()
+}
+
+const (
+
+	// Cycle through all focusable items of the list
+	ListTabAllValue ListTabBehavior = 0
+	// Cycle through a single list element, then move
+	//   focus out of the list. Moving focus between items needs to be
+	//   done with the arrow keys.
+	ListTabItemValue ListTabBehavior = 1
+	// Cycle only through a single cell, then
+	//   move focus out of the list. Moving focus between cells needs to
+	//   be done with the arrow keys. This is only relevant for
+	//   cell-based widgets like #GtkColumnView, otherwise it behaves
+	//   like `GTK_LIST_TAB_ITEM`.
+	ListTabCellValue ListTabBehavior = 2
 )
 
 // The type of message being displayed in a [class@MessageDialog].
@@ -1452,9 +1659,10 @@ const (
 	// Events are handled regardless of what their
 	//   target is.
 	LimitNoneValue PropagationLimit = 0
-	// Events are only handled if their target
-	//   is in the same [iface@Native] as the event controllers widget. Note
-	//   that some event types have two targets (origin and destination).
+	// Events are only handled if their target is in
+	//   the same [iface@Native] (or widget with [property@Gtk.Widget:limit-events]
+	//   set) as the event controllers widget.
+	//   Note that some event types have two targets (origin and destination).
 	LimitSameNativeValue PropagationLimit = 1
 )
 
@@ -1873,9 +2081,17 @@ func init() {
 
 	core.PuregoSafeRegister(&xInputHintsGLibType, lib, "gtk_input_hints_get_type")
 
+	core.PuregoSafeRegister(&xListScrollFlagsGLibType, lib, "gtk_list_scroll_flags_get_type")
+
 	core.PuregoSafeRegister(&xPickFlagsGLibType, lib, "gtk_pick_flags_get_type")
 
+	core.PuregoSafeRegister(&xPopoverMenuFlagsGLibType, lib, "gtk_popover_menu_flags_get_type")
+
 	core.PuregoSafeRegister(&xStateFlagsGLibType, lib, "gtk_state_flags_get_type")
+
+	core.PuregoSafeRegister(&xTextBufferNotifyFlagsGLibType, lib, "gtk_text_buffer_notify_flags_get_type")
+
+	core.PuregoSafeRegister(&xAccessibleAnnouncementPriorityGLibType, lib, "gtk_accessible_announcement_priority_get_type")
 
 	core.PuregoSafeRegister(&xAccessibleAutocompleteGLibType, lib, "gtk_accessible_autocomplete_get_type")
 
@@ -1917,6 +2133,8 @@ func init() {
 
 	core.PuregoSafeRegister(&xEventSequenceStateGLibType, lib, "gtk_event_sequence_state_get_type")
 
+	core.PuregoSafeRegister(&xFontRenderingGLibType, lib, "gtk_font_rendering_get_type")
+
 	core.PuregoSafeRegister(&xIconSizeGLibType, lib, "gtk_icon_size_get_type")
 
 	core.PuregoSafeRegister(&xInputPurposeGLibType, lib, "gtk_input_purpose_get_type")
@@ -1924,6 +2142,8 @@ func init() {
 	core.PuregoSafeRegister(&xJustificationGLibType, lib, "gtk_justification_get_type")
 
 	core.PuregoSafeRegister(&xLevelBarModeGLibType, lib, "gtk_level_bar_mode_get_type")
+
+	core.PuregoSafeRegister(&xListTabBehaviorGLibType, lib, "gtk_list_tab_behavior_get_type")
 
 	core.PuregoSafeRegister(&xMessageTypeGLibType, lib, "gtk_message_type_get_type")
 

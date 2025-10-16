@@ -20,7 +20,7 @@ func (x *GestureLongPressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkGestureLongPress` is a `GtkGesture` for long presses.
+// Recognizes long press gestures.
 //
 // This gesture is also known as “Press and Hold”.
 //

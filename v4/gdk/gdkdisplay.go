@@ -12,7 +12,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// `GdkDisplay` objects are the GDK representation of a workstation.
+// A representation of a workstation.
 //
 // Their purpose are two-fold:
 //
@@ -172,13 +172,27 @@ func (x *Display) GetDefaultSeat() *Seat {
 	return cls
 }
 
+var xDisplayGetDmabufFormats func(uintptr) *DmabufFormats
+
+// Returns the dma-buf formats that are supported on this display.
+//
+// GTK may use OpenGL or Vulkan to support some formats.
+// Calling this function will then initialize them if they aren't yet.
+//
+// The formats returned by this function can be used for negotiating
+// buffer formats with producers such as v4l, pipewire or GStreamer.
+//
+// To learn more about dma-bufs, see [class@Gdk.DmabufTextureBuilder].
+func (x *Display) GetDmabufFormats() *DmabufFormats {
+
+	cret := xDisplayGetDmabufFormats(x.GoPointer())
+	return cret
+}
+
 var xDisplayGetMonitorAtSurface func(uintptr, uintptr) uintptr
 
 // Gets the monitor in which the largest area of @surface
 // resides.
-//
-// Returns a monitor close to @surface if it is outside
-// of all monitors.
 func (x *Display) GetMonitorAtSurface(SurfaceVar *Surface) *Monitor {
 	var cls *Monitor
 
@@ -365,9 +379,9 @@ var xDisplayNotifyStartupComplete func(uintptr, string)
 // Indicates to the GUI environment that the application has
 // finished loading, using a given identifier.
 //
-// GTK will call this function automatically for [class@Gtk.Window]
+// GTK will call this function automatically for [GtkWindow](../gtk4/class.Window.html)
 // with custom startup-notification identifier unless
-// [method@Gtk.Window.set_auto_startup_notification]
+// [gtk_window_set_auto_startup_notification()](../gtk4/method.Window.set_auto_startup_notification.html)
 // is called to disable that feature.
 func (x *Display) NotifyStartupComplete(StartupIdVar string) {
 
@@ -404,11 +418,7 @@ func (x *Display) PrepareGl() (bool, error) {
 
 var xDisplayPutEvent func(uintptr, uintptr)
 
-// Appends the given event onto the front of the event
-// queue for @display.
-//
-// This function is only useful in very special situations
-// and should not be used by applications.
+// Adds the given event to the event queue for @display.
 func (x *Display) PutEvent(EventVar *Event) {
 
 	xDisplayPutEvent(x.GoPointer(), EventVar.GoPointer())
@@ -426,6 +436,18 @@ var xDisplaySupportsInputShapes func(uintptr) bool
 func (x *Display) SupportsInputShapes() bool {
 
 	cret := xDisplaySupportsInputShapes(x.GoPointer())
+	return cret
+}
+
+var xDisplaySupportsShadowWidth func(uintptr) bool
+
+// Returns whether it's possible for a surface to draw outside of the window area.
+//
+// If %TRUE is returned the application decides if it wants to draw shadows.
+// If %FALSE is returned, the compositor decides if it wants to draw shadows.
+func (x *Display) SupportsShadowWidth() bool {
+
+	cret := xDisplaySupportsShadowWidth(x.GoPointer())
 	return cret
 }
 
@@ -643,6 +665,7 @@ func init() {
 	core.PuregoSafeRegister(&xDisplayGetAppLaunchContext, lib, "gdk_display_get_app_launch_context")
 	core.PuregoSafeRegister(&xDisplayGetClipboard, lib, "gdk_display_get_clipboard")
 	core.PuregoSafeRegister(&xDisplayGetDefaultSeat, lib, "gdk_display_get_default_seat")
+	core.PuregoSafeRegister(&xDisplayGetDmabufFormats, lib, "gdk_display_get_dmabuf_formats")
 	core.PuregoSafeRegister(&xDisplayGetMonitorAtSurface, lib, "gdk_display_get_monitor_at_surface")
 	core.PuregoSafeRegister(&xDisplayGetMonitors, lib, "gdk_display_get_monitors")
 	core.PuregoSafeRegister(&xDisplayGetName, lib, "gdk_display_get_name")
@@ -659,6 +682,7 @@ func init() {
 	core.PuregoSafeRegister(&xDisplayPrepareGl, lib, "gdk_display_prepare_gl")
 	core.PuregoSafeRegister(&xDisplayPutEvent, lib, "gdk_display_put_event")
 	core.PuregoSafeRegister(&xDisplaySupportsInputShapes, lib, "gdk_display_supports_input_shapes")
+	core.PuregoSafeRegister(&xDisplaySupportsShadowWidth, lib, "gdk_display_supports_shadow_width")
 	core.PuregoSafeRegister(&xDisplaySync, lib, "gdk_display_sync")
 	core.PuregoSafeRegister(&xDisplayTranslateKey, lib, "gdk_display_translate_key")
 

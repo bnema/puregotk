@@ -67,10 +67,19 @@ func (x *Shadow) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+var xSerializationErrorQuark func() glib.Quark
+
+// Registers an error quark for [class@Gsk.RenderNode] errors.
+func SerializationErrorQuark() glib.Quark {
+
+	cret := xSerializationErrorQuark()
+	return cret
+}
+
 var xValueDupRenderNode func(*gobject.Value) uintptr
 
-// Retrieves the `GskRenderNode` stored inside the given `value`, and acquires
-// a reference to it.
+// Retrieves the render node stored inside a `GValue`,
+// and acquires a reference to it.
 func ValueDupRenderNode(ValueVar *gobject.Value) *RenderNode {
 	var cls *RenderNode
 
@@ -86,7 +95,7 @@ func ValueDupRenderNode(ValueVar *gobject.Value) *RenderNode {
 
 var xValueGetRenderNode func(*gobject.Value) uintptr
 
-// Retrieves the `GskRenderNode` stored inside the given `value`.
+// Retrieves the render node stored inside a `GValue`.
 func ValueGetRenderNode(ValueVar *gobject.Value) *RenderNode {
 	var cls *RenderNode
 
@@ -103,9 +112,10 @@ func ValueGetRenderNode(ValueVar *gobject.Value) *RenderNode {
 
 var xValueSetRenderNode func(*gobject.Value, uintptr)
 
-// Stores the given `GskRenderNode` inside `value`.
+// Stores the given render node inside a `GValue`.
 //
-// The [struct@GObject.Value] will acquire a reference to the `node`.
+// The [struct@GObject.Value] will acquire a reference
+// to the render node.
 func ValueSetRenderNode(ValueVar *gobject.Value, NodeVar *RenderNode) {
 
 	xValueSetRenderNode(ValueVar, NodeVar.GoPointer())
@@ -114,17 +124,17 @@ func ValueSetRenderNode(ValueVar *gobject.Value, NodeVar *RenderNode) {
 
 var xValueTakeRenderNode func(*gobject.Value, uintptr)
 
-// Stores the given `GskRenderNode` inside `value`.
+// Stores the given render node inside a `GValue`.
 //
-// This function transfers the ownership of the `node` to the `GValue`.
+// This function transfers the ownership of the
+// render node to the `GValue`.
 func ValueTakeRenderNode(ValueVar *gobject.Value, NodeVar *RenderNode) {
 
 	xValueTakeRenderNode(ValueVar, NodeVar.GoPointer())
 
 }
 
-// `GskRenderNode` is the basic block in a scene graph to be
-// rendered using [class@Gsk.Renderer].
+// The basic block in a scene graph to be rendered using [class@Gsk.Renderer].
 //
 // Each node has a parent, except the top-level node; each node may have
 // children nodes.
@@ -154,10 +164,10 @@ func RenderNodeNewFromInternalPtr(ptr uintptr) *RenderNode {
 
 var xRenderNodeDraw func(uintptr, *cairo.Context)
 
-// Draw the contents of @node to the given cairo context.
+// Draws the contents of a render node on a cairo context.
 //
 // Typically, you'll use this function to implement fallback rendering
-// of `GskRenderNode`s on an intermediate Cairo context, instead of using
+// of render nodes on an intermediate Cairo context, instead of using
 // the drawing context associated to a [class@Gdk.Surface]'s rendering buffer.
 //
 // For advanced nodes that cannot be supported using Cairo, in particular
@@ -181,10 +191,26 @@ func (x *RenderNode) GetBounds(BoundsVar *graphene.Rect) {
 
 var xRenderNodeGetNodeType func(uintptr) RenderNodeType
 
-// Returns the type of the @node.
+// Returns the type of the render node.
 func (x *RenderNode) GetNodeType() RenderNodeType {
 
 	cret := xRenderNodeGetNodeType(x.GoPointer())
+	return cret
+}
+
+var xRenderNodeGetOpaqueRect func(uintptr, *graphene.Rect) bool
+
+// Gets an opaque rectangle inside the node that GTK can determine to
+// be fully opaque.
+//
+// There is no guarantee that this is indeed the largest opaque rectangle or
+// that regions outside the rectangle are not opaque. This function is a best
+// effort with that goal.
+//
+// The rectangle will be fully contained in the bounds of the node.
+func (x *RenderNode) GetOpaqueRect(OutOpaqueVar *graphene.Rect) bool {
+
+	cret := xRenderNodeGetOpaqueRect(x.GoPointer(), OutOpaqueVar)
 	return cret
 }
 
@@ -290,6 +316,7 @@ func init() {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xSerializationErrorQuark, lib, "gsk_serialization_error_quark")
 	core.PuregoSafeRegister(&xValueDupRenderNode, lib, "gsk_value_dup_render_node")
 	core.PuregoSafeRegister(&xValueGetRenderNode, lib, "gsk_value_get_render_node")
 	core.PuregoSafeRegister(&xValueSetRenderNode, lib, "gsk_value_set_render_node")
@@ -300,6 +327,7 @@ func init() {
 	core.PuregoSafeRegister(&xRenderNodeDraw, lib, "gsk_render_node_draw")
 	core.PuregoSafeRegister(&xRenderNodeGetBounds, lib, "gsk_render_node_get_bounds")
 	core.PuregoSafeRegister(&xRenderNodeGetNodeType, lib, "gsk_render_node_get_node_type")
+	core.PuregoSafeRegister(&xRenderNodeGetOpaqueRect, lib, "gsk_render_node_get_opaque_rect")
 	core.PuregoSafeRegister(&xRenderNodeRef, lib, "gsk_render_node_ref")
 	core.PuregoSafeRegister(&xRenderNodeSerialize, lib, "gsk_render_node_serialize")
 	core.PuregoSafeRegister(&xRenderNodeUnref, lib, "gsk_render_node_unref")

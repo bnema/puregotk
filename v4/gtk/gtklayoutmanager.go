@@ -41,6 +41,10 @@ func (x *LayoutManagerClass) GoPointer() uintptr {
 }
 
 // OverrideGetRequestMode sets the callback function.
+// a virtual function, used to return the preferred
+//
+//	request mode for the layout manager; for instance, "width for height"
+//	or "height for width"; see `GtkSizeRequestMode`
 func (x *LayoutManagerClass) OverrideGetRequestMode(cb func(*LayoutManager, *Widget) SizeRequestMode) {
 	if cb == nil {
 		x.xGetRequestMode = 0
@@ -52,6 +56,10 @@ func (x *LayoutManagerClass) OverrideGetRequestMode(cb func(*LayoutManager, *Wid
 }
 
 // GetGetRequestMode gets the callback function.
+// a virtual function, used to return the preferred
+//
+//	request mode for the layout manager; for instance, "width for height"
+//	or "height for width"; see `GtkSizeRequestMode`
 func (x *LayoutManagerClass) GetGetRequestMode() func(*LayoutManager, *Widget) SizeRequestMode {
 	if x.xGetRequestMode == 0 {
 		return nil
@@ -64,6 +72,9 @@ func (x *LayoutManagerClass) GetGetRequestMode() func(*LayoutManager, *Widget) S
 }
 
 // OverrideMeasure sets the callback function.
+// a virtual function, used to measure the minimum and preferred
+//
+//	sizes of the widget using the layout manager for a given orientation
 func (x *LayoutManagerClass) OverrideMeasure(cb func(*LayoutManager, *Widget, Orientation, int, int, int, int, int)) {
 	if cb == nil {
 		x.xMeasure = 0
@@ -75,6 +86,9 @@ func (x *LayoutManagerClass) OverrideMeasure(cb func(*LayoutManager, *Widget, Or
 }
 
 // GetMeasure gets the callback function.
+// a virtual function, used to measure the minimum and preferred
+//
+//	sizes of the widget using the layout manager for a given orientation
 func (x *LayoutManagerClass) GetMeasure() func(*LayoutManager, *Widget, Orientation, int, int, int, int, int) {
 	if x.xMeasure == 0 {
 		return nil
@@ -87,6 +101,9 @@ func (x *LayoutManagerClass) GetMeasure() func(*LayoutManager, *Widget, Orientat
 }
 
 // OverrideAllocate sets the callback function.
+// a virtual function, used to allocate the size of the widget
+//
+//	using the layout manager
 func (x *LayoutManagerClass) OverrideAllocate(cb func(*LayoutManager, *Widget, int, int, int)) {
 	if cb == nil {
 		x.xAllocate = 0
@@ -98,6 +115,9 @@ func (x *LayoutManagerClass) OverrideAllocate(cb func(*LayoutManager, *Widget, i
 }
 
 // GetAllocate gets the callback function.
+// a virtual function, used to allocate the size of the widget
+//
+//	using the layout manager
 func (x *LayoutManagerClass) GetAllocate() func(*LayoutManager, *Widget, int, int, int) {
 	if x.xAllocate == 0 {
 		return nil
@@ -110,6 +130,9 @@ func (x *LayoutManagerClass) GetAllocate() func(*LayoutManager, *Widget, int, in
 }
 
 // OverrideCreateLayoutChild sets the callback function.
+// a virtual function, used to create a `GtkLayoutChild`
+//
+//	meta object for the layout properties
 func (x *LayoutManagerClass) OverrideCreateLayoutChild(cb func(*LayoutManager, *Widget, *Widget) *LayoutChild) {
 	if cb == nil {
 		x.xCreateLayoutChild = 0
@@ -125,6 +148,9 @@ func (x *LayoutManagerClass) OverrideCreateLayoutChild(cb func(*LayoutManager, *
 }
 
 // GetCreateLayoutChild gets the callback function.
+// a virtual function, used to create a `GtkLayoutChild`
+//
+//	meta object for the layout properties
 func (x *LayoutManagerClass) GetCreateLayoutChild() func(*LayoutManager, *Widget, *Widget) *LayoutChild {
 	if x.xCreateLayoutChild == 0 {
 		return nil
@@ -143,6 +169,9 @@ func (x *LayoutManagerClass) GetCreateLayoutChild() func(*LayoutManager, *Widget
 }
 
 // OverrideRoot sets the callback function.
+// a virtual function, called when the widget using the layout
+//
+//	manager is attached to a `GtkRoot`
 func (x *LayoutManagerClass) OverrideRoot(cb func(*LayoutManager)) {
 	if cb == nil {
 		x.xRoot = 0
@@ -154,6 +183,9 @@ func (x *LayoutManagerClass) OverrideRoot(cb func(*LayoutManager)) {
 }
 
 // GetRoot gets the callback function.
+// a virtual function, called when the widget using the layout
+//
+//	manager is attached to a `GtkRoot`
 func (x *LayoutManagerClass) GetRoot() func(*LayoutManager) {
 	if x.xRoot == 0 {
 		return nil
@@ -166,6 +198,9 @@ func (x *LayoutManagerClass) GetRoot() func(*LayoutManager) {
 }
 
 // OverrideUnroot sets the callback function.
+// a virtual function, called when the widget using the layout
+//
+//	manager is detached from a `GtkRoot`
 func (x *LayoutManagerClass) OverrideUnroot(cb func(*LayoutManager)) {
 	if cb == nil {
 		x.xUnroot = 0
@@ -177,6 +212,9 @@ func (x *LayoutManagerClass) OverrideUnroot(cb func(*LayoutManager)) {
 }
 
 // GetUnroot gets the callback function.
+// a virtual function, called when the widget using the layout
+//
+//	manager is detached from a `GtkRoot`
 func (x *LayoutManagerClass) GetUnroot() func(*LayoutManager) {
 	if x.xUnroot == 0 {
 		return nil
@@ -188,8 +226,7 @@ func (x *LayoutManagerClass) GetUnroot() func(*LayoutManager) {
 	}
 }
 
-// Layout managers are delegate classes that handle the preferred size
-// and the allocation of a widget.
+// Handles the preferred size and allocation for children of a widget.
 //
 // You typically subclass `GtkLayoutManager` if you want to implement a
 // layout policy for the children of a widget, or if you want to determine

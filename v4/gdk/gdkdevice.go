@@ -13,7 +13,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/pango"
 )
 
-// A `GdkTimeCoord` stores a single event in a motion history.
+// Stores a single event in a motion history.
 //
 // To check whether an axis is present, check whether the corresponding
 // flag from the [flags@Gdk.AxisFlags] enumeration is set in the @flags
@@ -64,8 +64,7 @@ const (
 	SourceTabletPadValue InputSource = 6
 )
 
-// The `GdkDevice` object represents an input device, such
-// as a keyboard, a mouse, or a touchpad.
+// Represents an input device, such as a keyboard, mouse or touchpad.
 //
 // See the [class@Gdk.Seat] documentation for more information
 // about the various kinds of devices, and their relationships.
@@ -83,6 +82,20 @@ func DeviceNewFromInternalPtr(ptr uintptr) *Device {
 	cls := &Device{}
 	cls.Ptr = ptr
 	return cls
+}
+
+var xDeviceGetActiveLayoutIndex func(uintptr) int
+
+// Retrieves the index of the active layout of the keyboard.
+//
+// If there is no valid active layout for the `GdkDevice`, this function will
+// return -1;
+//
+// This is only relevant for keyboard devices.
+func (x *Device) GetActiveLayoutIndex() int {
+
+	cret := xDeviceGetActiveLayoutIndex(x.GoPointer())
+	return cret
 }
 
 var xDeviceGetCapsLockState func(uintptr) bool
@@ -153,6 +166,17 @@ var xDeviceGetHasCursor func(uintptr) bool
 func (x *Device) GetHasCursor() bool {
 
 	cret := xDeviceGetHasCursor(x.GoPointer())
+	return cret
+}
+
+var xDeviceGetLayoutNames func(uintptr) []string
+
+// Retrieves the names of the layouts of the keyboard.
+//
+// This is only relevant for keyboard devices.
+func (x *Device) GetLayoutNames() []string {
+
+	cret := xDeviceGetLayoutNames(x.GoPointer())
 	return cret
 }
 
@@ -398,11 +422,13 @@ func init() {
 
 	core.PuregoSafeRegister(&xDeviceGLibType, lib, "gdk_device_get_type")
 
+	core.PuregoSafeRegister(&xDeviceGetActiveLayoutIndex, lib, "gdk_device_get_active_layout_index")
 	core.PuregoSafeRegister(&xDeviceGetCapsLockState, lib, "gdk_device_get_caps_lock_state")
 	core.PuregoSafeRegister(&xDeviceGetDeviceTool, lib, "gdk_device_get_device_tool")
 	core.PuregoSafeRegister(&xDeviceGetDirection, lib, "gdk_device_get_direction")
 	core.PuregoSafeRegister(&xDeviceGetDisplay, lib, "gdk_device_get_display")
 	core.PuregoSafeRegister(&xDeviceGetHasCursor, lib, "gdk_device_get_has_cursor")
+	core.PuregoSafeRegister(&xDeviceGetLayoutNames, lib, "gdk_device_get_layout_names")
 	core.PuregoSafeRegister(&xDeviceGetModifierState, lib, "gdk_device_get_modifier_state")
 	core.PuregoSafeRegister(&xDeviceGetName, lib, "gdk_device_get_name")
 	core.PuregoSafeRegister(&xDeviceGetNumLockState, lib, "gdk_device_get_num_lock_state")

@@ -4,20 +4,52 @@ package gio
 import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/glib"
 )
 
 var xIoErrorFromErrno func(int) IOErrorEnum
 
-// Converts errno.h error codes into GIO error codes. The fallback
-// value %G_IO_ERROR_FAILED is returned for error codes not currently
-// handled (but note that future GLib releases may return a more
+// Converts `errno.h` error codes into GIO error codes.
+//
+// The fallback value %G_IO_ERROR_FAILED is returned for error codes not
+// currently handled (but note that future GLib releases may return a more
 // specific value instead).
 //
-// As %errno is global and may be modified by intermediate function
-// calls, you should save its value as soon as the call which sets it
+// As `errno` is global and may be modified by intermediate function
+// calls, you should save its value immediately after the call returns,
+// and use the saved value instead of `errno`:
+//
+// |[&lt;!-- language="C" --&gt;
+//
+//	int saved_errno;
+//
+//	ret = read (blah);
+//	saved_errno = errno;
+//
+//	g_io_error_from_errno (saved_errno);
+//
+// ]|
 func IoErrorFromErrno(ErrNoVar int) IOErrorEnum {
 
 	cret := xIoErrorFromErrno(ErrNoVar)
+	return cret
+}
+
+var xIoErrorFromFileError func(glib.FileError) IOErrorEnum
+
+// Converts #GFileError error codes into GIO error codes.
+func IoErrorFromFileError(FileErrorVar glib.FileError) IOErrorEnum {
+
+	cret := xIoErrorFromFileError(FileErrorVar)
+	return cret
+}
+
+var xIoErrorQuark func() glib.Quark
+
+// Gets the GIO Error Quark.
+func IoErrorQuark() glib.Quark {
+
+	cret := xIoErrorQuark()
 	return cret
 }
 
@@ -30,5 +62,7 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xIoErrorFromErrno, lib, "g_io_error_from_errno")
+	core.PuregoSafeRegister(&xIoErrorFromFileError, lib, "g_io_error_from_file_error")
+	core.PuregoSafeRegister(&xIoErrorQuark, lib, "g_io_error_quark")
 
 }

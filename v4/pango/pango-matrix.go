@@ -102,6 +102,22 @@ func (x *Matrix) GetFontScaleFactors(XscaleVar float64, YscaleVar float64) {
 
 }
 
+var xMatrixGetSlantRatio func(uintptr) float64
+
+// Gets the slant ratio of a matrix.
+//
+// For a simple shear matrix in the form:
+//
+//	1 λ
+//	0 1
+//
+// this is simply λ.
+func (x *Matrix) GetSlantRatio() float64 {
+
+	cret := xMatrixGetSlantRatio(x.GoPointer())
+	return cret
+}
+
 var xMatrixRotate func(uintptr, float64)
 
 // Changes the transformation represented by @matrix to be the
@@ -227,6 +243,7 @@ func init() {
 	core.PuregoSafeRegister(&xMatrixFree, lib, "pango_matrix_free")
 	core.PuregoSafeRegister(&xMatrixGetFontScaleFactor, lib, "pango_matrix_get_font_scale_factor")
 	core.PuregoSafeRegister(&xMatrixGetFontScaleFactors, lib, "pango_matrix_get_font_scale_factors")
+	core.PuregoSafeRegister(&xMatrixGetSlantRatio, lib, "pango_matrix_get_slant_ratio")
 	core.PuregoSafeRegister(&xMatrixRotate, lib, "pango_matrix_rotate")
 	core.PuregoSafeRegister(&xMatrixScale, lib, "pango_matrix_scale")
 	core.PuregoSafeRegister(&xMatrixTransformDistance, lib, "pango_matrix_transform_distance")

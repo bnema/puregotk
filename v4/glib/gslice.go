@@ -24,17 +24,13 @@ const (
 
 var xSliceAlloc func(uint) uintptr
 
-// Allocates a block of memory from the slice allocator.
+// Allocates a block of memory from the libc allocator.
 //
 // The block address handed out can be expected to be aligned
-// to at least `1 * sizeof (void*)`, though in general slices
-// are `2 * sizeof (void*)` bytes aligned; if a `malloc()`
-// fallback implementation is used instead, the alignment may
-// be reduced in a libc dependent fashion.
+// to at least `1 * sizeof (void*)`.
 //
-// Note that the underlying slice allocation mechanism can
-// be changed with the [`G_SLICE=always-malloc`][G_SLICE]
-// environment variable.
+// Since GLib 2.76 this always uses the system malloc() implementation
+// internally.
 func SliceAlloc(BlockSizeVar uint) uintptr {
 
 	cret := xSliceAlloc(BlockSizeVar)
@@ -44,9 +40,10 @@ func SliceAlloc(BlockSizeVar uint) uintptr {
 var xSliceAlloc0 func(uint) uintptr
 
 // Allocates a block of memory via g_slice_alloc() and initializes
-// the returned memory to 0. Note that the underlying slice allocation
-// mechanism can be changed with the [`G_SLICE=always-malloc`][G_SLICE]
-// environment variable.
+// the returned memory to 0.
+//
+// Since GLib 2.76 this always uses the system malloc() implementation
+// internally.
 func SliceAlloc0(BlockSizeVar uint) uintptr {
 
 	cret := xSliceAlloc0(BlockSizeVar)
@@ -59,6 +56,9 @@ var xSliceCopy func(uint, uintptr) uintptr
 // and copies @block_size bytes into it from @mem_block.
 //
 // @mem_block must be non-%NULL if @block_size is non-zero.
+//
+// Since GLib 2.76 this always uses the system malloc() implementation
+// internally.
 func SliceCopy(BlockSizeVar uint, MemBlockVar uintptr) uintptr {
 
 	cret := xSliceCopy(BlockSizeVar, MemBlockVar)
@@ -72,10 +72,13 @@ var xSliceFree1 func(uint, uintptr)
 // The memory must have been allocated via g_slice_alloc() or
 // g_slice_alloc0() and the @block_size has to match the size
 // specified upon allocation. Note that the exact release behaviour
-// can be changed with the [`G_DEBUG=gc-friendly`][G_DEBUG] environment
-// variable, also see [`G_SLICE`][G_SLICE] for related debugging options.
+// can be changed with the [`G_DEBUG=gc-friendly`](running.html#environment-variables) environment
+// variable.
 //
 // If @mem_block is %NULL, this function does nothing.
+//
+// Since GLib 2.76 this always uses the system free_sized() implementation
+// internally.
 func SliceFree1(BlockSizeVar uint, MemBlockVar uintptr) {
 
 	xSliceFree1(BlockSizeVar, MemBlockVar)
@@ -91,10 +94,12 @@ var xSliceFreeChainWithOffset func(uint, uintptr, uint)
 // @next pointer (similar to #GSList). The offset of the @next
 // field in each block is passed as third argument.
 // Note that the exact release behaviour can be changed with the
-// [`G_DEBUG=gc-friendly`][G_DEBUG] environment variable, also see
-// [`G_SLICE`][G_SLICE] for related debugging options.
+// [`G_DEBUG=gc-friendly`](running.html#environment-variables) environment variable.
 //
 // If @mem_chain is %NULL, this function does nothing.
+//
+// Since GLib 2.76 this always uses the system free_sized() implementation
+// internally.
 func SliceFreeChainWithOffset(BlockSizeVar uint, MemChainVar uintptr, NextOffsetVar uint) {
 
 	xSliceFreeChainWithOffset(BlockSizeVar, MemChainVar, NextOffsetVar)
@@ -127,7 +132,7 @@ func SliceSetConfig(CkeyVar SliceConfig, ValueVar int64) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

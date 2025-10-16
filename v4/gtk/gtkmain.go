@@ -16,14 +16,26 @@ const (
 	PRIORITY_RESIZE int = 110
 )
 
+var xDisablePortals func()
+
+// Prevents GTK from using portals.
+//
+// This is equivalent to setting `GDK_DEBUG=no-portals` in the environment.
+//
+// This should only be used in portal implementations, apps must not call it.
+func DisablePortals() {
+
+	xDisablePortals()
+
+}
+
 var xDisableSetlocale func()
 
-// Prevents [id@gtk_init] and [id@gtk_init_check] from automatically calling
-// `setlocale (LC_ALL, "")`.
+// Prevents [func@Gtk.init] and [func@Gtk.init_check] from calling `setlocale()`.
 //
 // You would want to use this function if you wanted to set the locale for
-// your program to something other than the user’s locale, or if
-// you wanted to set different values for different locale categories.
+// your program to something other than the user’s locale, or if you wanted
+// to set different values for different locale categories.
 //
 // Most programs should not need to call this function.
 func DisableSetlocale() {
@@ -44,8 +56,7 @@ var xGetDefaultLanguage func() *pango.Language
 // locale. It determines, for example, whether GTK uses
 // the right-to-left or left-to-right text direction.
 //
-// This function is equivalent to
-// [func@Pango.Language.get_default].
+// This function is equivalent to [func@Pango.Language.get_default].
 // See that function for details.
 func GetDefaultLanguage() *pango.Language {
 
@@ -55,23 +66,23 @@ func GetDefaultLanguage() *pango.Language {
 
 var xGetLocaleDirection func() TextDirection
 
-// Get the direction of the current locale. This is the expected
-// reading direction for text and UI.
+// Gets the direction of the current locale.
+//
+// This is the expected reading direction for text and UI.
 //
 // This function depends on the current locale being set with
-// setlocale() and will default to setting the %GTK_TEXT_DIR_LTR
-// direction otherwise. %GTK_TEXT_DIR_NONE will never be returned.
+// `setlocale()` and will default to setting the `GTK_TEXT_DIR_LTR`
+// direction otherwise. `GTK_TEXT_DIR_NONE` will never be returned.
 //
-// GTK sets the default text direction according to the locale
-// during gtk_init(), and you should normally use
-// gtk_widget_get_direction() or gtk_widget_get_default_direction()
-// to obtain the current direction.
+// GTK sets the default text direction according to the locale during
+// [func@Gtk.init], and you should normally use [method@Gtk.Widget.get_direction]
+// or [func@Gtk.Widget.get_default_direction] to obtain the current direction.
 //
 // This function is only needed rare cases when the locale is
 // changed after GTK has already been initialized. In this case,
 // you can use it to update the default text direction as follows:
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 // #include &lt;locale.h&gt;
 //
 // static void
@@ -79,11 +90,10 @@ var xGetLocaleDirection func() TextDirection
 //
 //	{
 //	  setlocale (LC_ALL, new_locale);
-//	  GtkTextDirection direction = gtk_get_locale_direction ();
-//	  gtk_widget_set_default_direction (direction);
+//	  gtk_widget_set_default_direction (gtk_get_locale_direction ());
 //	}
 //
-// ]|
+// ```
 func GetLocaleDirection() TextDirection {
 
 	cret := xGetLocaleDirection()
@@ -92,25 +102,28 @@ func GetLocaleDirection() TextDirection {
 
 var xInit func()
 
-// Call this function before using any other GTK functions in your GUI
-// applications.  It will initialize everything needed to operate the
-// toolkit.
+// Initializes GTK.
 //
-// If you are using `GtkApplication`, you don't have to call gtk_init()
-// or gtk_init_check(); the `GApplication::startup` handler
-// does it for you.
+// This function must be called before using any other GTK functions
+// in your GUI applications.
 //
-// This function will terminate your program if it was unable to
-// initialize the windowing system for some reason. If you want
-// your program to fall back to a textual interface you want to
-// call gtk_init_check() instead.
+// It will initialize everything needed to operate the toolkit. In particular,
+// it will open the default display (see [func@Gdk.Display.get_default]).
 //
-// GTK calls `signal (SIGPIPE, SIG_IGN)`
-// during initialization, to ignore SIGPIPE signals, since these are
-// almost never wanted in graphical applications. If you do need to
-// handle SIGPIPE for some reason, reset the handler after gtk_init(),
-// but notice that other libraries (e.g. libdbus or gvfs) might do
-// similar things.
+// If you are using [class@Gtk.Application], you usually don't have to call this
+// function; the [vfunc@Gio.Application.startup] handler does it for you. Though,
+// if you are using `GApplication` methods that will be invoked before `startup`,
+// such as `local_command_line`, you may need to initialize GTK explicitly.
+//
+// This function will terminate your program if it was unable to initialize
+// the windowing system for some reason. If you want your program to fall back
+// to a textual interface, call [func@Gtk.init_check] instead.
+//
+// GTK calls `signal (SIGPIPE, SIG_IGN)` during initialization, to ignore
+// SIGPIPE signals, since these are almost never wanted in graphical
+// applications. If you do need to handle SIGPIPE for some reason, reset
+// the handler after gtk_init(), but notice that other libraries (e.g.
+// libdbus or gvfs) might do similar things.
 func Init() {
 
 	xInit()
@@ -119,9 +132,11 @@ func Init() {
 
 var xInitCheck func() bool
 
-// This function does the same work as gtk_init() with only a single
-// change: It does not terminate the program if the windowing system
-// can’t be initialized. Instead it returns %FALSE on failure.
+// Initializes GTK.
+//
+// This function does the same work as [func@Gtk.init] with only a
+// single change: It does not terminate the program if the windowing
+// system can’t be initialized. Instead it returns false on failure.
 //
 // This way the application can fall back to some other means of
 // communication with the user - for example a curses or command line
@@ -134,8 +149,9 @@ func InitCheck() bool {
 
 var xIsInitialized func() bool
 
-// Use this function to check if GTK has been initialized with gtk_init()
-// or gtk_init_check().
+// Returns whether GTK has been initialized.
+//
+// See [func@Gtk.init].
 func IsInitialized() bool {
 
 	cret := xIsInitialized()
@@ -150,6 +166,7 @@ func init() {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xDisablePortals, lib, "gtk_disable_portals")
 	core.PuregoSafeRegister(&xDisableSetlocale, lib, "gtk_disable_setlocale")
 	core.PuregoSafeRegister(&xGetDefaultLanguage, lib, "gtk_get_default_language")
 	core.PuregoSafeRegister(&xGetLocaleDirection, lib, "gtk_get_locale_direction")

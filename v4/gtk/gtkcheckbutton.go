@@ -74,9 +74,14 @@ func (x *CheckButtonClass) GetActivate() func(*CheckButton) {
 	}
 }
 
-// A `GtkCheckButton` places a label next to an indicator.
+// Places a label next to an indicator.
 //
-// ![Example GtkCheckButtons](check-button.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="check-button-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="Example GtkCheckButtons" src="check-button.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // A `GtkCheckButton` is created by calling either [ctor@Gtk.CheckButton.new]
 // or [ctor@Gtk.CheckButton.new_with_label].
@@ -105,14 +110,30 @@ func (x *CheckButtonClass) GetActivate() func(*CheckButton) {
 // Grouped check buttons use a different indicator, and are commonly referred
 // to as *radio buttons*.
 //
-// ![Example GtkCheckButtons](radio-button.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="radio-button-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="Example GtkRadioButtons" src="radio-button.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // To add a `GtkCheckButton` to a group, use [method@Gtk.CheckButton.set_group].
+//
+// When the code must keep track of the state of a group of radio buttons, it
+// is recommended to keep track of such state through a stateful
+// `GAction` with a target for each button. Using the `toggled` signals to keep
+// track of the group changes and state is discouraged.
+//
+// # Shortcuts and Gestures
+//
+// `GtkCheckButton` supports the following keyboard shortcuts:
+//
+// - &lt;kbd&gt;␣&lt;/kbd&gt; or &lt;kbd&gt;Enter&lt;/kbd&gt; activates the button.
 //
 // # CSS nodes
 //
 // ```
-// checkbutton[.text-button]
+// checkbutton[.text-button][.grouped]
 // ├── check
 // ╰── [label]
 // ```
@@ -125,7 +146,7 @@ func (x *CheckButtonClass) GetActivate() func(*CheckButton) {
 //
 // # Accessibility
 //
-// `GtkCheckButton` uses the %GTK_ACCESSIBLE_ROLE_CHECKBOX role.
+// `GtkCheckButton` uses the [enum@Gtk.AccessibleRole.checkbox] role.
 type CheckButton struct {
 	Widget
 }
@@ -297,7 +318,7 @@ var xCheckButtonSetInconsistent func(uintptr, bool)
 
 // Sets the `GtkCheckButton` to inconsistent state.
 //
-// You shoud turn off the inconsistent state again if the user checks
+// You should turn off the inconsistent state again if the user checks
 // the check button. This has to be done manually.
 func (x *CheckButton) SetInconsistent(InconsistentVar bool) {
 
@@ -349,6 +370,9 @@ func (c *CheckButton) SetGoPointer(ptr uintptr) {
 //
 // Applications should never connect to this signal, but use the
 // [signal@Gtk.CheckButton::toggled] signal.
+//
+// The default bindings for this signal are all forms of the
+// &lt;kbd&gt;␣&lt;/kbd&gt; and &lt;kbd&gt;Enter&lt;/kbd&gt; keys.
 func (x *CheckButton) ConnectActivate(cb *func(CheckButton)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -389,31 +413,162 @@ func (x *CheckButton) ConnectToggled(cb *func(CheckButton)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *CheckButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *CheckButton) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *CheckButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *CheckButton) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *CheckButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *CheckButton) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *CheckButton) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *CheckButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *CheckButton) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *CheckButton) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *CheckButton) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *CheckButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *CheckButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *CheckButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -459,7 +614,7 @@ func (x *CheckButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Ac
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -489,13 +644,17 @@ func (x *CheckButton) UpdateRelationValue(NRelationsVar int, RelationsVar []Acce
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -608,7 +767,7 @@ func (x *CheckButton) SetDetailedActionName(DetailedActionNameVar string) {
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *CheckButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

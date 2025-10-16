@@ -53,15 +53,43 @@ func Chdir(PathVar string) int {
 	return cret
 }
 
+var xChmod func(string, int) int
+
+// A wrapper for the POSIX chmod() function. The chmod() function is
+// used to set the permissions of a file system object.
+//
+// On Windows the file protection mechanism is not at all POSIX-like,
+// and the underlying chmod() function in the C library just sets or
+// clears the FAT-style READONLY attribute. It does not touch any
+// ACL. Software that needs to manage file permissions on Windows
+// exactly should use the Win32 API.
+//
+// See your C library manual for more details about chmod().
+func Chmod(FilenameVar string, ModeVar int) int {
+
+	cret := xChmod(FilenameVar, ModeVar)
+	return cret
+}
+
 var xClose func(int, **Error) bool
 
-// This wraps the close() call; in case of error, %errno will be
+// This wraps the close() call. In case of error, %errno will be
 // preserved, but the error will also be stored as a #GError in @error.
+// In case of success, %errno is undefined.
 //
 // Besides using #GError, there is another major reason to prefer this
 // function over the call provided by the system; on Unix, it will
 // attempt to correctly handle %EINTR, which has platform-specific
 // semantics.
+//
+// It is a bug to call this function with an invalid file descriptor.
+//
+// On POSIX platforms since GLib 2.76, this function is async-signal safe
+// if (and only if) @error is %NULL and @fd is a valid open file descriptor.
+// This makes it safe to call from a signal handler or a #GSpawnChildSetupFunc
+// under those conditions.
+// See [`signal(7)`](man:signal(7)) and
+// [`signal-safety(7)`](man:signal-safety(7)) for more details.
 func Close(FdVar int) (bool, error) {
 	var cerr *Error
 
@@ -71,6 +99,177 @@ func Close(FdVar int) (bool, error) {
 	}
 	return cret, cerr
 
+}
+
+var xCreat func(string, int) int
+
+// A wrapper for the POSIX creat() function. The creat() function is
+// used to convert a pathname into a file descriptor, creating a file
+// if necessary.
+//
+// On POSIX systems file descriptors are implemented by the operating
+// system. On Windows, it's the C library that implements creat() and
+// file descriptors. The actual Windows API for opening files is
+// different, see MSDN documentation for CreateFile(). The Win32 API
+// uses file handles, which are more randomish integers, not small
+// integers like file descriptors.
+//
+// Because file descriptors are specific to the C library on Windows,
+// the file descriptor returned by this function makes sense only to
+// functions in the same C library. Thus if the GLib-using code uses a
+// different C library than GLib does, the file descriptor returned by
+// this function cannot be passed to C library functions like write()
+// or read().
+//
+// See your C library manual for more details about creat().
+func Creat(FilenameVar string, ModeVar int) int {
+
+	cret := xCreat(FilenameVar, ModeVar)
+	return cret
+}
+
+var xFopen func(string, string) uintptr
+
+// A wrapper for the stdio `fopen()` function. The `fopen()` function
+// opens a file and associates a new stream with it.
+//
+// Because file descriptors are specific to the C library on Windows,
+// and a file descriptor is part of the `FILE` struct, the `FILE*` returned
+// by this function makes sense only to functions in the same C library.
+// Thus if the GLib-using code uses a different C library than GLib does,
+// the FILE* returned by this function cannot be passed to C library
+// functions like `fprintf()` or `fread()`.
+//
+// See your C library manual for more details about `fopen()`.
+//
+// As `close()` and `fclose()` are part of the C library, this implies that it is
+// currently impossible to close a file if the application C library and the C library
+// used by GLib are different. Convenience functions like g_file_set_contents_full()
+// avoid this problem.
+func Fopen(FilenameVar string, ModeVar string) uintptr {
+
+	cret := xFopen(FilenameVar, ModeVar)
+	return cret
+}
+
+var xFreopen func(string, string, uintptr) uintptr
+
+// A wrapper for the POSIX freopen() function. The freopen() function
+// opens a file and associates it with an existing stream.
+//
+// See your C library manual for more details about freopen().
+func Freopen(FilenameVar string, ModeVar string, StreamVar uintptr) uintptr {
+
+	cret := xFreopen(FilenameVar, ModeVar, StreamVar)
+	return cret
+}
+
+var xFsync func(int) int
+
+// A wrapper for the POSIX `fsync()` function. On Windows, `_commit()` will be
+// used. On macOS, `fcntl(F_FULLFSYNC)` will be used.
+// The `fsync()` function is used to synchronize a file's in-core
+// state with that of the disk.
+//
+// This wrapper will handle retrying on `EINTR`.
+//
+// See the C library manual for more details about fsync().
+func Fsync(FdVar int) int {
+
+	cret := xFsync(FdVar)
+	return cret
+}
+
+var xLstat func(string, *StatBuf) int
+
+// A wrapper for the POSIX lstat() function. The lstat() function is
+// like stat() except that in the case of symbolic links, it returns
+// information about the symbolic link itself and not the file that it
+// refers to. If the system does not support symbolic links g_lstat()
+// is identical to g_stat().
+//
+// See your C library manual for more details about lstat().
+func Lstat(FilenameVar string, BufVar *StatBuf) int {
+
+	cret := xLstat(FilenameVar, BufVar)
+	return cret
+}
+
+var xMkdir func(string, int) int
+
+// A wrapper for the POSIX mkdir() function. The mkdir() function
+// attempts to create a directory with the given name and permissions.
+// The mode argument is ignored on Windows.
+//
+// See your C library manual for more details about mkdir().
+func Mkdir(FilenameVar string, ModeVar int) int {
+
+	cret := xMkdir(FilenameVar, ModeVar)
+	return cret
+}
+
+var xOpen func(string, int, int) int
+
+// A wrapper for the POSIX open() function. The open() function is
+// used to convert a pathname into a file descriptor.
+//
+// On POSIX systems file descriptors are implemented by the operating
+// system. On Windows, it's the C library that implements open() and
+// file descriptors. The actual Win32 API for opening files is quite
+// different, see MSDN documentation for CreateFile(). The Win32 API
+// uses file handles, which are more randomish integers, not small
+// integers like file descriptors.
+//
+// Because file descriptors are specific to the C library on Windows,
+// the file descriptor returned by this function makes sense only to
+// functions in the same C library. Thus if the GLib-using code uses a
+// different C library than GLib does, the file descriptor returned by
+// this function cannot be passed to C library functions like write()
+// or read().
+//
+// See your C library manual for more details about open().
+func Open(FilenameVar string, FlagsVar int, ModeVar int) int {
+
+	cret := xOpen(FilenameVar, FlagsVar, ModeVar)
+	return cret
+}
+
+var xRemove func(string) int
+
+// A wrapper for the POSIX remove() function. The remove() function
+// deletes a name from the filesystem.
+//
+// See your C library manual for more details about how remove() works
+// on your system. On Unix, remove() removes also directories, as it
+// calls unlink() for files and rmdir() for directories. On Windows,
+// although remove() in the C library only works for files, this
+// function tries first remove() and then if that fails rmdir(), and
+// thus works for both files and directories. Note however, that on
+// Windows, it is in general not possible to remove a file that is
+// open to some process, or mapped into memory.
+//
+// If this function fails on Windows you can't infer too much from the
+// errno value. rmdir() is tried regardless of what caused remove() to
+// fail. Any errno value set by remove() will be overwritten by that
+// set by rmdir().
+func Remove(FilenameVar string) int {
+
+	cret := xRemove(FilenameVar)
+	return cret
+}
+
+var xRename func(string, string) int
+
+// A wrapper for the POSIX rename() function. The rename() function
+// renames a file, moving it between directories if required.
+//
+// See your C library manual for more details about how rename() works
+// on your system. It is not possible in general on Windows to rename
+// a file that is open to some process.
+func Rename(OldfilenameVar string, NewfilenameVar string) int {
+
+	cret := xRename(OldfilenameVar, NewfilenameVar)
+	return cret
 }
 
 var xRmdir func(string) int
@@ -83,6 +282,34 @@ var xRmdir func(string) int
 func Rmdir(FilenameVar string) int {
 
 	cret := xRmdir(FilenameVar)
+	return cret
+}
+
+var xStat func(string, *StatBuf) int
+
+// A wrapper for the POSIX stat() function. The stat() function
+// returns information about a file. On Windows the stat() function in
+// the C library checks only the FAT-style READONLY attribute and does
+// not look at the ACL at all. Thus on Windows the protection bits in
+// the @st_mode field are a fabrication of little use.
+//
+// On Windows the Microsoft C libraries have several variants of the
+// stat struct and stat() function with names like _stat(), _stat32(),
+// _stat32i64() and _stat64i32(). The one used here is for 32-bit code
+// the one with 32-bit size and time fields, specifically called _stat32().
+//
+// In Microsoft's compiler, by default struct stat means one with
+// 64-bit time fields while in MinGW struct stat is the legacy one
+// with 32-bit fields. To hopefully clear up this messs, the gstdio.h
+// header defines a type #GStatBuf which is the appropriate struct type
+// depending on the platform and/or compiler being used. On POSIX it
+// is just struct stat, but note that even on POSIX platforms, stat()
+// might be a macro.
+//
+// See your C library manual for more details about stat().
+func Stat(FilenameVar string, BufVar *StatBuf) int {
+
+	cret := xStat(FilenameVar, BufVar)
 	return cret
 }
 
@@ -102,9 +329,22 @@ func Unlink(FilenameVar string) int {
 	return cret
 }
 
+var xUtime func(string, uintptr) int
+
+// A wrapper for the POSIX utime() function. The utime() function
+// sets the access and modification timestamps of a file.
+//
+// See your C library manual for more details about how utime() works
+// on your system.
+func Utime(FilenameVar string, UtbVar uintptr) int {
+
+	cret := xUtime(FilenameVar, UtbVar)
+	return cret
+}
+
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -112,8 +352,20 @@ func init() {
 
 	core.PuregoSafeRegister(&xAccess, lib, "g_access")
 	core.PuregoSafeRegister(&xChdir, lib, "g_chdir")
+	core.PuregoSafeRegister(&xChmod, lib, "g_chmod")
 	core.PuregoSafeRegister(&xClose, lib, "g_close")
+	core.PuregoSafeRegister(&xCreat, lib, "g_creat")
+	core.PuregoSafeRegister(&xFopen, lib, "g_fopen")
+	core.PuregoSafeRegister(&xFreopen, lib, "g_freopen")
+	core.PuregoSafeRegister(&xFsync, lib, "g_fsync")
+	core.PuregoSafeRegister(&xLstat, lib, "g_lstat")
+	core.PuregoSafeRegister(&xMkdir, lib, "g_mkdir")
+	core.PuregoSafeRegister(&xOpen, lib, "g_open")
+	core.PuregoSafeRegister(&xRemove, lib, "g_remove")
+	core.PuregoSafeRegister(&xRename, lib, "g_rename")
 	core.PuregoSafeRegister(&xRmdir, lib, "g_rmdir")
+	core.PuregoSafeRegister(&xStat, lib, "g_stat")
 	core.PuregoSafeRegister(&xUnlink, lib, "g_unlink")
+	core.PuregoSafeRegister(&xUtime, lib, "g_utime")
 
 }

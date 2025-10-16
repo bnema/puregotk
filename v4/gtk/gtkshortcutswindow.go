@@ -5,6 +5,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
 	"github.com/jwijenbergh/puregotk/v4/glib"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
@@ -22,13 +23,23 @@ import (
 // showing information that is not relevant in the current application context.
 //
 // The recommended way to construct a `GtkShortcutsWindow` is with
-// [class@Gtk.Builder], by populating a `GtkShortcutsWindow` with one or
-// more `GtkShortcutsSection` objects, which contain `GtkShortcutsGroups`
-// that in turn contain objects of class `GtkShortcutsShortcut`.
+// [class@Gtk.Builder], by using the `&lt;child&gt;` tag to populate a
+// `GtkShortcutsWindow` with one or more [class@Gtk.ShortcutsSection] objects,
+// which contain one or more [class@Gtk.ShortcutsGroup] instances, which, in turn,
+// contain [class@Gtk.ShortcutsShortcut] instances.
+//
+// If you need to add a section programmatically, use [method@Gtk.ShortcutsWindow.add_section]
+// instead of [method@Gtk.Window.set_child], as the shortcuts window manages
+// its children directly.
 //
 // # A simple example:
 //
-// ![](gedit-shortcuts.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="gedit-shortcuts-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="A simple example" src="gedit-shortcuts.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // This example has as single section. As you can see, the shortcut groups
 // are arranged in columns, and spread across several pages if there are too
@@ -38,21 +49,43 @@ import (
 //
 // # An example with multiple views:
 //
-// ![](clocks-shortcuts.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="clocks-shortcuts-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example with multiple views" src="clocks-shortcuts.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // This example shows a `GtkShortcutsWindow` that has been configured to show only
-// the shortcuts relevant to the "stopwatch" view.
+// the shortcuts relevant to the “Stopwatch” view.
 //
 // The .ui file for this example can be found [here](https://gitlab.gnome.org/GNOME/gtk/tree/main/demos/gtk-demo/shortcuts-clocks.ui).
 //
 // # An example with multiple sections:
 //
-// ![](builder-shortcuts.png)
+// &lt;picture&gt;
 //
-// This example shows a `GtkShortcutsWindow` with two sections, "Editor Shortcuts"
-// and "Terminal Shortcuts".
+//	&lt;source srcset="builder-shortcuts-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example with multiple sections" src="builder-shortcuts.png"&gt;
+//
+// &lt;/picture&gt;
+//
+// This example shows a `GtkShortcutsWindow` with two sections, “Editor Shortcuts”
+// and “Terminal Shortcuts”.
 //
 // The .ui file for this example can be found [here](https://gitlab.gnome.org/GNOME/gtk/tree/main/demos/gtk-demo/shortcuts-builder.ui).
+//
+// # Shortcuts and Gestures
+//
+// The following signals have default keybindings:
+//
+// - [signal@Gtk.ShortcutsWindow::close]
+// - [signal@Gtk.ShortcutsWindow::search]
+//
+// # CSS nodes
+//
+// `GtkShortcutsWindow` has a single CSS node with the name `window` and style
+// class `.shortcuts`.
 type ShortcutsWindow struct {
 	Window
 }
@@ -67,6 +100,21 @@ func ShortcutsWindowNewFromInternalPtr(ptr uintptr) *ShortcutsWindow {
 	cls := &ShortcutsWindow{}
 	cls.Ptr = ptr
 	return cls
+}
+
+var xShortcutsWindowAddSection func(uintptr, uintptr)
+
+// Adds a section to the shortcuts window.
+//
+// This is the programmatic equivalent to using [class@Gtk.Builder] and a
+// `&lt;child&gt;` tag to add the child.
+//
+// Using [method@Gtk.Window.set_child] is not appropriate as the shortcuts
+// window manages its children internally.
+func (x *ShortcutsWindow) AddSection(SectionVar *ShortcutsSection) {
+
+	xShortcutsWindowAddSection(x.GoPointer(), SectionVar.GoPointer())
+
 }
 
 func (c *ShortcutsWindow) GoPointer() uintptr {
@@ -84,7 +132,7 @@ func (c *ShortcutsWindow) SetGoPointer(ptr uintptr) {
 //
 // This is a [keybinding signal](class.SignalAction.html).
 //
-// The default binding for this signal is the Escape key.
+// The default binding for this signal is the &lt;kbd&gt;Escape&lt;/kbd&gt; key.
 func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -108,7 +156,7 @@ func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint32 {
 //
 // This is a [keybinding signal](class.SignalAction.html).
 //
-// The default binding for this signal is Control-F.
+// The default binding for this signal is &lt;kbd&gt;Control&lt;/kbd&gt;+&lt;kbd&gt;F&lt;/kbd&gt;.
 func (x *ShortcutsWindow) ConnectSearch(cb *func(ShortcutsWindow)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -128,31 +176,162 @@ func (x *ShortcutsWindow) ConnectSearch(cb *func(ShortcutsWindow)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "search", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *ShortcutsWindow) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *ShortcutsWindow) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *ShortcutsWindow) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *ShortcutsWindow) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *ShortcutsWindow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *ShortcutsWindow) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *ShortcutsWindow) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *ShortcutsWindow) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *ShortcutsWindow) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *ShortcutsWindow) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *ShortcutsWindow) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *ShortcutsWindow) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *ShortcutsWindow) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *ShortcutsWindow) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -198,7 +377,7 @@ func (x *ShortcutsWindow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar 
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -228,13 +407,17 @@ func (x *ShortcutsWindow) UpdateRelationValue(NRelationsVar int, RelationsVar []
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -264,7 +447,7 @@ func (x *ShortcutsWindow) UpdateStateValue(NStatesVar int, StatesVar []Accessibl
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ShortcutsWindow) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -375,5 +558,19 @@ func (x *ShortcutsWindow) GetFocus() *Widget {
 func (x *ShortcutsWindow) SetFocus(FocusVar *Widget) {
 
 	XGtkRootSetFocus(x.GoPointer(), FocusVar.GoPointer())
+
+}
+
+func init() {
+	core.SetPackageName("GTK", "gtk4")
+	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
+	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
+	if err != nil {
+		panic(err)
+	}
+
+	core.PuregoSafeRegister(&xShortcutsWindowGLibType, lib, "gtk_shortcuts_window_get_type")
+
+	core.PuregoSafeRegister(&xShortcutsWindowAddSection, lib, "gtk_shortcuts_window_add_section")
 
 }

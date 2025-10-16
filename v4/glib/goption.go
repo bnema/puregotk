@@ -158,9 +158,9 @@ var xOptionContextParse func(uintptr, int, []string, **Error) bool
 // this function will produce help output to stdout and
 // call `exit (0)`.
 //
-// Note that function depends on the [current locale][setlocale] for
-// automatic character set conversion of string and filename
-// arguments.
+// Note that function depends on the
+// [current locale](running.html#locale) for automatic
+// character set conversion of string and filename arguments.
 func (x *OptionContext) Parse(ArgcVar int, ArgvVar []string) (bool, error) {
 	var cerr *Error
 
@@ -328,6 +328,26 @@ func (x *OptionContext) SetTranslationDomain(DomainVar string) {
 
 }
 
+// - %G_OPTION_ARG_NONE: %gboolean
+//
+//   - %G_OPTION_ARG_STRING: %gchar*
+//
+//   - %G_OPTION_ARG_INT: %gint
+//
+//   - %G_OPTION_ARG_FILENAME: %gchar*
+//
+//   - %G_OPTION_ARG_STRING_ARRAY: %gchar**
+//
+//   - %G_OPTION_ARG_FILENAME_ARRAY: %gchar**
+//
+//   - %G_OPTION_ARG_DOUBLE: %gdouble
+//
+//     If @arg type is %G_OPTION_ARG_STRING or %G_OPTION_ARG_FILENAME,
+//     the location will contain a newly allocated string if the option
+//     was given. That string needs to be freed by the callee using g_free().
+//     Likewise if @arg type is %G_OPTION_ARG_STRING_ARRAY or
+//     %G_OPTION_ARG_FILENAME_ARRAY, the data should be freed using g_strfreev().
+//
 // A GOptionEntry struct defines a single option. To have an effect, they
 // must be added to a #GOptionGroup with g_option_context_add_main_entries()
 // or g_option_group_add_entries().
@@ -377,6 +397,11 @@ func (x *OptionGroup) GoPointer() uintptr {
 var xNewOptionGroup func(string, string, string, uintptr, uintptr) *OptionGroup
 
 // Creates a new #GOptionGroup.
+//
+// @description is typically used to provide a title for the group. If so, it
+// is recommended that it’s written in title case, and has a trailing colon so
+// that it matches the style of built-in GLib group titles such as
+// ‘Application Options:’.
 func NewOptionGroup(NameVar string, DescriptionVar string, HelpDescriptionVar string, UserDataVar uintptr, DestroyVar *DestroyNotify) *OptionGroup {
 
 	cret := xNewOptionGroup(NameVar, DescriptionVar, HelpDescriptionVar, UserDataVar, NewCallbackNullable(DestroyVar))
@@ -493,36 +518,43 @@ type OptionFlags int
 
 const (
 
-	// No flags. Since: 2.42.
+	// No flags.
 	GOptionFlagNoneValue OptionFlags = 0
 	// The option doesn't appear in `--help` output.
 	GOptionFlagHiddenValue OptionFlags = 1
 	// The option appears in the main section of the
-	//     `--help` output, even if it is defined in a group.
+	//   `--help` output, even if it is defined in a group.
 	GOptionFlagInMainValue OptionFlags = 2
 	// For options of the %G_OPTION_ARG_NONE kind, this
-	//     flag indicates that the sense of the option is reversed.
+	//   flag indicates that the sense of the option is reversed. i.e. %FALSE will
+	//   be stored into the argument rather than %TRUE.
 	GOptionFlagReverseValue OptionFlags = 4
 	// For options of the %G_OPTION_ARG_CALLBACK kind,
-	//     this flag indicates that the callback does not take any argument
-	//     (like a %G_OPTION_ARG_NONE option). Since 2.8
+	//   this flag indicates that the callback does not take any argument
+	//   (like a %G_OPTION_ARG_NONE option). Since 2.8
 	GOptionFlagNoArgValue OptionFlags = 8
 	// For options of the %G_OPTION_ARG_CALLBACK
-	//     kind, this flag indicates that the argument should be passed to the
-	//     callback in the GLib filename encoding rather than UTF-8. Since 2.8
+	//   kind, this flag indicates that the argument should be passed to the
+	//   callback in the GLib filename encoding rather than UTF-8. Since 2.8
 	GOptionFlagFilenameValue OptionFlags = 16
 	// For options of the %G_OPTION_ARG_CALLBACK
-	//     kind, this flag indicates that the argument supply is optional.
-	//     If no argument is given then data of %GOptionParseFunc will be
-	//     set to NULL. Since 2.8
+	//   kind, this flag indicates that the argument supply is optional.
+	//   If no argument is given then data of %GOptionParseFunc will be
+	//   set to NULL. Since 2.8
 	GOptionFlagOptionalArgValue OptionFlags = 32
 	// This flag turns off the automatic conflict
-	//     resolution which prefixes long option names with `groupname-` if
-	//     there is a conflict. This option should only be used in situations
-	//     where aliasing is necessary to model some legacy commandline interface.
-	//     It is not safe to use this option, unless all option groups are under
-	//     your direct control. Since 2.8.
+	//   resolution which prefixes long option names with `groupname-` if
+	//   there is a conflict. This option should only be used in situations
+	//   where aliasing is necessary to model some legacy commandline interface.
+	//   It is not safe to use this option, unless all option groups are under
+	//   your direct control. Since 2.8.
 	GOptionFlagNoaliasValue OptionFlags = 64
+	// This flag marks the option as deprecated in the `--help`.
+	//
+	// You should update the description of the option to describe what
+	// the user should do in response to the deprecation, for instance:
+	// remove the option, or replace it with another one.
+	GOptionFlagDeprecatedValue OptionFlags = 128
 )
 
 // The #GOptionArg enum values determine which type of extra argument the
@@ -533,32 +565,32 @@ type OptionArg int
 
 const (
 
-	// No extra argument. This is useful for simple flags.
+	// No extra argument. This is useful for simple flags or booleans.
 	GOptionArgNoneValue OptionArg = 0
 	// The option takes a UTF-8 string argument.
 	GOptionArgStringValue OptionArg = 1
 	// The option takes an integer argument.
 	GOptionArgIntValue OptionArg = 2
-	// The option provides a callback (of type
-	//     #GOptionArgFunc) to parse the extra argument.
+	// The option provides a callback (of type #GOptionArgFunc)
+	//   to parse the extra argument.
 	GOptionArgCallbackValue OptionArg = 3
 	// The option takes a filename as argument, which will
-	//        be in the GLib filename encoding rather than UTF-8.
+	//      be in the GLib filename encoding rather than UTF-8.
 	GOptionArgFilenameValue OptionArg = 4
 	// The option takes a string argument, multiple
-	//     uses of the option are collected into an array of strings.
+	//   uses of the option are collected into an array of strings.
 	GOptionArgStringArrayValue OptionArg = 5
 	// The option takes a filename as argument,
-	//     multiple uses of the option are collected into an array of strings.
+	//   multiple uses of the option are collected into an array of strings.
 	GOptionArgFilenameArrayValue OptionArg = 6
 	// The option takes a double argument. The argument
-	//     can be formatted either for the user's locale or for the "C" locale.
-	//     Since 2.12
+	//   can be formatted either for the user's locale or for the "C" locale.
+	//   Since 2.12
 	GOptionArgDoubleValue OptionArg = 7
 	// The option takes a 64-bit integer. Like
-	//     %G_OPTION_ARG_INT but for larger numbers. The number can be in
-	//     decimal base, or in hexadecimal (when prefixed with `0x`, for
-	//     example, `0xffffffff`). Since 2.12
+	//   %G_OPTION_ARG_INT but for larger numbers. The number can be in
+	//   decimal base, or in hexadecimal (when prefixed with `0x`, for
+	//   example, `0xffffffff`). Since 2.12
 	GOptionArgInt64Value OptionArg = 8
 )
 
@@ -579,7 +611,7 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

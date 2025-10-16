@@ -20,7 +20,7 @@ func (x *GestureRotateClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkGestureRotate` is a `GtkGesture` for 2-finger rotations.
+// Recognizes 2-finger rotation gestures.
 //
 // Whenever the angle between both handled sequences changes, the
 // [signal@Gtk.GestureRotate::angle-changed] signal is emitted.

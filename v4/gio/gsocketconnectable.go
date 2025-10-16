@@ -29,6 +29,7 @@ func (x *SocketConnectableIface) GoPointer() uintptr {
 }
 
 // OverrideEnumerate sets the callback function.
+// Creates a #GSocketAddressEnumerator
 func (x *SocketConnectableIface) OverrideEnumerate(cb func(SocketConnectable) *SocketAddressEnumerator) {
 	if cb == nil {
 		x.xEnumerate = 0
@@ -44,6 +45,7 @@ func (x *SocketConnectableIface) OverrideEnumerate(cb func(SocketConnectable) *S
 }
 
 // GetEnumerate gets the callback function.
+// Creates a #GSocketAddressEnumerator
 func (x *SocketConnectableIface) GetEnumerate() func(SocketConnectable) *SocketAddressEnumerator {
 	if x.xEnumerate == 0 {
 		return nil
@@ -62,6 +64,7 @@ func (x *SocketConnectableIface) GetEnumerate() func(SocketConnectable) *SocketA
 }
 
 // OverrideProxyEnumerate sets the callback function.
+// Creates a #GProxyAddressEnumerator
 func (x *SocketConnectableIface) OverrideProxyEnumerate(cb func(SocketConnectable) *SocketAddressEnumerator) {
 	if cb == nil {
 		x.xProxyEnumerate = 0
@@ -77,6 +80,7 @@ func (x *SocketConnectableIface) OverrideProxyEnumerate(cb func(SocketConnectabl
 }
 
 // GetProxyEnumerate gets the callback function.
+// Creates a #GProxyAddressEnumerator
 func (x *SocketConnectableIface) GetProxyEnumerate() func(SocketConnectable) *SocketAddressEnumerator {
 	if x.xProxyEnumerate == 0 {
 		return nil
@@ -95,6 +99,9 @@ func (x *SocketConnectableIface) GetProxyEnumerate() func(SocketConnectable) *So
 }
 
 // OverrideToString sets the callback function.
+// Format the connectable’s address as a string for debugging.
+//
+//	Implementing this is optional. (Since: 2.48)
 func (x *SocketConnectableIface) OverrideToString(cb func(SocketConnectable) string) {
 	if cb == nil {
 		x.xToString = 0
@@ -106,6 +113,9 @@ func (x *SocketConnectableIface) OverrideToString(cb func(SocketConnectable) str
 }
 
 // GetToString gets the callback function.
+// Format the connectable’s address as a string for debugging.
+//
+//	Implementing this is optional. (Since: 2.48)
 func (x *SocketConnectableIface) GetToString() func(SocketConnectable) string {
 	if x.xToString == 0 {
 		return nil
@@ -118,12 +128,12 @@ func (x *SocketConnectableIface) GetToString() func(SocketConnectable) string {
 }
 
 // Objects that describe one or more potential socket endpoints
-// implement #GSocketConnectable. Callers can then use
-// g_socket_connectable_enumerate() to get a #GSocketAddressEnumerator
-// to try out each socket address in turn until one succeeds, as shown
-// in the sample code below.
+// implement `GSocketConnectable`. Callers can then use
+// [method@Gio.SocketConnectable.enumerate] to get a
+// [class@Gio.SocketAddressEnumerator] to try out each socket address in turn
+// until one succeeds, as shown in the sample code below.
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 // MyConnectionType *
 // connect_to_host (const char    *hostname,
 //
@@ -176,7 +186,7 @@ func (x *SocketConnectableIface) GetToString() func(SocketConnectable) string {
 //	    }
 //	}
 //
-// ]|
+// ```
 type SocketConnectable interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

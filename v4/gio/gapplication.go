@@ -56,6 +56,7 @@ func (x *ApplicationClass) GoPointer() uintptr {
 }
 
 // OverrideStartup sets the callback function.
+// invoked on the primary instance immediately after registration
 func (x *ApplicationClass) OverrideStartup(cb func(*Application)) {
 	if cb == nil {
 		x.xStartup = 0
@@ -67,6 +68,7 @@ func (x *ApplicationClass) OverrideStartup(cb func(*Application)) {
 }
 
 // GetStartup gets the callback function.
+// invoked on the primary instance immediately after registration
 func (x *ApplicationClass) GetStartup() func(*Application) {
 	if x.xStartup == 0 {
 		return nil
@@ -79,6 +81,7 @@ func (x *ApplicationClass) GetStartup() func(*Application) {
 }
 
 // OverrideActivate sets the callback function.
+// invoked on the primary instance when an activation occurs
 func (x *ApplicationClass) OverrideActivate(cb func(*Application)) {
 	if cb == nil {
 		x.xActivate = 0
@@ -90,6 +93,7 @@ func (x *ApplicationClass) OverrideActivate(cb func(*Application)) {
 }
 
 // GetActivate gets the callback function.
+// invoked on the primary instance when an activation occurs
 func (x *ApplicationClass) GetActivate() func(*Application) {
 	if x.xActivate == 0 {
 		return nil
@@ -102,6 +106,7 @@ func (x *ApplicationClass) GetActivate() func(*Application) {
 }
 
 // OverrideOpen sets the callback function.
+// invoked on the primary instance when there are files to open
 func (x *ApplicationClass) OverrideOpen(cb func(*Application, uintptr, int, string)) {
 	if cb == nil {
 		x.xOpen = 0
@@ -113,6 +118,7 @@ func (x *ApplicationClass) OverrideOpen(cb func(*Application, uintptr, int, stri
 }
 
 // GetOpen gets the callback function.
+// invoked on the primary instance when there are files to open
 func (x *ApplicationClass) GetOpen() func(*Application, uintptr, int, string) {
 	if x.xOpen == 0 {
 		return nil
@@ -125,6 +131,9 @@ func (x *ApplicationClass) GetOpen() func(*Application, uintptr, int, string) {
 }
 
 // OverrideCommandLine sets the callback function.
+// invoked on the primary instance when a command-line is
+//
+//	not handled locally
 func (x *ApplicationClass) OverrideCommandLine(cb func(*Application, *ApplicationCommandLine) int) {
 	if cb == nil {
 		x.xCommandLine = 0
@@ -136,6 +145,9 @@ func (x *ApplicationClass) OverrideCommandLine(cb func(*Application, *Applicatio
 }
 
 // GetCommandLine gets the callback function.
+// invoked on the primary instance when a command-line is
+//
+//	not handled locally
 func (x *ApplicationClass) GetCommandLine() func(*Application, *ApplicationCommandLine) int {
 	if x.xCommandLine == 0 {
 		return nil
@@ -148,6 +160,12 @@ func (x *ApplicationClass) GetCommandLine() func(*Application, *ApplicationComma
 }
 
 // OverrideLocalCommandLine sets the callback function.
+// invoked (locally). The virtual function has the chance
+//
+//	to inspect (and possibly replace) command line arguments. See
+//	g_application_run() for more information. Also see the
+//	#GApplication::handle-local-options signal, which is a simpler
+//	alternative to handling some commandline options locally
 func (x *ApplicationClass) OverrideLocalCommandLine(cb func(*Application, []string, int) bool) {
 	if cb == nil {
 		x.xLocalCommandLine = 0
@@ -159,6 +177,12 @@ func (x *ApplicationClass) OverrideLocalCommandLine(cb func(*Application, []stri
 }
 
 // GetLocalCommandLine gets the callback function.
+// invoked (locally). The virtual function has the chance
+//
+//	to inspect (and possibly replace) command line arguments. See
+//	g_application_run() for more information. Also see the
+//	#GApplication::handle-local-options signal, which is a simpler
+//	alternative to handling some commandline options locally
 func (x *ApplicationClass) GetLocalCommandLine() func(*Application, []string, int) bool {
 	if x.xLocalCommandLine == 0 {
 		return nil
@@ -171,6 +195,10 @@ func (x *ApplicationClass) GetLocalCommandLine() func(*Application, []string, in
 }
 
 // OverrideBeforeEmit sets the callback function.
+// invoked on the primary instance before 'activate', 'open',
+//
+//	'command-line' or any action invocation, gets the 'platform data' from
+//	the calling instance
 func (x *ApplicationClass) OverrideBeforeEmit(cb func(*Application, *glib.Variant)) {
 	if cb == nil {
 		x.xBeforeEmit = 0
@@ -182,6 +210,10 @@ func (x *ApplicationClass) OverrideBeforeEmit(cb func(*Application, *glib.Varian
 }
 
 // GetBeforeEmit gets the callback function.
+// invoked on the primary instance before 'activate', 'open',
+//
+//	'command-line' or any action invocation, gets the 'platform data' from
+//	the calling instance
 func (x *ApplicationClass) GetBeforeEmit() func(*Application, *glib.Variant) {
 	if x.xBeforeEmit == 0 {
 		return nil
@@ -194,6 +226,10 @@ func (x *ApplicationClass) GetBeforeEmit() func(*Application, *glib.Variant) {
 }
 
 // OverrideAfterEmit sets the callback function.
+// invoked on the primary instance after 'activate', 'open',
+//
+//	'command-line' or any action invocation, gets the 'platform data' from
+//	the calling instance
 func (x *ApplicationClass) OverrideAfterEmit(cb func(*Application, *glib.Variant)) {
 	if cb == nil {
 		x.xAfterEmit = 0
@@ -205,6 +241,10 @@ func (x *ApplicationClass) OverrideAfterEmit(cb func(*Application, *glib.Variant
 }
 
 // GetAfterEmit gets the callback function.
+// invoked on the primary instance after 'activate', 'open',
+//
+//	'command-line' or any action invocation, gets the 'platform data' from
+//	the calling instance
 func (x *ApplicationClass) GetAfterEmit() func(*Application, *glib.Variant) {
 	if x.xAfterEmit == 0 {
 		return nil
@@ -217,6 +257,9 @@ func (x *ApplicationClass) GetAfterEmit() func(*Application, *glib.Variant) {
 }
 
 // OverrideAddPlatformData sets the callback function.
+// invoked (locally) to add 'platform data' to be sent to
+//
+//	the primary instance when activating, opening or invoking actions
 func (x *ApplicationClass) OverrideAddPlatformData(cb func(*Application, *glib.VariantBuilder)) {
 	if cb == nil {
 		x.xAddPlatformData = 0
@@ -228,6 +271,9 @@ func (x *ApplicationClass) OverrideAddPlatformData(cb func(*Application, *glib.V
 }
 
 // GetAddPlatformData gets the callback function.
+// invoked (locally) to add 'platform data' to be sent to
+//
+//	the primary instance when activating, opening or invoking actions
 func (x *ApplicationClass) GetAddPlatformData() func(*Application, *glib.VariantBuilder) {
 	if x.xAddPlatformData == 0 {
 		return nil
@@ -240,6 +286,10 @@ func (x *ApplicationClass) GetAddPlatformData() func(*Application, *glib.Variant
 }
 
 // OverrideQuitMainloop sets the callback function.
+// Used to be invoked on the primary instance when the use
+//
+//	count of the application drops to zero (and after any inactivity
+//	timeout, if requested). Not used anymore since 2.32
 func (x *ApplicationClass) OverrideQuitMainloop(cb func(*Application)) {
 	if cb == nil {
 		x.xQuitMainloop = 0
@@ -251,6 +301,10 @@ func (x *ApplicationClass) OverrideQuitMainloop(cb func(*Application)) {
 }
 
 // GetQuitMainloop gets the callback function.
+// Used to be invoked on the primary instance when the use
+//
+//	count of the application drops to zero (and after any inactivity
+//	timeout, if requested). Not used anymore since 2.32
 func (x *ApplicationClass) GetQuitMainloop() func(*Application) {
 	if x.xQuitMainloop == 0 {
 		return nil
@@ -263,6 +317,11 @@ func (x *ApplicationClass) GetQuitMainloop() func(*Application) {
 }
 
 // OverrideRunMainloop sets the callback function.
+// Used to be invoked on the primary instance from
+//
+//	g_application_run() if the use-count is non-zero. Since 2.32,
+//	GApplication is iterating the main context directly and is not
+//	using @run_mainloop anymore
 func (x *ApplicationClass) OverrideRunMainloop(cb func(*Application)) {
 	if cb == nil {
 		x.xRunMainloop = 0
@@ -274,6 +333,11 @@ func (x *ApplicationClass) OverrideRunMainloop(cb func(*Application)) {
 }
 
 // GetRunMainloop gets the callback function.
+// Used to be invoked on the primary instance from
+//
+//	g_application_run() if the use-count is non-zero. Since 2.32,
+//	GApplication is iterating the main context directly and is not
+//	using @run_mainloop anymore
 func (x *ApplicationClass) GetRunMainloop() func(*Application) {
 	if x.xRunMainloop == 0 {
 		return nil
@@ -286,6 +350,9 @@ func (x *ApplicationClass) GetRunMainloop() func(*Application) {
 }
 
 // OverrideShutdown sets the callback function.
+// invoked only on the registered primary instance immediately
+//
+//	after the main loop terminates
 func (x *ApplicationClass) OverrideShutdown(cb func(*Application)) {
 	if cb == nil {
 		x.xShutdown = 0
@@ -297,6 +364,9 @@ func (x *ApplicationClass) OverrideShutdown(cb func(*Application)) {
 }
 
 // GetShutdown gets the callback function.
+// invoked only on the registered primary instance immediately
+//
+//	after the main loop terminates
 func (x *ApplicationClass) GetShutdown() func(*Application) {
 	if x.xShutdown == 0 {
 		return nil
@@ -309,6 +379,14 @@ func (x *ApplicationClass) GetShutdown() func(*Application) {
 }
 
 // OverrideDbusRegister sets the callback function.
+// invoked locally during registration, if the application is
+//
+//	using its D-Bus backend. You can use this to export extra objects on the
+//	bus, that need to exist before the application tries to own the bus name.
+//	The function is passed the #GDBusConnection to to session bus, and the
+//	object path that #GApplication will use to export its D-Bus API.
+//	If this function returns %TRUE, registration will proceed; otherwise
+//	registration will abort. Since: 2.34
 func (x *ApplicationClass) OverrideDbusRegister(cb func(*Application, *DBusConnection, string) bool) {
 	if cb == nil {
 		x.xDbusRegister = 0
@@ -320,6 +398,14 @@ func (x *ApplicationClass) OverrideDbusRegister(cb func(*Application, *DBusConne
 }
 
 // GetDbusRegister gets the callback function.
+// invoked locally during registration, if the application is
+//
+//	using its D-Bus backend. You can use this to export extra objects on the
+//	bus, that need to exist before the application tries to own the bus name.
+//	The function is passed the #GDBusConnection to to session bus, and the
+//	object path that #GApplication will use to export its D-Bus API.
+//	If this function returns %TRUE, registration will proceed; otherwise
+//	registration will abort. Since: 2.34
 func (x *ApplicationClass) GetDbusRegister() func(*Application, *DBusConnection, string) bool {
 	if x.xDbusRegister == 0 {
 		return nil
@@ -332,6 +418,10 @@ func (x *ApplicationClass) GetDbusRegister() func(*Application, *DBusConnection,
 }
 
 // OverrideDbusUnregister sets the callback function.
+// invoked locally during unregistration, if the application
+//
+//	is using its D-Bus backend. Use this to undo anything done by
+//	the @dbus_register vfunc. Since: 2.34
 func (x *ApplicationClass) OverrideDbusUnregister(cb func(*Application, *DBusConnection, string)) {
 	if cb == nil {
 		x.xDbusUnregister = 0
@@ -343,6 +433,10 @@ func (x *ApplicationClass) OverrideDbusUnregister(cb func(*Application, *DBusCon
 }
 
 // GetDbusUnregister gets the callback function.
+// invoked locally during unregistration, if the application
+//
+//	is using its D-Bus backend. Use this to undo anything done by
+//	the @dbus_register vfunc. Since: 2.34
 func (x *ApplicationClass) GetDbusUnregister() func(*Application, *DBusConnection, string) {
 	if x.xDbusUnregister == 0 {
 		return nil
@@ -355,6 +449,9 @@ func (x *ApplicationClass) GetDbusUnregister() func(*Application, *DBusConnectio
 }
 
 // OverrideHandleLocalOptions sets the callback function.
+// invoked locally after the parsing of the commandline
+//
+//	options has occurred. Since: 2.40
 func (x *ApplicationClass) OverrideHandleLocalOptions(cb func(*Application, *glib.VariantDict) int) {
 	if cb == nil {
 		x.xHandleLocalOptions = 0
@@ -366,6 +463,9 @@ func (x *ApplicationClass) OverrideHandleLocalOptions(cb func(*Application, *gli
 }
 
 // GetHandleLocalOptions gets the callback function.
+// invoked locally after the parsing of the commandline
+//
+//	options has occurred. Since: 2.40
 func (x *ApplicationClass) GetHandleLocalOptions() func(*Application, *glib.VariantDict) int {
 	if x.xHandleLocalOptions == 0 {
 		return nil
@@ -378,6 +478,7 @@ func (x *ApplicationClass) GetHandleLocalOptions() func(*Application, *glib.Vari
 }
 
 // OverrideNameLost sets the callback function.
+// invoked when another instance is taking over the name. Since: 2.60
 func (x *ApplicationClass) OverrideNameLost(cb func(*Application) bool) {
 	if cb == nil {
 		x.xNameLost = 0
@@ -389,6 +490,7 @@ func (x *ApplicationClass) OverrideNameLost(cb func(*Application) bool) {
 }
 
 // GetNameLost gets the callback function.
+// invoked when another instance is taking over the name. Since: 2.60
 func (x *ApplicationClass) GetNameLost() func(*Application) bool {
 	if x.xNameLost == 0 {
 		return nil
@@ -408,20 +510,23 @@ func (x *ApplicationPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A #GApplication is the foundation of an application.  It wraps some
+// `GApplication` is the core class for application support.
+//
+// A `GApplication` is the foundation of an application. It wraps some
 // low-level platform-specific services and is intended to act as the
 // foundation for higher-level application classes such as
-// #GtkApplication or #MxApplication.  In general, you should not use
+// `GtkApplication` or `MxApplication`. In general, you should not use
 // this class outside of a higher level framework.
 //
-// GApplication provides convenient life cycle management by maintaining
+// `GApplication` provides convenient life-cycle management by maintaining
 // a "use count" for the primary application instance. The use count can
-// be changed using g_application_hold() and g_application_release(). If
-// it drops to zero, the application exits. Higher-level classes such as
-// #GtkApplication employ the use count to ensure that the application
-// stays alive as long as it has any opened windows.
+// be changed using [method@Gio.Application.hold] and
+// [method@Gio.Application.release]. If it drops to zero, the application
+// exits. Higher-level classes such as `GtkApplication` employ the use count
+// to ensure that the application stays alive as long as it has any opened
+// windows.
 //
-// Another feature that GApplication (optionally) provides is process
+// Another feature that `GApplication` (optionally) provides is process
 // uniqueness. Applications can make use of this functionality by
 // providing a unique application ID. If given, only one application
 // with this ID can be running at a time per session. The session
@@ -433,49 +538,54 @@ func (x *ApplicationPrivate) GoPointer() uintptr {
 // always the current instance. On Linux, the D-Bus session bus
 // is used for communication.
 //
-// The use of #GApplication differs from some other commonly-used
+// The use of `GApplication` differs from some other commonly-used
 // uniqueness libraries (such as libunique) in important ways. The
 // application is not expected to manually register itself and check
 // if it is the primary instance. Instead, the main() function of a
-// #GApplication should do very little more than instantiating the
+// `GApplication` should do very little more than instantiating the
 // application instance, possibly connecting signal handlers, then
-// calling g_application_run(). All checks for uniqueness are done
+// calling [method@Gio.Application.run]. All checks for uniqueness are done
 // internally. If the application is the primary instance then the
 // startup signal is emitted and the mainloop runs. If the application
 // is not the primary instance then a signal is sent to the primary
-// instance and g_application_run() promptly returns. See the code
+// instance and [method@Gio.Application.run] promptly returns. See the code
 // examples below.
 //
-// If used, the expected form of an application identifier is the same as
-// that of of a
+// If used, the expected form of an application identifier is the
+// same as that of a
 // [D-Bus well-known bus name](https://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-names-bus).
 // Examples include: `com.example.MyApp`, `org.example.internal_apps.Calculator`,
 // `org._7_zip.Archiver`.
-// For details on valid application identifiers, see g_application_id_is_valid().
+// For details on valid application identifiers, see [func@Gio.Application.id_is_valid].
 //
 // On Linux, the application identifier is claimed as a well-known bus name
-// on the user's session bus.  This means that the uniqueness of your
-// application is scoped to the current session.  It also means that your
+// on the user's session bus. This means that the uniqueness of your
+// application is scoped to the current session. It also means that your
 // application may provide additional services (through registration of other
-// object paths) at that bus name.  The registration of these object paths
-// should be done with the shared GDBus session bus.  Note that due to the
+// object paths) at that bus name. The registration of these object paths
+// should be done with the shared GDBus session bus. Note that due to the
 // internal architecture of GDBus, method calls can be dispatched at any time
-// (even if a main loop is not running).  For this reason, you must ensure that
+// (even if a main loop is not running). For this reason, you must ensure that
 // any object paths that you wish to register are registered before #GApplication
 // attempts to acquire the bus name of your application (which happens in
-// g_application_register()).  Unfortunately, this means that you cannot use
-// g_application_get_is_remote() to decide if you want to register object paths.
+// [method@Gio.Application.register]). Unfortunately, this means that you cannot
+// use [property@Gio.Application:is-remote] to decide if you want to register
+// object paths.
 //
-// GApplication also implements the #GActionGroup and #GActionMap
+// `GApplication` also implements the [iface@Gio.ActionGroup] and [iface@Gio.ActionMap]
 // interfaces and lets you easily export actions by adding them with
-// g_action_map_add_action(). When invoking an action by calling
-// g_action_group_activate_action() on the application, it is always
+// [method@Gio.ActionMap.add_action]. When invoking an action by calling
+// [method@Gio.ActionGroup.activate_action] on the application, it is always
 // invoked in the primary instance. The actions are also exported on
-// the session bus, and GIO provides the #GDBusActionGroup wrapper to
-// conveniently access them remotely. GIO provides a #GDBusMenuModel wrapper
-// for remote access to exported #GMenuModels.
+// the session bus, and GIO provides the [class@Gio.DBusActionGroup] wrapper to
+// conveniently access them remotely. GIO provides a [class@Gio.DBusMenuModel] wrapper
+// for remote access to exported [class@Gio.MenuModel]s.
 //
-// There is a number of different entry points into a GApplication:
+// Note: Due to the fact that actions are exported on the session bus,
+// using `maybe` parameters is not supported, since D-Bus does not support
+// `maybe` types.
+//
+// There is a number of different entry points into a `GApplication`:
 //
 // - via 'Activate' (i.e. just starting the application)
 //
@@ -485,42 +595,43 @@ func (x *ApplicationPrivate) GoPointer() uintptr {
 //
 // - via activating an action
 //
-// The #GApplication::startup signal lets you handle the application
+// The [signal@Gio.Application::startup] signal lets you handle the application
 // initialization for all of these in a single place.
 //
 // Regardless of which of these entry points is used to start the
-// application, GApplication passes some ‘platform data’ from the
+// application, `GApplication` passes some ‘platform data’ from the
 // launching instance to the primary instance, in the form of a
-// #GVariant dictionary mapping strings to variants. To use platform
-// data, override the @before_emit or @after_emit virtual functions
-// in your #GApplication subclass. When dealing with
-// #GApplicationCommandLine objects, the platform data is
-// directly available via g_application_command_line_get_cwd(),
-// g_application_command_line_get_environ() and
-// g_application_command_line_get_platform_data().
+// [struct@GLib.Variant] dictionary mapping strings to variants. To use platform
+// data, override the [vfunc@Gio.Application.before_emit] or
+// [vfunc@Gio.Application.after_emit] virtual functions
+// in your `GApplication` subclass. When dealing with
+// [class@Gio.ApplicationCommandLine] objects, the platform data is
+// directly available via [method@Gio.ApplicationCommandLine.get_cwd],
+// [method@Gio.ApplicationCommandLine.get_environ] and
+// [method@Gio.ApplicationCommandLine.get_platform_data].
 //
 // As the name indicates, the platform data may vary depending on the
 // operating system, but it always includes the current directory (key
-// "cwd"), and optionally the environment (ie the set of environment
-// variables and their values) of the calling process (key "environ").
+// `cwd`), and optionally the environment (ie the set of environment
+// variables and their values) of the calling process (key `environ`).
 // The environment is only added to the platform data if the
-// %G_APPLICATION_SEND_ENVIRONMENT flag is set. #GApplication subclasses
-// can add their own platform data by overriding the @add_platform_data
-// virtual function. For instance, #GtkApplication adds startup notification
-// data in this way.
+// `G_APPLICATION_SEND_ENVIRONMENT` flag is set. `GApplication` subclasses
+// can add their own platform data by overriding the
+// [vfunc@Gio.Application.add_platform_data] virtual function. For instance,
+// `GtkApplication` adds startup notification data in this way.
 //
 // To parse commandline arguments you may handle the
-// #GApplication::command-line signal or override the local_command_line()
-// vfunc, to parse them in either the primary instance or the local instance,
-// respectively.
+// [signal@Gio.Application::command-line] signal or override the
+// [vfunc@Gio.Application.local_command_line] virtual function, to parse them in
+// either the primary instance or the local instance, respectively.
 //
-// For an example of opening files with a GApplication, see
+// For an example of opening files with a `GApplication`, see
 // [gapplication-example-open.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-open.c).
 //
-// For an example of using actions with GApplication, see
+// For an example of using actions with `GApplication`, see
 // [gapplication-example-actions.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-actions.c).
 //
-// For an example of using extra D-Bus hooks with GApplication, see
+// For an example of using extra D-Bus hooks with `GApplication`, see
 // [gapplication-example-dbushooks.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-dbushooks.c).
 type Application struct {
 	gobject.Object
@@ -613,6 +724,8 @@ var xApplicationAddMainOptionEntries func(uintptr, []glib.OptionEntry)
 // inspected and modified.  If %G_APPLICATION_HANDLES_COMMAND_LINE is
 // set, then the resulting dictionary is sent to the primary instance,
 // where g_application_command_line_get_options_dict() will return it.
+// As it has been passed outside the process at this point, the types of all
+// values in the options dict must be checked before being used.
 // This "packing" is done according to the type of the argument --
 // booleans for normal flags, strings for strings, bytestrings for
 // filenames, etc.  The packing only occurs if the flag is given (ie: we
@@ -629,8 +742,8 @@ var xApplicationAddMainOptionEntries func(uintptr, []glib.OptionEntry)
 // was to send all of the commandline arguments (options and all) to the
 // primary instance for handling.  #GApplication ignored them completely
 // on the local side.  Calling this function "opts in" to the new
-// behaviour, and in particular, means that unrecognised options will be
-// treated as errors.  Unrecognised options have never been ignored when
+// behaviour, and in particular, means that unrecognized options will be
+// treated as errors.  Unrecognized options have never been ignored when
 // %G_APPLICATION_HANDLES_COMMAND_LINE is unset.
 //
 // If #GApplication::handle-local-options needs to see the list of
@@ -682,7 +795,7 @@ var xApplicationAddOptionGroup func(uintptr, *glib.OptionGroup)
 //
 // Calling this function will cause the options in the supplied option
 // group to be parsed, but it does not cause you to be "opted in" to the
-// new functionality whereby unrecognised options are rejected even if
+// new functionality whereby unrecognized options are rejected even if
 // %G_APPLICATION_HANDLES_COMMAND_LINE was given.
 func (x *Application) AddOptionGroup(GroupVar *glib.OptionGroup) {
 
@@ -838,12 +951,21 @@ func (x *Application) GetResourceBasePath() string {
 	return cret
 }
 
+var xApplicationGetVersion func(uintptr) string
+
+// Gets the version of @application.
+func (x *Application) GetVersion() string {
+
+	cret := xApplicationGetVersion(x.GoPointer())
+	return cret
+}
+
 var xApplicationHold func(uintptr)
 
 // Increases the use count of @application.
 //
 // Use this function to indicate that the application has a reason to
-// continue to run.  For example, g_application_hold() is called by GTK+
+// continue to run.  For example, g_application_hold() is called by GTK
 // when a toplevel window is on the screen.
 //
 // To cancel the hold, call g_application_release().
@@ -1079,11 +1201,14 @@ var xApplicationSendNotification func(uintptr, string, uintptr)
 // notification. This works even for notifications sent from a previous
 // execution of the application, as long as @id is the same string.
 //
-// @id may be %NULL, but it is impossible to replace or withdraw
+// @id may be `NULL`, but it is impossible to replace or withdraw
 // notifications without an id.
 //
 // If @notification is no longer relevant, it can be withdrawn with
-// g_application_withdraw_notification().
+// [method@Gio.Application.withdraw_notification].
+//
+// It is an error to call this function if @application has no
+// application ID.
 func (x *Application) SendNotification(IdVar string, NotificationVar *Notification) {
 
 	xApplicationSendNotification(x.GoPointer(), IdVar, NotificationVar.GoPointer())
@@ -1199,10 +1324,10 @@ var xApplicationSetResourceBasePath func(uintptr, string)
 
 // Sets (or unsets) the base resource path of @application.
 //
-// The path is used to automatically load various [application
-// resources][gresource] such as menu layouts and action descriptions.
-// The various types of resources will be found at fixed names relative
-// to the given base path.
+// The path is used to automatically load various
+// [application resources][struct@Gio.Resource] such as menu layouts and
+// action descriptions. The various types of resources will be found at
+// fixed names relative to the given base path.
 //
 // By default, the resource base path is determined from the application
 // ID by prefixing '/' and replacing each '.' with '/'.  This is done at
@@ -1233,6 +1358,19 @@ var xApplicationSetResourceBasePath func(uintptr, string)
 func (x *Application) SetResourceBasePath(ResourcePathVar string) {
 
 	xApplicationSetResourceBasePath(x.GoPointer(), ResourcePathVar)
+
+}
+
+var xApplicationSetVersion func(uintptr, string)
+
+// Sets the version number of @application. This will be used to implement
+// a `--version` command line argument
+//
+// The application version can only be modified if @application has not yet
+// been registered.
+func (x *Application) SetVersion(VersionVar string) {
+
+	xApplicationSetVersion(x.GoPointer(), VersionVar)
 
 }
 
@@ -1484,36 +1622,36 @@ func (x *Application) ConnectStartup(cb *func(Application)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "startup", cbRefPtr)
 }
 
-// Emits the #GActionGroup::action-added signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-added] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionAdded(ActionNameVar string) {
 
 	XGActionGroupActionAdded(x.GoPointer(), ActionNameVar)
 
 }
 
-// Emits the #GActionGroup::action-enabled-changed signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-enabled-changed] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionEnabledChanged(ActionNameVar string, EnabledVar bool) {
 
 	XGActionGroupActionEnabledChanged(x.GoPointer(), ActionNameVar, EnabledVar)
 
 }
 
-// Emits the #GActionGroup::action-removed signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-removed] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionRemoved(ActionNameVar string) {
 
 	XGActionGroupActionRemoved(x.GoPointer(), ActionNameVar)
 
 }
 
-// Emits the #GActionGroup::action-state-changed signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-state-changed] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *Application) ActionStateChanged(ActionNameVar string, StateVar *glib.Variant) {
 
 	XGActionGroupActionStateChanged(x.GoPointer(), ActionNameVar, StateVar)
@@ -1524,35 +1662,35 @@ func (x *Application) ActionStateChanged(ActionNameVar string, StateVar *glib.Va
 //
 // If the action is expecting a parameter, then the correct type of
 // parameter must be given as @parameter.  If the action is expecting no
-// parameters then @parameter must be %NULL.  See
-// g_action_group_get_action_parameter_type().
+// parameters then @parameter must be `NULL`.  See
+// [method@Gio.ActionGroup.get_action_parameter_type].
 //
-// If the #GActionGroup implementation supports asynchronous remote
+// If the [type@Gio.ActionGroup] implementation supports asynchronous remote
 // activation over D-Bus, this call may return before the relevant
 // D-Bus traffic has been sent, or any replies have been received. In
 // order to block on such asynchronous activation calls,
-// g_dbus_connection_flush() should be called prior to the code, which
+// [method@Gio.DBusConnection.flush] should be called prior to the code, which
 // depends on the result of the action activation. Without flushing
 // the D-Bus connection, there is no guarantee that the action would
 // have been activated.
 //
 // The following code which runs in a remote app instance, shows an
-// example of a "quit" action being activated on the primary app
-// instance over D-Bus. Here g_dbus_connection_flush() is called
-// before `exit()`. Without g_dbus_connection_flush(), the "quit" action
+// example of a ‘quit’ action being activated on the primary app
+// instance over D-Bus. Here [method@Gio.DBusConnection.flush] is called
+// before `exit()`. Without `g_dbus_connection_flush()`, the ‘quit’ action
 // may fail to be activated on the primary instance.
 //
-// |[&lt;!-- language="C" --&gt;
-// // call "quit" action on primary instance
+// ```c
+// // call ‘quit’ action on primary instance
 // g_action_group_activate_action (G_ACTION_GROUP (app), "quit", NULL);
 //
 // // make sure the action is activated now
-// g_dbus_connection_flush (...);
+// g_dbus_connection_flush (…);
 //
-// g_debug ("application has been terminated. exiting.");
+// g_debug ("Application has been terminated. Exiting.");
 //
 // exit (0);
-// ]|
+// ```
 func (x *Application) ActivateAction(ActionNameVar string, ParameterVar *glib.Variant) {
 
 	XGActionGroupActivateAction(x.GoPointer(), ActionNameVar, ParameterVar)
@@ -1563,11 +1701,11 @@ func (x *Application) ActivateAction(ActionNameVar string, ParameterVar *glib.Va
 // changed to @value.
 //
 // The action must be stateful and @value must be of the correct type.
-// See g_action_group_get_action_state_type().
+// See [method@Gio.ActionGroup.get_action_state_type].
 //
 // This call merely requests a change.  The action may refuse to change
 // its state or may change its state to something other than @value.
-// See g_action_group_get_action_state_hint().
+// See [method@Gio.ActionGroup.get_action_state_hint].
 //
 // If the @value GVariant is floating, it is consumed.
 func (x *Application) ChangeActionState(ActionNameVar string, ValueVar *glib.Variant) {
@@ -1589,12 +1727,12 @@ func (x *Application) GetActionEnabled(ActionNameVar string) bool {
 // Queries the type of the parameter that must be given when activating
 // the named action within @action_group.
 //
-// When activating the action using g_action_group_activate_action(),
-// the #GVariant given to that function must be of the type returned
+// When activating the action using [method@Gio.ActionGroup.activate_action],
+// the [type@GLib.Variant] given to that function must be of the type returned
 // by this function.
 //
-// In the case that this function returns %NULL, you must not give any
-// #GVariant, but %NULL instead.
+// In the case that this function returns `NULL`, you must not give any
+// [type@GLib.Variant], but `NULL` instead.
 //
 // The parameter type of a particular action will never change but it is
 // possible for an action to be removed and for a new action to be added
@@ -1607,12 +1745,12 @@ func (x *Application) GetActionParameterType(ActionNameVar string) *glib.Variant
 
 // Queries the current state of the named action within @action_group.
 //
-// If the action is not stateful then %NULL will be returned.  If the
+// If the action is not stateful then `NULL` will be returned.  If the
 // action is stateful then the type of the return value is the type
-// given by g_action_group_get_action_state_type().
+// given by [method@Gio.ActionGroup.get_action_state_type].
 //
-// The return value (if non-%NULL) should be freed with
-// g_variant_unref() when it is no longer required.
+// The return value (if non-`NULL`) should be freed with
+// [method@GLib.Variant.unref] when it is no longer required.
 func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 
 	cret := XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
@@ -1622,12 +1760,12 @@ func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 // Requests a hint about the valid range of values for the state of the
 // named action within @action_group.
 //
-// If %NULL is returned it either means that the action is not stateful
+// If `NULL` is returned it either means that the action is not stateful
 // or that there is no hint about the valid range of values for the
 // state of the action.
 //
-// If a #GVariant array is returned then each item in the array is a
-// possible value for the state.  If a #GVariant pair (ie: two-tuple) is
+// If a [type@GLib.Variant] array is returned then each item in the array is a
+// possible value for the state.  If a [type@GLib.Variant] pair (ie: two-tuple) is
 // returned then the tuple specifies the inclusive lower and upper bound
 // of valid values for the state.
 //
@@ -1635,8 +1773,8 @@ func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 // have a state value outside of the hinted range and setting a value
 // within the range may fail.
 //
-// The return value (if non-%NULL) should be freed with
-// g_variant_unref() when it is no longer required.
+// The return value (if non-`NULL`) should be freed with
+// [method@GLib.Variant.unref] when it is no longer required.
 func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 
 	cret := XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
@@ -1647,14 +1785,14 @@ func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 // @action_group.
 //
 // If the action is stateful then this function returns the
-// #GVariantType of the state.  All calls to
-// g_action_group_change_action_state() must give a #GVariant of this
-// type and g_action_group_get_action_state() will return a #GVariant
+// [type@GLib.VariantType] of the state.  All calls to
+// [method@Gio.ActionGroup.change_action_state] must give a [type@GLib.Variant] of this
+// type and [method@Gio.ActionGroup.get_action_state] will return a [type@GLib.Variant]
 // of the same type.
 //
-// If the action is not stateful then this function will return %NULL.
-// In that case, g_action_group_get_action_state() will return %NULL
-// and you must not call g_action_group_change_action_state().
+// If the action is not stateful then this function will return `NULL`.
+// In that case, [method@Gio.ActionGroup.get_action_state] will return `NULL`
+// and you must not call [method@Gio.ActionGroup.change_action_state].
 //
 // The state type of a particular action will never change but it is
 // possible for an action to be removed and for a new action to be added
@@ -1674,7 +1812,7 @@ func (x *Application) HasAction(ActionNameVar string) bool {
 
 // Lists the actions contained within @action_group.
 //
-// The caller is responsible for freeing the list with g_strfreev() when
+// The caller is responsible for freeing the list with [func@GLib.strfreev] when
 // it is no longer required.
 func (x *Application) ListActions() []string {
 
@@ -1685,18 +1823,18 @@ func (x *Application) ListActions() []string {
 // Queries all aspects of the named action within an @action_group.
 //
 // This function acquires the information available from
-// g_action_group_has_action(), g_action_group_get_action_enabled(),
-// g_action_group_get_action_parameter_type(),
-// g_action_group_get_action_state_type(),
-// g_action_group_get_action_state_hint() and
-// g_action_group_get_action_state() with a single function call.
+// [method@Gio.ActionGroup.has_action], [method@Gio.ActionGroup.get_action_enabled],
+// [method@Gio.ActionGroup.get_action_parameter_type],
+// [method@Gio.ActionGroup.get_action_state_type],
+// [method@Gio.ActionGroup.get_action_state_hint] and
+// [method@Gio.ActionGroup.get_action_state] with a single function call.
 //
 // This provides two main benefits.
 //
 // The first is the improvement in efficiency that comes with not having
 // to perform repeated lookups of the action in order to discover
 // different things about it.  The second is that implementing
-// #GActionGroup can now be done by only overriding this one virtual
+// [type@Gio.ActionGroup] can now be done by only overriding this one virtual
 // function.
 //
 // The interface provides a default implementation of this function that
@@ -1705,9 +1843,9 @@ func (x *Application) ListActions() []string {
 // those functions that call this function.  All implementations,
 // therefore, must override either this function or all of the others.
 //
-// If the action exists, %TRUE is returned and any of the requested
-// fields (as indicated by having a non-%NULL reference passed in) are
-// filled.  If the action doesn't exist, %FALSE is returned and the
+// If the action exists, `TRUE` is returned and any of the requested
+// fields (as indicated by having a non-`NULL` reference passed in) are
+// filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
 func (x *Application) QueryAction(ActionNameVar string, EnabledVar bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
@@ -1727,12 +1865,12 @@ func (x *Application) AddAction(ActionVar Action) {
 
 }
 
-// A convenience function for creating multiple #GSimpleAction instances
-// and adding them to a #GActionMap.
+// A convenience function for creating multiple [class@Gio.SimpleAction]
+// instances and adding them to a [iface@Gio.ActionMap].
 //
-// Each action is constructed as per one #GActionEntry.
+// Each action is constructed as per one [struct@Gio.ActionEntry].
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 // static void
 // activate_quit (GSimpleAction *simple,
 //
@@ -1769,7 +1907,7 @@ func (x *Application) AddAction(ActionVar Action) {
 //	  return G_ACTION_GROUP (group);
 //	}
 //
-// ]|
+// ```
 func (x *Application) AddActionEntries(EntriesVar []ActionEntry, NEntriesVar int, UserDataVar uintptr) {
 
 	XGActionMapAddActionEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
@@ -1778,7 +1916,7 @@ func (x *Application) AddActionEntries(EntriesVar []ActionEntry, NEntriesVar int
 
 // Looks up the action with the name @action_name in @action_map.
 //
-// If no such action exists, returns %NULL.
+// If no such action exists, returns `NULL`.
 func (x *Application) LookupAction(ActionNameVar string) *ActionBase {
 	var cls *ActionBase
 
@@ -1799,6 +1937,37 @@ func (x *Application) LookupAction(ActionNameVar string) *ActionBase {
 func (x *Application) RemoveAction(ActionNameVar string) {
 
 	XGActionMapRemoveAction(x.GoPointer(), ActionNameVar)
+
+}
+
+// Remove actions from a [iface@Gio.ActionMap]. This is meant as the reverse of
+// [method@Gio.ActionMap.add_action_entries].
+//
+// ```c
+//
+//	static const GActionEntry entries[] = {
+//	    { "quit",         activate_quit              },
+//	    { "print-string", activate_print_string, "s" }
+//	};
+//
+// void
+// add_actions (GActionMap *map)
+//
+//	{
+//	  g_action_map_add_action_entries (map, entries, G_N_ELEMENTS (entries), NULL);
+//	}
+//
+// void
+// remove_actions (GActionMap *map)
+//
+//	{
+//	  g_action_map_remove_action_entries (map, entries, G_N_ELEMENTS (entries));
+//	}
+//
+// ```
+func (x *Application) RemoveActionEntries(EntriesVar []ActionEntry, NEntriesVar int) {
+
+	XGActionMapRemoveActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
 
 }
 
@@ -1904,6 +2073,7 @@ func init() {
 	core.PuregoSafeRegister(&xApplicationGetIsRegistered, lib, "g_application_get_is_registered")
 	core.PuregoSafeRegister(&xApplicationGetIsRemote, lib, "g_application_get_is_remote")
 	core.PuregoSafeRegister(&xApplicationGetResourceBasePath, lib, "g_application_get_resource_base_path")
+	core.PuregoSafeRegister(&xApplicationGetVersion, lib, "g_application_get_version")
 	core.PuregoSafeRegister(&xApplicationHold, lib, "g_application_hold")
 	core.PuregoSafeRegister(&xApplicationMarkBusy, lib, "g_application_mark_busy")
 	core.PuregoSafeRegister(&xApplicationOpen, lib, "g_application_open")
@@ -1921,6 +2091,7 @@ func init() {
 	core.PuregoSafeRegister(&xApplicationSetOptionContextParameterString, lib, "g_application_set_option_context_parameter_string")
 	core.PuregoSafeRegister(&xApplicationSetOptionContextSummary, lib, "g_application_set_option_context_summary")
 	core.PuregoSafeRegister(&xApplicationSetResourceBasePath, lib, "g_application_set_resource_base_path")
+	core.PuregoSafeRegister(&xApplicationSetVersion, lib, "g_application_set_version")
 	core.PuregoSafeRegister(&xApplicationUnbindBusyProperty, lib, "g_application_unbind_busy_property")
 	core.PuregoSafeRegister(&xApplicationUnmarkBusy, lib, "g_application_unmark_busy")
 	core.PuregoSafeRegister(&xApplicationWithdrawNotification, lib, "g_application_withdraw_notification")

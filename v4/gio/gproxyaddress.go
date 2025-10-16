@@ -29,7 +29,7 @@ func (x *ProxyAddressPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// Support for proxied #GInetSocketAddress.
+// A [class@Gio.InetSocketAddress] representing a connection via a proxy server.
 type ProxyAddress struct {
 	InetSocketAddress
 }

@@ -7,8 +7,18 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/glib"
 )
 
+var xCssParserErrorQuark func() glib.Quark
+
+// Registers an error quark for CSS parsing errors.
+func CssParserErrorQuark() glib.Quark {
+
+	cret := xCssParserErrorQuark()
+	return cret
+}
+
 var xCssParserWarningQuark func() glib.Quark
 
+// Registers an error quark for CSS parsing warnings.
 func CssParserWarningQuark() glib.Quark {
 
 	cret := xCssParserWarningQuark()
@@ -23,6 +33,7 @@ func init() {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xCssParserErrorQuark, lib, "gtk_css_parser_error_quark")
 	core.PuregoSafeRegister(&xCssParserWarningQuark, lib, "gtk_css_parser_warning_quark")
 
 }

@@ -35,9 +35,17 @@ type DestroyNotify func(uintptr)
 // and %FALSE otherwise.
 type EqualFunc func(uintptr, uintptr) bool
 
+// Specifies the type of a function used to test two values for
+// equality. The function should return %TRUE if both values are equal
+// and %FALSE otherwise.
+//
+// This is a version of #GEqualFunc which provides a @user_data closure from
+// the caller.
+type EqualFuncFull func(uintptr, uintptr, uintptr) bool
+
 // Declares a type of function which takes an arbitrary
 // data pointer argument and has no return value. It is
-// not currently used in GLib or GTK+.
+// not currently used in GLib or GTK.
 type FreeFunc func(uintptr)
 
 // Specifies the type of functions passed to g_list_foreach() and
@@ -190,21 +198,21 @@ const (
 	LN2 float64 = 0.693147
 	// Multiplying the base 2 exponent by this number yields the base 10 exponent.
 	LOG_2_BASE_10 float64 = 0.301030
-	// The maximum value which can be held in a #gint16.
+
 	MAXINT16 int16 = 32767
-	// The maximum value which can be held in a #gint32.
+
 	MAXINT32 int32 = 2147483647
-	// The maximum value which can be held in a #gint64.
+
 	MAXINT64 int64 = 9223372036854775807
-	// The maximum value which can be held in a #gint8.
+
 	MAXINT8 int8 = 127
-	// The maximum value which can be held in a #guint16.
+
 	MAXUINT16 uint16 = 65535
-	// The maximum value which can be held in a #guint32.
+
 	MAXUINT32 uint32 = 4294967295
-	// The maximum value which can be held in a #guint64.
+
 	MAXUINT64 uint64 = 18446744073709551615
-	// The maximum value which can be held in a #guint8.
+
 	MAXUINT8 byte = 255
 	// The minimum value which can be held in a #gint16.
 	MININT16 int16 = -32768
@@ -229,7 +237,7 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

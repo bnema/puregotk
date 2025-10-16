@@ -35,6 +35,7 @@ func (x *PixbufAnimationClass) GoPointer() uintptr {
 }
 
 // OverrideIsStaticImage sets the callback function.
+// returns whether the given animation is just a static image.
 func (x *PixbufAnimationClass) OverrideIsStaticImage(cb func(*PixbufAnimation) bool) {
 	if cb == nil {
 		x.xIsStaticImage = 0
@@ -46,6 +47,7 @@ func (x *PixbufAnimationClass) OverrideIsStaticImage(cb func(*PixbufAnimation) b
 }
 
 // GetIsStaticImage gets the callback function.
+// returns whether the given animation is just a static image.
 func (x *PixbufAnimationClass) GetIsStaticImage() func(*PixbufAnimation) bool {
 	if x.xIsStaticImage == 0 {
 		return nil
@@ -58,6 +60,7 @@ func (x *PixbufAnimationClass) GetIsStaticImage() func(*PixbufAnimation) bool {
 }
 
 // OverrideGetStaticImage sets the callback function.
+// returns a static image representing the given animation.
 func (x *PixbufAnimationClass) OverrideGetStaticImage(cb func(*PixbufAnimation) *Pixbuf) {
 	if cb == nil {
 		x.xGetStaticImage = 0
@@ -73,6 +76,7 @@ func (x *PixbufAnimationClass) OverrideGetStaticImage(cb func(*PixbufAnimation) 
 }
 
 // GetGetStaticImage gets the callback function.
+// returns a static image representing the given animation.
 func (x *PixbufAnimationClass) GetGetStaticImage() func(*PixbufAnimation) *Pixbuf {
 	if x.xGetStaticImage == 0 {
 		return nil
@@ -91,6 +95,7 @@ func (x *PixbufAnimationClass) GetGetStaticImage() func(*PixbufAnimation) *Pixbu
 }
 
 // OverrideGetSize sets the callback function.
+// fills @width and @height with the frame size of the animation.
 func (x *PixbufAnimationClass) OverrideGetSize(cb func(*PixbufAnimation, int, int)) {
 	if cb == nil {
 		x.xGetSize = 0
@@ -102,6 +107,7 @@ func (x *PixbufAnimationClass) OverrideGetSize(cb func(*PixbufAnimation, int, in
 }
 
 // GetGetSize gets the callback function.
+// fills @width and @height with the frame size of the animation.
 func (x *PixbufAnimationClass) GetGetSize() func(*PixbufAnimation, int, int) {
 	if x.xGetSize == 0 {
 		return nil
@@ -114,6 +120,7 @@ func (x *PixbufAnimationClass) GetGetSize() func(*PixbufAnimation, int, int) {
 }
 
 // OverrideGetIter sets the callback function.
+// returns an iterator for the given animation.
 func (x *PixbufAnimationClass) OverrideGetIter(cb func(*PixbufAnimation, *glib.TimeVal) *PixbufAnimationIter) {
 	if cb == nil {
 		x.xGetIter = 0
@@ -129,6 +136,7 @@ func (x *PixbufAnimationClass) OverrideGetIter(cb func(*PixbufAnimation, *glib.T
 }
 
 // GetGetIter gets the callback function.
+// returns an iterator for the given animation.
 func (x *PixbufAnimationClass) GetGetIter() func(*PixbufAnimation, *glib.TimeVal) *PixbufAnimationIter {
 	if x.xGetIter == 0 {
 		return nil
@@ -168,6 +176,9 @@ func (x *PixbufAnimationIterClass) GoPointer() uintptr {
 }
 
 // OverrideGetDelayTime sets the callback function.
+// returns the time in milliseconds that the current frame
+//
+//	should be shown.
 func (x *PixbufAnimationIterClass) OverrideGetDelayTime(cb func(*PixbufAnimationIter) int) {
 	if cb == nil {
 		x.xGetDelayTime = 0
@@ -179,6 +190,9 @@ func (x *PixbufAnimationIterClass) OverrideGetDelayTime(cb func(*PixbufAnimation
 }
 
 // GetGetDelayTime gets the callback function.
+// returns the time in milliseconds that the current frame
+//
+//	should be shown.
 func (x *PixbufAnimationIterClass) GetGetDelayTime() func(*PixbufAnimationIter) int {
 	if x.xGetDelayTime == 0 {
 		return nil
@@ -191,6 +205,7 @@ func (x *PixbufAnimationIterClass) GetGetDelayTime() func(*PixbufAnimationIter) 
 }
 
 // OverrideGetPixbuf sets the callback function.
+// returns the current frame.
 func (x *PixbufAnimationIterClass) OverrideGetPixbuf(cb func(*PixbufAnimationIter) *Pixbuf) {
 	if cb == nil {
 		x.xGetPixbuf = 0
@@ -206,6 +221,7 @@ func (x *PixbufAnimationIterClass) OverrideGetPixbuf(cb func(*PixbufAnimationIte
 }
 
 // GetGetPixbuf gets the callback function.
+// returns the current frame.
 func (x *PixbufAnimationIterClass) GetGetPixbuf() func(*PixbufAnimationIter) *Pixbuf {
 	if x.xGetPixbuf == 0 {
 		return nil
@@ -224,6 +240,9 @@ func (x *PixbufAnimationIterClass) GetGetPixbuf() func(*PixbufAnimationIter) *Pi
 }
 
 // OverrideOnCurrentlyLoadingFrame sets the callback function.
+// returns whether the current frame of @iter is
+//
+//	being loaded.
 func (x *PixbufAnimationIterClass) OverrideOnCurrentlyLoadingFrame(cb func(*PixbufAnimationIter) bool) {
 	if cb == nil {
 		x.xOnCurrentlyLoadingFrame = 0
@@ -235,6 +254,9 @@ func (x *PixbufAnimationIterClass) OverrideOnCurrentlyLoadingFrame(cb func(*Pixb
 }
 
 // GetOnCurrentlyLoadingFrame gets the callback function.
+// returns whether the current frame of @iter is
+//
+//	being loaded.
 func (x *PixbufAnimationIterClass) GetOnCurrentlyLoadingFrame() func(*PixbufAnimationIter) bool {
 	if x.xOnCurrentlyLoadingFrame == 0 {
 		return nil
@@ -247,6 +269,9 @@ func (x *PixbufAnimationIterClass) GetOnCurrentlyLoadingFrame() func(*PixbufAnim
 }
 
 // OverrideAdvance sets the callback function.
+// advances the iterator to @current_time, possibly changing the
+//
+//	current frame.
 func (x *PixbufAnimationIterClass) OverrideAdvance(cb func(*PixbufAnimationIter, *glib.TimeVal) bool) {
 	if cb == nil {
 		x.xAdvance = 0
@@ -258,6 +283,9 @@ func (x *PixbufAnimationIterClass) OverrideAdvance(cb func(*PixbufAnimationIter,
 }
 
 // GetAdvance gets the callback function.
+// advances the iterator to @current_time, possibly changing the
+//
+//	current frame.
 func (x *PixbufAnimationIterClass) GetAdvance() func(*PixbufAnimationIter, *glib.TimeVal) bool {
 	if x.xAdvance == 0 {
 		return nil

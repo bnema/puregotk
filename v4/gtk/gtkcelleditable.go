@@ -28,6 +28,9 @@ func (x *CellEditableIface) GoPointer() uintptr {
 }
 
 // OverrideEditingDone sets the callback function.
+// Signal is a sign for the cell renderer to update its
+//
+//	value from the cell_editable.
 func (x *CellEditableIface) OverrideEditingDone(cb func(CellEditable)) {
 	if cb == nil {
 		x.xEditingDone = 0
@@ -39,6 +42,9 @@ func (x *CellEditableIface) OverrideEditingDone(cb func(CellEditable)) {
 }
 
 // GetEditingDone gets the callback function.
+// Signal is a sign for the cell renderer to update its
+//
+//	value from the cell_editable.
 func (x *CellEditableIface) GetEditingDone() func(CellEditable) {
 	if x.xEditingDone == 0 {
 		return nil
@@ -51,6 +57,9 @@ func (x *CellEditableIface) GetEditingDone() func(CellEditable) {
 }
 
 // OverrideRemoveWidget sets the callback function.
+// Signal is meant to indicate that the cell is
+//
+//	finished editing, and the widget may now be destroyed.
 func (x *CellEditableIface) OverrideRemoveWidget(cb func(CellEditable)) {
 	if cb == nil {
 		x.xRemoveWidget = 0
@@ -62,6 +71,9 @@ func (x *CellEditableIface) OverrideRemoveWidget(cb func(CellEditable)) {
 }
 
 // GetRemoveWidget gets the callback function.
+// Signal is meant to indicate that the cell is
+//
+//	finished editing, and the widget may now be destroyed.
 func (x *CellEditableIface) GetRemoveWidget() func(CellEditable) {
 	if x.xRemoveWidget == 0 {
 		return nil
@@ -74,6 +86,7 @@ func (x *CellEditableIface) GetRemoveWidget() func(CellEditable) {
 }
 
 // OverrideStartEditing sets the callback function.
+// Begins editing on a cell_editable.
 func (x *CellEditableIface) OverrideStartEditing(cb func(CellEditable, *gdk.Event)) {
 	if cb == nil {
 		x.xStartEditing = 0
@@ -85,6 +98,7 @@ func (x *CellEditableIface) OverrideStartEditing(cb func(CellEditable, *gdk.Even
 }
 
 // GetStartEditing gets the callback function.
+// Begins editing on a cell_editable.
 func (x *CellEditableIface) GetStartEditing() func(CellEditable, *gdk.Event) {
 	if x.xStartEditing == 0 {
 		return nil

@@ -10,7 +10,16 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The GString struct contains the public fields of a GString.
+// A `GString` is an object that handles the memory management of a C string.
+//
+// The emphasis of `GString` is on text, typically UTF-8. Crucially, the "str" member
+// of a `GString` is guaranteed to have a trailing nul character, and it is therefore
+// always safe to call functions such as `strchr()` or `strdup()` on it.
+//
+// However, a `GString` can also hold arbitrary binary data, because it has a "len" member,
+// which includes any possible embedded nul characters in the data. Conceptually then,
+// `GString` is like a `GByteArray` with the addition of many convenience methods for
+// text, and a guaranteed nul terminator.
 type String struct {
 	_ structs.HostLayout
 
@@ -52,6 +61,19 @@ var xNewStringLen func(string, int) *String
 func NewStringLen(InitVar string, LenVar int) *String {
 
 	cret := xNewStringLen(InitVar, LenVar)
+	return cret
+}
+
+var xNewStringTake func(string) *String
+
+// Creates a new #GString, initialized with the given string.
+//
+// After this call, @init belongs to the #GString and may no longer be
+// modified by the caller. The memory of @data has to be dynamically
+// allocated and will eventually be freed with g_free().
+func NewStringTake(InitVar string) *String {
+
+	cret := xNewStringTake(InitVar)
 	return cret
 }
 
@@ -212,9 +234,24 @@ var xStringFree func(uintptr, bool) string
 // If @free_segment is %TRUE it also frees the character data.  If
 // it's %FALSE, the caller gains ownership of the buffer and must
 // free it after use with g_free().
+//
+// Instead of passing %FALSE to this function, consider using
+// g_string_free_and_steal().
 func (x *String) Free(FreeSegmentVar bool) string {
 
 	cret := xStringFree(x.GoPointer(), FreeSegmentVar)
+	return cret
+}
+
+var xStringFreeAndSteal func(uintptr) string
+
+// Frees the memory allocated for the #GString.
+//
+// The caller gains ownership of the buffer and
+// must free it after use with g_free().
+func (x *String) FreeAndSteal() string {
+
+	cret := xStringFreeAndSteal(x.GoPointer())
 	return cret
 }
 
@@ -430,7 +467,7 @@ func (x *String) Vprintf(FormatVar string, ArgsVar []interface{}) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -440,6 +477,7 @@ func init() {
 
 	core.PuregoSafeRegister(&xNewString, lib, "g_string_new")
 	core.PuregoSafeRegister(&xNewStringLen, lib, "g_string_new_len")
+	core.PuregoSafeRegister(&xNewStringTake, lib, "g_string_new_take")
 	core.PuregoSafeRegister(&xStringSizedNew, lib, "g_string_sized_new")
 
 	core.PuregoSafeRegister(&xStringAppend, lib, "g_string_append")
@@ -456,6 +494,7 @@ func init() {
 	core.PuregoSafeRegister(&xStringEqual, lib, "g_string_equal")
 	core.PuregoSafeRegister(&xStringErase, lib, "g_string_erase")
 	core.PuregoSafeRegister(&xStringFree, lib, "g_string_free")
+	core.PuregoSafeRegister(&xStringFreeAndSteal, lib, "g_string_free_and_steal")
 	core.PuregoSafeRegister(&xStringFreeToBytes, lib, "g_string_free_to_bytes")
 	core.PuregoSafeRegister(&xStringHash, lib, "g_string_hash")
 	core.PuregoSafeRegister(&xStringInsert, lib, "g_string_insert")

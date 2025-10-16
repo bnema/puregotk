@@ -29,6 +29,7 @@ func (x *ShortcutManagerInterface) GoPointer() uintptr {
 }
 
 // OverrideAddController sets the callback function.
+// Add a `GtkShortcutController` to be managed.
 func (x *ShortcutManagerInterface) OverrideAddController(cb func(ShortcutManager, *ShortcutController)) {
 	if cb == nil {
 		x.xAddController = 0
@@ -40,6 +41,7 @@ func (x *ShortcutManagerInterface) OverrideAddController(cb func(ShortcutManager
 }
 
 // GetAddController gets the callback function.
+// Add a `GtkShortcutController` to be managed.
 func (x *ShortcutManagerInterface) GetAddController() func(ShortcutManager, *ShortcutController) {
 	if x.xAddController == 0 {
 		return nil
@@ -52,6 +54,9 @@ func (x *ShortcutManagerInterface) GetAddController() func(ShortcutManager, *Sho
 }
 
 // OverrideRemoveController sets the callback function.
+// Remove a `GtkShortcutController` that had previously
+//
+//	been added
 func (x *ShortcutManagerInterface) OverrideRemoveController(cb func(ShortcutManager, *ShortcutController)) {
 	if cb == nil {
 		x.xRemoveController = 0
@@ -63,6 +68,9 @@ func (x *ShortcutManagerInterface) OverrideRemoveController(cb func(ShortcutMana
 }
 
 // GetRemoveController gets the callback function.
+// Remove a `GtkShortcutController` that had previously
+//
+//	been added
 func (x *ShortcutManagerInterface) GetRemoveController() func(ShortcutManager, *ShortcutController) {
 	if x.xRemoveController == 0 {
 		return nil
@@ -74,8 +82,7 @@ func (x *ShortcutManagerInterface) GetRemoveController() func(ShortcutManager, *
 	}
 }
 
-// The `GtkShortcutManager` interface is used to implement
-// shortcut scopes.
+// An interface that is used to implement shortcut scopes.
 //
 // This is important for [iface@Gtk.Native] widgets that have their
 // own surface, since the event controllers that are used to implement
@@ -85,7 +92,7 @@ func (x *ShortcutManagerInterface) GetRemoveController() func(ShortcutManager, *
 // [class@Gtk.Window] and [class@Gtk.Popover].
 //
 // Every widget that implements `GtkShortcutManager` will be used as a
-// %GTK_SHORTCUT_SCOPE_MANAGED.
+// `GTK_SHORTCUT_SCOPE_MANAGED`.
 type ShortcutManager interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

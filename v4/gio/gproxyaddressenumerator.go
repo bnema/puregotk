@@ -203,15 +203,16 @@ func (x *ProxyAddressEnumeratorPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GProxyAddressEnumerator is a wrapper around #GSocketAddressEnumerator which
-// takes the #GSocketAddress instances returned by the #GSocketAddressEnumerator
-// and wraps them in #GProxyAddress instances, using the given
-// #GProxyAddressEnumerator:proxy-resolver.
+// `GProxyAddressEnumerator` is a wrapper around
+// [class@Gio.SocketAddressEnumerator] which takes the [class@Gio.SocketAddress]
+// instances returned by the [class@Gio.SocketAddressEnumerator]
+// and wraps them in [class@Gio.ProxyAddress] instances, using the given
+// [property@Gio.ProxyAddressEnumerator:proxy-resolver].
 //
 // This enumerator will be returned (for example, by
-// g_socket_connectable_enumerate()) as appropriate when a proxy is configured;
-// there should be no need to manually wrap a #GSocketAddressEnumerator instance
-// with one.
+// [method@Gio.SocketConnectable.enumerate]) as appropriate when a proxy is
+// configured; there should be no need to manually wrap a
+// [class@Gio.SocketAddressEnumerator] instance with one.
 type ProxyAddressEnumerator struct {
 	SocketAddressEnumerator
 }

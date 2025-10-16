@@ -449,14 +449,34 @@ const (
 	GResolverNameLookupFlagsIpv6OnlyValue ResolverNameLookupFlags = 2
 )
 
-// #GResolver provides cancellable synchronous and asynchronous DNS
-// resolution, for hostnames (g_resolver_lookup_by_address(),
-// g_resolver_lookup_by_name() and their async variants) and SRV
-// (service) records (g_resolver_lookup_service()).
+var xResolverErrorQuark func() glib.Quark
+
+// Gets the #GResolver Error Quark.
+func ResolverErrorQuark() glib.Quark {
+
+	cret := xResolverErrorQuark()
+	return cret
+}
+
+// The object that handles DNS resolution. Use [func@Gio.Resolver.get_default]
+// to get the default resolver.
 //
-// #GNetworkAddress and #GNetworkService provide wrappers around
-// #GResolver functionality that also implement #GSocketConnectable,
-// making it easy to connect to a remote host/service.
+// `GResolver` provides cancellable synchronous and asynchronous DNS
+// resolution, for hostnames ([method@Gio.Resolver.lookup_by_address],
+// [method@Gio.Resolver.lookup_by_name] and their async variants) and SRV
+// (service) records ([method@Gio.Resolver.lookup_service]).
+//
+// [class@Gio.NetworkAddress] and [class@Gio.NetworkService] provide wrappers
+// around `GResolver` functionality that also implement
+// [iface@Gio.SocketConnectable], making it easy to connect to a remote
+// host/service.
+//
+// The default resolver (see [func@Gio.Resolver.get_default]) has a timeout of
+// 30s set on it since GLib 2.78. Earlier versions of GLib did not support
+// resolver timeouts.
+//
+// This is an abstract type; subclasses of it implement different resolvers for
+// different platforms and situations.
 type Resolver struct {
 	gobject.Object
 }
@@ -471,6 +491,15 @@ func ResolverNewFromInternalPtr(ptr uintptr) *Resolver {
 	cls := &Resolver{}
 	cls.Ptr = ptr
 	return cls
+}
+
+var xResolverGetTimeout func(uintptr) uint
+
+// Get the timeout applied to all resolver lookups. See #GResolver:timeout.
+func (x *Resolver) GetTimeout() uint {
+
+	cret := xResolverGetTimeout(x.GoPointer())
+	return cret
 }
 
 var xResolverLookupByAddress func(uintptr, uintptr, uintptr, **glib.Error) string
@@ -778,6 +807,15 @@ func (x *Resolver) SetDefault() {
 
 }
 
+var xResolverSetTimeout func(uintptr, uint)
+
+// Set the timeout applied to all resolver lookups. See #GResolver:timeout.
+func (x *Resolver) SetTimeout(TimeoutMsVar uint) {
+
+	xResolverSetTimeout(x.GoPointer(), TimeoutMsVar)
+
+}
+
 func (c *Resolver) GoPointer() uintptr {
 	if c == nil {
 		return 0
@@ -862,8 +900,11 @@ func init() {
 
 	core.PuregoSafeRegister(&xResolverNameLookupFlagsGLibType, lib, "g_resolver_name_lookup_flags_get_type")
 
+	core.PuregoSafeRegister(&xResolverErrorQuark, lib, "g_resolver_error_quark")
+
 	core.PuregoSafeRegister(&xResolverGLibType, lib, "g_resolver_get_type")
 
+	core.PuregoSafeRegister(&xResolverGetTimeout, lib, "g_resolver_get_timeout")
 	core.PuregoSafeRegister(&xResolverLookupByAddress, lib, "g_resolver_lookup_by_address")
 	core.PuregoSafeRegister(&xResolverLookupByAddressAsync, lib, "g_resolver_lookup_by_address_async")
 	core.PuregoSafeRegister(&xResolverLookupByAddressFinish, lib, "g_resolver_lookup_by_address_finish")
@@ -880,6 +921,7 @@ func init() {
 	core.PuregoSafeRegister(&xResolverLookupServiceAsync, lib, "g_resolver_lookup_service_async")
 	core.PuregoSafeRegister(&xResolverLookupServiceFinish, lib, "g_resolver_lookup_service_finish")
 	core.PuregoSafeRegister(&xResolverSetDefault, lib, "g_resolver_set_default")
+	core.PuregoSafeRegister(&xResolverSetTimeout, lib, "g_resolver_set_timeout")
 
 	core.PuregoSafeRegister(&xResolverFreeAddresses, lib, "g_resolver_free_addresses")
 	core.PuregoSafeRegister(&xResolverFreeTargets, lib, "g_resolver_free_targets")

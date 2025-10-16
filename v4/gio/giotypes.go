@@ -15,8 +15,8 @@ import (
 // Type definition for a function that will be called back when an asynchronous
 // operation within GIO has been completed. #GAsyncReadyCallback
 // callbacks from #GTask are guaranteed to be invoked in a later
-// iteration of the
-// [thread-default main context][g-main-context-push-thread-default]
+// iteration of the thread-default main context
+// (see [method@GLib.MainContext.push_thread_default])
 // where the #GTask was created. All other users of
 // #GAsyncReadyCallback must likewise call it asynchronously in a
 // later iteration of the main context.
@@ -34,8 +34,8 @@ type CancellableSourceFunc func(uintptr, uintptr) bool
 // use for an interface proxy (if @interface_name is not %NULL) or
 // object proxy (if @interface_name is %NULL).
 //
-// This function is called in the
-// [thread-default main loop][g-main-context-push-thread-default]
+// This function is called in the thread-default main context
+// (see [method@GLib.MainContext.push_thread_default])
 // that @manager was constructed in.
 type DBusProxyTypeFunc func(uintptr, string, string, uintptr) types.GType
 
@@ -180,7 +180,7 @@ func (x *FileAttributeMatcher) Matches(AttributeVar string) bool {
 
 var xFileAttributeMatcherMatchesOnly func(uintptr, string) bool
 
-// Checks if a attribute matcher only matches a given attribute. Always
+// Checks if an attribute matcher only matches a given attribute. Always
 // returns %FALSE if "*" was used when creating the matcher.
 func (x *FileAttributeMatcher) MatchesOnly(AttributeVar string) bool {
 
@@ -285,8 +285,59 @@ func (x *IOExtension) RefClass() *gobject.TypeClass {
 	return cret
 }
 
-// #GIOExtensionPoint is an opaque data structure and can only be accessed
-// using the following functions.
+// `GIOExtensionPoint` provides a mechanism for modules to extend the
+// functionality of the library or application that loaded it in an
+// organized fashion.
+//
+// An extension point is identified by a name, and it may optionally
+// require that any implementation must be of a certain type (or derived
+// thereof). Use [func@Gio.IOExtensionPoint.register] to register an
+// extension point, and [method@Gio.IOExtensionPoint.set_required_type] to
+// set a required type.
+//
+// A module can implement an extension point by specifying the
+// [type@GObject.Type] that implements the functionality. Additionally, each
+// implementation of an extension point has a name, and a priority. Use
+// [func@Gio.IOExtensionPoint.implement] to implement an extension point.
+//
+// ```c
+// GIOExtensionPoint *ep;
+//
+// // Register an extension point
+// ep = g_io_extension_point_register ("my-extension-point");
+// g_io_extension_point_set_required_type (ep, MY_TYPE_EXAMPLE);
+// ```
+//
+// ```c
+// // Implement an extension point
+// G_DEFINE_TYPE (MyExampleImpl, my_example_impl, MY_TYPE_EXAMPLE)
+// g_io_extension_point_implement ("my-extension-point",
+//
+//	my_example_impl_get_type (),
+//	"my-example",
+//	10);
+//
+// ```
+//
+//	It is up to the code that registered the extension point how
+//	it uses the implementations that have been associated with it.
+//	Depending on the use case, it may use all implementations, or
+//	only the one with the highest priority, or pick a specific
+//	one by name.
+//
+//	To avoid opening all modules just to find out what extension
+//	points they implement, GIO makes use of a caching mechanism,
+//	see [gio-querymodules](gio-querymodules.html).
+//	You are expected to run this command after installing a
+//	GIO module.
+//
+//	The `GIO_EXTRA_MODULES` environment variable can be used to
+//	specify additional directories to automatically load modules
+//	from. This environment variable has the same syntax as the
+//	`PATH`. If two modules have the same base name in different
+//	directories, then the latter one will be ignored. If additional
+//	directories are specified GIO will load modules from the built-in
+//	directory last.
 type IOExtensionPoint struct {
 	_ structs.HostLayout
 }
@@ -480,63 +531,69 @@ func (x *OutputVector) GoPointer() uintptr {
 
 // Applications and libraries often contain binary or textual data that is
 // really part of the application, rather than user data. For instance
-// #GtkBuilder .ui files, splashscreen images, GMenu markup XML, CSS files,
-// icons, etc. These are often shipped as files in `$datadir/appname`, or
-// manually included as literal strings in the code.
+// [`GtkBuilder`](https://docs.gtk.org/gtk4/class.Builder.html) `.ui` files,
+// splashscreen images, [class@Gio.Menu] markup XML, CSS files, icons, etc.
+// These are often shipped as files in `$datadir/appname`, or manually
+// included as literal strings in the code.
 //
-// The #GResource API and the [glib-compile-resources][glib-compile-resources] program
-// provide a convenient and efficient alternative to this which has some nice properties. You
-// maintain the files as normal files, so its easy to edit them, but during the build the files
-// are combined into a binary bundle that is linked into the executable. This means that loading
-// the resource files are efficient (as they are already in memory, shared with other instances) and
-// simple (no need to check for things like I/O errors or locate the files in the filesystem). It
+// The `GResource` API and the
+// [`glib-compile-resources`](glib-compile-resources.html) program provide a
+// convenient and efficient alternative to this which has some nice properties.
+// You maintain the files as normal files, so it’s easy to edit them, but during
+// the build the files are combined into a binary bundle that is linked into the
+// executable. This means that loading the resource files are efficient (as they
+// are already in memory, shared with other instances) and simple (no need to
+// check for things like I/O errors or locate the files in the filesystem). It
 // also makes it easier to create relocatable applications.
 //
-// Resource files can also be marked as compressed. Such files will be included in the resource bundle
-// in a compressed form, but will be automatically uncompressed when the resource is used. This
-// is very useful e.g. for larger text files that are parsed once (or rarely) and then thrown away.
+// Resource files can also be marked as compressed. Such files will be included
+// in the resource bundle in a compressed form, but will be automatically
+// uncompressed when the resource is used. This is very useful e.g. for larger
+// text files that are parsed once (or rarely) and then thrown away.
 //
 // Resource files can also be marked to be preprocessed, by setting the value of the
 // `preprocess` attribute to a comma-separated list of preprocessing options.
 // The only options currently supported are:
 //
-// `xml-stripblanks` which will use the xmllint command
-// to strip ignorable whitespace from the XML file. For this to work,
-// the `XMLLINT` environment variable must be set to the full path to
-// the xmllint executable, or xmllint must be in the `PATH`; otherwise
-// the preprocessing step is skipped.
+//   - `xml-stripblanks` which will use the [`xmllint`](man:xmllint(1)) command
+//     to strip ignorable whitespace from the XML file. For this to work,
+//     the `XMLLINT` environment variable must be set to the full path to
+//     the xmllint executable, or xmllint must be in the `PATH`; otherwise
+//     the preprocessing step is skipped.
 //
-// `to-pixdata` (deprecated since gdk-pixbuf 2.32) which will use the
-// `gdk-pixbuf-pixdata` command to convert images to the #GdkPixdata format,
-// which allows you to create pixbufs directly using the data inside the
-// resource file, rather than an (uncompressed) copy of it. For this, the
-// `gdk-pixbuf-pixdata` program must be in the `PATH`, or the
-// `GDK_PIXBUF_PIXDATA` environment variable must be set to the full path to the
-// `gdk-pixbuf-pixdata` executable; otherwise the resource compiler will abort.
-// `to-pixdata` has been deprecated since gdk-pixbuf 2.32, as #GResource
-// supports embedding modern image formats just as well. Instead of using it,
-// embed a PNG or SVG file in your #GResource.
+//   - `to-pixdata` (deprecated since gdk-pixbuf 2.32) which will use the
+//     `gdk-pixbuf-pixdata` command to convert images to the [`GdkPixdata`](https://docs.gtk.org/gdk-pixbuf/class.Pixdata.html)
+//     format, which allows you to create pixbufs directly using the data inside
+//     the resource file, rather than an (uncompressed) copy of it. For this, the
+//     `gdk-pixbuf-pixdata` program must be in the `PATH`, or the
+//     `GDK_PIXBUF_PIXDATA` environment variable must be set to the full path to
+//     the `gdk-pixbuf-pixdata` executable; otherwise the resource compiler will
+//     abort. `to-pixdata` has been deprecated since gdk-pixbuf 2.32, as
+//     `GResource` supports embedding modern image formats just as well. Instead
+//     of using it, embed a PNG or SVG file in your `GResource`.
 //
-// `json-stripblanks` which will use the `json-glib-format` command to strip
-// ignorable whitespace from the JSON file. For this to work, the
-// `JSON_GLIB_FORMAT` environment variable must be set to the full path to the
-// `json-glib-format` executable, or it must be in the `PATH`;
-// otherwise the preprocessing step is skipped. In addition, at least version
-// 1.6 of `json-glib-format` is required.
+//   - `json-stripblanks` which will use the
+//     [`json-glib-format`](man:json-glib-format(1)) command to strip ignorable
+//     whitespace from the JSON file. For this to work, the `JSON_GLIB_FORMAT`
+//     environment variable must be set to the full path to the
+//     `json-glib-format` executable, or it must be in the `PATH`; otherwise the
+//     preprocessing step is skipped. In addition, at least version 1.6 of
+//     `json-glib-format` is required.
 //
-// Resource files will be exported in the GResource namespace using the
+// Resource files will be exported in the `GResource` namespace using the
 // combination of the given `prefix` and the filename from the `file` element.
 // The `alias` attribute can be used to alter the filename to expose them at a
 // different location in the resource namespace. Typically, this is used to
 // include files from a different source directory without exposing the source
 // directory in the resource namespace, as in the example below.
 //
-// Resource bundles are created by the [glib-compile-resources][glib-compile-resources] program
-// which takes an XML file that describes the bundle, and a set of files that the XML references. These
-// are combined into a binary resource bundle.
+// Resource bundles are created by the
+// [`glib-compile-resources`](glib-compile-resources.html) program
+// which takes an XML file that describes the bundle, and a set of files that
+// the XML references. These are combined into a binary resource bundle.
 //
 // An example resource description:
-// |[
+// ```xml
 // &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 // &lt;gresources&gt;
 //
@@ -548,76 +605,93 @@ func (x *OutputVector) GoPointer() uintptr {
 //	&lt;/gresource&gt;
 //
 // &lt;/gresources&gt;
-// ]|
+// ```
 //
 // This will create a resource bundle with the following files:
-// |[
+// ```
 // /org/gtk/Example/data/splashscreen.png
 // /org/gtk/Example/dialog.ui
 // /org/gtk/Example/menumarkup.xml
 // /org/gtk/Example/example.css
-// ]|
+// ```
 //
-// Note that all resources in the process share the same namespace, so use Java-style
-// path prefixes (like in the above example) to avoid conflicts.
+// Note that all resources in the process share the same namespace, so use
+// Java-style path prefixes (like in the above example) to avoid conflicts.
 //
-// You can then use [glib-compile-resources][glib-compile-resources] to compile the XML to a
-// binary bundle that you can load with g_resource_load(). However, its more common to use the --generate-source and
-// --generate-header arguments to create a source file and header to link directly into your application.
+// You can then use [`glib-compile-resources`](glib-compile-resources.html) to
+// compile the XML to a binary bundle that you can load with
+// [func@Gio.Resource.load]. However, it’s more common to use the
+// `--generate-source` and `--generate-header` arguments to create a source file
+// and header to link directly into your application.
 // This will generate `get_resource()`, `register_resource()` and
 // `unregister_resource()` functions, prefixed by the `--c-name` argument passed
-// to [glib-compile-resources][glib-compile-resources]. `get_resource()` returns
-// the generated #GResource object. The register and unregister functions
-// register the resource so its files can be accessed using
-// g_resources_lookup_data().
+// to [`glib-compile-resources`](glib-compile-resources.html). `get_resource()`
+// returns the generated `GResource` object. The register and unregister
+// functions register the resource so its files can be accessed using
+// [func@Gio.resources_lookup_data].
 //
-// Once a #GResource has been created and registered all the data in it can be accessed globally in the process by
-// using API calls like g_resources_open_stream() to stream the data or g_resources_lookup_data() to get a direct pointer
-// to the data. You can also use URIs like "resource:///org/gtk/Example/data/splashscreen.png" with #GFile to access
-// the resource data.
+// Once a `GResource` has been created and registered all the data in it can be
+// accessed globally in the process by using API calls like
+// [func@Gio.resources_open_stream] to stream the data or
+// [func@Gio.resources_lookup_data] to get a direct pointer to the data. You can
+// also use URIs like `resource:///org/gtk/Example/data/splashscreen.png` with
+// [iface@Gio.File] to access the resource data.
 //
-// Some higher-level APIs, such as #GtkApplication, will automatically load
-// resources from certain well-known paths in the resource namespace as a
-// convenience. See the documentation for those APIs for details.
+// Some higher-level APIs, such as [`GtkApplication`](https://docs.gtk.org/gtk4/class.Application.html),
+// will automatically load resources from certain well-known paths in the
+// resource namespace as a convenience. See the documentation for those APIs
+// for details.
 //
-// There are two forms of the generated source, the default version uses the compiler support for constructor
-// and destructor functions (where available) to automatically create and register the #GResource on startup
-// or library load time. If you pass `--manual-register`, two functions to register/unregister the resource are created
-// instead. This requires an explicit initialization call in your application/library, but it works on all platforms,
-// even on the minor ones where constructors are not supported. (Constructor support is available for at least Win32, Mac OS and Linux.)
+// There are two forms of the generated source, the default version uses the
+// compiler support for constructor and destructor functions (where available)
+// to automatically create and register the `GResource` on startup or library
+// load time. If you pass `--manual-register`, two functions to
+// register/unregister the resource are created instead. This requires an
+// explicit initialization call in your application/library, but it works on all
+// platforms, even on the minor ones where constructors are not supported.
+// (Constructor support is available for at least Win32, Mac OS and Linux.)
 //
-// Note that resource data can point directly into the data segment of e.g. a library, so if you are unloading libraries
-// during runtime you need to be very careful with keeping around pointers to data from a resource, as this goes away
-// when the library is unloaded. However, in practice this is not generally a problem, since most resource accesses
-// are for your own resources, and resource data is often used once, during parsing, and then released.
+// Note that resource data can point directly into the data segment of e.g. a
+// library, so if you are unloading libraries during runtime you need to be very
+// careful with keeping around pointers to data from a resource, as this goes
+// away when the library is unloaded. However, in practice this is not generally
+// a problem, since most resource accesses are for your own resources, and
+// resource data is often used once, during parsing, and then released.
 //
-// When debugging a program or testing a change to an installed version, it is often useful to be able to
-// replace resources in the program or library, without recompiling, for debugging or quick hacking and testing
-// purposes. Since GLib 2.50, it is possible to use the `G_RESOURCE_OVERLAYS` environment variable to selectively overlay
-// resources with replacements from the filesystem.  It is a %G_SEARCHPATH_SEPARATOR-separated list of substitutions to perform
-// during resource lookups. It is ignored when running in a setuid process.
+// # Overlays
+//
+// When debugging a program or testing a change to an installed version, it is
+// often useful to be able to replace resources in the program or library,
+// without recompiling, for debugging or quick hacking and testing purposes.
+// Since GLib 2.50, it is possible to use the `G_RESOURCE_OVERLAYS` environment
+// variable to selectively overlay resources with replacements from the
+// filesystem.  It is a `G_SEARCHPATH_SEPARATOR`-separated list of substitutions
+// to perform during resource lookups. It is ignored when running in a setuid
+// process.
 //
 // # A substitution has the form
 //
-// |[
+// ```
+// /org/gtk/libgtk=/home/desrt/gtk-overlay
+// ```
 //
-//	/org/gtk/libgtk=/home/desrt/gtk-overlay
-//
-// ]|
-//
-// The part before the `=` is the resource subpath for which the overlay applies.  The part after is a
-// filesystem path which contains files and subdirectories as you would like to be loaded as resources with the
+// The part before the `=` is the resource subpath for which the overlay
+// applies.  The part after is a filesystem path which contains files and
+// subdirectories as you would like to be loaded as resources with the
 // equivalent names.
 //
-// In the example above, if an application tried to load a resource with the resource path
-// `/org/gtk/libgtk/ui/gtkdialog.ui` then GResource would check the filesystem path
-// `/home/desrt/gtk-overlay/ui/gtkdialog.ui`.  If a file was found there, it would be used instead.  This is an
-// overlay, not an outright replacement, which means that if a file is not found at that path, the built-in
-// version will be used instead.  Whiteouts are not currently supported.
+// In the example above, if an application tried to load a resource with the
+// resource path `/org/gtk/libgtk/ui/gtkdialog.ui` then `GResource` would check
+// the filesystem path `/home/desrt/gtk-overlay/ui/gtkdialog.ui`.  If a file was
+// found there, it would be used instead.  This is an overlay, not an outright
+// replacement, which means that if a file is not found at that path, the
+// built-in version will be used instead.  Whiteouts are not currently
+// supported.
 //
-// Substitutions must start with a slash, and must not contain a trailing slash before the '='.  The path after
-// the slash should ideally be absolute, but this is not strictly required.  It is possible to overlay the
-// location of a single resource with an individual file.
+// Substitutions must start with a slash, and must not contain a trailing slash
+// before the `=`.  The path after the slash should ideally be absolute, but
+// this is not strictly required.  It is possible to overlay the location of a
+// single resource with an individual file.
 type Resource struct {
 	_ structs.HostLayout
 }
@@ -634,12 +708,13 @@ func (x *Resource) GoPointer() uintptr {
 
 var xNewResourceFromData func(*glib.Bytes, **glib.Error) *Resource
 
-// Creates a GResource from a reference to the binary resource bundle.
+// Creates a [struct@Gio.Resource] from a reference to the binary resource bundle.
+//
 // This will keep a reference to @data while the resource lives, so
 // the data should not be modified or freed.
 //
 // If you want to use this resource in the global resource namespace you need
-// to register it with g_resources_register().
+// to register it with [func@Gio.resources_register].
 //
 // Note: @data must be backed by memory that is at least pointer aligned.
 // Otherwise this function will internally create a copy of the memory since
@@ -660,8 +735,10 @@ func NewResourceFromData(DataVar *glib.Bytes) (*Resource, error) {
 var xResourceRegister func(uintptr)
 
 // Registers the resource with the process-global set of resources.
+//
 // Once a resource is registered the files in it can be accessed
-// with the global resource lookup functions like g_resources_lookup_data().
+// with the global resource lookup functions like
+// [func@Gio.resources_lookup_data].
 func (x *Resource) Register() {
 
 	xResourceRegister(x.GoPointer())
@@ -680,10 +757,11 @@ func (x *Resource) Unregister() {
 var xResourceEnumerateChildren func(uintptr, string, ResourceLookupFlags, **glib.Error) []string
 
 // Returns all the names of children at the specified @path in the resource.
-// The return result is a %NULL terminated list of strings which should
-// be released with g_strfreev().
 //
-// If @path is invalid or does not exist in the #GResource,
+// The return result is a `NULL` terminated list of strings which should
+// be released with [func@GLib.strfreev].
+//
+// If @path is invalid or does not exist in the [struct@Gio.Resource],
 // %G_RESOURCE_ERROR_NOT_FOUND will be returned.
 //
 // @lookup_flags controls the behaviour of the lookup.
@@ -704,6 +782,9 @@ var xResourceGetInfo func(uintptr, string, ResourceLookupFlags, uint, uint32, **
 // if found returns information about it.
 //
 // @lookup_flags controls the behaviour of the lookup.
+//
+// The only error this can return is %G_RESOURCE_ERROR_NOT_FOUND, if @path was
+// not found in @resource.
 func (x *Resource) GetInfo(PathVar string, LookupFlagsVar ResourceLookupFlags, SizeVar uint, FlagsVar uint32) (bool, error) {
 	var cerr *glib.Error
 
@@ -715,22 +796,36 @@ func (x *Resource) GetInfo(PathVar string, LookupFlagsVar ResourceLookupFlags, S
 
 }
 
+var xResourceHasChildren func(uintptr, string) bool
+
+// Returns whether the specified @path in the resource
+// has children.
+func (x *Resource) HasChildren(PathVar string) bool {
+
+	cret := xResourceHasChildren(x.GoPointer(), PathVar)
+	return cret
+}
+
 var xResourceLookupData func(uintptr, string, ResourceLookupFlags, **glib.Error) *glib.Bytes
 
 // Looks for a file at the specified @path in the resource and
-// returns a #GBytes that lets you directly access the data in
+// returns a [struct@GLib.Bytes] that lets you directly access the data in
 // memory.
 //
 // The data is always followed by a zero byte, so you
 // can safely use the data as a C string. However, that byte
-// is not included in the size of the GBytes.
+// is not included in the size of the [struct@GLib.Bytes].
 //
 // For uncompressed resource files this is a pointer directly into
-// the resource bundle, which is typically in some readonly data section
-// in the program binary. For compressed files we allocate memory on
-// the heap and automatically uncompress the data.
+// the resource bundle, which is typically in some read-only data section
+// in the program binary. For compressed files, memory is allocated on
+// the heap and the data is automatically uncompressed.
 //
 // @lookup_flags controls the behaviour of the lookup.
+//
+// This can return error %G_RESOURCE_ERROR_NOT_FOUND if @path was not found in
+// @resource, or %G_RESOURCE_ERROR_INTERNAL if decompression of a compressed
+// resource failed.
 func (x *Resource) LookupData(PathVar string, LookupFlagsVar ResourceLookupFlags) (*glib.Bytes, error) {
 	var cerr *glib.Error
 
@@ -745,9 +840,12 @@ func (x *Resource) LookupData(PathVar string, LookupFlagsVar ResourceLookupFlags
 var xResourceOpenStream func(uintptr, string, ResourceLookupFlags, **glib.Error) uintptr
 
 // Looks for a file at the specified @path in the resource and
-// returns a #GInputStream that lets you read the data.
+// returns a [class@Gio.InputStream] that lets you read the data.
 //
 // @lookup_flags controls the behaviour of the lookup.
+//
+// The only error this can return is %G_RESOURCE_ERROR_NOT_FOUND, if @path was
+// not found in @resource.
 func (x *Resource) OpenStream(PathVar string, LookupFlagsVar ResourceLookupFlags) (*InputStream, error) {
 	var cls *InputStream
 	var cerr *glib.Error
@@ -768,8 +866,9 @@ func (x *Resource) OpenStream(PathVar string, LookupFlagsVar ResourceLookupFlags
 
 var xResourceRef func(uintptr) *Resource
 
-// Atomically increments the reference count of @resource by one. This
-// function is MT-safe and may be called from any thread.
+// Atomically increments the reference count of @resource by one.
+//
+// This function is threadsafe and may be called from any thread.
 func (x *Resource) Ref() *Resource {
 
 	cret := xResourceRef(x.GoPointer())
@@ -778,9 +877,10 @@ func (x *Resource) Ref() *Resource {
 
 var xResourceUnref func(uintptr)
 
-// Atomically decrements the reference count of @resource by one. If the
-// reference count drops to 0, all memory allocated by the resource is
-// released. This function is MT-safe and may be called from any
+// Atomically decrements the reference count of @resource by one.
+//
+// If the reference count drops to 0, all memory allocated by the resource is
+// released. This function is threadsafe and may be called from any
 // thread.
 func (x *Resource) Unref() {
 
@@ -788,20 +888,22 @@ func (x *Resource) Unref() {
 
 }
 
+// A single target host/port that a network service is running on.
+//
 // SRV (service) records are used by some network protocols to provide
 // service-specific aliasing and load-balancing. For example, XMPP
 // (Jabber) uses SRV records to locate the XMPP server for a domain;
-// rather than connecting directly to "example.com" or assuming a
-// specific server hostname like "xmpp.example.com", an XMPP client
-// would look up the "xmpp-client" SRV record for "example.com", and
+// rather than connecting directly to ‘example.com’ or assuming a
+// specific server hostname like ‘xmpp.example.com’, an XMPP client
+// would look up the `xmpp-client` SRV record for ‘example.com’, and
 // then connect to whatever host was pointed to by that record.
 //
-// You can use g_resolver_lookup_service() or
-// g_resolver_lookup_service_async() to find the #GSrvTargets
+// You can use [method@Gio.Resolver.lookup_service] or
+// [method@Gio.Resolver.lookup_service_async] to find the `GSrvTarget`s
 // for a given service. However, if you are simply planning to connect
-// to the remote service, you can use #GNetworkService's
-// #GSocketConnectable interface and not need to worry about
-// #GSrvTarget at all.
+// to the remote service, you can use [class@Gio.NetworkService]’s
+// [iface@Gio.SocketConnectable] interface and not need to worry about
+// `GSrvTarget` at all.
 type SrvTarget struct {
 	_ structs.HostLayout
 }
@@ -931,6 +1033,7 @@ func init() {
 	core.PuregoSafeRegister(&xResourceUnregister, lib, "g_resources_unregister")
 	core.PuregoSafeRegister(&xResourceEnumerateChildren, lib, "g_resource_enumerate_children")
 	core.PuregoSafeRegister(&xResourceGetInfo, lib, "g_resource_get_info")
+	core.PuregoSafeRegister(&xResourceHasChildren, lib, "g_resource_has_children")
 	core.PuregoSafeRegister(&xResourceLookupData, lib, "g_resource_lookup_data")
 	core.PuregoSafeRegister(&xResourceOpenStream, lib, "g_resource_open_stream")
 	core.PuregoSafeRegister(&xResourceRef, lib, "g_resource_ref")

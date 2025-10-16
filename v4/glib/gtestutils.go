@@ -13,12 +13,13 @@ import (
 // argument.
 type TestDataFunc func(uintptr)
 
-// The type used for functions that operate on test fixtures.  This is
-// used for the fixture setup and teardown functions as well as for the
-// testcases themselves.
+// The type used for functions that operate on test fixtures.
 //
-// @user_data is a pointer to the data that was given when registering
-// the test case.
+// This is used for the fixture setup and teardown functions
+// as well as for the testcases themselves.
+//
+// @user_data is a pointer to the data that was given when
+// registering the test case.
 //
 // @fixture will be a pointer to the area of memory allocated by the
 // test framework, of the size requested.  If the requested size was
@@ -164,7 +165,7 @@ func (x *TestSuite) AddSuite(NestedsuiteVar *TestSuite) {
 
 var xTestSuiteFree func(uintptr)
 
-// Free the @suite and all nested #GTestSuites.
+// Frees the @suite and all nested suites.
 func (x *TestSuite) Free() {
 
 	xTestSuiteFree(x.GoPointer())
@@ -172,62 +173,81 @@ func (x *TestSuite) Free() {
 }
 
 const (
-	// Creates a unique temporary directory for each unit test and uses
-	// g_set_user_dirs() to set XDG directories to point into subdirectories of it
-	// for the duration of the unit test. The directory tree is cleaned up after the
-	// test finishes successfully. Note that this doesn’t take effect until
-	// g_test_run() is called, so calls to (for example) g_get_user_home_dir() will
-	// return the system-wide value when made in a test program’s main() function.
+	// A value that can be passed as an option to [func@GLib.test_init].
+	//
+	// Creates a unique temporary directory for each unit test and uses sets
+	// XDG directories to point into subdirectories of it for the duration of
+	// the unit test. The directory tree is cleaned up after the test finishes
+	// successfully.
+	//
+	// Note that this doesn’t take effect until [func@GLib.test_run] is called,
+	// so calls to (for example) [func@GLib.get_home_dir] will return the
+	// system-wide value when made in a test program’s main() function.
 	//
 	// The following functions will return subdirectories of the temporary directory
 	// when this option is used. The specific subdirectory paths in use are not
 	// guaranteed to be stable API — always use a getter function to retrieve them.
 	//
-	//  - g_get_home_dir()
-	//  - g_get_user_cache_dir()
-	//  - g_get_system_config_dirs()
-	//  - g_get_user_config_dir()
-	//  - g_get_system_data_dirs()
-	//  - g_get_user_data_dir()
-	//  - g_get_user_state_dir()
-	//  - g_get_user_runtime_dir()
+	//  - [func@GLib.get_home_dir]
+	//  - [func@GLib.get_user_cache_dir]
+	//  - [func@GLib.get_system_config_dirs]
+	//  - [func@GLib.get_user_config_dir]
+	//  - [func@GLib.get_system_data_dirs]
+	//  - [func@GLib.get_user_data_dir]
+	//  - [func@GLib.get_user_state_dir]
+	//  - [func@GLib.get_user_runtime_dir]
 	//
 	// The subdirectories may not be created by the test harness; as with normal
-	// calls to functions like g_get_user_cache_dir(), the caller must be prepared
-	// to create the directory if it doesn’t exist.
+	// calls to functions like [func@GLib.get_user_cache_dir], the caller must
+	// be prepared to create the directory if it doesn’t exist.
 	TEST_OPTION_ISOLATE_DIRS string = "isolate_dirs"
+	// A value that can be passed as an option to [func@GLib.test_init].
+	//
+	// If this option is given, assertions will not abort the process, but
+	// call [func@GLib.test_fail]. Equivalent to [func@GLib.test_set_nonfatal_assertions].
+	TEST_OPTION_NONFATAL_ASSERTIONS string = "nonfatal-assertions"
+	// A value that can be passed as an option to [func@GLib.test_init].
+	//
+	// If this option is given, [func@GLib.test_init] will not call [func@GLib.set_prgname].
+	TEST_OPTION_NO_PRGNAME string = "no_g_set_prgname"
 )
 
-// Flags to pass to g_test_trap_subprocess() to control input and output.
+// Flags to pass to [func@GLib.test_trap_subprocess] to control input and output.
 //
-// Note that in contrast with g_test_trap_fork(), the default is to
-// not show stdout and stderr.
+// Note that in contrast with [func@GLib.test_trap_fork], the default
+// behavior of [func@GLib.test_trap_subprocess] is to not show stdout
+// and stderr.
 type TestSubprocessFlags int
 
 const (
 
+	// Default behaviour. Since: 2.74
+	GTestSubprocessDefaultValue TestSubprocessFlags = 0
 	// If this flag is given, the child
-	//     process will inherit the parent's stdin. Otherwise, the child's
-	//     stdin is redirected to `/dev/null`.
+	//   process will inherit the parent's stdin. Otherwise, the child's
+	//   stdin is redirected to `/dev/null`.
 	GTestSubprocessInheritStdinValue TestSubprocessFlags = 1
 	// If this flag is given, the child
-	//     process will inherit the parent's stdout. Otherwise, the child's
-	//     stdout will not be visible, but it will be captured to allow
-	//     later tests with g_test_trap_assert_stdout().
+	//   process will inherit the parent's stdout. Otherwise, the child's
+	//   stdout will not be visible, but it will be captured to allow
+	//   later tests with [func@GLib.test_trap_assert_stdout].
 	GTestSubprocessInheritStdoutValue TestSubprocessFlags = 2
 	// If this flag is given, the child
-	//     process will inherit the parent's stderr. Otherwise, the child's
-	//     stderr will not be visible, but it will be captured to allow
-	//     later tests with g_test_trap_assert_stderr().
+	//   process will inherit the parent's stderr. Otherwise, the child's
+	//   stderr will not be visible, but it will be captured to allow
+	//   later tests with [func@GLib.test_trap_assert_stderr].
 	GTestSubprocessInheritStderrValue TestSubprocessFlags = 4
 )
 
-// Test traps are guards around forked tests.
-// These flags determine what traps to set.
+// Flags to pass to [func@GLib.test_trap_fork] to control input and output.
+//
+// Test traps are guards around forked tests. These flags determine what traps to set.
 type TestTrapFlags int
 
 const (
 
+	// Default behaviour. Since: 2.74
+	GTestTrapDefaultValue TestTrapFlags = 0
 	// Redirect stdout of the test child to
 	//     `/dev/null` so it cannot be observed on the console during test
 	//     runs. The actual output is still captured though to allow later
@@ -245,21 +265,22 @@ const (
 )
 
 // The type of file to return the filename for, when used with
-// g_test_build_filename().
+// [func@GLib.test_build_filename].
 //
 // These two options correspond rather directly to the 'dist' and
 // 'built' terminology that automake uses and are explicitly used to
-// distinguish between the 'srcdir' and 'builddir' being separate.  All
-// files in your project should either be dist (in the
-// `EXTRA_DIST` or `dist_schema_DATA`
-// sense, in which case they will always be in the srcdir) or built (in
-// the `BUILT_SOURCES` sense, in which case they will
-// always be in the builddir).
+// distinguish between the 'srcdir' and 'builddir' being separate. All
+// files in your project should either be dist (in the `EXTRA_DIST` or
+// `dist_schema_DATA` sense, in which case they will always be in the
+// srcdir) or built (in the `BUILT_SOURCES` sense, in which case they
+// will always be in the builddir).
 //
-// Note: as a general rule of automake, files that are generated only as
+// Note: As a general rule of automake, files that are generated only as
 // part of the build-from-git process (but then are distributed with the
 // tarball) always go in srcdir (even if doing a srcdir != builddir
 // build from git) and are considered as distributed files.
+//
+// The same principles apply for other build systems, such as meson.
 type TestFileType int
 
 const (
@@ -318,6 +339,14 @@ func AssertionMessage(DomainVar string, FileVar string, LineVar int, FuncVar str
 
 }
 
+var xAssertionMessageCmpint func(string, string, int, string, string, uint64, string, uint64, byte)
+
+func AssertionMessageCmpint(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, Arg1Var uint64, CmpVar string, Arg2Var uint64, NumtypeVar byte) {
+
+	xAssertionMessageCmpint(DomainVar, FileVar, LineVar, FuncVar, ExprVar, Arg1Var, CmpVar, Arg2Var, NumtypeVar)
+
+}
+
 var xAssertionMessageCmpnum func(string, string, int, string, string, float64, string, float64, byte)
 
 func AssertionMessageCmpnum(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string, Arg1Var float64, CmpVar string, Arg2Var float64, NumtypeVar byte) {
@@ -352,8 +381,8 @@ func AssertionMessageError(DomainVar string, FileVar string, LineVar int, FuncVa
 
 var xAssertionMessageExpr func(string, string, int, string, string)
 
-// Internal function used to print messages from the public g_assert() and
-// g_assert_not_reached() macros.
+// Internal function used to print messages from the public
+// g_assert() and g_assert_not_reached() macros.
 func AssertionMessageExpr(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string) {
 
 	xAssertionMessageExpr(DomainVar, FileVar, LineVar, FuncVar, ExprVar)
@@ -362,9 +391,10 @@ func AssertionMessageExpr(DomainVar string, FileVar string, LineVar int, FuncVar
 
 var xStrcmp0 func(string, string) int
 
-// Compares @str1 and @str2 like strcmp(). Handles %NULL
-// gracefully by sorting it before non-%NULL strings.
-// Comparing two %NULL pointers returns 0.
+// Compares @str1 and @str2 like `strcmp()`.
+//
+// Handles `NULL` gracefully by sorting it before non-`NULL` strings.
+// Comparing two `NULL` pointers returns 0.
 func Strcmp0(Str1Var string, Str2Var string) int {
 
 	cret := xStrcmp0(Str1Var, Str2Var)
@@ -373,19 +403,21 @@ func Strcmp0(Str1Var string, Str2Var string) int {
 
 var xTestAddDataFunc func(string, uintptr, uintptr)
 
-// Create a new test case, similar to g_test_create_case(). However
-// the test is assumed to use no fixture, and test suites are automatically
-// created on the fly and added to the root fixture, based on the
-// slash-separated portions of @testpath. The @test_data argument
-// will be passed as first argument to @test_func.
+// Creates a new test case.
+//
+// This function is similar to [func@GLib.test_create_case].
+// However the test is assumed to use no fixture, and test suites are
+// automatically created on the fly and added to the root fixture,
+// based on the /-separated portions of @testpath. The @test_data
+// argument will be passed as first argument to @test_func.
 //
 // If @testpath includes the component "subprocess" anywhere in it,
 // the test will be skipped by default, and only run if explicitly
-// required via the `-p` command-line option or g_test_trap_subprocess().
+// required via the `-p` command-line option or [func@GLib.test_trap_subprocess].
 //
 // No component of @testpath may start with a dot (`.`) if the
-// %G_TEST_OPTION_ISOLATE_DIRS option is being used; and it is recommended to
-// do so even if it isn’t.
+// [const@GLib.TEST_OPTION_ISOLATE_DIRS] option is being used;
+// and it is recommended to do so even if it isn’t.
 func TestAddDataFunc(TestpathVar string, TestDataVar uintptr, TestFuncVar *TestDataFunc) {
 
 	xTestAddDataFunc(TestpathVar, TestDataVar, NewCallback(TestFuncVar))
@@ -394,8 +426,10 @@ func TestAddDataFunc(TestpathVar string, TestDataVar uintptr, TestFuncVar *TestD
 
 var xTestAddDataFuncFull func(string, uintptr, uintptr, uintptr)
 
-// Create a new test case, as with g_test_add_data_func(), but freeing
-// @test_data after the test run is complete.
+// Creates a new test case.
+//
+// In constract to [func@GLib.test_add_data_func], this function
+// is freeing @test_data after the test run is complete.
 func TestAddDataFuncFull(TestpathVar string, TestDataVar uintptr, TestFuncVar *TestDataFunc, DataFreeFuncVar *DestroyNotify) {
 
 	xTestAddDataFuncFull(TestpathVar, TestDataVar, NewCallback(TestFuncVar), NewCallback(DataFreeFuncVar))
@@ -404,18 +438,20 @@ func TestAddDataFuncFull(TestpathVar string, TestDataVar uintptr, TestFuncVar *T
 
 var xTestAddFunc func(string, uintptr)
 
-// Create a new test case, similar to g_test_create_case(). However
-// the test is assumed to use no fixture, and test suites are automatically
-// created on the fly and added to the root fixture, based on the
-// slash-separated portions of @testpath.
+// Creates a new test case.
+//
+// This function is similar to [func@GLib.test_create_case].
+// However the test is assumed to use no fixture, and test suites are
+// automatically created on the fly and added to the root fixture,
+// based on the /-separated portions of @testpath.
 //
 // If @testpath includes the component "subprocess" anywhere in it,
 // the test will be skipped by default, and only run if explicitly
-// required via the `-p` command-line option or g_test_trap_subprocess().
+// required via the `-p` command-line option or [func@GLib.test_trap_subprocess].
 //
 // No component of @testpath may start with a dot (`.`) if the
-// %G_TEST_OPTION_ISOLATE_DIRS option is being used; and it is recommended to
-// do so even if it isn’t.
+// [const@GLib.TEST_OPTION_ISOLATE_DIRS] option is being used; and
+// it is recommended to do so even if it isn’t.
 func TestAddFunc(TestpathVar string, TestFuncVar *TestFunc) {
 
 	xTestAddFunc(TestpathVar, NewCallback(TestFuncVar))
@@ -440,16 +476,17 @@ func TestAssertExpectedMessagesInternal(DomainVar string, FileVar string, LineVa
 
 var xTestBug func(string)
 
-// This function adds a message to test reports that
-// associates a bug URI with a test case.
+// Adds a message to test reports that associates a bug URI with a test case.
 //
-// Bug URIs are constructed from a base URI set with g_test_bug_base()
-// and @bug_uri_snippet. If g_test_bug_base() has not been called, it is
+// Bug URIs are constructed from a base URI set with [func@GLib.test_bug_base]
+// and @bug_uri_snippet. If [func@GLib.test_bug_base] has not been called, it is
 // assumed to be the empty string, so a full URI can be provided to
-// g_test_bug() instead.
+// [func@GLib.test_bug] instead.
 //
-// Since GLib 2.70, the base URI is not prepended to @bug_uri_snippet if it
-// is already a valid URI.
+// See also [func@GLib.test_summary].
+//
+// Since GLib 2.70, the base URI is not prepended to @bug_uri_snippet
+// if it is already a valid URI.
 func TestBug(BugUriSnippetVar string) {
 
 	xTestBug(BugUriSnippetVar)
@@ -458,10 +495,10 @@ func TestBug(BugUriSnippetVar string) {
 
 var xTestBugBase func(string)
 
-// Specify the base URI for bug reports.
+// Specifies the base URI for bug reports.
 //
 // The base URI is used to construct bug report messages for
-// g_test_message() when g_test_bug() is called.
+// [func@GLib.test_message] when [func@GLib.test_bug] is called.
 // Calling this function outside of a test case sets the
 // default base URI for all test cases. Calling it from within
 // a test case changes the base URI for the scope of the test
@@ -470,8 +507,8 @@ var xTestBugBase func(string)
 // portion to @uri_pattern, or by replacing the special string
 // `%s` within @uri_pattern if that is present.
 //
-// If g_test_bug_base() is not called, bug URIs are formed solely
-// from the value provided by g_test_bug().
+// If [func@GLib.test_bug_base] is not called, bug URIs are formed
+// solely from the value provided by [func@GLib.test_bug].
 func TestBugBase(UriPatternVar string) {
 
 	xTestBugBase(UriPatternVar)
@@ -482,22 +519,22 @@ var xTestBuildFilename func(TestFileType, string, ...interface{}) string
 
 // Creates the pathname to a data file that is required for a test.
 //
-// This function is conceptually similar to g_build_filename() except
-// that the first argument has been replaced with a #GTestFileType
-// argument.
+// This function is conceptually similar to [func@GLib.build_filename]
+// except that the first argument has been replaced with a
+// [enum@GLib.TestFileType] argument.
 //
 // The data file should either have been distributed with the module
-// containing the test (%G_TEST_DIST) or built as part of the build
-// system of that module (%G_TEST_BUILT).
+// containing the test ([enum@GLib.TestFileType.dist] or built as part of the
+// buildcsystem of that module ([enum@GLib.TestFileType.built]).
 //
 // In order for this function to work in srcdir != builddir situations,
-// the G_TEST_SRCDIR and G_TEST_BUILDDIR environment variables need to
-// have been defined.  As of 2.38, this is done by the glib.mk
-// included in GLib.  Please ensure that your copy is up to date before
+// the `G_TEST_SRCDIR` and `G_TEST_BUILDDIR` environment variables need
+// to have been defined. As of 2.38, this is done by the glib.mk that is
+// included in GLib. Please ensure that your copy is up to date before
 // using this function.
 //
 // In case neither variable is set, this function will fall back to
-// using the dirname portion of argv[0], possibly removing ".libs".
+// using the dirname portion of `argv[0]`, possibly removing ".libs".
 // This allows for casual running of tests directly from the commandline
 // in the srcdir == builddir case and should also support running of
 // installed tests, assuming the data files have been installed in the
@@ -510,23 +547,23 @@ func TestBuildFilename(FileTypeVar TestFileType, FirstPathVar string, varArgs ..
 
 var xTestCreateCase func(string, uint, uintptr, uintptr, uintptr, uintptr) *TestCase
 
-// Create a new #GTestCase, named @test_name.
+// Creates a new [struct@GLib.TestCase].
 //
-// This API is fairly low level, and calling g_test_add() or g_test_add_func()
-// is preferable.
+// This API is fairly low level, and calling [func@GLib.test_add] or
+// [func@GLib.test_add_func] is preferable.
 //
 // When this test is executed, a fixture structure of size @data_size
-// will be automatically allocated and filled with zeros. Then @data_setup is
-// called to initialize the fixture. After fixture setup, the actual test
+// will be automatically allocated and filled with zeros. Then @data_setup
+// is called to initialize the fixture. After fixture setup, the actual test
 // function @data_test is called. Once the test run completes, the
-// fixture structure is torn down by calling @data_teardown and
-// after that the memory is automatically released by the test framework.
+// fixture structure is torn down by calling @data_teardown and after
+// that the memory is automatically released by the test framework.
 //
 // Splitting up a test run into fixture setup, test function and
 // fixture teardown is most useful if the same fixture type is used for
-// multiple tests. In this cases, g_test_create_case() will be
-// called with the same type of fixture (the @data_size argument), but varying
-// @test_name and @data_test arguments.
+// multiple tests. In this cases, [func@GLib.test_create_case] will be
+// called with the same type of fixture (the @data_size argument), but
+// varying @test_name and @data_test arguments.
 func TestCreateCase(TestNameVar string, DataSizeVar uint, TestDataVar uintptr, DataSetupVar *TestFixtureFunc, DataTestVar *TestFixtureFunc, DataTeardownVar *TestFixtureFunc) *TestCase {
 
 	cret := xTestCreateCase(TestNameVar, DataSizeVar, TestDataVar, NewCallback(DataSetupVar), NewCallback(DataTestVar), NewCallback(DataTeardownVar))
@@ -535,51 +572,65 @@ func TestCreateCase(TestNameVar string, DataSizeVar uint, TestDataVar uintptr, D
 
 var xTestCreateSuite func(string) *TestSuite
 
-// Create a new test suite with the name @suite_name.
+// Creates a new test suite with the name @suite_name.
 func TestCreateSuite(SuiteNameVar string) *TestSuite {
 
 	cret := xTestCreateSuite(SuiteNameVar)
 	return cret
 }
 
+var xTestDisableCrashReporting func()
+
+// Attempts to disable system crash reporting infrastructure.
+//
+// This function should be called before exercising code paths that are
+// expected or intended to crash, to avoid wasting resources in system-wide
+// crash collection infrastructure such as systemd-coredump or abrt.
+func TestDisableCrashReporting() {
+
+	xTestDisableCrashReporting()
+
+}
+
 var xTestExpectMessage func(string, LogLevelFlags, string)
 
 // Indicates that a message with the given @log_domain and @log_level,
-// with text matching @pattern, is expected to be logged. When this
-// message is logged, it will not be printed, and the test case will
+// with text matching @pattern, is expected to be logged.
+//
+// When this message is logged, it will not be printed, and the test case will
 // not abort.
 //
-// This API may only be used with the old logging API (g_log() without
-// %G_LOG_USE_STRUCTURED defined). It will not work with the structured logging
-// API. See [Testing for Messages][testing-for-messages].
+// This API may only be used with the old logging API ([func@GLib.log] without
+// `G_LOG_USE_STRUCTURED` defined). It will not work with the structured logging
+// API. See [Testing for Messages](logging.html#testing-for-messages).
 //
-// Use g_test_assert_expected_messages() to assert that all
+// Use [func@GLib.test_assert_expected_messages] to assert that all
 // previously-expected messages have been seen and suppressed.
 //
 // You can call this multiple times in a row, if multiple messages are
 // expected as a result of a single call. (The messages must appear in
-// the same order as the calls to g_test_expect_message().)
+// the same order as the calls to [func@GLib.test_expect_message].)
 //
 // For example:
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
+// // g_main_context_push_thread_default() should fail if the
+// // context is already owned by another thread.
+// g_test_expect_message (G_LOG_DOMAIN,
 //
-//	// g_main_context_push_thread_default() should fail if the
-//	// context is already owned by another thread.
-//	g_test_expect_message (G_LOG_DOMAIN,
-//	                       G_LOG_LEVEL_CRITICAL,
-//	                       "assertion*acquired_context*failed");
-//	g_main_context_push_thread_default (bad_context);
-//	g_test_assert_expected_messages ();
+//	G_LOG_LEVEL_CRITICAL,
+//	"assertion*acquired_context*failed");
 //
-// ]|
+// g_main_context_push_thread_default (bad_context);
+// g_test_assert_expected_messages ();
+// ```
 //
-// Note that you cannot use this to test g_error() messages, since
-// g_error() intentionally never returns even if the program doesn't
-// abort; use g_test_trap_subprocess() in this case.
+// Note that you cannot use this to test [func@GLib.error] messages, since
+// [func@GLib.error] intentionally never returns even if the program doesn’t
+// abort; use [func@GLib.test_trap_subprocess] in this case.
 //
-// If messages at %G_LOG_LEVEL_DEBUG are emitted, but not explicitly
-// expected via g_test_expect_message() then they will be ignored.
+// If messages at [flags@GLib.LogLevelFlags.LEVEL_DEBUG] are emitted, but not explicitly
+// expected via [func@GLib.test_expect_message] then they will be ignored.
 func TestExpectMessage(LogDomainVar string, LogLevelVar LogLevelFlags, PatternVar string) {
 
 	xTestExpectMessage(LogDomainVar, LogLevelVar, PatternVar)
@@ -588,9 +639,10 @@ func TestExpectMessage(LogDomainVar string, LogLevelVar LogLevelFlags, PatternVa
 
 var xTestFail func()
 
-// Indicates that a test failed. This function can be called
-// multiple times from the same test. You can use this function
-// if your test failed in a recoverable way.
+// Indicates that a test failed.
+//
+// This function can be called multiple times from the same test.
+// You can use this function if your test failed in a recoverable way.
 //
 // Do not use this function if the failure of a test could cause
 // other tests to malfunction.
@@ -602,11 +654,11 @@ var xTestFail func()
 //
 // If not called from inside a test, this function does nothing.
 //
-// Note that unlike g_test_skip() and g_test_incomplete(), this
-// function does not log a message alongside the test failure.
+// Note that unlike [func@GLib.test_skip] and [func@GLib.test_incomplete],
+// this function does not log a message alongside the test failure.
 // If details of the test failure are available, either log them with
-// g_test_message() before g_test_fail(), or use g_test_fail_printf()
-// instead.
+// [func@GLib.test_message] before [func@GLib.test_fail], or use
+// [func@GLib.test_fail_printf] instead.
 func TestFail() {
 
 	xTestFail()
@@ -615,8 +667,11 @@ func TestFail() {
 
 var xTestFailPrintf func(string, ...interface{})
 
-// Equivalent to g_test_fail(), but also record a message like
-// g_test_skip_printf().
+// Indicates that a test failed and records a message.
+//
+// Also see [func@GLib.test_fail].
+//
+// The message is formatted as if by [func@GLib.strdup_printf].
 func TestFailPrintf(FormatVar string, varArgs ...interface{}) {
 
 	xTestFailPrintf(FormatVar, varArgs...)
@@ -625,10 +680,11 @@ func TestFailPrintf(FormatVar string, varArgs ...interface{}) {
 
 var xTestFailed func() bool
 
-// Returns whether a test has already failed. This will
-// be the case when g_test_fail(), g_test_incomplete()
-// or g_test_skip() have been called, but also if an
-// assertion has failed.
+// Returns whether a test has already failed.
+//
+// This will be the case when [func@GLib.test_fail],
+// [func@GLib.test_incomplete] or [func@GLib.test_skip] have
+// been called, but also if an assertion has failed.
 //
 // This can be useful to return early from a test if
 // continuing after a failed assertion might be harmful.
@@ -646,7 +702,7 @@ var xTestGetDir func(TestFileType) string
 // Gets the pathname of the directory containing test files of the type
 // specified by @file_type.
 //
-// This is approximately the same as calling g_test_build_filename("."),
+// This is approximately the same as calling `g_test_build_filename(".")`,
 // but you don't need to free the return value.
 func TestGetDir(FileTypeVar TestFileType) string {
 
@@ -658,9 +714,9 @@ var xTestGetFilename func(TestFileType, string, ...interface{}) string
 
 // Gets the pathname to a data file that is required for a test.
 //
-// This is the same as g_test_build_filename() with two differences.
+// This is the same as [func@GLib.test_build_filename] with two differences.
 // The first difference is that you must only use this function from within
-// a testcase function.  The second difference is that you need not free
+// a testcase function. The second difference is that you need not free
 // the return value — it will be automatically freed when the testcase
 // finishes running.
 //
@@ -678,10 +734,12 @@ var xTestGetPath func() string
 
 // Gets the test path for the test currently being run.
 //
-// In essence, it will be the same string passed as the first argument to
-// e.g. g_test_add() when the test was added.
+// In essence, it will be the same string passed as the first argument
+// to e.g. [func@GLib.test_add] when the test was added.
 //
 // This function returns a valid string only within a test function.
+//
+// Note that this is a test path, not a file system path.
 func TestGetPath() string {
 
 	cret := xTestGetPath()
@@ -690,7 +748,7 @@ func TestGetPath() string {
 
 var xTestGetRoot func() *TestSuite
 
-// Get the toplevel test suite for the test path API.
+// Gets the toplevel test suite for the test path API.
 func TestGetRoot() *TestSuite {
 
 	cret := xTestGetRoot()
@@ -700,8 +758,9 @@ func TestGetRoot() *TestSuite {
 var xTestIncomplete func(string)
 
 // Indicates that a test failed because of some incomplete
-// functionality. This function can be called multiple times
-// from the same test.
+// functionality.
+//
+// This function can be called multiple times from the same test.
 //
 // Calling this function will not stop the test from running, you
 // need to return from the test function yourself. So you can
@@ -717,8 +776,11 @@ func TestIncomplete(MsgVar string) {
 
 var xTestIncompletePrintf func(string, ...interface{})
 
-// Equivalent to g_test_incomplete(), but the explanation is formatted
-// as if by g_strdup_printf().
+// Indicates that a test failed because of some incomplete
+// functionality.
+//
+// Equivalent to [func@GLib.test_incomplete], but the explanation
+// is formatted as if by [func@GLib.strdup_printf].
 func TestIncompletePrintf(FormatVar string, varArgs ...interface{}) {
 
 	xTestIncompletePrintf(FormatVar, varArgs...)
@@ -727,11 +789,14 @@ func TestIncompletePrintf(FormatVar string, varArgs ...interface{}) {
 
 var xTestInit func(int, string, ...interface{})
 
-// Initialize the GLib testing framework, e.g. by seeding the
-// test random number generator, the name for g_get_prgname()
-// and parsing test related command line args.
+// Initializes the GLib testing framework.
 //
-// So far, the following arguments are understood:
+// This includes seeding the test random number generator,
+// setting the program name, and parsing test-related commandline args.
+//
+// This should be called before calling any other `g_test_*()` functions.
+//
+// The following arguments are understood:
 //
 //   - `-l`: List test cases available in a test executable.
 //
@@ -748,36 +813,41 @@ var xTestInit func(int, string, ...interface{})
 //     This can also be used to force a test to run that would otherwise
 //     be skipped (ie, a test whose name contains "/subprocess").
 //
-//   - `-m {perf|slow|thorough|quick|undefined|no-undefined}`: Execute tests according to these test modes:
+//   - `-m {perf|slow|thorough|quick|undefined|no-undefined}`: Execute tests according
+//     to these test modes:
 //
 //     `perf`: Performance tests, may take long and report results (off by default).
 //
-//     `slow`, `thorough`: Slow and thorough tests, may take quite long and maximize coverage
-//     (off by default).
+//     `slow`, `thorough`: Slow and thorough tests, may take quite long and maximize
+//     coverage (off by default).
 //
 //     `quick`: Quick tests, should run really quickly and give good coverage (the default).
 //
 //     `undefined`: Tests for undefined behaviour, may provoke programming errors
-//     under g_test_trap_subprocess() or g_test_expect_message() to check
-//     that appropriate assertions or warnings are given (the default).
+//     under [func@GLib.test_trap_subprocess] or [func@GLib.test_expect_message]
+//     to check that appropriate assertions or warnings are given (the default).
 //
-//     `no-undefined`: Avoid tests for undefined behaviour
+//     `no-undefined`: Avoid tests for undefined behaviour.
 //
 // - `--debug-log`: Debug test logging output.
 //
-// Options which can be passed to @... are:
+// Any parsed arguments are removed from @argv, and @argc is adjust accordingly.
 //
-//   - `"no_g_set_prgname"`: Causes g_test_init() to not call g_set_prgname().
-//   - %G_TEST_OPTION_ISOLATE_DIRS: Creates a unique temporary directory for each
-//     unit test and uses g_set_user_dirs() to set XDG directories to point into
-//     that temporary directory for the duration of the unit test. See the
-//     documentation for %G_TEST_OPTION_ISOLATE_DIRS.
+// The following options are supported:
 //
-// Since 2.58, if tests are compiled with `G_DISABLE_ASSERT` defined,
-// g_test_init() will print an error and exit. This is to prevent no-op tests
-// from being executed, as g_assert() is commonly (erroneously) used in unit
-// tests, and is a no-op when compiled with `G_DISABLE_ASSERT`. Ensure your
-// tests are compiled without `G_DISABLE_ASSERT` defined.
+//   - `G_TEST_OPTION_NO_PRGNAME`: Causes g_test_init() to not call
+//     [func@GLib.set_prgname]. Since. 2.84
+//   - `G_TEST_OPTION_ISOLATE_DIRS`: Creates a unique temporary directory for each
+//     unit test and sets XDG directories to point there for the duration of the unit
+//     test. See [const@GLib.TEST_OPTION_ISOLATE_DIRS].
+//   - `G_TEST_OPTION_NONFATAL_ASSERTIONS`: This has the same effect as
+//     [func@GLib.test_set_nonfatal_assertions]. Since 2.84
+//
+// Since 2.58, if tests are compiled with `G_DISABLE_ASSERT` defined, `g_test_init()`
+// will print an error and exit. This is to prevent no-op tests from being executed,
+// as [func@GLib.assert] is commonly (erroneously) used in unit tests, and is a no-op
+// when compiled with `G_DISABLE_ASSERT`. Ensure your tests are compiled without
+// `G_DISABLE_ASSERT` defined.
 func TestInit(ArgcVar int, ArgvVar string, varArgs ...interface{}) {
 
 	xTestInit(ArgcVar, ArgvVar, varArgs...)
@@ -803,10 +873,10 @@ var xTestLogSetFatalHandler func(uintptr, uintptr)
 // This handler has no effect on g_error messages.
 //
 // This handler also has no effect on structured log messages (using
-// g_log_structured() or g_log_structured_array()). To change the fatal
+// [func@GLib.log_structured] or [func@GLib.log_structured_array]). To change the fatal
 // behaviour for specific log messages, programs must install a custom log
-// writer function using g_log_set_writer_func().See
-// [Using Structured Logging][using-structured-logging].
+// writer function using [func@GLib.log_set_writer_func].See
+// [Using Structured Logging](logging.html#using-structured-logging).
 func TestLogSetFatalHandler(LogFuncVar *TestLogFatalFunc, UserDataVar uintptr) {
 
 	xTestLogSetFatalHandler(NewCallback(LogFuncVar), UserDataVar)
@@ -823,7 +893,8 @@ func TestLogTypeName(LogTypeVar TestLogType) string {
 
 var xTestMaximizedResult func(float64, string, ...interface{})
 
-// Report the result of a performance or measurement test.
+// Reports the result of a performance or measurement test.
+//
 // The test should generally strive to maximize the reported
 // quantities (larger values are better than smaller ones),
 // this and @maximized_quantity can determine sorting
@@ -836,7 +907,7 @@ func TestMaximizedResult(MaximizedQuantityVar float64, FormatVar string, varArgs
 
 var xTestMessage func(string, ...interface{})
 
-// Add a message to the test report.
+// Adds a message to the test report.
 func TestMessage(FormatVar string, varArgs ...interface{}) {
 
 	xTestMessage(FormatVar, varArgs...)
@@ -845,7 +916,8 @@ func TestMessage(FormatVar string, varArgs ...interface{}) {
 
 var xTestMinimizedResult func(float64, string, ...interface{})
 
-// Report the result of a performance or measurement test.
+// Reports the result of a performance or measurement test.
+//
 // The test should generally strive to minimize the reported
 // quantities (smaller values are better than larger ones),
 // this and @minimized_quantity can determine sorting
@@ -858,12 +930,13 @@ func TestMinimizedResult(MinimizedQuantityVar float64, FormatVar string, varArgs
 
 var xTestQueueDestroy func(uintptr, uintptr)
 
-// This function enqueus a callback @destroy_func to be executed
-// during the next test case teardown phase. This is most useful
-// to auto destruct allocated test resources at the end of a test run.
-// Resources are released in reverse queue order, that means enqueueing
-// callback A before callback B will cause B() to be called before
-// A() during teardown.
+// Enqueues a callback @destroy_func to be executed during the next test case
+// teardown phase.
+//
+// This is most useful to auto destroy allocated test resources at the end
+// of a test run. Resources are released in reverse queue order, that means
+// enqueueing callback `A` before callback `B` will cause `B()` to be called
+// before `A()` during teardown.
 func TestQueueDestroy(DestroyFuncVar *DestroyNotify, DestroyDataVar uintptr) {
 
 	xTestQueueDestroy(NewCallback(DestroyFuncVar), DestroyDataVar)
@@ -872,9 +945,11 @@ func TestQueueDestroy(DestroyFuncVar *DestroyNotify, DestroyDataVar uintptr) {
 
 var xTestQueueFree func(uintptr)
 
-// Enqueue a pointer to be released with g_free() during the next
-// teardown phase. This is equivalent to calling g_test_queue_destroy()
-// with a destroy callback of g_free().
+// Enqueues a pointer to be released with [func@GLib.free]
+// during the next teardown phase.
+//
+// This is equivalent to calling [func@GLib.test_queue_destroy]
+// with a destroy callback of [func@GLib.free].
 func TestQueueFree(GfreePointerVar uintptr) {
 
 	xTestQueueFree(GfreePointerVar)
@@ -883,8 +958,9 @@ func TestQueueFree(GfreePointerVar uintptr) {
 
 var xTestRandDouble func() float64
 
-// Get a reproducible random floating point number,
-// see g_test_rand_int() for details on test case random numbers.
+// Gets a reproducible random floating point number.
+//
+// See [func@GLib.test_rand_int] for details on test case random numbers.
 func TestRandDouble() float64 {
 
 	cret := xTestRandDouble()
@@ -893,8 +969,9 @@ func TestRandDouble() float64 {
 
 var xTestRandDoubleRange func(float64, float64) float64
 
-// Get a reproducible random floating pointer number out of a specified range,
-// see g_test_rand_int() for details on test case random numbers.
+// Gets a reproducible random floating point number out of a specified range.
+//
+// See [func@GLib.test_rand_int] for details on test case random numbers.
 func TestRandDoubleRange(RangeStartVar float64, RangeEndVar float64) float64 {
 
 	cret := xTestRandDoubleRange(RangeStartVar, RangeEndVar)
@@ -903,7 +980,7 @@ func TestRandDoubleRange(RangeStartVar float64, RangeEndVar float64) float64 {
 
 var xTestRandInt func() int32
 
-// Get a reproducible random integer number.
+// Gets a reproducible random integer number.
 //
 // The random numbers generated by the g_test_rand_*() family of functions
 // change with every new test program start, unless the --seed option is
@@ -920,8 +997,9 @@ func TestRandInt() int32 {
 
 var xTestRandIntRange func(int32, int32) int32
 
-// Get a reproducible random integer number out of a specified range,
-// see g_test_rand_int() for details on test case random numbers.
+// Gets a reproducible random integer number out of a specified range.
+//
+// See [func@GLib.test_rand_int] for details on test case random numbers.
 func TestRandIntRange(BeginVar int32, EndVar int32) int32 {
 
 	cret := xTestRandIntRange(BeginVar, EndVar)
@@ -930,12 +1008,14 @@ func TestRandIntRange(BeginVar int32, EndVar int32) int32 {
 
 var xTestRun func() int
 
-// Runs all tests under the toplevel suite which can be retrieved
-// with g_test_get_root(). Similar to g_test_run_suite(), the test
-// cases to be run are filtered according to test path arguments
-// (`-p testpath` and `-s testpath`) as parsed by g_test_init().
-// g_test_run_suite() or g_test_run() may only be called once in a
-// program.
+// Runs all tests under the toplevel suite.
+//
+// The toplevel suite can be retrieved with [func@GLib.test_get_root].
+//
+// Similar to [func@GLib.test_run_suite], the test cases to be run are
+// filtered according to test path arguments (`-p testpath` and `-s testpath`)
+// as parsed by [func@GLib.test_init]. [func@GLib.test_run_suite] or
+// [func@GLib.test_run] may only be called once in a program.
 //
 // In general, the tests and sub-suites within each suite are run in
 // the order in which they are defined. However, note that prior to
@@ -943,7 +1023,7 @@ var xTestRun func() int
 // functions which caused them to create multiple suites with the same
 // name, meaning that if you created tests "/foo/simple",
 // "/bar/simple", and "/foo/using-bar" in that order, they would get
-// run in that order (since g_test_run() would run the first "/foo"
+// run in that order (since [func@GLib.test_run] would run the first "/foo"
 // suite, then the "/bar" suite, then the second "/foo" suite). As of
 // 2.36, this bug is fixed, and adding the tests in that order would
 // result in a running order of "/foo/simple", "/foo/using-bar",
@@ -957,7 +1037,7 @@ var xTestRun func() int
 // However, you should never make the actual result of a test depend
 // on the order that tests are run in. If you need to ensure that some
 // particular code runs before or after a given test case, use
-// g_test_add(), which lets you specify setup and teardown functions.
+// [func@GLib.test_add], which lets you specify setup and teardown functions.
 //
 // If all tests are skipped or marked as incomplete (expected failures),
 // this function will return 0 if producing TAP output, or 77 (treated
@@ -970,14 +1050,15 @@ func TestRun() int {
 
 var xTestRunSuite func(*TestSuite) int
 
-// Execute the tests within @suite and all nested #GTestSuites.
+// Executes the tests within @suite and all nested test suites.
+//
 // The test suites to be executed are filtered according to
 // test path arguments (`-p testpath` and `-s testpath`) as parsed by
-// g_test_init(). See the g_test_run() documentation for more
-// information on the order that tests are run in.
+// [func@GLib.test_init]. See the [func@GLib.test_run] documentation
+// for more information on the order that tests are run in.
 //
-// g_test_run_suite() or g_test_run() may only be called once
-// in a program.
+// [func@GLib.test_run_suite] or [func@GLib.test_run] may only be
+// called once in a program.
 func TestRunSuite(SuiteVar *TestSuite) int {
 
 	cret := xTestRunSuite(SuiteVar)
@@ -986,17 +1067,21 @@ func TestRunSuite(SuiteVar *TestSuite) int {
 
 var xTestSetNonfatalAssertions func()
 
-// Changes the behaviour of the various `g_assert_*()` macros,
-// g_test_assert_expected_messages() and the various
-// `g_test_trap_assert_*()` macros to not abort to program, but instead
-// call g_test_fail() and continue. (This also changes the behavior of
-// g_test_fail() so that it will not cause the test program to abort
-// after completing the failed test.)
+// Changes the behaviour of the various assertion macros.
 //
-// Note that the g_assert_not_reached() and g_assert() macros are not
-// affected by this.
+// The `g_assert_*()` macros, `g_test_assert_expected_messages()`
+// and the various `g_test_trap_assert_*()` macros are changed
+// to not abort to program.
 //
-// This function can only be called after g_test_init().
+// Instead, they will call [func@GLib.test_fail] and continue.
+// (This also changes the behavior of [func@GLib.test_fail] so that
+// it will not cause the test program to abort after completing
+// the failed test.)
+//
+// Note that the [func@GLib.assert_not_reached] and [func@GLib.assert]
+// macros are not affected by this.
+//
+// This function can only be called after [func@GLib.test_init].
 func TestSetNonfatalAssertions() {
 
 	xTestSetNonfatalAssertions()
@@ -1021,8 +1106,10 @@ func TestSkip(MsgVar string) {
 
 var xTestSkipPrintf func(string, ...interface{})
 
-// Equivalent to g_test_skip(), but the explanation is formatted
-// as if by g_strdup_printf().
+// Indicates that a test was skipped.
+//
+// Equivalent to [func@GLib.test_skip], but the explanation
+// is formatted as if by [func@GLib.strdup_printf].
 func TestSkipPrintf(FormatVar string, varArgs ...interface{}) {
 
 	xTestSkipPrintf(FormatVar, varArgs...)
@@ -1031,8 +1118,7 @@ func TestSkipPrintf(FormatVar string, varArgs ...interface{}) {
 
 var xTestSubprocess func() bool
 
-// Returns %TRUE (after g_test_init() has been called) if the test
-// program is running under g_test_trap_subprocess().
+// Returns true if the test program is running under [func@GLib.test_trap_subprocess].
 func TestSubprocess() bool {
 
 	cret := xTestSubprocess()
@@ -1041,15 +1127,17 @@ func TestSubprocess() bool {
 
 var xTestSummary func(string)
 
-// Set the summary for a test, which describes what the test checks, and how it
-// goes about checking it. This may be included in test report output, and is
-// useful documentation for anyone reading the source code or modifying a test
-// in future. It must be a single line.
+// Sets the summary for a test.
+//
+// This may be included in test report output, and is useful documentation for
+// anyone reading the source code or modifying a test in future. It must be a
+// single line, and it should summarise what the test checks, and how.
 //
 // This should be called at the top of a test function.
 //
 // For example:
-// |[&lt;!-- language="C" --&gt;
+//
+// ```c
 // static void
 // test_array_sort (void)
 //
@@ -1057,10 +1145,12 @@ var xTestSummary func(string)
 //	  g_test_summary ("Test my_array_sort() sorts the array correctly and stably, "
 //	                  "including testing zero length and one-element arrays.");
 //
-//	  …
+//	  // ...
 //	}
 //
-// ]|
+// ```
+//
+// See also [func@GLib.test_bug].
 func TestSummary(SummaryVar string) {
 
 	xTestSummary(SummaryVar)
@@ -1069,8 +1159,8 @@ func TestSummary(SummaryVar string) {
 
 var xTestTimerElapsed func() float64
 
-// Get the number of seconds since the last start of the timer with
-// g_test_timer_start().
+// Gets the number of seconds since the last start of the timer with
+// [func@GLib.test_timer_start].
 func TestTimerElapsed() float64 {
 
 	cret := xTestTimerElapsed()
@@ -1079,7 +1169,7 @@ func TestTimerElapsed() float64 {
 
 var xTestTimerLast func() float64
 
-// Report the last result of g_test_timer_elapsed().
+// Reports the last result of [func@GLib.test_timer_elapsed].
 func TestTimerLast() float64 {
 
 	cret := xTestTimerLast()
@@ -1088,7 +1178,9 @@ func TestTimerLast() float64 {
 
 var xTestTimerStart func()
 
-// Start a timing test. Call g_test_timer_elapsed() when the task is supposed
+// Starts a timing test.
+//
+// Call [func@GLib.test_timer_elapsed] when the task is supposed
 // to be done. Call this function again to restart the timer.
 func TestTimerStart() {
 
@@ -1106,28 +1198,35 @@ func TestTrapAssertions(DomainVar string, FileVar string, LineVar int, FuncVar s
 
 var xTestTrapFork func(uint64, TestTrapFlags) bool
 
-// Fork the current test program to execute a test case that might
+// Forks the current test program to execute a test case that might
 // not return or that might abort.
 //
 // If @usec_timeout is non-0, the forked test case is aborted and
 // considered failing if its run time exceeds it.
 //
-// The forking behavior can be configured with the #GTestTrapFlags flags.
+// The forking behavior can be configured with [flags@GLib.TestTrapFlags]
+// flags.
 //
 // In the following example, the test code forks, the forked child
 // process produces some sample output and exits successfully.
 // The forking parent process then asserts successful child program
 // termination and validates child program outputs.
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 //
 //	static void
 //	test_fork_patterns (void)
 //	{
 //	  if (g_test_trap_fork (0, G_TEST_TRAP_SILENCE_STDOUT | G_TEST_TRAP_SILENCE_STDERR))
 //	    {
-//	      g_print ("some stdout text: somagic17\n");
-//	      g_printerr ("some stderr text: semagic43\n");
+//	      g_print ("some stdout text: somagic17
+//
+// ");
+//
+//	g_printerr ("some stderr text: semagic43
+//
+// ");
+//
 //	      exit (0); // successful test run
 //	    }
 //	  g_test_trap_assert_passed ();
@@ -1135,7 +1234,7 @@ var xTestTrapFork func(uint64, TestTrapFlags) bool
 //	  g_test_trap_assert_stderr ("*semagic43*");
 //	}
 //
-// ]|
+// ```
 func TestTrapFork(UsecTimeoutVar uint64, TestTrapFlagsVar TestTrapFlags) bool {
 
 	cret := xTestTrapFork(UsecTimeoutVar, TestTrapFlagsVar)
@@ -1144,7 +1243,7 @@ func TestTrapFork(UsecTimeoutVar uint64, TestTrapFlagsVar TestTrapFlags) bool {
 
 var xTestTrapHasPassed func() bool
 
-// Check the result of the last g_test_trap_subprocess() call.
+// Checks the result of the last [func@GLib.test_trap_subprocess] call.
 func TestTrapHasPassed() bool {
 
 	cret := xTestTrapHasPassed()
@@ -1153,7 +1252,7 @@ func TestTrapHasPassed() bool {
 
 var xTestTrapReachedTimeout func() bool
 
-// Check the result of the last g_test_trap_subprocess() call.
+// Checks the result of the last [func@GLib.test_trap_subprocess] call.
 func TestTrapReachedTimeout() bool {
 
 	cret := xTestTrapReachedTimeout()
@@ -1163,12 +1262,27 @@ func TestTrapReachedTimeout() bool {
 var xTestTrapSubprocess func(string, uint64, TestSubprocessFlags)
 
 // Respawns the test program to run only @test_path in a subprocess.
+//
+// This is equivalent to calling [func@GLib.test_trap_subprocess_with_envp]
+// with `envp` set to `NULL`. See the documentation for that function
+// for full details.
+func TestTrapSubprocess(TestPathVar string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
+
+	xTestTrapSubprocess(TestPathVar, UsecTimeoutVar, TestFlagsVar)
+
+}
+
+var xTestTrapSubprocessWithEnvp func(string, []string, uint64, TestSubprocessFlags)
+
+// Respawns the test program to run only @test_path in a subprocess with
+// a given environment.
+//
 // This can be used for a test case that might not return, or that
 // might abort.
 //
-// If @test_path is %NULL then the same test is re-run in a subprocess.
-// You can use g_test_subprocess() to determine whether the test is in
-// a subprocess or not.
+// If @test_path is `NULL` then the same test is re-run in a subprocess.
+// You can use [func@GLib.test_subprocess] to determine whether the test
+// is in a subprocess or not.
 //
 // @test_path can also be the name of the parent test, followed by
 // "`/subprocess/`" and then a name for the specific subtest (or just
@@ -1176,28 +1290,34 @@ var xTestTrapSubprocess func(string, uint64, TestSubprocessFlags)
 // tests with names of this form will automatically be skipped in the
 // parent process.
 //
+// If @envp is `NULL`, the parent process’ environment will be inherited.
+//
 // If @usec_timeout is non-0, the test subprocess is aborted and
 // considered failing if its run time exceeds it.
 //
-// The subprocess behavior can be configured with the
-// #GTestSubprocessFlags flags.
+// The subprocess behavior can be configured with [flags@GLib.TestSubprocessFlags]
+// flags.
 //
-// You can use methods such as g_test_trap_assert_passed(),
-// g_test_trap_assert_failed(), and g_test_trap_assert_stderr() to
+// You can use methods such as [func@GLib.test_trap_assert_passed],
+// [func@GLib.test_trap_assert_failed], and [func@GLib.test_trap_assert_stderr] to
 // check the results of the subprocess. (But note that
-// g_test_trap_assert_stdout() and g_test_trap_assert_stderr()
+// [func@GLib.test_trap_assert_stdout] and [func@GLib.test_trap_assert_stderr]
 // cannot be used if @test_flags specifies that the child should
 // inherit the parent stdout/stderr.)
 //
-// If your `main ()` needs to behave differently in
-// the subprocess, you can call g_test_subprocess() (after calling
-// g_test_init()) to see whether you are in a subprocess.
+// If your `main ()` needs to behave differently in the subprocess, you can
+// call [func@GLib.test_subprocess] (after calling [func@GLib.test_init])
+// to see whether you are in a subprocess.
 //
-// The following example tests that calling
-// `my_object_new(1000000)` will abort with an error
-// message.
+// Internally, this function tracks the child process using
+// [func@GLib.child_watch_source_new], so your process must not ignore
+// `SIGCHLD`, and must not attempt to watch or wait for the child process
+// via another mechanism.
 //
-// |[&lt;!-- language="C" --&gt;
+// The following example tests that calling `my_object_new(1000000)` will
+// abort with an error message.
+//
+// ```c
 //
 //	static void
 //	test_create_large_object (void)
@@ -1209,9 +1329,27 @@ var xTestTrapSubprocess func(string, uint64, TestSubprocessFlags)
 //	    }
 //
 //	  // Reruns this same test in a subprocess
-//	  g_test_trap_subprocess (NULL, 0, 0);
+//	  g_test_trap_subprocess (NULL, 0, G_TEST_SUBPROCESS_DEFAULT);
 //	  g_test_trap_assert_failed ();
 //	  g_test_trap_assert_stderr ("*ERROR*too large*");
+//	}
+//
+//	static void
+//	test_different_username (void)
+//	{
+//	  if (g_test_subprocess ())
+//	    {
+//	      // Code under test goes here
+//	      g_message ("Username is now simulated as %s", g_getenv ("USER"));
+//	      return;
+//	    }
+//
+//	  // Reruns this same test in a subprocess
+//	  g_autoptr(GStrv) envp = g_get_environ ();
+//	  envp = g_environ_setenv (g_steal_pointer (&amp;envp), "USER", "charlie", TRUE);
+//	  g_test_trap_subprocess_with_envp (NULL, envp, 0, G_TEST_SUBPROCESS_DEFAULT);
+//	  g_test_trap_assert_passed ();
+//	  g_test_trap_assert_stdout ("Username is now simulated as charlie");
 //	}
 //
 //	int
@@ -1219,27 +1357,30 @@ var xTestTrapSubprocess func(string, uint64, TestSubprocessFlags)
 //	{
 //	  g_test_init (&amp;argc, &amp;argv, NULL);
 //
-//	  g_test_add_func ("/myobject/create_large_object",
+//	  g_test_add_func ("/myobject/create-large-object",
 //	                   test_create_large_object);
+//	  g_test_add_func ("/myobject/different-username",
+//	                   test_different_username);
 //	  return g_test_run ();
 //	}
 //
-// ]|
-func TestTrapSubprocess(TestPathVar string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
+// ```
+func TestTrapSubprocessWithEnvp(TestPathVar string, EnvpVar []string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
 
-	xTestTrapSubprocess(TestPathVar, UsecTimeoutVar, TestFlagsVar)
+	xTestTrapSubprocessWithEnvp(TestPathVar, EnvpVar, UsecTimeoutVar, TestFlagsVar)
 
 }
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
 
 	core.PuregoSafeRegister(&xAssertionMessage, lib, "g_assertion_message")
+	core.PuregoSafeRegister(&xAssertionMessageCmpint, lib, "g_assertion_message_cmpint")
 	core.PuregoSafeRegister(&xAssertionMessageCmpnum, lib, "g_assertion_message_cmpnum")
 	core.PuregoSafeRegister(&xAssertionMessageCmpstr, lib, "g_assertion_message_cmpstr")
 	core.PuregoSafeRegister(&xAssertionMessageCmpstrv, lib, "g_assertion_message_cmpstrv")
@@ -1256,6 +1397,7 @@ func init() {
 	core.PuregoSafeRegister(&xTestBuildFilename, lib, "g_test_build_filename")
 	core.PuregoSafeRegister(&xTestCreateCase, lib, "g_test_create_case")
 	core.PuregoSafeRegister(&xTestCreateSuite, lib, "g_test_create_suite")
+	core.PuregoSafeRegister(&xTestDisableCrashReporting, lib, "g_test_disable_crash_reporting")
 	core.PuregoSafeRegister(&xTestExpectMessage, lib, "g_test_expect_message")
 	core.PuregoSafeRegister(&xTestFail, lib, "g_test_fail")
 	core.PuregoSafeRegister(&xTestFailPrintf, lib, "g_test_fail_printf")
@@ -1293,6 +1435,7 @@ func init() {
 	core.PuregoSafeRegister(&xTestTrapHasPassed, lib, "g_test_trap_has_passed")
 	core.PuregoSafeRegister(&xTestTrapReachedTimeout, lib, "g_test_trap_reached_timeout")
 	core.PuregoSafeRegister(&xTestTrapSubprocess, lib, "g_test_trap_subprocess")
+	core.PuregoSafeRegister(&xTestTrapSubprocessWithEnvp, lib, "g_test_trap_subprocess_with_envp")
 
 	core.PuregoSafeRegister(&xTestCaseFree, lib, "g_test_case_free")
 

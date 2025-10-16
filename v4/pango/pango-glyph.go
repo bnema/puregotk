@@ -293,6 +293,10 @@ var xShape func(string, int, *Analysis, *GlyphString)
 // that API allows for shaping interaction happening across text item
 // boundaries.
 //
+// Some aspects of hyphen insertion and text transformation (in particular,
+// capitalization) require log attrs, and thus can only be handled by
+// [func@Pango.shape_item].
+//
 // Note that the extra attributes in the @analyis that is returned from
 // [func@Pango.itemize] have indices that are relative to the entire paragraph,
 // so you need to subtract the item offset from their indices before
@@ -317,6 +321,10 @@ var xShapeFull func(string, int, string, int, *Analysis, *GlyphString)
 // text of which @item_text is part of, provide the broader text as
 // @paragraph_text. If @paragraph_text is %NULL, item text is used instead.
 //
+// Some aspects of hyphen insertion and text transformation (in particular,
+// capitalization) require log attrs, and thus can only be handled by
+// [func@Pango.shape_item].
+//
 // Note that the extra attributes in the @analyis that is returned from
 // [func@Pango.itemize] have indices that are relative to the entire paragraph,
 // so you do not pass the full paragraph text as @paragraph_text, you need
@@ -334,8 +342,9 @@ var xShapeItem func(*Item, string, int, *LogAttr, *GlyphString, ShapeFlags)
 //
 // This is similar to [func@Pango.shape_with_flags], except it takes a
 // `PangoItem` instead of separate @item_text and @analysis arguments.
-// It also takes @log_attrs, which may be used in implementing text
-// transforms.
+//
+// It also takes @log_attrs, which are needed for implementing some aspects
+// of hyphen insertion and text transforms (in particular, capitalization).
 //
 // Note that the extra attributes in the @analyis that is returned from
 // [func@Pango.itemize] have indices that are relative to the entire paragraph,
@@ -358,6 +367,10 @@ var xShapeWithFlags func(string, int, string, int, *Analysis, *GlyphString, Shap
 //
 // This is similar to [func@Pango.shape_full], except it also takes flags
 // that can influence the shaping process.
+//
+// Some aspects of hyphen insertion and text transformation (in particular,
+// capitalization) require log attrs, and thus can only be handled by
+// [func@Pango.shape_item].
 //
 // Note that the extra attributes in the @analyis that is returned from
 // [func@Pango.itemize] have indices that are relative to the entire paragraph,

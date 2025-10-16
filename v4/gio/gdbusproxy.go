@@ -30,6 +30,7 @@ func (x *DBusProxyClass) GoPointer() uintptr {
 }
 
 // OverrideGPropertiesChanged sets the callback function.
+// Signal class handler for the #GDBusProxy::g-properties-changed signal.
 func (x *DBusProxyClass) OverrideGPropertiesChanged(cb func(*DBusProxy, *glib.Variant, string)) {
 	if cb == nil {
 		x.xGPropertiesChanged = 0
@@ -41,6 +42,7 @@ func (x *DBusProxyClass) OverrideGPropertiesChanged(cb func(*DBusProxy, *glib.Va
 }
 
 // GetGPropertiesChanged gets the callback function.
+// Signal class handler for the #GDBusProxy::g-properties-changed signal.
 func (x *DBusProxyClass) GetGPropertiesChanged() func(*DBusProxy, *glib.Variant, string) {
 	if x.xGPropertiesChanged == 0 {
 		return nil
@@ -53,6 +55,7 @@ func (x *DBusProxyClass) GetGPropertiesChanged() func(*DBusProxy, *glib.Variant,
 }
 
 // OverrideGSignal sets the callback function.
+// Signal class handler for the #GDBusProxy::g-signal signal.
 func (x *DBusProxyClass) OverrideGSignal(cb func(*DBusProxy, string, string, *glib.Variant)) {
 	if cb == nil {
 		x.xGSignal = 0
@@ -64,6 +67,7 @@ func (x *DBusProxyClass) OverrideGSignal(cb func(*DBusProxy, string, string, *gl
 }
 
 // GetGSignal gets the callback function.
+// Signal class handler for the #GDBusProxy::g-signal signal.
 func (x *DBusProxyClass) GetGSignal() func(*DBusProxy, string, string, *glib.Variant) {
 	if x.xGSignal == 0 {
 		return nil
@@ -83,50 +87,53 @@ func (x *DBusProxyPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GDBusProxy is a base class used for proxies to access a D-Bus
-// interface on a remote object. A #GDBusProxy can be constructed for
+// `GDBusProxy` is a base class used for proxies to access a D-Bus
+// interface on a remote object. A `GDBusProxy` can be constructed for
 // both well-known and unique names.
 //
-// By default, #GDBusProxy will cache all properties (and listen to
+// By default, `GDBusProxy` will cache all properties (and listen to
 // changes) of the remote object, and proxy all signals that get
 // emitted. This behaviour can be changed by passing suitable
-// #GDBusProxyFlags when the proxy is created. If the proxy is for a
+// [flags@Gio.DBusProxyFlags] when the proxy is created. If the proxy is for a
 // well-known name, the property cache is flushed when the name owner
 // vanishes and reloaded when a name owner appears.
 //
-// The unique name owner of the proxy's name is tracked and can be read from
-// #GDBusProxy:g-name-owner. Connect to the #GObject::notify signal to
-// get notified of changes. Additionally, only signals and property
-// changes emitted from the current name owner are considered and
-// calls are always sent to the current name owner. This avoids a
-// number of race conditions when the name is lost by one owner and
-// claimed by another. However, if no name owner currently exists,
+// The unique name owner of the proxy’s name is tracked and can be read from
+// [property@Gio.DBusProxy:g-name-owner]. Connect to the
+// [signal@GObject.Object::notify] signal to get notified of changes.
+// Additionally, only signals and property changes emitted from the current name
+// owner are considered and calls are always sent to the current name owner.
+// This avoids a number of race conditions when the name is lost by one owner
+// and claimed by another. However, if no name owner currently exists,
 // then calls will be sent to the well-known name which may result in
 // the message bus launching an owner (unless
-// %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START is set).
+// `G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START` is set).
 //
 // If the proxy is for a stateless D-Bus service, where the name owner may
-// be started and stopped between calls, the #GDBusProxy:g-name-owner tracking
-// of #GDBusProxy will cause the proxy to drop signal and property changes from
-// the service after it has restarted for the first time. When interacting
-// with a stateless D-Bus service, do not use #GDBusProxy — use direct D-Bus
-// method calls and signal connections.
+// be started and stopped between calls, the
+// [property@Gio.DBusProxy:g-name-owner] tracking of `GDBusProxy` will cause the
+// proxy to drop signal and property changes from the service after it has
+// restarted for the first time. When interacting with a stateless D-Bus
+// service, do not use `GDBusProxy` — use direct D-Bus method calls and signal
+// connections.
 //
-// The generic #GDBusProxy::g-properties-changed and
-// #GDBusProxy::g-signal signals are not very convenient to work with.
-// Therefore, the recommended way of working with proxies is to subclass
-// #GDBusProxy, and have more natural properties and signals in your derived
-// class. This [example][gdbus-example-gdbus-codegen] shows how this can
-// easily be done using the [gdbus-codegen][gdbus-codegen] tool.
+// The generic [signal@Gio.DBusProxy::g-properties-changed] and
+// [signal@Gio.DBusProxy::g-signal] signals are not very convenient to work
+// with. Therefore, the recommended way of working with proxies is to subclass
+// `GDBusProxy`, and have more natural properties and signals in your derived
+// class. This [example](migrating-gdbus.html#using-gdbus-codegen) shows how
+// this can easily be done using the [`gdbus-codegen`](gdbus-codegen.html) tool.
 //
-// A #GDBusProxy instance can be used from multiple threads but note
-// that all signals (e.g. #GDBusProxy::g-signal, #GDBusProxy::g-properties-changed
-// and #GObject::notify) are emitted in the
-// [thread-default main context][g-main-context-push-thread-default]
-// of the thread where the instance was constructed.
+// A `GDBusProxy` instance can be used from multiple threads but note
+// that all signals (e.g. [signal@Gio.DBusProxy::g-signal],
+// [signal@Gio.DBusProxy::g-properties-changed] and
+// [signal@GObject.Object::notify]) are emitted in the thread-default main
+// context (see [method@GLib.MainContext.push_thread_default]) of the thread
+// where the instance was constructed.
 //
+// ## A watch proxy example
 // An example using a proxy for a well-known name can be found in
-// [gdbus-example-watch-proxy.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gdbus-example-watch-proxy.c)
+// [`gdbus-example-watch-proxy.c`](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gdbus-example-watch-proxy.c).
 type DBusProxy struct {
 	gobject.Object
 }
@@ -189,7 +196,7 @@ var xNewDBusProxyForBusSync func(BusType, DBusProxyFlags, *DBusInterfaceInfo, st
 
 // Like g_dbus_proxy_new_sync() but takes a #GBusType instead of a #GDBusConnection.
 //
-// #GDBusProxy is used in this [example][gdbus-wellknown-proxy].
+// #GDBusProxy is used in this [example][class@Gio.DBusProxy#a-watch-proxy-example].
 func NewDBusProxyForBusSync(BusTypeVar BusType, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable) (*DBusProxy, error) {
 	var cls *DBusProxy
 	var cerr *glib.Error
@@ -231,7 +238,7 @@ var xNewDBusProxySync func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, 
 // This is a synchronous failable constructor. See g_dbus_proxy_new()
 // and g_dbus_proxy_new_finish() for the asynchronous version.
 //
-// #GDBusProxy is used in this [example][gdbus-wellknown-proxy].
+// #GDBusProxy is used in this [example][class@Gio.DBusProxy#a-watch-proxy-example].
 func NewDBusProxySync(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable) (*DBusProxy, error) {
 	var cls *DBusProxy
 	var cerr *glib.Error
@@ -287,8 +294,8 @@ var xDBusProxyCall func(uintptr, string, *glib.Variant, DBusCallFlags, int, uint
 // then the return value is checked against the return type.
 //
 // This is an asynchronous method. When the operation is finished,
-// @callback will be invoked in the
-// [thread-default main context][g-main-context-push-thread-default]
+// @callback will be invoked in the thread-default main context
+// (see [method@GLib.MainContext.push_thread_default])
 // of the thread you are calling this method from.
 // You can then call g_dbus_proxy_call_finish() to get the result of
 // the operation. See g_dbus_proxy_call_sync() for the synchronous
@@ -798,7 +805,7 @@ func (x *DBusProxy) SetObject(ObjectVar DBusObject) {
 // If the object is not initialized, or initialization returns with an
 // error, then all operations on the object except g_object_ref() and
 // g_object_unref() are considered to be invalid, and have undefined
-// behaviour. See the [introduction][ginitable] for more details.
+// behaviour. See the [description][iface@Gio.Initable#description] for more details.
 //
 // Callers should not assume that a class which implements #GInitable can be
 // initialized multiple times, unless the class explicitly documents itself as
@@ -857,7 +864,7 @@ var xDBusProxyNew func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, stri
 //
 // See g_dbus_proxy_new_sync() and for a synchronous version of this constructor.
 //
-// #GDBusProxy is used in this [example][gdbus-wellknown-proxy].
+// #GDBusProxy is used in this [example][class@Gio.DBusProxy#a-watch-proxy-example].
 func DBusProxyNew(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
 	xDBusProxyNew(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -868,7 +875,7 @@ var xDBusProxyNewForBus func(BusType, DBusProxyFlags, *DBusInterfaceInfo, string
 
 // Like g_dbus_proxy_new() but takes a #GBusType instead of a #GDBusConnection.
 //
-// #GDBusProxy is used in this [example][gdbus-wellknown-proxy].
+// #GDBusProxy is used in this [example][class@Gio.DBusProxy#a-watch-proxy-example].
 func DBusProxyNewForBus(BusTypeVar BusType, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
 	xDBusProxyNewForBus(BusTypeVar, FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)

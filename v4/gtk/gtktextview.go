@@ -54,6 +54,9 @@ func (x *TextViewClass) GoPointer() uintptr {
 }
 
 // OverrideMoveCursor sets the callback function.
+// The class handler for the `GtkTextView::move-cursor`
+//
+//	keybinding signal.
 func (x *TextViewClass) OverrideMoveCursor(cb func(*TextView, MovementStep, int, bool)) {
 	if cb == nil {
 		x.xMoveCursor = 0
@@ -65,6 +68,9 @@ func (x *TextViewClass) OverrideMoveCursor(cb func(*TextView, MovementStep, int,
 }
 
 // GetMoveCursor gets the callback function.
+// The class handler for the `GtkTextView::move-cursor`
+//
+//	keybinding signal.
 func (x *TextViewClass) GetMoveCursor() func(*TextView, MovementStep, int, bool) {
 	if x.xMoveCursor == 0 {
 		return nil
@@ -77,6 +83,9 @@ func (x *TextViewClass) GetMoveCursor() func(*TextView, MovementStep, int, bool)
 }
 
 // OverrideSetAnchor sets the callback function.
+// The class handler for the `GtkTextView::set-anchor`
+//
+//	keybinding signal.
 func (x *TextViewClass) OverrideSetAnchor(cb func(*TextView)) {
 	if cb == nil {
 		x.xSetAnchor = 0
@@ -88,6 +97,9 @@ func (x *TextViewClass) OverrideSetAnchor(cb func(*TextView)) {
 }
 
 // GetSetAnchor gets the callback function.
+// The class handler for the `GtkTextView::set-anchor`
+//
+//	keybinding signal.
 func (x *TextViewClass) GetSetAnchor() func(*TextView) {
 	if x.xSetAnchor == 0 {
 		return nil
@@ -100,6 +112,9 @@ func (x *TextViewClass) GetSetAnchor() func(*TextView) {
 }
 
 // OverrideInsertAtCursor sets the callback function.
+// The class handler for the `GtkTextView::insert-at-cursor`
+//
+//	keybinding signal.
 func (x *TextViewClass) OverrideInsertAtCursor(cb func(*TextView, string)) {
 	if cb == nil {
 		x.xInsertAtCursor = 0
@@ -111,6 +126,9 @@ func (x *TextViewClass) OverrideInsertAtCursor(cb func(*TextView, string)) {
 }
 
 // GetInsertAtCursor gets the callback function.
+// The class handler for the `GtkTextView::insert-at-cursor`
+//
+//	keybinding signal.
 func (x *TextViewClass) GetInsertAtCursor() func(*TextView, string) {
 	if x.xInsertAtCursor == 0 {
 		return nil
@@ -123,6 +141,9 @@ func (x *TextViewClass) GetInsertAtCursor() func(*TextView, string) {
 }
 
 // OverrideDeleteFromCursor sets the callback function.
+// The class handler for the `GtkTextView::delete-from-cursor`
+//
+//	keybinding signal.
 func (x *TextViewClass) OverrideDeleteFromCursor(cb func(*TextView, DeleteType, int)) {
 	if cb == nil {
 		x.xDeleteFromCursor = 0
@@ -134,6 +155,9 @@ func (x *TextViewClass) OverrideDeleteFromCursor(cb func(*TextView, DeleteType, 
 }
 
 // GetDeleteFromCursor gets the callback function.
+// The class handler for the `GtkTextView::delete-from-cursor`
+//
+//	keybinding signal.
 func (x *TextViewClass) GetDeleteFromCursor() func(*TextView, DeleteType, int) {
 	if x.xDeleteFromCursor == 0 {
 		return nil
@@ -146,6 +170,9 @@ func (x *TextViewClass) GetDeleteFromCursor() func(*TextView, DeleteType, int) {
 }
 
 // OverrideBackspace sets the callback function.
+// The class handler for the `GtkTextView::backspace`
+//
+//	keybinding signal.
 func (x *TextViewClass) OverrideBackspace(cb func(*TextView)) {
 	if cb == nil {
 		x.xBackspace = 0
@@ -157,6 +184,9 @@ func (x *TextViewClass) OverrideBackspace(cb func(*TextView)) {
 }
 
 // GetBackspace gets the callback function.
+// The class handler for the `GtkTextView::backspace`
+//
+//	keybinding signal.
 func (x *TextViewClass) GetBackspace() func(*TextView) {
 	if x.xBackspace == 0 {
 		return nil
@@ -169,6 +199,9 @@ func (x *TextViewClass) GetBackspace() func(*TextView) {
 }
 
 // OverrideCutClipboard sets the callback function.
+// The class handler for the `GtkTextView::cut-clipboard`
+//
+//	keybinding signal
 func (x *TextViewClass) OverrideCutClipboard(cb func(*TextView)) {
 	if cb == nil {
 		x.xCutClipboard = 0
@@ -180,6 +213,9 @@ func (x *TextViewClass) OverrideCutClipboard(cb func(*TextView)) {
 }
 
 // GetCutClipboard gets the callback function.
+// The class handler for the `GtkTextView::cut-clipboard`
+//
+//	keybinding signal
 func (x *TextViewClass) GetCutClipboard() func(*TextView) {
 	if x.xCutClipboard == 0 {
 		return nil
@@ -192,6 +228,9 @@ func (x *TextViewClass) GetCutClipboard() func(*TextView) {
 }
 
 // OverrideCopyClipboard sets the callback function.
+// The class handler for the `GtkTextView::copy-clipboard`
+//
+//	keybinding signal.
 func (x *TextViewClass) OverrideCopyClipboard(cb func(*TextView)) {
 	if cb == nil {
 		x.xCopyClipboard = 0
@@ -203,6 +242,9 @@ func (x *TextViewClass) OverrideCopyClipboard(cb func(*TextView)) {
 }
 
 // GetCopyClipboard gets the callback function.
+// The class handler for the `GtkTextView::copy-clipboard`
+//
+//	keybinding signal.
 func (x *TextViewClass) GetCopyClipboard() func(*TextView) {
 	if x.xCopyClipboard == 0 {
 		return nil
@@ -215,6 +257,9 @@ func (x *TextViewClass) GetCopyClipboard() func(*TextView) {
 }
 
 // OverridePasteClipboard sets the callback function.
+// The class handler for the `GtkTextView::paste-clipboard`
+//
+//	keybinding signal.
 func (x *TextViewClass) OverridePasteClipboard(cb func(*TextView)) {
 	if cb == nil {
 		x.xPasteClipboard = 0
@@ -226,6 +271,9 @@ func (x *TextViewClass) OverridePasteClipboard(cb func(*TextView)) {
 }
 
 // GetPasteClipboard gets the callback function.
+// The class handler for the `GtkTextView::paste-clipboard`
+//
+//	keybinding signal.
 func (x *TextViewClass) GetPasteClipboard() func(*TextView) {
 	if x.xPasteClipboard == 0 {
 		return nil
@@ -238,6 +286,9 @@ func (x *TextViewClass) GetPasteClipboard() func(*TextView) {
 }
 
 // OverrideToggleOverwrite sets the callback function.
+// The class handler for the `GtkTextView::toggle-overwrite`
+//
+//	keybinding signal.
 func (x *TextViewClass) OverrideToggleOverwrite(cb func(*TextView)) {
 	if cb == nil {
 		x.xToggleOverwrite = 0
@@ -249,6 +300,9 @@ func (x *TextViewClass) OverrideToggleOverwrite(cb func(*TextView)) {
 }
 
 // GetToggleOverwrite gets the callback function.
+// The class handler for the `GtkTextView::toggle-overwrite`
+//
+//	keybinding signal.
 func (x *TextViewClass) GetToggleOverwrite() func(*TextView) {
 	if x.xToggleOverwrite == 0 {
 		return nil
@@ -261,6 +315,10 @@ func (x *TextViewClass) GetToggleOverwrite() func(*TextView) {
 }
 
 // OverrideCreateBuffer sets the callback function.
+// The create_buffer vfunc is called to create a `GtkTextBuffer`
+//
+//	for the text view. The default implementation is to just call
+//	gtk_text_buffer_new().
 func (x *TextViewClass) OverrideCreateBuffer(cb func(*TextView) *TextBuffer) {
 	if cb == nil {
 		x.xCreateBuffer = 0
@@ -276,6 +334,10 @@ func (x *TextViewClass) OverrideCreateBuffer(cb func(*TextView) *TextBuffer) {
 }
 
 // GetCreateBuffer gets the callback function.
+// The create_buffer vfunc is called to create a `GtkTextBuffer`
+//
+//	for the text view. The default implementation is to just call
+//	gtk_text_buffer_new().
 func (x *TextViewClass) GetCreateBuffer() func(*TextView) *TextBuffer {
 	if x.xCreateBuffer == 0 {
 		return nil
@@ -294,6 +356,12 @@ func (x *TextViewClass) GetCreateBuffer() func(*TextView) *TextBuffer {
 }
 
 // OverrideSnapshotLayer sets the callback function.
+// The snapshot_layer vfunc is called before and after the text
+//
+//	view is drawing its own text. Applications can override this vfunc
+//	in a subclass to draw customized content underneath or above the
+//	text. In the %GTK_TEXT_VIEW_LAYER_BELOW_TEXT and %GTK_TEXT_VIEW_LAYER_ABOVE_TEXT
+//	layers the drawing is done in the buffer coordinate space.
 func (x *TextViewClass) OverrideSnapshotLayer(cb func(*TextView, TextViewLayer, *Snapshot)) {
 	if cb == nil {
 		x.xSnapshotLayer = 0
@@ -305,6 +373,12 @@ func (x *TextViewClass) OverrideSnapshotLayer(cb func(*TextView, TextViewLayer, 
 }
 
 // GetSnapshotLayer gets the callback function.
+// The snapshot_layer vfunc is called before and after the text
+//
+//	view is drawing its own text. Applications can override this vfunc
+//	in a subclass to draw customized content underneath or above the
+//	text. In the %GTK_TEXT_VIEW_LAYER_BELOW_TEXT and %GTK_TEXT_VIEW_LAYER_ABOVE_TEXT
+//	layers the drawing is done in the buffer coordinate space.
 func (x *TextViewClass) GetSnapshotLayer() func(*TextView, TextViewLayer, *Snapshot) {
 	if x.xSnapshotLayer == 0 {
 		return nil
@@ -317,6 +391,7 @@ func (x *TextViewClass) GetSnapshotLayer() func(*TextView, TextViewLayer, *Snaps
 }
 
 // OverrideExtendSelection sets the callback function.
+// The class handler for the `GtkTextView::extend-selection` signal.
 func (x *TextViewClass) OverrideExtendSelection(cb func(*TextView, TextExtendSelection, *TextIter, *TextIter, *TextIter) bool) {
 	if cb == nil {
 		x.xExtendSelection = 0
@@ -328,6 +403,7 @@ func (x *TextViewClass) OverrideExtendSelection(cb func(*TextView, TextExtendSel
 }
 
 // GetExtendSelection gets the callback function.
+// The class handler for the `GtkTextView::extend-selection` signal.
 func (x *TextViewClass) GetExtendSelection() func(*TextView, TextExtendSelection, *TextIter, *TextIter, *TextIter) bool {
 	if x.xExtendSelection == 0 {
 		return nil
@@ -340,6 +416,7 @@ func (x *TextViewClass) GetExtendSelection() func(*TextView, TextExtendSelection
 }
 
 // OverrideInsertEmoji sets the callback function.
+// The class handler for the `GtkTextView::insert-emoji` signal.
 func (x *TextViewClass) OverrideInsertEmoji(cb func(*TextView)) {
 	if cb == nil {
 		x.xInsertEmoji = 0
@@ -351,6 +428,7 @@ func (x *TextViewClass) OverrideInsertEmoji(cb func(*TextView)) {
 }
 
 // GetInsertEmoji gets the callback function.
+// The class handler for the `GtkTextView::insert-emoji` signal.
 func (x *TextViewClass) GetInsertEmoji() func(*TextView) {
 	if x.xInsertEmoji == 0 {
 		return nil
@@ -439,13 +517,55 @@ const (
 	TextWindowBottomValue TextWindowType = 6
 )
 
-// A widget that displays the contents of a [class@Gtk.TextBuffer].
+// Displays the contents of a [class@Gtk.TextBuffer].
 //
-// ![An example GtkTextview](multiline-text.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="multiline-text-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkTextView" src="multiline-text.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // You may wish to begin by reading the [conceptual overview](section-text-widget.html),
 // which gives an overview of all the objects and data types related to the
 // text widget and how they work together.
+//
+// ## Shortcuts and Gestures
+//
+// `GtkTextView` supports the following keyboard shortcuts:
+//
+//   - &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;F10&lt;/kbd&gt; or &lt;kbd&gt;Menu&lt;/kbd&gt; opens the context menu.
+//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Z&lt;/kbd&gt; undoes the last modification.
+//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Y&lt;/kbd&gt; or &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Z&lt;/kbd&gt;
+//     redoes the last undone modification.
+//
+// Additionally, the following signals have default keybindings:
+//
+// - [signal@Gtk.TextView::backspace]
+// - [signal@Gtk.TextView::copy-clipboard]
+// - [signal@Gtk.TextView::cut-clipboard]
+// - [signal@Gtk.TextView::delete-from-cursor]
+// - [signal@Gtk.TextView::insert-emoji]
+// - [signal@Gtk.TextView::move-cursor]
+// - [signal@Gtk.TextView::paste-clipboard]
+// - [signal@Gtk.TextView::select-all]
+// - [signal@Gtk.TextView::toggle-cursor-visible]
+// - [signal@Gtk.TextView::toggle-overwrite]
+//
+// ## Actions
+//
+// `GtkTextView` defines a set of built-in actions:
+//
+//   - `clipboard.copy` copies the contents to the clipboard.
+//   - `clipboard.cut` copies the contents to the clipboard and deletes it from
+//     the widget.
+//   - `clipboard.paste` inserts the contents of the clipboard into the widget.
+//   - `menu.popup` opens the context menu.
+//   - `misc.insert-emoji` opens the Emoji chooser.
+//   - `selection.delete` deletes the current selection.
+//   - `selection.select-all` selects all of the widgets content.
+//   - `text.redo` redoes the last change to the contents.
+//   - `text.undo` undoes the last change to the contents.
 //
 // ## CSS nodes
 //
@@ -472,7 +592,7 @@ const (
 //
 // ## Accessibility
 //
-// `GtkTextView` uses the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role.
+// `GtkTextView` uses the [enum@Gtk.AccessibleRole.text_box] role.
 type TextView struct {
 	Widget
 }
@@ -1015,6 +1135,23 @@ func (x *TextView) GetTopMargin() int {
 	return cret
 }
 
+var xTextViewGetVisibleOffset func(uintptr, float64, float64)
+
+// Gets the X,Y offset in buffer coordinates of the top-left corner of
+// the textview's text contents.
+//
+// This allows for more-precise positioning than what is provided by
+// [method@Gtk.TextView.get_visible_rect()] as you can discover what
+// device pixel is being quantized for text positioning.
+//
+// You might want this when making ulterior widgets align with quantized
+// device pixels of the textview contents such as line numbers.
+func (x *TextView) GetVisibleOffset(XOffsetVar float64, YOffsetVar float64) {
+
+	xTextViewGetVisibleOffset(x.GoPointer(), XOffsetVar, YOffsetVar)
+
+}
+
 var xTextViewGetVisibleRect func(uintptr, *gdk.Rectangle)
 
 // Fills @visible_rect with the currently-visible
@@ -1223,6 +1360,8 @@ var xTextViewSetAcceptsTab func(uintptr, bool)
 // If @accepts_tab is %TRUE, a tab character is inserted. If @accepts_tab
 // is %FALSE the keyboard focus is moved to the next widget in the focus
 // chain.
+//
+// Focus can always be moved using &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt;.
 func (x *TextView) SetAcceptsTab(AcceptsTabVar bool) {
 
 	xTextViewSetAcceptsTab(x.GoPointer(), AcceptsTabVar)
@@ -1263,7 +1402,7 @@ var xTextViewSetCursorVisible func(uintptr, bool)
 // cursor, so you may want to turn the cursor off.
 //
 // Note that this property may be overridden by the
-// [property@GtkSettings:gtk-keynav-use-caret] setting.
+// [property@Gtk.Settings:gtk-keynav-use-caret] setting.
 func (x *TextView) SetCursorVisible(SettingVar bool) {
 
 	xTextViewSetCursorVisible(x.GoPointer(), SettingVar)
@@ -1504,7 +1643,7 @@ func (c *TextView) SetGoPointer(ptr uintptr) {
 // The ::backspace signal is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Backspace&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;-&lt;kbd&gt;Backspace&lt;/kbd&gt;.
+// &lt;kbd&gt;Backspace&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Backspace&lt;/kbd&gt;.
 func (x *TextView) ConnectBackspace(cb *func(TextView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -1529,8 +1668,8 @@ func (x *TextView) ConnectBackspace(cb *func(TextView)) uint32 {
 // The ::copy-clipboard signal is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;c&lt;/kbd&gt; and
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;Insert&lt;/kbd&gt;.
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;c&lt;/kbd&gt; and
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Insert&lt;/kbd&gt;.
 func (x *TextView) ConnectCopyClipboard(cb *func(TextView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -1555,8 +1694,8 @@ func (x *TextView) ConnectCopyClipboard(cb *func(TextView)) uint32 {
 // The ::cut-clipboard signal is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;x&lt;/kbd&gt; and
-// &lt;kbd&gt;Shift&lt;/kbd&gt;-&lt;kbd&gt;Delete&lt;/kbd&gt;.
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;x&lt;/kbd&gt; and
+// &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Delete&lt;/kbd&gt;.
 func (x *TextView) ConnectCutClipboard(cb *func(TextView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -1585,8 +1724,8 @@ func (x *TextView) ConnectCutClipboard(cb *func(TextView)) uint32 {
 // of characters.
 //
 // The default bindings for this signal are &lt;kbd&gt;Delete&lt;/kbd&gt; for
-// deleting a character, &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;Delete&lt;/kbd&gt; for
-// deleting a word and &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;Backspace&lt;/kbd&gt; for
+// deleting a character, &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Delete&lt;/kbd&gt; for
+// deleting a word and &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Backspace&lt;/kbd&gt; for
 // deleting a word backwards.
 func (x *TextView) ConnectDeleteFromCursor(cb *func(TextView, DeleteType, int)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -1657,8 +1796,8 @@ func (x *TextView) ConnectInsertAtCursor(cb *func(TextView, string)) uint32 {
 // The ::insert-emoji signal is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;.&lt;/kbd&gt; and
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;;&lt;/kbd&gt;
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;.&lt;/kbd&gt; and
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;;&lt;/kbd&gt;
 func (x *TextView) ConnectInsertEmoji(cb *func(TextView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -1695,10 +1834,10 @@ func (x *TextView) ConnectInsertEmoji(cb *func(TextView)) uint32 {
 //
 //   - &lt;kbd&gt;←&lt;/kbd&gt;, &lt;kbd&gt;→&lt;/kbd&gt;, &lt;kbd&gt;↑&lt;/kbd&gt;, &lt;kbd&gt;↓&lt;/kbd&gt;
 //     move by individual characters/lines
-//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;→&lt;/kbd&gt;, etc. move by words/paragraphs
-//   - &lt;kbd&gt;Home&lt;/kbd&gt;, &lt;kbd&gt;End&lt;/kbd&gt; move to the ends of the buffer
-//   - &lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;PgDn&lt;/kbd&gt; move vertically by pages
-//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;PgDn&lt;/kbd&gt;
+//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt;, etc. move by words/paragraphs
+//   - &lt;kbd&gt;Home&lt;/kbd&gt; and &lt;kbd&gt;End&lt;/kbd&gt; move to the ends of the buffer
+//   - &lt;kbd&gt;PgUp&lt;/kbd&gt; and &lt;kbd&gt;PgDn&lt;/kbd&gt; move vertically by pages
+//   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt; and &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;
 //     move horizontally by pages
 func (x *TextView) ConnectMoveCursor(cb *func(TextView, MovementStep, int, bool)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -1752,8 +1891,8 @@ func (x *TextView) ConnectMoveViewport(cb *func(TextView, ScrollStep, int)) uint
 // The ::paste-clipboard signal is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;v&lt;/kbd&gt; and
-// &lt;kbd&gt;Shift&lt;/kbd&gt;-&lt;kbd&gt;Insert&lt;/kbd&gt;.
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;v&lt;/kbd&gt; and
+// &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Insert&lt;/kbd&gt;.
 func (x *TextView) ConnectPasteClipboard(cb *func(TextView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -1805,10 +1944,10 @@ func (x *TextView) ConnectPreeditChanged(cb *func(TextView, string)) uint32 {
 // The ::select-all signal is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;a&lt;/kbd&gt; and
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;/&lt;/kbd&gt; for selecting and
-// &lt;kbd&gt;Shift&lt;/kbd&gt;-&lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;a&lt;/kbd&gt; and
-// &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;\&lt;/kbd&gt; for unselecting.
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;a&lt;/kbd&gt; and
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;/&lt;/kbd&gt; for selecting and
+// &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;a&lt;/kbd&gt; and
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;\&lt;/kbd&gt; for unselecting.
 func (x *TextView) ConnectSelectAll(cb *func(TextView, bool)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -1904,31 +2043,162 @@ func (x *TextView) ConnectToggleOverwrite(cb *func(TextView)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "toggle-overwrite", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *TextView) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *TextView) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *TextView) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *TextView) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *TextView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *TextView) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *TextView) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *TextView) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *TextView) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *TextView) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *TextView) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *TextView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *TextView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *TextView) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -1974,7 +2244,7 @@ func (x *TextView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -2004,13 +2274,17 @@ func (x *TextView) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -2037,10 +2311,47 @@ func (x *TextView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 
 }
 
+// Updates the position of the caret.
+//
+// Implementations of the `GtkAccessibleText` interface should call this
+// function every time the caret has moved, in order to notify assistive
+// technologies.
+func (x *TextView) UpdateCaretPosition() {
+
+	XGtkAccessibleTextUpdateCaretPosition(x.GoPointer())
+
+}
+
+// Notifies assistive technologies of a change in contents.
+//
+// Implementations of the `GtkAccessibleText` interface should call this
+// function every time their contents change as the result of an operation,
+// like an insertion or a removal.
+//
+// Note: If the change is a deletion, this function must be called *before*
+// removing the contents, if it is an insertion, it must be called *after*
+// inserting the new contents.
+func (x *TextView) UpdateContents(ChangeVar AccessibleTextContentChange, StartVar uint, EndVar uint) {
+
+	XGtkAccessibleTextUpdateContents(x.GoPointer(), ChangeVar, StartVar, EndVar)
+
+}
+
+// Updates the boundary of the selection.
+//
+// Implementations of the `GtkAccessibleText` interface should call this
+// function every time the selection has moved, in order to notify assistive
+// technologies.
+func (x *TextView) UpdateSelectionBound() {
+
+	XGtkAccessibleTextUpdateSelectionBound(x.GoPointer())
+
+}
+
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TextView) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -2191,6 +2502,7 @@ func init() {
 	core.PuregoSafeRegister(&xTextViewGetRtlContext, lib, "gtk_text_view_get_rtl_context")
 	core.PuregoSafeRegister(&xTextViewGetTabs, lib, "gtk_text_view_get_tabs")
 	core.PuregoSafeRegister(&xTextViewGetTopMargin, lib, "gtk_text_view_get_top_margin")
+	core.PuregoSafeRegister(&xTextViewGetVisibleOffset, lib, "gtk_text_view_get_visible_offset")
 	core.PuregoSafeRegister(&xTextViewGetVisibleRect, lib, "gtk_text_view_get_visible_rect")
 	core.PuregoSafeRegister(&xTextViewGetWrapMode, lib, "gtk_text_view_get_wrap_mode")
 	core.PuregoSafeRegister(&xTextViewImContextFilterKeypress, lib, "gtk_text_view_im_context_filter_keypress")

@@ -81,6 +81,29 @@ func PointerBitLock(AddressVar uintptr, LockBitVar int) {
 
 }
 
+var xPointerBitLockAndGet func(uintptr, uint, uintptr)
+
+// This is equivalent to g_bit_lock, but working on pointers (or other
+// pointer-sized values).
+//
+// For portability reasons, you may only lock on the bottom 32 bits of
+// the pointer.
+func PointerBitLockAndGet(AddressVar uintptr, LockBitVar uint, OutPtrVar uintptr) {
+
+	xPointerBitLockAndGet(AddressVar, LockBitVar, OutPtrVar)
+
+}
+
+var xPointerBitLockMaskPtr func(uintptr, uint, bool, uintptr, uintptr) uintptr
+
+// This mangles @ptr as g_pointer_bit_lock() and g_pointer_bit_unlock()
+// do.
+func PointerBitLockMaskPtr(PtrVar uintptr, LockBitVar uint, SetVar bool, PreserveMaskVar uintptr, PreservePtrVar uintptr) uintptr {
+
+	cret := xPointerBitLockMaskPtr(PtrVar, LockBitVar, SetVar, PreserveMaskVar, PreservePtrVar)
+	return cret
+}
+
 var xPointerBitTrylock func(uintptr, int) bool
 
 // This is equivalent to g_bit_trylock(), but working on pointers (or
@@ -113,9 +136,24 @@ func PointerBitUnlock(AddressVar uintptr, LockBitVar int) {
 
 }
 
+var xPointerBitUnlockAndSet func(uintptr, uint, uintptr, uintptr)
+
+// This is equivalent to g_pointer_bit_unlock() and atomically setting
+// the pointer value.
+//
+// Note that the lock bit will be cleared from the pointer. If the unlocked
+// pointer that was set is not identical to @ptr, an assertion fails. In other
+// words, @ptr must have @lock_bit unset. This also means, you usually can
+// only use this on the lowest bits.
+func PointerBitUnlockAndSet(AddressVar uintptr, LockBitVar uint, PtrVar uintptr, PreserveMaskVar uintptr) {
+
+	xPointerBitUnlockAndSet(AddressVar, LockBitVar, PtrVar, PreserveMaskVar)
+
+}
+
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -125,7 +163,10 @@ func init() {
 	core.PuregoSafeRegister(&xBitTrylock, lib, "g_bit_trylock")
 	core.PuregoSafeRegister(&xBitUnlock, lib, "g_bit_unlock")
 	core.PuregoSafeRegister(&xPointerBitLock, lib, "g_pointer_bit_lock")
+	core.PuregoSafeRegister(&xPointerBitLockAndGet, lib, "g_pointer_bit_lock_and_get")
+	core.PuregoSafeRegister(&xPointerBitLockMaskPtr, lib, "g_pointer_bit_lock_mask_ptr")
 	core.PuregoSafeRegister(&xPointerBitTrylock, lib, "g_pointer_bit_trylock")
 	core.PuregoSafeRegister(&xPointerBitUnlock, lib, "g_pointer_bit_unlock")
+	core.PuregoSafeRegister(&xPointerBitUnlockAndSet, lib, "g_pointer_bit_unlock_and_set")
 
 }

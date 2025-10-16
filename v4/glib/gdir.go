@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
 // An opaque structure representing an opened directory.
@@ -14,13 +15,42 @@ type Dir struct {
 	_ structs.HostLayout
 }
 
+var xDirGLibType func() types.GType
+
+func DirGLibType() types.GType {
+	return xDirGLibType()
+}
+
 func (x *Dir) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+var xDirOpen func(string, uint, **Error) *Dir
+
+// Opens a directory for reading. The names of the files in the
+// directory can then be retrieved using g_dir_read_name().  Note
+// that the ordering is not defined.
+func DirOpen(PathVar string, FlagsVar uint) (*Dir, error) {
+	var cerr *Error
+
+	cret := xDirOpen(PathVar, FlagsVar, &cerr)
+	if cerr == nil {
+		return cret, nil
+	}
+	return cret, cerr
+
+}
+
 var xDirClose func(uintptr)
 
-// Closes the directory and deallocates all related resources.
+// Closes the directory immediately and decrements the reference count.
+//
+// Once the reference count reaches zero, the `GDir` structure itself will be
+// freed. Prior to GLib 2.80, `GDir` was not reference counted.
+//
+// It is an error to call any of the `GDir` methods other than
+// [method@GLib.Dir.ref] and [method@GLib.Dir.unref] on a `GDir` after calling
+// [method@GLib.Dir.close] on it.
 func (x *Dir) Close() {
 
 	xDirClose(x.GoPointer())
@@ -48,6 +78,15 @@ func (x *Dir) ReadName() string {
 	return cret
 }
 
+var xDirRef func(uintptr) *Dir
+
+// Increment the reference count of `dir`.
+func (x *Dir) Ref() *Dir {
+
+	cret := xDirRef(x.GoPointer())
+	return cret
+}
+
 var xDirRewind func(uintptr)
 
 // Resets the given directory. The next call to g_dir_read_name()
@@ -58,16 +97,41 @@ func (x *Dir) Rewind() {
 
 }
 
+var xDirUnref func(uintptr)
+
+// Decrements the reference count of `dir`.
+//
+// Once the reference count reaches zero, the directory will be closed and all
+// resources associated with it will be freed. If [method@GLib.Dir.close] is
+// called when the reference count is greater than zero, the directory is closed
+// but the `GDir` structure will not be freed until its reference count reaches
+// zero.
+//
+// It is an error to call any of the `GDir` methods other than
+// [method@GLib.Dir.ref] and [method@GLib.Dir.unref] on a `GDir` after calling
+// [method@GLib.Dir.close] on it.
+func (x *Dir) Unref() {
+
+	xDirUnref(x.GoPointer())
+
+}
+
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xDirGLibType, lib, "g_dir_get_type")
+
+	core.PuregoSafeRegister(&xDirOpen, lib, "g_dir_open")
+
 	core.PuregoSafeRegister(&xDirClose, lib, "g_dir_close")
 	core.PuregoSafeRegister(&xDirReadName, lib, "g_dir_read_name")
+	core.PuregoSafeRegister(&xDirRef, lib, "g_dir_ref")
 	core.PuregoSafeRegister(&xDirRewind, lib, "g_dir_rewind")
+	core.PuregoSafeRegister(&xDirUnref, lib, "g_dir_unref")
 
 }

@@ -61,7 +61,7 @@ func (x *TlsCertificatePrivate) GoPointer() uintptr {
 // This can represent either a certificate only (eg, the certificate
 // received by a client from a server), or the combination of
 // a certificate and a private key (which is needed when acting as a
-// #GTlsServerConnection).
+// [iface@Gio.TlsServerConnection]).
 type TlsCertificate struct {
 	gobject.Object
 }
@@ -378,6 +378,8 @@ var xTlsCertificateVerify func(uintptr, uintptr, uintptr) TlsCertificateFlags
 // certificate outside the context of making a connection, or to
 // check a certificate against a CA that is not part of the system
 // CA database.
+//
+// If @cert is valid, %G_TLS_CERTIFICATE_NO_FLAGS is returned.
 //
 // If @identity is not %NULL, @cert's name(s) will be compared against
 // it, and %G_TLS_CERTIFICATE_BAD_IDENTITY will be set in the return

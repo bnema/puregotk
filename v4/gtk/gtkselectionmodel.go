@@ -51,6 +51,7 @@ func (x *SelectionModelInterface) GoPointer() uintptr {
 }
 
 // OverrideIsSelected sets the callback function.
+// Return if the item at the given position is selected.
 func (x *SelectionModelInterface) OverrideIsSelected(cb func(SelectionModel, uint) bool) {
 	if cb == nil {
 		x.xIsSelected = 0
@@ -62,6 +63,7 @@ func (x *SelectionModelInterface) OverrideIsSelected(cb func(SelectionModel, uin
 }
 
 // GetIsSelected gets the callback function.
+// Return if the item at the given position is selected.
 func (x *SelectionModelInterface) GetIsSelected() func(SelectionModel, uint) bool {
 	if x.xIsSelected == 0 {
 		return nil
@@ -74,6 +76,10 @@ func (x *SelectionModelInterface) GetIsSelected() func(SelectionModel, uint) boo
 }
 
 // OverrideGetSelectionInRange sets the callback function.
+// Return a bitset with all currently selected
+//
+//	items in the given range. By default, this function will call
+//	`GtkSelectionModel::is_selected()` on all items in the given range.
 func (x *SelectionModelInterface) OverrideGetSelectionInRange(cb func(SelectionModel, uint, uint) *Bitset) {
 	if cb == nil {
 		x.xGetSelectionInRange = 0
@@ -85,6 +91,10 @@ func (x *SelectionModelInterface) OverrideGetSelectionInRange(cb func(SelectionM
 }
 
 // GetGetSelectionInRange gets the callback function.
+// Return a bitset with all currently selected
+//
+//	items in the given range. By default, this function will call
+//	`GtkSelectionModel::is_selected()` on all items in the given range.
 func (x *SelectionModelInterface) GetGetSelectionInRange() func(SelectionModel, uint, uint) *Bitset {
 	if x.xGetSelectionInRange == 0 {
 		return nil
@@ -97,6 +107,9 @@ func (x *SelectionModelInterface) GetGetSelectionInRange() func(SelectionModel, 
 }
 
 // OverrideSelectItem sets the callback function.
+// Select the item in the given position. If the operation
+//
+//	is known to fail, return %FALSE.
 func (x *SelectionModelInterface) OverrideSelectItem(cb func(SelectionModel, uint, bool) bool) {
 	if cb == nil {
 		x.xSelectItem = 0
@@ -108,6 +121,9 @@ func (x *SelectionModelInterface) OverrideSelectItem(cb func(SelectionModel, uin
 }
 
 // GetSelectItem gets the callback function.
+// Select the item in the given position. If the operation
+//
+//	is known to fail, return %FALSE.
 func (x *SelectionModelInterface) GetSelectItem() func(SelectionModel, uint, bool) bool {
 	if x.xSelectItem == 0 {
 		return nil
@@ -120,6 +136,9 @@ func (x *SelectionModelInterface) GetSelectItem() func(SelectionModel, uint, boo
 }
 
 // OverrideUnselectItem sets the callback function.
+// Unselect the item in the given position. If the
+//
+//	operation is known to fail, return %FALSE.
 func (x *SelectionModelInterface) OverrideUnselectItem(cb func(SelectionModel, uint) bool) {
 	if cb == nil {
 		x.xUnselectItem = 0
@@ -131,6 +150,9 @@ func (x *SelectionModelInterface) OverrideUnselectItem(cb func(SelectionModel, u
 }
 
 // GetUnselectItem gets the callback function.
+// Unselect the item in the given position. If the
+//
+//	operation is known to fail, return %FALSE.
 func (x *SelectionModelInterface) GetUnselectItem() func(SelectionModel, uint) bool {
 	if x.xUnselectItem == 0 {
 		return nil
@@ -143,6 +165,9 @@ func (x *SelectionModelInterface) GetUnselectItem() func(SelectionModel, uint) b
 }
 
 // OverrideSelectRange sets the callback function.
+// Select all items in the given range. If the operation
+//
+//	is unsupported or known to fail for all items, return %FALSE.
 func (x *SelectionModelInterface) OverrideSelectRange(cb func(SelectionModel, uint, uint, bool) bool) {
 	if cb == nil {
 		x.xSelectRange = 0
@@ -154,6 +179,9 @@ func (x *SelectionModelInterface) OverrideSelectRange(cb func(SelectionModel, ui
 }
 
 // GetSelectRange gets the callback function.
+// Select all items in the given range. If the operation
+//
+//	is unsupported or known to fail for all items, return %FALSE.
 func (x *SelectionModelInterface) GetSelectRange() func(SelectionModel, uint, uint, bool) bool {
 	if x.xSelectRange == 0 {
 		return nil
@@ -166,6 +194,10 @@ func (x *SelectionModelInterface) GetSelectRange() func(SelectionModel, uint, ui
 }
 
 // OverrideUnselectRange sets the callback function.
+// Unselect all items in the given range. If the
+//
+//	operation is unsupported or known to fail for all items, return
+//	%FALSE.
 func (x *SelectionModelInterface) OverrideUnselectRange(cb func(SelectionModel, uint, uint) bool) {
 	if cb == nil {
 		x.xUnselectRange = 0
@@ -177,6 +209,10 @@ func (x *SelectionModelInterface) OverrideUnselectRange(cb func(SelectionModel, 
 }
 
 // GetUnselectRange gets the callback function.
+// Unselect all items in the given range. If the
+//
+//	operation is unsupported or known to fail for all items, return
+//	%FALSE.
 func (x *SelectionModelInterface) GetUnselectRange() func(SelectionModel, uint, uint) bool {
 	if x.xUnselectRange == 0 {
 		return nil
@@ -189,6 +225,9 @@ func (x *SelectionModelInterface) GetUnselectRange() func(SelectionModel, uint, 
 }
 
 // OverrideSelectAll sets the callback function.
+// Select all items in the model. If the operation is
+//
+//	unsupported or known to fail for all items, return %FALSE.
 func (x *SelectionModelInterface) OverrideSelectAll(cb func(SelectionModel) bool) {
 	if cb == nil {
 		x.xSelectAll = 0
@@ -200,6 +239,9 @@ func (x *SelectionModelInterface) OverrideSelectAll(cb func(SelectionModel) bool
 }
 
 // GetSelectAll gets the callback function.
+// Select all items in the model. If the operation is
+//
+//	unsupported or known to fail for all items, return %FALSE.
 func (x *SelectionModelInterface) GetSelectAll() func(SelectionModel) bool {
 	if x.xSelectAll == 0 {
 		return nil
@@ -212,6 +254,9 @@ func (x *SelectionModelInterface) GetSelectAll() func(SelectionModel) bool {
 }
 
 // OverrideUnselectAll sets the callback function.
+// Unselect all items in the model. If the operation is
+//
+//	unsupported or known to fail for all items, return %FALSE.
 func (x *SelectionModelInterface) OverrideUnselectAll(cb func(SelectionModel) bool) {
 	if cb == nil {
 		x.xUnselectAll = 0
@@ -223,6 +268,9 @@ func (x *SelectionModelInterface) OverrideUnselectAll(cb func(SelectionModel) bo
 }
 
 // GetUnselectAll gets the callback function.
+// Unselect all items in the model. If the operation is
+//
+//	unsupported or known to fail for all items, return %FALSE.
 func (x *SelectionModelInterface) GetUnselectAll() func(SelectionModel) bool {
 	if x.xUnselectAll == 0 {
 		return nil
@@ -235,6 +283,10 @@ func (x *SelectionModelInterface) GetUnselectAll() func(SelectionModel) bool {
 }
 
 // OverrideSetSelection sets the callback function.
+// Set selection state of all items in mask to selected.
+//
+//	See gtk_selection_model_set_selection() for a detailed explanation
+//	of this function.
 func (x *SelectionModelInterface) OverrideSetSelection(cb func(SelectionModel, *Bitset, *Bitset) bool) {
 	if cb == nil {
 		x.xSetSelection = 0
@@ -246,6 +298,10 @@ func (x *SelectionModelInterface) OverrideSetSelection(cb func(SelectionModel, *
 }
 
 // GetSetSelection gets the callback function.
+// Set selection state of all items in mask to selected.
+//
+//	See gtk_selection_model_set_selection() for a detailed explanation
+//	of this function.
 func (x *SelectionModelInterface) GetSetSelection() func(SelectionModel, *Bitset, *Bitset) bool {
 	if x.xSetSelection == 0 {
 		return nil
@@ -257,7 +313,7 @@ func (x *SelectionModelInterface) GetSetSelection() func(SelectionModel, *Bitset
 	}
 }
 
-// `GtkSelectionModel` is an interface that add support for selection to list models.
+// An interface that adds support for selection to list models.
 //
 // This support is then used by widgets using list models to add the ability
 // to select and unselect various items.
@@ -385,7 +441,7 @@ func (x *SelectionModelBase) SelectRange(PositionVar uint, NItemsVar uint, Unsel
 
 // Helper function for implementations of `GtkSelectionModel`.
 //
-// Call this when a the selection changes to emit the
+// Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
 func (x *SelectionModelBase) SelectionChanged(PositionVar uint, NItemsVar uint) {
 

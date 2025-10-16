@@ -6,6 +6,47 @@ import (
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
+const (
+	// Evaluates to the initial reference count for `gatomicrefcount`.
+	//
+	// This macro is useful for initializing `gatomicrefcount` fields inside
+	// structures, for instance:
+	//
+	// |[&lt;!-- language="C" --&gt;
+	// typedef struct {
+	//   gatomicrefcount ref_count;
+	//   char *name;
+	//   char *address;
+	// } Person;
+	//
+	// static const Person default_person = {
+	//   .ref_count = G_ATOMIC_REF_COUNT_INIT,
+	//   .name = "Default name",
+	//   .address = "Default address",
+	// };
+	// ]|
+	ATOMIC_REF_COUNT_INIT int = 1
+	// Evaluates to the initial reference count for `grefcount`.
+	//
+	// This macro is useful for initializing `grefcount` fields inside
+	// structures, for instance:
+	//
+	// |[&lt;!-- language="C" --&gt;
+	// typedef struct {
+	//   grefcount ref_count;
+	//   char *name;
+	//   char *address;
+	// } Person;
+	//
+	// static const Person default_person = {
+	//   .ref_count = G_REF_COUNT_INIT,
+	//   .name = "Default name",
+	//   .address = "Default address",
+	// };
+	// ]|
+	REF_COUNT_INIT int = -1
+)
+
 var xAtomicRefCountCompare func(int, int) bool
 
 // Atomically compares the current value of @arc with @val.
@@ -88,7 +129,7 @@ func RefCountInit(RcVar int) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

@@ -536,10 +536,13 @@ var xMessageDialogSetDefaultResponse func(uintptr, string)
 
 // Sets the ID of the default response of @self.
 //
-// If set, pressing &lt;kbd&gt;Enter&lt;/kbd&gt; will activate the corresponding button.
+// The button corresponding to this response will be set as the default widget
+// of @self.
 //
-// If set to `NULL` or to a non-existent response ID, pressing &lt;kbd&gt;Enter&lt;/kbd&gt;
-// will do nothing.
+// If not set, the default widget will not be set, and the last added response
+// will be focused by default.
+//
+// See [property@Gtk.Window:default-widget].
 func (x *MessageDialog) SetDefaultResponse(ResponseVar string) {
 
 	xMessageDialogSetDefaultResponse(x.GoPointer(), ResponseVar)
@@ -672,31 +675,162 @@ func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint32 
 	return gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *MessageDialog) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
+
+	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *MessageDialog) GetAccessibleParent() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *MessageDialog) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *MessageDialog) GetAtContext() *gtk.ATContext {
+	var cls *gtk.ATContext
+
+	cret := gtk.XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *MessageDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *MessageDialog) GetFirstAccessibleChild() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *MessageDialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *MessageDialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
+
+	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *MessageDialog) ResetProperty(PropertyVar gtk.AccessibleProperty) {
 
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *MessageDialog) ResetRelation(RelationVar gtk.AccessibleRelation) {
 
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *MessageDialog) ResetState(StateVar gtk.AccessibleState) {
 
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *MessageDialog) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *MessageDialog) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *MessageDialog) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
+
+	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -742,7 +876,7 @@ func (x *MessageDialog) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -772,13 +906,17 @@ func (x *MessageDialog) UpdateRelationValue(NRelationsVar int, RelationsVar []gt
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -808,7 +946,7 @@ func (x *MessageDialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessi
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *MessageDialog) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())

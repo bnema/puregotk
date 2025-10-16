@@ -8,11 +8,88 @@ import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The `GdkContentFormats` structure is used to advertise and negotiate the
-// format of content.
+// Provides information to interpret colors and pixels in a variety of ways.
+//
+// They are also known as
+// [*color spaces*](https://en.wikipedia.org/wiki/Color_space).
+//
+// Crucially, GTK knows how to convert colors from one color
+// state to another.
+//
+// `GdkColorState` objects are immutable and therefore threadsafe.
+type ColorState struct {
+	_ structs.HostLayout
+}
+
+var xColorStateGLibType func() types.GType
+
+func ColorStateGLibType() types.GType {
+	return xColorStateGLibType()
+}
+
+func (x *ColorState) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+var xColorStateCreateCicpParams func(uintptr) uintptr
+
+// Create a [class@Gdk.CicpParams] representing the colorstate.
+//
+// It is not guaranteed that every `GdkColorState` can be
+// represented with Cicp parameters. If that is the case,
+// this function returns `NULL`.
+func (x *ColorState) CreateCicpParams() *CicpParams {
+	var cls *CicpParams
+
+	cret := xColorStateCreateCicpParams(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &CicpParams{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xColorStateEqual func(uintptr, *ColorState) bool
+
+// Compares two `GdkColorStates` for equality.
+//
+// Note that this function is not guaranteed to be perfect and two objects
+// describing the same color state may compare not equal. However, different
+// color states will never compare equal.
+func (x *ColorState) Equal(OtherVar *ColorState) bool {
+
+	cret := xColorStateEqual(x.GoPointer(), OtherVar)
+	return cret
+}
+
+var xColorStateRef func(uintptr) *ColorState
+
+// Increase the reference count of @self.
+func (x *ColorState) Ref() *ColorState {
+
+	cret := xColorStateRef(x.GoPointer())
+	return cret
+}
+
+var xColorStateUnref func(uintptr)
+
+// Decrease the reference count of @self.
+//
+// Unless @self is static, it will be freed
+// when the reference count reaches zero.
+func (x *ColorState) Unref() {
+
+	xColorStateUnref(x.GoPointer())
+
+}
+
+// Used to advertise and negotiate the format of content.
 //
 // You will encounter `GdkContentFormats` when interacting with objects
 // controlling operations that pass data between different widgets, window
@@ -118,6 +195,15 @@ var xContentFormatsGetMimeTypes func(uintptr, uint) []string
 func (x *ContentFormats) GetMimeTypes(NMimeTypesVar uint) []string {
 
 	cret := xContentFormatsGetMimeTypes(x.GoPointer(), NMimeTypesVar)
+	return cret
+}
+
+var xContentFormatsIsEmpty func(uintptr) bool
+
+// Returns whether the content formats contain any formats.
+func (x *ContentFormats) IsEmpty() bool {
+
+	cret := xContentFormatsIsEmpty(x.GoPointer())
 	return cret
 }
 
@@ -250,7 +336,104 @@ func (x *ContentFormats) Unref() {
 
 }
 
-// A `GdkKeymapKey` is a hardware key that can be mapped to a keyval.
+// Provides information about supported DMA buffer formats.
+//
+// You can query whether a given format is supported with
+// [method@Gdk.DmabufFormats.contains] and you can iterate
+// over the list of all supported formats with
+// [method@Gdk.DmabufFormats.get_n_formats] and
+// [method@Gdk.DmabufFormats.get_format].
+//
+// The list of supported formats is sorted by preference,
+// with the best formats coming first.
+//
+// The list may contains (format, modifier) pairs where the modifier
+// is `DMA_FORMAT_MOD_INVALID`, indicating that **_implicit modifiers_**
+// may be used with this format.
+//
+// See [class@Gdk.DmabufTextureBuilder] for more information
+// about DMA buffers.
+//
+// Note that DMA buffers only exist on Linux.
+type DmabufFormats struct {
+	_ structs.HostLayout
+}
+
+var xDmabufFormatsGLibType func() types.GType
+
+func DmabufFormatsGLibType() types.GType {
+	return xDmabufFormatsGLibType()
+}
+
+func (x *DmabufFormats) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+var xDmabufFormatsContains func(uintptr, uint32, uint64) bool
+
+// Returns whether a given format is contained in @formats.
+func (x *DmabufFormats) Contains(FourccVar uint32, ModifierVar uint64) bool {
+
+	cret := xDmabufFormatsContains(x.GoPointer(), FourccVar, ModifierVar)
+	return cret
+}
+
+var xDmabufFormatsEqual func(uintptr, *DmabufFormats) bool
+
+// Returns whether @formats1 and @formats2 contain the
+// same dmabuf formats, in the same order.
+func (x *DmabufFormats) Equal(Formats2Var *DmabufFormats) bool {
+
+	cret := xDmabufFormatsEqual(x.GoPointer(), Formats2Var)
+	return cret
+}
+
+var xDmabufFormatsGetFormat func(uintptr, uint, uint32, uint64)
+
+// Gets the fourcc code and modifier for a format
+// that is contained in @formats.
+func (x *DmabufFormats) GetFormat(IdxVar uint, FourccVar uint32, ModifierVar uint64) {
+
+	xDmabufFormatsGetFormat(x.GoPointer(), IdxVar, FourccVar, ModifierVar)
+
+}
+
+var xDmabufFormatsGetNFormats func(uintptr) uint
+
+// Returns the number of formats that the @formats object
+// contains.
+//
+// Note that DMA buffers are a Linux concept, so on other
+// platforms, [method@Gdk.DmabufFormats.get_n_formats] will
+// always return zero.
+func (x *DmabufFormats) GetNFormats() uint {
+
+	cret := xDmabufFormatsGetNFormats(x.GoPointer())
+	return cret
+}
+
+var xDmabufFormatsRef func(uintptr) *DmabufFormats
+
+// Increases the reference count of @formats.
+func (x *DmabufFormats) Ref() *DmabufFormats {
+
+	cret := xDmabufFormatsRef(x.GoPointer())
+	return cret
+}
+
+var xDmabufFormatsUnref func(uintptr)
+
+// Decreases the reference count of @formats.
+//
+// When the reference count reaches zero,
+// the object is freed.
+func (x *DmabufFormats) Unref() {
+
+	xDmabufFormatsUnref(x.GoPointer())
+
+}
+
+// Represents a hardware key that can be mapped to a keyval.
 type KeymapKey struct {
 	_ structs.HostLayout
 
@@ -265,7 +448,7 @@ func (x *KeymapKey) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A `GdkRectangle` data type for representing rectangles.
+// Represents a rectangle.
 //
 // `GdkRectangle` is identical to `cairo_rectangle_t`. Together with Cairo’s
 // `cairo_region_t` data type, these are the central types for representing
@@ -351,6 +534,152 @@ func (x *Rectangle) Union(Src2Var *Rectangle, DestVar *Rectangle) {
 
 }
 
+// Used to download the contents of a [class@Gdk.Texture].
+//
+// It is intended to be created as a short-term object for a single download,
+// but can be used for multiple downloads of different textures or with different
+// settings.
+//
+// `GdkTextureDownloader` can be used to convert data between different formats.
+// Create a `GdkTexture` for the existing format and then download it in a
+// different format.
+type TextureDownloader struct {
+	_ structs.HostLayout
+}
+
+var xTextureDownloaderGLibType func() types.GType
+
+func TextureDownloaderGLibType() types.GType {
+	return xTextureDownloaderGLibType()
+}
+
+func (x *TextureDownloader) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewTextureDownloader func(uintptr) *TextureDownloader
+
+// Creates a new texture downloader for @texture.
+//
+// By default, the downloader will convert the data to
+// the default memory format, and to the sRGB color state.
+func NewTextureDownloader(TextureVar *Texture) *TextureDownloader {
+
+	cret := xNewTextureDownloader(TextureVar.GoPointer())
+	return cret
+}
+
+var xTextureDownloaderCopy func(uintptr) *TextureDownloader
+
+// Creates a copy of the downloader.
+//
+// This function is meant for language bindings.
+func (x *TextureDownloader) Copy() *TextureDownloader {
+
+	cret := xTextureDownloaderCopy(x.GoPointer())
+	return cret
+}
+
+var xTextureDownloaderDownloadBytes func(uintptr, uint) *glib.Bytes
+
+// Downloads the given texture pixels into a `GBytes`. The rowstride will
+// be stored in the stride value.
+//
+// This function will abort if it tries to download a large texture and
+// fails to allocate memory. If you think that may happen, you should handle
+// memory allocation yourself and use [method@Gdk.TextureDownloader.download_into]
+// once allocation succeeded.
+func (x *TextureDownloader) DownloadBytes(OutStrideVar uint) *glib.Bytes {
+
+	cret := xTextureDownloaderDownloadBytes(x.GoPointer(), OutStrideVar)
+	return cret
+}
+
+var xTextureDownloaderDownloadInto func(uintptr, []byte, uint)
+
+// Downloads the @texture into local memory.
+func (x *TextureDownloader) DownloadInto(DataVar []byte, StrideVar uint) {
+
+	xTextureDownloaderDownloadInto(x.GoPointer(), DataVar, StrideVar)
+
+}
+
+var xTextureDownloaderFree func(uintptr)
+
+// Frees the given downloader and all its associated resources.
+func (x *TextureDownloader) Free() {
+
+	xTextureDownloaderFree(x.GoPointer())
+
+}
+
+var xTextureDownloaderGetColorState func(uintptr) *ColorState
+
+// Gets the color state that the data will be downloaded in.
+func (x *TextureDownloader) GetColorState() *ColorState {
+
+	cret := xTextureDownloaderGetColorState(x.GoPointer())
+	return cret
+}
+
+var xTextureDownloaderGetFormat func(uintptr) MemoryFormat
+
+// Gets the format that the data will be downloaded in.
+func (x *TextureDownloader) GetFormat() MemoryFormat {
+
+	cret := xTextureDownloaderGetFormat(x.GoPointer())
+	return cret
+}
+
+var xTextureDownloaderGetTexture func(uintptr) uintptr
+
+// Gets the texture that the downloader will download.
+func (x *TextureDownloader) GetTexture() *Texture {
+	var cls *Texture
+
+	cret := xTextureDownloaderGetTexture(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &Texture{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xTextureDownloaderSetColorState func(uintptr, *ColorState)
+
+// Sets the color state the downloader will convert the data to.
+//
+// By default, the sRGB colorstate returned by [func@ColorState.get_srgb]
+// is used.
+func (x *TextureDownloader) SetColorState(ColorStateVar *ColorState) {
+
+	xTextureDownloaderSetColorState(x.GoPointer(), ColorStateVar)
+
+}
+
+var xTextureDownloaderSetFormat func(uintptr, MemoryFormat)
+
+// Sets the format the downloader will download.
+//
+// By default, GDK_MEMORY_DEFAULT is set.
+func (x *TextureDownloader) SetFormat(FormatVar MemoryFormat) {
+
+	xTextureDownloaderSetFormat(x.GoPointer(), FormatVar)
+
+}
+
+var xTextureDownloaderSetTexture func(uintptr, uintptr)
+
+// Changes the texture the downloader will download.
+func (x *TextureDownloader) SetTexture(TextureVar *Texture) {
+
+	xTextureDownloaderSetTexture(x.GoPointer(), TextureVar.GoPointer())
+
+}
+
 const (
 	// Represents the current time, and can be used anywhere a time is expected.
 	CURRENT_TIME int = 0
@@ -364,6 +693,13 @@ func init() {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xColorStateGLibType, lib, "gdk_color_state_get_type")
+
+	core.PuregoSafeRegister(&xColorStateCreateCicpParams, lib, "gdk_color_state_create_cicp_params")
+	core.PuregoSafeRegister(&xColorStateEqual, lib, "gdk_color_state_equal")
+	core.PuregoSafeRegister(&xColorStateRef, lib, "gdk_color_state_ref")
+	core.PuregoSafeRegister(&xColorStateUnref, lib, "gdk_color_state_unref")
+
 	core.PuregoSafeRegister(&xContentFormatsGLibType, lib, "gdk_content_formats_get_type")
 
 	core.PuregoSafeRegister(&xNewContentFormats, lib, "gdk_content_formats_new")
@@ -373,6 +709,7 @@ func init() {
 	core.PuregoSafeRegister(&xContentFormatsContainMimeType, lib, "gdk_content_formats_contain_mime_type")
 	core.PuregoSafeRegister(&xContentFormatsGetGtypes, lib, "gdk_content_formats_get_gtypes")
 	core.PuregoSafeRegister(&xContentFormatsGetMimeTypes, lib, "gdk_content_formats_get_mime_types")
+	core.PuregoSafeRegister(&xContentFormatsIsEmpty, lib, "gdk_content_formats_is_empty")
 	core.PuregoSafeRegister(&xContentFormatsMatch, lib, "gdk_content_formats_match")
 	core.PuregoSafeRegister(&xContentFormatsMatchGtype, lib, "gdk_content_formats_match_gtype")
 	core.PuregoSafeRegister(&xContentFormatsMatchMimeType, lib, "gdk_content_formats_match_mime_type")
@@ -386,11 +723,35 @@ func init() {
 	core.PuregoSafeRegister(&xContentFormatsUnionSerializeMimeTypes, lib, "gdk_content_formats_union_serialize_mime_types")
 	core.PuregoSafeRegister(&xContentFormatsUnref, lib, "gdk_content_formats_unref")
 
+	core.PuregoSafeRegister(&xDmabufFormatsGLibType, lib, "gdk_dmabuf_formats_get_type")
+
+	core.PuregoSafeRegister(&xDmabufFormatsContains, lib, "gdk_dmabuf_formats_contains")
+	core.PuregoSafeRegister(&xDmabufFormatsEqual, lib, "gdk_dmabuf_formats_equal")
+	core.PuregoSafeRegister(&xDmabufFormatsGetFormat, lib, "gdk_dmabuf_formats_get_format")
+	core.PuregoSafeRegister(&xDmabufFormatsGetNFormats, lib, "gdk_dmabuf_formats_get_n_formats")
+	core.PuregoSafeRegister(&xDmabufFormatsRef, lib, "gdk_dmabuf_formats_ref")
+	core.PuregoSafeRegister(&xDmabufFormatsUnref, lib, "gdk_dmabuf_formats_unref")
+
 	core.PuregoSafeRegister(&xRectangleGLibType, lib, "gdk_rectangle_get_type")
 
 	core.PuregoSafeRegister(&xRectangleContainsPoint, lib, "gdk_rectangle_contains_point")
 	core.PuregoSafeRegister(&xRectangleEqual, lib, "gdk_rectangle_equal")
 	core.PuregoSafeRegister(&xRectangleIntersect, lib, "gdk_rectangle_intersect")
 	core.PuregoSafeRegister(&xRectangleUnion, lib, "gdk_rectangle_union")
+
+	core.PuregoSafeRegister(&xTextureDownloaderGLibType, lib, "gdk_texture_downloader_get_type")
+
+	core.PuregoSafeRegister(&xNewTextureDownloader, lib, "gdk_texture_downloader_new")
+
+	core.PuregoSafeRegister(&xTextureDownloaderCopy, lib, "gdk_texture_downloader_copy")
+	core.PuregoSafeRegister(&xTextureDownloaderDownloadBytes, lib, "gdk_texture_downloader_download_bytes")
+	core.PuregoSafeRegister(&xTextureDownloaderDownloadInto, lib, "gdk_texture_downloader_download_into")
+	core.PuregoSafeRegister(&xTextureDownloaderFree, lib, "gdk_texture_downloader_free")
+	core.PuregoSafeRegister(&xTextureDownloaderGetColorState, lib, "gdk_texture_downloader_get_color_state")
+	core.PuregoSafeRegister(&xTextureDownloaderGetFormat, lib, "gdk_texture_downloader_get_format")
+	core.PuregoSafeRegister(&xTextureDownloaderGetTexture, lib, "gdk_texture_downloader_get_texture")
+	core.PuregoSafeRegister(&xTextureDownloaderSetColorState, lib, "gdk_texture_downloader_set_color_state")
+	core.PuregoSafeRegister(&xTextureDownloaderSetFormat, lib, "gdk_texture_downloader_set_format")
+	core.PuregoSafeRegister(&xTextureDownloaderSetTexture, lib, "gdk_texture_downloader_set_texture")
 
 }

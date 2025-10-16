@@ -2,6 +2,9 @@
 package glib
 
 import (
+	"structs"
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
@@ -9,6 +12,75 @@ import (
 // The type of functions to be called when a UNIX fd watch source
 // triggers.
 type UnixFDSourceFunc func(int, IOCondition, uintptr) bool
+
+// A Unix pipe. The advantage of this type over `int[2]` is that it can
+// be closed automatically when it goes out of scope, using `g_auto(GUnixPipe)`,
+// on compilers that support that feature.
+type UnixPipe struct {
+	_ structs.HostLayout
+
+	Fds [2]int
+}
+
+func (x *UnixPipe) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+// Mnemonic constants for the ends of a Unix pipe.
+type UnixPipeEnd int
+
+const (
+
+	// The readable file descriptor 0
+	GUnixPipeEndReadValue UnixPipeEnd = 0
+	// The writable file descriptor 1
+	GUnixPipeEndWriteValue UnixPipeEnd = 1
+)
+
+var xClosefrom func(int) int
+
+// Close every file descriptor equal to or greater than @lowfd.
+//
+// Typically @lowfd will be 3, to leave standard input, standard output
+// and standard error open.
+//
+// This is the same as Linux `close_range (lowfd, ~0U, 0)`,
+// but portable to other OSs and to older versions of Linux.
+// Equivalently, it is the same as BSD `closefrom (lowfd)`, but portable,
+// and async-signal-safe on all OSs.
+//
+// This function is async-signal safe, making it safe to call from a
+// signal handler or a [callback@GLib.SpawnChildSetupFunc], as long as @lowfd is
+// non-negative.
+// See [`signal(7)`](man:signal(7)) and
+// [`signal-safety(7)`](man:signal-safety(7)) for more details.
+func Closefrom(LowfdVar int) int {
+
+	cret := xClosefrom(LowfdVar)
+	return cret
+}
+
+var xFdwalkSetCloexec func(int) int
+
+// Mark every file descriptor equal to or greater than @lowfd to be closed
+// at the next `execve()` or similar, as if via the `FD_CLOEXEC` flag.
+//
+// Typically @lowfd will be 3, to leave standard input, standard output
+// and standard error open after exec.
+//
+// This is the same as Linux `close_range (lowfd, ~0U, CLOSE_RANGE_CLOEXEC)`,
+// but portable to other OSs and to older versions of Linux.
+//
+// This function is async-signal safe, making it safe to call from a
+// signal handler or a [callback@GLib.SpawnChildSetupFunc], as long as @lowfd is
+// non-negative.
+// See [`signal(7)`](man:signal(7)) and
+// [`signal-safety(7)`](man:signal-safety(7)) for more details.
+func FdwalkSetCloexec(LowfdVar int) int {
+
+	cret := xFdwalkSetCloexec(LowfdVar)
+	return cret
+}
 
 var xUnixFdAdd func(int, IOCondition, uintptr, uintptr) uint
 
@@ -47,10 +119,13 @@ func UnixFdAddFull(PriorityVar int, FdVar int, ConditionVar IOCondition, Functio
 
 var xUnixFdSourceNew func(int, IOCondition) *Source
 
-// Creates a #GSource to watch for a particular IO condition on a file
+// Creates a #GSource to watch for a particular I/O condition on a file
 // descriptor.
 //
-// The source will never close the fd -- you must do it yourself.
+// The source will never close the @fd — you must do it yourself.
+//
+// Any callback attached to the returned #GSource must have type
+// #GUnixFDSourceFunc.
 func UnixFdSourceNew(FdVar int, ConditionVar IOCondition) *Source {
 
 	cret := xUnixFdSourceNew(FdVar, ConditionVar)
@@ -81,17 +156,28 @@ func UnixGetPasswdEntry(UserNameVar string) (uintptr, error) {
 
 }
 
-var xUnixOpenPipe func(int, int, **Error) bool
+var xUnixOpenPipe func([2]int, int, **Error) bool
 
 // Similar to the UNIX pipe() call, but on modern systems like Linux
 // uses the pipe2() system call, which atomically creates a pipe with
-// the configured flags. The only supported flag currently is
-// %FD_CLOEXEC. If for example you want to configure %O_NONBLOCK, that
-// must still be done separately with fcntl().
+// the configured flags.
 //
-// This function does not take %O_CLOEXEC, it takes %FD_CLOEXEC as if
-// for fcntl(); these are different on Linux/glibc.
-func UnixOpenPipe(FdsVar int, FlagsVar int) (bool, error) {
+// As of GLib 2.78, the supported flags are `O_CLOEXEC`/`FD_CLOEXEC` (see below)
+// and `O_NONBLOCK`. Prior to GLib 2.78, only `FD_CLOEXEC` was supported — if
+// you wanted to configure `O_NONBLOCK` then that had to be done separately with
+// `fcntl()`.
+//
+// Since GLib 2.80, the constants %G_UNIX_PIPE_END_READ and
+// %G_UNIX_PIPE_END_WRITE can be used as mnemonic indexes in @fds.
+//
+// It is a programmer error to call this function with unsupported flags, and a
+// critical warning will be raised.
+//
+// As of GLib 2.78, it is preferred to pass `O_CLOEXEC` in, rather than
+// `FD_CLOEXEC`, as that matches the underlying `pipe()` API more closely. Prior
+// to 2.78, only `FD_CLOEXEC` was supported. Support for `FD_CLOEXEC` may be
+// deprecated and removed in future.
+func UnixOpenPipe(FdsVar [2]int, FlagsVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xUnixOpenPipe(FdsVar, FlagsVar, &cerr)
@@ -153,11 +239,11 @@ var xUnixSignalSourceNew func(int) *Source
 //
 // For example, an effective use of this function is to handle `SIGTERM`
 // cleanly; flushing any outstanding files, and then calling
-// g_main_loop_quit ().  It is not safe to do any of this a regular
-// UNIX signal handler; your handler may be invoked while malloc() or
-// another library function is running, causing reentrancy if you
-// attempt to use it from the handler.  None of the GLib/GObject API
-// is safe against this kind of reentrancy.
+// g_main_loop_quit().  It is not safe to do any of this from a regular
+// UNIX signal handler; such a handler may be invoked while malloc() or
+// another library function is running, causing reentrancy issues if the
+// handler attempts to use those functions.  None of the GLib/GObject
+// API is safe against this kind of reentrancy.
 //
 // The interaction of this source when combined with native UNIX
 // functions like sigprocmask() is not defined.
@@ -173,12 +259,14 @@ func UnixSignalSourceNew(SignumVar int) *Source {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xClosefrom, lib, "g_closefrom")
+	core.PuregoSafeRegister(&xFdwalkSetCloexec, lib, "g_fdwalk_set_cloexec")
 	core.PuregoSafeRegister(&xUnixFdAdd, lib, "g_unix_fd_add")
 	core.PuregoSafeRegister(&xUnixFdAddFull, lib, "g_unix_fd_add_full")
 	core.PuregoSafeRegister(&xUnixFdSourceNew, lib, "g_unix_fd_source_new")

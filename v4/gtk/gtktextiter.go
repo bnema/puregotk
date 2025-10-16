@@ -18,7 +18,7 @@ import (
 // gtk_text_iter_backward_find_char().
 type TextCharPredicate func(uint32, uintptr) bool
 
-// An iterator for the contents of a `GtkTextBuffer`.
+// Iterates over the contents of a `GtkTextBuffer`.
 //
 // You may wish to begin by reading the
 // [text widget conceptual overview](section-text-widget.html),
@@ -112,7 +112,7 @@ func (x *TextIter) BackwardChars(CountVar int) bool {
 
 var xTextIterBackwardCursorPosition func(uintptr) bool
 
-// Like gtk_text_iter_forward_cursor_position(), but moves backward.
+// Like [method@Gtk.TextIter.forward_cursor_position], but moves backward.
 func (x *TextIter) BackwardCursorPosition() bool {
 
 	cret := xTextIterBackwardCursorPosition(x.GoPointer())
@@ -132,7 +132,7 @@ func (x *TextIter) BackwardCursorPositions(CountVar int) bool {
 
 var xTextIterBackwardFindChar func(uintptr, uintptr, uintptr, *TextIter) bool
 
-// Same as gtk_text_iter_forward_find_char(),
+// Same as [method@Gtk.TextIter.forward_find_char],
 // but goes backward from @iter.
 func (x *TextIter) BackwardFindChar(PredVar *TextCharPredicate, UserDataVar uintptr, LimitVar *TextIter) bool {
 
@@ -177,7 +177,7 @@ func (x *TextIter) BackwardLines(CountVar int) bool {
 
 var xTextIterBackwardSearch func(uintptr, string, TextSearchFlags, *TextIter, *TextIter, *TextIter) bool
 
-// Same as gtk_text_iter_forward_search(), but moves backward.
+// Same as [method@Gtk.TextIter.forward_search], but moves backward.
 //
 // @match_end will never be set to a `GtkTextIter` located after @iter,
 // even if there is a possible @match_start before or at @iter.
@@ -204,7 +204,7 @@ func (x *TextIter) BackwardSentenceStart() bool {
 
 var xTextIterBackwardSentenceStarts func(uintptr, int) bool
 
-// Calls gtk_text_iter_backward_sentence_start() up to @count times.
+// Calls [method@Gtk.TextIter.backward_sentence_start] up to @count times.
 //
 // If @count is negative, moves forward instead of backward.
 func (x *TextIter) BackwardSentenceStarts(CountVar int) bool {
@@ -232,7 +232,7 @@ func (x *TextIter) BackwardToTagToggle(TagVar *TextTag) bool {
 
 var xTextIterBackwardVisibleCursorPosition func(uintptr) bool
 
-// Moves @iter forward to the previous visible cursor position.
+// Moves @iter backward to the previous visible cursor position.
 //
 // See [method@Gtk.TextIter.backward_cursor_position] for details.
 func (x *TextIter) BackwardVisibleCursorPosition() bool {
@@ -304,7 +304,7 @@ func (x *TextIter) BackwardVisibleWordStart() bool {
 
 var xTextIterBackwardVisibleWordStarts func(uintptr, int) bool
 
-// Calls gtk_text_iter_backward_visible_word_start() up to @count times.
+// Calls [method@Gtk.TextIter.backward_visible_word_start] up to @count times.
 func (x *TextIter) BackwardVisibleWordStarts(CountVar int) bool {
 
 	cret := xTextIterBackwardVisibleWordStarts(x.GoPointer(), CountVar)
@@ -328,7 +328,7 @@ func (x *TextIter) BackwardWordStart() bool {
 
 var xTextIterBackwardWordStarts func(uintptr, int) bool
 
-// Calls gtk_text_iter_backward_word_start() up to @count times.
+// Calls [method@Gtk.TextIter.backward_word_start] up to @count times.
 func (x *TextIter) BackwardWordStarts(CountVar int) bool {
 
 	cret := xTextIterBackwardWordStarts(x.GoPointer(), CountVar)
@@ -622,7 +622,7 @@ func (x *TextIter) ForwardSentenceEnd() bool {
 
 var xTextIterForwardSentenceEnds func(uintptr, int) bool
 
-// Calls gtk_text_iter_forward_sentence_end() @count times.
+// Calls [method@Gtk.TextIter.forward_sentence_end] @count times.
 //
 // If @count is negative, moves backward instead of forward.
 func (x *TextIter) ForwardSentenceEnds(CountVar int) bool {
@@ -636,7 +636,7 @@ var xTextIterForwardToEnd func(uintptr)
 // Moves @iter forward to the “end iterator”, which points
 // one past the last valid character in the buffer.
 //
-// gtk_text_iter_get_char() called on the end iterator
+// [method@Gtk.TextIter.get_char] called on the end iterator
 // returns 0, which is convenient for writing loops.
 func (x *TextIter) ForwardToEnd() {
 
@@ -751,7 +751,7 @@ func (x *TextIter) ForwardVisibleWordEnd() bool {
 
 var xTextIterForwardVisibleWordEnds func(uintptr, int) bool
 
-// Calls gtk_text_iter_forward_visible_word_end() up to @count times.
+// Calls [method@Gtk.TextIter.forward_visible_word_end] up to @count times.
 func (x *TextIter) ForwardVisibleWordEnds(CountVar int) bool {
 
 	cret := xTextIterForwardVisibleWordEnds(x.GoPointer(), CountVar)
@@ -775,7 +775,7 @@ func (x *TextIter) ForwardWordEnd() bool {
 
 var xTextIterForwardWordEnds func(uintptr, int) bool
 
-// Calls gtk_text_iter_forward_word_end() up to @count times.
+// Calls [method@Gtk.TextIter.forward_word_end] up to @count times.
 func (x *TextIter) ForwardWordEnds(CountVar int) bool {
 
 	cret := xTextIterForwardWordEnds(x.GoPointer(), CountVar)
@@ -940,7 +940,7 @@ var xTextIterGetOffset func(uintptr) int
 //
 // Each character in a `GtkTextBuffer` has an offset,
 // starting with 0 for the first character in the buffer.
-// Use [method@Gtk,TextBuffer.get_iter_at_offset] to convert
+// Use [method@Gtk.TextBuffer.get_iter_at_offset] to convert
 // an offset back into an iterator.
 func (x *TextIter) GetOffset() int {
 
@@ -1156,7 +1156,7 @@ var xTextIterIsEnd func(uintptr) bool
 // Returns %TRUE if @iter is the end iterator.
 //
 // This means it is one past the last dereferenceable iterator
-// in the buffer. gtk_text_iter_is_end() is the most efficient
+// in the buffer. [method@Gtk.TextIter.is_end] is the most efficient
 // way to check whether an iterator is the end iterator.
 func (x *TextIter) IsEnd() bool {
 
@@ -1204,7 +1204,7 @@ func (x *TextIter) SetLine(LineNumberVar int) {
 
 var xTextIterSetLineIndex func(uintptr, int)
 
-// Same as gtk_text_iter_set_line_offset(), but works with a
+// Same as [method@Gtk.TextIter.set_line_offset], but works with a
 // byte index. The given byte index must be at
 // the start of a character, it can’t be in the middle of a UTF-8
 // encoded character.
@@ -1242,7 +1242,7 @@ func (x *TextIter) SetOffset(CharOffsetVar int) {
 
 var xTextIterSetVisibleLineIndex func(uintptr, int)
 
-// Like gtk_text_iter_set_line_index(), but the index is in visible
+// Like [method@Gtk.TextIter.set_line_index], but the index is in visible
 // bytes, i.e. text with a tag making it invisible is not counted
 // in the index.
 func (x *TextIter) SetVisibleLineIndex(ByteOnLineVar int) {
@@ -1253,7 +1253,7 @@ func (x *TextIter) SetVisibleLineIndex(ByteOnLineVar int) {
 
 var xTextIterSetVisibleLineOffset func(uintptr, int)
 
-// Like gtk_text_iter_set_line_offset(), but the offset is in visible
+// Like [method@Gtk.TextIter.set_line_offset], but the offset is in visible
 // characters, i.e. text with a tag making it invisible is not
 // counted in the offset.
 func (x *TextIter) SetVisibleLineOffset(CharOnLineVar int) {
@@ -1299,7 +1299,7 @@ var xTextIterStartsTag func(uintptr, uintptr) bool
 // @iter is at the beginning of the tagged range, and that the
 // character at @iter is inside the tagged range. In other
 // words, unlike [method@Gtk.TextIter.ends_tag], if
-// this function returns %TRUE, [method@Gtk.TextIter.has_tag
+// this function returns %TRUE, [method@Gtk.TextIter.has_tag]
 // will also return %TRUE for the same parameters.
 func (x *TextIter) StartsTag(TagVar *TextTag) bool {
 
@@ -1334,9 +1334,9 @@ func (x *TextIter) TogglesTag(TagVar *TextTag) bool {
 
 // Flags affecting how a search is done.
 //
-// If neither %GTK_TEXT_SEARCH_VISIBLE_ONLY nor %GTK_TEXT_SEARCH_TEXT_ONLY are
-// enabled, the match must be exact; the special 0xFFFC character will match
-// embedded paintables or child widgets.
+// If neither `GTK_TEXT_SEARCH_VISIBLE_ONLY` nor `GTK_TEXT_SEARCH_TEXT_ONLY`
+// are enabled, the match must be exact; the special 0xFFFC character will
+// match embedded paintables or child widgets.
 type TextSearchFlags int
 
 var xTextSearchFlagsGLibType func() types.GType

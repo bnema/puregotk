@@ -20,7 +20,7 @@ func (x *GestureClickClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkGestureClick` is a `GtkGesture` implementation for clicks.
+// Recognizes click gestures.
 //
 // It is able to recognize multiple clicks on a nearby zone, which
 // can be listened for through the [signal@Gtk.GestureClick::pressed]

@@ -122,7 +122,7 @@ func (x *WindowGroupClass) GetGtkReserved4() func() {
 	}
 }
 
-// `GtkWindowGroup` makes group of windows behave like separate applications.
+// Creates groups of windows that behave like separate applications.
 //
 // It achieves this by limiting the effect of GTK grabs and modality
 // to windows in the same group.

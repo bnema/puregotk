@@ -13,15 +13,15 @@ import (
 )
 
 // This struct defines a single action.  It is for use with
-// g_action_map_add_action_entries().
+// [method@Gio.ActionMap.add_action_entries].
 //
 // The order of the items in the structure are intended to reflect
 // frequency of use.  It is permissible to use an incomplete initialiser
-// in order to leave some of the later values as %NULL.  All values
+// in order to leave some of the later values as `NULL`.  All values
 // after @name are optional.  Additional optional fields may be added in
 // the future.
 //
-// See g_action_map_add_action_entries() for an example.
+// See [method@Gio.ActionMap.add_action_entries] for an example.
 type ActionEntry struct {
 	_ structs.HostLayout
 
@@ -43,6 +43,13 @@ func (x *ActionEntry) GoPointer() uintptr {
 }
 
 // OverrideActivate sets the callback function.
+// the callback to connect to the "activate" signal of the action.
+//
+//	Since GLib 2.40, this can be `NULL` for stateful actions, in which case
+//	the default handler is used. For boolean-stated actions with no
+//	parameter, this is a toggle. For other state types (and parameter type
+//	equal to the state type) this will be a function that just calls
+//	@change_state (which you should provide).
 func (x *ActionEntry) OverrideActivate(cb func(*SimpleAction, *glib.Variant, uintptr)) {
 	if cb == nil {
 		x.xActivate = 0
@@ -54,6 +61,13 @@ func (x *ActionEntry) OverrideActivate(cb func(*SimpleAction, *glib.Variant, uin
 }
 
 // GetActivate gets the callback function.
+// the callback to connect to the "activate" signal of the action.
+//
+//	Since GLib 2.40, this can be `NULL` for stateful actions, in which case
+//	the default handler is used. For boolean-stated actions with no
+//	parameter, this is a toggle. For other state types (and parameter type
+//	equal to the state type) this will be a function that just calls
+//	@change_state (which you should provide).
 func (x *ActionEntry) GetActivate() func(*SimpleAction, *glib.Variant, uintptr) {
 	if x.xActivate == 0 {
 		return nil
@@ -66,6 +80,10 @@ func (x *ActionEntry) GetActivate() func(*SimpleAction, *glib.Variant, uintptr) 
 }
 
 // OverrideChangeState sets the callback function.
+// the callback to connect to the "change-state" signal of the
+//
+//	action.  All stateful actions should provide a handler here; stateless
+//	actions should not.
 func (x *ActionEntry) OverrideChangeState(cb func(*SimpleAction, *glib.Variant, uintptr)) {
 	if cb == nil {
 		x.xChangeState = 0
@@ -77,6 +95,10 @@ func (x *ActionEntry) OverrideChangeState(cb func(*SimpleAction, *glib.Variant, 
 }
 
 // GetChangeState gets the callback function.
+// the callback to connect to the "change-state" signal of the
+//
+//	action.  All stateful actions should provide a handler here; stateless
+//	actions should not.
 func (x *ActionEntry) GetChangeState() func(*SimpleAction, *glib.Variant, uintptr) {
 	if x.xChangeState == 0 {
 		return nil
@@ -88,7 +110,7 @@ func (x *ActionEntry) GetChangeState() func(*SimpleAction, *glib.Variant, uintpt
 	}
 }
 
-// The virtual function table for #GActionMap.
+// The virtual function table for [iface@Gio.ActionMap].
 type ActionMapInterface struct {
 	_ structs.HostLayout
 
@@ -106,6 +128,9 @@ func (x *ActionMapInterface) GoPointer() uintptr {
 }
 
 // OverrideLookupAction sets the callback function.
+// the virtual function pointer for
+//
+//	[method@Gio.ActionMap.lookup_action]
 func (x *ActionMapInterface) OverrideLookupAction(cb func(ActionMap, string) *ActionBase) {
 	if cb == nil {
 		x.xLookupAction = 0
@@ -121,6 +146,9 @@ func (x *ActionMapInterface) OverrideLookupAction(cb func(ActionMap, string) *Ac
 }
 
 // GetLookupAction gets the callback function.
+// the virtual function pointer for
+//
+//	[method@Gio.ActionMap.lookup_action]
 func (x *ActionMapInterface) GetLookupAction() func(ActionMap, string) *ActionBase {
 	if x.xLookupAction == 0 {
 		return nil
@@ -139,6 +167,9 @@ func (x *ActionMapInterface) GetLookupAction() func(ActionMap, string) *ActionBa
 }
 
 // OverrideAddAction sets the callback function.
+// the virtual function pointer for
+//
+//	[method@Gio.ActionMap.add_action]
 func (x *ActionMapInterface) OverrideAddAction(cb func(ActionMap, Action)) {
 	if cb == nil {
 		x.xAddAction = 0
@@ -150,6 +181,9 @@ func (x *ActionMapInterface) OverrideAddAction(cb func(ActionMap, Action)) {
 }
 
 // GetAddAction gets the callback function.
+// the virtual function pointer for
+//
+//	[method@Gio.ActionMap.add_action]
 func (x *ActionMapInterface) GetAddAction() func(ActionMap, Action) {
 	if x.xAddAction == 0 {
 		return nil
@@ -162,6 +196,9 @@ func (x *ActionMapInterface) GetAddAction() func(ActionMap, Action) {
 }
 
 // OverrideRemoveAction sets the callback function.
+// the virtual function pointer for
+//
+//	[method@Gio.ActionMap.remove_action]
 func (x *ActionMapInterface) OverrideRemoveAction(cb func(ActionMap, string)) {
 	if cb == nil {
 		x.xRemoveAction = 0
@@ -173,6 +210,9 @@ func (x *ActionMapInterface) OverrideRemoveAction(cb func(ActionMap, string)) {
 }
 
 // GetRemoveAction gets the callback function.
+// the virtual function pointer for
+//
+//	[method@Gio.ActionMap.remove_action]
 func (x *ActionMapInterface) GetRemoveAction() func(ActionMap, string) {
 	if x.xRemoveAction == 0 {
 		return nil
@@ -184,14 +224,16 @@ func (x *ActionMapInterface) GetRemoveAction() func(ActionMap, string) {
 	}
 }
 
-// The GActionMap interface is implemented by #GActionGroup
-// implementations that operate by containing a number of
-// named #GAction instances, such as #GSimpleActionGroup.
+// `GActionMap` is an interface for action containers.
+//
+// The `GActionMap` interface is implemented by [iface@Gio.ActionGroup]
+// implementations that operate by containing a number of named
+// [iface@Gio.Action] instances, such as [class@Gio.SimpleActionGroup].
 //
 // One useful application of this interface is to map the
 // names of actions from various action groups to unique,
 // prefixed names (e.g. by prepending "app." or "win.").
-// This is the motivation for the 'Map' part of the interface
+// This is the motivation for the ‘Map’ part of the interface
 // name.
 type ActionMap interface {
 	GoPointer() uintptr
@@ -200,6 +242,7 @@ type ActionMap interface {
 	AddActionEntries(EntriesVar []ActionEntry, NEntriesVar int, UserDataVar uintptr)
 	LookupAction(ActionNameVar string) *ActionBase
 	RemoveAction(ActionNameVar string)
+	RemoveActionEntries(EntriesVar []ActionEntry, NEntriesVar int)
 }
 
 var xActionMapGLibType func() types.GType
@@ -235,12 +278,12 @@ func (x *ActionMapBase) AddAction(ActionVar Action) {
 
 }
 
-// A convenience function for creating multiple #GSimpleAction instances
-// and adding them to a #GActionMap.
+// A convenience function for creating multiple [class@Gio.SimpleAction]
+// instances and adding them to a [iface@Gio.ActionMap].
 //
-// Each action is constructed as per one #GActionEntry.
+// Each action is constructed as per one [struct@Gio.ActionEntry].
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 // static void
 // activate_quit (GSimpleAction *simple,
 //
@@ -277,7 +320,7 @@ func (x *ActionMapBase) AddAction(ActionVar Action) {
 //	  return G_ACTION_GROUP (group);
 //	}
 //
-// ]|
+// ```
 func (x *ActionMapBase) AddActionEntries(EntriesVar []ActionEntry, NEntriesVar int, UserDataVar uintptr) {
 
 	XGActionMapAddActionEntries(x.GoPointer(), EntriesVar, NEntriesVar, UserDataVar)
@@ -286,7 +329,7 @@ func (x *ActionMapBase) AddActionEntries(EntriesVar []ActionEntry, NEntriesVar i
 
 // Looks up the action with the name @action_name in @action_map.
 //
-// If no such action exists, returns %NULL.
+// If no such action exists, returns `NULL`.
 func (x *ActionMapBase) LookupAction(ActionNameVar string) *ActionBase {
 	var cls *ActionBase
 
@@ -310,10 +353,42 @@ func (x *ActionMapBase) RemoveAction(ActionNameVar string) {
 
 }
 
+// Remove actions from a [iface@Gio.ActionMap]. This is meant as the reverse of
+// [method@Gio.ActionMap.add_action_entries].
+//
+// ```c
+//
+//	static const GActionEntry entries[] = {
+//	    { "quit",         activate_quit              },
+//	    { "print-string", activate_print_string, "s" }
+//	};
+//
+// void
+// add_actions (GActionMap *map)
+//
+//	{
+//	  g_action_map_add_action_entries (map, entries, G_N_ELEMENTS (entries), NULL);
+//	}
+//
+// void
+// remove_actions (GActionMap *map)
+//
+//	{
+//	  g_action_map_remove_action_entries (map, entries, G_N_ELEMENTS (entries));
+//	}
+//
+// ```
+func (x *ActionMapBase) RemoveActionEntries(EntriesVar []ActionEntry, NEntriesVar int) {
+
+	XGActionMapRemoveActionEntries(x.GoPointer(), EntriesVar, NEntriesVar)
+
+}
+
 var XGActionMapAddAction func(uintptr, uintptr)
 var XGActionMapAddActionEntries func(uintptr, []ActionEntry, int, uintptr)
 var XGActionMapLookupAction func(uintptr, string) uintptr
 var XGActionMapRemoveAction func(uintptr, string)
+var XGActionMapRemoveActionEntries func(uintptr, []ActionEntry, int)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
@@ -329,5 +404,6 @@ func init() {
 	core.PuregoSafeRegister(&XGActionMapAddActionEntries, lib, "g_action_map_add_action_entries")
 	core.PuregoSafeRegister(&XGActionMapLookupAction, lib, "g_action_map_lookup_action")
 	core.PuregoSafeRegister(&XGActionMapRemoveAction, lib, "g_action_map_remove_action")
+	core.PuregoSafeRegister(&XGActionMapRemoveActionEntries, lib, "g_action_map_remove_action_entries")
 
 }

@@ -32,7 +32,16 @@ func (x *ConstraintLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A layout manager using constraints to describe relations between widgets.
+var xConstraintVflParserErrorQuark func() glib.Quark
+
+// Registers an error quark for VFL error parsing.
+func ConstraintVflParserErrorQuark() glib.Quark {
+
+	cret := xConstraintVflParserErrorQuark()
+	return cret
+}
+
+// Uses constraints to describe relations between widgets.
 //
 // `GtkConstraintLayout` is a layout manager that uses relations between
 // widget attributes, expressed via [class@Gtk.Constraint] instances, to
@@ -475,7 +484,7 @@ func (c *ConstraintLayout) SetGoPointer(ptr uintptr) {
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ConstraintLayout) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -517,6 +526,8 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+
+	core.PuregoSafeRegister(&xConstraintVflParserErrorQuark, lib, "gtk_constraint_vfl_parser_error_quark")
 
 	core.PuregoSafeRegister(&xConstraintLayoutGLibType, lib, "gtk_constraint_layout_get_type")
 

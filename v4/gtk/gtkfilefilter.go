@@ -8,10 +8,10 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// `GtkFileFilter` filters files by name or mime type.
+// Filters files by name or mime type.
 //
 // `GtkFileFilter` can be used to restrict the files being shown in a
-// `GtkFileChooser`. Files can be filtered based on their name (with
+// file chooser. Files can be filtered based on their name (with
 // [method@Gtk.FileFilter.add_pattern] or [method@Gtk.FileFilter.add_suffix])
 // or on their mime type (with [method@Gtk.FileFilter.add_mime_type]).
 //
@@ -21,8 +21,8 @@ import (
 // text/plain. Note that `GtkFileFilter` allows wildcards for the
 // subtype of a mime type, so you can e.g. filter for image/\*.
 //
-// Normally, file filters are used by adding them to a `GtkFileChooser`
-// (see [method@Gtk.FileChooser.add_filter]), but it is also possible to
+// Normally, file filters are used by adding them to a file chooser
+// (see [method@Gtk.FileDialog.set_filters]), but it is also possible to
 // manually use a file filter on any [class@Gtk.FilterListModel] containing
 // `GFileInfo` objects.
 //
@@ -122,7 +122,7 @@ func NewFileFilterFromGvariant(VariantVar *glib.Variant) *FileFilter {
 
 var xFileFilterAddMimeType func(uintptr, string)
 
-// Adds a rule allowing a given mime type to @filter.
+// Adds a rule allowing a given mime type.
 func (x *FileFilter) AddMimeType(MimeTypeVar string) {
 
 	xFileFilterAddMimeType(x.GoPointer(), MimeTypeVar)
@@ -131,7 +131,7 @@ func (x *FileFilter) AddMimeType(MimeTypeVar string) {
 
 var xFileFilterAddPattern func(uintptr, string)
 
-// Adds a rule allowing a shell style glob to a filter.
+// Adds a rule allowing a shell style glob pattern.
 //
 // Note that it depends on the platform whether pattern
 // matching ignores case or not. On Windows, it does, on
@@ -144,8 +144,7 @@ func (x *FileFilter) AddPattern(PatternVar string) {
 
 var xFileFilterAddPixbufFormats func(uintptr)
 
-// Adds a rule allowing image files in the formats supported
-// by GdkPixbuf.
+// Adds a rule allowing image files in the formats supported by `GdkPixbuf`.
 //
 // This is equivalent to calling [method@Gtk.FileFilter.add_mime_type]
 // for all the supported mime types.
@@ -159,8 +158,14 @@ var xFileFilterAddSuffix func(uintptr, string)
 
 // Adds a suffix match rule to a filter.
 //
-// This is similar to adding a match for the pattern
-// "*.@suffix".
+// This is similar to adding a match for the pattern "*.@suffix"
+//
+// An exaple to filter files with the suffix ".sub":
+// ```c
+// gtk_file_filter_add_suffix (filter, "sub");
+// ```
+//
+// Filters with multiple dots are allowed.
 //
 // In contrast to pattern matches, suffix matches
 // are *always* case-insensitive.
@@ -176,8 +181,7 @@ var xFileFilterGetAttributes func(uintptr) []string
 // passed to this filter.
 //
 // This function will not typically be used by applications;
-// it is intended principally for use in the implementation
-// of `GtkFileChooser`.
+// it is intended for use in file chooser implementation.
 func (x *FileFilter) GetAttributes() []string {
 
 	cret := xFileFilterGetAttributes(x.GoPointer())
@@ -199,7 +203,7 @@ var xFileFilterSetName func(uintptr, string)
 
 // Sets a human-readable name of the filter.
 //
-// This is the string that will be displayed in the file chooser
+// This is the string that will be displayed in the user interface
 // if there is a selectable list of filters.
 func (x *FileFilter) SetName(NameVar string) {
 
@@ -230,7 +234,7 @@ func (c *FileFilter) SetGoPointer(ptr uintptr) {
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *FileFilter) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

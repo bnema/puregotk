@@ -20,9 +20,14 @@ import (
 // or [method@Gtk.MenuButton.set_menu_model].
 type MenuButtonCreatePopupFunc func(uintptr, uintptr)
 
-// The `GtkMenuButton` widget is used to display a popup when clicked.
+// Displays a popup when clicked.
 //
-// ![An example GtkMenuButton](menu-button.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="menu-button-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkMenuButton" src="menu-button.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // This popup can be provided either as a `GtkPopover` or as an abstract
 // `GMenuModel`.
@@ -83,7 +88,7 @@ type MenuButtonCreatePopupFunc func(uintptr, uintptr)
 //
 // # Accessibility
 //
-// `GtkMenuButton` uses the %GTK_ACCESSIBLE_ROLE_BUTTON role.
+// `GtkMenuButton` uses the [enum@Gtk.AccessibleRole.button] role.
 type MenuButton struct {
 	Widget
 }
@@ -121,12 +126,32 @@ func NewMenuButton() *MenuButton {
 	return cls
 }
 
+var xMenuButtonGetActive func(uintptr) bool
+
+// Returns whether the menu button is active.
+func (x *MenuButton) GetActive() bool {
+
+	cret := xMenuButtonGetActive(x.GoPointer())
+	return cret
+}
+
 var xMenuButtonGetAlwaysShowArrow func(uintptr) bool
 
-// Gets whether to show a dropdown arrow even when using an icon.
+// Gets whether to show a dropdown arrow even when using an icon or a custom
+// child.
 func (x *MenuButton) GetAlwaysShowArrow() bool {
 
 	cret := xMenuButtonGetAlwaysShowArrow(x.GoPointer())
+	return cret
+}
+
+var xMenuButtonGetCanShrink func(uintptr) bool
+
+// Retrieves whether the button can be smaller than the natural
+// size of its contents.
+func (x *MenuButton) GetCanShrink() bool {
+
+	cret := xMenuButtonGetCanShrink(x.GoPointer())
 	return cret
 }
 
@@ -257,6 +282,15 @@ func (x *MenuButton) Popup() {
 
 }
 
+var xMenuButtonSetActive func(uintptr, bool)
+
+// Sets whether the menu button is active.
+func (x *MenuButton) SetActive(ActiveVar bool) {
+
+	xMenuButtonSetActive(x.GoPointer(), ActiveVar)
+
+}
+
 var xMenuButtonSetAlwaysShowArrow func(uintptr, bool)
 
 // Sets whether to show a dropdown arrow even when using an icon or a custom
@@ -264,6 +298,20 @@ var xMenuButtonSetAlwaysShowArrow func(uintptr, bool)
 func (x *MenuButton) SetAlwaysShowArrow(AlwaysShowArrowVar bool) {
 
 	xMenuButtonSetAlwaysShowArrow(x.GoPointer(), AlwaysShowArrowVar)
+
+}
+
+var xMenuButtonSetCanShrink func(uintptr, bool)
+
+// Sets whether the button size can be smaller than the natural size of
+// its contents.
+//
+// For text buttons, setting @can_shrink to true will ellipsize the label.
+//
+// For icon buttons, this function has no effect.
+func (x *MenuButton) SetCanShrink(CanShrinkVar bool) {
+
+	xMenuButtonSetCanShrink(x.GoPointer(), CanShrinkVar)
 
 }
 
@@ -447,31 +495,162 @@ func (x *MenuButton) ConnectActivate(cb *func(MenuButton)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *MenuButton) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *MenuButton) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *MenuButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *MenuButton) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *MenuButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *MenuButton) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *MenuButton) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *MenuButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *MenuButton) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *MenuButton) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *MenuButton) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *MenuButton) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *MenuButton) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *MenuButton) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -517,7 +696,7 @@ func (x *MenuButton) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acc
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -547,13 +726,17 @@ func (x *MenuButton) UpdateRelationValue(NRelationsVar int, RelationsVar []Acces
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -583,7 +766,7 @@ func (x *MenuButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *MenuButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -602,7 +785,9 @@ func init() {
 
 	core.PuregoSafeRegister(&xNewMenuButton, lib, "gtk_menu_button_new")
 
+	core.PuregoSafeRegister(&xMenuButtonGetActive, lib, "gtk_menu_button_get_active")
 	core.PuregoSafeRegister(&xMenuButtonGetAlwaysShowArrow, lib, "gtk_menu_button_get_always_show_arrow")
+	core.PuregoSafeRegister(&xMenuButtonGetCanShrink, lib, "gtk_menu_button_get_can_shrink")
 	core.PuregoSafeRegister(&xMenuButtonGetChild, lib, "gtk_menu_button_get_child")
 	core.PuregoSafeRegister(&xMenuButtonGetDirection, lib, "gtk_menu_button_get_direction")
 	core.PuregoSafeRegister(&xMenuButtonGetHasFrame, lib, "gtk_menu_button_get_has_frame")
@@ -614,7 +799,9 @@ func init() {
 	core.PuregoSafeRegister(&xMenuButtonGetUseUnderline, lib, "gtk_menu_button_get_use_underline")
 	core.PuregoSafeRegister(&xMenuButtonPopdown, lib, "gtk_menu_button_popdown")
 	core.PuregoSafeRegister(&xMenuButtonPopup, lib, "gtk_menu_button_popup")
+	core.PuregoSafeRegister(&xMenuButtonSetActive, lib, "gtk_menu_button_set_active")
 	core.PuregoSafeRegister(&xMenuButtonSetAlwaysShowArrow, lib, "gtk_menu_button_set_always_show_arrow")
+	core.PuregoSafeRegister(&xMenuButtonSetCanShrink, lib, "gtk_menu_button_set_can_shrink")
 	core.PuregoSafeRegister(&xMenuButtonSetChild, lib, "gtk_menu_button_set_child")
 	core.PuregoSafeRegister(&xMenuButtonSetCreatePopupFunc, lib, "gtk_menu_button_set_create_popup_func")
 	core.PuregoSafeRegister(&xMenuButtonSetDirection, lib, "gtk_menu_button_set_direction")

@@ -11,8 +11,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// `GdkEventSequence` is an opaque type representing a sequence
-// of related touch events.
+// An opaque type representing a sequence of related events.
 type EventSequence struct {
 	_ structs.HostLayout
 }
@@ -157,8 +156,8 @@ const (
 	PadStripValue EventType = 26
 	// A tablet pad group mode change.
 	PadGroupModeValue EventType = 27
-	// A touchpad hold gesture event, the current state
-	//   is determined by its phase field. Since: 4.6
+	// A touchpad hold gesture event, the current state is determined by its phase
+	// field.
 	TouchpadHoldValue EventType = 28
 	// marks the end of the GdkEventType enumeration.
 	EventLastValue EventType = 29
@@ -523,12 +522,13 @@ func (c *DeleteEvent) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// `GdkEvent`s are immutable data structures, created by GDK to
-// represent windowing system events.
+// Represents windowing system events.
 //
 // In GTK applications the events are handled automatically by toplevel
 // widgets and passed on to the event controllers of appropriate widgets,
 // so using `GdkEvent` and its related API is rarely needed.
+//
+// `GdkEvent` structs are immutable.
 type Event struct {
 	Ptr uintptr
 }
@@ -672,7 +672,7 @@ func (x *Event) GetDisplay() *Display {
 
 var xEventGetEventSequence func(uintptr) *EventSequence
 
-// Retuns the event sequence to which the event belongs.
+// Returns the event sequence to which the event belongs.
 //
 // Related touch events are connected in a sequence. Other
 // events typically don't have event sequence information.
@@ -731,6 +731,8 @@ func (x *Event) GetPointerEmulated() bool {
 var xEventGetPosition func(uintptr, float64, float64) bool
 
 // Extract the event surface relative x/y coordinates from an event.
+//
+// This position is in [surface coordinates](coordinates.html).
 func (x *Event) GetPosition(XVar float64, YVar float64) bool {
 
 	cret := xEventGetPosition(x.GoPointer(), XVar, YVar)
@@ -805,9 +807,13 @@ var xEventTriggersContextMenu func(uintptr) bool
 // according to platform conventions.
 //
 // The right mouse button typically triggers context menus.
+// On macOS, Control+left mouse button also triggers.
 //
-// This function should always be used instead of simply checking for
-// event-&gt;button == %GDK_BUTTON_SECONDARY.
+// # This function should always be used instead of simply checking for
+//
+// ```c
+// event-&gt;button == GDK_BUTTON_SECONDARY
+// ```
 func (x *Event) TriggersContextMenu() bool {
 
 	cret := xEventTriggersContextMenu(x.GoPointer())

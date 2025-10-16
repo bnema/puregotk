@@ -154,15 +154,15 @@ func (x *UnixInputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GUnixInputStream implements #GInputStream for reading from a UNIX
+// `GUnixInputStream` implements [class@Gio.InputStream] for reading from a UNIX
 // file descriptor, including asynchronous operations. (If the file
-// descriptor refers to a socket or pipe, this will use poll() to do
+// descriptor refers to a socket or pipe, this will use `poll()` to do
 // asynchronous I/O. If it refers to a regular file, it will fall back
 // to doing asynchronous I/O in another thread.)
 //
 // Note that `&lt;gio/gunixinputstream.h&gt;` belongs to the UNIX-specific GIO
 // interfaces, thus you have to use the `gio-unix-2.0.pc` pkg-config
-// file when using it.
+// file or the `GioUnix-2.0` GIR namespace when using it.
 type UnixInputStream struct {
 	InputStream
 }
@@ -259,6 +259,9 @@ func (x *UnixInputStream) CanPoll() bool {
 // the stream may not actually be readable even after the source
 // triggers, so you should use g_pollable_input_stream_read_nonblocking()
 // rather than g_input_stream_read() from the callback.
+//
+// The behaviour of this method is undefined if
+// g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *UnixInputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 
 	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
@@ -273,6 +276,9 @@ func (x *UnixInputStream) CreateSource(CancellableVar *Cancellable) *glib.Source
 // non-blocking behavior, you should always use
 // g_pollable_input_stream_read_nonblocking(), which will return a
 // %G_IO_ERROR_WOULD_BLOCK error rather than blocking.
+//
+// The behaviour of this method is undefined if
+// g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *UnixInputStream) IsReadable() bool {
 
 	cret := XGPollableInputStreamIsReadable(x.GoPointer())
@@ -290,6 +296,9 @@ func (x *UnixInputStream) IsReadable() bool {
 // if @cancellable has already been cancelled when you call, which
 // may happen if you call this method after a source triggers due
 // to having been cancelled.
+//
+// The behaviour of this method is undefined if
+// g_pollable_input_stream_can_poll() returns %FALSE for @stream.
 func (x *UnixInputStream) ReadNonblocking(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 

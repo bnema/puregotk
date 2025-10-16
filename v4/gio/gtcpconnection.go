@@ -28,7 +28,7 @@ func (x *TcpConnectionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// This is the subclass of #GSocketConnection that is created
+// This is the subclass of [class@Gio.SocketConnection] that is created
 // for TCP/IP sockets.
 type TcpConnection struct {
 	SocketConnection

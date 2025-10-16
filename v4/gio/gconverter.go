@@ -29,6 +29,7 @@ func (x *ConverterIface) GoPointer() uintptr {
 }
 
 // OverrideConvert sets the callback function.
+// Converts data.
 func (x *ConverterIface) OverrideConvert(cb func(Converter, []byte, uint, []byte, uint, ConverterFlags, uint, uint) ConverterResult) {
 	if cb == nil {
 		x.xConvert = 0
@@ -40,6 +41,7 @@ func (x *ConverterIface) OverrideConvert(cb func(Converter, []byte, uint, []byte
 }
 
 // GetConvert gets the callback function.
+// Converts data.
 func (x *ConverterIface) GetConvert() func(Converter, []byte, uint, []byte, uint, ConverterFlags, uint, uint) ConverterResult {
 	if x.xConvert == 0 {
 		return nil
@@ -52,6 +54,7 @@ func (x *ConverterIface) GetConvert() func(Converter, []byte, uint, []byte, uint
 }
 
 // OverrideReset sets the callback function.
+// Reverts the internal state of the converter to its initial state.
 func (x *ConverterIface) OverrideReset(cb func(Converter)) {
 	if cb == nil {
 		x.xReset = 0
@@ -63,6 +66,7 @@ func (x *ConverterIface) OverrideReset(cb func(Converter)) {
 }
 
 // GetReset gets the callback function.
+// Reverts the internal state of the converter to its initial state.
 func (x *ConverterIface) GetReset() func(Converter) {
 	if x.xReset == 0 {
 		return nil
@@ -74,7 +78,9 @@ func (x *ConverterIface) GetReset() func(Converter) {
 	}
 }
 
-// #GConverter is implemented by objects that convert
+// `GConverter` is an interface for streaming conversions.
+//
+// `GConverter` is implemented by objects that convert
 // binary data in various ways. The conversion can be
 // stateful and may fail at any place.
 //
@@ -85,6 +91,7 @@ type Converter interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
 	Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar uint, BytesWrittenVar uint) (ConverterResult, error)
+	ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error)
 	Reset()
 }
 
@@ -202,6 +209,18 @@ func (x *ConverterBase) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []
 
 }
 
+// Applies @converter to the data in @bytes.
+func (x *ConverterBase) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error) {
+	var cerr *glib.Error
+
+	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
+	if cerr == nil {
+		return cret, nil
+	}
+	return cret, cerr
+
+}
+
 // Resets all internal state in the converter, making it behave
 // as if it was just created. If the converter has any internal
 // state that would produce output then that output is lost.
@@ -212,6 +231,7 @@ func (x *ConverterBase) Reset() {
 }
 
 var XGConverterConvert func(uintptr, []byte, uint, []byte, uint, ConverterFlags, uint, uint, **glib.Error) ConverterResult
+var XGConverterConvertBytes func(uintptr, *glib.Bytes, **glib.Error) *glib.Bytes
 var XGConverterReset func(uintptr)
 
 func init() {
@@ -225,6 +245,7 @@ func init() {
 	core.PuregoSafeRegister(&xConverterGLibType, lib, "g_converter_get_type")
 
 	core.PuregoSafeRegister(&XGConverterConvert, lib, "g_converter_convert")
+	core.PuregoSafeRegister(&XGConverterConvertBytes, lib, "g_converter_convert_bytes")
 	core.PuregoSafeRegister(&XGConverterReset, lib, "g_converter_reset")
 
 }

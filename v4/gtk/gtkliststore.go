@@ -107,7 +107,11 @@ func (x *ListStorePrivate) GoPointer() uintptr {
 //
 // ```
 //
-// # Performance Considerations
+// `GtkListStore` is deprecated since GTK 4.10, and should not be used in newly
+// written code. You should use [class@Gio.ListStore] instead, and the various
+// list models provided by GTK.
+//
+// ## Performance Considerations
 //
 // Internally, the `GtkListStore` was originally implemented with a linked list
 // with a tail pointer.  As a result, it was fast at data insertion and deletion,
@@ -117,7 +121,7 @@ func (x *ListStorePrivate) GoPointer() uintptr {
 // often and your code is expected to run on older versions of GTK, it is worth
 // keeping the iter around.
 //
-// # Atomic Operations
+// ## Atomic Operations
 //
 // It is important to note that only the methods
 // gtk_list_store_insert_with_values() and gtk_list_store_insert_with_valuesv()
@@ -134,7 +138,7 @@ func (x *ListStorePrivate) GoPointer() uintptr {
 // `GtkTreeModel`FilterVisibleFunc to be visited with an empty row first; the
 // function must be prepared for that.
 //
-// # GtkListStore as GtkBuildable
+// ## GtkListStore as GtkBuildable
 //
 // The GtkListStore implementation of the [iface@Gtk.Buildable] interface allows
 // to specify the model columns with a `&lt;columns&gt;` element that may contain
@@ -194,13 +198,22 @@ func ListStoreNewFromInternalPtr(ptr uintptr) *ListStore {
 
 var xNewListStore func(int, ...interface{}) uintptr
 
-// Creates a new list store as with @n_columns columns each of the types passed
-// in.  Note that only types derived from standard GObject fundamental types
+// Creates a new list store.
+//
+// The list store will have @n_columns columns, with each column using
+// the given type passed to this function.
+//
+// Note that only types derived from standard GObject fundamental types
 // are supported.
 //
-// As an example, `gtk_list_store_new (3, G_TYPE_INT, G_TYPE_STRING,
-// GDK_TYPE_TEXTURE);` will create a new `GtkListStore` with three columns, of type
-// int, string and `GdkTexture`, respectively.
+// As an example:
+//
+// ```c
+// gtk_list_store_new (3, G_TYPE_INT, G_TYPE_STRING, GDK_TYPE_TEXTURE);
+// ```
+//
+// will create a new `GtkListStore` with three columns, of type `int`,
+// `gchararray` and `GdkTexture`, respectively.
 func NewListStore(NColumnsVar int, varArgs ...interface{}) *ListStore {
 	var cls *ListStore
 
@@ -216,7 +229,9 @@ func NewListStore(NColumnsVar int, varArgs ...interface{}) *ListStore {
 
 var xNewListStorev func(int, []types.GType) uintptr
 
-// Non-vararg creation function.  Used primarily by language bindings.
+// Creates a new `GtkListStore`.
+//
+// This function is meant to be used by language bindings.
 func NewListStorev(NColumnsVar int, TypesVar []types.GType) *ListStore {
 	var cls *ListStore
 
@@ -298,7 +313,7 @@ var xListStoreInsertWithValues func(uintptr, *TreeIter, int, ...interface{})
 // `gtk_list_store_insert_with_values (list_store, iter, position...)`
 // has the same effect as calling:
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 // static void
 // insert_value (GtkListStore *list_store,
 //
@@ -313,7 +328,7 @@ var xListStoreInsertWithValues func(uintptr, *TreeIter, int, ...interface{})
 //	                      );
 //	}
 //
-// ]|
+// ```
 //
 // with the difference that the former will only emit `GtkTreeModel`::row-inserted
 // once, while the latter will emit `GtkTreeModel`::row-inserted,
@@ -427,10 +442,14 @@ func (x *ListStore) Set(IterVar *TreeIter, varArgs ...interface{}) {
 
 var xListStoreSetColumnTypes func(uintptr, int, []types.GType)
 
-// This function is meant primarily for `GObject`s that inherit from `GtkListStore`,
-// and should only be used when constructing a new `GtkListStore`.  It will not
-// function after a row has been added, or a method on the `GtkTreeModel`
-// interface is called.
+// Sets the types of the columns of a list store.
+//
+// This function is meant primarily for objects that inherit
+// from `GtkListStore`, and should only be used when constructing
+// a new instance.
+//
+// This function cannot be called after a row has been added, or
+// a method on the `GtkTreeModel` interface is called.
 func (x *ListStore) SetColumnTypes(NColumnsVar int, TypesVar []types.GType) {
 
 	xListStoreSetColumnTypes(x.GoPointer(), NColumnsVar, TypesVar)
@@ -495,7 +514,7 @@ func (c *ListStore) SetGoPointer(ptr uintptr) {
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ListStore) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

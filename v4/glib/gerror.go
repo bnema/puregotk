@@ -129,8 +129,8 @@ func (x *Error) Matches(DomainVar Quark, CodeVar int) bool {
 
 var xClearError func()
 
-// If @err or *@err is %NULL, does nothing. Otherwise,
-// calls g_error_free() on *@err and sets *@err to %NULL.
+// If @err or `*err` is %NULL, does nothing. Otherwise,
+// calls g_error_free() on `*err` and sets `*err` to %NULL.
 func ClearError() error {
 	var cerr *Error
 
@@ -142,13 +142,49 @@ func ClearError() error {
 
 }
 
+var xErrorDomainRegister func(string, uint, uintptr, uintptr, uintptr) Quark
+
+// This function registers an extended #GError domain.
+// @error_type_name will be duplicated. Otherwise does the same as
+// g_error_domain_register_static().
+func ErrorDomainRegister(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, ErrorTypeInitVar *ErrorInitFunc, ErrorTypeCopyVar *ErrorCopyFunc, ErrorTypeClearVar *ErrorClearFunc) Quark {
+
+	cret := xErrorDomainRegister(ErrorTypeNameVar, ErrorTypePrivateSizeVar, NewCallback(ErrorTypeInitVar), NewCallback(ErrorTypeCopyVar), NewCallback(ErrorTypeClearVar))
+	return cret
+}
+
+var xErrorDomainRegisterStatic func(string, uint, uintptr, uintptr, uintptr) Quark
+
+// This function registers an extended #GError domain.
+//
+// @error_type_name should not be freed. @error_type_private_size must
+// be greater than 0.
+//
+// @error_type_init receives an initialized #GError and should then initialize
+// the private data.
+//
+// @error_type_copy is a function that receives both original and a copy
+// #GError and should copy the fields of the private error data. The standard
+// #GError fields are already handled.
+//
+// @error_type_clear receives the pointer to the error, and it should free the
+// fields of the private error data. It should not free the struct itself though.
+//
+// Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
+// already takes care of passing valid information to this function.
+func ErrorDomainRegisterStatic(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, ErrorTypeInitVar *ErrorInitFunc, ErrorTypeCopyVar *ErrorCopyFunc, ErrorTypeClearVar *ErrorClearFunc) Quark {
+
+	cret := xErrorDomainRegisterStatic(ErrorTypeNameVar, ErrorTypePrivateSizeVar, NewCallback(ErrorTypeInitVar), NewCallback(ErrorTypeCopyVar), NewCallback(ErrorTypeClearVar))
+	return cret
+}
+
 var xPrefixError func(**Error, string, ...interface{})
 
 // Formats a string according to @format and prefix it to an existing
 // error message. If @err is %NULL (ie: no error variable) then do
 // nothing.
 //
-// If *@err is %NULL (ie: an error variable is present but there is no
+// If `*err` is %NULL (ie: an error variable is present but there is no
 // error condition) then also do nothing.
 func PrefixError(ErrVar **Error, FormatVar string, varArgs ...interface{}) {
 
@@ -158,7 +194,7 @@ func PrefixError(ErrVar **Error, FormatVar string, varArgs ...interface{}) {
 
 var xPrefixErrorLiteral func(**Error, string)
 
-// Prefixes @prefix to an existing error message. If @err or *@err is
+// Prefixes @prefix to an existing error message. If @err or `*err` is
 // %NULL (i.e.: no error variable) then do nothing.
 func PrefixErrorLiteral(ErrVar **Error, PrefixVar string) {
 
@@ -168,7 +204,7 @@ func PrefixErrorLiteral(ErrVar **Error, PrefixVar string) {
 
 var xPropagateError func(**Error, *Error)
 
-// If @dest is %NULL, free @src; otherwise, moves @src into *@dest.
+// If @dest is %NULL, free @src; otherwise, moves @src into `*dest`.
 // The error variable @dest points to must be %NULL.
 //
 // @src must be non-%NULL.
@@ -184,8 +220,8 @@ func PropagateError(DestVar **Error, SrcVar *Error) {
 
 var xPropagatePrefixedError func(**Error, *Error, string, ...interface{})
 
-// If @dest is %NULL, free @src; otherwise, moves @src into *@dest.
-// *@dest must be %NULL. After the move, add a prefix as with
+// If @dest is %NULL, free @src; otherwise, moves @src into `*dest`.
+// `*dest` must be %NULL. After the move, add a prefix as with
 // g_prefix_error().
 func PropagatePrefixedError(DestVar **Error, SrcVar *Error, FormatVar string, varArgs ...interface{}) {
 
@@ -195,8 +231,8 @@ func PropagatePrefixedError(DestVar **Error, SrcVar *Error, FormatVar string, va
 
 var xSetError func(**Error, Quark, int, string, ...interface{})
 
-// Does nothing if @err is %NULL; if @err is non-%NULL, then *@err
-// must be %NULL. A new #GError is created and assigned to *@err.
+// Does nothing if @err is %NULL; if @err is non-%NULL, then `*err`
+// must be %NULL. A new #GError is created and assigned to `*err`.
 func SetError(ErrVar **Error, DomainVar Quark, CodeVar int, FormatVar string, varArgs ...interface{}) {
 
 	xSetError(ErrVar, DomainVar, CodeVar, FormatVar, varArgs...)
@@ -205,8 +241,8 @@ func SetError(ErrVar **Error, DomainVar Quark, CodeVar int, FormatVar string, va
 
 var xSetErrorLiteral func(**Error, Quark, int, string)
 
-// Does nothing if @err is %NULL; if @err is non-%NULL, then *@err
-// must be %NULL. A new #GError is created and assigned to *@err.
+// Does nothing if @err is %NULL; if @err is non-%NULL, then `*err`
+// must be %NULL. A new #GError is created and assigned to `*err`.
 // Unlike g_set_error(), @message is not a printf()-style format string.
 // Use this function if @message contains text you don't have control over,
 // that could include printf() escape sequences.
@@ -218,13 +254,15 @@ func SetErrorLiteral(ErrVar **Error, DomainVar Quark, CodeVar int, MessageVar st
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
 
 	core.PuregoSafeRegister(&xClearError, lib, "g_clear_error")
+	core.PuregoSafeRegister(&xErrorDomainRegister, lib, "g_error_domain_register")
+	core.PuregoSafeRegister(&xErrorDomainRegisterStatic, lib, "g_error_domain_register_static")
 	core.PuregoSafeRegister(&xPrefixError, lib, "g_prefix_error")
 	core.PuregoSafeRegister(&xPrefixErrorLiteral, lib, "g_prefix_error_literal")
 	core.PuregoSafeRegister(&xPropagateError, lib, "g_propagate_error")

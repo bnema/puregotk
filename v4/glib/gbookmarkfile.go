@@ -7,15 +7,71 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// An opaque data structure representing a set of bookmarks.
+// `GBookmarkFile` lets you parse, edit or create files containing bookmarks.
+//
+// Bookmarks refer to a URI, along with some meta-data about the resource
+// pointed by the URI like its MIME type, the application that is registering
+// the bookmark and the icon that should be used to represent the bookmark.
+// The data is stored using the
+// [Desktop Bookmark Specification](https://www.freedesktop.org/wiki/Specifications/desktop-bookmark-spec/).
+//
+// The syntax of the bookmark files is described in detail inside the
+// Desktop Bookmark Specification, here is a quick summary: bookmark
+// files use a sub-class of the XML Bookmark Exchange Language
+// specification, consisting of valid UTF-8 encoded XML, under the
+// `&lt;xbel&gt;` root element; each bookmark is stored inside a
+// `&lt;bookmark&gt;` element, using its URI: no relative paths can
+// be used inside a bookmark file. The bookmark may have a user defined
+// title and description, to be used instead of the URI. Under the
+// `&lt;metadata&gt;` element, with its owner attribute set to
+// `http://freedesktop.org`, is stored the meta-data about a resource
+// pointed by its URI. The meta-data consists of the resource's MIME
+// type; the applications that have registered a bookmark; the groups
+// to which a bookmark belongs to; a visibility flag, used to set the
+// bookmark as "private" to the applications and groups that has it
+// registered; the URI and MIME type of an icon, to be used when
+// displaying the bookmark inside a GUI.
+//
+// Here is an example of a bookmark file:
+// [bookmarks.xbel](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/glib/tests/bookmarks.xbel)
+//
+// A bookmark file might contain more than one bookmark; each bookmark
+// is accessed through its URI.
+//
+// The important caveat of bookmark files is that when you add a new
+// bookmark you must also add the application that is registering it, using
+// [method@GLib.BookmarkFile.add_application] or [method@GLib.BookmarkFile.set_application_info].
+// If a bookmark has no applications then it won't be dumped when creating
+// the on disk representation, using [method@GLib.BookmarkFile.to_data] or
+// [method@GLib.BookmarkFile.to_file].
 type BookmarkFile struct {
 	_ structs.HostLayout
 }
 
+var xBookmarkFileGLibType func() types.GType
+
+func BookmarkFileGLibType() types.GType {
+	return xBookmarkFileGLibType()
+}
+
 func (x *BookmarkFile) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewBookmarkFile func() *BookmarkFile
+
+// Creates a new empty #GBookmarkFile object.
+//
+// Use g_bookmark_file_load_from_file(), g_bookmark_file_load_from_data()
+// or g_bookmark_file_load_from_data_dirs() to read an existing bookmark
+// file.
+func NewBookmarkFile() *BookmarkFile {
+
+	cret := xNewBookmarkFile()
+	return cret
 }
 
 var xBookmarkFileAddApplication func(uintptr, string, string, string)
@@ -60,6 +116,15 @@ func (x *BookmarkFile) AddGroup(UriVar string, GroupVar string) {
 
 }
 
+var xBookmarkFileCopy func(uintptr) *BookmarkFile
+
+// Deeply copies a @bookmark #GBookmarkFile object to a new one.
+func (x *BookmarkFile) Copy() *BookmarkFile {
+
+	cret := xBookmarkFileCopy(x.GoPointer())
+	return cret
+}
+
 var xBookmarkFileFree func(uintptr)
 
 // Frees a #GBookmarkFile.
@@ -69,13 +134,13 @@ func (x *BookmarkFile) Free() {
 
 }
 
-var xBookmarkFileGetAdded func(uintptr, string, **Error) int32
+var xBookmarkFileGetAdded func(uintptr, string, **Error) time_t
 
 // Gets the time the bookmark for @uri was added to @bookmark
 //
 // In the event the URI cannot be found, -1 is returned and
 // @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
-func (x *BookmarkFile) GetAdded(UriVar string) (int32, error) {
+func (x *BookmarkFile) GetAdded(UriVar string) (time_t, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetAdded(x.GoPointer(), UriVar, &cerr)
@@ -103,7 +168,7 @@ func (x *BookmarkFile) GetAddedDateTime(UriVar string) (*DateTime, error) {
 
 }
 
-var xBookmarkFileGetAppInfo func(uintptr, string, string, string, uint, int32, **Error) bool
+var xBookmarkFileGetAppInfo func(uintptr, string, string, string, uint, *time_t, **Error) bool
 
 // Gets the registration information of @app_name for the bookmark for
 // @uri.  See g_bookmark_file_set_application_info() for more information about
@@ -118,7 +183,7 @@ var xBookmarkFileGetAppInfo func(uintptr, string, string, string, uint, int32, *
 // %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. In the event that unquoting
 // the command line fails, an error of the %G_SHELL_ERROR domain is
 // set and %FALSE is returned.
-func (x *BookmarkFile) GetAppInfo(UriVar string, NameVar string, ExecVar string, CountVar uint, StampVar int32) (bool, error) {
+func (x *BookmarkFile) GetAppInfo(UriVar string, NameVar string, ExecVar string, CountVar uint, StampVar *time_t) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetAppInfo(x.GoPointer(), UriVar, NameVar, ExecVar, CountVar, StampVar, &cerr)
@@ -265,13 +330,13 @@ func (x *BookmarkFile) GetMimeType(UriVar string) (string, error) {
 
 }
 
-var xBookmarkFileGetModified func(uintptr, string, **Error) int32
+var xBookmarkFileGetModified func(uintptr, string, **Error) time_t
 
 // Gets the time when the bookmark for @uri was last modified.
 //
 // In the event the URI cannot be found, -1 is returned and
 // @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
-func (x *BookmarkFile) GetModified(UriVar string) (int32, error) {
+func (x *BookmarkFile) GetModified(UriVar string) (time_t, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetModified(x.GoPointer(), UriVar, &cerr)
@@ -338,13 +403,13 @@ func (x *BookmarkFile) GetUris(LengthVar uint) []string {
 	return cret
 }
 
-var xBookmarkFileGetVisited func(uintptr, string, **Error) int32
+var xBookmarkFileGetVisited func(uintptr, string, **Error) time_t
 
 // Gets the time the bookmark for @uri was last visited.
 //
 // In the event the URI cannot be found, -1 is returned and
 // @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
-func (x *BookmarkFile) GetVisited(UriVar string) (int32, error) {
+func (x *BookmarkFile) GetVisited(UriVar string) (time_t, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetVisited(x.GoPointer(), UriVar, &cerr)
@@ -541,12 +606,12 @@ func (x *BookmarkFile) RemoveItem(UriVar string) (bool, error) {
 
 }
 
-var xBookmarkFileSetAdded func(uintptr, string, int32)
+var xBookmarkFileSetAdded func(uintptr, string, time_t)
 
 // Sets the time the bookmark for @uri was added into @bookmark.
 //
 // If no bookmark for @uri is found then it is created.
-func (x *BookmarkFile) SetAdded(UriVar string, AddedVar int32) {
+func (x *BookmarkFile) SetAdded(UriVar string, AddedVar time_t) {
 
 	xBookmarkFileSetAdded(x.GoPointer(), UriVar, AddedVar)
 
@@ -563,7 +628,7 @@ func (x *BookmarkFile) SetAddedDateTime(UriVar string, AddedVar *DateTime) {
 
 }
 
-var xBookmarkFileSetAppInfo func(uintptr, string, string, string, int, int32, **Error) bool
+var xBookmarkFileSetAppInfo func(uintptr, string, string, string, int, time_t, **Error) bool
 
 // Sets the meta-data of application @name inside the list of
 // applications that have registered a bookmark for @uri inside
@@ -593,7 +658,7 @@ var xBookmarkFileSetAppInfo func(uintptr, string, string, string, int, int32, **
 // for @uri,  %FALSE is returned and error is set to
 // %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.  Otherwise, if no bookmark
 // for @uri is found, one is created.
-func (x *BookmarkFile) SetAppInfo(UriVar string, NameVar string, ExecVar string, CountVar int, StampVar int32) (bool, error) {
+func (x *BookmarkFile) SetAppInfo(UriVar string, NameVar string, ExecVar string, CountVar int, StampVar time_t) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileSetAppInfo(x.GoPointer(), UriVar, NameVar, ExecVar, CountVar, StampVar, &cerr)
@@ -704,7 +769,7 @@ func (x *BookmarkFile) SetMimeType(UriVar string, MimeTypeVar string) {
 
 }
 
-var xBookmarkFileSetModified func(uintptr, string, int32)
+var xBookmarkFileSetModified func(uintptr, string, time_t)
 
 // Sets the last time the bookmark for @uri was last modified.
 //
@@ -714,7 +779,7 @@ var xBookmarkFileSetModified func(uintptr, string, int32)
 // was actually changed.  Every function of #GBookmarkFile that
 // modifies a bookmark also changes the modification time, except for
 // g_bookmark_file_set_visited_date_time().
-func (x *BookmarkFile) SetModified(UriVar string, ModifiedVar int32) {
+func (x *BookmarkFile) SetModified(UriVar string, ModifiedVar time_t) {
 
 	xBookmarkFileSetModified(x.GoPointer(), UriVar, ModifiedVar)
 
@@ -750,7 +815,7 @@ func (x *BookmarkFile) SetTitle(UriVar string, TitleVar string) {
 
 }
 
-var xBookmarkFileSetVisited func(uintptr, string, int32)
+var xBookmarkFileSetVisited func(uintptr, string, time_t)
 
 // Sets the time the bookmark for @uri was last visited.
 //
@@ -761,7 +826,7 @@ var xBookmarkFileSetVisited func(uintptr, string, int32)
 // or by the default application for the bookmark's MIME type, retrieved
 // using g_bookmark_file_get_mime_type().  Changing the "visited" time
 // does not affect the "modified" time.
-func (x *BookmarkFile) SetVisited(UriVar string, VisitedVar int32) {
+func (x *BookmarkFile) SetVisited(UriVar string, VisitedVar time_t) {
 
 	xBookmarkFileSetVisited(x.GoPointer(), UriVar, VisitedVar)
 
@@ -840,14 +905,19 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xBookmarkFileGLibType, lib, "g_bookmark_file_get_type")
+
+	core.PuregoSafeRegister(&xNewBookmarkFile, lib, "g_bookmark_file_new")
+
 	core.PuregoSafeRegister(&xBookmarkFileAddApplication, lib, "g_bookmark_file_add_application")
 	core.PuregoSafeRegister(&xBookmarkFileAddGroup, lib, "g_bookmark_file_add_group")
+	core.PuregoSafeRegister(&xBookmarkFileCopy, lib, "g_bookmark_file_copy")
 	core.PuregoSafeRegister(&xBookmarkFileFree, lib, "g_bookmark_file_free")
 	core.PuregoSafeRegister(&xBookmarkFileGetAdded, lib, "g_bookmark_file_get_added")
 	core.PuregoSafeRegister(&xBookmarkFileGetAddedDateTime, lib, "g_bookmark_file_get_added_date_time")

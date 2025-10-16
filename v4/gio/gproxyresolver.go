@@ -32,6 +32,7 @@ func (x *ProxyResolverInterface) GoPointer() uintptr {
 }
 
 // OverrideIsSupported sets the callback function.
+// the virtual function pointer for g_proxy_resolver_is_supported()
 func (x *ProxyResolverInterface) OverrideIsSupported(cb func(ProxyResolver) bool) {
 	if cb == nil {
 		x.xIsSupported = 0
@@ -43,6 +44,7 @@ func (x *ProxyResolverInterface) OverrideIsSupported(cb func(ProxyResolver) bool
 }
 
 // GetIsSupported gets the callback function.
+// the virtual function pointer for g_proxy_resolver_is_supported()
 func (x *ProxyResolverInterface) GetIsSupported() func(ProxyResolver) bool {
 	if x.xIsSupported == 0 {
 		return nil
@@ -55,6 +57,7 @@ func (x *ProxyResolverInterface) GetIsSupported() func(ProxyResolver) bool {
 }
 
 // OverrideLookup sets the callback function.
+// the virtual function pointer for g_proxy_resolver_lookup()
 func (x *ProxyResolverInterface) OverrideLookup(cb func(ProxyResolver, string, *Cancellable) []string) {
 	if cb == nil {
 		x.xLookup = 0
@@ -66,6 +69,7 @@ func (x *ProxyResolverInterface) OverrideLookup(cb func(ProxyResolver, string, *
 }
 
 // GetLookup gets the callback function.
+// the virtual function pointer for g_proxy_resolver_lookup()
 func (x *ProxyResolverInterface) GetLookup() func(ProxyResolver, string, *Cancellable) []string {
 	if x.xLookup == 0 {
 		return nil
@@ -78,6 +82,9 @@ func (x *ProxyResolverInterface) GetLookup() func(ProxyResolver, string, *Cancel
 }
 
 // OverrideLookupAsync sets the callback function.
+// the virtual function pointer for
+//
+//	g_proxy_resolver_lookup_async()
 func (x *ProxyResolverInterface) OverrideLookupAsync(cb func(ProxyResolver, string, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xLookupAsync = 0
@@ -89,6 +96,9 @@ func (x *ProxyResolverInterface) OverrideLookupAsync(cb func(ProxyResolver, stri
 }
 
 // GetLookupAsync gets the callback function.
+// the virtual function pointer for
+//
+//	g_proxy_resolver_lookup_async()
 func (x *ProxyResolverInterface) GetLookupAsync() func(ProxyResolver, string, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xLookupAsync == 0 {
 		return nil
@@ -101,6 +111,9 @@ func (x *ProxyResolverInterface) GetLookupAsync() func(ProxyResolver, string, *C
 }
 
 // OverrideLookupFinish sets the callback function.
+// the virtual function pointer for
+//
+//	g_proxy_resolver_lookup_finish()
 func (x *ProxyResolverInterface) OverrideLookupFinish(cb func(ProxyResolver, AsyncResult) []string) {
 	if cb == nil {
 		x.xLookupFinish = 0
@@ -112,6 +125,9 @@ func (x *ProxyResolverInterface) OverrideLookupFinish(cb func(ProxyResolver, Asy
 }
 
 // GetLookupFinish gets the callback function.
+// the virtual function pointer for
+//
+//	g_proxy_resolver_lookup_finish()
 func (x *ProxyResolverInterface) GetLookupFinish() func(ProxyResolver, AsyncResult) []string {
 	if x.xLookupFinish == 0 {
 		return nil
@@ -123,13 +139,14 @@ func (x *ProxyResolverInterface) GetLookupFinish() func(ProxyResolver, AsyncResu
 	}
 }
 
-// #GProxyResolver provides synchronous and asynchronous network proxy
-// resolution. #GProxyResolver is used within #GSocketClient through
-// the method g_socket_connectable_proxy_enumerate().
+// `GProxyResolver` provides synchronous and asynchronous network proxy
+// resolution. `GProxyResolver` is used within [class@Gio.SocketClient] through
+// the method [method@Gio.SocketConnectable.proxy_enumerate].
 //
-// Implementations of #GProxyResolver based on libproxy and GNOME settings can
-// be found in glib-networking. GIO comes with an implementation for use inside
-// Flatpak portals.
+// Implementations of `GProxyResolver` based on
+// [libproxy](https://github.com/libproxy/libproxy) and GNOME settings can be
+// found in [glib-networking](https://gitlab.gnome.org/GNOME/glib-networking).
+// GIO comes with an implementation for use inside Flatpak portals.
 type ProxyResolver interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
@@ -171,8 +188,8 @@ func (x *ProxyResolverBase) IsSupported() bool {
 
 // Looks into the system proxy configuration to determine what proxy,
 // if any, to use to connect to @uri. The returned proxy URIs are of
-// the form `&lt;protocol&gt;://[user[:password]@]host:port` or
-// `direct://`, where &lt;protocol&gt; could be http, rtsp, socks
+// the form `&lt;protocol&gt;://[user[:password]@]host[:port]` or
+// `direct://`, where `&lt;protocol&gt;` could be http, rtsp, socks
 // or other proxying protocol.
 //
 // If you don't know what network protocol is being used on the
@@ -224,7 +241,7 @@ var XGProxyResolverLookupFinish func(uintptr, uintptr, **glib.Error) []string
 
 const (
 	// Extension point for proxy resolving functionality.
-	// See [Extending GIO][extending-gio].
+	// See [Extending GIO](overview.html#extending-gio).
 	PROXY_RESOLVER_EXTENSION_POINT_NAME string = "gio-proxy-resolver"
 )
 

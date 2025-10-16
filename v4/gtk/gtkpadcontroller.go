@@ -58,8 +58,7 @@ const (
 	PadActionStripValue PadActionType = 2
 )
 
-// `GtkPadController` is an event controller for the pads found in drawing
-// tablets.
+// Handles input from the pads found in drawing tablets.
 //
 // Pads are the collection of buttons and tactile sensors often found around
 // the stylus-sensitive area.

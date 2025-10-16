@@ -35,8 +35,10 @@ func ApplicationFlagsGLibType() types.GType {
 
 const (
 
-	// Default
+	// Default flags.
 	GApplicationFlagsNoneValue ApplicationFlags = 0
+	// Default flags.
+	GApplicationDefaultFlagsValue ApplicationFlags = 0
 	// Run as a service. In this mode, registration
 	//      fails if the service is already running, and the application
 	//      will initially wait up to 10 seconds for an initial activation
@@ -242,6 +244,13 @@ const (
 	// When authenticating
 	// as a server, require the UID of the peer to be the same as the UID of the server. (Since: 2.68)
 	GDbusConnectionFlagsAuthenticationRequireSameUserValue DBusConnectionFlags = 32
+	// When authenticating, try to use
+	//  protocols that work across a Linux user namespace boundary, even if this
+	//  reduces interoperability with older D-Bus implementations. This currently
+	//  affects client-side `EXTERNAL` authentication, for which this flag makes
+	//  connections to a server in another user namespace succeed, but causes
+	//  a deadlock when connecting to a GDBus server older than 2.73.3. Since: 2.74
+	GDbusConnectionFlagsCrossNamespaceValue DBusConnectionFlags = 64
 )
 
 // Flags describing the behavior of a #GDBusInterfaceSkeleton instance.
@@ -509,6 +518,9 @@ const (
 	GFileCopyNoFallbackForMoveValue FileCopyFlags = 16
 	// Leaves target file with default perms, instead of setting the source file perms.
 	GFileCopyTargetDefaultPermsValue FileCopyFlags = 32
+	// Use default modification
+	//     timestamps instead of copying them from the source file. Since 2.80
+	GFileCopyTargetDefaultModifiedTimeValue FileCopyFlags = 64
 )
 
 // Flags used when an operation may create a file.
@@ -561,6 +573,9 @@ const (
 	//   sizes.  Normally, the block-size is used, if available, as this is a
 	//   more accurate representation of disk space used.
 	//   Compare with `du --apparent-size`.
+	//   Since GLib 2.78. and similarly to `du` since GNU Coreutils 9.2, this will
+	//   ignore the sizes of file types other than regular files and links, as the
+	//   sizes of other file types are not specified in a standard way.
 	GFileMeasureApparentSizeValue FileMeasureFlags = 4
 	// Do not cross mount point boundaries.
 	//   Compare with `du -x`.
@@ -847,6 +862,8 @@ func TlsCertificateFlagsGLibType() types.GType {
 
 const (
 
+	// No flags set. Since: 2.74
+	GTlsCertificateNoFlagsValue TlsCertificateFlags = 0
 	// The signing certificate authority is
 	//   not known.
 	GTlsCertificateUnknownCaValue TlsCertificateFlags = 1
@@ -1243,8 +1260,8 @@ const (
 	//    drives.
 	GDriveStartStopTypeMultidiskValue DriveStartStopType = 3
 	// The start/stop methods will
-	//    unlock/lock the disk (for example using the ATA &lt;quote&gt;SECURITY
-	//    UNLOCK DEVICE&lt;/quote&gt; command)
+	//    unlock/lock the disk (for example using the ATA `SECURITY UNLOCK
+	//    DEVICE` command)
 	GDriveStartStopTypePasswordValue DriveStartStopType = 4
 )
 
@@ -1562,6 +1579,10 @@ const (
 	GIoErrorNotConnectedValue IOErrorEnum = 45
 	// Message too large. Since 2.48.
 	GIoErrorMessageTooLargeValue IOErrorEnum = 46
+	// No such device found. Since 2.74
+	GIoErrorNoSuchDeviceValue IOErrorEnum = 47
+	// Destination address unset. Since 2.80
+	GIoErrorDestinationUnsetValue IOErrorEnum = 48
 )
 
 // Flags for use with g_io_module_scope_new().
@@ -2052,7 +2073,7 @@ const (
 )
 
 // The type of TLS channel binding data to retrieve from #GTlsConnection
-// or #GDtlsConnection, as documented by RFC 5929. The
+// or #GDtlsConnection, as documented by RFC 5929 or RFC 9266. The
 // [`tls-unique-for-telnet`](https://tools.ietf.org/html/rfc5929#section-5)
 // binding type is not currently implemented.
 type TlsChannelBindingType int
@@ -2071,6 +2092,9 @@ const (
 	// [`tls-server-end-point`](https://tools.ietf.org/html/rfc5929#section-4)
 	//    binding type
 	GTlsChannelBindingTlsServerEndPointValue TlsChannelBindingType = 1
+	// [`tls-exporter`](https://www.rfc-editor.org/rfc/rfc9266.html) binding
+	//    type. Since: 2.74
+	GTlsChannelBindingTlsExporterValue TlsChannelBindingType = 2
 )
 
 // Flags for g_tls_database_lookup_certificate_for_handle(),

@@ -31,8 +31,7 @@ func (x *FixedLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkFixedLayout` is a layout manager which can place child widgets
-// at fixed positions.
+// Places child widgets at fixed positions.
 //
 // Most applications should never use this layout manager; fixed positioning
 // and sizing requires constant recalculations on where children need to be

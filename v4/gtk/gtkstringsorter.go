@@ -21,14 +21,37 @@ func (x *StringSorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkStringSorter` is a `GtkSorter` that compares strings.
+// Describes how a [class@Gtk.StringSorter] turns strings into sort keys to
+// compare them.
+//
+// Note that the result of sorting will in general depend on the current locale
+// unless the mode is @GTK_COLLATION_NONE.
+type Collation int
+
+var xCollationGLibType func() types.GType
+
+func CollationGLibType() types.GType {
+	return xCollationGLibType()
+}
+
+const (
+
+	// Don't do any collation
+	CollationNoneValue Collation = 0
+	// Use [func@GLib.utf8_collate_key]
+	CollationUnicodeValue Collation = 1
+	// Use [func@GLib.utf8_collate_key_for_filename]
+	CollationFilenameValue Collation = 2
+)
+
+// Sorts items by comparing strings.
+//
+// To obtain the strings to compare, this sorter evaluates a
+// [class@Gtk.Expression].
 //
 // It does the comparison in a linguistically correct way using the
 // current locale by normalizing Unicode strings and possibly case-folding
 // them before performing the comparison.
-//
-// To obtain the strings to compare, this sorter evaluates a
-// [class@Gtk.Expression].
 type StringSorter struct {
 	Sorter
 }
@@ -65,6 +88,15 @@ func NewStringSorter(ExpressionVar *Expression) *StringSorter {
 	return cls
 }
 
+var xStringSorterGetCollation func(uintptr) Collation
+
+// Gets which collation method the sorter uses.
+func (x *StringSorter) GetCollation() Collation {
+
+	cret := xStringSorterGetCollation(x.GoPointer())
+	return cret
+}
+
 var xStringSorterGetExpression func(uintptr) uintptr
 
 // Gets the expression that is evaluated to obtain strings from items.
@@ -89,6 +121,15 @@ func (x *StringSorter) GetIgnoreCase() bool {
 
 	cret := xStringSorterGetIgnoreCase(x.GoPointer())
 	return cret
+}
+
+var xStringSorterSetCollation func(uintptr, Collation)
+
+// Sets the collation method to use for sorting.
+func (x *StringSorter) SetCollation(CollationVar Collation) {
+
+	xStringSorterSetCollation(x.GoPointer(), CollationVar)
+
 }
 
 var xStringSorterSetExpression func(uintptr, uintptr)
@@ -130,12 +171,16 @@ func init() {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xCollationGLibType, lib, "gtk_collation_get_type")
+
 	core.PuregoSafeRegister(&xStringSorterGLibType, lib, "gtk_string_sorter_get_type")
 
 	core.PuregoSafeRegister(&xNewStringSorter, lib, "gtk_string_sorter_new")
 
+	core.PuregoSafeRegister(&xStringSorterGetCollation, lib, "gtk_string_sorter_get_collation")
 	core.PuregoSafeRegister(&xStringSorterGetExpression, lib, "gtk_string_sorter_get_expression")
 	core.PuregoSafeRegister(&xStringSorterGetIgnoreCase, lib, "gtk_string_sorter_get_ignore_case")
+	core.PuregoSafeRegister(&xStringSorterSetCollation, lib, "gtk_string_sorter_set_collation")
 	core.PuregoSafeRegister(&xStringSorterSetExpression, lib, "gtk_string_sorter_set_expression")
 	core.PuregoSafeRegister(&xStringSorterSetIgnoreCase, lib, "gtk_string_sorter_set_ignore_case")
 

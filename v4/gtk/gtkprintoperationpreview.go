@@ -345,8 +345,7 @@ func (x *PrintOperationPreviewIface) GetGtkReserved8() func() {
 	}
 }
 
-// `GtkPrintOperationPreview` is the interface that is used to
-// implement print preview.
+// The interface that is used to implement print preview.
 //
 // A `GtkPrintOperationPreview` object is passed to the
 // [signal@Gtk.PrintOperation::preview] signal by

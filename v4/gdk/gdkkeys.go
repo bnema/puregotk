@@ -32,7 +32,7 @@ func KeyvalFromName(KeyvalNameVar string) uint {
 
 var xKeyvalIsLower func(uint) bool
 
-// Returns %TRUE if the given key value is in lower case.
+// Returns true if the given key value is in lower case.
 func KeyvalIsLower(KeyvalVar uint) bool {
 
 	cret := xKeyvalIsLower(KeyvalVar)
@@ -41,7 +41,7 @@ func KeyvalIsLower(KeyvalVar uint) bool {
 
 var xKeyvalIsUpper func(uint) bool
 
-// Returns %TRUE if the given key value is in upper case.
+// Returns true if the given key value is in upper case.
 func KeyvalIsUpper(KeyvalVar uint) bool {
 
 	cret := xKeyvalIsUpper(KeyvalVar)
@@ -72,12 +72,12 @@ func KeyvalToLower(KeyvalVar uint) uint {
 
 var xKeyvalToUnicode func(uint) uint32
 
-// Convert from a GDK key symbol to the corresponding Unicode
+// Converts from a GDK key symbol to the corresponding Unicode
 // character.
 //
 // Note that the conversion does not take the current locale
 // into consideration, which might be expected for particular
-// keyvals, such as %GDK_KEY_KP_Decimal.
+// keyvals, such as `GDK_KEY_KP_Decimal`.
 func KeyvalToUnicode(KeyvalVar uint) uint32 {
 
 	cret := xKeyvalToUnicode(KeyvalVar)
@@ -95,7 +95,7 @@ func KeyvalToUpper(KeyvalVar uint) uint {
 
 var xUnicodeToKeyval func(uint32) uint
 
-// Convert from a Unicode character to a key symbol.
+// Converts from a Unicode character to a key symbol.
 func UnicodeToKeyval(WcVar uint32) uint {
 
 	cret := xUnicodeToKeyval(WcVar)

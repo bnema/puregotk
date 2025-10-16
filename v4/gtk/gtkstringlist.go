@@ -32,18 +32,19 @@ func (x *StringObjectClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkStringList` is a list model that wraps an array of strings.
+// A list model that wraps an array of strings.
 //
-// The objects in the model have a "string" property.
+// The objects in the model are of type [class@Gtk.StringObject] and have
+// a "string" property that can be used inside expressions.
 //
 // `GtkStringList` is well-suited for any place where you would
 // typically use a `char*[]`, but need a list model.
 //
-// # GtkStringList as GtkBuildable
+// ## GtkStringList as GtkBuildable
 //
 // The `GtkStringList` implementation of the `GtkBuildable` interface
-// supports adding items directly using the &lt;items&gt; element and
-// specifying &lt;item&gt; elements for each item. Each &lt;item&gt; element
+// supports adding items directly using the `&lt;items&gt;` element and
+// specifying `&lt;item&gt;` elements for each item. Each `&lt;item&gt;` element
 // supports the regular translation attributes “translatable”,
 // “context” and “comments”.
 //
@@ -102,6 +103,17 @@ func (x *StringList) Append(StringVar string) {
 
 	xStringListAppend(x.GoPointer(), StringVar)
 
+}
+
+var xStringListFind func(uintptr, string) uint
+
+// Gets the position of the @string in @self.
+//
+// If @self does not contain @string item, `G_MAXUINT` is returned.
+func (x *StringList) Find(StringVar string) uint {
+
+	cret := xStringListFind(x.GoPointer(), StringVar)
+	return cret
 }
 
 var xStringListGetString func(uintptr, uint) string
@@ -272,17 +284,18 @@ func (x *StringList) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar ui
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *StringList) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
-// `GtkStringObject` is the type of items in a `GtkStringList`.
+// The type of items in a `GtkStringList`.
 //
 // A `GtkStringObject` is a wrapper around a `const char*`; it has
-// a [property@Gtk.StringObject:string] property.
+// a [property@Gtk.StringObject:string] property that can be used
+// for property bindings and expressions.
 type StringObject struct {
 	gobject.Object
 }
@@ -348,6 +361,7 @@ func init() {
 	core.PuregoSafeRegister(&xNewStringList, lib, "gtk_string_list_new")
 
 	core.PuregoSafeRegister(&xStringListAppend, lib, "gtk_string_list_append")
+	core.PuregoSafeRegister(&xStringListFind, lib, "gtk_string_list_find")
 	core.PuregoSafeRegister(&xStringListGetString, lib, "gtk_string_list_get_string")
 	core.PuregoSafeRegister(&xStringListRemove, lib, "gtk_string_list_remove")
 	core.PuregoSafeRegister(&xStringListSplice, lib, "gtk_string_list_splice")

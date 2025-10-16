@@ -15,7 +15,7 @@ import (
 // to iterate over every `GtkTextTag` inside a `GtkTextTagTable`.
 type TextTagTableForeach func(uintptr, uintptr)
 
-// The collection of tags in a `GtkTextBuffer`
+// Collects the tags in a `GtkTextBuffer`.
 //
 // You may wish to begin by reading the
 // [text widget conceptual overview](section-text-widget.html),
@@ -26,7 +26,7 @@ type TextTagTableForeach func(uintptr, uintptr)
 //
 // The `GtkTextTagTable` implementation of the `GtkBuildable` interface
 // supports adding tags by specifying “tag” as the “type” attribute
-// of a &lt;child&gt; element.
+// of a `&lt;child&gt;` element.
 //
 // An example of a UI definition fragment specifying tags:
 // ```xml
@@ -215,7 +215,7 @@ func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint32
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TextTagTable) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

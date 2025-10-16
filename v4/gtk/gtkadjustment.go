@@ -172,9 +172,9 @@ func (x *AdjustmentClass) GetGtkReserved4() func() {
 	}
 }
 
-// `GtkAdjustment` is a model for a numeric value.
+// A model for a numeric value.
 //
-// The `GtkAdjustment has an associated lower and upper bound.
+// The `GtkAdjustment` has an associated lower and upper bound.
 // It also contains step and page increments, and a page size.
 //
 // Adjustments are used within several GTK widgets, including
@@ -218,8 +218,8 @@ func NewAdjustment(ValueVar float64, LowerVar float64, UpperVar float64, StepInc
 
 var xAdjustmentClampPage func(uintptr, float64, float64)
 
-// Updates the value property to ensure that the range
-// between @lower and @upper is in the current page.
+// Updates the value of the adjustment to ensure that the
+// given range is contained in the current page.
 //
 // The current page goes from `value` to `value` + `page-size`.
 // If the range is larger than the page size, then only the

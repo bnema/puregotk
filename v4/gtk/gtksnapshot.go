@@ -24,7 +24,7 @@ func (x *SnapshotClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkSnapshot` assists in creating [class@Gsk.RenderNode]s for widgets.
+// Assists in creating [class@Gsk.RenderNode]s for widgets.
 //
 // It functions in a similar way to a cairo context, and maintains a stack
 // of render nodes and their associated transformations.
@@ -112,6 +112,19 @@ func (x *Snapshot) AppendConicGradient(BoundsVar *graphene.Rect, CenterVar *grap
 
 }
 
+var xSnapshotAppendFill func(uintptr, *gsk.Path, gsk.FillRule, *gdk.RGBA)
+
+// A convenience method to fill a path with a color.
+//
+// See [method@Gtk.Snapshot.push_fill] if you need
+// to fill a path with more complex content than
+// a color.
+func (x *Snapshot) AppendFill(PathVar *gsk.Path, FillRuleVar gsk.FillRule, ColorVar *gdk.RGBA) {
+
+	xSnapshotAppendFill(x.GoPointer(), PathVar, FillRuleVar, ColorVar)
+
+}
+
 var xSnapshotAppendInsetShadow func(uintptr, *gsk.RoundedRect, *gdk.RGBA, float32, float32, float32, float32)
 
 // Appends an inset shadow into the box given by @outline.
@@ -123,6 +136,13 @@ func (x *Snapshot) AppendInsetShadow(OutlineVar *gsk.RoundedRect, ColorVar *gdk.
 
 var xSnapshotAppendLayout func(uintptr, uintptr, *gdk.RGBA)
 
+// Creates render nodes for rendering @layout in the given foregound @color
+// and appends them to the current node of @snapshot without changing the
+// current node. The current theme's foreground color for a widget can be
+// obtained with [method@Gtk.Widget.get_color].
+//
+// Note that if the layout does not produce any visible output, then nodes
+// may not be added to the @snapshot.
 func (x *Snapshot) AppendLayout(LayoutVar *pango.Layout, ColorVar *gdk.RGBA) {
 
 	xSnapshotAppendLayout(x.GoPointer(), LayoutVar.GoPointer(), ColorVar)
@@ -187,11 +207,43 @@ func (x *Snapshot) AppendRepeatingRadialGradient(BoundsVar *graphene.Rect, Cente
 
 }
 
+var xSnapshotAppendScaledTexture func(uintptr, uintptr, gsk.ScalingFilter, *graphene.Rect)
+
+// Creates a new render node drawing the @texture
+// into the given @bounds and appends it to the
+// current render node of @snapshot.
+//
+// In contrast to [method@Gtk.Snapshot.append_texture],
+// this function provides control about how the filter
+// that is used when scaling.
+func (x *Snapshot) AppendScaledTexture(TextureVar *gdk.Texture, FilterVar gsk.ScalingFilter, BoundsVar *graphene.Rect) {
+
+	xSnapshotAppendScaledTexture(x.GoPointer(), TextureVar.GoPointer(), FilterVar, BoundsVar)
+
+}
+
+var xSnapshotAppendStroke func(uintptr, *gsk.Path, *gsk.Stroke, *gdk.RGBA)
+
+// A convenience method to stroke a path with a color.
+//
+// See [method@Gtk.Snapshot.push_stroke] if you need
+// to stroke a path with more complex content than
+// a color.
+func (x *Snapshot) AppendStroke(PathVar *gsk.Path, StrokeVar *gsk.Stroke, ColorVar *gdk.RGBA) {
+
+	xSnapshotAppendStroke(x.GoPointer(), PathVar, StrokeVar, ColorVar)
+
+}
+
 var xSnapshotAppendTexture func(uintptr, uintptr, *graphene.Rect)
 
 // Creates a new render node drawing the @texture
 // into the given @bounds and appends it to the
 // current render node of @snapshot.
+//
+// If the texture needs to be scaled to fill @bounds,
+// linear filtering is used. See [method@Gtk.Snapshot.append_scaled_texture]
+// if you need other filtering, such as nearest-neighbour.
 func (x *Snapshot) AppendTexture(TextureVar *gdk.Texture, BoundsVar *graphene.Rect) {
 
 	xSnapshotAppendTexture(x.GoPointer(), TextureVar.GoPointer(), BoundsVar)
@@ -202,6 +254,8 @@ var xSnapshotFreeToNode func(uintptr) uintptr
 
 // Returns the node that was constructed by @snapshot
 // and frees @snapshot.
+//
+// See also [method@Gtk.Snapshot.to_node].
 func (x *Snapshot) FreeToNode() *gsk.RenderNode {
 	var cls *gsk.RenderNode
 
@@ -311,6 +365,13 @@ var xSnapshotPushColorMatrix func(uintptr, *graphene.Matrix, *graphene.Vec4)
 // Modifies the colors of an image by applying an affine transformation
 // in RGB space.
 //
+// In particular, the colors will be transformed by applying
+//
+//	pixel = transpose(color_matrix) * pixel + color_offset
+//
+// for every pixel. The transformation operates on unpremultiplied
+// colors, with color components ordered R, G, B, A.
+//
 // The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 func (x *Snapshot) PushColorMatrix(ColorMatrixVar *graphene.Matrix, ColorOffsetVar *graphene.Vec4) {
 
@@ -345,6 +406,21 @@ var xSnapshotPushDebug func(uintptr, string, ...interface{})
 func (x *Snapshot) PushDebug(MessageVar string, varArgs ...interface{}) {
 
 	xSnapshotPushDebug(x.GoPointer(), MessageVar, varArgs...)
+
+}
+
+var xSnapshotPushFill func(uintptr, *gsk.Path, gsk.FillRule)
+
+// Fills the area given by @path and @fill_rule with an image and discards everything
+// outside of it.
+//
+// The image is recorded until the next call to [method@Gtk.Snapshot.pop].
+//
+// If you want to fill the path with a color, [method@Gtk.Snapshot.append_fill]
+// may be more convenient.
+func (x *Snapshot) PushFill(PathVar *gsk.Path, FillRuleVar gsk.FillRule) {
+
+	xSnapshotPushFill(x.GoPointer(), PathVar, FillRuleVar)
 
 }
 
@@ -390,6 +466,21 @@ func (x *Snapshot) PushGlShader(ShaderVar *gsk.GLShader, BoundsVar *graphene.Rec
 
 }
 
+var xSnapshotPushMask func(uintptr, gsk.MaskMode)
+
+// Until the first call to [method@Gtk.Snapshot.pop], the
+// mask image for the mask operation will be recorded.
+//
+// After that call, the source image will be recorded until
+// the second call to [method@Gtk.Snapshot.pop].
+//
+// Calling this function requires 2 subsequent calls to gtk_snapshot_pop().
+func (x *Snapshot) PushMask(MaskModeVar gsk.MaskMode) {
+
+	xSnapshotPushMask(x.GoPointer(), MaskModeVar)
+
+}
+
 var xSnapshotPushOpacity func(uintptr, float64)
 
 // Modifies the opacity of an image.
@@ -431,6 +522,25 @@ var xSnapshotPushShadow func(uintptr, []gsk.Shadow, uint)
 func (x *Snapshot) PushShadow(ShadowVar []gsk.Shadow, NShadowsVar uint) {
 
 	xSnapshotPushShadow(x.GoPointer(), ShadowVar, NShadowsVar)
+
+}
+
+var xSnapshotPushStroke func(uintptr, *gsk.Path, *gsk.Stroke)
+
+// Strokes the given @path with the attributes given by @stroke and
+// an image.
+//
+// The image is recorded until the next call to [method@Gtk.Snapshot.pop].
+//
+// Note that the strokes are subject to the same transformation as
+// everything else, so uneven scaling will cause horizontal and vertical
+// strokes to have different widths.
+//
+// If you want to stroke the path with a color, [method@Gtk.Snapshot.append_stroke]
+// may be more convenient.
+func (x *Snapshot) PushStroke(PathVar *gsk.Path, StrokeVar *gsk.Stroke) {
+
+	xSnapshotPushStroke(x.GoPointer(), PathVar, StrokeVar)
 
 }
 
@@ -501,9 +611,10 @@ func (x *Snapshot) Restore() {
 var xSnapshotRotate func(uintptr, float32)
 
 // Rotates @@snapshot's coordinate system by @angle degrees in 2D space -
-// or in 3D speak, rotates around the Z axis.
+// or in 3D speak, rotates around the Z axis. The rotation happens around
+// the origin point of (0, 0) in the @snapshot's current coordinate system.
 //
-// To rotate around other axes, use [method@Gsk.Transform.rotate_3d].
+// To rotate around axes other than the Z axis, use [method@Gsk.Transform.rotate_3d].
 func (x *Snapshot) Rotate(AngleVar float32) {
 
 	xSnapshotRotate(x.GoPointer(), AngleVar)
@@ -527,9 +638,10 @@ var xSnapshotSave func(uintptr)
 // on an internal stack.
 //
 // When [method@Gtk.Snapshot.restore] is called, @snapshot will
-// be restored to the saved state. Multiple calls to
-// [method@Snapshot.save] and [class@Snapshot.restore] can be nested;
-// each call to `gtk_snapshot_restore()` restores the state from
+// be restored to the saved state.
+//
+// Multiple calls to [method@Gtk.Snapshot.save] and [method@Gtk.Snapshot.restore]
+// can be nested; each call to `gtk_snapshot_restore()` restores the state from
 // the matching paired `gtk_snapshot_save()`.
 //
 // It is necessary to clear all saved states with corresponding
@@ -565,6 +677,10 @@ var xSnapshotToNode func(uintptr) uintptr
 
 // Returns the render node that was constructed
 // by @snapshot.
+//
+// Note that this function may return %NULL if nothing has been
+// added to the snapshot or if its content does not produce pixels
+// to be rendered.
 //
 // After calling this function, it is no longer possible to
 // add more nodes to @snapshot. The only function that should
@@ -666,6 +782,7 @@ func init() {
 	core.PuregoSafeRegister(&xSnapshotAppendCairo, lib, "gtk_snapshot_append_cairo")
 	core.PuregoSafeRegister(&xSnapshotAppendColor, lib, "gtk_snapshot_append_color")
 	core.PuregoSafeRegister(&xSnapshotAppendConicGradient, lib, "gtk_snapshot_append_conic_gradient")
+	core.PuregoSafeRegister(&xSnapshotAppendFill, lib, "gtk_snapshot_append_fill")
 	core.PuregoSafeRegister(&xSnapshotAppendInsetShadow, lib, "gtk_snapshot_append_inset_shadow")
 	core.PuregoSafeRegister(&xSnapshotAppendLayout, lib, "gtk_snapshot_append_layout")
 	core.PuregoSafeRegister(&xSnapshotAppendLinearGradient, lib, "gtk_snapshot_append_linear_gradient")
@@ -674,6 +791,8 @@ func init() {
 	core.PuregoSafeRegister(&xSnapshotAppendRadialGradient, lib, "gtk_snapshot_append_radial_gradient")
 	core.PuregoSafeRegister(&xSnapshotAppendRepeatingLinearGradient, lib, "gtk_snapshot_append_repeating_linear_gradient")
 	core.PuregoSafeRegister(&xSnapshotAppendRepeatingRadialGradient, lib, "gtk_snapshot_append_repeating_radial_gradient")
+	core.PuregoSafeRegister(&xSnapshotAppendScaledTexture, lib, "gtk_snapshot_append_scaled_texture")
+	core.PuregoSafeRegister(&xSnapshotAppendStroke, lib, "gtk_snapshot_append_stroke")
 	core.PuregoSafeRegister(&xSnapshotAppendTexture, lib, "gtk_snapshot_append_texture")
 	core.PuregoSafeRegister(&xSnapshotFreeToNode, lib, "gtk_snapshot_free_to_node")
 	core.PuregoSafeRegister(&xSnapshotFreeToPaintable, lib, "gtk_snapshot_free_to_paintable")
@@ -686,11 +805,14 @@ func init() {
 	core.PuregoSafeRegister(&xSnapshotPushColorMatrix, lib, "gtk_snapshot_push_color_matrix")
 	core.PuregoSafeRegister(&xSnapshotPushCrossFade, lib, "gtk_snapshot_push_cross_fade")
 	core.PuregoSafeRegister(&xSnapshotPushDebug, lib, "gtk_snapshot_push_debug")
+	core.PuregoSafeRegister(&xSnapshotPushFill, lib, "gtk_snapshot_push_fill")
 	core.PuregoSafeRegister(&xSnapshotPushGlShader, lib, "gtk_snapshot_push_gl_shader")
+	core.PuregoSafeRegister(&xSnapshotPushMask, lib, "gtk_snapshot_push_mask")
 	core.PuregoSafeRegister(&xSnapshotPushOpacity, lib, "gtk_snapshot_push_opacity")
 	core.PuregoSafeRegister(&xSnapshotPushRepeat, lib, "gtk_snapshot_push_repeat")
 	core.PuregoSafeRegister(&xSnapshotPushRoundedClip, lib, "gtk_snapshot_push_rounded_clip")
 	core.PuregoSafeRegister(&xSnapshotPushShadow, lib, "gtk_snapshot_push_shadow")
+	core.PuregoSafeRegister(&xSnapshotPushStroke, lib, "gtk_snapshot_push_stroke")
 	core.PuregoSafeRegister(&xSnapshotRenderBackground, lib, "gtk_snapshot_render_background")
 	core.PuregoSafeRegister(&xSnapshotRenderFocus, lib, "gtk_snapshot_render_focus")
 	core.PuregoSafeRegister(&xSnapshotRenderFrame, lib, "gtk_snapshot_render_frame")

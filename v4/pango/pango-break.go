@@ -75,7 +75,7 @@ func Break(TextVar string, LengthVar int, AnalysisVar *Analysis, AttrsVar []LogA
 
 }
 
-var xDefaultBreak func(string, int, *Analysis, *LogAttr, int)
+var xDefaultBreak func(string, int, *Analysis, []LogAttr, int)
 
 // This is the default break algorithm.
 //
@@ -86,7 +86,7 @@ var xDefaultBreak func(string, int, *Analysis, *LogAttr, int)
 // See [func@Pango.tailor_break] for language-specific breaks.
 //
 // See [func@Pango.attr_break] for attribute-based customization.
-func DefaultBreak(TextVar string, LengthVar int, AnalysisVar *Analysis, AttrsVar *LogAttr, AttrsLenVar int) {
+func DefaultBreak(TextVar string, LengthVar int, AnalysisVar *Analysis, AttrsVar []LogAttr, AttrsLenVar int) {
 
 	xDefaultBreak(TextVar, LengthVar, AnalysisVar, AttrsVar, AttrsLenVar)
 

@@ -174,17 +174,18 @@ func (x *MediaFileClass) GetGtkReserved4() func() {
 }
 
 const (
+	// The default extension point name for media file.
 	MEDIA_FILE_EXTENSION_POINT_NAME string = "gtk-media-file"
 )
 
-// `GtkMediaFile` implements `GtkMediaStream` for files.
+// Implements the `GtkMediaStream` interface for files.
 //
 // This provides a simple way to play back video files with GTK.
 //
 // GTK provides a GIO extension point for `GtkMediaFile` implementations
 // to allow for external implementations using various media frameworks.
 //
-// GTK itself includes implementations using GStreamer and ffmpeg.
+// GTK itself includes an implementation using GStreamer.
 type MediaFile struct {
 	MediaStream
 }
@@ -352,7 +353,7 @@ func (x *MediaFile) SetFile(FileVar gio.File) {
 
 var xMediaFileSetFilename func(uintptr, string)
 
-// Sets the `GtkMediaFile to play the given file.
+// Sets the `GtkMediaFile` to play the given file.
 //
 // This is a utility function that converts the given @filename
 // to a `GFile` and calls [method@Gtk.MediaFile.set_file].
@@ -378,7 +379,7 @@ func (x *MediaFile) SetInputStream(StreamVar *gio.InputStream) {
 
 var xMediaFileSetResource func(uintptr, string)
 
-// Sets the `GtkMediaFile to play the given resource.
+// Sets the `GtkMediaFile` to play the given resource.
 //
 // This is a utility function that converts the given @resource_path
 // to a `GFile` and calls [method@Gtk.MediaFile.set_file].

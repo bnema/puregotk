@@ -324,15 +324,15 @@ func (x *FileInputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// GFileInputStream provides input streams that take their
+// `GFileInputStream` provides input streams that take their
 // content from a file.
 //
-// GFileInputStream implements #GSeekable, which allows the input
+// `GFileInputStream` implements [iface@Gio.Seekable], which allows the input
 // stream to jump to arbitrary positions in the file, provided the
 // filesystem of the file allows it. To find the position of a file
-// input stream, use g_seekable_tell(). To find out if a file input
-// stream supports seeking, use g_seekable_can_seek().
-// To position a file input stream, use g_seekable_seek().
+// input stream, use [method@Gio.Seekable.tell]. To find out if a file input
+// stream supports seeking, use [vfunc@Gio.Seekable.can_seek].
+// To position a file input stream, use [vfunc@Gio.Seekable.seek].
 type FileInputStream struct {
 	InputStream
 }

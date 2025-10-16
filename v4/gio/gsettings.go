@@ -12,24 +12,25 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The type for the function that is used to convert from #GSettings to
-// an object property. The @value is already initialized to hold values
-// of the appropriate type.
+// The type for the function that is used to convert from [class@Gio.Settings]
+// to an object property.
+//
+// The @value is already initialized to hold values of the appropriate type.
 type SettingsBindGetMapping func(*gobject.Value, *glib.Variant, uintptr) bool
 
 // The type for the function that is used to convert an object property
-// value to a #GVariant for storing it in #GSettings.
+// value to a [struct@GLib.Variant] for storing it in [class@Gio.Settings].
 type SettingsBindSetMapping func(*gobject.Value, *glib.VariantType, uintptr) *glib.Variant
 
 // The type of the function that is used to convert from a value stored
-// in a #GSettings to a value that is useful to the application.
+// in a [class@Gio.Settings] to a value that is useful to the application.
 //
 // If the value is successfully mapped, the result should be stored at
-// @result and %TRUE returned.  If mapping fails (for example, if @value
-// is not in the right format) then %FALSE should be returned.
+// @result and true returned.  If mapping fails (for example, if @value
+// is not in the right format) then false should be returned.
 //
-// If @value is %NULL then it means that the mapping function is being
-// given a "last chance" to successfully return a valid value.  %TRUE
+// If @value is `NULL` then it means that the mapping function is being
+// given a ‘last chance’ to successfully return a valid value.  True
 // must be returned in this case.
 type SettingsGetMapping func(*glib.Variant, uintptr, uintptr) bool
 
@@ -153,9 +154,10 @@ func (x *SettingsPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// Flags used when creating a binding. These flags determine in which
-// direction the binding works. The default is to synchronize in both
-// directions.
+// Flags used when creating a binding.
+//
+// These flags determine in which direction the binding works. The default is to
+// synchronize in both directions.
 type SettingsBindFlags int
 
 var xSettingsBindFlagsGLibType func() types.GType
@@ -168,131 +170,134 @@ const (
 
 	// Equivalent to `G_SETTINGS_BIND_GET|G_SETTINGS_BIND_SET`
 	GSettingsBindDefaultValue SettingsBindFlags = 0
-	// Update the #GObject property when the setting changes.
-	//     It is an error to use this flag if the property is not writable.
+	// Update the [class@GObject.Object] property when the setting changes.
+	//   It is an error to use this flag if the property is not writable.
 	GSettingsBindGetValue SettingsBindFlags = 1
-	// Update the setting when the #GObject property changes.
-	//     It is an error to use this flag if the property is not readable.
+	// Update the setting when the [class@GObject.Object] property changes.
+	//   It is an error to use this flag if the property is not readable.
 	GSettingsBindSetValue SettingsBindFlags = 2
-	// Do not try to bind a "sensitivity" property to the writability of the setting
+	// Do not try to bind a ‘sensitivity’ property to the writability of the setting
 	GSettingsBindNoSensitivityValue SettingsBindFlags = 4
-	// When set in addition to %G_SETTINGS_BIND_GET, set the #GObject property
-	//     value initially from the setting, but do not listen for changes of the setting
+	// When set in addition to [flags@Gio.SettingsBindFlags.GET],
+	//   set the [class@GObject.Object] property
+	//   value initially from the setting, but do not listen for changes of the setting
 	GSettingsBindGetNoChangesValue SettingsBindFlags = 8
-	// When passed to g_settings_bind(), uses a pair of mapping functions that invert
-	//     the boolean value when mapping between the setting and the property.  The setting and property must both
-	//     be booleans.  You cannot pass this flag to g_settings_bind_with_mapping().
+	// When passed to [method@Gio.Settings.bind],
+	//   uses a pair of mapping functions that invert
+	//   the boolean value when mapping between the setting and the property.  The setting and property must both
+	//   be booleans.  You cannot pass this flag to [method@Gio.Settings.bind_with_mapping].
 	GSettingsBindInvertBooleanValue SettingsBindFlags = 16
 )
 
-// The #GSettings class provides a convenient API for storing and retrieving
+// The `GSettings` class provides a convenient API for storing and retrieving
 // application settings.
 //
 // Reads and writes can be considered to be non-blocking.  Reading
-// settings with #GSettings is typically extremely fast: on
+// settings with `GSettings` is typically extremely fast: on
 // approximately the same order of magnitude (but slower than) a
-// #GHashTable lookup.  Writing settings is also extremely fast in terms
-// of time to return to your application, but can be extremely expensive
+// [struct@GLib.HashTable] lookup.  Writing settings is also extremely fast in
+// terms of time to return to your application, but can be extremely expensive
 // for other threads and other processes.  Many settings backends
 // (including dconf) have lazy initialisation which means in the common
 // case of the user using their computer without modifying any settings
-// a lot of work can be avoided.  For dconf, the D-Bus service doesn't
+// a lot of work can be avoided.  For dconf, the D-Bus service doesn’t
 // even need to be started in this case.  For this reason, you should
-// only ever modify #GSettings keys in response to explicit user action.
+// only ever modify `GSettings` keys in response to explicit user action.
 // Particular care should be paid to ensure that modifications are not
-// made during startup -- for example, when setting the initial value
-// of preferences widgets.  The built-in g_settings_bind() functionality
-// is careful not to write settings in response to notify signals as a
-// result of modifications that it makes to widgets.
+// made during startup — for example, when setting the initial value
+// of preferences widgets.  The built-in [method@Gio.Settings.bind]
+// functionality is careful not to write settings in response to notify signals
+// as a result of modifications that it makes to widgets.
 //
-// When creating a GSettings instance, you have to specify a schema
+// When creating a `GSettings` instance, you have to specify a schema
 // that describes the keys in your settings and their types and default
 // values, as well as some other information.
 //
 // Normally, a schema has a fixed path that determines where the settings
 // are stored in the conceptual global tree of settings. However, schemas
-// can also be '[relocatable][gsettings-relocatable]', i.e. not equipped with
+// can also be ‘[relocatable](#relocatable-schemas)’, i.e. not equipped with
 // a fixed path. This is
-// useful e.g. when the schema describes an 'account', and you want to be
+// useful e.g. when the schema describes an ‘account’, and you want to be
 // able to store a arbitrary number of accounts.
 //
-// Paths must start with and end with a forward slash character ('/')
+// Paths must start with and end with a forward slash character (`/`)
 // and must not contain two sequential slash characters.  Paths should
 // be chosen based on a domain name associated with the program or
 // library to which the settings belong.  Examples of paths are
-// "/org/gtk/settings/file-chooser/" and "/ca/desrt/dconf-editor/".
-// Paths should not start with "/apps/", "/desktop/" or "/system/" as
+// `/org/gtk/settings/file-chooser/` and `/ca/desrt/dconf-editor/`.
+// Paths should not start with `/apps/`, `/desktop/` or `/system/` as
 // they often did in GConf.
 //
 // Unlike other configuration systems (like GConf), GSettings does not
 // restrict keys to basic types like strings and numbers. GSettings stores
-// values as #GVariant, and allows any #GVariantType for keys. Key names
-// are restricted to lowercase characters, numbers and '-'. Furthermore,
-// the names must begin with a lowercase character, must not end
-// with a '-', and must not contain consecutive dashes.
+// values as [struct@GLib.Variant], and allows any [type@GLib.VariantType] for
+// keys. Key names are restricted to lowercase characters, numbers and `-`.
+// Furthermore, the names must begin with a lowercase character, must not end
+// with a `-`, and must not contain consecutive dashes.
 //
 // Similar to GConf, the default values in GSettings schemas can be
 // localized, but the localized values are stored in gettext catalogs
 // and looked up with the domain that is specified in the
-// `gettext-domain` attribute of the &lt;schemalist&gt; or &lt;schema&gt;
+// `gettext-domain` attribute of the `&lt;schemalist&gt;` or `&lt;schema&gt;`
 // elements and the category that is specified in the `l10n` attribute of
-// the &lt;default&gt; element. The string which is translated includes all text in
-// the &lt;default&gt; element, including any surrounding quotation marks.
+// the `&lt;default&gt;` element. The string which is translated includes all text in
+// the `&lt;default&gt;` element, including any surrounding quotation marks.
 //
 // The `l10n` attribute must be set to `messages` or `time`, and sets the
 // [locale category for
 // translation](https://www.gnu.org/software/gettext/manual/html_node/Aspects.html#index-locale-categories-1).
 // The `messages` category should be used by default; use `time` for
 // translatable date or time formats. A translation comment can be added as an
-// XML comment immediately above the &lt;default&gt; element — it is recommended to
+// XML comment immediately above the `&lt;default&gt;` element — it is recommended to
 // add these comments to aid translators understand the meaning and
 // implications of the default value. An optional translation `context`
-// attribute can be set on the &lt;default&gt; element to disambiguate multiple
+// attribute can be set on the `&lt;default&gt;` element to disambiguate multiple
 // defaults which use the same string.
 //
 // For example:
-// |[
+// ```xml
 //
 //	&lt;!-- Translators: A list of words which are not allowed to be typed, in
 //	     GVariant serialization syntax.
 //	     See: https://developer.gnome.org/glib/stable/gvariant-text.html --&gt;
 //	&lt;default l10n='messages' context='Banned words'&gt;['bad', 'words']&lt;/default&gt;
 //
-// ]|
+// ```
 //
 // Translations of default values must remain syntactically valid serialized
-// #GVariants (e.g. retaining any surrounding quotation marks) or runtime
-// errors will occur.
+// [struct@GLib.Variant]s (e.g. retaining any surrounding quotation marks) or
+// runtime errors will occur.
 //
 // GSettings uses schemas in a compact binary form that is created
-// by the [glib-compile-schemas][glib-compile-schemas]
+// by the [`glib-compile-schemas`](glib-compile-schemas.html)
 // utility. The input is a schema description in an XML format.
 //
 // A DTD for the gschema XML format can be found here:
 // [gschema.dtd](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/gschema.dtd)
 //
-// The [glib-compile-schemas][glib-compile-schemas] tool expects schema
+// The [`glib-compile-schemas`](glib-compile-schemas.html) tool expects schema
 // files to have the extension `.gschema.xml`.
 //
-// At runtime, schemas are identified by their id (as specified in the
-// id attribute of the &lt;schema&gt; element). The convention for schema
-// ids is to use a dotted name, similar in style to a D-Bus bus name,
-// e.g. "org.gnome.SessionManager". In particular, if the settings are
+// At runtime, schemas are identified by their ID (as specified in the
+// `id` attribute of the `&lt;schema&gt;` element). The convention for schema
+// IDs is to use a dotted name, similar in style to a D-Bus bus name,
+// e.g. `org.gnome.SessionManager`. In particular, if the settings are
 // for a specific service that owns a D-Bus bus name, the D-Bus bus name
-// and schema id should match. For schemas which deal with settings not
-// associated with one named application, the id should not use
-// StudlyCaps, e.g. "org.gnome.font-rendering".
+// and schema ID should match. For schemas which deal with settings not
+// associated with one named application, the ID should not use
+// StudlyCaps, e.g. `org.gnome.font-rendering`.
 //
-// In addition to #GVariant types, keys can have types that have
-// enumerated types. These can be described by a &lt;choice&gt;,
-// &lt;enum&gt; or &lt;flags&gt; element, as seen in the
-// [example][schema-enumerated]. The underlying type of such a key
-// is string, but you can use g_settings_get_enum(), g_settings_set_enum(),
-// g_settings_get_flags(), g_settings_set_flags() access the numeric values
-// corresponding to the string value of enum and flags keys.
+// In addition to [struct@GLib.Variant] types, keys can have types that have
+// enumerated types. These can be described by a `&lt;choice&gt;`,
+// `&lt;enum&gt;` or `&lt;flags&gt;` element, as seen in the
+// second example below. The underlying type of such a key
+// is string, but you can use [method@Gio.Settings.get_enum],
+// [method@Gio.Settings.set_enum], [method@Gio.Settings.get_flags],
+// [method@Gio.Settings.set_flags] access the numeric values corresponding to
+// the string value of enum and flags keys.
 //
 // An example for default value:
-// |[
+// ```xml
 // &lt;schemalist&gt;
 //
 //	&lt;schema id="org.gtk.Test" path="/org/gtk/Test/" gettext-domain="test"&gt;
@@ -317,10 +322,10 @@ const (
 //	&lt;/schema&gt;
 //
 // &lt;/schemalist&gt;
-// ]|
+// ```
 //
 // An example for ranges, choices and enumerated types:
-// |[
+// ```xml
 // &lt;schemalist&gt;
 //
 //	&lt;enum id="org.gtk.Test.myenum"&gt;
@@ -364,7 +369,7 @@ const (
 //	&lt;/schema&gt;
 //
 // &lt;/schemalist&gt;
-// ]|
+// ```
 //
 // ## Vendor overrides
 //
@@ -372,43 +377,67 @@ const (
 // an application. Sometimes, it is necessary for a vendor or distributor
 // to adjust these defaults. Since patching the XML source for the schema
 // is inconvenient and error-prone,
-// [glib-compile-schemas][glib-compile-schemas] reads so-called vendor
-// override' files. These are keyfiles in the same directory as the XML
-// schema sources which can override default values. The schema id serves
+// [`glib-compile-schemas`](glib-compile-schemas.html) reads so-called ‘vendor
+// override’ files. These are keyfiles in the same directory as the XML
+// schema sources which can override default values. The schema ID serves
 // as the group name in the key file, and the values are expected in
-// serialized GVariant form, as in the following example:
-// |[
+// serialized [struct@GLib.Variant] form, as in the following example:
+// ```
+// [org.gtk.Example]
+// key1='string'
+// key2=1.5
+// ```
 //
-//	[org.gtk.Example]
-//	key1='string'
-//	key2=1.5
-//
-// ]|
-//
-// glib-compile-schemas expects schema files to have the extension
+// `glib-compile-schemas` expects schema files to have the extension
 // `.gschema.override`.
+//
+// ## Delay-apply mode
+//
+// By default, values set on a [class@Gio.Settings] instance immediately start
+// to be written to the backend (although these writes may not complete by the
+// time that [method@Gio.Settings.set]) returns; see [func@Gio.Settings.sync]).
+//
+// In order to allow groups of settings to be changed simultaneously and
+// atomically, GSettings also supports a ‘delay-apply’ mode. In this mode,
+// updated values are kept locally in the [class@Gio.Settings] instance until
+// they are explicitly applied by calling [method@Gio.Settings.apply].
+//
+// For example, this could be useful for a preferences dialog where the
+// preferences all need to be applied simultaneously when the user clicks ‘Save’.
+//
+// Switching a [class@Gio.Settings] instance to ‘delay-apply’ mode is a one-time
+// irreversible operation: from that point onwards, *all* changes made to that
+// [class@Gio.Settings] have to be explicitly applied by calling
+// [method@Gio.Settings.apply]. The ‘delay-apply’ mode is also propagated to any
+// child settings objects subsequently created using
+// [method@Gio.Settings.get_child].
+//
+// At any point, the set of unapplied changes can be queried using
+// [property@Gio.Settings:has-unapplied], and discarded by calling
+// [method@Gio.Settings.revert].
 //
 // ## Binding
 //
-// A very convenient feature of GSettings lets you bind #GObject properties
-// directly to settings, using g_settings_bind(). Once a GObject property
-// has been bound to a setting, changes on either side are automatically
-// propagated to the other side. GSettings handles details like mapping
-// between GObject and GVariant types, and preventing infinite cycles.
+// A very convenient feature of GSettings lets you bind [class@GObject.Object]
+// properties directly to settings, using [method@Gio.Settings.bind]. Once a
+// [class@GObject.Object] property has been bound to a setting, changes on
+// either side are automatically propagated to the other side. GSettings handles
+// details like mapping between [class@GObject.Object] and [struct@GLib.Variant]
+// types, and preventing infinite cycles.
 //
 // This makes it very easy to hook up a preferences dialog to the
 // underlying settings. To make this even more convenient, GSettings
-// looks for a boolean property with the name "sensitivity" and
+// looks for a boolean property with the name `sensitivity` and
 // automatically binds it to the writability of the bound setting.
-// If this 'magic' gets in the way, it can be suppressed with the
-// %G_SETTINGS_BIND_NO_SENSITIVITY flag.
+// If this ‘magic’ gets in the way, it can be suppressed with the
+// `G_SETTINGS_BIND_NO_SENSITIVITY` flag.
 //
-// ## Relocatable schemas # {#gsettings-relocatable}
+// ## Relocatable schemas
 //
 // A relocatable schema is one with no `path` attribute specified on its
-// &lt;schema&gt; element. By using g_settings_new_with_path(), a #GSettings object
-// can be instantiated for a relocatable schema, assigning a path to the
-// instance. Paths passed to g_settings_new_with_path() will typically be
+// `&lt;schema&gt;` element. By using [ctor@Gio.Settings.new_with_path], a `GSettings`
+// object can be instantiated for a relocatable schema, assigning a path to the
+// instance. Paths passed to [ctor@Gio.Settings.new_with_path] will typically be
 // constructed dynamically from a constant prefix plus some form of instance
 // identifier; but they must still be valid GSettings paths. Paths could also
 // be constant and used with a globally installed schema originating from a
@@ -419,61 +448,114 @@ const (
 // `org.foo.MyApp.Window`, it could be instantiated for paths
 // `/org/foo/MyApp/main/`, `/org/foo/MyApp/document-1/`,
 // `/org/foo/MyApp/document-2/`, etc. If any of the paths are well-known
-// they can be specified as &lt;child&gt; elements in the parent schema, e.g.:
-// |[
+// they can be specified as `&lt;child&gt;` elements in the parent schema, e.g.:
+// ```xml
 // &lt;schema id="org.foo.MyApp" path="/org/foo/MyApp/"&gt;
 //
 //	&lt;child name="main" schema="org.foo.MyApp.Window"/&gt;
 //
 // &lt;/schema&gt;
-// ]|
+// ```
 //
-// ## Build system integration # {#gsettings-build-system}
+// ## Build system integration
+//
+// ### Meson
+//
+// GSettings is natively supported by Meson’s [GNOME module](https://mesonbuild.com/Gnome-module.html).
+//
+// You can install the schemas as any other data file:
+//
+// ```
+// install_data(
+//
+//	'org.foo.MyApp.gschema.xml',
+//	install_dir: get_option('datadir') / 'glib-2.0/schemas',
+//
+// )
+// ```
+//
+// You can use `gnome.post_install()` function to compile the schemas on
+// installation:
+//
+// ```
+// gnome = import('gnome')
+// gnome.post_install(
+//
+//	glib_compile_schemas: true,
+//
+// )
+// ```
+//
+// If an enumerated type defined in a C header file is to be used in a GSettings
+// schema, it can either be defined manually using an `&lt;enum&gt;` element in the
+// schema XML, or it can be extracted automatically from the C header. This
+// approach is preferred, as it ensures the two representations are always
+// synchronised. To do so, you will need to use the `gnome.mkenums()` function
+// with the following templates:
+//
+// ```
+// schemas_enums = gnome.mkenums('org.foo.MyApp.enums.xml',
+//
+//	comments: '&lt;!-- @comment@ --&gt;',
+//	fhead: '&lt;schemalist&gt;',
+//	vhead: '  &lt;@type@ id="org.foo.MyApp.@EnumName@"&gt;',
+//	vprod: '    &lt;value nick="@valuenick@" value="@valuenum@"/&gt;',
+//	vtail: '  &lt;/@type@&gt;',
+//	ftail: '&lt;/schemalist&gt;',
+//	sources: enum_sources,
+//	install_header: true,
+//	install_dir: get_option('datadir') / 'glib-2.0/schemas',
+//
+// )
+// ```
+//
+// It is recommended to validate your schemas as part of the test suite for
+// your application:
+//
+// ```
+// test('validate-schema',
+//
+//	find_program('glib-compile-schemas'),
+//	args: ['--strict', '--dry-run', meson.current_source_dir()],
+//
+// )
+// ```
+//
+// If your application allows running uninstalled, you should also use the
+// `gnome.compile_schemas()` function to compile the schemas in the current
+// build directory:
+//
+// ```
+// gnome.compile_schemas()
+// ```
+//
+// ### Autotools
 //
 // GSettings comes with autotools integration to simplify compiling and
 // installing schemas. To add GSettings support to an application, add the
 // following to your `configure.ac`:
-// |[
+// ```
 // GLIB_GSETTINGS
-// ]|
+// ```
 //
 // In the appropriate `Makefile.am`, use the following snippet to compile and
 // install the named schema:
-// |[
+// ```
 // gsettings_SCHEMAS = org.foo.MyApp.gschema.xml
 // EXTRA_DIST = $(gsettings_SCHEMAS)
 //
 // @GSETTINGS_RULES@
-// ]|
-//
-// No changes are needed to the build system to mark a schema XML file for
-// translation. Assuming it sets the `gettext-domain` attribute, a schema may
-// be marked for translation by adding it to `POTFILES.in`, assuming gettext
-// 0.19 is in use (the preferred method for translation):
-// |[
-// data/org.foo.MyApp.gschema.xml
-// ]|
-//
-// Alternatively, if intltool 0.50.1 is in use:
-// |[
-// [type: gettext/gsettings]data/org.foo.MyApp.gschema.xml
-// ]|
-//
-// GSettings will use gettext to look up translations for the &lt;summary&gt; and
-// &lt;description&gt; elements, and also any &lt;default&gt; elements which have a `l10n`
-// attribute set. Translations must not be included in the `.gschema.xml` file
-// by the build system, for example by using intltool XML rules with a
-// `.gschema.xml.in` template.
+// ```
 //
 // If an enumerated type defined in a C header file is to be used in a GSettings
-// schema, it can either be defined manually using an &lt;enum&gt; element in the
+// schema, it can either be defined manually using an `&lt;enum&gt;` element in the
 // schema XML, or it can be extracted automatically from the C header. This
 // approach is preferred, as it ensures the two representations are always
 // synchronised. To do so, add the following to the relevant `Makefile.am`:
-// |[
+// ```
 // gsettings_ENUM_NAMESPACE = org.foo.MyApp
 // gsettings_ENUM_FILES = my-app-enums.h my-app-misc.h
-// ]|
+// ```
 //
 // `gsettings_ENUM_NAMESPACE` specifies the schema namespace for the enum files,
 // which are specified in `gsettings_ENUM_FILES`. This will generate a
@@ -481,6 +563,28 @@ const (
 // automatically included in the schema compilation, install and uninstall
 // rules. It should not be committed to version control or included in
 // `EXTRA_DIST`.
+//
+// ## Localization
+//
+// No changes are needed to the build system to mark a schema XML file for
+// translation. Assuming it sets the `gettext-domain` attribute, a schema may
+// be marked for translation by adding it to `POTFILES.in`, assuming gettext
+// 0.19 or newer is in use (the preferred method for translation):
+// ```
+// data/org.foo.MyApp.gschema.xml
+// ```
+//
+// Alternatively, if intltool 0.50.1 is in use:
+// ```
+// [type: gettext/gsettings]data/org.foo.MyApp.gschema.xml
+// ```
+//
+// GSettings will use gettext to look up translations for the `&lt;summary&gt;` and
+// `&lt;description&gt;` elements, and also any `&lt;default&gt;` elements which have a
+// `l10n` attribute set.
+//
+// Translations **must not** be included in the `.gschema.xml` file by the build
+// system, for example by using a rule to generate the XML file from a template.
 type Settings struct {
 	gobject.Object
 }
@@ -499,19 +603,19 @@ func SettingsNewFromInternalPtr(ptr uintptr) *Settings {
 
 var xNewSettings func(string) uintptr
 
-// Creates a new #GSettings object with the schema specified by
+// Creates a new [class@Gio.Settings] object with the schema specified by
 // @schema_id.
 //
 // It is an error for the schema to not exist: schemas are an
 // essential part of a program, as they provide type information.
 // If schemas need to be dynamically loaded (for example, from an
-// optional runtime dependency), g_settings_schema_source_lookup()
+// optional runtime dependency), [method@Gio.SettingsSchemaSource.lookup]
 // can be used to test for their existence before loading them.
 //
-// Signals on the newly created #GSettings object will be dispatched
-// via the thread-default #GMainContext in effect at the time of the
-// call to g_settings_new().  The new #GSettings will hold a reference
-// on the context.  See g_main_context_push_thread_default().
+// Signals on the newly created [class@Gio.Settings] object will be dispatched
+// via the thread-default [struct@GLib.MainContext] in effect at the time of the
+// call to [ctor@Gio.Settings.new].  The new [class@Gio.Settings] will hold a reference
+// on the context.  See [method@GLib.MainContext.push_thread_default].
 func NewSettings(SchemaIdVar string) *Settings {
 	var cls *Settings
 
@@ -527,7 +631,7 @@ func NewSettings(SchemaIdVar string) *Settings {
 
 var xNewSettingsFull func(*SettingsSchema, uintptr, string) uintptr
 
-// Creates a new #GSettings object with a given schema, backend and
+// Creates a new [class@Gio.Settings] object with a given schema, backend and
 // path.
 //
 // It should be extremely rare that you ever want to use this function.
@@ -535,20 +639,20 @@ var xNewSettingsFull func(*SettingsSchema, uintptr, string) uintptr
 // that want to provide access to schemas loaded from custom locations,
 // etc).
 //
-// At the most basic level, a #GSettings object is a pure composition of
-// 4 things: a #GSettingsSchema, a #GSettingsBackend, a path within that
-// backend, and a #GMainContext to which signals are dispatched.
+// At the most basic level, a [class@Gio.Settings] object is a pure composition of
+// four things: a [struct@Gio.SettingsSchema], a [class@Gio.SettingsBackend], a path within that
+// backend, and a [struct@GLib.MainContext] to which signals are dispatched.
 //
 // This constructor therefore gives you full control over constructing
-// #GSettings instances.  The first 3 parameters are given directly as
+// [class@Gio.Settings] instances.  The first 3 parameters are given directly as
 // @schema, @backend and @path, and the main context is taken from the
-// thread-default (as per g_settings_new()).
+// thread-default (as per [ctor@Gio.Settings.new]).
 //
-// If @backend is %NULL then the default backend is used.
+// If @backend is `NULL` then the default backend is used.
 //
-// If @path is %NULL then the path from the schema is used.  It is an
-// error if @path is %NULL and the schema has no path of its own or if
-// @path is non-%NULL and not equal to the path that the schema does
+// If @path is `NULL` then the path from the schema is used.  It is an
+// error if @path is `NULL` and the schema has no path of its own or if
+// @path is non-`NULL` and not equal to the path that the schema does
 // have.
 func NewSettingsFull(SchemaVar *SettingsSchema, BackendVar *SettingsBackend, PathVar string) *Settings {
 	var cls *Settings
@@ -565,12 +669,12 @@ func NewSettingsFull(SchemaVar *SettingsSchema, BackendVar *SettingsBackend, Pat
 
 var xNewSettingsWithBackend func(string, uintptr) uintptr
 
-// Creates a new #GSettings object with the schema specified by
-// @schema_id and a given #GSettingsBackend.
+// Creates a new [class@Gio.Settings] object with the schema specified by
+// @schema_id and a given [class@Gio.SettingsBackend].
 //
-// Creating a #GSettings object with a different backend allows accessing
+// Creating a [class@Gio.Settings] object with a different backend allows accessing
 // settings from a database other than the usual one. For example, it may make
-// sense to pass a backend corresponding to the "defaults" settings database on
+// sense to pass a backend corresponding to the ‘defaults’ settings database on
 // the system to get a settings object that modifies the system default
 // settings instead of the settings for this user.
 func NewSettingsWithBackend(SchemaIdVar string, BackendVar *SettingsBackend) *Settings {
@@ -588,11 +692,11 @@ func NewSettingsWithBackend(SchemaIdVar string, BackendVar *SettingsBackend) *Se
 
 var xNewSettingsWithBackendAndPath func(string, uintptr, string) uintptr
 
-// Creates a new #GSettings object with the schema specified by
-// @schema_id and a given #GSettingsBackend and path.
+// Creates a new [class@Gio.Settings] object with the schema specified by
+// @schema_id and a given [class@Gio.SettingsBackend] and path.
 //
-// This is a mix of g_settings_new_with_backend() and
-// g_settings_new_with_path().
+// This is a mix of [ctor@Gio.Settings.new_with_backend] and
+// [ctor@Gio.Settings.new_with_path].
 func NewSettingsWithBackendAndPath(SchemaIdVar string, BackendVar *SettingsBackend, PathVar string) *Settings {
 	var cls *Settings
 
@@ -608,18 +712,18 @@ func NewSettingsWithBackendAndPath(SchemaIdVar string, BackendVar *SettingsBacke
 
 var xNewSettingsWithPath func(string, string) uintptr
 
-// Creates a new #GSettings object with the relocatable schema specified
+// Creates a new [class@Gio.Settings] object with the relocatable schema specified
 // by @schema_id and a given path.
 //
 // You only need to do this if you want to directly create a settings
-// object with a schema that doesn't have a specified path of its own.
-// That's quite rare.
+// object with a schema that doesn’t have a specified path of its own.
+// That’s quite rare.
 //
 // It is a programmer error to call this function for a schema that
 // has an explicitly specified path.
 //
 // It is a programmer error if @path is not a valid path.  A valid path
-// begins and ends with '/' and does not contain two consecutive '/'
+// begins and ends with `/` and does not contain two consecutive `/`
 // characters.
 func NewSettingsWithPath(SchemaIdVar string, PathVar string) *Settings {
 	var cls *Settings
@@ -636,10 +740,11 @@ func NewSettingsWithPath(SchemaIdVar string, PathVar string) *Settings {
 
 var xSettingsApply func(uintptr)
 
-// Applies any changes that have been made to the settings.  This
-// function does nothing unless @settings is in 'delay-apply' mode;
-// see g_settings_delay().  In the normal case settings are always
-// applied immediately.
+// Applies any changes that have been made to the settings.
+//
+// This function does nothing unless @settings is in
+// [‘delay-apply’ mode](class.Settings.html#delay-apply-mode).  In the normal
+// case settings are always applied immediately.
 func (x *Settings) Apply() {
 
 	xSettingsApply(x.GoPointer())
@@ -654,14 +759,14 @@ var xSettingsBind func(uintptr, string, uintptr, string, SettingsBindFlags)
 // The binding uses the default GIO mapping functions to map
 // between the settings and property values. These functions
 // handle booleans, numeric types and string types in a
-// straightforward way. Use g_settings_bind_with_mapping() if
+// straightforward way. Use [method@Gio.Settings.bind_with_mapping] if
 // you need a custom mapping, or map between types that are not
 // supported by the default mapping functions.
 //
-// Unless the @flags include %G_SETTINGS_BIND_NO_SENSITIVITY, this
+// Unless the @flags include [flags@Gio.SettingsBindFlags.NO_SENSITIVITY], this
 // function also establishes a binding between the writability of
-// @key and the "sensitive" property of @object (if @object has
-// a boolean property by that name). See g_settings_bind_writable()
+// @key and the `sensitive` property of @object (if @object has
+// a boolean property by that name). See [method@Gio.Settings.bind_writable]
 // for more details about writable bindings.
 //
 // Note that the lifecycle of the binding is tied to @object,
@@ -688,7 +793,17 @@ var xSettingsBindWithMapping func(uintptr, string, uintptr, string, SettingsBind
 // binding overrides the first one.
 func (x *Settings) BindWithMapping(KeyVar string, ObjectVar *gobject.Object, PropertyVar string, FlagsVar SettingsBindFlags, GetMappingVar *SettingsBindGetMapping, SetMappingVar *SettingsBindSetMapping, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xSettingsBindWithMapping(x.GoPointer(), KeyVar, ObjectVar.GoPointer(), PropertyVar, FlagsVar, glib.NewCallback(GetMappingVar), glib.NewCallback(SetMappingVar), UserDataVar, glib.NewCallback(DestroyVar))
+	xSettingsBindWithMapping(x.GoPointer(), KeyVar, ObjectVar.GoPointer(), PropertyVar, FlagsVar, glib.NewCallbackNullable(GetMappingVar), glib.NewCallbackNullable(SetMappingVar), UserDataVar, glib.NewCallback(DestroyVar))
+
+}
+
+var xSettingsBindWithMappingClosures func(uintptr, string, uintptr, string, SettingsBindFlags, *gobject.Closure, *gobject.Closure)
+
+// Version of [method@Gio.Settings.bind_with_mapping] using closures instead of
+// callbacks for easier binding in other languages.
+func (x *Settings) BindWithMappingClosures(KeyVar string, ObjectVar *gobject.Object, PropertyVar string, FlagsVar SettingsBindFlags, GetMappingVar *gobject.Closure, SetMappingVar *gobject.Closure) {
+
+	xSettingsBindWithMappingClosures(x.GoPointer(), KeyVar, ObjectVar.GoPointer(), PropertyVar, FlagsVar, GetMappingVar, SetMappingVar)
 
 }
 
@@ -696,16 +811,17 @@ var xSettingsBindWritable func(uintptr, string, uintptr, string, bool)
 
 // Create a binding between the writability of @key in the
 // @settings object and the property @property of @object.
-// The property must be boolean; "sensitive" or "visible"
+//
+// The property must be boolean; `sensitive` or `visible`
 // properties of widgets are the most likely candidates.
 //
 // Writable bindings are always uni-directional; changes of the
 // writability of the setting will be propagated to the object
 // property, not the other way.
 //
-// When the @inverted argument is %TRUE, the binding inverts the
+// When the @inverted argument is true, the binding inverts the
 // value as it passes from the setting to the object, i.e. @property
-// will be set to %TRUE if the key is not writable.
+// will be set to true if the key is not writable.
 //
 // Note that the lifecycle of the binding is tied to @object,
 // and that you can have only one binding per object property.
@@ -719,7 +835,7 @@ func (x *Settings) BindWritable(KeyVar string, ObjectVar *gobject.Object, Proper
 
 var xSettingsCreateAction func(uintptr, string) uintptr
 
-// Creates a #GAction corresponding to a given #GSettings key.
+// Creates a [iface@Gio.Action] corresponding to a given [class@Gio.Settings] key.
 //
 // The action has the same name as the key.
 //
@@ -748,9 +864,12 @@ func (x *Settings) CreateAction(KeyVar string) *ActionBase {
 
 var xSettingsDelay func(uintptr)
 
-// Changes the #GSettings object into 'delay-apply' mode. In this
+// Changes the [class@Gio.Settings] object into
+// [‘delay-apply’ mode](class.Settings.html#delay-apply-mode).
+//
+// In this
 // mode, changes to @settings are not immediately propagated to the
-// backend, but kept locally until g_settings_apply() is called.
+// backend, but kept locally until [method@Gio.Settings.apply] is called.
 func (x *Settings) Delay() {
 
 	xSettingsDelay(x.GoPointer())
@@ -761,11 +880,11 @@ var xSettingsGet func(uintptr, string, string, ...interface{})
 
 // Gets the value that is stored at @key in @settings.
 //
-// A convenience function that combines g_settings_get_value() with
-// g_variant_get().
+// A convenience function that combines [method@Gio.Settings.get_value] with
+// [method@GLib.Variant.get].
 //
-// It is a programmer error to give a @key that isn't contained in the
-// schema for @settings or for the #GVariantType of @format to mismatch
+// It is a programmer error to give a @key that isn’t contained in the
+// schema for @settings or for the [struct@GLib.VariantType] of @format to mismatch
 // the type given in the schema.
 func (x *Settings) Get(KeyVar string, FormatVar string, varArgs ...interface{}) {
 
@@ -777,10 +896,10 @@ var xSettingsGetBoolean func(uintptr, string) bool
 
 // Gets the value that is stored at @key in @settings.
 //
-// A convenience variant of g_settings_get() for booleans.
+// A convenience variant of [method@Gio.Settings.get] for booleans.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a boolean type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having a `b` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) GetBoolean(KeyVar string) bool {
 
 	cret := xSettingsGetBoolean(x.GoPointer(), KeyVar)
@@ -790,14 +909,14 @@ func (x *Settings) GetBoolean(KeyVar string) bool {
 var xSettingsGetChild func(uintptr, string) uintptr
 
 // Creates a child settings object which has a base path of
-// `base-path/@name`, where `base-path` is the base path of
-// @settings.
+// `base-path/name`, where `base-path` is the base path of
+// @settings and `name` is as specified by the caller.
 //
 // The schema for the child settings object must have been declared
 // in the schema of @settings using a `&lt;child&gt;` element.
 //
-// The created child settings object will inherit the #GSettings:delay-apply
-// mode from @settings.
+// The created child settings object will inherit the
+// [property@Gio.Settings:delay-apply] mode from @settings.
 func (x *Settings) GetChild(NameVar string) *Settings {
 	var cls *Settings
 
@@ -813,26 +932,26 @@ func (x *Settings) GetChild(NameVar string) *Settings {
 
 var xSettingsGetDefaultValue func(uintptr, string) *glib.Variant
 
-// Gets the "default value" of a key.
+// Gets the ‘default value’ of a key.
 //
-// This is the value that would be read if g_settings_reset() were to be
+// This is the value that would be read if [method@Gio.Settings.reset] were to be
 // called on the key.
 //
 // Note that this may be a different value than returned by
-// g_settings_schema_key_get_default_value() if the system administrator
+// [method@Gio.SettingsSchemaKey.get_default_value] if the system administrator
 // has provided a default value.
 //
-// Comparing the return values of g_settings_get_default_value() and
-// g_settings_get_value() is not sufficient for determining if a value
+// Comparing the return values of [method@Gio.Settings.get_default_value] and
+// [method@Gio.Settings.get_value] is not sufficient for determining if a value
 // has been set because the user may have explicitly set the value to
 // something that happens to be equal to the default.  The difference
-// here is that if the default changes in the future, the user's key
+// here is that if the default changes in the future, the user’s key
 // will still be set.
 //
 // This function may be useful for adding an indication to a UI of what
 // the default value was before the user set it.
 //
-// It is a programmer error to give a @key that isn't contained in the
+// It is a programmer error to give a @key that isn’t contained in the
 // schema for @settings.
 func (x *Settings) GetDefaultValue(KeyVar string) *glib.Variant {
 
@@ -844,10 +963,10 @@ var xSettingsGetDouble func(uintptr, string) float64
 
 // Gets the value that is stored at @key in @settings.
 //
-// A convenience variant of g_settings_get() for doubles.
+// A convenience variant of [method@Gio.Settings.get] for doubles.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a 'double' type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having a `d` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) GetDouble(KeyVar string) float64 {
 
 	cret := xSettingsGetDouble(x.GoPointer(), KeyVar)
@@ -862,7 +981,7 @@ var xSettingsGetEnum func(uintptr, string) int
 // In order to use this function the type of the value must be a string
 // and it must be marked in the schema file as an enumerated type.
 //
-// It is a programmer error to give a @key that isn't contained in the
+// It is a programmer error to give a @key that isn’t contained in the
 // schema for @settings or is not marked as an enumerated type.
 //
 // If the value stored in the configuration database is not a valid
@@ -882,7 +1001,7 @@ var xSettingsGetFlags func(uintptr, string) uint
 // In order to use this function the type of the value must be an array
 // of strings and it must be marked in the schema file as a flags type.
 //
-// It is a programmer error to give a @key that isn't contained in the
+// It is a programmer error to give a @key that isn’t contained in the
 // schema for @settings or is not marked as a flags type.
 //
 // If the value stored in the configuration database is not a valid
@@ -896,8 +1015,11 @@ func (x *Settings) GetFlags(KeyVar string) uint {
 
 var xSettingsGetHasUnapplied func(uintptr) bool
 
-// Returns whether the #GSettings object has any unapplied
-// changes.  This can only be the case if it is in 'delayed-apply' mode.
+// Returns whether the [class@Gio.Settings] object has any unapplied
+// changes.
+//
+// This can only be the case if it is in
+// [‘delay-apply’ mode](class.Settings.html#delay-apply-mode).
 func (x *Settings) GetHasUnapplied() bool {
 
 	cret := xSettingsGetHasUnapplied(x.GoPointer())
@@ -908,10 +1030,10 @@ var xSettingsGetInt func(uintptr, string) int
 
 // Gets the value that is stored at @key in @settings.
 //
-// A convenience variant of g_settings_get() for 32-bit integers.
+// A convenience variant of [method@Gio.Settings.get] for 32-bit integers.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a int32 type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having an `i` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) GetInt(KeyVar string) int {
 
 	cret := xSettingsGetInt(x.GoPointer(), KeyVar)
@@ -922,10 +1044,10 @@ var xSettingsGetInt64 func(uintptr, string) int64
 
 // Gets the value that is stored at @key in @settings.
 //
-// A convenience variant of g_settings_get() for 64-bit integers.
+// A convenience variant of [method@Gio.Settings.get] for 64-bit integers.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a int64 type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having an `x` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) GetInt64(KeyVar string) int64 {
 
 	cret := xSettingsGetInt64(x.GoPointer(), KeyVar)
@@ -943,23 +1065,23 @@ var xSettingsGetMapped func(uintptr, string, uintptr, uintptr) uintptr
 // indicates that the processing was unsuccessful (due to a parse error,
 // for example) then the mapping is tried again with another value.
 //
-// This allows a robust 'fall back to defaults' behaviour to be
+// This allows a robust ‘fall back to defaults’ behaviour to be
 // implemented somewhat automatically.
 //
-// The first value that is tried is the user's setting for the key.  If
+// The first value that is tried is the user’s setting for the key.  If
 // the mapping function fails to map this value, other values may be
 // tried in an unspecified order (system or site defaults, translated
 // schema default values, untranslated schema default values, etc).
 //
 // If the mapping function fails for all possible values, one additional
-// attempt is made: the mapping function is called with a %NULL value.
+// attempt is made: the mapping function is called with a `NULL` value.
 // If the mapping function still indicates failure at this point then
 // the application will be aborted.
 //
 // The result parameter for the @mapping function is pointed to a
-// #gpointer which is initially set to %NULL.  The same pointer is given
-// to each invocation of @mapping.  The final value of that #gpointer is
-// what is returned by this function.  %NULL is valid; it is returned
+// `gpointer` which is initially set to `NULL`.  The same pointer is given
+// to each invocation of @mapping.  The final value of that `gpointer` is
+// what is returned by this function.  `NULL` is valid; it is returned
 // just as any other value would be.
 func (x *Settings) GetMapped(KeyVar string, MappingVar *SettingsGetMapping, UserDataVar uintptr) uintptr {
 
@@ -980,10 +1102,10 @@ var xSettingsGetString func(uintptr, string) string
 
 // Gets the value that is stored at @key in @settings.
 //
-// A convenience variant of g_settings_get() for strings.
+// A convenience variant of [method@Gio.Settings.get] for strings.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a string type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having an `s` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) GetString(KeyVar string) string {
 
 	cret := xSettingsGetString(x.GoPointer(), KeyVar)
@@ -992,10 +1114,10 @@ func (x *Settings) GetString(KeyVar string) string {
 
 var xSettingsGetStrv func(uintptr, string) []string
 
-// A convenience variant of g_settings_get() for string arrays.
+// A convenience variant of [method@Gio.Settings.get] for string arrays.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having an array of strings type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having an `as` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) GetStrv(KeyVar string) []string {
 
 	cret := xSettingsGetStrv(x.GoPointer(), KeyVar)
@@ -1006,11 +1128,11 @@ var xSettingsGetUint func(uintptr, string) uint
 
 // Gets the value that is stored at @key in @settings.
 //
-// A convenience variant of g_settings_get() for 32-bit unsigned
+// A convenience variant of [method@Gio.Settings.get] for 32-bit unsigned
 // integers.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a uint32 type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having a `u` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) GetUint(KeyVar string) uint {
 
 	cret := xSettingsGetUint(x.GoPointer(), KeyVar)
@@ -1021,11 +1143,11 @@ var xSettingsGetUint64 func(uintptr, string) uint64
 
 // Gets the value that is stored at @key in @settings.
 //
-// A convenience variant of g_settings_get() for 64-bit unsigned
+// A convenience variant of [method@Gio.Settings.get] for 64-bit unsigned
 // integers.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a uint64 type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having a `t` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) GetUint64(KeyVar string) uint64 {
 
 	cret := xSettingsGetUint64(x.GoPointer(), KeyVar)
@@ -1034,23 +1156,23 @@ func (x *Settings) GetUint64(KeyVar string) uint64 {
 
 var xSettingsGetUserValue func(uintptr, string) *glib.Variant
 
-// Checks the "user value" of a key, if there is one.
+// Checks the ‘user value’ of a key, if there is one.
 //
 // The user value of a key is the last value that was set by the user.
 //
-// After calling g_settings_reset() this function should always return
-// %NULL (assuming something is not wrong with the system
+// After calling [method@Gio.Settings.reset] this function should always return
+// `NULL` (assuming something is not wrong with the system
 // configuration).
 //
-// It is possible that g_settings_get_value() will return a different
+// It is possible that [method@Gio.Settings.get_value] will return a different
 // value than this function.  This can happen in the case that the user
 // set a value for a key that was subsequently locked down by the system
-// administrator -- this function will return the user's old value.
+// administrator — this function will return the user’s old value.
 //
-// This function may be useful for adding a "reset" option to a UI or
+// This function may be useful for adding a ‘reset’ option to a UI or
 // for providing indication that a particular value has been changed.
 //
-// It is a programmer error to give a @key that isn't contained in the
+// It is a programmer error to give a @key that isn’t contained in the
 // schema for @settings.
 func (x *Settings) GetUserValue(KeyVar string) *glib.Variant {
 
@@ -1062,7 +1184,7 @@ var xSettingsGetValue func(uintptr, string) *glib.Variant
 
 // Gets the value that is stored in @settings for @key.
 //
-// It is a programmer error to give a @key that isn't contained in the
+// It is a programmer error to give a @key that isn’t contained in the
 // schema for @settings.
 func (x *Settings) GetValue(KeyVar string) *glib.Variant {
 
@@ -1072,7 +1194,7 @@ func (x *Settings) GetValue(KeyVar string) *glib.Variant {
 
 var xSettingsIsWritable func(uintptr, string) bool
 
-// Finds out if a key can be written or not
+// Finds out if a key can be written.
 func (x *Settings) IsWritable(NameVar string) bool {
 
 	cret := xSettingsIsWritable(x.GoPointer(), NameVar)
@@ -1084,13 +1206,13 @@ var xSettingsListChildren func(uintptr) []string
 // Gets the list of children on @settings.
 //
 // The list is exactly the list of strings for which it is not an error
-// to call g_settings_get_child().
+// to call [method@Gio.Settings.get_child].
 //
-// There is little reason to call this function from "normal" code, since
+// There is little reason to call this function from ‘normal’ code, since
 // you should already know what children are in your schema. This function
 // may still be useful there for introspection reasons, however.
 //
-// You should free the return value with g_strfreev() when you are done
+// You should free the return value with [func@GLib.strfreev] when you are done
 // with it.
 func (x *Settings) ListChildren() []string {
 
@@ -1102,11 +1224,11 @@ var xSettingsListKeys func(uintptr) []string
 
 // Introspects the list of keys on @settings.
 //
-// You should probably not be calling this function from "normal" code
+// You should probably not be calling this function from ‘normal’ code
 // (since you should already know what keys are in your schema).  This
 // function is intended for introspection reasons.
 //
-// You should free the return value with g_strfreev() when you are done
+// You should free the return value with [func@GLib.strfreev] when you are done
 // with it.
 func (x *Settings) ListKeys() []string {
 
@@ -1139,10 +1261,11 @@ func (x *Settings) Reset(KeyVar string) {
 
 var xSettingsRevert func(uintptr)
 
-// Reverts all non-applied changes to the settings.  This function
-// does nothing unless @settings is in 'delay-apply' mode; see
-// g_settings_delay().  In the normal case settings are always applied
-// immediately.
+// Reverts all unapplied changes to the settings.
+//
+// This function does nothing unless @settings is in
+// [‘delay-apply’ mode](class.Settings.html#delay-apply-mode).  In the normal
+// case settings are always applied immediately.
 //
 // Change notifications will be emitted for affected keys.
 func (x *Settings) Revert() {
@@ -1155,11 +1278,11 @@ var xSettingsSet func(uintptr, string, string, ...interface{}) bool
 
 // Sets @key in @settings to @value.
 //
-// A convenience function that combines g_settings_set_value() with
-// g_variant_new().
+// A convenience function that combines [method@Gio.Settings.set_value] with
+// [ctor@GLib.Variant.new].
 //
-// It is a programmer error to give a @key that isn't contained in the
-// schema for @settings or for the #GVariantType of @format to mismatch
+// It is a programmer error to give a @key that isn’t contained in the
+// schema for @settings or for the [struct@GLib.VariantType] of @format to mismatch
 // the type given in the schema.
 func (x *Settings) Set(KeyVar string, FormatVar string, varArgs ...interface{}) bool {
 
@@ -1171,10 +1294,10 @@ var xSettingsSetBoolean func(uintptr, string, bool) bool
 
 // Sets @key in @settings to @value.
 //
-// A convenience variant of g_settings_set() for booleans.
+// A convenience variant of [method@Gio.Settings.set] for booleans.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a boolean type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having a `b` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) SetBoolean(KeyVar string, ValueVar bool) bool {
 
 	cret := xSettingsSetBoolean(x.GoPointer(), KeyVar, ValueVar)
@@ -1185,10 +1308,10 @@ var xSettingsSetDouble func(uintptr, string, float64) bool
 
 // Sets @key in @settings to @value.
 //
-// A convenience variant of g_settings_set() for doubles.
+// A convenience variant of [method@Gio.Settings.set] for doubles.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a 'double' type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having a `d` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) SetDouble(KeyVar string, ValueVar float64) bool {
 
 	cret := xSettingsSetDouble(x.GoPointer(), KeyVar, ValueVar)
@@ -1200,12 +1323,12 @@ var xSettingsSetEnum func(uintptr, string, int) bool
 // Looks up the enumerated type nick for @value and writes it to @key,
 // within @settings.
 //
-// It is a programmer error to give a @key that isn't contained in the
+// It is a programmer error to give a @key that isn’t contained in the
 // schema for @settings or is not marked as an enumerated type, or for
 // @value not to be a valid value for the named type.
 //
 // After performing the write, accessing @key directly with
-// g_settings_get_string() will return the 'nick' associated with
+// [method@Gio.Settings.get_string] will return the ‘nick’ associated with
 // @value.
 func (x *Settings) SetEnum(KeyVar string, ValueVar int) bool {
 
@@ -1219,12 +1342,12 @@ var xSettingsSetFlags func(uintptr, string, uint) bool
 // them in an array of strings and writes the array to @key, within
 // @settings.
 //
-// It is a programmer error to give a @key that isn't contained in the
+// It is a programmer error to give a @key that isn’t contained in the
 // schema for @settings or is not marked as a flags type, or for @value
 // to contain any bits that are not value for the named type.
 //
 // After performing the write, accessing @key directly with
-// g_settings_get_strv() will return an array of 'nicks'; one for each
+// [method@Gio.Settings.get_strv] will return an array of ‘nicks’; one for each
 // bit in @value.
 func (x *Settings) SetFlags(KeyVar string, ValueVar uint) bool {
 
@@ -1236,10 +1359,10 @@ var xSettingsSetInt func(uintptr, string, int) bool
 
 // Sets @key in @settings to @value.
 //
-// A convenience variant of g_settings_set() for 32-bit integers.
+// A convenience variant of [method@Gio.Settings.set] for 32-bit integers.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a int32 type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having an `i` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) SetInt(KeyVar string, ValueVar int) bool {
 
 	cret := xSettingsSetInt(x.GoPointer(), KeyVar, ValueVar)
@@ -1250,10 +1373,10 @@ var xSettingsSetInt64 func(uintptr, string, int64) bool
 
 // Sets @key in @settings to @value.
 //
-// A convenience variant of g_settings_set() for 64-bit integers.
+// A convenience variant of [method@Gio.Settings.set] for 64-bit integers.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a int64 type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having an `x` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) SetInt64(KeyVar string, ValueVar int64) bool {
 
 	cret := xSettingsSetInt64(x.GoPointer(), KeyVar, ValueVar)
@@ -1264,10 +1387,10 @@ var xSettingsSetString func(uintptr, string, string) bool
 
 // Sets @key in @settings to @value.
 //
-// A convenience variant of g_settings_set() for strings.
+// A convenience variant of [method@Gio.Settings.set] for strings.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a string type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having an `s` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) SetString(KeyVar string, ValueVar string) bool {
 
 	cret := xSettingsSetString(x.GoPointer(), KeyVar, ValueVar)
@@ -1278,11 +1401,11 @@ var xSettingsSetStrv func(uintptr, string, []string) bool
 
 // Sets @key in @settings to @value.
 //
-// A convenience variant of g_settings_set() for string arrays.  If
-// @value is %NULL, then @key is set to be the empty array.
+// A convenience variant of [method@Gio.Settings.set] for string arrays.  If
+// @value is `NULL`, then @key is set to be the empty array.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having an array of strings type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having an `as` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) SetStrv(KeyVar string, ValueVar []string) bool {
 
 	cret := xSettingsSetStrv(x.GoPointer(), KeyVar, ValueVar)
@@ -1293,11 +1416,11 @@ var xSettingsSetUint func(uintptr, string, uint) bool
 
 // Sets @key in @settings to @value.
 //
-// A convenience variant of g_settings_set() for 32-bit unsigned
+// A convenience variant of [method@Gio.Settings.set] for 32-bit unsigned
 // integers.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a uint32 type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having a `u` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) SetUint(KeyVar string, ValueVar uint) bool {
 
 	cret := xSettingsSetUint(x.GoPointer(), KeyVar, ValueVar)
@@ -1308,11 +1431,11 @@ var xSettingsSetUint64 func(uintptr, string, uint64) bool
 
 // Sets @key in @settings to @value.
 //
-// A convenience variant of g_settings_set() for 64-bit unsigned
+// A convenience variant of [method@Gio.Settings.set] for 64-bit unsigned
 // integers.
 //
-// It is a programmer error to give a @key that isn't specified as
-// having a uint64 type in the schema for @settings.
+// It is a programmer error to give a @key that isn’t specified as
+// having a `t` type in the schema for @settings (see [struct@GLib.VariantType]).
 func (x *Settings) SetUint64(KeyVar string, ValueVar uint64) bool {
 
 	cret := xSettingsSetUint64(x.GoPointer(), KeyVar, ValueVar)
@@ -1323,7 +1446,7 @@ var xSettingsSetValue func(uintptr, string, *glib.Variant) bool
 
 // Sets @key in @settings to @value.
 //
-// It is a programmer error to give a @key that isn't contained in the
+// It is a programmer error to give a @key that isn’t contained in the
 // schema for @settings or for @value to have the incorrect type, per
 // the schema.
 //
@@ -1345,21 +1468,22 @@ func (c *Settings) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// The "change-event" signal is emitted once per change event that
-// affects this settings object.  You should connect to this signal
+// Emitted once per change event that affects this settings object.
+//
+// You should connect to this signal
 // only if you are interested in viewing groups of changes before they
-// are split out into multiple emissions of the "changed" signal.
-// For most use cases it is more appropriate to use the "changed" signal.
+// are split out into multiple emissions of the [signal@Gio.Settings::changed] signal.
+// For most use cases it is more appropriate to use the [signal@Gio.Settings::changed] signal.
 //
 // In the event that the change event applies to one or more specified
-// keys, @keys will be an array of #GQuark of length @n_keys.  In the
-// event that the change event applies to the #GSettings object as a
+// keys, @keys will be an array of [alias@GLib.Quark]s of length @n_keys.  In the
+// event that the change event applies to the [class@Gio.Settings] object as a
 // whole (ie: potentially every key has been changed) then @keys will
-// be %NULL and @n_keys will be 0.
+// be `NULL` and @n_keys will be `0`.
 //
-// The default handler for this signal invokes the "changed" signal
+// The default handler for this signal invokes the [signal@Gio.Settings::changed] signal
 // for each affected key.  If any other connected handler returns
-// %TRUE then this default functionality will be suppressed.
+// true then this default functionality will be suppressed.
 func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -1379,13 +1503,14 @@ func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int) bool) uin
 	return gobject.SignalConnect(x.GoPointer(), "change-event", cbRefPtr)
 }
 
-// The "changed" signal is emitted when a key has potentially changed.
-// You should call one of the g_settings_get() calls to check the new
+// Emitted when a key has potentially changed.
+//
+// You should call one of the [method@Gio.Settings.get] calls to check the new
 // value.
 //
 // This signal supports detailed connections.  You can connect to the
-// detailed signal "changed::x" in order to only receive callbacks
-// when key "x" changes.
+// detailed signal `changed::x` in order to only receive callbacks
+// when key `x` changes.
 //
 // Note that @settings only emits this signal if you have read @key at
 // least once while a signal handler was already connected for @key.
@@ -1408,23 +1533,24 @@ func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
 }
 
-// The "writable-change-event" signal is emitted once per writability
-// change event that affects this settings object.  You should connect
+// Emitted once per writability change event that affects this settings object.
+//
+// You should connect
 // to this signal if you are interested in viewing groups of changes
 // before they are split out into multiple emissions of the
-// "writable-changed" signal.  For most use cases it is more
-// appropriate to use the "writable-changed" signal.
+// [signal@Gio.Settings::writable-changed] signal.  For most use cases it is more
+// appropriate to use the [signal@Gio.Settings::writable-changed] signal.
 //
 // In the event that the writability change applies only to a single
-// key, @key will be set to the #GQuark for that key.  In the event
+// key, @key will be set to the [alias@GLib.Quark] for that key.  In the event
 // that the writability change affects the entire settings object,
-// @key will be 0.
+// @key will be `0`.
 //
-// The default handler for this signal invokes the "writable-changed"
-// and "changed" signals for each affected key.  This is done because
+// The default handler for this signal invokes the [signal@Gio.Settings::writable-changed]
+// and [signal@Gio.Settings::changed] signals for each affected key.  This is done because
 // changes in writability might also imply changes in value (if for
 // example, a new mandatory setting is introduced).  If any other
-// connected handler returns %TRUE then this default functionality
+// connected handler returns true then this default functionality
 // will be suppressed.
 func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -1445,13 +1571,14 @@ func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint) bool) uin
 	return gobject.SignalConnect(x.GoPointer(), "writable-change-event", cbRefPtr)
 }
 
-// The "writable-changed" signal is emitted when the writability of a
-// key has potentially changed.  You should call
-// g_settings_is_writable() in order to determine the new status.
+// Emitted when the writability of a key has potentially changed.
+//
+// You should call [method@Gio.Settings.is_writable] in order to determine the
+// new status.
 //
 // This signal supports detailed connections.  You can connect to the
-// detailed signal "writable-changed::x" in order to only receive
-// callbacks when the writability of "x" changes.
+// detailed signal `writable-changed::x` in order to only receive
+// callbacks when the writability of `x` changes.
 func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -1493,12 +1620,12 @@ var xSettingsSync func()
 
 // Ensures that all pending operations are complete for the default backend.
 //
-// Writes made to a #GSettings are handled asynchronously.  For this
+// Writes made to a [class@Gio.Settings] are handled asynchronously.  For this
 // reason, it is very unlikely that the changes have it to disk by the
-// time g_settings_set() returns.
+// time [method@Gio.Settings.set] returns.
 //
 // This call will block until all of the writes have made it to the
-// backend.  Since the mainloop is not running, no change notifications
+// backend.  Since the main loop is not running, no change notifications
 // will be dispatched during this call (but some may be queued by the
 // time the call is done).
 func SettingsSync() {
@@ -1541,6 +1668,7 @@ func init() {
 	core.PuregoSafeRegister(&xSettingsApply, lib, "g_settings_apply")
 	core.PuregoSafeRegister(&xSettingsBind, lib, "g_settings_bind")
 	core.PuregoSafeRegister(&xSettingsBindWithMapping, lib, "g_settings_bind_with_mapping")
+	core.PuregoSafeRegister(&xSettingsBindWithMappingClosures, lib, "g_settings_bind_with_mapping_closures")
 	core.PuregoSafeRegister(&xSettingsBindWritable, lib, "g_settings_bind_writable")
 	core.PuregoSafeRegister(&xSettingsCreateAction, lib, "g_settings_create_action")
 	core.PuregoSafeRegister(&xSettingsDelay, lib, "g_settings_delay")

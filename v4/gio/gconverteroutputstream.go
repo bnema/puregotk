@@ -155,11 +155,11 @@ func (x *ConverterOutputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// Converter output stream implements #GOutputStream and allows
+// Converter output stream implements [class@Gio.OutputStream] and allows
 // conversion of data of various types during reading.
 //
-// As of GLib 2.34, #GConverterOutputStream implements
-// #GPollableOutputStream.
+// As of GLib 2.34, `GConverterOutputStream` implements
+// [iface@Gio.PollableOutputStream].
 type ConverterOutputStream struct {
 	FilterOutputStream
 }
@@ -241,6 +241,9 @@ func (x *ConverterOutputStream) CanPoll() bool {
 // the stream may not actually be writable even after the source
 // triggers, so you should use g_pollable_output_stream_write_nonblocking()
 // rather than g_output_stream_write() from the callback.
+//
+// The behaviour of this method is undefined if
+// g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterOutputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 
 	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
@@ -255,6 +258,9 @@ func (x *ConverterOutputStream) CreateSource(CancellableVar *Cancellable) *glib.
 // non-blocking behavior, you should always use
 // g_pollable_output_stream_write_nonblocking(), which will return a
 // %G_IO_ERROR_WOULD_BLOCK error rather than blocking.
+//
+// The behaviour of this method is undefined if
+// g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterOutputStream) IsWritable() bool {
 
 	cret := XGPollableOutputStreamIsWritable(x.GoPointer())
@@ -276,6 +282,9 @@ func (x *ConverterOutputStream) IsWritable() bool {
 // Also note that if %G_IO_ERROR_WOULD_BLOCK is returned some underlying
 // transports like D/TLS require that you re-send the same @buffer and
 // @count in the next write call.
+//
+// The behaviour of this method is undefined if
+// g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
@@ -303,6 +312,9 @@ func (x *ConverterOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint
 // Also note that if %G_POLLABLE_RETURN_WOULD_BLOCK is returned some underlying
 // transports like D/TLS require that you re-send the same @vectors and
 // @n_vectors in the next write call.
+//
+// The behaviour of this method is undefined if
+// g_pollable_output_stream_can_poll() returns %FALSE for @stream.
 func (x *ConverterOutputStream) WritevNonblocking(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar uint, CancellableVar *Cancellable) (PollableReturn, error) {
 	var cerr *glib.Error
 

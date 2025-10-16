@@ -22,8 +22,8 @@ func (x *DtlsServerConnectionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GDtlsServerConnection is the server-side subclass of #GDtlsConnection,
-// representing a server-side DTLS connection.
+// `GDtlsServerConnection` is the server-side subclass of
+// [iface@Gio.DtlsConnection], representing a server-side DTLS connection.
 type DtlsServerConnection interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

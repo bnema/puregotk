@@ -11,7 +11,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The virtual function table for #GActionGroup.
+// The virtual function table for [type@Gio.ActionGroup].
 type ActionGroupInterface struct {
 	_ structs.HostLayout
 
@@ -51,6 +51,7 @@ func (x *ActionGroupInterface) GoPointer() uintptr {
 }
 
 // OverrideHasAction sets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.has_action]
 func (x *ActionGroupInterface) OverrideHasAction(cb func(ActionGroup, string) bool) {
 	if cb == nil {
 		x.xHasAction = 0
@@ -62,6 +63,7 @@ func (x *ActionGroupInterface) OverrideHasAction(cb func(ActionGroup, string) bo
 }
 
 // GetHasAction gets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.has_action]
 func (x *ActionGroupInterface) GetHasAction() func(ActionGroup, string) bool {
 	if x.xHasAction == 0 {
 		return nil
@@ -74,6 +76,7 @@ func (x *ActionGroupInterface) GetHasAction() func(ActionGroup, string) bool {
 }
 
 // OverrideListActions sets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.list_actions]
 func (x *ActionGroupInterface) OverrideListActions(cb func(ActionGroup) []string) {
 	if cb == nil {
 		x.xListActions = 0
@@ -85,6 +88,7 @@ func (x *ActionGroupInterface) OverrideListActions(cb func(ActionGroup) []string
 }
 
 // GetListActions gets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.list_actions]
 func (x *ActionGroupInterface) GetListActions() func(ActionGroup) []string {
 	if x.xListActions == 0 {
 		return nil
@@ -97,6 +101,7 @@ func (x *ActionGroupInterface) GetListActions() func(ActionGroup) []string {
 }
 
 // OverrideGetActionEnabled sets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.get_action_enabled]
 func (x *ActionGroupInterface) OverrideGetActionEnabled(cb func(ActionGroup, string) bool) {
 	if cb == nil {
 		x.xGetActionEnabled = 0
@@ -108,6 +113,7 @@ func (x *ActionGroupInterface) OverrideGetActionEnabled(cb func(ActionGroup, str
 }
 
 // GetGetActionEnabled gets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.get_action_enabled]
 func (x *ActionGroupInterface) GetGetActionEnabled() func(ActionGroup, string) bool {
 	if x.xGetActionEnabled == 0 {
 		return nil
@@ -120,6 +126,7 @@ func (x *ActionGroupInterface) GetGetActionEnabled() func(ActionGroup, string) b
 }
 
 // OverrideGetActionParameterType sets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.get_action_parameter_type]
 func (x *ActionGroupInterface) OverrideGetActionParameterType(cb func(ActionGroup, string) *glib.VariantType) {
 	if cb == nil {
 		x.xGetActionParameterType = 0
@@ -131,6 +138,7 @@ func (x *ActionGroupInterface) OverrideGetActionParameterType(cb func(ActionGrou
 }
 
 // GetGetActionParameterType gets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.get_action_parameter_type]
 func (x *ActionGroupInterface) GetGetActionParameterType() func(ActionGroup, string) *glib.VariantType {
 	if x.xGetActionParameterType == 0 {
 		return nil
@@ -143,6 +151,7 @@ func (x *ActionGroupInterface) GetGetActionParameterType() func(ActionGroup, str
 }
 
 // OverrideGetActionStateType sets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.get_action_state_type]
 func (x *ActionGroupInterface) OverrideGetActionStateType(cb func(ActionGroup, string) *glib.VariantType) {
 	if cb == nil {
 		x.xGetActionStateType = 0
@@ -154,6 +163,7 @@ func (x *ActionGroupInterface) OverrideGetActionStateType(cb func(ActionGroup, s
 }
 
 // GetGetActionStateType gets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.get_action_state_type]
 func (x *ActionGroupInterface) GetGetActionStateType() func(ActionGroup, string) *glib.VariantType {
 	if x.xGetActionStateType == 0 {
 		return nil
@@ -166,6 +176,7 @@ func (x *ActionGroupInterface) GetGetActionStateType() func(ActionGroup, string)
 }
 
 // OverrideGetActionStateHint sets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.get_action_state_hint]
 func (x *ActionGroupInterface) OverrideGetActionStateHint(cb func(ActionGroup, string) *glib.Variant) {
 	if cb == nil {
 		x.xGetActionStateHint = 0
@@ -177,6 +188,7 @@ func (x *ActionGroupInterface) OverrideGetActionStateHint(cb func(ActionGroup, s
 }
 
 // GetGetActionStateHint gets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.get_action_state_hint]
 func (x *ActionGroupInterface) GetGetActionStateHint() func(ActionGroup, string) *glib.Variant {
 	if x.xGetActionStateHint == 0 {
 		return nil
@@ -189,6 +201,7 @@ func (x *ActionGroupInterface) GetGetActionStateHint() func(ActionGroup, string)
 }
 
 // OverrideGetActionState sets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.get_action_state]
 func (x *ActionGroupInterface) OverrideGetActionState(cb func(ActionGroup, string) *glib.Variant) {
 	if cb == nil {
 		x.xGetActionState = 0
@@ -200,6 +213,7 @@ func (x *ActionGroupInterface) OverrideGetActionState(cb func(ActionGroup, strin
 }
 
 // GetGetActionState gets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.get_action_state]
 func (x *ActionGroupInterface) GetGetActionState() func(ActionGroup, string) *glib.Variant {
 	if x.xGetActionState == 0 {
 		return nil
@@ -212,6 +226,7 @@ func (x *ActionGroupInterface) GetGetActionState() func(ActionGroup, string) *gl
 }
 
 // OverrideChangeActionState sets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.change_action_state]
 func (x *ActionGroupInterface) OverrideChangeActionState(cb func(ActionGroup, string, *glib.Variant)) {
 	if cb == nil {
 		x.xChangeActionState = 0
@@ -223,6 +238,7 @@ func (x *ActionGroupInterface) OverrideChangeActionState(cb func(ActionGroup, st
 }
 
 // GetChangeActionState gets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.change_action_state]
 func (x *ActionGroupInterface) GetChangeActionState() func(ActionGroup, string, *glib.Variant) {
 	if x.xChangeActionState == 0 {
 		return nil
@@ -235,6 +251,7 @@ func (x *ActionGroupInterface) GetChangeActionState() func(ActionGroup, string, 
 }
 
 // OverrideActivateAction sets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.activate_action]
 func (x *ActionGroupInterface) OverrideActivateAction(cb func(ActionGroup, string, *glib.Variant)) {
 	if cb == nil {
 		x.xActivateAction = 0
@@ -246,6 +263,7 @@ func (x *ActionGroupInterface) OverrideActivateAction(cb func(ActionGroup, strin
 }
 
 // GetActivateAction gets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.activate_action]
 func (x *ActionGroupInterface) GetActivateAction() func(ActionGroup, string, *glib.Variant) {
 	if x.xActivateAction == 0 {
 		return nil
@@ -258,6 +276,7 @@ func (x *ActionGroupInterface) GetActivateAction() func(ActionGroup, string, *gl
 }
 
 // OverrideActionAdded sets the callback function.
+// the class closure for the [signal@Gio.ActionGroup::action-added] signal
 func (x *ActionGroupInterface) OverrideActionAdded(cb func(ActionGroup, string)) {
 	if cb == nil {
 		x.xActionAdded = 0
@@ -269,6 +288,7 @@ func (x *ActionGroupInterface) OverrideActionAdded(cb func(ActionGroup, string))
 }
 
 // GetActionAdded gets the callback function.
+// the class closure for the [signal@Gio.ActionGroup::action-added] signal
 func (x *ActionGroupInterface) GetActionAdded() func(ActionGroup, string) {
 	if x.xActionAdded == 0 {
 		return nil
@@ -281,6 +301,7 @@ func (x *ActionGroupInterface) GetActionAdded() func(ActionGroup, string) {
 }
 
 // OverrideActionRemoved sets the callback function.
+// the class closure for the [signal@Gio.ActionGroup::action-removed] signal
 func (x *ActionGroupInterface) OverrideActionRemoved(cb func(ActionGroup, string)) {
 	if cb == nil {
 		x.xActionRemoved = 0
@@ -292,6 +313,7 @@ func (x *ActionGroupInterface) OverrideActionRemoved(cb func(ActionGroup, string
 }
 
 // GetActionRemoved gets the callback function.
+// the class closure for the [signal@Gio.ActionGroup::action-removed] signal
 func (x *ActionGroupInterface) GetActionRemoved() func(ActionGroup, string) {
 	if x.xActionRemoved == 0 {
 		return nil
@@ -304,6 +326,7 @@ func (x *ActionGroupInterface) GetActionRemoved() func(ActionGroup, string) {
 }
 
 // OverrideActionEnabledChanged sets the callback function.
+// the class closure for the [signal@Gio.ActionGroup::action-enabled-changed] signal
 func (x *ActionGroupInterface) OverrideActionEnabledChanged(cb func(ActionGroup, string, bool)) {
 	if cb == nil {
 		x.xActionEnabledChanged = 0
@@ -315,6 +338,7 @@ func (x *ActionGroupInterface) OverrideActionEnabledChanged(cb func(ActionGroup,
 }
 
 // GetActionEnabledChanged gets the callback function.
+// the class closure for the [signal@Gio.ActionGroup::action-enabled-changed] signal
 func (x *ActionGroupInterface) GetActionEnabledChanged() func(ActionGroup, string, bool) {
 	if x.xActionEnabledChanged == 0 {
 		return nil
@@ -327,6 +351,7 @@ func (x *ActionGroupInterface) GetActionEnabledChanged() func(ActionGroup, strin
 }
 
 // OverrideActionStateChanged sets the callback function.
+// the class closure for the [signal@Gio.ActionGroup::action-enabled-changed] signal
 func (x *ActionGroupInterface) OverrideActionStateChanged(cb func(ActionGroup, string, *glib.Variant)) {
 	if cb == nil {
 		x.xActionStateChanged = 0
@@ -338,6 +363,7 @@ func (x *ActionGroupInterface) OverrideActionStateChanged(cb func(ActionGroup, s
 }
 
 // GetActionStateChanged gets the callback function.
+// the class closure for the [signal@Gio.ActionGroup::action-enabled-changed] signal
 func (x *ActionGroupInterface) GetActionStateChanged() func(ActionGroup, string, *glib.Variant) {
 	if x.xActionStateChanged == 0 {
 		return nil
@@ -350,6 +376,7 @@ func (x *ActionGroupInterface) GetActionStateChanged() func(ActionGroup, string,
 }
 
 // OverrideQueryAction sets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.query_action]
 func (x *ActionGroupInterface) OverrideQueryAction(cb func(ActionGroup, string, bool, **glib.VariantType, **glib.VariantType, **glib.Variant, **glib.Variant) bool) {
 	if cb == nil {
 		x.xQueryAction = 0
@@ -361,6 +388,7 @@ func (x *ActionGroupInterface) OverrideQueryAction(cb func(ActionGroup, string, 
 }
 
 // GetQueryAction gets the callback function.
+// the virtual function pointer for [method@Gio.ActionGroup.query_action]
 func (x *ActionGroupInterface) GetQueryAction() func(ActionGroup, string, bool, **glib.VariantType, **glib.VariantType, **glib.Variant, **glib.Variant) bool {
 	if x.xQueryAction == 0 {
 		return nil
@@ -372,51 +400,50 @@ func (x *ActionGroupInterface) GetQueryAction() func(ActionGroup, string, bool, 
 	}
 }
 
-// #GActionGroup represents a group of actions. Actions can be used to
-// expose functionality in a structured way, either from one part of a
-// program to another, or to the outside world. Action groups are often
-// used together with a #GMenuModel that provides additional
-// representation data for displaying the actions to the user, e.g. in
-// a menu.
+// `GActionGroup` represents a group of actions.
 //
-// The main way to interact with the actions in a GActionGroup is to
-// activate them with g_action_group_activate_action(). Activating an
-// action may require a #GVariant parameter. The required type of the
-// parameter can be inquired with g_action_group_get_action_parameter_type().
-// Actions may be disabled, see g_action_group_get_action_enabled().
+// Actions can be used to expose functionality in a structured way, either
+// from one part of a program to another, or to the outside world. Action
+// groups are often used together with a [type@Gio.MenuModel] that provides additional
+// representation data for displaying the actions to the user, e.g. in a menu.
+//
+// The main way to interact with the actions in a `GActionGroup` is to
+// activate them with [method@Gio.ActionGroup.activate_action]. Activating an
+// action may require a [type@GLib.Variant] parameter. The required type of the
+// parameter can be inquired with [method@Gio.ActionGroup.get_action_parameter_type].
+// Actions may be disabled, see [method@Gio.ActionGroup.get_action_enabled].
 // Activating a disabled action has no effect.
 //
-// Actions may optionally have a state in the form of a #GVariant. The
-// current state of an action can be inquired with
-// g_action_group_get_action_state(). Activating a stateful action may
-// change its state, but it is also possible to set the state by calling
-// g_action_group_change_action_state().
+// Actions may optionally have a state in the form of a [type@GLib.Variant]. The current
+// state of an action can be inquired with [method@Gio.ActionGroup.get_action_state].
+// Activating a stateful action may change its state, but it is also possible to
+// set the state by calling [method@Gio.ActionGroup.change_action_state].
 //
 // As typical example, consider a text editing application which has an
-// option to change the current font to 'bold'. A good way to represent
+// option to change the current font to ‘bold’. A good way to represent
 // this would be a stateful action, with a boolean state. Activating the
 // action would toggle the state.
 //
 // Each action in the group has a unique name (which is a string).  All
-// method calls, except g_action_group_list_actions() take the name of
+// method calls, except [method@Gio.ActionGroup.list_actions] take the name of
 // an action as an argument.
 //
-// The #GActionGroup API is meant to be the 'public' API to the action
-// group.  The calls here are exactly the interaction that 'external
-// forces' (eg: UI, incoming D-Bus messages, etc.) are supposed to have
-// with actions.  'Internal' APIs (ie: ones meant only to be accessed by
-// the action group implementation) are found on subclasses.  This is
-// why you will find - for example - g_action_group_get_action_enabled()
-// but not an equivalent set() call.
+// The `GActionGroup` API is meant to be the ‘public’ API to the action
+// group. The calls here are exactly the interaction that ‘external
+// forces’ (eg: UI, incoming D-Bus messages, etc.) are supposed to have
+// with actions. ‘Internal’ APIs (ie: ones meant only to be accessed by
+// the action group implementation) are found on subclasses. This is
+// why you will find – for example – [method@Gio.ActionGroup.get_action_enabled]
+// but not an equivalent `set_action_enabled()` method.
 //
 // Signals are emitted on the action group in response to state changes
 // on individual actions.
 //
-// Implementations of #GActionGroup should provide implementations for
-// the virtual functions g_action_group_list_actions() and
-// g_action_group_query_action().  The other virtual functions should
-// not be implemented - their "wrappers" are actually implemented with
-// calls to g_action_group_query_action().
+// Implementations of `GActionGroup` should provide implementations for
+// the virtual functions [method@Gio.ActionGroup.list_actions] and
+// [method@Gio.ActionGroup.query_action]. The other virtual functions should
+// not be implemented — their ‘wrappers’ are actually implemented with
+// calls to [method@Gio.ActionGroup.query_action].
 type ActionGroup interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
@@ -457,36 +484,36 @@ func (x *ActionGroupBase) SetGoPointer(ptr uintptr) {
 	x.Ptr = ptr
 }
 
-// Emits the #GActionGroup::action-added signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-added] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *ActionGroupBase) ActionAdded(ActionNameVar string) {
 
 	XGActionGroupActionAdded(x.GoPointer(), ActionNameVar)
 
 }
 
-// Emits the #GActionGroup::action-enabled-changed signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-enabled-changed] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *ActionGroupBase) ActionEnabledChanged(ActionNameVar string, EnabledVar bool) {
 
 	XGActionGroupActionEnabledChanged(x.GoPointer(), ActionNameVar, EnabledVar)
 
 }
 
-// Emits the #GActionGroup::action-removed signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-removed] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *ActionGroupBase) ActionRemoved(ActionNameVar string) {
 
 	XGActionGroupActionRemoved(x.GoPointer(), ActionNameVar)
 
 }
 
-// Emits the #GActionGroup::action-state-changed signal on @action_group.
+// Emits the [signal@Gio.ActionGroup::action-state-changed] signal on @action_group.
 //
-// This function should only be called by #GActionGroup implementations.
+// This function should only be called by [type@Gio.ActionGroup] implementations.
 func (x *ActionGroupBase) ActionStateChanged(ActionNameVar string, StateVar *glib.Variant) {
 
 	XGActionGroupActionStateChanged(x.GoPointer(), ActionNameVar, StateVar)
@@ -497,35 +524,35 @@ func (x *ActionGroupBase) ActionStateChanged(ActionNameVar string, StateVar *gli
 //
 // If the action is expecting a parameter, then the correct type of
 // parameter must be given as @parameter.  If the action is expecting no
-// parameters then @parameter must be %NULL.  See
-// g_action_group_get_action_parameter_type().
+// parameters then @parameter must be `NULL`.  See
+// [method@Gio.ActionGroup.get_action_parameter_type].
 //
-// If the #GActionGroup implementation supports asynchronous remote
+// If the [type@Gio.ActionGroup] implementation supports asynchronous remote
 // activation over D-Bus, this call may return before the relevant
 // D-Bus traffic has been sent, or any replies have been received. In
 // order to block on such asynchronous activation calls,
-// g_dbus_connection_flush() should be called prior to the code, which
+// [method@Gio.DBusConnection.flush] should be called prior to the code, which
 // depends on the result of the action activation. Without flushing
 // the D-Bus connection, there is no guarantee that the action would
 // have been activated.
 //
 // The following code which runs in a remote app instance, shows an
-// example of a "quit" action being activated on the primary app
-// instance over D-Bus. Here g_dbus_connection_flush() is called
-// before `exit()`. Without g_dbus_connection_flush(), the "quit" action
+// example of a ‘quit’ action being activated on the primary app
+// instance over D-Bus. Here [method@Gio.DBusConnection.flush] is called
+// before `exit()`. Without `g_dbus_connection_flush()`, the ‘quit’ action
 // may fail to be activated on the primary instance.
 //
-// |[&lt;!-- language="C" --&gt;
-// // call "quit" action on primary instance
+// ```c
+// // call ‘quit’ action on primary instance
 // g_action_group_activate_action (G_ACTION_GROUP (app), "quit", NULL);
 //
 // // make sure the action is activated now
-// g_dbus_connection_flush (...);
+// g_dbus_connection_flush (…);
 //
-// g_debug ("application has been terminated. exiting.");
+// g_debug ("Application has been terminated. Exiting.");
 //
 // exit (0);
-// ]|
+// ```
 func (x *ActionGroupBase) ActivateAction(ActionNameVar string, ParameterVar *glib.Variant) {
 
 	XGActionGroupActivateAction(x.GoPointer(), ActionNameVar, ParameterVar)
@@ -536,11 +563,11 @@ func (x *ActionGroupBase) ActivateAction(ActionNameVar string, ParameterVar *gli
 // changed to @value.
 //
 // The action must be stateful and @value must be of the correct type.
-// See g_action_group_get_action_state_type().
+// See [method@Gio.ActionGroup.get_action_state_type].
 //
 // This call merely requests a change.  The action may refuse to change
 // its state or may change its state to something other than @value.
-// See g_action_group_get_action_state_hint().
+// See [method@Gio.ActionGroup.get_action_state_hint].
 //
 // If the @value GVariant is floating, it is consumed.
 func (x *ActionGroupBase) ChangeActionState(ActionNameVar string, ValueVar *glib.Variant) {
@@ -562,12 +589,12 @@ func (x *ActionGroupBase) GetActionEnabled(ActionNameVar string) bool {
 // Queries the type of the parameter that must be given when activating
 // the named action within @action_group.
 //
-// When activating the action using g_action_group_activate_action(),
-// the #GVariant given to that function must be of the type returned
+// When activating the action using [method@Gio.ActionGroup.activate_action],
+// the [type@GLib.Variant] given to that function must be of the type returned
 // by this function.
 //
-// In the case that this function returns %NULL, you must not give any
-// #GVariant, but %NULL instead.
+// In the case that this function returns `NULL`, you must not give any
+// [type@GLib.Variant], but `NULL` instead.
 //
 // The parameter type of a particular action will never change but it is
 // possible for an action to be removed and for a new action to be added
@@ -580,12 +607,12 @@ func (x *ActionGroupBase) GetActionParameterType(ActionNameVar string) *glib.Var
 
 // Queries the current state of the named action within @action_group.
 //
-// If the action is not stateful then %NULL will be returned.  If the
+// If the action is not stateful then `NULL` will be returned.  If the
 // action is stateful then the type of the return value is the type
-// given by g_action_group_get_action_state_type().
+// given by [method@Gio.ActionGroup.get_action_state_type].
 //
-// The return value (if non-%NULL) should be freed with
-// g_variant_unref() when it is no longer required.
+// The return value (if non-`NULL`) should be freed with
+// [method@GLib.Variant.unref] when it is no longer required.
 func (x *ActionGroupBase) GetActionState(ActionNameVar string) *glib.Variant {
 
 	cret := XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
@@ -595,12 +622,12 @@ func (x *ActionGroupBase) GetActionState(ActionNameVar string) *glib.Variant {
 // Requests a hint about the valid range of values for the state of the
 // named action within @action_group.
 //
-// If %NULL is returned it either means that the action is not stateful
+// If `NULL` is returned it either means that the action is not stateful
 // or that there is no hint about the valid range of values for the
 // state of the action.
 //
-// If a #GVariant array is returned then each item in the array is a
-// possible value for the state.  If a #GVariant pair (ie: two-tuple) is
+// If a [type@GLib.Variant] array is returned then each item in the array is a
+// possible value for the state.  If a [type@GLib.Variant] pair (ie: two-tuple) is
 // returned then the tuple specifies the inclusive lower and upper bound
 // of valid values for the state.
 //
@@ -608,8 +635,8 @@ func (x *ActionGroupBase) GetActionState(ActionNameVar string) *glib.Variant {
 // have a state value outside of the hinted range and setting a value
 // within the range may fail.
 //
-// The return value (if non-%NULL) should be freed with
-// g_variant_unref() when it is no longer required.
+// The return value (if non-`NULL`) should be freed with
+// [method@GLib.Variant.unref] when it is no longer required.
 func (x *ActionGroupBase) GetActionStateHint(ActionNameVar string) *glib.Variant {
 
 	cret := XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
@@ -620,14 +647,14 @@ func (x *ActionGroupBase) GetActionStateHint(ActionNameVar string) *glib.Variant
 // @action_group.
 //
 // If the action is stateful then this function returns the
-// #GVariantType of the state.  All calls to
-// g_action_group_change_action_state() must give a #GVariant of this
-// type and g_action_group_get_action_state() will return a #GVariant
+// [type@GLib.VariantType] of the state.  All calls to
+// [method@Gio.ActionGroup.change_action_state] must give a [type@GLib.Variant] of this
+// type and [method@Gio.ActionGroup.get_action_state] will return a [type@GLib.Variant]
 // of the same type.
 //
-// If the action is not stateful then this function will return %NULL.
-// In that case, g_action_group_get_action_state() will return %NULL
-// and you must not call g_action_group_change_action_state().
+// If the action is not stateful then this function will return `NULL`.
+// In that case, [method@Gio.ActionGroup.get_action_state] will return `NULL`
+// and you must not call [method@Gio.ActionGroup.change_action_state].
 //
 // The state type of a particular action will never change but it is
 // possible for an action to be removed and for a new action to be added
@@ -647,7 +674,7 @@ func (x *ActionGroupBase) HasAction(ActionNameVar string) bool {
 
 // Lists the actions contained within @action_group.
 //
-// The caller is responsible for freeing the list with g_strfreev() when
+// The caller is responsible for freeing the list with [func@GLib.strfreev] when
 // it is no longer required.
 func (x *ActionGroupBase) ListActions() []string {
 
@@ -658,18 +685,18 @@ func (x *ActionGroupBase) ListActions() []string {
 // Queries all aspects of the named action within an @action_group.
 //
 // This function acquires the information available from
-// g_action_group_has_action(), g_action_group_get_action_enabled(),
-// g_action_group_get_action_parameter_type(),
-// g_action_group_get_action_state_type(),
-// g_action_group_get_action_state_hint() and
-// g_action_group_get_action_state() with a single function call.
+// [method@Gio.ActionGroup.has_action], [method@Gio.ActionGroup.get_action_enabled],
+// [method@Gio.ActionGroup.get_action_parameter_type],
+// [method@Gio.ActionGroup.get_action_state_type],
+// [method@Gio.ActionGroup.get_action_state_hint] and
+// [method@Gio.ActionGroup.get_action_state] with a single function call.
 //
 // This provides two main benefits.
 //
 // The first is the improvement in efficiency that comes with not having
 // to perform repeated lookups of the action in order to discover
 // different things about it.  The second is that implementing
-// #GActionGroup can now be done by only overriding this one virtual
+// [type@Gio.ActionGroup] can now be done by only overriding this one virtual
 // function.
 //
 // The interface provides a default implementation of this function that
@@ -678,9 +705,9 @@ func (x *ActionGroupBase) ListActions() []string {
 // those functions that call this function.  All implementations,
 // therefore, must override either this function or all of the others.
 //
-// If the action exists, %TRUE is returned and any of the requested
-// fields (as indicated by having a non-%NULL reference passed in) are
-// filled.  If the action doesn't exist, %FALSE is returned and the
+// If the action exists, `TRUE` is returned and any of the requested
+// fields (as indicated by having a non-`NULL` reference passed in) are
+// filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
 func (x *ActionGroupBase) QueryAction(ActionNameVar string, EnabledVar bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 

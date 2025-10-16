@@ -8,8 +8,8 @@ import (
 
 var xGetCharset func(string) bool
 
-// Obtains the character set for the [current locale][setlocale]; you
-// might use this character set as an argument to g_convert(), to convert
+// Obtains the character set for the [current locale](running.html#locale);
+// you might use this character set as an argument to g_convert(), to convert
 // from the current locale's encoding to some other encoding. (Frequently
 // g_locale_to_utf8() and g_locale_from_utf8() are nice shortcuts, though.)
 //
@@ -21,7 +21,8 @@ var xGetCharset func(string) bool
 //
 // On Linux, the character set is found by consulting nl_langinfo() if
 // available. If not, the environment variables `LC_ALL`, `LC_CTYPE`, `LANG`
-// and `CHARSET` are queried in order.
+// and `CHARSET` are queried in order. nl_langinfo() returns the C locale if
+// no locale has been loaded by setlocale().
 //
 // The return value is %TRUE if the locale's encoding is UTF-8, in that
 // case you can perhaps avoid calling g_convert().
@@ -130,7 +131,7 @@ func GetLocaleVariants(LocaleVar string) []string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

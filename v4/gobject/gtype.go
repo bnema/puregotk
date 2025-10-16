@@ -206,6 +206,194 @@ type TypeClassCacheFunc func(uintptr, *TypeClass) bool
 // See g_type_add_interface_check().
 type TypeInterfaceCheckFunc func(uintptr, *TypeInterface)
 
+// This function is responsible for converting the values collected from
+// a variadic argument list into contents suitable for storage in a #GValue.
+//
+// This function should setup @value similar to #GTypeValueInitFunc; e.g.
+// for a string value that does not allow `NULL` pointers, it needs to either
+// emit an error, or do an implicit conversion by storing an empty string.
+//
+// The @value passed in to this function has a zero-filled data array, so
+// just like for #GTypeValueInitFunc it is guaranteed to not contain any old
+// contents that might need freeing.
+//
+// The @n_collect_values argument is the string length of the `collect_format`
+// field of #GTypeValueTable, and `collect_values` is an array of #GTypeCValue
+// with length of @n_collect_values, containing the collected values according
+// to `collect_format`.
+//
+// The @collect_flags argument provided as a hint by the caller. It may
+// contain the flag %G_VALUE_NOCOPY_CONTENTS indicating that the collected
+// value contents may be considered ‘static’ for the duration of the @value
+// lifetime. Thus an extra copy of the contents stored in @collect_values is
+// not required for assignment to @value.
+//
+// For our above string example, we continue with:
+//
+// |[&lt;!-- language="C" --&gt;
+// if (!collect_values[0].v_pointer)
+//
+//	value-&gt;data[0].v_pointer = g_strdup ("");
+//
+// else if (collect_flags &amp; G_VALUE_NOCOPY_CONTENTS)
+//
+//	{
+//	  value-&gt;data[0].v_pointer = collect_values[0].v_pointer;
+//	  // keep a flag for the value_free() implementation to not free this string
+//	  value-&gt;data[1].v_uint = G_VALUE_NOCOPY_CONTENTS;
+//	}
+//
+// else
+//
+//	value-&gt;data[0].v_pointer = g_strdup (collect_values[0].v_pointer);
+//
+// return NULL;
+// ]|
+//
+// It should be noted, that it is generally a bad idea to follow the
+// %G_VALUE_NOCOPY_CONTENTS hint for reference counted types. Due to
+// reentrancy requirements and reference count assertions performed
+// by the signal emission code, reference counts should always be
+// incremented for reference counted contents stored in the `value-&gt;data`
+// array. To deviate from our string example for a moment, and taking
+// a look at an exemplary implementation for `GTypeValueTable.collect_value()`
+// of `GObject`:
+//
+// |[&lt;!-- language="C" --&gt;
+// GObject *object = G_OBJECT (collect_values[0].v_pointer);
+// g_return_val_if_fail (object != NULL,
+//
+//	g_strdup_printf ("Object %p passed as invalid NULL pointer", object));
+//
+// // never honour G_VALUE_NOCOPY_CONTENTS for ref-counted types
+// value-&gt;data[0].v_pointer = g_object_ref (object);
+// return NULL;
+// ]|
+//
+// The reference count for valid objects is always incremented, regardless
+// of `collect_flags`. For invalid objects, the example returns a newly
+// allocated string without altering `value`.
+//
+// Upon success, `collect_value()` needs to return `NULL`. If, however,
+// an error condition occurred, `collect_value()` should return a newly
+// allocated string containing an error diagnostic.
+//
+// The calling code makes no assumptions about the `value` contents being
+// valid upon error returns, `value` is simply thrown away without further
+// freeing. As such, it is a good idea to not allocate `GValue` contents
+// prior to returning an error; however, `collect_values()` is not obliged
+// to return a correctly setup @value for error returns, simply because
+// any non-`NULL` return is considered a fatal programming error, and
+// further program behaviour is undefined.
+type TypeValueCollectFunc func(*Value, uint, []TypeCValue, uint) string
+
+// Copies the content of a #GValue into another.
+//
+// The @dest_value is a #GValue with zero-filled data section and @src_value
+// is a properly initialized #GValue of same type, or derived type.
+//
+// The purpose of this function is to copy the contents of @src_value
+// into @dest_value in a way, that even after @src_value has been freed, the
+// contents of @dest_value remain valid. String type example:
+//
+// |[&lt;!-- language="C" --&gt;
+// dest_value-&gt;data[0].v_pointer = g_strdup (src_value-&gt;data[0].v_pointer);
+// ]|
+type TypeValueCopyFunc func(*Value, *Value)
+
+// Frees any old contents that might be left in the `value-&gt;data` array of
+// the given value.
+//
+// No resources may remain allocated through the #GValue contents after this
+// function returns. E.g. for our above string type:
+//
+// |[&lt;!-- language="C" --&gt;
+// // only free strings without a specific flag for static storage
+// if (!(value-&gt;data[1].v_uint &amp; G_VALUE_NOCOPY_CONTENTS))
+//
+//	g_free (value-&gt;data[0].v_pointer);
+//
+// ]|
+type TypeValueFreeFunc func(*Value)
+
+// Initializes the value contents by setting the fields of the `value-&gt;data`
+// array.
+//
+// The data array of the #GValue passed into this function was zero-filled
+// with `memset()`, so no care has to be taken to free any old contents.
+// For example, in the case of a string value that may never be %NULL, the
+// implementation might look like:
+//
+// |[&lt;!-- language="C" --&gt;
+// value-&gt;data[0].v_pointer = g_strdup ("");
+// ]|
+type TypeValueInitFunc func(*Value)
+
+// This function is responsible for storing the `value`
+// contents into arguments passed through a variadic argument list which
+// got collected into `collect_values` according to `lcopy_format`.
+//
+// The `n_collect_values` argument equals the string length of
+// `lcopy_format`, and `collect_flags` may contain %G_VALUE_NOCOPY_CONTENTS.
+//
+// In contrast to #GTypeValueCollectFunc, this function is obliged to always
+// properly support %G_VALUE_NOCOPY_CONTENTS.
+//
+// Similar to #GTypeValueCollectFunc the function may prematurely abort by
+// returning a newly allocated string describing an error condition. To
+// complete the string example:
+//
+// |[&lt;!-- language="C" --&gt;
+// gchar **string_p = collect_values[0].v_pointer;
+// g_return_val_if_fail (string_p != NULL,
+//
+//	g_strdup ("string location passed as NULL"));
+//
+// if (collect_flags &amp; G_VALUE_NOCOPY_CONTENTS)
+//
+//	*string_p = value-&gt;data[0].v_pointer;
+//
+// else
+//
+//	*string_p = g_strdup (value-&gt;data[0].v_pointer);
+//
+// ]|
+//
+// And an illustrative version of this function for reference-counted
+// types:
+//
+// |[&lt;!-- language="C" --&gt;
+// GObject **object_p = collect_values[0].v_pointer;
+// g_return_val_if_fail (object_p != NULL,
+//
+//	g_strdup ("object location passed as NULL"));
+//
+// if (value-&gt;data[0].v_pointer == NULL)
+//
+//	*object_p = NULL;
+//
+// else if (collect_flags &amp; G_VALUE_NOCOPY_CONTENTS) // always honour
+//
+//	*object_p = value-&gt;data[0].v_pointer;
+//
+// else
+//
+//	*object_p = g_object_ref (value-&gt;data[0].v_pointer);
+//
+// return NULL;
+// ]|
+type TypeValueLCopyFunc func(*Value, uint, []TypeCValue, uint) string
+
+// If the value contents fit into a pointer, such as objects or strings,
+// return this pointer, so the caller can peek at the current contents.
+//
+// To extend on our above string example:
+//
+// |[&lt;!-- language="C" --&gt;
+// return value-&gt;data[0].v_pointer;
+// ]|
+type TypeValuePeekPointerFunc func(*Value) uintptr
+
 // A structure that provides information to the type system which is
 // used specifically for managing interface types.
 type InterfaceInfo struct {
@@ -333,11 +521,13 @@ func (x *TypeClass) GetPrivate(PrivateTypeVar types.GType) uintptr {
 
 var xTypeClassPeekParent func(uintptr) *TypeClass
 
+// Retrieves the class structure of the immediate parent type of the
+// class passed in.
+//
 // This is a convenience function often needed in class initializers.
-// It returns the class structure of the immediate parent type of the
-// class passed in.  Since derived classes hold a reference count on
-// their parent classes as long as they are instantiated, the returned
-// class will always exist.
+//
+// Since derived classes hold a reference on their parent classes as
+// long as they are instantiated, the returned class will always exist.
 //
 // This function is essentially equivalent to:
 // g_type_class_peek (g_type_parent (G_TYPE_FROM_CLASS (g_class)))
@@ -350,6 +540,7 @@ func (x *TypeClass) PeekParent() *TypeClass {
 var xTypeClassUnref func(uintptr)
 
 // Decrements the reference count of the class structure being passed in.
+//
 // Once the last reference count of a class has been released, classes
 // may be finalized by the type system, so further dereferencing of a
 // class pointer after g_type_class_unref() are invalid.
@@ -362,7 +553,9 @@ func (x *TypeClass) Unref() {
 var xTypeClassUnrefUncached func(uintptr)
 
 // A variant of g_type_class_unref() for use in #GTypeClassCacheFunc
-// implementations. It unreferences a class without consulting the chain
+// implementations.
+//
+// It unreferences a class without consulting the chain
 // of #GTypeClassCacheFuncs, avoiding the recursion which would occur
 // otherwise.
 func (x *TypeClass) UnrefUncached() {
@@ -455,9 +648,10 @@ func (x *TypeInterface) GoPointer() uintptr {
 var xTypeInterfacePeekParent func(uintptr) *TypeInterface
 
 // Returns the corresponding #GTypeInterface structure of the parent type
-// of the instance type to which @g_iface belongs. This is useful when
-// deriving the implementation of an interface from the parent type and
-// then possibly overriding some methods.
+// of the instance type to which @g_iface belongs.
+//
+// This is useful when deriving the implementation of an interface from the
+// parent type and then possibly overriding some methods.
 func (x *TypeInterface) PeekParent() *TypeInterface {
 
 	cret := xTypeInterfacePeekParent(x.GoPointer())
@@ -483,182 +677,51 @@ func (x *TypeQuery) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+// - `'i'`: Integers, passed as `collect_values[].v_int`
+//
+//   - `'l'`: Longs, passed as `collect_values[].v_long`
+//
+//   - `'d'`: Doubles, passed as `collect_values[].v_double`
+//
+//   - `'p'`: Pointers, passed as `collect_values[].v_pointer`
+//
+//     It should be noted that for variable argument list construction,
+//     ANSI C promotes every type smaller than an integer to an int, and
+//     floats to doubles. So for collection of short int or char, `'i'`
+//     needs to be used, and for collection of floats `'d'`.
+//
 // The #GTypeValueTable provides the functions required by the #GValue
 // implementation, to serve as a container for values of a type.
 type TypeValueTable struct {
 	_ structs.HostLayout
 
-	xValueInit uintptr
+	ValueInit TypeValueInitFunc
 
-	xValueFree uintptr
+	ValueFree TypeValueFreeFunc
 
-	xValueCopy uintptr
+	ValueCopy TypeValueCopyFunc
 
-	xValuePeekPointer uintptr
+	ValuePeekPointer TypeValuePeekPointerFunc
 
 	CollectFormat uintptr
 
-	xCollectValue uintptr
+	CollectValue TypeValueCollectFunc
 
 	LcopyFormat uintptr
 
-	xLcopyValue uintptr
+	LcopyValue TypeValueLCopyFunc
 }
 
 func (x *TypeValueTable) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideValueInit sets the callback function.
-func (x *TypeValueTable) OverrideValueInit(cb func(*Value)) {
-	if cb == nil {
-		x.xValueInit = 0
-	} else {
-		x.xValueInit = purego.NewCallback(func(ValueVarp *Value) {
-			cb(ValueVarp)
-		})
-	}
-}
-
-// GetValueInit gets the callback function.
-func (x *TypeValueTable) GetValueInit() func(*Value) {
-	if x.xValueInit == 0 {
-		return nil
-	}
-	var rawCallback func(ValueVarp *Value)
-	purego.RegisterFunc(&rawCallback, x.xValueInit)
-	return func(ValueVar *Value) {
-		rawCallback(ValueVar)
-	}
-}
-
-// OverrideValueFree sets the callback function.
-func (x *TypeValueTable) OverrideValueFree(cb func(*Value)) {
-	if cb == nil {
-		x.xValueFree = 0
-	} else {
-		x.xValueFree = purego.NewCallback(func(ValueVarp *Value) {
-			cb(ValueVarp)
-		})
-	}
-}
-
-// GetValueFree gets the callback function.
-func (x *TypeValueTable) GetValueFree() func(*Value) {
-	if x.xValueFree == 0 {
-		return nil
-	}
-	var rawCallback func(ValueVarp *Value)
-	purego.RegisterFunc(&rawCallback, x.xValueFree)
-	return func(ValueVar *Value) {
-		rawCallback(ValueVar)
-	}
-}
-
-// OverrideValueCopy sets the callback function.
-func (x *TypeValueTable) OverrideValueCopy(cb func(*Value, *Value)) {
-	if cb == nil {
-		x.xValueCopy = 0
-	} else {
-		x.xValueCopy = purego.NewCallback(func(SrcValueVarp *Value, DestValueVarp *Value) {
-			cb(SrcValueVarp, DestValueVarp)
-		})
-	}
-}
-
-// GetValueCopy gets the callback function.
-func (x *TypeValueTable) GetValueCopy() func(*Value, *Value) {
-	if x.xValueCopy == 0 {
-		return nil
-	}
-	var rawCallback func(SrcValueVarp *Value, DestValueVarp *Value)
-	purego.RegisterFunc(&rawCallback, x.xValueCopy)
-	return func(SrcValueVar *Value, DestValueVar *Value) {
-		rawCallback(SrcValueVar, DestValueVar)
-	}
-}
-
-// OverrideValuePeekPointer sets the callback function.
-func (x *TypeValueTable) OverrideValuePeekPointer(cb func(*Value) uintptr) {
-	if cb == nil {
-		x.xValuePeekPointer = 0
-	} else {
-		x.xValuePeekPointer = purego.NewCallback(func(ValueVarp *Value) uintptr {
-			return cb(ValueVarp)
-		})
-	}
-}
-
-// GetValuePeekPointer gets the callback function.
-func (x *TypeValueTable) GetValuePeekPointer() func(*Value) uintptr {
-	if x.xValuePeekPointer == 0 {
-		return nil
-	}
-	var rawCallback func(ValueVarp *Value) uintptr
-	purego.RegisterFunc(&rawCallback, x.xValuePeekPointer)
-	return func(ValueVar *Value) uintptr {
-		return rawCallback(ValueVar)
-	}
-}
-
-// OverrideCollectValue sets the callback function.
-func (x *TypeValueTable) OverrideCollectValue(cb func(*Value, uint, *TypeCValue, uint) string) {
-	if cb == nil {
-		x.xCollectValue = 0
-	} else {
-		x.xCollectValue = purego.NewCallback(func(ValueVarp *Value, NCollectValuesVarp uint, CollectValuesVarp *TypeCValue, CollectFlagsVarp uint) string {
-			return cb(ValueVarp, NCollectValuesVarp, CollectValuesVarp, CollectFlagsVarp)
-		})
-	}
-}
-
-// GetCollectValue gets the callback function.
-func (x *TypeValueTable) GetCollectValue() func(*Value, uint, *TypeCValue, uint) string {
-	if x.xCollectValue == 0 {
-		return nil
-	}
-	var rawCallback func(ValueVarp *Value, NCollectValuesVarp uint, CollectValuesVarp *TypeCValue, CollectFlagsVarp uint) string
-	purego.RegisterFunc(&rawCallback, x.xCollectValue)
-	return func(ValueVar *Value, NCollectValuesVar uint, CollectValuesVar *TypeCValue, CollectFlagsVar uint) string {
-		return rawCallback(ValueVar, NCollectValuesVar, CollectValuesVar, CollectFlagsVar)
-	}
-}
-
-// OverrideLcopyValue sets the callback function.
-func (x *TypeValueTable) OverrideLcopyValue(cb func(*Value, uint, *TypeCValue, uint) string) {
-	if cb == nil {
-		x.xLcopyValue = 0
-	} else {
-		x.xLcopyValue = purego.NewCallback(func(ValueVarp *Value, NCollectValuesVarp uint, CollectValuesVarp *TypeCValue, CollectFlagsVarp uint) string {
-			return cb(ValueVarp, NCollectValuesVarp, CollectValuesVarp, CollectFlagsVarp)
-		})
-	}
-}
-
-// GetLcopyValue gets the callback function.
-func (x *TypeValueTable) GetLcopyValue() func(*Value, uint, *TypeCValue, uint) string {
-	if x.xLcopyValue == 0 {
-		return nil
-	}
-	var rawCallback func(ValueVarp *Value, NCollectValuesVarp uint, CollectValuesVarp *TypeCValue, CollectFlagsVarp uint) string
-	purego.RegisterFunc(&rawCallback, x.xLcopyValue)
-	return func(ValueVar *Value, NCollectValuesVar uint, CollectValuesVar *TypeCValue, CollectFlagsVar uint) string {
-		return rawCallback(ValueVar, NCollectValuesVar, CollectValuesVar, CollectFlagsVar)
-	}
-}
-
-type TypeCValue = uintptr
-
-// A numerical value which represents the unique identifier of a registered
-// type.
-type Type = types.GType
-
 const (
 	// A bit in the type number that's supposed to be left untouched.
-	TYPE_FLAG_RESERVED_ID_BIT glib.Type = 1
+	TYPE_FLAG_RESERVED_ID_BIT Type = 1
 	// An integer constant that represents the number of identifiers reserved
 	// for types that are assigned at compile-time.
-	TYPE_FUNDAMENTAL_MAX int = 255
+	TYPE_FUNDAMENTAL_MAX int = 1020
 	// Shift value used in converting numbers to type IDs.
 	TYPE_FUNDAMENTAL_SHIFT int = 2
 	// First fundamental type number to create a new fundamental type id with
@@ -679,7 +742,7 @@ const (
 // These flags used to be passed to g_type_init_with_debug_flags() which
 // is now deprecated.
 //
-// If you need to enable debugging features, use the GOBJECT_DEBUG
+// If you need to enable debugging features, use the `GOBJECT_DEBUG`
 // environment variable.
 type TypeDebugFlags int
 
@@ -702,6 +765,8 @@ type TypeFlags int
 
 const (
 
+	// No special flags. Since: 2.74
+	GTypeFlagNoneValue TypeFlags = 0
 	// Indicates an abstract type. No instances can be
 	//  created for an abstract type
 	GTypeFlagAbstractValue TypeFlags = 16
@@ -712,6 +777,10 @@ const (
 	// Indicates a final type. A final type is a non-derivable
 	//  leaf node in a deep derivable type hierarchy tree. Since: 2.70
 	GTypeFlagFinalValue TypeFlags = 64
+	// The type is deprecated and may be removed in a
+	//  future version. A warning will be emitted if it is instantiated while
+	//  running with `G_ENABLE_DIAGNOSTIC=1`. Since 2.76
+	GTypeFlagDeprecatedValue TypeFlags = 128
 )
 
 // Bit masks used to check or determine specific characteristics of a
@@ -902,10 +971,27 @@ func TypeClassAdjustPrivateOffset(GClassVar uintptr, PrivateSizeOrOffsetVar int)
 
 }
 
+var xTypeClassGet func(types.GType) *TypeClass
+
+// Retrieves the type class of the given @type.
+//
+// This function will create the class on demand if it does not exist
+// already.
+//
+// If you don't want to create the class, use g_type_class_peek() instead.
+func TypeClassGet(TypeVar types.GType) *TypeClass {
+
+	cret := xTypeClassGet(TypeVar)
+	return cret
+}
+
 var xTypeClassPeek func(types.GType) *TypeClass
 
-// This function is essentially the same as g_type_class_ref(),
-// except that the classes reference count isn't incremented.
+// Retrieves the class for a give type.
+//
+// This function is essentially the same as g_type_class_get(),
+// except that the class may have not been instantiated yet.
+//
 // As a consequence, this function may return %NULL if the class
 // of the type passed in does not currently exist (hasn't been
 // referenced before).
@@ -928,8 +1014,9 @@ func TypeClassPeekStatic(TypeVar types.GType) *TypeClass {
 var xTypeClassRef func(types.GType) *TypeClass
 
 // Increments the reference count of the class structure belonging to
-// @type. This function will demand-create the class if it doesn't
-// exist already.
+// @type.
+//
+// This function will demand-create the class if it doesn't exist already.
 func TypeClassRef(TypeVar types.GType) *TypeClass {
 
 	cret := xTypeClassRef(TypeVar)
@@ -957,6 +1044,27 @@ var xTypeCreateInstance func(types.GType) *TypeInstance
 func TypeCreateInstance(TypeVar types.GType) *TypeInstance {
 
 	cret := xTypeCreateInstance(TypeVar)
+	return cret
+}
+
+var xTypeDefaultInterfaceGet func(types.GType) *TypeInterface
+
+// Returns the default interface vtable for the given @g_type.
+//
+// If the type is not currently in use, then the default vtable
+// for the type will be created and initialized by calling
+// the base interface init and default vtable init functions for
+// the type (the @base_init and @class_init members of #GTypeInfo).
+//
+// If you don't want to create the interface vtable, you should use
+// g_type_default_interface_peek() instead.
+//
+// Calling g_type_default_interface_get() is useful when you
+// want to make sure that signals and properties for an interface
+// have been installed.
+func TypeDefaultInterfaceGet(GTypeVar types.GType) *TypeInterface {
+
+	cret := xTypeDefaultInterfaceGet(GTypeVar)
 	return cret
 }
 
@@ -991,10 +1099,11 @@ func TypeDefaultInterfaceRef(GTypeVar types.GType) *TypeInterface {
 var xTypeDefaultInterfaceUnref func(*TypeInterface)
 
 // Decrements the reference count for the type corresponding to the
-// interface default vtable @g_iface. If the type is dynamic, then
-// when no one is using the interface and all references have
-// been released, the finalize function for the interface's default
-// vtable (the @class_finalize member of #GTypeInfo) will be called.
+// interface default vtable @g_iface.
+//
+// If the type is dynamic, then when no one is using the interface and all
+// references have been released, the finalize function for the interface's
+// default vtable (the @class_finalize member of #GTypeInfo) will be called.
 func TypeDefaultInterfaceUnref(GIfaceVar *TypeInterface) {
 
 	xTypeDefaultInterfaceUnref(GIfaceVar)
@@ -1082,8 +1191,8 @@ var xTypeGetInstanceCount func(types.GType) int
 
 // Returns the number of instances allocated of the particular type;
 // this is only available if GLib is built with debugging support and
-// the instance_count debug flag is set (by setting the GOBJECT_DEBUG
-// variable to include instance-count).
+// the `instance-count` debug flag is set (by setting the `GOBJECT_DEBUG`
+// variable to include `instance-count`).
 func TypeGetInstanceCount(TypeVar types.GType) int {
 
 	cret := xTypeGetInstanceCount(TypeVar)
@@ -1151,7 +1260,7 @@ var xTypeInitWithDebugFlags func(TypeDebugFlags)
 // flags.  Since GLib 2.36, the type system is initialised automatically
 // and this function does nothing.
 //
-// If you need to enable debugging features, use the GOBJECT_DEBUG
+// If you need to enable debugging features, use the `GOBJECT_DEBUG`
 // environment variable.
 func TypeInitWithDebugFlags(DebugFlagsVar TypeDebugFlags) {
 
@@ -1248,11 +1357,12 @@ func TypeIsA(TypeVar types.GType, IsATypeVar types.GType) bool {
 
 var xTypeName func(types.GType) string
 
-// Get the unique name that is assigned to a type ID.  Note that this
-// function (like all other GType API) cannot cope with invalid type
-// IDs. %G_TYPE_INVALID may be passed to this function, as may be any
-// other validly registered type ID, but randomized type IDs should
-// not be passed in and will most likely lead to a crash.
+// Get the unique name that is assigned to a type ID.
+//
+// Note that this function (like all other GType API) cannot cope with
+// invalid type IDs. %G_TYPE_INVALID may be passed to this function, as
+// may be any other validly registered type ID, but randomized type IDs
+// should not be passed in and will most likely lead to a crash.
 func TypeName(TypeVar types.GType) string {
 
 	cret := xTypeName(TypeVar)
@@ -1312,11 +1422,15 @@ func TypeQname(TypeVar types.GType) glib.Quark {
 var xNewTypeQuery func(types.GType, *TypeQuery)
 
 // Queries the type system for information about a specific type.
+//
 // This function will fill in a user-provided structure to hold
 // type-specific information. If an invalid #GType is passed in, the
 // @type member of the #GTypeQuery is 0. All members filled into the
 // #GTypeQuery structure should be considered constant and have to be
 // left untouched.
+//
+// Since GLib 2.78, this function allows queries on dynamic types. Previously
+// it only supported static types.
 func NewTypeQuery(TypeVar types.GType, QueryVar *TypeQuery) {
 
 	xNewTypeQuery(TypeVar, QueryVar)
@@ -1452,10 +1566,12 @@ func init() {
 	core.PuregoSafeRegister(&xTypeCheckValueHolds, lib, "g_type_check_value_holds")
 	core.PuregoSafeRegister(&xTypeChildren, lib, "g_type_children")
 	core.PuregoSafeRegister(&xTypeClassAdjustPrivateOffset, lib, "g_type_class_adjust_private_offset")
+	core.PuregoSafeRegister(&xTypeClassGet, lib, "g_type_class_get")
 	core.PuregoSafeRegister(&xTypeClassPeek, lib, "g_type_class_peek")
 	core.PuregoSafeRegister(&xTypeClassPeekStatic, lib, "g_type_class_peek_static")
 	core.PuregoSafeRegister(&xTypeClassRef, lib, "g_type_class_ref")
 	core.PuregoSafeRegister(&xTypeCreateInstance, lib, "g_type_create_instance")
+	core.PuregoSafeRegister(&xTypeDefaultInterfaceGet, lib, "g_type_default_interface_get")
 	core.PuregoSafeRegister(&xTypeDefaultInterfacePeek, lib, "g_type_default_interface_peek")
 	core.PuregoSafeRegister(&xTypeDefaultInterfaceRef, lib, "g_type_default_interface_ref")
 	core.PuregoSafeRegister(&xTypeDefaultInterfaceUnref, lib, "g_type_default_interface_unref")

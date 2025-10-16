@@ -54,6 +54,9 @@ func (x *PrintOperationClass) GoPointer() uintptr {
 }
 
 // OverrideDone sets the callback function.
+// Signal emitted when the print operation run has finished
+//
+//	doing everything required for printing.
 func (x *PrintOperationClass) OverrideDone(cb func(*PrintOperation, PrintOperationResult)) {
 	if cb == nil {
 		x.xDone = 0
@@ -65,6 +68,9 @@ func (x *PrintOperationClass) OverrideDone(cb func(*PrintOperation, PrintOperati
 }
 
 // GetDone gets the callback function.
+// Signal emitted when the print operation run has finished
+//
+//	doing everything required for printing.
 func (x *PrintOperationClass) GetDone() func(*PrintOperation, PrintOperationResult) {
 	if x.xDone == 0 {
 		return nil
@@ -77,6 +83,9 @@ func (x *PrintOperationClass) GetDone() func(*PrintOperation, PrintOperationResu
 }
 
 // OverrideBeginPrint sets the callback function.
+// Signal emitted after the user has finished changing
+//
+//	print settings in the dialog, before the actual rendering starts.
 func (x *PrintOperationClass) OverrideBeginPrint(cb func(*PrintOperation, *PrintContext)) {
 	if cb == nil {
 		x.xBeginPrint = 0
@@ -88,6 +97,9 @@ func (x *PrintOperationClass) OverrideBeginPrint(cb func(*PrintOperation, *Print
 }
 
 // GetBeginPrint gets the callback function.
+// Signal emitted after the user has finished changing
+//
+//	print settings in the dialog, before the actual rendering starts.
 func (x *PrintOperationClass) GetBeginPrint() func(*PrintOperation, *PrintContext) {
 	if x.xBeginPrint == 0 {
 		return nil
@@ -100,6 +112,9 @@ func (x *PrintOperationClass) GetBeginPrint() func(*PrintOperation, *PrintContex
 }
 
 // OverridePaginate sets the callback function.
+// Signal emitted after the “begin-print” signal, but
+//
+//	before the actual rendering starts.
 func (x *PrintOperationClass) OverridePaginate(cb func(*PrintOperation, *PrintContext) bool) {
 	if cb == nil {
 		x.xPaginate = 0
@@ -111,6 +126,9 @@ func (x *PrintOperationClass) OverridePaginate(cb func(*PrintOperation, *PrintCo
 }
 
 // GetPaginate gets the callback function.
+// Signal emitted after the “begin-print” signal, but
+//
+//	before the actual rendering starts.
 func (x *PrintOperationClass) GetPaginate() func(*PrintOperation, *PrintContext) bool {
 	if x.xPaginate == 0 {
 		return nil
@@ -123,6 +141,9 @@ func (x *PrintOperationClass) GetPaginate() func(*PrintOperation, *PrintContext)
 }
 
 // OverrideRequestPageSetup sets the callback function.
+// Emitted once for every page that is printed,
+//
+//	to give the application a chance to modify the page setup.
 func (x *PrintOperationClass) OverrideRequestPageSetup(cb func(*PrintOperation, *PrintContext, int, *PageSetup)) {
 	if cb == nil {
 		x.xRequestPageSetup = 0
@@ -134,6 +155,9 @@ func (x *PrintOperationClass) OverrideRequestPageSetup(cb func(*PrintOperation, 
 }
 
 // GetRequestPageSetup gets the callback function.
+// Emitted once for every page that is printed,
+//
+//	to give the application a chance to modify the page setup.
 func (x *PrintOperationClass) GetRequestPageSetup() func(*PrintOperation, *PrintContext, int, *PageSetup) {
 	if x.xRequestPageSetup == 0 {
 		return nil
@@ -146,6 +170,7 @@ func (x *PrintOperationClass) GetRequestPageSetup() func(*PrintOperation, *Print
 }
 
 // OverrideDrawPage sets the callback function.
+// Signal emitted for every page that is printed.
 func (x *PrintOperationClass) OverrideDrawPage(cb func(*PrintOperation, *PrintContext, int)) {
 	if cb == nil {
 		x.xDrawPage = 0
@@ -157,6 +182,7 @@ func (x *PrintOperationClass) OverrideDrawPage(cb func(*PrintOperation, *PrintCo
 }
 
 // GetDrawPage gets the callback function.
+// Signal emitted for every page that is printed.
 func (x *PrintOperationClass) GetDrawPage() func(*PrintOperation, *PrintContext, int) {
 	if x.xDrawPage == 0 {
 		return nil
@@ -169,6 +195,7 @@ func (x *PrintOperationClass) GetDrawPage() func(*PrintOperation, *PrintContext,
 }
 
 // OverrideEndPrint sets the callback function.
+// Signal emitted after all pages have been rendered.
 func (x *PrintOperationClass) OverrideEndPrint(cb func(*PrintOperation, *PrintContext)) {
 	if cb == nil {
 		x.xEndPrint = 0
@@ -180,6 +207,7 @@ func (x *PrintOperationClass) OverrideEndPrint(cb func(*PrintOperation, *PrintCo
 }
 
 // GetEndPrint gets the callback function.
+// Signal emitted after all pages have been rendered.
 func (x *PrintOperationClass) GetEndPrint() func(*PrintOperation, *PrintContext) {
 	if x.xEndPrint == 0 {
 		return nil
@@ -192,6 +220,9 @@ func (x *PrintOperationClass) GetEndPrint() func(*PrintOperation, *PrintContext)
 }
 
 // OverrideStatusChanged sets the callback function.
+// Emitted at between the various phases of the print
+//
+//	operation.
 func (x *PrintOperationClass) OverrideStatusChanged(cb func(*PrintOperation)) {
 	if cb == nil {
 		x.xStatusChanged = 0
@@ -203,6 +234,9 @@ func (x *PrintOperationClass) OverrideStatusChanged(cb func(*PrintOperation)) {
 }
 
 // GetStatusChanged gets the callback function.
+// Emitted at between the various phases of the print
+//
+//	operation.
 func (x *PrintOperationClass) GetStatusChanged() func(*PrintOperation) {
 	if x.xStatusChanged == 0 {
 		return nil
@@ -215,6 +249,7 @@ func (x *PrintOperationClass) GetStatusChanged() func(*PrintOperation) {
 }
 
 // OverrideCreateCustomWidget sets the callback function.
+// Signal emitted when displaying the print dialog.
 func (x *PrintOperationClass) OverrideCreateCustomWidget(cb func(*PrintOperation) *Widget) {
 	if cb == nil {
 		x.xCreateCustomWidget = 0
@@ -230,6 +265,7 @@ func (x *PrintOperationClass) OverrideCreateCustomWidget(cb func(*PrintOperation
 }
 
 // GetCreateCustomWidget gets the callback function.
+// Signal emitted when displaying the print dialog.
 func (x *PrintOperationClass) GetCreateCustomWidget() func(*PrintOperation) *Widget {
 	if x.xCreateCustomWidget == 0 {
 		return nil
@@ -248,6 +284,9 @@ func (x *PrintOperationClass) GetCreateCustomWidget() func(*PrintOperation) *Wid
 }
 
 // OverrideCustomWidgetApply sets the callback function.
+// Signal emitted right before “begin-print” if
+//
+//	you added a custom widget in the “create-custom-widget” handler.
 func (x *PrintOperationClass) OverrideCustomWidgetApply(cb func(*PrintOperation, *Widget)) {
 	if cb == nil {
 		x.xCustomWidgetApply = 0
@@ -259,6 +298,9 @@ func (x *PrintOperationClass) OverrideCustomWidgetApply(cb func(*PrintOperation,
 }
 
 // GetCustomWidgetApply gets the callback function.
+// Signal emitted right before “begin-print” if
+//
+//	you added a custom widget in the “create-custom-widget” handler.
 func (x *PrintOperationClass) GetCustomWidgetApply() func(*PrintOperation, *Widget) {
 	if x.xCustomWidgetApply == 0 {
 		return nil
@@ -271,6 +313,9 @@ func (x *PrintOperationClass) GetCustomWidgetApply() func(*PrintOperation, *Widg
 }
 
 // OverridePreview sets the callback function.
+// Signal emitted when a preview is requested from the
+//
+//	native dialog.
 func (x *PrintOperationClass) OverridePreview(cb func(*PrintOperation, PrintOperationPreview, *PrintContext, *Window) bool) {
 	if cb == nil {
 		x.xPreview = 0
@@ -282,6 +327,9 @@ func (x *PrintOperationClass) OverridePreview(cb func(*PrintOperation, PrintOper
 }
 
 // GetPreview gets the callback function.
+// Signal emitted when a preview is requested from the
+//
+//	native dialog.
 func (x *PrintOperationClass) GetPreview() func(*PrintOperation, PrintOperationPreview, *PrintContext, *Window) bool {
 	if x.xPreview == 0 {
 		return nil
@@ -294,6 +342,7 @@ func (x *PrintOperationClass) GetPreview() func(*PrintOperation, PrintOperationP
 }
 
 // OverrideUpdateCustomWidget sets the callback function.
+// Emitted after change of selected printer.
 func (x *PrintOperationClass) OverrideUpdateCustomWidget(cb func(*PrintOperation, *Widget, *PageSetup, *PrintSettings)) {
 	if cb == nil {
 		x.xUpdateCustomWidget = 0
@@ -305,6 +354,7 @@ func (x *PrintOperationClass) OverrideUpdateCustomWidget(cb func(*PrintOperation
 }
 
 // GetUpdateCustomWidget gets the callback function.
+// Emitted after change of selected printer.
 func (x *PrintOperationClass) GetUpdateCustomWidget() func(*PrintOperation, *Widget, *PageSetup, *PrintSettings) {
 	if x.xUpdateCustomWidget == 0 {
 		return nil
@@ -363,7 +413,8 @@ const (
 	// Show the print dialog.
 	PrintOperationActionPrintDialogValue PrintOperationAction = 0
 	// Start to print without showing
-	//   the print dialog, based on the current print settings.
+	//   the print dialog, based on the current print settings, if possible.
+	//   Depending on the platform, a print dialog might appear anyway.
 	PrintOperationActionPrintValue PrintOperationAction = 1
 	// Show the print preview.
 	PrintOperationActionPreviewValue PrintOperationAction = 2
@@ -446,13 +497,14 @@ func PrintErrorQuark() glib.Quark {
 
 var xPrintRunPageSetupDialog func(uintptr, uintptr, uintptr) uintptr
 
-// Runs a page setup dialog, letting the user modify the values from
-// @page_setup. If the user cancels the dialog, the returned `GtkPageSetup`
-// is identical to the passed in @page_setup, otherwise it contains the
-// modifications done in the dialog.
+// Runs a page setup dialog, letting the user modify the values from @page_setup.
+//
+// If the user cancels the dialog, the returned `GtkPageSetup` is identical
+// to the passed in @page_setup, otherwise it contains the modifications
+// done in the dialog.
 //
 // Note that this function may use a recursive mainloop to show the page
-// setup dialog. See gtk_print_run_page_setup_dialog_async() if this is
+// setup dialog. See [func@Gtk.print_run_page_setup_dialog_async] if this is
 // a problem.
 func PrintRunPageSetupDialog(ParentVar *Window, PageSetupVar *PageSetup, SettingsVar *PrintSettings) *PageSetup {
 	var cls *PageSetup
@@ -471,16 +523,16 @@ var xPrintRunPageSetupDialogAsync func(uintptr, uintptr, uintptr, uintptr, uintp
 
 // Runs a page setup dialog, letting the user modify the values from @page_setup.
 //
-// In contrast to gtk_print_run_page_setup_dialog(), this function  returns after
-// showing the page setup dialog on platforms that support this, and calls @done_cb
-// from a signal handler for the ::response signal of the dialog.
+// In contrast to [func@Gtk.print_run_page_setup_dialog], this function  returns
+// after showing the page setup dialog on platforms that support this, and calls
+// @done_cb from a signal handler for the ::response signal of the dialog.
 func PrintRunPageSetupDialogAsync(ParentVar *Window, PageSetupVar *PageSetup, SettingsVar *PrintSettings, DoneCbVar *PageSetupDoneFunc, DataVar uintptr) {
 
 	xPrintRunPageSetupDialogAsync(ParentVar.GoPointer(), PageSetupVar.GoPointer(), SettingsVar.GoPointer(), glib.NewCallback(DoneCbVar), DataVar)
 
 }
 
-// `GtkPrintOperation` is the high-level, portable printing API.
+// High-level, portable printing API.
 //
 // It looks a bit different than other GTK dialogs such as the
 // `GtkFileChooser`, since some platforms don’t expose enough
@@ -802,7 +854,7 @@ var xPrintOperationRun func(uintptr, PrintOperationAction, uintptr, **glib.Error
 //						     error-&gt;message);
 //	   g_signal_connect (error_dialog, "response",
 //	                     G_CALLBACK (gtk_window_destroy), NULL);
-//	   gtk_widget_show (error_dialog);
+//	   gtk_window_present (GTK_WINDOW (error_dialog));
 //	   g_error_free (error);
 //	 }
 //

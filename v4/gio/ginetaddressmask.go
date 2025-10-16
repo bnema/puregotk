@@ -30,10 +30,10 @@ func (x *InetAddressMaskPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GInetAddressMask represents a range of IPv4 or IPv6 addresses
+// `GInetAddressMask` represents a range of IPv4 or IPv6 addresses
 // described by a base address and a length indicating how many bits
 // of the base address are relevant for matching purposes. These are
-// often given in string form. Eg, "10.0.0.0/8", or "fe80::/10".
+// often given in string form. For example, `10.0.0.0/8`, or `fe80::/10`.
 type InetAddressMask struct {
 	gobject.Object
 }
@@ -187,7 +187,7 @@ func (c *InetAddressMask) SetGoPointer(ptr uintptr) {
 // If the object is not initialized, or initialization returns with an
 // error, then all operations on the object except g_object_ref() and
 // g_object_unref() are considered to be invalid, and have undefined
-// behaviour. See the [introduction][ginitable] for more details.
+// behaviour. See the [description][iface@Gio.Initable#description] for more details.
 //
 // Callers should not assume that a class which implements #GInitable can be
 // initialized multiple times, unless the class explicitly documents itself as

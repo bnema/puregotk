@@ -35,6 +35,7 @@ func (x *MemVTable) GoPointer() uintptr {
 }
 
 // OverrideMalloc sets the callback function.
+// function to use for allocating memory.
 func (x *MemVTable) OverrideMalloc(cb func(uint) uintptr) {
 	if cb == nil {
 		x.xMalloc = 0
@@ -46,6 +47,7 @@ func (x *MemVTable) OverrideMalloc(cb func(uint) uintptr) {
 }
 
 // GetMalloc gets the callback function.
+// function to use for allocating memory.
 func (x *MemVTable) GetMalloc() func(uint) uintptr {
 	if x.xMalloc == 0 {
 		return nil
@@ -58,6 +60,7 @@ func (x *MemVTable) GetMalloc() func(uint) uintptr {
 }
 
 // OverrideRealloc sets the callback function.
+// function to use for reallocating memory.
 func (x *MemVTable) OverrideRealloc(cb func(uintptr, uint) uintptr) {
 	if cb == nil {
 		x.xRealloc = 0
@@ -69,6 +72,7 @@ func (x *MemVTable) OverrideRealloc(cb func(uintptr, uint) uintptr) {
 }
 
 // GetRealloc gets the callback function.
+// function to use for reallocating memory.
 func (x *MemVTable) GetRealloc() func(uintptr, uint) uintptr {
 	if x.xRealloc == 0 {
 		return nil
@@ -81,6 +85,7 @@ func (x *MemVTable) GetRealloc() func(uintptr, uint) uintptr {
 }
 
 // OverrideFree sets the callback function.
+// function to use to free memory.
 func (x *MemVTable) OverrideFree(cb func(uintptr)) {
 	if cb == nil {
 		x.xFree = 0
@@ -92,6 +97,7 @@ func (x *MemVTable) OverrideFree(cb func(uintptr)) {
 }
 
 // GetFree gets the callback function.
+// function to use to free memory.
 func (x *MemVTable) GetFree() func(uintptr) {
 	if x.xFree == 0 {
 		return nil
@@ -104,6 +110,7 @@ func (x *MemVTable) GetFree() func(uintptr) {
 }
 
 // OverrideCalloc sets the callback function.
+// function to use for allocating zero-filled memory.
 func (x *MemVTable) OverrideCalloc(cb func(uint, uint) uintptr) {
 	if cb == nil {
 		x.xCalloc = 0
@@ -115,6 +122,7 @@ func (x *MemVTable) OverrideCalloc(cb func(uint, uint) uintptr) {
 }
 
 // GetCalloc gets the callback function.
+// function to use for allocating zero-filled memory.
 func (x *MemVTable) GetCalloc() func(uint, uint) uintptr {
 	if x.xCalloc == 0 {
 		return nil
@@ -127,6 +135,7 @@ func (x *MemVTable) GetCalloc() func(uint, uint) uintptr {
 }
 
 // OverrideTryMalloc sets the callback function.
+// function to use for allocating memory without a default error handler.
 func (x *MemVTable) OverrideTryMalloc(cb func(uint) uintptr) {
 	if cb == nil {
 		x.xTryMalloc = 0
@@ -138,6 +147,7 @@ func (x *MemVTable) OverrideTryMalloc(cb func(uint) uintptr) {
 }
 
 // GetTryMalloc gets the callback function.
+// function to use for allocating memory without a default error handler.
 func (x *MemVTable) GetTryMalloc() func(uint) uintptr {
 	if x.xTryMalloc == 0 {
 		return nil
@@ -150,6 +160,7 @@ func (x *MemVTable) GetTryMalloc() func(uint) uintptr {
 }
 
 // OverrideTryRealloc sets the callback function.
+// function to use for reallocating memory without a default error handler.
 func (x *MemVTable) OverrideTryRealloc(cb func(uintptr, uint) uintptr) {
 	if cb == nil {
 		x.xTryRealloc = 0
@@ -161,6 +172,7 @@ func (x *MemVTable) OverrideTryRealloc(cb func(uintptr, uint) uintptr) {
 }
 
 // GetTryRealloc gets the callback function.
+// function to use for reallocating memory without a default error handler.
 func (x *MemVTable) GetTryRealloc() func(uintptr, uint) uintptr {
 	if x.xTryRealloc == 0 {
 		return nil
@@ -179,8 +191,11 @@ var xAlignedAlloc func(uint, uint, uint) uintptr
 // alignment value. Additionally, it will detect possible overflow during
 // multiplication.
 //
+// If the allocation fails (because the system is out of memory),
+// the program is terminated.
+//
 // Aligned memory allocations returned by this function can only be
-// freed using g_aligned_free().
+// freed using g_aligned_free_sized() or g_aligned_free().
 func AlignedAlloc(NBlocksVar uint, NBlockBytesVar uint, AlignmentVar uint) uintptr {
 
 	cret := xAlignedAlloc(NBlocksVar, NBlockBytesVar, AlignmentVar)
@@ -206,6 +221,23 @@ func AlignedFree(MemVar uintptr) {
 
 }
 
+var xAlignedFreeSized func(uintptr, uint, uint)
+
+// Frees the memory pointed to by @mem, assuming it is has the given @size and
+// @alignment.
+//
+// If @mem is %NULL this is a no-op (and @size is ignored).
+//
+// It is an error if @size doesn’t match the size, or @alignment doesn’t match
+// the alignment, passed when @mem was allocated. @size and @alignment are
+// passed to this function to allow optimizations in the allocator. If you
+// don’t know either of them, use g_aligned_free() instead.
+func AlignedFreeSized(MemVar uintptr, AlignmentVar uint, SizeVar uint) {
+
+	xAlignedFreeSized(MemVar, AlignmentVar, SizeVar)
+
+}
+
 var xClearPointer func(uintptr, uintptr)
 
 // Clears a reference to a variable.
@@ -219,9 +251,32 @@ var xClearPointer func(uintptr, uintptr)
 // A macro is also included that allows this function to be used without
 // pointer casts. This will mask any warnings about incompatible function types
 // or calling conventions, so you must ensure that your @destroy function is
-// compatible with being called as `GDestroyNotify` using the standard calling
-// convention for the platform that GLib was compiled for; otherwise the program
-// will experience undefined behaviour.
+// compatible with being called as [callback@GLib.DestroyNotify] using the
+// standard calling convention for the platform that GLib was compiled for;
+// otherwise the program will experience undefined behaviour.
+//
+// Examples of this kind of undefined behaviour include using many Windows Win32
+// APIs, as well as many if not all OpenGL and Vulkan calls on 32-bit Windows,
+// which typically use the `__stdcall` calling convention rather than the
+// `__cdecl` calling convention.
+//
+// The affected functions can be used by wrapping them in a
+// [callback@GLib.DestroyNotify] that is declared with the standard calling
+// convention:
+//
+// ```c
+// // Wrapper needed to avoid mismatched calling conventions on Windows
+// static void
+// destroy_sync (void *sync)
+//
+//	{
+//	  glDeleteSync (sync);
+//	}
+//
+// // …
+//
+// g_clear_pointer (&amp;sync, destroy_sync);
+// ```
 func ClearPointer(PpVar uintptr, DestroyVar *DestroyNotify) {
 
 	xClearPointer(PpVar, NewCallback(DestroyVar))
@@ -232,6 +287,15 @@ var xFree func(uintptr)
 
 // Frees the memory pointed to by @mem.
 //
+// If you know the allocated size of @mem, calling g_free_sized() may be faster,
+// depending on the libc implementation in use.
+//
+// Starting from GLib 2.78, this may happen automatically in case a GCC
+// compatible compiler is used with some optimization level and the allocated
+// size is known at compile time (see [documentation of
+// `__builtin_object_size()`](https://gcc.gnu.org/onlinedocs/gcc/Object-Size-Checking.html)
+// to understand its caveats).
+//
 // If @mem is %NULL it simply returns, so there is no need to check @mem
 // against %NULL before calling this function.
 func Free(MemVar uintptr) {
@@ -240,10 +304,32 @@ func Free(MemVar uintptr) {
 
 }
 
+var xFreeSized func(uintptr, uint)
+
+// Frees the memory pointed to by @mem, assuming it is has the given @size.
+//
+// If @mem is %NULL this is a no-op (and @size is ignored).
+//
+// It is an error if @size doesn’t match the size passed when @mem was
+// allocated. @size is passed to this function to allow optimizations in the
+// allocator. If you don’t know the allocation size, use g_free() instead.
+//
+// In case a GCC compatible compiler is used, this function may be used
+// automatically via g_free() if the allocated size is known at compile time,
+// since GLib 2.78.
+func FreeSized(MemVar uintptr, SizeVar uint) {
+
+	xFreeSized(MemVar, SizeVar)
+
+}
+
 var xMalloc func(uint) uintptr
 
 // Allocates @n_bytes bytes of memory.
 // If @n_bytes is 0 it returns %NULL.
+//
+// If the allocation fails (because the system is out of memory),
+// the program is terminated.
 func Malloc(NBytesVar uint) uintptr {
 
 	cret := xMalloc(NBytesVar)
@@ -254,6 +340,9 @@ var xMalloc0 func(uint) uintptr
 
 // Allocates @n_bytes bytes of memory, initialized to 0's.
 // If @n_bytes is 0 it returns %NULL.
+//
+// If the allocation fails (because the system is out of memory),
+// the program is terminated.
 func Malloc0(NBytesVar uint) uintptr {
 
 	cret := xMalloc0(NBytesVar)
@@ -264,6 +353,9 @@ var xMalloc0N func(uint, uint) uintptr
 
 // This function is similar to g_malloc0(), allocating (@n_blocks * @n_block_bytes) bytes,
 // but care is taken to detect possible overflow during multiplication.
+//
+// If the allocation fails (because the system is out of memory),
+// the program is terminated.
 func Malloc0N(NBlocksVar uint, NBlockBytesVar uint) uintptr {
 
 	cret := xMalloc0N(NBlocksVar, NBlockBytesVar)
@@ -274,6 +366,9 @@ var xMallocN func(uint, uint) uintptr
 
 // This function is similar to g_malloc(), allocating (@n_blocks * @n_block_bytes) bytes,
 // but care is taken to detect possible overflow during multiplication.
+//
+// If the allocation fails (because the system is out of memory),
+// the program is terminated.
 func MallocN(NBlocksVar uint, NBlockBytesVar uint) uintptr {
 
 	cret := xMallocN(NBlocksVar, NBlockBytesVar)
@@ -323,6 +418,9 @@ var xRealloc func(uintptr, uint) uintptr
 // have been moved. @mem may be %NULL, in which case it's considered to
 // have zero-length. @n_bytes may be 0, in which case %NULL will be returned
 // and @mem will be freed unless it is %NULL.
+//
+// If the allocation fails (because the system is out of memory),
+// the program is terminated.
 func Realloc(MemVar uintptr, NBytesVar uint) uintptr {
 
 	cret := xRealloc(MemVar, NBytesVar)
@@ -333,6 +431,9 @@ var xReallocN func(uintptr, uint, uint) uintptr
 
 // This function is similar to g_realloc(), allocating (@n_blocks * @n_block_bytes) bytes,
 // but care is taken to detect possible overflow during multiplication.
+//
+// If the allocation fails (because the system is out of memory),
+// the program is terminated.
 func ReallocN(MemVar uintptr, NBlocksVar uint, NBlockBytesVar uint) uintptr {
 
 	cret := xReallocN(MemVar, NBlocksVar, NBlockBytesVar)
@@ -404,7 +505,7 @@ func TryReallocN(MemVar uintptr, NBlocksVar uint, NBlockBytesVar uint) uintptr {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -413,8 +514,10 @@ func init() {
 	core.PuregoSafeRegister(&xAlignedAlloc, lib, "g_aligned_alloc")
 	core.PuregoSafeRegister(&xAlignedAlloc0, lib, "g_aligned_alloc0")
 	core.PuregoSafeRegister(&xAlignedFree, lib, "g_aligned_free")
+	core.PuregoSafeRegister(&xAlignedFreeSized, lib, "g_aligned_free_sized")
 	core.PuregoSafeRegister(&xClearPointer, lib, "g_clear_pointer")
 	core.PuregoSafeRegister(&xFree, lib, "g_free")
+	core.PuregoSafeRegister(&xFreeSized, lib, "g_free_sized")
 	core.PuregoSafeRegister(&xMalloc, lib, "g_malloc")
 	core.PuregoSafeRegister(&xMalloc0, lib, "g_malloc0")
 	core.PuregoSafeRegister(&xMalloc0N, lib, "g_malloc0_n")

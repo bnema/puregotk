@@ -33,6 +33,7 @@ func (x *SeekableIface) GoPointer() uintptr {
 }
 
 // OverrideTell sets the callback function.
+// Tells the current location within a stream.
 func (x *SeekableIface) OverrideTell(cb func(Seekable) int64) {
 	if cb == nil {
 		x.xTell = 0
@@ -44,6 +45,7 @@ func (x *SeekableIface) OverrideTell(cb func(Seekable) int64) {
 }
 
 // GetTell gets the callback function.
+// Tells the current location within a stream.
 func (x *SeekableIface) GetTell() func(Seekable) int64 {
 	if x.xTell == 0 {
 		return nil
@@ -56,6 +58,7 @@ func (x *SeekableIface) GetTell() func(Seekable) int64 {
 }
 
 // OverrideCanSeek sets the callback function.
+// Checks if seeking is supported by the stream.
 func (x *SeekableIface) OverrideCanSeek(cb func(Seekable) bool) {
 	if cb == nil {
 		x.xCanSeek = 0
@@ -67,6 +70,7 @@ func (x *SeekableIface) OverrideCanSeek(cb func(Seekable) bool) {
 }
 
 // GetCanSeek gets the callback function.
+// Checks if seeking is supported by the stream.
 func (x *SeekableIface) GetCanSeek() func(Seekable) bool {
 	if x.xCanSeek == 0 {
 		return nil
@@ -79,6 +83,7 @@ func (x *SeekableIface) GetCanSeek() func(Seekable) bool {
 }
 
 // OverrideSeek sets the callback function.
+// Seeks to a location within a stream.
 func (x *SeekableIface) OverrideSeek(cb func(Seekable, int64, glib.SeekType, *Cancellable) bool) {
 	if cb == nil {
 		x.xSeek = 0
@@ -90,6 +95,7 @@ func (x *SeekableIface) OverrideSeek(cb func(Seekable, int64, glib.SeekType, *Ca
 }
 
 // GetSeek gets the callback function.
+// Seeks to a location within a stream.
 func (x *SeekableIface) GetSeek() func(Seekable, int64, glib.SeekType, *Cancellable) bool {
 	if x.xSeek == 0 {
 		return nil
@@ -102,6 +108,7 @@ func (x *SeekableIface) GetSeek() func(Seekable, int64, glib.SeekType, *Cancella
 }
 
 // OverrideCanTruncate sets the callback function.
+// Checks if truncation is supported by the stream.
 func (x *SeekableIface) OverrideCanTruncate(cb func(Seekable) bool) {
 	if cb == nil {
 		x.xCanTruncate = 0
@@ -113,6 +120,7 @@ func (x *SeekableIface) OverrideCanTruncate(cb func(Seekable) bool) {
 }
 
 // GetCanTruncate gets the callback function.
+// Checks if truncation is supported by the stream.
 func (x *SeekableIface) GetCanTruncate() func(Seekable) bool {
 	if x.xCanTruncate == 0 {
 		return nil
@@ -125,6 +133,7 @@ func (x *SeekableIface) GetCanTruncate() func(Seekable) bool {
 }
 
 // OverrideTruncateFn sets the callback function.
+// Truncates a stream.
 func (x *SeekableIface) OverrideTruncateFn(cb func(Seekable, int64, *Cancellable) bool) {
 	if cb == nil {
 		x.xTruncateFn = 0
@@ -136,6 +145,7 @@ func (x *SeekableIface) OverrideTruncateFn(cb func(Seekable, int64, *Cancellable
 }
 
 // GetTruncateFn gets the callback function.
+// Truncates a stream.
 func (x *SeekableIface) GetTruncateFn() func(Seekable, int64, *Cancellable) bool {
 	if x.xTruncateFn == 0 {
 		return nil
@@ -147,20 +157,20 @@ func (x *SeekableIface) GetTruncateFn() func(Seekable, int64, *Cancellable) bool
 	}
 }
 
-// #GSeekable is implemented by streams (implementations of
-// #GInputStream or #GOutputStream) that support seeking.
+// `GSeekable` is implemented by streams (implementations of
+// [class@Gio.InputStream] or [class@Gio.OutputStream]) that support seeking.
 //
 // Seekable streams largely fall into two categories: resizable and
 // fixed-size.
 //
-// #GSeekable on fixed-sized streams is approximately the same as POSIX
-// lseek() on a block device (for example: attempting to seek past the
-// end of the device is an error).  Fixed streams typically cannot be
+// `GSeekable` on fixed-sized streams is approximately the same as POSIX
+// [`lseek()`](man:lseek(2)) on a block device (for example: attempting to seek
+// past the end of the device is an error).  Fixed streams typically cannot be
 // truncated.
 //
-// #GSeekable on resizable streams is approximately the same as POSIX
-// lseek() on a normal file.  Seeking past the end and writing data will
-// usually cause the stream to resize by introducing zero bytes.
+// `GSeekable` on resizable streams is approximately the same as POSIX
+// [`lseek()`](man:lseek(2)) on a normal file.  Seeking past the end and writing
+// data will usually cause the stream to resize by introducing zero bytes.
 type Seekable interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

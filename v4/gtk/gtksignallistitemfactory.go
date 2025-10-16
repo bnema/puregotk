@@ -20,8 +20,7 @@ func (x *SignalListItemFactoryClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkSignalListItemFactory` is a `GtkListItemFactory` that emits signals
-// to to manage listitems.
+// Emits signals to manage listitems.
 //
 // Signals are emitted for every listitem in the same order:
 //
@@ -46,17 +45,17 @@ func (x *SignalListItemFactoryClass) GoPointer() uintptr {
 //     again to bind the listitem for use with new items. By reusing listitems,
 //     potentially costly setup can be avoided. However, it means code needs to
 //     make sure to properly clean up the listitem in step 3 so that no information
-//     from the previous use leaks into the next use.
+//     from the previous use leaks into the next one.
 //
-// 5. [signal@Gtk.SignalListItemFactory::teardown] is emitted to allow undoing
-// the effects of [signal@Gtk.SignalListItemFactory::setup]. After this signal
-// was emitted on a listitem, the listitem will be destroyed and not be used again.
+//  5. [signal@Gtk.SignalListItemFactory::teardown] is emitted to allow undoing
+//     the effects of [signal@Gtk.SignalListItemFactory::setup]. After this signal
+//     was emitted on a listitem, the listitem will be destroyed and not be used again.
 //
-// Note that during the signal emissions, changing properties on the
-// `GtkListItem`s passed will not trigger notify signals as the listitem's
-// notifications are frozen. See g_object_freeze_notify() for details.
+// Note that during the signal emissions, changing properties on the listitems
+// passed will not trigger notify signals as the listitem's notifications are
+// frozen. See [method@GObject.Object.freeze_notify()] for details.
 //
-// For tracking changes in other properties in the `GtkListItem`, the
+// For tracking changes in other properties in the listitem, the
 // ::notify signal is recommended. The signal can be connected in the
 // [signal@Gtk.SignalListItemFactory::setup] signal and removed again during
 // [signal@Gtk.SignalListItemFactory::teardown].
@@ -105,9 +104,10 @@ func (c *SignalListItemFactory) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Emitted when an object has been bound, for example when a
-// new [property@Gtk.ListItem:item] has been set on a
-// `GtkListItem` and should be bound for use.
+// Emitted when an object has been bound to an item.
+//
+// The handler for this signal must set
+// to populate the listitem with widgets.
 //
 // After this signal was emitted, the object might be shown in
 // a [class@Gtk.ListView] or other widget.
@@ -134,9 +134,12 @@ func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uint
 	return gobject.SignalConnect(x.GoPointer(), "bind", cbRefPtr)
 }
 
-// Emitted when a new listitem has been created and needs to be setup for use.
+// Emitted when a newly created listitem needs to be prepared for use.
 //
 // It is the first signal emitted for every listitem.
+//
+// The handler for this signal must call [method@Gtk.ListItem.set_child]
+// to populate the listitem with widgets.
 //
 // The [signal@Gtk.SignalListItemFactory::teardown] signal is the opposite
 // of this signal and can be used to undo everything done in this signal.
@@ -184,9 +187,11 @@ func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, 
 	return gobject.SignalConnect(x.GoPointer(), "teardown", cbRefPtr)
 }
 
-// Emitted when a object has been unbound from its item, for example when
-// a listitem was removed from use in a list widget
-// and its new [property@Gtk.ListItem:item] is about to be unset.
+// Emitted when an object has been unbound from its item.
+//
+// This happens for example when a listitem was removed from use
+// in a list widget and its [property@Gtk.ListItem:item] is about
+// to be unset.
 //
 // This signal is the opposite of the [signal@Gtk.SignalListItemFactory::bind]
 // signal and should be used to undo everything done in that signal.

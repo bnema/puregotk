@@ -115,7 +115,7 @@ var xMatchInfoFetchNamed func(uintptr, string) string
 // Retrieves the text matching the capturing parentheses named @name.
 //
 // If @name is a valid sub pattern name but it didn't match anything
-// (e.g. sub pattern "X", matching "b" against "(?P&lt;X&gt;a)?b")
+// (e.g. sub pattern `"X"`, matching `"b"` against `"(?P&lt;X&gt;a)?b"`)
 // then an empty string is returned.
 //
 // The string is fetched from the string passed to the match function,
@@ -131,7 +131,7 @@ var xMatchInfoFetchNamedPos func(uintptr, string, int, int) bool
 // Retrieves the position in bytes of the capturing parentheses named @name.
 //
 // If @name is a valid sub pattern name but it didn't match anything
-// (e.g. sub pattern "X", matching "b" against "(?P&lt;X&gt;a)?b")
+// (e.g. sub pattern `"X"`, matching `"b"` against `"(?P&lt;X&gt;a)?b"`)
 // then @start_pos and @end_pos are set to -1 and %TRUE is returned.
 func (x *MatchInfo) FetchNamedPos(NameVar string, StartPosVar int, EndPosVar int) bool {
 
@@ -296,9 +296,11 @@ func (x *MatchInfo) Unref() {
 
 }
 
-// The g_regex_*() functions implement regular
-// expression pattern matching using syntax and semantics similar to
-// Perl regular expression.
+// A `GRegex` is the "compiled" form of a regular expression pattern.
+//
+// `GRegex` implements regular expression pattern matching using syntax and
+// semantics similar to Perl regular expression. See the
+// [PCRE documentation](man:pcrepattern(3)) for the syntax definition.
 //
 // Some functions accept a @start_position argument, setting it differs
 // from just passing over a shortened string and setting %G_REGEX_MATCH_NOTBOL
@@ -332,35 +334,21 @@ func (x *MatchInfo) Unref() {
 // The behaviour of the dot, circumflex, and dollar metacharacters are
 // affected by newline characters, the default is to recognize any newline
 // character (the same characters recognized by "\R"). This can be changed
-// with %G_REGEX_NEWLINE_CR, %G_REGEX_NEWLINE_LF and %G_REGEX_NEWLINE_CRLF
-// compile options, and with %G_REGEX_MATCH_NEWLINE_ANY,
-// %G_REGEX_MATCH_NEWLINE_CR, %G_REGEX_MATCH_NEWLINE_LF and
-// %G_REGEX_MATCH_NEWLINE_CRLF match options. These settings are also
-// relevant when compiling a pattern if %G_REGEX_EXTENDED is set, and an
+// with `G_REGEX_NEWLINE_CR`, `G_REGEX_NEWLINE_LF` and `G_REGEX_NEWLINE_CRLF`
+// compile options, and with `G_REGEX_MATCH_NEWLINE_ANY`,
+// `G_REGEX_MATCH_NEWLINE_CR`, `G_REGEX_MATCH_NEWLINE_LF` and
+// `G_REGEX_MATCH_NEWLINE_CRLF` match options. These settings are also
+// relevant when compiling a pattern if `G_REGEX_EXTENDED` is set, and an
 // unescaped "#" outside a character class is encountered. This indicates
 // a comment that lasts until after the next newline.
 //
-// When setting the %G_REGEX_JAVASCRIPT_COMPAT flag, pattern syntax and pattern
-// matching is changed to be compatible with the way that regular expressions
-// work in JavaScript. More precisely, a lonely ']' character in the pattern
-// is a syntax error; the '\x' escape only allows 0 to 2 hexadecimal digits, and
-// you must use the '\u' escape sequence with 4 hex digits to specify a unicode
-// codepoint instead of '\x' or 'x{....}'. If '\x' or '\u' are not followed by
-// the specified number of hex digits, they match 'x' and 'u' literally; also
-// '\U' always matches 'U' instead of being an error in the pattern. Finally,
-// pattern matching is modified so that back references to an unset subpattern
-// group produces a match with the empty string instead of an error. See
-// pcreapi(3) for more information.
-//
-// Creating and manipulating the same #GRegex structure from different
-// threads is not a problem as #GRegex does not modify its internal
-// state between creation and destruction, on the other hand #GMatchInfo
+// Creating and manipulating the same `GRegex` structure from different
+// threads is not a problem as `GRegex` does not modify its internal
+// state between creation and destruction, on the other hand `GMatchInfo`
 // is not threadsafe.
 //
 // The regular expressions low-level functionalities are obtained through
-// the excellent
-// [PCRE](http://www.pcre.org/)
-// library written by Philip Hazel.
+// the excellent [PCRE](http://www.pcre.org/) library written by Philip Hazel.
 type Regex struct {
 	_ structs.HostLayout
 }
@@ -497,7 +485,7 @@ var xRegexMatch func(uintptr, string, RegexMatchFlags, **MatchInfo) bool
 //	  GRegex *regex;
 //	  GMatchInfo *match_info;
 //
-//	  regex = g_regex_new ("[A-Z]+", 0, 0, NULL);
+//	  regex = g_regex_new ("[A-Z]+", G_REGEX_DEFAULT, G_REGEX_MATCH_DEFAULT, NULL);
 //	  g_regex_match (regex, string, 0, &amp;match_info);
 //	  while (g_match_info_matches (match_info))
 //	    {
@@ -548,15 +536,15 @@ var xRegexMatchAllFull func(uintptr, []string, int, int, RegexMatchFlags, **Matc
 // Using the standard algorithm for regular expression matching only
 // the longest match in the @string is retrieved, it is not possible
 // to obtain all the available matches. For instance matching
-// "&lt;a&gt; &lt;b&gt; &lt;c&gt;" against the pattern "&lt;.*&gt;"
-// you get "&lt;a&gt; &lt;b&gt; &lt;c&gt;".
+// `"&lt;a&gt; &lt;b&gt; &lt;c&gt;"` against the pattern `"&lt;.*&gt;"`
+// you get `"&lt;a&gt; &lt;b&gt; &lt;c&gt;"`.
 //
 // This function uses a different algorithm (called DFA, i.e. deterministic
 // finite automaton), so it can retrieve all the possible matches, all
 // starting at the same point in the string. For instance matching
-// "&lt;a&gt; &lt;b&gt; &lt;c&gt;" against the pattern "&lt;.*&gt;;"
-// you would obtain three matches: "&lt;a&gt; &lt;b&gt; &lt;c&gt;",
-// "&lt;a&gt; &lt;b&gt;" and "&lt;a&gt;".
+// `"&lt;a&gt; &lt;b&gt; &lt;c&gt;"` against the pattern `"&lt;.*&gt;"`
+// you would obtain three matches: `"&lt;a&gt; &lt;b&gt; &lt;c&gt;"`,
+// `"&lt;a&gt; &lt;b&gt;"` and `"&lt;a&gt;"`.
 //
 // The number of matched strings is retrieved using
 // g_match_info_get_match_count(). To obtain the matched strings and
@@ -630,7 +618,7 @@ var xRegexMatchFull func(uintptr, []string, int, int, RegexMatchFlags, **MatchIn
 //	  GMatchInfo *match_info;
 //	  GError *error = NULL;
 //
-//	  regex = g_regex_new ("[A-Z]+", 0, 0, NULL);
+//	  regex = g_regex_new ("[A-Z]+", G_REGEX_DEFAULT, G_REGEX_MATCH_DEFAULT, NULL);
 //	  g_regex_match_full (regex, string, -1, 0, 0, &amp;match_info, &amp;error);
 //	  while (g_match_info_matches (match_info))
 //	    {
@@ -672,13 +660,13 @@ func (x *Regex) Ref() *Regex {
 var xRegexReplace func(uintptr, []string, int, int, string, RegexMatchFlags, **Error) string
 
 // Replaces all occurrences of the pattern in @regex with the
-// replacement text. Backreferences of the form '\number' or
-// '\g&lt;number&gt;' in the replacement text are interpolated by the
-// number-th captured subexpression of the match, '\g&lt;name&gt;' refers
-// to the captured subexpression with the given name. '\0' refers
-// to the complete match, but '\0' followed by a number is the octal
-// representation of a character. To include a literal '\' in the
-// replacement, write '\\\\'.
+// replacement text. Backreferences of the form `\number` or
+// `\g&lt;number&gt;` in the replacement text are interpolated by the
+// number-th captured subexpression of the match, `\g&lt;name&gt;` refers
+// to the captured subexpression with the given name. `\0` refers
+// to the complete match, but `\0` followed by a number is the octal
+// representation of a character. To include a literal `\` in the
+// replacement, write `\\\\`.
 //
 // There are also escapes that changes the case of the following text:
 //
@@ -751,7 +739,7 @@ var xRegexReplaceEval func(uintptr, []string, int, int, RegexMatchFlags, uintptr
 // g_hash_table_insert (h, "3", "THREE");
 // g_hash_table_insert (h, "4", "FOUR");
 //
-// reg = g_regex_new ("1|2|3|4", 0, 0, NULL);
+// reg = g_regex_new ("1|2|3|4", G_REGEX_DEFAULT, G_REGEX_MATCH_DEFAULT, NULL);
 // res = g_regex_replace_eval (reg, text, -1, 0, 0, eval_cb, h, NULL);
 // g_hash_table_destroy (h);
 //
@@ -863,6 +851,8 @@ type RegexCompileFlags int
 
 const (
 
+	// No special options set. Since: 2.74
+	GRegexDefaultValue RegexCompileFlags = 0
 	// Letters in the pattern match both upper- and
 	//     lowercase letters. This option can be changed within a pattern
 	//     by a "(?i)" option setting.
@@ -915,9 +905,13 @@ const (
 	//     parentheses can still be used for capturing (and they acquire numbers
 	//     in the usual way).
 	GRegexNoAutoCaptureValue RegexCompileFlags = 4096
-	// Optimize the regular expression. If the pattern will
-	//     be used many times, then it may be worth the effort to optimize it
-	//     to improve the speed of matches.
+	// Since 2.74 and the port to pcre2, requests JIT
+	//     compilation, which, if the just-in-time compiler is available, further
+	//     processes a compiled pattern into machine code that executes much
+	//     faster. However, it comes at the cost of extra processing before the
+	//     match is performed, so it is most beneficial to use this when the same
+	//     compiled pattern is used for matching many times. Before 2.74 this
+	//     option used the built-in non-JIT optimizations in pcre1.
 	GRegexOptimizeValue RegexCompileFlags = 8192
 	// Limits an unanchored pattern to match before (or at) the
 	//     first newline. Since: 2.34
@@ -948,7 +942,8 @@ const (
 	//    characters '\r', '\n' and '\r\n'. Since: 2.34
 	GRegexBsrAnycrlfValue RegexCompileFlags = 8388608
 	// Changes behaviour so that it is compatible with
-	//     JavaScript rather than PCRE. Since: 2.34
+	//     JavaScript rather than PCRE. Since GLib 2.74 this is no longer supported,
+	//     as libpcre2 does not support it. Since: 2.34 Deprecated: 2.74
 	GRegexJavascriptCompatValue RegexCompileFlags = 33554432
 )
 
@@ -957,6 +952,8 @@ type RegexMatchFlags int
 
 const (
 
+	// No special options set. Since: 2.74
+	GRegexMatchDefaultValue RegexMatchFlags = 0
 	// The pattern is forced to be "anchored", that is,
 	//     it is constrained to match only at the first matching point in the
 	//     string that is being searched. This effect can also be achieved by
@@ -1232,7 +1229,7 @@ func RegexEscapeNul(StringVar string, LengthVar int) string {
 	return cret
 }
 
-var xRegexEscapeString func([]string, int) string
+var xRegexEscapeString func(string, int) string
 
 // Escapes the special characters used for regular expressions
 // in @string, for instance "a.b*c" becomes "a\.b\*c". This
@@ -1241,7 +1238,7 @@ var xRegexEscapeString func([]string, int) string
 // @string can contain nul characters that are replaced with "\0",
 // in this case remember to specify the correct length of @string
 // in @length.
-func RegexEscapeString(StringVar []string, LengthVar int) string {
+func RegexEscapeString(StringVar string, LengthVar int) string {
 
 	cret := xRegexEscapeString(StringVar, LengthVar)
 	return cret
@@ -1302,7 +1299,7 @@ func RegexSplitSimple(PatternVar string, StringVar string, CompileOptionsVar Reg
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

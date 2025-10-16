@@ -11,14 +11,19 @@ import (
 )
 
 // Specifies the type of the function passed to
-// g_hash_table_foreach_remove(). It is called with each key/value
-// pair, together with the @user_data parameter passed to
-// g_hash_table_foreach_remove(). It should return %TRUE if the
-// key/value pair should be removed from the #GHashTable.
+// [func@GLib.HashTable.find], [func@GLib.HashTable.foreach_remove], and
+// [func@GLib.HashTable.foreach_steal].
+//
+// The function is called with each key/value pair, together with
+// the @user_data parameter passed to the calling function.
+//
+// The function should return true if the key/value pair should be
+// selected, meaning it has been found or it should be removed from the
+// [struct@GLib.HashTable], depending on the calling function.
 type HRFunc func(uintptr, uintptr, uintptr) bool
 
 // The #GHashTable struct is an opaque data structure to represent a
-// [Hash Table][glib-Hash-Tables]. It should only be accessed via the
+// [Hash Table](data-structures.html#hash-tables). It should only be accessed via the
 // following functions.
 type HashTable struct {
 	_ structs.HostLayout
@@ -264,6 +269,110 @@ func HashTableDestroy(HashTableVar *HashTable) {
 
 }
 
+var xHashTableFind func(*HashTable, uintptr, uintptr) uintptr
+
+// Calls the given function for key/value pairs in the #GHashTable
+// until @predicate returns %TRUE. The function is passed the key
+// and value of each pair, and the given @user_data parameter. The
+// hash table may not be modified while iterating over it (you can't
+// add/remove items).
+//
+// Note, that hash tables are really only optimized for forward
+// lookups, i.e. g_hash_table_lookup(). So code that frequently issues
+// g_hash_table_find() or g_hash_table_foreach() (e.g. in the order of
+// once per every entry in a hash table) should probably be reworked
+// to use additional or different data structures for reverse lookups
+// (keep in mind that an O(n) find/foreach operation issued for all n
+// values in a hash table ends up needing O(n*n) operations).
+func HashTableFind(HashTableVar *HashTable, PredicateVar *HRFunc, UserDataVar uintptr) uintptr {
+
+	cret := xHashTableFind(HashTableVar, NewCallback(PredicateVar), UserDataVar)
+	return cret
+}
+
+var xHashTableForeach func(*HashTable, uintptr, uintptr)
+
+// Calls the given function for each of the key/value pairs in the
+// #GHashTable.  The function is passed the key and value of each
+// pair, and the given @user_data parameter.  The hash table may not
+// be modified while iterating over it (you can't add/remove
+// items). To remove all items matching a predicate, use
+// g_hash_table_foreach_remove().
+//
+// The order in which g_hash_table_foreach() iterates over the keys/values in
+// the hash table is not defined.
+//
+// See g_hash_table_find() for performance caveats for linear
+// order searches in contrast to g_hash_table_lookup().
+func HashTableForeach(HashTableVar *HashTable, FuncVar *HFunc, UserDataVar uintptr) {
+
+	xHashTableForeach(HashTableVar, NewCallback(FuncVar), UserDataVar)
+
+}
+
+var xHashTableForeachRemove func(*HashTable, uintptr, uintptr) uint
+
+// Calls the given function for each key/value pair in the
+// #GHashTable. If the function returns %TRUE, then the key/value
+// pair is removed from the #GHashTable. If you supplied key or
+// value destroy functions when creating the #GHashTable, they are
+// used to free the memory allocated for the removed keys and values.
+//
+// See #GHashTableIter for an alternative way to loop over the
+// key/value pairs in the hash table.
+func HashTableForeachRemove(HashTableVar *HashTable, FuncVar *HRFunc, UserDataVar uintptr) uint {
+
+	cret := xHashTableForeachRemove(HashTableVar, NewCallback(FuncVar), UserDataVar)
+	return cret
+}
+
+var xHashTableForeachSteal func(*HashTable, uintptr, uintptr) uint
+
+// Calls the given function for each key/value pair in the
+// #GHashTable. If the function returns %TRUE, then the key/value
+// pair is removed from the #GHashTable, but no key or value
+// destroy functions are called.
+//
+// See #GHashTableIter for an alternative way to loop over the
+// key/value pairs in the hash table.
+func HashTableForeachSteal(HashTableVar *HashTable, FuncVar *HRFunc, UserDataVar uintptr) uint {
+
+	cret := xHashTableForeachSteal(HashTableVar, NewCallback(FuncVar), UserDataVar)
+	return cret
+}
+
+var xHashTableGetKeysAsPtrArray func(*HashTable) uintptr
+
+// Retrieves every key inside @hash_table, as a #GPtrArray.
+// The returned data is valid until changes to the hash release those keys.
+//
+// This iterates over every entry in the hash table to build its return value.
+// To iterate over the entries in a #GHashTable more efficiently, use a
+// #GHashTableIter.
+//
+// You should always unref the returned array with g_ptr_array_unref().
+func HashTableGetKeysAsPtrArray(HashTableVar *HashTable) uintptr {
+
+	cret := xHashTableGetKeysAsPtrArray(HashTableVar)
+	return cret
+}
+
+var xHashTableGetValuesAsPtrArray func(*HashTable) uintptr
+
+// Retrieves every value inside @hash_table, as a #GPtrArray.
+// The returned data is valid until changes to the hash release those values.
+//
+// This iterates over every entry in the hash table to build its return value.
+// To iterate over the entries in a #GHashTable more efficiently, use a
+// #GHashTableIter.
+//
+// You should always unref the returned array with g_ptr_array_unref().
+func HashTableGetValuesAsPtrArray(HashTableVar *HashTable) uintptr {
+
+	cret := xHashTableGetValuesAsPtrArray(HashTableVar)
+	return cret
+}
+
 var xHashTableInsert func(*HashTable, uintptr, uintptr) bool
 
 // Inserts a new key and value into a #GHashTable.
@@ -325,6 +434,16 @@ var xHashTableNewSimilar func(*HashTable) *HashTable
 func HashTableNewSimilar(OtherHashTableVar *HashTable) *HashTable {
 
 	cret := xHashTableNewSimilar(OtherHashTableVar)
+	return cret
+}
+
+var xHashTableRef func(*HashTable) *HashTable
+
+// Atomically increments the reference count of @hash_table by one.
+// This function is MT-safe and may be called from any thread.
+func HashTableRef(HashTableVar *HashTable) *HashTable {
+
+	cret := xHashTableRef(HashTableVar)
 	return cret
 }
 
@@ -404,6 +523,30 @@ func HashTableStealAll(HashTableVar *HashTable) {
 
 }
 
+var xHashTableStealAllKeys func(*HashTable) uintptr
+
+// Removes all keys and their associated values from a #GHashTable
+// without calling the key destroy functions, returning the keys
+// as a #GPtrArray with the free func set to the @hash_table key
+// destroy function.
+func HashTableStealAllKeys(HashTableVar *HashTable) uintptr {
+
+	cret := xHashTableStealAllKeys(HashTableVar)
+	return cret
+}
+
+var xHashTableStealAllValues func(*HashTable) uintptr
+
+// Removes all keys and their associated values from a #GHashTable
+// without calling the value destroy functions, returning the values
+// as a #GPtrArray with the free func set to the @hash_table value
+// destroy function.
+func HashTableStealAllValues(HashTableVar *HashTable) uintptr {
+
+	cret := xHashTableStealAllValues(HashTableVar)
+	return cret
+}
+
 var xHashTableStealExtended func(*HashTable, uintptr, uintptr, uintptr) bool
 
 // Looks up a key in the #GHashTable, stealing the original key and the
@@ -412,10 +555,17 @@ var xHashTableStealExtended func(*HashTable, uintptr, uintptr, uintptr) bool
 //
 // If found, the stolen key and value are removed from the hash table without
 // calling the key and value destroy functions, and ownership is transferred to
-// the caller of this method; as with g_hash_table_steal().
+// the caller of this method, as with g_hash_table_steal(). That is the case
+// regardless whether @stolen_key or @stolen_value output parameters are
+// requested.
 //
 // You can pass %NULL for @lookup_key, provided the hash and equal functions
 // of @hash_table are %NULL-safe.
+//
+// The dictionary implementation optimizes for having all values identical to
+// their keys, for example by using g_hash_table_add(). Before 2.82, when
+// stealing both the key and the value from such a dictionary, the value was
+// %NULL. Since 2.82, the returned value and key will be the same.
 func HashTableStealExtended(HashTableVar *HashTable, LookupKeyVar uintptr, StolenKeyVar uintptr, StolenValueVar uintptr) bool {
 
 	cret := xHashTableStealExtended(HashTableVar, LookupKeyVar, StolenKeyVar, StolenValueVar)
@@ -532,7 +682,7 @@ func StrHash(VVar uintptr) uint {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -545,16 +695,25 @@ func init() {
 	core.PuregoSafeRegister(&xHashTableAdd, lib, "g_hash_table_add")
 	core.PuregoSafeRegister(&xHashTableContains, lib, "g_hash_table_contains")
 	core.PuregoSafeRegister(&xHashTableDestroy, lib, "g_hash_table_destroy")
+	core.PuregoSafeRegister(&xHashTableFind, lib, "g_hash_table_find")
+	core.PuregoSafeRegister(&xHashTableForeach, lib, "g_hash_table_foreach")
+	core.PuregoSafeRegister(&xHashTableForeachRemove, lib, "g_hash_table_foreach_remove")
+	core.PuregoSafeRegister(&xHashTableForeachSteal, lib, "g_hash_table_foreach_steal")
+	core.PuregoSafeRegister(&xHashTableGetKeysAsPtrArray, lib, "g_hash_table_get_keys_as_ptr_array")
+	core.PuregoSafeRegister(&xHashTableGetValuesAsPtrArray, lib, "g_hash_table_get_values_as_ptr_array")
 	core.PuregoSafeRegister(&xHashTableInsert, lib, "g_hash_table_insert")
 	core.PuregoSafeRegister(&xHashTableLookup, lib, "g_hash_table_lookup")
 	core.PuregoSafeRegister(&xHashTableLookupExtended, lib, "g_hash_table_lookup_extended")
 	core.PuregoSafeRegister(&xHashTableNewSimilar, lib, "g_hash_table_new_similar")
+	core.PuregoSafeRegister(&xHashTableRef, lib, "g_hash_table_ref")
 	core.PuregoSafeRegister(&xHashTableRemove, lib, "g_hash_table_remove")
 	core.PuregoSafeRegister(&xHashTableRemoveAll, lib, "g_hash_table_remove_all")
 	core.PuregoSafeRegister(&xHashTableReplace, lib, "g_hash_table_replace")
 	core.PuregoSafeRegister(&xHashTableSize, lib, "g_hash_table_size")
 	core.PuregoSafeRegister(&xHashTableSteal, lib, "g_hash_table_steal")
 	core.PuregoSafeRegister(&xHashTableStealAll, lib, "g_hash_table_steal_all")
+	core.PuregoSafeRegister(&xHashTableStealAllKeys, lib, "g_hash_table_steal_all_keys")
+	core.PuregoSafeRegister(&xHashTableStealAllValues, lib, "g_hash_table_steal_all_values")
 	core.PuregoSafeRegister(&xHashTableStealExtended, lib, "g_hash_table_steal_extended")
 	core.PuregoSafeRegister(&xHashTableUnref, lib, "g_hash_table_unref")
 	core.PuregoSafeRegister(&xInt64Equal, lib, "g_int64_equal")

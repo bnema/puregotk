@@ -20,11 +20,14 @@ func (x *BuilderListItemFactoryClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkBuilderListItemFactory` is a `GtkListItemFactory` that creates
-// widgets by instantiating `GtkBuilder` UI templates.
+// Creates widgets by instantiating `GtkBuilder` UI templates.
 //
-// The templates must be extending `GtkListItem`, and typically use
-// `GtkExpression`s to obtain data from the items in the model.
+// The templates must extend the class that the parent widget expects.
+// For example, a factory provided to [property@Gtk.ListView:factory] must have
+// a template that extends [class@Gtk.ListItem].
+//
+// Templates typically use [class@Gtk.Expression] to obtain data from the items
+// in the model.
 //
 // Example:
 // ```xml
@@ -45,6 +48,11 @@ func (x *BuilderListItemFactoryClass) GoPointer() uintptr {
 //	&lt;/interface&gt;
 //
 // ```
+//
+// A common approach is to embed such templates as CDATA marked sections into
+// a surrounding UI file. Note that if you use this approach, extracting
+// translatable strings with xgettext will not work for strings inside the
+// marked section.
 type BuilderListItemFactory struct {
 	ListItemFactory
 }

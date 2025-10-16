@@ -256,7 +256,7 @@ func (x *EditableInterface) GetGetDelegate() func(Editable) *EditableBase {
 	}
 }
 
-// `GtkEditable` is an interface for text editing widgets.
+// Interface for single-line text editing widgets.
 //
 // Typical examples of editable widgets are [class@Gtk.Entry] and
 // [class@Gtk.SpinButton]. It contains functions for generically manipulating
@@ -401,6 +401,7 @@ func (x *EditableInterface) GetGetDelegate() func(Editable) *EditableBase {
 type Editable interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
+	DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool
 	DeleteSelection()
 	DeleteText(StartPosVar int, EndPosVar int)
 	FinishDelegate()
@@ -445,6 +446,48 @@ func (x *EditableBase) GoPointer() uintptr {
 
 func (x *EditableBase) SetGoPointer(ptr uintptr) {
 	x.Ptr = ptr
+}
+
+// Retrieves the accessible platform state from the editable delegate.
+//
+// This is an helper function to retrieve the accessible state for
+// `GtkEditable` interface implementations using a delegate pattern.
+//
+// You should call this function in your editable widget implementation
+// of the [vfunc@Gtk.Accessible.get_platform_state] virtual function, for
+// instance:
+//
+// ```c
+// static void
+// accessible_interface_init (GtkAccessibleInterface *iface)
+//
+//	{
+//	  iface-&gt;get_platform_state = your_editable_get_accessible_platform_state;
+//	}
+//
+// static gboolean
+// your_editable_get_accessible_platform_state (GtkAccessible *accessible,
+//
+//	GtkAccessiblePlatformState state)
+//
+//	{
+//	  return gtk_editable_delegate_get_accessible_platform_state (GTK_EDITABLE (accessible), state);
+//	}
+//
+// ```
+//
+// Note that the widget which is the delegate *must* be a direct child of
+// this widget, otherwise your implementation of [vfunc@Gtk.Accessible.get_platform_state]
+// might not even be called, as the platform change will originate from
+// the parent of the delegate, and, as a result, will not work properly.
+//
+// So, if you can't ensure the direct child condition, you should give the
+// delegate the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role, or you can
+// change your tree to allow this function to work.
+func (x *EditableBase) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
+	return cret
 }
 
 // Deletes the currently selected text of the editable.
@@ -689,6 +732,7 @@ func (x *EditableBase) SetWidthChars(NCharsVar int) {
 
 }
 
+var XGtkEditableDelegateGetAccessiblePlatformState func(uintptr, AccessiblePlatformState) bool
 var XGtkEditableDeleteSelection func(uintptr)
 var XGtkEditableDeleteText func(uintptr, int, int)
 var XGtkEditableFinishDelegate func(uintptr)
@@ -812,6 +856,7 @@ func init() {
 
 	core.PuregoSafeRegister(&xEditableGLibType, lib, "gtk_editable_get_type")
 
+	core.PuregoSafeRegister(&XGtkEditableDelegateGetAccessiblePlatformState, lib, "gtk_editable_delegate_get_accessible_platform_state")
 	core.PuregoSafeRegister(&XGtkEditableDeleteSelection, lib, "gtk_editable_delete_selection")
 	core.PuregoSafeRegister(&XGtkEditableDeleteText, lib, "gtk_editable_delete_text")
 	core.PuregoSafeRegister(&XGtkEditableFinishDelegate, lib, "gtk_editable_finish_delegate")

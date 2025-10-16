@@ -155,14 +155,14 @@ func (x *SimpleProxyResolverPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GSimpleProxyResolver is a simple #GProxyResolver implementation
+// `GSimpleProxyResolver` is a simple [iface@Gio.ProxyResolver] implementation
 // that handles a single default proxy, multiple URI-scheme-specific
 // proxies, and a list of hosts that proxies should not be used for.
 //
-// #GSimpleProxyResolver is never the default proxy resolver, but it
+// `GSimpleProxyResolver` is never the default proxy resolver, but it
 // can be used as the base class for another proxy resolver
 // implementation, or it can be created and used manually, such as
-// with g_socket_client_set_proxy_resolver().
+// with [method@Gio.SocketClient.set_proxy_resolver].
 type SimpleProxyResolver struct {
 	gobject.Object
 }
@@ -244,8 +244,8 @@ func (x *SimpleProxyResolver) IsSupported() bool {
 
 // Looks into the system proxy configuration to determine what proxy,
 // if any, to use to connect to @uri. The returned proxy URIs are of
-// the form `&lt;protocol&gt;://[user[:password]@]host:port` or
-// `direct://`, where &lt;protocol&gt; could be http, rtsp, socks
+// the form `&lt;protocol&gt;://[user[:password]@]host[:port]` or
+// `direct://`, where `&lt;protocol&gt;` could be http, rtsp, socks
 // or other proxying protocol.
 //
 // If you don't know what network protocol is being used on the

@@ -23,8 +23,8 @@ func (x *DtlsClientConnectionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GDtlsClientConnection is the client-side subclass of
-// #GDtlsConnection, representing a client-side DTLS connection.
+// `GDtlsClientConnection` is the client-side subclass of
+// [iface@Gio.DtlsConnection], representing a client-side DTLS connection.
 type DtlsClientConnection interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
@@ -85,6 +85,10 @@ func (x *DtlsClientConnectionBase) GetServerIdentity() *SocketConnectableBase {
 }
 
 // Gets @conn's validation flags
+//
+// This function does not work as originally designed and is impossible
+// to use correctly. See #GDtlsClientConnection:validation-flags for more
+// information.
 func (x *DtlsClientConnectionBase) GetValidationFlags() TlsCertificateFlags {
 
 	cret := XGDtlsClientConnectionGetValidationFlags(x.GoPointer())
@@ -104,6 +108,10 @@ func (x *DtlsClientConnectionBase) SetServerIdentity(IdentityVar SocketConnectab
 // Sets @conn's validation flags, to override the default set of
 // checks performed when validating a server certificate. By default,
 // %G_TLS_CERTIFICATE_VALIDATE_ALL is used.
+//
+// This function does not work as originally designed and is impossible
+// to use correctly. See #GDtlsClientConnection:validation-flags for more
+// information.
 func (x *DtlsClientConnectionBase) SetValidationFlags(FlagsVar TlsCertificateFlags) {
 
 	XGDtlsClientConnectionSetValidationFlags(x.GoPointer(), FlagsVar)

@@ -7,7 +7,7 @@ const (
 	// The micro component of the version of Pango available at compile-time.
 	VERSION_MICRO int = 3
 	// The minor component of the version of Pango available at compile-time.
-	VERSION_MINOR int = 50
+	VERSION_MINOR int = 56
 	// A string literal containing the version of Pango available at compile-time.
-	VERSION_STRING string = "1.50.3"
+	VERSION_STRING string = "1.56.3"
 )

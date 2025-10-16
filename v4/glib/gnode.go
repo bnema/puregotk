@@ -20,7 +20,7 @@ type NodeForeachFunc func(*Node, uintptr)
 // %TRUE, then the traversal is stopped.
 type NodeTraverseFunc func(*Node, uintptr) bool
 
-// The #GNode struct represents one node in a [n-ary tree][glib-N-ary-Trees].
+// The #GNode struct represents one node in a [n-ary tree](data-structures.html#n-ary-trees).
 type Node struct {
 	_ structs.HostLayout
 
@@ -313,21 +313,43 @@ const (
 )
 
 // Specifies the type of traversal performed by g_tree_traverse(),
-// g_node_traverse() and g_node_find(). The different orders are
-// illustrated here:
+// g_node_traverse() and g_node_find().
+//
+// The different orders are illustrated here:
+//
 //   - In order: A, B, C, D, E, F, G, H, I
-//     ![](Sorted_binary_tree_inorder.svg)
+//     &lt;picture&gt;
+//     &lt;source srcset="Sorted_binary_tree_inorder-dark.svg"
+//     media="(prefers-color-scheme: dark)"&gt;
+//     &lt;img src="Sorted_binary_tree_inorder.svg"
+//     alt="Sorted binary tree, in-order traversal"&gt;
+//     &lt;/picture&gt;
 //   - Pre order: F, B, A, D, C, E, G, I, H
-//     ![](Sorted_binary_tree_preorder.svg)
+//     &lt;picture&gt;
+//     &lt;source srcset="Sorted_binary_tree_preorder-dark.svg"
+//     media="(prefers-color-scheme: dark)"&gt;
+//     &lt;img src="Sorted_binary_tree_preorder.svg"
+//     alt="Sorted binary tree, pre-order traversal"&gt;
+//     &lt;/picture&gt;
 //   - Post order: A, C, E, D, B, H, I, G, F
-//     ![](Sorted_binary_tree_postorder.svg)
+//     &lt;picture&gt;
+//     &lt;source srcset="Sorted_binary_tree_postorder-dark.svg"
+//     media="(prefers-color-scheme: dark)"&gt;
+//     &lt;img src="Sorted_binary_tree_postorder.svg"
+//     alt="Sorted binary tree, post-order traversal"&gt;
+//     &lt;/picture&gt;
 //   - Level order: F, B, G, A, D, I, C, E, H
-//     ![](Sorted_binary_tree_breadth-first_traversal.svg)
+//     &lt;picture&gt;
+//     &lt;source srcset="Sorted_binary_tree_breadth-first_traversal-dark.svg"
+//     media="(prefers-color-scheme: dark)"&gt;
+//     &lt;img src="Sorted_binary_tree_breadth-first_traversal.svg"
+//     alt="Sorted binary tree, breadth-first level order traversal"&gt;
+//     &lt;/picture&gt;
 type TraverseType int
 
 const (
 
-	// vists a node's left child first, then the node itself,
+	// visits a node's left child first, then the node itself,
 	//              then its right child. This is the one to use if you
 	//              want the output sorted according to the compare
 	//              function.
@@ -337,9 +359,9 @@ const (
 	// visits the node's children, then the node itself.
 	GPostOrderValue TraverseType = 2
 	// is not implemented for
-	//              [balanced binary trees][glib-Balanced-Binary-Trees].
-	//              For [n-ary trees][glib-N-ary-Trees], it
-	//              vists the root node first, then its children, then
+	//              [balanced binary trees](data-structures.html#binary-trees).
+	//              For [n-ary trees](data-structures.html#n-ary-trees), it
+	//              visits the root node first, then its children, then
 	//              its grandchildren, and so on. Note that this is less
 	//              efficient than the other orders.
 	GLevelOrderValue TraverseType = 3
@@ -347,7 +369,7 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

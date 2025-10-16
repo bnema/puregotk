@@ -27,6 +27,7 @@ func (x *RemoteActionGroupInterface) GoPointer() uintptr {
 }
 
 // OverrideActivateActionFull sets the callback function.
+// the virtual function pointer for g_remote_action_group_activate_action_full()
 func (x *RemoteActionGroupInterface) OverrideActivateActionFull(cb func(RemoteActionGroup, string, *glib.Variant, *glib.Variant)) {
 	if cb == nil {
 		x.xActivateActionFull = 0
@@ -38,6 +39,7 @@ func (x *RemoteActionGroupInterface) OverrideActivateActionFull(cb func(RemoteAc
 }
 
 // GetActivateActionFull gets the callback function.
+// the virtual function pointer for g_remote_action_group_activate_action_full()
 func (x *RemoteActionGroupInterface) GetActivateActionFull() func(RemoteActionGroup, string, *glib.Variant, *glib.Variant) {
 	if x.xActivateActionFull == 0 {
 		return nil
@@ -50,6 +52,7 @@ func (x *RemoteActionGroupInterface) GetActivateActionFull() func(RemoteActionGr
 }
 
 // OverrideChangeActionStateFull sets the callback function.
+// the virtual function pointer for g_remote_action_group_change_action_state_full()
 func (x *RemoteActionGroupInterface) OverrideChangeActionStateFull(cb func(RemoteActionGroup, string, *glib.Variant, *glib.Variant)) {
 	if cb == nil {
 		x.xChangeActionStateFull = 0
@@ -61,6 +64,7 @@ func (x *RemoteActionGroupInterface) OverrideChangeActionStateFull(cb func(Remot
 }
 
 // GetChangeActionStateFull gets the callback function.
+// the virtual function pointer for g_remote_action_group_change_action_state_full()
 func (x *RemoteActionGroupInterface) GetChangeActionStateFull() func(RemoteActionGroup, string, *glib.Variant, *glib.Variant) {
 	if x.xChangeActionStateFull == 0 {
 		return nil
@@ -72,25 +76,25 @@ func (x *RemoteActionGroupInterface) GetChangeActionStateFull() func(RemoteActio
 	}
 }
 
-// The GRemoteActionGroup interface is implemented by #GActionGroup
+// The `GRemoteActionGroup` interface is implemented by [iface@Gio.ActionGroup]
 // instances that either transmit action invocations to other processes
 // or receive action invocations in the local process from other
 // processes.
 //
 // The interface has `_full` variants of the two
-// methods on #GActionGroup used to activate actions:
-// g_action_group_activate_action() and
-// g_action_group_change_action_state(). These variants allow a
-// "platform data" #GVariant to be specified: a dictionary providing
+// methods on [iface@Gio.ActionGroup] used to activate actions:
+// [method@Gio.ActionGroup.activate_action] and
+// [method@Gio.ActionGroup.change_action_state]. These variants allow a
+// ‘platform data’ [struct@GLib.Variant] to be specified: a dictionary providing
 // context for the action invocation (for example: timestamps, startup
 // notification IDs, etc).
 //
-// #GDBusActionGroup implements #GRemoteActionGroup.  This provides a
+// [class@Gio.DBusActionGroup] implements `GRemoteActionGroup`.  This provides a
 // mechanism to send platform data for action invocations over D-Bus.
 //
-// Additionally, g_dbus_connection_export_action_group() will check if
-// the exported #GActionGroup implements #GRemoteActionGroup and use the
-// `_full` variants of the calls if available.  This
+// Additionally, [method@Gio.DBusConnection.export_action_group] will check if
+// the exported [iface@Gio.ActionGroup] implements `GRemoteActionGroup` and use
+// the `_full` variants of the calls if available.  This
 // provides a mechanism by which to receive platform data for action
 // invocations that arrive by way of D-Bus.
 type RemoteActionGroup interface {

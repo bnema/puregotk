@@ -20,9 +20,9 @@ func (x *EmblemClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GEmblem is an implementation of #GIcon that supports
+// `GEmblem` is an implementation of [iface@Gio.Icon] that supports
 // having an emblem, which is an icon with additional properties.
-// It can than be added to a #GEmblemedIcon.
+// It can than be added to a [class@Gio.EmblemedIcon].
 //
 // Currently, only metainformation about the emblem's origin is
 // supported. More may be added in the future.
@@ -115,6 +115,13 @@ func (c *Emblem) SetGoPointer(ptr uintptr) {
 func (x *Emblem) Equal(Icon2Var Icon) bool {
 
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+	return cret
+}
+
+// Gets a hash for an icon.
+func (x *Emblem) Hash() uint {
+
+	cret := XGIconHash(x.GoPointer())
 	return cret
 }
 

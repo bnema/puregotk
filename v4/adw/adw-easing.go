@@ -98,6 +98,23 @@ const (
 	//   with bounce on both ends, combining `ADW_EASE_IN_BOUNCE` and
 	//   `ADW_EASE_OUT_BOUNCE`.
 	EaseInOutBounceValue Easing = 30
+	// Cubic bezier tweening, with control points in (0.25, 0.1) and (0.25, 1.0).
+	//
+	// Increases in velocity towards the middle of the animation, slowing back down
+	// at the end.
+	EaseValue Easing = 31
+	// Cubic bezier tweening, with control points in (0.42, 0.0) and (1.0, 1.0).
+	//
+	// Starts off slowly, with the speed of the animation increasing until complete.
+	EaseInValue Easing = 32
+	// Cubic bezier tweening, with control points in (0.0, 0.0) and (0.58, 1.0).
+	//
+	// Starts quickly, slowing down the animation until complete.
+	EaseOutValue Easing = 33
+	// Cubic bezier tweening, with control points in (0.42, 0.0) and (0.58, 1.0).
+	//
+	// Starts off slowly, speeds up in the middle, and then slows down again.
+	EaseInOutValue Easing = 34
 )
 
 var xEasingEase func(Easing, float64) float64

@@ -380,15 +380,17 @@ func (x *InputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GInputStream has functions to read from a stream (g_input_stream_read()),
-// to close a stream (g_input_stream_close()) and to skip some content
-// (g_input_stream_skip()).
+// `GInputStream` is a base class for implementing streaming input.
+//
+// It has functions to read from a stream ([method@Gio.InputStream.read]),
+// to close a stream ([method@Gio.InputStream.close]) and to skip some content
+// ([method@Gio.InputStream.skip]).
 //
 // To copy the content of an input stream to an output stream without
-// manually handling the reads and writes, use g_output_stream_splice().
+// manually handling the reads and writes, use [method@Gio.OutputStream.splice].
 //
-// See the documentation for #GIOStream for details of thread safety of
-// streaming APIs.
+// See the documentation for [class@Gio.IOStream] for details of thread safety
+// of streaming APIs.
 //
 // All of these functions have async variants too.
 type InputStream struct {
@@ -573,9 +575,9 @@ var xInputStreamReadAllAsync func(uintptr, []byte, uint, int, uintptr, uintptr, 
 // Request an asynchronous read of @count bytes from the stream into the
 // buffer starting at @buffer.
 //
-// This is the asynchronous equivalent of g_input_stream_read_all().
+// This is the asynchronous equivalent of [method@InputStream.read_all].
 //
-// Call g_input_stream_read_all_finish() to collect the result.
+// Call [method@InputStream.read_all_finish] to collect the result.
 //
 // Any outstanding I/O request with higher priority (lower numerical
 // value) will be executed before an outstanding request with lower
@@ -589,7 +591,7 @@ func (x *InputStream) ReadAllAsync(BufferVar []byte, CountVar uint, IoPriorityVa
 var xInputStreamReadAllFinish func(uintptr, uintptr, uint, **glib.Error) bool
 
 // Finishes an asynchronous stream read operation started with
-// g_input_stream_read_all_async().
+// [method@InputStream.read_all_async].
 //
 // As a special exception to the normal conventions for functions that
 // use #GError, if this function returns %FALSE (and sets @error) then

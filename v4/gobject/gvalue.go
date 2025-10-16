@@ -666,6 +666,23 @@ func (x *Value) SetVariant(VariantVar *glib.Variant) {
 
 }
 
+var xValueStealString func(uintptr) string
+
+// Steal ownership on contents of a %G_TYPE_STRING #GValue.
+// As a result of this operation the value's contents will be reset to %NULL.
+//
+// The purpose of this call is to provide a way to avoid an extra copy
+// when some object have been serialized into string through #GValue API.
+//
+// NOTE: for safety and compatibility purposes, if #GValue contains
+// static string, or an interned one, this function will return a copy
+// of the string. Otherwise the transfer notation would be ambiguous.
+func (x *Value) StealString() string {
+
+	cret := xValueStealString(x.GoPointer())
+	return cret
+}
+
 var xValueTakeBoxed func(uintptr, uintptr)
 
 // Sets the contents of a %G_TYPE_BOXED derived #GValue to @v_boxed
@@ -878,6 +895,7 @@ func init() {
 	core.PuregoSafeRegister(&xValueSetUint64, lib, "g_value_set_uint64")
 	core.PuregoSafeRegister(&xValueSetUlong, lib, "g_value_set_ulong")
 	core.PuregoSafeRegister(&xValueSetVariant, lib, "g_value_set_variant")
+	core.PuregoSafeRegister(&xValueStealString, lib, "g_value_steal_string")
 	core.PuregoSafeRegister(&xValueTakeBoxed, lib, "g_value_take_boxed")
 	core.PuregoSafeRegister(&xValueTakeObject, lib, "g_value_take_object")
 	core.PuregoSafeRegister(&xValueTakeParam, lib, "g_value_take_param")

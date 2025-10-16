@@ -7,22 +7,22 @@ import (
 )
 
 // A typedef alias for gchar**. This is mostly useful when used together with
-// g_auto().
+// `g_auto()`.
 type Strv = string
 
 const (
-	// A good size for a buffer to be passed into g_ascii_dtostr().
+	// A good size for a buffer to be passed into [func@GLib.ascii_dtostr].
 	// It is guaranteed to be enough for all output of that function
 	// on systems with 64bit IEEE-compatible doubles.
 	//
 	// The typical usage would be something like:
-	// |[&lt;!-- language="C" --&gt;
-	//   char buf[G_ASCII_DTOSTR_BUF_SIZE];
+	// ```C
+	// char buf[G_ASCII_DTOSTR_BUF_SIZE];
 	//
-	//   fprintf (out, "value=%s\n", g_ascii_dtostr (buf, sizeof (buf), value));
-	// ]|
+	// fprintf (out, "value=%s\n", g_ascii_dtostr (buf, sizeof (buf), value));
+	// ```
 	ASCII_DTOSTR_BUF_SIZE int = 39
-	// The standard delimiters, used in g_strdelimit().
+	// The standard delimiters, used in [func@GLib.strdelimit].
 	STR_DELIMITERS string = "_-|> <."
 )
 
@@ -57,16 +57,19 @@ type NumberParserError int
 
 const (
 
-	// String was not a valid number.
+	// string was not a valid number
 	GNumberParserErrorInvalidValue NumberParserError = 0
-	// String was a number, but out of bounds.
+	// string was a number, but out of bounds
 	GNumberParserErrorOutOfBoundsValue NumberParserError = 1
 )
 
 var xAsciiDigitValue func(byte) int
 
-// Determines the numeric value of a character as a decimal digit.
-// Differs from g_unichar_digit_value() because it takes a char, so
+// Determines the numeric value of a character as a decimal digit. If the
+// character is not a decimal digit according to [func@GLib.ascii_isdigit],
+// `-1` is returned.
+//
+// Differs from [func@GLib.unichar_digit_value] because it takes a char, so
 // there's no worry about sign extension if characters are signed.
 func AsciiDigitValue(CVar byte) int {
 
@@ -76,14 +79,14 @@ func AsciiDigitValue(CVar byte) int {
 
 var xAsciiDtostr func(string, int, float64) string
 
-// Converts a #gdouble to a string, using the '.' as
+// Converts a `gdouble` to a string, using the '.' as
 // decimal point.
 //
 // This function generates enough precision that converting
-// the string back using g_ascii_strtod() gives the same machine-number
+// the string back using [func@GLib.ascii_strtod] gives the same machine-number
 // (on machines with IEEE compatible 64bit doubles). It is
 // guaranteed that the size of the resulting string will never
-// be larger than %G_ASCII_DTOSTR_BUF_SIZE bytes, including the terminating
+// be larger than [const@GLib.ASCII_DTOSTR_BUF_SIZE] bytes, including the terminating
 // nul character, which is always added.
 func AsciiDtostr(BufferVar string, BufLenVar int, DVar float64) string {
 
@@ -93,18 +96,18 @@ func AsciiDtostr(BufferVar string, BufLenVar int, DVar float64) string {
 
 var xAsciiFormatd func(string, int, string, float64) string
 
-// Converts a #gdouble to a string, using the '.' as
+// Converts a `gdouble` to a string, using the '.' as
 // decimal point. To format the number you pass in
-// a printf()-style format string. Allowed conversion
+// a `printf()`-style format string. Allowed conversion
 // specifiers are 'e', 'E', 'f', 'F', 'g' and 'G'.
 //
 // The @format must just be a single format specifier
-// starting with `%`, expecting a #gdouble argument.
+// starting with `%`, expecting a `gdouble` argument.
 //
 // The returned buffer is guaranteed to be nul-terminated.
 //
 // If you just want to want to serialize the value into a
-// string, use g_ascii_dtostr().
+// string, use [func@GLib.ascii_dtostr].
 func AsciiFormatd(BufferVar string, BufLenVar int, FormatVar string, DVar float64) string {
 
 	cret := xAsciiFormatd(BufferVar, BufLenVar, FormatVar, DVar)
@@ -115,7 +118,7 @@ var xAsciiStrcasecmp func(string, string) int
 
 // Compare two strings, ignoring the case of ASCII characters.
 //
-// Unlike the BSD strcasecmp() function, this only recognizes standard
+// Unlike the BSD `strcasecmp()` function, this only recognizes standard
 // ASCII letters and ignores the locale, treating all non-ASCII
 // bytes as if they are not letters.
 //
@@ -127,7 +130,7 @@ var xAsciiStrcasecmp func(string, string) int
 // characters include all ASCII letters. If you compare two CP932
 // strings using this function, you will get false matches.
 //
-// Both @s1 and @s2 must be non-%NULL.
+// Both @s1 and @s2 must be non-`NULL`.
 func AsciiStrcasecmp(S1Var string, S2Var string) int {
 
 	cret := xAsciiStrcasecmp(S1Var, S2Var)
@@ -136,7 +139,8 @@ func AsciiStrcasecmp(S1Var string, S2Var string) int {
 
 var xAsciiStrdown func(string, int) string
 
-// Converts all upper case ASCII letters to lower case ASCII letters.
+// Converts all upper case ASCII letters to lower case ASCII letters, with
+// semantics that exactly match [func@GLib.ascii_tolower].
 func AsciiStrdown(StrVar string, LenVar int) string {
 
 	cret := xAsciiStrdown(StrVar, LenVar)
@@ -158,12 +162,12 @@ var xAsciiStringToSigned func(string, uint, int64, int64, int64, **Error) bool
 // for octal numbers, since they were usually prefixed with a zero
 // which does not change the value of the parsed number.
 //
-// Parsing failures result in an error with the %G_NUMBER_PARSER_ERROR
+// Parsing failures result in an error with the `G_NUMBER_PARSER_ERROR`
 // domain. If the input is invalid, the error code will be
-// %G_NUMBER_PARSER_ERROR_INVALID. If the parsed number is out of
-// bounds - %G_NUMBER_PARSER_ERROR_OUT_OF_BOUNDS.
+// [error@GLib.NumberParserError.INVALID]. If the parsed number is out of
+// bounds - [error@GLib.NumberParserError.OUT_OF_BOUNDS].
 //
-// See g_ascii_strtoll() if you have more complex needs such as
+// See [func@GLib.ascii_strtoll] if you have more complex needs such as
 // parsing a string which starts with a number, but then has other
 // characters.
 func AsciiStringToSigned(StrVar string, BaseVar uint, MinVar int64, MaxVar int64, OutNumVar int64) (bool, error) {
@@ -193,12 +197,12 @@ var xAsciiStringToUnsigned func(string, uint, uint64, uint64, uint64, **Error) b
 // for octal numbers, since they were usually prefixed with a zero
 // which does not change the value of the parsed number.
 //
-// Parsing failures result in an error with the %G_NUMBER_PARSER_ERROR
+// Parsing failures result in an error with the `G_NUMBER_PARSER_ERROR`
 // domain. If the input is invalid, the error code will be
-// %G_NUMBER_PARSER_ERROR_INVALID. If the parsed number is out of
-// bounds - %G_NUMBER_PARSER_ERROR_OUT_OF_BOUNDS.
+// [error@GLib.NumberParserError.INVALID]. If the parsed number is out of
+// bounds - [error@GLib.NumberParserError.OUT_OF_BOUNDS].
 //
-// See g_ascii_strtoull() if you have more complex needs such as
+// See [func@GLib.ascii_strtoull] if you have more complex needs such as
 // parsing a string which starts with a number, but then has other
 // characters.
 func AsciiStringToUnsigned(StrVar string, BaseVar uint, MinVar uint64, MaxVar uint64, OutNumVar uint64) (bool, error) {
@@ -219,11 +223,11 @@ var xAsciiStrncasecmp func(string, string, uint) int
 // less than @n bytes long, comparison will stop at the first nul byte
 // encountered.
 //
-// Unlike the BSD strcasecmp() function, this only recognizes standard
+// Unlike the BSD `strncasecmp()` function, this only recognizes standard
 // ASCII letters and ignores the locale, treating all non-ASCII
 // characters as if they are not letters.
 //
-// The same warning as in g_ascii_strcasecmp() applies: Use this
+// The same warning as in [func@GLib.ascii_strcasecmp] applies: Use this
 // function only on strings known to be in encodings where bytes
 // corresponding to ASCII letters always represent themselves.
 func AsciiStrncasecmp(S1Var string, S2Var string, NVar uint) int {
@@ -234,9 +238,9 @@ func AsciiStrncasecmp(S1Var string, S2Var string, NVar uint) int {
 
 var xAsciiStrtod func(string, string) float64
 
-// Converts a string to a #gdouble value.
+// Converts a string to a floating point value.
 //
-// This function behaves like the standard strtod() function
+// This function behaves like the standard `strtod()` function
 // does in the C locale. It does this without actually changing
 // the current locale, since that would not be thread-safe.
 // A limitation of the implementation is that this function
@@ -245,17 +249,17 @@ var xAsciiStrtod func(string, string) float64
 // This function is typically used when reading configuration
 // files or other non-user input that should be locale independent.
 // To handle input from the user you should normally use the
-// locale-sensitive system strtod() function.
+// locale-sensitive system `strtod()` function.
 //
-// To convert from a #gdouble to a string in a locale-insensitive
-// way, use g_ascii_dtostr().
+// To convert from a gdouble to a string in a locale-insensitive
+// way, use [func@GLib.ascii_dtostr].
 //
-// If the correct value would cause overflow, plus or minus %HUGE_VAL
-// is returned (according to the sign of the value), and %ERANGE is
-// stored in %errno. If the correct value would cause underflow,
-// zero is returned and %ERANGE is stored in %errno.
+// If the correct value would cause overflow, plus or minus `HUGE_VAL`
+// is returned (according to the sign of the value), and `ERANGE` is
+// stored in `errno`. If the correct value would cause underflow,
+// zero is returned and `ERANGE` is stored in `errno`.
 //
-// This function resets %errno before calling strtod() so that
+// This function resets `errno` before calling `strtod()` so that
 // you can reliably detect overflow and underflow.
 func AsciiStrtod(NptrVar string, EndptrVar string) float64 {
 
@@ -265,8 +269,9 @@ func AsciiStrtod(NptrVar string, EndptrVar string) float64 {
 
 var xAsciiStrtoll func(string, string, uint) int64
 
-// Converts a string to a #gint64 value.
-// This function behaves like the standard strtoll() function
+// Converts a string to a `gint64` value.
+//
+// This function behaves like the standard `strtoll()` function
 // does in the C locale. It does this without actually
 // changing the current locale, since that would not be
 // thread-safe.
@@ -274,14 +279,14 @@ var xAsciiStrtoll func(string, string, uint) int64
 // This function is typically used when reading configuration
 // files or other non-user input that should be locale independent.
 // To handle input from the user you should normally use the
-// locale-sensitive system strtoll() function.
+// locale-sensitive system `strtoll()` function.
 //
-// If the correct value would cause overflow, %G_MAXINT64 or %G_MININT64
-// is returned, and `ERANGE` is stored in `errno`.
+// If the correct value would cause overflow, [const@GLib.MAXINT64] or
+// [const@GLib.MININT64] is returned, and `ERANGE` is stored in `errno`.
 // If the base is outside the valid range, zero is returned, and
 // `EINVAL` is stored in `errno`. If the
 // string conversion fails, zero is returned, and @endptr returns @nptr
-// (if @endptr is non-%NULL).
+// (if @endptr is non-`NULL`).
 func AsciiStrtoll(NptrVar string, EndptrVar string, BaseVar uint) int64 {
 
 	cret := xAsciiStrtoll(NptrVar, EndptrVar, BaseVar)
@@ -290,28 +295,29 @@ func AsciiStrtoll(NptrVar string, EndptrVar string, BaseVar uint) int64 {
 
 var xAsciiStrtoull func(string, string, uint) uint64
 
-// Converts a string to a #guint64 value.
-// This function behaves like the standard strtoull() function
+// Converts a string to a `guint64` value.
+//
+// This function behaves like the standard `strtoull()` function
 // does in the C locale. It does this without actually
 // changing the current locale, since that would not be
 // thread-safe.
 //
 // Note that input with a leading minus sign (`-`) is accepted, and will return
-// the negation of the parsed number, unless that would overflow a #guint64.
+// the negation of the parsed number, unless that would overflow a `guint64`.
 // Critically, this means you cannot assume that a short fixed length input will
-// never result in a low return value, as the input could have a leading `-`.
+// result in a low return value, as the input could have a leading `-`.
 //
 // This function is typically used when reading configuration
 // files or other non-user input that should be locale independent.
 // To handle input from the user you should normally use the
-// locale-sensitive system strtoull() function.
+// locale-sensitive system `strtoull()` function.
 //
-// If the correct value would cause overflow, %G_MAXUINT64
+// If the correct value would cause overflow, [const@GLib.MAXUINT64]
 // is returned, and `ERANGE` is stored in `errno`.
 // If the base is outside the valid range, zero is returned, and
 // `EINVAL` is stored in `errno`.
 // If the string conversion fails, zero is returned, and @endptr returns
-// @nptr (if @endptr is non-%NULL).
+// @nptr (if @endptr is non-`NULL`).
 func AsciiStrtoull(NptrVar string, EndptrVar string, BaseVar uint) uint64 {
 
 	cret := xAsciiStrtoull(NptrVar, EndptrVar, BaseVar)
@@ -320,7 +326,8 @@ func AsciiStrtoull(NptrVar string, EndptrVar string, BaseVar uint) uint64 {
 
 var xAsciiStrup func(string, int) string
 
-// Converts all lower case ASCII letters to upper case ASCII letters.
+// Converts all lower case ASCII letters to upper case ASCII letters, with
+// semantics that exactly match [func@GLib.ascii_toupper].
 func AsciiStrup(StrVar string, LenVar int) string {
 
 	cret := xAsciiStrup(StrVar, LenVar)
@@ -329,14 +336,15 @@ func AsciiStrup(StrVar string, LenVar int) string {
 
 var xAsciiTolower func(byte) byte
 
-// Convert a character to ASCII lower case.
+// Convert a character to ASCII lower case. If the character is not an
+// ASCII upper case letter, it is returned unchanged.
 //
-// Unlike the standard C library tolower() function, this only
+// Unlike the standard C library `tolower()` function, this only
 // recognizes standard ASCII letters and ignores the locale, returning
 // all non-ASCII characters unchanged, even if they are lower case
 // letters in a particular character set. Also unlike the standard
 // library function, this takes and returns a char, not an int, so
-// don't call it on %EOF but no need to worry about casting to #guchar
+// don't call it on `EOF` but no need to worry about casting to `guchar`
 // before passing a possibly non-ASCII character in.
 func AsciiTolower(CVar byte) byte {
 
@@ -346,14 +354,15 @@ func AsciiTolower(CVar byte) byte {
 
 var xAsciiToupper func(byte) byte
 
-// Convert a character to ASCII upper case.
+// Convert a character to ASCII upper case. If the character is not an
+// ASCII lower case letter, it is returned unchanged.
 //
-// Unlike the standard C library toupper() function, this only
+// Unlike the standard C library `toupper()` function, this only
 // recognizes standard ASCII letters and ignores the locale, returning
 // all non-ASCII characters unchanged, even if they are upper case
 // letters in a particular character set. Also unlike the standard
 // library function, this takes and returns a char, not an int, so
-// don't call it on %EOF but no need to worry about casting to #guchar
+// don't call it on `EOF` but no need to worry about casting to `guchar`
 // before passing a possibly non-ASCII character in.
 func AsciiToupper(CVar byte) byte {
 
@@ -363,10 +372,15 @@ func AsciiToupper(CVar byte) byte {
 
 var xAsciiXdigitValue func(byte) int
 
-// Determines the numeric value of a character as a hexadecimal
-// digit. Differs from g_unichar_xdigit_value() because it takes
-// a char, so there's no worry about sign extension if characters
-// are signed.
+// Determines the numeric value of a character as a hexadecimal digit. If the
+// character is not a hex digit according to [func@GLib.ascii_isxdigit],
+// `-1` is returned.
+//
+// Differs from [func@GLib.unichar_xdigit_value] because it takes a char, so
+// there's no worry about sign extension if characters are signed.
+//
+// Differs from [func@GLib.unichar_xdigit_value] because it takes a char, so
+// there's no worry about sign extension if characters are signed.
 func AsciiXdigitValue(CVar byte) int {
 
 	cret := xAsciiXdigitValue(CVar)
@@ -376,7 +390,7 @@ func AsciiXdigitValue(CVar byte) int {
 var xMemdup func(uintptr, uint) uintptr
 
 // Allocates @byte_size bytes of memory, and copies @byte_size bytes into it
-// from @mem. If @mem is %NULL it returns %NULL.
+// from @mem. If @mem is `NULL` it returns `NULL`.
 func Memdup(MemVar uintptr, ByteSizeVar uint) uintptr {
 
 	cret := xMemdup(MemVar, ByteSizeVar)
@@ -386,10 +400,10 @@ func Memdup(MemVar uintptr, ByteSizeVar uint) uintptr {
 var xMemdup2 func(uintptr, uint) uintptr
 
 // Allocates @byte_size bytes of memory, and copies @byte_size bytes into it
-// from @mem. If @mem is %NULL it returns %NULL.
+// from @mem. If @mem is `NULL` it returns `NULL`.
 //
-// This replaces g_memdup(), which was prone to integer overflows when
-// converting the argument from a #gsize to a #guint.
+// This replaces [func@GLib.memdup], which was prone to integer overflows when
+// converting the argument from a `gsize` to a `guint`.
 func Memdup2(MemVar uintptr, ByteSizeVar uint) uintptr {
 
 	cret := xMemdup2(MemVar, ByteSizeVar)
@@ -398,10 +412,10 @@ func Memdup2(MemVar uintptr, ByteSizeVar uint) uintptr {
 
 var xStpcpy func(string, string) string
 
-// Copies a nul-terminated string into the dest buffer, include the
-// trailing nul, and return a pointer to the trailing nul byte.
-// This is useful for concatenating multiple strings together
-// without having to repeatedly scan for the end.
+// Copies a nul-terminated string into the destination buffer, including
+// the trailing nul byte, and returns a pointer to the trailing nul byte
+// in `dest`.  The return value is useful for concatenating multiple
+// strings without having to repeatedly scan for the end.
 func Stpcpy(DestVar string, SrcVar string) string {
 
 	cret := xStpcpy(DestVar, SrcVar)
@@ -419,7 +433,7 @@ func StrHasPrefix(StrVar string, PrefixVar string) bool {
 
 var xStrHasSuffix func(string, string) bool
 
-// Looks whether the string @str ends with @suffix.
+// Looks whether a string ends with @suffix.
 func StrHasSuffix(StrVar string, SuffixVar string) bool {
 
 	cret := xStrHasSuffix(StrVar, SuffixVar)
@@ -441,8 +455,8 @@ var xStrMatchString func(string, string, bool) bool
 // Checks if a search conducted for @search_term should match
 // @potential_hit.
 //
-// This function calls g_str_tokenize_and_fold() on both
-// @search_term and @potential_hit.  ASCII alternates are never taken
+// This function calls [func@GLib.str_tokenize_and_fold] on both
+// @search_term and @potential_hit. ASCII alternates are never taken
 // for @search_term but will be taken for @potential_hit according to
 // the value of @accept_alternates.
 //
@@ -450,9 +464,9 @@ var xStrMatchString func(string, string, bool) bool
 // folded token from @potential_hit.
 //
 // Depending on how you're performing the search, it will typically be
-// faster to call g_str_tokenize_and_fold() on each string in
+// faster to call `g_str_tokenize_and_fold()` on each string in
 // your corpus and build an index on the returned folded tokens, then
-// call g_str_tokenize_and_fold() on the search term and
+// call `g_str_tokenize_and_fold()` on the search term and
 // perform lookups into that index.
 //
 // As some examples, searching for ‘fred’ would match the potential hit
@@ -494,15 +508,15 @@ func StrToAscii(StrVar string, FromLocaleVar string) string {
 
 var xStrTokenizeAndFold func(string, string, []string) []string
 
-// Tokenises @string and performs folding on each token.
+// Tokenizes @string and performs folding on each token.
 //
 // A token is a non-empty sequence of alphanumeric characters in the
 // source string, separated by non-alphanumeric characters.  An
 // "alphanumeric" character for this purpose is one that matches
-// g_unichar_isalnum() or g_unichar_ismark().
+// [func@GLib.unichar_isalnum] or [func@GLib.unichar_ismark].
 //
 // Each token is then (Unicode) normalised and case-folded.  If
-// @ascii_alternates is non-%NULL and some of the returned tokens
+// @ascii_alternates is non-`NULL` and some of the returned tokens
 // contain non-ASCII characters, ASCII alternatives will be generated.
 //
 // The number of ASCII alternatives that are generated and the method
@@ -522,22 +536,16 @@ var xStrcanon func(string, string, byte) string
 //
 // Modifies @string in place, and return @string itself, not a copy. The
 // return value is to allow nesting such as:
+// ```C
+// g_ascii_strup (g_strcanon (str, "abc", '?'))
+// ```
 //
-// |[&lt;!-- language="C" --&gt;
-//
-//	g_ascii_strup (g_strcanon (str, "abc", '?'))
-//
-// ]|
-//
-// In order to modify a copy, you may use g_strdup():
-//
-// |[&lt;!-- language="C" --&gt;
-//
-//	reformatted = g_strcanon (g_strdup (const_str), "abc", '?');
-//	...
-//	g_free (reformatted);
-//
-// ]|
+// In order to modify a copy, you may use [func@GLib.strdup]:
+// ```C
+// reformatted = g_strcanon (g_strdup (const_str), "abc", '?');
+// …
+// g_free (reformatted);
+// ```
 func Strcanon(StringVar string, ValidCharsVar string, SubstitutorVar byte) string {
 
 	cret := xStrcanon(StringVar, ValidCharsVar, SubstitutorVar)
@@ -547,7 +555,7 @@ func Strcanon(StringVar string, ValidCharsVar string, SubstitutorVar byte) strin
 var xStrcasecmp func(string, string) int
 
 // A case-insensitive string comparison, corresponding to the standard
-// strcasecmp() function on platforms which support it.
+// `strcasecmp()` function on platforms which support it.
 func Strcasecmp(S1Var string, S2Var string) int {
 
 	cret := xStrcasecmp(S1Var, S2Var)
@@ -564,7 +572,7 @@ var xStrchomp func(string) string
 //
 // The pointer to @string is returned to allow the nesting of functions.
 //
-// Also see g_strchug() and g_strstrip().
+// Also see [func@GLib.strchug] and [func@GLib.strstrip].
 func Strchomp(StringVar string) string {
 
 	cret := xStrchomp(StringVar)
@@ -582,7 +590,7 @@ var xStrchug func(string) string
 //
 // The pointer to @string is returned to allow the nesting of functions.
 //
-// Also see g_strchomp() and g_strstrip().
+// Also see [func@GLib.strchomp] and [func@GLib.strstrip].
 func Strchug(StringVar string) string {
 
 	cret := xStrchug(StringVar)
@@ -591,9 +599,20 @@ func Strchug(StringVar string) string {
 
 var xStrcompress func(string) string
 
-// Replaces all escaped characters with their one byte equivalent.
+// Makes a copy of a string replacing C string-style escape
+// sequences with their one byte equivalent:
 //
-// This function does the reverse conversion of g_strescape().
+//   - `\b` → [U+0008 Backspace](https://en.wikipedia.org/wiki/Backspace)
+//   - `\f` → [U+000C Form Feed](https://en.wikipedia.org/wiki/Form_feed)
+//   - `\n` → [U+000A Line Feed](https://en.wikipedia.org/wiki/Newline)
+//   - `\r` → [U+000D Carriage Return](https://en.wikipedia.org/wiki/Carriage_return)
+//   - `\t` → [U+0009 Horizontal Tabulation](https://en.wikipedia.org/wiki/Tab_character)
+//   - `\v` → [U+000B Vertical Tabulation](https://en.wikipedia.org/wiki/Vertical_Tab)
+//   - `\` followed by one to three octal digits → the numeric value (mod 255)
+//   - `\` followed by any other character → the character as is.
+//     For example, `\\` will turn into a backslash (`\`) and `\"` into a double quote (`"`).
+//
+// [func@GLib.strescape] does the reverse conversion.
 func Strcompress(SourceVar string) string {
 
 	cret := xStrcompress(SourceVar)
@@ -602,11 +621,10 @@ func Strcompress(SourceVar string) string {
 
 var xStrconcat func(string, ...interface{}) string
 
-// Concatenates all of the given strings into one long string. The
-// returned string should be freed with g_free() when no longer needed.
+// Concatenates all of the given strings into one long string.
 //
-// The variable argument list must end with %NULL. If you forget the %NULL,
-// g_strconcat() will start appending random memory junk to your string.
+// The variable argument list must end with `NULL`. If you forget the `NULL`,
+// `g_strconcat()` will start appending random memory junk to your string.
 //
 // Note that this function is usually not the right function to use to
 // assemble a translated message from pieces, since proper translation
@@ -626,22 +644,16 @@ var xStrdelimit func(string, string, byte) string
 // and returns @string itself, not a copy.
 //
 // The return value is to allow nesting such as:
+// ```C
+// g_ascii_strup (g_strdelimit (str, "abc", '?'))
+// ```
 //
-// |[&lt;!-- language="C" --&gt;
-//
-//	g_ascii_strup (g_strdelimit (str, "abc", '?'))
-//
-// ]|
-//
-// In order to modify a copy, you may use g_strdup():
-//
-// |[&lt;!-- language="C" --&gt;
-//
-//	reformatted = g_strdelimit (g_strdup (const_str), "abc", '?');
-//	...
-//	g_free (reformatted);
-//
-// ]|
+// In order to modify a copy, you may use [func@GLib.strdup]:
+// ```C
+// reformatted = g_strdelimit (g_strdup (const_str), "abc", '?');
+// …
+// g_free (reformatted);
+// ```
 func Strdelimit(StringVar string, DelimitersVar string, NewDelimiterVar byte) string {
 
 	cret := xStrdelimit(StringVar, DelimitersVar, NewDelimiterVar)
@@ -659,9 +671,7 @@ func Strdown(StringVar string) string {
 
 var xStrdup func(string) string
 
-// Duplicates a string. If @str is %NULL it returns %NULL.
-// The returned string should be freed with g_free()
-// when no longer needed.
+// Duplicates a string. If @str is `NULL` it returns `NULL`.
 func Strdup(StrVar string) string {
 
 	cret := xStrdup(StrVar)
@@ -670,10 +680,9 @@ func Strdup(StrVar string) string {
 
 var xStrdupPrintf func(string, ...interface{}) string
 
-// Similar to the standard C sprintf() function but safer, since it
+// Similar to the standard C `sprintf()` function but safer, since it
 // calculates the maximum space required and allocates memory to hold
-// the result. The returned string should be freed with g_free() when no
-// longer needed.
+// the result.
 //
 // The returned string is guaranteed to be non-NULL, unless @format
 // contains `%lc` or `%ls` conversions, which can fail if no multibyte
@@ -686,16 +695,15 @@ func StrdupPrintf(FormatVar string, varArgs ...interface{}) string {
 
 var xStrdupVprintf func(string, []interface{}) string
 
-// Similar to the standard C vsprintf() function but safer, since it
+// Similar to the standard C `vsprintf()` function but safer, since it
 // calculates the maximum space required and allocates memory to hold
-// the result. The returned string should be freed with g_free() when
-// no longer needed.
+// the result.
 //
 // The returned string is guaranteed to be non-NULL, unless @format
 // contains `%lc` or `%ls` conversions, which can fail if no multibyte
 // representation is available for the given character.
 //
-// See also g_vasprintf(), which offers the same functionality, but
+// See also [func@GLib.vasprintf], which offers the same functionality, but
 // additionally returns the length of the allocated string.
 func StrdupVprintf(FormatVar string, ArgsVar []interface{}) string {
 
@@ -703,13 +711,13 @@ func StrdupVprintf(FormatVar string, ArgsVar []interface{}) string {
 	return cret
 }
 
-var xStrdupv func(string) []string
+var xStrdupv func([]string) []string
 
-// Copies %NULL-terminated array of strings. The copy is a deep copy;
-// the new array should be freed by first freeing each string, then
-// the array itself. g_strfreev() does this for you. If called
-// on a %NULL value, g_strdupv() simply returns %NULL.
-func Strdupv(StrArrayVar string) []string {
+// Copies an array of strings. The copy is a deep copy; each string is also
+// copied.
+//
+// If called on a `NULL` value, `g_strdupv()` simply returns `NULL`.
+func Strdupv(StrArrayVar []string) []string {
 
 	cret := xStrdupv(StrArrayVar)
 	return cret
@@ -718,25 +726,26 @@ func Strdupv(StrArrayVar string) []string {
 var xStrerror func(int) string
 
 // Returns a string corresponding to the given error code, e.g. "no
-// such process". Unlike strerror(), this always returns a string in
+// such process".
+//
+// Unlike `strerror()`, this always returns a string in
 // UTF-8 encoding, and the pointer is guaranteed to remain valid for
-// the lifetime of the process.
+// the lifetime of the process. If the error code is unknown, it returns a
+// string like “Unknown error &lt;code\&gt;”.
 //
 // Note that the string may be translated according to the current locale.
 //
-// The value of %errno will not be changed by this function. However, it may
+// The value of `errno` will not be changed by this function. However, it may
 // be changed by intermediate function calls, so you should save its value
 // as soon as the call returns:
-// |[
+// ```C
+// int saved_errno;
 //
-//	int saved_errno;
+// ret = read (blah);
+// saved_errno = errno;
 //
-//	ret = read (blah);
-//	saved_errno = errno;
-//
-//	g_strerror (saved_errno);
-//
-// ]|
+// g_strerror (saved_errno);
+// ```
 func Strerror(ErrnumVar int) string {
 
 	cret := xStrerror(ErrnumVar)
@@ -745,27 +754,37 @@ func Strerror(ErrnumVar int) string {
 
 var xStrescape func(string, string) string
 
-// Escapes the special characters '\b', '\f', '\n', '\r', '\t', '\v', '\'
-// and '"' in the string @source by inserting a '\' before
-// them. Additionally all characters in the range 0x01-0x1F (everything
+// It replaces the following special characters in the string @source
+// with their corresponding C escape sequence:
+//
+// | Symbol                                                                      | Escape |
+// |-----------------------------------------------------------------------------|--------|
+// | [U+0008 Backspace](https://en.wikipedia.org/wiki/Backspace)                 | `\b`   |
+// | [U+000C Form Feed](https://en.wikipedia.org/wiki/Form_feed)                 | `\f`   |
+// | [U+000A Line Feed](https://en.wikipedia.org/wiki/Newline)                   | `\n`   |
+// | [U+000D Carriage Return](https://en.wikipedia.org/wiki/Carriage_return)     | `\r`   |
+// | [U+0009 Horizontal Tabulation](https://en.wikipedia.org/wiki/Tab_character) | `\t`   |
+// | [U+000B Vertical Tabulation](https://en.wikipedia.org/wiki/Vertical_Tab)    | `\v`   |
+//
+// It also inserts a backslash (`\`) before any backslash or a double quote (`"`).
+// Additionally all characters in the range 0x01-0x1F (everything
 // below SPACE) and in the range 0x7F-0xFF (all non-ASCII chars) are
-// replaced with a '\' followed by their octal representation.
+// replaced with a backslash followed by their octal representation.
 // Characters supplied in @exceptions are not escaped.
 //
-// g_strcompress() does the reverse conversion.
+// [func@GLib.strcompress] does the reverse conversion.
 func Strescape(SourceVar string, ExceptionsVar string) string {
 
 	cret := xStrescape(SourceVar, ExceptionsVar)
 	return cret
 }
 
-var xStrfreev func(string)
+var xStrfreev func([]string)
 
-// Frees a %NULL-terminated array of strings, as well as each
-// string it contains.
+// Frees an array of strings, as well as each string it contains.
 //
-// If @str_array is %NULL, this function simply returns.
-func Strfreev(StrArrayVar string) {
+// If @str_array is `NULL`, this function simply returns.
+func Strfreev(StrArrayVar []string) {
 
 	xStrfreev(StrArrayVar)
 
@@ -774,24 +793,22 @@ func Strfreev(StrArrayVar string) {
 var xStrjoin func(string, ...interface{}) string
 
 // Joins a number of strings together to form one long string, with the
-// optional @separator inserted between each of them. The returned string
-// should be freed with g_free().
+// optional @separator inserted between each of them.
 func Strjoin(SeparatorVar string, varArgs ...interface{}) string {
 
 	cret := xStrjoin(SeparatorVar, varArgs...)
 	return cret
 }
 
-var xStrjoinv func(string, string) string
+var xStrjoinv func(string, []string) string
 
-// Joins a number of strings together to form one long string, with the
-// optional @separator inserted between each of them. The returned string
-// should be freed with g_free().
+// Joins an array of strings together to form one long string, with the
+// optional @separator inserted between each of them.
 //
 // If @str_array has no items, the return value will be an
 // empty string. If @str_array contains a single item, @separator will not
 // appear in the resulting string.
-func Strjoinv(SeparatorVar string, StrArrayVar string) string {
+func Strjoinv(SeparatorVar string, StrArrayVar []string) string {
 
 	cret := xStrjoinv(SeparatorVar, StrArrayVar)
 	return cret
@@ -799,19 +816,19 @@ func Strjoinv(SeparatorVar string, StrArrayVar string) string {
 
 var xStrlcat func(string, string, uint) uint
 
-// Portability wrapper that calls strlcat() on systems which have it,
+// Portability wrapper that calls `strlcat()` on systems which have it,
 // and emulates it otherwise. Appends nul-terminated @src string to @dest,
 // guaranteeing nul-termination for @dest. The total size of @dest won't
 // exceed @dest_size.
 //
-// At most @dest_size - 1 characters will be copied. Unlike strncat(),
+// At most @dest_size - 1 characters will be copied. Unlike `strncat()`,
 // @dest_size is the full size of dest, not the space left over. This
 // function does not allocate memory. It always nul-terminates (unless
 // @dest_size == 0 or there were no nul characters in the @dest_size
 // characters of dest to start with).
 //
-// Caveat: this is supposedly a more secure alternative to strcat() or
-// strncat(), but for real security g_strconcat() is harder to mess up.
+// Caveat: this is supposedly a more secure alternative to `strcat()` or
+// `strncat()`, but for real security [func@GLib.strconcat] is harder to mess up.
 func Strlcat(DestVar string, SrcVar string, DestSizeVar uint) uint {
 
 	cret := xStrlcat(DestVar, SrcVar, DestSizeVar)
@@ -820,19 +837,19 @@ func Strlcat(DestVar string, SrcVar string, DestSizeVar uint) uint {
 
 var xStrlcpy func(string, string, uint) uint
 
-// Portability wrapper that calls strlcpy() on systems which have it,
-// and emulates strlcpy() otherwise. Copies @src to @dest; @dest is
+// Portability wrapper that calls `strlcpy()` on systems which have it,
+// and emulates `strlcpy()` otherwise. Copies @src to @dest; @dest is
 // guaranteed to be nul-terminated; @src must be nul-terminated;
 // @dest_size is the buffer size, not the number of bytes to copy.
 //
 // At most @dest_size - 1 characters will be copied. Always nul-terminates
 // (unless @dest_size is 0). This function does not allocate memory. Unlike
-// strncpy(), this function doesn't pad @dest (so it's often faster). It
-// returns the size of the attempted result, strlen (src), so if
+// `strncpy()`, this function doesn't pad @dest (so it's often faster). It
+// returns the size of the attempted result, `strlen (src)`, so if
 // @retval &gt;= @dest_size, truncation occurred.
 //
-// Caveat: strlcpy() is supposedly more secure than strcpy() or strncpy(),
-// but if you really want to avoid screwups, g_strdup() is an even better
+// Caveat: `strlcpy()` is supposedly more secure than `strcpy()` or `strncpy()`,
+// but if you really want to avoid screwups, [func@GLib.strdup] is an even better
 // idea.
 func Strlcpy(DestVar string, SrcVar string, DestSizeVar uint) uint {
 
@@ -843,8 +860,8 @@ func Strlcpy(DestVar string, SrcVar string, DestSizeVar uint) uint {
 var xStrncasecmp func(string, string, uint) int
 
 // A case-insensitive string comparison, corresponding to the standard
-// strncasecmp() function on platforms which support it. It is similar
-// to g_strcasecmp() except it only compares the first @n characters of
+// `strncasecmp()` function on platforms which support it. It is similar
+// to [func@GLib.strcasecmp] except it only compares the first @n characters of
 // the strings.
 func Strncasecmp(S1Var string, S2Var string, NVar uint) int {
 
@@ -857,11 +874,10 @@ var xStrndup func(string, uint) string
 // Duplicates the first @n bytes of a string, returning a newly-allocated
 // buffer @n + 1 bytes long which will always be nul-terminated. If @str
 // is less than @n bytes long the buffer is padded with nuls. If @str is
-// %NULL it returns %NULL. The returned value should be freed when no longer
-// needed.
+// `NULL` it returns `NULL`.
 //
 // To copy a number of characters from a UTF-8 encoded string,
-// use g_utf8_strncpy() instead.
+// use [func@GLib.utf8_strncpy] instead.
 func Strndup(StrVar string, NVar uint) string {
 
 	cret := xStrndup(StrVar, NVar)
@@ -871,7 +887,6 @@ func Strndup(StrVar string, NVar uint) string {
 var xStrnfill func(uint, byte) string
 
 // Creates a new string @length bytes long filled with @fill_char.
-// The returned string should be freed when no longer needed.
 func Strnfill(LengthVar uint, FillCharVar byte) string {
 
 	cret := xStrnfill(LengthVar, FillCharVar)
@@ -883,9 +898,9 @@ var xStrreverse func(string) string
 // Reverses all of the bytes in a string. For example,
 // `g_strreverse ("abcdef")` will result in "fedcba".
 //
-// Note that g_strreverse() doesn't work on UTF-8 strings
+// Note that `g_strreverse()` doesn't work on UTF-8 strings
 // containing multibyte characters. For that purpose, use
-// g_utf8_strreverse().
+// [func@GLib.utf8_strreverse].
 func Strreverse(StringVar string) string {
 
 	cret := xStrreverse(StringVar)
@@ -896,6 +911,9 @@ var xStrrstr func(string, string) string
 
 // Searches the string @haystack for the last occurrence
 // of the string @needle.
+//
+// The fact that this function returns `gchar *` rather than `const gchar *` is
+// a historical artifact.
 func Strrstr(HaystackVar string, NeedleVar string) string {
 
 	cret := xStrrstr(HaystackVar, NeedleVar)
@@ -907,6 +925,9 @@ var xStrrstrLen func(string, int, string) string
 // Searches the string @haystack for the last occurrence
 // of the string @needle, limiting the length of the search
 // to @haystack_len.
+//
+// The fact that this function returns `gchar *` rather than `const gchar *` is
+// a historical artifact.
 func StrrstrLen(HaystackVar string, HaystackLenVar int, NeedleVar string) string {
 
 	cret := xStrrstrLen(HaystackVar, HaystackLenVar, NeedleVar)
@@ -916,9 +937,11 @@ func StrrstrLen(HaystackVar string, HaystackLenVar int, NeedleVar string) string
 var xStrsignal func(int) string
 
 // Returns a string describing the given signal, e.g. "Segmentation fault".
-// You should use this function in preference to strsignal(), because it
+// If the signal is unknown, it returns “unknown signal (&lt;signum\&gt;)”.
+//
+// You should use this function in preference to `strsignal()`, because it
 // returns a string in UTF-8 encoding, and since not all platforms support
-// the strsignal() function.
+// the `strsignal()` function.
 func Strsignal(SignumVar int) string {
 
 	cret := xStrsignal(SignumVar)
@@ -931,16 +954,15 @@ var xStrsplit func(string, string, int) []string
 // @delimiter. If @max_tokens is reached, the remainder of @string is
 // appended to the last token.
 //
-// As an example, the result of g_strsplit (":a:bc::d:", ":", -1) is a
-// %NULL-terminated vector containing the six strings "", "a", "bc", "", "d"
-// and "".
+// As an example, the result of `g_strsplit (":a:bc::d:", ":", -1)` is an array
+// containing the six strings "", "a", "bc", "", "d" and "".
 //
 // As a special case, the result of splitting the empty string "" is an empty
-// vector, not a vector containing a single string. The reason for this
-// special case is that being able to represent an empty vector is typically
+// array, not an array containing a single string. The reason for this
+// special case is that being able to represent an empty array is typically
 // more useful than consistent handling of empty elements. If you do need
 // to represent empty elements, you'll need to check for the empty string
-// before calling g_strsplit().
+// before calling `g_strsplit()`.
 func Strsplit(StringVar string, DelimiterVar string, MaxTokensVar int) []string {
 
 	cret := xStrsplit(StringVar, DelimiterVar, MaxTokensVar)
@@ -950,23 +972,22 @@ func Strsplit(StringVar string, DelimiterVar string, MaxTokensVar int) []string 
 var xStrsplitSet func(string, string, int) []string
 
 // Splits @string into a number of tokens not containing any of the characters
-// in @delimiter. A token is the (possibly empty) longest string that does not
+// in @delimiters. A token is the (possibly empty) longest string that does not
 // contain any of the characters in @delimiters. If @max_tokens is reached, the
 // remainder is appended to the last token.
 //
-// For example the result of g_strsplit_set ("abc:def/ghi", ":/", -1) is a
-// %NULL-terminated vector containing the three strings "abc", "def",
-// and "ghi".
+// For example, the result of g_strsplit_set ("abc:def/ghi", ":/", -1) is an
+// array containing the three strings "abc", "def", and "ghi".
 //
-// The result of g_strsplit_set (":def/ghi:", ":/", -1) is a %NULL-terminated
-// vector containing the four strings "", "def", "ghi", and "".
+// The result of g_strsplit_set (":def/ghi:", ":/", -1) is an array containing
+// the four strings "", "def", "ghi", and "".
 //
 // As a special case, the result of splitting the empty string "" is an empty
-// vector, not a vector containing a single string. The reason for this
-// special case is that being able to represent an empty vector is typically
+// array, not an array containing a single string. The reason for this
+// special case is that being able to represent an empty array is typically
 // more useful than consistent handling of empty elements. If you do need
 // to represent empty elements, you'll need to check for the empty string
-// before calling g_strsplit_set().
+// before calling `g_strsplit_set()`.
 //
 // Note that this function works on bytes not characters, so it can't be used
 // to delimit UTF-8 strings for anything but ASCII characters.
@@ -980,7 +1001,13 @@ var xStrstrLen func(string, int, string) string
 
 // Searches the string @haystack for the first occurrence
 // of the string @needle, limiting the length of the search
-// to @haystack_len.
+// to @haystack_len or a nul terminator byte (whichever is reached first).
+//
+// A length of `-1` can be used to mean “search the entire string”, like
+// `strstr()`.
+//
+// The fact that this function returns `gchar *` rather than `const gchar *` is
+// a historical artifact.
 func StrstrLen(HaystackVar string, HaystackLenVar int, NeedleVar string) string {
 
 	cret := xStrstrLen(HaystackVar, HaystackLenVar, NeedleVar)
@@ -989,13 +1016,14 @@ func StrstrLen(HaystackVar string, HaystackLenVar int, NeedleVar string) string 
 
 var xStrtod func(string, string) float64
 
-// Converts a string to a #gdouble value.
-// It calls the standard strtod() function to handle the conversion, but
+// Converts a string to a floating point value.
+//
+// It calls the standard `strtod()` function to handle the conversion, but
 // if the string is not completely converted it attempts the conversion
-// again with g_ascii_strtod(), and returns the best match.
+// again with [func@GLib.ascii_strtod], and returns the best match.
 //
 // This function should seldom be used. The normal situation when reading
-// numbers not for human consumption is to use g_ascii_strtod(). Only when
+// numbers not for human consumption is to use [func@GLib.ascii_strtod]. Only when
 // you know that you must expect both locale formatted and C formatted numbers
 // should you use this. Make sure that you don't pass strings such as comma
 // separated lists of values, since the commas may be interpreted as a decimal
@@ -1015,34 +1043,37 @@ func Strup(StringVar string) string {
 	return cret
 }
 
-var xStrvContains func(string, string) bool
+var xStrvContains func([]string, string) bool
 
-// Checks if @strv contains @str. @strv must not be %NULL.
-func StrvContains(StrvVar string, StrVar string) bool {
+// Checks if an array of strings contains the string @str according to
+// [func@GLib.str_equal]. @strv must not be `NULL`.
+func StrvContains(StrvVar []string, StrVar string) bool {
 
 	cret := xStrvContains(StrvVar, StrVar)
 	return cret
 }
 
-var xStrvEqual func(string, string) bool
+var xStrvEqual func([]string, []string) bool
 
-// Checks if @strv1 and @strv2 contain exactly the same elements in exactly the
-// same order. Elements are compared using g_str_equal(). To match independently
-// of order, sort the arrays first (using g_qsort_with_data() or similar).
+// Checks if two arrays of strings contain exactly the same elements in
+// exactly the same order.
 //
-// Two empty arrays are considered equal. Neither @strv1 not @strv2 may be
-// %NULL.
-func StrvEqual(Strv1Var string, Strv2Var string) bool {
+// Elements are compared using [func@GLib.str_equal]. To match independently
+// of order, sort the arrays first (using [func@GLib.qsort_with_data]
+// or similar).
+//
+// Two empty arrays are considered equal. Neither @strv1 nor @strv2 may be
+// `NULL`.
+func StrvEqual(Strv1Var []string, Strv2Var []string) bool {
 
 	cret := xStrvEqual(Strv1Var, Strv2Var)
 	return cret
 }
 
-var xStrvLength func(string) uint
+var xStrvLength func([]string) uint
 
-// Returns the length of the given %NULL-terminated
-// string array @str_array. @str_array must not be %NULL.
-func StrvLength(StrArrayVar string) uint {
+// Returns the length of an array of strings. @str_array must not be `NULL`.
+func StrvLength(StrArrayVar []string) uint {
 
 	cret := xStrvLength(StrArrayVar)
 	return cret
@@ -1050,7 +1081,7 @@ func StrvLength(StrArrayVar string) uint {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

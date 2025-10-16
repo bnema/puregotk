@@ -15,7 +15,7 @@ import (
 type SequenceIterCompareFunc func(*SequenceIter, *SequenceIter, uintptr) int
 
 // The #GSequence struct is an opaque data type representing a
-// [sequence][glib-Sequences] data type.
+// [sequence](data-structures.html#scalable-lists) data type.
 type Sequence struct {
 	_ structs.HostLayout
 }
@@ -355,6 +355,17 @@ func (x *SequenceIter) Prev() *SequenceIter {
 	return cret
 }
 
+var xSequenceForeachRange func(*SequenceIter, *SequenceIter, uintptr, uintptr)
+
+// Calls @func for each item in the range (@begin, @end) passing
+// @user_data to the function. @func must not modify the sequence
+// itself.
+func SequenceForeachRange(BeginVar *SequenceIter, EndVar *SequenceIter, FuncVar *Func, UserDataVar uintptr) {
+
+	xSequenceForeachRange(BeginVar, EndVar, NewCallback(FuncVar), UserDataVar)
+
+}
+
 var xSequenceGet func(*SequenceIter) uintptr
 
 // Returns the data that @iter points to.
@@ -451,6 +462,41 @@ func SequenceSet(IterVar *SequenceIter, DataVar uintptr) {
 
 }
 
+var xSequenceSortChanged func(*SequenceIter, uintptr, uintptr)
+
+// Moves the data pointed to by @iter to a new position as indicated by
+// @cmp_func. This
+// function should be called for items in a sequence already sorted according
+// to @cmp_func whenever some aspect of an item changes so that @cmp_func
+// may return different values for that item.
+//
+// @cmp_func is called with two items of the @seq, and @cmp_data.
+// It should return 0 if the items are equal, a negative value if
+// the first item comes before the second, and a positive value if
+// the second item comes before the first.
+func SequenceSortChanged(IterVar *SequenceIter, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) {
+
+	xSequenceSortChanged(IterVar, NewCallback(CmpFuncVar), CmpDataVar)
+
+}
+
+var xSequenceSortChangedIter func(*SequenceIter, uintptr, uintptr)
+
+// Like g_sequence_sort_changed(), but uses
+// a #GSequenceIterCompareFunc instead of a #GCompareDataFunc as
+// the compare function.
+//
+// @iter_cmp is called with two iterators pointing into the #GSequence that
+// @iter points into. It should
+// return 0 if the iterators are equal, a negative value if the first
+// iterator comes before the second, and a positive value if the second
+// iterator comes before the first.
+func SequenceSortChangedIter(IterVar *SequenceIter, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) {
+
+	xSequenceSortChangedIter(IterVar, NewCallback(IterCmpVar), CmpDataVar)
+
+}
+
 var xSequenceSwap func(*SequenceIter, *SequenceIter)
 
 // Swaps the items pointed to by @a and @b. It is allowed for @a and @b
@@ -463,12 +509,13 @@ func SequenceSwap(AVar *SequenceIter, BVar *SequenceIter) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xSequenceForeachRange, lib, "g_sequence_foreach_range")
 	core.PuregoSafeRegister(&xSequenceGet, lib, "g_sequence_get")
 	core.PuregoSafeRegister(&xSequenceInsertBefore, lib, "g_sequence_insert_before")
 	core.PuregoSafeRegister(&xSequenceMove, lib, "g_sequence_move")
@@ -477,6 +524,8 @@ func init() {
 	core.PuregoSafeRegister(&xSequenceRemove, lib, "g_sequence_remove")
 	core.PuregoSafeRegister(&xSequenceRemoveRange, lib, "g_sequence_remove_range")
 	core.PuregoSafeRegister(&xSequenceSet, lib, "g_sequence_set")
+	core.PuregoSafeRegister(&xSequenceSortChanged, lib, "g_sequence_sort_changed")
+	core.PuregoSafeRegister(&xSequenceSortChangedIter, lib, "g_sequence_sort_changed_iter")
 	core.PuregoSafeRegister(&xSequenceSwap, lib, "g_sequence_swap")
 
 	core.PuregoSafeRegister(&xSequenceAppend, lib, "g_sequence_append")

@@ -5,14 +5,23 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gio"
 	"github.com/jwijenbergh/puregotk/v4/glib"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// `GdkVulkanContext` is an object representing the platform-specific
-// Vulkan draw context.
+var xVulkanErrorQuark func() glib.Quark
+
+// Registers an error quark for [class@Gdk.VulkanContext] errors.
+func VulkanErrorQuark() glib.Quark {
+
+	cret := xVulkanErrorQuark()
+	return cret
+}
+
+// Represents the platform-specific Vulkan draw context.
 //
 // `GdkVulkanContext`s are created for a surface using
 // [method@Gdk.Surface.create_vulkan_context], and the context will match
@@ -88,7 +97,7 @@ func (x *VulkanContext) ConnectImagesUpdated(cb *func(VulkanContext)) uint32 {
 // If the object is not initialized, or initialization returns with an
 // error, then all operations on the object except g_object_ref() and
 // g_object_unref() are considered to be invalid, and have undefined
-// behaviour. See the [introduction][ginitable] for more details.
+// behaviour. See the [description][iface@Gio.Initable#description] for more details.
 //
 // Callers should not assume that a class which implements #GInitable can be
 // initialized multiple times, unless the class explicitly documents itself as
@@ -116,5 +125,19 @@ func (x *VulkanContext) Init(CancellableVar *gio.Cancellable) (bool, error) {
 		return cret, nil
 	}
 	return cret, cerr
+
+}
+
+func init() {
+	core.SetPackageName("GDK", "gtk4")
+	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
+	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
+	if err != nil {
+		panic(err)
+	}
+
+	core.PuregoSafeRegister(&xVulkanErrorQuark, lib, "gdk_vulkan_error_quark")
+
+	core.PuregoSafeRegister(&xVulkanContextGLibType, lib, "gdk_vulkan_context_get_type")
 
 }

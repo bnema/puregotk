@@ -29,6 +29,7 @@ func (x *LoadableIconIface) GoPointer() uintptr {
 }
 
 // OverrideLoad sets the callback function.
+// Loads an icon.
 func (x *LoadableIconIface) OverrideLoad(cb func(LoadableIcon, int, string, *Cancellable) *InputStream) {
 	if cb == nil {
 		x.xLoad = 0
@@ -44,6 +45,7 @@ func (x *LoadableIconIface) OverrideLoad(cb func(LoadableIcon, int, string, *Can
 }
 
 // GetLoad gets the callback function.
+// Loads an icon.
 func (x *LoadableIconIface) GetLoad() func(LoadableIcon, int, string, *Cancellable) *InputStream {
 	if x.xLoad == 0 {
 		return nil
@@ -62,6 +64,7 @@ func (x *LoadableIconIface) GetLoad() func(LoadableIcon, int, string, *Cancellab
 }
 
 // OverrideLoadAsync sets the callback function.
+// Loads an icon asynchronously.
 func (x *LoadableIconIface) OverrideLoadAsync(cb func(LoadableIcon, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xLoadAsync = 0
@@ -73,6 +76,7 @@ func (x *LoadableIconIface) OverrideLoadAsync(cb func(LoadableIcon, int, *Cancel
 }
 
 // GetLoadAsync gets the callback function.
+// Loads an icon asynchronously.
 func (x *LoadableIconIface) GetLoadAsync() func(LoadableIcon, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xLoadAsync == 0 {
 		return nil
@@ -85,6 +89,7 @@ func (x *LoadableIconIface) GetLoadAsync() func(LoadableIcon, int, *Cancellable,
 }
 
 // OverrideLoadFinish sets the callback function.
+// Finishes an asynchronous icon load.
 func (x *LoadableIconIface) OverrideLoadFinish(cb func(LoadableIcon, AsyncResult, string) *InputStream) {
 	if cb == nil {
 		x.xLoadFinish = 0
@@ -100,6 +105,7 @@ func (x *LoadableIconIface) OverrideLoadFinish(cb func(LoadableIcon, AsyncResult
 }
 
 // GetLoadFinish gets the callback function.
+// Finishes an asynchronous icon load.
 func (x *LoadableIconIface) GetLoadFinish() func(LoadableIcon, AsyncResult, string) *InputStream {
 	if x.xLoadFinish == 0 {
 		return nil
@@ -117,8 +123,8 @@ func (x *LoadableIconIface) GetLoadFinish() func(LoadableIcon, AsyncResult, stri
 	}
 }
 
-// Extends the #GIcon interface and adds the ability to
-// load icons from streams.
+// `GLoadableIcon` extends the [iface@Gio.Icon] interface and adds the ability
+// to load icons from streams.
 type LoadableIcon interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

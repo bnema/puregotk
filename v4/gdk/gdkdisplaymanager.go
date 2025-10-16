@@ -52,8 +52,9 @@ func SetAllowedBackends(BackendsVar string) {
 
 }
 
-// A singleton object that offers notification when displays appear or
-// disappear.
+// Offers notification when displays appear or disappear.
+//
+// `GdkDisplayManager` is a singleton object.
 //
 // You can use [func@Gdk.DisplayManager.get] to obtain the `GdkDisplayManager`
 // singleton, but that should be rarely necessary. Typically, initializing
@@ -209,7 +210,7 @@ var xDisplayManagerGet func() uintptr
 // with multiple backends).
 //
 // Applications can use [func@set_allowed_backends] to limit what
-// backends wil be used.
+// backends will be used.
 func DisplayManagerGet() *DisplayManager {
 	var cls *DisplayManager
 

@@ -28,6 +28,7 @@ func (x *DebugControllerDBusClass) GoPointer() uintptr {
 }
 
 // OverrideAuthorize sets the callback function.
+// Default handler for the #GDebugControllerDBus::authorize signal.
 func (x *DebugControllerDBusClass) OverrideAuthorize(cb func(*DebugControllerDBus, *DBusMethodInvocation) bool) {
 	if cb == nil {
 		x.xAuthorize = 0
@@ -39,6 +40,7 @@ func (x *DebugControllerDBusClass) OverrideAuthorize(cb func(*DebugControllerDBu
 }
 
 // GetAuthorize gets the callback function.
+// Default handler for the #GDebugControllerDBus::authorize signal.
 func (x *DebugControllerDBusClass) GetAuthorize() func(*DebugControllerDBus, *DBusMethodInvocation) bool {
 	if x.xAuthorize == 0 {
 		return nil
@@ -50,29 +52,32 @@ func (x *DebugControllerDBusClass) GetAuthorize() func(*DebugControllerDBus, *DB
 	}
 }
 
-// #GDebugControllerDBus is an implementation of #GDebugController which exposes
-// debug settings as a D-Bus object.
+// `GDebugControllerDBus` is an implementation of [iface@Gio.DebugController]
+// which exposes debug settings as a D-Bus object.
 //
-// It is a #GInitable object, and will register an object at
+// It is a [iface@Gio.Initable] object, and will register an object at
 // `/org/gtk/Debugging` on the bus given as
-// #GDebugControllerDBus:connection once it’s initialized. The object will be
-// unregistered when the last reference to the #GDebugControllerDBus is dropped.
+// [property@Gio.DebugControllerDBus:connection] once it’s initialized. The
+// object will be unregistered when the last reference to the
+// `GDebugControllerDBus` is dropped.
 //
 // This D-Bus object can be used by remote processes to enable or disable debug
 // output in this process. Remote processes calling
 // `org.gtk.Debugging.SetDebugEnabled()` will affect the value of
-// #GDebugController:debug-enabled and, by default, g_log_get_debug_enabled().
-// default.
+// [property@Gio.DebugController:debug-enabled] and, by default,
+// [func@GLib.log_get_debug_enabled].
 //
-// By default, all processes will be able to call `SetDebugEnabled()`. If this
-// process is privileged, or might expose sensitive information in its debug
-// output, you may want to restrict the ability to enable debug output to
-// privileged users or processes.
+// By default, no processes are allowed to call `SetDebugEnabled()` unless a
+// [signal@Gio.DebugControllerDBus::authorize] signal handler is installed. This
+// is because the process may be privileged, or might expose sensitive
+// information in its debug output. You may want to restrict the ability to
+// enable debug output to privileged users or processes.
 //
 // One option is to install a D-Bus security policy which restricts access to
 // `SetDebugEnabled()`, installing something like the following in
 // `$datadir/dbus-1/system.d/`:
-// |[&lt;!-- language="XML" --&gt;
+//
+// ```xml
 // &lt;?xml version="1.0"?&gt; &lt;!--*-nxml-*--&gt;
 // &lt;!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
 //
@@ -88,7 +93,7 @@ func (x *DebugControllerDBusClass) GetAuthorize() func(*DebugControllerDBus, *DB
 //	&lt;/policy&gt;
 //
 // &lt;/busconfig&gt;
-// ]|
+// ```
 //
 // This will prevent the `SetDebugEnabled()` method from being called by all
 // except root. It will not prevent the `DebugEnabled` property from being read,
@@ -96,9 +101,10 @@ func (x *DebugControllerDBusClass) GetAuthorize() func(*DebugControllerDBus, *DB
 //
 // Another option is to use polkit to allow or deny requests on a case-by-case
 // basis, allowing for the possibility of dynamic authorisation. To do this,
-// connect to the #GDebugControllerDBus::authorize signal and query polkit in
-// it:
-// |[&lt;!-- language="C" --&gt;
+// connect to the [signal@Gio.DebugControllerDBus::authorize] signal and query
+// polkit in it:
+//
+// ```c
 //
 //	g_autoptr(GError) child_error = NULL;
 //	g_autoptr(GDBusConnection) connection = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, NULL);
@@ -108,7 +114,7 @@ func (x *DebugControllerDBusClass) GetAuthorize() func(*DebugControllerDBus, *DB
 //	debug_controller = G_DEBUG_CONTROLLER (g_debug_controller_dbus_new (priv-&gt;connection, NULL, &amp;child_error));
 //	if (debug_controller == NULL)
 //	  {
-//	    g_error ("Could not register debug controller on bus: %s"),
+//	    g_error ("Could not register debug controller on bus: %s",
 //	             child_error-&gt;message);
 //	  }
 //
@@ -161,7 +167,7 @@ func (x *DebugControllerDBusClass) GetAuthorize() func(*DebugControllerDBus, *DB
 //	  return polkit_authorization_result_get_is_authorized (auth_result);
 //	}
 //
-// ]|
+// ```
 type DebugControllerDBus struct {
 	gobject.Object
 }
@@ -308,7 +314,7 @@ func (x *DebugControllerDBus) SetDebugEnabled(DebugEnabledVar bool) {
 // If the object is not initialized, or initialization returns with an
 // error, then all operations on the object except g_object_ref() and
 // g_object_unref() are considered to be invalid, and have undefined
-// behaviour. See the [introduction][ginitable] for more details.
+// behaviour. See the [description][iface@Gio.Initable#description] for more details.
 //
 // Callers should not assume that a class which implements #GInitable can be
 // initialized multiple times, unless the class explicitly documents itself as

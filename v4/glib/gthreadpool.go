@@ -9,9 +9,32 @@ import (
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
-// The #GThreadPool struct represents a thread pool. It has three
-// public read-only members, but the underlying struct is bigger,
-// so you must not copy this struct.
+// The `GThreadPool` struct represents a thread pool.
+//
+// A thread pool is useful when you wish to asynchronously fork out the execution of work
+// and continue working in your own thread. If that will happen often, the overhead of starting
+// and destroying a thread each time might be too high. In such cases reusing already started
+// threads seems like a good idea. And it indeed is, but implementing this can be tedious
+// and error-prone.
+//
+// Therefore GLib provides thread pools for your convenience. An added advantage is, that the
+// threads can be shared between the different subsystems of your program, when they are using GLib.
+//
+// To create a new thread pool, you use [func@GLib.ThreadPool.new].
+// It is destroyed by [method@GLib.ThreadPool.free].
+//
+// If you want to execute a certain task within a thread pool, use [method@GLib.ThreadPool.push].
+//
+// To get the current number of running threads you call [method@GLib.ThreadPool.get_num_threads].
+// To get the number of still unprocessed tasks you call [method@GLib.ThreadPool.unprocessed].
+// To control the maximum number of threads for a thread pool, you use
+// [method@GLib.ThreadPool.get_max_threads]. and [method@GLib.ThreadPool.set_max_threads].
+//
+// Finally you can control the number of unused threads, that are kept alive by GLib for future use.
+// The current number can be fetched with [func@GLib.ThreadPool.get_num_unused_threads].
+// The maximum number can be controlled by [func@GLib.ThreadPool.get_max_unused_threads] and
+// [func@GLib.ThreadPool.set_max_unused_threads]. All currently unused threads
+// can be stopped by calling [func@GLib.ThreadPool.stop_unused_threads].
 type ThreadPool struct {
 	_ structs.HostLayout
 
@@ -217,7 +240,7 @@ var xThreadPoolSetMaxUnusedThreads func(int)
 // If @max_threads is -1, no limit is imposed on the number
 // of unused threads.
 //
-// The default value is 2.
+// The default value is 8 since GLib 2.84. Previously the default value was 2.
 func ThreadPoolSetMaxUnusedThreads(MaxThreadsVar int) {
 
 	xThreadPoolSetMaxUnusedThreads(MaxThreadsVar)
@@ -237,7 +260,7 @@ func ThreadPoolStopUnusedThreads() {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

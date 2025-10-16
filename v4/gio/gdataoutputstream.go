@@ -154,8 +154,8 @@ func (x *DataOutputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// Data output stream implements #GOutputStream and includes functions for
-// writing data directly to an output stream.
+// Data output stream implements [class@Gio.OutputStream] and includes functions
+// for writing data directly to an output stream.
 type DataOutputStream struct {
 	FilterOutputStream
 }

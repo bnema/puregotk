@@ -29,8 +29,8 @@ func (x *ConstraintTargetInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// The `GtkConstraintTarget` interface is implemented by objects that
-// can be used as source or target in `GtkConstraint`s.
+// Makes it possible to use an object as source or target in a
+// [class@Gtk.Constraint].
 //
 // Besides `GtkWidget`, it is also implemented by `GtkConstraintGuide`.
 type ConstraintTarget interface {
@@ -59,7 +59,7 @@ func (x *ConstraintTargetBase) SetGoPointer(ptr uintptr) {
 	x.Ptr = ptr
 }
 
-// `GtkConstraint` describes a constraint between attributes of two widgets,
+// Describes a constraint between attributes of two widgets,
 //
 //	expressed as a linear equation.
 //

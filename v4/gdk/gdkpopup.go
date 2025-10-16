@@ -19,12 +19,12 @@ func (x *PopupInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A `GdkPopup` is a surface that is attached to another surface.
+// A surface that is attached to another surface.
 //
 // The `GdkPopup` is positioned relative to its parent surface.
 //
 // `GdkPopup`s are typically used to implement menus and similar popups.
-// They can be modal, which is indicated by the [property@GdkPopup:autohide]
+// They can be modal, which is indicated by the [property@Gdk.Popup:autohide]
 // property.
 type Popup interface {
 	GoPointer() uintptr
@@ -117,11 +117,11 @@ func (x *PopupBase) GetSurfaceAnchor() Gravity {
 
 // Present @popup after having processed the `GdkPopupLayout` rules.
 //
-// If the popup was previously now showing, it will be showed,
+// If the popup was previously not showing, it will be shown,
 // otherwise it will change position according to @layout.
 //
 // After calling this function, the result should be handled in response
-// to the [signal@GdkSurface::layout] signal being emitted. The resulting
+// to the [signal@Gdk.Surface::layout] signal being emitted. The resulting
 // popup position can be queried using [method@Gdk.Popup.get_position_x],
 // [method@Gdk.Popup.get_position_y], and the resulting size will be sent as
 // parameters in the layout signal. Use [method@Gdk.Popup.get_rect_anchor]

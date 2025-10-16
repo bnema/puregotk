@@ -10,10 +10,15 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The `GdkToplevelSize` struct contains information that is useful
-// to compute the size of a toplevel.
+// Contains information that is useful to compute the size of a toplevel.
 type ToplevelSize struct {
 	_ structs.HostLayout
+}
+
+var xToplevelSizeGLibType func() types.GType
+
+func ToplevelSizeGLibType() types.GType {
+	return xToplevelSizeGLibType()
 }
 
 func (x *ToplevelSize) GoPointer() uintptr {
@@ -59,6 +64,9 @@ var xToplevelSizeSetShadowWidth func(uintptr, int, int, int, int)
 // The shadow width corresponds to the part of the computed surface size
 // that would consist of the shadow margin surrounding the window, would
 // there be any.
+//
+// Shadow width should only be set if
+// [method@Gtk.Display.supports_shadow_width] is %TRUE.
 func (x *ToplevelSize) SetShadowWidth(LeftVar int, RightVar int, TopVar int, BottomVar int) {
 
 	xToplevelSizeSetShadowWidth(x.GoPointer(), LeftVar, RightVar, TopVar, BottomVar)
@@ -79,14 +87,6 @@ func (x *ToplevelSize) SetSize(WidthVar int, HeightVar int) {
 
 }
 
-var xToplevelSizeGetType func() types.GType
-
-func ToplevelSizeGetType() types.GType {
-
-	cret := xToplevelSizeGetType()
-	return cret
-}
-
 func init() {
 	core.SetPackageName("GDK", "gtk4")
 	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
@@ -95,7 +95,7 @@ func init() {
 		panic(err)
 	}
 
-	core.PuregoSafeRegister(&xToplevelSizeGetType, lib, "gdk_toplevel_size_get_type")
+	core.PuregoSafeRegister(&xToplevelSizeGLibType, lib, "gdk_toplevel_size_get_type")
 
 	core.PuregoSafeRegister(&xToplevelSizeGetBounds, lib, "gdk_toplevel_size_get_bounds")
 	core.PuregoSafeRegister(&xToplevelSizeSetMinSize, lib, "gdk_toplevel_size_set_min_size")

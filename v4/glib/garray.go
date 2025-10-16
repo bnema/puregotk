@@ -48,30 +48,33 @@ func (x *ByteArray) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A simple refcounted data type representing an immutable sequence of zero or
-// more bytes from an unspecified origin.
+// A simple reference counted data type representing an immutable sequence of
+// zero or more bytes from an unspecified origin.
 //
-// The purpose of a #GBytes is to keep the memory region that it holds
+// The purpose of a `GBytes` is to keep the memory region that it holds
 // alive for as long as anyone holds a reference to the bytes.  When
 // the last reference count is dropped, the memory is released. Multiple
-// unrelated callers can use byte data in the #GBytes without coordinating
+// unrelated callers can use byte data in the `GBytes` without coordinating
 // their activities, resting assured that the byte data will not change or
 // move while they hold a reference.
 //
-// A #GBytes can come from many different origins that may have
+// A `GBytes` can come from many different origins that may have
 // different procedures for freeing the memory region.  Examples are
-// memory from g_malloc(), from memory slices, from a #GMappedFile or
-// memory from other allocators.
+// memory from [func@GLib.malloc], from memory slices, from a
+// [struct@GLib.MappedFile] or memory from other allocators.
 //
-// #GBytes work well as keys in #GHashTable. Use g_bytes_equal() and
-// g_bytes_hash() as parameters to g_hash_table_new() or g_hash_table_new_full().
-// #GBytes can also be used as keys in a #GTree by passing the g_bytes_compare()
-// function to g_tree_new().
+// `GBytes` work well as keys in [struct@GLib.HashTable]. Use
+// [method@GLib.Bytes.equal] and [method@GLib.Bytes.hash] as parameters to
+// [func@GLib.HashTable.new] or [func@GLib.HashTable.new_full].
+// `GBytes` can also be used as keys in a [struct@GLib.Tree] by passing the
+// [method@GLib.Bytes.compare] function to [ctor@GLib.Tree.new].
 //
 // The data pointed to by this bytes must not be modified. For a mutable
-// array of bytes see #GByteArray. Use g_bytes_unref_to_array() to create a
-// mutable array for a #GBytes sequence. To create an immutable #GBytes from
-// a mutable #GByteArray, use the g_byte_array_free_to_bytes() function.
+// array of bytes see [struct@GLib.ByteArray]. Use
+// [method@GLib.Bytes.unref_to_array] to create a mutable array for a `GBytes`
+// sequence. To create an immutable `GBytes` from a mutable
+// [struct@GLib.ByteArray], use the [func@GLib.ByteArray.free_to_bytes]
+// function.
 type Bytes struct {
 	_ structs.HostLayout
 }
@@ -88,9 +91,13 @@ func (x *Bytes) GoPointer() uintptr {
 
 var xNewBytes func([]byte, uint) *Bytes
 
-// Creates a new #GBytes from @data.
+// Creates a new [struct@GLib.Bytes] from @data.
 //
-// @data is copied. If @size is 0, @data may be %NULL.
+// @data is copied. If @size is 0, @data may be `NULL`.
+//
+// As an optimization, [ctor@GLib.Bytes.new] may avoid an extra allocation by
+// copying the data within the resulting bytes structure if sufficiently small
+// (since GLib 2.84).
 func NewBytes(DataVar []byte, SizeVar uint) *Bytes {
 
 	cret := xNewBytes(DataVar, SizeVar)
@@ -99,9 +106,9 @@ func NewBytes(DataVar []byte, SizeVar uint) *Bytes {
 
 var xNewBytesStatic func([]byte, uint) *Bytes
 
-// Creates a new #GBytes from static data.
+// Creates a new [struct@GLib.Bytes] from static data.
 //
-// @data must be static (ie: never modified or freed). It may be %NULL if @size
+// @data must be static (ie: never modified or freed). It may be `NULL` if @size
 // is 0.
 func NewBytesStatic(DataVar []byte, SizeVar uint) *Bytes {
 
@@ -111,18 +118,16 @@ func NewBytesStatic(DataVar []byte, SizeVar uint) *Bytes {
 
 var xNewBytesTake func(uintptr, uint) *Bytes
 
-// Creates a new #GBytes from @data.
+// Creates a new [struct@GLib.Bytes] from @data.
 //
-// After this call, @data belongs to the bytes and may no longer be
-// modified by the caller.  g_free() will be called on @data when the
-// bytes is no longer in use. Because of this @data must have been created by
-// a call to g_malloc(), g_malloc0() or g_realloc() or by one of the many
-// functions that wrap these calls (such as g_new(), g_strdup(), etc).
+// After this call, @data belongs to the `GBytes` and may no longer be
+// modified by the caller. The memory of @data has to be dynamically
+// allocated and will eventually be freed with [func@GLib.free].
 //
-// For creating #GBytes with memory from other allocators, see
-// g_bytes_new_with_free_func().
+// For creating `GBytes` with memory from other allocators, see
+// [ctor@GLib.Bytes.new_with_free_func].
 //
-// @data may be %NULL if @size is 0.
+// @data may be `NULL` if @size is 0.
 func NewBytesTake(DataVar uintptr, SizeVar uint) *Bytes {
 
 	cret := xNewBytesTake(DataVar, SizeVar)
@@ -131,7 +136,7 @@ func NewBytesTake(DataVar uintptr, SizeVar uint) *Bytes {
 
 var xNewBytesWithFreeFunc func([]byte, uint, uintptr, uintptr) *Bytes
 
-// Creates a #GBytes from @data.
+// Creates a [struct@GLib.Bytes] from @data.
 //
 // When the last reference is dropped, @free_func will be called with the
 // @user_data argument.
@@ -139,7 +144,7 @@ var xNewBytesWithFreeFunc func([]byte, uint, uintptr, uintptr) *Bytes
 // @data must not be modified after this call is made until @free_func has
 // been called to indicate that the bytes is no longer in use.
 //
-// @data may be %NULL if @size is 0.
+// @data may be `NULL` if @size is 0.
 func NewBytesWithFreeFunc(DataVar []byte, SizeVar uint, FreeFuncVar *DestroyNotify, UserDataVar uintptr) *Bytes {
 
 	cret := xNewBytesWithFreeFunc(DataVar, SizeVar, NewCallback(FreeFuncVar), UserDataVar)
@@ -148,9 +153,10 @@ func NewBytesWithFreeFunc(DataVar []byte, SizeVar uint, FreeFuncVar *DestroyNoti
 
 var xBytesCompare func(uintptr, uintptr) int
 
-// Compares the two #GBytes values.
+// Compares the two [struct@GLib.Bytes] values.
 //
-// This function can be used to sort GBytes instances in lexicographical order.
+// This function can be used to sort `GBytes` instances in lexicographical
+// order.
 //
 // If @bytes1 and @bytes2 have different length but the shorter one is a
 // prefix of the longer one then the shorter one is considered to be less than
@@ -165,11 +171,12 @@ func (x *Bytes) Compare(Bytes2Var uintptr) int {
 
 var xBytesEqual func(uintptr, uintptr) bool
 
-// Compares the two #GBytes values being pointed to and returns
-// %TRUE if they are equal.
+// Compares the two [struct@GLib.Bytes] values being pointed to and returns
+// `TRUE` if they are equal.
 //
-// This function can be passed to g_hash_table_new() as the @key_equal_func
-// parameter, when using non-%NULL #GBytes pointers as keys in a #GHashTable.
+// This function can be passed to [func@GLib.HashTable.new] as the
+// @key_equal_func parameter, when using non-`NULL` `GBytes` pointers as keys in
+// a [struct@GLib.HashTable].
 func (x *Bytes) Equal(Bytes2Var uintptr) bool {
 
 	cret := xBytesEqual(x.GoPointer(), Bytes2Var)
@@ -178,13 +185,15 @@ func (x *Bytes) Equal(Bytes2Var uintptr) bool {
 
 var xBytesGetData func(uintptr, uint) uintptr
 
-// Get the byte data in the #GBytes. This data should not be modified.
+// Get the byte data in the [struct@GLib.Bytes].
 //
-// This function will always return the same pointer for a given #GBytes.
+// This data should not be modified.
 //
-// %NULL may be returned if @size is 0. This is not guaranteed, as the #GBytes
-// may represent an empty string with @data non-%NULL and @size as 0. %NULL will
-// not be returned if @size is non-zero.
+// This function will always return the same pointer for a given `GBytes`.
+//
+// `NULL` may be returned if @size is 0. This is not guaranteed, as the `GBytes`
+// may represent an empty string with @data non-`NULL` and @size as 0. `NULL`
+// will not be returned if @size is non-zero.
 func (x *Bytes) GetData(SizeVar uint) uintptr {
 
 	cret := xBytesGetData(x.GoPointer(), SizeVar)
@@ -199,20 +208,20 @@ var xBytesGetRegion func(uintptr, uint, uint, uint) uintptr
 // and contains @n_elements many elements of @element_size size.
 //
 // @n_elements may be zero, but @element_size must always be non-zero.
-// Ideally, @element_size is a static constant (eg: sizeof a struct).
+// Ideally, @element_size is a static constant (eg: `sizeof` a struct).
 //
 // This function does careful bounds checking (including checking for
-// arithmetic overflows) and returns a non-%NULL pointer if the
+// arithmetic overflows) and returns a non-`NULL` pointer if the
 // specified region lies entirely within the @bytes. If the region is
-// in some way out of range, or if an overflow has occurred, then %NULL
+// in some way out of range, or if an overflow has occurred, then `NULL`
 // is returned.
 //
 // Note: it is possible to have a valid zero-size region. In this case,
 // the returned pointer will be equal to the base pointer of the data of
-// @bytes, plus @offset.  This will be non-%NULL except for the case
+// @bytes, plus @offset.  This will be non-`NULL` except for the case
 // where @bytes itself was a zero-sized region.  Since it is unlikely
 // that you will be using this function to check for a zero-sized region
-// in a zero-sized @bytes, %NULL effectively always means "error".
+// in a zero-sized @bytes, `NULL` effectively always means ‘error’.
 func (x *Bytes) GetRegion(ElementSizeVar uint, OffsetVar uint, NElementsVar uint) uintptr {
 
 	cret := xBytesGetRegion(x.GoPointer(), ElementSizeVar, OffsetVar, NElementsVar)
@@ -221,9 +230,9 @@ func (x *Bytes) GetRegion(ElementSizeVar uint, OffsetVar uint, NElementsVar uint
 
 var xBytesGetSize func(uintptr) uint
 
-// Get the size of the byte data in the #GBytes.
+// Get the size of the byte data in the [struct@GLib.Bytes].
 //
-// This function will always return the same value for a given #GBytes.
+// This function will always return the same value for a given `GBytes`.
 func (x *Bytes) GetSize() uint {
 
 	cret := xBytesGetSize(x.GoPointer())
@@ -232,10 +241,11 @@ func (x *Bytes) GetSize() uint {
 
 var xBytesHash func(uintptr) uint
 
-// Creates an integer hash code for the byte data in the #GBytes.
+// Creates an integer hash code for the byte data in the [struct@GLib.Bytes].
 //
-// This function can be passed to g_hash_table_new() as the @key_hash_func
-// parameter, when using non-%NULL #GBytes pointers as keys in a #GHashTable.
+// This function can be passed to [func@GLib.HashTable.new] as the
+// @key_hash_func parameter, when using non-`NULL` `GBytes` pointers as keys in
+// a [struct@GLib.HashTable].
 func (x *Bytes) Hash() uint {
 
 	cret := xBytesHash(x.GoPointer())
@@ -244,17 +254,18 @@ func (x *Bytes) Hash() uint {
 
 var xBytesNewFromBytes func(uintptr, uint, uint) *Bytes
 
-// Creates a #GBytes which is a subsection of another #GBytes. The @offset +
-// @length may not be longer than the size of @bytes.
+// Creates a [struct@GLib.Bytes] which is a subsection of another `GBytes`.
 //
-// A reference to @bytes will be held by the newly created #GBytes until
+// The @offset + @length may not be longer than the size of @bytes.
+//
+// A reference to @bytes will be held by the newly created `GBytes` until
 // the byte data is no longer needed.
 //
 // Since 2.56, if @offset is 0 and @length matches the size of @bytes, then
 // @bytes will be returned with the reference count incremented by 1. If @bytes
-// is a slice of another #GBytes, then the resulting #GBytes will reference
-// the same #GBytes instead of @bytes. This allows consumers to simplify the
-// usage of #GBytes when asynchronously writing to streams.
+// is a slice of another `GBytes`, then the resulting `GBytes` will reference
+// the same `GBytes` instead of @bytes. This allows consumers to simplify the
+// usage of `GBytes` when asynchronously writing to streams.
 func (x *Bytes) NewFromBytes(OffsetVar uint, LengthVar uint) *Bytes {
 
 	cret := xBytesNewFromBytes(x.GoPointer(), OffsetVar, LengthVar)
@@ -272,8 +283,10 @@ func (x *Bytes) Ref() *Bytes {
 
 var xBytesUnref func(uintptr)
 
-// Releases a reference on @bytes.  This may result in the bytes being
-// freed. If @bytes is %NULL, it will return immediately.
+// Releases a reference on @bytes.
+//
+// This may result in the bytes being freed. If @bytes is `NULL`, it will
+// return immediately.
 func (x *Bytes) Unref() {
 
 	xBytesUnref(x.GoPointer())
@@ -282,17 +295,19 @@ func (x *Bytes) Unref() {
 
 var xBytesUnrefToArray func(uintptr) uintptr
 
-// Unreferences the bytes, and returns a new mutable #GByteArray containing
-// the same byte data.
+// Unreferences the bytes, and returns a new mutable [struct@GLib.ByteArray]
+// containing the same byte data.
 //
 // As an optimization, the byte data is transferred to the array without copying
-// if this was the last reference to bytes and bytes was created with
-// g_bytes_new(), g_bytes_new_take() or g_byte_array_free_to_bytes(). In all
-// other cases the data is copied.
+// if this was the last reference to @bytes and @bytes was created with
+// [ctor@GLib.Bytes.new], [ctor@GLib.Bytes.new_take] or
+// [func@GLib.ByteArray.free_to_bytes] and the buffer was larger than the size
+// [struct@GLib.Bytes] may internalize within its allocation. In all other cases
+// the data is copied.
 //
 // Do not use it if @bytes contains more than %G_MAXUINT
-// bytes. #GByteArray stores the length of its data in #guint, which
-// may be shorter than #gsize, that @bytes is using.
+// bytes. [struct@GLib.ByteArray] stores the length of its data in `guint`,
+// which may be shorter than `gsize`, that @bytes is using.
 func (x *Bytes) UnrefToArray() uintptr {
 
 	cret := xBytesUnrefToArray(x.GoPointer())
@@ -305,9 +320,11 @@ var xBytesUnrefToData func(uintptr, uint) uintptr
 // contents.
 //
 // As an optimization, the byte data is returned without copying if this was
-// the last reference to bytes and bytes was created with g_bytes_new(),
-// g_bytes_new_take() or g_byte_array_free_to_bytes(). In all other cases the
-// data is copied.
+// the last reference to @bytes and @bytes was created with
+// [ctor@GLib.Bytes.new], [ctor@GLib.Bytes.new_take] or
+// [func@GLib.ByteArray.free_to_bytes] and the buffer was larger than the size
+// [struct@GLib.Bytes] may internalize within its allocation. In all other cases
+// the data is copied.
 func (x *Bytes) UnrefToData(SizeVar uint) uintptr {
 
 	cret := xBytesUnrefToData(x.GoPointer(), SizeVar)
@@ -331,6 +348,67 @@ func PtrArrayGLibType() types.GType {
 
 func (x *PtrArray) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+var xArrayNewTake func(uintptr, uint, bool, uint) uintptr
+
+// Creates a new #GArray with @data as array data, @len as length and a
+// reference count of 1.
+//
+// This avoids having to copy the data manually, when it can just be
+// inherited.
+// After this call, @data belongs to the #GArray and may no longer be
+// modified by the caller. The memory of @data has to be dynamically
+// allocated and will eventually be freed with g_free().
+//
+// In case the elements need to be cleared when the array is freed, use
+// g_array_set_clear_func() to set a #GDestroyNotify function to perform
+// such task.
+//
+// Do not use it if @len or @element_size are greater than %G_MAXUINT.
+// #GArray stores the length of its data in #guint, which may be shorter
+// than #gsize.
+func ArrayNewTake(DataVar uintptr, LenVar uint, ClearVar bool, ElementSizeVar uint) uintptr {
+
+	cret := xArrayNewTake(DataVar, LenVar, ClearVar, ElementSizeVar)
+	return cret
+}
+
+var xArrayNewTakeZeroTerminated func(uintptr, bool, uint) uintptr
+
+// Creates a new #GArray with @data as array data, computing the length of it
+// and setting the reference count to 1.
+//
+// This avoids having to copy the data manually, when it can just be
+// inherited.
+// After this call, @data belongs to the #GArray and may no longer be
+// modified by the caller. The memory of @data has to be dynamically
+// allocated and will eventually be freed with g_free().
+//
+// The length is calculated by iterating through @data until the first %NULL
+// element is found.
+//
+// In case the elements need to be cleared when the array is freed, use
+// g_array_set_clear_func() to set a #GDestroyNotify function to perform
+// such task.
+//
+// Do not use it if @data length or @element_size are greater than %G_MAXUINT.
+// #GArray stores the length of its data in #guint, which may be shorter
+// than #gsize.
+func ArrayNewTakeZeroTerminated(DataVar uintptr, ClearVar bool, ElementSizeVar uint) uintptr {
+
+	cret := xArrayNewTakeZeroTerminated(DataVar, ClearVar, ElementSizeVar)
+	return cret
+}
+
+var xByteArrayAppend func([]byte, byte, uint) uintptr
+
+// Adds the given bytes to the end of the #GByteArray.
+// The array will grow in size automatically if necessary.
+func ByteArrayAppend(ArrayVar []byte, DataVar byte, LenVar uint) uintptr {
+
+	cret := xByteArrayAppend(ArrayVar, DataVar, LenVar)
+	return cret
 }
 
 var xByteArrayFree func([]byte, bool) byte
@@ -372,8 +450,10 @@ func ByteArrayNew() uintptr {
 
 var xByteArrayNewTake func([]byte, uint) uintptr
 
-// Create byte array containing the data. The data will be owned by the array
-// and will be freed with g_free(), i.e. it could be allocated using g_strdup().
+// Creates a byte array containing the @data.
+// After this call, @data belongs to the #GByteArray and may no longer be
+// modified by the caller. The memory of @data has to be dynamically
+// allocated and will eventually be freed with g_free().
 //
 // Do not use it if @len is greater than %G_MAXUINT. #GByteArray
 // stores the length of its data in #guint, which may be shorter than
@@ -382,6 +462,107 @@ func ByteArrayNewTake(DataVar []byte, LenVar uint) uintptr {
 
 	cret := xByteArrayNewTake(DataVar, LenVar)
 	return cret
+}
+
+var xByteArrayPrepend func([]byte, byte, uint) uintptr
+
+// Adds the given data to the start of the #GByteArray.
+// The array will grow in size automatically if necessary.
+func ByteArrayPrepend(ArrayVar []byte, DataVar byte, LenVar uint) uintptr {
+
+	cret := xByteArrayPrepend(ArrayVar, DataVar, LenVar)
+	return cret
+}
+
+var xByteArrayRef func([]byte) uintptr
+
+// Atomically increments the reference count of @array by one.
+// This function is thread-safe and may be called from any thread.
+func ByteArrayRef(ArrayVar []byte) uintptr {
+
+	cret := xByteArrayRef(ArrayVar)
+	return cret
+}
+
+var xByteArrayRemoveIndex func([]byte, uint) uintptr
+
+// Removes the byte at the given index from a #GByteArray.
+// The following bytes are moved down one place.
+func ByteArrayRemoveIndex(ArrayVar []byte, IndexVar uint) uintptr {
+
+	cret := xByteArrayRemoveIndex(ArrayVar, IndexVar)
+	return cret
+}
+
+var xByteArrayRemoveIndexFast func([]byte, uint) uintptr
+
+// Removes the byte at the given index from a #GByteArray. The last
+// element in the array is used to fill in the space, so this function
+// does not preserve the order of the #GByteArray. But it is faster
+// than g_byte_array_remove_index().
+func ByteArrayRemoveIndexFast(ArrayVar []byte, IndexVar uint) uintptr {
+
+	cret := xByteArrayRemoveIndexFast(ArrayVar, IndexVar)
+	return cret
+}
+
+var xByteArrayRemoveRange func([]byte, uint, uint) uintptr
+
+// Removes the given number of bytes starting at the given index from a
+// #GByteArray.  The following elements are moved to close the gap.
+func ByteArrayRemoveRange(ArrayVar []byte, IndexVar uint, LengthVar uint) uintptr {
+
+	cret := xByteArrayRemoveRange(ArrayVar, IndexVar, LengthVar)
+	return cret
+}
+
+var xByteArraySetSize func([]byte, uint) uintptr
+
+// Sets the size of the #GByteArray, expanding it if necessary.
+func ByteArraySetSize(ArrayVar []byte, LengthVar uint) uintptr {
+
+	cret := xByteArraySetSize(ArrayVar, LengthVar)
+	return cret
+}
+
+var xByteArraySizedNew func(uint) uintptr
+
+// Creates a new #GByteArray with @reserved_size bytes preallocated.
+// This avoids frequent reallocation, if you are going to add many
+// bytes to the array. Note however that the size of the array is still
+// 0.
+func ByteArraySizedNew(ReservedSizeVar uint) uintptr {
+
+	cret := xByteArraySizedNew(ReservedSizeVar)
+	return cret
+}
+
+var xByteArraySort func([]byte, uintptr)
+
+// Sorts a byte array, using @compare_func which should be a
+// qsort()-style comparison function (returns less than zero for first
+// arg is less than second arg, zero for equal, greater than zero if
+// first arg is greater than second arg).
+//
+// If two array elements compare equal, their order in the sorted array
+// is undefined. If you want equal elements to keep their order (i.e.
+// you want a stable sort) you can write a comparison function that,
+// if two elements would otherwise compare equal, compares them by
+// their addresses.
+func ByteArraySort(ArrayVar []byte, CompareFuncVar *CompareFunc) {
+
+	xByteArraySort(ArrayVar, NewCallback(CompareFuncVar))
+
+}
+
+var xByteArraySortWithData func([]byte, uintptr, uintptr)
+
+// Like g_byte_array_sort(), but the comparison function takes an extra
+// user data argument.
+func ByteArraySortWithData(ArrayVar []byte, CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
+
+	xByteArraySortWithData(ArrayVar, NewCallback(CompareFuncVar), UserDataVar)
+
 }
 
 var xByteArraySteal func([]byte, uint) byte
@@ -439,22 +620,131 @@ func PtrArrayFindWithEqualFunc(HaystackVar []uintptr, NeedleVar uintptr, EqualFu
 	return cret
 }
 
+var xPtrArrayNewFromArray func([]uintptr, uint, uintptr, uintptr, uintptr) uintptr
+
+// Creates a new #GPtrArray, copying @len pointers from @data, and setting
+// the array’s reference count to 1.
+//
+// This avoids having to manually add each element one by one.
+//
+// If @copy_func is provided, then it is used to copy each element before
+// adding them to the new array. If it is %NULL then the pointers are copied
+// directly.
+//
+// It also sets @element_free_func for freeing each element when the array is
+// destroyed either via g_ptr_array_unref(), when g_ptr_array_free() is called
+// with @free_segment set to %TRUE or when removing elements.
+//
+// Do not use it if @len is greater than %G_MAXUINT. #GPtrArray
+// stores the length of its data in #guint, which may be shorter than
+// #gsize.
+func PtrArrayNewFromArray(DataVar []uintptr, LenVar uint, CopyFuncVar *CopyFunc, CopyFuncUserDataVar uintptr, ElementFreeFuncVar *DestroyNotify) uintptr {
+
+	cret := xPtrArrayNewFromArray(DataVar, LenVar, NewCallbackNullable(CopyFuncVar), CopyFuncUserDataVar, NewCallbackNullable(ElementFreeFuncVar))
+	return cret
+}
+
+var xPtrArrayNewFromNullTerminatedArray func([]uintptr, uintptr, uintptr, uintptr) uintptr
+
+// Creates a new #GPtrArray copying the pointers from @data after having
+// computed the length of it and with a reference count of 1.
+// This avoids having to manually add each element one by one.
+// If @copy_func is provided, then it is used to copy the data in the new
+// array.
+// It also set @element_free_func for freeing each element when the array is
+// destroyed either via g_ptr_array_unref(), when g_ptr_array_free() is called
+// with @free_segment set to %TRUE or when removing elements.
+//
+// Do not use it if the @data has more than %G_MAXUINT elements. #GPtrArray
+// stores the length of its data in #guint, which may be shorter than
+// #gsize.
+func PtrArrayNewFromNullTerminatedArray(DataVar []uintptr, CopyFuncVar *CopyFunc, CopyFuncUserDataVar uintptr, ElementFreeFuncVar *DestroyNotify) uintptr {
+
+	cret := xPtrArrayNewFromNullTerminatedArray(DataVar, NewCallbackNullable(CopyFuncVar), CopyFuncUserDataVar, NewCallbackNullable(ElementFreeFuncVar))
+	return cret
+}
+
+var xPtrArrayNewTake func([]uintptr, uint, uintptr) uintptr
+
+// Creates a new #GPtrArray with @data as pointers, @len as length and a
+// reference count of 1.
+//
+// This avoids having to copy such data manually.
+// After this call, @data belongs to the #GPtrArray and may no longer be
+// modified by the caller. The memory of @data has to be dynamically
+// allocated and will eventually be freed with g_free().
+//
+// It also sets @element_free_func for freeing each element when the array is
+// destroyed either via g_ptr_array_unref(), when g_ptr_array_free() is called
+// with @free_segment set to %TRUE or when removing elements.
+//
+// Do not use it if @len is greater than %G_MAXUINT. #GPtrArray
+// stores the length of its data in #guint, which may be shorter than
+// #gsize.
+func PtrArrayNewTake(DataVar []uintptr, LenVar uint, ElementFreeFuncVar *DestroyNotify) uintptr {
+
+	cret := xPtrArrayNewTake(DataVar, LenVar, NewCallbackNullable(ElementFreeFuncVar))
+	return cret
+}
+
+var xPtrArrayNewTakeNullTerminated func([]uintptr, uintptr) uintptr
+
+// Creates a new #GPtrArray with @data as pointers, computing the length of it
+// and setting the reference count to 1.
+//
+// This avoids having to copy such data manually.
+// After this call, @data belongs to the #GPtrArray and may no longer be
+// modified by the caller. The memory of @data has to be dynamically
+// allocated and will eventually be freed with g_free().
+//
+// The length is calculated by iterating through @data until the first %NULL
+// element is found.
+//
+// It also sets @element_free_func for freeing each element when the array is
+// destroyed either via g_ptr_array_unref(), when g_ptr_array_free() is called
+// with @free_segment set to %TRUE or when removing elements.
+//
+// Do not use it if the @data length is greater than %G_MAXUINT. #GPtrArray
+// stores the length of its data in #guint, which may be shorter than
+// #gsize.
+func PtrArrayNewTakeNullTerminated(DataVar []uintptr, ElementFreeFuncVar *DestroyNotify) uintptr {
+
+	cret := xPtrArrayNewTakeNullTerminated(DataVar, NewCallbackNullable(ElementFreeFuncVar))
+	return cret
+}
+
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
 
+	core.PuregoSafeRegister(&xArrayNewTake, lib, "g_array_new_take")
+	core.PuregoSafeRegister(&xArrayNewTakeZeroTerminated, lib, "g_array_new_take_zero_terminated")
+	core.PuregoSafeRegister(&xByteArrayAppend, lib, "g_byte_array_append")
 	core.PuregoSafeRegister(&xByteArrayFree, lib, "g_byte_array_free")
 	core.PuregoSafeRegister(&xByteArrayFreeToBytes, lib, "g_byte_array_free_to_bytes")
 	core.PuregoSafeRegister(&xByteArrayNew, lib, "g_byte_array_new")
 	core.PuregoSafeRegister(&xByteArrayNewTake, lib, "g_byte_array_new_take")
+	core.PuregoSafeRegister(&xByteArrayPrepend, lib, "g_byte_array_prepend")
+	core.PuregoSafeRegister(&xByteArrayRef, lib, "g_byte_array_ref")
+	core.PuregoSafeRegister(&xByteArrayRemoveIndex, lib, "g_byte_array_remove_index")
+	core.PuregoSafeRegister(&xByteArrayRemoveIndexFast, lib, "g_byte_array_remove_index_fast")
+	core.PuregoSafeRegister(&xByteArrayRemoveRange, lib, "g_byte_array_remove_range")
+	core.PuregoSafeRegister(&xByteArraySetSize, lib, "g_byte_array_set_size")
+	core.PuregoSafeRegister(&xByteArraySizedNew, lib, "g_byte_array_sized_new")
+	core.PuregoSafeRegister(&xByteArraySort, lib, "g_byte_array_sort")
+	core.PuregoSafeRegister(&xByteArraySortWithData, lib, "g_byte_array_sort_with_data")
 	core.PuregoSafeRegister(&xByteArraySteal, lib, "g_byte_array_steal")
 	core.PuregoSafeRegister(&xByteArrayUnref, lib, "g_byte_array_unref")
 	core.PuregoSafeRegister(&xPtrArrayFind, lib, "g_ptr_array_find")
 	core.PuregoSafeRegister(&xPtrArrayFindWithEqualFunc, lib, "g_ptr_array_find_with_equal_func")
+	core.PuregoSafeRegister(&xPtrArrayNewFromArray, lib, "g_ptr_array_new_from_array")
+	core.PuregoSafeRegister(&xPtrArrayNewFromNullTerminatedArray, lib, "g_ptr_array_new_from_null_terminated_array")
+	core.PuregoSafeRegister(&xPtrArrayNewTake, lib, "g_ptr_array_new_take")
+	core.PuregoSafeRegister(&xPtrArrayNewTakeNullTerminated, lib, "g_ptr_array_new_take_null_terminated")
 
 	core.PuregoSafeRegister(&xArrayGLibType, lib, "g_array_get_type")
 

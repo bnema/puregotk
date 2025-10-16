@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
 // The GRand struct is an opaque data structure. It should only be
@@ -15,8 +16,45 @@ type Rand struct {
 	_ structs.HostLayout
 }
 
+var xRandGLibType func() types.GType
+
+func RandGLibType() types.GType {
+	return xRandGLibType()
+}
+
 func (x *Rand) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewRand func() *Rand
+
+// Creates a new random number generator initialized with a seed taken
+// either from `/dev/urandom` (if existing) or from the current time
+// (as a fallback).
+//
+// On Windows, the seed is taken from rand_s().
+func NewRand() *Rand {
+
+	cret := xNewRand()
+	return cret
+}
+
+var xNewRandWithSeed func(uint32) *Rand
+
+// Creates a new random number generator initialized with @seed.
+func NewRandWithSeed(SeedVar uint32) *Rand {
+
+	cret := xNewRandWithSeed(SeedVar)
+	return cret
+}
+
+var xNewRandWithSeedArray func(uint32, uint) *Rand
+
+// Creates a new random number generator initialized with @seed.
+func NewRandWithSeedArray(SeedVar uint32, SeedLengthVar uint) *Rand {
+
+	cret := xNewRandWithSeedArray(SeedVar, SeedLengthVar)
+	return cret
 }
 
 var xRandCopy func(uintptr) *Rand
@@ -152,7 +190,7 @@ func RandomSetSeed(SeedVar uint32) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -163,6 +201,12 @@ func init() {
 	core.PuregoSafeRegister(&xRandomInt, lib, "g_random_int")
 	core.PuregoSafeRegister(&xRandomIntRange, lib, "g_random_int_range")
 	core.PuregoSafeRegister(&xRandomSetSeed, lib, "g_random_set_seed")
+
+	core.PuregoSafeRegister(&xRandGLibType, lib, "g_rand_get_type")
+
+	core.PuregoSafeRegister(&xNewRand, lib, "g_rand_new")
+	core.PuregoSafeRegister(&xNewRandWithSeed, lib, "g_rand_new_with_seed")
+	core.PuregoSafeRegister(&xNewRandWithSeedArray, lib, "g_rand_new_with_seed_array")
 
 	core.PuregoSafeRegister(&xRandCopy, lib, "g_rand_copy")
 	core.PuregoSafeRegister(&xRandDouble, lib, "g_rand_double")

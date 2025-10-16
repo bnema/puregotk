@@ -13,7 +13,7 @@ import (
 )
 
 // This function type is used by g_vfs_register_uri_scheme() to make it
-// possible for a client to associate an URI scheme to a different #GFile
+// possible for a client to associate a URI scheme to a different #GFile
 // implementation.
 //
 // The client should return a reference to the new file that has been
@@ -497,7 +497,7 @@ func (x *VfsClass) GetGReserved6() func() {
 
 const (
 	// Extension point for #GVfs functionality.
-	// See [Extending GIO][extending-gio].
+	// See [Extending GIO](overview.html#extending-gio).
 	VFS_EXTENSION_POINT_NAME string = "gio-vfs"
 )
 

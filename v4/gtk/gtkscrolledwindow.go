@@ -66,7 +66,14 @@ const (
 	PolicyExternalValue PolicyType = 3
 )
 
-// `GtkScrolledWindow` is a container that makes its child scrollable.
+// Makes its child scrollable.
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="scrolledwindow-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkScrolledWindow" src="scrolledwindow.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // It does so using either internally added scrollbars or externally
 // associated adjustments, and optionally draws a frame around the child.
@@ -80,26 +87,7 @@ const (
 // just add any child widget and not worry about the details.
 //
 // If [method@Gtk.ScrolledWindow.set_child] has added a `GtkViewport` for you,
-// you can remove both your added child widget from the `GtkViewport`, and the
-// `GtkViewport` from the `GtkScrolledWindow`, like this:
-//
-// ```c
-// GtkWidget *scrolled_window = gtk_scrolled_window_new ();
-// GtkWidget *child_widget = gtk_button_new ();
-//
-// // GtkButton is not a GtkScrollable, so GtkScrolledWindow will automatically
-// // add a GtkViewport.
-// gtk_box_append (GTK_BOX (scrolled_window), child_widget);
-//
-// // Either of these will result in child_widget being unparented:
-// gtk_box_remove (GTK_BOX (scrolled_window), child_widget);
-// // or
-// gtk_box_remove (GTK_BOX (scrolled_window),
-//
-//	gtk_bin_get_child (GTK_BIN (scrolled_window)));
-//
-// ```
-//
+// it will be automatically removed when you unset the child.
 // Unless [property@Gtk.ScrolledWindow:hscrollbar-policy] and
 // [property@Gtk.ScrolledWindow:vscrollbar-policy] are %GTK_POLICY_NEVER or
 // %GTK_POLICY_EXTERNAL, `GtkScrolledWindow` adds internal `GtkScrollbar` widgets
@@ -131,6 +119,12 @@ const (
 // can be turned off with the [property@Gtk.ScrolledWindow:overlay-scrolling]
 // property.
 //
+// # Shortcuts and Gestures
+//
+// The following signals have default keybindings:
+//
+// - [signal@Gtk.ScrolledWindow::scroll-child]
+//
 // # CSS nodes
 //
 // `GtkScrolledWindow` has a main CSS node with name scrolledwindow.
@@ -150,7 +144,10 @@ const (
 //
 // # Accessibility
 //
-// `GtkScrolledWindow` uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
+// Until GTK 4.10, `GtkScrolledWindow` used the [enum@Gtk.AccessibleRole.group] role.
+//
+// Starting from GTK 4.12, `GtkScrolledWindow` uses the [enum@Gtk.AccessibleRole.generic]
+// role.
 type ScrolledWindow struct {
 	Widget
 }
@@ -187,6 +184,10 @@ func NewScrolledWindow() *ScrolledWindow {
 var xScrolledWindowGetChild func(uintptr) uintptr
 
 // Gets the child widget of @scrolled_window.
+//
+// If the scrolled window automatically added a [class@Gtk.Viewport], this
+// function will return the viewport widget, and you can retrieve its child
+// using [method@Gtk.Viewport.get_child].
 func (x *ScrolledWindow) GetChild() *Widget {
 	var cls *Widget
 
@@ -382,6 +383,10 @@ func (x *ScrolledWindow) GetVscrollbar() *Widget {
 var xScrolledWindowSetChild func(uintptr, uintptr)
 
 // Sets the child widget of @scrolled_window.
+//
+// If @child does not implement the [iface@Gtk.Scrollable] interface,
+// the scrolled window will add @child to a [class@Gtk.Viewport] instance
+// and then add the viewport as its child widget.
 func (x *ScrolledWindow) SetChild(ChildVar *Widget) {
 
 	xScrolledWindowSetChild(x.GoPointer(), ChildVar.GoPointer())
@@ -635,8 +640,8 @@ func (x *ScrolledWindow) ConnectEdgeReached(cb *func(ScrolledWindow, PositionTyp
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are
-// `Ctrl + Tab` to move forward and `Ctrl + Shift + Tab` to
-// move backward.
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; to move forward and
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt;` to move backward.
 func (x *ScrolledWindow) ConnectMoveFocusOut(cb *func(ScrolledWindow, DirectionType)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -681,31 +686,162 @@ func (x *ScrolledWindow) ConnectScrollChild(cb *func(ScrolledWindow, ScrollType,
 	return gobject.SignalConnect(x.GoPointer(), "scroll-child", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *ScrolledWindow) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *ScrolledWindow) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *ScrolledWindow) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *ScrolledWindow) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *ScrolledWindow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *ScrolledWindow) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *ScrolledWindow) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *ScrolledWindow) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *ScrolledWindow) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *ScrolledWindow) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *ScrolledWindow) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *ScrolledWindow) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *ScrolledWindow) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *ScrolledWindow) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -751,7 +887,7 @@ func (x *ScrolledWindow) UpdatePropertyValue(NPropertiesVar int, PropertiesVar [
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -781,13 +917,17 @@ func (x *ScrolledWindow) UpdateRelationValue(NRelationsVar int, RelationsVar []A
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -817,7 +957,7 @@ func (x *ScrolledWindow) UpdateStateValue(NStatesVar int, StatesVar []Accessible
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ScrolledWindow) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

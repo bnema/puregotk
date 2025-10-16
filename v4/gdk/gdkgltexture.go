@@ -20,7 +20,7 @@ func (x *GLTextureClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A GdkTexture representing a GL texture object.
+// A `GdkTexture` representing a GL texture object.
 type GLTexture struct {
 	Texture
 }
@@ -229,6 +229,13 @@ func (x *GLTexture) Snapshot(SnapshotVar *Snapshot, WidthVar float64, HeightVar 
 func (x *GLTexture) Equal(Icon2Var gio.Icon) bool {
 
 	cret := gio.XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+	return cret
+}
+
+// Gets a hash for an icon.
+func (x *GLTexture) Hash() uint {
+
+	cret := gio.XGIconHash(x.GoPointer())
 	return cret
 }
 

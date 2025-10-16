@@ -18,6 +18,9 @@ func (x *GLRendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+// Renders a GSK rendernode tree with OpenGL.
+//
+// See [class@Gsk.Renderer].
 type GLRenderer struct {
 	Renderer
 }
@@ -36,7 +39,7 @@ func GLRendererNewFromInternalPtr(ptr uintptr) *GLRenderer {
 
 var xNewGLRenderer func() uintptr
 
-// Creates a new `GskRenderer` using the new OpenGL renderer.
+// Creates an instance of the GL renderer.
 func NewGLRenderer() *GLRenderer {
 	var cls *GLRenderer
 
@@ -61,6 +64,52 @@ func (c *GLRenderer) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// A GL based renderer.
+//
+// See [class@Gsk.Renderer].
+type NglRenderer struct {
+	Renderer
+}
+
+var xNglRendererGLibType func() types.GType
+
+func NglRendererGLibType() types.GType {
+	return xNglRendererGLibType()
+}
+
+func NglRendererNewFromInternalPtr(ptr uintptr) *NglRenderer {
+	cls := &NglRenderer{}
+	cls.Ptr = ptr
+	return cls
+}
+
+var xNewNglRenderer func() uintptr
+
+// Same as gsk_gl_renderer_new().
+func NewNglRenderer() *NglRenderer {
+	var cls *NglRenderer
+
+	cret := xNewNglRenderer()
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &NglRenderer{}
+	cls.Ptr = cret
+	return cls
+}
+
+func (c *NglRenderer) GoPointer() uintptr {
+	if c == nil {
+		return 0
+	}
+	return c.Ptr
+}
+
+func (c *NglRenderer) SetGoPointer(ptr uintptr) {
+	c.Ptr = ptr
+}
+
 func init() {
 	core.SetPackageName("GSK", "gtk4")
 	core.SetSharedLibrary("GSK", "libgtk-4.so.1")
@@ -72,5 +121,9 @@ func init() {
 	core.PuregoSafeRegister(&xGLRendererGLibType, lib, "gsk_gl_renderer_get_type")
 
 	core.PuregoSafeRegister(&xNewGLRenderer, lib, "gsk_gl_renderer_new")
+
+	core.PuregoSafeRegister(&xNglRendererGLibType, lib, "gsk_ngl_renderer_get_type")
+
+	core.PuregoSafeRegister(&xNewNglRenderer, lib, "gsk_ngl_renderer_new")
 
 }

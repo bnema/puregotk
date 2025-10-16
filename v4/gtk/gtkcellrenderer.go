@@ -48,6 +48,9 @@ func (x *CellRendererClass) GoPointer() uintptr {
 }
 
 // OverrideGetRequestMode sets the callback function.
+// Called to gets whether the cell renderer prefers
+//
+//	a height-for-width layout or a width-for-height layout.
 func (x *CellRendererClass) OverrideGetRequestMode(cb func(*CellRenderer) SizeRequestMode) {
 	if cb == nil {
 		x.xGetRequestMode = 0
@@ -59,6 +62,9 @@ func (x *CellRendererClass) OverrideGetRequestMode(cb func(*CellRenderer) SizeRe
 }
 
 // GetGetRequestMode gets the callback function.
+// Called to gets whether the cell renderer prefers
+//
+//	a height-for-width layout or a width-for-height layout.
 func (x *CellRendererClass) GetGetRequestMode() func(*CellRenderer) SizeRequestMode {
 	if x.xGetRequestMode == 0 {
 		return nil
@@ -71,6 +77,7 @@ func (x *CellRendererClass) GetGetRequestMode() func(*CellRenderer) SizeRequestM
 }
 
 // OverrideGetPreferredWidth sets the callback function.
+// Called to get a renderer’s natural width.
 func (x *CellRendererClass) OverrideGetPreferredWidth(cb func(*CellRenderer, *Widget, int, int)) {
 	if cb == nil {
 		x.xGetPreferredWidth = 0
@@ -82,6 +89,7 @@ func (x *CellRendererClass) OverrideGetPreferredWidth(cb func(*CellRenderer, *Wi
 }
 
 // GetGetPreferredWidth gets the callback function.
+// Called to get a renderer’s natural width.
 func (x *CellRendererClass) GetGetPreferredWidth() func(*CellRenderer, *Widget, int, int) {
 	if x.xGetPreferredWidth == 0 {
 		return nil
@@ -94,6 +102,7 @@ func (x *CellRendererClass) GetGetPreferredWidth() func(*CellRenderer, *Widget, 
 }
 
 // OverrideGetPreferredHeightForWidth sets the callback function.
+// Called to get a renderer’s natural height for width.
 func (x *CellRendererClass) OverrideGetPreferredHeightForWidth(cb func(*CellRenderer, *Widget, int, int, int)) {
 	if cb == nil {
 		x.xGetPreferredHeightForWidth = 0
@@ -105,6 +114,7 @@ func (x *CellRendererClass) OverrideGetPreferredHeightForWidth(cb func(*CellRend
 }
 
 // GetGetPreferredHeightForWidth gets the callback function.
+// Called to get a renderer’s natural height for width.
 func (x *CellRendererClass) GetGetPreferredHeightForWidth() func(*CellRenderer, *Widget, int, int, int) {
 	if x.xGetPreferredHeightForWidth == 0 {
 		return nil
@@ -117,6 +127,7 @@ func (x *CellRendererClass) GetGetPreferredHeightForWidth() func(*CellRenderer, 
 }
 
 // OverrideGetPreferredHeight sets the callback function.
+// Called to get a renderer’s natural height.
 func (x *CellRendererClass) OverrideGetPreferredHeight(cb func(*CellRenderer, *Widget, int, int)) {
 	if cb == nil {
 		x.xGetPreferredHeight = 0
@@ -128,6 +139,7 @@ func (x *CellRendererClass) OverrideGetPreferredHeight(cb func(*CellRenderer, *W
 }
 
 // GetGetPreferredHeight gets the callback function.
+// Called to get a renderer’s natural height.
 func (x *CellRendererClass) GetGetPreferredHeight() func(*CellRenderer, *Widget, int, int) {
 	if x.xGetPreferredHeight == 0 {
 		return nil
@@ -140,6 +152,7 @@ func (x *CellRendererClass) GetGetPreferredHeight() func(*CellRenderer, *Widget,
 }
 
 // OverrideGetPreferredWidthForHeight sets the callback function.
+// Called to get a renderer’s natural width for height.
 func (x *CellRendererClass) OverrideGetPreferredWidthForHeight(cb func(*CellRenderer, *Widget, int, int, int)) {
 	if cb == nil {
 		x.xGetPreferredWidthForHeight = 0
@@ -151,6 +164,7 @@ func (x *CellRendererClass) OverrideGetPreferredWidthForHeight(cb func(*CellRend
 }
 
 // GetGetPreferredWidthForHeight gets the callback function.
+// Called to get a renderer’s natural width for height.
 func (x *CellRendererClass) GetGetPreferredWidthForHeight() func(*CellRenderer, *Widget, int, int, int) {
 	if x.xGetPreferredWidthForHeight == 0 {
 		return nil
@@ -163,6 +177,7 @@ func (x *CellRendererClass) GetGetPreferredWidthForHeight() func(*CellRenderer, 
 }
 
 // OverrideGetAlignedArea sets the callback function.
+// Called to get the aligned area used by @cell inside @cell_area.
 func (x *CellRendererClass) OverrideGetAlignedArea(cb func(*CellRenderer, *Widget, CellRendererState, *gdk.Rectangle, *gdk.Rectangle)) {
 	if cb == nil {
 		x.xGetAlignedArea = 0
@@ -174,6 +189,7 @@ func (x *CellRendererClass) OverrideGetAlignedArea(cb func(*CellRenderer, *Widge
 }
 
 // GetGetAlignedArea gets the callback function.
+// Called to get the aligned area used by @cell inside @cell_area.
 func (x *CellRendererClass) GetGetAlignedArea() func(*CellRenderer, *Widget, CellRendererState, *gdk.Rectangle, *gdk.Rectangle) {
 	if x.xGetAlignedArea == 0 {
 		return nil
@@ -186,6 +202,7 @@ func (x *CellRendererClass) GetGetAlignedArea() func(*CellRenderer, *Widget, Cel
 }
 
 // OverrideSnapshot sets the callback function.
+// Called to snapshot the content of the `GtkCellRenderer`.
 func (x *CellRendererClass) OverrideSnapshot(cb func(*CellRenderer, *Snapshot, *Widget, *gdk.Rectangle, *gdk.Rectangle, CellRendererState)) {
 	if cb == nil {
 		x.xSnapshot = 0
@@ -197,6 +214,7 @@ func (x *CellRendererClass) OverrideSnapshot(cb func(*CellRenderer, *Snapshot, *
 }
 
 // GetSnapshot gets the callback function.
+// Called to snapshot the content of the `GtkCellRenderer`.
 func (x *CellRendererClass) GetSnapshot() func(*CellRenderer, *Snapshot, *Widget, *gdk.Rectangle, *gdk.Rectangle, CellRendererState) {
 	if x.xSnapshot == 0 {
 		return nil
@@ -209,6 +227,7 @@ func (x *CellRendererClass) GetSnapshot() func(*CellRenderer, *Snapshot, *Widget
 }
 
 // OverrideActivate sets the callback function.
+// Called to activate the content of the `GtkCellRenderer`.
 func (x *CellRendererClass) OverrideActivate(cb func(*CellRenderer, *gdk.Event, *Widget, string, *gdk.Rectangle, *gdk.Rectangle, CellRendererState) bool) {
 	if cb == nil {
 		x.xActivate = 0
@@ -220,6 +239,7 @@ func (x *CellRendererClass) OverrideActivate(cb func(*CellRenderer, *gdk.Event, 
 }
 
 // GetActivate gets the callback function.
+// Called to activate the content of the `GtkCellRenderer`.
 func (x *CellRendererClass) GetActivate() func(*CellRenderer, *gdk.Event, *Widget, string, *gdk.Rectangle, *gdk.Rectangle, CellRendererState) bool {
 	if x.xActivate == 0 {
 		return nil
@@ -232,6 +252,7 @@ func (x *CellRendererClass) GetActivate() func(*CellRenderer, *gdk.Event, *Widge
 }
 
 // OverrideStartEditing sets the callback function.
+// Called to initiate editing the content of the `GtkCellRenderer`.
 func (x *CellRendererClass) OverrideStartEditing(cb func(*CellRenderer, *gdk.Event, *Widget, string, *gdk.Rectangle, *gdk.Rectangle, CellRendererState) *CellEditableBase) {
 	if cb == nil {
 		x.xStartEditing = 0
@@ -247,6 +268,7 @@ func (x *CellRendererClass) OverrideStartEditing(cb func(*CellRenderer, *gdk.Eve
 }
 
 // GetStartEditing gets the callback function.
+// Called to initiate editing the content of the `GtkCellRenderer`.
 func (x *CellRendererClass) GetStartEditing() func(*CellRenderer, *gdk.Event, *Widget, string, *gdk.Rectangle, *gdk.Rectangle, CellRendererState) *CellEditableBase {
 	if x.xStartEditing == 0 {
 		return nil
@@ -265,6 +287,7 @@ func (x *CellRendererClass) GetStartEditing() func(*CellRenderer, *gdk.Event, *W
 }
 
 // OverrideEditingCanceled sets the callback function.
+// Signal gets emitted when the user cancels the process of editing a cell.
 func (x *CellRendererClass) OverrideEditingCanceled(cb func(*CellRenderer)) {
 	if cb == nil {
 		x.xEditingCanceled = 0
@@ -276,6 +299,7 @@ func (x *CellRendererClass) OverrideEditingCanceled(cb func(*CellRenderer)) {
 }
 
 // GetEditingCanceled gets the callback function.
+// Signal gets emitted when the user cancels the process of editing a cell.
 func (x *CellRendererClass) GetEditingCanceled() func(*CellRenderer) {
 	if x.xEditingCanceled == 0 {
 		return nil
@@ -288,6 +312,7 @@ func (x *CellRendererClass) GetEditingCanceled() func(*CellRenderer) {
 }
 
 // OverrideEditingStarted sets the callback function.
+// Signal gets emitted when a cell starts to be edited.
 func (x *CellRendererClass) OverrideEditingStarted(cb func(*CellRenderer, CellEditable, string)) {
 	if cb == nil {
 		x.xEditingStarted = 0
@@ -299,6 +324,7 @@ func (x *CellRendererClass) OverrideEditingStarted(cb func(*CellRenderer, CellEd
 }
 
 // GetEditingStarted gets the callback function.
+// Signal gets emitted when a cell starts to be edited.
 func (x *CellRendererClass) GetEditingStarted() func(*CellRenderer, CellEditable, string) {
 	if x.xEditingStarted == 0 {
 		return nil
@@ -749,7 +775,8 @@ func (x *CellRenderer) ConnectEditingCanceled(cb *func(CellRenderer)) uint32 {
 // continue to use the same kind of widget for editing in future
 // releases, therefore you should check the type of @editable
 // before doing any specific setup, as in the following example:
-// |[&lt;!-- language="C" --&gt;
+//
+// ```c
 // static void
 // text_editing_started (GtkCellRenderer *cell,
 //
@@ -768,7 +795,7 @@ func (x *CellRenderer) ConnectEditingCanceled(cb *func(CellRenderer)) uint32 {
 //	    }
 //	}
 //
-// ]|
+// ```
 func (x *CellRenderer) ConnectEditingStarted(cb *func(CellRenderer, uintptr, string)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {

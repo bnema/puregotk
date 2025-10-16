@@ -20,7 +20,7 @@ func (x *EventControllerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkEventController` is the base class for event controllers.
+// The base class for event controllers.
 //
 // These are ancillary objects associated to widgets, which react
 // to `GdkEvents`, and possibly trigger actions as a consequence.
@@ -31,7 +31,7 @@ func (x *EventControllerClass) GoPointer() uintptr {
 //
 // See the chapter on [input handling](input-handling.html) for
 // an overview of the basic concepts, such as the capture and bubble
-// phases of even propagation.
+// phases of event propagation.
 type EventController struct {
 	gobject.Object
 }

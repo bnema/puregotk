@@ -10,112 +10,112 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// #GVariant is a variant datatype; it can contain one or more values
+// `GVariant` is a variant datatype; it can contain one or more values
 // along with information about the type of the values.
 //
-// A #GVariant may contain simple types, like an integer, or a boolean value;
+// A `GVariant` may contain simple types, like an integer, or a boolean value;
 // or complex types, like an array of two strings, or a dictionary of key
-// value pairs. A #GVariant is also immutable: once it's been created neither
+// value pairs. A `GVariant` is also immutable: once it’s been created neither
 // its type nor its content can be modified further.
 //
-// GVariant is useful whenever data needs to be serialized, for example when
-// sending method parameters in D-Bus, or when saving settings using GSettings.
+// `GVariant` is useful whenever data needs to be serialized, for example when
+// sending method parameters in D-Bus, or when saving settings using
+// [`GSettings`](../gio/class.Settings.html).
 //
-// When creating a new #GVariant, you pass the data you want to store in it
+// When creating a new `GVariant`, you pass the data you want to store in it
 // along with a string representing the type of data you wish to pass to it.
 //
-// For instance, if you want to create a #GVariant holding an integer value you
+// For instance, if you want to create a `GVariant` holding an integer value you
 // can use:
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
+// GVariant *v = g_variant_new ("u", 40);
+// ```
 //
-//	GVariant *v = g_variant_new ("u", 40);
+// The string `u` in the first argument tells `GVariant` that the data passed to
+// the constructor (`40`) is going to be an unsigned integer.
 //
-// ]|
-//
-// The string "u" in the first argument tells #GVariant that the data passed to
-// the constructor (40) is going to be an unsigned integer.
-//
-// More advanced examples of #GVariant in use can be found in documentation for
-// [GVariant format strings][gvariant-format-strings-pointers].
+// More advanced examples of `GVariant` in use can be found in documentation for
+// [`GVariant` format strings](gvariant-format-strings.html#pointers).
 //
 // The range of possible values is determined by the type.
 //
-// The type system used by #GVariant is #GVariantType.
+// The type system used by `GVariant` is [type@GLib.VariantType].
 //
-// #GVariant instances always have a type and a value (which are given
-// at construction time).  The type and value of a #GVariant instance
-// can never change other than by the #GVariant itself being
-// destroyed.  A #GVariant cannot contain a pointer.
+// `GVariant` instances always have a type and a value (which are given
+// at construction time).  The type and value of a `GVariant` instance
+// can never change other than by the `GVariant` itself being
+// destroyed.  A `GVariant` cannot contain a pointer.
 //
-// #GVariant is reference counted using g_variant_ref() and
-// g_variant_unref().  #GVariant also has floating reference counts --
-// see g_variant_ref_sink().
+// `GVariant` is reference counted using [method@GLib.Variant.ref] and
+// [method@GLib.Variant.unref].  `GVariant` also has floating reference counts —
+// see [method@GLib.Variant.ref_sink].
 //
-// #GVariant is completely threadsafe.  A #GVariant instance can be
+// `GVariant` is completely threadsafe.  A `GVariant` instance can be
 // concurrently accessed in any way from any number of threads without
 // problems.
 //
-// #GVariant is heavily optimised for dealing with data in serialized
+// `GVariant` is heavily optimised for dealing with data in serialized
 // form.  It works particularly well with data located in memory-mapped
 // files.  It can perform nearly all deserialization operations in a
 // small constant time, usually touching only a single memory page.
-// Serialized #GVariant data can also be sent over the network.
+// Serialized `GVariant` data can also be sent over the network.
 //
-// #GVariant is largely compatible with D-Bus.  Almost all types of
-// #GVariant instances can be sent over D-Bus.  See #GVariantType for
-// exceptions.  (However, #GVariant's serialization format is not the same
-// as the serialization format of a D-Bus message body: use #GDBusMessage,
-// in the gio library, for those.)
+// `GVariant` is largely compatible with D-Bus.  Almost all types of
+// `GVariant` instances can be sent over D-Bus.  See [type@GLib.VariantType] for
+// exceptions.  (However, `GVariant`’s serialization format is not the same
+// as the serialization format of a D-Bus message body: use
+// [GDBusMessage](../gio/class.DBusMessage.html), in the GIO library, for those.)
 //
-// For space-efficiency, the #GVariant serialization format does not
-// automatically include the variant's length, type or endianness,
+// For space-efficiency, the `GVariant` serialization format does not
+// automatically include the variant’s length, type or endianness,
 // which must either be implied from context (such as knowledge that a
 // particular file format always contains a little-endian
-// %G_VARIANT_TYPE_VARIANT which occupies the whole length of the file)
+// `G_VARIANT_TYPE_VARIANT` which occupies the whole length of the file)
 // or supplied out-of-band (for instance, a length, type and/or endianness
 // indicator could be placed at the beginning of a file, network message
 // or network stream).
 //
-// A #GVariant's size is limited mainly by any lower level operating
-// system constraints, such as the number of bits in #gsize.  For
+// A `GVariant`’s size is limited mainly by any lower level operating
+// system constraints, such as the number of bits in `gsize`.  For
 // example, it is reasonable to have a 2GB file mapped into memory
-// with #GMappedFile, and call g_variant_new_from_data() on it.
+// with [struct@GLib.MappedFile], and call [ctor@GLib.Variant.new_from_data] on
+// it.
 //
-// For convenience to C programmers, #GVariant features powerful
+// For convenience to C programmers, `GVariant` features powerful
 // varargs-based value construction and destruction.  This feature is
 // designed to be embedded in other libraries.
 //
-// There is a Python-inspired text language for describing #GVariant
-// values.  #GVariant includes a printer for this language and a parser
+// There is a Python-inspired text language for describing `GVariant`
+// values.  `GVariant` includes a printer for this language and a parser
 // with type inferencing.
 //
 // ## Memory Use
 //
-// #GVariant tries to be quite efficient with respect to memory use.
+// `GVariant` tries to be quite efficient with respect to memory use.
 // This section gives a rough idea of how much memory is used by the
 // current implementation.  The information here is subject to change
 // in the future.
 //
-// The memory allocated by #GVariant can be grouped into 4 broad
+// The memory allocated by `GVariant` can be grouped into 4 broad
 // purposes: memory for serialized data, memory for the type
 // information cache, buffer management memory and memory for the
-// #GVariant structure itself.
+// `GVariant` structure itself.
 //
 // ## Serialized Data Memory
 //
-// This is the memory that is used for storing GVariant data in
+// This is the memory that is used for storing `GVariant` data in
 // serialized form.  This is what would be sent over the network or
 // what would end up on disk, not counting any indicator of the
 // endianness, or of the length or type of the top-level variant.
 //
 // The amount of memory required to store a boolean is 1 byte. 16,
 // 32 and 64 bit integers and double precision floating point numbers
-// use their "natural" size.  Strings (including object path and
+// use their ‘natural’ size.  Strings (including object path and
 // signature strings) are stored with a nul terminator, and as such
 // use the length of the string plus 1 byte.
 //
-// Maybe types use no space at all to represent the null value and
+// ‘Maybe’ types use no space at all to represent the null value and
 // use the same amount of space (sometimes plus one byte) as the
 // equivalent non-maybe-typed value to represent the non-null case.
 //
@@ -141,39 +141,39 @@ import (
 // In the case that the dictionary is empty, 0 bytes are required for
 // the serialization.
 //
-// If we add an item "width" that maps to the int32 value of 500 then
-// we will use 4 byte to store the int32 (so 6 for the variant
+// If we add an item ‘width’ that maps to the int32 value of 500 then
+// we will use 4 bytes to store the int32 (so 6 for the variant
 // containing it) and 6 bytes for the string.  The variant must be
-// aligned to 8 after the 6 bytes of the string, so that's 2 extra
+// aligned to 8 after the 6 bytes of the string, so that’s 2 extra
 // bytes.  6 (string) + 2 (padding) + 6 (variant) is 14 bytes used
 // for the dictionary entry.  An additional 1 byte is added to the
 // array as a framing offset making a total of 15 bytes.
 //
-// If we add another entry, "title" that maps to a nullable string
+// If we add another entry, ‘title’ that maps to a nullable string
 // that happens to have a value of null, then we use 0 bytes for the
 // null value (and 3 bytes for the variant to contain it along with
 // its type string) plus 6 bytes for the string.  Again, we need 2
 // padding bytes.  That makes a total of 6 + 2 + 3 = 11 bytes.
 //
 // We now require extra padding between the two items in the array.
-// After the 14 bytes of the first item, that's 2 bytes required.
+// After the 14 bytes of the first item, that’s 2 bytes required.
 // We now require 2 framing offsets for an extra two
 // bytes. 14 + 2 + 11 + 2 = 29 bytes to encode the entire two-item
 // dictionary.
 //
 // ## Type Information Cache
 //
-// For each GVariant type that currently exists in the program a type
+// For each `GVariant` type that currently exists in the program a type
 // information structure is kept in the type information cache.  The
 // type information structure is required for rapid deserialization.
 //
-// Continuing with the above example, if a #GVariant exists with the
-// type "a{sv}" then a type information struct will exist for
-// "a{sv}", "{sv}", "s", and "v".  Multiple uses of the same type
+// Continuing with the above example, if a `GVariant` exists with the
+// type `a{sv}` then a type information struct will exist for
+// `a{sv}`, `{sv}`, `s`, and `v`.  Multiple uses of the same type
 // will share the same type information.  Additionally, all
 // single-digit types are stored in read-only static memory and do
 // not contribute to the writable memory footprint of a program using
-// #GVariant.
+// `GVariant`.
 //
 // Aside from the type information structures stored in read-only
 // memory, there are two forms of type information.  One is used for
@@ -181,23 +181,23 @@ import (
 // maybe types.  The other is used for container types where there
 // are multiple element types: tuples and dictionary entries.
 //
-// Array type info structures are 6 * sizeof (void *), plus the
+// Array type info structures are `6 * sizeof (void *)`, plus the
 // memory required to store the type string itself.  This means that
-// on 32-bit systems, the cache entry for "a{sv}" would require 30
-// bytes of memory (plus malloc overhead).
+// on 32-bit systems, the cache entry for `a{sv}` would require 30
+// bytes of memory (plus allocation overhead).
 //
-// Tuple type info structures are 6 * sizeof (void *), plus 4 *
-// sizeof (void *) for each item in the tuple, plus the memory
+// Tuple type info structures are `6 * sizeof (void *)`, plus `4 *
+// sizeof (void *)` for each item in the tuple, plus the memory
 // required to store the type string itself.  A 2-item tuple, for
 // example, would have a type information structure that consumed
-// writable memory in the size of 14 * sizeof (void *) (plus type
+// writable memory in the size of `14 * sizeof (void *)` (plus type
 // string)  This means that on 32-bit systems, the cache entry for
-// "{sv}" would require 61 bytes of memory (plus malloc overhead).
+// `{sv}` would require 61 bytes of memory (plus allocation overhead).
 //
-// This means that in total, for our "a{sv}" example, 91 bytes of
+// This means that in total, for our `a{sv}` example, 91 bytes of
 // type information would be allocated.
 //
-// The type information cache, additionally, uses a #GHashTable to
+// The type information cache, additionally, uses a [struct@GLib.HashTable] to
 // store and look up the cached items and stores a pointer to this
 // hash table in static storage.  The hash table is freed when there
 // are zero items in the type cache.
@@ -209,34 +209,34 @@ import (
 //
 // ## Buffer Management Memory
 //
-// #GVariant uses an internal buffer management structure to deal
+// `GVariant` uses an internal buffer management structure to deal
 // with the various different possible sources of serialized data
 // that it uses.  The buffer is responsible for ensuring that the
 // correct call is made when the data is no longer in use by
-// #GVariant.  This may involve a g_free() or a g_slice_free() or
-// even g_mapped_file_unref().
+// `GVariant`.  This may involve a [func@GLib.free] or
+// even [method@GLib.MappedFile.unref].
 //
 // One buffer management structure is used for each chunk of
 // serialized data.  The size of the buffer management structure
-// is 4 * (void *).  On 32-bit systems, that's 16 bytes.
+// is `4 * (void *)`.  On 32-bit systems, that’s 16 bytes.
 //
 // ## GVariant structure
 //
-// The size of a #GVariant structure is 6 * (void *).  On 32-bit
-// systems, that's 24 bytes.
+// The size of a `GVariant` structure is `6 * (void *)`.  On 32-bit
+// systems, that’s 24 bytes.
 //
-// #GVariant structures only exist if they are explicitly created
-// with API calls.  For example, if a #GVariant is constructed out of
+// `GVariant` structures only exist if they are explicitly created
+// with API calls.  For example, if a `GVariant` is constructed out of
 // serialized data for the example given above (with the dictionary)
 // then although there are 9 individual values that comprise the
 // entire dictionary (two keys, two values, two variants containing
 // the values, two dictionary entries, plus the dictionary itself),
-// only 1 #GVariant instance exists -- the one referring to the
+// only 1 `GVariant` instance exists — the one referring to the
 // dictionary.
 //
 // If calls are made to start accessing the other values then
-// #GVariant instances will exist for those values only for as long
-// as they are in use (ie: until you call g_variant_unref()).  The
+// `GVariant` instances will exist for those values only for as long
+// as they are in use (ie: until you call [method@GLib.Variant.unref]).  The
 // type information is shared.  The serialized data and the buffer
 // management structure for that serialized data is shared by the
 // child.
@@ -247,9 +247,9 @@ import (
 // strings to variants (with two entries, as given above), we are
 // using 91 bytes of memory for type information, 29 bytes of memory
 // for the serialized data, 16 bytes for buffer management and 24
-// bytes for the #GVariant instance, or a total of 160 bytes, plus
-// malloc overhead.  If we were to use g_variant_get_child_value() to
-// access the two dictionary entries, we would use an additional 48
+// bytes for the `GVariant` instance, or a total of 160 bytes, plus
+// allocation overhead.  If we were to use [method@GLib.Variant.get_child_value]
+// to access the two dictionary entries, we would use an additional 48
 // bytes.  If we were to have other dictionaries of the same type, we
 // would use more memory for the serialized data and buffer
 // management for those dictionaries, but the type information would
@@ -276,7 +276,7 @@ var xNewVariant func(string, ...interface{}) *Variant
 //
 // The type of the created instance and the arguments that are expected
 // by this function are determined by @format_string. See the section on
-// [GVariant format strings][gvariant-format-strings]. Please note that
+// [GVariant format strings](gvariant-format-strings.html). Please note that
 // the syntax of the format string is very likely to be extended in the
 // future.
 //
@@ -286,7 +286,7 @@ var xNewVariant func(string, ...interface{}) *Variant
 //
 // Note that the arguments must be of the correct width for their types
 // specified in @format_string. This can be achieved by casting them. See
-// the [GVariant varargs documentation][gvariant-varargs].
+// the [GVariant varargs documentation](gvariant-format-strings.html#varargs).
 //
 // |[&lt;!-- language="C" --&gt;
 // MyFlags some_flags = FLAG_ONE | FLAG_TWO;
@@ -530,8 +530,8 @@ func NewVariantMaybe(ChildTypeVar *VariantType, ChildVar *Variant) *Variant {
 
 var xNewVariantObjectPath func(string) *Variant
 
-// Creates a D-Bus object path #GVariant with the contents of @string.
-// @string must be a valid D-Bus object path.  Use
+// Creates a D-Bus object path #GVariant with the contents of @object_path.
+// @object_path must be a valid D-Bus object path.  Use
 // g_variant_is_object_path() if you're not sure.
 func NewVariantObjectPath(ObjectPathVar string) *Variant {
 
@@ -566,7 +566,7 @@ var xNewVariantParsed func(string, ...interface{}) *Variant
 //
 // Note that the arguments must be of the correct width for their types
 // specified in @format. This can be achieved by casting them. See
-// the [GVariant varargs documentation][gvariant-varargs].
+// the [GVariant varargs documentation](gvariant-format-strings.html#varargs).
 //
 // Consider this simple example:
 // |[&lt;!-- language="C" --&gt;
@@ -611,7 +611,7 @@ var xNewVariantParsedVa func(string, []interface{}) *Variant
 //
 // Note that the arguments in @app must be of the correct width for their types
 // specified in @format when collected into the #va_list. See
-// the [GVariant varargs documentation][gvariant-varargs].
+// the [GVariant varargs documentation](gvariant-format-strings.html#varargs).
 //
 // In order to behave correctly in all cases it is necessary for the
 // calling function to g_variant_ref_sink() the return result before
@@ -655,7 +655,7 @@ var xNewVariantString func(string) *Variant
 //
 // @string must be valid UTF-8, and must not be %NULL. To encode
 // potentially-%NULL strings, use g_variant_new() with `ms` as the
-// [format string][gvariant-format-strings-maybe-types].
+// [format string](gvariant-format-strings.html#maybe-types).
 func NewVariantString(StringVar string) *Variant {
 
 	cret := xNewVariantString(StringVar)
@@ -681,8 +681,9 @@ var xNewVariantTakeString func(string) *Variant
 // @string must be valid UTF-8, and must not be %NULL. To encode
 // potentially-%NULL strings, use this with g_variant_new_maybe().
 //
-// This function consumes @string.  g_free() will be called on @string
-// when it is no longer required.
+// After this call, @string belongs to the #GVariant and may no longer be
+// modified by the caller. The memory of @data has to be dynamically
+// allocated and will eventually be freed with g_free().
 //
 // You must not modify or access @string in any other way after passing
 // it to this function.  It is even possible that @string is immediately
@@ -756,7 +757,7 @@ var xNewVariantVa func(string, string, []interface{}) *Variant
 //
 // Note that the arguments in @app must be of the correct width for their
 // types specified in @format_string when collected into the #va_list.
-// See the [GVariant varargs documentation][gvariant-varargs].
+// See the [GVariant varargs documentation](gvariant-format-strings.html#varargs).
 //
 // These two generalisations allow mixing of multiple calls to
 // g_variant_new_va() and g_variant_get_va() within a single actual
@@ -805,7 +806,13 @@ var xVariantByteswap func(uintptr) *Variant
 // contain multi-byte numeric data.  That include strings, booleans,
 // bytes and containers containing only these things (recursively).
 //
+// While this function can safely handle untrusted, non-normal data, it is
+// recommended to check whether the input is in normal form beforehand, using
+// g_variant_is_normal_form(), and to reject non-normal inputs if your
+// application can be strict about what inputs it rejects.
+//
 // The returned value is always in normal form and is marked as trusted.
+// A full, not floating, reference is returned.
 func (x *Variant) Byteswap() *Variant {
 
 	cret := xVariantByteswap(x.GoPointer())
@@ -972,14 +979,14 @@ var xVariantGet func(uintptr, string, ...interface{})
 // determined by @format_string.  @format_string also restricts the
 // permissible types of @value.  It is an error to give a value with
 // an incompatible type.  See the section on
-// [GVariant format strings][gvariant-format-strings].
+// [GVariant format strings](gvariant-format-strings.html).
 // Please note that the syntax of the format string is very likely to be
 // extended in the future.
 //
 // @format_string determines the C types that are used for unpacking
 // the values and also determines if the values are copied or borrowed,
 // see the section on
-// [GVariant format strings][gvariant-format-strings-pointers].
+// [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *Variant) Get(FormatStringVar string, varArgs ...interface{}) {
 
 	xVariantGet(x.GoPointer(), FormatStringVar, varArgs...)
@@ -1064,7 +1071,7 @@ var xVariantGetChild func(uintptr, uint, string, ...interface{})
 // @format_string determines the C types that are used for unpacking
 // the values and also determines if the values are copied or borrowed,
 // see the section on
-// [GVariant format strings][gvariant-format-strings-pointers].
+// [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *Variant) GetChild(IndexVar uint, FormatStringVar string, varArgs ...interface{}) {
 
 	xVariantGetChild(x.GoPointer(), IndexVar, FormatStringVar, varArgs...)
@@ -1169,7 +1176,7 @@ var xVariantGetFixedArray func(uintptr, uint, uint) uintptr
 //
 // @element_size must be the size of a single element in the array,
 // as given by the section on
-// [serialized data memory][gvariant-serialized-data-memory].
+// [serialized data memory](struct.Variant.html#serialized-data-memory).
 //
 // In particular, arrays of these fixed-sized types can be interpreted
 // as an array of the given C type, with @element_size set to the size
@@ -1268,7 +1275,9 @@ var xVariantGetNormalForm func(uintptr) *Variant
 // marked as trusted and a new reference to it is returned.
 //
 // If @value is found not to be in normal form then a new trusted
-// #GVariant is created with the same value as @value.
+// #GVariant is created with the same value as @value. The non-normal parts of
+// @value will be replaced with default values which are guaranteed to be in
+// normal form.
 //
 // It makes sense to call this function if you've received #GVariant
 // data from untrusted sources and you want to ensure your serialized
@@ -1451,7 +1460,7 @@ var xVariantGetVa func(uintptr, string, string, []interface{})
 // @format_string determines the C types that are used for unpacking
 // the values and also determines if the values are copied or borrowed,
 // see the section on
-// [GVariant format strings][gvariant-format-strings-pointers].
+// [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *Variant) GetVa(FormatStringVar string, EndptrVar string, AppVar []interface{}) {
 
 	xVariantGetVa(x.GoPointer(), FormatStringVar, EndptrVar, AppVar)
@@ -1569,7 +1578,7 @@ var xVariantLookup func(uintptr, string, string, ...interface{}) bool
 // @format_string determines the C types that are used for unpacking
 // the values and also determines if the values are copied or borrowed,
 // see the section on
-// [GVariant format strings][gvariant-format-strings-pointers].
+// [`GVariant` format strings](gvariant-format-strings.html#pointers).
 //
 // This function is currently implemented with a linear scan.  If you
 // plan to do many lookups then #GVariantDict may be more efficient.
@@ -1631,7 +1640,7 @@ var xVariantPrint func(uintptr, bool) string
 
 // Pretty-prints @value in the format understood by g_variant_parse().
 //
-// The format is described [here][gvariant-text].
+// The format is described [here](gvariant-text-format.html).
 //
 // If @type_annotate is %TRUE, then type information is included in
 // the output.
@@ -1793,7 +1802,7 @@ var xNewVariantBuilder func(*VariantType) *VariantBuilder
 //
 // In most cases it is easier to place a #GVariantBuilder directly on
 // the stack of the calling function and initialise it with
-// g_variant_builder_init().
+// g_variant_builder_init_static().
 func NewVariantBuilder(TypeVar *VariantType) *VariantBuilder {
 
 	cret := xNewVariantBuilder(TypeVar)
@@ -1809,7 +1818,7 @@ var xVariantBuilderAdd func(uintptr, string, ...interface{})
 //
 // Note that the arguments must be of the correct width for their types
 // specified in @format_string. This can be achieved by casting them. See
-// the [GVariant varargs documentation][gvariant-varargs].
+// the [GVariant varargs documentation](gvariant-format-strings.html#varargs).
 //
 // This function might be used as follows:
 //
@@ -1821,7 +1830,7 @@ var xVariantBuilderAdd func(uintptr, string, ...interface{})
 //	  GVariantBuilder builder;
 //	  int i;
 //
-//	  g_variant_builder_init (&amp;builder, G_VARIANT_TYPE_ARRAY);
+//	  g_variant_builder_init_static (&amp;builder, G_VARIANT_TYPE_ARRAY);
 //	  for (i = 0; i &lt; 16; i++)
 //	    {
 //	      gchar buf[3];
@@ -1850,7 +1859,7 @@ var xVariantBuilderAddParsed func(uintptr, string, ...interface{})
 //
 // Note that the arguments must be of the correct width for their types
 // specified in @format_string. This can be achieved by casting them. See
-// the [GVariant varargs documentation][gvariant-varargs].
+// the [GVariant varargs documentation](gvariant-format-strings.html#varargs).
 //
 // This function might be used as follows:
 //
@@ -1862,7 +1871,7 @@ var xVariantBuilderAddParsed func(uintptr, string, ...interface{})
 //	  GVariantBuilder builder;
 //	  int i;
 //
-//	  g_variant_builder_init (&amp;builder, G_VARIANT_TYPE_ARRAY);
+//	  g_variant_builder_init_static (&amp;builder, G_VARIANT_TYPE_ARRAY);
 //	  g_variant_builder_add_parsed (&amp;builder, "{'width', &lt;%i&gt;}", 600);
 //	  g_variant_builder_add_parsed (&amp;builder, "{'title', &lt;%s&gt;}", "foo");
 //	  g_variant_builder_add_parsed (&amp;builder, "{'transparency', &lt;0.5&gt;}");
@@ -1965,6 +1974,10 @@ var xVariantBuilderInit func(uintptr, *VariantType)
 // Maybe, array, tuple, dictionary entry and variant-typed values may be
 // constructed.
 //
+// If using a static type such as one of the `G_VARIANT_TYPE_*` constants
+// or a `G_VARIANT_TYPE ("(ii)")` macro, it is more performant to use
+// g_variant_builder_init_static() rather than g_variant_builder_init().
+//
 // After the builder is initialised, values are added using
 // g_variant_builder_add_value() or g_variant_builder_add().
 //
@@ -1989,6 +2002,20 @@ var xVariantBuilderInit func(uintptr, *VariantType)
 func (x *VariantBuilder) Init(TypeVar *VariantType) {
 
 	xVariantBuilderInit(x.GoPointer(), TypeVar)
+
+}
+
+var xVariantBuilderInitStatic func(uintptr, *VariantType)
+
+// Initialises a #GVariantBuilder structure.
+//
+// This function works exactly like g_variant_builder_init() but does
+// not make a copy of @type. Therefore, @type must remain valid for the
+// lifetime of @builder. This is always true of type constants like
+// `G_VARIANT_TYPE_*` or `G_VARIANT_TYPE ("(ii)")`.
+func (x *VariantBuilder) InitStatic(TypeVar *VariantType) {
+
+	xVariantBuilderInitStatic(x.GoPointer(), TypeVar)
 
 }
 
@@ -2288,12 +2315,13 @@ var xVariantDictLookup func(uintptr, string, string, ...interface{}) bool
 //
 // This function is a wrapper around g_variant_dict_lookup_value() and
 // g_variant_get().  In the case that %NULL would have been returned,
-// this function returns %FALSE.  Otherwise, it unpacks the returned
+// this function returns %FALSE and does not modify the values of the arguments
+// passed in to @....  Otherwise, it unpacks the returned
 // value and returns %TRUE.
 //
 // @format_string determines the C types that are used for unpacking the
 // values and also determines if the values are copied or borrowed, see the
-// section on [GVariant format strings][gvariant-format-strings-pointers].
+// section on [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *VariantDict) Lookup(KeyVar string, FormatStringVar string, varArgs ...interface{}) bool {
 
 	cret := xVariantDictLookup(x.GoPointer(), KeyVar, FormatStringVar, varArgs...)
@@ -2360,7 +2388,7 @@ func (x *VariantDict) Unref() {
 type VariantIter struct {
 	_ structs.HostLayout
 
-	X [16]uint
+	X [16]uintptr
 }
 
 func (x *VariantIter) GoPointer() uintptr {
@@ -2475,7 +2503,7 @@ var xVariantIterLoop func(uintptr, string, ...interface{}) bool
 // the values and also determines if the values are copied or borrowed.
 //
 // See the section on
-// [GVariant format strings][gvariant-format-strings-pointers].
+// [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *VariantIter) Loop(FormatStringVar string, varArgs ...interface{}) bool {
 
 	cret := xVariantIterLoop(x.GoPointer(), FormatStringVar, varArgs...)
@@ -2539,7 +2567,7 @@ var xVariantIterNext func(uintptr, string, ...interface{}) bool
 // the values and also determines if the values are copied or borrowed.
 //
 // See the section on
-// [GVariant format strings][gvariant-format-strings-pointers].
+// [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *VariantIter) Next(FormatStringVar string, varArgs ...interface{}) bool {
 
 	cret := xVariantIterNext(x.GoPointer(), FormatStringVar, varArgs...)
@@ -2709,7 +2737,7 @@ var xVariantParse func(*VariantType, string, string, string, **Error) *Variant
 //
 // A single #GVariant is parsed from the content of @text.
 //
-// The format is described [here][gvariant-text].
+// The format is described [here](gvariant-text-format.html).
 //
 // The memory at @limit will never be accessed and the parser behaves as
 // if the character at @limit is the nul terminator.  This has the
@@ -2729,13 +2757,14 @@ var xVariantParse func(*VariantType, string, string, string, **Error) *Variant
 //
 // In the event that the parsing is successful, the resulting #GVariant
 // is returned. It is never floating, and must be freed with
-// g_variant_unref().
+// [method@GLib.Variant.unref].
 //
 // In case of any error, %NULL will be returned.  If @error is non-%NULL
 // then it will be set to reflect the error that occurred.
 //
-// Officially, the language understood by the parser is "any string
-// produced by g_variant_print()".
+// Officially, the language understood by the parser is “any string
+// produced by [method@GLib.Variant.print]”. This explicitly includes
+// `g_variant_print()`’s annotated types like `int64 -1000`.
 //
 // There may be implementation specific restrictions on deeply nested values,
 // which would result in a %G_VARIANT_PARSE_ERROR_RECURSION error. #GVariant is
@@ -2794,7 +2823,7 @@ func VariantParseErrorPrintContext(ErrorVar *Error, SourceStrVar string) string 
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -2905,6 +2934,7 @@ func init() {
 	core.PuregoSafeRegister(&xVariantBuilderClose, lib, "g_variant_builder_close")
 	core.PuregoSafeRegister(&xVariantBuilderEnd, lib, "g_variant_builder_end")
 	core.PuregoSafeRegister(&xVariantBuilderInit, lib, "g_variant_builder_init")
+	core.PuregoSafeRegister(&xVariantBuilderInitStatic, lib, "g_variant_builder_init_static")
 	core.PuregoSafeRegister(&xVariantBuilderOpen, lib, "g_variant_builder_open")
 	core.PuregoSafeRegister(&xVariantBuilderRef, lib, "g_variant_builder_ref")
 	core.PuregoSafeRegister(&xVariantBuilderUnref, lib, "g_variant_builder_unref")

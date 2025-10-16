@@ -29,11 +29,12 @@ func (x *TcpWrapperConnectionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A #GTcpWrapperConnection can be used to wrap a #GIOStream that is
-// based on a #GSocket, but which is not actually a
-// #GSocketConnection. This is used by #GSocketClient so that it can
-// always return a #GSocketConnection, even when the connection it has
-// actually created is not directly a #GSocketConnection.
+// A `GTcpWrapperConnection` can be used to wrap a [class@Gio.IOStream] that is
+// based on a [class@Gio.Socket], but which is not actually a
+// [class@Gio.SocketConnection]. This is used by [class@Gio.SocketClient] so
+// that it can always return a [class@Gio.SocketConnection], even when the
+// connection it has actually created is not directly a
+// [class@Gio.SocketConnection].
 type TcpWrapperConnection struct {
 	TcpConnection
 }

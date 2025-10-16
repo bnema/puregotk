@@ -7,17 +7,60 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// An opaque structure representing a HMAC operation.
-// To create a new GHmac, use g_hmac_new(). To free
-// a GHmac, use g_hmac_unref().
+// HMACs should be used when producing a cookie or hash based on data
+// and a key. Simple mechanisms for using SHA1 and other algorithms to
+// digest a key and data together are vulnerable to various security
+// issues.
+// [HMAC](http://en.wikipedia.org/wiki/HMAC)
+// uses algorithms like SHA1 in a secure way to produce a digest of a
+// key and data.
+//
+// Both the key and data are arbitrary byte arrays of bytes or characters.
+//
+// Support for HMAC Digests has been added in GLib 2.30, and support for SHA-512
+// in GLib 2.42. Support for SHA-384 was added in GLib 2.52.
+//
+// To create a new `GHmac`, use [ctor@GLib.Hmac.new]. To free a `GHmac`, use
+// [method@GLib.Hmac.unref].
 type Hmac struct {
 	_ structs.HostLayout
 }
 
+var xHmacGLibType func() types.GType
+
+func HmacGLibType() types.GType {
+	return xHmacGLibType()
+}
+
 func (x *Hmac) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewHmac func(ChecksumType, []byte, uint) *Hmac
+
+// Creates a new #GHmac, using the digest algorithm @digest_type.
+// If the @digest_type is not known, %NULL is returned.
+// A #GHmac can be used to compute the HMAC of a key and an
+// arbitrary binary blob, using different hashing algorithms.
+//
+// A #GHmac works by feeding a binary blob through g_hmac_update()
+// until the data is complete; the digest can then be extracted
+// using g_hmac_get_string(), which will return the checksum as a
+// hexadecimal string; or g_hmac_get_digest(), which will return a
+// array of raw bytes. Once either g_hmac_get_string() or
+// g_hmac_get_digest() have been called on a #GHmac, the HMAC
+// will be closed and it won't be possible to call g_hmac_update()
+// on it anymore.
+//
+// Support for digests of type %G_CHECKSUM_SHA512 has been added in GLib 2.42.
+// Support for %G_CHECKSUM_SHA384 was added in GLib 2.52.
+func NewHmac(DigestTypeVar ChecksumType, KeyVar []byte, KeyLenVar uint) *Hmac {
+
+	cret := xNewHmac(DigestTypeVar, KeyVar, KeyLenVar)
+	return cret
 }
 
 var xHmacCopy func(uintptr) *Hmac
@@ -134,7 +177,7 @@ func ComputeHmacForString(DigestTypeVar ChecksumType, KeyVar []byte, KeyLenVar u
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -143,6 +186,10 @@ func init() {
 	core.PuregoSafeRegister(&xComputeHmacForBytes, lib, "g_compute_hmac_for_bytes")
 	core.PuregoSafeRegister(&xComputeHmacForData, lib, "g_compute_hmac_for_data")
 	core.PuregoSafeRegister(&xComputeHmacForString, lib, "g_compute_hmac_for_string")
+
+	core.PuregoSafeRegister(&xHmacGLibType, lib, "g_hmac_get_type")
+
+	core.PuregoSafeRegister(&xNewHmac, lib, "g_hmac_new")
 
 	core.PuregoSafeRegister(&xHmacCopy, lib, "g_hmac_copy")
 	core.PuregoSafeRegister(&xHmacGetDigest, lib, "g_hmac_get_digest")

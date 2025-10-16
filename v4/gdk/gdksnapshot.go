@@ -19,7 +19,7 @@ func (x *SnapshotClass) GoPointer() uintptr {
 
 // Base type for snapshot operations.
 //
-// The subclass of `GdkSnapshot` used by GTK is [class@Gtk.Snapshot].
+// The subclass of `GdkSnapshot` used by GTK is [GtkSnapshot](../gtk4/class.Snapshot.html).
 type Snapshot struct {
 	gobject.Object
 }

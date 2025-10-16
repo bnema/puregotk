@@ -22,7 +22,7 @@ func (x *ZlibDecompressorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GZlibDecompressor is an implementation of #GConverter that
+// `GZlibDecompressor` is an implementation of [iface@Gio.Converter] that
 // decompresses data compressed with zlib.
 type ZlibDecompressor struct {
 	gobject.Object
@@ -174,6 +174,18 @@ func (x *ZlibDecompressor) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar
 	var cerr *glib.Error
 
 	cret := XGConverterConvert(x.GoPointer(), InbufVar, InbufSizeVar, OutbufVar, OutbufSizeVar, FlagsVar, BytesReadVar, BytesWrittenVar, &cerr)
+	if cerr == nil {
+		return cret, nil
+	}
+	return cret, cerr
+
+}
+
+// Applies @converter to the data in @bytes.
+func (x *ZlibDecompressor) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error) {
+	var cerr *glib.Error
+
+	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

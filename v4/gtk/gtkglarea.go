@@ -33,6 +33,7 @@ func (x *GLAreaClass) GoPointer() uintptr {
 }
 
 // OverrideRender sets the callback function.
+// class closure for the `GtkGLArea::render` signal
 func (x *GLAreaClass) OverrideRender(cb func(*GLArea, *gdk.GLContext) bool) {
 	if cb == nil {
 		x.xRender = 0
@@ -44,6 +45,7 @@ func (x *GLAreaClass) OverrideRender(cb func(*GLArea, *gdk.GLContext) bool) {
 }
 
 // GetRender gets the callback function.
+// class closure for the `GtkGLArea::render` signal
 func (x *GLAreaClass) GetRender() func(*GLArea, *gdk.GLContext) bool {
 	if x.xRender == 0 {
 		return nil
@@ -56,6 +58,7 @@ func (x *GLAreaClass) GetRender() func(*GLArea, *gdk.GLContext) bool {
 }
 
 // OverrideResize sets the callback function.
+// class closeure for the `GtkGLArea::resize` signal
 func (x *GLAreaClass) OverrideResize(cb func(*GLArea, int, int)) {
 	if cb == nil {
 		x.xResize = 0
@@ -67,6 +70,7 @@ func (x *GLAreaClass) OverrideResize(cb func(*GLArea, int, int)) {
 }
 
 // GetResize gets the callback function.
+// class closeure for the `GtkGLArea::resize` signal
 func (x *GLAreaClass) GetResize() func(*GLArea, int, int) {
 	if x.xResize == 0 {
 		return nil
@@ -79,6 +83,7 @@ func (x *GLAreaClass) GetResize() func(*GLArea, int, int) {
 }
 
 // OverrideCreateContext sets the callback function.
+// class closure for the `GtkGLArea::create-context` signal
 func (x *GLAreaClass) OverrideCreateContext(cb func(*GLArea) *gdk.GLContext) {
 	if cb == nil {
 		x.xCreateContext = 0
@@ -94,6 +99,7 @@ func (x *GLAreaClass) OverrideCreateContext(cb func(*GLArea) *gdk.GLContext) {
 }
 
 // GetCreateContext gets the callback function.
+// class closure for the `GtkGLArea::create-context` signal
 func (x *GLAreaClass) GetCreateContext() func(*GLArea) *gdk.GLContext {
 	if x.xCreateContext == 0 {
 		return nil
@@ -111,13 +117,20 @@ func (x *GLAreaClass) GetCreateContext() func(*GLArea) *gdk.GLContext {
 	}
 }
 
-// `GtkGLArea` is a widget that allows drawing with OpenGL.
+// Allows drawing with OpenGL.
 //
-// ![An example GtkGLArea](glarea.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="glarea-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkGLArea" src="glarea.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // `GtkGLArea` sets up its own [class@Gdk.GLContext], and creates a custom
 // GL framebuffer that the widget will do GL rendering onto. It also ensures
 // that this framebuffer is the default GL rendering target when rendering.
+// The completed rendering is integrated into the larger GTK scene graph as
+// a texture.
 //
 // In order to draw, you have to connect to the [signal@Gtk.GLArea::render]
 // signal, or subclass `GtkGLArea` and override the GtkGLAreaClass.render
@@ -135,6 +148,8 @@ func (x *GLAreaClass) GetCreateContext() func(*GLArea) *gdk.GLContext {
 // The `render()` function will be called when the `GtkGLArea` is ready
 // for you to draw its content:
 //
+// The initial contents of the framebuffer are transparent.
+//
 // ```c
 // static gboolean
 // render (GtkGLArea *area, GdkGLContext *context)
@@ -148,6 +163,13 @@ func (x *GLAreaClass) GetCreateContext() func(*GLArea) *gdk.GLContext {
 //	  // we can start by clearing the buffer
 //	  glClearColor (0, 0, 0, 0);
 //	  glClear (GL_COLOR_BUFFER_BIT);
+//
+//	  // record the active framebuffer ID, so we can return to it
+//	  // with `glBindFramebuffer (GL_FRAMEBUFFER, screen_fb)` should
+//	  // we, for instance, intend on utilizing the results of an
+//	  // intermediate render texture pass
+//	  GLuint screen_fb = 0;
+//	  glGetIntegerv (GL_FRAMEBUFFER_BINDING, &amp;screen_fb);
 //
 //	  // draw your object
 //	  // draw_an_object ();
@@ -180,7 +202,7 @@ func (x *GLAreaClass) GetCreateContext() func(*GLArea) *gdk.GLContext {
 //
 // ```c
 // static void
-// on_realize (GtkGLarea *area)
+// on_realize (GtkGLArea *area)
 //
 //	{
 //	  // We need to make the context current if we want to
@@ -266,6 +288,28 @@ func (x *GLArea) AttachBuffers() {
 
 	xGLAreaAttachBuffers(x.GoPointer())
 
+}
+
+var xGLAreaGetAllowedApis func(uintptr) gdk.GLAPI
+
+// Gets the allowed APIs.
+//
+// See [method@Gtk.GLArea.set_allowed_apis].
+func (x *GLArea) GetAllowedApis() gdk.GLAPI {
+
+	cret := xGLAreaGetAllowedApis(x.GoPointer())
+	return cret
+}
+
+var xGLAreaGetApi func(uintptr) gdk.GLAPI
+
+// Gets the API that is currently in use.
+//
+// If the GL area has not been realized yet, 0 is returned.
+func (x *GLArea) GetApi() gdk.GLAPI {
+
+	cret := xGLAreaGetApi(x.GoPointer())
+	return cret
 }
 
 var xGLAreaGetAutoRender func(uintptr) bool
@@ -371,6 +415,20 @@ var xGLAreaQueueRender func(uintptr)
 func (x *GLArea) QueueRender() {
 
 	xGLAreaQueueRender(x.GoPointer())
+
+}
+
+var xGLAreaSetAllowedApis func(uintptr, gdk.GLAPI)
+
+// Sets the allowed APIs to create a context with.
+//
+// You should check [property@Gtk.GLArea:api] before drawing
+// with either API.
+//
+// By default, all APIs are allowed.
+func (x *GLArea) SetAllowedApis(ApisVar gdk.GLAPI) {
+
+	xGLAreaSetAllowedApis(x.GoPointer(), ApisVar)
 
 }
 
@@ -549,31 +607,162 @@ func (x *GLArea) ConnectResize(cb *func(GLArea, int, int)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *GLArea) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *GLArea) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *GLArea) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *GLArea) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *GLArea) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *GLArea) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *GLArea) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *GLArea) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *GLArea) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *GLArea) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *GLArea) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *GLArea) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *GLArea) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *GLArea) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -619,7 +808,7 @@ func (x *GLArea) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Accessi
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -649,13 +838,17 @@ func (x *GLArea) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessibl
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -685,7 +878,7 @@ func (x *GLArea) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, V
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *GLArea) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -705,6 +898,8 @@ func init() {
 	core.PuregoSafeRegister(&xNewGLArea, lib, "gtk_gl_area_new")
 
 	core.PuregoSafeRegister(&xGLAreaAttachBuffers, lib, "gtk_gl_area_attach_buffers")
+	core.PuregoSafeRegister(&xGLAreaGetAllowedApis, lib, "gtk_gl_area_get_allowed_apis")
+	core.PuregoSafeRegister(&xGLAreaGetApi, lib, "gtk_gl_area_get_api")
 	core.PuregoSafeRegister(&xGLAreaGetAutoRender, lib, "gtk_gl_area_get_auto_render")
 	core.PuregoSafeRegister(&xGLAreaGetContext, lib, "gtk_gl_area_get_context")
 	core.PuregoSafeRegister(&xGLAreaGetError, lib, "gtk_gl_area_get_error")
@@ -714,6 +909,7 @@ func init() {
 	core.PuregoSafeRegister(&xGLAreaGetUseEs, lib, "gtk_gl_area_get_use_es")
 	core.PuregoSafeRegister(&xGLAreaMakeCurrent, lib, "gtk_gl_area_make_current")
 	core.PuregoSafeRegister(&xGLAreaQueueRender, lib, "gtk_gl_area_queue_render")
+	core.PuregoSafeRegister(&xGLAreaSetAllowedApis, lib, "gtk_gl_area_set_allowed_apis")
 	core.PuregoSafeRegister(&xGLAreaSetAutoRender, lib, "gtk_gl_area_set_auto_render")
 	core.PuregoSafeRegister(&xGLAreaSetError, lib, "gtk_gl_area_set_error")
 	core.PuregoSafeRegister(&xGLAreaSetHasDepthBuffer, lib, "gtk_gl_area_set_has_depth_buffer")

@@ -29,7 +29,9 @@ type ParamSpecClass struct {
 
 	xValuesCmp uintptr
 
-	Dummy [4]uintptr
+	xValueIsValid uintptr
+
+	Dummy [3]uintptr
 }
 
 func (x *ParamSpecClass) GoPointer() uintptr {
@@ -37,6 +39,9 @@ func (x *ParamSpecClass) GoPointer() uintptr {
 }
 
 // OverrideFinalize sets the callback function.
+// The instance finalization function (optional), should chain
+//
+//	up to the finalize method of the parent class.
 func (x *ParamSpecClass) OverrideFinalize(cb func(*ParamSpec)) {
 	if cb == nil {
 		x.xFinalize = 0
@@ -48,6 +53,9 @@ func (x *ParamSpecClass) OverrideFinalize(cb func(*ParamSpec)) {
 }
 
 // GetFinalize gets the callback function.
+// The instance finalization function (optional), should chain
+//
+//	up to the finalize method of the parent class.
 func (x *ParamSpecClass) GetFinalize() func(*ParamSpec) {
 	if x.xFinalize == 0 {
 		return nil
@@ -60,6 +68,10 @@ func (x *ParamSpecClass) GetFinalize() func(*ParamSpec) {
 }
 
 // OverrideValueSetDefault sets the callback function.
+// Resets a @value to the default value for this type
+//
+//	(recommended, the default is g_value_reset()), see
+//	g_param_value_set_default().
 func (x *ParamSpecClass) OverrideValueSetDefault(cb func(*ParamSpec, *Value)) {
 	if cb == nil {
 		x.xValueSetDefault = 0
@@ -71,6 +83,10 @@ func (x *ParamSpecClass) OverrideValueSetDefault(cb func(*ParamSpec, *Value)) {
 }
 
 // GetValueSetDefault gets the callback function.
+// Resets a @value to the default value for this type
+//
+//	(recommended, the default is g_value_reset()), see
+//	g_param_value_set_default().
 func (x *ParamSpecClass) GetValueSetDefault() func(*ParamSpec, *Value) {
 	if x.xValueSetDefault == 0 {
 		return nil
@@ -83,6 +99,10 @@ func (x *ParamSpecClass) GetValueSetDefault() func(*ParamSpec, *Value) {
 }
 
 // OverrideValueValidate sets the callback function.
+// Ensures that the contents of @value comply with the
+//
+//	specifications set out by this type (optional), see
+//	g_param_value_validate().
 func (x *ParamSpecClass) OverrideValueValidate(cb func(*ParamSpec, *Value) bool) {
 	if cb == nil {
 		x.xValueValidate = 0
@@ -94,6 +114,10 @@ func (x *ParamSpecClass) OverrideValueValidate(cb func(*ParamSpec, *Value) bool)
 }
 
 // GetValueValidate gets the callback function.
+// Ensures that the contents of @value comply with the
+//
+//	specifications set out by this type (optional), see
+//	g_param_value_validate().
 func (x *ParamSpecClass) GetValueValidate() func(*ParamSpec, *Value) bool {
 	if x.xValueValidate == 0 {
 		return nil
@@ -106,6 +130,9 @@ func (x *ParamSpecClass) GetValueValidate() func(*ParamSpec, *Value) bool {
 }
 
 // OverrideValuesCmp sets the callback function.
+// Compares @value1 with @value2 according to this type
+//
+//	(recommended, the default is memcmp()), see g_param_values_cmp().
 func (x *ParamSpecClass) OverrideValuesCmp(cb func(*ParamSpec, *Value, *Value) int) {
 	if cb == nil {
 		x.xValuesCmp = 0
@@ -117,6 +144,9 @@ func (x *ParamSpecClass) OverrideValuesCmp(cb func(*ParamSpec, *Value, *Value) i
 }
 
 // GetValuesCmp gets the callback function.
+// Compares @value1 with @value2 according to this type
+//
+//	(recommended, the default is memcmp()), see g_param_values_cmp().
 func (x *ParamSpecClass) GetValuesCmp() func(*ParamSpec, *Value, *Value) int {
 	if x.xValuesCmp == 0 {
 		return nil
@@ -125,6 +155,37 @@ func (x *ParamSpecClass) GetValuesCmp() func(*ParamSpec, *Value, *Value) int {
 	purego.RegisterFunc(&rawCallback, x.xValuesCmp)
 	return func(PspecVar *ParamSpec, Value1Var *Value, Value2Var *Value) int {
 		return rawCallback(PspecVar.GoPointer(), Value1Var, Value2Var)
+	}
+}
+
+// OverrideValueIsValid sets the callback function.
+// Checks if contents of @value comply with the specifications
+//
+//	set out by this type, without modifying the value. This vfunc is optional.
+//	If it isn't set, GObject will use @value_validate. Since 2.74
+func (x *ParamSpecClass) OverrideValueIsValid(cb func(*ParamSpec, *Value) bool) {
+	if cb == nil {
+		x.xValueIsValid = 0
+	} else {
+		x.xValueIsValid = purego.NewCallback(func(PspecVarp uintptr, ValueVarp *Value) bool {
+			return cb(ParamSpecNewFromInternalPtr(PspecVarp), ValueVarp)
+		})
+	}
+}
+
+// GetValueIsValid gets the callback function.
+// Checks if contents of @value comply with the specifications
+//
+//	set out by this type, without modifying the value. This vfunc is optional.
+//	If it isn't set, GObject will use @value_validate. Since 2.74
+func (x *ParamSpecClass) GetValueIsValid() func(*ParamSpec, *Value) bool {
+	if x.xValueIsValid == 0 {
+		return nil
+	}
+	var rawCallback func(PspecVarp uintptr, ValueVarp *Value) bool
+	purego.RegisterFunc(&rawCallback, x.xValueIsValid)
+	return func(PspecVar *ParamSpec, ValueVar *Value) bool {
+		return rawCallback(PspecVar.GoPointer(), ValueVar)
 	}
 }
 
@@ -139,6 +200,15 @@ type ParamSpecPool struct {
 
 func (x *ParamSpecPool) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+var xParamSpecPoolFree func(uintptr)
+
+// Frees the resources allocated by a #GParamSpecPool.
+func (x *ParamSpecPool) Free() {
+
+	xParamSpecPoolFree(x.GoPointer())
+
 }
 
 var xParamSpecPoolInsert func(uintptr, uintptr, types.GType)
@@ -229,6 +299,7 @@ func (x *ParamSpecTypeInfo) GoPointer() uintptr {
 }
 
 // OverrideInstanceInit sets the callback function.
+// Location of the instance initialization function (optional).
 func (x *ParamSpecTypeInfo) OverrideInstanceInit(cb func(*ParamSpec)) {
 	if cb == nil {
 		x.xInstanceInit = 0
@@ -240,6 +311,7 @@ func (x *ParamSpecTypeInfo) OverrideInstanceInit(cb func(*ParamSpec)) {
 }
 
 // GetInstanceInit gets the callback function.
+// Location of the instance initialization function (optional).
 func (x *ParamSpecTypeInfo) GetInstanceInit() func(*ParamSpec) {
 	if x.xInstanceInit == 0 {
 		return nil
@@ -252,6 +324,7 @@ func (x *ParamSpecTypeInfo) GetInstanceInit() func(*ParamSpec) {
 }
 
 // OverrideFinalize sets the callback function.
+// The instance finalization function (optional).
 func (x *ParamSpecTypeInfo) OverrideFinalize(cb func(*ParamSpec)) {
 	if cb == nil {
 		x.xFinalize = 0
@@ -263,6 +336,7 @@ func (x *ParamSpecTypeInfo) OverrideFinalize(cb func(*ParamSpec)) {
 }
 
 // GetFinalize gets the callback function.
+// The instance finalization function (optional).
 func (x *ParamSpecTypeInfo) GetFinalize() func(*ParamSpec) {
 	if x.xFinalize == 0 {
 		return nil
@@ -275,6 +349,10 @@ func (x *ParamSpecTypeInfo) GetFinalize() func(*ParamSpec) {
 }
 
 // OverrideValueSetDefault sets the callback function.
+// Resets a @value to the default value for @pspec
+//
+//	(recommended, the default is g_value_reset()), see
+//	g_param_value_set_default().
 func (x *ParamSpecTypeInfo) OverrideValueSetDefault(cb func(*ParamSpec, *Value)) {
 	if cb == nil {
 		x.xValueSetDefault = 0
@@ -286,6 +364,10 @@ func (x *ParamSpecTypeInfo) OverrideValueSetDefault(cb func(*ParamSpec, *Value))
 }
 
 // GetValueSetDefault gets the callback function.
+// Resets a @value to the default value for @pspec
+//
+//	(recommended, the default is g_value_reset()), see
+//	g_param_value_set_default().
 func (x *ParamSpecTypeInfo) GetValueSetDefault() func(*ParamSpec, *Value) {
 	if x.xValueSetDefault == 0 {
 		return nil
@@ -298,6 +380,10 @@ func (x *ParamSpecTypeInfo) GetValueSetDefault() func(*ParamSpec, *Value) {
 }
 
 // OverrideValueValidate sets the callback function.
+// Ensures that the contents of @value comply with the
+//
+//	specifications set out by @pspec (optional), see
+//	g_param_value_validate().
 func (x *ParamSpecTypeInfo) OverrideValueValidate(cb func(*ParamSpec, *Value) bool) {
 	if cb == nil {
 		x.xValueValidate = 0
@@ -309,6 +395,10 @@ func (x *ParamSpecTypeInfo) OverrideValueValidate(cb func(*ParamSpec, *Value) bo
 }
 
 // GetValueValidate gets the callback function.
+// Ensures that the contents of @value comply with the
+//
+//	specifications set out by @pspec (optional), see
+//	g_param_value_validate().
 func (x *ParamSpecTypeInfo) GetValueValidate() func(*ParamSpec, *Value) bool {
 	if x.xValueValidate == 0 {
 		return nil
@@ -321,6 +411,9 @@ func (x *ParamSpecTypeInfo) GetValueValidate() func(*ParamSpec, *Value) bool {
 }
 
 // OverrideValuesCmp sets the callback function.
+// Compares @value1 with @value2 according to @pspec
+//
+//	(recommended, the default is memcmp()), see g_param_values_cmp().
 func (x *ParamSpecTypeInfo) OverrideValuesCmp(cb func(*ParamSpec, *Value, *Value) int) {
 	if cb == nil {
 		x.xValuesCmp = 0
@@ -332,6 +425,9 @@ func (x *ParamSpecTypeInfo) OverrideValuesCmp(cb func(*ParamSpec, *Value, *Value
 }
 
 // GetValuesCmp gets the callback function.
+// Compares @value1 with @value2 according to @pspec
+//
+//	(recommended, the default is memcmp()), see g_param_values_cmp().
 func (x *ParamSpecTypeInfo) GetValuesCmp() func(*ParamSpec, *Value, *Value) int {
 	if x.xValuesCmp == 0 {
 		return nil
@@ -362,6 +458,12 @@ const (
 	PARAM_MASK int = 255
 	// #GParamFlags value alias for %G_PARAM_STATIC_NAME | %G_PARAM_STATIC_NICK | %G_PARAM_STATIC_BLURB.
 	//
+	// It is recommended to use this for all properties by default, as it allows for
+	// internal performance improvements in GObject.
+	//
+	// It is very rare that a property would have a dynamically constructed name,
+	// nickname or blurb.
+	//
 	// Since 2.13.0
 	PARAM_STATIC_STRINGS int = 224
 	// Minimum shift count to be used for user defined flags, to be stored in
@@ -383,9 +485,11 @@ const (
 	GParamWritableValue ParamFlags = 2
 	// alias for %G_PARAM_READABLE | %G_PARAM_WRITABLE
 	GParamReadwriteValue ParamFlags = 3
-	// the parameter will be set upon object construction
+	// the parameter will be set upon object construction.
+	//   See [vfunc@Object.constructed] for more details
 	GParamConstructValue ParamFlags = 4
-	// the parameter can only be set upon object construction
+	// the parameter can only be set upon object construction.
+	//   See [vfunc@Object.constructed] for more details
 	GParamConstructOnlyValue ParamFlags = 8
 	// upon parameter conversion (see g_param_value_convert())
 	//  strict validation is not required
@@ -457,6 +561,16 @@ func ParamValueDefaults(PspecVar *ParamSpec, ValueVar *Value) bool {
 	return cret
 }
 
+var xParamValueIsValid func(uintptr, *Value) bool
+
+// Return whether the contents of @value comply with the specifications
+// set out by @pspec.
+func ParamValueIsValid(PspecVar *ParamSpec, ValueVar *Value) bool {
+
+	cret := xParamValueIsValid(PspecVar.GoPointer(), ValueVar)
+	return cret
+}
+
 var xParamValueSetDefault func(uintptr, *Value)
 
 // Sets @value to its default value as specified in @pspec.
@@ -491,17 +605,16 @@ func ParamValuesCmp(PspecVar *ParamSpec, Value1Var *Value, Value2Var *Value) int
 	return cret
 }
 
-// #GParamSpec is an object structure that encapsulates the metadata
-// required to specify parameters, such as e.g. #GObject properties.
+// `GParamSpec` encapsulates the metadata required to specify parameters, such as `GObject` properties.
 //
-// ## Parameter names # {#canonical-parameter-names}
+// ## Parameter names
 //
 // A property name consists of one or more segments consisting of ASCII letters
 // and digits, separated by either the `-` or `_` character. The first
 // character of a property name must be a letter. These are the same rules as
-// for signal naming (see g_signal_new()).
+// for signal naming (see [func@GObject.signal_new]).
 //
-// When creating and looking up a #GParamSpec, either separator can be
+// When creating and looking up a `GParamSpec`, either separator can be
 // used, but they cannot be mixed. Using `-` is considerably more
 // efficient, and is the ‘canonical form’. Using `_` is discouraged.
 type ParamSpec struct {
@@ -712,15 +825,16 @@ var xParamSpecInternal func(types.GType, string, string, string, ParamFlags) uin
 
 // Creates a new #GParamSpec instance.
 //
-// See [canonical parameter names][canonical-parameter-names] for details of
-// the rules for @name. Names which violate these rules lead to undefined
-// behaviour.
+// See [canonical parameter names][class@GObject.ParamSpec#parameter-names]
+// for details of the rules for @name. Names which violate these rules lead
+// to undefined behaviour.
 //
-// Beyond the name, #GParamSpecs have two more descriptive
-// strings associated with them, the @nick, which should be suitable
-// for use as a label for the property in a property editor, and the
-// @blurb, which should be a somewhat longer description, suitable for
-// e.g. a tooltip. The @nick and @blurb should ideally be localized.
+// Beyond the name, #GParamSpecs have two more descriptive strings, the
+// @nick and @blurb, which may be used as a localized label and description.
+// For GTK and related libraries these are considered deprecated and may be
+// omitted, while for other libraries such as GStreamer and its plugins they
+// are essential. When in doubt, follow the conventions used in the
+// surrounding code and supporting libraries.
 func ParamSpecInternal(ParamTypeVar types.GType, NameVar string, NickVar string, BlurbVar string, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
@@ -741,8 +855,8 @@ var xParamSpecIsValidName func(string) bool
 // dynamically-generated properties which need to be validated at run-time
 // before actually trying to create them.
 //
-// See [canonical parameter names][canonical-parameter-names] for details of
-// the rules for valid names.
+// See [canonical parameter names][class@GObject.ParamSpec#parameter-names]
+// for details of the rules for valid names.
 func ParamSpecIsValidName(NameVar string) bool {
 
 	cret := xParamSpecIsValidName(NameVar)
@@ -760,10 +874,12 @@ func init() {
 	core.PuregoSafeRegister(&xParamTypeRegisterStatic, lib, "g_param_type_register_static")
 	core.PuregoSafeRegister(&xParamValueConvert, lib, "g_param_value_convert")
 	core.PuregoSafeRegister(&xParamValueDefaults, lib, "g_param_value_defaults")
+	core.PuregoSafeRegister(&xParamValueIsValid, lib, "g_param_value_is_valid")
 	core.PuregoSafeRegister(&xParamValueSetDefault, lib, "g_param_value_set_default")
 	core.PuregoSafeRegister(&xParamValueValidate, lib, "g_param_value_validate")
 	core.PuregoSafeRegister(&xParamValuesCmp, lib, "g_param_values_cmp")
 
+	core.PuregoSafeRegister(&xParamSpecPoolFree, lib, "g_param_spec_pool_free")
 	core.PuregoSafeRegister(&xParamSpecPoolInsert, lib, "g_param_spec_pool_insert")
 	core.PuregoSafeRegister(&xParamSpecPoolList, lib, "g_param_spec_pool_list")
 	core.PuregoSafeRegister(&xParamSpecPoolListOwned, lib, "g_param_spec_pool_list_owned")

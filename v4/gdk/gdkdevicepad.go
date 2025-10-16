@@ -18,8 +18,7 @@ func (x *DevicePadInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GdkDevicePad` is an interface implemented by devices of type
-// %GDK_SOURCE_TABLET_PAD
+// An interface for tablet pad devices.
 //
 // It allows querying the features provided by the pad device.
 //

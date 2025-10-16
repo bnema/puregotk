@@ -22,7 +22,7 @@ func (x *BookmarkListClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkBookmarkList` is a list model that wraps `GBookmarkFile`.
+// A list model that wraps `GBookmarkFile`.
 //
 // It presents a `GListModel` and fills it asynchronously with the
 // `GFileInfo`s returned from that function.

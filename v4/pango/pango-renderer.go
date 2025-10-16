@@ -66,6 +66,7 @@ func (x *RendererClass) GoPointer() uintptr {
 }
 
 // OverrideDrawGlyphs sets the callback function.
+// draws a `PangoGlyphString`
 func (x *RendererClass) OverrideDrawGlyphs(cb func(*Renderer, *Font, *GlyphString, int, int)) {
 	if cb == nil {
 		x.xDrawGlyphs = 0
@@ -77,6 +78,7 @@ func (x *RendererClass) OverrideDrawGlyphs(cb func(*Renderer, *Font, *GlyphStrin
 }
 
 // GetDrawGlyphs gets the callback function.
+// draws a `PangoGlyphString`
 func (x *RendererClass) GetDrawGlyphs() func(*Renderer, *Font, *GlyphString, int, int) {
 	if x.xDrawGlyphs == 0 {
 		return nil
@@ -89,6 +91,7 @@ func (x *RendererClass) GetDrawGlyphs() func(*Renderer, *Font, *GlyphString, int
 }
 
 // OverrideDrawRectangle sets the callback function.
+// draws a rectangle
 func (x *RendererClass) OverrideDrawRectangle(cb func(*Renderer, RenderPart, int, int, int, int)) {
 	if cb == nil {
 		x.xDrawRectangle = 0
@@ -100,6 +103,7 @@ func (x *RendererClass) OverrideDrawRectangle(cb func(*Renderer, RenderPart, int
 }
 
 // GetDrawRectangle gets the callback function.
+// draws a rectangle
 func (x *RendererClass) GetDrawRectangle() func(*Renderer, RenderPart, int, int, int, int) {
 	if x.xDrawRectangle == 0 {
 		return nil
@@ -112,6 +116,9 @@ func (x *RendererClass) GetDrawRectangle() func(*Renderer, RenderPart, int, int,
 }
 
 // OverrideDrawErrorUnderline sets the callback function.
+// draws a squiggly line that approximately
+// covers the given rectangle in the style of an underline used to
+// indicate a spelling error.
 func (x *RendererClass) OverrideDrawErrorUnderline(cb func(*Renderer, int, int, int, int)) {
 	if cb == nil {
 		x.xDrawErrorUnderline = 0
@@ -123,6 +130,9 @@ func (x *RendererClass) OverrideDrawErrorUnderline(cb func(*Renderer, int, int, 
 }
 
 // GetDrawErrorUnderline gets the callback function.
+// draws a squiggly line that approximately
+// covers the given rectangle in the style of an underline used to
+// indicate a spelling error.
 func (x *RendererClass) GetDrawErrorUnderline() func(*Renderer, int, int, int, int) {
 	if x.xDrawErrorUnderline == 0 {
 		return nil
@@ -135,6 +145,10 @@ func (x *RendererClass) GetDrawErrorUnderline() func(*Renderer, int, int, int, i
 }
 
 // OverrideDrawShape sets the callback function.
+// draw content for a glyph shaped with `PangoAttrShape`
+//
+//	@x, @y are the coordinates of the left edge of the baseline,
+//	in user coordinates.
 func (x *RendererClass) OverrideDrawShape(cb func(*Renderer, *AttrShape, int, int)) {
 	if cb == nil {
 		x.xDrawShape = 0
@@ -146,6 +160,10 @@ func (x *RendererClass) OverrideDrawShape(cb func(*Renderer, *AttrShape, int, in
 }
 
 // GetDrawShape gets the callback function.
+// draw content for a glyph shaped with `PangoAttrShape`
+//
+//	@x, @y are the coordinates of the left edge of the baseline,
+//	in user coordinates.
 func (x *RendererClass) GetDrawShape() func(*Renderer, *AttrShape, int, int) {
 	if x.xDrawShape == 0 {
 		return nil
@@ -158,6 +176,7 @@ func (x *RendererClass) GetDrawShape() func(*Renderer, *AttrShape, int, int) {
 }
 
 // OverrideDrawTrapezoid sets the callback function.
+// draws a trapezoidal filled area
 func (x *RendererClass) OverrideDrawTrapezoid(cb func(*Renderer, RenderPart, float64, float64, float64, float64, float64, float64)) {
 	if cb == nil {
 		x.xDrawTrapezoid = 0
@@ -169,6 +188,7 @@ func (x *RendererClass) OverrideDrawTrapezoid(cb func(*Renderer, RenderPart, flo
 }
 
 // GetDrawTrapezoid gets the callback function.
+// draws a trapezoidal filled area
 func (x *RendererClass) GetDrawTrapezoid() func(*Renderer, RenderPart, float64, float64, float64, float64, float64, float64) {
 	if x.xDrawTrapezoid == 0 {
 		return nil
@@ -181,6 +201,7 @@ func (x *RendererClass) GetDrawTrapezoid() func(*Renderer, RenderPart, float64, 
 }
 
 // OverrideDrawGlyph sets the callback function.
+// draws a single glyph
 func (x *RendererClass) OverrideDrawGlyph(cb func(*Renderer, *Font, Glyph, float64, float64)) {
 	if cb == nil {
 		x.xDrawGlyph = 0
@@ -192,6 +213,7 @@ func (x *RendererClass) OverrideDrawGlyph(cb func(*Renderer, *Font, Glyph, float
 }
 
 // GetDrawGlyph gets the callback function.
+// draws a single glyph
 func (x *RendererClass) GetDrawGlyph() func(*Renderer, *Font, Glyph, float64, float64) {
 	if x.xDrawGlyph == 0 {
 		return nil
@@ -204,6 +226,9 @@ func (x *RendererClass) GetDrawGlyph() func(*Renderer, *Font, Glyph, float64, fl
 }
 
 // OverridePartChanged sets the callback function.
+// do renderer specific processing when rendering
+//
+//	attributes change
 func (x *RendererClass) OverridePartChanged(cb func(*Renderer, RenderPart)) {
 	if cb == nil {
 		x.xPartChanged = 0
@@ -215,6 +240,9 @@ func (x *RendererClass) OverridePartChanged(cb func(*Renderer, RenderPart)) {
 }
 
 // GetPartChanged gets the callback function.
+// do renderer specific processing when rendering
+//
+//	attributes change
 func (x *RendererClass) GetPartChanged() func(*Renderer, RenderPart) {
 	if x.xPartChanged == 0 {
 		return nil
@@ -227,6 +255,7 @@ func (x *RendererClass) GetPartChanged() func(*Renderer, RenderPart) {
 }
 
 // OverrideBegin sets the callback function.
+// Do renderer-specific initialization before drawing
 func (x *RendererClass) OverrideBegin(cb func(*Renderer)) {
 	if cb == nil {
 		x.xBegin = 0
@@ -238,6 +267,7 @@ func (x *RendererClass) OverrideBegin(cb func(*Renderer)) {
 }
 
 // GetBegin gets the callback function.
+// Do renderer-specific initialization before drawing
 func (x *RendererClass) GetBegin() func(*Renderer) {
 	if x.xBegin == 0 {
 		return nil
@@ -250,6 +280,7 @@ func (x *RendererClass) GetBegin() func(*Renderer) {
 }
 
 // OverrideEnd sets the callback function.
+// Do renderer-specific cleanup after drawing
 func (x *RendererClass) OverrideEnd(cb func(*Renderer)) {
 	if cb == nil {
 		x.xEnd = 0
@@ -261,6 +292,7 @@ func (x *RendererClass) OverrideEnd(cb func(*Renderer)) {
 }
 
 // GetEnd gets the callback function.
+// Do renderer-specific cleanup after drawing
 func (x *RendererClass) GetEnd() func(*Renderer) {
 	if x.xEnd == 0 {
 		return nil
@@ -273,6 +305,7 @@ func (x *RendererClass) GetEnd() func(*Renderer) {
 }
 
 // OverridePrepareRun sets the callback function.
+// updates the renderer for a new run
 func (x *RendererClass) OverridePrepareRun(cb func(*Renderer, *LayoutRun)) {
 	if cb == nil {
 		x.xPrepareRun = 0
@@ -284,6 +317,7 @@ func (x *RendererClass) OverridePrepareRun(cb func(*Renderer, *LayoutRun)) {
 }
 
 // GetPrepareRun gets the callback function.
+// updates the renderer for a new run
 func (x *RendererClass) GetPrepareRun() func(*Renderer, *LayoutRun) {
 	if x.xPrepareRun == 0 {
 		return nil
@@ -296,6 +330,7 @@ func (x *RendererClass) GetPrepareRun() func(*Renderer, *LayoutRun) {
 }
 
 // OverrideDrawGlyphItem sets the callback function.
+// draws a `PangoGlyphItem`
 func (x *RendererClass) OverrideDrawGlyphItem(cb func(*Renderer, string, *GlyphItem, int, int)) {
 	if cb == nil {
 		x.xDrawGlyphItem = 0
@@ -307,6 +342,7 @@ func (x *RendererClass) OverrideDrawGlyphItem(cb func(*Renderer, string, *GlyphI
 }
 
 // GetDrawGlyphItem gets the callback function.
+// draws a `PangoGlyphItem`
 func (x *RendererClass) GetDrawGlyphItem() func(*Renderer, string, *GlyphItem, int, int) {
 	if x.xDrawGlyphItem == 0 {
 		return nil

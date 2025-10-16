@@ -320,7 +320,7 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// `GtkExpression` provides a way to describe references to values.
+// Provides a way to describe references to values.
 //
 // An important aspect of expressions is that the value can be obtained
 // from a source that is several steps away. For example, an expression
@@ -385,7 +385,7 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 // ## GtkExpression in GObject properties
 //
 // In order to use a `GtkExpression` as a `GObject` property, you must use the
-// [id@gtk_param_spec_expression] when creating a `GParamSpec` to install in the
+// [func@Gtk.param_spec_expression] when creating a `GParamSpec` to install in the
 // `GObject` class being defined; for instance:
 //
 // ```c
@@ -401,8 +401,8 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 // ```
 //
 // When implementing the `GObjectClass.set_property` and `GObjectClass.get_property`
-// virtual functions, you must use [id@gtk_value_get_expression], to retrieve the
-// stored `GtkExpression` from the `GValue` container, and [id@gtk_value_set_expression],
+// virtual functions, you must use [func@Gtk.value_get_expression], to retrieve the
+// stored `GtkExpression` from the `GValue` container, and [func@Gtk.value_set_expression],
 // to store the `GtkExpression` into the `GValue`; for instance:
 //
 // ```c
@@ -427,8 +427,9 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 //
 // To create a property expression, use the `&lt;lookup&gt;` element. It can have a `type`
 // attribute to specify the object type, and a `name` attribute to specify the property
-// to look up. The content of `&lt;lookup&gt;` can either be an element specfiying the expression
-// to use the object, or a string that specifies the name of the object to use.
+// to look up. The content of `&lt;lookup&gt;` can either be a string that specifies the name
+// of the object to use, an element specifying an expression to provide an object, or
+// empty to use the `this` object.
 //
 // Example:
 //
@@ -437,6 +438,11 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 //	&lt;lookup name='search'&gt;string_filter&lt;/lookup&gt;
 //
 // ```
+//
+// Since the `&lt;lookup&gt;` element creates an expression and its element content can
+// itself be an expression, this means that `&lt;lookup&gt;` tags can also be nested.
+// This is a common idiom when dealing with `GtkListItem`s. See
+// [class@Gtk.BuilderListItemFactory] for an example of this technique.
 //
 // To create a constant expression, use the `&lt;constant&gt;` element. If the type attribute
 // is specified, the element content is interpreted as a value of that type. Otherwise,
@@ -449,9 +455,10 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 //
 // ```
 //
-// To create a closure expression, use the `&lt;closure&gt;` element. The `type` and `function`
-// attributes specify what function to use for the closure, the content of the element
-// contains the expressions for the parameters. For instance:
+// To create a closure expression, use the `&lt;closure&gt;` element. The `function`
+// attribute specifies what function to use for the closure, and the `type`
+// attribute specifies its return type. The content of the element contains the
+// expressions for the parameters. For instance:
 //
 // ```xml
 //
@@ -459,6 +466,24 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 //	  &lt;constant type='gchararray'&gt;File size:&lt;/constant&gt;
 //	  &lt;lookup type='GFile' name='size'&gt;myfile&lt;/lookup&gt;
 //	&lt;/closure&gt;
+//
+// ```
+//
+// To create a property binding, use the `&lt;binding&gt;` element in place of where a
+// `&lt;property&gt;` tag would ordinarily be used. The `name` and `object` attributes are
+// supported. The `name` attribute is required, and pertains to the applicable property
+// name. The `object` attribute is optional. If provided, it will use the specified object
+// as the `this` object when the expression is evaluated. Here is an example in which the
+// `label` property of a `GtkLabel` is bound to the `string` property of another arbitrary
+// object:
+//
+// ```xml
+//
+//	&lt;object class='GtkLabel'&gt;
+//	  &lt;binding name='label'&gt;
+//	    &lt;lookup name='string'&gt;some_other_object&lt;/lookup&gt;
+//	  &lt;/binding&gt;
+//	&lt;/object&gt;
 //
 // ```
 type Expression struct {

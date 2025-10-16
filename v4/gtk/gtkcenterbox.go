@@ -19,10 +19,15 @@ func (x *CenterBoxClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkCenterBox` arranges three children in a row, keeping the middle child
+// Arranges three children in a row, keeping the middle child
 // centered as well as possible.
 //
-// ![An example GtkCenterBox](centerbox.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="centerbox-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkCenterBox" src="centerbox.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // To add children to `GtkCenterBox`, use [method@Gtk.CenterBox.set_start_widget],
 // [method@Gtk.CenterBox.set_center_widget] and
@@ -35,7 +40,7 @@ func (x *CenterBoxClass) GoPointer() uintptr {
 //
 // The `GtkCenterBox` implementation of the `GtkBuildable` interface
 // supports placing children in the 3 positions by specifying “start”, “center”
-// or “end” as the “type” attribute of a &lt;child&gt; element.
+// or “end” as the “type” attribute of a `&lt;child&gt;` element.
 //
 // # CSS nodes
 //
@@ -50,7 +55,10 @@ func (x *CenterBoxClass) GoPointer() uintptr {
 //
 // # Accessibility
 //
-// `GtkCenterBox` uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
+// Until GTK 4.10, `GtkCenterBox` used the [enum@Gtk.AccessibleRole.group] role.
+//
+// Starting from GTK 4.12, `GtkCenterBox` uses the [enum@Gtk.AccessibleRole.generic]
+// role.
 type CenterBox struct {
 	Widget
 }
@@ -86,7 +94,9 @@ func NewCenterBox() *CenterBox {
 
 var xCenterBoxGetBaselinePosition func(uintptr) BaselinePosition
 
-// Gets the value set by gtk_center_box_set_baseline_position().
+// Gets the baseline position of the center box.
+//
+// See [method@Gtk.CenterBox.set_baseline_position].
 func (x *CenterBox) GetBaselinePosition() BaselinePosition {
 
 	cret := xCenterBoxGetBaselinePosition(x.GoPointer())
@@ -95,7 +105,7 @@ func (x *CenterBox) GetBaselinePosition() BaselinePosition {
 
 var xCenterBoxGetCenterWidget func(uintptr) uintptr
 
-// Gets the center widget, or %NULL if there is none.
+// Gets the center widget.
 func (x *CenterBox) GetCenterWidget() *Widget {
 	var cls *Widget
 
@@ -112,7 +122,7 @@ func (x *CenterBox) GetCenterWidget() *Widget {
 
 var xCenterBoxGetEndWidget func(uintptr) uintptr
 
-// Gets the end widget, or %NULL if there is none.
+// Gets the end widget.
 func (x *CenterBox) GetEndWidget() *Widget {
 	var cls *Widget
 
@@ -127,9 +137,18 @@ func (x *CenterBox) GetEndWidget() *Widget {
 	return cls
 }
 
+var xCenterBoxGetShrinkCenterLast func(uintptr) bool
+
+// Gets whether the center widget shrinks after other children.
+func (x *CenterBox) GetShrinkCenterLast() bool {
+
+	cret := xCenterBoxGetShrinkCenterLast(x.GoPointer())
+	return cret
+}
+
 var xCenterBoxGetStartWidget func(uintptr) uintptr
 
-// Gets the start widget, or %NULL if there is none.
+// Gets the start widget.
 func (x *CenterBox) GetStartWidget() *Widget {
 	var cls *Widget
 
@@ -151,8 +170,8 @@ var xCenterBoxSetBaselinePosition func(uintptr, BaselinePosition)
 // This affects only horizontal boxes with at least one baseline
 // aligned child. If there is more vertical space available than
 // requested, and the baseline is not allocated by the parent then
-// @position is used to allocate the baseline wrt. the extra space
-// available.
+// @position is used to allocate the baseline with respect to the
+// extra space available.
 func (x *CenterBox) SetBaselinePosition(PositionVar BaselinePosition) {
 
 	xCenterBoxSetBaselinePosition(x.GoPointer(), PositionVar)
@@ -163,7 +182,7 @@ var xCenterBoxSetCenterWidget func(uintptr, uintptr)
 
 // Sets the center widget.
 //
-// To remove the existing center widget, pas %NULL.
+// To remove the existing center widget, pass `NULL`.
 func (x *CenterBox) SetCenterWidget(ChildVar *Widget) {
 
 	xCenterBoxSetCenterWidget(x.GoPointer(), ChildVar.GoPointer())
@@ -174,10 +193,26 @@ var xCenterBoxSetEndWidget func(uintptr, uintptr)
 
 // Sets the end widget.
 //
-// To remove the existing end widget, pass %NULL.
+// To remove the existing end widget, pass `NULL`.
 func (x *CenterBox) SetEndWidget(ChildVar *Widget) {
 
 	xCenterBoxSetEndWidget(x.GoPointer(), ChildVar.GoPointer())
+
+}
+
+var xCenterBoxSetShrinkCenterLast func(uintptr, bool)
+
+// Sets whether to shrink the center widget after other children.
+//
+// By default, when there's no space to give all three children their
+// natural widths, the start and end widgets start shrinking and the
+// center child keeps natural width until they reach minimum width.
+//
+// If @shrink_center_last is false, start and end widgets keep natural
+// width and the center widget starts shrinking instead.
+func (x *CenterBox) SetShrinkCenterLast(ShrinkCenterLastVar bool) {
+
+	xCenterBoxSetShrinkCenterLast(x.GoPointer(), ShrinkCenterLastVar)
 
 }
 
@@ -185,7 +220,7 @@ var xCenterBoxSetStartWidget func(uintptr, uintptr)
 
 // Sets the start widget.
 //
-// To remove the existing start widget, pass %NULL.
+// To remove the existing start widget, pass `NULL`.
 func (x *CenterBox) SetStartWidget(ChildVar *Widget) {
 
 	xCenterBoxSetStartWidget(x.GoPointer(), ChildVar.GoPointer())
@@ -203,31 +238,162 @@ func (c *CenterBox) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *CenterBox) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *CenterBox) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *CenterBox) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *CenterBox) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *CenterBox) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *CenterBox) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *CenterBox) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *CenterBox) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *CenterBox) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *CenterBox) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *CenterBox) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *CenterBox) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *CenterBox) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *CenterBox) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -273,7 +439,7 @@ func (x *CenterBox) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acce
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -303,13 +469,17 @@ func (x *CenterBox) UpdateRelationValue(NRelationsVar int, RelationsVar []Access
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -339,7 +509,7 @@ func (x *CenterBox) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *CenterBox) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -375,10 +545,12 @@ func init() {
 	core.PuregoSafeRegister(&xCenterBoxGetBaselinePosition, lib, "gtk_center_box_get_baseline_position")
 	core.PuregoSafeRegister(&xCenterBoxGetCenterWidget, lib, "gtk_center_box_get_center_widget")
 	core.PuregoSafeRegister(&xCenterBoxGetEndWidget, lib, "gtk_center_box_get_end_widget")
+	core.PuregoSafeRegister(&xCenterBoxGetShrinkCenterLast, lib, "gtk_center_box_get_shrink_center_last")
 	core.PuregoSafeRegister(&xCenterBoxGetStartWidget, lib, "gtk_center_box_get_start_widget")
 	core.PuregoSafeRegister(&xCenterBoxSetBaselinePosition, lib, "gtk_center_box_set_baseline_position")
 	core.PuregoSafeRegister(&xCenterBoxSetCenterWidget, lib, "gtk_center_box_set_center_widget")
 	core.PuregoSafeRegister(&xCenterBoxSetEndWidget, lib, "gtk_center_box_set_end_widget")
+	core.PuregoSafeRegister(&xCenterBoxSetShrinkCenterLast, lib, "gtk_center_box_set_shrink_center_last")
 	core.PuregoSafeRegister(&xCenterBoxSetStartWidget, lib, "gtk_center_box_set_start_widget")
 
 }

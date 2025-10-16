@@ -395,6 +395,34 @@ const (
 	//
 	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
 	FILE_ATTRIBUTE_THUMBNAILING_FAILED string = "thumbnail::failed"
+	// A key in the "thumbnail" namespace for checking if thumbnailing failed
+	// for the large image.
+	//
+	// This attribute is %TRUE if thumbnailing failed.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+	FILE_ATTRIBUTE_THUMBNAILING_FAILED_LARGE string = "thumbnail::failed-large"
+	// A key in the "thumbnail" namespace for checking if thumbnailing failed
+	// for the normal image.
+	//
+	// This attribute is %TRUE if thumbnailing failed.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+	FILE_ATTRIBUTE_THUMBNAILING_FAILED_NORMAL string = "thumbnail::failed-normal"
+	// A key in the "thumbnail" namespace for checking if thumbnailing failed
+	// for the x-large image.
+	//
+	// This attribute is %TRUE if thumbnailing failed.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+	FILE_ATTRIBUTE_THUMBNAILING_FAILED_XLARGE string = "thumbnail::failed-xlarge"
+	// A key in the "thumbnail" namespace for checking if thumbnailing failed
+	// for the xx-large image.
+	//
+	// This attribute is %TRUE if thumbnailing failed.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+	FILE_ATTRIBUTE_THUMBNAILING_FAILED_XXLARGE string = "thumbnail::failed-xxlarge"
 	// A key in the "thumbnail" namespace for checking whether the thumbnail is outdated.
 	//
 	// This attribute is %TRUE if the thumbnail is up-to-date with the file it represents,
@@ -405,11 +433,83 @@ const (
 	//
 	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
 	FILE_ATTRIBUTE_THUMBNAIL_IS_VALID string = "thumbnail::is-valid"
+	// A key in the "thumbnail" namespace for checking whether the large
+	// thumbnail is outdated.
+	//
+	// This attribute is %TRUE if the large thumbnail is up-to-date with the file
+	// it represents, and %FALSE if the file has been modified since the thumbnail
+	// was generated.
+	//
+	// If %G_FILE_ATTRIBUTE_THUMBNAILING_FAILED_LARGE is %TRUE and this attribute
+	// is %FALSE, it indicates that thumbnailing may be attempted again and may
+	// succeed.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+	FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_LARGE string = "thumbnail::is-valid-large"
+	// A key in the "thumbnail" namespace for checking whether the normal
+	// thumbnail is outdated.
+	//
+	// This attribute is %TRUE if the normal thumbnail is up-to-date with the file
+	// it represents, and %FALSE if the file has been modified since the thumbnail
+	// was generated.
+	//
+	// If %G_FILE_ATTRIBUTE_THUMBNAILING_FAILED_NORMAL is %TRUE and this attribute
+	// is %FALSE, it indicates that thumbnailing may be attempted again and may
+	// succeed.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+	FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_NORMAL string = "thumbnail::is-valid-normal"
+	// A key in the "thumbnail" namespace for checking whether the x-large
+	// thumbnail is outdated.
+	//
+	// This attribute is %TRUE if the x-large thumbnail is up-to-date with the file
+	// it represents, and %FALSE if the file has been modified since the thumbnail
+	// was generated.
+	//
+	// If %G_FILE_ATTRIBUTE_THUMBNAILING_FAILED_XLARGE is %TRUE and this attribute
+	// is %FALSE, it indicates that thumbnailing may be attempted again and may
+	// succeed.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+	FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_XLARGE string = "thumbnail::is-valid-xlarge"
+	// A key in the "thumbnail" namespace for checking whether the xx-large
+	// thumbnail is outdated.
+	//
+	// This attribute is %TRUE if the x-large thumbnail is up-to-date with the file
+	// it represents, and %FALSE if the file has been modified since the thumbnail
+	// was generated.
+	//
+	// If %G_FILE_ATTRIBUTE_THUMBNAILING_FAILED_XXLARGE is %TRUE and this attribute
+	// is %FALSE, it indicates that thumbnailing may be attempted again and may
+	// succeed.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+	FILE_ATTRIBUTE_THUMBNAIL_IS_VALID_XXLARGE string = "thumbnail::is-valid-xxlarge"
 	// A key in the "thumbnail" namespace for getting the path to the thumbnail
-	// image.
+	// image with the biggest size available.
 	//
 	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
 	FILE_ATTRIBUTE_THUMBNAIL_PATH string = "thumbnail::path"
+	// A key in the "thumbnail" namespace for getting the path to the large
+	// thumbnail image.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
+	FILE_ATTRIBUTE_THUMBNAIL_PATH_LARGE string = "thumbnail::path-large"
+	// A key in the "thumbnail" namespace for getting the path to the normal
+	// thumbnail image.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
+	FILE_ATTRIBUTE_THUMBNAIL_PATH_NORMAL string = "thumbnail::path-normal"
+	// A key in the "thumbnail" namespace for getting the path to the x-large
+	// thumbnail image.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
+	FILE_ATTRIBUTE_THUMBNAIL_PATH_XLARGE string = "thumbnail::path-xlarge"
+	// A key in the "thumbnail" namespace for getting the path to the xx-large
+	// thumbnail image.
+	//
+	// Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
+	FILE_ATTRIBUTE_THUMBNAIL_PATH_XXLARGE string = "thumbnail::path-xxlarge"
 	// A key in the "time" namespace for getting the time the file was last
 	// accessed.
 	//
@@ -417,6 +517,11 @@ const (
 	// contains the time since the file was last accessed, in seconds since the
 	// UNIX epoch.
 	FILE_ATTRIBUTE_TIME_ACCESS string = "time::access"
+	// A key in the "time" namespace for getting the nanoseconds of the time
+	// the file was last accessed. This should be used in conjunction with
+	// #G_FILE_ATTRIBUTE_TIME_ACCESS. Corresponding #GFileAttributeType is
+	// %G_FILE_ATTRIBUTE_TYPE_UINT32.
+	FILE_ATTRIBUTE_TIME_ACCESS_NSEC string = "time::access-nsec"
 	// A key in the "time" namespace for getting the microseconds of the time
 	// the file was last accessed.
 	//
@@ -433,6 +538,11 @@ const (
 	//
 	// This corresponds to the traditional UNIX ctime.
 	FILE_ATTRIBUTE_TIME_CHANGED string = "time::changed"
+	// A key in the "time" namespace for getting the nanoseconds of the time
+	// the file was last changed. This should be used in conjunction with
+	// #G_FILE_ATTRIBUTE_TIME_CHANGED. Corresponding #GFileAttributeType is
+	// %G_FILE_ATTRIBUTE_TYPE_UINT32.
+	FILE_ATTRIBUTE_TIME_CHANGED_NSEC string = "time::changed-nsec"
 	// A key in the "time" namespace for getting the microseconds of the time
 	// the file was last changed.
 	//
@@ -449,6 +559,11 @@ const (
 	// This may correspond to Linux `stx_btime`, FreeBSD `st_birthtim`, NetBSD
 	// `st_birthtime` or NTFS `ctime`.
 	FILE_ATTRIBUTE_TIME_CREATED string = "time::created"
+	// A key in the "time" namespace for getting the nanoseconds of the time
+	// the file was created. This should be used in conjunction with
+	// #G_FILE_ATTRIBUTE_TIME_CREATED. Corresponding #GFileAttributeType is
+	// %G_FILE_ATTRIBUTE_TYPE_UINT32.
+	FILE_ATTRIBUTE_TIME_CREATED_NSEC string = "time::created-nsec"
 	// A key in the "time" namespace for getting the microseconds of the time
 	// the file was created.
 	//
@@ -463,6 +578,11 @@ const (
 	// contains the time since the file was modified, in seconds since the UNIX
 	// epoch.
 	FILE_ATTRIBUTE_TIME_MODIFIED string = "time::modified"
+	// A key in the "time" namespace for getting the nanoseconds of the time
+	// the file was last modified. This should be used in conjunction with
+	// #G_FILE_ATTRIBUTE_TIME_MODIFIED. Corresponding #GFileAttributeType is
+	// %G_FILE_ATTRIBUTE_TYPE_UINT32.
+	FILE_ATTRIBUTE_TIME_MODIFIED_NSEC string = "time::modified-nsec"
 	// A key in the "time" namespace for getting the microseconds of the time
 	// the file was last modified.
 	//
@@ -568,35 +688,42 @@ const (
 	FILE_ATTRIBUTE_UNIX_UID string = "unix::uid"
 )
 
-// Functionality for manipulating basic metadata for files. #GFileInfo
+// Stores information about a file system object referenced by a [iface@Gio.File].
+//
+// Functionality for manipulating basic metadata for files. `GFileInfo`
 // implements methods for getting information that all files should
 // contain, and allows for manipulation of extended attributes.
 //
-// See [GFileAttribute][gio-GFileAttribute] for more information on how
-// GIO handles file attributes.
+// See the [file attributes](file-attributes.html) document for more
+// information on how GIO handles file attributes.
 //
-// To obtain a #GFileInfo for a #GFile, use g_file_query_info() (or its
-// async variant). To obtain a #GFileInfo for a file input or output
-// stream, use g_file_input_stream_query_info() or
-// g_file_output_stream_query_info() (or their async variants).
+// To obtain a `GFileInfo` for a [iface@Gio.File], use
+// [method@Gio.File.query_info] (or its async variant). To obtain a `GFileInfo`
+// for a file input or output stream, use [method@Gio.FileInputStream.query_info]
+// or [method@Gio.FileOutputStream.query_info] (or their async variants).
 //
 // To change the actual attributes of a file, you should then set the
-// attribute in the #GFileInfo and call g_file_set_attributes_from_info()
-// or g_file_set_attributes_async() on a GFile.
+// attribute in the `GFileInfo` and call [method@Gio.File.set_attributes_from_info]
+// or [method@Gio.File.set_attributes_async] on a `GFile`.
 //
 // However, not all attributes can be changed in the file. For instance,
-// the actual size of a file cannot be changed via g_file_info_set_size().
-// You may call g_file_query_settable_attributes() and
-// g_file_query_writable_namespaces() to discover the settable attributes
+// the actual size of a file cannot be changed via [method@Gio.FileInfo.set_size].
+// You may call [method@Gio.File.query_settable_attributes] and
+// [method@Gio.File.query_writable_namespaces] to discover the settable attributes
 // of a particular file at runtime.
 //
-// The direct accessors, such as g_file_info_get_name(), are slightly more
+// The direct accessors, such as [method@Gio.FileInfo.get_name], are slightly more
 // optimized than the generic attribute accessors, such as
-// g_file_info_get_attribute_byte_string().This optimization will matter
+// [method@Gio.FileInfo.get_attribute_byte_string].This optimization will matter
 // only if calling the API in a tight loop.
 //
-// #GFileAttributeMatcher allows for searching through a #GFileInfo for
-// attributes.
+// It is an error to call these accessors without specifying their required file
+// attributes when creating the `GFileInfo`. Use
+// [method@Gio.FileInfo.has_attribute] or [method@Gio.FileInfo.list_attributes]
+// to check what attributes are specified for a `GFileInfo`.
+//
+// [struct@Gio.FileAttributeMatcher] allows for searching through a `GFileInfo`
+// for attributes.
 type FileInfo struct {
 	gobject.Object
 }
@@ -640,8 +767,8 @@ func (x *FileInfo) ClearStatus() {
 
 var xFileInfoCopyInto func(uintptr, uintptr)
 
-// First clears all of the [GFileAttribute][gio-GFileAttribute] of @dest_info,
-// and then copies all of the file attributes from @src_info to @dest_info.
+// First clears all of the [GFileAttribute](file-attributes.html#file-attributes) of
+// @dest_info, and then copies all of the file attributes from @src_info to @dest_info.
 func (x *FileInfo) CopyInto(DestInfoVar *FileInfo) {
 
 	xFileInfoCopyInto(x.GoPointer(), DestInfoVar.GoPointer())
@@ -669,9 +796,13 @@ var xFileInfoGetAccessDateTime func(uintptr) *glib.DateTime
 // Gets the access time of the current @info and returns it as a
 // #GDateTime.
 //
-// This requires the %G_FILE_ATTRIBUTE_TIME_ACCESS attribute. If
-// %G_FILE_ATTRIBUTE_TIME_ACCESS_USEC is provided, the resulting #GDateTime
-// will have microsecond precision.
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_TIME_ACCESS. If %G_FILE_ATTRIBUTE_TIME_ACCESS_USEC is
+// provided, the resulting #GDateTime will additionally have microsecond
+// precision.
+//
+// If nanosecond precision is needed, %G_FILE_ATTRIBUTE_TIME_ACCESS_NSEC must
+// be queried separately using g_file_info_get_attribute_uint32().
 func (x *FileInfo) GetAccessDateTime() *glib.DateTime {
 
 	cret := xFileInfoGetAccessDateTime(x.GoPointer())
@@ -680,9 +811,26 @@ func (x *FileInfo) GetAccessDateTime() *glib.DateTime {
 
 var xFileInfoGetAttributeAsString func(uintptr, string) string
 
-// Gets the value of a attribute, formatted as a string.
-// This escapes things as needed to make the string valid
-// UTF-8.
+// Gets the value of an attribute, formatted as a human readable string.
+//
+// This escapes things as needed to make the string valid UTF-8 and readable by
+// humans. It’s not meant to be a machine readable or reversible escaping
+// format.
+//
+// To format file name attributes of type
+// [enum@Gio.FileAttributeType.BYTE_STRING] for output as UTF-8, use
+// [func@GLib.filename_to_utf8] instead:
+// ```c
+// const char *trash_orig_path_byte_string;
+// g_autofree char *trash_orig_path_utf8 = NULL;
+//
+// trash_orig_path_byte_string = g_file_info_get_attribute_byte_string (info, G_FILE_ATTRIBUTE_TRASH_ORIG_PATH);
+// trash_orig_path_utf8 = g_filename_to_utf8 (trash_orig_path_byte_string, -1, NULL, NULL, NULL);
+// if (trash_orig_path_utf8 != NULL)
+//
+//	g_message ("Some larger UTF-8 string with filename embedded as %s", trash_orig_path_utf8);
+//
+// ```
 func (x *FileInfo) GetAttributeAsString(AttributeVar string) string {
 
 	cret := xFileInfoGetAttributeAsString(x.GoPointer(), AttributeVar)
@@ -715,6 +863,20 @@ var xFileInfoGetAttributeData func(uintptr, string, *FileAttributeType, uintptr,
 func (x *FileInfo) GetAttributeData(AttributeVar string, TypeVar *FileAttributeType, ValuePpVar uintptr, StatusVar *FileAttributeStatus) bool {
 
 	cret := xFileInfoGetAttributeData(x.GoPointer(), AttributeVar, TypeVar, ValuePpVar, StatusVar)
+	return cret
+}
+
+var xFileInfoGetAttributeFilePath func(uintptr, string) string
+
+// Gets the value of a byte string attribute as a file path.
+//
+// If the attribute does not contain a byte string, `NULL` will be returned.
+//
+// This function is meant to be used by language bindings that have specific
+// handling for Unix paths.
+func (x *FileInfo) GetAttributeFilePath(AttributeVar string) string {
+
+	cret := xFileInfoGetAttributeFilePath(x.GoPointer(), AttributeVar)
 	return cret
 }
 
@@ -821,6 +983,9 @@ func (x *FileInfo) GetAttributeUint64(AttributeVar string) uint64 {
 var xFileInfoGetContentType func(uintptr) string
 
 // Gets the file's content type.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE.
 func (x *FileInfo) GetContentType() string {
 
 	cret := xFileInfoGetContentType(x.GoPointer())
@@ -832,9 +997,13 @@ var xFileInfoGetCreationDateTime func(uintptr) *glib.DateTime
 // Gets the creation time of the current @info and returns it as a
 // #GDateTime.
 //
-// This requires the %G_FILE_ATTRIBUTE_TIME_CREATED attribute. If
-// %G_FILE_ATTRIBUTE_TIME_CREATED_USEC is provided, the resulting #GDateTime
-// will have microsecond precision.
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_TIME_CREATED. If %G_FILE_ATTRIBUTE_TIME_CREATED_USEC is
+// provided, the resulting #GDateTime will additionally have microsecond
+// precision.
+//
+// If nanosecond precision is needed, %G_FILE_ATTRIBUTE_TIME_CREATED_NSEC must
+// be queried separately using g_file_info_get_attribute_uint32().
 func (x *FileInfo) GetCreationDateTime() *glib.DateTime {
 
 	cret := xFileInfoGetCreationDateTime(x.GoPointer())
@@ -844,8 +1013,8 @@ func (x *FileInfo) GetCreationDateTime() *glib.DateTime {
 var xFileInfoGetDeletionDate func(uintptr) *glib.DateTime
 
 // Returns the #GDateTime representing the deletion date of the file, as
-// available in G_FILE_ATTRIBUTE_TRASH_DELETION_DATE. If the
-// G_FILE_ATTRIBUTE_TRASH_DELETION_DATE attribute is unset, %NULL is returned.
+// available in %G_FILE_ATTRIBUTE_TRASH_DELETION_DATE. If the
+// %G_FILE_ATTRIBUTE_TRASH_DELETION_DATE attribute is unset, %NULL is returned.
 func (x *FileInfo) GetDeletionDate() *glib.DateTime {
 
 	cret := xFileInfoGetDeletionDate(x.GoPointer())
@@ -855,6 +1024,9 @@ func (x *FileInfo) GetDeletionDate() *glib.DateTime {
 var xFileInfoGetDisplayName func(uintptr) string
 
 // Gets a display name for a file. This is guaranteed to always be set.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME.
 func (x *FileInfo) GetDisplayName() string {
 
 	cret := xFileInfoGetDisplayName(x.GoPointer())
@@ -864,6 +1036,9 @@ func (x *FileInfo) GetDisplayName() string {
 var xFileInfoGetEditName func(uintptr) string
 
 // Gets the edit name for a file.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_EDIT_NAME.
 func (x *FileInfo) GetEditName() string {
 
 	cret := xFileInfoGetEditName(x.GoPointer())
@@ -872,8 +1047,11 @@ func (x *FileInfo) GetEditName() string {
 
 var xFileInfoGetEtag func(uintptr) string
 
-// Gets the [entity tag][gfile-etag] for a given
+// Gets the [entity tag][iface@Gio.File#entity-tags] for a given
 // #GFileInfo. See %G_FILE_ATTRIBUTE_ETAG_VALUE.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_ETAG_VALUE.
 func (x *FileInfo) GetEtag() string {
 
 	cret := xFileInfoGetEtag(x.GoPointer())
@@ -884,6 +1062,9 @@ var xFileInfoGetFileType func(uintptr) FileType
 
 // Gets a file's type (whether it is a regular file, symlink, etc).
 // This is different from the file's content type, see g_file_info_get_content_type().
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_TYPE.
 func (x *FileInfo) GetFileType() FileType {
 
 	cret := xFileInfoGetFileType(x.GoPointer())
@@ -893,6 +1074,9 @@ func (x *FileInfo) GetFileType() FileType {
 var xFileInfoGetIcon func(uintptr) uintptr
 
 // Gets the icon for a file.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_ICON.
 func (x *FileInfo) GetIcon() *IconBase {
 	var cls *IconBase
 
@@ -910,6 +1094,9 @@ func (x *FileInfo) GetIcon() *IconBase {
 var xFileInfoGetIsBackup func(uintptr) bool
 
 // Checks if a file is a backup file.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_IS_BACKUP.
 func (x *FileInfo) GetIsBackup() bool {
 
 	cret := xFileInfoGetIsBackup(x.GoPointer())
@@ -919,6 +1106,9 @@ func (x *FileInfo) GetIsBackup() bool {
 var xFileInfoGetIsHidden func(uintptr) bool
 
 // Checks if a file is hidden.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN.
 func (x *FileInfo) GetIsHidden() bool {
 
 	cret := xFileInfoGetIsHidden(x.GoPointer())
@@ -928,6 +1118,9 @@ func (x *FileInfo) GetIsHidden() bool {
 var xFileInfoGetIsSymlink func(uintptr) bool
 
 // Checks if a file is a symlink.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_IS_SYMLINK.
 func (x *FileInfo) GetIsSymlink() bool {
 
 	cret := xFileInfoGetIsSymlink(x.GoPointer())
@@ -939,9 +1132,13 @@ var xFileInfoGetModificationDateTime func(uintptr) *glib.DateTime
 // Gets the modification time of the current @info and returns it as a
 // #GDateTime.
 //
-// This requires the %G_FILE_ATTRIBUTE_TIME_MODIFIED attribute. If
-// %G_FILE_ATTRIBUTE_TIME_MODIFIED_USEC is provided, the resulting #GDateTime
-// will have microsecond precision.
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_TIME_MODIFIED. If %G_FILE_ATTRIBUTE_TIME_MODIFIED_USEC is
+// provided, the resulting #GDateTime will additionally have microsecond
+// precision.
+//
+// If nanosecond precision is needed, %G_FILE_ATTRIBUTE_TIME_MODIFIED_NSEC must
+// be queried separately using g_file_info_get_attribute_uint32().
 func (x *FileInfo) GetModificationDateTime() *glib.DateTime {
 
 	cret := xFileInfoGetModificationDateTime(x.GoPointer())
@@ -952,6 +1149,10 @@ var xFileInfoGetModificationTime func(uintptr, *glib.TimeVal)
 
 // Gets the modification time of the current @info and sets it
 // in @result.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_TIME_MODIFIED. If %G_FILE_ATTRIBUTE_TIME_MODIFIED_USEC is
+// provided it will be used too.
 func (x *FileInfo) GetModificationTime(ResultVar *glib.TimeVal) {
 
 	xFileInfoGetModificationTime(x.GoPointer(), ResultVar)
@@ -961,6 +1162,9 @@ func (x *FileInfo) GetModificationTime(ResultVar *glib.TimeVal) {
 var xFileInfoGetName func(uintptr) string
 
 // Gets the name for a file. This is guaranteed to always be set.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_NAME.
 func (x *FileInfo) GetName() string {
 
 	cret := xFileInfoGetName(x.GoPointer())
@@ -972,6 +1176,9 @@ var xFileInfoGetSize func(uintptr) int64
 // Gets the file's size (in bytes). The size is retrieved through the value of
 // the %G_FILE_ATTRIBUTE_STANDARD_SIZE attribute and is converted
 // from #guint64 to #goffset before returning the result.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_SIZE.
 func (x *FileInfo) GetSize() int64 {
 
 	cret := xFileInfoGetSize(x.GoPointer())
@@ -982,6 +1189,9 @@ var xFileInfoGetSortOrder func(uintptr) int32
 
 // Gets the value of the sort_order attribute from the #GFileInfo.
 // See %G_FILE_ATTRIBUTE_STANDARD_SORT_ORDER.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_SORT_ORDER.
 func (x *FileInfo) GetSortOrder() int32 {
 
 	cret := xFileInfoGetSortOrder(x.GoPointer())
@@ -991,6 +1201,9 @@ func (x *FileInfo) GetSortOrder() int32 {
 var xFileInfoGetSymbolicIcon func(uintptr) uintptr
 
 // Gets the symbolic icon for a file.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_SYMBOLIC_ICON.
 func (x *FileInfo) GetSymbolicIcon() *IconBase {
 	var cls *IconBase
 
@@ -1008,6 +1221,9 @@ func (x *FileInfo) GetSymbolicIcon() *IconBase {
 var xFileInfoGetSymlinkTarget func(uintptr) string
 
 // Gets the symlink target for a given #GFileInfo.
+//
+// It is an error to call this if the #GFileInfo does not contain
+// %G_FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET.
 func (x *FileInfo) GetSymlinkTarget() string {
 
 	cret := xFileInfoGetSymlinkTarget(x.GoPointer())
@@ -1056,6 +1272,8 @@ var xFileInfoSetAccessDateTime func(uintptr, *glib.DateTime)
 // Sets the %G_FILE_ATTRIBUTE_TIME_ACCESS and
 // %G_FILE_ATTRIBUTE_TIME_ACCESS_USEC attributes in the file info to the
 // given date/time value.
+//
+// %G_FILE_ATTRIBUTE_TIME_ACCESS_NSEC will be cleared.
 func (x *FileInfo) SetAccessDateTime(AtimeVar *glib.DateTime) {
 
 	xFileInfoSetAccessDateTime(x.GoPointer(), AtimeVar)
@@ -1089,6 +1307,19 @@ var xFileInfoSetAttributeByteString func(uintptr, string, string)
 func (x *FileInfo) SetAttributeByteString(AttributeVar string, AttrValueVar string) {
 
 	xFileInfoSetAttributeByteString(x.GoPointer(), AttributeVar, AttrValueVar)
+
+}
+
+var xFileInfoSetAttributeFilePath func(uintptr, string, string)
+
+// Sets the @attribute to contain the given @attr_value,
+// if possible.
+//
+// This function is meant to be used by language bindings that have specific
+// handling for Unix paths.
+func (x *FileInfo) SetAttributeFilePath(AttributeVar string, AttrValueVar string) {
+
+	xFileInfoSetAttributeFilePath(x.GoPointer(), AttributeVar, AttrValueVar)
 
 }
 
@@ -1202,6 +1433,8 @@ var xFileInfoSetCreationDateTime func(uintptr, *glib.DateTime)
 // Sets the %G_FILE_ATTRIBUTE_TIME_CREATED and
 // %G_FILE_ATTRIBUTE_TIME_CREATED_USEC attributes in the file info to the
 // given date/time value.
+//
+// %G_FILE_ATTRIBUTE_TIME_CREATED_NSEC will be cleared.
 func (x *FileInfo) SetCreationDateTime(CreationTimeVar *glib.DateTime) {
 
 	xFileInfoSetCreationDateTime(x.GoPointer(), CreationTimeVar)
@@ -1273,6 +1506,8 @@ var xFileInfoSetModificationDateTime func(uintptr, *glib.DateTime)
 // Sets the %G_FILE_ATTRIBUTE_TIME_MODIFIED and
 // %G_FILE_ATTRIBUTE_TIME_MODIFIED_USEC attributes in the file info to the
 // given date/time value.
+//
+// %G_FILE_ATTRIBUTE_TIME_MODIFIED_NSEC will be cleared.
 func (x *FileInfo) SetModificationDateTime(MtimeVar *glib.DateTime) {
 
 	xFileInfoSetModificationDateTime(x.GoPointer(), MtimeVar)
@@ -1284,6 +1519,8 @@ var xFileInfoSetModificationTime func(uintptr, *glib.TimeVal)
 // Sets the %G_FILE_ATTRIBUTE_TIME_MODIFIED and
 // %G_FILE_ATTRIBUTE_TIME_MODIFIED_USEC attributes in the file info to the
 // given time value.
+//
+// %G_FILE_ATTRIBUTE_TIME_MODIFIED_NSEC will be cleared.
 func (x *FileInfo) SetModificationTime(MtimeVar *glib.TimeVal) {
 
 	xFileInfoSetModificationTime(x.GoPointer(), MtimeVar)
@@ -1381,6 +1618,7 @@ func init() {
 	core.PuregoSafeRegister(&xFileInfoGetAttributeBoolean, lib, "g_file_info_get_attribute_boolean")
 	core.PuregoSafeRegister(&xFileInfoGetAttributeByteString, lib, "g_file_info_get_attribute_byte_string")
 	core.PuregoSafeRegister(&xFileInfoGetAttributeData, lib, "g_file_info_get_attribute_data")
+	core.PuregoSafeRegister(&xFileInfoGetAttributeFilePath, lib, "g_file_info_get_attribute_file_path")
 	core.PuregoSafeRegister(&xFileInfoGetAttributeInt32, lib, "g_file_info_get_attribute_int32")
 	core.PuregoSafeRegister(&xFileInfoGetAttributeInt64, lib, "g_file_info_get_attribute_int64")
 	core.PuregoSafeRegister(&xFileInfoGetAttributeObject, lib, "g_file_info_get_attribute_object")
@@ -1416,6 +1654,7 @@ func init() {
 	core.PuregoSafeRegister(&xFileInfoSetAttribute, lib, "g_file_info_set_attribute")
 	core.PuregoSafeRegister(&xFileInfoSetAttributeBoolean, lib, "g_file_info_set_attribute_boolean")
 	core.PuregoSafeRegister(&xFileInfoSetAttributeByteString, lib, "g_file_info_set_attribute_byte_string")
+	core.PuregoSafeRegister(&xFileInfoSetAttributeFilePath, lib, "g_file_info_set_attribute_file_path")
 	core.PuregoSafeRegister(&xFileInfoSetAttributeInt32, lib, "g_file_info_set_attribute_int32")
 	core.PuregoSafeRegister(&xFileInfoSetAttributeInt64, lib, "g_file_info_set_attribute_int64")
 	core.PuregoSafeRegister(&xFileInfoSetAttributeMask, lib, "g_file_info_set_attribute_mask")

@@ -29,6 +29,7 @@ func (x *AsyncInitableIface) GoPointer() uintptr {
 }
 
 // OverrideInitAsync sets the callback function.
+// Starts initialization of the object.
 func (x *AsyncInitableIface) OverrideInitAsync(cb func(AsyncInitable, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xInitAsync = 0
@@ -40,6 +41,7 @@ func (x *AsyncInitableIface) OverrideInitAsync(cb func(AsyncInitable, int, *Canc
 }
 
 // GetInitAsync gets the callback function.
+// Starts initialization of the object.
 func (x *AsyncInitableIface) GetInitAsync() func(AsyncInitable, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xInitAsync == 0 {
 		return nil
@@ -52,6 +54,7 @@ func (x *AsyncInitableIface) GetInitAsync() func(AsyncInitable, int, *Cancellabl
 }
 
 // OverrideInitFinish sets the callback function.
+// Finishes initialization of the object.
 func (x *AsyncInitableIface) OverrideInitFinish(cb func(AsyncInitable, AsyncResult) bool) {
 	if cb == nil {
 		x.xInitFinish = 0
@@ -63,6 +66,7 @@ func (x *AsyncInitableIface) OverrideInitFinish(cb func(AsyncInitable, AsyncResu
 }
 
 // GetInitFinish gets the callback function.
+// Finishes initialization of the object.
 func (x *AsyncInitableIface) GetInitFinish() func(AsyncInitable, AsyncResult) bool {
 	if x.xInitFinish == 0 {
 		return nil
@@ -74,22 +78,24 @@ func (x *AsyncInitableIface) GetInitFinish() func(AsyncInitable, AsyncResult) bo
 	}
 }
 
-// This is the asynchronous version of #GInitable; it behaves the same
-// in all ways except that initialization is asynchronous. For more details
-// see the descriptions on #GInitable.
+// `GAsyncInitable` is an interface for asynchronously initializable objects.
 //
-// A class may implement both the #GInitable and #GAsyncInitable interfaces.
+// This is the asynchronous version of [iface@Gio.Initable]; it behaves the same
+// in all ways except that initialization is asynchronous. For more details
+// see the descriptions on `GInitable`.
+//
+// A class may implement both the `GInitable` and `GAsyncInitable` interfaces.
 //
 // Users of objects implementing this are not intended to use the interface
 // method directly; instead it will be used automatically in various ways.
-// For C applications you generally just call g_async_initable_new_async()
+// For C applications you generally just call [func@Gio.AsyncInitable.new_async]
 // directly, or indirectly via a foo_thing_new_async() wrapper. This will call
-// g_async_initable_init_async() under the cover, calling back with %NULL and
-// a set %GError on failure.
+// [method@Gio.AsyncInitable.init_async] under the covers, calling back with `NULL`
+// and a set `GError` on failure.
 //
 // A typical implementation might look something like this:
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 //
 //	enum {
 //	   NOT_INITIALIZED,
@@ -181,7 +187,7 @@ func (x *AsyncInitableIface) GetInitFinish() func(AsyncInitable, AsyncResult) bo
 //	  iface-&gt;init_finish = foo_init_finish;
 //	}
 //
-// ]|
+// ```
 type AsyncInitable interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

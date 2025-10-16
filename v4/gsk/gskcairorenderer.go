@@ -18,7 +18,7 @@ func (x *CairoRendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A GSK renderer that is using cairo.
+// Renders a GSK rendernode tree with cairo.
 //
 // Since it is using cairo, this renderer cannot support
 // 3D transformations.

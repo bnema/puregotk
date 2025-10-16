@@ -46,8 +46,7 @@ const (
 	SubpixelLayoutVerticalBgrValue SubpixelLayout = 5
 )
 
-// `GdkMonitor` objects represent the individual outputs that are
-// associated with a `GdkDisplay`.
+// Represents the individual outputs that are associated with a `GdkDisplay`.
 //
 // `GdkDisplay` keeps a `GListModel` to enumerate and monitor
 // monitors with [method@Gdk.Display.get_monitors]. You can use
@@ -72,9 +71,24 @@ func MonitorNewFromInternalPtr(ptr uintptr) *Monitor {
 var xMonitorGetConnector func(uintptr) string
 
 // Gets the name of the monitor's connector, if available.
+//
+// These are strings such as "eDP-1", or "HDMI-2". They depend
+// on software and hardware configuration, and should not be
+// relied on as stable identifiers of a specific monitor.
 func (x *Monitor) GetConnector() string {
 
 	cret := xMonitorGetConnector(x.GoPointer())
+	return cret
+}
+
+var xMonitorGetDescription func(uintptr) string
+
+// Gets a string describing the monitor, if available.
+//
+// This can be used to identify a monitor in the UI.
+func (x *Monitor) GetDescription() string {
+
+	cret := xMonitorGetDescription(x.GoPointer())
 	return cret
 }
 
@@ -101,7 +115,7 @@ var xMonitorGetGeometry func(uintptr, *Rectangle)
 // display coordinate space.
 //
 // The returned geometry is in  ”application pixels”, not in
-// ”device pixels” (see [method@Gdk.Monitor.get_scale_factor]).
+// ”device pixels” (see [method@Gdk.Monitor.get_scale]).
 func (x *Monitor) GetGeometry(GeometryVar *Rectangle) {
 
 	xMonitorGetGeometry(x.GoPointer(), GeometryVar)
@@ -150,6 +164,20 @@ var xMonitorGetRefreshRate func(uintptr) int
 func (x *Monitor) GetRefreshRate() int {
 
 	cret := xMonitorGetRefreshRate(x.GoPointer())
+	return cret
+}
+
+var xMonitorGetScale func(uintptr) float64
+
+// Gets the internal scale factor that maps from monitor coordinates
+// to device pixels.
+//
+// This can be used if you want to create pixel based data for a
+// particular monitor, but most of the time you’re drawing to a surface
+// where it is better to use [method@Gdk.Surface.get_scale] instead.
+func (x *Monitor) GetScale() float64 {
+
+	cret := xMonitorGetScale(x.GoPointer())
 	return cret
 }
 
@@ -246,12 +274,14 @@ func init() {
 	core.PuregoSafeRegister(&xMonitorGLibType, lib, "gdk_monitor_get_type")
 
 	core.PuregoSafeRegister(&xMonitorGetConnector, lib, "gdk_monitor_get_connector")
+	core.PuregoSafeRegister(&xMonitorGetDescription, lib, "gdk_monitor_get_description")
 	core.PuregoSafeRegister(&xMonitorGetDisplay, lib, "gdk_monitor_get_display")
 	core.PuregoSafeRegister(&xMonitorGetGeometry, lib, "gdk_monitor_get_geometry")
 	core.PuregoSafeRegister(&xMonitorGetHeightMm, lib, "gdk_monitor_get_height_mm")
 	core.PuregoSafeRegister(&xMonitorGetManufacturer, lib, "gdk_monitor_get_manufacturer")
 	core.PuregoSafeRegister(&xMonitorGetModel, lib, "gdk_monitor_get_model")
 	core.PuregoSafeRegister(&xMonitorGetRefreshRate, lib, "gdk_monitor_get_refresh_rate")
+	core.PuregoSafeRegister(&xMonitorGetScale, lib, "gdk_monitor_get_scale")
 	core.PuregoSafeRegister(&xMonitorGetScaleFactor, lib, "gdk_monitor_get_scale_factor")
 	core.PuregoSafeRegister(&xMonitorGetSubpixelLayout, lib, "gdk_monitor_get_subpixel_layout")
 	core.PuregoSafeRegister(&xMonitorGetWidthMm, lib, "gdk_monitor_get_width_mm")

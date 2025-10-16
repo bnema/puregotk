@@ -110,7 +110,8 @@ var xNewTreeViewColumnWithAttributes func(string, uintptr, ...interface{}) uintp
 // gtk_tree_view_column_set_attributes() on the newly created `GtkTreeViewColumn`.
 //
 // Here’s a simple example:
-// |[&lt;!-- language="C" --&gt;
+//
+// ```c
 //
 //	enum { TEXT_COLUMN, COLOR_COLUMN, N_COLUMNS };
 //	// ...
@@ -125,7 +126,7 @@ var xNewTreeViewColumnWithAttributes func(string, uintptr, ...interface{}) uintp
 //	                                                     NULL);
 //	}
 //
-// ]|
+// ```
 func NewTreeViewColumnWithAttributes(TitleVar string, CellVar *CellRenderer, varArgs ...interface{}) *TreeViewColumn {
 	var cls *TreeViewColumn
 
@@ -739,7 +740,7 @@ func (x *TreeViewColumn) ConnectClicked(cb *func(TreeViewColumn)) uint32 {
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *TreeViewColumn) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

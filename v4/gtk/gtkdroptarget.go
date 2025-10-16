@@ -21,7 +21,7 @@ func (x *DropTargetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkDropTarget` is an event controller to receive Drag-and-Drop operations.
+// An event controller to receive Drag-and-Drop operations.
 //
 // The most basic way to use a `GtkDropTarget` to receive drops on a
 // widget is to create it via [ctor@Gtk.DropTarget.new], passing in the
@@ -61,7 +61,7 @@ func (x *DropTargetClass) GoPointer() uintptr {
 //
 //	  // This widget accepts two types of drop types: GFile objects
 //	  // and GdkPixbuf objects
-//	  gtk_drop_target_set_gtypes (target, (GTypes [2]) {
+//	  gtk_drop_target_set_gtypes (target, (GType [2]) {
 //	    G_TYPE_FILE,
 //	    GDK_TYPE_PIXBUF,
 //	  }, 2);
@@ -246,7 +246,7 @@ func (x *DropTarget) SetActions(ActionsVar gdk.DragAction) {
 
 var xDropTargetSetGtypes func(uintptr, []types.GType, uint)
 
-// Sets the supported `GTypes` for this drop target.
+// Sets the supported `GType`s for this drop target.
 func (x *DropTarget) SetGtypes(TypesVar []types.GType, NTypesVar uint) {
 
 	xDropTargetSetGtypes(x.GoPointer(), TypesVar, NTypesVar)

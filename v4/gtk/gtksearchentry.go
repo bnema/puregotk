@@ -11,13 +11,17 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// `GtkSearchEntry` is an entry widget that has been tailored for use
-// as a search entry.
+// A single-line text entry widget for use as a search entry.
 //
 // The main API for interacting with a `GtkSearchEntry` as entry
 // is the `GtkEditable` interface.
 //
-// ![An example GtkSearchEntry](search-entry.png)
+// &lt;picture&gt;
+//
+//	&lt;source srcset="search-entry-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="An example GtkSearchEntry" src="search-entry.png"&gt;
+//
+// &lt;/picture&gt;
 //
 // It will show an inactive symbolic “find” icon when the search
 // entry is empty, and a symbolic “clear” icon when there is text.
@@ -42,6 +46,15 @@ import (
 // `GtkSearchEntry` provides only minimal API and should be used with
 // the [iface@Gtk.Editable] API.
 //
+// ## Shortcuts and Gestures
+//
+// The following signals have default keybindings:
+//
+// - [signal@Gtk.SearchEntry::activate]
+// - [signal@Gtk.SearchEntry::next-match]
+// - [signal@Gtk.SearchEntry::previous-match]
+// - [signal@Gtk.SearchEntry::stop-search]
+//
 // ## CSS Nodes
 //
 // ```
@@ -54,7 +67,7 @@ import (
 //
 // ## Accessibility
 //
-// `GtkSearchEntry` uses the %GTK_ACCESSIBLE_ROLE_SEARCH_BOX role.
+// `GtkSearchEntry` uses the [enum@Gtk.AccessibleRole.search_box] role.
 type SearchEntry struct {
 	Widget
 }
@@ -88,6 +101,24 @@ func NewSearchEntry() *SearchEntry {
 	return cls
 }
 
+var xSearchEntryGetInputHints func(uintptr) InputHints
+
+// Gets the input purpose for @entry.
+func (x *SearchEntry) GetInputHints() InputHints {
+
+	cret := xSearchEntryGetInputHints(x.GoPointer())
+	return cret
+}
+
+var xSearchEntryGetInputPurpose func(uintptr) InputPurpose
+
+// Gets the input purpose of @entry.
+func (x *SearchEntry) GetInputPurpose() InputPurpose {
+
+	cret := xSearchEntryGetInputPurpose(x.GoPointer())
+	return cret
+}
+
 var xSearchEntryGetKeyCaptureWidget func(uintptr) uintptr
 
 // Gets the widget that @entry is capturing key events from.
@@ -105,6 +136,15 @@ func (x *SearchEntry) GetKeyCaptureWidget() *Widget {
 	return cls
 }
 
+var xSearchEntryGetPlaceholderText func(uintptr) string
+
+// Gets the placeholder text associated with @entry.
+func (x *SearchEntry) GetPlaceholderText() string {
+
+	cret := xSearchEntryGetPlaceholderText(x.GoPointer())
+	return cret
+}
+
 var xSearchEntryGetSearchDelay func(uintptr) uint
 
 // Get the delay to be used between the last keypress and the
@@ -113,6 +153,24 @@ func (x *SearchEntry) GetSearchDelay() uint {
 
 	cret := xSearchEntryGetSearchDelay(x.GoPointer())
 	return cret
+}
+
+var xSearchEntrySetInputHints func(uintptr, InputHints)
+
+// Sets the input hints for @entry.
+func (x *SearchEntry) SetInputHints(HintsVar InputHints) {
+
+	xSearchEntrySetInputHints(x.GoPointer(), HintsVar)
+
+}
+
+var xSearchEntrySetInputPurpose func(uintptr, InputPurpose)
+
+// Sets the input purpose of @entry.
+func (x *SearchEntry) SetInputPurpose(PurposeVar InputPurpose) {
+
+	xSearchEntrySetInputPurpose(x.GoPointer(), PurposeVar)
+
 }
 
 var xSearchEntrySetKeyCaptureWidget func(uintptr, uintptr)
@@ -140,6 +198,15 @@ func (x *SearchEntry) SetKeyCaptureWidget(WidgetVar *Widget) {
 
 }
 
+var xSearchEntrySetPlaceholderText func(uintptr, string)
+
+// Sets the placeholder text associated with @entry.
+func (x *SearchEntry) SetPlaceholderText(TextVar string) {
+
+	xSearchEntrySetPlaceholderText(x.GoPointer(), TextVar)
+
+}
+
 var xSearchEntrySetSearchDelay func(uintptr, uint)
 
 // Set the delay to be used between the last keypress and the
@@ -163,7 +230,7 @@ func (c *SearchEntry) SetGoPointer(ptr uintptr) {
 
 // Emitted when the entry is activated.
 //
-// The keybindings for this signal are all forms of the Enter key.
+// The keybindings for this signal are all forms of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
 func (x *SearchEntry) ConnectActivate(cb *func(SearchEntry)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -191,7 +258,7 @@ func (x *SearchEntry) ConnectActivate(cb *func(SearchEntry)) uint32 {
 // Applications should connect to it, to implement moving
 // between matches.
 //
-// The default bindings for this signal is Ctrl-g.
+// The default bindings for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;g&lt;/kbd&gt;.
 func (x *SearchEntry) ConnectNextMatch(cb *func(SearchEntry)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -219,7 +286,8 @@ func (x *SearchEntry) ConnectNextMatch(cb *func(SearchEntry)) uint32 {
 // Applications should connect to it, to implement moving
 // between matches.
 //
-// The default bindings for this signal is Ctrl-Shift-g.
+// The default bindings for this signal is
+// &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;g&lt;/kbd&gt;.
 func (x *SearchEntry) ConnectPreviousMatch(cb *func(SearchEntry)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -288,7 +356,7 @@ func (x *SearchEntry) ConnectSearchStarted(cb *func(SearchEntry)) uint32 {
 // Applications should connect to it, to implement hiding
 // the search entry in this case.
 //
-// The default bindings for this signal is Escape.
+// The default bindings for this signal is &lt;kbd&gt;Escape&lt;/kbd&gt;.
 func (x *SearchEntry) ConnectStopSearch(cb *func(SearchEntry)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -308,31 +376,162 @@ func (x *SearchEntry) ConnectStopSearch(cb *func(SearchEntry)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "stop-search", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *SearchEntry) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *SearchEntry) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *SearchEntry) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *SearchEntry) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *SearchEntry) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *SearchEntry) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *SearchEntry) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *SearchEntry) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *SearchEntry) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *SearchEntry) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *SearchEntry) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *SearchEntry) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *SearchEntry) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *SearchEntry) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -378,7 +577,7 @@ func (x *SearchEntry) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Ac
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -408,13 +607,17 @@ func (x *SearchEntry) UpdateRelationValue(NRelationsVar int, RelationsVar []Acce
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -444,10 +647,52 @@ func (x *SearchEntry) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *SearchEntry) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+	return cret
+}
+
+// Retrieves the accessible platform state from the editable delegate.
+//
+// This is an helper function to retrieve the accessible state for
+// `GtkEditable` interface implementations using a delegate pattern.
+//
+// You should call this function in your editable widget implementation
+// of the [vfunc@Gtk.Accessible.get_platform_state] virtual function, for
+// instance:
+//
+// ```c
+// static void
+// accessible_interface_init (GtkAccessibleInterface *iface)
+//
+//	{
+//	  iface-&gt;get_platform_state = your_editable_get_accessible_platform_state;
+//	}
+//
+// static gboolean
+// your_editable_get_accessible_platform_state (GtkAccessible *accessible,
+//
+//	GtkAccessiblePlatformState state)
+//
+//	{
+//	  return gtk_editable_delegate_get_accessible_platform_state (GTK_EDITABLE (accessible), state);
+//	}
+//
+// ```
+//
+// Note that the widget which is the delegate *must* be a direct child of
+// this widget, otherwise your implementation of [vfunc@Gtk.Accessible.get_platform_state]
+// might not even be called, as the platform change will originate from
+// the parent of the delegate, and, as a result, will not work properly.
+//
+// So, if you can't ensure the direct child condition, you should give the
+// delegate the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role, or you can
+// change your tree to allow this function to work.
+func (x *SearchEntry) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
 	return cret
 }
 
@@ -705,9 +950,15 @@ func init() {
 
 	core.PuregoSafeRegister(&xNewSearchEntry, lib, "gtk_search_entry_new")
 
+	core.PuregoSafeRegister(&xSearchEntryGetInputHints, lib, "gtk_search_entry_get_input_hints")
+	core.PuregoSafeRegister(&xSearchEntryGetInputPurpose, lib, "gtk_search_entry_get_input_purpose")
 	core.PuregoSafeRegister(&xSearchEntryGetKeyCaptureWidget, lib, "gtk_search_entry_get_key_capture_widget")
+	core.PuregoSafeRegister(&xSearchEntryGetPlaceholderText, lib, "gtk_search_entry_get_placeholder_text")
 	core.PuregoSafeRegister(&xSearchEntryGetSearchDelay, lib, "gtk_search_entry_get_search_delay")
+	core.PuregoSafeRegister(&xSearchEntrySetInputHints, lib, "gtk_search_entry_set_input_hints")
+	core.PuregoSafeRegister(&xSearchEntrySetInputPurpose, lib, "gtk_search_entry_set_input_purpose")
 	core.PuregoSafeRegister(&xSearchEntrySetKeyCaptureWidget, lib, "gtk_search_entry_set_key_capture_widget")
+	core.PuregoSafeRegister(&xSearchEntrySetPlaceholderText, lib, "gtk_search_entry_set_placeholder_text")
 	core.PuregoSafeRegister(&xSearchEntrySetSearchDelay, lib, "gtk_search_entry_set_search_delay")
 
 }

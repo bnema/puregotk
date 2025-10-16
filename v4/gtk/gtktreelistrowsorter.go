@@ -21,8 +21,7 @@ func (x *TreeListRowSorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkTreeListRowSorter` is a special-purpose sorter that will apply a given
-// sorter to the levels in a tree.
+// Applies a gives sorter to the levels in a tree.
 //
 // Here is an example for setting up a column view with a tree model and
 // a `GtkTreeListSorter`:

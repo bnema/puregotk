@@ -20,7 +20,7 @@ func (x *GesturePanClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkGesturePan` is a `GtkGesture` for pan gestures.
+// Recognizes pan gestures.
 //
 // These are drags that are locked to happen along one axis. The axis
 // that a `GtkGesturePan` handles is defined at construct time, and

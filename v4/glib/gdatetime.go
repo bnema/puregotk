@@ -10,7 +10,31 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// An opaque structure that represents a date and time, including a time zone.
+// `GDateTime` is a structure that combines a Gregorian date and time
+// into a single structure.
+//
+// `GDateTime` provides many conversion and methods to manipulate dates and times.
+// Time precision is provided down to microseconds and the time can range
+// (proleptically) from 0001-01-01 00:00:00 to 9999-12-31 23:59:59.999999.
+// `GDateTime` follows POSIX time in the sense that it is oblivious to leap
+// seconds.
+//
+// `GDateTime` is an immutable object; once it has been created it cannot
+// be modified further. All modifiers will create a new `GDateTime`.
+// Nearly all such functions can fail due to the date or time going out
+// of range, in which case %NULL will be returned.
+//
+// `GDateTime` is reference counted: the reference count is increased by calling
+// [method@GLib.DateTime.ref] and decreased by calling [method@GLib.DateTime.unref].
+// When the reference count drops to 0, the resources allocated by the `GDateTime`
+// structure are released.
+//
+// Many parts of the API may produce non-obvious results. As an
+// example, adding two months to January 31st will yield March 31st
+// whereas adding one month and then one month again will yield either
+// March 28th or March 29th.  Also note that adding 24 hours is not
+// always the same as adding one day (since days containing daylight
+// savings time transitions are either 23 or 25 hours in length).
 type DateTime struct {
 	_ structs.HostLayout
 }
@@ -65,7 +89,7 @@ var xNewDateTimeFromIso8601 func(string, *TimeZone) *DateTime
 
 // Creates a #GDateTime corresponding to the given
 // [ISO 8601 formatted string](https://en.wikipedia.org/wiki/ISO_8601)
-// @text. ISO 8601 strings of the form &lt;date&gt;&lt;sep&gt;&lt;time&gt;&lt;tz&gt; are supported, with
+// @text. ISO 8601 strings of the form `&lt;date&gt;&lt;sep&gt;&lt;time&gt;&lt;tz&gt;` are supported, with
 // some extensions from [RFC 3339](https://tools.ietf.org/html/rfc3339) as
 // mentioned below.
 //
@@ -73,11 +97,11 @@ var xNewDateTimeFromIso8601 func(string, *TimeZone) *DateTime
 // in an ISO-8601 string will be ignored, so a `23:59:60` time would be parsed as
 // `23:59:59`.
 //
-// &lt;sep&gt; is the separator and can be either 'T', 't' or ' '. The latter two
+// `&lt;sep&gt;` is the separator and can be either 'T', 't' or ' '. The latter two
 // separators are an extension from
 // [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6).
 //
-// &lt;date&gt; is in the form:
+// `&lt;date&gt;` is in the form:
 //
 //   - `YYYY-MM-DD` - Year/month/day, e.g. 2016-08-24.
 //   - `YYYYMMDD` - Same as above without dividers.
@@ -87,12 +111,12 @@ var xNewDateTimeFromIso8601 func(string, *TimeZone) *DateTime
 //     e.g. 2016-W34-3.
 //   - `YYYYWwwD` - Same as above without dividers.
 //
-// &lt;time&gt; is in the form:
+// `&lt;time&gt;` is in the form:
 //
 // - `hh:mm:ss(.sss)` - Hours, minutes, seconds (subseconds), e.g. 22:10:42.123.
 // - `hhmmss(.sss)` - Same as above without dividers.
 //
-// &lt;tz&gt; is an optional timezone suffix of the form:
+// `&lt;tz&gt;` is an optional timezone suffix of the form:
 //
 // - `Z` - UTC.
 // - `+hh:mm` or `-hh:mm` - Offset from UTC in hours and minutes, e.g. +12:00.
@@ -169,6 +193,25 @@ func NewDateTimeFromUnixLocal(TVar int64) *DateTime {
 	return cret
 }
 
+var xNewDateTimeFromUnixLocalUsec func(int64) *DateTime
+
+// Creates a [struct@GLib.DateTime] corresponding to the given Unix time @t in the
+// local time zone.
+//
+// Unix time is the number of microseconds that have elapsed since 1970-01-01
+// 00:00:00 UTC, regardless of the local time offset.
+//
+// This call can fail (returning `NULL`) if @t represents a time outside
+// of the supported range of #GDateTime.
+//
+// You should release the return value by calling [method@GLib.DateTime.unref]
+// when you are done with it.
+func NewDateTimeFromUnixLocalUsec(UsecsVar int64) *DateTime {
+
+	cret := xNewDateTimeFromUnixLocalUsec(UsecsVar)
+	return cret
+}
+
 var xNewDateTimeFromUnixUtc func(int64) *DateTime
 
 // Creates a #GDateTime corresponding to the given Unix time @t in UTC.
@@ -184,6 +227,24 @@ var xNewDateTimeFromUnixUtc func(int64) *DateTime
 func NewDateTimeFromUnixUtc(TVar int64) *DateTime {
 
 	cret := xNewDateTimeFromUnixUtc(TVar)
+	return cret
+}
+
+var xNewDateTimeFromUnixUtcUsec func(int64) *DateTime
+
+// Creates a [struct@GLib.DateTime] corresponding to the given Unix time @t in UTC.
+//
+// Unix time is the number of microseconds that have elapsed since 1970-01-01
+// 00:00:00 UTC.
+//
+// This call can fail (returning `NULL`) if @t represents a time outside
+// of the supported range of #GDateTime.
+//
+// You should release the return value by calling [method@GLib.DateTime.unref]
+// when you are done with it.
+func NewDateTimeFromUnixUtcUsec(UsecsVar int64) *DateTime {
+
+	cret := xNewDateTimeFromUnixUtcUsec(UsecsVar)
 	return cret
 }
 
@@ -390,102 +451,127 @@ var xDateTimeFormat func(uintptr, string) string
 // Creates a newly allocated string representing the requested @format.
 //
 // The format strings understood by this function are a subset of the
-// strftime() format language as specified by C99.  The \%D, \%U and \%W
-// conversions are not supported, nor is the 'E' modifier.  The GNU
-// extensions \%k, \%l, \%s and \%P are supported, however, as are the
-// '0', '_' and '-' modifiers. The Python extension \%f is also supported.
+// `strftime()` format language as specified by C99.  The `%D`, `%U` and `%W`
+// conversions are not supported, nor is the `E` modifier.  The GNU
+// extensions `%k`, `%l`, `%s` and `%P` are supported, however, as are the
+// `0`, `_` and `-` modifiers. The Python extension `%f` is also supported.
 //
-// In contrast to strftime(), this function always produces a UTF-8
+// In contrast to `strftime()`, this function always produces a UTF-8
 // string, regardless of the current locale.  Note that the rendering of
-// many formats is locale-dependent and may not match the strftime()
+// many formats is locale-dependent and may not match the `strftime()`
 // output exactly.
 //
 // The following format specifiers are supported:
 //
-//   - \%a: the abbreviated weekday name according to the current locale
-//   - \%A: the full weekday name according to the current locale
-//   - \%b: the abbreviated month name according to the current locale
-//   - \%B: the full month name according to the current locale
-//   - \%c: the preferred date and time representation for the current locale
-//   - \%C: the century number (year/100) as a 2-digit integer (00-99)
-//   - \%d: the day of the month as a decimal number (range 01 to 31)
-//   - \%e: the day of the month as a decimal number (range  1 to 31)
-//   - \%F: equivalent to `%Y-%m-%d` (the ISO 8601 date format)
-//   - \%g: the last two digits of the ISO 8601 week-based year as a
-//     decimal number (00-99). This works well with \%V and \%u.
-//   - \%G: the ISO 8601 week-based year as a decimal number. This works
-//     well with \%V and \%u.
-//   - \%h: equivalent to \%b
-//   - \%H: the hour as a decimal number using a 24-hour clock (range 00 to 23)
-//   - \%I: the hour as a decimal number using a 12-hour clock (range 01 to 12)
-//   - \%j: the day of the year as a decimal number (range 001 to 366)
-//   - \%k: the hour (24-hour clock) as a decimal number (range 0 to 23);
-//     single digits are preceded by a blank
-//   - \%l: the hour (12-hour clock) as a decimal number (range 1 to 12);
-//     single digits are preceded by a blank
-//   - \%m: the month as a decimal number (range 01 to 12)
-//   - \%M: the minute as a decimal number (range 00 to 59)
-//   - \%f: the microsecond as a decimal number (range 000000 to 999999)
-//   - \%p: either "AM" or "PM" according to the given time value, or the
+//   - `%a`: the abbreviated weekday name according to the current locale
+//   - `%A`: the full weekday name according to the current locale
+//   - `%b`: the abbreviated month name according to the current locale
+//   - `%B`: the full month name according to the current locale
+//   - `%c`: the preferred date and time representation for the current locale
+//   - `%C`: the century number (year/100) as a 2-digit integer (00-99)
+//   - `%d`: the day of the month as a decimal number (range 01 to 31)
+//   - `%e`: the day of the month as a decimal number (range 1 to 31);
+//     single digits are preceded by a figure space (U+2007)
+//   - `%F`: equivalent to `%Y-%m-%d` (the ISO 8601 date format)
+//   - `%g`: the last two digits of the ISO 8601 week-based year as a
+//     decimal number (00-99). This works well with `%V` and `%u`.
+//   - `%G`: the ISO 8601 week-based year as a decimal number. This works
+//     well with `%V` and `%u`.
+//   - `%h`: equivalent to `%b`
+//   - `%H`: the hour as a decimal number using a 24-hour clock (range 00 to 23)
+//   - `%I`: the hour as a decimal number using a 12-hour clock (range 01 to 12)
+//   - `%j`: the day of the year as a decimal number (range 001 to 366)
+//   - `%k`: the hour (24-hour clock) as a decimal number (range 0 to 23);
+//     single digits are preceded by a figure space (U+2007)
+//   - `%l`: the hour (12-hour clock) as a decimal number (range 1 to 12);
+//     single digits are preceded by a figure space (U+2007)
+//   - `%m`: the month as a decimal number (range 01 to 12)
+//   - `%M`: the minute as a decimal number (range 00 to 59)
+//   - `%f`: the microsecond as a decimal number (range 000000 to 999999)
+//   - `%p`: either ‘AM’ or ‘PM’ according to the given time value, or the
 //     corresponding  strings for the current locale.  Noon is treated as
-//     "PM" and midnight as "AM". Use of this format specifier is discouraged, as
-//     many locales have no concept of AM/PM formatting. Use \%c or \%X instead.
-//   - \%P: like \%p but lowercase: "am" or "pm" or a corresponding string for
+//     ‘PM’ and midnight as ‘AM’. Use of this format specifier is discouraged, as
+//     many locales have no concept of AM/PM formatting. Use `%c` or `%X` instead.
+//   - `%P`: like `%p` but lowercase: ‘am’ or ‘pm’ or a corresponding string for
 //     the current locale. Use of this format specifier is discouraged, as
-//     many locales have no concept of AM/PM formatting. Use \%c or \%X instead.
-//   - \%r: the time in a.m. or p.m. notation. Use of this format specifier is
-//     discouraged, as many locales have no concept of AM/PM formatting. Use \%c
-//     or \%X instead.
-//   - \%R: the time in 24-hour notation (\%H:\%M)
-//   - \%s: the number of seconds since the Epoch, that is, since 1970-01-01
+//     many locales have no concept of AM/PM formatting. Use `%c` or `%X` instead.
+//   - `%r`: the time in a.m. or p.m. notation. Use of this format specifier is
+//     discouraged, as many locales have no concept of AM/PM formatting. Use `%c`
+//     or `%X` instead.
+//   - `%R`: the time in 24-hour notation (`%H:%M`)
+//   - `%s`: the number of seconds since the Epoch, that is, since 1970-01-01
 //     00:00:00 UTC
-//   - \%S: the second as a decimal number (range 00 to 60)
-//   - \%t: a tab character
-//   - \%T: the time in 24-hour notation with seconds (\%H:\%M:\%S)
-//   - \%u: the ISO 8601 standard day of the week as a decimal, range 1 to 7,
-//     Monday being 1. This works well with \%G and \%V.
-//   - \%V: the ISO 8601 standard week number of the current year as a decimal
+//   - `%S`: the second as a decimal number (range 00 to 60)
+//   - `%t`: a tab character
+//   - `%T`: the time in 24-hour notation with seconds (`%H:%M:%S`)
+//   - `%u`: the ISO 8601 standard day of the week as a decimal, range 1 to 7,
+//     Monday being 1. This works well with `%G` and `%V`.
+//   - `%V`: the ISO 8601 standard week number of the current year as a decimal
 //     number, range 01 to 53, where week 1 is the first week that has at
 //     least 4 days in the new year. See g_date_time_get_week_of_year().
-//     This works well with \%G and \%u.
-//   - \%w: the day of the week as a decimal, range 0 to 6, Sunday being 0.
-//     This is not the ISO 8601 standard format -- use \%u instead.
-//   - \%x: the preferred date representation for the current locale without
+//     This works well with `%G` and `%u`.
+//   - `%w`: the day of the week as a decimal, range 0 to 6, Sunday being 0.
+//     This is not the ISO 8601 standard format — use `%u` instead.
+//   - `%x`: the preferred date representation for the current locale without
 //     the time
-//   - \%X: the preferred time representation for the current locale without
+//   - `%X`: the preferred time representation for the current locale without
 //     the date
-//   - \%y: the year as a decimal number without the century
-//   - \%Y: the year as a decimal number including the century
-//   - \%z: the time zone as an offset from UTC (+hhmm)
-//   - \%:z: the time zone as an offset from UTC (+hh:mm).
-//     This is a gnulib strftime() extension. Since: 2.38
-//   - \%::z: the time zone as an offset from UTC (+hh:mm:ss). This is a
-//     gnulib strftime() extension. Since: 2.38
-//   - \%:::z: the time zone as an offset from UTC, with : to necessary
-//     precision (e.g., -04, +05:30). This is a gnulib strftime() extension. Since: 2.38
-//   - \%Z: the time zone or name or abbreviation
-//   - \%\%: a literal \% character
+//   - `%y`: the year as a decimal number without the century
+//   - `%Y`: the year as a decimal number including the century
+//   - `%z`: the time zone as an offset from UTC (`+hhmm`)
+//   - `%:z`: the time zone as an offset from UTC (`+hh:mm`).
+//     This is a gnulib `strftime()` extension. Since: 2.38
+//   - `%::z`: the time zone as an offset from UTC (`+hh:mm:ss`). This is a
+//     gnulib `strftime()` extension. Since: 2.38
+//   - `%:::z`: the time zone as an offset from UTC, with `:` to necessary
+//     precision (e.g., `-04`, `+05:30`). This is a gnulib `strftime()` extension. Since: 2.38
+//   - `%Z`: the time zone or name or abbreviation
+//   - `%%`: a literal `%` character
 //
 // Some conversion specifications can be modified by preceding the
-// conversion specifier by one or more modifier characters. The
-// following modifiers are supported for many of the numeric
+// conversion specifier by one or more modifier characters.
+//
+// The following modifiers are supported for many of the numeric
 // conversions:
 //
-//   - O: Use alternative numeric symbols, if the current locale supports those.
-//   - _: Pad a numeric result with spaces. This overrides the default padding
+//   - `O`: Use alternative numeric symbols, if the current locale supports those.
+//   - `_`: Pad a numeric result with spaces. This overrides the default padding
 //     for the specifier.
-//   - -: Do not pad a numeric result. This overrides the default padding
+//   - `-`: Do not pad a numeric result. This overrides the default padding
 //     for the specifier.
-//   - 0: Pad a numeric result with zeros. This overrides the default padding
+//   - `0`: Pad a numeric result with zeros. This overrides the default padding
 //     for the specifier.
 //
-// Additionally, when O is used with B, b, or h, it produces the alternative
+// The following modifiers are supported for many of the alphabetic conversions:
+//
+//   - `^`: Use upper case if possible. This is a gnulib `strftime()` extension.
+//     Since: 2.80
+//   - `#`: Use opposite case if possible. This is a gnulib `strftime()`
+//     extension. Since: 2.80
+//
+// Additionally, when `O` is used with `B`, `b`, or `h`, it produces the alternative
 // form of a month name. The alternative form should be used when the month
 // name is used without a day number (e.g., standalone). It is required in
 // some languages (Baltic, Slavic, Greek, and more) due to their grammatical
-// rules. For other languages there is no difference. \%OB is a GNU and BSD
-// strftime() extension expected to be added to the future POSIX specification,
-// \%Ob and \%Oh are GNU strftime() extensions. Since: 2.56
+// rules. For other languages there is no difference. `%OB` is a GNU and BSD
+// `strftime()` extension expected to be added to the future POSIX specification,
+// `%Ob` and `%Oh` are GNU `strftime()` extensions. Since: 2.56
+//
+// Since GLib 2.80, when `E` is used with `%c`, `%C`, `%x`, `%X`, `%y` or `%Y`,
+// the date is formatted using an alternate era representation specific to the
+// locale. This is typically used for the Thai solar calendar or Japanese era
+// names, for example.
+//
+//   - `%Ec`: the preferred date and time representation for the current locale,
+//     using the alternate era representation
+//   - `%EC`: the name of the era
+//   - `%Ex`: the preferred date representation for the current locale without
+//     the time, using the alternate era representation
+//   - `%EX`: the preferred time representation for the current locale without
+//     the date, using the alternate era representation
+//   - `%Ey`: the year since the beginning of the era denoted by the `%EC`
+//     specifier
+//   - `%EY`: the full alternative year representation
 func (x *DateTime) Format(FormatVar string) string {
 
 	cret := xDateTimeFormat(x.GoPointer(), FormatVar)
@@ -799,6 +885,18 @@ func (x *DateTime) ToUnix() int64 {
 	return cret
 }
 
+var xDateTimeToUnixUsec func(uintptr) int64
+
+// Gives the Unix time corresponding to @datetime, in microseconds.
+//
+// Unix time is the number of microseconds that have elapsed since 1970-01-01
+// 00:00:00 UTC, regardless of the time zone associated with @datetime.
+func (x *DateTime) ToUnixUsec() int64 {
+
+	cret := xDateTimeToUnixUsec(x.GoPointer())
+	return cret
+}
+
 var xDateTimeToUtc func(uintptr) *DateTime
 
 // Creates a new #GDateTime corresponding to the same instant in time as
@@ -842,7 +940,7 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
@@ -855,7 +953,9 @@ func init() {
 	core.PuregoSafeRegister(&xNewDateTimeFromTimevalLocal, lib, "g_date_time_new_from_timeval_local")
 	core.PuregoSafeRegister(&xNewDateTimeFromTimevalUtc, lib, "g_date_time_new_from_timeval_utc")
 	core.PuregoSafeRegister(&xNewDateTimeFromUnixLocal, lib, "g_date_time_new_from_unix_local")
+	core.PuregoSafeRegister(&xNewDateTimeFromUnixLocalUsec, lib, "g_date_time_new_from_unix_local_usec")
 	core.PuregoSafeRegister(&xNewDateTimeFromUnixUtc, lib, "g_date_time_new_from_unix_utc")
+	core.PuregoSafeRegister(&xNewDateTimeFromUnixUtcUsec, lib, "g_date_time_new_from_unix_utc_usec")
 	core.PuregoSafeRegister(&xNewDateTimeLocal, lib, "g_date_time_new_local")
 	core.PuregoSafeRegister(&xNewDateTimeNow, lib, "g_date_time_new_now")
 	core.PuregoSafeRegister(&xNewDateTimeNowLocal, lib, "g_date_time_new_now_local")
@@ -899,6 +999,7 @@ func init() {
 	core.PuregoSafeRegister(&xDateTimeToTimeval, lib, "g_date_time_to_timeval")
 	core.PuregoSafeRegister(&xDateTimeToTimezone, lib, "g_date_time_to_timezone")
 	core.PuregoSafeRegister(&xDateTimeToUnix, lib, "g_date_time_to_unix")
+	core.PuregoSafeRegister(&xDateTimeToUnixUsec, lib, "g_date_time_to_unix_usec")
 	core.PuregoSafeRegister(&xDateTimeToUtc, lib, "g_date_time_to_utc")
 	core.PuregoSafeRegister(&xDateTimeUnref, lib, "g_date_time_unref")
 

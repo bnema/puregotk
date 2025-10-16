@@ -141,6 +141,20 @@ func (x *StyleManager) GetDisplay() *gdk.Display {
 	return cls
 }
 
+var xStyleManagerGetDocumentFontName func(uintptr) string
+
+// Gets the system document font.
+//
+// The font is in the same format as [property@Gtk.Settings:gtk-font-name],
+// e.g. "Adwaita Sans 11".
+//
+// Use [func@Pango.FontDescription.from_string] to parse it.
+func (x *StyleManager) GetDocumentFontName() string {
+
+	cret := xStyleManagerGetDocumentFontName(x.GoPointer())
+	return cret
+}
+
 var xStyleManagerGetHighContrast func(uintptr) bool
 
 // Gets whether the application is using high contrast appearance.
@@ -149,6 +163,20 @@ var xStyleManagerGetHighContrast func(uintptr) bool
 func (x *StyleManager) GetHighContrast() bool {
 
 	cret := xStyleManagerGetHighContrast(x.GoPointer())
+	return cret
+}
+
+var xStyleManagerGetMonospaceFontName func(uintptr) string
+
+// Gets the system monospace font.
+//
+// The font is in the same format as [property@Gtk.Settings:gtk-font-name],
+// e.g. "Adwaita Mono 11".
+//
+// Use [func@Pango.FontDescription.from_string] to parse it.
+func (x *StyleManager) GetMonospaceFontName() string {
+
+	cret := xStyleManagerGetMonospaceFontName(x.GoPointer())
 	return cret
 }
 
@@ -291,7 +319,9 @@ func init() {
 	core.PuregoSafeRegister(&xStyleManagerGetColorScheme, lib, "adw_style_manager_get_color_scheme")
 	core.PuregoSafeRegister(&xStyleManagerGetDark, lib, "adw_style_manager_get_dark")
 	core.PuregoSafeRegister(&xStyleManagerGetDisplay, lib, "adw_style_manager_get_display")
+	core.PuregoSafeRegister(&xStyleManagerGetDocumentFontName, lib, "adw_style_manager_get_document_font_name")
 	core.PuregoSafeRegister(&xStyleManagerGetHighContrast, lib, "adw_style_manager_get_high_contrast")
+	core.PuregoSafeRegister(&xStyleManagerGetMonospaceFontName, lib, "adw_style_manager_get_monospace_font_name")
 	core.PuregoSafeRegister(&xStyleManagerGetSystemSupportsAccentColors, lib, "adw_style_manager_get_system_supports_accent_colors")
 	core.PuregoSafeRegister(&xStyleManagerGetSystemSupportsColorSchemes, lib, "adw_style_manager_get_system_supports_color_schemes")
 	core.PuregoSafeRegister(&xStyleManagerSetColorScheme, lib, "adw_style_manager_set_color_scheme")

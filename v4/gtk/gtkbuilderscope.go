@@ -42,6 +42,12 @@ func (x *BuilderScopeInterface) GoPointer() uintptr {
 }
 
 // OverrideGetTypeFromName sets the callback function.
+// Try to lookup a `GType` via the its name. See
+//
+//	gtk_builder_get_type_from_name() for more details.
+//	The C implementation will use g_type_from_name() and if that fails try to guess the
+//	correct function name for registering the type and then use dlsym() to load it.
+//	The default implementation just tries g_type_from_name() and otherwise fails.
 func (x *BuilderScopeInterface) OverrideGetTypeFromName(cb func(BuilderScope, *Builder, string) types.GType) {
 	if cb == nil {
 		x.xGetTypeFromName = 0
@@ -53,6 +59,12 @@ func (x *BuilderScopeInterface) OverrideGetTypeFromName(cb func(BuilderScope, *B
 }
 
 // GetGetTypeFromName gets the callback function.
+// Try to lookup a `GType` via the its name. See
+//
+//	gtk_builder_get_type_from_name() for more details.
+//	The C implementation will use g_type_from_name() and if that fails try to guess the
+//	correct function name for registering the type and then use dlsym() to load it.
+//	The default implementation just tries g_type_from_name() and otherwise fails.
 func (x *BuilderScopeInterface) GetGetTypeFromName() func(BuilderScope, *Builder, string) types.GType {
 	if x.xGetTypeFromName == 0 {
 		return nil
@@ -65,6 +77,12 @@ func (x *BuilderScopeInterface) GetGetTypeFromName() func(BuilderScope, *Builder
 }
 
 // OverrideGetTypeFromFunction sets the callback function.
+// Try to lookup a `GType` via the given function name, specified
+//
+//	explicitly in a GtkBuilder file, like via the "type-func" attribute in the `&lt;object&gt;` tag.
+//	This function is very rarely used.
+//	The C implementation will use dlsym() and call the resulting function as a `GTypeFunc`.
+//	The default implementation will fail and just return %G_TYPE_INVALID.
 func (x *BuilderScopeInterface) OverrideGetTypeFromFunction(cb func(BuilderScope, *Builder, string) types.GType) {
 	if cb == nil {
 		x.xGetTypeFromFunction = 0
@@ -76,6 +94,12 @@ func (x *BuilderScopeInterface) OverrideGetTypeFromFunction(cb func(BuilderScope
 }
 
 // GetGetTypeFromFunction gets the callback function.
+// Try to lookup a `GType` via the given function name, specified
+//
+//	explicitly in a GtkBuilder file, like via the "type-func" attribute in the `&lt;object&gt;` tag.
+//	This function is very rarely used.
+//	The C implementation will use dlsym() and call the resulting function as a `GTypeFunc`.
+//	The default implementation will fail and just return %G_TYPE_INVALID.
 func (x *BuilderScopeInterface) GetGetTypeFromFunction() func(BuilderScope, *Builder, string) types.GType {
 	if x.xGetTypeFromFunction == 0 {
 		return nil
@@ -88,6 +112,12 @@ func (x *BuilderScopeInterface) GetGetTypeFromFunction() func(BuilderScope, *Bui
 }
 
 // OverrideCreateClosure sets the callback function.
+// Create a closure with the given arguments. See gtk_builder_create_closure()
+//
+//	for more details on those.
+//	The C implementation will try to use dlsym() to locate the function name and then
+//	g_cclosure_new() to create a closure for the symbol.
+//	The default implementation just fails and returns %NULL.
 func (x *BuilderScopeInterface) OverrideCreateClosure(cb func(BuilderScope, *Builder, string, BuilderClosureFlags, *gobject.Object) *gobject.Closure) {
 	if cb == nil {
 		x.xCreateClosure = 0
@@ -99,6 +129,12 @@ func (x *BuilderScopeInterface) OverrideCreateClosure(cb func(BuilderScope, *Bui
 }
 
 // GetCreateClosure gets the callback function.
+// Create a closure with the given arguments. See gtk_builder_create_closure()
+//
+//	for more details on those.
+//	The C implementation will try to use dlsym() to locate the function name and then
+//	g_cclosure_new() to create a closure for the symbol.
+//	The default implementation just fails and returns %NULL.
 func (x *BuilderScopeInterface) GetCreateClosure() func(BuilderScope, *Builder, string, BuilderClosureFlags, *gobject.Object) *gobject.Closure {
 	if x.xCreateClosure == 0 {
 		return nil
@@ -110,8 +146,7 @@ func (x *BuilderScopeInterface) GetCreateClosure() func(BuilderScope, *Builder, 
 	}
 }
 
-// `GtkBuilderScope` is an interface to provide language binding support
-// to `GtkBuilder`.
+// Provides language binding support to `GtkBuilder`.
 //
 // The goal of `GtkBuilderScope` is to look up programming-language-specific
 // values for strings that are given in a `GtkBuilder` UI file.
@@ -124,6 +159,10 @@ func (x *BuilderScopeInterface) GetCreateClosure() func(BuilderScope, *Builder, 
 //
 // By default, GTK will use its own implementation of `GtkBuilderScope`
 // for the C language which can be created via [ctor@Gtk.BuilderCScope.new].
+//
+// If you implement `GtkBuilderScope` for a language binding, you
+// may want to (partially) derive from or fall back to a [class@Gtk.BuilderCScope],
+// as that class implements support for automatic lookups from C symbols.
 type BuilderScope interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

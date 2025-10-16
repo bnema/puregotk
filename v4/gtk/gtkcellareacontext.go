@@ -32,6 +32,11 @@ func (x *CellAreaContextClass) GoPointer() uintptr {
 }
 
 // OverrideAllocate sets the callback function.
+// This tells the context that an allocation width or height
+//
+//	(or both) have been decided for a group of rows. The context should
+//	store any allocations for internally aligned cells at this point so
+//	that they dont need to be recalculated at gtk_cell_area_render() time.
 func (x *CellAreaContextClass) OverrideAllocate(cb func(*CellAreaContext, int, int)) {
 	if cb == nil {
 		x.xAllocate = 0
@@ -43,6 +48,11 @@ func (x *CellAreaContextClass) OverrideAllocate(cb func(*CellAreaContext, int, i
 }
 
 // GetAllocate gets the callback function.
+// This tells the context that an allocation width or height
+//
+//	(or both) have been decided for a group of rows. The context should
+//	store any allocations for internally aligned cells at this point so
+//	that they dont need to be recalculated at gtk_cell_area_render() time.
 func (x *CellAreaContextClass) GetAllocate() func(*CellAreaContext, int, int) {
 	if x.xAllocate == 0 {
 		return nil
@@ -55,6 +65,9 @@ func (x *CellAreaContextClass) GetAllocate() func(*CellAreaContext, int, int) {
 }
 
 // OverrideReset sets the callback function.
+// Clear any previously stored information about requested and
+//
+//	allocated sizes for the context.
 func (x *CellAreaContextClass) OverrideReset(cb func(*CellAreaContext)) {
 	if cb == nil {
 		x.xReset = 0
@@ -66,6 +79,9 @@ func (x *CellAreaContextClass) OverrideReset(cb func(*CellAreaContext)) {
 }
 
 // GetReset gets the callback function.
+// Clear any previously stored information about requested and
+//
+//	allocated sizes for the context.
 func (x *CellAreaContextClass) GetReset() func(*CellAreaContext) {
 	if x.xReset == 0 {
 		return nil
@@ -78,6 +94,9 @@ func (x *CellAreaContextClass) GetReset() func(*CellAreaContext) {
 }
 
 // OverrideGetPreferredHeightForWidth sets the callback function.
+// Returns the aligned height for the given
+//
+//	width that context must store while collecting sizes for it’s rows.
 func (x *CellAreaContextClass) OverrideGetPreferredHeightForWidth(cb func(*CellAreaContext, int, int, int)) {
 	if cb == nil {
 		x.xGetPreferredHeightForWidth = 0
@@ -89,6 +108,9 @@ func (x *CellAreaContextClass) OverrideGetPreferredHeightForWidth(cb func(*CellA
 }
 
 // GetGetPreferredHeightForWidth gets the callback function.
+// Returns the aligned height for the given
+//
+//	width that context must store while collecting sizes for it’s rows.
 func (x *CellAreaContextClass) GetGetPreferredHeightForWidth() func(*CellAreaContext, int, int, int) {
 	if x.xGetPreferredHeightForWidth == 0 {
 		return nil
@@ -101,6 +123,9 @@ func (x *CellAreaContextClass) GetGetPreferredHeightForWidth() func(*CellAreaCon
 }
 
 // OverrideGetPreferredWidthForHeight sets the callback function.
+// Returns the aligned width for the given
+//
+//	height that context must store while collecting sizes for it’s rows.
 func (x *CellAreaContextClass) OverrideGetPreferredWidthForHeight(cb func(*CellAreaContext, int, int, int)) {
 	if cb == nil {
 		x.xGetPreferredWidthForHeight = 0
@@ -112,6 +137,9 @@ func (x *CellAreaContextClass) OverrideGetPreferredWidthForHeight(cb func(*CellA
 }
 
 // GetGetPreferredWidthForHeight gets the callback function.
+// Returns the aligned width for the given
+//
+//	height that context must store while collecting sizes for it’s rows.
 func (x *CellAreaContextClass) GetGetPreferredWidthForHeight() func(*CellAreaContext, int, int, int) {
 	if x.xGetPreferredWidthForHeight == 0 {
 		return nil

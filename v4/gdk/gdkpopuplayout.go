@@ -10,8 +10,8 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The `GdkPopupLayout` struct contains information that is
-// necessary position a [iface@Gdk.Popup] relative to its parent.
+// Contains information that is necessary position a [iface@Gdk.Popup]
+// relative to its parent.
 //
 // The positioning requires a negotiation with the windowing system,
 // since it depends on external constraints, such as the position of
@@ -40,9 +40,9 @@ import (
 // [method@Gdk.Popup.get_position_x], [method@Gdk.Popup.get_position_y],
 // [method@Gdk.Popup.get_rect_anchor] and [method@Gdk.Popup.get_surface_anchor]
 // after the popup has been presented. This can be used to adjust the rendering.
-// For example, [class@Gtk.Popover] changes its arrow position accordingly.
-// But you have to be careful avoid changing the size of the popover, or it
-// has to be presented again.
+// For example, [GtkPopover](../gtk4/class.Popover.html) changes its arrow position
+// accordingly. But you have to be careful avoid changing the size of the popover,
+// or it has to be presented again.
 type PopupLayout struct {
 	_ structs.HostLayout
 }

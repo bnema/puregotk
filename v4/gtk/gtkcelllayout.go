@@ -45,6 +45,7 @@ func (x *CellLayoutIface) GoPointer() uintptr {
 }
 
 // OverridePackStart sets the callback function.
+// Packs the cell into the beginning of cell_layout.
 func (x *CellLayoutIface) OverridePackStart(cb func(CellLayout, *CellRenderer, bool)) {
 	if cb == nil {
 		x.xPackStart = 0
@@ -56,6 +57,7 @@ func (x *CellLayoutIface) OverridePackStart(cb func(CellLayout, *CellRenderer, b
 }
 
 // GetPackStart gets the callback function.
+// Packs the cell into the beginning of cell_layout.
 func (x *CellLayoutIface) GetPackStart() func(CellLayout, *CellRenderer, bool) {
 	if x.xPackStart == 0 {
 		return nil
@@ -68,6 +70,7 @@ func (x *CellLayoutIface) GetPackStart() func(CellLayout, *CellRenderer, bool) {
 }
 
 // OverridePackEnd sets the callback function.
+// Adds the cell to the end of cell_layout.
 func (x *CellLayoutIface) OverridePackEnd(cb func(CellLayout, *CellRenderer, bool)) {
 	if cb == nil {
 		x.xPackEnd = 0
@@ -79,6 +82,7 @@ func (x *CellLayoutIface) OverridePackEnd(cb func(CellLayout, *CellRenderer, boo
 }
 
 // GetPackEnd gets the callback function.
+// Adds the cell to the end of cell_layout.
 func (x *CellLayoutIface) GetPackEnd() func(CellLayout, *CellRenderer, bool) {
 	if x.xPackEnd == 0 {
 		return nil
@@ -91,6 +95,9 @@ func (x *CellLayoutIface) GetPackEnd() func(CellLayout, *CellRenderer, bool) {
 }
 
 // OverrideClear sets the callback function.
+// Unsets all the mappings on all renderers on cell_layout and
+//
+//	removes all renderers from cell_layout.
 func (x *CellLayoutIface) OverrideClear(cb func(CellLayout)) {
 	if cb == nil {
 		x.xClear = 0
@@ -102,6 +109,9 @@ func (x *CellLayoutIface) OverrideClear(cb func(CellLayout)) {
 }
 
 // GetClear gets the callback function.
+// Unsets all the mappings on all renderers on cell_layout and
+//
+//	removes all renderers from cell_layout.
 func (x *CellLayoutIface) GetClear() func(CellLayout) {
 	if x.xClear == 0 {
 		return nil
@@ -114,6 +124,9 @@ func (x *CellLayoutIface) GetClear() func(CellLayout) {
 }
 
 // OverrideAddAttribute sets the callback function.
+// Adds an attribute mapping to the list in
+//
+//	cell_layout.
 func (x *CellLayoutIface) OverrideAddAttribute(cb func(CellLayout, *CellRenderer, string, int)) {
 	if cb == nil {
 		x.xAddAttribute = 0
@@ -125,6 +138,9 @@ func (x *CellLayoutIface) OverrideAddAttribute(cb func(CellLayout, *CellRenderer
 }
 
 // GetAddAttribute gets the callback function.
+// Adds an attribute mapping to the list in
+//
+//	cell_layout.
 func (x *CellLayoutIface) GetAddAttribute() func(CellLayout, *CellRenderer, string, int) {
 	if x.xAddAttribute == 0 {
 		return nil
@@ -137,6 +153,9 @@ func (x *CellLayoutIface) GetAddAttribute() func(CellLayout, *CellRenderer, stri
 }
 
 // OverrideSetCellDataFunc sets the callback function.
+// Sets the `GtkCellLayout`DataFunc to use for
+//
+//	cell_layout.
 func (x *CellLayoutIface) OverrideSetCellDataFunc(cb func(CellLayout, *CellRenderer, *CellLayoutDataFunc, uintptr, *glib.DestroyNotify)) {
 	if cb == nil {
 		x.xSetCellDataFunc = 0
@@ -148,6 +167,9 @@ func (x *CellLayoutIface) OverrideSetCellDataFunc(cb func(CellLayout, *CellRende
 }
 
 // GetSetCellDataFunc gets the callback function.
+// Sets the `GtkCellLayout`DataFunc to use for
+//
+//	cell_layout.
 func (x *CellLayoutIface) GetSetCellDataFunc() func(CellLayout, *CellRenderer, *CellLayoutDataFunc, uintptr, *glib.DestroyNotify) {
 	if x.xSetCellDataFunc == 0 {
 		return nil
@@ -160,6 +182,9 @@ func (x *CellLayoutIface) GetSetCellDataFunc() func(CellLayout, *CellRenderer, *
 }
 
 // OverrideClearAttributes sets the callback function.
+// Clears all existing attributes previously set
+//
+//	with gtk_cell_layout_set_attributes().
 func (x *CellLayoutIface) OverrideClearAttributes(cb func(CellLayout, *CellRenderer)) {
 	if cb == nil {
 		x.xClearAttributes = 0
@@ -171,6 +196,9 @@ func (x *CellLayoutIface) OverrideClearAttributes(cb func(CellLayout, *CellRende
 }
 
 // GetClearAttributes gets the callback function.
+// Clears all existing attributes previously set
+//
+//	with gtk_cell_layout_set_attributes().
 func (x *CellLayoutIface) GetClearAttributes() func(CellLayout, *CellRenderer) {
 	if x.xClearAttributes == 0 {
 		return nil
@@ -183,6 +211,7 @@ func (x *CellLayoutIface) GetClearAttributes() func(CellLayout, *CellRenderer) {
 }
 
 // OverrideReorder sets the callback function.
+// Re-inserts cell at position.
 func (x *CellLayoutIface) OverrideReorder(cb func(CellLayout, *CellRenderer, int)) {
 	if cb == nil {
 		x.xReorder = 0
@@ -194,6 +223,7 @@ func (x *CellLayoutIface) OverrideReorder(cb func(CellLayout, *CellRenderer, int
 }
 
 // GetReorder gets the callback function.
+// Re-inserts cell at position.
 func (x *CellLayoutIface) GetReorder() func(CellLayout, *CellRenderer, int) {
 	if x.xReorder == 0 {
 		return nil
@@ -206,6 +236,9 @@ func (x *CellLayoutIface) GetReorder() func(CellLayout, *CellRenderer, int) {
 }
 
 // OverrideGetCells sets the callback function.
+// Get the cell renderers which have been added to
+//
+//	cell_layout.
 func (x *CellLayoutIface) OverrideGetCells(cb func(CellLayout) *glib.List) {
 	if cb == nil {
 		x.xGetCells = 0
@@ -217,6 +250,9 @@ func (x *CellLayoutIface) OverrideGetCells(cb func(CellLayout) *glib.List) {
 }
 
 // GetGetCells gets the callback function.
+// Get the cell renderers which have been added to
+//
+//	cell_layout.
 func (x *CellLayoutIface) GetGetCells() func(CellLayout) *glib.List {
 	if x.xGetCells == 0 {
 		return nil
@@ -229,6 +265,10 @@ func (x *CellLayoutIface) GetGetCells() func(CellLayout) *glib.List {
 }
 
 // OverrideGetArea sets the callback function.
+// Get the underlying `GtkCellArea` which might be
+//
+//	cell_layout if called on a `GtkCellArea` or might be NULL if no
+//	`GtkCellArea` is used by cell_layout.
 func (x *CellLayoutIface) OverrideGetArea(cb func(CellLayout) *CellArea) {
 	if cb == nil {
 		x.xGetArea = 0
@@ -244,6 +284,10 @@ func (x *CellLayoutIface) OverrideGetArea(cb func(CellLayout) *CellArea) {
 }
 
 // GetGetArea gets the callback function.
+// Get the underlying `GtkCellArea` which might be
+//
+//	cell_layout if called on a `GtkCellArea` or might be NULL if no
+//	`GtkCellArea` is used by cell_layout.
 func (x *CellLayoutIface) GetGetArea() func(CellLayout) *CellArea {
 	if x.xGetArea == 0 {
 		return nil
@@ -277,7 +321,7 @@ func (x *CellLayoutIface) GetGetArea() func(CellLayout) *CellArea {
 // gtk_cell_layout_set_cell_data_func() that is called to determine the
 // value of the attribute for each cell that is rendered.
 //
-// # GtkCellLayouts as GtkBuildable
+// ## GtkCellLayouts as GtkBuildable
 //
 // Implementations of GtkCellLayout which also implement the GtkBuildable
 // interface (`GtkCellView`, `GtkIconView`, `GtkComboBox`,
@@ -325,7 +369,7 @@ func (x *CellLayoutIface) GetGetArea() func(CellLayout) *CellArea {
 // &lt;/object&gt;
 // ```
 //
-// # Subclassing GtkCellLayout implementations
+// ## Subclassing GtkCellLayout implementations
 //
 // When subclassing a widget that implements `GtkCellLayout` like
 // `GtkIconView` or `GtkComboBox`, there are some considerations related

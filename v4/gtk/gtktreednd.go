@@ -27,6 +27,10 @@ func (x *TreeDragDestIface) GoPointer() uintptr {
 }
 
 // OverrideDragDataReceived sets the callback function.
+// Asks the `GtkTreeDragDest` to insert a row
+//
+//	before the path dest, deriving the contents of the row from
+//	selection_data.
 func (x *TreeDragDestIface) OverrideDragDataReceived(cb func(TreeDragDest, *TreePath, *gobject.Value) bool) {
 	if cb == nil {
 		x.xDragDataReceived = 0
@@ -38,6 +42,10 @@ func (x *TreeDragDestIface) OverrideDragDataReceived(cb func(TreeDragDest, *Tree
 }
 
 // GetDragDataReceived gets the callback function.
+// Asks the `GtkTreeDragDest` to insert a row
+//
+//	before the path dest, deriving the contents of the row from
+//	selection_data.
 func (x *TreeDragDestIface) GetDragDataReceived() func(TreeDragDest, *TreePath, *gobject.Value) bool {
 	if x.xDragDataReceived == 0 {
 		return nil
@@ -50,6 +58,9 @@ func (x *TreeDragDestIface) GetDragDataReceived() func(TreeDragDest, *TreePath, 
 }
 
 // OverrideRowDropPossible sets the callback function.
+// Determines whether a drop is possible before
+//
+//	the given dest_path, at the same depth as dest_path.
 func (x *TreeDragDestIface) OverrideRowDropPossible(cb func(TreeDragDest, *TreePath, *gobject.Value) bool) {
 	if cb == nil {
 		x.xRowDropPossible = 0
@@ -61,6 +72,9 @@ func (x *TreeDragDestIface) OverrideRowDropPossible(cb func(TreeDragDest, *TreeP
 }
 
 // GetRowDropPossible gets the callback function.
+// Determines whether a drop is possible before
+//
+//	the given dest_path, at the same depth as dest_path.
 func (x *TreeDragDestIface) GetRowDropPossible() func(TreeDragDest, *TreePath, *gobject.Value) bool {
 	if x.xRowDropPossible == 0 {
 		return nil
@@ -89,6 +103,9 @@ func (x *TreeDragSourceIface) GoPointer() uintptr {
 }
 
 // OverrideRowDraggable sets the callback function.
+// Asks the `GtkTreeDragSource` whether a particular
+//
+//	row can be used as the source of a DND operation.
 func (x *TreeDragSourceIface) OverrideRowDraggable(cb func(TreeDragSource, *TreePath) bool) {
 	if cb == nil {
 		x.xRowDraggable = 0
@@ -100,6 +117,9 @@ func (x *TreeDragSourceIface) OverrideRowDraggable(cb func(TreeDragSource, *Tree
 }
 
 // GetRowDraggable gets the callback function.
+// Asks the `GtkTreeDragSource` whether a particular
+//
+//	row can be used as the source of a DND operation.
 func (x *TreeDragSourceIface) GetRowDraggable() func(TreeDragSource, *TreePath) bool {
 	if x.xRowDraggable == 0 {
 		return nil
@@ -112,6 +132,9 @@ func (x *TreeDragSourceIface) GetRowDraggable() func(TreeDragSource, *TreePath) 
 }
 
 // OverrideDragDataGet sets the callback function.
+// Asks the `GtkTreeDragSource` to fill in
+//
+//	selection_data with a representation of the row at path.
 func (x *TreeDragSourceIface) OverrideDragDataGet(cb func(TreeDragSource, *TreePath) *gdk.ContentProvider) {
 	if cb == nil {
 		x.xDragDataGet = 0
@@ -127,6 +150,9 @@ func (x *TreeDragSourceIface) OverrideDragDataGet(cb func(TreeDragSource, *TreeP
 }
 
 // GetDragDataGet gets the callback function.
+// Asks the `GtkTreeDragSource` to fill in
+//
+//	selection_data with a representation of the row at path.
 func (x *TreeDragSourceIface) GetDragDataGet() func(TreeDragSource, *TreePath) *gdk.ContentProvider {
 	if x.xDragDataGet == 0 {
 		return nil
@@ -145,6 +171,9 @@ func (x *TreeDragSourceIface) GetDragDataGet() func(TreeDragSource, *TreePath) *
 }
 
 // OverrideDragDataDelete sets the callback function.
+// Asks the `GtkTreeDragSource` to delete the row at
+//
+//	path, because it was moved somewhere else via drag-and-drop.
 func (x *TreeDragSourceIface) OverrideDragDataDelete(cb func(TreeDragSource, *TreePath) bool) {
 	if cb == nil {
 		x.xDragDataDelete = 0
@@ -156,6 +185,9 @@ func (x *TreeDragSourceIface) OverrideDragDataDelete(cb func(TreeDragSource, *Tr
 }
 
 // GetDragDataDelete gets the callback function.
+// Asks the `GtkTreeDragSource` to delete the row at
+//
+//	path, because it was moved somewhere else via drag-and-drop.
 func (x *TreeDragSourceIface) GetDragDataDelete() func(TreeDragSource, *TreePath) bool {
 	if x.xDragDataDelete == 0 {
 		return nil

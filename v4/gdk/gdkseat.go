@@ -37,11 +37,10 @@ const (
 	// The union of all pointing capabilities
 	SeatCapabilityAllPointingValue SeatCapabilities = 7
 	// The union of all capabilities
-	SeatCapabilityAllValue SeatCapabilities = 15
+	SeatCapabilityAllValue SeatCapabilities = 31
 )
 
-// The `GdkSeat` object represents a collection of input devices
-// that belong to a user.
+// Represents a collection of input devices that belong to a user.
 type Seat struct {
 	gobject.Object
 }

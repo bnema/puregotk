@@ -22,8 +22,7 @@ func (x *WidgetPaintableClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkWidgetPaintable` is a `GdkPaintable` that displays the contents
-// of a widget.
+// A `GdkPaintable` that displays the contents of a widget.
 //
 // `GtkWidgetPaintable` will also take care of the widget not being in a
 // state where it can be drawn (like when it isn't shown) and just draw

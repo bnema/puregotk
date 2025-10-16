@@ -38,6 +38,7 @@ func (x *TlsConnectionClass) GoPointer() uintptr {
 }
 
 // OverrideAcceptCertificate sets the callback function.
+// Check whether to accept a certificate.
 func (x *TlsConnectionClass) OverrideAcceptCertificate(cb func(*TlsConnection, *TlsCertificate, TlsCertificateFlags) bool) {
 	if cb == nil {
 		x.xAcceptCertificate = 0
@@ -49,6 +50,7 @@ func (x *TlsConnectionClass) OverrideAcceptCertificate(cb func(*TlsConnection, *
 }
 
 // GetAcceptCertificate gets the callback function.
+// Check whether to accept a certificate.
 func (x *TlsConnectionClass) GetAcceptCertificate() func(*TlsConnection, *TlsCertificate, TlsCertificateFlags) bool {
 	if x.xAcceptCertificate == 0 {
 		return nil
@@ -61,6 +63,7 @@ func (x *TlsConnectionClass) GetAcceptCertificate() func(*TlsConnection, *TlsCer
 }
 
 // OverrideHandshake sets the callback function.
+// Perform a handshake operation.
 func (x *TlsConnectionClass) OverrideHandshake(cb func(*TlsConnection, *Cancellable) bool) {
 	if cb == nil {
 		x.xHandshake = 0
@@ -72,6 +75,7 @@ func (x *TlsConnectionClass) OverrideHandshake(cb func(*TlsConnection, *Cancella
 }
 
 // GetHandshake gets the callback function.
+// Perform a handshake operation.
 func (x *TlsConnectionClass) GetHandshake() func(*TlsConnection, *Cancellable) bool {
 	if x.xHandshake == 0 {
 		return nil
@@ -84,6 +88,7 @@ func (x *TlsConnectionClass) GetHandshake() func(*TlsConnection, *Cancellable) b
 }
 
 // OverrideHandshakeAsync sets the callback function.
+// Start an asynchronous handshake operation.
 func (x *TlsConnectionClass) OverrideHandshakeAsync(cb func(*TlsConnection, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xHandshakeAsync = 0
@@ -95,6 +100,7 @@ func (x *TlsConnectionClass) OverrideHandshakeAsync(cb func(*TlsConnection, int,
 }
 
 // GetHandshakeAsync gets the callback function.
+// Start an asynchronous handshake operation.
 func (x *TlsConnectionClass) GetHandshakeAsync() func(*TlsConnection, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xHandshakeAsync == 0 {
 		return nil
@@ -107,6 +113,7 @@ func (x *TlsConnectionClass) GetHandshakeAsync() func(*TlsConnection, int, *Canc
 }
 
 // OverrideHandshakeFinish sets the callback function.
+// Finish an asynchronous handshake operation.
 func (x *TlsConnectionClass) OverrideHandshakeFinish(cb func(*TlsConnection, AsyncResult) bool) {
 	if cb == nil {
 		x.xHandshakeFinish = 0
@@ -118,6 +125,7 @@ func (x *TlsConnectionClass) OverrideHandshakeFinish(cb func(*TlsConnection, Asy
 }
 
 // GetHandshakeFinish gets the callback function.
+// Finish an asynchronous handshake operation.
 func (x *TlsConnectionClass) GetHandshakeFinish() func(*TlsConnection, AsyncResult) bool {
 	if x.xHandshakeFinish == 0 {
 		return nil
@@ -130,6 +138,7 @@ func (x *TlsConnectionClass) GetHandshakeFinish() func(*TlsConnection, AsyncResu
 }
 
 // OverrideGetBindingData sets the callback function.
+// Retrieve TLS channel binding data (Since: 2.66)
 func (x *TlsConnectionClass) OverrideGetBindingData(cb func(*TlsConnection, TlsChannelBindingType, []byte) bool) {
 	if cb == nil {
 		x.xGetBindingData = 0
@@ -141,6 +150,7 @@ func (x *TlsConnectionClass) OverrideGetBindingData(cb func(*TlsConnection, TlsC
 }
 
 // GetGetBindingData gets the callback function.
+// Retrieve TLS channel binding data (Since: 2.66)
 func (x *TlsConnectionClass) GetGetBindingData() func(*TlsConnection, TlsChannelBindingType, []byte) bool {
 	if x.xGetBindingData == 0 {
 		return nil
@@ -153,6 +163,7 @@ func (x *TlsConnectionClass) GetGetBindingData() func(*TlsConnection, TlsChannel
 }
 
 // OverrideGetNegotiatedProtocol sets the callback function.
+// Get ALPN-negotiated protocol (Since: 2.70)
 func (x *TlsConnectionClass) OverrideGetNegotiatedProtocol(cb func(*TlsConnection) string) {
 	if cb == nil {
 		x.xGetNegotiatedProtocol = 0
@@ -164,6 +175,7 @@ func (x *TlsConnectionClass) OverrideGetNegotiatedProtocol(cb func(*TlsConnectio
 }
 
 // GetGetNegotiatedProtocol gets the callback function.
+// Get ALPN-negotiated protocol (Since: 2.70)
 func (x *TlsConnectionClass) GetGetNegotiatedProtocol() func(*TlsConnection) string {
 	if x.xGetNegotiatedProtocol == 0 {
 		return nil
@@ -183,12 +195,31 @@ func (x *TlsConnectionPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GTlsConnection is the base TLS connection class type, which wraps
-// a #GIOStream and provides TLS encryption on top of it. Its
-// subclasses, #GTlsClientConnection and #GTlsServerConnection,
-// implement client-side and server-side TLS, respectively.
+var xTlsChannelBindingErrorQuark func() glib.Quark
+
+// Gets the TLS channel binding error quark.
+func TlsChannelBindingErrorQuark() glib.Quark {
+
+	cret := xTlsChannelBindingErrorQuark()
+	return cret
+}
+
+var xTlsErrorQuark func() glib.Quark
+
+// Gets the TLS error quark.
+func TlsErrorQuark() glib.Quark {
+
+	cret := xTlsErrorQuark()
+	return cret
+}
+
+// `GTlsConnection` is the base TLS connection class type, which wraps
+// a [class@Gio.IOStream] and provides TLS encryption on top of it. Its
+// subclasses, [iface@Gio.TlsClientConnection] and
+// [iface@Gio.TlsServerConnection], implement client-side and server-side TLS,
+// respectively.
 //
-// For DTLS (Datagram TLS) support, see #GDtlsConnection.
+// For DTLS (Datagram TLS) support, see [iface@Gio.DtlsConnection].
 type TlsConnection struct {
 	IOStream
 }
@@ -527,7 +558,7 @@ var xTlsConnectionSetDatabase func(uintptr, uintptr)
 // #GTlsClientConnection:validation-flags).
 //
 // There are nonintuitive security implications when using a non-default
-// database. See #GDtlsConnection:database for details.
+// database. See #GTlsConnection:database for details.
 func (x *TlsConnection) SetDatabase(DatabaseVar *TlsDatabase) {
 
 	xTlsConnectionSetDatabase(x.GoPointer(), DatabaseVar.GoPointer())
@@ -689,6 +720,9 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+
+	core.PuregoSafeRegister(&xTlsChannelBindingErrorQuark, lib, "g_tls_channel_binding_error_quark")
+	core.PuregoSafeRegister(&xTlsErrorQuark, lib, "g_tls_error_quark")
 
 	core.PuregoSafeRegister(&xTlsConnectionGLibType, lib, "g_tls_connection_get_type")
 

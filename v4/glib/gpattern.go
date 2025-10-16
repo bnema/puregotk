@@ -10,8 +10,22 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// A GPatternSpec struct is the 'compiled' form of a pattern. This
-// structure is opaque and its fields cannot be accessed directly.
+// A `GPatternSpec` struct is the ‘compiled’ form of a glob-style pattern.
+//
+// The [func@GLib.pattern_match_simple] and [method@GLib.PatternSpec.match] functions
+// match a string against a pattern containing `*` and `?` wildcards with similar
+// semantics as the standard `glob()` function: `*` matches an arbitrary,
+// possibly empty, string, `?` matches an arbitrary character.
+//
+// Note that in contrast to [`glob()`](man:glob(3)), the `/` character can be
+// matched by the wildcards, there are no `[…]` character ranges and `*` and `?`
+// can not be escaped to include them literally in a pattern.
+//
+// When multiple strings must be matched against the same pattern, it is better
+// to compile the pattern to a [struct@GLib.PatternSpec] using
+// [ctor@GLib.PatternSpec.new] and use [method@GLib.PatternSpec.match_string]
+// instead of [func@GLib.pattern_match_simple]. This avoids the overhead of repeated
+// pattern compilation.
 type PatternSpec struct {
 	_ structs.HostLayout
 }
@@ -28,7 +42,7 @@ func (x *PatternSpec) GoPointer() uintptr {
 
 var xNewPatternSpec func(string) *PatternSpec
 
-// Compiles a pattern to a #GPatternSpec.
+// Compiles a pattern to a [type@GLib.PatternSpec].
 func NewPatternSpec(PatternVar string) *PatternSpec {
 
 	cret := xNewPatternSpec(PatternVar)
@@ -37,7 +51,7 @@ func NewPatternSpec(PatternVar string) *PatternSpec {
 
 var xPatternSpecCopy func(uintptr) *PatternSpec
 
-// Copies @pspec in a new #GPatternSpec.
+// Copies @pspec in a new [type@GLib.PatternSpec].
 func (x *PatternSpec) Copy() *PatternSpec {
 
 	cret := xPatternSpecCopy(x.GoPointer())
@@ -56,7 +70,7 @@ func (x *PatternSpec) Equal(Pspec2Var *PatternSpec) bool {
 
 var xPatternSpecFree func(uintptr)
 
-// Frees the memory allocated for the #GPatternSpec.
+// Frees the memory allocated for the [type@GLib.PatternSpec].
 func (x *PatternSpec) Free() {
 
 	xPatternSpecFree(x.GoPointer())
@@ -65,23 +79,25 @@ func (x *PatternSpec) Free() {
 
 var xPatternSpecMatch func(uintptr, uint, string, string) bool
 
-// Matches a string against a compiled pattern. Passing the correct
+// Matches a string against a compiled pattern.
+//
+// Passing the correct
 // length of the string given is mandatory. The reversed string can be
-// omitted by passing %NULL, this is more efficient if the reversed
+// omitted by passing `NULL`, this is more efficient if the reversed
 // version of the string to be matched is not at hand, as
-// g_pattern_match() will only construct it if the compiled pattern
+// [method@GLib.PatternSpec.match] will only construct it if the compiled pattern
 // requires reverse matches.
 //
 // Note that, if the user code will (possibly) match a string against a
 // multitude of patterns containing wildcards, chances are high that
-// some patterns will require a reversed string. In this case, it's
+// some patterns will require a reversed string. In this case, it’s
 // more efficient to provide the reversed string to avoid multiple
-// constructions thereof in the various calls to g_pattern_match().
+// constructions thereof in the various calls to [method@GLib.PatternSpec.match].
 //
 // Note also that the reverse of a UTF-8 encoded string can in general
-// not be obtained by g_strreverse(). This works only if the string
+// not be obtained by [func@GLib.strreverse]. This works only if the string
 // does not contain any multibyte characters. GLib offers the
-// g_utf8_strreverse() function to reverse UTF-8 encoded strings.
+// [func@GLib.utf8_strreverse] function to reverse UTF-8 encoded strings.
 func (x *PatternSpec) Match(StringLengthVar uint, StringVar string, StringReversedVar string) bool {
 
 	cret := xPatternSpecMatch(x.GoPointer(), StringLengthVar, StringVar, StringReversedVar)
@@ -90,9 +106,11 @@ func (x *PatternSpec) Match(StringLengthVar uint, StringVar string, StringRevers
 
 var xPatternSpecMatchString func(uintptr, string) bool
 
-// Matches a string against a compiled pattern. If the string is to be
+// Matches a string against a compiled pattern.
+//
+// If the string is to be
 // matched against more than one pattern, consider using
-// g_pattern_match() instead while supplying the reversed string.
+// [method@GLib.PatternSpec.match] instead while supplying the reversed string.
 func (x *PatternSpec) MatchString(StringVar string) bool {
 
 	cret := xPatternSpecMatchString(x.GoPointer(), StringVar)
@@ -101,23 +119,25 @@ func (x *PatternSpec) MatchString(StringVar string) bool {
 
 var xPatternMatch func(*PatternSpec, uint, string, string) bool
 
-// Matches a string against a compiled pattern. Passing the correct
+// Matches a string against a compiled pattern.
+//
+// Passing the correct
 // length of the string given is mandatory. The reversed string can be
-// omitted by passing %NULL, this is more efficient if the reversed
+// omitted by passing `NULL`, this is more efficient if the reversed
 // version of the string to be matched is not at hand, as
-// g_pattern_match() will only construct it if the compiled pattern
+// `g_pattern_match()` will only construct it if the compiled pattern
 // requires reverse matches.
 //
 // Note that, if the user code will (possibly) match a string against a
 // multitude of patterns containing wildcards, chances are high that
-// some patterns will require a reversed string. In this case, it's
+// some patterns will require a reversed string. In this case, it’s
 // more efficient to provide the reversed string to avoid multiple
-// constructions thereof in the various calls to g_pattern_match().
+// constructions thereof in the various calls to `g_pattern_match()`.
 //
 // Note also that the reverse of a UTF-8 encoded string can in general
-// not be obtained by g_strreverse(). This works only if the string
+// not be obtained by [func@GLib.strreverse]. This works only if the string
 // does not contain any multibyte characters. GLib offers the
-// g_utf8_strreverse() function to reverse UTF-8 encoded strings.
+// [func@GLib.utf8_strreverse] function to reverse UTF-8 encoded strings.
 func PatternMatch(PspecVar *PatternSpec, StringLengthVar uint, StringVar string, StringReversedVar string) bool {
 
 	cret := xPatternMatch(PspecVar, StringLengthVar, StringVar, StringReversedVar)
@@ -126,10 +146,12 @@ func PatternMatch(PspecVar *PatternSpec, StringLengthVar uint, StringVar string,
 
 var xPatternMatchSimple func(string, string) bool
 
-// Matches a string against a pattern given as a string. If this
-// function is to be called in a loop, it's more efficient to compile
-// the pattern once with g_pattern_spec_new() and call
-// g_pattern_match_string() repeatedly.
+// Matches a string against a pattern given as a string.
+//
+// If this
+// function is to be called in a loop, it’s more efficient to compile
+// the pattern once with [ctor@GLib.PatternSpec.new] and call
+// [method@GLib.PatternSpec.match_string] repeatedly.
 func PatternMatchSimple(PatternVar string, StringVar string) bool {
 
 	cret := xPatternMatchSimple(PatternVar, StringVar)
@@ -138,9 +160,11 @@ func PatternMatchSimple(PatternVar string, StringVar string) bool {
 
 var xPatternMatchString func(*PatternSpec, string) bool
 
-// Matches a string against a compiled pattern. If the string is to be
+// Matches a string against a compiled pattern.
+//
+// If the string is to be
 // matched against more than one pattern, consider using
-// g_pattern_match() instead while supplying the reversed string.
+// [method@GLib.PatternSpec.match] instead while supplying the reversed string.
 func PatternMatchString(PspecVar *PatternSpec, StringVar string) bool {
 
 	cret := xPatternMatchString(PspecVar, StringVar)
@@ -149,7 +173,7 @@ func PatternMatchString(PspecVar *PatternSpec, StringVar string) bool {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

@@ -20,11 +20,16 @@ func (x *OrientableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// The `GtkOrientable` interface is implemented by all widgets that can be
-// oriented horizontally or vertically.
+// An interface for widgets that can be oriented horizontally or vertically.
 //
 // `GtkOrientable` is more flexible in that it allows the orientation to be
 // changed at runtime, allowing the widgets to “flip”.
+//
+// ## CSS nodes
+//
+// `GtkWidget` types implementing the `GtkOrientable` interface will
+// automatically acquire the `horizontal` or `vertical` CSS class depending on
+// the value of the [property@Gtk.Orientable:orientation] property.
 type Orientable interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)

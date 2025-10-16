@@ -19,13 +19,10 @@ type ContentDeserializeFunc func(uintptr)
 
 var xContentDeserializeAsync func(uintptr, string, types.GType, int, uintptr, uintptr, uintptr)
 
-// Read content from the given input stream and deserialize it, asynchronously.
+// Reads content from the given input stream and deserialize it, asynchronously.
 //
-// The default I/O priority is %G_PRIORITY_DEFAULT (i.e. 0), and lower numbers
+// The default I/O priority is `G_PRIORITY_DEFAULT` (i.e. 0), and lower numbers
 // indicate a higher priority.
-//
-// When the operation is finished, @callback will be called. You must then
-// call [func@Gdk.content_deserialize_finish] to get the result of the operation.
 func ContentDeserializeAsync(StreamVar *gio.InputStream, MimeTypeVar string, TypeVar types.GType, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xContentDeserializeAsync(StreamVar.GoPointer(), MimeTypeVar, TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -55,8 +52,7 @@ func ContentRegisterDeserializer(MimeTypeVar string, TypeVar types.GType, Deseri
 
 }
 
-// A `GdkContentDeserializer` is used to deserialize content received via
-// inter-application data transfers.
+// Deserializes content received via inter-application data transfers.
 //
 // The `GdkContentDeserializer` transforms serialized content that is
 // identified by a mime type into an object identified by a GType.
@@ -218,7 +214,7 @@ func (c *ContentDeserializer) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Gets the source object from a #GAsyncResult.
+// Gets the source object from a [iface@Gio.AsyncResult].
 func (x *ContentDeserializer) GetSourceObject() *gobject.Object {
 	var cls *gobject.Object
 
@@ -240,14 +236,14 @@ func (x *ContentDeserializer) IsTagged(SourceTagVar uintptr) bool {
 	return cret
 }
 
-// If @res is a #GSimpleAsyncResult, this is equivalent to
-// g_simple_async_result_propagate_error(). Otherwise it returns
-// %FALSE.
+// If @res is a [class@Gio.SimpleAsyncResult], this is equivalent to
+// [method@Gio.SimpleAsyncResult.propagate_error]. Otherwise it returns
+// `FALSE`.
 //
-// This can be used for legacy error handling in async *_finish()
-// wrapper functions that traditionally handled #GSimpleAsyncResult
+// This can be used for legacy error handling in async `*_finish()`
+// wrapper functions that traditionally handled [class@Gio.SimpleAsyncResult]
 // error returns themselves rather than calling into the virtual method.
-// This should not be used in new code; #GAsyncResult errors that are
+// This should not be used in new code; [iface@Gio.AsyncResult] errors that are
 // set by virtual methods should also be extracted by virtual methods,
 // to enable subclasses to chain up correctly.
 func (x *ContentDeserializer) LegacyPropagateError() (bool, error) {

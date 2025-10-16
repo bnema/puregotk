@@ -22,12 +22,14 @@ func (x *SortListModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A `GListModel` that sorts the elements of an underlying model
-// according to a `GtkSorter`.
+// A list model that sorts the elements of another model.
+//
+// The elements are sorted according to a `GtkSorter`.
 //
 // The model is a stable sort. If two items compare equal according
 // to the sorter, the one that appears first in the original model will
 // also appear first after sorting.
+//
 // Note that if you change the sorter, the previous order will have no
 // influence on the new order. If you want that, consider using a
 // `GtkMultiSorter` and appending the previous sorter to it.
@@ -41,6 +43,13 @@ func (x *SortListModelClass) GoPointer() uintptr {
 // If you run into performance issues with `GtkSortListModel`,
 // it is strongly recommended that you write your own sorting list
 // model.
+//
+// `GtkSortListModel` allows sorting the items into sections. It
+// implements `GtkSectionModel` and when [property@Gtk.SortListModel:section-sorter]
+// is set, it will sort all items with that sorter and items comparing
+// equal with it will be put into the same section.
+// The [property@Gtk.SortListModel:sorter] will then be used to sort items
+// inside their sections.
 type SortListModel struct {
 	gobject.Object
 }
@@ -126,6 +135,24 @@ func (x *SortListModel) GetPending() uint {
 	return cret
 }
 
+var xSortListModelGetSectionSorter func(uintptr) uintptr
+
+// Gets the section sorter that is used to sort items of @self into
+// sections.
+func (x *SortListModel) GetSectionSorter() *Sorter {
+	var cls *Sorter
+
+	cret := xSortListModelGetSectionSorter(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &Sorter{}
+	cls.Ptr = cret
+	return cls
+}
+
 var xSortListModelGetSorter func(uintptr) uintptr
 
 // Gets the sorter that is used to sort @self.
@@ -175,6 +202,15 @@ var xSortListModelSetModel func(uintptr, uintptr)
 func (x *SortListModel) SetModel(ModelVar gio.ListModel) {
 
 	xSortListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
+
+}
+
+var xSortListModelSetSectionSorter func(uintptr, uintptr)
+
+// Sets a new section sorter on @self.
+func (x *SortListModel) SetSectionSorter(SorterVar *Sorter) {
+
+	xSortListModelSetSectionSorter(x.GoPointer(), SorterVar.GoPointer())
 
 }
 
@@ -289,6 +325,38 @@ func (x *SortListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar
 
 }
 
+// Query the section that covers the given position. The number of
+// items in the section can be computed by `out_end - out_start`.
+//
+// If the position is larger than the number of items, a single
+// range from n_items to G_MAXUINT will be returned.
+func (x *SortListModel) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+
+	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
+
+}
+
+// This function emits the [signal@Gtk.SectionModel::sections-changed]
+// signal to notify about changes to sections.
+//
+// It must cover all positions that used to be a section start or that
+// are now a section start. It does not have to cover all positions for
+// which the section has changed.
+//
+// The [signal@Gio.ListModel::items-changed] implies the effect of the
+// [signal@Gtk.SectionModel::sections-changed] signal for all the items
+// it covers.
+//
+// It is recommended that when changes to the items cause section changes
+// in a larger range, that the larger range is included in the emission
+// of the [signal@Gio.ListModel::items-changed] instead of emitting
+// two signals.
+func (x *SortListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
+
+	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
+
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
@@ -304,9 +372,11 @@ func init() {
 	core.PuregoSafeRegister(&xSortListModelGetIncremental, lib, "gtk_sort_list_model_get_incremental")
 	core.PuregoSafeRegister(&xSortListModelGetModel, lib, "gtk_sort_list_model_get_model")
 	core.PuregoSafeRegister(&xSortListModelGetPending, lib, "gtk_sort_list_model_get_pending")
+	core.PuregoSafeRegister(&xSortListModelGetSectionSorter, lib, "gtk_sort_list_model_get_section_sorter")
 	core.PuregoSafeRegister(&xSortListModelGetSorter, lib, "gtk_sort_list_model_get_sorter")
 	core.PuregoSafeRegister(&xSortListModelSetIncremental, lib, "gtk_sort_list_model_set_incremental")
 	core.PuregoSafeRegister(&xSortListModelSetModel, lib, "gtk_sort_list_model_set_model")
+	core.PuregoSafeRegister(&xSortListModelSetSectionSorter, lib, "gtk_sort_list_model_set_section_sorter")
 	core.PuregoSafeRegister(&xSortListModelSetSorter, lib, "gtk_sort_list_model_set_sorter")
 
 }

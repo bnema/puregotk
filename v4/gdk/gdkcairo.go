@@ -10,7 +10,7 @@ import (
 
 var xCairoDrawFromGl func(*cairo.Context, uintptr, int, int, int, int, int, int, int)
 
-// The main way to not draw GL content in GTK.
+// Draws GL content onto a cairo context.
 //
 // It takes a render buffer ID (@source_type == GL_RENDERBUFFER) or a texture
 // id (@source_type == GL_TEXTURE) and draws it onto @cr with an OVER operation,

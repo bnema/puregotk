@@ -3,8 +3,7 @@ package gtk
 
 import "github.com/jwijenbergh/puregotk/v4/gobject/types"
 
-// `GtkStyleProvider` is an interface for style information used by
-// `GtkStyleContext`.
+// An interface for style information used by [class@Gtk.StyleContext].
 //
 // See [method@Gtk.StyleContext.add_provider] and
 // [func@Gtk.StyleContext.add_provider_for_display] for

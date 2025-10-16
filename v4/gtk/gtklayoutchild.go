@@ -21,8 +21,7 @@ func (x *LayoutChildClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkLayoutChild` is the base class for objects that are meant to hold
-// layout properties.
+// The base class for objects that are meant to hold layout properties.
 //
 // If a `GtkLayoutManager` has per-child properties, like their packing type,
 // or the horizontal and vertical span, or the icon name, then the layout

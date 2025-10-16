@@ -7,12 +7,1039 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/cairo"
 	"github.com/jwijenbergh/puregotk/v4/glib"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 	"github.com/jwijenbergh/puregotk/v4/graphene"
+	"github.com/jwijenbergh/puregotk/v4/pango"
 )
 
-// `GskTransform` is an object to describe transform matrices.
+// Describes lines and curves that are more complex than simple rectangles.
+//
+// Paths can used for rendering (filling or stroking) and for animations
+// (e.g. as trajectories).
+//
+// `GskPath` is an immutable, opaque, reference-counted struct.
+// After creation, you cannot change the types it represents. Instead,
+// new `GskPath` objects have to be created. The [struct@Gsk.PathBuilder]
+// structure is meant to help in this endeavor.
+//
+// Conceptually, a path consists of zero or more contours (continuous, connected
+// curves), each of which may or may not be closed. Contours are typically
+// constructed from Bézier segments.
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="path-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="A Path" src="path-light.png"&gt;
+//
+// &lt;/picture&gt;
+type Path struct {
+	_ structs.HostLayout
+}
+
+var xPathGLibType func() types.GType
+
+func PathGLibType() types.GType {
+	return xPathGLibType()
+}
+
+func (x *Path) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+var xPathForeach func(uintptr, PathForeachFlags, uintptr, uintptr) bool
+
+// Calls @func for every operation of the path.
+//
+// Note that this may only approximate @self, because paths can contain
+// optimizations for various specialized contours, and depending on the
+// @flags, the path may be decomposed into simpler curves than the ones
+// that it contained originally.
+//
+// This function serves two purposes:
+//
+//   - When the @flags allow everything, it provides access to the raw,
+//     unmodified data of the path.
+//   - When the @flags disallow certain operations, it provides
+//     an approximation of the path using just the allowed operations.
+func (x *Path) Foreach(FlagsVar PathForeachFlags, FuncVar *PathForeachFunc, UserDataVar uintptr) bool {
+
+	cret := xPathForeach(x.GoPointer(), FlagsVar, glib.NewCallback(FuncVar), UserDataVar)
+	return cret
+}
+
+var xPathGetBounds func(uintptr, *graphene.Rect) bool
+
+// Computes the bounds of the given path.
+//
+// The returned bounds may be larger than necessary, because this
+// function aims to be fast, not accurate. The bounds are guaranteed
+// to contain the path.
+//
+// It is possible that the returned rectangle has 0 width and/or height.
+// This can happen when the path only describes a point or an
+// axis-aligned line.
+//
+// If the path is empty, false is returned and @bounds are set to
+// graphene_rect_zero(). This is different from the case where the path
+// is a single point at the origin, where the @bounds will also be set to
+// the zero rectangle but true will be returned.
+func (x *Path) GetBounds(BoundsVar *graphene.Rect) bool {
+
+	cret := xPathGetBounds(x.GoPointer(), BoundsVar)
+	return cret
+}
+
+var xPathGetClosestPoint func(uintptr, *graphene.Point, float32, *PathPoint, float32) bool
+
+// Computes the closest point on the path to the given point.
+//
+// If there is no point closer than the given threshold,
+// false is returned.
+func (x *Path) GetClosestPoint(PointVar *graphene.Point, ThresholdVar float32, ResultVar *PathPoint, DistanceVar float32) bool {
+
+	cret := xPathGetClosestPoint(x.GoPointer(), PointVar, ThresholdVar, ResultVar, DistanceVar)
+	return cret
+}
+
+var xPathGetEndPoint func(uintptr, *PathPoint) bool
+
+// Gets the end point of the path.
+//
+// An empty path has no points, so false
+// is returned in this case.
+func (x *Path) GetEndPoint(ResultVar *PathPoint) bool {
+
+	cret := xPathGetEndPoint(x.GoPointer(), ResultVar)
+	return cret
+}
+
+var xPathGetStartPoint func(uintptr, *PathPoint) bool
+
+// Gets the start point of the path.
+//
+// An empty path has no points, so false
+// is returned in this case.
+func (x *Path) GetStartPoint(ResultVar *PathPoint) bool {
+
+	cret := xPathGetStartPoint(x.GoPointer(), ResultVar)
+	return cret
+}
+
+var xPathGetStrokeBounds func(uintptr, *Stroke, *graphene.Rect) bool
+
+// Computes the bounds for stroking the given path with the
+// given parameters.
+//
+// The returned bounds may be larger than necessary, because this
+// function aims to be fast, not accurate. The bounds are guaranteed
+// to contain the area affected by the stroke, including protrusions
+// like miters.
+func (x *Path) GetStrokeBounds(StrokeVar *Stroke, BoundsVar *graphene.Rect) bool {
+
+	cret := xPathGetStrokeBounds(x.GoPointer(), StrokeVar, BoundsVar)
+	return cret
+}
+
+var xPathInFill func(uintptr, *graphene.Point, FillRule) bool
+
+// Returns whether a point is inside the fill area of a path.
+//
+// Note that this function assumes that filling a contour
+// implicitly closes it.
+func (x *Path) InFill(PointVar *graphene.Point, FillRuleVar FillRule) bool {
+
+	cret := xPathInFill(x.GoPointer(), PointVar, FillRuleVar)
+	return cret
+}
+
+var xPathIsClosed func(uintptr) bool
+
+// Returns if the path represents a single closed contour.
+func (x *Path) IsClosed() bool {
+
+	cret := xPathIsClosed(x.GoPointer())
+	return cret
+}
+
+var xPathIsEmpty func(uintptr) bool
+
+// Checks if the path is empty, i.e. contains no lines or curves.
+func (x *Path) IsEmpty() bool {
+
+	cret := xPathIsEmpty(x.GoPointer())
+	return cret
+}
+
+var xPathPrint func(uintptr, *glib.String)
+
+// Converts the path into a human-readable representation.
+//
+// The string is compatible with (a superset of)
+// [SVG path syntax](https://www.w3.org/TR/SVG11/paths.html#PathData),
+// see [func@Gsk.Path.parse] for a summary of the syntax.
+func (x *Path) Print(StringVar *glib.String) {
+
+	xPathPrint(x.GoPointer(), StringVar)
+
+}
+
+var xPathRef func(uintptr) *Path
+
+// Increases the reference count of a path by one.
+func (x *Path) Ref() *Path {
+
+	cret := xPathRef(x.GoPointer())
+	return cret
+}
+
+var xPathToCairo func(uintptr, *cairo.Context)
+
+// Appends the path to a cairo context for drawing with Cairo.
+//
+// This may cause some suboptimal conversions to be performed as
+// Cairo does not support all features of `GskPath`.
+//
+// This function does not clear the existing Cairo path. Call
+// cairo_new_path() if you want this.
+func (x *Path) ToCairo(CrVar *cairo.Context) {
+
+	xPathToCairo(x.GoPointer(), CrVar)
+
+}
+
+var xPathToString func(uintptr) string
+
+// Converts the path into a human-readable string.
+//
+// You can use this function in a debugger to get a quick overview
+// of the path.
+//
+// This is a wrapper around [method@Gsk.Path.print], see that function
+// for details.
+func (x *Path) ToString() string {
+
+	cret := xPathToString(x.GoPointer())
+	return cret
+}
+
+var xPathUnref func(uintptr)
+
+// Decreases the reference count of a path by one.
+//
+// If the resulting reference count is zero, frees the path.
+func (x *Path) Unref() {
+
+	xPathUnref(x.GoPointer())
+
+}
+
+// Constructs `GskPath` objects.
+//
+// A path is constructed like this:
+//
+// ```c
+// GskPath *
+// construct_path (void)
+//
+//	{
+//	  GskPathBuilder *builder;
+//
+//	  builder = gsk_path_builder_new ();
+//
+//	  // add contours to the path here
+//
+//	  return gsk_path_builder_free_to_path (builder);
+//
+// ```
+//
+// Adding contours to the path can be done in two ways.
+// The easiest option is to use the `gsk_path_builder_add_*` group
+// of functions that add predefined contours to the current path,
+// either common shapes like [method@Gsk.PathBuilder.add_circle]
+// or by adding from other paths like [method@Gsk.PathBuilder.add_path].
+//
+// The `gsk_path_builder_add_*` methods always add complete contours,
+// and do not use or modify the current point.
+//
+// The other option is to define each line and curve manually with
+// the `gsk_path_builder_*_to` group of functions. You start with
+// a call to [method@Gsk.PathBuilder.move_to] to set the starting point
+// and then use multiple calls to any of the drawing functions to
+// move the pen along the plane. Once you are done, you can call
+// [method@Gsk.PathBuilder.close] to close the path by connecting it
+// back with a line to the starting point.
+//
+// This is similar to how paths are drawn in Cairo.
+//
+// Note that `GskPathBuilder` will reduce the degree of added Bézier
+// curves as much as possible, to simplify rendering.
+type PathBuilder struct {
+	_ structs.HostLayout
+}
+
+var xPathBuilderGLibType func() types.GType
+
+func PathBuilderGLibType() types.GType {
+	return xPathBuilderGLibType()
+}
+
+func (x *PathBuilder) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewPathBuilder func() *PathBuilder
+
+// Create a new `GskPathBuilder` object.
+//
+// The resulting builder would create an empty `GskPath`.
+// Use addition functions to add types to it.
+func NewPathBuilder() *PathBuilder {
+
+	cret := xNewPathBuilder()
+	return cret
+}
+
+var xPathBuilderAddCairoPath func(uintptr, *cairo.Path)
+
+// Adds a Cairo path to the builder.
+//
+// You can use cairo_copy_path() to access the path
+// from a Cairo context.
+func (x *PathBuilder) AddCairoPath(PathVar *cairo.Path) {
+
+	xPathBuilderAddCairoPath(x.GoPointer(), PathVar)
+
+}
+
+var xPathBuilderAddCircle func(uintptr, *graphene.Point, float32)
+
+// Adds a circle as a new contour.
+//
+// The path is going around the circle in clockwise direction.
+//
+// If @radius is zero, the contour will be a closed point.
+func (x *PathBuilder) AddCircle(CenterVar *graphene.Point, RadiusVar float32) {
+
+	xPathBuilderAddCircle(x.GoPointer(), CenterVar, RadiusVar)
+
+}
+
+var xPathBuilderAddLayout func(uintptr, uintptr)
+
+// Adds the outlines for the glyphs in @layout to the builder.
+func (x *PathBuilder) AddLayout(LayoutVar *pango.Layout) {
+
+	xPathBuilderAddLayout(x.GoPointer(), LayoutVar.GoPointer())
+
+}
+
+var xPathBuilderAddPath func(uintptr, *Path)
+
+// Appends all of @path to the builder.
+func (x *PathBuilder) AddPath(PathVar *Path) {
+
+	xPathBuilderAddPath(x.GoPointer(), PathVar)
+
+}
+
+var xPathBuilderAddRect func(uintptr, *graphene.Rect)
+
+// Adds a rectangle as a new contour.
+//
+// The path is going around the rectangle in clockwise direction.
+//
+// If the the width or height are 0, the path will be a closed
+// horizontal or vertical line. If both are 0, it'll be a closed dot.
+func (x *PathBuilder) AddRect(RectVar *graphene.Rect) {
+
+	xPathBuilderAddRect(x.GoPointer(), RectVar)
+
+}
+
+var xPathBuilderAddReversePath func(uintptr, *Path)
+
+// Appends all of @path to the builder, in reverse order.
+func (x *PathBuilder) AddReversePath(PathVar *Path) {
+
+	xPathBuilderAddReversePath(x.GoPointer(), PathVar)
+
+}
+
+var xPathBuilderAddRoundedRect func(uintptr, *RoundedRect)
+
+// Adds a rounded rectangle as a new contour.
+//
+// The path is going around the rectangle in clockwise direction.
+func (x *PathBuilder) AddRoundedRect(RectVar *RoundedRect) {
+
+	xPathBuilderAddRoundedRect(x.GoPointer(), RectVar)
+
+}
+
+var xPathBuilderAddSegment func(uintptr, *Path, *PathPoint, *PathPoint)
+
+// Adds a segment of a path to the builder.
+//
+// If @start is equal to or after @end, the path will first add the
+// segment from @start to the end of the path, and then add the segment
+// from the beginning to @end. If the path is closed, these segments
+// will be connected.
+//
+// Note that this method always adds a path with the given start point
+// and end point. To add a closed path, use [method@Gsk.PathBuilder.add_path].
+func (x *PathBuilder) AddSegment(PathVar *Path, StartVar *PathPoint, EndVar *PathPoint) {
+
+	xPathBuilderAddSegment(x.GoPointer(), PathVar, StartVar, EndVar)
+
+}
+
+var xPathBuilderArcTo func(uintptr, float32, float32, float32, float32)
+
+// Adds an elliptical arc from the current point to @x2, @y2
+// with @x1, @y1 determining the tangent directions.
+//
+// After this, @x2, @y2 will be the new current point.
+//
+// Note: Two points and their tangents do not determine
+// a unique ellipse, so GSK just picks one. If you need more
+// precise control, use [method@Gsk.PathBuilder.conic_to]
+// or [method@Gsk.PathBuilder.svg_arc_to].
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="arc-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="Arc To" src="arc-light.png"&gt;
+//
+// &lt;/picture&gt;
+func (x *PathBuilder) ArcTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32) {
+
+	xPathBuilderArcTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var)
+
+}
+
+var xPathBuilderClose func(uintptr)
+
+// Ends the current contour with a line back to the start point.
+//
+// Note that this is different from calling [method@Gsk.PathBuilder.line_to]
+// with the start point in that the contour will be closed. A closed
+// contour behaves differently from an open one. When stroking, its
+// start and end point are considered connected, so they will be
+// joined via the line join, and not ended with line caps.
+func (x *PathBuilder) Close() {
+
+	xPathBuilderClose(x.GoPointer())
+
+}
+
+var xPathBuilderConicTo func(uintptr, float32, float32, float32, float32, float32)
+
+// Adds a [conic curve](https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline)
+// from the current point to @x2, @y2 with the given @weight and @x1, @y1 as the
+// control point.
+//
+// The weight determines how strongly the curve is pulled towards the control point.
+// A conic with weight 1 is identical to a quadratic Bézier curve with the same points.
+//
+// Conic curves can be used to draw ellipses and circles. They are also known as
+// rational quadratic Bézier curves.
+//
+// After this, @x2, @y2 will be the new current point.
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="conic-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="Conic To" src="conic-light.png"&gt;
+//
+// &lt;/picture&gt;
+func (x *PathBuilder) ConicTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, WeightVar float32) {
+
+	xPathBuilderConicTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, WeightVar)
+
+}
+
+var xPathBuilderCubicTo func(uintptr, float32, float32, float32, float32, float32, float32)
+
+// Adds a [cubic Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
+// from the current point to @x3, @y3 with @x1, @y1 and @x2, @y2 as the control
+// points.
+//
+// After this, @x3, @y3 will be the new current point.
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="cubic-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="Cubic To" src="cubic-light.png"&gt;
+//
+// &lt;/picture&gt;
+func (x *PathBuilder) CubicTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, X3Var float32, Y3Var float32) {
+
+	xPathBuilderCubicTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, X3Var, Y3Var)
+
+}
+
+var xPathBuilderFreeToPath func(uintptr) *Path
+
+// Creates a new path from the current state of the
+// builder, and unrefs the builder.
+func (x *PathBuilder) FreeToPath() *Path {
+
+	cret := xPathBuilderFreeToPath(x.GoPointer())
+	return cret
+}
+
+var xPathBuilderGetCurrentPoint func(uintptr) *graphene.Point
+
+// Gets the current point.
+//
+// The current point is used for relative drawing commands and
+// updated after every operation.
+//
+// When the builder is created, the default current point is set
+// to `0, 0`. Note that this is different from cairo, which starts
+// out without a current point.
+func (x *PathBuilder) GetCurrentPoint() *graphene.Point {
+
+	cret := xPathBuilderGetCurrentPoint(x.GoPointer())
+	return cret
+}
+
+var xPathBuilderHtmlArcTo func(uintptr, float32, float32, float32, float32, float32)
+
+// Implements arc-to according to the HTML Canvas spec.
+//
+// A convenience function that implements the
+// [HTML arc_to](https://html.spec.whatwg.org/multipage/canvas.html#dom-context-2d-arcto-dev)
+// functionality.
+//
+// After this, the current point will be the point where
+// the circle with the given radius touches the line from
+// @x1, @y1 to @x2, @y2.
+func (x *PathBuilder) HtmlArcTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, RadiusVar float32) {
+
+	xPathBuilderHtmlArcTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, RadiusVar)
+
+}
+
+var xPathBuilderLineTo func(uintptr, float32, float32)
+
+// Draws a line from the current point to @x, @y and makes it
+// the new current point.
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="line-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="Line To" src="line-light.png"&gt;
+//
+// &lt;/picture&gt;
+func (x *PathBuilder) LineTo(XVar float32, YVar float32) {
+
+	xPathBuilderLineTo(x.GoPointer(), XVar, YVar)
+
+}
+
+var xPathBuilderMoveTo func(uintptr, float32, float32)
+
+// Starts a new contour by placing the pen at @x, @y.
+//
+// If this function is called twice in succession, the first
+// call will result in a contour made up of a single point.
+// The second call will start a new contour.
+func (x *PathBuilder) MoveTo(XVar float32, YVar float32) {
+
+	xPathBuilderMoveTo(x.GoPointer(), XVar, YVar)
+
+}
+
+var xPathBuilderQuadTo func(uintptr, float32, float32, float32, float32)
+
+// Adds a [quadratic Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
+// from the current point to @x2, @y2 with @x1, @y1 as the control point.
+//
+// After this, @x2, @y2 will be the new current point.
+//
+// &lt;picture&gt;
+//
+//	&lt;source srcset="quad-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	&lt;img alt="Quad To" src="quad-light.png"&gt;
+//
+// &lt;/picture&gt;
+func (x *PathBuilder) QuadTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32) {
+
+	xPathBuilderQuadTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var)
+
+}
+
+var xPathBuilderRef func(uintptr) *PathBuilder
+
+// Acquires a reference on the given builder.
+//
+// This function is intended primarily for language bindings.
+// `GskPathBuilder` objects should not be kept around.
+func (x *PathBuilder) Ref() *PathBuilder {
+
+	cret := xPathBuilderRef(x.GoPointer())
+	return cret
+}
+
+var xPathBuilderRelArcTo func(uintptr, float32, float32, float32, float32)
+
+// Adds an elliptical arc from the current point to @x2, @y2
+// with @x1, @y1 determining the tangent directions.
+//
+// All coordinates are given relative to the current point.
+//
+// This is the relative version of [method@Gsk.PathBuilder.arc_to].
+func (x *PathBuilder) RelArcTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32) {
+
+	xPathBuilderRelArcTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var)
+
+}
+
+var xPathBuilderRelConicTo func(uintptr, float32, float32, float32, float32, float32)
+
+// Adds a [conic curve](https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline)
+// from the current point to @x2, @y2 with the given @weight and @x1, @y1 as the
+// control point.
+//
+// All coordinates are given relative to the current point.
+//
+// This is the relative version of [method@Gsk.PathBuilder.conic_to].
+func (x *PathBuilder) RelConicTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, WeightVar float32) {
+
+	xPathBuilderRelConicTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, WeightVar)
+
+}
+
+var xPathBuilderRelCubicTo func(uintptr, float32, float32, float32, float32, float32, float32)
+
+// Adds a [cubic Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
+// from the current point to @x3, @y3 with @x1, @y1 and @x2, @y2 as the control
+// points.
+//
+// All coordinates are given relative to the current point.
+//
+// This is the relative version of [method@Gsk.PathBuilder.cubic_to].
+func (x *PathBuilder) RelCubicTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, X3Var float32, Y3Var float32) {
+
+	xPathBuilderRelCubicTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, X3Var, Y3Var)
+
+}
+
+var xPathBuilderRelHtmlArcTo func(uintptr, float32, float32, float32, float32, float32)
+
+// Implements arc-to according to the HTML Canvas spec.
+//
+// All coordinates are given relative to the current point.
+//
+// This is the relative version of [method@Gsk.PathBuilder.html_arc_to].
+func (x *PathBuilder) RelHtmlArcTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32, RadiusVar float32) {
+
+	xPathBuilderRelHtmlArcTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var, RadiusVar)
+
+}
+
+var xPathBuilderRelLineTo func(uintptr, float32, float32)
+
+// Draws a line from the current point to a point offset from it
+// by @x, @y and makes it the new current point.
+//
+// This is the relative version of [method@Gsk.PathBuilder.line_to].
+func (x *PathBuilder) RelLineTo(XVar float32, YVar float32) {
+
+	xPathBuilderRelLineTo(x.GoPointer(), XVar, YVar)
+
+}
+
+var xPathBuilderRelMoveTo func(uintptr, float32, float32)
+
+// Starts a new contour by placing the pen at @x, @y
+// relative to the current point.
+//
+// This is the relative version of [method@Gsk.PathBuilder.move_to].
+func (x *PathBuilder) RelMoveTo(XVar float32, YVar float32) {
+
+	xPathBuilderRelMoveTo(x.GoPointer(), XVar, YVar)
+
+}
+
+var xPathBuilderRelQuadTo func(uintptr, float32, float32, float32, float32)
+
+// Adds a [quadratic Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
+// from the current point to @x2, @y2 with @x1, @y1 the control point.
+//
+// All coordinates are given relative to the current point.
+//
+// This is the relative version of [method@Gsk.PathBuilder.quad_to].
+func (x *PathBuilder) RelQuadTo(X1Var float32, Y1Var float32, X2Var float32, Y2Var float32) {
+
+	xPathBuilderRelQuadTo(x.GoPointer(), X1Var, Y1Var, X2Var, Y2Var)
+
+}
+
+var xPathBuilderRelSvgArcTo func(uintptr, float32, float32, float32, bool, bool, float32, float32)
+
+// Implements arc-to according to the SVG spec.
+//
+// All coordinates are given relative to the current point.
+//
+// This is the relative version of [method@Gsk.PathBuilder.svg_arc_to].
+func (x *PathBuilder) RelSvgArcTo(RxVar float32, RyVar float32, XAxisRotationVar float32, LargeArcVar bool, PositiveSweepVar bool, XVar float32, YVar float32) {
+
+	xPathBuilderRelSvgArcTo(x.GoPointer(), RxVar, RyVar, XAxisRotationVar, LargeArcVar, PositiveSweepVar, XVar, YVar)
+
+}
+
+var xPathBuilderSvgArcTo func(uintptr, float32, float32, float32, bool, bool, float32, float32)
+
+// Implements arc-to according to the SVG spec.
+//
+// A convenience function that implements the
+// [SVG arc_to](https://www.w3.org/TR/SVG11/paths.html#PathDataEllipticalArcCommands)
+// functionality.
+//
+// After this, @x, @y will be the new current point.
+func (x *PathBuilder) SvgArcTo(RxVar float32, RyVar float32, XAxisRotationVar float32, LargeArcVar bool, PositiveSweepVar bool, XVar float32, YVar float32) {
+
+	xPathBuilderSvgArcTo(x.GoPointer(), RxVar, RyVar, XAxisRotationVar, LargeArcVar, PositiveSweepVar, XVar, YVar)
+
+}
+
+var xPathBuilderToPath func(uintptr) *Path
+
+// Creates a new path from the given builder.
+//
+// The given `GskPathBuilder` is reset once this function returns;
+// you cannot call this function multiple times on the same builder
+// instance.
+//
+// This function is intended primarily for language bindings.
+// C code should use [method@Gsk.PathBuilder.free_to_path].
+func (x *PathBuilder) ToPath() *Path {
+
+	cret := xPathBuilderToPath(x.GoPointer())
+	return cret
+}
+
+var xPathBuilderUnref func(uintptr)
+
+// Releases a reference on the given builder.
+func (x *PathBuilder) Unref() {
+
+	xPathBuilderUnref(x.GoPointer())
+
+}
+
+// Performs measurements on paths such as determining the length of the path.
+//
+// Many measuring operations require sampling the path length
+// at intermediate points. Therefore, a `GskPathMeasure` has
+// a tolerance that determines what precision is required
+// for such approximations.
+//
+// A `GskPathMeasure` struct is a reference counted struct
+// and should be treated as opaque.
+type PathMeasure struct {
+	_ structs.HostLayout
+}
+
+var xPathMeasureGLibType func() types.GType
+
+func PathMeasureGLibType() types.GType {
+	return xPathMeasureGLibType()
+}
+
+func (x *PathMeasure) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewPathMeasure func(*Path) *PathMeasure
+
+// Creates a measure object for the given @path with the
+// default tolerance.
+func NewPathMeasure(PathVar *Path) *PathMeasure {
+
+	cret := xNewPathMeasure(PathVar)
+	return cret
+}
+
+var xNewPathMeasureWithTolerance func(*Path, float32) *PathMeasure
+
+// Creates a measure object for the given @path and @tolerance.
+func NewPathMeasureWithTolerance(PathVar *Path, ToleranceVar float32) *PathMeasure {
+
+	cret := xNewPathMeasureWithTolerance(PathVar, ToleranceVar)
+	return cret
+}
+
+var xPathMeasureGetLength func(uintptr) float32
+
+// Gets the length of the path being measured.
+//
+// The length is cached, so this function does not do any work.
+func (x *PathMeasure) GetLength() float32 {
+
+	cret := xPathMeasureGetLength(x.GoPointer())
+	return cret
+}
+
+var xPathMeasureGetPath func(uintptr) *Path
+
+// Returns the path that the measure was created for.
+func (x *PathMeasure) GetPath() *Path {
+
+	cret := xPathMeasureGetPath(x.GoPointer())
+	return cret
+}
+
+var xPathMeasureGetPoint func(uintptr, float32, *PathPoint) bool
+
+// Gets the point at the given distance into the path.
+//
+// An empty path has no points, so false is returned in that case.
+func (x *PathMeasure) GetPoint(DistanceVar float32, ResultVar *PathPoint) bool {
+
+	cret := xPathMeasureGetPoint(x.GoPointer(), DistanceVar, ResultVar)
+	return cret
+}
+
+var xPathMeasureGetTolerance func(uintptr) float32
+
+// Returns the tolerance that the measure was created with.
+func (x *PathMeasure) GetTolerance() float32 {
+
+	cret := xPathMeasureGetTolerance(x.GoPointer())
+	return cret
+}
+
+var xPathMeasureRef func(uintptr) *PathMeasure
+
+// Increases the reference count of a `GskPathMeasure` by one.
+func (x *PathMeasure) Ref() *PathMeasure {
+
+	cret := xPathMeasureRef(x.GoPointer())
+	return cret
+}
+
+var xPathMeasureUnref func(uintptr)
+
+// Decreases the reference count of a `GskPathMeasure` by one.
+//
+// If the resulting reference count is zero, frees the object.
+func (x *PathMeasure) Unref() {
+
+	xPathMeasureUnref(x.GoPointer())
+
+}
+
+// Collects the parameters that are needed when stroking a path.
+type Stroke struct {
+	_ structs.HostLayout
+}
+
+var xStrokeGLibType func() types.GType
+
+func StrokeGLibType() types.GType {
+	return xStrokeGLibType()
+}
+
+func (x *Stroke) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewStroke func(float32) *Stroke
+
+// Creates a new `GskStroke` with the given @line_width.
+func NewStroke(LineWidthVar float32) *Stroke {
+
+	cret := xNewStroke(LineWidthVar)
+	return cret
+}
+
+var xStrokeCopy func(uintptr) *Stroke
+
+// Creates a copy of a `GskStroke`.
+func (x *Stroke) Copy() *Stroke {
+
+	cret := xStrokeCopy(x.GoPointer())
+	return cret
+}
+
+var xStrokeFree func(uintptr)
+
+// Frees a `GskStroke`.
+func (x *Stroke) Free() {
+
+	xStrokeFree(x.GoPointer())
+
+}
+
+var xStrokeGetDash func(uintptr, uint) uintptr
+
+// Gets the dash array in use.
+func (x *Stroke) GetDash(NDashVar uint) uintptr {
+
+	cret := xStrokeGetDash(x.GoPointer(), NDashVar)
+	return cret
+}
+
+var xStrokeGetDashOffset func(uintptr) float32
+
+// Gets the dash offset.
+func (x *Stroke) GetDashOffset() float32 {
+
+	cret := xStrokeGetDashOffset(x.GoPointer())
+	return cret
+}
+
+var xStrokeGetLineCap func(uintptr) LineCap
+
+// Gets the line cap used.
+//
+// See [enum@Gsk.LineCap] for details.
+func (x *Stroke) GetLineCap() LineCap {
+
+	cret := xStrokeGetLineCap(x.GoPointer())
+	return cret
+}
+
+var xStrokeGetLineJoin func(uintptr) LineJoin
+
+// Gets the line join used.
+//
+// See [enum@Gsk.LineJoin] for details.
+func (x *Stroke) GetLineJoin() LineJoin {
+
+	cret := xStrokeGetLineJoin(x.GoPointer())
+	return cret
+}
+
+var xStrokeGetLineWidth func(uintptr) float32
+
+// Gets the line width used.
+func (x *Stroke) GetLineWidth() float32 {
+
+	cret := xStrokeGetLineWidth(x.GoPointer())
+	return cret
+}
+
+var xStrokeGetMiterLimit func(uintptr) float32
+
+// Gets the miter limit.
+func (x *Stroke) GetMiterLimit() float32 {
+
+	cret := xStrokeGetMiterLimit(x.GoPointer())
+	return cret
+}
+
+var xStrokeSetDash func(uintptr, []float32, uint)
+
+// Sets the dash pattern to use.
+//
+// A dash pattern is specified by an array of alternating non-negative
+// values. Each value provides the length of alternate "on" and "off"
+// portions of the stroke.
+//
+// Each "on" segment will have caps applied as if the segment were a
+// separate contour. In particular, it is valid to use an "on" length
+// of 0 with [enum@Gsk.LineCap.round] or [enum@Gsk.LineCap.square]
+// to draw dots or squares along a path.
+//
+// If @n_dash is 0, if all elements in @dash are 0, or if there are
+// negative values in @dash, then dashing is disabled.
+//
+// If @n_dash is 1, an alternating "on" and "off" pattern with the
+// single dash length provided is assumed.
+//
+// If @n_dash is uneven, the dash array will be used with the first
+// element in @dash defining an "on" or "off" in alternating passes
+// through the array.
+//
+// You can specify a starting offset into the dash with
+// [method@Gsk.Stroke.set_dash_offset].
+func (x *Stroke) SetDash(DashVar []float32, NDashVar uint) {
+
+	xStrokeSetDash(x.GoPointer(), DashVar, NDashVar)
+
+}
+
+var xStrokeSetDashOffset func(uintptr, float32)
+
+// Sets the offset into the dash pattern where dashing should begin.
+//
+// This is an offset into the length of the path, not an index into
+// the array values of the dash array.
+//
+// See [method@Gsk.Stroke.set_dash] for more details on dashing.
+func (x *Stroke) SetDashOffset(OffsetVar float32) {
+
+	xStrokeSetDashOffset(x.GoPointer(), OffsetVar)
+
+}
+
+var xStrokeSetLineCap func(uintptr, LineCap)
+
+// Sets the line cap to be used when stroking.
+//
+// See [enum@Gsk.LineCap] for details.
+func (x *Stroke) SetLineCap(LineCapVar LineCap) {
+
+	xStrokeSetLineCap(x.GoPointer(), LineCapVar)
+
+}
+
+var xStrokeSetLineJoin func(uintptr, LineJoin)
+
+// Sets the line join to be used when stroking.
+//
+// See [enum@Gsk.LineJoin] for details.
+func (x *Stroke) SetLineJoin(LineJoinVar LineJoin) {
+
+	xStrokeSetLineJoin(x.GoPointer(), LineJoinVar)
+
+}
+
+var xStrokeSetLineWidth func(uintptr, float32)
+
+// Sets the line width to be used when stroking.
+//
+// The line width must be &gt; 0.
+func (x *Stroke) SetLineWidth(LineWidthVar float32) {
+
+	xStrokeSetLineWidth(x.GoPointer(), LineWidthVar)
+
+}
+
+var xStrokeSetMiterLimit func(uintptr, float32)
+
+// Sets the miter limit to be used when stroking.
+//
+// The miter limit is the distance from the corner where sharp
+// turns of joins get cut off.
+//
+// The limit is specfied in units of line width and must be non-negative.
+//
+// For joins of type [enum@Gsk.LineJoin.miter] that exceed the miter limit,
+// the join gets rendered as if it was of type [enum@Gsk.LineJoin.bevel].
+func (x *Stroke) SetMiterLimit(LimitVar float32) {
+
+	xStrokeSetMiterLimit(x.GoPointer(), LimitVar)
+
+}
+
+var xStrokeToCairo func(uintptr, *cairo.Context)
+
+// A helper function that sets the stroke parameters
+// of a cairo context from a `GskStroke`.
+func (x *Stroke) ToCairo(CrVar *cairo.Context) {
+
+	xStrokeToCairo(x.GoPointer(), CrVar)
+
+}
+
+// Describes a 3D transform.
 //
 // Unlike `graphene_matrix_t`, `GskTransform` retains the steps in how
 // a transform was constructed, and allows inspecting them. It is modeled
@@ -37,6 +1064,10 @@ func (x *Transform) GoPointer() uintptr {
 
 var xNewTransform func() *Transform
 
+// Creates a new identity transform.
+//
+// This function is meant to be used by language
+// bindings. For C code, this is equivalent to using `NULL`.
 func NewTransform() *Transform {
 
 	cret := xNewTransform()
@@ -65,11 +1096,14 @@ var xTransformInvert func(uintptr) *Transform
 
 // Inverts the given transform.
 //
-// If @self is not invertible, %NULL is returned.
-// Note that inverting %NULL also returns %NULL, which is
-// the correct inverse of %NULL. If you need to differentiate
-// between those cases, you should check @self is not %NULL
+// If @self is not invertible, `NULL` is returned.
+// Note that inverting `NULL` also returns `NULL`, which is
+// the correct inverse of `NULL`. If you need to differentiate
+// between those cases, you should check @self is not `NULL`
 // before calling this function.
+//
+// This function consumes @self. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Invert() *Transform {
 
 	cret := xTransformInvert(x.GoPointer())
@@ -79,6 +1113,9 @@ func (x *Transform) Invert() *Transform {
 var xTransformMatrix func(uintptr, *graphene.Matrix) *Transform
 
 // Multiplies @next with the given @matrix.
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Matrix(MatrixVar *graphene.Matrix) *Transform {
 
 	cret := xTransformMatrix(x.GoPointer(), MatrixVar)
@@ -93,6 +1130,9 @@ var xTransformPerspective func(uintptr, float32) *Transform
 // scaling points with positive Z values away from the origin, and
 // those with negative Z values towards the origin. Points
 // on the z=0 plane are unchanged.
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Perspective(DepthVar float32) *Transform {
 
 	cret := xTransformPerspective(x.GoPointer(), DepthVar)
@@ -101,8 +1141,7 @@ func (x *Transform) Perspective(DepthVar float32) *Transform {
 
 var xTransformPrint func(uintptr, *glib.String)
 
-// Converts @self into a human-readable string representation suitable
-// for printing.
+// Converts the transform into a human-readable representation.
 //
 // The result of this function can later be parsed with
 // [func@Gsk.Transform.parse].
@@ -114,7 +1153,7 @@ func (x *Transform) Print(StringVar *glib.String) {
 
 var xTransformRef func(uintptr) *Transform
 
-// Acquires a reference on the given `GskTransform`.
+// Acquires a reference on the given transform.
 func (x *Transform) Ref() *Transform {
 
 	cret := xTransformRef(x.GoPointer())
@@ -123,7 +1162,12 @@ func (x *Transform) Ref() *Transform {
 
 var xTransformRotate func(uintptr, float32) *Transform
 
-// Rotates @next @angle degrees in 2D - or in 3D-speak, around the z axis.
+// Rotates @next by an angle around the Z axis.
+//
+// The rotation happens around the origin point of (0, 0).
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Rotate(AngleVar float32) *Transform {
 
 	cret := xTransformRotate(x.GoPointer(), AngleVar)
@@ -135,6 +1179,9 @@ var xTransformRotate3d func(uintptr, float32, *graphene.Vec3) *Transform
 // Rotates @next @angle degrees around @axis.
 //
 // For a rotation in 2D space, use [method@Gsk.Transform.rotate]
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Rotate3d(AngleVar float32, AxisVar *graphene.Vec3) *Transform {
 
 	cret := xTransformRotate3d(x.GoPointer(), AngleVar, AxisVar)
@@ -146,6 +1193,9 @@ var xTransformScale func(uintptr, float32, float32) *Transform
 // Scales @next in 2-dimensional space by the given factors.
 //
 // Use [method@Gsk.Transform.scale_3d] to scale in all 3 dimensions.
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Scale(FactorXVar float32, FactorYVar float32) *Transform {
 
 	cret := xTransformScale(x.GoPointer(), FactorXVar, FactorYVar)
@@ -155,6 +1205,9 @@ func (x *Transform) Scale(FactorXVar float32, FactorYVar float32) *Transform {
 var xTransformScale3d func(uintptr, float32, float32, float32) *Transform
 
 // Scales @next by the given factors.
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Scale3d(FactorXVar float32, FactorYVar float32, FactorZVar float32) *Transform {
 
 	cret := xTransformScale3d(x.GoPointer(), FactorXVar, FactorYVar, FactorZVar)
@@ -164,6 +1217,9 @@ func (x *Transform) Scale3d(FactorXVar float32, FactorYVar float32, FactorZVar f
 var xTransformSkew func(uintptr, float32, float32) *Transform
 
 // Applies a skew transform.
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Skew(SkewXVar float32, SkewYVar float32) *Transform {
 
 	cret := xTransformSkew(x.GoPointer(), SkewXVar, SkewYVar)
@@ -172,13 +1228,18 @@ func (x *Transform) Skew(SkewXVar float32, SkewYVar float32) *Transform {
 
 var xTransformTo2d func(uintptr, float32, float32, float32, float32, float32, float32)
 
-// Converts a `GskTransform` to a 2D transformation matrix.
+// Converts a transform to a 2D transformation matrix.
 //
 // @self must be a 2D transformation. If you are not
-// sure, use gsk_transform_get_category() &gt;=
-// %GSK_TRANSFORM_CATEGORY_2D to check.
+// sure, use
 //
-// The returned values have the following layout:
+//	gsk_transform_get_category() &gt;= GSK_TRANSFORM_CATEGORY_2D
+//
+// to check.
+//
+// The returned values are a subset of the full 4x4 matrix that
+// is computed by [method@Gsk.Transform.to_matrix] and have the
+// following layout:
 //
 // ```
 //
@@ -199,7 +1260,7 @@ func (x *Transform) To2d(OutXxVar float32, OutYxVar float32, OutXyVar float32, O
 
 var xTransformTo2dComponents func(uintptr, float32, float32, float32, float32, float32, float32, float32)
 
-// Converts a `GskTransform` to 2D transformation factors.
+// Converts a transform to 2D transformation factors.
 //
 // To recreate an equivalent transform from the factors returned
 // by this function, use
@@ -214,7 +1275,7 @@ var xTransformTo2dComponents func(uintptr, float32, float32, float32, float32, f
 //
 // @self must be a 2D transformation. If you are not sure, use
 //
-//	gsk_transform_get_category() &gt;= %GSK_TRANSFORM_CATEGORY_2D
+//	gsk_transform_get_category() &gt;= GSK_TRANSFORM_CATEGORY_2D
 //
 // to check.
 func (x *Transform) To2dComponents(OutSkewXVar float32, OutSkewYVar float32, OutScaleXVar float32, OutScaleYVar float32, OutAngleVar float32, OutDxVar float32, OutDyVar float32) {
@@ -225,19 +1286,21 @@ func (x *Transform) To2dComponents(OutSkewXVar float32, OutSkewYVar float32, Out
 
 var xTransformToAffine func(uintptr, float32, float32, float32, float32)
 
-// Converts a `GskTransform` to 2D affine transformation factors.
+// Converts a transform to 2D affine transformation factors.
 //
 // To recreate an equivalent transform from the factors returned
 // by this function, use
 //
-//	gsk_transform_scale (gsk_transform_translate (NULL,
-//	                                              &amp;GRAPHENE_POINT_T (dx, dy)),
-//	                     sx, sy)
+//	gsk_transform_scale (
+//	    gsk_transform_translate (
+//	        NULL,
+//	        &amp;GRAPHENE_POINT_T (dx, dy)),
+//	    sx, sy)
 //
 // @self must be a 2D affine transformation. If you are not
 // sure, use
 //
-//	gsk_transform_get_category() &gt;= %GSK_TRANSFORM_CATEGORY_2D_AFFINE
+//	gsk_transform_get_category() &gt;= GSK_TRANSFORM_CATEGORY_2D_AFFINE
 //
 // to check.
 func (x *Transform) ToAffine(OutScaleXVar float32, OutScaleYVar float32, OutDxVar float32, OutDyVar float32) {
@@ -248,7 +1311,7 @@ func (x *Transform) ToAffine(OutScaleXVar float32, OutScaleYVar float32, OutDxVa
 
 var xTransformToMatrix func(uintptr, *graphene.Matrix)
 
-// Computes the actual value of @self and stores it in @out_matrix.
+// Computes the 4x4 matrix for the transform.
 //
 // The previous value of @out_matrix will be ignored.
 func (x *Transform) ToMatrix(OutMatrixVar *graphene.Matrix) {
@@ -259,7 +1322,7 @@ func (x *Transform) ToMatrix(OutMatrixVar *graphene.Matrix) {
 
 var xTransformToString func(uintptr) string
 
-// Converts a matrix into a string that is suitable for printing.
+// Converts the transform into a human-readable string.
 //
 // The resulting string can be parsed with [func@Gsk.Transform.parse].
 //
@@ -272,12 +1335,12 @@ func (x *Transform) ToString() string {
 
 var xTransformToTranslate func(uintptr, float32, float32)
 
-// Converts a `GskTransform` to a translation operation.
+// Converts a transform to a translation operation.
 //
 // @self must be a 2D transformation. If you are not
 // sure, use
 //
-//	gsk_transform_get_category() &gt;= %GSK_TRANSFORM_CATEGORY_2D_TRANSLATE
+//	gsk_transform_get_category() &gt;= GSK_TRANSFORM_CATEGORY_2D_TRANSLATE
 //
 // to check.
 func (x *Transform) ToTranslate(OutDxVar float32, OutDyVar float32) {
@@ -289,6 +1352,9 @@ func (x *Transform) ToTranslate(OutDxVar float32, OutDyVar float32) {
 var xTransformTransform func(uintptr, *Transform) *Transform
 
 // Applies all the operations from @other to @next.
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Transform(OtherVar *Transform) *Transform {
 
 	cret := xTransformTransform(x.GoPointer(), OtherVar)
@@ -297,7 +1363,7 @@ func (x *Transform) Transform(OtherVar *Transform) *Transform {
 
 var xTransformTransformBounds func(uintptr, *graphene.Rect, *graphene.Rect)
 
-// Transforms a `graphene_rect_t` using the given transform @self.
+// Transforms a rectangle using the given transform.
 //
 // The result is the bounding box containing the coplanar quad.
 func (x *Transform) TransformBounds(RectVar *graphene.Rect, OutRectVar *graphene.Rect) {
@@ -308,7 +1374,7 @@ func (x *Transform) TransformBounds(RectVar *graphene.Rect, OutRectVar *graphene
 
 var xTransformTransformPoint func(uintptr, *graphene.Point, *graphene.Point)
 
-// Transforms a `graphene_point_t` using the given transform @self.
+// Transforms a point using the given transform.
 func (x *Transform) TransformPoint(PointVar *graphene.Point, OutPointVar *graphene.Point) {
 
 	xTransformTransformPoint(x.GoPointer(), PointVar, OutPointVar)
@@ -318,6 +1384,9 @@ func (x *Transform) TransformPoint(PointVar *graphene.Point, OutPointVar *graphe
 var xTransformTranslate func(uintptr, *graphene.Point) *Transform
 
 // Translates @next in 2-dimensional space by @point.
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Translate(PointVar *graphene.Point) *Transform {
 
 	cret := xTransformTranslate(x.GoPointer(), PointVar)
@@ -327,6 +1396,9 @@ func (x *Transform) Translate(PointVar *graphene.Point) *Transform {
 var xTransformTranslate3d func(uintptr, *graphene.Point3D) *Transform
 
 // Translates @next by @point.
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
 func (x *Transform) Translate3d(PointVar *graphene.Point3D) *Transform {
 
 	cret := xTransformTranslate3d(x.GoPointer(), PointVar)
@@ -335,7 +1407,7 @@ func (x *Transform) Translate3d(PointVar *graphene.Point3D) *Transform {
 
 var xTransformUnref func(uintptr)
 
-// Releases a reference on the given `GskTransform`.
+// Releases a reference on the given transform.
 //
 // If the reference was the last, the resources associated to the @self are
 // freed.
@@ -352,6 +1424,90 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+
+	core.PuregoSafeRegister(&xPathGLibType, lib, "gsk_path_get_type")
+
+	core.PuregoSafeRegister(&xPathForeach, lib, "gsk_path_foreach")
+	core.PuregoSafeRegister(&xPathGetBounds, lib, "gsk_path_get_bounds")
+	core.PuregoSafeRegister(&xPathGetClosestPoint, lib, "gsk_path_get_closest_point")
+	core.PuregoSafeRegister(&xPathGetEndPoint, lib, "gsk_path_get_end_point")
+	core.PuregoSafeRegister(&xPathGetStartPoint, lib, "gsk_path_get_start_point")
+	core.PuregoSafeRegister(&xPathGetStrokeBounds, lib, "gsk_path_get_stroke_bounds")
+	core.PuregoSafeRegister(&xPathInFill, lib, "gsk_path_in_fill")
+	core.PuregoSafeRegister(&xPathIsClosed, lib, "gsk_path_is_closed")
+	core.PuregoSafeRegister(&xPathIsEmpty, lib, "gsk_path_is_empty")
+	core.PuregoSafeRegister(&xPathPrint, lib, "gsk_path_print")
+	core.PuregoSafeRegister(&xPathRef, lib, "gsk_path_ref")
+	core.PuregoSafeRegister(&xPathToCairo, lib, "gsk_path_to_cairo")
+	core.PuregoSafeRegister(&xPathToString, lib, "gsk_path_to_string")
+	core.PuregoSafeRegister(&xPathUnref, lib, "gsk_path_unref")
+
+	core.PuregoSafeRegister(&xPathBuilderGLibType, lib, "gsk_path_builder_get_type")
+
+	core.PuregoSafeRegister(&xNewPathBuilder, lib, "gsk_path_builder_new")
+
+	core.PuregoSafeRegister(&xPathBuilderAddCairoPath, lib, "gsk_path_builder_add_cairo_path")
+	core.PuregoSafeRegister(&xPathBuilderAddCircle, lib, "gsk_path_builder_add_circle")
+	core.PuregoSafeRegister(&xPathBuilderAddLayout, lib, "gsk_path_builder_add_layout")
+	core.PuregoSafeRegister(&xPathBuilderAddPath, lib, "gsk_path_builder_add_path")
+	core.PuregoSafeRegister(&xPathBuilderAddRect, lib, "gsk_path_builder_add_rect")
+	core.PuregoSafeRegister(&xPathBuilderAddReversePath, lib, "gsk_path_builder_add_reverse_path")
+	core.PuregoSafeRegister(&xPathBuilderAddRoundedRect, lib, "gsk_path_builder_add_rounded_rect")
+	core.PuregoSafeRegister(&xPathBuilderAddSegment, lib, "gsk_path_builder_add_segment")
+	core.PuregoSafeRegister(&xPathBuilderArcTo, lib, "gsk_path_builder_arc_to")
+	core.PuregoSafeRegister(&xPathBuilderClose, lib, "gsk_path_builder_close")
+	core.PuregoSafeRegister(&xPathBuilderConicTo, lib, "gsk_path_builder_conic_to")
+	core.PuregoSafeRegister(&xPathBuilderCubicTo, lib, "gsk_path_builder_cubic_to")
+	core.PuregoSafeRegister(&xPathBuilderFreeToPath, lib, "gsk_path_builder_free_to_path")
+	core.PuregoSafeRegister(&xPathBuilderGetCurrentPoint, lib, "gsk_path_builder_get_current_point")
+	core.PuregoSafeRegister(&xPathBuilderHtmlArcTo, lib, "gsk_path_builder_html_arc_to")
+	core.PuregoSafeRegister(&xPathBuilderLineTo, lib, "gsk_path_builder_line_to")
+	core.PuregoSafeRegister(&xPathBuilderMoveTo, lib, "gsk_path_builder_move_to")
+	core.PuregoSafeRegister(&xPathBuilderQuadTo, lib, "gsk_path_builder_quad_to")
+	core.PuregoSafeRegister(&xPathBuilderRef, lib, "gsk_path_builder_ref")
+	core.PuregoSafeRegister(&xPathBuilderRelArcTo, lib, "gsk_path_builder_rel_arc_to")
+	core.PuregoSafeRegister(&xPathBuilderRelConicTo, lib, "gsk_path_builder_rel_conic_to")
+	core.PuregoSafeRegister(&xPathBuilderRelCubicTo, lib, "gsk_path_builder_rel_cubic_to")
+	core.PuregoSafeRegister(&xPathBuilderRelHtmlArcTo, lib, "gsk_path_builder_rel_html_arc_to")
+	core.PuregoSafeRegister(&xPathBuilderRelLineTo, lib, "gsk_path_builder_rel_line_to")
+	core.PuregoSafeRegister(&xPathBuilderRelMoveTo, lib, "gsk_path_builder_rel_move_to")
+	core.PuregoSafeRegister(&xPathBuilderRelQuadTo, lib, "gsk_path_builder_rel_quad_to")
+	core.PuregoSafeRegister(&xPathBuilderRelSvgArcTo, lib, "gsk_path_builder_rel_svg_arc_to")
+	core.PuregoSafeRegister(&xPathBuilderSvgArcTo, lib, "gsk_path_builder_svg_arc_to")
+	core.PuregoSafeRegister(&xPathBuilderToPath, lib, "gsk_path_builder_to_path")
+	core.PuregoSafeRegister(&xPathBuilderUnref, lib, "gsk_path_builder_unref")
+
+	core.PuregoSafeRegister(&xPathMeasureGLibType, lib, "gsk_path_measure_get_type")
+
+	core.PuregoSafeRegister(&xNewPathMeasure, lib, "gsk_path_measure_new")
+	core.PuregoSafeRegister(&xNewPathMeasureWithTolerance, lib, "gsk_path_measure_new_with_tolerance")
+
+	core.PuregoSafeRegister(&xPathMeasureGetLength, lib, "gsk_path_measure_get_length")
+	core.PuregoSafeRegister(&xPathMeasureGetPath, lib, "gsk_path_measure_get_path")
+	core.PuregoSafeRegister(&xPathMeasureGetPoint, lib, "gsk_path_measure_get_point")
+	core.PuregoSafeRegister(&xPathMeasureGetTolerance, lib, "gsk_path_measure_get_tolerance")
+	core.PuregoSafeRegister(&xPathMeasureRef, lib, "gsk_path_measure_ref")
+	core.PuregoSafeRegister(&xPathMeasureUnref, lib, "gsk_path_measure_unref")
+
+	core.PuregoSafeRegister(&xStrokeGLibType, lib, "gsk_stroke_get_type")
+
+	core.PuregoSafeRegister(&xNewStroke, lib, "gsk_stroke_new")
+
+	core.PuregoSafeRegister(&xStrokeCopy, lib, "gsk_stroke_copy")
+	core.PuregoSafeRegister(&xStrokeFree, lib, "gsk_stroke_free")
+	core.PuregoSafeRegister(&xStrokeGetDash, lib, "gsk_stroke_get_dash")
+	core.PuregoSafeRegister(&xStrokeGetDashOffset, lib, "gsk_stroke_get_dash_offset")
+	core.PuregoSafeRegister(&xStrokeGetLineCap, lib, "gsk_stroke_get_line_cap")
+	core.PuregoSafeRegister(&xStrokeGetLineJoin, lib, "gsk_stroke_get_line_join")
+	core.PuregoSafeRegister(&xStrokeGetLineWidth, lib, "gsk_stroke_get_line_width")
+	core.PuregoSafeRegister(&xStrokeGetMiterLimit, lib, "gsk_stroke_get_miter_limit")
+	core.PuregoSafeRegister(&xStrokeSetDash, lib, "gsk_stroke_set_dash")
+	core.PuregoSafeRegister(&xStrokeSetDashOffset, lib, "gsk_stroke_set_dash_offset")
+	core.PuregoSafeRegister(&xStrokeSetLineCap, lib, "gsk_stroke_set_line_cap")
+	core.PuregoSafeRegister(&xStrokeSetLineJoin, lib, "gsk_stroke_set_line_join")
+	core.PuregoSafeRegister(&xStrokeSetLineWidth, lib, "gsk_stroke_set_line_width")
+	core.PuregoSafeRegister(&xStrokeSetMiterLimit, lib, "gsk_stroke_set_miter_limit")
+	core.PuregoSafeRegister(&xStrokeToCairo, lib, "gsk_stroke_to_cairo")
 
 	core.PuregoSafeRegister(&xTransformGLibType, lib, "gsk_transform_get_type")
 

@@ -19,37 +19,38 @@ type BusNameLostCallback func(uintptr, string, uintptr)
 
 var xBusOwnName func(BusType, string, BusNameOwnerFlags, uintptr, uintptr, uintptr, uintptr, uintptr) uint
 
-// Starts acquiring @name on the bus specified by @bus_type and calls
-// @name_acquired_handler and @name_lost_handler when the name is
-// acquired respectively lost. Callbacks will be invoked in the
-// [thread-default main context][g-main-context-push-thread-default]
+// Requests ownership of @name on the bus specified by @bus_type.
+//
+// It asynchronously calls @name_acquired_handler and @name_lost_handler when
+// the name is acquired and lost, respectively.
+//
+// Callbacks will be invoked in the thread-default
+// main context (see [method@GLib.MainContext.push_thread_default])
 // of the thread you are calling this function from.
 //
 // You are guaranteed that one of the @name_acquired_handler and @name_lost_handler
-// callbacks will be invoked after calling this function - there are three
+// callbacks will be invoked after calling this function — there are three
 // possible cases:
 //
-//   - @name_lost_handler with a %NULL connection (if a connection to the bus
-//     can't be made).
-//
-//   - @bus_acquired_handler then @name_lost_handler (if the name can't be
-//     obtained)
-//
+//   - @name_lost_handler with a `NULL` connection (if a connection to the bus
+//     can’t be made).
+//   - @bus_acquired_handler then @name_lost_handler (if the name can’t be
+//     obtained).
 //   - @bus_acquired_handler then @name_acquired_handler (if the name was
 //     obtained).
 //
-// When you are done owning the name, just call g_bus_unown_name()
-// with the owner id this function returns.
+// When you are done owning the name, call [func@Gio.bus_unown_name] with the
+// owner ID this function returns.
 //
 // If the name is acquired or lost (for example another application
 // could acquire the name if you allow replacement or the application
 // currently owning the name exits), the handlers are also invoked.
-// If the #GDBusConnection that is used for attempting to own the name
+// If the [class@Gio.DBusConnection] that is used for attempting to own the name
 // closes, then @name_lost_handler is invoked since it is no longer
 // possible for other processes to access the process.
 //
-// You cannot use g_bus_own_name() several times for the same name (unless
-// interleaved with calls to g_bus_unown_name()) - only the first call
+// You cannot use [func@Gio.bus_own_name] several times for the same name (unless
+// interleaved with calls to [func@Gio.bus_unown_name]) — only the first call
 // will work.
 //
 // Another guarantee is that invocations of @name_acquired_handler
@@ -58,14 +59,14 @@ var xBusOwnName func(BusType, string, BusNameOwnerFlags, uintptr, uintptr, uintp
 // guaranteed that the next time one of the handlers is invoked, it
 // will be @name_lost_handler. The reverse is also true.
 //
-// If you plan on exporting objects (using e.g.
-// g_dbus_connection_register_object()), note that it is generally too late
+// If you plan on exporting objects (using, for example,
+// [method@Gio.DBusConnection.register_object]), note that it is generally too late
 // to export the objects in @name_acquired_handler. Instead, you can do this
 // in @bus_acquired_handler since you are guaranteed that this will run
 // before @name is requested from the bus.
 //
-// This behavior makes it very simple to write applications that wants
-// to [own names][gdbus-owning-names] and export objects.
+// This behavior makes it very simple to write applications that want
+// to [own names](dbus-name-owning.html#d-bus-name-owning) and export objects.
 // Simply register objects to be exported in @bus_acquired_handler and
 // unregister the objects (if any) in @name_lost_handler.
 func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, BusAcquiredHandlerVar *BusAcquiredCallback, NameAcquiredHandlerVar *BusNameAcquiredCallback, NameLostHandlerVar *BusNameLostCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
@@ -76,8 +77,8 @@ func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, 
 
 var xBusOwnNameOnConnection func(uintptr, string, BusNameOwnerFlags, uintptr, uintptr, uintptr, uintptr) uint
 
-// Like g_bus_own_name() but takes a #GDBusConnection instead of a
-// #GBusType.
+// Like [func@Gio.bus_own_name] but takes a [class@Gio.DBusConnection] instead
+// of a [enum@Gio.BusType].
 func BusOwnNameOnConnection(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameOwnerFlags, NameAcquiredHandlerVar *BusNameAcquiredCallback, NameLostHandlerVar *BusNameLostCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
 	cret := xBusOwnNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, glib.NewCallbackNullable(NameAcquiredHandlerVar), glib.NewCallbackNullable(NameLostHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
@@ -86,7 +87,7 @@ func BusOwnNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Flags
 
 var xBusOwnNameOnConnectionWithClosures func(uintptr, string, BusNameOwnerFlags, *gobject.Closure, *gobject.Closure) uint
 
-// Version of g_bus_own_name_on_connection() using closures instead of
+// Version of [func@Gio.bus_own_name_on_connection] using closures instead of
 // callbacks for easier binding in other languages.
 func BusOwnNameOnConnectionWithClosures(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameOwnerFlags, NameAcquiredClosureVar *gobject.Closure, NameLostClosureVar *gobject.Closure) uint {
 
@@ -96,7 +97,7 @@ func BusOwnNameOnConnectionWithClosures(ConnectionVar *DBusConnection, NameVar s
 
 var xBusOwnNameWithClosures func(BusType, string, BusNameOwnerFlags, *gobject.Closure, *gobject.Closure, *gobject.Closure) uint
 
-// Version of g_bus_own_name() using closures instead of callbacks for
+// Version of [func@Gio.bus_own_name using closures instead of callbacks for
 // easier binding in other languages.
 func BusOwnNameWithClosures(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, BusAcquiredClosureVar *gobject.Closure, NameAcquiredClosureVar *gobject.Closure, NameLostClosureVar *gobject.Closure) uint {
 
@@ -109,11 +110,12 @@ var xBusUnownName func(uint)
 // Stops owning a name.
 //
 // Note that there may still be D-Bus traffic to process (relating to owning
-// and unowning the name) in the current thread-default #GMainContext after
-// this function has returned. You should continue to iterate the #GMainContext
-// until the #GDestroyNotify function passed to g_bus_own_name() is called, in
-// order to avoid memory leaks through callbacks queued on the #GMainContext
-// after it’s stopped being iterated.
+// and unowning the name) in the current thread-default
+// [struct@GLib.MainContext] after this function has returned. You should
+// continue to iterate the [struct@GLib.MainContext] until the
+// [callback@GLib.DestroyNotify] function passed to [func@Gio.bus_own_name] is
+// called, in order to avoid memory leaks through callbacks queued on the
+// [struct@GLib.MainContext] after it’s stopped being iterated.
 func BusUnownName(OwnerIdVar uint) {
 
 	xBusUnownName(OwnerIdVar)

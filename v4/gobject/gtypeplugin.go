@@ -5,6 +5,8 @@ import (
 	"structs"
 	"unsafe"
 
+	"github.com/jwijenbergh/purego"
+	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -39,4 +41,140 @@ type TypePluginClass struct {
 
 func (x *TypePluginClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// An interface that handles the lifecycle of dynamically loaded types.
+//
+// The GObject type system supports dynamic loading of types.
+// It goes as follows:
+//
+//  1. The type is initially introduced (usually upon loading the module
+//     the first time, or by your main application that knows what modules
+//     introduces what types), like this:
+//     ```c
+//     new_type_id = g_type_register_dynamic (parent_type_id,
+//     "TypeName",
+//     new_type_plugin,
+//     type_flags);
+//     ```
+//     where `new_type_plugin` is an implementation of the
+//     `GTypePlugin` interface.
+//
+//  2. The type's implementation is referenced, e.g. through
+//     [func@GObject.TypeClass.ref] or through [func@GObject.type_create_instance]
+//     (this is being called by [ctor@GObject.Object.new]) or through one of the above
+//     done on a type derived from `new_type_id`.
+//
+//  3. This causes the type system to load the type's implementation by calling
+//     [method@GObject.TypePlugin.use] and [method@GObject.TypePlugin.complete_type_info]
+//     on `new_type_plugin`.
+//
+//  4. At some point the type's implementation isn't required anymore, e.g. after
+//     [method@GObject.TypeClass.unref] or [func@GObject.type_free_instance]
+//     (called when the reference count of an instance drops to zero).
+//
+//  5. This causes the type system to throw away the information retrieved
+//     from [method@GObject.TypePlugin.complete_type_info] and then it calls
+//     [method@GObject.TypePlugin.unuse] on `new_type_plugin`.
+//
+// 6. Things may repeat from the second step.
+//
+// So basically, you need to implement a `GTypePlugin` type that
+// carries a use_count, once use_count goes from zero to one, you need
+// to load the implementation to successfully handle the upcoming
+// [method@GObject.TypePlugin.complete_type_info] call. Later, maybe after
+// succeeding use/unuse calls, once use_count drops to zero, you can
+// unload the implementation again. The type system makes sure to call
+// [method@GObject.TypePlugin.use] and [method@GObject.TypePlugin.complete_type_info]
+// again when the type is needed again.
+//
+// [class@GObject.TypeModule] is an implementation of `GTypePlugin` that
+// already implements most of this except for the actual module loading and
+// unloading. It even handles multiple registered types per module.
+type TypePlugin interface {
+	GoPointer() uintptr
+	SetGoPointer(uintptr)
+	CompleteInterfaceInfo(InstanceTypeVar types.GType, InterfaceTypeVar types.GType, InfoVar *InterfaceInfo)
+	CompleteTypeInfo(GTypeVar types.GType, InfoVar *TypeInfo, ValueTableVar *TypeValueTable)
+	Unuse()
+	Use()
+}
+
+var xTypePluginGLibType func() types.GType
+
+func TypePluginGLibType() types.GType {
+	return xTypePluginGLibType()
+}
+
+type TypePluginBase struct {
+	Ptr uintptr
+}
+
+func (x *TypePluginBase) GoPointer() uintptr {
+	if x == nil {
+		return 0
+	}
+	return x.Ptr
+}
+
+func (x *TypePluginBase) SetGoPointer(ptr uintptr) {
+	x.Ptr = ptr
+}
+
+// Calls the @complete_interface_info function from the
+// #GTypePluginClass of @plugin. There should be no need to use this
+// function outside of the GObject type system itself.
+func (x *TypePluginBase) CompleteInterfaceInfo(InstanceTypeVar types.GType, InterfaceTypeVar types.GType, InfoVar *InterfaceInfo) {
+
+	XGTypePluginCompleteInterfaceInfo(x.GoPointer(), InstanceTypeVar, InterfaceTypeVar, InfoVar)
+
+}
+
+// Calls the @complete_type_info function from the #GTypePluginClass of @plugin.
+// There should be no need to use this function outside of the GObject
+// type system itself.
+func (x *TypePluginBase) CompleteTypeInfo(GTypeVar types.GType, InfoVar *TypeInfo, ValueTableVar *TypeValueTable) {
+
+	XGTypePluginCompleteTypeInfo(x.GoPointer(), GTypeVar, InfoVar, ValueTableVar)
+
+}
+
+// Calls the @unuse_plugin function from the #GTypePluginClass of
+// @plugin.  There should be no need to use this function outside of
+// the GObject type system itself.
+func (x *TypePluginBase) Unuse() {
+
+	XGTypePluginUnuse(x.GoPointer())
+
+}
+
+// Calls the @use_plugin function from the #GTypePluginClass of
+// @plugin.  There should be no need to use this function outside of
+// the GObject type system itself.
+func (x *TypePluginBase) Use() {
+
+	XGTypePluginUse(x.GoPointer())
+
+}
+
+var XGTypePluginCompleteInterfaceInfo func(uintptr, types.GType, types.GType, *InterfaceInfo)
+var XGTypePluginCompleteTypeInfo func(uintptr, types.GType, *TypeInfo, *TypeValueTable)
+var XGTypePluginUnuse func(uintptr)
+var XGTypePluginUse func(uintptr)
+
+func init() {
+	core.SetPackageName("GOBJECT", "gobject-2.0")
+	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
+	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
+	if err != nil {
+		panic(err)
+	}
+
+	core.PuregoSafeRegister(&xTypePluginGLibType, lib, "g_type_plugin_get_type")
+
+	core.PuregoSafeRegister(&XGTypePluginCompleteInterfaceInfo, lib, "g_type_plugin_complete_interface_info")
+	core.PuregoSafeRegister(&XGTypePluginCompleteTypeInfo, lib, "g_type_plugin_complete_type_info")
+	core.PuregoSafeRegister(&XGTypePluginUnuse, lib, "g_type_plugin_unuse")
+	core.PuregoSafeRegister(&XGTypePluginUse, lib, "g_type_plugin_use")
+
 }

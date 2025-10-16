@@ -22,8 +22,7 @@ func (x *SelectionFilterModelClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkSelectionFilterModel` is a list model that presents the selection from
-// a `GtkSelectionModel`.
+// A list model that presents the selection from a `GtkSelectionModel`.
 type SelectionFilterModel struct {
 	gobject.Object
 }

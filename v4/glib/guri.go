@@ -10,26 +10,79 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// The #GUri type and related functions can be used to parse URIs into
+// The `GUri` type and related functions can be used to parse URIs into
 // their components, and build valid URIs from individual components.
 //
-// Note that #GUri scope is to help manipulate URIs in various applications,
+// Since `GUri` only represents absolute URIs, all `GUri`s will have a
+// URI scheme, so [method@GLib.Uri.get_scheme] will always return a non-`NULL`
+// answer. Likewise, by definition, all URIs have a path component, so
+// [method@GLib.Uri.get_path] will always return a non-`NULL` string (which may
+// be empty).
+//
+// If the URI string has an
+// [‘authority’ component](https://tools.ietf.org/html/rfc3986#section-3) (that
+// is, if the scheme is followed by `://` rather than just `:`), then the
+// `GUri` will contain a hostname, and possibly a port and ‘userinfo’.
+// Additionally, depending on how the `GUri` was constructed/parsed (for example,
+// using the `G_URI_FLAGS_HAS_PASSWORD` and `G_URI_FLAGS_HAS_AUTH_PARAMS` flags),
+// the userinfo may be split out into a username, password, and
+// additional authorization-related parameters.
+//
+// Normally, the components of a `GUri` will have all `%`-encoded
+// characters decoded. However, if you construct/parse a `GUri` with
+// `G_URI_FLAGS_ENCODED`, then the `%`-encoding will be preserved instead in
+// the userinfo, path, and query fields (and in the host field if also
+// created with `G_URI_FLAGS_NON_DNS`). In particular, this is necessary if
+// the URI may contain binary data or non-UTF-8 text, or if decoding
+// the components might change the interpretation of the URI.
+//
+// For example, with the encoded flag:
+//
+// ```c
+// g_autoptr(GUri) uri = g_uri_parse ("http://host/path?query=http%3A%2F%2Fhost%2Fpath%3Fparam%3Dvalue", G_URI_FLAGS_ENCODED, &amp;err);
+// g_assert_cmpstr (g_uri_get_query (uri), ==, "query=http%3A%2F%2Fhost%2Fpath%3Fparam%3Dvalue");
+// ```
+//
+// While the default `%`-decoding behaviour would give:
+//
+// ```c
+// g_autoptr(GUri) uri = g_uri_parse ("http://host/path?query=http%3A%2F%2Fhost%2Fpath%3Fparam%3Dvalue", G_URI_FLAGS_NONE, &amp;err);
+// g_assert_cmpstr (g_uri_get_query (uri), ==, "query=http://host/path?param=value");
+// ```
+//
+// During decoding, if an invalid UTF-8 string is encountered, parsing will fail
+// with an error indicating the bad string location:
+//
+// ```c
+// g_autoptr(GUri) uri = g_uri_parse ("http://host/path?query=http%3A%2F%2Fhost%2Fpath%3Fbad%3D%00alue", G_URI_FLAGS_NONE, &amp;err);
+// g_assert_error (err, G_URI_ERROR, G_URI_ERROR_BAD_QUERY);
+// ```
+//
+// You should pass `G_URI_FLAGS_ENCODED` or `G_URI_FLAGS_ENCODED_QUERY` if you
+// need to handle that case manually. In particular, if the query string
+// contains `=` characters that are `%`-encoded, you should let
+// [func@GLib.Uri.parse_params] do the decoding once of the query.
+//
+// `GUri` is immutable once constructed, and can safely be accessed from
+// multiple threads. Its reference counting is atomic.
+//
+// Note that the scope of `GUri` is to help manipulate URIs in various applications,
 // following [RFC 3986](https://tools.ietf.org/html/rfc3986). In particular,
-// it doesn't intend to cover web browser needs, and doesn't implement the
+// it doesn't intend to cover web browser needs, and doesn’t implement the
 // [WHATWG URL](https://url.spec.whatwg.org/) standard. No APIs are provided to
 // help prevent
 // [homograph attacks](https://en.wikipedia.org/wiki/IDN_homograph_attack), so
-// #GUri is not suitable for formatting URIs for display to the user for making
+// `GUri` is not suitable for formatting URIs for display to the user for making
 // security-sensitive decisions.
 //
-// ## Relative and absolute URIs # {#relative-absolute-uris}
+// ## Relative and absolute URIs
 //
 // As defined in [RFC 3986](https://tools.ietf.org/html/rfc3986#section-4), the
 // hierarchical nature of URIs means that they can either be ‘relative
 // references’ (sometimes referred to as ‘relative URIs’) or ‘URIs’ (for
 // clarity, ‘URIs’ are referred to in this documentation as
 // ‘absolute URIs’ — although
-// [in constrast to RFC 3986](https://tools.ietf.org/html/rfc3986#section-4.3),
+// [in contrast to RFC 3986](https://tools.ietf.org/html/rfc3986#section-4.3),
 // fragment identifiers are always allowed).
 //
 // Relative references have one or more components of the URI missing. In
@@ -42,79 +95,79 @@ import (
 //
 // Absolute URIs have a scheme specified. Any other components of the URI which
 // are missing are specified as explicitly unset in the URI, rather than being
-// resolved relative to a base URI using g_uri_parse_relative().
+// resolved relative to a base URI using [method@GLib.Uri.parse_relative].
 //
 // For example, a valid absolute URI is `file:///home/bob` or
 // `https://search.com?query=string`.
 //
-// A #GUri instance is always an absolute URI. A string may be an absolute URI
+// A `GUri` instance is always an absolute URI. A string may be an absolute URI
 // or a relative reference; see the documentation for individual functions as to
 // what forms they accept.
 //
 // ## Parsing URIs
 //
-// The most minimalist APIs for parsing URIs are g_uri_split() and
-// g_uri_split_with_user(). These split a URI into its component
+// The most minimalist APIs for parsing URIs are [func@GLib.Uri.split] and
+// [func@GLib.Uri.split_with_user]. These split a URI into its component
 // parts, and return the parts; the difference between the two is that
-// g_uri_split() treats the ‘userinfo’ component of the URI as a
-// single element, while g_uri_split_with_user() can (depending on the
-// #GUriFlags you pass) treat it as containing a username, password,
-// and authentication parameters. Alternatively, g_uri_split_network()
+// [func@GLib.Uri.split] treats the ‘userinfo’ component of the URI as a
+// single element, while [func@GLib.Uri.split_with_user] can (depending on the
+// [flags@GLib.UriFlags] you pass) treat it as containing a username, password,
+// and authentication parameters. Alternatively, [func@GLib.Uri.split_network]
 // can be used when you are only interested in the components that are
 // needed to initiate a network connection to the service (scheme,
 // host, and port).
 //
-// g_uri_parse() is similar to g_uri_split(), but instead of returning
-// individual strings, it returns a #GUri structure (and it requires
+// [func@GLib.Uri.parse] is similar to [func@GLib.Uri.split], but instead of
+// returning individual strings, it returns a `GUri` structure (and it requires
 // that the URI be an absolute URI).
 //
-// g_uri_resolve_relative() and g_uri_parse_relative() allow you to
-// resolve a relative URI relative to a base URI.
-// g_uri_resolve_relative() takes two strings and returns a string,
-// and g_uri_parse_relative() takes a #GUri and a string and returns a
-// #GUri.
+// [func@GLib.Uri.resolve_relative] and [method@GLib.Uri.parse_relative] allow
+// you to resolve a relative URI relative to a base URI.
+// [func@GLib.Uri.resolve_relative] takes two strings and returns a string,
+// and [method@GLib.Uri.parse_relative] takes a `GUri` and a string and returns a
+// `GUri`.
 //
-// All of the parsing functions take a #GUriFlags argument describing
+// All of the parsing functions take a [flags@GLib.UriFlags] argument describing
 // exactly how to parse the URI; see the documentation for that type
 // for more details on the specific flags that you can pass. If you
 // need to choose different flags based on the type of URI, you can
-// use g_uri_peek_scheme() on the URI string to check the scheme
+// use [func@GLib.Uri.peek_scheme] on the URI string to check the scheme
 // first, and use that to decide what flags to parse it with.
 //
-// For example, you might want to use %G_URI_PARAMS_WWW_FORM when parsing the
-// params for a web URI, so compare the result of g_uri_peek_scheme() against
-// `http` and `https`.
+// For example, you might want to use `G_URI_PARAMS_WWW_FORM` when parsing the
+// params for a web URI, so compare the result of [func@GLib.Uri.peek_scheme]
+// against `http` and `https`.
 //
 // ## Building URIs
 //
-// g_uri_join() and g_uri_join_with_user() can be used to construct
+// [func@GLib.Uri.join] and [func@GLib.Uri.join_with_user] can be used to construct
 // valid URI strings from a set of component strings. They are the
-// inverse of g_uri_split() and g_uri_split_with_user().
+// inverse of [func@GLib.Uri.split] and [func@GLib.Uri.split_with_user].
 //
-// Similarly, g_uri_build() and g_uri_build_with_user() can be used to
-// construct a #GUri from a set of component strings.
+// Similarly, [func@GLib.Uri.build] and [func@GLib.Uri.build_with_user] can be
+// used to construct a `GUri` from a set of component strings.
 //
 // As with the parsing functions, the building functions take a
-// #GUriFlags argument. In particular, it is important to keep in mind
+// [flags@GLib.UriFlags] argument. In particular, it is important to keep in mind
 // whether the URI components you are using are already `%`-encoded. If so,
-// you must pass the %G_URI_FLAGS_ENCODED flag.
+// you must pass the `G_URI_FLAGS_ENCODED` flag.
 //
 // ## `file://` URIs
 //
 // Note that Windows and Unix both define special rules for parsing
 // `file://` URIs (involving non-UTF-8 character sets on Unix, and the
-// interpretation of path separators on Windows). #GUri does not
-// implement these rules. Use g_filename_from_uri() and
-// g_filename_to_uri() if you want to properly convert between
+// interpretation of path separators on Windows). `GUri` does not
+// implement these rules. Use [func@GLib.filename_from_uri] and
+// [func@GLib.filename_to_uri] if you want to properly convert between
 // `file://` URIs and local filenames.
 //
 // ## URI Equality
 //
 // Note that there is no `g_uri_equal ()` function, because comparing
-// URIs usefully requires scheme-specific knowledge that #GUri does
-// not have. #GUri can help with normalization if you use the various
-// encoded #GUriFlags as well as %G_URI_FLAGS_SCHEME_NORMALIZE however
-// it is not comprehensive.
+// URIs usefully requires scheme-specific knowledge that `GUri` does
+// not have. `GUri` can help with normalization if you use the various
+// encoded [flags@GLib.UriFlags] as well as `G_URI_FLAGS_SCHEME_NORMALIZE`
+// however it is not comprehensive.
 // For example, `data:,foo` and `data:;base64,Zm9v` resolve to the same
 // thing according to the `data:` URI specification which GLib does not
 // handle.
@@ -261,7 +314,7 @@ func (x *Uri) GetUserinfo() string {
 var xUriParseRelative func(uintptr, string, UriFlags, **Error) *Uri
 
 // Parses @uri_ref according to @flags and, if it is a
-// [relative URI][relative-absolute-uris], resolves it relative to @base_uri.
+// [relative URI](#relative-and-absolute-uris), resolves it relative to @base_uri.
 // If the result is not a valid absolute URI, it will be discarded, and an error
 // returned.
 func (x *Uri) ParseRelative(UriRefVar string, FlagsVar UriFlags) (*Uri, error) {
@@ -611,7 +664,7 @@ func UriEscapeString(UnescapedVar string, ReservedCharsAllowedVar string, AllowU
 var xUriIsValid func(string, UriFlags, **Error) bool
 
 // Parses @uri_string according to @flags, to determine whether it is a valid
-// [absolute URI][relative-absolute-uris], i.e. it does not need to be resolved
+// [absolute URI](#relative-and-absolute-uris), i.e. it does not need to be resolved
 // relative to another URI using g_uri_parse_relative().
 //
 // If it’s not a valid URI, an error is returned explaining how it’s invalid.
@@ -637,9 +690,7 @@ var xUriJoin func(UriFlags, string, string, string, int, string, string, string)
 //
 // When @host is present, @path must either be empty or begin with a slash (`/`)
 // character. When @host is not present, @path cannot begin with two slash
-//
-//	characters (`//`). See
-//
+// characters (`//`). See
 // [RFC 3986, section 3](https://tools.ietf.org/html/rfc3986#section-3).
 //
 // See also g_uri_join_with_user(), which allows specifying the
@@ -673,7 +724,7 @@ func UriJoinWithUser(FlagsVar UriFlags, SchemeVar string, UserVar string, Passwo
 var xUriParse func(string, UriFlags, **Error) *Uri
 
 // Parses @uri_string according to @flags. If the result is not a
-// valid [absolute URI][relative-absolute-uris], it will be discarded, and an
+// valid [absolute URI](#relative-and-absolute-uris), it will be discarded, and an
 // error returned.
 func UriParse(UriStringVar string, FlagsVar UriFlags) (*Uri, error) {
 	var cerr *Error
@@ -759,7 +810,7 @@ func UriPeekScheme(UriVar string) string {
 var xUriResolveRelative func(string, string, UriFlags, **Error) string
 
 // Parses @uri_ref according to @flags and, if it is a
-// [relative URI][relative-absolute-uris], resolves it relative to
+// [relative URI](#relative-and-absolute-uris), resolves it relative to
 // @base_uri_string. If the result is not a valid absolute URI, it will be
 // discarded, and an error returned.
 //
@@ -779,7 +830,7 @@ func UriResolveRelative(BaseUriStringVar string, UriRefVar string, FlagsVar UriF
 var xUriSplit func(string, UriFlags, string, string, string, int, string, string, string, **Error) bool
 
 // Parses @uri_ref (which can be an
-// [absolute or relative URI][relative-absolute-uris]) according to @flags, and
+// [absolute or relative URI](#relative-and-absolute-uris)) according to @flags, and
 // returns the pieces. Any component that doesn't appear in @uri_ref will be
 // returned as %NULL (but note that all URIs always have a path component,
 // though it may be the empty string).
@@ -807,7 +858,7 @@ func UriSplit(UriRefVar string, FlagsVar UriFlags, SchemeVar string, UserinfoVar
 
 var xUriSplitNetwork func(string, UriFlags, string, string, int, **Error) bool
 
-// Parses @uri_string (which must be an [absolute URI][relative-absolute-uris])
+// Parses @uri_string (which must be an [absolute URI](#relative-and-absolute-uris))
 // according to @flags, and returns the pieces relevant to connecting to a host.
 // See the documentation for g_uri_split() for more details; this is
 // mostly a wrapper around that function with simpler arguments.
@@ -827,7 +878,7 @@ func UriSplitNetwork(UriStringVar string, FlagsVar UriFlags, SchemeVar string, H
 var xUriSplitWithUser func(string, UriFlags, string, string, string, string, string, int, string, string, string, **Error) bool
 
 // Parses @uri_ref (which can be an
-// [absolute or relative URI][relative-absolute-uris]) according to @flags, and
+// [absolute or relative URI](#relative-and-absolute-uris)) according to @flags, and
 // returns the pieces. Any component that doesn't appear in @uri_ref will be
 // returned as %NULL (but note that all URIs always have a path component,
 // though it may be the empty string).
@@ -906,7 +957,7 @@ func UriUnescapeString(EscapedStringVar string, IllegalCharactersVar string) str
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libglib-2.0.so.0")
+	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
 	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)

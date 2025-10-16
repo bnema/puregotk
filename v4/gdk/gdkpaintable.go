@@ -42,6 +42,11 @@ func (x *PaintableInterface) GoPointer() uintptr {
 }
 
 // OverrideSnapshot sets the callback function.
+// Snapshot the paintable. The given @width and @height are
+//
+//	guaranteed to be larger than 0.0. The resulting snapshot must modify
+//	only the area in the rectangle from (0,0) to (width, height).
+//	This is the only function that must be implemented for this interface.
 func (x *PaintableInterface) OverrideSnapshot(cb func(Paintable, *Snapshot, float64, float64)) {
 	if cb == nil {
 		x.xSnapshot = 0
@@ -53,6 +58,11 @@ func (x *PaintableInterface) OverrideSnapshot(cb func(Paintable, *Snapshot, floa
 }
 
 // GetSnapshot gets the callback function.
+// Snapshot the paintable. The given @width and @height are
+//
+//	guaranteed to be larger than 0.0. The resulting snapshot must modify
+//	only the area in the rectangle from (0,0) to (width, height).
+//	This is the only function that must be implemented for this interface.
 func (x *PaintableInterface) GetSnapshot() func(Paintable, *Snapshot, float64, float64) {
 	if x.xSnapshot == 0 {
 		return nil
@@ -65,6 +75,10 @@ func (x *PaintableInterface) GetSnapshot() func(Paintable, *Snapshot, float64, f
 }
 
 // OverrideGetCurrentImage sets the callback function.
+// return a `GdkPaintable` that does not change over
+//
+//	time. This means the `GDK_PAINTABLE_STATIC_SIZE` and
+//	`GDK_PAINTABLE_STATIC_CONTENTS` flag are set.
 func (x *PaintableInterface) OverrideGetCurrentImage(cb func(Paintable) *PaintableBase) {
 	if cb == nil {
 		x.xGetCurrentImage = 0
@@ -80,6 +94,10 @@ func (x *PaintableInterface) OverrideGetCurrentImage(cb func(Paintable) *Paintab
 }
 
 // GetGetCurrentImage gets the callback function.
+// return a `GdkPaintable` that does not change over
+//
+//	time. This means the `GDK_PAINTABLE_STATIC_SIZE` and
+//	`GDK_PAINTABLE_STATIC_CONTENTS` flag are set.
 func (x *PaintableInterface) GetGetCurrentImage() func(Paintable) *PaintableBase {
 	if x.xGetCurrentImage == 0 {
 		return nil
@@ -98,6 +116,9 @@ func (x *PaintableInterface) GetGetCurrentImage() func(Paintable) *PaintableBase
 }
 
 // OverrideGetFlags sets the callback function.
+// Get the flags for this instance. See [flags@Gdk.PaintableFlags]
+//
+//	for details.
 func (x *PaintableInterface) OverrideGetFlags(cb func(Paintable) PaintableFlags) {
 	if cb == nil {
 		x.xGetFlags = 0
@@ -109,6 +130,9 @@ func (x *PaintableInterface) OverrideGetFlags(cb func(Paintable) PaintableFlags)
 }
 
 // GetGetFlags gets the callback function.
+// Get the flags for this instance. See [flags@Gdk.PaintableFlags]
+//
+//	for details.
 func (x *PaintableInterface) GetGetFlags() func(Paintable) PaintableFlags {
 	if x.xGetFlags == 0 {
 		return nil
@@ -121,6 +145,10 @@ func (x *PaintableInterface) GetGetFlags() func(Paintable) PaintableFlags {
 }
 
 // OverrideGetIntrinsicWidth sets the callback function.
+// The preferred width for this object to be
+//
+//	snapshot at or 0 if none. This is purely a hint. The object must still
+//	be able to render at any size.
 func (x *PaintableInterface) OverrideGetIntrinsicWidth(cb func(Paintable) int) {
 	if cb == nil {
 		x.xGetIntrinsicWidth = 0
@@ -132,6 +160,10 @@ func (x *PaintableInterface) OverrideGetIntrinsicWidth(cb func(Paintable) int) {
 }
 
 // GetGetIntrinsicWidth gets the callback function.
+// The preferred width for this object to be
+//
+//	snapshot at or 0 if none. This is purely a hint. The object must still
+//	be able to render at any size.
 func (x *PaintableInterface) GetGetIntrinsicWidth() func(Paintable) int {
 	if x.xGetIntrinsicWidth == 0 {
 		return nil
@@ -144,6 +176,10 @@ func (x *PaintableInterface) GetGetIntrinsicWidth() func(Paintable) int {
 }
 
 // OverrideGetIntrinsicHeight sets the callback function.
+// The preferred height for this object to be
+//
+//	snapshot at or 0 if none. This is purely a hint. The object must still
+//	be able to render at any size.
 func (x *PaintableInterface) OverrideGetIntrinsicHeight(cb func(Paintable) int) {
 	if cb == nil {
 		x.xGetIntrinsicHeight = 0
@@ -155,6 +191,10 @@ func (x *PaintableInterface) OverrideGetIntrinsicHeight(cb func(Paintable) int) 
 }
 
 // GetGetIntrinsicHeight gets the callback function.
+// The preferred height for this object to be
+//
+//	snapshot at or 0 if none. This is purely a hint. The object must still
+//	be able to render at any size.
 func (x *PaintableInterface) GetGetIntrinsicHeight() func(Paintable) int {
 	if x.xGetIntrinsicHeight == 0 {
 		return nil
@@ -167,6 +207,11 @@ func (x *PaintableInterface) GetGetIntrinsicHeight() func(Paintable) int {
 }
 
 // OverrideGetIntrinsicAspectRatio sets the callback function.
+// The preferred aspect ratio for this object
+//
+//	or 0 if none. If both [vfunc@Gdk.Paintable.get_intrinsic_width]
+//	and [vfunc@Gdk.Paintable.get_intrinsic_height] return non-zero
+//	values, this function should return the aspect ratio computed from those.
 func (x *PaintableInterface) OverrideGetIntrinsicAspectRatio(cb func(Paintable) float64) {
 	if cb == nil {
 		x.xGetIntrinsicAspectRatio = 0
@@ -178,6 +223,11 @@ func (x *PaintableInterface) OverrideGetIntrinsicAspectRatio(cb func(Paintable) 
 }
 
 // GetGetIntrinsicAspectRatio gets the callback function.
+// The preferred aspect ratio for this object
+//
+//	or 0 if none. If both [vfunc@Gdk.Paintable.get_intrinsic_width]
+//	and [vfunc@Gdk.Paintable.get_intrinsic_height] return non-zero
+//	values, this function should return the aspect ratio computed from those.
 func (x *PaintableInterface) GetGetIntrinsicAspectRatio() func(Paintable) float64 {
 	if x.xGetIntrinsicAspectRatio == 0 {
 		return nil
@@ -189,8 +239,7 @@ func (x *PaintableInterface) GetGetIntrinsicAspectRatio() func(Paintable) float6
 	}
 }
 
-// `GdkPaintable` is a simple interface used by GTK to represent content that
-// can be painted.
+// An interface for content that can be painted.
 //
 // The content of a `GdkPaintable` can be painted anywhere at any size
 // without requiring any sort of layout. The interface is inspired by
@@ -206,7 +255,7 @@ func (x *PaintableInterface) GetGetIntrinsicAspectRatio() func(Paintable) float6
 // to do, it is suggested that you scale your paintable ignoring any potential
 // aspect ratio.
 //
-// The contents that a `GdkPaintable` produces may depend on the [class@GdkSnapshot]
+// The contents that a `GdkPaintable` produces may depend on the [class@Gdk.Snapshot]
 // passed to it. For example, paintables may decide to use more detailed images
 // on higher resolution screens or when OpenGL is available. A `GdkPaintable`
 // will however always produce the same output for the same snapshot.
@@ -214,7 +263,7 @@ func (x *PaintableInterface) GetGetIntrinsicAspectRatio() func(Paintable) float6
 // A `GdkPaintable` may change its contents, meaning that it will now produce
 // a different output with the same snapshot. Once that happens, it will call
 // [method@Gdk.Paintable.invalidate_contents] which will emit the
-// [signal@GdkPaintable::invalidate-contents] signal. If a paintable is known
+// [signal@Gdk.Paintable::invalidate-contents] signal. If a paintable is known
 // to never change its contents, it will set the %GDK_PAINTABLE_STATIC_CONTENTS
 // flag. If a consumer cannot deal with changing contents, it may call
 // [method@Gdk.Paintable.get_current_image] which will return a static
@@ -225,7 +274,7 @@ func (x *PaintableInterface) GetGetIntrinsicAspectRatio() func(Paintable) float6
 // can use this information to layout thepaintable appropriately. Just like the
 // contents, the size of a paintable can change. A paintable will indicate this
 // by calling [method@Gdk.Paintable.invalidate_size] which will emit the
-// [signal@GdkPaintable::invalidate-size] signal. And just like for contents,
+// [signal@Gdk.Paintable::invalidate-size] signal. And just like for contents,
 // if a paintable is known to never change its size, it will set the
 // %GDK_PAINTABLE_STATIC_SIZE flag.
 //
@@ -437,11 +486,11 @@ func PaintableFlagsGLibType() types.GType {
 const (
 
 	// The size is immutable.
-	//   The [signal@GdkPaintable::invalidate-size] signal will never be
+	//   The [signal@Gdk.Paintable::invalidate-size] signal will never be
 	//   emitted.
 	PaintableStaticSizeValue PaintableFlags = 1
 	// The content is immutable.
-	//   The [signal@GdkPaintable::invalidate-contents] signal will never be
+	//   The [signal@Gdk.Paintable::invalidate-contents] signal will never be
 	//   emitted.
 	PaintableStaticContentsValue PaintableFlags = 2
 )
@@ -453,7 +502,8 @@ var xPaintableNewEmpty func(int, int) uintptr
 // This is often useful for implementing the
 // [vfunc@Gdk.Paintable.get_current_image] virtual function
 // when the paintable is in an incomplete state (like a
-// [class@Gtk.MediaStream] before receiving the first frame).
+// [GtkMediaStream](../gtk4/class.MediaStream.html) before receiving
+// the first frame).
 func PaintableNewEmpty(IntrinsicWidthVar int, IntrinsicHeightVar int) *PaintableBase {
 	var cls *PaintableBase
 

@@ -21,20 +21,21 @@ func (x *DebugControllerInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GDebugController is an interface to expose control of debugging features and
+// `GDebugController` is an interface to expose control of debugging features and
 // debug output.
 //
-// It is implemented on Linux using #GDebugControllerDBus, which exposes a D-Bus
-// interface to allow authenticated peers to control debug features in this
-// process.
+// It is implemented on Linux using [class@Gio.DebugControllerDBus], which
+// exposes a D-Bus interface to allow authenticated peers to control debug
+// features in this process.
 //
 // Whether debug output is enabled is exposed as
-// #GDebugController:debug-enabled. This controls g_log_set_debug_enabled() by
-// default. Application code may connect to the #GObject::notify signal for it
+// [property@Gio.DebugController:debug-enabled]. This controls
+// [func@GLib.log_set_debug_enabled] by default. Application code may
+// connect to the [signal@GObject.Object::notify] signal for it
 // to control other parts of its debug infrastructure as necessary.
 //
 // If your application or service is using the default GLib log writer function,
-// creating one of the built-in implementations of #GDebugController should be
+// creating one of the built-in implementations of `GDebugController` should be
 // all that’s needed to dynamically enable or disable debug output.
 type DebugController interface {
 	GoPointer() uintptr
@@ -83,7 +84,7 @@ var XGDebugControllerSetDebugEnabled func(uintptr, bool)
 
 const (
 	// Extension point for debug control functionality.
-	// See [Extending GIO][extending-gio].
+	// See [Extending GIO](overview.html#extending-gio).
 	DEBUG_CONTROLLER_EXTENSION_POINT_NAME string = "gio-debug-controller"
 )
 

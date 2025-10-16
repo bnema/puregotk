@@ -276,7 +276,7 @@ func (x *FilterClass) GetGtkReserved8() func() {
 // using the filter to optimize refiltering items.
 //
 // If you are writing an implementation and are not sure which
-// value to pass, %GTK_FILTER_CHANGE_DIFFERENT is always a correct
+// value to pass, `GTK_FILTER_CHANGE_DIFFERENT` is always a correct
 // choice.
 type FilterChange int
 
@@ -289,22 +289,22 @@ func FilterChangeGLibType() types.GType {
 const (
 
 	// The filter change cannot be
-	//   described with any of the other enumeration values.
+	//   described with any of the other enumeration values
 	FilterChangeDifferentValue FilterChange = 0
 	// The filter is less strict than
-	//   it was before: All items that it used to return %TRUE for
-	//   still return %TRUE, others now may, too.
+	//   it was before: All items that it used to return true
+	//   still return true, others now may, too.
 	FilterChangeLessStrictValue FilterChange = 1
 	// The filter is more strict than
-	//   it was before: All items that it used to return %FALSE for
-	//   still return %FALSE, others now may, too.
+	//   it was before: All items that it used to return false
+	//   still return false, others now may, too.
 	FilterChangeMoreStrictValue FilterChange = 2
 )
 
 // Describes the known strictness of a filter.
 //
 // Note that for filters where the strictness is not known,
-// %GTK_FILTER_MATCH_SOME is always an acceptable value,
+// `GTK_FILTER_MATCH_SOME` is always an acceptable value,
 // even if a filter does match all or no items.
 type FilterMatch int
 
@@ -317,22 +317,21 @@ func FilterMatchGLibType() types.GType {
 const (
 
 	// The filter matches some items,
-	//   gtk_filter_match() may return %TRUE or %FALSE
+	//   [method@Gtk.Filter.match] may return true or false
 	FilterMatchSomeValue FilterMatch = 0
 	// The filter does not match any item,
-	//   gtk_filter_match() will always return %FALSE.
+	//   [method@Gtk.Filter.match] will always return false
 	FilterMatchNoneValue FilterMatch = 1
 	// The filter matches all items,
-	//   gtk_filter_match() will alays return %TRUE.
+	//   [method@Gtk.Filter.match] will alays return true
 	FilterMatchAllValue FilterMatch = 2
 )
 
-// A `GtkFilter` object describes the filtering to be performed by a
-// [class@Gtk.FilterListModel].
+// Describes the filtering to be performed by a [class@Gtk.FilterListModel].
 //
 // The model will use the filter to determine if it should include items
 // or not by calling [method@Gtk.Filter.match] for each item and only
-// keeping the ones that the function returns %TRUE for.
+// keeping the ones that the function returns true for.
 //
 // Filters may change what items they match through their lifetime. In that
 // case, they will emit the [signal@Gtk.Filter::changed] signal to notify
@@ -373,7 +372,7 @@ var xFilterChanged func(uintptr, FilterChange)
 // be changed, but only some. Refer to the [enum@Gtk.FilterChange]
 // documentation for details.
 //
-// This function is intended for implementors of `GtkFilter`
+// This function is intended for implementers of `GtkFilter`
 // subclasses and should not be called from other functions.
 func (x *Filter) Changed(ChangeVar FilterChange) {
 
@@ -383,14 +382,14 @@ func (x *Filter) Changed(ChangeVar FilterChange) {
 
 var xFilterGetStrictness func(uintptr) FilterMatch
 
-// Gets the known strictness of @filters.
+// Gets the known strictness of a filter.
 //
-// If the strictness is not known, %GTK_FILTER_MATCH_SOME is returned.
+// If the strictness is not known, [enum@Gtk.FilterMatch.some] is returned.
 //
 // This value may change after emission of the [signal@Gtk.Filter::changed]
 // signal.
 //
-// This function is meant purely for optimization purposes, filters can
+// This function is meant purely for optimization purposes. Filters can
 // choose to omit implementing it, but `GtkFilterListModel` uses it.
 func (x *Filter) GetStrictness() FilterMatch {
 

@@ -22,8 +22,7 @@ func (x *MultiSorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkMultiSorter` combines multiple sorters by trying them
-// in turn.
+// Combines multiple sorters by trying them in turn.
 //
 // If the first sorter compares two items as equal,
 // the second is tried next, and so on.
@@ -193,7 +192,7 @@ func (x *MultiSorter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar u
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *MultiSorter) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

@@ -421,31 +421,162 @@ func (x *NavigationPage) ConnectShown(cb *func(NavigationPage)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "shown", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *NavigationPage) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
+
+	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *NavigationPage) GetAccessibleParent() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *NavigationPage) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *NavigationPage) GetAtContext() *gtk.ATContext {
+	var cls *gtk.ATContext
+
+	cret := gtk.XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *NavigationPage) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *NavigationPage) GetFirstAccessibleChild() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *NavigationPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *NavigationPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
+
+	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *NavigationPage) ResetProperty(PropertyVar gtk.AccessibleProperty) {
 
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *NavigationPage) ResetRelation(RelationVar gtk.AccessibleRelation) {
 
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *NavigationPage) ResetState(StateVar gtk.AccessibleState) {
 
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *NavigationPage) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *NavigationPage) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *NavigationPage) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
+
+	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -491,7 +622,7 @@ func (x *NavigationPage) UpdatePropertyValue(NPropertiesVar int, PropertiesVar [
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -521,13 +652,17 @@ func (x *NavigationPage) UpdateRelationValue(NRelationsVar int, RelationsVar []g
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -557,7 +692,7 @@ func (x *NavigationPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.Access
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *NavigationPage) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
@@ -805,6 +940,15 @@ func (x *NavigationView) GetAnimateTransitions() bool {
 	return cret
 }
 
+var xNavigationViewGetHhomogeneous func(uintptr) bool
+
+// Gets whether @self is horizontally homogeneous.
+func (x *NavigationView) GetHhomogeneous() bool {
+
+	cret := xNavigationViewGetHhomogeneous(x.GoPointer())
+	return cret
+}
+
 var xNavigationViewGetNavigationStack func(uintptr) uintptr
 
 // Returns a [iface@Gio.ListModel] that contains the pages in navigation stack.
@@ -856,6 +1000,15 @@ func (x *NavigationView) GetPreviousPage(PageVar *NavigationPage) *NavigationPag
 	return cls
 }
 
+var xNavigationViewGetVhomogeneous func(uintptr) bool
+
+// Gets whether @self is vertically homogeneous.
+func (x *NavigationView) GetVhomogeneous() bool {
+
+	cret := xNavigationViewGetVhomogeneous(x.GoPointer())
+	return cret
+}
+
 var xNavigationViewGetVisiblePage func(uintptr) uintptr
 
 // Gets the currently visible page in @self.
@@ -871,6 +1024,15 @@ func (x *NavigationView) GetVisiblePage() *NavigationPage {
 	cls = &NavigationPage{}
 	cls.Ptr = cret
 	return cls
+}
+
+var xNavigationViewGetVisiblePageTag func(uintptr) string
+
+// Gets the tag of the currently visible page in @self.
+func (x *NavigationView) GetVisiblePageTag() string {
+
+	cret := xNavigationViewGetVisiblePageTag(x.GoPointer())
+	return cret
 }
 
 var xNavigationViewPop func(uintptr) bool
@@ -1032,6 +1194,20 @@ func (x *NavigationView) SetAnimateTransitions(AnimateTransitionsVar bool) {
 
 }
 
+var xNavigationViewSetHhomogeneous func(uintptr, bool)
+
+// Sets @self to be horizontally homogeneous or not.
+//
+// If the view is horizontally homogeneous, it allocates the same width for
+// all pages.
+//
+// If it's not, the view may change width when a different page becomes visible.
+func (x *NavigationView) SetHhomogeneous(HhomogeneousVar bool) {
+
+	xNavigationViewSetHhomogeneous(x.GoPointer(), HhomogeneousVar)
+
+}
+
 var xNavigationViewSetPopOnEscape func(uintptr, bool)
 
 // Sets whether pressing Escape pops the current page on @self.
@@ -1041,6 +1217,21 @@ var xNavigationViewSetPopOnEscape func(uintptr, bool)
 func (x *NavigationView) SetPopOnEscape(PopOnEscapeVar bool) {
 
 	xNavigationViewSetPopOnEscape(x.GoPointer(), PopOnEscapeVar)
+
+}
+
+var xNavigationViewSetVhomogeneous func(uintptr, bool)
+
+// Sets @self to be vertically homogeneous or not.
+//
+// If the view is vertically homogeneous, it allocates the same height for
+// all pages.
+//
+// If it's not, the view may change height when a different page becomes
+// visible.
+func (x *NavigationView) SetVhomogeneous(VhomogeneousVar bool) {
+
+	xNavigationViewSetVhomogeneous(x.GoPointer(), VhomogeneousVar)
 
 }
 
@@ -1204,31 +1395,162 @@ func (x *NavigationView) GetSwipeArea(NavigationDirectionVar NavigationDirection
 
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *NavigationView) Announce(MessageVar string, PriorityVar gtk.AccessibleAnnouncementPriority) {
+
+	gtk.XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *NavigationView) GetAccessibleParent() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *NavigationView) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *NavigationView) GetAtContext() *gtk.ATContext {
+	var cls *gtk.ATContext
+
+	cret := gtk.XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *NavigationView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *NavigationView) GetFirstAccessibleChild() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *NavigationView) GetNextAccessibleSibling() *gtk.AccessibleBase {
+	var cls *gtk.AccessibleBase
+
+	cret := gtk.XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &gtk.AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *NavigationView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
+
+	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *NavigationView) ResetProperty(PropertyVar gtk.AccessibleProperty) {
 
 	gtk.XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *NavigationView) ResetRelation(RelationVar gtk.AccessibleRelation) {
 
 	gtk.XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *NavigationView) ResetState(StateVar gtk.AccessibleState) {
 
 	gtk.XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *NavigationView) SetAccessibleParent(ParentVar gtk.Accessible, NextSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *NavigationView) UpdateNextAccessibleSibling(NewSiblingVar gtk.Accessible) {
+
+	gtk.XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *NavigationView) UpdatePlatformState(StateVar gtk.AccessiblePlatformState) {
+
+	gtk.XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -1274,7 +1596,7 @@ func (x *NavigationView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar [
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -1304,13 +1626,17 @@ func (x *NavigationView) UpdateRelationValue(NRelationsVar int, RelationsVar []g
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -1340,7 +1666,7 @@ func (x *NavigationView) UpdateStateValue(NStatesVar int, StatesVar []gtk.Access
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *NavigationView) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
@@ -1376,10 +1702,13 @@ func init() {
 	core.PuregoSafeRegister(&xNavigationViewAdd, lib, "adw_navigation_view_add")
 	core.PuregoSafeRegister(&xNavigationViewFindPage, lib, "adw_navigation_view_find_page")
 	core.PuregoSafeRegister(&xNavigationViewGetAnimateTransitions, lib, "adw_navigation_view_get_animate_transitions")
+	core.PuregoSafeRegister(&xNavigationViewGetHhomogeneous, lib, "adw_navigation_view_get_hhomogeneous")
 	core.PuregoSafeRegister(&xNavigationViewGetNavigationStack, lib, "adw_navigation_view_get_navigation_stack")
 	core.PuregoSafeRegister(&xNavigationViewGetPopOnEscape, lib, "adw_navigation_view_get_pop_on_escape")
 	core.PuregoSafeRegister(&xNavigationViewGetPreviousPage, lib, "adw_navigation_view_get_previous_page")
+	core.PuregoSafeRegister(&xNavigationViewGetVhomogeneous, lib, "adw_navigation_view_get_vhomogeneous")
 	core.PuregoSafeRegister(&xNavigationViewGetVisiblePage, lib, "adw_navigation_view_get_visible_page")
+	core.PuregoSafeRegister(&xNavigationViewGetVisiblePageTag, lib, "adw_navigation_view_get_visible_page_tag")
 	core.PuregoSafeRegister(&xNavigationViewPop, lib, "adw_navigation_view_pop")
 	core.PuregoSafeRegister(&xNavigationViewPopToPage, lib, "adw_navigation_view_pop_to_page")
 	core.PuregoSafeRegister(&xNavigationViewPopToTag, lib, "adw_navigation_view_pop_to_tag")
@@ -1389,6 +1718,8 @@ func init() {
 	core.PuregoSafeRegister(&xNavigationViewReplace, lib, "adw_navigation_view_replace")
 	core.PuregoSafeRegister(&xNavigationViewReplaceWithTags, lib, "adw_navigation_view_replace_with_tags")
 	core.PuregoSafeRegister(&xNavigationViewSetAnimateTransitions, lib, "adw_navigation_view_set_animate_transitions")
+	core.PuregoSafeRegister(&xNavigationViewSetHhomogeneous, lib, "adw_navigation_view_set_hhomogeneous")
 	core.PuregoSafeRegister(&xNavigationViewSetPopOnEscape, lib, "adw_navigation_view_set_pop_on_escape")
+	core.PuregoSafeRegister(&xNavigationViewSetVhomogeneous, lib, "adw_navigation_view_set_vhomogeneous")
 
 }

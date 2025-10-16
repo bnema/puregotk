@@ -25,7 +25,9 @@ type ApplicationCommandLineClass struct {
 
 	xGetStdin uintptr
 
-	Padding [11]uintptr
+	xDone uintptr
+
+	Padding [10]uintptr
 }
 
 func (x *ApplicationCommandLineClass) GoPointer() uintptr {
@@ -111,6 +113,29 @@ func (x *ApplicationCommandLineClass) GetGetStdin() func(*ApplicationCommandLine
 	}
 }
 
+// OverrideDone sets the callback function.
+func (x *ApplicationCommandLineClass) OverrideDone(cb func(*ApplicationCommandLine)) {
+	if cb == nil {
+		x.xDone = 0
+	} else {
+		x.xDone = purego.NewCallback(func(CmdlineVarp uintptr) {
+			cb(ApplicationCommandLineNewFromInternalPtr(CmdlineVarp))
+		})
+	}
+}
+
+// GetDone gets the callback function.
+func (x *ApplicationCommandLineClass) GetDone() func(*ApplicationCommandLine) {
+	if x.xDone == 0 {
+		return nil
+	}
+	var rawCallback func(CmdlineVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDone)
+	return func(CmdlineVar *ApplicationCommandLine) {
+		rawCallback(CmdlineVar.GoPointer())
+	}
+}
+
 type ApplicationCommandLinePrivate struct {
 	_ structs.HostLayout
 }
@@ -119,30 +144,33 @@ func (x *ApplicationCommandLinePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GApplicationCommandLine represents a command-line invocation of
-// an application.  It is created by #GApplication and emitted
-// in the #GApplication::command-line signal and virtual function.
+// `GApplicationCommandLine` represents a command-line invocation of
+// an application.
+//
+// It is created by [class@Gio.Application] and emitted
+// in the [signal@Gio.Application::command-line] signal and virtual function.
 //
 // The class contains the list of arguments that the program was invoked
-// with.  It is also possible to query if the commandline invocation was
+// with. It is also possible to query if the commandline invocation was
 // local (ie: the current process is running in direct response to the
 // invocation) or remote (ie: some other process forwarded the
 // commandline to this process).
 //
-// The GApplicationCommandLine object can provide the @argc and @argv
-// parameters for use with the #GOptionContext command-line parsing API,
-// with the g_application_command_line_get_arguments() function. See
-// [gapplication-example-cmdline3.c][gapplication-example-cmdline3]
+// The `GApplicationCommandLine` object can provide the @argc and @argv
+// parameters for use with the [struct@GLib.OptionContext] command-line parsing API,
+// with the [method@Gio.ApplicationCommandLine.get_arguments] function. See
+// [gapplication-example-cmdline3.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-cmdline3.c)
 // for an example.
 //
 // The exit status of the originally-invoked process may be set and
-// messages can be printed to stdout or stderr of that process.  The
-// lifecycle of the originally-invoked process is tied to the lifecycle
-// of this object (ie: the process exits when the last reference is
-// dropped).
+// messages can be printed to stdout or stderr of that process.
 //
-// The main use for #GApplicationCommandLine (and the
-// #GApplication::command-line signal) is 'Emacs server' like use cases:
+// For remote invocation, the originally-invoked process exits when
+// [method@Gio.ApplicationCommandLine.done] method is called. This method is
+// also automatically called when the object is disposed.
+//
+// The main use for `GApplicationCommandLine` (and the
+// [signal@Gio.Application::command-line] signal) is 'Emacs server' like use cases:
 // You can set the `EDITOR` environment variable to have e.g. git use
 // your favourite editor to edit commit messages, and if you already
 // have an instance of the editor running, the editing will happen
@@ -151,11 +179,12 @@ func (x *ApplicationCommandLinePrivate) GoPointer() uintptr {
 // does not return until the editing is done.
 //
 // Normally, the commandline is completely handled in the
-// #GApplication::command-line handler. The launching instance exits
+// [signal@Gio.Application::command-line] handler. The launching instance exits
 // once the signal handler in the primary instance has returned, and
 // the return value of the signal handler becomes the exit status
 // of the launching instance.
-// |[&lt;!-- language="C" --&gt;
+//
+// ```c
 // static int
 // command_line (GApplication            *application,
 //
@@ -180,13 +209,15 @@ func (x *ApplicationCommandLinePrivate) GoPointer() uintptr {
 //	  return 0;
 //	}
 //
-// ]|
+// ```
+//
 // The complete example can be found here:
 // [gapplication-example-cmdline.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-cmdline.c)
 //
 // In more complicated cases, the handling of the commandline can be
 // split between the launcher and the primary instance.
-// |[&lt;!-- language="C" --&gt;
+//
+// ```c
 // static gboolean
 //
 //	test_local_cmdline (GApplication   *application,
@@ -236,18 +267,19 @@ func (x *ApplicationCommandLinePrivate) GoPointer() uintptr {
 //	  ...
 //	}
 //
-// ]|
+// ```
+//
 // In this example of split commandline handling, options that start
 // with `--local-` are handled locally, all other options are passed
-// to the #GApplication::command-line handler which runs in the primary
+// to the [signal@Gio.Application::command-line] handler which runs in the primary
 // instance.
 //
 // The complete example can be found here:
 // [gapplication-example-cmdline2.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-cmdline2.c)
 //
-// If handling the commandline requires a lot of work, it may
-// be better to defer it.
-// |[&lt;!-- language="C" --&gt;
+// If handling the commandline requires a lot of work, it may be better to defer it.
+//
+// ```c
 // static gboolean
 // my_cmdline_handler (gpointer data)
 //
@@ -281,10 +313,11 @@ func (x *ApplicationCommandLinePrivate) GoPointer() uintptr {
 //	  return 0;
 //	}
 //
-// ]|
+// ```
+//
 // In this example the commandline is not completely handled before
-// the #GApplication::command-line handler returns. Instead, we keep
-// a reference to the #GApplicationCommandLine object and handle it
+// the [signal@Gio.Application::command-line] handler returns. Instead, we keep
+// a reference to the `GApplicationCommandLine` object and handle it
 // later (in this example, in an idle). Note that it is necessary to
 // hold the application until you are done with the commandline.
 //
@@ -325,6 +358,29 @@ func (x *ApplicationCommandLine) CreateFileForArg(ArgVar string) *FileBase {
 	cls = &FileBase{}
 	cls.Ptr = cret
 	return cls
+}
+
+var xApplicationCommandLineDone func(uintptr)
+
+// Signals that command line processing is completed.
+//
+// For remote invocation, it causes the invoking process to terminate.
+//
+// For local invocation, it does nothing.
+//
+// This method should be called in the [signal@Gio.Application::command-line]
+// handler, after the exit status is set and all messages are printed.
+//
+// After this call, g_application_command_line_set_exit_status() has no effect.
+// Subsequent calls to this method are no-ops.
+//
+// This method is automatically called when the #GApplicationCommandLine
+// object is disposed — so you can omit the call in non-garbage collected
+// languages.
+func (x *ApplicationCommandLine) Done() {
+
+	xApplicationCommandLineDone(x.GoPointer())
+
 }
 
 var xApplicationCommandLineGetArguments func(uintptr, int) []string
@@ -406,7 +462,7 @@ func (x *ApplicationCommandLine) GetIsRemote() bool {
 
 var xApplicationCommandLineGetOptionsDict func(uintptr) *glib.VariantDict
 
-// Gets the options there were passed to g_application_command_line().
+// Gets the options that were passed to g_application_command_line().
 //
 // If you did not override local_command_line() then these are the same
 // options that were parsed according to the #GOptionEntrys added to the
@@ -415,6 +471,9 @@ var xApplicationCommandLineGetOptionsDict func(uintptr) *glib.VariantDict
 //
 // If no options were sent then an empty dictionary is returned so that
 // you don't need to check for %NULL.
+//
+// The data has been passed via an untrusted external process, so the types of
+// all values must be checked before being used.
 func (x *ApplicationCommandLine) GetOptionsDict() *glib.VariantDict {
 
 	cret := xApplicationCommandLineGetOptionsDict(x.GoPointer())
@@ -429,6 +488,9 @@ var xApplicationCommandLineGetPlatformData func(uintptr) *glib.Variant
 // context in which the invocation occurred.  It typically contains
 // information like the current working directory and the startup
 // notification ID.
+//
+// It comes from an untrusted external process and hence the types of all
+// values must be validated before being used.
 //
 // For local invocation, it will be %NULL.
 func (x *ApplicationCommandLine) GetPlatformData() *glib.Variant {
@@ -495,6 +557,19 @@ func (x *ApplicationCommandLine) Print(FormatVar string, varArgs ...interface{})
 
 }
 
+var xApplicationCommandLinePrintLiteral func(uintptr, string)
+
+// Prints a message using the stdout print handler in the invoking process.
+//
+// Unlike g_application_command_line_print(), @message is not a `printf()`-style
+// format string. Use this function if @message contains text you don't have
+// control over, that could include `printf()` escape sequences.
+func (x *ApplicationCommandLine) PrintLiteral(MessageVar string) {
+
+	xApplicationCommandLinePrintLiteral(x.GoPointer(), MessageVar)
+
+}
+
 var xApplicationCommandLinePrinterr func(uintptr, string, ...interface{})
 
 // Formats a message and prints it using the stderr print handler in the
@@ -506,6 +581,19 @@ var xApplicationCommandLinePrinterr func(uintptr, string, ...interface{})
 func (x *ApplicationCommandLine) Printerr(FormatVar string, varArgs ...interface{}) {
 
 	xApplicationCommandLinePrinterr(x.GoPointer(), FormatVar, varArgs...)
+
+}
+
+var xApplicationCommandLinePrinterrLiteral func(uintptr, string)
+
+// Prints a message using the stderr print handler in the invoking process.
+//
+// Unlike g_application_command_line_printerr(), @message is not
+// a `printf()`-style format string. Use this function if @message contains text
+// you don't have control over, that could include `printf()` escape sequences.
+func (x *ApplicationCommandLine) PrinterrLiteral(MessageVar string) {
+
+	xApplicationCommandLinePrinterrLiteral(x.GoPointer(), MessageVar)
 
 }
 
@@ -532,6 +620,9 @@ var xApplicationCommandLineSetExitStatus func(uintptr, int)
 // have been 'successful' in a certain sense, and the exit status is
 // always zero.  If the application use count is zero, though, the exit
 // status of the local #GApplicationCommandLine is used.
+//
+// This method is a no-op if g_application_command_line_done() has
+// been called.
 func (x *ApplicationCommandLine) SetExitStatus(ExitStatusVar int) {
 
 	xApplicationCommandLineSetExitStatus(x.GoPointer(), ExitStatusVar)
@@ -560,6 +651,7 @@ func init() {
 	core.PuregoSafeRegister(&xApplicationCommandLineGLibType, lib, "g_application_command_line_get_type")
 
 	core.PuregoSafeRegister(&xApplicationCommandLineCreateFileForArg, lib, "g_application_command_line_create_file_for_arg")
+	core.PuregoSafeRegister(&xApplicationCommandLineDone, lib, "g_application_command_line_done")
 	core.PuregoSafeRegister(&xApplicationCommandLineGetArguments, lib, "g_application_command_line_get_arguments")
 	core.PuregoSafeRegister(&xApplicationCommandLineGetCwd, lib, "g_application_command_line_get_cwd")
 	core.PuregoSafeRegister(&xApplicationCommandLineGetEnviron, lib, "g_application_command_line_get_environ")
@@ -570,7 +662,9 @@ func init() {
 	core.PuregoSafeRegister(&xApplicationCommandLineGetStdin, lib, "g_application_command_line_get_stdin")
 	core.PuregoSafeRegister(&xApplicationCommandLineGetenv, lib, "g_application_command_line_getenv")
 	core.PuregoSafeRegister(&xApplicationCommandLinePrint, lib, "g_application_command_line_print")
+	core.PuregoSafeRegister(&xApplicationCommandLinePrintLiteral, lib, "g_application_command_line_print_literal")
 	core.PuregoSafeRegister(&xApplicationCommandLinePrinterr, lib, "g_application_command_line_printerr")
+	core.PuregoSafeRegister(&xApplicationCommandLinePrinterrLiteral, lib, "g_application_command_line_printerr_literal")
 	core.PuregoSafeRegister(&xApplicationCommandLineSetExitStatus, lib, "g_application_command_line_set_exit_status")
 
 }

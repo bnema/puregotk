@@ -33,20 +33,19 @@ func StringFilterMatchModeGLibType() types.GType {
 const (
 
 	// The search string and
-	//   text must match exactly.
+	//   text must match exactly
 	StringFilterMatchModeExactValue StringFilterMatchMode = 0
 	// The search string
-	//   must be contained as a substring inside the text.
+	//   must be contained as a substring inside the text
 	StringFilterMatchModeSubstringValue StringFilterMatchMode = 1
 	// The text must begin
-	//   with the search string.
+	//   with the search string
 	StringFilterMatchModePrefixValue StringFilterMatchMode = 2
 )
 
-// `GtkStringFilter` determines whether to include items by comparing
-// strings to a fixed search term.
+// Determines whether to include items by comparing strings to a fixed search term.
 //
-// The strings are obtained from the items by evaluating a `GtkExpression`
+// The strings are obtained from the items by evaluating an expression
 // set with [method@Gtk.StringFilter.set_expression], and they are
 // compared against a search term set with [method@Gtk.StringFilter.set_search].
 //
@@ -141,7 +140,7 @@ var xStringFilterSetExpression func(uintptr, uintptr)
 // Sets the expression that the string filter uses to
 // obtain strings from items.
 //
-// The expression must have a value type of %G_TYPE_STRING.
+// The expression must have a value type of `G_TYPE_STRING`.
 func (x *StringFilter) SetExpression(ExpressionVar *Expression) {
 
 	xStringFilterSetExpression(x.GoPointer(), ExpressionVar.GoPointer())

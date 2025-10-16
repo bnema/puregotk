@@ -43,6 +43,7 @@ func (x *SocketControlMessageClass) GoPointer() uintptr {
 }
 
 // OverrideGetSize sets the callback function.
+// gets the size of the message.
 func (x *SocketControlMessageClass) OverrideGetSize(cb func(*SocketControlMessage) uint) {
 	if cb == nil {
 		x.xGetSize = 0
@@ -54,6 +55,7 @@ func (x *SocketControlMessageClass) OverrideGetSize(cb func(*SocketControlMessag
 }
 
 // GetGetSize gets the callback function.
+// gets the size of the message.
 func (x *SocketControlMessageClass) GetGetSize() func(*SocketControlMessage) uint {
 	if x.xGetSize == 0 {
 		return nil
@@ -66,6 +68,7 @@ func (x *SocketControlMessageClass) GetGetSize() func(*SocketControlMessage) uin
 }
 
 // OverrideGetLevel sets the callback function.
+// gets the protocol of the message.
 func (x *SocketControlMessageClass) OverrideGetLevel(cb func(*SocketControlMessage) int) {
 	if cb == nil {
 		x.xGetLevel = 0
@@ -77,6 +80,7 @@ func (x *SocketControlMessageClass) OverrideGetLevel(cb func(*SocketControlMessa
 }
 
 // GetGetLevel gets the callback function.
+// gets the protocol of the message.
 func (x *SocketControlMessageClass) GetGetLevel() func(*SocketControlMessage) int {
 	if x.xGetLevel == 0 {
 		return nil
@@ -89,6 +93,7 @@ func (x *SocketControlMessageClass) GetGetLevel() func(*SocketControlMessage) in
 }
 
 // OverrideGetType sets the callback function.
+// gets the protocol specific type of the message.
 func (x *SocketControlMessageClass) OverrideGetType(cb func(*SocketControlMessage) int) {
 	if cb == nil {
 		x.xGetType = 0
@@ -100,6 +105,7 @@ func (x *SocketControlMessageClass) OverrideGetType(cb func(*SocketControlMessag
 }
 
 // GetGetType gets the callback function.
+// gets the protocol specific type of the message.
 func (x *SocketControlMessageClass) GetGetType() func(*SocketControlMessage) int {
 	if x.xGetType == 0 {
 		return nil
@@ -112,6 +118,7 @@ func (x *SocketControlMessageClass) GetGetType() func(*SocketControlMessage) int
 }
 
 // OverrideSerialize sets the callback function.
+// Writes out the message data.
 func (x *SocketControlMessageClass) OverrideSerialize(cb func(*SocketControlMessage, uintptr)) {
 	if cb == nil {
 		x.xSerialize = 0
@@ -123,6 +130,7 @@ func (x *SocketControlMessageClass) OverrideSerialize(cb func(*SocketControlMess
 }
 
 // GetSerialize gets the callback function.
+// Writes out the message data.
 func (x *SocketControlMessageClass) GetSerialize() func(*SocketControlMessage, uintptr) {
 	if x.xSerialize == 0 {
 		return nil
@@ -135,6 +143,7 @@ func (x *SocketControlMessageClass) GetSerialize() func(*SocketControlMessage, u
 }
 
 // OverrideDeserialize sets the callback function.
+// Tries to deserialize a message.
 func (x *SocketControlMessageClass) OverrideDeserialize(cb func(int, int, uint, uintptr) *SocketControlMessage) {
 	if cb == nil {
 		x.xDeserialize = 0
@@ -150,6 +159,7 @@ func (x *SocketControlMessageClass) OverrideDeserialize(cb func(int, int, uint, 
 }
 
 // GetDeserialize gets the callback function.
+// Tries to deserialize a message.
 func (x *SocketControlMessageClass) GetDeserialize() func(int, int, uint, uintptr) *SocketControlMessage {
 	if x.xDeserialize == 0 {
 		return nil
@@ -290,26 +300,26 @@ func (x *SocketControlMessagePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A #GSocketControlMessage is a special-purpose utility message that
-// can be sent to or received from a #GSocket. These types of
-// messages are often called "ancillary data".
+// A `GSocketControlMessage` is a special-purpose utility message that
+// can be sent to or received from a [class@Gio.Socket]. These types of
+// messages are often called ‘ancillary data’.
 //
 // The message can represent some sort of special instruction to or
 // information from the socket or can represent a special kind of
 // transfer to the peer (for example, sending a file descriptor over
 // a UNIX socket).
 //
-// These messages are sent with g_socket_send_message() and received
-// with g_socket_receive_message().
+// These messages are sent with [method@Gio.Socket.send_message] and received
+// with [method@Gio.Socket.receive_message].
 //
 // To extend the set of control message that can be sent, subclass this
-// class and override the get_size, get_level, get_type and serialize
+// class and override the `get_size`, `get_level`, `get_type` and `serialize`
 // methods.
 //
 // To extend the set of control messages that can be received, subclass
-// this class and implement the deserialize method. Also, make sure your
-// class is registered with the GType typesystem before calling
-// g_socket_receive_message() to read such a message.
+// this class and implement the `deserialize` method. Also, make sure your
+// class is registered with the [type@GObject.Type] type system before calling
+// [method@Gio.Socket.receive_message] to read such a message.
 type SocketControlMessage struct {
 	gobject.Object
 }

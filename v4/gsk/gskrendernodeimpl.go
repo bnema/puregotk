@@ -207,10 +207,10 @@ func NewBorderNode(OutlineVar *RoundedRect, BorderWidthVar [4]float32, BorderCol
 	return cls
 }
 
-var xBorderNodeGetColors func(uintptr) *gdk.RGBA
+var xBorderNodeGetColors func(uintptr) uintptr
 
 // Retrieves the colors of the border.
-func (x *BorderNode) GetColors() *gdk.RGBA {
+func (x *BorderNode) GetColors() uintptr {
 
 	cret := xBorderNodeGetColors(x.GoPointer())
 	return cret
@@ -407,11 +407,12 @@ var xNewColorMatrixNode func(uintptr, *graphene.Matrix, *graphene.Vec4) uintptr
 // Creates a `GskRenderNode` that will drawn the @child with
 // @color_matrix.
 //
-// In particular, the node will transform the operation
+// In particular, the node will transform colors by applying
 //
-//	pixel = color_matrix * pixel + color_offset
+//	pixel = transpose(color_matrix) * pixel + color_offset
 //
-// for every pixel.
+// for every pixel. The transformation operates on unpremultiplied
+// colors, with color components ordered R, G, B, A.
 func NewColorMatrixNode(ChildVar *RenderNode, ColorMatrixVar *graphene.Matrix, ColorOffsetVar *graphene.Vec4) *ColorMatrixNode {
 	var cls *ColorMatrixNode
 
@@ -508,6 +509,9 @@ func NewColorNode(RgbaVar *gdk.RGBA, BoundsVar *graphene.Rect) *ColorNode {
 var xColorNodeGetColor func(uintptr) *gdk.RGBA
 
 // Retrieves the color of the given @node.
+//
+// The value returned by this function will not be correct
+// if the render node was created for a non-sRGB color.
 func (x *ColorNode) GetColor() *gdk.RGBA {
 
 	cret := xColorNodeGetColor(x.GoPointer())
@@ -856,6 +860,89 @@ func (c *DebugNode) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// A render node filling the area given by [struct@Gsk.Path]
+// and [enum@Gsk.FillRule] with the child node.
+type FillNode struct {
+	RenderNode
+}
+
+var xFillNodeGLibType func() types.GType
+
+func FillNodeGLibType() types.GType {
+	return xFillNodeGLibType()
+}
+
+func FillNodeNewFromInternalPtr(ptr uintptr) *FillNode {
+	cls := &FillNode{}
+	cls.Ptr = ptr
+	return cls
+}
+
+var xNewFillNode func(uintptr, *Path, FillRule) uintptr
+
+// Creates a `GskRenderNode` that will fill the @child in the area
+// given by @path and @fill_rule.
+func NewFillNode(ChildVar *RenderNode, PathVar *Path, FillRuleVar FillRule) *FillNode {
+	var cls *FillNode
+
+	cret := xNewFillNode(ChildVar.GoPointer(), PathVar, FillRuleVar)
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &FillNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xFillNodeGetChild func(uintptr) uintptr
+
+// Gets the child node that is getting drawn by the given @node.
+func (x *FillNode) GetChild() *RenderNode {
+	var cls *RenderNode
+
+	cret := xFillNodeGetChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &RenderNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xFillNodeGetFillRule func(uintptr) FillRule
+
+// Retrieves the fill rule used to determine how the path is filled.
+func (x *FillNode) GetFillRule() FillRule {
+
+	cret := xFillNodeGetFillRule(x.GoPointer())
+	return cret
+}
+
+var xFillNodeGetPath func(uintptr) *Path
+
+// Retrieves the path used to describe the area filled with the contents of
+// the @node.
+func (x *FillNode) GetPath() *Path {
+
+	cret := xFillNodeGetPath(x.GoPointer())
+	return cret
+}
+
+func (c *FillNode) GoPointer() uintptr {
+	if c == nil {
+		return 0
+	}
+	return c.Ptr
+}
+
+func (c *FillNode) SetGoPointer(ptr uintptr) {
+	c.Ptr = ptr
+}
+
 // A render node using a GL shader when drawing its children nodes.
 type GLShaderNode struct {
 	RenderNode
@@ -1014,6 +1101,9 @@ func (x *InsetShadowNode) GetBlurRadius() float32 {
 var xInsetShadowNodeGetColor func(uintptr) *gdk.RGBA
 
 // Retrieves the color of the inset shadow.
+//
+// The value returned by this function will not be correct
+// if the render node was created for a non-sRGB color.
 func (x *InsetShadowNode) GetColor() *gdk.RGBA {
 
 	cret := xInsetShadowNodeGetColor(x.GoPointer())
@@ -1148,6 +1238,97 @@ func (c *LinearGradientNode) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// A render node masking one child node with another.
+type MaskNode struct {
+	RenderNode
+}
+
+var xMaskNodeGLibType func() types.GType
+
+func MaskNodeGLibType() types.GType {
+	return xMaskNodeGLibType()
+}
+
+func MaskNodeNewFromInternalPtr(ptr uintptr) *MaskNode {
+	cls := &MaskNode{}
+	cls.Ptr = ptr
+	return cls
+}
+
+var xNewMaskNode func(uintptr, uintptr, MaskMode) uintptr
+
+// Creates a `GskRenderNode` that will mask a given node by another.
+//
+// The @mask_mode determines how the 'mask values' are derived from
+// the colors of the @mask. Applying the mask consists of multiplying
+// the 'mask value' with the alpha of the source.
+func NewMaskNode(SourceVar *RenderNode, MaskVar *RenderNode, MaskModeVar MaskMode) *MaskNode {
+	var cls *MaskNode
+
+	cret := xNewMaskNode(SourceVar.GoPointer(), MaskVar.GoPointer(), MaskModeVar)
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &MaskNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xMaskNodeGetMask func(uintptr) uintptr
+
+// Retrieves the mask `GskRenderNode` child of the @node.
+func (x *MaskNode) GetMask() *RenderNode {
+	var cls *RenderNode
+
+	cret := xMaskNodeGetMask(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &RenderNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xMaskNodeGetMaskMode func(uintptr) MaskMode
+
+// Retrieves the mask mode used by @node.
+func (x *MaskNode) GetMaskMode() MaskMode {
+
+	cret := xMaskNodeGetMaskMode(x.GoPointer())
+	return cret
+}
+
+var xMaskNodeGetSource func(uintptr) uintptr
+
+// Retrieves the source `GskRenderNode` child of the @node.
+func (x *MaskNode) GetSource() *RenderNode {
+	var cls *RenderNode
+
+	cret := xMaskNodeGetSource(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &RenderNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+func (c *MaskNode) GoPointer() uintptr {
+	if c == nil {
+		return 0
+	}
+	return c.Ptr
+}
+
+func (c *MaskNode) SetGoPointer(ptr uintptr) {
+	c.Ptr = ptr
+}
+
 // A render node controlling the opacity of its single child node.
 type OpacityNode struct {
 	RenderNode
@@ -1265,6 +1446,9 @@ func (x *OutsetShadowNode) GetBlurRadius() float32 {
 var xOutsetShadowNodeGetColor func(uintptr) *gdk.RGBA
 
 // Retrieves the color of the outset shadow.
+//
+// The value returned by this function will not be correct
+// if the render node was created for a non-sRGB color.
 func (x *OutsetShadowNode) GetColor() *gdk.RGBA {
 
 	cret := xOutsetShadowNodeGetColor(x.GoPointer())
@@ -1341,7 +1525,7 @@ var xNewRadialGradientNode func(*graphene.Rect, *graphene.Point, float32, float3
 //
 // The radial gradient
 // starts around @center. The size of the gradient is dictated by @hradius
-// in horizontal orientation and by @vradius in vertial orientation.
+// in horizontal orientation and by @vradius in vertical orientation.
 func NewRadialGradientNode(BoundsVar *graphene.Rect, CenterVar *graphene.Point, HradiusVar float32, VradiusVar float32, StartVar float32, EndVar float32, ColorStopsVar []ColorStop, NColorStopsVar uint) *RadialGradientNode {
 	var cls *RadialGradientNode
 
@@ -1384,7 +1568,7 @@ func (x *RadialGradientNode) GetEnd() float32 {
 
 var xRadialGradientNodeGetHradius func(uintptr) float32
 
-// Retrieves the horizonal radius for the gradient.
+// Retrieves the horizontal radius for the gradient.
 func (x *RadialGradientNode) GetHradius() float32 {
 
 	cret := xRadialGradientNodeGetHradius(x.GoPointer())
@@ -1569,7 +1753,7 @@ var xNewRepeatingRadialGradientNode func(*graphene.Rect, *graphene.Point, float3
 //
 // The radial gradient starts around @center. The size of the gradient
 // is dictated by @hradius in horizontal orientation and by @vradius
-// in vertial orientation.
+// in vertical orientation.
 func NewRepeatingRadialGradientNode(BoundsVar *graphene.Rect, CenterVar *graphene.Point, HradiusVar float32, VradiusVar float32, StartVar float32, EndVar float32, ColorStopsVar []ColorStop, NColorStopsVar uint) *RepeatingRadialGradientNode {
 	var cls *RepeatingRadialGradientNode
 
@@ -1745,6 +1929,166 @@ func (c *ShadowNode) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// A render node that will fill the area determined by stroking the the given
+// [struct@Gsk.Path] using the [struct@Gsk.Stroke] attributes.
+type StrokeNode struct {
+	RenderNode
+}
+
+var xStrokeNodeGLibType func() types.GType
+
+func StrokeNodeGLibType() types.GType {
+	return xStrokeNodeGLibType()
+}
+
+func StrokeNodeNewFromInternalPtr(ptr uintptr) *StrokeNode {
+	cls := &StrokeNode{}
+	cls.Ptr = ptr
+	return cls
+}
+
+var xNewStrokeNode func(uintptr, *Path, *Stroke) uintptr
+
+// Creates a #GskRenderNode that will fill the outline generated by stroking
+// the given @path using the attributes defined in @stroke.
+//
+// The area is filled with @child.
+func NewStrokeNode(ChildVar *RenderNode, PathVar *Path, StrokeVar *Stroke) *StrokeNode {
+	var cls *StrokeNode
+
+	cret := xNewStrokeNode(ChildVar.GoPointer(), PathVar, StrokeVar)
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &StrokeNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xStrokeNodeGetChild func(uintptr) uintptr
+
+// Gets the child node that is getting drawn by the given @node.
+func (x *StrokeNode) GetChild() *RenderNode {
+	var cls *RenderNode
+
+	cret := xStrokeNodeGetChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &RenderNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xStrokeNodeGetPath func(uintptr) *Path
+
+// Retrieves the path that will be stroked with the contents of
+// the @node.
+func (x *StrokeNode) GetPath() *Path {
+
+	cret := xStrokeNodeGetPath(x.GoPointer())
+	return cret
+}
+
+var xStrokeNodeGetStroke func(uintptr) *Stroke
+
+// Retrieves the stroke attributes used in this @node.
+func (x *StrokeNode) GetStroke() *Stroke {
+
+	cret := xStrokeNodeGetStroke(x.GoPointer())
+	return cret
+}
+
+func (c *StrokeNode) GoPointer() uintptr {
+	if c == nil {
+		return 0
+	}
+	return c.Ptr
+}
+
+func (c *StrokeNode) SetGoPointer(ptr uintptr) {
+	c.Ptr = ptr
+}
+
+// A render node that potentially diverts a part of the scene graph to a subsurface.
+type SubsurfaceNode struct {
+	RenderNode
+}
+
+var xSubsurfaceNodeGLibType func() types.GType
+
+func SubsurfaceNodeGLibType() types.GType {
+	return xSubsurfaceNodeGLibType()
+}
+
+func SubsurfaceNodeNewFromInternalPtr(ptr uintptr) *SubsurfaceNode {
+	cls := &SubsurfaceNode{}
+	cls.Ptr = ptr
+	return cls
+}
+
+var xNewSubsurfaceNode func(uintptr, uintptr) uintptr
+
+// Creates a `GskRenderNode` that will possibly divert the child
+// node to a subsurface.
+//
+// Note: Since subsurfaces are currently private, these nodes cannot
+// currently be created outside of GTK. See
+// [GtkGraphicsOffload](../gtk4/class.GraphicsOffload.html).
+func NewSubsurfaceNode(ChildVar *RenderNode, SubsurfaceVar uintptr) *SubsurfaceNode {
+	var cls *SubsurfaceNode
+
+	cret := xNewSubsurfaceNode(ChildVar.GoPointer(), SubsurfaceVar)
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &SubsurfaceNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xSubsurfaceNodeGetChild func(uintptr) uintptr
+
+// Gets the child node that is getting drawn by the given @node.
+func (x *SubsurfaceNode) GetChild() *RenderNode {
+	var cls *RenderNode
+
+	cret := xSubsurfaceNodeGetChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &RenderNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+func (c *SubsurfaceNode) GoPointer() uintptr {
+	if c == nil {
+		return 0
+	}
+	return c.Ptr
+}
+
+func (c *SubsurfaceNode) SetGoPointer(ptr uintptr) {
+	c.Ptr = ptr
+}
+
+var xSubsurfaceNodeGetSubsurface func(uintptr) uintptr
+
+// Gets the subsurface that was set on this node
+func SubsurfaceNodeGetSubsurface(NodeVar *DebugNode) uintptr {
+
+	cret := xSubsurfaceNodeGetSubsurface(NodeVar.GoPointer())
+	return cret
+}
+
 // A render node drawing a set of glyphs.
 type TextNode struct {
 	RenderNode
@@ -1784,6 +2128,9 @@ func NewTextNode(FontVar *pango.Font, GlyphsVar *pango.GlyphString, ColorVar *gd
 var xTextNodeGetColor func(uintptr) *gdk.RGBA
 
 // Retrieves the color used by the text @node.
+//
+// The value returned by this function will not be correct
+// if the render node was created for a non-sRGB color.
 func (x *TextNode) GetColor() *gdk.RGBA {
 
 	cret := xTextNodeGetColor(x.GoPointer())
@@ -1875,6 +2222,10 @@ var xNewTextureNode func(uintptr, *graphene.Rect) uintptr
 
 // Creates a `GskRenderNode` that will render the given
 // @texture into the area given by @bounds.
+//
+// Note that GSK applies linear filtering when textures are
+// scaled and transformed. See [class@Gsk.TextureScaleNode]
+// for a way to influence filtering.
 func NewTextureNode(TextureVar *gdk.Texture, BoundsVar *graphene.Rect) *TextureNode {
 	var cls *TextureNode
 
@@ -1913,6 +2264,87 @@ func (c *TextureNode) GoPointer() uintptr {
 }
 
 func (c *TextureNode) SetGoPointer(ptr uintptr) {
+	c.Ptr = ptr
+}
+
+// A render node for a `GdkTexture`, with control over scaling.
+type TextureScaleNode struct {
+	RenderNode
+}
+
+var xTextureScaleNodeGLibType func() types.GType
+
+func TextureScaleNodeGLibType() types.GType {
+	return xTextureScaleNodeGLibType()
+}
+
+func TextureScaleNodeNewFromInternalPtr(ptr uintptr) *TextureScaleNode {
+	cls := &TextureScaleNode{}
+	cls.Ptr = ptr
+	return cls
+}
+
+var xNewTextureScaleNode func(uintptr, *graphene.Rect, ScalingFilter) uintptr
+
+// Creates a node that scales the texture to the size given by the
+// bounds using the filter and then places it at the bounds' position.
+//
+// Note that further scaling and other transformations which are
+// applied to the node will apply linear filtering to the resulting
+// texture, as usual.
+//
+// This node is intended for tight control over scaling applied
+// to a texture, such as in image editors and requires the
+// application to be aware of the whole render tree as further
+// transforms may be applied that conflict with the desired effect
+// of this node.
+func NewTextureScaleNode(TextureVar *gdk.Texture, BoundsVar *graphene.Rect, FilterVar ScalingFilter) *TextureScaleNode {
+	var cls *TextureScaleNode
+
+	cret := xNewTextureScaleNode(TextureVar.GoPointer(), BoundsVar, FilterVar)
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &TextureScaleNode{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xTextureScaleNodeGetFilter func(uintptr) ScalingFilter
+
+// Retrieves the `GskScalingFilter` used when creating this `GskRenderNode`.
+func (x *TextureScaleNode) GetFilter() ScalingFilter {
+
+	cret := xTextureScaleNodeGetFilter(x.GoPointer())
+	return cret
+}
+
+var xTextureScaleNodeGetTexture func(uintptr) uintptr
+
+// Retrieves the `GdkTexture` used when creating this `GskRenderNode`.
+func (x *TextureScaleNode) GetTexture() *gdk.Texture {
+	var cls *gdk.Texture
+
+	cret := xTextureScaleNodeGetTexture(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &gdk.Texture{}
+	cls.Ptr = cret
+	return cls
+}
+
+func (c *TextureScaleNode) GoPointer() uintptr {
+	if c == nil {
+		return 0
+	}
+	return c.Ptr
+}
+
+func (c *TextureScaleNode) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
@@ -2078,6 +2510,14 @@ func init() {
 	core.PuregoSafeRegister(&xDebugNodeGetChild, lib, "gsk_debug_node_get_child")
 	core.PuregoSafeRegister(&xDebugNodeGetMessage, lib, "gsk_debug_node_get_message")
 
+	core.PuregoSafeRegister(&xFillNodeGLibType, lib, "gsk_fill_node_get_type")
+
+	core.PuregoSafeRegister(&xNewFillNode, lib, "gsk_fill_node_new")
+
+	core.PuregoSafeRegister(&xFillNodeGetChild, lib, "gsk_fill_node_get_child")
+	core.PuregoSafeRegister(&xFillNodeGetFillRule, lib, "gsk_fill_node_get_fill_rule")
+	core.PuregoSafeRegister(&xFillNodeGetPath, lib, "gsk_fill_node_get_path")
+
 	core.PuregoSafeRegister(&xGLShaderNodeGLibType, lib, "gsk_gl_shader_node_get_type")
 
 	core.PuregoSafeRegister(&xNewGLShaderNode, lib, "gsk_gl_shader_node_new")
@@ -2106,6 +2546,14 @@ func init() {
 	core.PuregoSafeRegister(&xLinearGradientNodeGetEnd, lib, "gsk_linear_gradient_node_get_end")
 	core.PuregoSafeRegister(&xLinearGradientNodeGetNColorStops, lib, "gsk_linear_gradient_node_get_n_color_stops")
 	core.PuregoSafeRegister(&xLinearGradientNodeGetStart, lib, "gsk_linear_gradient_node_get_start")
+
+	core.PuregoSafeRegister(&xMaskNodeGLibType, lib, "gsk_mask_node_get_type")
+
+	core.PuregoSafeRegister(&xNewMaskNode, lib, "gsk_mask_node_new")
+
+	core.PuregoSafeRegister(&xMaskNodeGetMask, lib, "gsk_mask_node_get_mask")
+	core.PuregoSafeRegister(&xMaskNodeGetMaskMode, lib, "gsk_mask_node_get_mask_mode")
+	core.PuregoSafeRegister(&xMaskNodeGetSource, lib, "gsk_mask_node_get_source")
 
 	core.PuregoSafeRegister(&xOpacityNodeGLibType, lib, "gsk_opacity_node_get_type")
 
@@ -2167,6 +2615,22 @@ func init() {
 	core.PuregoSafeRegister(&xShadowNodeGetNShadows, lib, "gsk_shadow_node_get_n_shadows")
 	core.PuregoSafeRegister(&xShadowNodeGetShadow, lib, "gsk_shadow_node_get_shadow")
 
+	core.PuregoSafeRegister(&xStrokeNodeGLibType, lib, "gsk_stroke_node_get_type")
+
+	core.PuregoSafeRegister(&xNewStrokeNode, lib, "gsk_stroke_node_new")
+
+	core.PuregoSafeRegister(&xStrokeNodeGetChild, lib, "gsk_stroke_node_get_child")
+	core.PuregoSafeRegister(&xStrokeNodeGetPath, lib, "gsk_stroke_node_get_path")
+	core.PuregoSafeRegister(&xStrokeNodeGetStroke, lib, "gsk_stroke_node_get_stroke")
+
+	core.PuregoSafeRegister(&xSubsurfaceNodeGLibType, lib, "gsk_subsurface_node_get_type")
+
+	core.PuregoSafeRegister(&xNewSubsurfaceNode, lib, "gsk_subsurface_node_new")
+
+	core.PuregoSafeRegister(&xSubsurfaceNodeGetChild, lib, "gsk_subsurface_node_get_child")
+
+	core.PuregoSafeRegister(&xSubsurfaceNodeGetSubsurface, lib, "gsk_subsurface_node_get_subsurface")
+
 	core.PuregoSafeRegister(&xTextNodeGLibType, lib, "gsk_text_node_get_type")
 
 	core.PuregoSafeRegister(&xNewTextNode, lib, "gsk_text_node_new")
@@ -2183,6 +2647,13 @@ func init() {
 	core.PuregoSafeRegister(&xNewTextureNode, lib, "gsk_texture_node_new")
 
 	core.PuregoSafeRegister(&xTextureNodeGetTexture, lib, "gsk_texture_node_get_texture")
+
+	core.PuregoSafeRegister(&xTextureScaleNodeGLibType, lib, "gsk_texture_scale_node_get_type")
+
+	core.PuregoSafeRegister(&xNewTextureScaleNode, lib, "gsk_texture_scale_node_new")
+
+	core.PuregoSafeRegister(&xTextureScaleNodeGetFilter, lib, "gsk_texture_scale_node_get_filter")
+	core.PuregoSafeRegister(&xTextureScaleNodeGetTexture, lib, "gsk_texture_scale_node_get_texture")
 
 	core.PuregoSafeRegister(&xTransformNodeGLibType, lib, "gsk_transform_node_get_type")
 

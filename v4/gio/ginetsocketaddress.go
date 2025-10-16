@@ -29,8 +29,11 @@ func (x *InetSocketAddressPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// An IPv4 or IPv6 socket address; that is, the combination of a
-// #GInetAddress and a port number.
+// An IPv4 or IPv6 socket address. That is, the combination of a
+// [class@Gio.InetAddress] and a port number.
+//
+// In UNIX terms, `GInetSocketAddress` corresponds to a
+// [`struct sockaddr_in` or `struct sockaddr_in6`](man:sockaddr(3type)).
 type InetSocketAddress struct {
 	SocketAddress
 }

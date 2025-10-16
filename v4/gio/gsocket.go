@@ -280,41 +280,42 @@ func (x *SocketPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A #GSocket is a low-level networking primitive. It is a more or less
+// A `GSocket` is a low-level networking primitive. It is a more or less
 // direct mapping of the BSD socket API in a portable GObject based API.
 // It supports both the UNIX socket implementations and winsock2 on Windows.
 //
-// #GSocket is the platform independent base upon which the higher level
+// `GSocket` is the platform independent base upon which the higher level
 // network primitives are based. Applications are not typically meant to
-// use it directly, but rather through classes like #GSocketClient,
-// #GSocketService and #GSocketConnection. However there may be cases where
-// direct use of #GSocket is useful.
+// use it directly, but rather through classes like [class@Gio.SocketClient],
+// [class@Gio.SocketService] and [class@Gio.SocketConnection]. However there may
+// be cases where direct use of `GSocket` is useful.
 //
-// #GSocket implements the #GInitable interface, so if it is manually constructed
-// by e.g. g_object_new() you must call g_initable_init() and check the
-// results before using the object. This is done automatically in
-// g_socket_new() and g_socket_new_from_fd(), so these functions can return
-// %NULL.
+// `GSocket` implements the [iface@Gio.Initable] interface, so if it is manually
+// constructed by e.g. [ctor@GObject.Object.new] you must call
+// [method@Gio.Initable.init] and check the results before using the object.
+// This is done automatically in [ctor@Gio.Socket.new] and
+// [ctor@Gio.Socket.new_from_fd], so these functions can return `NULL`.
 //
 // Sockets operate in two general modes, blocking or non-blocking. When
 // in blocking mode all operations (which don’t take an explicit blocking
 // parameter) block until the requested operation
 // is finished or there is an error. In non-blocking mode all calls that
-// would block return immediately with a %G_IO_ERROR_WOULD_BLOCK error.
-// To know when a call would successfully run you can call g_socket_condition_check(),
-// or g_socket_condition_wait(). You can also use g_socket_create_source() and
-// attach it to a #GMainContext to get callbacks when I/O is possible.
+// would block return immediately with a `G_IO_ERROR_WOULD_BLOCK` error.
+// To know when a call would successfully run you can call
+// [method@Gio.Socket.condition_check], or [method@Gio.Socket.condition_wait].
+// You can also use [method@Gio.Socket.create_source] and attach it to a
+// [type@GLib.MainContext] to get callbacks when I/O is possible.
 // Note that all sockets are always set to non blocking mode in the system, and
-// blocking mode is emulated in GSocket.
+// blocking mode is emulated in `GSocket`.
 //
 // When working in non-blocking mode applications should always be able to
-// handle getting a %G_IO_ERROR_WOULD_BLOCK error even when some other
+// handle getting a `G_IO_ERROR_WOULD_BLOCK` error even when some other
 // function said that I/O was possible. This can easily happen in case
 // of a race condition in the application, but it can also happen for other
 // reasons. For instance, on Windows a socket is always seen as writable
-// until a write returns %G_IO_ERROR_WOULD_BLOCK.
+// until a write returns `G_IO_ERROR_WOULD_BLOCK`.
 //
-// #GSockets can be either connection oriented or datagram based.
+// `GSocket`s can be either connection oriented or datagram based.
 // For connection oriented types you must first establish a connection by
 // either connecting to an address or accepting a connection from another
 // address. For connectionless socket types the target/source address is
@@ -322,15 +323,35 @@ func (x *SocketPrivate) GoPointer() uintptr {
 //
 // All socket file descriptors are set to be close-on-exec.
 //
-// Note that creating a #GSocket causes the signal %SIGPIPE to be
+// Note that creating a `GSocket` causes the signal `SIGPIPE` to be
 // ignored for the remainder of the program. If you are writing a
-// command-line utility that uses #GSocket, you may need to take into
+// command-line utility that uses `GSocket`, you may need to take into
 // account the fact that your program will not automatically be killed
-// if it tries to write to %stdout after it has been closed.
+// if it tries to write to `stdout` after it has been closed.
 //
-// Like most other APIs in GLib, #GSocket is not inherently thread safe. To use
-// a #GSocket concurrently from multiple threads, you must implement your own
+// Like most other APIs in GLib, `GSocket` is not inherently thread safe. To use
+// a `GSocket` concurrently from multiple threads, you must implement your own
 // locking.
+//
+// ## Nagle’s algorithm
+//
+// Since GLib 2.80, `GSocket` will automatically set the `TCP_NODELAY` option on
+// all `G_SOCKET_TYPE_STREAM` sockets. This disables
+// [Nagle’s algorithm](https://en.wikipedia.org/wiki/Nagle%27s_algorithm) as it
+// typically does more harm than good on modern networks.
+//
+// If your application needs Nagle’s algorithm enabled, call
+// [method@Gio.Socket.set_option] after constructing a `GSocket` to enable it:
+// ```c
+// socket = g_socket_new (…, G_SOCKET_TYPE_STREAM, …);
+// if (socket != NULL)
+//
+//	{
+//	  g_socket_set_option (socket, IPPROTO_TCP, TCP_NODELAY, FALSE, &amp;local_error);
+//	  // handle error if needed
+//	}
+//
+// ```
 type Socket struct {
 	gobject.Object
 }
@@ -861,7 +882,7 @@ var xSocketGetOption func(uintptr, int, int, int, **glib.Error) bool
 // getsockopt(). (If you need to fetch a  non-integer-valued option,
 // you will need to call getsockopt() directly.)
 //
-// The [&lt;gio/gnetworking.h&gt;][gio-gnetworking.h]
+// The [`&lt;gio/gnetworking.h&gt;`](networking.html)
 // header pulls in system headers that will define most of the
 // standard/portable socket options. For unusual socket protocols or
 // platform-dependent options, you may need to include additional
@@ -1112,6 +1133,55 @@ func (x *Socket) Receive(BufferVar []byte, SizeVar uint, CancellableVar *Cancell
 	var cerr *glib.Error
 
 	cret := xSocketReceive(x.GoPointer(), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
+	if cerr == nil {
+		return cret, nil
+	}
+	return cret, cerr
+
+}
+
+var xSocketReceiveBytes func(uintptr, uint, int64, uintptr, **glib.Error) *glib.Bytes
+
+// Receives data (up to @size bytes) from a socket.
+//
+// This function is a variant of [method@Gio.Socket.receive] which returns a
+// [struct@GLib.Bytes] rather than a plain buffer.
+//
+// Pass `-1` to @timeout_us to block indefinitely until data is received (or
+// the connection is closed, or there is an error). Pass `0` to use the default
+// timeout from [property@Gio.Socket:timeout], or pass a positive number to wait
+// for that many microseconds for data before returning `G_IO_ERROR_TIMED_OUT`.
+func (x *Socket) ReceiveBytes(SizeVar uint, TimeoutUsVar int64, CancellableVar *Cancellable) (*glib.Bytes, error) {
+	var cerr *glib.Error
+
+	cret := xSocketReceiveBytes(x.GoPointer(), SizeVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
+	if cerr == nil {
+		return cret, nil
+	}
+	return cret, cerr
+
+}
+
+var xSocketReceiveBytesFrom func(uintptr, uintptr, uint, int64, uintptr, **glib.Error) *glib.Bytes
+
+// Receive data (up to @size bytes) from a socket.
+//
+// This function is a variant of [method@Gio.Socket.receive_from] which returns
+// a [struct@GLib.Bytes] rather than a plain buffer.
+//
+// If @address is non-%NULL then @address will be set equal to the
+// source address of the received packet.
+//
+// The @address is owned by the caller.
+//
+// Pass `-1` to @timeout_us to block indefinitely until data is received (or
+// the connection is closed, or there is an error). Pass `0` to use the default
+// timeout from [property@Gio.Socket:timeout], or pass a positive number to wait
+// for that many microseconds for data before returning `G_IO_ERROR_TIMED_OUT`.
+func (x *Socket) ReceiveBytesFrom(AddressVar **SocketAddress, SizeVar uint, TimeoutUsVar int64, CancellableVar *Cancellable) (*glib.Bytes, error) {
+	var cerr *glib.Error
+
+	cret := xSocketReceiveBytesFrom(x.GoPointer(), *gobject.ConvertPtr(AddressVar), SizeVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1564,7 +1634,7 @@ var xSocketSetOption func(uintptr, int, int, int, **glib.Error) bool
 // setsockopt(). (If you need to set a non-integer-valued option,
 // you will need to call setsockopt() directly.)
 //
-// The [&lt;gio/gnetworking.h&gt;][gio-gnetworking.h]
+// The [`&lt;gio/gnetworking.h&gt;`](networking.html)
 // header pulls in system headers that will define most of the
 // standard/portable socket options. For unusual socket protocols or
 // platform-dependent options, you may need to include additional
@@ -1691,7 +1761,7 @@ func (c *Socket) SetGoPointer(ptr uintptr) {
 // If the object is not initialized, or initialization returns with an
 // error, then all operations on the object except g_object_ref() and
 // g_object_unref() are considered to be invalid, and have undefined
-// behaviour. See the [introduction][ginitable] for more details.
+// behaviour. See the [description][iface@Gio.Initable#description] for more details.
 //
 // Callers should not assume that a class which implements #GInitable can be
 // initialized multiple times, unless the class explicitly documents itself as
@@ -1770,6 +1840,8 @@ func init() {
 	core.PuregoSafeRegister(&xSocketLeaveMulticastGroupSsm, lib, "g_socket_leave_multicast_group_ssm")
 	core.PuregoSafeRegister(&xSocketListen, lib, "g_socket_listen")
 	core.PuregoSafeRegister(&xSocketReceive, lib, "g_socket_receive")
+	core.PuregoSafeRegister(&xSocketReceiveBytes, lib, "g_socket_receive_bytes")
+	core.PuregoSafeRegister(&xSocketReceiveBytesFrom, lib, "g_socket_receive_bytes_from")
 	core.PuregoSafeRegister(&xSocketReceiveFrom, lib, "g_socket_receive_from")
 	core.PuregoSafeRegister(&xSocketReceiveMessage, lib, "g_socket_receive_message")
 	core.PuregoSafeRegister(&xSocketReceiveMessages, lib, "g_socket_receive_messages")

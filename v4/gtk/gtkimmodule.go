@@ -2,5 +2,6 @@
 package gtk
 
 const (
+	// The default name of the extension point.
 	IM_MODULE_EXTENSION_POINT_NAME string = "gtk-im-module"
 )

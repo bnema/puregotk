@@ -29,14 +29,14 @@ func (x *NetworkServicePrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// Like #GNetworkAddress does with hostnames, #GNetworkService
+// Like [class@Gio.NetworkAddress] does with hostnames, `GNetworkService`
 // provides an easy way to resolve a SRV record, and then attempt to
 // connect to one of the hosts that implements that service, handling
 // service priority/weighting, multiple IP addresses, and multiple
 // address families.
 //
-// See #GSrvTarget for more information about SRV records, and see
-// #GSocketConnectable for an example of using the connectable
+// See [struct@Gio.SrvTarget] for more information about SRV records, and see
+// [iface@Gio.SocketConnectable] for an example of using the connectable
 // interface.
 type NetworkService struct {
 	gobject.Object

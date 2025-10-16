@@ -29,8 +29,7 @@ func (x *CssProviderPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkCssProvider` is an object implementing the `GtkStyleProvider` interface
-// for CSS.
+// A style provider for CSS.
 //
 // It is able to parse CSS-like input in order to style widgets.
 //
@@ -90,6 +89,17 @@ func NewCssProvider() *CssProvider {
 	return cls
 }
 
+var xCssProviderLoadFromBytes func(uintptr, *glib.Bytes)
+
+// Loads @data into @css_provider.
+//
+// This clears any previously loaded information.
+func (x *CssProvider) LoadFromBytes(DataVar *glib.Bytes) {
+
+	xCssProviderLoadFromBytes(x.GoPointer(), DataVar)
+
+}
+
 var xCssProviderLoadFromData func(uintptr, string, int)
 
 // Loads @data into @css_provider.
@@ -135,6 +145,17 @@ func (x *CssProvider) LoadFromResource(ResourcePathVar string) {
 
 }
 
+var xCssProviderLoadFromString func(uintptr, string)
+
+// Loads @string into @css_provider.
+//
+// This clears any previously loaded information.
+func (x *CssProvider) LoadFromString(StringVar string) {
+
+	xCssProviderLoadFromString(x.GoPointer(), StringVar)
+
+}
+
 var xCssProviderLoadNamed func(uintptr, string, string)
 
 // Loads a theme from the usual theme paths.
@@ -153,7 +174,7 @@ var xCssProviderToString func(uintptr) string
 // Converts the @provider into a string representation in CSS
 // format.
 //
-// Using [method@Gtk.CssProvider.load_from_data] with the return
+// Using [method@Gtk.CssProvider.load_from_string] with the return
 // value from this function on a new provider created with
 // [ctor@Gtk.CssProvider.new] will basically create a duplicate
 // of this @provider.
@@ -176,6 +197,9 @@ func (c *CssProvider) SetGoPointer(ptr uintptr) {
 
 // Signals that a parsing error occurred.
 //
+// The expected error values are in the [error@Gtk.CssParserError]
+// and [enum@Gtk.CssParserWarning] enumerations.
+//
 // The @path, @line and @position describe the actual location of
 // the error as accurately as possible.
 //
@@ -183,6 +207,9 @@ func (c *CssProvider) SetGoPointer(ptr uintptr) {
 // the error. Errors may however cause parts of the given data or
 // even all of it to not be parsed at all. So it is a useful idea
 // to check that the parsing succeeds by connecting to this signal.
+//
+// Errors in the [enum@Gtk.CssParserWarning] enumeration should not
+// be treated as fatal errors.
 //
 // Note that this signal may be emitted at any time as the css provider
 // may opt to defer parsing parts or all of the input to a later time
@@ -218,10 +245,12 @@ func init() {
 
 	core.PuregoSafeRegister(&xNewCssProvider, lib, "gtk_css_provider_new")
 
+	core.PuregoSafeRegister(&xCssProviderLoadFromBytes, lib, "gtk_css_provider_load_from_bytes")
 	core.PuregoSafeRegister(&xCssProviderLoadFromData, lib, "gtk_css_provider_load_from_data")
 	core.PuregoSafeRegister(&xCssProviderLoadFromFile, lib, "gtk_css_provider_load_from_file")
 	core.PuregoSafeRegister(&xCssProviderLoadFromPath, lib, "gtk_css_provider_load_from_path")
 	core.PuregoSafeRegister(&xCssProviderLoadFromResource, lib, "gtk_css_provider_load_from_resource")
+	core.PuregoSafeRegister(&xCssProviderLoadFromString, lib, "gtk_css_provider_load_from_string")
 	core.PuregoSafeRegister(&xCssProviderLoadNamed, lib, "gtk_css_provider_load_named")
 	core.PuregoSafeRegister(&xCssProviderToString, lib, "gtk_css_provider_to_string")
 

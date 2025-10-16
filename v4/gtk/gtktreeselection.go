@@ -113,9 +113,10 @@ var xTreeSelectionGetSelectedRows func(uintptr, *uintptr) *glib.List
 // To do this, you can use gtk_tree_row_reference_new().
 //
 // To free the return value, use:
-// |[&lt;!-- language="C" --&gt;
+//
+// ```c
 // g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
-// ]|
+// ```
 func (x *TreeSelection) GetSelectedRows(ModelVar *TreeModel) *glib.List {
 
 	cret := xTreeSelectionGetSelectedRows(x.GoPointer(), gobject.ConvertPtr(ModelVar))

@@ -20,8 +20,7 @@ func (x *BoxLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkBoxLayout` is a layout manager that arranges children in a single
-// row or column.
+// Arranges children in a single row or column.
 //
 // Whether it is a row or column depends on the value of its
 // [property@Gtk.Orientable:orientation] property. Within the other dimension
@@ -66,6 +65,15 @@ func NewBoxLayout(OrientationVar Orientation) *BoxLayout {
 	return cls
 }
 
+var xBoxLayoutGetBaselineChild func(uintptr) int
+
+// Gets the value set by gtk_box_layout_set_baseline_child().
+func (x *BoxLayout) GetBaselineChild() int {
+
+	cret := xBoxLayoutGetBaselineChild(x.GoPointer())
+	return cret
+}
+
 var xBoxLayoutGetBaselinePosition func(uintptr) BaselinePosition
 
 // Gets the value set by gtk_box_layout_set_baseline_position().
@@ -91,6 +99,16 @@ func (x *BoxLayout) GetSpacing() uint {
 
 	cret := xBoxLayoutGetSpacing(x.GoPointer())
 	return cret
+}
+
+var xBoxLayoutSetBaselineChild func(uintptr, int)
+
+// Sets the index of the child that determines the baseline
+// in vertical layout.
+func (x *BoxLayout) SetBaselineChild(ChildVar int) {
+
+	xBoxLayoutSetBaselineChild(x.GoPointer(), ChildVar)
+
 }
 
 var xBoxLayoutSetBaselinePosition func(uintptr, BaselinePosition)
@@ -164,9 +182,11 @@ func init() {
 
 	core.PuregoSafeRegister(&xNewBoxLayout, lib, "gtk_box_layout_new")
 
+	core.PuregoSafeRegister(&xBoxLayoutGetBaselineChild, lib, "gtk_box_layout_get_baseline_child")
 	core.PuregoSafeRegister(&xBoxLayoutGetBaselinePosition, lib, "gtk_box_layout_get_baseline_position")
 	core.PuregoSafeRegister(&xBoxLayoutGetHomogeneous, lib, "gtk_box_layout_get_homogeneous")
 	core.PuregoSafeRegister(&xBoxLayoutGetSpacing, lib, "gtk_box_layout_get_spacing")
+	core.PuregoSafeRegister(&xBoxLayoutSetBaselineChild, lib, "gtk_box_layout_set_baseline_child")
 	core.PuregoSafeRegister(&xBoxLayoutSetBaselinePosition, lib, "gtk_box_layout_set_baseline_position")
 	core.PuregoSafeRegister(&xBoxLayoutSetHomogeneous, lib, "gtk_box_layout_set_homogeneous")
 	core.PuregoSafeRegister(&xBoxLayoutSetSpacing, lib, "gtk_box_layout_set_spacing")

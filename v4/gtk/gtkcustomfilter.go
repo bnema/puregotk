@@ -13,8 +13,8 @@ import (
 
 // User function that is called to determine if the @item should be matched.
 //
-// If the filter matches the item, this function must return %TRUE. If the
-// item should be filtered out, %FALSE must be returned.
+// If the filter matches the item, this function must return true.
+// If the item should be filtered out, false must be returned.
 type CustomFilterFunc func(uintptr, uintptr) bool
 
 type CustomFilterClass struct {
@@ -27,7 +27,7 @@ func (x *CustomFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkCustomFilter` determines whether to include items with a callback.
+// Determines whether to include items with a callback.
 type CustomFilter struct {
 	Filter
 }
@@ -46,13 +46,12 @@ func CustomFilterNewFromInternalPtr(ptr uintptr) *CustomFilter {
 
 var xNewCustomFilter func(uintptr, uintptr, uintptr) uintptr
 
-// Creates a new filter using the given @match_func to filter
-// items.
+// Creates a new filter using the given function to filter items.
 //
-// If @match_func is %NULL, the filter matches all items.
+// If @match_func is `NULL`, the filter matches all items.
 //
 // If the filter func changes its filtering behavior,
-// gtk_filter_changed() needs to be called.
+// [method@Gtk.Filter.changed] needs to be called.
 func NewCustomFilter(MatchFuncVar *CustomFilterFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *CustomFilter {
 	var cls *CustomFilter
 
@@ -70,13 +69,13 @@ var xCustomFilterSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 
 // Sets the function used for filtering items.
 //
-// If @match_func is %NULL, the filter matches all items.
+// If @match_func is `NULL`, the filter matches all items.
 //
 // If the filter func changes its filtering behavior,
-// gtk_filter_changed() needs to be called.
+// [method@Gtk.Filter.changed] needs to be called.
 //
-// If a previous function was set, its @user_destroy will be
-// called now.
+// If a previous function was set, its @user_destroy
+// will be called.
 func (x *CustomFilter) SetFilterFunc(MatchFuncVar *CustomFilterFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
 
 	xCustomFilterSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(MatchFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))

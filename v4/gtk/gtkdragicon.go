@@ -23,13 +23,13 @@ func (x *DragIconClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkDragIcon` is a `GtkRoot` implementation for drag icons.
+// A `GtkRoot` implementation for drag icons.
 //
 // A drag icon moves with the pointer during a Drag-and-Drop operation
 // and is destroyed when the drag ends.
 //
 // To set up a drag icon and associate it with an ongoing drag operation,
-// use [func@Gtk.DragIcon.get_for_drag] to get the icon for a drag. You can
+// use [ctor@Gtk.DragIcon.get_for_drag] to get the icon for a drag. You can
 // then use it like any other widget and use [method@Gtk.DragIcon.set_child]
 // to set whatever widget should be used for the drag icon.
 //
@@ -47,6 +47,26 @@ func DragIconGLibType() types.GType {
 func DragIconNewFromInternalPtr(ptr uintptr) *DragIcon {
 	cls := &DragIcon{}
 	cls.Ptr = ptr
+	return cls
+}
+
+var xDragIconGetForDrag func(uintptr) uintptr
+
+// Gets the `GtkDragIcon` in use with @drag.
+//
+// If no drag icon exists yet, a new one will be created
+// and shown.
+func DragIconGetForDrag(DragVar *gdk.Drag) *DragIcon {
+	var cls *DragIcon
+
+	cret := xDragIconGetForDrag(DragVar.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &DragIcon{}
+	cls.Ptr = cret
 	return cls
 }
 
@@ -87,31 +107,162 @@ func (c *DragIcon) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *DragIcon) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *DragIcon) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *DragIcon) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *DragIcon) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *DragIcon) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *DragIcon) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *DragIcon) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *DragIcon) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *DragIcon) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *DragIcon) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *DragIcon) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *DragIcon) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *DragIcon) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *DragIcon) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -157,7 +308,7 @@ func (x *DragIcon) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -187,13 +338,17 @@ func (x *DragIcon) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -223,7 +378,7 @@ func (x *DragIcon) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *DragIcon) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -362,26 +517,6 @@ func DragIconCreateWidgetForValue(ValueVar *gobject.Value) *Widget {
 	return cls
 }
 
-var xDragIconGetForDrag func(uintptr) uintptr
-
-// Gets the `GtkDragIcon` in use with @drag.
-//
-// If no drag icon exists yet, a new one will be created
-// and shown.
-func DragIconGetForDrag(DragVar *gdk.Drag) *Widget {
-	var cls *Widget
-
-	cret := xDragIconGetForDrag(DragVar.GoPointer())
-
-	if cret == 0 {
-		return nil
-	}
-	gobject.IncreaseRef(cret)
-	cls = &Widget{}
-	cls.Ptr = cret
-	return cls
-}
-
 var xDragIconSetFromPaintable func(uintptr, uintptr, int, int)
 
 // Creates a `GtkDragIcon` that shows @paintable, and associates
@@ -405,11 +540,12 @@ func init() {
 
 	core.PuregoSafeRegister(&xDragIconGLibType, lib, "gtk_drag_icon_get_type")
 
+	core.PuregoSafeRegister(&xDragIconGetForDrag, lib, "gtk_drag_icon_get_for_drag")
+
 	core.PuregoSafeRegister(&xDragIconGetChild, lib, "gtk_drag_icon_get_child")
 	core.PuregoSafeRegister(&xDragIconSetChild, lib, "gtk_drag_icon_set_child")
 
 	core.PuregoSafeRegister(&xDragIconCreateWidgetForValue, lib, "gtk_drag_icon_create_widget_for_value")
-	core.PuregoSafeRegister(&xDragIconGetForDrag, lib, "gtk_drag_icon_get_for_drag")
 	core.PuregoSafeRegister(&xDragIconSetFromPaintable, lib, "gtk_drag_icon_set_from_paintable")
 
 }

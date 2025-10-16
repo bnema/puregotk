@@ -486,7 +486,7 @@ func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint32 {
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *EntryCompletion) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

@@ -22,11 +22,12 @@ func (x *NoSelectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkNoSelection` is a `GtkSelectionModel` that does not allow selecting
-// anything.
+// A selection model that does not allow selecting anything.
 //
 // This model is meant to be used as a simple wrapper around a `GListModel`
 // when a `GtkSelectionModel` is required.
+//
+// `GtkNoSelection` passes through sections from the underlying model.
 type NoSelection struct {
 	gobject.Object
 }
@@ -189,6 +190,38 @@ func (x *NoSelection) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar u
 
 }
 
+// Query the section that covers the given position. The number of
+// items in the section can be computed by `out_end - out_start`.
+//
+// If the position is larger than the number of items, a single
+// range from n_items to G_MAXUINT will be returned.
+func (x *NoSelection) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+
+	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
+
+}
+
+// This function emits the [signal@Gtk.SectionModel::sections-changed]
+// signal to notify about changes to sections.
+//
+// It must cover all positions that used to be a section start or that
+// are now a section start. It does not have to cover all positions for
+// which the section has changed.
+//
+// The [signal@Gio.ListModel::items-changed] implies the effect of the
+// [signal@Gtk.SectionModel::sections-changed] signal for all the items
+// it covers.
+//
+// It is recommended that when changes to the items cause section changes
+// in a larger range, that the larger range is included in the emission
+// of the [signal@Gio.ListModel::items-changed] instead of emitting
+// two signals.
+func (x *NoSelection) SectionsChanged(PositionVar uint, NItemsVar uint) {
+
+	XGtkSectionModelSectionsChanged(x.GoPointer(), PositionVar, NItemsVar)
+
+}
+
 // Gets the set containing all currently selected items in the model.
 //
 // This function may be slow, so if you are only interested in single item,
@@ -243,7 +276,7 @@ func (x *NoSelection) SelectRange(PositionVar uint, NItemsVar uint, UnselectRest
 
 // Helper function for implementations of `GtkSelectionModel`.
 //
-// Call this when a the selection changes to emit the
+// Call this when the selection changes to emit the
 // [signal@Gtk.SelectionModel::selection-changed] signal.
 func (x *NoSelection) SelectionChanged(PositionVar uint, NItemsVar uint) {
 

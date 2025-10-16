@@ -20,8 +20,10 @@ func (x *FileIconClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GFileIcon specifies an icon by pointing to an image file
+// `GFileIcon` specifies an icon by pointing to an image file
 // to be used as icon.
+//
+// It implements [iface@Gio.LoadableIcon].
 type FileIcon struct {
 	gobject.Object
 }
@@ -86,6 +88,13 @@ func (c *FileIcon) SetGoPointer(ptr uintptr) {
 func (x *FileIcon) Equal(Icon2Var Icon) bool {
 
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+	return cret
+}
+
+// Gets a hash for an icon.
+func (x *FileIcon) Hash() uint {
+
+	cret := XGIconHash(x.GoPointer())
 	return cret
 }
 

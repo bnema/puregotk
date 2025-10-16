@@ -20,7 +20,7 @@ func (x *ListViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkListView` presents a large dynamic list of items.
+// Presents a large dynamic list of items.
 //
 // `GtkListView` uses its factory to generate one row widget for each visible
 // item and shows them in a linear display, either vertically or horizontally.
@@ -97,6 +97,13 @@ func (x *ListViewClass) GoPointer() uintptr {
 //
 // ```
 //
+// # Actions
+//
+// `GtkListView` defines a set of built-in actions:
+//
+//   - `list.activate-item` activates the item at given position by emitting
+//     the [signal@Gtk.ListView::activate] signal.
+//
 // # CSS nodes
 //
 // ```
@@ -122,8 +129,8 @@ func (x *ListViewClass) GoPointer() uintptr {
 //
 // # Accessibility
 //
-// `GtkListView` uses the %GTK_ACCESSIBLE_ROLE_LIST role, and the list
-// items use the %GTK_ACCESSIBLE_ROLE_LIST_ITEM role.
+// `GtkListView` uses the [enum@Gtk.AccessibleRole.list] role, and the list
+// items use the [enum@Gtk.AccessibleRole.list_item] role.
 type ListView struct {
 	ListBase
 }
@@ -193,6 +200,23 @@ func (x *ListView) GetFactory() *ListItemFactory {
 	return cls
 }
 
+var xListViewGetHeaderFactory func(uintptr) uintptr
+
+// Gets the factory that's currently used to populate section headers.
+func (x *ListView) GetHeaderFactory() *ListItemFactory {
+	var cls *ListItemFactory
+
+	cret := xListViewGetHeaderFactory(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &ListItemFactory{}
+	cls.Ptr = cret
+	return cls
+}
+
 var xListViewGetModel func(uintptr) uintptr
 
 // Gets the model that's currently used to read the items displayed.
@@ -212,7 +236,7 @@ func (x *ListView) GetModel() *SelectionModelBase {
 
 var xListViewGetShowSeparators func(uintptr) bool
 
-// Returns whether the list box should show separators
+// Returns whether the listview should show separators
 // between rows.
 func (x *ListView) GetShowSeparators() bool {
 
@@ -228,6 +252,28 @@ func (x *ListView) GetSingleClickActivate() bool {
 
 	cret := xListViewGetSingleClickActivate(x.GoPointer())
 	return cret
+}
+
+var xListViewGetTabBehavior func(uintptr) ListTabBehavior
+
+// Gets the behavior set for the &lt;kbd&gt;Tab&lt;/kbd&gt; key.
+func (x *ListView) GetTabBehavior() ListTabBehavior {
+
+	cret := xListViewGetTabBehavior(x.GoPointer())
+	return cret
+}
+
+var xListViewScrollTo func(uintptr, uint, ListScrollFlags, *ScrollInfo)
+
+// Scrolls to the item at the given position and performs the actions
+// specified in @flags.
+//
+// This function works no matter if the listview is shown or focused.
+// If it isn't, then the changes will take effect once that happens.
+func (x *ListView) ScrollTo(PosVar uint, FlagsVar ListScrollFlags, ScrollVar *ScrollInfo) {
+
+	xListViewScrollTo(x.GoPointer(), PosVar, FlagsVar, ScrollVar)
+
 }
 
 var xListViewSetEnableRubberband func(uintptr, bool)
@@ -248,6 +294,19 @@ func (x *ListView) SetFactory(FactoryVar *ListItemFactory) {
 
 }
 
+var xListViewSetHeaderFactory func(uintptr, uintptr)
+
+// Sets the `GtkListItemFactory` to use for populating the
+// [class@Gtk.ListHeader] objects used in section headers.
+//
+// If this factory is set to `NULL`, the list will not show
+// section headers.
+func (x *ListView) SetHeaderFactory(FactoryVar *ListItemFactory) {
+
+	xListViewSetHeaderFactory(x.GoPointer(), FactoryVar.GoPointer())
+
+}
+
 var xListViewSetModel func(uintptr, uintptr)
 
 // Sets the model to use.
@@ -261,7 +320,7 @@ func (x *ListView) SetModel(ModelVar SelectionModel) {
 
 var xListViewSetShowSeparators func(uintptr, bool)
 
-// Sets whether the list box should show separators
+// Sets whether the listview should show separators
 // between rows.
 func (x *ListView) SetShowSeparators(ShowSeparatorsVar bool) {
 
@@ -279,6 +338,19 @@ func (x *ListView) SetSingleClickActivate(SingleClickActivateVar bool) {
 
 }
 
+var xListViewSetTabBehavior func(uintptr, ListTabBehavior)
+
+// Sets the &lt;kbd&gt;Tab&lt;/kbd&gt; key behavior.
+//
+// This influences how the &lt;kbd&gt;Tab&lt;/kbd&gt; and
+// &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; keys move the
+// focus in the listview.
+func (x *ListView) SetTabBehavior(TabBehaviorVar ListTabBehavior) {
+
+	xListViewSetTabBehavior(x.GoPointer(), TabBehaviorVar)
+
+}
+
 func (c *ListView) GoPointer() uintptr {
 	if c == nil {
 		return 0
@@ -290,8 +362,10 @@ func (c *ListView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-// Emitted when a row has been activated by the user,
-// usually via activating the GtkListView|list.activate-item action.
+// Emitted when a row has been activated by the user.
+//
+// Activation usually happens via the list.activate-item action of
+// the `GtkListView`.
 //
 // This allows for a convenient way to handle activation in a listview.
 // See [method@Gtk.ListItem.set_activatable] for details on how to use
@@ -315,31 +389,162 @@ func (x *ListView) ConnectActivate(cb *func(ListView, uint)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
-// Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
+// Requests the user's screen reader to announce the given message.
+//
+// This kind of notification is useful for messages that
+// either have only a visual representation or that are not
+// exposed visually at all, e.g. a notification about a
+// successful operation.
+//
+// Also, by using this API, you can ensure that the message
+// does not interrupts the user's current screen reader output.
+func (x *ListView) Announce(MessageVar string, PriorityVar AccessibleAnnouncementPriority) {
+
+	XGtkAccessibleAnnounce(x.GoPointer(), MessageVar, PriorityVar)
+
+}
+
+// Retrieves the accessible parent for an accessible object.
+//
+// This function returns `NULL` for top level widgets.
+func (x *ListView) GetAccessibleParent() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetAccessibleParent(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the accessible role of an accessible object.
 func (x *ListView) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
 	return cret
 }
 
-// Resets the accessible @property to its default value.
+// Retrieves the implementation for the given accessible object.
+func (x *ListView) GetAtContext() *ATContext {
+	var cls *ATContext
+
+	cret := XGtkAccessibleGetAtContext(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &ATContext{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries the coordinates and dimensions of this accessible
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get the bounds from an ignored
+// child widget.
+func (x *ListView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+
+	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	return cret
+}
+
+// Retrieves the first accessible child of an accessible object.
+func (x *ListView) GetFirstAccessibleChild() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetFirstAccessibleChild(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Retrieves the next accessible sibling of an accessible object
+func (x *ListView) GetNextAccessibleSibling() *AccessibleBase {
+	var cls *AccessibleBase
+
+	cret := XGtkAccessibleGetNextAccessibleSibling(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &AccessibleBase{}
+	cls.Ptr = cret
+	return cls
+}
+
+// Queries a platform state, such as focus.
+//
+// This functionality can be overridden by `GtkAccessible`
+// implementations, e.g. to get platform state from an ignored
+// child widget, as is the case for `GtkText` wrappers.
+func (x *ListView) GetPlatformState(StateVar AccessiblePlatformState) bool {
+
+	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+	return cret
+}
+
+// Resets the accessible property to its default value.
 func (x *ListView) ResetProperty(PropertyVar AccessibleProperty) {
 
 	XGtkAccessibleResetProperty(x.GoPointer(), PropertyVar)
 
 }
 
-// Resets the accessible @relation to its default value.
+// Resets the accessible relation to its default value.
 func (x *ListView) ResetRelation(RelationVar AccessibleRelation) {
 
 	XGtkAccessibleResetRelation(x.GoPointer(), RelationVar)
 
 }
 
-// Resets the accessible @state to its default value.
+// Resets the accessible state to its default value.
 func (x *ListView) ResetState(StateVar AccessibleState) {
 
 	XGtkAccessibleResetState(x.GoPointer(), StateVar)
+
+}
+
+// Sets the parent and sibling of an accessible object.
+//
+// This function is meant to be used by accessible implementations that are
+// not part of the widget hierarchy, and but act as a logical bridge between
+// widgets. For instance, if a widget creates an object that holds metadata
+// for each child, and you want that object to implement the `GtkAccessible`
+// interface, you will use this function to ensure that the parent of each
+// child widget is the metadata object, and the parent of each metadata
+// object is the container widget.
+func (x *ListView) SetAccessibleParent(ParentVar Accessible, NextSiblingVar Accessible) {
+
+	XGtkAccessibleSetAccessibleParent(x.GoPointer(), ParentVar.GoPointer(), NextSiblingVar.GoPointer())
+
+}
+
+// Updates the next accessible sibling.
+//
+// That might be useful when a new child of a custom accessible
+// is created, and it needs to be linked to a previous child.
+func (x *ListView) UpdateNextAccessibleSibling(NewSiblingVar Accessible) {
+
+	XGtkAccessibleUpdateNextAccessibleSibling(x.GoPointer(), NewSiblingVar.GoPointer())
+
+}
+
+// Informs ATs that the platform state has changed.
+//
+// This function should be used by `GtkAccessible` implementations that
+// have a platform state but are not widgets. Widgets handle platform
+// states automatically.
+func (x *ListView) UpdatePlatformState(StateVar AccessiblePlatformState) {
+
+	XGtkAccessibleUpdatePlatformState(x.GoPointer(), StateVar)
 
 }
 
@@ -385,7 +590,7 @@ func (x *ListView) UpdatePropertyValue(NPropertiesVar int, PropertiesVar []Acces
 // relation change must be communicated to assistive technologies.
 //
 // If the [enum@Gtk.AccessibleRelation] requires a list of references,
-// you should pass each reference individually, followed by %NULL, e.g.
+// you should pass each reference individually, followed by `NULL`, e.g.
 //
 // ```c
 // gtk_accessible_update_relation (accessible,
@@ -415,13 +620,17 @@ func (x *ListView) UpdateRelationValue(NRelationsVar int, RelationsVar []Accessi
 
 }
 
-// Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
-// documentation for the value types of accessible states.
+// Updates a list of accessible states.
 //
-// This function should be called by `GtkWidget` types whenever an accessible
-// state change must be communicated to assistive technologies.
+// See the [enum@Gtk.AccessibleState] documentation for the
+// value types of accessible states.
+//
+// This function should be called by `GtkWidget` types whenever
+// an accessible state change must be communicated to assistive
+// technologies.
 //
 // Example:
+//
 // ```c
 // value = GTK_ACCESSIBLE_TRISTATE_MIXED;
 // gtk_accessible_update_state (GTK_ACCESSIBLE (check_button),
@@ -451,7 +660,7 @@ func (x *ListView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *ListView) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
@@ -576,13 +785,18 @@ func init() {
 
 	core.PuregoSafeRegister(&xListViewGetEnableRubberband, lib, "gtk_list_view_get_enable_rubberband")
 	core.PuregoSafeRegister(&xListViewGetFactory, lib, "gtk_list_view_get_factory")
+	core.PuregoSafeRegister(&xListViewGetHeaderFactory, lib, "gtk_list_view_get_header_factory")
 	core.PuregoSafeRegister(&xListViewGetModel, lib, "gtk_list_view_get_model")
 	core.PuregoSafeRegister(&xListViewGetShowSeparators, lib, "gtk_list_view_get_show_separators")
 	core.PuregoSafeRegister(&xListViewGetSingleClickActivate, lib, "gtk_list_view_get_single_click_activate")
+	core.PuregoSafeRegister(&xListViewGetTabBehavior, lib, "gtk_list_view_get_tab_behavior")
+	core.PuregoSafeRegister(&xListViewScrollTo, lib, "gtk_list_view_scroll_to")
 	core.PuregoSafeRegister(&xListViewSetEnableRubberband, lib, "gtk_list_view_set_enable_rubberband")
 	core.PuregoSafeRegister(&xListViewSetFactory, lib, "gtk_list_view_set_factory")
+	core.PuregoSafeRegister(&xListViewSetHeaderFactory, lib, "gtk_list_view_set_header_factory")
 	core.PuregoSafeRegister(&xListViewSetModel, lib, "gtk_list_view_set_model")
 	core.PuregoSafeRegister(&xListViewSetShowSeparators, lib, "gtk_list_view_set_show_separators")
 	core.PuregoSafeRegister(&xListViewSetSingleClickActivate, lib, "gtk_list_view_set_single_click_activate")
+	core.PuregoSafeRegister(&xListViewSetTabBehavior, lib, "gtk_list_view_set_tab_behavior")
 
 }

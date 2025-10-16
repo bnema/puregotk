@@ -154,8 +154,8 @@ func (x *DataInputStreamPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// Data input stream implements #GInputStream and includes functions for
-// reading structured data directly from a binary input stream.
+// Data input stream implements [class@Gio.InputStream] and includes functions
+// for reading structured data directly from a binary input stream.
 type DataInputStream struct {
 	BufferedInputStream
 }

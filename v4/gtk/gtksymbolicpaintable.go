@@ -26,6 +26,11 @@ func (x *SymbolicPaintableInterface) GoPointer() uintptr {
 }
 
 // OverrideSnapshotSymbolic sets the callback function.
+// Snapshot the paintable using the given colors.
+//
+//	See `GtkSymbolicPaintable::snapshot_symbolic()` for details.
+//	If this function is not implemented, [vfunc@Gdk.Paintable.snapshot]
+//	will be called.
 func (x *SymbolicPaintableInterface) OverrideSnapshotSymbolic(cb func(SymbolicPaintable, *gdk.Snapshot, float64, float64, []gdk.RGBA, uint)) {
 	if cb == nil {
 		x.xSnapshotSymbolic = 0
@@ -37,6 +42,11 @@ func (x *SymbolicPaintableInterface) OverrideSnapshotSymbolic(cb func(SymbolicPa
 }
 
 // GetSnapshotSymbolic gets the callback function.
+// Snapshot the paintable using the given colors.
+//
+//	See `GtkSymbolicPaintable::snapshot_symbolic()` for details.
+//	If this function is not implemented, [vfunc@Gdk.Paintable.snapshot]
+//	will be called.
 func (x *SymbolicPaintableInterface) GetSnapshotSymbolic() func(SymbolicPaintable, *gdk.Snapshot, float64, float64, []gdk.RGBA, uint) {
 	if x.xSnapshotSymbolic == 0 {
 		return nil
@@ -48,8 +58,7 @@ func (x *SymbolicPaintableInterface) GetSnapshotSymbolic() func(SymbolicPaintabl
 	}
 }
 
-// `GtkSymbolicPaintable` is an interface that support symbolic colors in
-// paintables.
+// An interface that supports symbolic colors in paintables.
 //
 // `GdkPaintable`s implementing the interface will have the
 // [vfunc@Gtk.SymbolicPaintable.snapshot_symbolic] function called and

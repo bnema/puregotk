@@ -53,7 +53,7 @@ func (x *TreeModelSortPrivate) GoPointer() uintptr {
 //
 // ## Using a `GtkTreeModelSort`
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 //
 //	{
 //	  GtkTreeView *tree_view1;
@@ -80,7 +80,7 @@ func (x *TreeModelSortPrivate) GoPointer() uintptr {
 //	                                        COLUMN_1, GTK_SORT_DESCENDING);
 //	}
 //
-// ]|
+// ```
 //
 // To demonstrate how to access the underlying child model from the sort
 // model, the next example will be a callback for the `GtkTreeSelection`
@@ -90,7 +90,7 @@ func (x *TreeModelSortPrivate) GoPointer() uintptr {
 //
 // ## Accessing the child model of in a selection changed callback
 //
-// |[&lt;!-- language="C" --&gt;
+// ```c
 // void
 // selection_changed (GtkTreeSelection *selection, gpointer data)
 //
@@ -132,7 +132,7 @@ func (x *TreeModelSortPrivate) GoPointer() uintptr {
 //	  g_free (modified_data);
 //	}
 //
-// ]|
+// ```
 type TreeModelSort struct {
 	gobject.Object
 }

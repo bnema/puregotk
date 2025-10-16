@@ -36,7 +36,7 @@ func (x *MultiFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkAnyFilter` matches an item when at least one of its filters matches.
+// Matches an item when at least one of its filters matches.
 //
 // To add filters to a `GtkAnyFilter`, use [method@Gtk.MultiFilter.append].
 type AnyFilter struct {
@@ -182,14 +182,14 @@ func (x *AnyFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uin
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *AnyFilter) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
-// `GtkEveryFilter` matches an item when each of its filters matches.
+// Matches an item when each of its filters matches.
 //
 // To add filters to a `GtkEveryFilter`, use [method@Gtk.MultiFilter.append].
 type EveryFilter struct {
@@ -335,14 +335,14 @@ func (x *EveryFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar u
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *EveryFilter) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
 	return cret
 }
 
-// `GtkMultiFilter` is the base class for filters that combine multiple filters.
+// Base class for filters that combine multiple filters.
 type MultiFilter struct {
 	Filter
 }
@@ -361,7 +361,7 @@ func MultiFilterNewFromInternalPtr(ptr uintptr) *MultiFilter {
 
 var xMultiFilterAppend func(uintptr, uintptr)
 
-// Adds a @filter to @self to use for matching.
+// Adds a filter.
 func (x *MultiFilter) Append(FilterVar *Filter) {
 
 	xMultiFilterAppend(x.GoPointer(), FilterVar.GoPointer())
@@ -370,11 +370,10 @@ func (x *MultiFilter) Append(FilterVar *Filter) {
 
 var xMultiFilterRemove func(uintptr, uint)
 
-// Removes the filter at the given @position from the list of filters used
-// by @self.
+// Removes a filter.
 //
-// If @position is larger than the number of filters, nothing happens and
-// the function returns.
+// If @position is larger than the number of filters,
+// nothing happens.
 func (x *MultiFilter) Remove(PositionVar uint) {
 
 	xMultiFilterRemove(x.GoPointer(), PositionVar)
@@ -486,7 +485,7 @@ func (x *MultiFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar u
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute
-// of the &lt;object&gt; tag used to construct the @buildable.
+// of the `&lt;object&gt;` tag used to construct the @buildable.
 func (x *MultiFilter) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())

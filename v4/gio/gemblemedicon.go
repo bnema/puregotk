@@ -30,12 +30,12 @@ func (x *EmblemedIconPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// #GEmblemedIcon is an implementation of #GIcon that supports
+// `GEmblemedIcon` is an implementation of [iface@Gio.Icon] that supports
 // adding an emblem to an icon. Adding multiple emblems to an
-// icon is ensured via g_emblemed_icon_add_emblem().
+// icon is ensured via [method@Gio.EmblemedIcon.add_emblem].
 //
-// Note that #GEmblemedIcon allows no control over the position
-// of the emblems. See also #GEmblem for more information.
+// Note that `GEmblemedIcon` allows no control over the position
+// of the emblems. See also [class@Gio.Emblem] for more information.
 type EmblemedIcon struct {
 	gobject.Object
 }
@@ -127,6 +127,13 @@ func (c *EmblemedIcon) SetGoPointer(ptr uintptr) {
 func (x *EmblemedIcon) Equal(Icon2Var Icon) bool {
 
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+	return cret
+}
+
+// Gets a hash for an icon.
+func (x *EmblemedIcon) Hash() uint {
+
+	cret := XGIconHash(x.GoPointer())
 	return cret
 }
 

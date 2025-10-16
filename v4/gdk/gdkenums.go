@@ -73,6 +73,23 @@ const (
 	ActionAskValue DragAction = 8
 )
 
+// The list of the different APIs that GdkGLContext can potentially support.
+type GLAPI int
+
+var xGLAPIGLibType func() types.GType
+
+func GLAPIGLibType() types.GType {
+	return xGLAPIGLibType()
+}
+
+const (
+
+	// The OpenGL API
+	GlApiGlValue GLAPI = 1
+	// The OpenGL ES API
+	GlApiGlesValue GLAPI = 2
+)
+
 // Flags to indicate the state of modifier keys and mouse buttons
 // in events.
 //
@@ -80,7 +97,7 @@ const (
 // Apple, CapsLock or ShiftLock.
 //
 // Note that GDK may add internal values to events which include values outside
-// of this enumeration. Your code should preserve and ignore them.  You can use
+// of this enumeration. Your code should preserve and ignore them. You can use
 // %GDK_MODIFIER_MASK to remove all private values.
 type ModifierType int
 
@@ -92,16 +109,18 @@ func ModifierTypeGLibType() types.GType {
 
 const (
 
+	// No modifier.
+	NoModifierMaskValue ModifierType = 0
 	// the Shift key.
 	ShiftMaskValue ModifierType = 1
-	// a Lock key (depending on the modifier mapping of the
-	//  X server this may either be CapsLock or ShiftLock).
+	// a Lock key (depending on the Windowing System configuration,
+	//    this may either be &lt;kbd&gt;CapsLock&lt;/kbd&gt; or &lt;kbd&gt;ShiftLock&lt;/kbd&gt;).
 	LockMaskValue ModifierType = 2
 	// the Control key.
 	ControlMaskValue ModifierType = 4
-	// the fourth modifier key (it depends on the modifier
-	//  mapping of the X server which key is interpreted as this modifier, but
-	//  normally it is the Alt key).
+	// the fourth modifier key (it depends on the Windowing System
+	//    configuration which key is interpreted as this modifier, but normally it
+	//    is the &lt;kbd&gt;Alt&lt;/kbd&gt; key).
 	AltMaskValue ModifierType = 8
 	// the first mouse button.
 	Button1MaskValue ModifierType = 256
@@ -113,11 +132,11 @@ const (
 	Button4MaskValue ModifierType = 2048
 	// the fifth mouse button.
 	Button5MaskValue ModifierType = 4096
-	// the Super modifier
+	// the Super modifier.
 	SuperMaskValue ModifierType = 67108864
-	// the Hyper modifier
+	// the Hyper modifier.
 	HyperMaskValue ModifierType = 134217728
-	// the Meta modifier
+	// the Meta modifier. Maps to Command on macOS.
 	MetaMaskValue ModifierType = 268435456
 )
 
@@ -162,6 +181,27 @@ const (
 	AxisSliderValue AxisUse = 11
 	// a constant equal to the numerically highest axis value.
 	AxisLastValue AxisUse = 12
+)
+
+// Error enumeration for `GdkDmabufTexture`.
+type DmabufError int
+
+var xDmabufErrorGLibType func() types.GType
+
+func DmabufErrorGLibType() types.GType {
+	return xDmabufErrorGLibType()
+}
+
+const (
+
+	// Dmabuf support is not available, because the OS
+	//   is not Linux, or it was explicitly disabled at compile- or runtime
+	DmabufErrorNotAvailableValue DmabufError = 0
+	// The requested format is not supported
+	DmabufErrorUnsupportedFormatValue DmabufError = 1
+	// GTK failed to create the resource for other
+	//   reasons
+	DmabufErrorCreationFailedValue DmabufError = 2
 )
 
 // Error enumeration for `GdkGLContext`.
@@ -221,12 +261,12 @@ const (
 	GravityStaticValue Gravity = 10
 )
 
-// `GdkMemoryFormat` describes formats that image data can have in memory.
+// Describes formats that image data can have in memory.
 //
 // It describes formats by listing the contents of the memory passed to it.
-// So GDK_MEMORY_A8R8G8B8 will be 1 byte (8 bits) of alpha, followed by a
+// So `GDK_MEMORY_A8R8G8B8` will be 1 byte (8 bits) of alpha, followed by a
 // byte each of red, green and blue. It is not endian-dependent, so
-// CAIRO_FORMAT_ARGB32 is represented by different `GdkMemoryFormats`
+// `CAIRO_FORMAT_ARGB32` is represented by different `GdkMemoryFormats`
 // on architectures with different endiannesses.
 //
 // Its naming is modelled after
@@ -263,37 +303,63 @@ const (
 	MemoryR8g8b8Value MemoryFormat = 7
 	// 3 bytes; for blue, green, red. The data is opaque.
 	MemoryB8g8r8Value MemoryFormat = 8
-	// 3 guint16 values; for red, green, blue. Since: 4.6
+	// 3 guint16 values; for red, green, blue.
 	MemoryR16g16b16Value MemoryFormat = 9
-	// 4 guint16 values; for red, green,
-	//   blue, alpha. The color values are premultiplied with the alpha value.
-	//  Since: 4.6
+	// 4 guint16 values; for red, green, blue, alpha. The color values are
+	// premultiplied with the alpha value.
 	MemoryR16g16b16a16PremultipliedValue MemoryFormat = 10
 	// 4 guint16 values; for red, green, blue, alpha.
-	//  Since: 4.6
 	MemoryR16g16b16a16Value MemoryFormat = 11
-	// 3 half-float values; for red, green, blue.
-	//   The data is opaque. Since: 4.6
+	// 3 half-float values; for red, green, blue. The data is opaque.
 	MemoryR16g16b16FloatValue MemoryFormat = 12
-	// 4 half-float values; for
-	//   red, green, blue and alpha. The color values are premultiplied with
-	//   the alpha value. Since: 4.6
+	// 4 half-float values; for red, green, blue and alpha. The color values are
+	// premultiplied with the alpha value.
 	MemoryR16g16b16a16FloatPremultipliedValue MemoryFormat = 13
-	// 4 half-float values; for red, green,
-	//   blue and alpha. Since: 4.6
+	// 4 half-float values; for red, green, blue and alpha.
 	MemoryR16g16b16a16FloatValue MemoryFormat = 14
-
+	// 3 float values; for red, green, blue.
 	MemoryR32g32b32FloatValue MemoryFormat = 15
-	// 4 float values; for
-	//   red, green, blue and alpha. The color values are premultiplied with
-	//   the alpha value. Since: 4.6
+	// 4 float values; for red, green, blue and alpha. The color values are
+	// premultiplied with the alpha value.
 	MemoryR32g32b32a32FloatPremultipliedValue MemoryFormat = 16
-	// 4 float values; for red, green, blue and
-	//   alpha. Since: 4.6
+	// 4 float values; for red, green, blue and alpha.
 	MemoryR32g32b32a32FloatValue MemoryFormat = 17
+	// 2 bytes; for grayscale, alpha. The color values are premultiplied with the
+	// alpha value.
+	MemoryG8a8PremultipliedValue MemoryFormat = 18
+	// 2 bytes; for grayscale, alpha.
+	MemoryG8a8Value MemoryFormat = 19
+	// One byte; for grayscale. The data is opaque.
+	MemoryG8Value MemoryFormat = 20
+	// 2 guint16 values; for grayscale, alpha. The color values are premultiplied
+	// with the alpha value.
+	MemoryG16a16PremultipliedValue MemoryFormat = 21
+	// 2 guint16 values; for grayscale, alpha.
+	MemoryG16a16Value MemoryFormat = 22
+	// One guint16 value; for grayscale. The data is opaque.
+	MemoryG16Value MemoryFormat = 23
+	// One byte; for alpha.
+	MemoryA8Value MemoryFormat = 24
+	// One guint16 value; for alpha.
+	MemoryA16Value MemoryFormat = 25
+	// One half-float value; for alpha.
+	MemoryA16FloatValue MemoryFormat = 26
+	// One float value; for alpha.
+	MemoryA32FloatValue MemoryFormat = 27
+	// 4 bytes; for alpha, blue, green, red, The color values are premultiplied with
+	// the alpha value.
+	MemoryA8b8g8r8PremultipliedValue MemoryFormat = 28
+	// 4 bytes; for blue, green, red, unused.
+	MemoryB8g8r8x8Value MemoryFormat = 29
+	// 4 bytes; for unused, red, green, blue.
+	MemoryX8r8g8b8Value MemoryFormat = 30
+	// 4 bytes; for red, green, blue, unused.
+	MemoryR8g8b8x8Value MemoryFormat = 31
+	// 4 bytes; for unused, blue, green, red.
+	MemoryX8b8g8r8Value MemoryFormat = 32
 	// The number of formats. This value will change as
 	//   more formats get added, so do not rely on its concrete integer.
-	MemoryNFormatsValue MemoryFormat = 18
+	MemoryNFormatsValue MemoryFormat = 33
 )
 
 // Error enumeration for `GdkVulkanContext`.

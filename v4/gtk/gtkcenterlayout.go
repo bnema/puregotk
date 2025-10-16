@@ -21,7 +21,7 @@ func (x *CenterLayoutClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkCenterLayout` is a layout manager that manages up to three children.
+// Manages up to three children.
 //
 // The start widget is allocated at the start of the layout (left in
 // left-to-right locales and right in right-to-left ones), and the end
@@ -112,9 +112,18 @@ func (x *CenterLayout) GetOrientation() Orientation {
 	return cret
 }
 
+var xCenterLayoutGetShrinkCenterLast func(uintptr) bool
+
+// Gets whether @self shrinks the center widget after other children.
+func (x *CenterLayout) GetShrinkCenterLast() bool {
+
+	cret := xCenterLayoutGetShrinkCenterLast(x.GoPointer())
+	return cret
+}
+
 var xCenterLayoutGetStartWidget func(uintptr) uintptr
 
-// Returns the start widget fo the layout.
+// Returns the start widget of the layout.
 func (x *CenterLayout) GetStartWidget() *Widget {
 	var cls *Widget
 
@@ -169,6 +178,22 @@ func (x *CenterLayout) SetOrientation(OrientationVar Orientation) {
 
 }
 
+var xCenterLayoutSetShrinkCenterLast func(uintptr, bool)
+
+// Sets whether to shrink the center widget after other children.
+//
+// By default, when there's no space to give all three children their
+// natural widths, the start and end widgets start shrinking and the
+// center child keeps natural width until they reach minimum width.
+//
+// If set to `FALSE`, start and end widgets keep natural width and the
+// center widget starts shrinking instead.
+func (x *CenterLayout) SetShrinkCenterLast(ShrinkCenterLastVar bool) {
+
+	xCenterLayoutSetShrinkCenterLast(x.GoPointer(), ShrinkCenterLastVar)
+
+}
+
 var xCenterLayoutSetStartWidget func(uintptr, uintptr)
 
 // Sets the new start widget of @self.
@@ -207,11 +232,13 @@ func init() {
 	core.PuregoSafeRegister(&xCenterLayoutGetCenterWidget, lib, "gtk_center_layout_get_center_widget")
 	core.PuregoSafeRegister(&xCenterLayoutGetEndWidget, lib, "gtk_center_layout_get_end_widget")
 	core.PuregoSafeRegister(&xCenterLayoutGetOrientation, lib, "gtk_center_layout_get_orientation")
+	core.PuregoSafeRegister(&xCenterLayoutGetShrinkCenterLast, lib, "gtk_center_layout_get_shrink_center_last")
 	core.PuregoSafeRegister(&xCenterLayoutGetStartWidget, lib, "gtk_center_layout_get_start_widget")
 	core.PuregoSafeRegister(&xCenterLayoutSetBaselinePosition, lib, "gtk_center_layout_set_baseline_position")
 	core.PuregoSafeRegister(&xCenterLayoutSetCenterWidget, lib, "gtk_center_layout_set_center_widget")
 	core.PuregoSafeRegister(&xCenterLayoutSetEndWidget, lib, "gtk_center_layout_set_end_widget")
 	core.PuregoSafeRegister(&xCenterLayoutSetOrientation, lib, "gtk_center_layout_set_orientation")
+	core.PuregoSafeRegister(&xCenterLayoutSetShrinkCenterLast, lib, "gtk_center_layout_set_shrink_center_last")
 	core.PuregoSafeRegister(&xCenterLayoutSetStartWidget, lib, "gtk_center_layout_set_start_widget")
 
 }

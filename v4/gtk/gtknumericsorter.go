@@ -21,7 +21,7 @@ func (x *NumericSorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkNumericSorter` is a `GtkSorter` that compares numbers.
+// Sorts items numerically.
 //
 // To obtain the numbers to compare, this sorter evaluates a
 // [class@Gtk.Expression].

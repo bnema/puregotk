@@ -11,8 +11,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// A `GdkContentFormatsBuilder` is an auxiliary struct used to create
-// new `GdkContentFormats`, and should not be kept around.
+// Creates `GdkContentFormats` objects.
 type ContentFormatsBuilder struct {
 	_ structs.HostLayout
 }

@@ -38,6 +38,7 @@ func (x *SocketListenerClass) GoPointer() uintptr {
 }
 
 // OverrideChanged sets the callback function.
+// virtual method called when the set of socket listened to changes
 func (x *SocketListenerClass) OverrideChanged(cb func(*SocketListener)) {
 	if cb == nil {
 		x.xChanged = 0
@@ -49,6 +50,7 @@ func (x *SocketListenerClass) OverrideChanged(cb func(*SocketListener)) {
 }
 
 // GetChanged gets the callback function.
+// virtual method called when the set of socket listened to changes
 func (x *SocketListenerClass) GetChanged() func(*SocketListener) {
 	if x.xChanged == 0 {
 		return nil
@@ -206,20 +208,21 @@ func (x *SocketListenerPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// A #GSocketListener is an object that keeps track of a set
+// A `GSocketListener` is an object that keeps track of a set
 // of server sockets and helps you accept sockets from any of the
 // socket, either sync or async.
 //
-// Add addresses and ports to listen on using g_socket_listener_add_address()
-// and g_socket_listener_add_inet_port(). These will be listened on until
-// g_socket_listener_close() is called. Dropping your final reference to the
-// #GSocketListener will not cause g_socket_listener_close() to be called
-// implicitly, as some references to the #GSocketListener may be held
+// Add addresses and ports to listen on using
+// [method@Gio.SocketListener.add_address] and
+// [method@Gio.SocketListener.add_inet_port]. These will be listened on until
+// [method@Gio.SocketListener.close] is called. Dropping your final reference to
+// the `GSocketListener` will not cause [method@Gio.SocketListener.close] to be
+// called implicitly, as some references to the `GSocketListener` may be held
 // internally.
 //
-// If you want to implement a network server, also look at #GSocketService
-// and #GThreadedSocketService which are subclasses of #GSocketListener
-// that make this even easier.
+// If you want to implement a network server, also look at
+// [class@Gio.SocketService] and [class@Gio.ThreadedSocketService] which are
+// subclasses of `GSocketListener` that make this even easier.
 type SocketListener struct {
 	gobject.Object
 }

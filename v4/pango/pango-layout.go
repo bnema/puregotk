@@ -625,6 +625,8 @@ const (
 	// wrap lines at word boundaries, but fall back to
 	//   character boundaries if there is not enough space for a full word.
 	WrapWordCharValue WrapMode = 2
+	// do not wrap.
+	WrapNoneValue WrapMode = 3
 )
 
 // A `PangoLayout` structure represents an entire paragraph of text.
@@ -1214,7 +1216,7 @@ var xLayoutIndexToPos func(uintptr, int, *Rectangle)
 // Converts from an index within a `PangoLayout` to the onscreen position
 // corresponding to the grapheme at that index.
 //
-// The return value is represented as rectangle. Note that `pos-&gt;x` is
+// The returns is represented as rectangle. Note that `pos-&gt;x` is
 // always the leading edge of the grapheme and `pos-&gt;x + pos-&gt;width` the
 // trailing edge of the grapheme. If the directionality of the grapheme
 // is right-to-left, then `pos-&gt;width` will be negative.
@@ -1243,7 +1245,6 @@ var xLayoutIsWrapped func(uintptr) bool
 // Queries whether the layout had to wrap any paragraphs.
 //
 // This returns %TRUE if a positive width is set on @layout,
-// ellipsization mode of @layout is set to %PANGO_ELLIPSIZE_NONE,
 // and there are paragraphs exceeding the layout width that have
 // to be wrapped.
 func (x *Layout) IsWrapped() bool {
@@ -1607,7 +1608,7 @@ func (x *Layout) SetText(TextVar string, LengthVar int) {
 var xLayoutSetWidth func(uintptr, int)
 
 // Sets the width to which the lines of the `PangoLayout` should wrap or
-// ellipsized.
+// get ellipsized.
 //
 // The default value is -1: no width set.
 func (x *Layout) SetWidth(WidthVar int) {

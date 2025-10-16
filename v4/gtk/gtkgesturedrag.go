@@ -20,7 +20,7 @@ func (x *GestureDragClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// `GtkGestureDrag` is a `GtkGesture` implementation for drags.
+// Recognizes drag gestures.
 //
 // The drag operation itself can be tracked throughout the
 // [signal@Gtk.GestureDrag::drag-begin],
