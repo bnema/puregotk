@@ -17,11 +17,146 @@ type SwipeableInterface struct {
 
 	Parent uintptr
 
+	xGetDistance uintptr
+
+	xGetSnapPoints uintptr
+
+	xGetProgress uintptr
+
+	xGetCancelProgress uintptr
+
+	xGetSwipeArea uintptr
+
 	Padding [4]uintptr
 }
 
 func (x *SwipeableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetDistance sets the callback function.
+// Gets the swipe distance.
+func (x *SwipeableInterface) OverrideGetDistance(cb func(Swipeable) float64) {
+	if cb == nil {
+		x.xGetDistance = 0
+	} else {
+		x.xGetDistance = purego.NewCallback(func(SelfVarp uintptr) float64 {
+			return cb(&SwipeableBase{Ptr: SelfVarp})
+		})
+	}
+}
+
+// GetGetDistance gets the callback function.
+// Gets the swipe distance.
+func (x *SwipeableInterface) GetGetDistance() func(Swipeable) float64 {
+	if x.xGetDistance == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr) float64
+	purego.RegisterFunc(&rawCallback, x.xGetDistance)
+	return func(SelfVar Swipeable) float64 {
+		return rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideGetSnapPoints sets the callback function.
+// Gets the snap points.
+func (x *SwipeableInterface) OverrideGetSnapPoints(cb func(Swipeable, int) uintptr) {
+	if cb == nil {
+		x.xGetSnapPoints = 0
+	} else {
+		x.xGetSnapPoints = purego.NewCallback(func(SelfVarp uintptr, NSnapPointsVarp int) uintptr {
+			return cb(&SwipeableBase{Ptr: SelfVarp}, NSnapPointsVarp)
+		})
+	}
+}
+
+// GetGetSnapPoints gets the callback function.
+// Gets the snap points.
+func (x *SwipeableInterface) GetGetSnapPoints() func(Swipeable, int) uintptr {
+	if x.xGetSnapPoints == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, NSnapPointsVarp int) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetSnapPoints)
+	return func(SelfVar Swipeable, NSnapPointsVar int) uintptr {
+		return rawCallback(SelfVar.GoPointer(), NSnapPointsVar)
+	}
+}
+
+// OverrideGetProgress sets the callback function.
+// Gets the current progress.
+func (x *SwipeableInterface) OverrideGetProgress(cb func(Swipeable) float64) {
+	if cb == nil {
+		x.xGetProgress = 0
+	} else {
+		x.xGetProgress = purego.NewCallback(func(SelfVarp uintptr) float64 {
+			return cb(&SwipeableBase{Ptr: SelfVarp})
+		})
+	}
+}
+
+// GetGetProgress gets the callback function.
+// Gets the current progress.
+func (x *SwipeableInterface) GetGetProgress() func(Swipeable) float64 {
+	if x.xGetProgress == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr) float64
+	purego.RegisterFunc(&rawCallback, x.xGetProgress)
+	return func(SelfVar Swipeable) float64 {
+		return rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideGetCancelProgress sets the callback function.
+// Gets the cancel progress.
+func (x *SwipeableInterface) OverrideGetCancelProgress(cb func(Swipeable) float64) {
+	if cb == nil {
+		x.xGetCancelProgress = 0
+	} else {
+		x.xGetCancelProgress = purego.NewCallback(func(SelfVarp uintptr) float64 {
+			return cb(&SwipeableBase{Ptr: SelfVarp})
+		})
+	}
+}
+
+// GetGetCancelProgress gets the callback function.
+// Gets the cancel progress.
+func (x *SwipeableInterface) GetGetCancelProgress() func(Swipeable) float64 {
+	if x.xGetCancelProgress == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr) float64
+	purego.RegisterFunc(&rawCallback, x.xGetCancelProgress)
+	return func(SelfVar Swipeable) float64 {
+		return rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideGetSwipeArea sets the callback function.
+// Gets the swipeable rectangle.
+func (x *SwipeableInterface) OverrideGetSwipeArea(cb func(Swipeable, NavigationDirection, bool, *gdk.Rectangle)) {
+	if cb == nil {
+		x.xGetSwipeArea = 0
+	} else {
+		x.xGetSwipeArea = purego.NewCallback(func(SelfVarp uintptr, NavigationDirectionVarp NavigationDirection, IsDragVarp bool, RectVarp *gdk.Rectangle) {
+			cb(&SwipeableBase{Ptr: SelfVarp}, NavigationDirectionVarp, IsDragVarp, RectVarp)
+		})
+	}
+}
+
+// GetGetSwipeArea gets the callback function.
+// Gets the swipeable rectangle.
+func (x *SwipeableInterface) GetGetSwipeArea() func(Swipeable, NavigationDirection, bool, *gdk.Rectangle) {
+	if x.xGetSwipeArea == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, NavigationDirectionVarp NavigationDirection, IsDragVarp bool, RectVarp *gdk.Rectangle)
+	purego.RegisterFunc(&rawCallback, x.xGetSwipeArea)
+	return func(SelfVar Swipeable, NavigationDirectionVar NavigationDirection, IsDragVar bool, RectVar *gdk.Rectangle) {
+		rawCallback(SelfVar.GoPointer(), NavigationDirectionVar, IsDragVar, RectVar)
+	}
 }
 
 // An interface for swipeable widgets.

@@ -15,13 +15,38 @@ import (
 type ToggleButtonClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass ButtonClass
+
+	xToggled uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *ToggleButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideToggled sets the callback function.
+func (x *ToggleButtonClass) OverrideToggled(cb func(*ToggleButton)) {
+	if cb == nil {
+		x.xToggled = 0
+	} else {
+		x.xToggled = purego.NewCallback(func(ToggleButtonVarp uintptr) {
+			cb(ToggleButtonNewFromInternalPtr(ToggleButtonVarp))
+		})
+	}
+}
+
+// GetToggled gets the callback function.
+func (x *ToggleButtonClass) GetToggled() func(*ToggleButton) {
+	if x.xToggled == 0 {
+		return nil
+	}
+	var rawCallback func(ToggleButtonVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xToggled)
+	return func(ToggleButtonVar *ToggleButton) {
+		rawCallback(ToggleButtonVar.GoPointer())
+	}
 }
 
 // A `GtkToggleButton` is a button which remains “pressed-in” when

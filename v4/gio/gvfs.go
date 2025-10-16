@@ -23,11 +23,476 @@ type VfsFileLookupFunc func(uintptr, string, uintptr) uintptr
 type VfsClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xIsActive uintptr
+
+	xGetFileForPath uintptr
+
+	xGetFileForUri uintptr
+
+	xGetSupportedUriSchemes uintptr
+
+	xParseName uintptr
+
+	xLocalFileAddInfo uintptr
+
+	xAddWritableNamespaces uintptr
+
+	xLocalFileSetAttributes uintptr
+
+	xLocalFileRemoved uintptr
+
+	xLocalFileMoved uintptr
+
+	xDeserializeIcon uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
+
+	xGReserved6 uintptr
 }
 
 func (x *VfsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideIsActive sets the callback function.
+func (x *VfsClass) OverrideIsActive(cb func(*Vfs) bool) {
+	if cb == nil {
+		x.xIsActive = 0
+	} else {
+		x.xIsActive = purego.NewCallback(func(VfsVarp uintptr) bool {
+			return cb(VfsNewFromInternalPtr(VfsVarp))
+		})
+	}
+}
+
+// GetIsActive gets the callback function.
+func (x *VfsClass) GetIsActive() func(*Vfs) bool {
+	if x.xIsActive == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xIsActive)
+	return func(VfsVar *Vfs) bool {
+		return rawCallback(VfsVar.GoPointer())
+	}
+}
+
+// OverrideGetFileForPath sets the callback function.
+func (x *VfsClass) OverrideGetFileForPath(cb func(*Vfs, string) *FileBase) {
+	if cb == nil {
+		x.xGetFileForPath = 0
+	} else {
+		x.xGetFileForPath = purego.NewCallback(func(VfsVarp uintptr, PathVarp string) uintptr {
+			ret := cb(VfsNewFromInternalPtr(VfsVarp), PathVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetFileForPath gets the callback function.
+func (x *VfsClass) GetGetFileForPath() func(*Vfs, string) *FileBase {
+	if x.xGetFileForPath == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr, PathVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetFileForPath)
+	return func(VfsVar *Vfs, PathVar string) *FileBase {
+		rawRet := rawCallback(VfsVar.GoPointer(), PathVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetFileForUri sets the callback function.
+func (x *VfsClass) OverrideGetFileForUri(cb func(*Vfs, string) *FileBase) {
+	if cb == nil {
+		x.xGetFileForUri = 0
+	} else {
+		x.xGetFileForUri = purego.NewCallback(func(VfsVarp uintptr, UriVarp string) uintptr {
+			ret := cb(VfsNewFromInternalPtr(VfsVarp), UriVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetFileForUri gets the callback function.
+func (x *VfsClass) GetGetFileForUri() func(*Vfs, string) *FileBase {
+	if x.xGetFileForUri == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr, UriVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetFileForUri)
+	return func(VfsVar *Vfs, UriVar string) *FileBase {
+		rawRet := rawCallback(VfsVar.GoPointer(), UriVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetSupportedUriSchemes sets the callback function.
+func (x *VfsClass) OverrideGetSupportedUriSchemes(cb func(*Vfs) []string) {
+	if cb == nil {
+		x.xGetSupportedUriSchemes = 0
+	} else {
+		x.xGetSupportedUriSchemes = purego.NewCallback(func(VfsVarp uintptr) []string {
+			return cb(VfsNewFromInternalPtr(VfsVarp))
+		})
+	}
+}
+
+// GetGetSupportedUriSchemes gets the callback function.
+func (x *VfsClass) GetGetSupportedUriSchemes() func(*Vfs) []string {
+	if x.xGetSupportedUriSchemes == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr) []string
+	purego.RegisterFunc(&rawCallback, x.xGetSupportedUriSchemes)
+	return func(VfsVar *Vfs) []string {
+		return rawCallback(VfsVar.GoPointer())
+	}
+}
+
+// OverrideParseName sets the callback function.
+func (x *VfsClass) OverrideParseName(cb func(*Vfs, string) *FileBase) {
+	if cb == nil {
+		x.xParseName = 0
+	} else {
+		x.xParseName = purego.NewCallback(func(VfsVarp uintptr, ParseNameVarp string) uintptr {
+			ret := cb(VfsNewFromInternalPtr(VfsVarp), ParseNameVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetParseName gets the callback function.
+func (x *VfsClass) GetParseName() func(*Vfs, string) *FileBase {
+	if x.xParseName == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr, ParseNameVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xParseName)
+	return func(VfsVar *Vfs, ParseNameVar string) *FileBase {
+		rawRet := rawCallback(VfsVar.GoPointer(), ParseNameVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideLocalFileAddInfo sets the callback function.
+func (x *VfsClass) OverrideLocalFileAddInfo(cb func(*Vfs, string, uint64, *FileAttributeMatcher, *FileInfo, *Cancellable, uintptr, *glib.DestroyNotify)) {
+	if cb == nil {
+		x.xLocalFileAddInfo = 0
+	} else {
+		x.xLocalFileAddInfo = purego.NewCallback(func(VfsVarp uintptr, FilenameVarp string, DeviceVarp uint64, AttributeMatcherVarp *FileAttributeMatcher, InfoVarp uintptr, CancellableVarp uintptr, ExtraDataVarp uintptr, FreeExtraDataVarp uintptr) {
+			cb(VfsNewFromInternalPtr(VfsVarp), FilenameVarp, DeviceVarp, AttributeMatcherVarp, FileInfoNewFromInternalPtr(InfoVarp), CancellableNewFromInternalPtr(CancellableVarp), ExtraDataVarp, (*glib.DestroyNotify)(unsafe.Pointer(FreeExtraDataVarp)))
+		})
+	}
+}
+
+// GetLocalFileAddInfo gets the callback function.
+func (x *VfsClass) GetLocalFileAddInfo() func(*Vfs, string, uint64, *FileAttributeMatcher, *FileInfo, *Cancellable, uintptr, *glib.DestroyNotify) {
+	if x.xLocalFileAddInfo == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr, FilenameVarp string, DeviceVarp uint64, AttributeMatcherVarp *FileAttributeMatcher, InfoVarp uintptr, CancellableVarp uintptr, ExtraDataVarp uintptr, FreeExtraDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xLocalFileAddInfo)
+	return func(VfsVar *Vfs, FilenameVar string, DeviceVar uint64, AttributeMatcherVar *FileAttributeMatcher, InfoVar *FileInfo, CancellableVar *Cancellable, ExtraDataVar uintptr, FreeExtraDataVar *glib.DestroyNotify) {
+		rawCallback(VfsVar.GoPointer(), FilenameVar, DeviceVar, AttributeMatcherVar, InfoVar.GoPointer(), CancellableVar.GoPointer(), ExtraDataVar, glib.NewCallback(FreeExtraDataVar))
+	}
+}
+
+// OverrideAddWritableNamespaces sets the callback function.
+func (x *VfsClass) OverrideAddWritableNamespaces(cb func(*Vfs, *FileAttributeInfoList)) {
+	if cb == nil {
+		x.xAddWritableNamespaces = 0
+	} else {
+		x.xAddWritableNamespaces = purego.NewCallback(func(VfsVarp uintptr, ListVarp *FileAttributeInfoList) {
+			cb(VfsNewFromInternalPtr(VfsVarp), ListVarp)
+		})
+	}
+}
+
+// GetAddWritableNamespaces gets the callback function.
+func (x *VfsClass) GetAddWritableNamespaces() func(*Vfs, *FileAttributeInfoList) {
+	if x.xAddWritableNamespaces == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr, ListVarp *FileAttributeInfoList)
+	purego.RegisterFunc(&rawCallback, x.xAddWritableNamespaces)
+	return func(VfsVar *Vfs, ListVar *FileAttributeInfoList) {
+		rawCallback(VfsVar.GoPointer(), ListVar)
+	}
+}
+
+// OverrideLocalFileSetAttributes sets the callback function.
+func (x *VfsClass) OverrideLocalFileSetAttributes(cb func(*Vfs, string, *FileInfo, FileQueryInfoFlags, *Cancellable) bool) {
+	if cb == nil {
+		x.xLocalFileSetAttributes = 0
+	} else {
+		x.xLocalFileSetAttributes = purego.NewCallback(func(VfsVarp uintptr, FilenameVarp string, InfoVarp uintptr, FlagsVarp FileQueryInfoFlags, CancellableVarp uintptr) bool {
+			return cb(VfsNewFromInternalPtr(VfsVarp), FilenameVarp, FileInfoNewFromInternalPtr(InfoVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetLocalFileSetAttributes gets the callback function.
+func (x *VfsClass) GetLocalFileSetAttributes() func(*Vfs, string, *FileInfo, FileQueryInfoFlags, *Cancellable) bool {
+	if x.xLocalFileSetAttributes == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr, FilenameVarp string, InfoVarp uintptr, FlagsVarp FileQueryInfoFlags, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xLocalFileSetAttributes)
+	return func(VfsVar *Vfs, FilenameVar string, InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool {
+		return rawCallback(VfsVar.GoPointer(), FilenameVar, InfoVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideLocalFileRemoved sets the callback function.
+func (x *VfsClass) OverrideLocalFileRemoved(cb func(*Vfs, string)) {
+	if cb == nil {
+		x.xLocalFileRemoved = 0
+	} else {
+		x.xLocalFileRemoved = purego.NewCallback(func(VfsVarp uintptr, FilenameVarp string) {
+			cb(VfsNewFromInternalPtr(VfsVarp), FilenameVarp)
+		})
+	}
+}
+
+// GetLocalFileRemoved gets the callback function.
+func (x *VfsClass) GetLocalFileRemoved() func(*Vfs, string) {
+	if x.xLocalFileRemoved == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr, FilenameVarp string)
+	purego.RegisterFunc(&rawCallback, x.xLocalFileRemoved)
+	return func(VfsVar *Vfs, FilenameVar string) {
+		rawCallback(VfsVar.GoPointer(), FilenameVar)
+	}
+}
+
+// OverrideLocalFileMoved sets the callback function.
+func (x *VfsClass) OverrideLocalFileMoved(cb func(*Vfs, string, string)) {
+	if cb == nil {
+		x.xLocalFileMoved = 0
+	} else {
+		x.xLocalFileMoved = purego.NewCallback(func(VfsVarp uintptr, SourceVarp string, DestVarp string) {
+			cb(VfsNewFromInternalPtr(VfsVarp), SourceVarp, DestVarp)
+		})
+	}
+}
+
+// GetLocalFileMoved gets the callback function.
+func (x *VfsClass) GetLocalFileMoved() func(*Vfs, string, string) {
+	if x.xLocalFileMoved == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr, SourceVarp string, DestVarp string)
+	purego.RegisterFunc(&rawCallback, x.xLocalFileMoved)
+	return func(VfsVar *Vfs, SourceVar string, DestVar string) {
+		rawCallback(VfsVar.GoPointer(), SourceVar, DestVar)
+	}
+}
+
+// OverrideDeserializeIcon sets the callback function.
+func (x *VfsClass) OverrideDeserializeIcon(cb func(*Vfs, *glib.Variant) *IconBase) {
+	if cb == nil {
+		x.xDeserializeIcon = 0
+	} else {
+		x.xDeserializeIcon = purego.NewCallback(func(VfsVarp uintptr, ValueVarp *glib.Variant) uintptr {
+			ret := cb(VfsNewFromInternalPtr(VfsVarp), ValueVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetDeserializeIcon gets the callback function.
+func (x *VfsClass) GetDeserializeIcon() func(*Vfs, *glib.Variant) *IconBase {
+	if x.xDeserializeIcon == 0 {
+		return nil
+	}
+	var rawCallback func(VfsVarp uintptr, ValueVarp *glib.Variant) uintptr
+	purego.RegisterFunc(&rawCallback, x.xDeserializeIcon)
+	return func(VfsVar *Vfs, ValueVar *glib.Variant) *IconBase {
+		rawRet := rawCallback(VfsVar.GoPointer(), ValueVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IconBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *VfsClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *VfsClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *VfsClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *VfsClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *VfsClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *VfsClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *VfsClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *VfsClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *VfsClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *VfsClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved6 sets the callback function.
+func (x *VfsClass) OverrideGReserved6(cb func()) {
+	if cb == nil {
+		x.xGReserved6 = 0
+	} else {
+		x.xGReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved6 gets the callback function.
+func (x *VfsClass) GetGReserved6() func() {
+	if x.xGReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved6)
+	return func() {
+		rawCallback()
+	}
 }
 
 const (

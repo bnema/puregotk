@@ -17,7 +17,7 @@ import (
 type ComboRowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass ActionRowClass
 
 	Padding [4]uintptr
 }

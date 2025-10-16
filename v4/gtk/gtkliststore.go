@@ -16,7 +16,7 @@ import (
 type ListStoreClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 
 	Padding [8]uintptr
 }

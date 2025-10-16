@@ -15,13 +15,38 @@ import (
 type TlsCertificateClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xVerify uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *TlsCertificateClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideVerify sets the callback function.
+func (x *TlsCertificateClass) OverrideVerify(cb func(*TlsCertificate, SocketConnectable, *TlsCertificate) TlsCertificateFlags) {
+	if cb == nil {
+		x.xVerify = 0
+	} else {
+		x.xVerify = purego.NewCallback(func(CertVarp uintptr, IdentityVarp uintptr, TrustedCaVarp uintptr) TlsCertificateFlags {
+			return cb(TlsCertificateNewFromInternalPtr(CertVarp), &SocketConnectableBase{Ptr: IdentityVarp}, TlsCertificateNewFromInternalPtr(TrustedCaVarp))
+		})
+	}
+}
+
+// GetVerify gets the callback function.
+func (x *TlsCertificateClass) GetVerify() func(*TlsCertificate, SocketConnectable, *TlsCertificate) TlsCertificateFlags {
+	if x.xVerify == 0 {
+		return nil
+	}
+	var rawCallback func(CertVarp uintptr, IdentityVarp uintptr, TrustedCaVarp uintptr) TlsCertificateFlags
+	purego.RegisterFunc(&rawCallback, x.xVerify)
+	return func(CertVar *TlsCertificate, IdentityVar SocketConnectable, TrustedCaVar *TlsCertificate) TlsCertificateFlags {
+		return rawCallback(CertVar.GoPointer(), IdentityVar.GoPointer(), TrustedCaVar.GoPointer())
+	}
 }
 
 type TlsCertificatePrivate struct {

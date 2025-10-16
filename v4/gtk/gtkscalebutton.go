@@ -15,13 +15,38 @@ import (
 type ScaleButtonClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xValueChanged uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *ScaleButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideValueChanged sets the callback function.
+func (x *ScaleButtonClass) OverrideValueChanged(cb func(*ScaleButton, float64)) {
+	if cb == nil {
+		x.xValueChanged = 0
+	} else {
+		x.xValueChanged = purego.NewCallback(func(ButtonVarp uintptr, ValueVarp float64) {
+			cb(ScaleButtonNewFromInternalPtr(ButtonVarp), ValueVarp)
+		})
+	}
+}
+
+// GetValueChanged gets the callback function.
+func (x *ScaleButtonClass) GetValueChanged() func(*ScaleButton, float64) {
+	if x.xValueChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ButtonVarp uintptr, ValueVarp float64)
+	purego.RegisterFunc(&rawCallback, x.xValueChanged)
+	return func(ButtonVar *ScaleButton, ValueVar float64) {
+		rawCallback(ButtonVar.GoPointer(), ValueVar)
+	}
 }
 
 // `GtkScaleButton` provides a button which pops up a scale widget.

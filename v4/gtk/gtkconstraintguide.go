@@ -14,7 +14,7 @@ import (
 type ConstraintGuideClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *ConstraintGuideClass) GoPointer() uintptr {

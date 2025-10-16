@@ -14,7 +14,7 @@ import (
 type NetworkServiceClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *NetworkServiceClass) GoPointer() uintptr {

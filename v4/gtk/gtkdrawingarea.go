@@ -22,13 +22,38 @@ type DrawingAreaDrawFunc func(uintptr, *cairo.Context, int, int, uintptr)
 type DrawingAreaClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xResize uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *DrawingAreaClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideResize sets the callback function.
+func (x *DrawingAreaClass) OverrideResize(cb func(*DrawingArea, int, int)) {
+	if cb == nil {
+		x.xResize = 0
+	} else {
+		x.xResize = purego.NewCallback(func(AreaVarp uintptr, WidthVarp int, HeightVarp int) {
+			cb(DrawingAreaNewFromInternalPtr(AreaVarp), WidthVarp, HeightVarp)
+		})
+	}
+}
+
+// GetResize gets the callback function.
+func (x *DrawingAreaClass) GetResize() func(*DrawingArea, int, int) {
+	if x.xResize == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, WidthVarp int, HeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xResize)
+	return func(AreaVar *DrawingArea, WidthVar int, HeightVar int) {
+		rawCallback(AreaVar.GoPointer(), WidthVar, HeightVar)
+	}
 }
 
 // `GtkDrawingArea` is a widget that allows drawing with cairo.

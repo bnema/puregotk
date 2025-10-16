@@ -23,13 +23,38 @@ import (
 type EntryClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xActivate uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *EntryClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideActivate sets the callback function.
+func (x *EntryClass) OverrideActivate(cb func(*Entry)) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(EntryVarp uintptr) {
+			cb(EntryNewFromInternalPtr(EntryVarp))
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+func (x *EntryClass) GetActivate() func(*Entry) {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(EntryVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(EntryVar *Entry) {
+		rawCallback(EntryVar.GoPointer())
+	}
 }
 
 // Specifies the side of the entry at which an icon is placed.

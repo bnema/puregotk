@@ -41,13 +41,388 @@ type TreeViewSearchEqualFunc func(uintptr, int, string, *TreeIter, uintptr) bool
 type TreeViewClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xRowActivated uintptr
+
+	xTestExpandRow uintptr
+
+	xTestCollapseRow uintptr
+
+	xRowExpanded uintptr
+
+	xRowCollapsed uintptr
+
+	xColumnsChanged uintptr
+
+	xCursorChanged uintptr
+
+	xMoveCursor uintptr
+
+	xSelectAll uintptr
+
+	xUnselectAll uintptr
+
+	xSelectCursorRow uintptr
+
+	xToggleCursorRow uintptr
+
+	xExpandCollapseCursorRow uintptr
+
+	xSelectCursorParent uintptr
+
+	xStartInteractiveSearch uintptr
 
 	Reserved [16]uintptr
 }
 
 func (x *TreeViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideRowActivated sets the callback function.
+func (x *TreeViewClass) OverrideRowActivated(cb func(*TreeView, *TreePath, *TreeViewColumn)) {
+	if cb == nil {
+		x.xRowActivated = 0
+	} else {
+		x.xRowActivated = purego.NewCallback(func(TreeViewVarp uintptr, PathVarp *TreePath, ColumnVarp uintptr) {
+			cb(TreeViewNewFromInternalPtr(TreeViewVarp), PathVarp, TreeViewColumnNewFromInternalPtr(ColumnVarp))
+		})
+	}
+}
+
+// GetRowActivated gets the callback function.
+func (x *TreeViewClass) GetRowActivated() func(*TreeView, *TreePath, *TreeViewColumn) {
+	if x.xRowActivated == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr, PathVarp *TreePath, ColumnVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRowActivated)
+	return func(TreeViewVar *TreeView, PathVar *TreePath, ColumnVar *TreeViewColumn) {
+		rawCallback(TreeViewVar.GoPointer(), PathVar, ColumnVar.GoPointer())
+	}
+}
+
+// OverrideTestExpandRow sets the callback function.
+func (x *TreeViewClass) OverrideTestExpandRow(cb func(*TreeView, *TreeIter, *TreePath) bool) {
+	if cb == nil {
+		x.xTestExpandRow = 0
+	} else {
+		x.xTestExpandRow = purego.NewCallback(func(TreeViewVarp uintptr, IterVarp *TreeIter, PathVarp *TreePath) bool {
+			return cb(TreeViewNewFromInternalPtr(TreeViewVarp), IterVarp, PathVarp)
+		})
+	}
+}
+
+// GetTestExpandRow gets the callback function.
+func (x *TreeViewClass) GetTestExpandRow() func(*TreeView, *TreeIter, *TreePath) bool {
+	if x.xTestExpandRow == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr, IterVarp *TreeIter, PathVarp *TreePath) bool
+	purego.RegisterFunc(&rawCallback, x.xTestExpandRow)
+	return func(TreeViewVar *TreeView, IterVar *TreeIter, PathVar *TreePath) bool {
+		return rawCallback(TreeViewVar.GoPointer(), IterVar, PathVar)
+	}
+}
+
+// OverrideTestCollapseRow sets the callback function.
+func (x *TreeViewClass) OverrideTestCollapseRow(cb func(*TreeView, *TreeIter, *TreePath) bool) {
+	if cb == nil {
+		x.xTestCollapseRow = 0
+	} else {
+		x.xTestCollapseRow = purego.NewCallback(func(TreeViewVarp uintptr, IterVarp *TreeIter, PathVarp *TreePath) bool {
+			return cb(TreeViewNewFromInternalPtr(TreeViewVarp), IterVarp, PathVarp)
+		})
+	}
+}
+
+// GetTestCollapseRow gets the callback function.
+func (x *TreeViewClass) GetTestCollapseRow() func(*TreeView, *TreeIter, *TreePath) bool {
+	if x.xTestCollapseRow == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr, IterVarp *TreeIter, PathVarp *TreePath) bool
+	purego.RegisterFunc(&rawCallback, x.xTestCollapseRow)
+	return func(TreeViewVar *TreeView, IterVar *TreeIter, PathVar *TreePath) bool {
+		return rawCallback(TreeViewVar.GoPointer(), IterVar, PathVar)
+	}
+}
+
+// OverrideRowExpanded sets the callback function.
+func (x *TreeViewClass) OverrideRowExpanded(cb func(*TreeView, *TreeIter, *TreePath)) {
+	if cb == nil {
+		x.xRowExpanded = 0
+	} else {
+		x.xRowExpanded = purego.NewCallback(func(TreeViewVarp uintptr, IterVarp *TreeIter, PathVarp *TreePath) {
+			cb(TreeViewNewFromInternalPtr(TreeViewVarp), IterVarp, PathVarp)
+		})
+	}
+}
+
+// GetRowExpanded gets the callback function.
+func (x *TreeViewClass) GetRowExpanded() func(*TreeView, *TreeIter, *TreePath) {
+	if x.xRowExpanded == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr, IterVarp *TreeIter, PathVarp *TreePath)
+	purego.RegisterFunc(&rawCallback, x.xRowExpanded)
+	return func(TreeViewVar *TreeView, IterVar *TreeIter, PathVar *TreePath) {
+		rawCallback(TreeViewVar.GoPointer(), IterVar, PathVar)
+	}
+}
+
+// OverrideRowCollapsed sets the callback function.
+func (x *TreeViewClass) OverrideRowCollapsed(cb func(*TreeView, *TreeIter, *TreePath)) {
+	if cb == nil {
+		x.xRowCollapsed = 0
+	} else {
+		x.xRowCollapsed = purego.NewCallback(func(TreeViewVarp uintptr, IterVarp *TreeIter, PathVarp *TreePath) {
+			cb(TreeViewNewFromInternalPtr(TreeViewVarp), IterVarp, PathVarp)
+		})
+	}
+}
+
+// GetRowCollapsed gets the callback function.
+func (x *TreeViewClass) GetRowCollapsed() func(*TreeView, *TreeIter, *TreePath) {
+	if x.xRowCollapsed == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr, IterVarp *TreeIter, PathVarp *TreePath)
+	purego.RegisterFunc(&rawCallback, x.xRowCollapsed)
+	return func(TreeViewVar *TreeView, IterVar *TreeIter, PathVar *TreePath) {
+		rawCallback(TreeViewVar.GoPointer(), IterVar, PathVar)
+	}
+}
+
+// OverrideColumnsChanged sets the callback function.
+func (x *TreeViewClass) OverrideColumnsChanged(cb func(*TreeView)) {
+	if cb == nil {
+		x.xColumnsChanged = 0
+	} else {
+		x.xColumnsChanged = purego.NewCallback(func(TreeViewVarp uintptr) {
+			cb(TreeViewNewFromInternalPtr(TreeViewVarp))
+		})
+	}
+}
+
+// GetColumnsChanged gets the callback function.
+func (x *TreeViewClass) GetColumnsChanged() func(*TreeView) {
+	if x.xColumnsChanged == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xColumnsChanged)
+	return func(TreeViewVar *TreeView) {
+		rawCallback(TreeViewVar.GoPointer())
+	}
+}
+
+// OverrideCursorChanged sets the callback function.
+func (x *TreeViewClass) OverrideCursorChanged(cb func(*TreeView)) {
+	if cb == nil {
+		x.xCursorChanged = 0
+	} else {
+		x.xCursorChanged = purego.NewCallback(func(TreeViewVarp uintptr) {
+			cb(TreeViewNewFromInternalPtr(TreeViewVarp))
+		})
+	}
+}
+
+// GetCursorChanged gets the callback function.
+func (x *TreeViewClass) GetCursorChanged() func(*TreeView) {
+	if x.xCursorChanged == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCursorChanged)
+	return func(TreeViewVar *TreeView) {
+		rawCallback(TreeViewVar.GoPointer())
+	}
+}
+
+// OverrideMoveCursor sets the callback function.
+func (x *TreeViewClass) OverrideMoveCursor(cb func(*TreeView, MovementStep, int, bool, bool) bool) {
+	if cb == nil {
+		x.xMoveCursor = 0
+	} else {
+		x.xMoveCursor = purego.NewCallback(func(TreeViewVarp uintptr, StepVarp MovementStep, CountVarp int, ExtendVarp bool, ModifyVarp bool) bool {
+			return cb(TreeViewNewFromInternalPtr(TreeViewVarp), StepVarp, CountVarp, ExtendVarp, ModifyVarp)
+		})
+	}
+}
+
+// GetMoveCursor gets the callback function.
+func (x *TreeViewClass) GetMoveCursor() func(*TreeView, MovementStep, int, bool, bool) bool {
+	if x.xMoveCursor == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr, StepVarp MovementStep, CountVarp int, ExtendVarp bool, ModifyVarp bool) bool
+	purego.RegisterFunc(&rawCallback, x.xMoveCursor)
+	return func(TreeViewVar *TreeView, StepVar MovementStep, CountVar int, ExtendVar bool, ModifyVar bool) bool {
+		return rawCallback(TreeViewVar.GoPointer(), StepVar, CountVar, ExtendVar, ModifyVar)
+	}
+}
+
+// OverrideSelectAll sets the callback function.
+func (x *TreeViewClass) OverrideSelectAll(cb func(*TreeView) bool) {
+	if cb == nil {
+		x.xSelectAll = 0
+	} else {
+		x.xSelectAll = purego.NewCallback(func(TreeViewVarp uintptr) bool {
+			return cb(TreeViewNewFromInternalPtr(TreeViewVarp))
+		})
+	}
+}
+
+// GetSelectAll gets the callback function.
+func (x *TreeViewClass) GetSelectAll() func(*TreeView) bool {
+	if x.xSelectAll == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSelectAll)
+	return func(TreeViewVar *TreeView) bool {
+		return rawCallback(TreeViewVar.GoPointer())
+	}
+}
+
+// OverrideUnselectAll sets the callback function.
+func (x *TreeViewClass) OverrideUnselectAll(cb func(*TreeView) bool) {
+	if cb == nil {
+		x.xUnselectAll = 0
+	} else {
+		x.xUnselectAll = purego.NewCallback(func(TreeViewVarp uintptr) bool {
+			return cb(TreeViewNewFromInternalPtr(TreeViewVarp))
+		})
+	}
+}
+
+// GetUnselectAll gets the callback function.
+func (x *TreeViewClass) GetUnselectAll() func(*TreeView) bool {
+	if x.xUnselectAll == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xUnselectAll)
+	return func(TreeViewVar *TreeView) bool {
+		return rawCallback(TreeViewVar.GoPointer())
+	}
+}
+
+// OverrideSelectCursorRow sets the callback function.
+func (x *TreeViewClass) OverrideSelectCursorRow(cb func(*TreeView, bool) bool) {
+	if cb == nil {
+		x.xSelectCursorRow = 0
+	} else {
+		x.xSelectCursorRow = purego.NewCallback(func(TreeViewVarp uintptr, StartEditingVarp bool) bool {
+			return cb(TreeViewNewFromInternalPtr(TreeViewVarp), StartEditingVarp)
+		})
+	}
+}
+
+// GetSelectCursorRow gets the callback function.
+func (x *TreeViewClass) GetSelectCursorRow() func(*TreeView, bool) bool {
+	if x.xSelectCursorRow == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr, StartEditingVarp bool) bool
+	purego.RegisterFunc(&rawCallback, x.xSelectCursorRow)
+	return func(TreeViewVar *TreeView, StartEditingVar bool) bool {
+		return rawCallback(TreeViewVar.GoPointer(), StartEditingVar)
+	}
+}
+
+// OverrideToggleCursorRow sets the callback function.
+func (x *TreeViewClass) OverrideToggleCursorRow(cb func(*TreeView) bool) {
+	if cb == nil {
+		x.xToggleCursorRow = 0
+	} else {
+		x.xToggleCursorRow = purego.NewCallback(func(TreeViewVarp uintptr) bool {
+			return cb(TreeViewNewFromInternalPtr(TreeViewVarp))
+		})
+	}
+}
+
+// GetToggleCursorRow gets the callback function.
+func (x *TreeViewClass) GetToggleCursorRow() func(*TreeView) bool {
+	if x.xToggleCursorRow == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xToggleCursorRow)
+	return func(TreeViewVar *TreeView) bool {
+		return rawCallback(TreeViewVar.GoPointer())
+	}
+}
+
+// OverrideExpandCollapseCursorRow sets the callback function.
+func (x *TreeViewClass) OverrideExpandCollapseCursorRow(cb func(*TreeView, bool, bool, bool) bool) {
+	if cb == nil {
+		x.xExpandCollapseCursorRow = 0
+	} else {
+		x.xExpandCollapseCursorRow = purego.NewCallback(func(TreeViewVarp uintptr, LogicalVarp bool, ExpandVarp bool, OpenAllVarp bool) bool {
+			return cb(TreeViewNewFromInternalPtr(TreeViewVarp), LogicalVarp, ExpandVarp, OpenAllVarp)
+		})
+	}
+}
+
+// GetExpandCollapseCursorRow gets the callback function.
+func (x *TreeViewClass) GetExpandCollapseCursorRow() func(*TreeView, bool, bool, bool) bool {
+	if x.xExpandCollapseCursorRow == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr, LogicalVarp bool, ExpandVarp bool, OpenAllVarp bool) bool
+	purego.RegisterFunc(&rawCallback, x.xExpandCollapseCursorRow)
+	return func(TreeViewVar *TreeView, LogicalVar bool, ExpandVar bool, OpenAllVar bool) bool {
+		return rawCallback(TreeViewVar.GoPointer(), LogicalVar, ExpandVar, OpenAllVar)
+	}
+}
+
+// OverrideSelectCursorParent sets the callback function.
+func (x *TreeViewClass) OverrideSelectCursorParent(cb func(*TreeView) bool) {
+	if cb == nil {
+		x.xSelectCursorParent = 0
+	} else {
+		x.xSelectCursorParent = purego.NewCallback(func(TreeViewVarp uintptr) bool {
+			return cb(TreeViewNewFromInternalPtr(TreeViewVarp))
+		})
+	}
+}
+
+// GetSelectCursorParent gets the callback function.
+func (x *TreeViewClass) GetSelectCursorParent() func(*TreeView) bool {
+	if x.xSelectCursorParent == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSelectCursorParent)
+	return func(TreeViewVar *TreeView) bool {
+		return rawCallback(TreeViewVar.GoPointer())
+	}
+}
+
+// OverrideStartInteractiveSearch sets the callback function.
+func (x *TreeViewClass) OverrideStartInteractiveSearch(cb func(*TreeView) bool) {
+	if cb == nil {
+		x.xStartInteractiveSearch = 0
+	} else {
+		x.xStartInteractiveSearch = purego.NewCallback(func(TreeViewVarp uintptr) bool {
+			return cb(TreeViewNewFromInternalPtr(TreeViewVarp))
+		})
+	}
+}
+
+// GetStartInteractiveSearch gets the callback function.
+func (x *TreeViewClass) GetStartInteractiveSearch() func(*TreeView) bool {
+	if x.xStartInteractiveSearch == 0 {
+		return nil
+	}
+	var rawCallback func(TreeViewVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xStartInteractiveSearch)
+	return func(TreeViewVar *TreeView) bool {
+		return rawCallback(TreeViewVar.GoPointer())
+	}
 }
 
 // An enum for determining where a dropped row goes.
@@ -441,7 +816,7 @@ func (x *TreeView) GetColumns() *glib.List {
 	return cret
 }
 
-var xTreeViewGetCursor func(uintptr, **TreePath, *uintptr)
+var xTreeViewGetCursor func(uintptr, **TreePath, uintptr)
 
 // Fills in @path and @focus_column with the current path and focus column.  If
 // the cursor isn’t currently set, then *@path will be %NULL.  If no column
@@ -451,7 +826,7 @@ var xTreeViewGetCursor func(uintptr, **TreePath, *uintptr)
 // you are done with it.
 func (x *TreeView) GetCursor(PathVar **TreePath, FocusColumnVar **TreeViewColumn) {
 
-	xTreeViewGetCursor(x.GoPointer(), PathVar, gobject.ConvertPtr(FocusColumnVar))
+	xTreeViewGetCursor(x.GoPointer(), PathVar, *gobject.ConvertPtr(FocusColumnVar))
 
 }
 
@@ -605,7 +980,7 @@ func (x *TreeView) GetNColumns() uint {
 	return cret
 }
 
-var xTreeViewGetPathAtPos func(uintptr, int, int, **TreePath, *uintptr, int, int) bool
+var xTreeViewGetPathAtPos func(uintptr, int, int, **TreePath, uintptr, int, int) bool
 
 // Finds the path at the point (@x, @y), relative to bin_window coordinates.
 // That is, @x and @y are relative to an events coordinates. Widget-relative
@@ -625,7 +1000,7 @@ var xTreeViewGetPathAtPos func(uintptr, int, int, **TreePath, *uintptr, int, int
 // gtk_tree_view_convert_widget_to_bin_window_coords().
 func (x *TreeView) GetPathAtPos(XVar int, YVar int, PathVar **TreePath, ColumnVar **TreeViewColumn, CellXVar int, CellYVar int) bool {
 
-	cret := xTreeViewGetPathAtPos(x.GoPointer(), XVar, YVar, PathVar, gobject.ConvertPtr(ColumnVar), CellXVar, CellYVar)
+	cret := xTreeViewGetPathAtPos(x.GoPointer(), XVar, YVar, PathVar, *gobject.ConvertPtr(ColumnVar), CellXVar, CellYVar)
 	return cret
 }
 
@@ -815,7 +1190,7 @@ func (x *TreeView) InsertColumnWithDataFunc(PositionVar int, TitleVar string, Ce
 	return cret
 }
 
-var xTreeViewIsBlankAtPos func(uintptr, int, int, **TreePath, *uintptr, int, int) bool
+var xTreeViewIsBlankAtPos func(uintptr, int, int, **TreePath, uintptr, int, int) bool
 
 // Determine whether the point (@x, @y) in @tree_view is blank, that is no
 // cell content nor an expander arrow is drawn at the location. If so, the
@@ -836,7 +1211,7 @@ var xTreeViewIsBlankAtPos func(uintptr, int, int, **TreePath, *uintptr, int, int
 // gtk_tree_view_get_path_at_pos() for more information.
 func (x *TreeView) IsBlankAtPos(XVar int, YVar int, PathVar **TreePath, ColumnVar **TreeViewColumn, CellXVar int, CellYVar int) bool {
 
-	cret := xTreeViewIsBlankAtPos(x.GoPointer(), XVar, YVar, PathVar, gobject.ConvertPtr(ColumnVar), CellXVar, CellYVar)
+	cret := xTreeViewIsBlankAtPos(x.GoPointer(), XVar, YVar, PathVar, *gobject.ConvertPtr(ColumnVar), CellXVar, CellYVar)
 	return cret
 }
 

@@ -16,11 +16,361 @@ import (
 type MediaStreamClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xPlay uintptr
+
+	xPause uintptr
+
+	xSeek uintptr
+
+	xUpdateAudio uintptr
+
+	xRealize uintptr
+
+	xUnrealize uintptr
+
+	xGtkReserved1 uintptr
+
+	xGtkReserved2 uintptr
+
+	xGtkReserved3 uintptr
+
+	xGtkReserved4 uintptr
+
+	xGtkReserved5 uintptr
+
+	xGtkReserved6 uintptr
+
+	xGtkReserved7 uintptr
+
+	xGtkReserved8 uintptr
 }
 
 func (x *MediaStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverridePlay sets the callback function.
+func (x *MediaStreamClass) OverridePlay(cb func(*MediaStream) bool) {
+	if cb == nil {
+		x.xPlay = 0
+	} else {
+		x.xPlay = purego.NewCallback(func(SelfVarp uintptr) bool {
+			return cb(MediaStreamNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetPlay gets the callback function.
+func (x *MediaStreamClass) GetPlay() func(*MediaStream) bool {
+	if x.xPlay == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xPlay)
+	return func(SelfVar *MediaStream) bool {
+		return rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverridePause sets the callback function.
+func (x *MediaStreamClass) OverridePause(cb func(*MediaStream)) {
+	if cb == nil {
+		x.xPause = 0
+	} else {
+		x.xPause = purego.NewCallback(func(SelfVarp uintptr) {
+			cb(MediaStreamNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetPause gets the callback function.
+func (x *MediaStreamClass) GetPause() func(*MediaStream) {
+	if x.xPause == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xPause)
+	return func(SelfVar *MediaStream) {
+		rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideSeek sets the callback function.
+func (x *MediaStreamClass) OverrideSeek(cb func(*MediaStream, int64)) {
+	if cb == nil {
+		x.xSeek = 0
+	} else {
+		x.xSeek = purego.NewCallback(func(SelfVarp uintptr, TimestampVarp int64) {
+			cb(MediaStreamNewFromInternalPtr(SelfVarp), TimestampVarp)
+		})
+	}
+}
+
+// GetSeek gets the callback function.
+func (x *MediaStreamClass) GetSeek() func(*MediaStream, int64) {
+	if x.xSeek == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, TimestampVarp int64)
+	purego.RegisterFunc(&rawCallback, x.xSeek)
+	return func(SelfVar *MediaStream, TimestampVar int64) {
+		rawCallback(SelfVar.GoPointer(), TimestampVar)
+	}
+}
+
+// OverrideUpdateAudio sets the callback function.
+func (x *MediaStreamClass) OverrideUpdateAudio(cb func(*MediaStream, bool, float64)) {
+	if cb == nil {
+		x.xUpdateAudio = 0
+	} else {
+		x.xUpdateAudio = purego.NewCallback(func(SelfVarp uintptr, MutedVarp bool, VolumeVarp float64) {
+			cb(MediaStreamNewFromInternalPtr(SelfVarp), MutedVarp, VolumeVarp)
+		})
+	}
+}
+
+// GetUpdateAudio gets the callback function.
+func (x *MediaStreamClass) GetUpdateAudio() func(*MediaStream, bool, float64) {
+	if x.xUpdateAudio == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, MutedVarp bool, VolumeVarp float64)
+	purego.RegisterFunc(&rawCallback, x.xUpdateAudio)
+	return func(SelfVar *MediaStream, MutedVar bool, VolumeVar float64) {
+		rawCallback(SelfVar.GoPointer(), MutedVar, VolumeVar)
+	}
+}
+
+// OverrideRealize sets the callback function.
+func (x *MediaStreamClass) OverrideRealize(cb func(*MediaStream, *gdk.Surface)) {
+	if cb == nil {
+		x.xRealize = 0
+	} else {
+		x.xRealize = purego.NewCallback(func(SelfVarp uintptr, SurfaceVarp uintptr) {
+			cb(MediaStreamNewFromInternalPtr(SelfVarp), gdk.SurfaceNewFromInternalPtr(SurfaceVarp))
+		})
+	}
+}
+
+// GetRealize gets the callback function.
+func (x *MediaStreamClass) GetRealize() func(*MediaStream, *gdk.Surface) {
+	if x.xRealize == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, SurfaceVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRealize)
+	return func(SelfVar *MediaStream, SurfaceVar *gdk.Surface) {
+		rawCallback(SelfVar.GoPointer(), SurfaceVar.GoPointer())
+	}
+}
+
+// OverrideUnrealize sets the callback function.
+func (x *MediaStreamClass) OverrideUnrealize(cb func(*MediaStream, *gdk.Surface)) {
+	if cb == nil {
+		x.xUnrealize = 0
+	} else {
+		x.xUnrealize = purego.NewCallback(func(SelfVarp uintptr, SurfaceVarp uintptr) {
+			cb(MediaStreamNewFromInternalPtr(SelfVarp), gdk.SurfaceNewFromInternalPtr(SurfaceVarp))
+		})
+	}
+}
+
+// GetUnrealize gets the callback function.
+func (x *MediaStreamClass) GetUnrealize() func(*MediaStream, *gdk.Surface) {
+	if x.xUnrealize == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, SurfaceVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnrealize)
+	return func(SelfVar *MediaStream, SurfaceVar *gdk.Surface) {
+		rawCallback(SelfVar.GoPointer(), SurfaceVar.GoPointer())
+	}
+}
+
+// OverrideGtkReserved1 sets the callback function.
+func (x *MediaStreamClass) OverrideGtkReserved1(cb func()) {
+	if cb == nil {
+		x.xGtkReserved1 = 0
+	} else {
+		x.xGtkReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved1 gets the callback function.
+func (x *MediaStreamClass) GetGtkReserved1() func() {
+	if x.xGtkReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved2 sets the callback function.
+func (x *MediaStreamClass) OverrideGtkReserved2(cb func()) {
+	if cb == nil {
+		x.xGtkReserved2 = 0
+	} else {
+		x.xGtkReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved2 gets the callback function.
+func (x *MediaStreamClass) GetGtkReserved2() func() {
+	if x.xGtkReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved3 sets the callback function.
+func (x *MediaStreamClass) OverrideGtkReserved3(cb func()) {
+	if cb == nil {
+		x.xGtkReserved3 = 0
+	} else {
+		x.xGtkReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved3 gets the callback function.
+func (x *MediaStreamClass) GetGtkReserved3() func() {
+	if x.xGtkReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved4 sets the callback function.
+func (x *MediaStreamClass) OverrideGtkReserved4(cb func()) {
+	if cb == nil {
+		x.xGtkReserved4 = 0
+	} else {
+		x.xGtkReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved4 gets the callback function.
+func (x *MediaStreamClass) GetGtkReserved4() func() {
+	if x.xGtkReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved5 sets the callback function.
+func (x *MediaStreamClass) OverrideGtkReserved5(cb func()) {
+	if cb == nil {
+		x.xGtkReserved5 = 0
+	} else {
+		x.xGtkReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved5 gets the callback function.
+func (x *MediaStreamClass) GetGtkReserved5() func() {
+	if x.xGtkReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved6 sets the callback function.
+func (x *MediaStreamClass) OverrideGtkReserved6(cb func()) {
+	if cb == nil {
+		x.xGtkReserved6 = 0
+	} else {
+		x.xGtkReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved6 gets the callback function.
+func (x *MediaStreamClass) GetGtkReserved6() func() {
+	if x.xGtkReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved6)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved7 sets the callback function.
+func (x *MediaStreamClass) OverrideGtkReserved7(cb func()) {
+	if cb == nil {
+		x.xGtkReserved7 = 0
+	} else {
+		x.xGtkReserved7 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved7 gets the callback function.
+func (x *MediaStreamClass) GetGtkReserved7() func() {
+	if x.xGtkReserved7 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved7)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved8 sets the callback function.
+func (x *MediaStreamClass) OverrideGtkReserved8(cb func()) {
+	if cb == nil {
+		x.xGtkReserved8 = 0
+	} else {
+		x.xGtkReserved8 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved8 gets the callback function.
+func (x *MediaStreamClass) GetGtkReserved8() func() {
+	if x.xGtkReserved8 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved8)
+	return func() {
+		rawCallback()
+	}
 }
 
 // `GtkMediaStream` is the integration point for media playback inside GTK.

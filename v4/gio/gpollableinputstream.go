@@ -25,10 +25,110 @@ type PollableInputStreamInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xCanPoll uintptr
+
+	xIsReadable uintptr
+
+	xCreateSource uintptr
+
+	xReadNonblocking uintptr
 }
 
 func (x *PollableInputStreamInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideCanPoll sets the callback function.
+func (x *PollableInputStreamInterface) OverrideCanPoll(cb func(PollableInputStream) bool) {
+	if cb == nil {
+		x.xCanPoll = 0
+	} else {
+		x.xCanPoll = purego.NewCallback(func(StreamVarp uintptr) bool {
+			return cb(&PollableInputStreamBase{Ptr: StreamVarp})
+		})
+	}
+}
+
+// GetCanPoll gets the callback function.
+func (x *PollableInputStreamInterface) GetCanPoll() func(PollableInputStream) bool {
+	if x.xCanPoll == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanPoll)
+	return func(StreamVar PollableInputStream) bool {
+		return rawCallback(StreamVar.GoPointer())
+	}
+}
+
+// OverrideIsReadable sets the callback function.
+func (x *PollableInputStreamInterface) OverrideIsReadable(cb func(PollableInputStream) bool) {
+	if cb == nil {
+		x.xIsReadable = 0
+	} else {
+		x.xIsReadable = purego.NewCallback(func(StreamVarp uintptr) bool {
+			return cb(&PollableInputStreamBase{Ptr: StreamVarp})
+		})
+	}
+}
+
+// GetIsReadable gets the callback function.
+func (x *PollableInputStreamInterface) GetIsReadable() func(PollableInputStream) bool {
+	if x.xIsReadable == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xIsReadable)
+	return func(StreamVar PollableInputStream) bool {
+		return rawCallback(StreamVar.GoPointer())
+	}
+}
+
+// OverrideCreateSource sets the callback function.
+func (x *PollableInputStreamInterface) OverrideCreateSource(cb func(PollableInputStream, *Cancellable) *glib.Source) {
+	if cb == nil {
+		x.xCreateSource = 0
+	} else {
+		x.xCreateSource = purego.NewCallback(func(StreamVarp uintptr, CancellableVarp uintptr) *glib.Source {
+			return cb(&PollableInputStreamBase{Ptr: StreamVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetCreateSource gets the callback function.
+func (x *PollableInputStreamInterface) GetCreateSource() func(PollableInputStream, *Cancellable) *glib.Source {
+	if x.xCreateSource == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, CancellableVarp uintptr) *glib.Source
+	purego.RegisterFunc(&rawCallback, x.xCreateSource)
+	return func(StreamVar PollableInputStream, CancellableVar *Cancellable) *glib.Source {
+		return rawCallback(StreamVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideReadNonblocking sets the callback function.
+func (x *PollableInputStreamInterface) OverrideReadNonblocking(cb func(PollableInputStream, []byte, uint) int) {
+	if cb == nil {
+		x.xReadNonblocking = 0
+	} else {
+		x.xReadNonblocking = purego.NewCallback(func(StreamVarp uintptr, BufferVarp []byte, CountVarp uint) int {
+			return cb(&PollableInputStreamBase{Ptr: StreamVarp}, BufferVarp, CountVarp)
+		})
+	}
+}
+
+// GetReadNonblocking gets the callback function.
+func (x *PollableInputStreamInterface) GetReadNonblocking() func(PollableInputStream, []byte, uint) int {
+	if x.xReadNonblocking == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, BufferVarp []byte, CountVarp uint) int
+	purego.RegisterFunc(&rawCallback, x.xReadNonblocking)
+	return func(StreamVar PollableInputStream, BufferVar []byte, CountVar uint) int {
+		return rawCallback(StreamVar.GoPointer(), BufferVar, CountVar)
+	}
 }
 
 // #GPollableInputStream is implemented by #GInputStreams that
@@ -41,7 +141,7 @@ type PollableInputStream interface {
 	CanPoll() bool
 	CreateSource(CancellableVar *Cancellable) *glib.Source
 	IsReadable() bool
-	ReadNonblocking(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) int
+	ReadNonblocking(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) (int, error)
 }
 
 var xPollableInputStreamGLibType func() types.GType

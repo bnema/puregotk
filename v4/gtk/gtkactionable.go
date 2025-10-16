@@ -16,10 +16,110 @@ type ActionableInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xGetActionName uintptr
+
+	xSetActionName uintptr
+
+	xGetActionTargetValue uintptr
+
+	xSetActionTargetValue uintptr
 }
 
 func (x *ActionableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetActionName sets the callback function.
+func (x *ActionableInterface) OverrideGetActionName(cb func(Actionable) string) {
+	if cb == nil {
+		x.xGetActionName = 0
+	} else {
+		x.xGetActionName = purego.NewCallback(func(ActionableVarp uintptr) string {
+			return cb(&ActionableBase{Ptr: ActionableVarp})
+		})
+	}
+}
+
+// GetGetActionName gets the callback function.
+func (x *ActionableInterface) GetGetActionName() func(Actionable) string {
+	if x.xGetActionName == 0 {
+		return nil
+	}
+	var rawCallback func(ActionableVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetActionName)
+	return func(ActionableVar Actionable) string {
+		return rawCallback(ActionableVar.GoPointer())
+	}
+}
+
+// OverrideSetActionName sets the callback function.
+func (x *ActionableInterface) OverrideSetActionName(cb func(Actionable, string)) {
+	if cb == nil {
+		x.xSetActionName = 0
+	} else {
+		x.xSetActionName = purego.NewCallback(func(ActionableVarp uintptr, ActionNameVarp string) {
+			cb(&ActionableBase{Ptr: ActionableVarp}, ActionNameVarp)
+		})
+	}
+}
+
+// GetSetActionName gets the callback function.
+func (x *ActionableInterface) GetSetActionName() func(Actionable, string) {
+	if x.xSetActionName == 0 {
+		return nil
+	}
+	var rawCallback func(ActionableVarp uintptr, ActionNameVarp string)
+	purego.RegisterFunc(&rawCallback, x.xSetActionName)
+	return func(ActionableVar Actionable, ActionNameVar string) {
+		rawCallback(ActionableVar.GoPointer(), ActionNameVar)
+	}
+}
+
+// OverrideGetActionTargetValue sets the callback function.
+func (x *ActionableInterface) OverrideGetActionTargetValue(cb func(Actionable) *glib.Variant) {
+	if cb == nil {
+		x.xGetActionTargetValue = 0
+	} else {
+		x.xGetActionTargetValue = purego.NewCallback(func(ActionableVarp uintptr) *glib.Variant {
+			return cb(&ActionableBase{Ptr: ActionableVarp})
+		})
+	}
+}
+
+// GetGetActionTargetValue gets the callback function.
+func (x *ActionableInterface) GetGetActionTargetValue() func(Actionable) *glib.Variant {
+	if x.xGetActionTargetValue == 0 {
+		return nil
+	}
+	var rawCallback func(ActionableVarp uintptr) *glib.Variant
+	purego.RegisterFunc(&rawCallback, x.xGetActionTargetValue)
+	return func(ActionableVar Actionable) *glib.Variant {
+		return rawCallback(ActionableVar.GoPointer())
+	}
+}
+
+// OverrideSetActionTargetValue sets the callback function.
+func (x *ActionableInterface) OverrideSetActionTargetValue(cb func(Actionable, *glib.Variant)) {
+	if cb == nil {
+		x.xSetActionTargetValue = 0
+	} else {
+		x.xSetActionTargetValue = purego.NewCallback(func(ActionableVarp uintptr, TargetValueVarp *glib.Variant) {
+			cb(&ActionableBase{Ptr: ActionableVarp}, TargetValueVarp)
+		})
+	}
+}
+
+// GetSetActionTargetValue gets the callback function.
+func (x *ActionableInterface) GetSetActionTargetValue() func(Actionable, *glib.Variant) {
+	if x.xSetActionTargetValue == 0 {
+		return nil
+	}
+	var rawCallback func(ActionableVarp uintptr, TargetValueVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xSetActionTargetValue)
+	return func(ActionableVar Actionable, TargetValueVar *glib.Variant) {
+		rawCallback(ActionableVar.GoPointer(), TargetValueVar)
+	}
 }
 
 // The `GtkActionable` interface provides a convenient way of asscociating

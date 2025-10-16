@@ -16,7 +16,7 @@ import (
 type ButtonRowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass PreferencesRowClass
 }
 
 func (x *ButtonRowClass) GoPointer() uintptr {

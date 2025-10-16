@@ -15,7 +15,7 @@ import (
 type SortListModelClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *SortListModelClass) GoPointer() uintptr {

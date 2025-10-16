@@ -15,7 +15,7 @@ import (
 type SqueezerClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *SqueezerClass) GoPointer() uintptr {
@@ -25,7 +25,7 @@ func (x *SqueezerClass) GoPointer() uintptr {
 type SqueezerPageClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *SqueezerPageClass) GoPointer() uintptr {

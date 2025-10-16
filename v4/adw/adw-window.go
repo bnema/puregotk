@@ -18,7 +18,7 @@ import (
 type WindowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WindowClass
 
 	Padding [4]uintptr
 }

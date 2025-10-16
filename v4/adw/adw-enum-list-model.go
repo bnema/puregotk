@@ -15,7 +15,7 @@ import (
 type EnumListItemClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *EnumListItemClass) GoPointer() uintptr {
@@ -25,7 +25,7 @@ func (x *EnumListItemClass) GoPointer() uintptr {
 type EnumListModelClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *EnumListModelClass) GoPointer() uintptr {

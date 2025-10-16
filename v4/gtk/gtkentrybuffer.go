@@ -15,11 +15,361 @@ import (
 type EntryBufferClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xInsertedText uintptr
+
+	xDeletedText uintptr
+
+	xGetText uintptr
+
+	xGetLength uintptr
+
+	xInsertText uintptr
+
+	xDeleteText uintptr
+
+	xGtkReserved1 uintptr
+
+	xGtkReserved2 uintptr
+
+	xGtkReserved3 uintptr
+
+	xGtkReserved4 uintptr
+
+	xGtkReserved5 uintptr
+
+	xGtkReserved6 uintptr
+
+	xGtkReserved7 uintptr
+
+	xGtkReserved8 uintptr
 }
 
 func (x *EntryBufferClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideInsertedText sets the callback function.
+func (x *EntryBufferClass) OverrideInsertedText(cb func(*EntryBuffer, uint, string, uint)) {
+	if cb == nil {
+		x.xInsertedText = 0
+	} else {
+		x.xInsertedText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint) {
+			cb(EntryBufferNewFromInternalPtr(BufferVarp), PositionVarp, CharsVarp, NCharsVarp)
+		})
+	}
+}
+
+// GetInsertedText gets the callback function.
+func (x *EntryBufferClass) GetInsertedText() func(*EntryBuffer, uint, string, uint) {
+	if x.xInsertedText == 0 {
+		return nil
+	}
+	var rawCallback func(BufferVarp uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint)
+	purego.RegisterFunc(&rawCallback, x.xInsertedText)
+	return func(BufferVar *EntryBuffer, PositionVar uint, CharsVar string, NCharsVar uint) {
+		rawCallback(BufferVar.GoPointer(), PositionVar, CharsVar, NCharsVar)
+	}
+}
+
+// OverrideDeletedText sets the callback function.
+func (x *EntryBufferClass) OverrideDeletedText(cb func(*EntryBuffer, uint, uint)) {
+	if cb == nil {
+		x.xDeletedText = 0
+	} else {
+		x.xDeletedText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint, NCharsVarp uint) {
+			cb(EntryBufferNewFromInternalPtr(BufferVarp), PositionVarp, NCharsVarp)
+		})
+	}
+}
+
+// GetDeletedText gets the callback function.
+func (x *EntryBufferClass) GetDeletedText() func(*EntryBuffer, uint, uint) {
+	if x.xDeletedText == 0 {
+		return nil
+	}
+	var rawCallback func(BufferVarp uintptr, PositionVarp uint, NCharsVarp uint)
+	purego.RegisterFunc(&rawCallback, x.xDeletedText)
+	return func(BufferVar *EntryBuffer, PositionVar uint, NCharsVar uint) {
+		rawCallback(BufferVar.GoPointer(), PositionVar, NCharsVar)
+	}
+}
+
+// OverrideGetText sets the callback function.
+func (x *EntryBufferClass) OverrideGetText(cb func(*EntryBuffer, uint) string) {
+	if cb == nil {
+		x.xGetText = 0
+	} else {
+		x.xGetText = purego.NewCallback(func(BufferVarp uintptr, NBytesVarp uint) string {
+			return cb(EntryBufferNewFromInternalPtr(BufferVarp), NBytesVarp)
+		})
+	}
+}
+
+// GetGetText gets the callback function.
+func (x *EntryBufferClass) GetGetText() func(*EntryBuffer, uint) string {
+	if x.xGetText == 0 {
+		return nil
+	}
+	var rawCallback func(BufferVarp uintptr, NBytesVarp uint) string
+	purego.RegisterFunc(&rawCallback, x.xGetText)
+	return func(BufferVar *EntryBuffer, NBytesVar uint) string {
+		return rawCallback(BufferVar.GoPointer(), NBytesVar)
+	}
+}
+
+// OverrideGetLength sets the callback function.
+func (x *EntryBufferClass) OverrideGetLength(cb func(*EntryBuffer) uint) {
+	if cb == nil {
+		x.xGetLength = 0
+	} else {
+		x.xGetLength = purego.NewCallback(func(BufferVarp uintptr) uint {
+			return cb(EntryBufferNewFromInternalPtr(BufferVarp))
+		})
+	}
+}
+
+// GetGetLength gets the callback function.
+func (x *EntryBufferClass) GetGetLength() func(*EntryBuffer) uint {
+	if x.xGetLength == 0 {
+		return nil
+	}
+	var rawCallback func(BufferVarp uintptr) uint
+	purego.RegisterFunc(&rawCallback, x.xGetLength)
+	return func(BufferVar *EntryBuffer) uint {
+		return rawCallback(BufferVar.GoPointer())
+	}
+}
+
+// OverrideInsertText sets the callback function.
+func (x *EntryBufferClass) OverrideInsertText(cb func(*EntryBuffer, uint, string, uint) uint) {
+	if cb == nil {
+		x.xInsertText = 0
+	} else {
+		x.xInsertText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint) uint {
+			return cb(EntryBufferNewFromInternalPtr(BufferVarp), PositionVarp, CharsVarp, NCharsVarp)
+		})
+	}
+}
+
+// GetInsertText gets the callback function.
+func (x *EntryBufferClass) GetInsertText() func(*EntryBuffer, uint, string, uint) uint {
+	if x.xInsertText == 0 {
+		return nil
+	}
+	var rawCallback func(BufferVarp uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint) uint
+	purego.RegisterFunc(&rawCallback, x.xInsertText)
+	return func(BufferVar *EntryBuffer, PositionVar uint, CharsVar string, NCharsVar uint) uint {
+		return rawCallback(BufferVar.GoPointer(), PositionVar, CharsVar, NCharsVar)
+	}
+}
+
+// OverrideDeleteText sets the callback function.
+func (x *EntryBufferClass) OverrideDeleteText(cb func(*EntryBuffer, uint, uint) uint) {
+	if cb == nil {
+		x.xDeleteText = 0
+	} else {
+		x.xDeleteText = purego.NewCallback(func(BufferVarp uintptr, PositionVarp uint, NCharsVarp uint) uint {
+			return cb(EntryBufferNewFromInternalPtr(BufferVarp), PositionVarp, NCharsVarp)
+		})
+	}
+}
+
+// GetDeleteText gets the callback function.
+func (x *EntryBufferClass) GetDeleteText() func(*EntryBuffer, uint, uint) uint {
+	if x.xDeleteText == 0 {
+		return nil
+	}
+	var rawCallback func(BufferVarp uintptr, PositionVarp uint, NCharsVarp uint) uint
+	purego.RegisterFunc(&rawCallback, x.xDeleteText)
+	return func(BufferVar *EntryBuffer, PositionVar uint, NCharsVar uint) uint {
+		return rawCallback(BufferVar.GoPointer(), PositionVar, NCharsVar)
+	}
+}
+
+// OverrideGtkReserved1 sets the callback function.
+func (x *EntryBufferClass) OverrideGtkReserved1(cb func()) {
+	if cb == nil {
+		x.xGtkReserved1 = 0
+	} else {
+		x.xGtkReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved1 gets the callback function.
+func (x *EntryBufferClass) GetGtkReserved1() func() {
+	if x.xGtkReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved2 sets the callback function.
+func (x *EntryBufferClass) OverrideGtkReserved2(cb func()) {
+	if cb == nil {
+		x.xGtkReserved2 = 0
+	} else {
+		x.xGtkReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved2 gets the callback function.
+func (x *EntryBufferClass) GetGtkReserved2() func() {
+	if x.xGtkReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved3 sets the callback function.
+func (x *EntryBufferClass) OverrideGtkReserved3(cb func()) {
+	if cb == nil {
+		x.xGtkReserved3 = 0
+	} else {
+		x.xGtkReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved3 gets the callback function.
+func (x *EntryBufferClass) GetGtkReserved3() func() {
+	if x.xGtkReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved4 sets the callback function.
+func (x *EntryBufferClass) OverrideGtkReserved4(cb func()) {
+	if cb == nil {
+		x.xGtkReserved4 = 0
+	} else {
+		x.xGtkReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved4 gets the callback function.
+func (x *EntryBufferClass) GetGtkReserved4() func() {
+	if x.xGtkReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved5 sets the callback function.
+func (x *EntryBufferClass) OverrideGtkReserved5(cb func()) {
+	if cb == nil {
+		x.xGtkReserved5 = 0
+	} else {
+		x.xGtkReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved5 gets the callback function.
+func (x *EntryBufferClass) GetGtkReserved5() func() {
+	if x.xGtkReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved6 sets the callback function.
+func (x *EntryBufferClass) OverrideGtkReserved6(cb func()) {
+	if cb == nil {
+		x.xGtkReserved6 = 0
+	} else {
+		x.xGtkReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved6 gets the callback function.
+func (x *EntryBufferClass) GetGtkReserved6() func() {
+	if x.xGtkReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved6)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved7 sets the callback function.
+func (x *EntryBufferClass) OverrideGtkReserved7(cb func()) {
+	if cb == nil {
+		x.xGtkReserved7 = 0
+	} else {
+		x.xGtkReserved7 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved7 gets the callback function.
+func (x *EntryBufferClass) GetGtkReserved7() func() {
+	if x.xGtkReserved7 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved7)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved8 sets the callback function.
+func (x *EntryBufferClass) OverrideGtkReserved8(cb func()) {
+	if cb == nil {
+		x.xGtkReserved8 = 0
+	} else {
+		x.xGtkReserved8 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved8 gets the callback function.
+func (x *EntryBufferClass) GetGtkReserved8() func() {
+	if x.xGtkReserved8 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved8)
+	return func() {
+		rawCallback()
+	}
 }
 
 // A `GtkEntryBuffer` hold the text displayed in a `GtkText` widget.

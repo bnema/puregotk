@@ -18,7 +18,7 @@ import (
 type ApplicationWindowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WindowClass
 
 	Padding [8]uintptr
 }

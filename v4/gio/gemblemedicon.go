@@ -15,7 +15,7 @@ import (
 type EmblemedIconClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *EmblemedIconClass) GoPointer() uintptr {

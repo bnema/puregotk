@@ -18,13 +18,138 @@ import (
 type WindowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xActivateFocus uintptr
+
+	xActivateDefault uintptr
+
+	xKeysChanged uintptr
+
+	xEnableDebugging uintptr
+
+	xCloseRequest uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *WindowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideActivateFocus sets the callback function.
+func (x *WindowClass) OverrideActivateFocus(cb func(*Window)) {
+	if cb == nil {
+		x.xActivateFocus = 0
+	} else {
+		x.xActivateFocus = purego.NewCallback(func(WindowVarp uintptr) {
+			cb(WindowNewFromInternalPtr(WindowVarp))
+		})
+	}
+}
+
+// GetActivateFocus gets the callback function.
+func (x *WindowClass) GetActivateFocus() func(*Window) {
+	if x.xActivateFocus == 0 {
+		return nil
+	}
+	var rawCallback func(WindowVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivateFocus)
+	return func(WindowVar *Window) {
+		rawCallback(WindowVar.GoPointer())
+	}
+}
+
+// OverrideActivateDefault sets the callback function.
+func (x *WindowClass) OverrideActivateDefault(cb func(*Window)) {
+	if cb == nil {
+		x.xActivateDefault = 0
+	} else {
+		x.xActivateDefault = purego.NewCallback(func(WindowVarp uintptr) {
+			cb(WindowNewFromInternalPtr(WindowVarp))
+		})
+	}
+}
+
+// GetActivateDefault gets the callback function.
+func (x *WindowClass) GetActivateDefault() func(*Window) {
+	if x.xActivateDefault == 0 {
+		return nil
+	}
+	var rawCallback func(WindowVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivateDefault)
+	return func(WindowVar *Window) {
+		rawCallback(WindowVar.GoPointer())
+	}
+}
+
+// OverrideKeysChanged sets the callback function.
+func (x *WindowClass) OverrideKeysChanged(cb func(*Window)) {
+	if cb == nil {
+		x.xKeysChanged = 0
+	} else {
+		x.xKeysChanged = purego.NewCallback(func(WindowVarp uintptr) {
+			cb(WindowNewFromInternalPtr(WindowVarp))
+		})
+	}
+}
+
+// GetKeysChanged gets the callback function.
+func (x *WindowClass) GetKeysChanged() func(*Window) {
+	if x.xKeysChanged == 0 {
+		return nil
+	}
+	var rawCallback func(WindowVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xKeysChanged)
+	return func(WindowVar *Window) {
+		rawCallback(WindowVar.GoPointer())
+	}
+}
+
+// OverrideEnableDebugging sets the callback function.
+func (x *WindowClass) OverrideEnableDebugging(cb func(*Window, bool) bool) {
+	if cb == nil {
+		x.xEnableDebugging = 0
+	} else {
+		x.xEnableDebugging = purego.NewCallback(func(WindowVarp uintptr, ToggleVarp bool) bool {
+			return cb(WindowNewFromInternalPtr(WindowVarp), ToggleVarp)
+		})
+	}
+}
+
+// GetEnableDebugging gets the callback function.
+func (x *WindowClass) GetEnableDebugging() func(*Window, bool) bool {
+	if x.xEnableDebugging == 0 {
+		return nil
+	}
+	var rawCallback func(WindowVarp uintptr, ToggleVarp bool) bool
+	purego.RegisterFunc(&rawCallback, x.xEnableDebugging)
+	return func(WindowVar *Window, ToggleVar bool) bool {
+		return rawCallback(WindowVar.GoPointer(), ToggleVar)
+	}
+}
+
+// OverrideCloseRequest sets the callback function.
+func (x *WindowClass) OverrideCloseRequest(cb func(*Window) bool) {
+	if cb == nil {
+		x.xCloseRequest = 0
+	} else {
+		x.xCloseRequest = purego.NewCallback(func(WindowVarp uintptr) bool {
+			return cb(WindowNewFromInternalPtr(WindowVarp))
+		})
+	}
+}
+
+// GetCloseRequest gets the callback function.
+func (x *WindowClass) GetCloseRequest() func(*Window) bool {
+	if x.xCloseRequest == 0 {
+		return nil
+	}
+	var rawCallback func(WindowVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCloseRequest)
+	return func(WindowVar *Window) bool {
+		return rawCallback(WindowVar.GoPointer())
+	}
 }
 
 type WindowGroupPrivate struct {

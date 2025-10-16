@@ -16,7 +16,7 @@ import (
 type BreakpointClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *BreakpointClass) GoPointer() uintptr {

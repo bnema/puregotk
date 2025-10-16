@@ -16,7 +16,7 @@ import (
 type SpinnerPaintableClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *SpinnerPaintableClass) GoPointer() uintptr {

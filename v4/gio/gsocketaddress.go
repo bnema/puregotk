@@ -15,11 +15,86 @@ import (
 type SocketAddressClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGetFamily uintptr
+
+	xGetNativeSize uintptr
+
+	xToNative uintptr
 }
 
 func (x *SocketAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetFamily sets the callback function.
+func (x *SocketAddressClass) OverrideGetFamily(cb func(*SocketAddress) SocketFamily) {
+	if cb == nil {
+		x.xGetFamily = 0
+	} else {
+		x.xGetFamily = purego.NewCallback(func(AddressVarp uintptr) SocketFamily {
+			return cb(SocketAddressNewFromInternalPtr(AddressVarp))
+		})
+	}
+}
+
+// GetGetFamily gets the callback function.
+func (x *SocketAddressClass) GetGetFamily() func(*SocketAddress) SocketFamily {
+	if x.xGetFamily == 0 {
+		return nil
+	}
+	var rawCallback func(AddressVarp uintptr) SocketFamily
+	purego.RegisterFunc(&rawCallback, x.xGetFamily)
+	return func(AddressVar *SocketAddress) SocketFamily {
+		return rawCallback(AddressVar.GoPointer())
+	}
+}
+
+// OverrideGetNativeSize sets the callback function.
+func (x *SocketAddressClass) OverrideGetNativeSize(cb func(*SocketAddress) int) {
+	if cb == nil {
+		x.xGetNativeSize = 0
+	} else {
+		x.xGetNativeSize = purego.NewCallback(func(AddressVarp uintptr) int {
+			return cb(SocketAddressNewFromInternalPtr(AddressVarp))
+		})
+	}
+}
+
+// GetGetNativeSize gets the callback function.
+func (x *SocketAddressClass) GetGetNativeSize() func(*SocketAddress) int {
+	if x.xGetNativeSize == 0 {
+		return nil
+	}
+	var rawCallback func(AddressVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xGetNativeSize)
+	return func(AddressVar *SocketAddress) int {
+		return rawCallback(AddressVar.GoPointer())
+	}
+}
+
+// OverrideToNative sets the callback function.
+func (x *SocketAddressClass) OverrideToNative(cb func(*SocketAddress, uintptr, uint) bool) {
+	if cb == nil {
+		x.xToNative = 0
+	} else {
+		x.xToNative = purego.NewCallback(func(AddressVarp uintptr, DestVarp uintptr, DestlenVarp uint) bool {
+			return cb(SocketAddressNewFromInternalPtr(AddressVarp), DestVarp, DestlenVarp)
+		})
+	}
+}
+
+// GetToNative gets the callback function.
+func (x *SocketAddressClass) GetToNative() func(*SocketAddress, uintptr, uint) bool {
+	if x.xToNative == 0 {
+		return nil
+	}
+	var rawCallback func(AddressVarp uintptr, DestVarp uintptr, DestlenVarp uint) bool
+	purego.RegisterFunc(&rawCallback, x.xToNative)
+	return func(AddressVar *SocketAddress, DestVar uintptr, DestlenVar uint) bool {
+		return rawCallback(AddressVar.GoPointer(), DestVar, DestlenVar)
+	}
 }
 
 // #GSocketAddress is the equivalent of struct sockaddr in the BSD

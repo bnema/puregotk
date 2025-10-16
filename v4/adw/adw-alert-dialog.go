@@ -17,13 +17,38 @@ import (
 type AlertDialogClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass DialogClass
+
+	xResponse uintptr
 
 	Padding [4]uintptr
 }
 
 func (x *AlertDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideResponse sets the callback function.
+func (x *AlertDialogClass) OverrideResponse(cb func(*AlertDialog, string)) {
+	if cb == nil {
+		x.xResponse = 0
+	} else {
+		x.xResponse = purego.NewCallback(func(SelfVarp uintptr, ResponseVarp string) {
+			cb(AlertDialogNewFromInternalPtr(SelfVarp), ResponseVarp)
+		})
+	}
+}
+
+// GetResponse gets the callback function.
+func (x *AlertDialogClass) GetResponse() func(*AlertDialog, string) {
+	if x.xResponse == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ResponseVarp string)
+	purego.RegisterFunc(&rawCallback, x.xResponse)
+	return func(SelfVar *AlertDialog, ResponseVar string) {
+		rawCallback(SelfVar.GoPointer(), ResponseVar)
+	}
 }
 
 // Describes the possible styles of [class@AlertDialog] response buttons.

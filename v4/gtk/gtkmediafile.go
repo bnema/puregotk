@@ -16,11 +16,161 @@ import (
 type MediaFileClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass MediaStreamClass
+
+	xOpen uintptr
+
+	xClose uintptr
+
+	xGtkReserved1 uintptr
+
+	xGtkReserved2 uintptr
+
+	xGtkReserved3 uintptr
+
+	xGtkReserved4 uintptr
 }
 
 func (x *MediaFileClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideOpen sets the callback function.
+func (x *MediaFileClass) OverrideOpen(cb func(*MediaFile)) {
+	if cb == nil {
+		x.xOpen = 0
+	} else {
+		x.xOpen = purego.NewCallback(func(SelfVarp uintptr) {
+			cb(MediaFileNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetOpen gets the callback function.
+func (x *MediaFileClass) GetOpen() func(*MediaFile) {
+	if x.xOpen == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xOpen)
+	return func(SelfVar *MediaFile) {
+		rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideClose sets the callback function.
+func (x *MediaFileClass) OverrideClose(cb func(*MediaFile)) {
+	if cb == nil {
+		x.xClose = 0
+	} else {
+		x.xClose = purego.NewCallback(func(SelfVarp uintptr) {
+			cb(MediaFileNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetClose gets the callback function.
+func (x *MediaFileClass) GetClose() func(*MediaFile) {
+	if x.xClose == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xClose)
+	return func(SelfVar *MediaFile) {
+		rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideGtkReserved1 sets the callback function.
+func (x *MediaFileClass) OverrideGtkReserved1(cb func()) {
+	if cb == nil {
+		x.xGtkReserved1 = 0
+	} else {
+		x.xGtkReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved1 gets the callback function.
+func (x *MediaFileClass) GetGtkReserved1() func() {
+	if x.xGtkReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved2 sets the callback function.
+func (x *MediaFileClass) OverrideGtkReserved2(cb func()) {
+	if cb == nil {
+		x.xGtkReserved2 = 0
+	} else {
+		x.xGtkReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved2 gets the callback function.
+func (x *MediaFileClass) GetGtkReserved2() func() {
+	if x.xGtkReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved3 sets the callback function.
+func (x *MediaFileClass) OverrideGtkReserved3(cb func()) {
+	if cb == nil {
+		x.xGtkReserved3 = 0
+	} else {
+		x.xGtkReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved3 gets the callback function.
+func (x *MediaFileClass) GetGtkReserved3() func() {
+	if x.xGtkReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved4 sets the callback function.
+func (x *MediaFileClass) OverrideGtkReserved4(cb func()) {
+	if cb == nil {
+		x.xGtkReserved4 = 0
+	} else {
+		x.xGtkReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved4 gets the callback function.
+func (x *MediaFileClass) GetGtkReserved4() func() {
+	if x.xGtkReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved4)
+	return func() {
+		rawCallback()
+	}
 }
 
 const (

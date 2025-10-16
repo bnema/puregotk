@@ -15,7 +15,7 @@ import (
 type SliceListModelClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *SliceListModelClass) GoPointer() uintptr {

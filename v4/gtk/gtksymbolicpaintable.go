@@ -17,10 +17,35 @@ type SymbolicPaintableInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xSnapshotSymbolic uintptr
 }
 
 func (x *SymbolicPaintableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideSnapshotSymbolic sets the callback function.
+func (x *SymbolicPaintableInterface) OverrideSnapshotSymbolic(cb func(SymbolicPaintable, *gdk.Snapshot, float64, float64, []gdk.RGBA, uint)) {
+	if cb == nil {
+		x.xSnapshotSymbolic = 0
+	} else {
+		x.xSnapshotSymbolic = purego.NewCallback(func(PaintableVarp uintptr, SnapshotVarp uintptr, WidthVarp float64, HeightVarp float64, ColorsVarp []gdk.RGBA, NColorsVarp uint) {
+			cb(&SymbolicPaintableBase{Ptr: PaintableVarp}, gdk.SnapshotNewFromInternalPtr(SnapshotVarp), WidthVarp, HeightVarp, ColorsVarp, NColorsVarp)
+		})
+	}
+}
+
+// GetSnapshotSymbolic gets the callback function.
+func (x *SymbolicPaintableInterface) GetSnapshotSymbolic() func(SymbolicPaintable, *gdk.Snapshot, float64, float64, []gdk.RGBA, uint) {
+	if x.xSnapshotSymbolic == 0 {
+		return nil
+	}
+	var rawCallback func(PaintableVarp uintptr, SnapshotVarp uintptr, WidthVarp float64, HeightVarp float64, ColorsVarp []gdk.RGBA, NColorsVarp uint)
+	purego.RegisterFunc(&rawCallback, x.xSnapshotSymbolic)
+	return func(PaintableVar SymbolicPaintable, SnapshotVar *gdk.Snapshot, WidthVar float64, HeightVar float64, ColorsVar []gdk.RGBA, NColorsVar uint) {
+		rawCallback(PaintableVar.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar, ColorsVar, NColorsVar)
+	}
 }
 
 // `GtkSymbolicPaintable` is an interface that support symbolic colors in

@@ -25,7 +25,7 @@ type TreeListModelCreateModelFunc func(uintptr, uintptr) uintptr
 type TreeListModelClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *TreeListModelClass) GoPointer() uintptr {
@@ -35,7 +35,7 @@ func (x *TreeListModelClass) GoPointer() uintptr {
 type TreeListRowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *TreeListRowClass) GoPointer() uintptr {

@@ -18,10 +18,60 @@ type AsyncInitableIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xInitAsync uintptr
+
+	xInitFinish uintptr
 }
 
 func (x *AsyncInitableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideInitAsync sets the callback function.
+func (x *AsyncInitableIface) OverrideInitAsync(cb func(AsyncInitable, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xInitAsync = 0
+	} else {
+		x.xInitAsync = purego.NewCallback(func(InitableVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&AsyncInitableBase{Ptr: InitableVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetInitAsync gets the callback function.
+func (x *AsyncInitableIface) GetInitAsync() func(AsyncInitable, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xInitAsync == 0 {
+		return nil
+	}
+	var rawCallback func(InitableVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xInitAsync)
+	return func(InitableVar AsyncInitable, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(InitableVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideInitFinish sets the callback function.
+func (x *AsyncInitableIface) OverrideInitFinish(cb func(AsyncInitable, AsyncResult) bool) {
+	if cb == nil {
+		x.xInitFinish = 0
+	} else {
+		x.xInitFinish = purego.NewCallback(func(InitableVarp uintptr, ResVarp uintptr) bool {
+			return cb(&AsyncInitableBase{Ptr: InitableVarp}, &AsyncResultBase{Ptr: ResVarp})
+		})
+	}
+}
+
+// GetInitFinish gets the callback function.
+func (x *AsyncInitableIface) GetInitFinish() func(AsyncInitable, AsyncResult) bool {
+	if x.xInitFinish == 0 {
+		return nil
+	}
+	var rawCallback func(InitableVarp uintptr, ResVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xInitFinish)
+	return func(InitableVar AsyncInitable, ResVar AsyncResult) bool {
+		return rawCallback(InitableVar.GoPointer(), ResVar.GoPointer())
+	}
 }
 
 // This is the asynchronous version of #GInitable; it behaves the same
@@ -136,8 +186,8 @@ type AsyncInitable interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
 	InitAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	InitFinish(ResVar AsyncResult) bool
-	NewFinish(ResVar AsyncResult) *gobject.Object
+	InitFinish(ResVar AsyncResult) (bool, error)
+	NewFinish(ResVar AsyncResult) (*gobject.Object, error)
 }
 
 var xAsyncInitableGLibType func() types.GType

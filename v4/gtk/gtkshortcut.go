@@ -15,7 +15,7 @@ import (
 type ShortcutClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *ShortcutClass) GoPointer() uintptr {

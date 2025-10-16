@@ -16,7 +16,7 @@ import (
 type AboutDialogClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass DialogClass
 }
 
 func (x *AboutDialogClass) GoPointer() uintptr {

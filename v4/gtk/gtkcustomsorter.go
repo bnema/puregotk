@@ -14,7 +14,7 @@ import (
 type CustomSorterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass SorterClass
 }
 
 func (x *CustomSorterClass) GoPointer() uintptr {

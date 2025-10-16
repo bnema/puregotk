@@ -25,7 +25,45 @@ type CellCallback func(uintptr, uintptr) bool
 type CellAreaClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.InitiallyUnownedClass
+
+	xAdd uintptr
+
+	xRemove uintptr
+
+	xForeach uintptr
+
+	xForeachAlloc uintptr
+
+	xEvent uintptr
+
+	xSnapshot uintptr
+
+	xApplyAttributes uintptr
+
+	xCreateContext uintptr
+
+	xCopyContext uintptr
+
+	xGetRequestMode uintptr
+
+	xGetPreferredWidth uintptr
+
+	xGetPreferredHeightForWidth uintptr
+
+	xGetPreferredHeight uintptr
+
+	xGetPreferredWidthForHeight uintptr
+
+	xSetCellProperty uintptr
+
+	xGetCellProperty uintptr
+
+	xFocus uintptr
+
+	xIsActivatable uintptr
+
+	xActivate uintptr
 
 	Padding [8]uintptr
 }
@@ -67,6 +105,463 @@ func (x *CellAreaClass) ListCellProperties(NPropertiesVar uint) uintptr {
 
 	cret := xCellAreaClassListCellProperties(x.GoPointer(), NPropertiesVar)
 	return cret
+}
+
+// OverrideAdd sets the callback function.
+func (x *CellAreaClass) OverrideAdd(cb func(*CellArea, *CellRenderer)) {
+	if cb == nil {
+		x.xAdd = 0
+	} else {
+		x.xAdd = purego.NewCallback(func(AreaVarp uintptr, RendererVarp uintptr) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), CellRendererNewFromInternalPtr(RendererVarp))
+		})
+	}
+}
+
+// GetAdd gets the callback function.
+func (x *CellAreaClass) GetAdd() func(*CellArea, *CellRenderer) {
+	if x.xAdd == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, RendererVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xAdd)
+	return func(AreaVar *CellArea, RendererVar *CellRenderer) {
+		rawCallback(AreaVar.GoPointer(), RendererVar.GoPointer())
+	}
+}
+
+// OverrideRemove sets the callback function.
+func (x *CellAreaClass) OverrideRemove(cb func(*CellArea, *CellRenderer)) {
+	if cb == nil {
+		x.xRemove = 0
+	} else {
+		x.xRemove = purego.NewCallback(func(AreaVarp uintptr, RendererVarp uintptr) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), CellRendererNewFromInternalPtr(RendererVarp))
+		})
+	}
+}
+
+// GetRemove gets the callback function.
+func (x *CellAreaClass) GetRemove() func(*CellArea, *CellRenderer) {
+	if x.xRemove == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, RendererVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRemove)
+	return func(AreaVar *CellArea, RendererVar *CellRenderer) {
+		rawCallback(AreaVar.GoPointer(), RendererVar.GoPointer())
+	}
+}
+
+// OverrideForeach sets the callback function.
+func (x *CellAreaClass) OverrideForeach(cb func(*CellArea, *CellCallback, uintptr)) {
+	if cb == nil {
+		x.xForeach = 0
+	} else {
+		x.xForeach = purego.NewCallback(func(AreaVarp uintptr, CallbackVarp uintptr, CallbackDataVarp uintptr) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), (*CellCallback)(unsafe.Pointer(CallbackVarp)), CallbackDataVarp)
+		})
+	}
+}
+
+// GetForeach gets the callback function.
+func (x *CellAreaClass) GetForeach() func(*CellArea, *CellCallback, uintptr) {
+	if x.xForeach == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, CallbackVarp uintptr, CallbackDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xForeach)
+	return func(AreaVar *CellArea, CallbackVar *CellCallback, CallbackDataVar uintptr) {
+		rawCallback(AreaVar.GoPointer(), glib.NewCallback(CallbackVar), CallbackDataVar)
+	}
+}
+
+// OverrideForeachAlloc sets the callback function.
+func (x *CellAreaClass) OverrideForeachAlloc(cb func(*CellArea, *CellAreaContext, *Widget, *gdk.Rectangle, *gdk.Rectangle, *CellAllocCallback, uintptr)) {
+	if cb == nil {
+		x.xForeachAlloc = 0
+	} else {
+		x.xForeachAlloc = purego.NewCallback(func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, CellAreaVarp *gdk.Rectangle, BackgroundAreaVarp *gdk.Rectangle, CallbackVarp uintptr, CallbackDataVarp uintptr) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), CellAreaContextNewFromInternalPtr(ContextVarp), WidgetNewFromInternalPtr(WidgetVarp), CellAreaVarp, BackgroundAreaVarp, (*CellAllocCallback)(unsafe.Pointer(CallbackVarp)), CallbackDataVarp)
+		})
+	}
+}
+
+// GetForeachAlloc gets the callback function.
+func (x *CellAreaClass) GetForeachAlloc() func(*CellArea, *CellAreaContext, *Widget, *gdk.Rectangle, *gdk.Rectangle, *CellAllocCallback, uintptr) {
+	if x.xForeachAlloc == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, CellAreaVarp *gdk.Rectangle, BackgroundAreaVarp *gdk.Rectangle, CallbackVarp uintptr, CallbackDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xForeachAlloc)
+	return func(AreaVar *CellArea, ContextVar *CellAreaContext, WidgetVar *Widget, CellAreaVar *gdk.Rectangle, BackgroundAreaVar *gdk.Rectangle, CallbackVar *CellAllocCallback, CallbackDataVar uintptr) {
+		rawCallback(AreaVar.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), CellAreaVar, BackgroundAreaVar, glib.NewCallback(CallbackVar), CallbackDataVar)
+	}
+}
+
+// OverrideEvent sets the callback function.
+func (x *CellAreaClass) OverrideEvent(cb func(*CellArea, *CellAreaContext, *Widget, *gdk.Event, *gdk.Rectangle, CellRendererState) int) {
+	if cb == nil {
+		x.xEvent = 0
+	} else {
+		x.xEvent = purego.NewCallback(func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, EventVarp uintptr, CellAreaVarp *gdk.Rectangle, FlagsVarp CellRendererState) int {
+			return cb(CellAreaNewFromInternalPtr(AreaVarp), CellAreaContextNewFromInternalPtr(ContextVarp), WidgetNewFromInternalPtr(WidgetVarp), gdk.EventNewFromInternalPtr(EventVarp), CellAreaVarp, FlagsVarp)
+		})
+	}
+}
+
+// GetEvent gets the callback function.
+func (x *CellAreaClass) GetEvent() func(*CellArea, *CellAreaContext, *Widget, *gdk.Event, *gdk.Rectangle, CellRendererState) int {
+	if x.xEvent == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, EventVarp uintptr, CellAreaVarp *gdk.Rectangle, FlagsVarp CellRendererState) int
+	purego.RegisterFunc(&rawCallback, x.xEvent)
+	return func(AreaVar *CellArea, ContextVar *CellAreaContext, WidgetVar *Widget, EventVar *gdk.Event, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState) int {
+		return rawCallback(AreaVar.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), EventVar.GoPointer(), CellAreaVar, FlagsVar)
+	}
+}
+
+// OverrideSnapshot sets the callback function.
+func (x *CellAreaClass) OverrideSnapshot(cb func(*CellArea, *CellAreaContext, *Widget, *Snapshot, *gdk.Rectangle, *gdk.Rectangle, CellRendererState, bool)) {
+	if cb == nil {
+		x.xSnapshot = 0
+	} else {
+		x.xSnapshot = purego.NewCallback(func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, SnapshotVarp uintptr, BackgroundAreaVarp *gdk.Rectangle, CellAreaVarp *gdk.Rectangle, FlagsVarp CellRendererState, PaintFocusVarp bool) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), CellAreaContextNewFromInternalPtr(ContextVarp), WidgetNewFromInternalPtr(WidgetVarp), SnapshotNewFromInternalPtr(SnapshotVarp), BackgroundAreaVarp, CellAreaVarp, FlagsVarp, PaintFocusVarp)
+		})
+	}
+}
+
+// GetSnapshot gets the callback function.
+func (x *CellAreaClass) GetSnapshot() func(*CellArea, *CellAreaContext, *Widget, *Snapshot, *gdk.Rectangle, *gdk.Rectangle, CellRendererState, bool) {
+	if x.xSnapshot == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, SnapshotVarp uintptr, BackgroundAreaVarp *gdk.Rectangle, CellAreaVarp *gdk.Rectangle, FlagsVarp CellRendererState, PaintFocusVarp bool)
+	purego.RegisterFunc(&rawCallback, x.xSnapshot)
+	return func(AreaVar *CellArea, ContextVar *CellAreaContext, WidgetVar *Widget, SnapshotVar *Snapshot, BackgroundAreaVar *gdk.Rectangle, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState, PaintFocusVar bool) {
+		rawCallback(AreaVar.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), SnapshotVar.GoPointer(), BackgroundAreaVar, CellAreaVar, FlagsVar, PaintFocusVar)
+	}
+}
+
+// OverrideApplyAttributes sets the callback function.
+func (x *CellAreaClass) OverrideApplyAttributes(cb func(*CellArea, TreeModel, *TreeIter, bool, bool)) {
+	if cb == nil {
+		x.xApplyAttributes = 0
+	} else {
+		x.xApplyAttributes = purego.NewCallback(func(AreaVarp uintptr, TreeModelVarp uintptr, IterVarp *TreeIter, IsExpanderVarp bool, IsExpandedVarp bool) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), &TreeModelBase{Ptr: TreeModelVarp}, IterVarp, IsExpanderVarp, IsExpandedVarp)
+		})
+	}
+}
+
+// GetApplyAttributes gets the callback function.
+func (x *CellAreaClass) GetApplyAttributes() func(*CellArea, TreeModel, *TreeIter, bool, bool) {
+	if x.xApplyAttributes == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, TreeModelVarp uintptr, IterVarp *TreeIter, IsExpanderVarp bool, IsExpandedVarp bool)
+	purego.RegisterFunc(&rawCallback, x.xApplyAttributes)
+	return func(AreaVar *CellArea, TreeModelVar TreeModel, IterVar *TreeIter, IsExpanderVar bool, IsExpandedVar bool) {
+		rawCallback(AreaVar.GoPointer(), TreeModelVar.GoPointer(), IterVar, IsExpanderVar, IsExpandedVar)
+	}
+}
+
+// OverrideCreateContext sets the callback function.
+func (x *CellAreaClass) OverrideCreateContext(cb func(*CellArea) *CellAreaContext) {
+	if cb == nil {
+		x.xCreateContext = 0
+	} else {
+		x.xCreateContext = purego.NewCallback(func(AreaVarp uintptr) uintptr {
+			ret := cb(CellAreaNewFromInternalPtr(AreaVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetCreateContext gets the callback function.
+func (x *CellAreaClass) GetCreateContext() func(*CellArea) *CellAreaContext {
+	if x.xCreateContext == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCreateContext)
+	return func(AreaVar *CellArea) *CellAreaContext {
+		rawRet := rawCallback(AreaVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &CellAreaContext{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCopyContext sets the callback function.
+func (x *CellAreaClass) OverrideCopyContext(cb func(*CellArea, *CellAreaContext) *CellAreaContext) {
+	if cb == nil {
+		x.xCopyContext = 0
+	} else {
+		x.xCopyContext = purego.NewCallback(func(AreaVarp uintptr, ContextVarp uintptr) uintptr {
+			ret := cb(CellAreaNewFromInternalPtr(AreaVarp), CellAreaContextNewFromInternalPtr(ContextVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetCopyContext gets the callback function.
+func (x *CellAreaClass) GetCopyContext() func(*CellArea, *CellAreaContext) *CellAreaContext {
+	if x.xCopyContext == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, ContextVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCopyContext)
+	return func(AreaVar *CellArea, ContextVar *CellAreaContext) *CellAreaContext {
+		rawRet := rawCallback(AreaVar.GoPointer(), ContextVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &CellAreaContext{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetRequestMode sets the callback function.
+func (x *CellAreaClass) OverrideGetRequestMode(cb func(*CellArea) SizeRequestMode) {
+	if cb == nil {
+		x.xGetRequestMode = 0
+	} else {
+		x.xGetRequestMode = purego.NewCallback(func(AreaVarp uintptr) SizeRequestMode {
+			return cb(CellAreaNewFromInternalPtr(AreaVarp))
+		})
+	}
+}
+
+// GetGetRequestMode gets the callback function.
+func (x *CellAreaClass) GetGetRequestMode() func(*CellArea) SizeRequestMode {
+	if x.xGetRequestMode == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr) SizeRequestMode
+	purego.RegisterFunc(&rawCallback, x.xGetRequestMode)
+	return func(AreaVar *CellArea) SizeRequestMode {
+		return rawCallback(AreaVar.GoPointer())
+	}
+}
+
+// OverrideGetPreferredWidth sets the callback function.
+func (x *CellAreaClass) OverrideGetPreferredWidth(cb func(*CellArea, *CellAreaContext, *Widget, int, int)) {
+	if cb == nil {
+		x.xGetPreferredWidth = 0
+	} else {
+		x.xGetPreferredWidth = purego.NewCallback(func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, MinimumWidthVarp int, NaturalWidthVarp int) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), CellAreaContextNewFromInternalPtr(ContextVarp), WidgetNewFromInternalPtr(WidgetVarp), MinimumWidthVarp, NaturalWidthVarp)
+		})
+	}
+}
+
+// GetGetPreferredWidth gets the callback function.
+func (x *CellAreaClass) GetGetPreferredWidth() func(*CellArea, *CellAreaContext, *Widget, int, int) {
+	if x.xGetPreferredWidth == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, MinimumWidthVarp int, NaturalWidthVarp int)
+	purego.RegisterFunc(&rawCallback, x.xGetPreferredWidth)
+	return func(AreaVar *CellArea, ContextVar *CellAreaContext, WidgetVar *Widget, MinimumWidthVar int, NaturalWidthVar int) {
+		rawCallback(AreaVar.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), MinimumWidthVar, NaturalWidthVar)
+	}
+}
+
+// OverrideGetPreferredHeightForWidth sets the callback function.
+func (x *CellAreaClass) OverrideGetPreferredHeightForWidth(cb func(*CellArea, *CellAreaContext, *Widget, int, int, int)) {
+	if cb == nil {
+		x.xGetPreferredHeightForWidth = 0
+	} else {
+		x.xGetPreferredHeightForWidth = purego.NewCallback(func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, WidthVarp int, MinimumHeightVarp int, NaturalHeightVarp int) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), CellAreaContextNewFromInternalPtr(ContextVarp), WidgetNewFromInternalPtr(WidgetVarp), WidthVarp, MinimumHeightVarp, NaturalHeightVarp)
+		})
+	}
+}
+
+// GetGetPreferredHeightForWidth gets the callback function.
+func (x *CellAreaClass) GetGetPreferredHeightForWidth() func(*CellArea, *CellAreaContext, *Widget, int, int, int) {
+	if x.xGetPreferredHeightForWidth == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, WidthVarp int, MinimumHeightVarp int, NaturalHeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xGetPreferredHeightForWidth)
+	return func(AreaVar *CellArea, ContextVar *CellAreaContext, WidgetVar *Widget, WidthVar int, MinimumHeightVar int, NaturalHeightVar int) {
+		rawCallback(AreaVar.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), WidthVar, MinimumHeightVar, NaturalHeightVar)
+	}
+}
+
+// OverrideGetPreferredHeight sets the callback function.
+func (x *CellAreaClass) OverrideGetPreferredHeight(cb func(*CellArea, *CellAreaContext, *Widget, int, int)) {
+	if cb == nil {
+		x.xGetPreferredHeight = 0
+	} else {
+		x.xGetPreferredHeight = purego.NewCallback(func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, MinimumHeightVarp int, NaturalHeightVarp int) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), CellAreaContextNewFromInternalPtr(ContextVarp), WidgetNewFromInternalPtr(WidgetVarp), MinimumHeightVarp, NaturalHeightVarp)
+		})
+	}
+}
+
+// GetGetPreferredHeight gets the callback function.
+func (x *CellAreaClass) GetGetPreferredHeight() func(*CellArea, *CellAreaContext, *Widget, int, int) {
+	if x.xGetPreferredHeight == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, MinimumHeightVarp int, NaturalHeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xGetPreferredHeight)
+	return func(AreaVar *CellArea, ContextVar *CellAreaContext, WidgetVar *Widget, MinimumHeightVar int, NaturalHeightVar int) {
+		rawCallback(AreaVar.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), MinimumHeightVar, NaturalHeightVar)
+	}
+}
+
+// OverrideGetPreferredWidthForHeight sets the callback function.
+func (x *CellAreaClass) OverrideGetPreferredWidthForHeight(cb func(*CellArea, *CellAreaContext, *Widget, int, int, int)) {
+	if cb == nil {
+		x.xGetPreferredWidthForHeight = 0
+	} else {
+		x.xGetPreferredWidthForHeight = purego.NewCallback(func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, HeightVarp int, MinimumWidthVarp int, NaturalWidthVarp int) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), CellAreaContextNewFromInternalPtr(ContextVarp), WidgetNewFromInternalPtr(WidgetVarp), HeightVarp, MinimumWidthVarp, NaturalWidthVarp)
+		})
+	}
+}
+
+// GetGetPreferredWidthForHeight gets the callback function.
+func (x *CellAreaClass) GetGetPreferredWidthForHeight() func(*CellArea, *CellAreaContext, *Widget, int, int, int) {
+	if x.xGetPreferredWidthForHeight == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, HeightVarp int, MinimumWidthVarp int, NaturalWidthVarp int)
+	purego.RegisterFunc(&rawCallback, x.xGetPreferredWidthForHeight)
+	return func(AreaVar *CellArea, ContextVar *CellAreaContext, WidgetVar *Widget, HeightVar int, MinimumWidthVar int, NaturalWidthVar int) {
+		rawCallback(AreaVar.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), HeightVar, MinimumWidthVar, NaturalWidthVar)
+	}
+}
+
+// OverrideSetCellProperty sets the callback function.
+func (x *CellAreaClass) OverrideSetCellProperty(cb func(*CellArea, *CellRenderer, uint, *gobject.Value, *gobject.ParamSpec)) {
+	if cb == nil {
+		x.xSetCellProperty = 0
+	} else {
+		x.xSetCellProperty = purego.NewCallback(func(AreaVarp uintptr, RendererVarp uintptr, PropertyIdVarp uint, ValueVarp *gobject.Value, PspecVarp uintptr) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), CellRendererNewFromInternalPtr(RendererVarp), PropertyIdVarp, ValueVarp, gobject.ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetSetCellProperty gets the callback function.
+func (x *CellAreaClass) GetSetCellProperty() func(*CellArea, *CellRenderer, uint, *gobject.Value, *gobject.ParamSpec) {
+	if x.xSetCellProperty == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, RendererVarp uintptr, PropertyIdVarp uint, ValueVarp *gobject.Value, PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetCellProperty)
+	return func(AreaVar *CellArea, RendererVar *CellRenderer, PropertyIdVar uint, ValueVar *gobject.Value, PspecVar *gobject.ParamSpec) {
+		rawCallback(AreaVar.GoPointer(), RendererVar.GoPointer(), PropertyIdVar, ValueVar, PspecVar.GoPointer())
+	}
+}
+
+// OverrideGetCellProperty sets the callback function.
+func (x *CellAreaClass) OverrideGetCellProperty(cb func(*CellArea, *CellRenderer, uint, *gobject.Value, *gobject.ParamSpec)) {
+	if cb == nil {
+		x.xGetCellProperty = 0
+	} else {
+		x.xGetCellProperty = purego.NewCallback(func(AreaVarp uintptr, RendererVarp uintptr, PropertyIdVarp uint, ValueVarp *gobject.Value, PspecVarp uintptr) {
+			cb(CellAreaNewFromInternalPtr(AreaVarp), CellRendererNewFromInternalPtr(RendererVarp), PropertyIdVarp, ValueVarp, gobject.ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetGetCellProperty gets the callback function.
+func (x *CellAreaClass) GetGetCellProperty() func(*CellArea, *CellRenderer, uint, *gobject.Value, *gobject.ParamSpec) {
+	if x.xGetCellProperty == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, RendererVarp uintptr, PropertyIdVarp uint, ValueVarp *gobject.Value, PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xGetCellProperty)
+	return func(AreaVar *CellArea, RendererVar *CellRenderer, PropertyIdVar uint, ValueVar *gobject.Value, PspecVar *gobject.ParamSpec) {
+		rawCallback(AreaVar.GoPointer(), RendererVar.GoPointer(), PropertyIdVar, ValueVar, PspecVar.GoPointer())
+	}
+}
+
+// OverrideFocus sets the callback function.
+func (x *CellAreaClass) OverrideFocus(cb func(*CellArea, DirectionType) bool) {
+	if cb == nil {
+		x.xFocus = 0
+	} else {
+		x.xFocus = purego.NewCallback(func(AreaVarp uintptr, DirectionVarp DirectionType) bool {
+			return cb(CellAreaNewFromInternalPtr(AreaVarp), DirectionVarp)
+		})
+	}
+}
+
+// GetFocus gets the callback function.
+func (x *CellAreaClass) GetFocus() func(*CellArea, DirectionType) bool {
+	if x.xFocus == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, DirectionVarp DirectionType) bool
+	purego.RegisterFunc(&rawCallback, x.xFocus)
+	return func(AreaVar *CellArea, DirectionVar DirectionType) bool {
+		return rawCallback(AreaVar.GoPointer(), DirectionVar)
+	}
+}
+
+// OverrideIsActivatable sets the callback function.
+func (x *CellAreaClass) OverrideIsActivatable(cb func(*CellArea) bool) {
+	if cb == nil {
+		x.xIsActivatable = 0
+	} else {
+		x.xIsActivatable = purego.NewCallback(func(AreaVarp uintptr) bool {
+			return cb(CellAreaNewFromInternalPtr(AreaVarp))
+		})
+	}
+}
+
+// GetIsActivatable gets the callback function.
+func (x *CellAreaClass) GetIsActivatable() func(*CellArea) bool {
+	if x.xIsActivatable == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xIsActivatable)
+	return func(AreaVar *CellArea) bool {
+		return rawCallback(AreaVar.GoPointer())
+	}
+}
+
+// OverrideActivate sets the callback function.
+func (x *CellAreaClass) OverrideActivate(cb func(*CellArea, *CellAreaContext, *Widget, *gdk.Rectangle, CellRendererState, bool) bool) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, CellAreaVarp *gdk.Rectangle, FlagsVarp CellRendererState, EditOnlyVarp bool) bool {
+			return cb(CellAreaNewFromInternalPtr(AreaVarp), CellAreaContextNewFromInternalPtr(ContextVarp), WidgetNewFromInternalPtr(WidgetVarp), CellAreaVarp, FlagsVarp, EditOnlyVarp)
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+func (x *CellAreaClass) GetActivate() func(*CellArea, *CellAreaContext, *Widget, *gdk.Rectangle, CellRendererState, bool) bool {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, ContextVarp uintptr, WidgetVarp uintptr, CellAreaVarp *gdk.Rectangle, FlagsVarp CellRendererState, EditOnlyVarp bool) bool
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(AreaVar *CellArea, ContextVar *CellAreaContext, WidgetVar *Widget, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState, EditOnlyVar bool) bool {
+		return rawCallback(AreaVar.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), CellAreaVar, FlagsVar, EditOnlyVar)
+	}
 }
 
 // An abstract class for laying out `GtkCellRenderer`s

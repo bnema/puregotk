@@ -13,7 +13,7 @@ import (
 type UnixSocketAddressClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass SocketAddressClass
 }
 
 func (x *UnixSocketAddressClass) GoPointer() uintptr {

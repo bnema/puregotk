@@ -14,13 +14,113 @@ import (
 type CellAreaContextClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xAllocate uintptr
+
+	xReset uintptr
+
+	xGetPreferredHeightForWidth uintptr
+
+	xGetPreferredWidthForHeight uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *CellAreaContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideAllocate sets the callback function.
+func (x *CellAreaContextClass) OverrideAllocate(cb func(*CellAreaContext, int, int)) {
+	if cb == nil {
+		x.xAllocate = 0
+	} else {
+		x.xAllocate = purego.NewCallback(func(ContextVarp uintptr, WidthVarp int, HeightVarp int) {
+			cb(CellAreaContextNewFromInternalPtr(ContextVarp), WidthVarp, HeightVarp)
+		})
+	}
+}
+
+// GetAllocate gets the callback function.
+func (x *CellAreaContextClass) GetAllocate() func(*CellAreaContext, int, int) {
+	if x.xAllocate == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, WidthVarp int, HeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xAllocate)
+	return func(ContextVar *CellAreaContext, WidthVar int, HeightVar int) {
+		rawCallback(ContextVar.GoPointer(), WidthVar, HeightVar)
+	}
+}
+
+// OverrideReset sets the callback function.
+func (x *CellAreaContextClass) OverrideReset(cb func(*CellAreaContext)) {
+	if cb == nil {
+		x.xReset = 0
+	} else {
+		x.xReset = purego.NewCallback(func(ContextVarp uintptr) {
+			cb(CellAreaContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetReset gets the callback function.
+func (x *CellAreaContextClass) GetReset() func(*CellAreaContext) {
+	if x.xReset == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xReset)
+	return func(ContextVar *CellAreaContext) {
+		rawCallback(ContextVar.GoPointer())
+	}
+}
+
+// OverrideGetPreferredHeightForWidth sets the callback function.
+func (x *CellAreaContextClass) OverrideGetPreferredHeightForWidth(cb func(*CellAreaContext, int, int, int)) {
+	if cb == nil {
+		x.xGetPreferredHeightForWidth = 0
+	} else {
+		x.xGetPreferredHeightForWidth = purego.NewCallback(func(ContextVarp uintptr, WidthVarp int, MinimumHeightVarp int, NaturalHeightVarp int) {
+			cb(CellAreaContextNewFromInternalPtr(ContextVarp), WidthVarp, MinimumHeightVarp, NaturalHeightVarp)
+		})
+	}
+}
+
+// GetGetPreferredHeightForWidth gets the callback function.
+func (x *CellAreaContextClass) GetGetPreferredHeightForWidth() func(*CellAreaContext, int, int, int) {
+	if x.xGetPreferredHeightForWidth == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, WidthVarp int, MinimumHeightVarp int, NaturalHeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xGetPreferredHeightForWidth)
+	return func(ContextVar *CellAreaContext, WidthVar int, MinimumHeightVar int, NaturalHeightVar int) {
+		rawCallback(ContextVar.GoPointer(), WidthVar, MinimumHeightVar, NaturalHeightVar)
+	}
+}
+
+// OverrideGetPreferredWidthForHeight sets the callback function.
+func (x *CellAreaContextClass) OverrideGetPreferredWidthForHeight(cb func(*CellAreaContext, int, int, int)) {
+	if cb == nil {
+		x.xGetPreferredWidthForHeight = 0
+	} else {
+		x.xGetPreferredWidthForHeight = purego.NewCallback(func(ContextVarp uintptr, HeightVarp int, MinimumWidthVarp int, NaturalWidthVarp int) {
+			cb(CellAreaContextNewFromInternalPtr(ContextVarp), HeightVarp, MinimumWidthVarp, NaturalWidthVarp)
+		})
+	}
+}
+
+// GetGetPreferredWidthForHeight gets the callback function.
+func (x *CellAreaContextClass) GetGetPreferredWidthForHeight() func(*CellAreaContext, int, int, int) {
+	if x.xGetPreferredWidthForHeight == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, HeightVarp int, MinimumWidthVarp int, NaturalWidthVarp int)
+	purego.RegisterFunc(&rawCallback, x.xGetPreferredWidthForHeight)
+	return func(ContextVar *CellAreaContext, HeightVar int, MinimumWidthVar int, NaturalWidthVar int) {
+		rawCallback(ContextVar.GoPointer(), HeightVar, MinimumWidthVar, NaturalWidthVar)
+	}
 }
 
 type CellAreaContextPrivate struct {

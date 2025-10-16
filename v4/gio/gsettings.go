@@ -36,13 +36,113 @@ type SettingsGetMapping func(*glib.Variant, uintptr, uintptr) bool
 type SettingsClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xWritableChanged uintptr
+
+	xChanged uintptr
+
+	xWritableChangeEvent uintptr
+
+	xChangeEvent uintptr
 
 	Padding [20]uintptr
 }
 
 func (x *SettingsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideWritableChanged sets the callback function.
+func (x *SettingsClass) OverrideWritableChanged(cb func(*Settings, string)) {
+	if cb == nil {
+		x.xWritableChanged = 0
+	} else {
+		x.xWritableChanged = purego.NewCallback(func(SettingsVarp uintptr, KeyVarp string) {
+			cb(SettingsNewFromInternalPtr(SettingsVarp), KeyVarp)
+		})
+	}
+}
+
+// GetWritableChanged gets the callback function.
+func (x *SettingsClass) GetWritableChanged() func(*Settings, string) {
+	if x.xWritableChanged == 0 {
+		return nil
+	}
+	var rawCallback func(SettingsVarp uintptr, KeyVarp string)
+	purego.RegisterFunc(&rawCallback, x.xWritableChanged)
+	return func(SettingsVar *Settings, KeyVar string) {
+		rawCallback(SettingsVar.GoPointer(), KeyVar)
+	}
+}
+
+// OverrideChanged sets the callback function.
+func (x *SettingsClass) OverrideChanged(cb func(*Settings, string)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(SettingsVarp uintptr, KeyVarp string) {
+			cb(SettingsNewFromInternalPtr(SettingsVarp), KeyVarp)
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *SettingsClass) GetChanged() func(*Settings, string) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(SettingsVarp uintptr, KeyVarp string)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(SettingsVar *Settings, KeyVar string) {
+		rawCallback(SettingsVar.GoPointer(), KeyVar)
+	}
+}
+
+// OverrideWritableChangeEvent sets the callback function.
+func (x *SettingsClass) OverrideWritableChangeEvent(cb func(*Settings, glib.Quark) bool) {
+	if cb == nil {
+		x.xWritableChangeEvent = 0
+	} else {
+		x.xWritableChangeEvent = purego.NewCallback(func(SettingsVarp uintptr, KeyVarp glib.Quark) bool {
+			return cb(SettingsNewFromInternalPtr(SettingsVarp), KeyVarp)
+		})
+	}
+}
+
+// GetWritableChangeEvent gets the callback function.
+func (x *SettingsClass) GetWritableChangeEvent() func(*Settings, glib.Quark) bool {
+	if x.xWritableChangeEvent == 0 {
+		return nil
+	}
+	var rawCallback func(SettingsVarp uintptr, KeyVarp glib.Quark) bool
+	purego.RegisterFunc(&rawCallback, x.xWritableChangeEvent)
+	return func(SettingsVar *Settings, KeyVar glib.Quark) bool {
+		return rawCallback(SettingsVar.GoPointer(), KeyVar)
+	}
+}
+
+// OverrideChangeEvent sets the callback function.
+func (x *SettingsClass) OverrideChangeEvent(cb func(*Settings, *glib.Quark, int) bool) {
+	if cb == nil {
+		x.xChangeEvent = 0
+	} else {
+		x.xChangeEvent = purego.NewCallback(func(SettingsVarp uintptr, KeysVarp *glib.Quark, NKeysVarp int) bool {
+			return cb(SettingsNewFromInternalPtr(SettingsVarp), KeysVarp, NKeysVarp)
+		})
+	}
+}
+
+// GetChangeEvent gets the callback function.
+func (x *SettingsClass) GetChangeEvent() func(*Settings, *glib.Quark, int) bool {
+	if x.xChangeEvent == 0 {
+		return nil
+	}
+	var rawCallback func(SettingsVarp uintptr, KeysVarp *glib.Quark, NKeysVarp int) bool
+	purego.RegisterFunc(&rawCallback, x.xChangeEvent)
+	return func(SettingsVar *Settings, KeysVar *glib.Quark, NKeysVar int) bool {
+		return rawCallback(SettingsVar.GoPointer(), KeysVar, NKeysVar)
+	}
 }
 
 type SettingsPrivate struct {

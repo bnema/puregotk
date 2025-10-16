@@ -15,11 +15,136 @@ import (
 type StyleContextClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xChanged uintptr
+
+	xGtkReserved1 uintptr
+
+	xGtkReserved2 uintptr
+
+	xGtkReserved3 uintptr
+
+	xGtkReserved4 uintptr
 }
 
 func (x *StyleContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideChanged sets the callback function.
+func (x *StyleContextClass) OverrideChanged(cb func(*StyleContext)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(ContextVarp uintptr) {
+			cb(StyleContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *StyleContextClass) GetChanged() func(*StyleContext) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(ContextVar *StyleContext) {
+		rawCallback(ContextVar.GoPointer())
+	}
+}
+
+// OverrideGtkReserved1 sets the callback function.
+func (x *StyleContextClass) OverrideGtkReserved1(cb func()) {
+	if cb == nil {
+		x.xGtkReserved1 = 0
+	} else {
+		x.xGtkReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved1 gets the callback function.
+func (x *StyleContextClass) GetGtkReserved1() func() {
+	if x.xGtkReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved2 sets the callback function.
+func (x *StyleContextClass) OverrideGtkReserved2(cb func()) {
+	if cb == nil {
+		x.xGtkReserved2 = 0
+	} else {
+		x.xGtkReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved2 gets the callback function.
+func (x *StyleContextClass) GetGtkReserved2() func() {
+	if x.xGtkReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved3 sets the callback function.
+func (x *StyleContextClass) OverrideGtkReserved3(cb func()) {
+	if cb == nil {
+		x.xGtkReserved3 = 0
+	} else {
+		x.xGtkReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved3 gets the callback function.
+func (x *StyleContextClass) GetGtkReserved3() func() {
+	if x.xGtkReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved4 sets the callback function.
+func (x *StyleContextClass) OverrideGtkReserved4(cb func()) {
+	if cb == nil {
+		x.xGtkReserved4 = 0
+	} else {
+		x.xGtkReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved4 gets the callback function.
+func (x *StyleContextClass) GetGtkReserved4() func() {
+	if x.xGtkReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved4)
+	return func() {
+		rawCallback()
+	}
 }
 
 // Flags that modify the behavior of gtk_style_context_to_string().

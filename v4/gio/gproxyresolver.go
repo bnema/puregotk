@@ -17,10 +17,110 @@ type ProxyResolverInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xIsSupported uintptr
+
+	xLookup uintptr
+
+	xLookupAsync uintptr
+
+	xLookupFinish uintptr
 }
 
 func (x *ProxyResolverInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideIsSupported sets the callback function.
+func (x *ProxyResolverInterface) OverrideIsSupported(cb func(ProxyResolver) bool) {
+	if cb == nil {
+		x.xIsSupported = 0
+	} else {
+		x.xIsSupported = purego.NewCallback(func(ResolverVarp uintptr) bool {
+			return cb(&ProxyResolverBase{Ptr: ResolverVarp})
+		})
+	}
+}
+
+// GetIsSupported gets the callback function.
+func (x *ProxyResolverInterface) GetIsSupported() func(ProxyResolver) bool {
+	if x.xIsSupported == 0 {
+		return nil
+	}
+	var rawCallback func(ResolverVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xIsSupported)
+	return func(ResolverVar ProxyResolver) bool {
+		return rawCallback(ResolverVar.GoPointer())
+	}
+}
+
+// OverrideLookup sets the callback function.
+func (x *ProxyResolverInterface) OverrideLookup(cb func(ProxyResolver, string, *Cancellable) []string) {
+	if cb == nil {
+		x.xLookup = 0
+	} else {
+		x.xLookup = purego.NewCallback(func(ResolverVarp uintptr, UriVarp string, CancellableVarp uintptr) []string {
+			return cb(&ProxyResolverBase{Ptr: ResolverVarp}, UriVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetLookup gets the callback function.
+func (x *ProxyResolverInterface) GetLookup() func(ProxyResolver, string, *Cancellable) []string {
+	if x.xLookup == 0 {
+		return nil
+	}
+	var rawCallback func(ResolverVarp uintptr, UriVarp string, CancellableVarp uintptr) []string
+	purego.RegisterFunc(&rawCallback, x.xLookup)
+	return func(ResolverVar ProxyResolver, UriVar string, CancellableVar *Cancellable) []string {
+		return rawCallback(ResolverVar.GoPointer(), UriVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideLookupAsync sets the callback function.
+func (x *ProxyResolverInterface) OverrideLookupAsync(cb func(ProxyResolver, string, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xLookupAsync = 0
+	} else {
+		x.xLookupAsync = purego.NewCallback(func(ResolverVarp uintptr, UriVarp string, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&ProxyResolverBase{Ptr: ResolverVarp}, UriVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetLookupAsync gets the callback function.
+func (x *ProxyResolverInterface) GetLookupAsync() func(ProxyResolver, string, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xLookupAsync == 0 {
+		return nil
+	}
+	var rawCallback func(ResolverVarp uintptr, UriVarp string, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xLookupAsync)
+	return func(ResolverVar ProxyResolver, UriVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(ResolverVar.GoPointer(), UriVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideLookupFinish sets the callback function.
+func (x *ProxyResolverInterface) OverrideLookupFinish(cb func(ProxyResolver, AsyncResult) []string) {
+	if cb == nil {
+		x.xLookupFinish = 0
+	} else {
+		x.xLookupFinish = purego.NewCallback(func(ResolverVarp uintptr, ResultVarp uintptr) []string {
+			return cb(&ProxyResolverBase{Ptr: ResolverVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetLookupFinish gets the callback function.
+func (x *ProxyResolverInterface) GetLookupFinish() func(ProxyResolver, AsyncResult) []string {
+	if x.xLookupFinish == 0 {
+		return nil
+	}
+	var rawCallback func(ResolverVarp uintptr, ResultVarp uintptr) []string
+	purego.RegisterFunc(&rawCallback, x.xLookupFinish)
+	return func(ResolverVar ProxyResolver, ResultVar AsyncResult) []string {
+		return rawCallback(ResolverVar.GoPointer(), ResultVar.GoPointer())
+	}
 }
 
 // #GProxyResolver provides synchronous and asynchronous network proxy
@@ -34,9 +134,9 @@ type ProxyResolver interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
 	IsSupported() bool
-	Lookup(UriVar string, CancellableVar *Cancellable) []string
+	Lookup(UriVar string, CancellableVar *Cancellable) ([]string, error)
 	LookupAsync(UriVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	LookupFinish(ResultVar AsyncResult) []string
+	LookupFinish(ResultVar AsyncResult) ([]string, error)
 }
 
 var xProxyResolverGLibType func() types.GType

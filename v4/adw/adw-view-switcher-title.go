@@ -15,7 +15,7 @@ import (
 type ViewSwitcherTitleClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *ViewSwitcherTitleClass) GoPointer() uintptr {

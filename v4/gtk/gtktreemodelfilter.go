@@ -27,13 +27,77 @@ type TreeModelFilterVisibleFunc func(uintptr, *TreeIter, uintptr) bool
 type TreeModelFilterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xVisible uintptr
+
+	xModify uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *TreeModelFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideVisible sets the callback function.
+// A function which decides whether the row indicated by @iter is visible.
+func (x *TreeModelFilterClass) OverrideVisible(cb func(*TreeModelFilter, TreeModel, *TreeIter) bool) {
+	if cb == nil {
+		x.xVisible = 0
+	} else {
+		x.xVisible = purego.NewCallback(func(SelfVarp uintptr, ChildModelVarp uintptr, IterVarp *TreeIter) bool {
+			return cb(TreeModelFilterNewFromInternalPtr(SelfVarp), &TreeModelBase{Ptr: ChildModelVarp}, IterVarp)
+		})
+	}
+}
+
+// GetVisible gets the callback function.
+// A function which decides whether the row indicated by @iter is visible.
+func (x *TreeModelFilterClass) GetVisible() func(*TreeModelFilter, TreeModel, *TreeIter) bool {
+	if x.xVisible == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ChildModelVarp uintptr, IterVarp *TreeIter) bool
+	purego.RegisterFunc(&rawCallback, x.xVisible)
+	return func(SelfVar *TreeModelFilter, ChildModelVar TreeModel, IterVar *TreeIter) bool {
+		return rawCallback(SelfVar.GoPointer(), ChildModelVar.GoPointer(), IterVar)
+	}
+}
+
+// OverrideModify sets the callback function.
+// A function which calculates display values from raw values in the model.
+// It must fill @value with the display value for the column @column in the
+// row indicated by @iter.
+//
+// Since this function is called for each data access, it’s not a
+// particularly efficient operation.
+func (x *TreeModelFilterClass) OverrideModify(cb func(*TreeModelFilter, TreeModel, *TreeIter, *gobject.Value, int)) {
+	if cb == nil {
+		x.xModify = 0
+	} else {
+		x.xModify = purego.NewCallback(func(SelfVarp uintptr, ChildModelVarp uintptr, IterVarp *TreeIter, ValueVarp *gobject.Value, ColumnVarp int) {
+			cb(TreeModelFilterNewFromInternalPtr(SelfVarp), &TreeModelBase{Ptr: ChildModelVarp}, IterVarp, ValueVarp, ColumnVarp)
+		})
+	}
+}
+
+// GetModify gets the callback function.
+// A function which calculates display values from raw values in the model.
+// It must fill @value with the display value for the column @column in the
+// row indicated by @iter.
+//
+// Since this function is called for each data access, it’s not a
+// particularly efficient operation.
+func (x *TreeModelFilterClass) GetModify() func(*TreeModelFilter, TreeModel, *TreeIter, *gobject.Value, int) {
+	if x.xModify == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ChildModelVarp uintptr, IterVarp *TreeIter, ValueVarp *gobject.Value, ColumnVarp int)
+	purego.RegisterFunc(&rawCallback, x.xModify)
+	return func(SelfVar *TreeModelFilter, ChildModelVar TreeModel, IterVar *TreeIter, ValueVar *gobject.Value, ColumnVar int) {
+		rawCallback(SelfVar.GoPointer(), ChildModelVar.GoPointer(), IterVar, ValueVar, ColumnVar)
+	}
 }
 
 type TreeModelFilterPrivate struct {

@@ -329,11 +329,136 @@ func (x *RecentInfo) Unref() {
 type RecentManagerClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xChanged uintptr
+
+	xGtkRecent1 uintptr
+
+	xGtkRecent2 uintptr
+
+	xGtkRecent3 uintptr
+
+	xGtkRecent4 uintptr
 }
 
 func (x *RecentManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideChanged sets the callback function.
+func (x *RecentManagerClass) OverrideChanged(cb func(*RecentManager)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(ManagerVarp uintptr) {
+			cb(RecentManagerNewFromInternalPtr(ManagerVarp))
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *RecentManagerClass) GetChanged() func(*RecentManager) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ManagerVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(ManagerVar *RecentManager) {
+		rawCallback(ManagerVar.GoPointer())
+	}
+}
+
+// OverrideGtkRecent1 sets the callback function.
+func (x *RecentManagerClass) OverrideGtkRecent1(cb func()) {
+	if cb == nil {
+		x.xGtkRecent1 = 0
+	} else {
+		x.xGtkRecent1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkRecent1 gets the callback function.
+func (x *RecentManagerClass) GetGtkRecent1() func() {
+	if x.xGtkRecent1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkRecent1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkRecent2 sets the callback function.
+func (x *RecentManagerClass) OverrideGtkRecent2(cb func()) {
+	if cb == nil {
+		x.xGtkRecent2 = 0
+	} else {
+		x.xGtkRecent2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkRecent2 gets the callback function.
+func (x *RecentManagerClass) GetGtkRecent2() func() {
+	if x.xGtkRecent2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkRecent2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkRecent3 sets the callback function.
+func (x *RecentManagerClass) OverrideGtkRecent3(cb func()) {
+	if cb == nil {
+		x.xGtkRecent3 = 0
+	} else {
+		x.xGtkRecent3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkRecent3 gets the callback function.
+func (x *RecentManagerClass) GetGtkRecent3() func() {
+	if x.xGtkRecent3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkRecent3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkRecent4 sets the callback function.
+func (x *RecentManagerClass) OverrideGtkRecent4(cb func()) {
+	if cb == nil {
+		x.xGtkRecent4 = 0
+	} else {
+		x.xGtkRecent4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkRecent4 gets the callback function.
+func (x *RecentManagerClass) GetGtkRecent4() func() {
+	if x.xGtkRecent4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkRecent4)
+	return func() {
+		rawCallback()
+	}
 }
 
 type RecentManagerPrivate struct {

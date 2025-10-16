@@ -16,10 +16,135 @@ type SeekableIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xTell uintptr
+
+	xCanSeek uintptr
+
+	xSeek uintptr
+
+	xCanTruncate uintptr
+
+	xTruncateFn uintptr
 }
 
 func (x *SeekableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideTell sets the callback function.
+func (x *SeekableIface) OverrideTell(cb func(Seekable) int64) {
+	if cb == nil {
+		x.xTell = 0
+	} else {
+		x.xTell = purego.NewCallback(func(SeekableVarp uintptr) int64 {
+			return cb(&SeekableBase{Ptr: SeekableVarp})
+		})
+	}
+}
+
+// GetTell gets the callback function.
+func (x *SeekableIface) GetTell() func(Seekable) int64 {
+	if x.xTell == 0 {
+		return nil
+	}
+	var rawCallback func(SeekableVarp uintptr) int64
+	purego.RegisterFunc(&rawCallback, x.xTell)
+	return func(SeekableVar Seekable) int64 {
+		return rawCallback(SeekableVar.GoPointer())
+	}
+}
+
+// OverrideCanSeek sets the callback function.
+func (x *SeekableIface) OverrideCanSeek(cb func(Seekable) bool) {
+	if cb == nil {
+		x.xCanSeek = 0
+	} else {
+		x.xCanSeek = purego.NewCallback(func(SeekableVarp uintptr) bool {
+			return cb(&SeekableBase{Ptr: SeekableVarp})
+		})
+	}
+}
+
+// GetCanSeek gets the callback function.
+func (x *SeekableIface) GetCanSeek() func(Seekable) bool {
+	if x.xCanSeek == 0 {
+		return nil
+	}
+	var rawCallback func(SeekableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanSeek)
+	return func(SeekableVar Seekable) bool {
+		return rawCallback(SeekableVar.GoPointer())
+	}
+}
+
+// OverrideSeek sets the callback function.
+func (x *SeekableIface) OverrideSeek(cb func(Seekable, int64, glib.SeekType, *Cancellable) bool) {
+	if cb == nil {
+		x.xSeek = 0
+	} else {
+		x.xSeek = purego.NewCallback(func(SeekableVarp uintptr, OffsetVarp int64, TypeVarp glib.SeekType, CancellableVarp uintptr) bool {
+			return cb(&SeekableBase{Ptr: SeekableVarp}, OffsetVarp, TypeVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetSeek gets the callback function.
+func (x *SeekableIface) GetSeek() func(Seekable, int64, glib.SeekType, *Cancellable) bool {
+	if x.xSeek == 0 {
+		return nil
+	}
+	var rawCallback func(SeekableVarp uintptr, OffsetVarp int64, TypeVarp glib.SeekType, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSeek)
+	return func(SeekableVar Seekable, OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) bool {
+		return rawCallback(SeekableVar.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideCanTruncate sets the callback function.
+func (x *SeekableIface) OverrideCanTruncate(cb func(Seekable) bool) {
+	if cb == nil {
+		x.xCanTruncate = 0
+	} else {
+		x.xCanTruncate = purego.NewCallback(func(SeekableVarp uintptr) bool {
+			return cb(&SeekableBase{Ptr: SeekableVarp})
+		})
+	}
+}
+
+// GetCanTruncate gets the callback function.
+func (x *SeekableIface) GetCanTruncate() func(Seekable) bool {
+	if x.xCanTruncate == 0 {
+		return nil
+	}
+	var rawCallback func(SeekableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanTruncate)
+	return func(SeekableVar Seekable) bool {
+		return rawCallback(SeekableVar.GoPointer())
+	}
+}
+
+// OverrideTruncateFn sets the callback function.
+func (x *SeekableIface) OverrideTruncateFn(cb func(Seekable, int64, *Cancellable) bool) {
+	if cb == nil {
+		x.xTruncateFn = 0
+	} else {
+		x.xTruncateFn = purego.NewCallback(func(SeekableVarp uintptr, OffsetVarp int64, CancellableVarp uintptr) bool {
+			return cb(&SeekableBase{Ptr: SeekableVarp}, OffsetVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetTruncateFn gets the callback function.
+func (x *SeekableIface) GetTruncateFn() func(Seekable, int64, *Cancellable) bool {
+	if x.xTruncateFn == 0 {
+		return nil
+	}
+	var rawCallback func(SeekableVarp uintptr, OffsetVarp int64, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xTruncateFn)
+	return func(SeekableVar Seekable, OffsetVar int64, CancellableVar *Cancellable) bool {
+		return rawCallback(SeekableVar.GoPointer(), OffsetVar, CancellableVar.GoPointer())
+	}
 }
 
 // #GSeekable is implemented by streams (implementations of
@@ -41,9 +166,9 @@ type Seekable interface {
 	SetGoPointer(uintptr)
 	CanSeek() bool
 	CanTruncate() bool
-	Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) bool
+	Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) (bool, error)
 	Tell() int64
-	Truncate(OffsetVar int64, CancellableVar *Cancellable) bool
+	Truncate(OffsetVar int64, CancellableVar *Cancellable) (bool, error)
 }
 
 var xSeekableGLibType func() types.GType

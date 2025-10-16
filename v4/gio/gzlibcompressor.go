@@ -15,7 +15,7 @@ import (
 type ZlibCompressorClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *ZlibCompressorClass) GoPointer() uintptr {

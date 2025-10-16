@@ -17,13 +17,213 @@ import (
 type ContentProviderClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xContentChanged uintptr
+
+	xAttachClipboard uintptr
+
+	xDetachClipboard uintptr
+
+	xRefFormats uintptr
+
+	xRefStorableFormats uintptr
+
+	xWriteMimeTypeAsync uintptr
+
+	xWriteMimeTypeFinish uintptr
+
+	xGetValue uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *ContentProviderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideContentChanged sets the callback function.
+func (x *ContentProviderClass) OverrideContentChanged(cb func(*ContentProvider)) {
+	if cb == nil {
+		x.xContentChanged = 0
+	} else {
+		x.xContentChanged = purego.NewCallback(func(ProviderVarp uintptr) {
+			cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+		})
+	}
+}
+
+// GetContentChanged gets the callback function.
+func (x *ContentProviderClass) GetContentChanged() func(*ContentProvider) {
+	if x.xContentChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ProviderVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xContentChanged)
+	return func(ProviderVar *ContentProvider) {
+		rawCallback(ProviderVar.GoPointer())
+	}
+}
+
+// OverrideAttachClipboard sets the callback function.
+func (x *ContentProviderClass) OverrideAttachClipboard(cb func(*ContentProvider, *Clipboard)) {
+	if cb == nil {
+		x.xAttachClipboard = 0
+	} else {
+		x.xAttachClipboard = purego.NewCallback(func(ProviderVarp uintptr, ClipboardVarp uintptr) {
+			cb(ContentProviderNewFromInternalPtr(ProviderVarp), ClipboardNewFromInternalPtr(ClipboardVarp))
+		})
+	}
+}
+
+// GetAttachClipboard gets the callback function.
+func (x *ContentProviderClass) GetAttachClipboard() func(*ContentProvider, *Clipboard) {
+	if x.xAttachClipboard == 0 {
+		return nil
+	}
+	var rawCallback func(ProviderVarp uintptr, ClipboardVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xAttachClipboard)
+	return func(ProviderVar *ContentProvider, ClipboardVar *Clipboard) {
+		rawCallback(ProviderVar.GoPointer(), ClipboardVar.GoPointer())
+	}
+}
+
+// OverrideDetachClipboard sets the callback function.
+func (x *ContentProviderClass) OverrideDetachClipboard(cb func(*ContentProvider, *Clipboard)) {
+	if cb == nil {
+		x.xDetachClipboard = 0
+	} else {
+		x.xDetachClipboard = purego.NewCallback(func(ProviderVarp uintptr, ClipboardVarp uintptr) {
+			cb(ContentProviderNewFromInternalPtr(ProviderVarp), ClipboardNewFromInternalPtr(ClipboardVarp))
+		})
+	}
+}
+
+// GetDetachClipboard gets the callback function.
+func (x *ContentProviderClass) GetDetachClipboard() func(*ContentProvider, *Clipboard) {
+	if x.xDetachClipboard == 0 {
+		return nil
+	}
+	var rawCallback func(ProviderVarp uintptr, ClipboardVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDetachClipboard)
+	return func(ProviderVar *ContentProvider, ClipboardVar *Clipboard) {
+		rawCallback(ProviderVar.GoPointer(), ClipboardVar.GoPointer())
+	}
+}
+
+// OverrideRefFormats sets the callback function.
+func (x *ContentProviderClass) OverrideRefFormats(cb func(*ContentProvider) *ContentFormats) {
+	if cb == nil {
+		x.xRefFormats = 0
+	} else {
+		x.xRefFormats = purego.NewCallback(func(ProviderVarp uintptr) *ContentFormats {
+			return cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+		})
+	}
+}
+
+// GetRefFormats gets the callback function.
+func (x *ContentProviderClass) GetRefFormats() func(*ContentProvider) *ContentFormats {
+	if x.xRefFormats == 0 {
+		return nil
+	}
+	var rawCallback func(ProviderVarp uintptr) *ContentFormats
+	purego.RegisterFunc(&rawCallback, x.xRefFormats)
+	return func(ProviderVar *ContentProvider) *ContentFormats {
+		return rawCallback(ProviderVar.GoPointer())
+	}
+}
+
+// OverrideRefStorableFormats sets the callback function.
+func (x *ContentProviderClass) OverrideRefStorableFormats(cb func(*ContentProvider) *ContentFormats) {
+	if cb == nil {
+		x.xRefStorableFormats = 0
+	} else {
+		x.xRefStorableFormats = purego.NewCallback(func(ProviderVarp uintptr) *ContentFormats {
+			return cb(ContentProviderNewFromInternalPtr(ProviderVarp))
+		})
+	}
+}
+
+// GetRefStorableFormats gets the callback function.
+func (x *ContentProviderClass) GetRefStorableFormats() func(*ContentProvider) *ContentFormats {
+	if x.xRefStorableFormats == 0 {
+		return nil
+	}
+	var rawCallback func(ProviderVarp uintptr) *ContentFormats
+	purego.RegisterFunc(&rawCallback, x.xRefStorableFormats)
+	return func(ProviderVar *ContentProvider) *ContentFormats {
+		return rawCallback(ProviderVar.GoPointer())
+	}
+}
+
+// OverrideWriteMimeTypeAsync sets the callback function.
+func (x *ContentProviderClass) OverrideWriteMimeTypeAsync(cb func(*ContentProvider, string, *gio.OutputStream, int, *gio.Cancellable, *gio.AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xWriteMimeTypeAsync = 0
+	} else {
+		x.xWriteMimeTypeAsync = purego.NewCallback(func(ProviderVarp uintptr, MimeTypeVarp string, StreamVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(ContentProviderNewFromInternalPtr(ProviderVarp), MimeTypeVarp, gio.OutputStreamNewFromInternalPtr(StreamVarp), IoPriorityVarp, gio.CancellableNewFromInternalPtr(CancellableVarp), (*gio.AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetWriteMimeTypeAsync gets the callback function.
+func (x *ContentProviderClass) GetWriteMimeTypeAsync() func(*ContentProvider, string, *gio.OutputStream, int, *gio.Cancellable, *gio.AsyncReadyCallback, uintptr) {
+	if x.xWriteMimeTypeAsync == 0 {
+		return nil
+	}
+	var rawCallback func(ProviderVarp uintptr, MimeTypeVarp string, StreamVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xWriteMimeTypeAsync)
+	return func(ProviderVar *ContentProvider, MimeTypeVar string, StreamVar *gio.OutputStream, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(ProviderVar.GoPointer(), MimeTypeVar, StreamVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideWriteMimeTypeFinish sets the callback function.
+func (x *ContentProviderClass) OverrideWriteMimeTypeFinish(cb func(*ContentProvider, gio.AsyncResult) bool) {
+	if cb == nil {
+		x.xWriteMimeTypeFinish = 0
+	} else {
+		x.xWriteMimeTypeFinish = purego.NewCallback(func(ProviderVarp uintptr, ResultVarp uintptr) bool {
+			return cb(ContentProviderNewFromInternalPtr(ProviderVarp), &gio.AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetWriteMimeTypeFinish gets the callback function.
+func (x *ContentProviderClass) GetWriteMimeTypeFinish() func(*ContentProvider, gio.AsyncResult) bool {
+	if x.xWriteMimeTypeFinish == 0 {
+		return nil
+	}
+	var rawCallback func(ProviderVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xWriteMimeTypeFinish)
+	return func(ProviderVar *ContentProvider, ResultVar gio.AsyncResult) bool {
+		return rawCallback(ProviderVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGetValue sets the callback function.
+func (x *ContentProviderClass) OverrideGetValue(cb func(*ContentProvider, *gobject.Value) bool) {
+	if cb == nil {
+		x.xGetValue = 0
+	} else {
+		x.xGetValue = purego.NewCallback(func(ProviderVarp uintptr, ValueVarp *gobject.Value) bool {
+			return cb(ContentProviderNewFromInternalPtr(ProviderVarp), ValueVarp)
+		})
+	}
+}
+
+// GetGetValue gets the callback function.
+func (x *ContentProviderClass) GetGetValue() func(*ContentProvider, *gobject.Value) bool {
+	if x.xGetValue == 0 {
+		return nil
+	}
+	var rawCallback func(ProviderVarp uintptr, ValueVarp *gobject.Value) bool
+	purego.RegisterFunc(&rawCallback, x.xGetValue)
+	return func(ProviderVar *ContentProvider, ValueVar *gobject.Value) bool {
+		return rawCallback(ProviderVar.GoPointer(), ValueVar)
+	}
 }
 
 // A `GdkContentProvider` is used to provide content for the clipboard or

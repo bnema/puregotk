@@ -14,7 +14,7 @@ import (
 type ProxyAddressClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass InetSocketAddressClass
 }
 
 func (x *ProxyAddressClass) GoPointer() uintptr {

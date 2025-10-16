@@ -113,6 +113,8 @@ type Closure struct {
 
 	IsInvalid uint
 
+	xMarshal uintptr
+
 	Data uintptr
 
 	Notifiers *ClosureNotifyData
@@ -407,6 +409,29 @@ func (x *Closure) Unref() {
 
 	xClosureUnref(x.GoPointer())
 
+}
+
+// OverrideMarshal sets the callback function.
+func (x *Closure) OverrideMarshal(cb func(*Closure, *Value, uint, *Value, uintptr, uintptr)) {
+	if cb == nil {
+		x.xMarshal = 0
+	} else {
+		x.xMarshal = purego.NewCallback(func(ClosureVarp *Closure, ReturnValueVarp *Value, NParamValuesVarp uint, ParamValuesVarp *Value, InvocationHintVarp uintptr, MarshalDataVarp uintptr) {
+			cb(ClosureVarp, ReturnValueVarp, NParamValuesVarp, ParamValuesVarp, InvocationHintVarp, MarshalDataVarp)
+		})
+	}
+}
+
+// GetMarshal gets the callback function.
+func (x *Closure) GetMarshal() func(*Closure, *Value, uint, *Value, uintptr, uintptr) {
+	if x.xMarshal == 0 {
+		return nil
+	}
+	var rawCallback func(ClosureVarp *Closure, ReturnValueVarp *Value, NParamValuesVarp uint, ParamValuesVarp *Value, InvocationHintVarp uintptr, MarshalDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMarshal)
+	return func(ClosureVar *Closure, ReturnValueVar *Value, NParamValuesVar uint, ParamValuesVar *Value, InvocationHintVar uintptr, MarshalDataVar uintptr) {
+		rawCallback(ClosureVar, ReturnValueVar, NParamValuesVar, ParamValuesVar, InvocationHintVar, MarshalDataVar)
+	}
 }
 
 type ClosureNotifyData struct {

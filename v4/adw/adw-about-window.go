@@ -18,7 +18,7 @@ import (
 type AboutWindowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WindowClass
 }
 
 func (x *AboutWindowClass) GoPointer() uintptr {

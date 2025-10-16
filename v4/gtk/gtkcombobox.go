@@ -16,13 +16,88 @@ import (
 type ComboBoxClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xChanged uintptr
+
+	xFormatEntryText uintptr
+
+	xActivate uintptr
 
 	Padding [7]uintptr
 }
 
 func (x *ComboBoxClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideChanged sets the callback function.
+func (x *ComboBoxClass) OverrideChanged(cb func(*ComboBox)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(ComboBoxVarp uintptr) {
+			cb(ComboBoxNewFromInternalPtr(ComboBoxVarp))
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *ComboBoxClass) GetChanged() func(*ComboBox) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ComboBoxVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(ComboBoxVar *ComboBox) {
+		rawCallback(ComboBoxVar.GoPointer())
+	}
+}
+
+// OverrideFormatEntryText sets the callback function.
+func (x *ComboBoxClass) OverrideFormatEntryText(cb func(*ComboBox, string) string) {
+	if cb == nil {
+		x.xFormatEntryText = 0
+	} else {
+		x.xFormatEntryText = purego.NewCallback(func(ComboBoxVarp uintptr, PathVarp string) string {
+			return cb(ComboBoxNewFromInternalPtr(ComboBoxVarp), PathVarp)
+		})
+	}
+}
+
+// GetFormatEntryText gets the callback function.
+func (x *ComboBoxClass) GetFormatEntryText() func(*ComboBox, string) string {
+	if x.xFormatEntryText == 0 {
+		return nil
+	}
+	var rawCallback func(ComboBoxVarp uintptr, PathVarp string) string
+	purego.RegisterFunc(&rawCallback, x.xFormatEntryText)
+	return func(ComboBoxVar *ComboBox, PathVar string) string {
+		return rawCallback(ComboBoxVar.GoPointer(), PathVar)
+	}
+}
+
+// OverrideActivate sets the callback function.
+func (x *ComboBoxClass) OverrideActivate(cb func(*ComboBox)) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(ComboBoxVarp uintptr) {
+			cb(ComboBoxNewFromInternalPtr(ComboBoxVarp))
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+func (x *ComboBoxClass) GetActivate() func(*ComboBox) {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(ComboBoxVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(ComboBoxVar *ComboBox) {
+		rawCallback(ComboBoxVar.GoPointer())
+	}
 }
 
 // A `GtkComboBox` is a widget that allows the user to choose from a list of

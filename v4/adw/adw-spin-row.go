@@ -16,7 +16,7 @@ import (
 type SpinRowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass ActionRowClass
 }
 
 func (x *SpinRowClass) GoPointer() uintptr {

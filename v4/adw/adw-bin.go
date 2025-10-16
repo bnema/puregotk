@@ -15,7 +15,7 @@ import (
 type BinClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *BinClass) GoPointer() uintptr {

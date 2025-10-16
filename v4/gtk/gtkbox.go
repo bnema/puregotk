@@ -14,7 +14,7 @@ import (
 type BoxClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
 
 	Padding [8]uintptr
 }

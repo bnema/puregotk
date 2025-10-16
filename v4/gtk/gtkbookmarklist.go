@@ -15,7 +15,7 @@ import (
 type BookmarkListClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *BookmarkListClass) GoPointer() uintptr {

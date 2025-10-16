@@ -16,7 +16,7 @@ import (
 type FileChooserNativeClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass NativeDialogClass
 }
 
 func (x *FileChooserNativeClass) GoPointer() uintptr {

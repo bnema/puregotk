@@ -15,7 +15,7 @@ import (
 type BuilderCScopeClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *BuilderCScopeClass) GoPointer() uintptr {
@@ -29,10 +29,85 @@ type BuilderScopeInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xGetTypeFromName uintptr
+
+	xGetTypeFromFunction uintptr
+
+	xCreateClosure uintptr
 }
 
 func (x *BuilderScopeInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetTypeFromName sets the callback function.
+func (x *BuilderScopeInterface) OverrideGetTypeFromName(cb func(BuilderScope, *Builder, string) types.GType) {
+	if cb == nil {
+		x.xGetTypeFromName = 0
+	} else {
+		x.xGetTypeFromName = purego.NewCallback(func(SelfVarp uintptr, BuilderVarp uintptr, TypeNameVarp string) types.GType {
+			return cb(&BuilderScopeBase{Ptr: SelfVarp}, BuilderNewFromInternalPtr(BuilderVarp), TypeNameVarp)
+		})
+	}
+}
+
+// GetGetTypeFromName gets the callback function.
+func (x *BuilderScopeInterface) GetGetTypeFromName() func(BuilderScope, *Builder, string) types.GType {
+	if x.xGetTypeFromName == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, BuilderVarp uintptr, TypeNameVarp string) types.GType
+	purego.RegisterFunc(&rawCallback, x.xGetTypeFromName)
+	return func(SelfVar BuilderScope, BuilderVar *Builder, TypeNameVar string) types.GType {
+		return rawCallback(SelfVar.GoPointer(), BuilderVar.GoPointer(), TypeNameVar)
+	}
+}
+
+// OverrideGetTypeFromFunction sets the callback function.
+func (x *BuilderScopeInterface) OverrideGetTypeFromFunction(cb func(BuilderScope, *Builder, string) types.GType) {
+	if cb == nil {
+		x.xGetTypeFromFunction = 0
+	} else {
+		x.xGetTypeFromFunction = purego.NewCallback(func(SelfVarp uintptr, BuilderVarp uintptr, FunctionNameVarp string) types.GType {
+			return cb(&BuilderScopeBase{Ptr: SelfVarp}, BuilderNewFromInternalPtr(BuilderVarp), FunctionNameVarp)
+		})
+	}
+}
+
+// GetGetTypeFromFunction gets the callback function.
+func (x *BuilderScopeInterface) GetGetTypeFromFunction() func(BuilderScope, *Builder, string) types.GType {
+	if x.xGetTypeFromFunction == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, BuilderVarp uintptr, FunctionNameVarp string) types.GType
+	purego.RegisterFunc(&rawCallback, x.xGetTypeFromFunction)
+	return func(SelfVar BuilderScope, BuilderVar *Builder, FunctionNameVar string) types.GType {
+		return rawCallback(SelfVar.GoPointer(), BuilderVar.GoPointer(), FunctionNameVar)
+	}
+}
+
+// OverrideCreateClosure sets the callback function.
+func (x *BuilderScopeInterface) OverrideCreateClosure(cb func(BuilderScope, *Builder, string, BuilderClosureFlags, *gobject.Object) *gobject.Closure) {
+	if cb == nil {
+		x.xCreateClosure = 0
+	} else {
+		x.xCreateClosure = purego.NewCallback(func(SelfVarp uintptr, BuilderVarp uintptr, FunctionNameVarp string, FlagsVarp BuilderClosureFlags, ObjectVarp uintptr) *gobject.Closure {
+			return cb(&BuilderScopeBase{Ptr: SelfVarp}, BuilderNewFromInternalPtr(BuilderVarp), FunctionNameVarp, FlagsVarp, gobject.ObjectNewFromInternalPtr(ObjectVarp))
+		})
+	}
+}
+
+// GetCreateClosure gets the callback function.
+func (x *BuilderScopeInterface) GetCreateClosure() func(BuilderScope, *Builder, string, BuilderClosureFlags, *gobject.Object) *gobject.Closure {
+	if x.xCreateClosure == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, BuilderVarp uintptr, FunctionNameVarp string, FlagsVarp BuilderClosureFlags, ObjectVarp uintptr) *gobject.Closure
+	purego.RegisterFunc(&rawCallback, x.xCreateClosure)
+	return func(SelfVar BuilderScope, BuilderVar *Builder, FunctionNameVar string, FlagsVar BuilderClosureFlags, ObjectVar *gobject.Object) *gobject.Closure {
+		return rawCallback(SelfVar.GoPointer(), BuilderVar.GoPointer(), FunctionNameVar, FlagsVar, ObjectVar.GoPointer())
+	}
 }
 
 // `GtkBuilderScope` is an interface to provide language binding support

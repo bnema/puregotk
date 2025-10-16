@@ -15,11 +15,136 @@ import (
 type SimpleProxyResolverClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
 }
 
 func (x *SimpleProxyResolverClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *SimpleProxyResolverClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *SimpleProxyResolverClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *SimpleProxyResolverClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *SimpleProxyResolverClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *SimpleProxyResolverClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *SimpleProxyResolverClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *SimpleProxyResolverClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *SimpleProxyResolverClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *SimpleProxyResolverClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *SimpleProxyResolverClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
 }
 
 type SimpleProxyResolverPrivate struct {

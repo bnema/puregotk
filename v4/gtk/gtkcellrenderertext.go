@@ -15,13 +15,38 @@ import (
 type CellRendererTextClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass CellRendererClass
+
+	xEdited uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *CellRendererTextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideEdited sets the callback function.
+func (x *CellRendererTextClass) OverrideEdited(cb func(*CellRendererText, string, string)) {
+	if cb == nil {
+		x.xEdited = 0
+	} else {
+		x.xEdited = purego.NewCallback(func(CellRendererTextVarp uintptr, PathVarp string, NewTextVarp string) {
+			cb(CellRendererTextNewFromInternalPtr(CellRendererTextVarp), PathVarp, NewTextVarp)
+		})
+	}
+}
+
+// GetEdited gets the callback function.
+func (x *CellRendererTextClass) GetEdited() func(*CellRendererText, string, string) {
+	if x.xEdited == 0 {
+		return nil
+	}
+	var rawCallback func(CellRendererTextVarp uintptr, PathVarp string, NewTextVarp string)
+	purego.RegisterFunc(&rawCallback, x.xEdited)
+	return func(CellRendererTextVar *CellRendererText, PathVar string, NewTextVar string) {
+		rawCallback(CellRendererTextVar.GoPointer(), PathVar, NewTextVar)
+	}
 }
 
 // Renders text in a cell

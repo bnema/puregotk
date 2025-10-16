@@ -15,7 +15,7 @@ import (
 type SimpleActionGroupClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 
 	Padding [12]uintptr
 }

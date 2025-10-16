@@ -19,11 +19,131 @@ import (
 type PixbufAnimationClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xIsStaticImage uintptr
+
+	xGetStaticImage uintptr
+
+	xGetSize uintptr
+
+	xGetIter uintptr
 }
 
 func (x *PixbufAnimationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideIsStaticImage sets the callback function.
+func (x *PixbufAnimationClass) OverrideIsStaticImage(cb func(*PixbufAnimation) bool) {
+	if cb == nil {
+		x.xIsStaticImage = 0
+	} else {
+		x.xIsStaticImage = purego.NewCallback(func(AnimationVarp uintptr) bool {
+			return cb(PixbufAnimationNewFromInternalPtr(AnimationVarp))
+		})
+	}
+}
+
+// GetIsStaticImage gets the callback function.
+func (x *PixbufAnimationClass) GetIsStaticImage() func(*PixbufAnimation) bool {
+	if x.xIsStaticImage == 0 {
+		return nil
+	}
+	var rawCallback func(AnimationVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xIsStaticImage)
+	return func(AnimationVar *PixbufAnimation) bool {
+		return rawCallback(AnimationVar.GoPointer())
+	}
+}
+
+// OverrideGetStaticImage sets the callback function.
+func (x *PixbufAnimationClass) OverrideGetStaticImage(cb func(*PixbufAnimation) *Pixbuf) {
+	if cb == nil {
+		x.xGetStaticImage = 0
+	} else {
+		x.xGetStaticImage = purego.NewCallback(func(AnimationVarp uintptr) uintptr {
+			ret := cb(PixbufAnimationNewFromInternalPtr(AnimationVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetStaticImage gets the callback function.
+func (x *PixbufAnimationClass) GetGetStaticImage() func(*PixbufAnimation) *Pixbuf {
+	if x.xGetStaticImage == 0 {
+		return nil
+	}
+	var rawCallback func(AnimationVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetStaticImage)
+	return func(AnimationVar *PixbufAnimation) *Pixbuf {
+		rawRet := rawCallback(AnimationVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &Pixbuf{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetSize sets the callback function.
+func (x *PixbufAnimationClass) OverrideGetSize(cb func(*PixbufAnimation, int, int)) {
+	if cb == nil {
+		x.xGetSize = 0
+	} else {
+		x.xGetSize = purego.NewCallback(func(AnimationVarp uintptr, WidthVarp int, HeightVarp int) {
+			cb(PixbufAnimationNewFromInternalPtr(AnimationVarp), WidthVarp, HeightVarp)
+		})
+	}
+}
+
+// GetGetSize gets the callback function.
+func (x *PixbufAnimationClass) GetGetSize() func(*PixbufAnimation, int, int) {
+	if x.xGetSize == 0 {
+		return nil
+	}
+	var rawCallback func(AnimationVarp uintptr, WidthVarp int, HeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xGetSize)
+	return func(AnimationVar *PixbufAnimation, WidthVar int, HeightVar int) {
+		rawCallback(AnimationVar.GoPointer(), WidthVar, HeightVar)
+	}
+}
+
+// OverrideGetIter sets the callback function.
+func (x *PixbufAnimationClass) OverrideGetIter(cb func(*PixbufAnimation, *glib.TimeVal) *PixbufAnimationIter) {
+	if cb == nil {
+		x.xGetIter = 0
+	} else {
+		x.xGetIter = purego.NewCallback(func(AnimationVarp uintptr, StartTimeVarp *glib.TimeVal) uintptr {
+			ret := cb(PixbufAnimationNewFromInternalPtr(AnimationVarp), StartTimeVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetIter gets the callback function.
+func (x *PixbufAnimationClass) GetGetIter() func(*PixbufAnimation, *glib.TimeVal) *PixbufAnimationIter {
+	if x.xGetIter == 0 {
+		return nil
+	}
+	var rawCallback func(AnimationVarp uintptr, StartTimeVarp *glib.TimeVal) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetIter)
+	return func(AnimationVar *PixbufAnimation, StartTimeVar *glib.TimeVal) *PixbufAnimationIter {
+		rawRet := rawCallback(AnimationVar.GoPointer(), StartTimeVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &PixbufAnimationIter{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // Modules supporting animations must derive a type from
@@ -32,11 +152,121 @@ func (x *PixbufAnimationClass) GoPointer() uintptr {
 type PixbufAnimationIterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGetDelayTime uintptr
+
+	xGetPixbuf uintptr
+
+	xOnCurrentlyLoadingFrame uintptr
+
+	xAdvance uintptr
 }
 
 func (x *PixbufAnimationIterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetDelayTime sets the callback function.
+func (x *PixbufAnimationIterClass) OverrideGetDelayTime(cb func(*PixbufAnimationIter) int) {
+	if cb == nil {
+		x.xGetDelayTime = 0
+	} else {
+		x.xGetDelayTime = purego.NewCallback(func(IterVarp uintptr) int {
+			return cb(PixbufAnimationIterNewFromInternalPtr(IterVarp))
+		})
+	}
+}
+
+// GetGetDelayTime gets the callback function.
+func (x *PixbufAnimationIterClass) GetGetDelayTime() func(*PixbufAnimationIter) int {
+	if x.xGetDelayTime == 0 {
+		return nil
+	}
+	var rawCallback func(IterVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xGetDelayTime)
+	return func(IterVar *PixbufAnimationIter) int {
+		return rawCallback(IterVar.GoPointer())
+	}
+}
+
+// OverrideGetPixbuf sets the callback function.
+func (x *PixbufAnimationIterClass) OverrideGetPixbuf(cb func(*PixbufAnimationIter) *Pixbuf) {
+	if cb == nil {
+		x.xGetPixbuf = 0
+	} else {
+		x.xGetPixbuf = purego.NewCallback(func(IterVarp uintptr) uintptr {
+			ret := cb(PixbufAnimationIterNewFromInternalPtr(IterVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetPixbuf gets the callback function.
+func (x *PixbufAnimationIterClass) GetGetPixbuf() func(*PixbufAnimationIter) *Pixbuf {
+	if x.xGetPixbuf == 0 {
+		return nil
+	}
+	var rawCallback func(IterVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetPixbuf)
+	return func(IterVar *PixbufAnimationIter) *Pixbuf {
+		rawRet := rawCallback(IterVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &Pixbuf{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideOnCurrentlyLoadingFrame sets the callback function.
+func (x *PixbufAnimationIterClass) OverrideOnCurrentlyLoadingFrame(cb func(*PixbufAnimationIter) bool) {
+	if cb == nil {
+		x.xOnCurrentlyLoadingFrame = 0
+	} else {
+		x.xOnCurrentlyLoadingFrame = purego.NewCallback(func(IterVarp uintptr) bool {
+			return cb(PixbufAnimationIterNewFromInternalPtr(IterVarp))
+		})
+	}
+}
+
+// GetOnCurrentlyLoadingFrame gets the callback function.
+func (x *PixbufAnimationIterClass) GetOnCurrentlyLoadingFrame() func(*PixbufAnimationIter) bool {
+	if x.xOnCurrentlyLoadingFrame == 0 {
+		return nil
+	}
+	var rawCallback func(IterVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xOnCurrentlyLoadingFrame)
+	return func(IterVar *PixbufAnimationIter) bool {
+		return rawCallback(IterVar.GoPointer())
+	}
+}
+
+// OverrideAdvance sets the callback function.
+func (x *PixbufAnimationIterClass) OverrideAdvance(cb func(*PixbufAnimationIter, *glib.TimeVal) bool) {
+	if cb == nil {
+		x.xAdvance = 0
+	} else {
+		x.xAdvance = purego.NewCallback(func(IterVarp uintptr, CurrentTimeVarp *glib.TimeVal) bool {
+			return cb(PixbufAnimationIterNewFromInternalPtr(IterVarp), CurrentTimeVarp)
+		})
+	}
+}
+
+// GetAdvance gets the callback function.
+func (x *PixbufAnimationIterClass) GetAdvance() func(*PixbufAnimationIter, *glib.TimeVal) bool {
+	if x.xAdvance == 0 {
+		return nil
+	}
+	var rawCallback func(IterVarp uintptr, CurrentTimeVarp *glib.TimeVal) bool
+	purego.RegisterFunc(&rawCallback, x.xAdvance)
+	return func(IterVar *PixbufAnimationIter, CurrentTimeVar *glib.TimeVal) bool {
+		return rawCallback(IterVar.GoPointer(), CurrentTimeVar)
+	}
 }
 
 // An opaque object representing an animation.

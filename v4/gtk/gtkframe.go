@@ -14,13 +14,38 @@ import (
 type FrameClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xComputeChildAllocation uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *FrameClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideComputeChildAllocation sets the callback function.
+func (x *FrameClass) OverrideComputeChildAllocation(cb func(*Frame, *Allocation)) {
+	if cb == nil {
+		x.xComputeChildAllocation = 0
+	} else {
+		x.xComputeChildAllocation = purego.NewCallback(func(FrameVarp uintptr, AllocationVarp *Allocation) {
+			cb(FrameNewFromInternalPtr(FrameVarp), AllocationVarp)
+		})
+	}
+}
+
+// GetComputeChildAllocation gets the callback function.
+func (x *FrameClass) GetComputeChildAllocation() func(*Frame, *Allocation) {
+	if x.xComputeChildAllocation == 0 {
+		return nil
+	}
+	var rawCallback func(FrameVarp uintptr, AllocationVarp *Allocation)
+	purego.RegisterFunc(&rawCallback, x.xComputeChildAllocation)
+	return func(FrameVar *Frame, AllocationVar *Allocation) {
+		rawCallback(FrameVar.GoPointer(), AllocationVar)
+	}
 }
 
 // `GtkFrame` is a widget that surrounds its child with a decorative

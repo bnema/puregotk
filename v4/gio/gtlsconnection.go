@@ -16,13 +16,163 @@ import (
 type TlsConnectionClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass IOStreamClass
+
+	xAcceptCertificate uintptr
+
+	xHandshake uintptr
+
+	xHandshakeAsync uintptr
+
+	xHandshakeFinish uintptr
+
+	xGetBindingData uintptr
+
+	xGetNegotiatedProtocol uintptr
 
 	Padding [6]uintptr
 }
 
 func (x *TlsConnectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideAcceptCertificate sets the callback function.
+func (x *TlsConnectionClass) OverrideAcceptCertificate(cb func(*TlsConnection, *TlsCertificate, TlsCertificateFlags) bool) {
+	if cb == nil {
+		x.xAcceptCertificate = 0
+	} else {
+		x.xAcceptCertificate = purego.NewCallback(func(ConnectionVarp uintptr, PeerCertVarp uintptr, ErrorsVarp TlsCertificateFlags) bool {
+			return cb(TlsConnectionNewFromInternalPtr(ConnectionVarp), TlsCertificateNewFromInternalPtr(PeerCertVarp), ErrorsVarp)
+		})
+	}
+}
+
+// GetAcceptCertificate gets the callback function.
+func (x *TlsConnectionClass) GetAcceptCertificate() func(*TlsConnection, *TlsCertificate, TlsCertificateFlags) bool {
+	if x.xAcceptCertificate == 0 {
+		return nil
+	}
+	var rawCallback func(ConnectionVarp uintptr, PeerCertVarp uintptr, ErrorsVarp TlsCertificateFlags) bool
+	purego.RegisterFunc(&rawCallback, x.xAcceptCertificate)
+	return func(ConnectionVar *TlsConnection, PeerCertVar *TlsCertificate, ErrorsVar TlsCertificateFlags) bool {
+		return rawCallback(ConnectionVar.GoPointer(), PeerCertVar.GoPointer(), ErrorsVar)
+	}
+}
+
+// OverrideHandshake sets the callback function.
+func (x *TlsConnectionClass) OverrideHandshake(cb func(*TlsConnection, *Cancellable) bool) {
+	if cb == nil {
+		x.xHandshake = 0
+	} else {
+		x.xHandshake = purego.NewCallback(func(ConnVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(TlsConnectionNewFromInternalPtr(ConnVarp), CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetHandshake gets the callback function.
+func (x *TlsConnectionClass) GetHandshake() func(*TlsConnection, *Cancellable) bool {
+	if x.xHandshake == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xHandshake)
+	return func(ConnVar *TlsConnection, CancellableVar *Cancellable) bool {
+		return rawCallback(ConnVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideHandshakeAsync sets the callback function.
+func (x *TlsConnectionClass) OverrideHandshakeAsync(cb func(*TlsConnection, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xHandshakeAsync = 0
+	} else {
+		x.xHandshakeAsync = purego.NewCallback(func(ConnVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(TlsConnectionNewFromInternalPtr(ConnVarp), IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetHandshakeAsync gets the callback function.
+func (x *TlsConnectionClass) GetHandshakeAsync() func(*TlsConnection, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xHandshakeAsync == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xHandshakeAsync)
+	return func(ConnVar *TlsConnection, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(ConnVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideHandshakeFinish sets the callback function.
+func (x *TlsConnectionClass) OverrideHandshakeFinish(cb func(*TlsConnection, AsyncResult) bool) {
+	if cb == nil {
+		x.xHandshakeFinish = 0
+	} else {
+		x.xHandshakeFinish = purego.NewCallback(func(ConnVarp uintptr, ResultVarp uintptr) bool {
+			return cb(TlsConnectionNewFromInternalPtr(ConnVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetHandshakeFinish gets the callback function.
+func (x *TlsConnectionClass) GetHandshakeFinish() func(*TlsConnection, AsyncResult) bool {
+	if x.xHandshakeFinish == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xHandshakeFinish)
+	return func(ConnVar *TlsConnection, ResultVar AsyncResult) bool {
+		return rawCallback(ConnVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGetBindingData sets the callback function.
+func (x *TlsConnectionClass) OverrideGetBindingData(cb func(*TlsConnection, TlsChannelBindingType, []byte) bool) {
+	if cb == nil {
+		x.xGetBindingData = 0
+	} else {
+		x.xGetBindingData = purego.NewCallback(func(ConnVarp uintptr, TypeVarp TlsChannelBindingType, DataVarp []byte) bool {
+			return cb(TlsConnectionNewFromInternalPtr(ConnVarp), TypeVarp, DataVarp)
+		})
+	}
+}
+
+// GetGetBindingData gets the callback function.
+func (x *TlsConnectionClass) GetGetBindingData() func(*TlsConnection, TlsChannelBindingType, []byte) bool {
+	if x.xGetBindingData == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, TypeVarp TlsChannelBindingType, DataVarp []byte) bool
+	purego.RegisterFunc(&rawCallback, x.xGetBindingData)
+	return func(ConnVar *TlsConnection, TypeVar TlsChannelBindingType, DataVar []byte) bool {
+		return rawCallback(ConnVar.GoPointer(), TypeVar, DataVar)
+	}
+}
+
+// OverrideGetNegotiatedProtocol sets the callback function.
+func (x *TlsConnectionClass) OverrideGetNegotiatedProtocol(cb func(*TlsConnection) string) {
+	if cb == nil {
+		x.xGetNegotiatedProtocol = 0
+	} else {
+		x.xGetNegotiatedProtocol = purego.NewCallback(func(ConnVarp uintptr) string {
+			return cb(TlsConnectionNewFromInternalPtr(ConnVarp))
+		})
+	}
+}
+
+// GetGetNegotiatedProtocol gets the callback function.
+func (x *TlsConnectionClass) GetGetNegotiatedProtocol() func(*TlsConnection) string {
+	if x.xGetNegotiatedProtocol == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetNegotiatedProtocol)
+	return func(ConnVar *TlsConnection) string {
+		return rawCallback(ConnVar.GoPointer())
+	}
 }
 
 type TlsConnectionPrivate struct {

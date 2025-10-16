@@ -14,11 +14,211 @@ import (
 type BufferedInputStreamClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass FilterInputStreamClass
+
+	xFill uintptr
+
+	xFillAsync uintptr
+
+	xFillFinish uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
 }
 
 func (x *BufferedInputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideFill sets the callback function.
+func (x *BufferedInputStreamClass) OverrideFill(cb func(*BufferedInputStream, int, *Cancellable) int) {
+	if cb == nil {
+		x.xFill = 0
+	} else {
+		x.xFill = purego.NewCallback(func(StreamVarp uintptr, CountVarp int, CancellableVarp uintptr) int {
+			return cb(BufferedInputStreamNewFromInternalPtr(StreamVarp), CountVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetFill gets the callback function.
+func (x *BufferedInputStreamClass) GetFill() func(*BufferedInputStream, int, *Cancellable) int {
+	if x.xFill == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, CountVarp int, CancellableVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xFill)
+	return func(StreamVar *BufferedInputStream, CountVar int, CancellableVar *Cancellable) int {
+		return rawCallback(StreamVar.GoPointer(), CountVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideFillAsync sets the callback function.
+func (x *BufferedInputStreamClass) OverrideFillAsync(cb func(*BufferedInputStream, int, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xFillAsync = 0
+	} else {
+		x.xFillAsync = purego.NewCallback(func(StreamVarp uintptr, CountVarp int, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(BufferedInputStreamNewFromInternalPtr(StreamVarp), CountVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetFillAsync gets the callback function.
+func (x *BufferedInputStreamClass) GetFillAsync() func(*BufferedInputStream, int, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xFillAsync == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, CountVarp int, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xFillAsync)
+	return func(StreamVar *BufferedInputStream, CountVar int, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(StreamVar.GoPointer(), CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideFillFinish sets the callback function.
+func (x *BufferedInputStreamClass) OverrideFillFinish(cb func(*BufferedInputStream, AsyncResult) int) {
+	if cb == nil {
+		x.xFillFinish = 0
+	} else {
+		x.xFillFinish = purego.NewCallback(func(StreamVarp uintptr, ResultVarp uintptr) int {
+			return cb(BufferedInputStreamNewFromInternalPtr(StreamVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetFillFinish gets the callback function.
+func (x *BufferedInputStreamClass) GetFillFinish() func(*BufferedInputStream, AsyncResult) int {
+	if x.xFillFinish == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, ResultVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xFillFinish)
+	return func(StreamVar *BufferedInputStream, ResultVar AsyncResult) int {
+		return rawCallback(StreamVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *BufferedInputStreamClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *BufferedInputStreamClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *BufferedInputStreamClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *BufferedInputStreamClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *BufferedInputStreamClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *BufferedInputStreamClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *BufferedInputStreamClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *BufferedInputStreamClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *BufferedInputStreamClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *BufferedInputStreamClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
 }
 
 type BufferedInputStreamPrivate struct {

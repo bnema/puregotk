@@ -14,7 +14,7 @@ import (
 type ClampLayoutClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.LayoutManagerClass
 }
 
 func (x *ClampLayoutClass) GoPointer() uintptr {

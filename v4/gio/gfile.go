@@ -18,11 +18,2871 @@ type FileIface struct {
 
 	GIface uintptr
 
+	xDup uintptr
+
+	xHash uintptr
+
+	xEqual uintptr
+
+	xIsNative uintptr
+
+	xHasUriScheme uintptr
+
+	xGetUriScheme uintptr
+
+	xGetBasename uintptr
+
+	xGetPath uintptr
+
+	xGetUri uintptr
+
+	xGetParseName uintptr
+
+	xGetParent uintptr
+
+	xPrefixMatches uintptr
+
+	xGetRelativePath uintptr
+
+	xResolveRelativePath uintptr
+
+	xGetChildForDisplayName uintptr
+
+	xEnumerateChildren uintptr
+
+	xEnumerateChildrenAsync uintptr
+
+	xEnumerateChildrenFinish uintptr
+
+	xQueryInfo uintptr
+
+	xQueryInfoAsync uintptr
+
+	xQueryInfoFinish uintptr
+
+	xQueryFilesystemInfo uintptr
+
+	xQueryFilesystemInfoAsync uintptr
+
+	xQueryFilesystemInfoFinish uintptr
+
+	xFindEnclosingMount uintptr
+
+	xFindEnclosingMountAsync uintptr
+
+	xFindEnclosingMountFinish uintptr
+
+	xSetDisplayName uintptr
+
+	xSetDisplayNameAsync uintptr
+
+	xSetDisplayNameFinish uintptr
+
+	xQuerySettableAttributes uintptr
+
+	xQuerySettableAttributesAsync uintptr
+
+	xQuerySettableAttributesFinish uintptr
+
+	xQueryWritableNamespaces uintptr
+
+	xQueryWritableNamespacesAsync uintptr
+
+	xQueryWritableNamespacesFinish uintptr
+
+	xSetAttribute uintptr
+
+	xSetAttributesFromInfo uintptr
+
+	xSetAttributesAsync uintptr
+
+	xSetAttributesFinish uintptr
+
+	xReadFn uintptr
+
+	xReadAsync uintptr
+
+	xReadFinish uintptr
+
+	xAppendTo uintptr
+
+	xAppendToAsync uintptr
+
+	xAppendToFinish uintptr
+
+	xCreate uintptr
+
+	xCreateAsync uintptr
+
+	xCreateFinish uintptr
+
+	xReplace uintptr
+
+	xReplaceAsync uintptr
+
+	xReplaceFinish uintptr
+
+	xDeleteFile uintptr
+
+	xDeleteFileAsync uintptr
+
+	xDeleteFileFinish uintptr
+
+	xTrash uintptr
+
+	xTrashAsync uintptr
+
+	xTrashFinish uintptr
+
+	xMakeDirectory uintptr
+
+	xMakeDirectoryAsync uintptr
+
+	xMakeDirectoryFinish uintptr
+
+	xMakeSymbolicLink uintptr
+
+	xMakeSymbolicLinkAsync uintptr
+
+	xMakeSymbolicLinkFinish uintptr
+
+	xCopy uintptr
+
+	xCopyAsync uintptr
+
+	xCopyFinish uintptr
+
+	xMove uintptr
+
+	xMoveAsync uintptr
+
+	xMoveFinish uintptr
+
+	xMountMountable uintptr
+
+	xMountMountableFinish uintptr
+
+	xUnmountMountable uintptr
+
+	xUnmountMountableFinish uintptr
+
+	xEjectMountable uintptr
+
+	xEjectMountableFinish uintptr
+
+	xMountEnclosingVolume uintptr
+
+	xMountEnclosingVolumeFinish uintptr
+
+	xMonitorDir uintptr
+
+	xMonitorFile uintptr
+
+	xOpenReadwrite uintptr
+
+	xOpenReadwriteAsync uintptr
+
+	xOpenReadwriteFinish uintptr
+
+	xCreateReadwrite uintptr
+
+	xCreateReadwriteAsync uintptr
+
+	xCreateReadwriteFinish uintptr
+
+	xReplaceReadwrite uintptr
+
+	xReplaceReadwriteAsync uintptr
+
+	xReplaceReadwriteFinish uintptr
+
+	xStartMountable uintptr
+
+	xStartMountableFinish uintptr
+
+	xStopMountable uintptr
+
+	xStopMountableFinish uintptr
+
 	SupportsThreadContexts bool
+
+	xUnmountMountableWithOperation uintptr
+
+	xUnmountMountableWithOperationFinish uintptr
+
+	xEjectMountableWithOperation uintptr
+
+	xEjectMountableWithOperationFinish uintptr
+
+	xPollMountable uintptr
+
+	xPollMountableFinish uintptr
+
+	xMeasureDiskUsage uintptr
+
+	xMeasureDiskUsageAsync uintptr
+
+	xMeasureDiskUsageFinish uintptr
 }
 
 func (x *FileIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideDup sets the callback function.
+func (x *FileIface) OverrideDup(cb func(File) *FileBase) {
+	if cb == nil {
+		x.xDup = 0
+	} else {
+		x.xDup = purego.NewCallback(func(FileVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetDup gets the callback function.
+func (x *FileIface) GetDup() func(File) *FileBase {
+	if x.xDup == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xDup)
+	return func(FileVar File) *FileBase {
+		rawRet := rawCallback(FileVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideHash sets the callback function.
+func (x *FileIface) OverrideHash(cb func(File) uint) {
+	if cb == nil {
+		x.xHash = 0
+	} else {
+		x.xHash = purego.NewCallback(func(FileVarp uintptr) uint {
+			return cb(&FileBase{Ptr: FileVarp})
+		})
+	}
+}
+
+// GetHash gets the callback function.
+func (x *FileIface) GetHash() func(File) uint {
+	if x.xHash == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr) uint
+	purego.RegisterFunc(&rawCallback, x.xHash)
+	return func(FileVar File) uint {
+		return rawCallback(FileVar.GoPointer())
+	}
+}
+
+// OverrideEqual sets the callback function.
+func (x *FileIface) OverrideEqual(cb func(File, File) bool) {
+	if cb == nil {
+		x.xEqual = 0
+	} else {
+		x.xEqual = purego.NewCallback(func(File1Varp uintptr, File2Varp uintptr) bool {
+			return cb(&FileBase{Ptr: File1Varp}, &FileBase{Ptr: File2Varp})
+		})
+	}
+}
+
+// GetEqual gets the callback function.
+func (x *FileIface) GetEqual() func(File, File) bool {
+	if x.xEqual == 0 {
+		return nil
+	}
+	var rawCallback func(File1Varp uintptr, File2Varp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEqual)
+	return func(File1Var File, File2Var File) bool {
+		return rawCallback(File1Var.GoPointer(), File2Var.GoPointer())
+	}
+}
+
+// OverrideIsNative sets the callback function.
+func (x *FileIface) OverrideIsNative(cb func(File) bool) {
+	if cb == nil {
+		x.xIsNative = 0
+	} else {
+		x.xIsNative = purego.NewCallback(func(FileVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp})
+		})
+	}
+}
+
+// GetIsNative gets the callback function.
+func (x *FileIface) GetIsNative() func(File) bool {
+	if x.xIsNative == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xIsNative)
+	return func(FileVar File) bool {
+		return rawCallback(FileVar.GoPointer())
+	}
+}
+
+// OverrideHasUriScheme sets the callback function.
+func (x *FileIface) OverrideHasUriScheme(cb func(File, string) bool) {
+	if cb == nil {
+		x.xHasUriScheme = 0
+	} else {
+		x.xHasUriScheme = purego.NewCallback(func(FileVarp uintptr, UriSchemeVarp string) bool {
+			return cb(&FileBase{Ptr: FileVarp}, UriSchemeVarp)
+		})
+	}
+}
+
+// GetHasUriScheme gets the callback function.
+func (x *FileIface) GetHasUriScheme() func(File, string) bool {
+	if x.xHasUriScheme == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, UriSchemeVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xHasUriScheme)
+	return func(FileVar File, UriSchemeVar string) bool {
+		return rawCallback(FileVar.GoPointer(), UriSchemeVar)
+	}
+}
+
+// OverrideGetUriScheme sets the callback function.
+func (x *FileIface) OverrideGetUriScheme(cb func(File) string) {
+	if cb == nil {
+		x.xGetUriScheme = 0
+	} else {
+		x.xGetUriScheme = purego.NewCallback(func(FileVarp uintptr) string {
+			return cb(&FileBase{Ptr: FileVarp})
+		})
+	}
+}
+
+// GetGetUriScheme gets the callback function.
+func (x *FileIface) GetGetUriScheme() func(File) string {
+	if x.xGetUriScheme == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetUriScheme)
+	return func(FileVar File) string {
+		return rawCallback(FileVar.GoPointer())
+	}
+}
+
+// OverrideGetBasename sets the callback function.
+func (x *FileIface) OverrideGetBasename(cb func(File) string) {
+	if cb == nil {
+		x.xGetBasename = 0
+	} else {
+		x.xGetBasename = purego.NewCallback(func(FileVarp uintptr) string {
+			return cb(&FileBase{Ptr: FileVarp})
+		})
+	}
+}
+
+// GetGetBasename gets the callback function.
+func (x *FileIface) GetGetBasename() func(File) string {
+	if x.xGetBasename == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetBasename)
+	return func(FileVar File) string {
+		return rawCallback(FileVar.GoPointer())
+	}
+}
+
+// OverrideGetPath sets the callback function.
+func (x *FileIface) OverrideGetPath(cb func(File) string) {
+	if cb == nil {
+		x.xGetPath = 0
+	} else {
+		x.xGetPath = purego.NewCallback(func(FileVarp uintptr) string {
+			return cb(&FileBase{Ptr: FileVarp})
+		})
+	}
+}
+
+// GetGetPath gets the callback function.
+func (x *FileIface) GetGetPath() func(File) string {
+	if x.xGetPath == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetPath)
+	return func(FileVar File) string {
+		return rawCallback(FileVar.GoPointer())
+	}
+}
+
+// OverrideGetUri sets the callback function.
+func (x *FileIface) OverrideGetUri(cb func(File) string) {
+	if cb == nil {
+		x.xGetUri = 0
+	} else {
+		x.xGetUri = purego.NewCallback(func(FileVarp uintptr) string {
+			return cb(&FileBase{Ptr: FileVarp})
+		})
+	}
+}
+
+// GetGetUri gets the callback function.
+func (x *FileIface) GetGetUri() func(File) string {
+	if x.xGetUri == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetUri)
+	return func(FileVar File) string {
+		return rawCallback(FileVar.GoPointer())
+	}
+}
+
+// OverrideGetParseName sets the callback function.
+func (x *FileIface) OverrideGetParseName(cb func(File) string) {
+	if cb == nil {
+		x.xGetParseName = 0
+	} else {
+		x.xGetParseName = purego.NewCallback(func(FileVarp uintptr) string {
+			return cb(&FileBase{Ptr: FileVarp})
+		})
+	}
+}
+
+// GetGetParseName gets the callback function.
+func (x *FileIface) GetGetParseName() func(File) string {
+	if x.xGetParseName == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetParseName)
+	return func(FileVar File) string {
+		return rawCallback(FileVar.GoPointer())
+	}
+}
+
+// OverrideGetParent sets the callback function.
+func (x *FileIface) OverrideGetParent(cb func(File) *FileBase) {
+	if cb == nil {
+		x.xGetParent = 0
+	} else {
+		x.xGetParent = purego.NewCallback(func(FileVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetParent gets the callback function.
+func (x *FileIface) GetGetParent() func(File) *FileBase {
+	if x.xGetParent == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetParent)
+	return func(FileVar File) *FileBase {
+		rawRet := rawCallback(FileVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverridePrefixMatches sets the callback function.
+func (x *FileIface) OverridePrefixMatches(cb func(File, File) bool) {
+	if cb == nil {
+		x.xPrefixMatches = 0
+	} else {
+		x.xPrefixMatches = purego.NewCallback(func(PrefixVarp uintptr, FileVarp uintptr) bool {
+			return cb(&FileBase{Ptr: PrefixVarp}, &FileBase{Ptr: FileVarp})
+		})
+	}
+}
+
+// GetPrefixMatches gets the callback function.
+func (x *FileIface) GetPrefixMatches() func(File, File) bool {
+	if x.xPrefixMatches == 0 {
+		return nil
+	}
+	var rawCallback func(PrefixVarp uintptr, FileVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xPrefixMatches)
+	return func(PrefixVar File, FileVar File) bool {
+		return rawCallback(PrefixVar.GoPointer(), FileVar.GoPointer())
+	}
+}
+
+// OverrideGetRelativePath sets the callback function.
+func (x *FileIface) OverrideGetRelativePath(cb func(File, File) string) {
+	if cb == nil {
+		x.xGetRelativePath = 0
+	} else {
+		x.xGetRelativePath = purego.NewCallback(func(ParentVarp uintptr, DescendantVarp uintptr) string {
+			return cb(&FileBase{Ptr: ParentVarp}, &FileBase{Ptr: DescendantVarp})
+		})
+	}
+}
+
+// GetGetRelativePath gets the callback function.
+func (x *FileIface) GetGetRelativePath() func(File, File) string {
+	if x.xGetRelativePath == 0 {
+		return nil
+	}
+	var rawCallback func(ParentVarp uintptr, DescendantVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetRelativePath)
+	return func(ParentVar File, DescendantVar File) string {
+		return rawCallback(ParentVar.GoPointer(), DescendantVar.GoPointer())
+	}
+}
+
+// OverrideResolveRelativePath sets the callback function.
+func (x *FileIface) OverrideResolveRelativePath(cb func(File, string) *FileBase) {
+	if cb == nil {
+		x.xResolveRelativePath = 0
+	} else {
+		x.xResolveRelativePath = purego.NewCallback(func(FileVarp uintptr, RelativePathVarp string) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, RelativePathVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetResolveRelativePath gets the callback function.
+func (x *FileIface) GetResolveRelativePath() func(File, string) *FileBase {
+	if x.xResolveRelativePath == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, RelativePathVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xResolveRelativePath)
+	return func(FileVar File, RelativePathVar string) *FileBase {
+		rawRet := rawCallback(FileVar.GoPointer(), RelativePathVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetChildForDisplayName sets the callback function.
+func (x *FileIface) OverrideGetChildForDisplayName(cb func(File, string) *FileBase) {
+	if cb == nil {
+		x.xGetChildForDisplayName = 0
+	} else {
+		x.xGetChildForDisplayName = purego.NewCallback(func(FileVarp uintptr, DisplayNameVarp string) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, DisplayNameVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetChildForDisplayName gets the callback function.
+func (x *FileIface) GetGetChildForDisplayName() func(File, string) *FileBase {
+	if x.xGetChildForDisplayName == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, DisplayNameVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetChildForDisplayName)
+	return func(FileVar File, DisplayNameVar string) *FileBase {
+		rawRet := rawCallback(FileVar.GoPointer(), DisplayNameVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideEnumerateChildren sets the callback function.
+func (x *FileIface) OverrideEnumerateChildren(cb func(File, string, FileQueryInfoFlags, *Cancellable) *FileEnumerator) {
+	if cb == nil {
+		x.xEnumerateChildren = 0
+	} else {
+		x.xEnumerateChildren = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, AttributesVarp, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetEnumerateChildren gets the callback function.
+func (x *FileIface) GetEnumerateChildren() func(File, string, FileQueryInfoFlags, *Cancellable) *FileEnumerator {
+	if x.xEnumerateChildren == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xEnumerateChildren)
+	return func(FileVar File, AttributesVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) *FileEnumerator {
+		rawRet := rawCallback(FileVar.GoPointer(), AttributesVar, FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileEnumerator{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideEnumerateChildrenAsync sets the callback function.
+func (x *FileIface) OverrideEnumerateChildrenAsync(cb func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xEnumerateChildrenAsync = 0
+	} else {
+		x.xEnumerateChildrenAsync = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, AttributesVarp, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetEnumerateChildrenAsync gets the callback function.
+func (x *FileIface) GetEnumerateChildrenAsync() func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xEnumerateChildrenAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEnumerateChildrenAsync)
+	return func(FileVar File, AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), AttributesVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideEnumerateChildrenFinish sets the callback function.
+func (x *FileIface) OverrideEnumerateChildrenFinish(cb func(File, AsyncResult) *FileEnumerator) {
+	if cb == nil {
+		x.xEnumerateChildrenFinish = 0
+	} else {
+		x.xEnumerateChildrenFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetEnumerateChildrenFinish gets the callback function.
+func (x *FileIface) GetEnumerateChildrenFinish() func(File, AsyncResult) *FileEnumerator {
+	if x.xEnumerateChildrenFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xEnumerateChildrenFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileEnumerator {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileEnumerator{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideQueryInfo sets the callback function.
+func (x *FileIface) OverrideQueryInfo(cb func(File, string, FileQueryInfoFlags, *Cancellable) *FileInfo) {
+	if cb == nil {
+		x.xQueryInfo = 0
+	} else {
+		x.xQueryInfo = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, AttributesVarp, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetQueryInfo gets the callback function.
+func (x *FileIface) GetQueryInfo() func(File, string, FileQueryInfoFlags, *Cancellable) *FileInfo {
+	if x.xQueryInfo == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xQueryInfo)
+	return func(FileVar File, AttributesVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) *FileInfo {
+		rawRet := rawCallback(FileVar.GoPointer(), AttributesVar, FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileInfo{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideQueryInfoAsync sets the callback function.
+func (x *FileIface) OverrideQueryInfoAsync(cb func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xQueryInfoAsync = 0
+	} else {
+		x.xQueryInfoAsync = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, AttributesVarp, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetQueryInfoAsync gets the callback function.
+func (x *FileIface) GetQueryInfoAsync() func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xQueryInfoAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, AttributesVarp string, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xQueryInfoAsync)
+	return func(FileVar File, AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), AttributesVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideQueryInfoFinish sets the callback function.
+func (x *FileIface) OverrideQueryInfoFinish(cb func(File, AsyncResult) *FileInfo) {
+	if cb == nil {
+		x.xQueryInfoFinish = 0
+	} else {
+		x.xQueryInfoFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetQueryInfoFinish gets the callback function.
+func (x *FileIface) GetQueryInfoFinish() func(File, AsyncResult) *FileInfo {
+	if x.xQueryInfoFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xQueryInfoFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileInfo {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileInfo{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideQueryFilesystemInfo sets the callback function.
+func (x *FileIface) OverrideQueryFilesystemInfo(cb func(File, string, *Cancellable) *FileInfo) {
+	if cb == nil {
+		x.xQueryFilesystemInfo = 0
+	} else {
+		x.xQueryFilesystemInfo = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, AttributesVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetQueryFilesystemInfo gets the callback function.
+func (x *FileIface) GetQueryFilesystemInfo() func(File, string, *Cancellable) *FileInfo {
+	if x.xQueryFilesystemInfo == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, AttributesVarp string, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xQueryFilesystemInfo)
+	return func(FileVar File, AttributesVar string, CancellableVar *Cancellable) *FileInfo {
+		rawRet := rawCallback(FileVar.GoPointer(), AttributesVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileInfo{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideQueryFilesystemInfoAsync sets the callback function.
+func (x *FileIface) OverrideQueryFilesystemInfoAsync(cb func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xQueryFilesystemInfoAsync = 0
+	} else {
+		x.xQueryFilesystemInfoAsync = purego.NewCallback(func(FileVarp uintptr, AttributesVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, AttributesVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetQueryFilesystemInfoAsync gets the callback function.
+func (x *FileIface) GetQueryFilesystemInfoAsync() func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xQueryFilesystemInfoAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, AttributesVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xQueryFilesystemInfoAsync)
+	return func(FileVar File, AttributesVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideQueryFilesystemInfoFinish sets the callback function.
+func (x *FileIface) OverrideQueryFilesystemInfoFinish(cb func(File, AsyncResult) *FileInfo) {
+	if cb == nil {
+		x.xQueryFilesystemInfoFinish = 0
+	} else {
+		x.xQueryFilesystemInfoFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetQueryFilesystemInfoFinish gets the callback function.
+func (x *FileIface) GetQueryFilesystemInfoFinish() func(File, AsyncResult) *FileInfo {
+	if x.xQueryFilesystemInfoFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xQueryFilesystemInfoFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileInfo {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileInfo{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideFindEnclosingMount sets the callback function.
+func (x *FileIface) OverrideFindEnclosingMount(cb func(File, *Cancellable) *MountBase) {
+	if cb == nil {
+		x.xFindEnclosingMount = 0
+	} else {
+		x.xFindEnclosingMount = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetFindEnclosingMount gets the callback function.
+func (x *FileIface) GetFindEnclosingMount() func(File, *Cancellable) *MountBase {
+	if x.xFindEnclosingMount == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xFindEnclosingMount)
+	return func(FileVar File, CancellableVar *Cancellable) *MountBase {
+		rawRet := rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &MountBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideFindEnclosingMountAsync sets the callback function.
+func (x *FileIface) OverrideFindEnclosingMountAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xFindEnclosingMountAsync = 0
+	} else {
+		x.xFindEnclosingMountAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetFindEnclosingMountAsync gets the callback function.
+func (x *FileIface) GetFindEnclosingMountAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xFindEnclosingMountAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xFindEnclosingMountAsync)
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideFindEnclosingMountFinish sets the callback function.
+func (x *FileIface) OverrideFindEnclosingMountFinish(cb func(File, AsyncResult) *MountBase) {
+	if cb == nil {
+		x.xFindEnclosingMountFinish = 0
+	} else {
+		x.xFindEnclosingMountFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetFindEnclosingMountFinish gets the callback function.
+func (x *FileIface) GetFindEnclosingMountFinish() func(File, AsyncResult) *MountBase {
+	if x.xFindEnclosingMountFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xFindEnclosingMountFinish)
+	return func(FileVar File, ResVar AsyncResult) *MountBase {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &MountBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideSetDisplayName sets the callback function.
+func (x *FileIface) OverrideSetDisplayName(cb func(File, string, *Cancellable) *FileBase) {
+	if cb == nil {
+		x.xSetDisplayName = 0
+	} else {
+		x.xSetDisplayName = purego.NewCallback(func(FileVarp uintptr, DisplayNameVarp string, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, DisplayNameVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetSetDisplayName gets the callback function.
+func (x *FileIface) GetSetDisplayName() func(File, string, *Cancellable) *FileBase {
+	if x.xSetDisplayName == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, DisplayNameVarp string, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xSetDisplayName)
+	return func(FileVar File, DisplayNameVar string, CancellableVar *Cancellable) *FileBase {
+		rawRet := rawCallback(FileVar.GoPointer(), DisplayNameVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideSetDisplayNameAsync sets the callback function.
+func (x *FileIface) OverrideSetDisplayNameAsync(cb func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xSetDisplayNameAsync = 0
+	} else {
+		x.xSetDisplayNameAsync = purego.NewCallback(func(FileVarp uintptr, DisplayNameVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, DisplayNameVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetSetDisplayNameAsync gets the callback function.
+func (x *FileIface) GetSetDisplayNameAsync() func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xSetDisplayNameAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, DisplayNameVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetDisplayNameAsync)
+	return func(FileVar File, DisplayNameVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), DisplayNameVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideSetDisplayNameFinish sets the callback function.
+func (x *FileIface) OverrideSetDisplayNameFinish(cb func(File, AsyncResult) *FileBase) {
+	if cb == nil {
+		x.xSetDisplayNameFinish = 0
+	} else {
+		x.xSetDisplayNameFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetSetDisplayNameFinish gets the callback function.
+func (x *FileIface) GetSetDisplayNameFinish() func(File, AsyncResult) *FileBase {
+	if x.xSetDisplayNameFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xSetDisplayNameFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileBase {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideQuerySettableAttributes sets the callback function.
+func (x *FileIface) OverrideQuerySettableAttributes(cb func(File, *Cancellable) *FileAttributeInfoList) {
+	if cb == nil {
+		x.xQuerySettableAttributes = 0
+	} else {
+		x.xQuerySettableAttributes = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) *FileAttributeInfoList {
+			return cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetQuerySettableAttributes gets the callback function.
+func (x *FileIface) GetQuerySettableAttributes() func(File, *Cancellable) *FileAttributeInfoList {
+	if x.xQuerySettableAttributes == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) *FileAttributeInfoList
+	purego.RegisterFunc(&rawCallback, x.xQuerySettableAttributes)
+	return func(FileVar File, CancellableVar *Cancellable) *FileAttributeInfoList {
+		return rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideQuerySettableAttributesAsync sets the callback function.
+func (x *FileIface) OverrideQuerySettableAttributesAsync(cb func()) {
+	if cb == nil {
+		x.xQuerySettableAttributesAsync = 0
+	} else {
+		x.xQuerySettableAttributesAsync = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetQuerySettableAttributesAsync gets the callback function.
+func (x *FileIface) GetQuerySettableAttributesAsync() func() {
+	if x.xQuerySettableAttributesAsync == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xQuerySettableAttributesAsync)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideQuerySettableAttributesFinish sets the callback function.
+func (x *FileIface) OverrideQuerySettableAttributesFinish(cb func()) {
+	if cb == nil {
+		x.xQuerySettableAttributesFinish = 0
+	} else {
+		x.xQuerySettableAttributesFinish = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetQuerySettableAttributesFinish gets the callback function.
+func (x *FileIface) GetQuerySettableAttributesFinish() func() {
+	if x.xQuerySettableAttributesFinish == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xQuerySettableAttributesFinish)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideQueryWritableNamespaces sets the callback function.
+func (x *FileIface) OverrideQueryWritableNamespaces(cb func(File, *Cancellable) *FileAttributeInfoList) {
+	if cb == nil {
+		x.xQueryWritableNamespaces = 0
+	} else {
+		x.xQueryWritableNamespaces = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) *FileAttributeInfoList {
+			return cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetQueryWritableNamespaces gets the callback function.
+func (x *FileIface) GetQueryWritableNamespaces() func(File, *Cancellable) *FileAttributeInfoList {
+	if x.xQueryWritableNamespaces == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) *FileAttributeInfoList
+	purego.RegisterFunc(&rawCallback, x.xQueryWritableNamespaces)
+	return func(FileVar File, CancellableVar *Cancellable) *FileAttributeInfoList {
+		return rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideQueryWritableNamespacesAsync sets the callback function.
+func (x *FileIface) OverrideQueryWritableNamespacesAsync(cb func()) {
+	if cb == nil {
+		x.xQueryWritableNamespacesAsync = 0
+	} else {
+		x.xQueryWritableNamespacesAsync = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetQueryWritableNamespacesAsync gets the callback function.
+func (x *FileIface) GetQueryWritableNamespacesAsync() func() {
+	if x.xQueryWritableNamespacesAsync == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xQueryWritableNamespacesAsync)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideQueryWritableNamespacesFinish sets the callback function.
+func (x *FileIface) OverrideQueryWritableNamespacesFinish(cb func()) {
+	if cb == nil {
+		x.xQueryWritableNamespacesFinish = 0
+	} else {
+		x.xQueryWritableNamespacesFinish = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetQueryWritableNamespacesFinish gets the callback function.
+func (x *FileIface) GetQueryWritableNamespacesFinish() func() {
+	if x.xQueryWritableNamespacesFinish == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xQueryWritableNamespacesFinish)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideSetAttribute sets the callback function.
+func (x *FileIface) OverrideSetAttribute(cb func(File, string, FileAttributeType, uintptr, FileQueryInfoFlags, *Cancellable) bool) {
+	if cb == nil {
+		x.xSetAttribute = 0
+	} else {
+		x.xSetAttribute = purego.NewCallback(func(FileVarp uintptr, AttributeVarp string, TypeVarp FileAttributeType, ValuePVarp uintptr, FlagsVarp FileQueryInfoFlags, CancellableVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, AttributeVarp, TypeVarp, ValuePVarp, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetSetAttribute gets the callback function.
+func (x *FileIface) GetSetAttribute() func(File, string, FileAttributeType, uintptr, FileQueryInfoFlags, *Cancellable) bool {
+	if x.xSetAttribute == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, AttributeVarp string, TypeVarp FileAttributeType, ValuePVarp uintptr, FlagsVarp FileQueryInfoFlags, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSetAttribute)
+	return func(FileVar File, AttributeVar string, TypeVar FileAttributeType, ValuePVar uintptr, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool {
+		return rawCallback(FileVar.GoPointer(), AttributeVar, TypeVar, ValuePVar, FlagsVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideSetAttributesFromInfo sets the callback function.
+func (x *FileIface) OverrideSetAttributesFromInfo(cb func(File, *FileInfo, FileQueryInfoFlags, *Cancellable) bool) {
+	if cb == nil {
+		x.xSetAttributesFromInfo = 0
+	} else {
+		x.xSetAttributesFromInfo = purego.NewCallback(func(FileVarp uintptr, InfoVarp uintptr, FlagsVarp FileQueryInfoFlags, CancellableVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, FileInfoNewFromInternalPtr(InfoVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetSetAttributesFromInfo gets the callback function.
+func (x *FileIface) GetSetAttributesFromInfo() func(File, *FileInfo, FileQueryInfoFlags, *Cancellable) bool {
+	if x.xSetAttributesFromInfo == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, InfoVarp uintptr, FlagsVarp FileQueryInfoFlags, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSetAttributesFromInfo)
+	return func(FileVar File, InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool {
+		return rawCallback(FileVar.GoPointer(), InfoVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideSetAttributesAsync sets the callback function.
+func (x *FileIface) OverrideSetAttributesAsync(cb func(File, *FileInfo, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xSetAttributesAsync = 0
+	} else {
+		x.xSetAttributesAsync = purego.NewCallback(func(FileVarp uintptr, InfoVarp uintptr, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FileInfoNewFromInternalPtr(InfoVarp), FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetSetAttributesAsync gets the callback function.
+func (x *FileIface) GetSetAttributesAsync() func(File, *FileInfo, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xSetAttributesAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, InfoVarp uintptr, FlagsVarp FileQueryInfoFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetAttributesAsync)
+	return func(FileVar File, InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), InfoVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideSetAttributesFinish sets the callback function.
+func (x *FileIface) OverrideSetAttributesFinish(cb func(File, AsyncResult, **FileInfo) bool) {
+	if cb == nil {
+		x.xSetAttributesFinish = 0
+	} else {
+		x.xSetAttributesFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr, InfoVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp}, (**FileInfo)(unsafe.Pointer(InfoVarp)))
+		})
+	}
+}
+
+// GetSetAttributesFinish gets the callback function.
+func (x *FileIface) GetSetAttributesFinish() func(File, AsyncResult, **FileInfo) bool {
+	if x.xSetAttributesFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr, InfoVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSetAttributesFinish)
+	return func(FileVar File, ResultVar AsyncResult, InfoVar **FileInfo) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer(), *gobject.ConvertPtr(InfoVar))
+	}
+}
+
+// OverrideReadFn sets the callback function.
+func (x *FileIface) OverrideReadFn(cb func(File, *Cancellable) *FileInputStream) {
+	if cb == nil {
+		x.xReadFn = 0
+	} else {
+		x.xReadFn = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetReadFn gets the callback function.
+func (x *FileIface) GetReadFn() func(File, *Cancellable) *FileInputStream {
+	if x.xReadFn == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xReadFn)
+	return func(FileVar File, CancellableVar *Cancellable) *FileInputStream {
+		rawRet := rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileInputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideReadAsync sets the callback function.
+func (x *FileIface) OverrideReadAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xReadAsync = 0
+	} else {
+		x.xReadAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetReadAsync gets the callback function.
+func (x *FileIface) GetReadAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xReadAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xReadAsync)
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideReadFinish sets the callback function.
+func (x *FileIface) OverrideReadFinish(cb func(File, AsyncResult) *FileInputStream) {
+	if cb == nil {
+		x.xReadFinish = 0
+	} else {
+		x.xReadFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetReadFinish gets the callback function.
+func (x *FileIface) GetReadFinish() func(File, AsyncResult) *FileInputStream {
+	if x.xReadFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xReadFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileInputStream {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileInputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideAppendTo sets the callback function.
+func (x *FileIface) OverrideAppendTo(cb func(File, FileCreateFlags, *Cancellable) *FileOutputStream) {
+	if cb == nil {
+		x.xAppendTo = 0
+	} else {
+		x.xAppendTo = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetAppendTo gets the callback function.
+func (x *FileIface) GetAppendTo() func(File, FileCreateFlags, *Cancellable) *FileOutputStream {
+	if x.xAppendTo == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xAppendTo)
+	return func(FileVar File, FlagsVar FileCreateFlags, CancellableVar *Cancellable) *FileOutputStream {
+		rawRet := rawCallback(FileVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileOutputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideAppendToAsync sets the callback function.
+func (x *FileIface) OverrideAppendToAsync(cb func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xAppendToAsync = 0
+	} else {
+		x.xAppendToAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetAppendToAsync gets the callback function.
+func (x *FileIface) GetAppendToAsync() func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xAppendToAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xAppendToAsync)
+	return func(FileVar File, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideAppendToFinish sets the callback function.
+func (x *FileIface) OverrideAppendToFinish(cb func(File, AsyncResult) *FileOutputStream) {
+	if cb == nil {
+		x.xAppendToFinish = 0
+	} else {
+		x.xAppendToFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetAppendToFinish gets the callback function.
+func (x *FileIface) GetAppendToFinish() func(File, AsyncResult) *FileOutputStream {
+	if x.xAppendToFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xAppendToFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileOutputStream {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileOutputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCreate sets the callback function.
+func (x *FileIface) OverrideCreate(cb func(File, FileCreateFlags, *Cancellable) *FileOutputStream) {
+	if cb == nil {
+		x.xCreate = 0
+	} else {
+		x.xCreate = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetCreate gets the callback function.
+func (x *FileIface) GetCreate() func(File, FileCreateFlags, *Cancellable) *FileOutputStream {
+	if x.xCreate == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCreate)
+	return func(FileVar File, FlagsVar FileCreateFlags, CancellableVar *Cancellable) *FileOutputStream {
+		rawRet := rawCallback(FileVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileOutputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCreateAsync sets the callback function.
+func (x *FileIface) OverrideCreateAsync(cb func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xCreateAsync = 0
+	} else {
+		x.xCreateAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetCreateAsync gets the callback function.
+func (x *FileIface) GetCreateAsync() func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xCreateAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCreateAsync)
+	return func(FileVar File, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideCreateFinish sets the callback function.
+func (x *FileIface) OverrideCreateFinish(cb func(File, AsyncResult) *FileOutputStream) {
+	if cb == nil {
+		x.xCreateFinish = 0
+	} else {
+		x.xCreateFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetCreateFinish gets the callback function.
+func (x *FileIface) GetCreateFinish() func(File, AsyncResult) *FileOutputStream {
+	if x.xCreateFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCreateFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileOutputStream {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileOutputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideReplace sets the callback function.
+func (x *FileIface) OverrideReplace(cb func(File, string, bool, FileCreateFlags, *Cancellable) *FileOutputStream) {
+	if cb == nil {
+		x.xReplace = 0
+	} else {
+		x.xReplace = purego.NewCallback(func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, EtagVarp, MakeBackupVarp, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetReplace gets the callback function.
+func (x *FileIface) GetReplace() func(File, string, bool, FileCreateFlags, *Cancellable) *FileOutputStream {
+	if x.xReplace == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xReplace)
+	return func(FileVar File, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) *FileOutputStream {
+		rawRet := rawCallback(FileVar.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileOutputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideReplaceAsync sets the callback function.
+func (x *FileIface) OverrideReplaceAsync(cb func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xReplaceAsync = 0
+	} else {
+		x.xReplaceAsync = purego.NewCallback(func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, EtagVarp, MakeBackupVarp, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetReplaceAsync gets the callback function.
+func (x *FileIface) GetReplaceAsync() func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xReplaceAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xReplaceAsync)
+	return func(FileVar File, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideReplaceFinish sets the callback function.
+func (x *FileIface) OverrideReplaceFinish(cb func(File, AsyncResult) *FileOutputStream) {
+	if cb == nil {
+		x.xReplaceFinish = 0
+	} else {
+		x.xReplaceFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetReplaceFinish gets the callback function.
+func (x *FileIface) GetReplaceFinish() func(File, AsyncResult) *FileOutputStream {
+	if x.xReplaceFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xReplaceFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileOutputStream {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileOutputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideDeleteFile sets the callback function.
+func (x *FileIface) OverrideDeleteFile(cb func(File, *Cancellable) bool) {
+	if cb == nil {
+		x.xDeleteFile = 0
+	} else {
+		x.xDeleteFile = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetDeleteFile gets the callback function.
+func (x *FileIface) GetDeleteFile() func(File, *Cancellable) bool {
+	if x.xDeleteFile == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xDeleteFile)
+	return func(FileVar File, CancellableVar *Cancellable) bool {
+		return rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideDeleteFileAsync sets the callback function.
+func (x *FileIface) OverrideDeleteFileAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xDeleteFileAsync = 0
+	} else {
+		x.xDeleteFileAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetDeleteFileAsync gets the callback function.
+func (x *FileIface) GetDeleteFileAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xDeleteFileAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDeleteFileAsync)
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideDeleteFileFinish sets the callback function.
+func (x *FileIface) OverrideDeleteFileFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xDeleteFileFinish = 0
+	} else {
+		x.xDeleteFileFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetDeleteFileFinish gets the callback function.
+func (x *FileIface) GetDeleteFileFinish() func(File, AsyncResult) bool {
+	if x.xDeleteFileFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xDeleteFileFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideTrash sets the callback function.
+func (x *FileIface) OverrideTrash(cb func(File, *Cancellable) bool) {
+	if cb == nil {
+		x.xTrash = 0
+	} else {
+		x.xTrash = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetTrash gets the callback function.
+func (x *FileIface) GetTrash() func(File, *Cancellable) bool {
+	if x.xTrash == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xTrash)
+	return func(FileVar File, CancellableVar *Cancellable) bool {
+		return rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideTrashAsync sets the callback function.
+func (x *FileIface) OverrideTrashAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xTrashAsync = 0
+	} else {
+		x.xTrashAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetTrashAsync gets the callback function.
+func (x *FileIface) GetTrashAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xTrashAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xTrashAsync)
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideTrashFinish sets the callback function.
+func (x *FileIface) OverrideTrashFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xTrashFinish = 0
+	} else {
+		x.xTrashFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetTrashFinish gets the callback function.
+func (x *FileIface) GetTrashFinish() func(File, AsyncResult) bool {
+	if x.xTrashFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xTrashFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideMakeDirectory sets the callback function.
+func (x *FileIface) OverrideMakeDirectory(cb func(File, *Cancellable) bool) {
+	if cb == nil {
+		x.xMakeDirectory = 0
+	} else {
+		x.xMakeDirectory = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetMakeDirectory gets the callback function.
+func (x *FileIface) GetMakeDirectory() func(File, *Cancellable) bool {
+	if x.xMakeDirectory == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xMakeDirectory)
+	return func(FileVar File, CancellableVar *Cancellable) bool {
+		return rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideMakeDirectoryAsync sets the callback function.
+func (x *FileIface) OverrideMakeDirectoryAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xMakeDirectoryAsync = 0
+	} else {
+		x.xMakeDirectoryAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetMakeDirectoryAsync gets the callback function.
+func (x *FileIface) GetMakeDirectoryAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xMakeDirectoryAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMakeDirectoryAsync)
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideMakeDirectoryFinish sets the callback function.
+func (x *FileIface) OverrideMakeDirectoryFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xMakeDirectoryFinish = 0
+	} else {
+		x.xMakeDirectoryFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetMakeDirectoryFinish gets the callback function.
+func (x *FileIface) GetMakeDirectoryFinish() func(File, AsyncResult) bool {
+	if x.xMakeDirectoryFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xMakeDirectoryFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideMakeSymbolicLink sets the callback function.
+func (x *FileIface) OverrideMakeSymbolicLink(cb func(File, string, *Cancellable) bool) {
+	if cb == nil {
+		x.xMakeSymbolicLink = 0
+	} else {
+		x.xMakeSymbolicLink = purego.NewCallback(func(FileVarp uintptr, SymlinkValueVarp string, CancellableVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, SymlinkValueVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetMakeSymbolicLink gets the callback function.
+func (x *FileIface) GetMakeSymbolicLink() func(File, string, *Cancellable) bool {
+	if x.xMakeSymbolicLink == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, SymlinkValueVarp string, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xMakeSymbolicLink)
+	return func(FileVar File, SymlinkValueVar string, CancellableVar *Cancellable) bool {
+		return rawCallback(FileVar.GoPointer(), SymlinkValueVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideMakeSymbolicLinkAsync sets the callback function.
+func (x *FileIface) OverrideMakeSymbolicLinkAsync(cb func()) {
+	if cb == nil {
+		x.xMakeSymbolicLinkAsync = 0
+	} else {
+		x.xMakeSymbolicLinkAsync = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetMakeSymbolicLinkAsync gets the callback function.
+func (x *FileIface) GetMakeSymbolicLinkAsync() func() {
+	if x.xMakeSymbolicLinkAsync == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xMakeSymbolicLinkAsync)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideMakeSymbolicLinkFinish sets the callback function.
+func (x *FileIface) OverrideMakeSymbolicLinkFinish(cb func()) {
+	if cb == nil {
+		x.xMakeSymbolicLinkFinish = 0
+	} else {
+		x.xMakeSymbolicLinkFinish = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetMakeSymbolicLinkFinish gets the callback function.
+func (x *FileIface) GetMakeSymbolicLinkFinish() func() {
+	if x.xMakeSymbolicLinkFinish == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xMakeSymbolicLinkFinish)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideCopy sets the callback function.
+func (x *FileIface) OverrideCopy(cb func(File, File, FileCopyFlags, *Cancellable, *FileProgressCallback, uintptr) bool) {
+	if cb == nil {
+		x.xCopy = 0
+	} else {
+		x.xCopy = purego.NewCallback(func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr) bool {
+			return cb(&FileBase{Ptr: SourceVarp}, &FileBase{Ptr: DestinationVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*FileProgressCallback)(unsafe.Pointer(ProgressCallbackVarp)), ProgressCallbackDataVarp)
+		})
+	}
+}
+
+// GetCopy gets the callback function.
+func (x *FileIface) GetCopy() func(File, File, FileCopyFlags, *Cancellable, *FileProgressCallback, uintptr) bool {
+	if x.xCopy == 0 {
+		return nil
+	}
+	var rawCallback func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCopy)
+	return func(SourceVar File, DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr) bool {
+		return rawCallback(SourceVar.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar)
+	}
+}
+
+// OverrideCopyAsync sets the callback function.
+func (x *FileIface) OverrideCopyAsync(cb func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xCopyAsync = 0
+	} else {
+		x.xCopyAsync = purego.NewCallback(func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: SourceVarp}, &FileBase{Ptr: DestinationVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*FileProgressCallback)(unsafe.Pointer(ProgressCallbackVarp)), ProgressCallbackDataVarp, (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetCopyAsync gets the callback function.
+func (x *FileIface) GetCopyAsync() func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
+	if x.xCopyAsync == 0 {
+		return nil
+	}
+	var rawCallback func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCopyAsync)
+	return func(SourceVar File, DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(SourceVar.GoPointer(), DestinationVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideCopyFinish sets the callback function.
+func (x *FileIface) OverrideCopyFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xCopyFinish = 0
+	} else {
+		x.xCopyFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+		})
+	}
+}
+
+// GetCopyFinish gets the callback function.
+func (x *FileIface) GetCopyFinish() func(File, AsyncResult) bool {
+	if x.xCopyFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCopyFinish)
+	return func(FileVar File, ResVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+	}
+}
+
+// OverrideMove sets the callback function.
+func (x *FileIface) OverrideMove(cb func(File, File, FileCopyFlags, *Cancellable, *FileProgressCallback, uintptr) bool) {
+	if cb == nil {
+		x.xMove = 0
+	} else {
+		x.xMove = purego.NewCallback(func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr) bool {
+			return cb(&FileBase{Ptr: SourceVarp}, &FileBase{Ptr: DestinationVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*FileProgressCallback)(unsafe.Pointer(ProgressCallbackVarp)), ProgressCallbackDataVarp)
+		})
+	}
+}
+
+// GetMove gets the callback function.
+func (x *FileIface) GetMove() func(File, File, FileCopyFlags, *Cancellable, *FileProgressCallback, uintptr) bool {
+	if x.xMove == 0 {
+		return nil
+	}
+	var rawCallback func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xMove)
+	return func(SourceVar File, DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr) bool {
+		return rawCallback(SourceVar.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar)
+	}
+}
+
+// OverrideMoveAsync sets the callback function.
+func (x *FileIface) OverrideMoveAsync(cb func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xMoveAsync = 0
+	} else {
+		x.xMoveAsync = purego.NewCallback(func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: SourceVarp}, &FileBase{Ptr: DestinationVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*FileProgressCallback)(unsafe.Pointer(ProgressCallbackVarp)), ProgressCallbackDataVarp, (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetMoveAsync gets the callback function.
+func (x *FileIface) GetMoveAsync() func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
+	if x.xMoveAsync == 0 {
+		return nil
+	}
+	var rawCallback func(SourceVarp uintptr, DestinationVarp uintptr, FlagsVarp FileCopyFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressCallbackDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMoveAsync)
+	return func(SourceVar File, DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(SourceVar.GoPointer(), DestinationVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideMoveFinish sets the callback function.
+func (x *FileIface) OverrideMoveFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xMoveFinish = 0
+	} else {
+		x.xMoveFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetMoveFinish gets the callback function.
+func (x *FileIface) GetMoveFinish() func(File, AsyncResult) bool {
+	if x.xMoveFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xMoveFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideMountMountable sets the callback function.
+func (x *FileIface) OverrideMountMountable(cb func(File, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xMountMountable = 0
+	} else {
+		x.xMountMountable = purego.NewCallback(func(FileVarp uintptr, FlagsVarp MountMountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetMountMountable gets the callback function.
+func (x *FileIface) GetMountMountable() func(File, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xMountMountable == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp MountMountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMountMountable)
+	return func(FileVar File, FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideMountMountableFinish sets the callback function.
+func (x *FileIface) OverrideMountMountableFinish(cb func(File, AsyncResult) *FileBase) {
+	if cb == nil {
+		x.xMountMountableFinish = 0
+	} else {
+		x.xMountMountableFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetMountMountableFinish gets the callback function.
+func (x *FileIface) GetMountMountableFinish() func(File, AsyncResult) *FileBase {
+	if x.xMountMountableFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xMountMountableFinish)
+	return func(FileVar File, ResultVar AsyncResult) *FileBase {
+		rawRet := rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideUnmountMountable sets the callback function.
+func (x *FileIface) OverrideUnmountMountable(cb func(File, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xUnmountMountable = 0
+	} else {
+		x.xUnmountMountable = purego.NewCallback(func(FileVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetUnmountMountable gets the callback function.
+func (x *FileIface) GetUnmountMountable() func(File, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xUnmountMountable == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnmountMountable)
+	return func(FileVar File, FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideUnmountMountableFinish sets the callback function.
+func (x *FileIface) OverrideUnmountMountableFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xUnmountMountableFinish = 0
+	} else {
+		x.xUnmountMountableFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetUnmountMountableFinish gets the callback function.
+func (x *FileIface) GetUnmountMountableFinish() func(File, AsyncResult) bool {
+	if x.xUnmountMountableFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xUnmountMountableFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideEjectMountable sets the callback function.
+func (x *FileIface) OverrideEjectMountable(cb func(File, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xEjectMountable = 0
+	} else {
+		x.xEjectMountable = purego.NewCallback(func(FileVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetEjectMountable gets the callback function.
+func (x *FileIface) GetEjectMountable() func(File, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xEjectMountable == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEjectMountable)
+	return func(FileVar File, FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideEjectMountableFinish sets the callback function.
+func (x *FileIface) OverrideEjectMountableFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xEjectMountableFinish = 0
+	} else {
+		x.xEjectMountableFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetEjectMountableFinish gets the callback function.
+func (x *FileIface) GetEjectMountableFinish() func(File, AsyncResult) bool {
+	if x.xEjectMountableFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEjectMountableFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideMountEnclosingVolume sets the callback function.
+func (x *FileIface) OverrideMountEnclosingVolume(cb func(File, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xMountEnclosingVolume = 0
+	} else {
+		x.xMountEnclosingVolume = purego.NewCallback(func(LocationVarp uintptr, FlagsVarp MountMountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: LocationVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetMountEnclosingVolume gets the callback function.
+func (x *FileIface) GetMountEnclosingVolume() func(File, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xMountEnclosingVolume == 0 {
+		return nil
+	}
+	var rawCallback func(LocationVarp uintptr, FlagsVarp MountMountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMountEnclosingVolume)
+	return func(LocationVar File, FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(LocationVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideMountEnclosingVolumeFinish sets the callback function.
+func (x *FileIface) OverrideMountEnclosingVolumeFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xMountEnclosingVolumeFinish = 0
+	} else {
+		x.xMountEnclosingVolumeFinish = purego.NewCallback(func(LocationVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: LocationVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetMountEnclosingVolumeFinish gets the callback function.
+func (x *FileIface) GetMountEnclosingVolumeFinish() func(File, AsyncResult) bool {
+	if x.xMountEnclosingVolumeFinish == 0 {
+		return nil
+	}
+	var rawCallback func(LocationVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xMountEnclosingVolumeFinish)
+	return func(LocationVar File, ResultVar AsyncResult) bool {
+		return rawCallback(LocationVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideMonitorDir sets the callback function.
+func (x *FileIface) OverrideMonitorDir(cb func(File, FileMonitorFlags, *Cancellable) *FileMonitor) {
+	if cb == nil {
+		x.xMonitorDir = 0
+	} else {
+		x.xMonitorDir = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileMonitorFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetMonitorDir gets the callback function.
+func (x *FileIface) GetMonitorDir() func(File, FileMonitorFlags, *Cancellable) *FileMonitor {
+	if x.xMonitorDir == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileMonitorFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xMonitorDir)
+	return func(FileVar File, FlagsVar FileMonitorFlags, CancellableVar *Cancellable) *FileMonitor {
+		rawRet := rawCallback(FileVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileMonitor{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideMonitorFile sets the callback function.
+func (x *FileIface) OverrideMonitorFile(cb func(File, FileMonitorFlags, *Cancellable) *FileMonitor) {
+	if cb == nil {
+		x.xMonitorFile = 0
+	} else {
+		x.xMonitorFile = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileMonitorFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetMonitorFile gets the callback function.
+func (x *FileIface) GetMonitorFile() func(File, FileMonitorFlags, *Cancellable) *FileMonitor {
+	if x.xMonitorFile == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileMonitorFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xMonitorFile)
+	return func(FileVar File, FlagsVar FileMonitorFlags, CancellableVar *Cancellable) *FileMonitor {
+		rawRet := rawCallback(FileVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileMonitor{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideOpenReadwrite sets the callback function.
+func (x *FileIface) OverrideOpenReadwrite(cb func(File, *Cancellable) *FileIOStream) {
+	if cb == nil {
+		x.xOpenReadwrite = 0
+	} else {
+		x.xOpenReadwrite = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetOpenReadwrite gets the callback function.
+func (x *FileIface) GetOpenReadwrite() func(File, *Cancellable) *FileIOStream {
+	if x.xOpenReadwrite == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xOpenReadwrite)
+	return func(FileVar File, CancellableVar *Cancellable) *FileIOStream {
+		rawRet := rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileIOStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideOpenReadwriteAsync sets the callback function.
+func (x *FileIface) OverrideOpenReadwriteAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xOpenReadwriteAsync = 0
+	} else {
+		x.xOpenReadwriteAsync = purego.NewCallback(func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetOpenReadwriteAsync gets the callback function.
+func (x *FileIface) GetOpenReadwriteAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xOpenReadwriteAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xOpenReadwriteAsync)
+	return func(FileVar File, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideOpenReadwriteFinish sets the callback function.
+func (x *FileIface) OverrideOpenReadwriteFinish(cb func(File, AsyncResult) *FileIOStream) {
+	if cb == nil {
+		x.xOpenReadwriteFinish = 0
+	} else {
+		x.xOpenReadwriteFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetOpenReadwriteFinish gets the callback function.
+func (x *FileIface) GetOpenReadwriteFinish() func(File, AsyncResult) *FileIOStream {
+	if x.xOpenReadwriteFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xOpenReadwriteFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileIOStream {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileIOStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCreateReadwrite sets the callback function.
+func (x *FileIface) OverrideCreateReadwrite(cb func(File, FileCreateFlags, *Cancellable) *FileIOStream) {
+	if cb == nil {
+		x.xCreateReadwrite = 0
+	} else {
+		x.xCreateReadwrite = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetCreateReadwrite gets the callback function.
+func (x *FileIface) GetCreateReadwrite() func(File, FileCreateFlags, *Cancellable) *FileIOStream {
+	if x.xCreateReadwrite == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCreateReadwrite)
+	return func(FileVar File, FlagsVar FileCreateFlags, CancellableVar *Cancellable) *FileIOStream {
+		rawRet := rawCallback(FileVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileIOStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCreateReadwriteAsync sets the callback function.
+func (x *FileIface) OverrideCreateReadwriteAsync(cb func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xCreateReadwriteAsync = 0
+	} else {
+		x.xCreateReadwriteAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetCreateReadwriteAsync gets the callback function.
+func (x *FileIface) GetCreateReadwriteAsync() func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xCreateReadwriteAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCreateReadwriteAsync)
+	return func(FileVar File, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideCreateReadwriteFinish sets the callback function.
+func (x *FileIface) OverrideCreateReadwriteFinish(cb func(File, AsyncResult) *FileIOStream) {
+	if cb == nil {
+		x.xCreateReadwriteFinish = 0
+	} else {
+		x.xCreateReadwriteFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetCreateReadwriteFinish gets the callback function.
+func (x *FileIface) GetCreateReadwriteFinish() func(File, AsyncResult) *FileIOStream {
+	if x.xCreateReadwriteFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCreateReadwriteFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileIOStream {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileIOStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideReplaceReadwrite sets the callback function.
+func (x *FileIface) OverrideReplaceReadwrite(cb func(File, string, bool, FileCreateFlags, *Cancellable) *FileIOStream) {
+	if cb == nil {
+		x.xReplaceReadwrite = 0
+	} else {
+		x.xReplaceReadwrite = purego.NewCallback(func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, EtagVarp, MakeBackupVarp, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetReplaceReadwrite gets the callback function.
+func (x *FileIface) GetReplaceReadwrite() func(File, string, bool, FileCreateFlags, *Cancellable) *FileIOStream {
+	if x.xReplaceReadwrite == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xReplaceReadwrite)
+	return func(FileVar File, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) *FileIOStream {
+		rawRet := rawCallback(FileVar.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileIOStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideReplaceReadwriteAsync sets the callback function.
+func (x *FileIface) OverrideReplaceReadwriteAsync(cb func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xReplaceReadwriteAsync = 0
+	} else {
+		x.xReplaceReadwriteAsync = purego.NewCallback(func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, EtagVarp, MakeBackupVarp, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetReplaceReadwriteAsync gets the callback function.
+func (x *FileIface) GetReplaceReadwriteAsync() func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xReplaceReadwriteAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, EtagVarp string, MakeBackupVarp bool, FlagsVarp FileCreateFlags, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xReplaceReadwriteAsync)
+	return func(FileVar File, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideReplaceReadwriteFinish sets the callback function.
+func (x *FileIface) OverrideReplaceReadwriteFinish(cb func(File, AsyncResult) *FileIOStream) {
+	if cb == nil {
+		x.xReplaceReadwriteFinish = 0
+	} else {
+		x.xReplaceReadwriteFinish = purego.NewCallback(func(FileVarp uintptr, ResVarp uintptr) uintptr {
+			ret := cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetReplaceReadwriteFinish gets the callback function.
+func (x *FileIface) GetReplaceReadwriteFinish() func(File, AsyncResult) *FileIOStream {
+	if x.xReplaceReadwriteFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xReplaceReadwriteFinish)
+	return func(FileVar File, ResVar AsyncResult) *FileIOStream {
+		rawRet := rawCallback(FileVar.GoPointer(), ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileIOStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideStartMountable sets the callback function.
+func (x *FileIface) OverrideStartMountable(cb func(File, DriveStartFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xStartMountable = 0
+	} else {
+		x.xStartMountable = purego.NewCallback(func(FileVarp uintptr, FlagsVarp DriveStartFlags, StartOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, MountOperationNewFromInternalPtr(StartOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetStartMountable gets the callback function.
+func (x *FileIface) GetStartMountable() func(File, DriveStartFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xStartMountable == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp DriveStartFlags, StartOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xStartMountable)
+	return func(FileVar File, FlagsVar DriveStartFlags, StartOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, StartOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideStartMountableFinish sets the callback function.
+func (x *FileIface) OverrideStartMountableFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xStartMountableFinish = 0
+	} else {
+		x.xStartMountableFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetStartMountableFinish gets the callback function.
+func (x *FileIface) GetStartMountableFinish() func(File, AsyncResult) bool {
+	if x.xStartMountableFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xStartMountableFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideStopMountable sets the callback function.
+func (x *FileIface) OverrideStopMountable(cb func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xStopMountable = 0
+	} else {
+		x.xStopMountable = purego.NewCallback(func(FileVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetStopMountable gets the callback function.
+func (x *FileIface) GetStopMountable() func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xStopMountable == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xStopMountable)
+	return func(FileVar File, FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideStopMountableFinish sets the callback function.
+func (x *FileIface) OverrideStopMountableFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xStopMountableFinish = 0
+	} else {
+		x.xStopMountableFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetStopMountableFinish gets the callback function.
+func (x *FileIface) GetStopMountableFinish() func(File, AsyncResult) bool {
+	if x.xStopMountableFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xStopMountableFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideUnmountMountableWithOperation sets the callback function.
+func (x *FileIface) OverrideUnmountMountableWithOperation(cb func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xUnmountMountableWithOperation = 0
+	} else {
+		x.xUnmountMountableWithOperation = purego.NewCallback(func(FileVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetUnmountMountableWithOperation gets the callback function.
+func (x *FileIface) GetUnmountMountableWithOperation() func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xUnmountMountableWithOperation == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnmountMountableWithOperation)
+	return func(FileVar File, FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideUnmountMountableWithOperationFinish sets the callback function.
+func (x *FileIface) OverrideUnmountMountableWithOperationFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xUnmountMountableWithOperationFinish = 0
+	} else {
+		x.xUnmountMountableWithOperationFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetUnmountMountableWithOperationFinish gets the callback function.
+func (x *FileIface) GetUnmountMountableWithOperationFinish() func(File, AsyncResult) bool {
+	if x.xUnmountMountableWithOperationFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xUnmountMountableWithOperationFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideEjectMountableWithOperation sets the callback function.
+func (x *FileIface) OverrideEjectMountableWithOperation(cb func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xEjectMountableWithOperation = 0
+	} else {
+		x.xEjectMountableWithOperation = purego.NewCallback(func(FileVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetEjectMountableWithOperation gets the callback function.
+func (x *FileIface) GetEjectMountableWithOperation() func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xEjectMountableWithOperation == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEjectMountableWithOperation)
+	return func(FileVar File, FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideEjectMountableWithOperationFinish sets the callback function.
+func (x *FileIface) OverrideEjectMountableWithOperationFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xEjectMountableWithOperationFinish = 0
+	} else {
+		x.xEjectMountableWithOperationFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetEjectMountableWithOperationFinish gets the callback function.
+func (x *FileIface) GetEjectMountableWithOperationFinish() func(File, AsyncResult) bool {
+	if x.xEjectMountableWithOperationFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEjectMountableWithOperationFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverridePollMountable sets the callback function.
+func (x *FileIface) OverridePollMountable(cb func(File, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xPollMountable = 0
+	} else {
+		x.xPollMountable = purego.NewCallback(func(FileVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetPollMountable gets the callback function.
+func (x *FileIface) GetPollMountable() func(File, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xPollMountable == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xPollMountable)
+	return func(FileVar File, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverridePollMountableFinish sets the callback function.
+func (x *FileIface) OverridePollMountableFinish(cb func(File, AsyncResult) bool) {
+	if cb == nil {
+		x.xPollMountableFinish = 0
+	} else {
+		x.xPollMountableFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetPollMountableFinish gets the callback function.
+func (x *FileIface) GetPollMountableFinish() func(File, AsyncResult) bool {
+	if x.xPollMountableFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xPollMountableFinish)
+	return func(FileVar File, ResultVar AsyncResult) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideMeasureDiskUsage sets the callback function.
+func (x *FileIface) OverrideMeasureDiskUsage(cb func(File, FileMeasureFlags, *Cancellable, *FileMeasureProgressCallback, uintptr, uint64, uint64, uint64) bool) {
+	if cb == nil {
+		x.xMeasureDiskUsage = 0
+	} else {
+		x.xMeasureDiskUsage = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileMeasureFlags, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, DiskUsageVarp uint64, NumDirsVarp uint64, NumFilesVarp uint64) bool {
+			return cb(&FileBase{Ptr: FileVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*FileMeasureProgressCallback)(unsafe.Pointer(ProgressCallbackVarp)), ProgressDataVarp, DiskUsageVarp, NumDirsVarp, NumFilesVarp)
+		})
+	}
+}
+
+// GetMeasureDiskUsage gets the callback function.
+func (x *FileIface) GetMeasureDiskUsage() func(File, FileMeasureFlags, *Cancellable, *FileMeasureProgressCallback, uintptr, uint64, uint64, uint64) bool {
+	if x.xMeasureDiskUsage == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileMeasureFlags, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, DiskUsageVarp uint64, NumDirsVarp uint64, NumFilesVarp uint64) bool
+	purego.RegisterFunc(&rawCallback, x.xMeasureDiskUsage)
+	return func(FileVar File, FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) bool {
+		return rawCallback(FileVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressDataVar, DiskUsageVar, NumDirsVar, NumFilesVar)
+	}
+}
+
+// OverrideMeasureDiskUsageAsync sets the callback function.
+func (x *FileIface) OverrideMeasureDiskUsageAsync(cb func(File, FileMeasureFlags, int, *Cancellable, *FileMeasureProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xMeasureDiskUsageAsync = 0
+	} else {
+		x.xMeasureDiskUsageAsync = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileMeasureFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&FileBase{Ptr: FileVarp}, FlagsVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*FileMeasureProgressCallback)(unsafe.Pointer(ProgressCallbackVarp)), ProgressDataVarp, (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetMeasureDiskUsageAsync gets the callback function.
+func (x *FileIface) GetMeasureDiskUsageAsync() func(File, FileMeasureFlags, int, *Cancellable, *FileMeasureProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
+	if x.xMeasureDiskUsageAsync == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileMeasureFlags, IoPriorityVarp int, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMeasureDiskUsageAsync)
+	return func(FileVar File, FlagsVar FileMeasureFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(FileVar.GoPointer(), FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressDataVar, glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideMeasureDiskUsageFinish sets the callback function.
+func (x *FileIface) OverrideMeasureDiskUsageFinish(cb func(File, AsyncResult, uint64, uint64, uint64) bool) {
+	if cb == nil {
+		x.xMeasureDiskUsageFinish = 0
+	} else {
+		x.xMeasureDiskUsageFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr, DiskUsageVarp uint64, NumDirsVarp uint64, NumFilesVarp uint64) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp}, DiskUsageVarp, NumDirsVarp, NumFilesVarp)
+		})
+	}
+}
+
+// GetMeasureDiskUsageFinish gets the callback function.
+func (x *FileIface) GetMeasureDiskUsageFinish() func(File, AsyncResult, uint64, uint64, uint64) bool {
+	if x.xMeasureDiskUsageFinish == 0 {
+		return nil
+	}
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr, DiskUsageVarp uint64, NumDirsVarp uint64, NumFilesVarp uint64) bool
+	purego.RegisterFunc(&rawCallback, x.xMeasureDiskUsageFinish)
+	return func(FileVar File, ResultVar AsyncResult, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) bool {
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer(), DiskUsageVar, NumDirsVar, NumFilesVar)
+	}
 }
 
 // #GFile is a high level abstraction for manipulating files on a
@@ -109,38 +2969,38 @@ func (x *FileIface) GoPointer() uintptr {
 type File interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	AppendTo(FlagsVar FileCreateFlags, CancellableVar *Cancellable) *FileOutputStream
+	AppendTo(FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error)
 	AppendToAsync(FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	AppendToFinish(ResVar AsyncResult) *FileOutputStream
-	BuildAttributeListForCopy(FlagsVar FileCopyFlags, CancellableVar *Cancellable) string
-	Copy(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr) bool
+	AppendToFinish(ResVar AsyncResult) (*FileOutputStream, error)
+	BuildAttributeListForCopy(FlagsVar FileCopyFlags, CancellableVar *Cancellable) (string, error)
+	Copy(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr) (bool, error)
 	CopyAsync(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	CopyAttributes(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable) bool
-	CopyFinish(ResVar AsyncResult) bool
-	Create(FlagsVar FileCreateFlags, CancellableVar *Cancellable) *FileOutputStream
+	CopyAttributes(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable) (bool, error)
+	CopyFinish(ResVar AsyncResult) (bool, error)
+	Create(FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error)
 	CreateAsync(FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	CreateFinish(ResVar AsyncResult) *FileOutputStream
-	CreateReadwrite(FlagsVar FileCreateFlags, CancellableVar *Cancellable) *FileIOStream
+	CreateFinish(ResVar AsyncResult) (*FileOutputStream, error)
+	CreateReadwrite(FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error)
 	CreateReadwriteAsync(FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	CreateReadwriteFinish(ResVar AsyncResult) *FileIOStream
-	Delete(CancellableVar *Cancellable) bool
+	CreateReadwriteFinish(ResVar AsyncResult) (*FileIOStream, error)
+	Delete(CancellableVar *Cancellable) (bool, error)
 	DeleteAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	DeleteFinish(ResultVar AsyncResult) bool
+	DeleteFinish(ResultVar AsyncResult) (bool, error)
 	Dup() *FileBase
 	EjectMountable(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	EjectMountableFinish(ResultVar AsyncResult) bool
+	EjectMountableFinish(ResultVar AsyncResult) (bool, error)
 	EjectMountableWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	EjectMountableWithOperationFinish(ResultVar AsyncResult) bool
-	EnumerateChildren(AttributesVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) *FileEnumerator
+	EjectMountableWithOperationFinish(ResultVar AsyncResult) (bool, error)
+	EnumerateChildren(AttributesVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (*FileEnumerator, error)
 	EnumerateChildrenAsync(AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	EnumerateChildrenFinish(ResVar AsyncResult) *FileEnumerator
+	EnumerateChildrenFinish(ResVar AsyncResult) (*FileEnumerator, error)
 	Equal(File2Var File) bool
-	FindEnclosingMount(CancellableVar *Cancellable) *MountBase
+	FindEnclosingMount(CancellableVar *Cancellable) (*MountBase, error)
 	FindEnclosingMountAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	FindEnclosingMountFinish(ResVar AsyncResult) *MountBase
+	FindEnclosingMountFinish(ResVar AsyncResult) (*MountBase, error)
 	GetBasename() string
 	GetChild(NameVar string) *FileBase
-	GetChildForDisplayName(DisplayNameVar string) *FileBase
+	GetChildForDisplayName(DisplayNameVar string) (*FileBase, error)
 	GetParent() *FileBase
 	GetParseName() string
 	GetPath() string
@@ -152,90 +3012,90 @@ type File interface {
 	HasUriScheme(UriSchemeVar string) bool
 	Hash() uint
 	IsNative() bool
-	LoadBytes(CancellableVar *Cancellable, EtagOutVar string) *glib.Bytes
+	LoadBytes(CancellableVar *Cancellable, EtagOutVar string) (*glib.Bytes, error)
 	LoadBytesAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	LoadBytesFinish(ResultVar AsyncResult, EtagOutVar string) *glib.Bytes
-	LoadContents(CancellableVar *Cancellable, ContentsVar []string, LengthVar uint, EtagOutVar string) bool
+	LoadBytesFinish(ResultVar AsyncResult, EtagOutVar string) (*glib.Bytes, error)
+	LoadContents(CancellableVar *Cancellable, ContentsVar []string, LengthVar uint, EtagOutVar string) (bool, error)
 	LoadContentsAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	LoadContentsFinish(ResVar AsyncResult, ContentsVar []string, LengthVar uint, EtagOutVar string) bool
+	LoadContentsFinish(ResVar AsyncResult, ContentsVar []string, LengthVar uint, EtagOutVar string) (bool, error)
 	LoadPartialContentsAsync(CancellableVar *Cancellable, ReadMoreCallbackVar *FileReadMoreCallback, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	LoadPartialContentsFinish(ResVar AsyncResult, ContentsVar []string, LengthVar uint, EtagOutVar string) bool
-	MakeDirectory(CancellableVar *Cancellable) bool
+	LoadPartialContentsFinish(ResVar AsyncResult, ContentsVar []string, LengthVar uint, EtagOutVar string) (bool, error)
+	MakeDirectory(CancellableVar *Cancellable) (bool, error)
 	MakeDirectoryAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	MakeDirectoryFinish(ResultVar AsyncResult) bool
-	MakeDirectoryWithParents(CancellableVar *Cancellable) bool
-	MakeSymbolicLink(SymlinkValueVar string, CancellableVar *Cancellable) bool
-	MeasureDiskUsage(FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) bool
+	MakeDirectoryFinish(ResultVar AsyncResult) (bool, error)
+	MakeDirectoryWithParents(CancellableVar *Cancellable) (bool, error)
+	MakeSymbolicLink(SymlinkValueVar string, CancellableVar *Cancellable) (bool, error)
+	MeasureDiskUsage(FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) (bool, error)
 	MeasureDiskUsageAsync(FlagsVar FileMeasureFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	MeasureDiskUsageFinish(ResultVar AsyncResult, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) bool
-	Monitor(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) *FileMonitor
-	MonitorDirectory(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) *FileMonitor
-	MonitorFile(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) *FileMonitor
+	MeasureDiskUsageFinish(ResultVar AsyncResult, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) (bool, error)
+	Monitor(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) (*FileMonitor, error)
+	MonitorDirectory(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) (*FileMonitor, error)
+	MonitorFile(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) (*FileMonitor, error)
 	MountEnclosingVolume(FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	MountEnclosingVolumeFinish(ResultVar AsyncResult) bool
+	MountEnclosingVolumeFinish(ResultVar AsyncResult) (bool, error)
 	MountMountable(FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	MountMountableFinish(ResultVar AsyncResult) *FileBase
-	Move(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr) bool
+	MountMountableFinish(ResultVar AsyncResult) (*FileBase, error)
+	Move(DestinationVar File, FlagsVar FileCopyFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr) (bool, error)
 	MoveAsync(DestinationVar File, FlagsVar FileCopyFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileProgressCallback, ProgressCallbackDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	MoveFinish(ResultVar AsyncResult) bool
-	OpenReadwrite(CancellableVar *Cancellable) *FileIOStream
+	MoveFinish(ResultVar AsyncResult) (bool, error)
+	OpenReadwrite(CancellableVar *Cancellable) (*FileIOStream, error)
 	OpenReadwriteAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	OpenReadwriteFinish(ResVar AsyncResult) *FileIOStream
+	OpenReadwriteFinish(ResVar AsyncResult) (*FileIOStream, error)
 	PeekPath() string
 	PollMountable(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	PollMountableFinish(ResultVar AsyncResult) bool
-	QueryDefaultHandler(CancellableVar *Cancellable) *AppInfoBase
+	PollMountableFinish(ResultVar AsyncResult) (bool, error)
+	QueryDefaultHandler(CancellableVar *Cancellable) (*AppInfoBase, error)
 	QueryDefaultHandlerAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	QueryDefaultHandlerFinish(ResultVar AsyncResult) *AppInfoBase
+	QueryDefaultHandlerFinish(ResultVar AsyncResult) (*AppInfoBase, error)
 	QueryExists(CancellableVar *Cancellable) bool
 	QueryFileType(FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) FileType
-	QueryFilesystemInfo(AttributesVar string, CancellableVar *Cancellable) *FileInfo
+	QueryFilesystemInfo(AttributesVar string, CancellableVar *Cancellable) (*FileInfo, error)
 	QueryFilesystemInfoAsync(AttributesVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	QueryFilesystemInfoFinish(ResVar AsyncResult) *FileInfo
-	QueryInfo(AttributesVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) *FileInfo
+	QueryFilesystemInfoFinish(ResVar AsyncResult) (*FileInfo, error)
+	QueryInfo(AttributesVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (*FileInfo, error)
 	QueryInfoAsync(AttributesVar string, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	QueryInfoFinish(ResVar AsyncResult) *FileInfo
-	QuerySettableAttributes(CancellableVar *Cancellable) *FileAttributeInfoList
-	QueryWritableNamespaces(CancellableVar *Cancellable) *FileAttributeInfoList
-	Read(CancellableVar *Cancellable) *FileInputStream
+	QueryInfoFinish(ResVar AsyncResult) (*FileInfo, error)
+	QuerySettableAttributes(CancellableVar *Cancellable) (*FileAttributeInfoList, error)
+	QueryWritableNamespaces(CancellableVar *Cancellable) (*FileAttributeInfoList, error)
+	Read(CancellableVar *Cancellable) (*FileInputStream, error)
 	ReadAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ReadFinish(ResVar AsyncResult) *FileInputStream
-	Replace(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) *FileOutputStream
+	ReadFinish(ResVar AsyncResult) (*FileInputStream, error)
+	Replace(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error)
 	ReplaceAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ReplaceContents(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar string, CancellableVar *Cancellable) bool
+	ReplaceContents(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar string, CancellableVar *Cancellable) (bool, error)
 	ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ReplaceContentsFinish(ResVar AsyncResult, NewEtagVar string) bool
-	ReplaceFinish(ResVar AsyncResult) *FileOutputStream
-	ReplaceReadwrite(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) *FileIOStream
+	ReplaceContentsFinish(ResVar AsyncResult, NewEtagVar string) (bool, error)
+	ReplaceFinish(ResVar AsyncResult) (*FileOutputStream, error)
+	ReplaceReadwrite(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error)
 	ReplaceReadwriteAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ReplaceReadwriteFinish(ResVar AsyncResult) *FileIOStream
+	ReplaceReadwriteFinish(ResVar AsyncResult) (*FileIOStream, error)
 	ResolveRelativePath(RelativePathVar string) *FileBase
-	SetAttribute(AttributeVar string, TypeVar FileAttributeType, ValuePVar uintptr, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool
-	SetAttributeByteString(AttributeVar string, ValueVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool
-	SetAttributeInt32(AttributeVar string, ValueVar int32, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool
-	SetAttributeInt64(AttributeVar string, ValueVar int64, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool
-	SetAttributeString(AttributeVar string, ValueVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool
-	SetAttributeUint32(AttributeVar string, ValueVar uint32, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool
-	SetAttributeUint64(AttributeVar string, ValueVar uint64, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool
+	SetAttribute(AttributeVar string, TypeVar FileAttributeType, ValuePVar uintptr, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
+	SetAttributeByteString(AttributeVar string, ValueVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
+	SetAttributeInt32(AttributeVar string, ValueVar int32, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
+	SetAttributeInt64(AttributeVar string, ValueVar int64, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
+	SetAttributeString(AttributeVar string, ValueVar string, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
+	SetAttributeUint32(AttributeVar string, ValueVar uint32, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
+	SetAttributeUint64(AttributeVar string, ValueVar uint64, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
 	SetAttributesAsync(InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	SetAttributesFinish(ResultVar AsyncResult, InfoVar **FileInfo) bool
-	SetAttributesFromInfo(InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) bool
-	SetDisplayName(DisplayNameVar string, CancellableVar *Cancellable) *FileBase
+	SetAttributesFinish(ResultVar AsyncResult, InfoVar **FileInfo) (bool, error)
+	SetAttributesFromInfo(InfoVar *FileInfo, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
+	SetDisplayName(DisplayNameVar string, CancellableVar *Cancellable) (*FileBase, error)
 	SetDisplayNameAsync(DisplayNameVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	SetDisplayNameFinish(ResVar AsyncResult) *FileBase
+	SetDisplayNameFinish(ResVar AsyncResult) (*FileBase, error)
 	StartMountable(FlagsVar DriveStartFlags, StartOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	StartMountableFinish(ResultVar AsyncResult) bool
+	StartMountableFinish(ResultVar AsyncResult) (bool, error)
 	StopMountable(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	StopMountableFinish(ResultVar AsyncResult) bool
+	StopMountableFinish(ResultVar AsyncResult) (bool, error)
 	SupportsThreadContexts() bool
-	Trash(CancellableVar *Cancellable) bool
+	Trash(CancellableVar *Cancellable) (bool, error)
 	TrashAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	TrashFinish(ResultVar AsyncResult) bool
+	TrashFinish(ResultVar AsyncResult) (bool, error)
 	UnmountMountable(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	UnmountMountableFinish(ResultVar AsyncResult) bool
+	UnmountMountableFinish(ResultVar AsyncResult) (bool, error)
 	UnmountMountableWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	UnmountMountableWithOperationFinish(ResultVar AsyncResult) bool
+	UnmountMountableWithOperationFinish(ResultVar AsyncResult) (bool, error)
 }
 
 var xFileGLibType func() types.GType
@@ -2464,7 +5324,7 @@ func (x *FileBase) SetAttributesAsync(InfoVar *FileInfo, FlagsVar FileQueryInfoF
 func (x *FileBase) SetAttributesFinish(ResultVar AsyncResult, InfoVar **FileInfo) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGFileSetAttributesFinish(x.GoPointer(), ResultVar.GoPointer(), gobject.ConvertPtr(InfoVar), &cerr)
+	cret := XGFileSetAttributesFinish(x.GoPointer(), ResultVar.GoPointer(), *gobject.ConvertPtr(InfoVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2846,7 +5706,7 @@ var XGFileSetAttributeString func(uintptr, string, string, FileQueryInfoFlags, u
 var XGFileSetAttributeUint32 func(uintptr, string, uint32, FileQueryInfoFlags, uintptr, **glib.Error) bool
 var XGFileSetAttributeUint64 func(uintptr, string, uint64, FileQueryInfoFlags, uintptr, **glib.Error) bool
 var XGFileSetAttributesAsync func(uintptr, uintptr, FileQueryInfoFlags, int, uintptr, uintptr, uintptr)
-var XGFileSetAttributesFinish func(uintptr, uintptr, *uintptr, **glib.Error) bool
+var XGFileSetAttributesFinish func(uintptr, uintptr, uintptr, **glib.Error) bool
 var XGFileSetAttributesFromInfo func(uintptr, uintptr, FileQueryInfoFlags, uintptr, **glib.Error) bool
 var XGFileSetDisplayName func(uintptr, string, uintptr, **glib.Error) uintptr
 var XGFileSetDisplayNameAsync func(uintptr, string, int, uintptr, uintptr, uintptr)
@@ -2956,7 +5816,7 @@ func FileNewForUri(UriVar string) *FileBase {
 	return cls
 }
 
-var xFileNewTmp func(string, *uintptr, **glib.Error) uintptr
+var xFileNewTmp func(string, uintptr, **glib.Error) uintptr
 
 // Opens a file in the preferred directory for temporary files (as
 // returned by g_get_tmp_dir()) and returns a #GFile and
@@ -2972,7 +5832,7 @@ func FileNewTmp(TmplVar string, IostreamVar **FileIOStream) (*FileBase, error) {
 	var cls *FileBase
 	var cerr *glib.Error
 
-	cret := xFileNewTmp(TmplVar, gobject.ConvertPtr(IostreamVar), &cerr)
+	cret := xFileNewTmp(TmplVar, *gobject.ConvertPtr(IostreamVar), &cerr)
 
 	if cret == 0 {
 		return nil, cerr

@@ -16,10 +16,95 @@ type ListModelInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xGetItemType uintptr
+
+	xGetNItems uintptr
+
+	xGetItem uintptr
 }
 
 func (x *ListModelInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetItemType sets the callback function.
+func (x *ListModelInterface) OverrideGetItemType(cb func(ListModel) types.GType) {
+	if cb == nil {
+		x.xGetItemType = 0
+	} else {
+		x.xGetItemType = purego.NewCallback(func(ListVarp uintptr) types.GType {
+			return cb(&ListModelBase{Ptr: ListVarp})
+		})
+	}
+}
+
+// GetGetItemType gets the callback function.
+func (x *ListModelInterface) GetGetItemType() func(ListModel) types.GType {
+	if x.xGetItemType == 0 {
+		return nil
+	}
+	var rawCallback func(ListVarp uintptr) types.GType
+	purego.RegisterFunc(&rawCallback, x.xGetItemType)
+	return func(ListVar ListModel) types.GType {
+		return rawCallback(ListVar.GoPointer())
+	}
+}
+
+// OverrideGetNItems sets the callback function.
+func (x *ListModelInterface) OverrideGetNItems(cb func(ListModel) uint) {
+	if cb == nil {
+		x.xGetNItems = 0
+	} else {
+		x.xGetNItems = purego.NewCallback(func(ListVarp uintptr) uint {
+			return cb(&ListModelBase{Ptr: ListVarp})
+		})
+	}
+}
+
+// GetGetNItems gets the callback function.
+func (x *ListModelInterface) GetGetNItems() func(ListModel) uint {
+	if x.xGetNItems == 0 {
+		return nil
+	}
+	var rawCallback func(ListVarp uintptr) uint
+	purego.RegisterFunc(&rawCallback, x.xGetNItems)
+	return func(ListVar ListModel) uint {
+		return rawCallback(ListVar.GoPointer())
+	}
+}
+
+// OverrideGetItem sets the callback function.
+func (x *ListModelInterface) OverrideGetItem(cb func(ListModel, uint) *gobject.Object) {
+	if cb == nil {
+		x.xGetItem = 0
+	} else {
+		x.xGetItem = purego.NewCallback(func(ListVarp uintptr, PositionVarp uint) uintptr {
+			ret := cb(&ListModelBase{Ptr: ListVarp}, PositionVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetItem gets the callback function.
+func (x *ListModelInterface) GetGetItem() func(ListModel, uint) *gobject.Object {
+	if x.xGetItem == 0 {
+		return nil
+	}
+	var rawCallback func(ListVarp uintptr, PositionVarp uint) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetItem)
+	return func(ListVar ListModel, PositionVar uint) *gobject.Object {
+		rawRet := rawCallback(ListVar.GoPointer(), PositionVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &gobject.Object{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // #GListModel is an interface that represents a mutable list of

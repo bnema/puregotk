@@ -15,11 +15,161 @@ import (
 type TypeModuleClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass ObjectClass
+
+	xLoad uintptr
+
+	xUnload uintptr
+
+	xReserved1 uintptr
+
+	xReserved2 uintptr
+
+	xReserved3 uintptr
+
+	xReserved4 uintptr
 }
 
 func (x *TypeModuleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideLoad sets the callback function.
+func (x *TypeModuleClass) OverrideLoad(cb func(*TypeModule) bool) {
+	if cb == nil {
+		x.xLoad = 0
+	} else {
+		x.xLoad = purego.NewCallback(func(ModuleVarp uintptr) bool {
+			return cb(TypeModuleNewFromInternalPtr(ModuleVarp))
+		})
+	}
+}
+
+// GetLoad gets the callback function.
+func (x *TypeModuleClass) GetLoad() func(*TypeModule) bool {
+	if x.xLoad == 0 {
+		return nil
+	}
+	var rawCallback func(ModuleVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xLoad)
+	return func(ModuleVar *TypeModule) bool {
+		return rawCallback(ModuleVar.GoPointer())
+	}
+}
+
+// OverrideUnload sets the callback function.
+func (x *TypeModuleClass) OverrideUnload(cb func(*TypeModule)) {
+	if cb == nil {
+		x.xUnload = 0
+	} else {
+		x.xUnload = purego.NewCallback(func(ModuleVarp uintptr) {
+			cb(TypeModuleNewFromInternalPtr(ModuleVarp))
+		})
+	}
+}
+
+// GetUnload gets the callback function.
+func (x *TypeModuleClass) GetUnload() func(*TypeModule) {
+	if x.xUnload == 0 {
+		return nil
+	}
+	var rawCallback func(ModuleVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnload)
+	return func(ModuleVar *TypeModule) {
+		rawCallback(ModuleVar.GoPointer())
+	}
+}
+
+// OverrideReserved1 sets the callback function.
+func (x *TypeModuleClass) OverrideReserved1(cb func()) {
+	if cb == nil {
+		x.xReserved1 = 0
+	} else {
+		x.xReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetReserved1 gets the callback function.
+func (x *TypeModuleClass) GetReserved1() func() {
+	if x.xReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideReserved2 sets the callback function.
+func (x *TypeModuleClass) OverrideReserved2(cb func()) {
+	if cb == nil {
+		x.xReserved2 = 0
+	} else {
+		x.xReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetReserved2 gets the callback function.
+func (x *TypeModuleClass) GetReserved2() func() {
+	if x.xReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideReserved3 sets the callback function.
+func (x *TypeModuleClass) OverrideReserved3(cb func()) {
+	if cb == nil {
+		x.xReserved3 = 0
+	} else {
+		x.xReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetReserved3 gets the callback function.
+func (x *TypeModuleClass) GetReserved3() func() {
+	if x.xReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideReserved4 sets the callback function.
+func (x *TypeModuleClass) OverrideReserved4(cb func()) {
+	if cb == nil {
+		x.xReserved4 = 0
+	} else {
+		x.xReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetReserved4 gets the callback function.
+func (x *TypeModuleClass) GetReserved4() func() {
+	if x.xReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xReserved4)
+	return func() {
+		rawCallback()
+	}
 }
 
 // #GTypeModule provides a simple implementation of the #GTypePlugin

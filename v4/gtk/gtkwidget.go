@@ -80,7 +80,57 @@ func (x *Requisition) Free() {
 type WidgetClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.InitiallyUnownedClass
+
+	xShow uintptr
+
+	xHide uintptr
+
+	xMap uintptr
+
+	xUnmap uintptr
+
+	xRealize uintptr
+
+	xUnrealize uintptr
+
+	xRoot uintptr
+
+	xUnroot uintptr
+
+	xSizeAllocate uintptr
+
+	xStateFlagsChanged uintptr
+
+	xDirectionChanged uintptr
+
+	xGetRequestMode uintptr
+
+	xMeasure uintptr
+
+	xMnemonicActivate uintptr
+
+	xGrabFocus uintptr
+
+	xFocus uintptr
+
+	xSetFocusChild uintptr
+
+	xMoveFocus uintptr
+
+	xKeynavFailed uintptr
+
+	xQueryTooltip uintptr
+
+	xComputeExpand uintptr
+
+	xCssChanged uintptr
+
+	xSystemSettingChanged uintptr
+
+	xSnapshot uintptr
+
+	xContains uintptr
 
 	Priv *WidgetClassPrivate
 
@@ -428,6 +478,581 @@ func (x *WidgetClass) SetTemplateScope(ScopeVar BuilderScope) {
 
 	xWidgetClassSetTemplateScope(x.GoPointer(), ScopeVar.GoPointer())
 
+}
+
+// OverrideShow sets the callback function.
+func (x *WidgetClass) OverrideShow(cb func(*Widget)) {
+	if cb == nil {
+		x.xShow = 0
+	} else {
+		x.xShow = purego.NewCallback(func(WidgetVarp uintptr) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetShow gets the callback function.
+func (x *WidgetClass) GetShow() func(*Widget) {
+	if x.xShow == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xShow)
+	return func(WidgetVar *Widget) {
+		rawCallback(WidgetVar.GoPointer())
+	}
+}
+
+// OverrideHide sets the callback function.
+func (x *WidgetClass) OverrideHide(cb func(*Widget)) {
+	if cb == nil {
+		x.xHide = 0
+	} else {
+		x.xHide = purego.NewCallback(func(WidgetVarp uintptr) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetHide gets the callback function.
+func (x *WidgetClass) GetHide() func(*Widget) {
+	if x.xHide == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xHide)
+	return func(WidgetVar *Widget) {
+		rawCallback(WidgetVar.GoPointer())
+	}
+}
+
+// OverrideMap sets the callback function.
+func (x *WidgetClass) OverrideMap(cb func(*Widget)) {
+	if cb == nil {
+		x.xMap = 0
+	} else {
+		x.xMap = purego.NewCallback(func(WidgetVarp uintptr) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetMap gets the callback function.
+func (x *WidgetClass) GetMap() func(*Widget) {
+	if x.xMap == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMap)
+	return func(WidgetVar *Widget) {
+		rawCallback(WidgetVar.GoPointer())
+	}
+}
+
+// OverrideUnmap sets the callback function.
+func (x *WidgetClass) OverrideUnmap(cb func(*Widget)) {
+	if cb == nil {
+		x.xUnmap = 0
+	} else {
+		x.xUnmap = purego.NewCallback(func(WidgetVarp uintptr) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetUnmap gets the callback function.
+func (x *WidgetClass) GetUnmap() func(*Widget) {
+	if x.xUnmap == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnmap)
+	return func(WidgetVar *Widget) {
+		rawCallback(WidgetVar.GoPointer())
+	}
+}
+
+// OverrideRealize sets the callback function.
+func (x *WidgetClass) OverrideRealize(cb func(*Widget)) {
+	if cb == nil {
+		x.xRealize = 0
+	} else {
+		x.xRealize = purego.NewCallback(func(WidgetVarp uintptr) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetRealize gets the callback function.
+func (x *WidgetClass) GetRealize() func(*Widget) {
+	if x.xRealize == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRealize)
+	return func(WidgetVar *Widget) {
+		rawCallback(WidgetVar.GoPointer())
+	}
+}
+
+// OverrideUnrealize sets the callback function.
+func (x *WidgetClass) OverrideUnrealize(cb func(*Widget)) {
+	if cb == nil {
+		x.xUnrealize = 0
+	} else {
+		x.xUnrealize = purego.NewCallback(func(WidgetVarp uintptr) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetUnrealize gets the callback function.
+func (x *WidgetClass) GetUnrealize() func(*Widget) {
+	if x.xUnrealize == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnrealize)
+	return func(WidgetVar *Widget) {
+		rawCallback(WidgetVar.GoPointer())
+	}
+}
+
+// OverrideRoot sets the callback function.
+func (x *WidgetClass) OverrideRoot(cb func(*Widget)) {
+	if cb == nil {
+		x.xRoot = 0
+	} else {
+		x.xRoot = purego.NewCallback(func(WidgetVarp uintptr) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetRoot gets the callback function.
+func (x *WidgetClass) GetRoot() func(*Widget) {
+	if x.xRoot == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRoot)
+	return func(WidgetVar *Widget) {
+		rawCallback(WidgetVar.GoPointer())
+	}
+}
+
+// OverrideUnroot sets the callback function.
+func (x *WidgetClass) OverrideUnroot(cb func(*Widget)) {
+	if cb == nil {
+		x.xUnroot = 0
+	} else {
+		x.xUnroot = purego.NewCallback(func(WidgetVarp uintptr) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetUnroot gets the callback function.
+func (x *WidgetClass) GetUnroot() func(*Widget) {
+	if x.xUnroot == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnroot)
+	return func(WidgetVar *Widget) {
+		rawCallback(WidgetVar.GoPointer())
+	}
+}
+
+// OverrideSizeAllocate sets the callback function.
+func (x *WidgetClass) OverrideSizeAllocate(cb func(*Widget, int, int, int)) {
+	if cb == nil {
+		x.xSizeAllocate = 0
+	} else {
+		x.xSizeAllocate = purego.NewCallback(func(WidgetVarp uintptr, WidthVarp int, HeightVarp int, BaselineVarp int) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp), WidthVarp, HeightVarp, BaselineVarp)
+		})
+	}
+}
+
+// GetSizeAllocate gets the callback function.
+func (x *WidgetClass) GetSizeAllocate() func(*Widget, int, int, int) {
+	if x.xSizeAllocate == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, WidthVarp int, HeightVarp int, BaselineVarp int)
+	purego.RegisterFunc(&rawCallback, x.xSizeAllocate)
+	return func(WidgetVar *Widget, WidthVar int, HeightVar int, BaselineVar int) {
+		rawCallback(WidgetVar.GoPointer(), WidthVar, HeightVar, BaselineVar)
+	}
+}
+
+// OverrideStateFlagsChanged sets the callback function.
+func (x *WidgetClass) OverrideStateFlagsChanged(cb func(*Widget, StateFlags)) {
+	if cb == nil {
+		x.xStateFlagsChanged = 0
+	} else {
+		x.xStateFlagsChanged = purego.NewCallback(func(WidgetVarp uintptr, PreviousStateFlagsVarp StateFlags) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp), PreviousStateFlagsVarp)
+		})
+	}
+}
+
+// GetStateFlagsChanged gets the callback function.
+func (x *WidgetClass) GetStateFlagsChanged() func(*Widget, StateFlags) {
+	if x.xStateFlagsChanged == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, PreviousStateFlagsVarp StateFlags)
+	purego.RegisterFunc(&rawCallback, x.xStateFlagsChanged)
+	return func(WidgetVar *Widget, PreviousStateFlagsVar StateFlags) {
+		rawCallback(WidgetVar.GoPointer(), PreviousStateFlagsVar)
+	}
+}
+
+// OverrideDirectionChanged sets the callback function.
+func (x *WidgetClass) OverrideDirectionChanged(cb func(*Widget, TextDirection)) {
+	if cb == nil {
+		x.xDirectionChanged = 0
+	} else {
+		x.xDirectionChanged = purego.NewCallback(func(WidgetVarp uintptr, PreviousDirectionVarp TextDirection) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp), PreviousDirectionVarp)
+		})
+	}
+}
+
+// GetDirectionChanged gets the callback function.
+func (x *WidgetClass) GetDirectionChanged() func(*Widget, TextDirection) {
+	if x.xDirectionChanged == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, PreviousDirectionVarp TextDirection)
+	purego.RegisterFunc(&rawCallback, x.xDirectionChanged)
+	return func(WidgetVar *Widget, PreviousDirectionVar TextDirection) {
+		rawCallback(WidgetVar.GoPointer(), PreviousDirectionVar)
+	}
+}
+
+// OverrideGetRequestMode sets the callback function.
+func (x *WidgetClass) OverrideGetRequestMode(cb func(*Widget) SizeRequestMode) {
+	if cb == nil {
+		x.xGetRequestMode = 0
+	} else {
+		x.xGetRequestMode = purego.NewCallback(func(WidgetVarp uintptr) SizeRequestMode {
+			return cb(WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetGetRequestMode gets the callback function.
+func (x *WidgetClass) GetGetRequestMode() func(*Widget) SizeRequestMode {
+	if x.xGetRequestMode == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr) SizeRequestMode
+	purego.RegisterFunc(&rawCallback, x.xGetRequestMode)
+	return func(WidgetVar *Widget) SizeRequestMode {
+		return rawCallback(WidgetVar.GoPointer())
+	}
+}
+
+// OverrideMeasure sets the callback function.
+func (x *WidgetClass) OverrideMeasure(cb func(*Widget, Orientation, int, int, int, int, int)) {
+	if cb == nil {
+		x.xMeasure = 0
+	} else {
+		x.xMeasure = purego.NewCallback(func(WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp int, NaturalVarp int, MinimumBaselineVarp int, NaturalBaselineVarp int) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp), OrientationVarp, ForSizeVarp, MinimumVarp, NaturalVarp, MinimumBaselineVarp, NaturalBaselineVarp)
+		})
+	}
+}
+
+// GetMeasure gets the callback function.
+func (x *WidgetClass) GetMeasure() func(*Widget, Orientation, int, int, int, int, int) {
+	if x.xMeasure == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp int, NaturalVarp int, MinimumBaselineVarp int, NaturalBaselineVarp int)
+	purego.RegisterFunc(&rawCallback, x.xMeasure)
+	return func(WidgetVar *Widget, OrientationVar Orientation, ForSizeVar int, MinimumVar int, NaturalVar int, MinimumBaselineVar int, NaturalBaselineVar int) {
+		rawCallback(WidgetVar.GoPointer(), OrientationVar, ForSizeVar, MinimumVar, NaturalVar, MinimumBaselineVar, NaturalBaselineVar)
+	}
+}
+
+// OverrideMnemonicActivate sets the callback function.
+func (x *WidgetClass) OverrideMnemonicActivate(cb func(*Widget, bool) bool) {
+	if cb == nil {
+		x.xMnemonicActivate = 0
+	} else {
+		x.xMnemonicActivate = purego.NewCallback(func(WidgetVarp uintptr, GroupCyclingVarp bool) bool {
+			return cb(WidgetNewFromInternalPtr(WidgetVarp), GroupCyclingVarp)
+		})
+	}
+}
+
+// GetMnemonicActivate gets the callback function.
+func (x *WidgetClass) GetMnemonicActivate() func(*Widget, bool) bool {
+	if x.xMnemonicActivate == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, GroupCyclingVarp bool) bool
+	purego.RegisterFunc(&rawCallback, x.xMnemonicActivate)
+	return func(WidgetVar *Widget, GroupCyclingVar bool) bool {
+		return rawCallback(WidgetVar.GoPointer(), GroupCyclingVar)
+	}
+}
+
+// OverrideGrabFocus sets the callback function.
+func (x *WidgetClass) OverrideGrabFocus(cb func(*Widget) bool) {
+	if cb == nil {
+		x.xGrabFocus = 0
+	} else {
+		x.xGrabFocus = purego.NewCallback(func(WidgetVarp uintptr) bool {
+			return cb(WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetGrabFocus gets the callback function.
+func (x *WidgetClass) GetGrabFocus() func(*Widget) bool {
+	if x.xGrabFocus == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xGrabFocus)
+	return func(WidgetVar *Widget) bool {
+		return rawCallback(WidgetVar.GoPointer())
+	}
+}
+
+// OverrideFocus sets the callback function.
+func (x *WidgetClass) OverrideFocus(cb func(*Widget, DirectionType) bool) {
+	if cb == nil {
+		x.xFocus = 0
+	} else {
+		x.xFocus = purego.NewCallback(func(WidgetVarp uintptr, DirectionVarp DirectionType) bool {
+			return cb(WidgetNewFromInternalPtr(WidgetVarp), DirectionVarp)
+		})
+	}
+}
+
+// GetFocus gets the callback function.
+func (x *WidgetClass) GetFocus() func(*Widget, DirectionType) bool {
+	if x.xFocus == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, DirectionVarp DirectionType) bool
+	purego.RegisterFunc(&rawCallback, x.xFocus)
+	return func(WidgetVar *Widget, DirectionVar DirectionType) bool {
+		return rawCallback(WidgetVar.GoPointer(), DirectionVar)
+	}
+}
+
+// OverrideSetFocusChild sets the callback function.
+func (x *WidgetClass) OverrideSetFocusChild(cb func(*Widget, *Widget)) {
+	if cb == nil {
+		x.xSetFocusChild = 0
+	} else {
+		x.xSetFocusChild = purego.NewCallback(func(WidgetVarp uintptr, ChildVarp uintptr) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp), WidgetNewFromInternalPtr(ChildVarp))
+		})
+	}
+}
+
+// GetSetFocusChild gets the callback function.
+func (x *WidgetClass) GetSetFocusChild() func(*Widget, *Widget) {
+	if x.xSetFocusChild == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, ChildVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetFocusChild)
+	return func(WidgetVar *Widget, ChildVar *Widget) {
+		rawCallback(WidgetVar.GoPointer(), ChildVar.GoPointer())
+	}
+}
+
+// OverrideMoveFocus sets the callback function.
+func (x *WidgetClass) OverrideMoveFocus(cb func(*Widget, DirectionType)) {
+	if cb == nil {
+		x.xMoveFocus = 0
+	} else {
+		x.xMoveFocus = purego.NewCallback(func(WidgetVarp uintptr, DirectionVarp DirectionType) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp), DirectionVarp)
+		})
+	}
+}
+
+// GetMoveFocus gets the callback function.
+func (x *WidgetClass) GetMoveFocus() func(*Widget, DirectionType) {
+	if x.xMoveFocus == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, DirectionVarp DirectionType)
+	purego.RegisterFunc(&rawCallback, x.xMoveFocus)
+	return func(WidgetVar *Widget, DirectionVar DirectionType) {
+		rawCallback(WidgetVar.GoPointer(), DirectionVar)
+	}
+}
+
+// OverrideKeynavFailed sets the callback function.
+func (x *WidgetClass) OverrideKeynavFailed(cb func(*Widget, DirectionType) bool) {
+	if cb == nil {
+		x.xKeynavFailed = 0
+	} else {
+		x.xKeynavFailed = purego.NewCallback(func(WidgetVarp uintptr, DirectionVarp DirectionType) bool {
+			return cb(WidgetNewFromInternalPtr(WidgetVarp), DirectionVarp)
+		})
+	}
+}
+
+// GetKeynavFailed gets the callback function.
+func (x *WidgetClass) GetKeynavFailed() func(*Widget, DirectionType) bool {
+	if x.xKeynavFailed == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, DirectionVarp DirectionType) bool
+	purego.RegisterFunc(&rawCallback, x.xKeynavFailed)
+	return func(WidgetVar *Widget, DirectionVar DirectionType) bool {
+		return rawCallback(WidgetVar.GoPointer(), DirectionVar)
+	}
+}
+
+// OverrideQueryTooltip sets the callback function.
+func (x *WidgetClass) OverrideQueryTooltip(cb func(*Widget, int, int, bool, *Tooltip) bool) {
+	if cb == nil {
+		x.xQueryTooltip = 0
+	} else {
+		x.xQueryTooltip = purego.NewCallback(func(WidgetVarp uintptr, XVarp int, YVarp int, KeyboardTooltipVarp bool, TooltipVarp uintptr) bool {
+			return cb(WidgetNewFromInternalPtr(WidgetVarp), XVarp, YVarp, KeyboardTooltipVarp, TooltipNewFromInternalPtr(TooltipVarp))
+		})
+	}
+}
+
+// GetQueryTooltip gets the callback function.
+func (x *WidgetClass) GetQueryTooltip() func(*Widget, int, int, bool, *Tooltip) bool {
+	if x.xQueryTooltip == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, XVarp int, YVarp int, KeyboardTooltipVarp bool, TooltipVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xQueryTooltip)
+	return func(WidgetVar *Widget, XVar int, YVar int, KeyboardTooltipVar bool, TooltipVar *Tooltip) bool {
+		return rawCallback(WidgetVar.GoPointer(), XVar, YVar, KeyboardTooltipVar, TooltipVar.GoPointer())
+	}
+}
+
+// OverrideComputeExpand sets the callback function.
+func (x *WidgetClass) OverrideComputeExpand(cb func(*Widget, bool, bool)) {
+	if cb == nil {
+		x.xComputeExpand = 0
+	} else {
+		x.xComputeExpand = purego.NewCallback(func(WidgetVarp uintptr, HexpandPVarp bool, VexpandPVarp bool) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp), HexpandPVarp, VexpandPVarp)
+		})
+	}
+}
+
+// GetComputeExpand gets the callback function.
+func (x *WidgetClass) GetComputeExpand() func(*Widget, bool, bool) {
+	if x.xComputeExpand == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, HexpandPVarp bool, VexpandPVarp bool)
+	purego.RegisterFunc(&rawCallback, x.xComputeExpand)
+	return func(WidgetVar *Widget, HexpandPVar bool, VexpandPVar bool) {
+		rawCallback(WidgetVar.GoPointer(), HexpandPVar, VexpandPVar)
+	}
+}
+
+// OverrideCssChanged sets the callback function.
+func (x *WidgetClass) OverrideCssChanged(cb func(*Widget, *CssStyleChange)) {
+	if cb == nil {
+		x.xCssChanged = 0
+	} else {
+		x.xCssChanged = purego.NewCallback(func(WidgetVarp uintptr, ChangeVarp *CssStyleChange) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp), ChangeVarp)
+		})
+	}
+}
+
+// GetCssChanged gets the callback function.
+func (x *WidgetClass) GetCssChanged() func(*Widget, *CssStyleChange) {
+	if x.xCssChanged == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, ChangeVarp *CssStyleChange)
+	purego.RegisterFunc(&rawCallback, x.xCssChanged)
+	return func(WidgetVar *Widget, ChangeVar *CssStyleChange) {
+		rawCallback(WidgetVar.GoPointer(), ChangeVar)
+	}
+}
+
+// OverrideSystemSettingChanged sets the callback function.
+func (x *WidgetClass) OverrideSystemSettingChanged(cb func(*Widget, SystemSetting)) {
+	if cb == nil {
+		x.xSystemSettingChanged = 0
+	} else {
+		x.xSystemSettingChanged = purego.NewCallback(func(WidgetVarp uintptr, SettingsVarp SystemSetting) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp), SettingsVarp)
+		})
+	}
+}
+
+// GetSystemSettingChanged gets the callback function.
+func (x *WidgetClass) GetSystemSettingChanged() func(*Widget, SystemSetting) {
+	if x.xSystemSettingChanged == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, SettingsVarp SystemSetting)
+	purego.RegisterFunc(&rawCallback, x.xSystemSettingChanged)
+	return func(WidgetVar *Widget, SettingsVar SystemSetting) {
+		rawCallback(WidgetVar.GoPointer(), SettingsVar)
+	}
+}
+
+// OverrideSnapshot sets the callback function.
+func (x *WidgetClass) OverrideSnapshot(cb func(*Widget, *Snapshot)) {
+	if cb == nil {
+		x.xSnapshot = 0
+	} else {
+		x.xSnapshot = purego.NewCallback(func(WidgetVarp uintptr, SnapshotVarp uintptr) {
+			cb(WidgetNewFromInternalPtr(WidgetVarp), SnapshotNewFromInternalPtr(SnapshotVarp))
+		})
+	}
+}
+
+// GetSnapshot gets the callback function.
+func (x *WidgetClass) GetSnapshot() func(*Widget, *Snapshot) {
+	if x.xSnapshot == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, SnapshotVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSnapshot)
+	return func(WidgetVar *Widget, SnapshotVar *Snapshot) {
+		rawCallback(WidgetVar.GoPointer(), SnapshotVar.GoPointer())
+	}
+}
+
+// OverrideContains sets the callback function.
+func (x *WidgetClass) OverrideContains(cb func(*Widget, float64, float64) bool) {
+	if cb == nil {
+		x.xContains = 0
+	} else {
+		x.xContains = purego.NewCallback(func(WidgetVarp uintptr, XVarp float64, YVarp float64) bool {
+			return cb(WidgetNewFromInternalPtr(WidgetVarp), XVarp, YVarp)
+		})
+	}
+}
+
+// GetContains gets the callback function.
+func (x *WidgetClass) GetContains() func(*Widget, float64, float64) bool {
+	if x.xContains == 0 {
+		return nil
+	}
+	var rawCallback func(WidgetVarp uintptr, XVarp float64, YVarp float64) bool
+	purego.RegisterFunc(&rawCallback, x.xContains)
+	return func(WidgetVar *Widget, XVar float64, YVar float64) bool {
+		return rawCallback(WidgetVar.GoPointer(), XVar, YVar)
+	}
 }
 
 type WidgetClassPrivate struct {

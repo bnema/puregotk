@@ -22,13 +22,298 @@ type PageSetupDoneFunc func(uintptr, uintptr)
 type PrintOperationClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xDone uintptr
+
+	xBeginPrint uintptr
+
+	xPaginate uintptr
+
+	xRequestPageSetup uintptr
+
+	xDrawPage uintptr
+
+	xEndPrint uintptr
+
+	xStatusChanged uintptr
+
+	xCreateCustomWidget uintptr
+
+	xCustomWidgetApply uintptr
+
+	xPreview uintptr
+
+	xUpdateCustomWidget uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *PrintOperationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideDone sets the callback function.
+func (x *PrintOperationClass) OverrideDone(cb func(*PrintOperation, PrintOperationResult)) {
+	if cb == nil {
+		x.xDone = 0
+	} else {
+		x.xDone = purego.NewCallback(func(OperationVarp uintptr, ResultVarp PrintOperationResult) {
+			cb(PrintOperationNewFromInternalPtr(OperationVarp), ResultVarp)
+		})
+	}
+}
+
+// GetDone gets the callback function.
+func (x *PrintOperationClass) GetDone() func(*PrintOperation, PrintOperationResult) {
+	if x.xDone == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr, ResultVarp PrintOperationResult)
+	purego.RegisterFunc(&rawCallback, x.xDone)
+	return func(OperationVar *PrintOperation, ResultVar PrintOperationResult) {
+		rawCallback(OperationVar.GoPointer(), ResultVar)
+	}
+}
+
+// OverrideBeginPrint sets the callback function.
+func (x *PrintOperationClass) OverrideBeginPrint(cb func(*PrintOperation, *PrintContext)) {
+	if cb == nil {
+		x.xBeginPrint = 0
+	} else {
+		x.xBeginPrint = purego.NewCallback(func(OperationVarp uintptr, ContextVarp uintptr) {
+			cb(PrintOperationNewFromInternalPtr(OperationVarp), PrintContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetBeginPrint gets the callback function.
+func (x *PrintOperationClass) GetBeginPrint() func(*PrintOperation, *PrintContext) {
+	if x.xBeginPrint == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr, ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xBeginPrint)
+	return func(OperationVar *PrintOperation, ContextVar *PrintContext) {
+		rawCallback(OperationVar.GoPointer(), ContextVar.GoPointer())
+	}
+}
+
+// OverridePaginate sets the callback function.
+func (x *PrintOperationClass) OverridePaginate(cb func(*PrintOperation, *PrintContext) bool) {
+	if cb == nil {
+		x.xPaginate = 0
+	} else {
+		x.xPaginate = purego.NewCallback(func(OperationVarp uintptr, ContextVarp uintptr) bool {
+			return cb(PrintOperationNewFromInternalPtr(OperationVarp), PrintContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetPaginate gets the callback function.
+func (x *PrintOperationClass) GetPaginate() func(*PrintOperation, *PrintContext) bool {
+	if x.xPaginate == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr, ContextVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xPaginate)
+	return func(OperationVar *PrintOperation, ContextVar *PrintContext) bool {
+		return rawCallback(OperationVar.GoPointer(), ContextVar.GoPointer())
+	}
+}
+
+// OverrideRequestPageSetup sets the callback function.
+func (x *PrintOperationClass) OverrideRequestPageSetup(cb func(*PrintOperation, *PrintContext, int, *PageSetup)) {
+	if cb == nil {
+		x.xRequestPageSetup = 0
+	} else {
+		x.xRequestPageSetup = purego.NewCallback(func(OperationVarp uintptr, ContextVarp uintptr, PageNrVarp int, SetupVarp uintptr) {
+			cb(PrintOperationNewFromInternalPtr(OperationVarp), PrintContextNewFromInternalPtr(ContextVarp), PageNrVarp, PageSetupNewFromInternalPtr(SetupVarp))
+		})
+	}
+}
+
+// GetRequestPageSetup gets the callback function.
+func (x *PrintOperationClass) GetRequestPageSetup() func(*PrintOperation, *PrintContext, int, *PageSetup) {
+	if x.xRequestPageSetup == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr, ContextVarp uintptr, PageNrVarp int, SetupVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRequestPageSetup)
+	return func(OperationVar *PrintOperation, ContextVar *PrintContext, PageNrVar int, SetupVar *PageSetup) {
+		rawCallback(OperationVar.GoPointer(), ContextVar.GoPointer(), PageNrVar, SetupVar.GoPointer())
+	}
+}
+
+// OverrideDrawPage sets the callback function.
+func (x *PrintOperationClass) OverrideDrawPage(cb func(*PrintOperation, *PrintContext, int)) {
+	if cb == nil {
+		x.xDrawPage = 0
+	} else {
+		x.xDrawPage = purego.NewCallback(func(OperationVarp uintptr, ContextVarp uintptr, PageNrVarp int) {
+			cb(PrintOperationNewFromInternalPtr(OperationVarp), PrintContextNewFromInternalPtr(ContextVarp), PageNrVarp)
+		})
+	}
+}
+
+// GetDrawPage gets the callback function.
+func (x *PrintOperationClass) GetDrawPage() func(*PrintOperation, *PrintContext, int) {
+	if x.xDrawPage == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr, ContextVarp uintptr, PageNrVarp int)
+	purego.RegisterFunc(&rawCallback, x.xDrawPage)
+	return func(OperationVar *PrintOperation, ContextVar *PrintContext, PageNrVar int) {
+		rawCallback(OperationVar.GoPointer(), ContextVar.GoPointer(), PageNrVar)
+	}
+}
+
+// OverrideEndPrint sets the callback function.
+func (x *PrintOperationClass) OverrideEndPrint(cb func(*PrintOperation, *PrintContext)) {
+	if cb == nil {
+		x.xEndPrint = 0
+	} else {
+		x.xEndPrint = purego.NewCallback(func(OperationVarp uintptr, ContextVarp uintptr) {
+			cb(PrintOperationNewFromInternalPtr(OperationVarp), PrintContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetEndPrint gets the callback function.
+func (x *PrintOperationClass) GetEndPrint() func(*PrintOperation, *PrintContext) {
+	if x.xEndPrint == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr, ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEndPrint)
+	return func(OperationVar *PrintOperation, ContextVar *PrintContext) {
+		rawCallback(OperationVar.GoPointer(), ContextVar.GoPointer())
+	}
+}
+
+// OverrideStatusChanged sets the callback function.
+func (x *PrintOperationClass) OverrideStatusChanged(cb func(*PrintOperation)) {
+	if cb == nil {
+		x.xStatusChanged = 0
+	} else {
+		x.xStatusChanged = purego.NewCallback(func(OperationVarp uintptr) {
+			cb(PrintOperationNewFromInternalPtr(OperationVarp))
+		})
+	}
+}
+
+// GetStatusChanged gets the callback function.
+func (x *PrintOperationClass) GetStatusChanged() func(*PrintOperation) {
+	if x.xStatusChanged == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xStatusChanged)
+	return func(OperationVar *PrintOperation) {
+		rawCallback(OperationVar.GoPointer())
+	}
+}
+
+// OverrideCreateCustomWidget sets the callback function.
+func (x *PrintOperationClass) OverrideCreateCustomWidget(cb func(*PrintOperation) *Widget) {
+	if cb == nil {
+		x.xCreateCustomWidget = 0
+	} else {
+		x.xCreateCustomWidget = purego.NewCallback(func(OperationVarp uintptr) uintptr {
+			ret := cb(PrintOperationNewFromInternalPtr(OperationVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetCreateCustomWidget gets the callback function.
+func (x *PrintOperationClass) GetCreateCustomWidget() func(*PrintOperation) *Widget {
+	if x.xCreateCustomWidget == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCreateCustomWidget)
+	return func(OperationVar *PrintOperation) *Widget {
+		rawRet := rawCallback(OperationVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &Widget{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCustomWidgetApply sets the callback function.
+func (x *PrintOperationClass) OverrideCustomWidgetApply(cb func(*PrintOperation, *Widget)) {
+	if cb == nil {
+		x.xCustomWidgetApply = 0
+	} else {
+		x.xCustomWidgetApply = purego.NewCallback(func(OperationVarp uintptr, WidgetVarp uintptr) {
+			cb(PrintOperationNewFromInternalPtr(OperationVarp), WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetCustomWidgetApply gets the callback function.
+func (x *PrintOperationClass) GetCustomWidgetApply() func(*PrintOperation, *Widget) {
+	if x.xCustomWidgetApply == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr, WidgetVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCustomWidgetApply)
+	return func(OperationVar *PrintOperation, WidgetVar *Widget) {
+		rawCallback(OperationVar.GoPointer(), WidgetVar.GoPointer())
+	}
+}
+
+// OverridePreview sets the callback function.
+func (x *PrintOperationClass) OverridePreview(cb func(*PrintOperation, PrintOperationPreview, *PrintContext, *Window) bool) {
+	if cb == nil {
+		x.xPreview = 0
+	} else {
+		x.xPreview = purego.NewCallback(func(OperationVarp uintptr, PreviewVarp uintptr, ContextVarp uintptr, ParentVarp uintptr) bool {
+			return cb(PrintOperationNewFromInternalPtr(OperationVarp), &PrintOperationPreviewBase{Ptr: PreviewVarp}, PrintContextNewFromInternalPtr(ContextVarp), WindowNewFromInternalPtr(ParentVarp))
+		})
+	}
+}
+
+// GetPreview gets the callback function.
+func (x *PrintOperationClass) GetPreview() func(*PrintOperation, PrintOperationPreview, *PrintContext, *Window) bool {
+	if x.xPreview == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr, PreviewVarp uintptr, ContextVarp uintptr, ParentVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xPreview)
+	return func(OperationVar *PrintOperation, PreviewVar PrintOperationPreview, ContextVar *PrintContext, ParentVar *Window) bool {
+		return rawCallback(OperationVar.GoPointer(), PreviewVar.GoPointer(), ContextVar.GoPointer(), ParentVar.GoPointer())
+	}
+}
+
+// OverrideUpdateCustomWidget sets the callback function.
+func (x *PrintOperationClass) OverrideUpdateCustomWidget(cb func(*PrintOperation, *Widget, *PageSetup, *PrintSettings)) {
+	if cb == nil {
+		x.xUpdateCustomWidget = 0
+	} else {
+		x.xUpdateCustomWidget = purego.NewCallback(func(OperationVarp uintptr, WidgetVarp uintptr, SetupVarp uintptr, SettingsVarp uintptr) {
+			cb(PrintOperationNewFromInternalPtr(OperationVarp), WidgetNewFromInternalPtr(WidgetVarp), PageSetupNewFromInternalPtr(SetupVarp), PrintSettingsNewFromInternalPtr(SettingsVarp))
+		})
+	}
+}
+
+// GetUpdateCustomWidget gets the callback function.
+func (x *PrintOperationClass) GetUpdateCustomWidget() func(*PrintOperation, *Widget, *PageSetup, *PrintSettings) {
+	if x.xUpdateCustomWidget == 0 {
+		return nil
+	}
+	var rawCallback func(OperationVarp uintptr, WidgetVarp uintptr, SetupVarp uintptr, SettingsVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUpdateCustomWidget)
+	return func(OperationVar *PrintOperation, WidgetVar *Widget, SetupVar *PageSetup, SettingsVar *PrintSettings) {
+		rawCallback(OperationVar.GoPointer(), WidgetVar.GoPointer(), SetupVar.GoPointer(), SettingsVar.GoPointer())
+	}
 }
 
 type PrintOperationPrivate struct {

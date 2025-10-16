@@ -14,7 +14,7 @@ import (
 type InetSocketAddressClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass SocketAddressClass
 }
 
 func (x *InetSocketAddressClass) GoPointer() uintptr {

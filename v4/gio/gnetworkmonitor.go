@@ -17,10 +17,110 @@ type NetworkMonitorInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xNetworkChanged uintptr
+
+	xCanReach uintptr
+
+	xCanReachAsync uintptr
+
+	xCanReachFinish uintptr
 }
 
 func (x *NetworkMonitorInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideNetworkChanged sets the callback function.
+func (x *NetworkMonitorInterface) OverrideNetworkChanged(cb func(NetworkMonitor, bool)) {
+	if cb == nil {
+		x.xNetworkChanged = 0
+	} else {
+		x.xNetworkChanged = purego.NewCallback(func(MonitorVarp uintptr, NetworkAvailableVarp bool) {
+			cb(&NetworkMonitorBase{Ptr: MonitorVarp}, NetworkAvailableVarp)
+		})
+	}
+}
+
+// GetNetworkChanged gets the callback function.
+func (x *NetworkMonitorInterface) GetNetworkChanged() func(NetworkMonitor, bool) {
+	if x.xNetworkChanged == 0 {
+		return nil
+	}
+	var rawCallback func(MonitorVarp uintptr, NetworkAvailableVarp bool)
+	purego.RegisterFunc(&rawCallback, x.xNetworkChanged)
+	return func(MonitorVar NetworkMonitor, NetworkAvailableVar bool) {
+		rawCallback(MonitorVar.GoPointer(), NetworkAvailableVar)
+	}
+}
+
+// OverrideCanReach sets the callback function.
+func (x *NetworkMonitorInterface) OverrideCanReach(cb func(NetworkMonitor, SocketConnectable, *Cancellable) bool) {
+	if cb == nil {
+		x.xCanReach = 0
+	} else {
+		x.xCanReach = purego.NewCallback(func(MonitorVarp uintptr, ConnectableVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(&NetworkMonitorBase{Ptr: MonitorVarp}, &SocketConnectableBase{Ptr: ConnectableVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetCanReach gets the callback function.
+func (x *NetworkMonitorInterface) GetCanReach() func(NetworkMonitor, SocketConnectable, *Cancellable) bool {
+	if x.xCanReach == 0 {
+		return nil
+	}
+	var rawCallback func(MonitorVarp uintptr, ConnectableVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanReach)
+	return func(MonitorVar NetworkMonitor, ConnectableVar SocketConnectable, CancellableVar *Cancellable) bool {
+		return rawCallback(MonitorVar.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideCanReachAsync sets the callback function.
+func (x *NetworkMonitorInterface) OverrideCanReachAsync(cb func(NetworkMonitor, SocketConnectable, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xCanReachAsync = 0
+	} else {
+		x.xCanReachAsync = purego.NewCallback(func(MonitorVarp uintptr, ConnectableVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&NetworkMonitorBase{Ptr: MonitorVarp}, &SocketConnectableBase{Ptr: ConnectableVarp}, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetCanReachAsync gets the callback function.
+func (x *NetworkMonitorInterface) GetCanReachAsync() func(NetworkMonitor, SocketConnectable, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xCanReachAsync == 0 {
+		return nil
+	}
+	var rawCallback func(MonitorVarp uintptr, ConnectableVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCanReachAsync)
+	return func(MonitorVar NetworkMonitor, ConnectableVar SocketConnectable, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(MonitorVar.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideCanReachFinish sets the callback function.
+func (x *NetworkMonitorInterface) OverrideCanReachFinish(cb func(NetworkMonitor, AsyncResult) bool) {
+	if cb == nil {
+		x.xCanReachFinish = 0
+	} else {
+		x.xCanReachFinish = purego.NewCallback(func(MonitorVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&NetworkMonitorBase{Ptr: MonitorVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetCanReachFinish gets the callback function.
+func (x *NetworkMonitorInterface) GetCanReachFinish() func(NetworkMonitor, AsyncResult) bool {
+	if x.xCanReachFinish == 0 {
+		return nil
+	}
+	var rawCallback func(MonitorVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanReachFinish)
+	return func(MonitorVar NetworkMonitor, ResultVar AsyncResult) bool {
+		return rawCallback(MonitorVar.GoPointer(), ResultVar.GoPointer())
+	}
 }
 
 // #GNetworkMonitor provides an easy-to-use cross-platform API
@@ -32,9 +132,9 @@ func (x *NetworkMonitorInterface) GoPointer() uintptr {
 type NetworkMonitor interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	CanReach(ConnectableVar SocketConnectable, CancellableVar *Cancellable) bool
+	CanReach(ConnectableVar SocketConnectable, CancellableVar *Cancellable) (bool, error)
 	CanReachAsync(ConnectableVar SocketConnectable, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	CanReachFinish(ResultVar AsyncResult) bool
+	CanReachFinish(ResultVar AsyncResult) (bool, error)
 	GetConnectivity() NetworkConnectivity
 	GetNetworkAvailable() bool
 	GetNetworkMetered() bool

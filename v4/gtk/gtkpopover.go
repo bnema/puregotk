@@ -17,13 +17,63 @@ import (
 type PopoverClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xClosed uintptr
+
+	xActivateDefault uintptr
 
 	Reserved [8]uintptr
 }
 
 func (x *PopoverClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideClosed sets the callback function.
+func (x *PopoverClass) OverrideClosed(cb func(*Popover)) {
+	if cb == nil {
+		x.xClosed = 0
+	} else {
+		x.xClosed = purego.NewCallback(func(PopoverVarp uintptr) {
+			cb(PopoverNewFromInternalPtr(PopoverVarp))
+		})
+	}
+}
+
+// GetClosed gets the callback function.
+func (x *PopoverClass) GetClosed() func(*Popover) {
+	if x.xClosed == 0 {
+		return nil
+	}
+	var rawCallback func(PopoverVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xClosed)
+	return func(PopoverVar *Popover) {
+		rawCallback(PopoverVar.GoPointer())
+	}
+}
+
+// OverrideActivateDefault sets the callback function.
+func (x *PopoverClass) OverrideActivateDefault(cb func(*Popover)) {
+	if cb == nil {
+		x.xActivateDefault = 0
+	} else {
+		x.xActivateDefault = purego.NewCallback(func(PopoverVarp uintptr) {
+			cb(PopoverNewFromInternalPtr(PopoverVarp))
+		})
+	}
+}
+
+// GetActivateDefault gets the callback function.
+func (x *PopoverClass) GetActivateDefault() func(*Popover) {
+	if x.xActivateDefault == 0 {
+		return nil
+	}
+	var rawCallback func(PopoverVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivateDefault)
+	return func(PopoverVar *Popover) {
+		rawCallback(PopoverVar.GoPointer())
+	}
 }
 
 // `GtkPopover` is a bubble-like context popup.

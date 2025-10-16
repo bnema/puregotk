@@ -16,7 +16,7 @@ import (
 type OverlaySplitViewClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *OverlaySplitViewClass) GoPointer() uintptr {

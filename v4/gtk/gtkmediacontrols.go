@@ -14,7 +14,7 @@ import (
 type MediaControlsClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
 }
 
 func (x *MediaControlsClass) GoPointer() uintptr {

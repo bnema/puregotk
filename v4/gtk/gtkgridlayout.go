@@ -13,7 +13,7 @@ import (
 type GridLayoutChildClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutChildClass
 }
 
 func (x *GridLayoutChildClass) GoPointer() uintptr {
@@ -23,7 +23,7 @@ func (x *GridLayoutChildClass) GoPointer() uintptr {
 type GridLayoutClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutManagerClass
 }
 
 func (x *GridLayoutClass) GoPointer() uintptr {

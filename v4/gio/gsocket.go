@@ -15,11 +15,261 @@ import (
 type SocketClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
+
+	xGReserved6 uintptr
+
+	xGReserved7 uintptr
+
+	xGReserved8 uintptr
+
+	xGReserved9 uintptr
+
+	xGReserved10 uintptr
 }
 
 func (x *SocketClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *SocketClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *SocketClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *SocketClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *SocketClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *SocketClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *SocketClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *SocketClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *SocketClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *SocketClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *SocketClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved6 sets the callback function.
+func (x *SocketClass) OverrideGReserved6(cb func()) {
+	if cb == nil {
+		x.xGReserved6 = 0
+	} else {
+		x.xGReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved6 gets the callback function.
+func (x *SocketClass) GetGReserved6() func() {
+	if x.xGReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved6)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved7 sets the callback function.
+func (x *SocketClass) OverrideGReserved7(cb func()) {
+	if cb == nil {
+		x.xGReserved7 = 0
+	} else {
+		x.xGReserved7 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved7 gets the callback function.
+func (x *SocketClass) GetGReserved7() func() {
+	if x.xGReserved7 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved7)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved8 sets the callback function.
+func (x *SocketClass) OverrideGReserved8(cb func()) {
+	if cb == nil {
+		x.xGReserved8 = 0
+	} else {
+		x.xGReserved8 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved8 gets the callback function.
+func (x *SocketClass) GetGReserved8() func() {
+	if x.xGReserved8 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved8)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved9 sets the callback function.
+func (x *SocketClass) OverrideGReserved9(cb func()) {
+	if cb == nil {
+		x.xGReserved9 = 0
+	} else {
+		x.xGReserved9 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved9 gets the callback function.
+func (x *SocketClass) GetGReserved9() func() {
+	if x.xGReserved9 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved9)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved10 sets the callback function.
+func (x *SocketClass) OverrideGReserved10(cb func()) {
+	if cb == nil {
+		x.xGReserved10 = 0
+	} else {
+		x.xGReserved10 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved10 gets the callback function.
+func (x *SocketClass) GetGReserved10() func() {
+	if x.xGReserved10 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved10)
+	return func() {
+		rawCallback()
+	}
 }
 
 type SocketPrivate struct {
@@ -869,7 +1119,7 @@ func (x *Socket) Receive(BufferVar []byte, SizeVar uint, CancellableVar *Cancell
 
 }
 
-var xSocketReceiveFrom func(uintptr, *uintptr, []byte, uint, uintptr, **glib.Error) int
+var xSocketReceiveFrom func(uintptr, uintptr, []byte, uint, uintptr, **glib.Error) int
 
 // Receive data (up to @size bytes) from a socket.
 //
@@ -881,7 +1131,7 @@ var xSocketReceiveFrom func(uintptr, *uintptr, []byte, uint, uintptr, **glib.Err
 func (x *Socket) ReceiveFrom(AddressVar **SocketAddress, BufferVar []byte, SizeVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xSocketReceiveFrom(x.GoPointer(), gobject.ConvertPtr(AddressVar), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
+	cret := xSocketReceiveFrom(x.GoPointer(), *gobject.ConvertPtr(AddressVar), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -889,7 +1139,7 @@ func (x *Socket) ReceiveFrom(AddressVar **SocketAddress, BufferVar []byte, SizeV
 
 }
 
-var xSocketReceiveMessage func(uintptr, *uintptr, []InputVector, int, uintptr, int, int, uintptr, **glib.Error) int
+var xSocketReceiveMessage func(uintptr, uintptr, []InputVector, int, uintptr, int, int, uintptr, **glib.Error) int
 
 // Receive data from a socket.  For receiving multiple messages, see
 // g_socket_receive_messages(); for easier use, see
@@ -953,7 +1203,7 @@ var xSocketReceiveMessage func(uintptr, *uintptr, []InputVector, int, uintptr, i
 func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVector, NumVectorsVar int, MessagesVar uintptr, NumMessagesVar int, FlagsVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xSocketReceiveMessage(x.GoPointer(), gobject.ConvertPtr(AddressVar), VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+	cret := xSocketReceiveMessage(x.GoPointer(), *gobject.ConvertPtr(AddressVar), VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

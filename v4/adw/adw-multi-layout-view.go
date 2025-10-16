@@ -15,7 +15,7 @@ import (
 type MultiLayoutViewClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *MultiLayoutViewClass) GoPointer() uintptr {

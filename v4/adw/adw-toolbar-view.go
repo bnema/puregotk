@@ -15,7 +15,7 @@ import (
 type ToolbarViewClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *ToolbarViewClass) GoPointer() uintptr {

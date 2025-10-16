@@ -18,13 +18,348 @@ import (
 type TextViewClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xMoveCursor uintptr
+
+	xSetAnchor uintptr
+
+	xInsertAtCursor uintptr
+
+	xDeleteFromCursor uintptr
+
+	xBackspace uintptr
+
+	xCutClipboard uintptr
+
+	xCopyClipboard uintptr
+
+	xPasteClipboard uintptr
+
+	xToggleOverwrite uintptr
+
+	xCreateBuffer uintptr
+
+	xSnapshotLayer uintptr
+
+	xExtendSelection uintptr
+
+	xInsertEmoji uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *TextViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideMoveCursor sets the callback function.
+func (x *TextViewClass) OverrideMoveCursor(cb func(*TextView, MovementStep, int, bool)) {
+	if cb == nil {
+		x.xMoveCursor = 0
+	} else {
+		x.xMoveCursor = purego.NewCallback(func(TextViewVarp uintptr, StepVarp MovementStep, CountVarp int, ExtendSelectionVarp bool) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp), StepVarp, CountVarp, ExtendSelectionVarp)
+		})
+	}
+}
+
+// GetMoveCursor gets the callback function.
+func (x *TextViewClass) GetMoveCursor() func(*TextView, MovementStep, int, bool) {
+	if x.xMoveCursor == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr, StepVarp MovementStep, CountVarp int, ExtendSelectionVarp bool)
+	purego.RegisterFunc(&rawCallback, x.xMoveCursor)
+	return func(TextViewVar *TextView, StepVar MovementStep, CountVar int, ExtendSelectionVar bool) {
+		rawCallback(TextViewVar.GoPointer(), StepVar, CountVar, ExtendSelectionVar)
+	}
+}
+
+// OverrideSetAnchor sets the callback function.
+func (x *TextViewClass) OverrideSetAnchor(cb func(*TextView)) {
+	if cb == nil {
+		x.xSetAnchor = 0
+	} else {
+		x.xSetAnchor = purego.NewCallback(func(TextViewVarp uintptr) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp))
+		})
+	}
+}
+
+// GetSetAnchor gets the callback function.
+func (x *TextViewClass) GetSetAnchor() func(*TextView) {
+	if x.xSetAnchor == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetAnchor)
+	return func(TextViewVar *TextView) {
+		rawCallback(TextViewVar.GoPointer())
+	}
+}
+
+// OverrideInsertAtCursor sets the callback function.
+func (x *TextViewClass) OverrideInsertAtCursor(cb func(*TextView, string)) {
+	if cb == nil {
+		x.xInsertAtCursor = 0
+	} else {
+		x.xInsertAtCursor = purego.NewCallback(func(TextViewVarp uintptr, StrVarp string) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp), StrVarp)
+		})
+	}
+}
+
+// GetInsertAtCursor gets the callback function.
+func (x *TextViewClass) GetInsertAtCursor() func(*TextView, string) {
+	if x.xInsertAtCursor == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr, StrVarp string)
+	purego.RegisterFunc(&rawCallback, x.xInsertAtCursor)
+	return func(TextViewVar *TextView, StrVar string) {
+		rawCallback(TextViewVar.GoPointer(), StrVar)
+	}
+}
+
+// OverrideDeleteFromCursor sets the callback function.
+func (x *TextViewClass) OverrideDeleteFromCursor(cb func(*TextView, DeleteType, int)) {
+	if cb == nil {
+		x.xDeleteFromCursor = 0
+	} else {
+		x.xDeleteFromCursor = purego.NewCallback(func(TextViewVarp uintptr, TypeVarp DeleteType, CountVarp int) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp), TypeVarp, CountVarp)
+		})
+	}
+}
+
+// GetDeleteFromCursor gets the callback function.
+func (x *TextViewClass) GetDeleteFromCursor() func(*TextView, DeleteType, int) {
+	if x.xDeleteFromCursor == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr, TypeVarp DeleteType, CountVarp int)
+	purego.RegisterFunc(&rawCallback, x.xDeleteFromCursor)
+	return func(TextViewVar *TextView, TypeVar DeleteType, CountVar int) {
+		rawCallback(TextViewVar.GoPointer(), TypeVar, CountVar)
+	}
+}
+
+// OverrideBackspace sets the callback function.
+func (x *TextViewClass) OverrideBackspace(cb func(*TextView)) {
+	if cb == nil {
+		x.xBackspace = 0
+	} else {
+		x.xBackspace = purego.NewCallback(func(TextViewVarp uintptr) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp))
+		})
+	}
+}
+
+// GetBackspace gets the callback function.
+func (x *TextViewClass) GetBackspace() func(*TextView) {
+	if x.xBackspace == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xBackspace)
+	return func(TextViewVar *TextView) {
+		rawCallback(TextViewVar.GoPointer())
+	}
+}
+
+// OverrideCutClipboard sets the callback function.
+func (x *TextViewClass) OverrideCutClipboard(cb func(*TextView)) {
+	if cb == nil {
+		x.xCutClipboard = 0
+	} else {
+		x.xCutClipboard = purego.NewCallback(func(TextViewVarp uintptr) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp))
+		})
+	}
+}
+
+// GetCutClipboard gets the callback function.
+func (x *TextViewClass) GetCutClipboard() func(*TextView) {
+	if x.xCutClipboard == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCutClipboard)
+	return func(TextViewVar *TextView) {
+		rawCallback(TextViewVar.GoPointer())
+	}
+}
+
+// OverrideCopyClipboard sets the callback function.
+func (x *TextViewClass) OverrideCopyClipboard(cb func(*TextView)) {
+	if cb == nil {
+		x.xCopyClipboard = 0
+	} else {
+		x.xCopyClipboard = purego.NewCallback(func(TextViewVarp uintptr) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp))
+		})
+	}
+}
+
+// GetCopyClipboard gets the callback function.
+func (x *TextViewClass) GetCopyClipboard() func(*TextView) {
+	if x.xCopyClipboard == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCopyClipboard)
+	return func(TextViewVar *TextView) {
+		rawCallback(TextViewVar.GoPointer())
+	}
+}
+
+// OverridePasteClipboard sets the callback function.
+func (x *TextViewClass) OverridePasteClipboard(cb func(*TextView)) {
+	if cb == nil {
+		x.xPasteClipboard = 0
+	} else {
+		x.xPasteClipboard = purego.NewCallback(func(TextViewVarp uintptr) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp))
+		})
+	}
+}
+
+// GetPasteClipboard gets the callback function.
+func (x *TextViewClass) GetPasteClipboard() func(*TextView) {
+	if x.xPasteClipboard == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xPasteClipboard)
+	return func(TextViewVar *TextView) {
+		rawCallback(TextViewVar.GoPointer())
+	}
+}
+
+// OverrideToggleOverwrite sets the callback function.
+func (x *TextViewClass) OverrideToggleOverwrite(cb func(*TextView)) {
+	if cb == nil {
+		x.xToggleOverwrite = 0
+	} else {
+		x.xToggleOverwrite = purego.NewCallback(func(TextViewVarp uintptr) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp))
+		})
+	}
+}
+
+// GetToggleOverwrite gets the callback function.
+func (x *TextViewClass) GetToggleOverwrite() func(*TextView) {
+	if x.xToggleOverwrite == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xToggleOverwrite)
+	return func(TextViewVar *TextView) {
+		rawCallback(TextViewVar.GoPointer())
+	}
+}
+
+// OverrideCreateBuffer sets the callback function.
+func (x *TextViewClass) OverrideCreateBuffer(cb func(*TextView) *TextBuffer) {
+	if cb == nil {
+		x.xCreateBuffer = 0
+	} else {
+		x.xCreateBuffer = purego.NewCallback(func(TextViewVarp uintptr) uintptr {
+			ret := cb(TextViewNewFromInternalPtr(TextViewVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetCreateBuffer gets the callback function.
+func (x *TextViewClass) GetCreateBuffer() func(*TextView) *TextBuffer {
+	if x.xCreateBuffer == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCreateBuffer)
+	return func(TextViewVar *TextView) *TextBuffer {
+		rawRet := rawCallback(TextViewVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &TextBuffer{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideSnapshotLayer sets the callback function.
+func (x *TextViewClass) OverrideSnapshotLayer(cb func(*TextView, TextViewLayer, *Snapshot)) {
+	if cb == nil {
+		x.xSnapshotLayer = 0
+	} else {
+		x.xSnapshotLayer = purego.NewCallback(func(TextViewVarp uintptr, LayerVarp TextViewLayer, SnapshotVarp uintptr) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp), LayerVarp, SnapshotNewFromInternalPtr(SnapshotVarp))
+		})
+	}
+}
+
+// GetSnapshotLayer gets the callback function.
+func (x *TextViewClass) GetSnapshotLayer() func(*TextView, TextViewLayer, *Snapshot) {
+	if x.xSnapshotLayer == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr, LayerVarp TextViewLayer, SnapshotVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSnapshotLayer)
+	return func(TextViewVar *TextView, LayerVar TextViewLayer, SnapshotVar *Snapshot) {
+		rawCallback(TextViewVar.GoPointer(), LayerVar, SnapshotVar.GoPointer())
+	}
+}
+
+// OverrideExtendSelection sets the callback function.
+func (x *TextViewClass) OverrideExtendSelection(cb func(*TextView, TextExtendSelection, *TextIter, *TextIter, *TextIter) bool) {
+	if cb == nil {
+		x.xExtendSelection = 0
+	} else {
+		x.xExtendSelection = purego.NewCallback(func(TextViewVarp uintptr, GranularityVarp TextExtendSelection, LocationVarp *TextIter, StartVarp *TextIter, EndVarp *TextIter) bool {
+			return cb(TextViewNewFromInternalPtr(TextViewVarp), GranularityVarp, LocationVarp, StartVarp, EndVarp)
+		})
+	}
+}
+
+// GetExtendSelection gets the callback function.
+func (x *TextViewClass) GetExtendSelection() func(*TextView, TextExtendSelection, *TextIter, *TextIter, *TextIter) bool {
+	if x.xExtendSelection == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr, GranularityVarp TextExtendSelection, LocationVarp *TextIter, StartVarp *TextIter, EndVarp *TextIter) bool
+	purego.RegisterFunc(&rawCallback, x.xExtendSelection)
+	return func(TextViewVar *TextView, GranularityVar TextExtendSelection, LocationVar *TextIter, StartVar *TextIter, EndVar *TextIter) bool {
+		return rawCallback(TextViewVar.GoPointer(), GranularityVar, LocationVar, StartVar, EndVar)
+	}
+}
+
+// OverrideInsertEmoji sets the callback function.
+func (x *TextViewClass) OverrideInsertEmoji(cb func(*TextView)) {
+	if cb == nil {
+		x.xInsertEmoji = 0
+	} else {
+		x.xInsertEmoji = purego.NewCallback(func(TextViewVarp uintptr) {
+			cb(TextViewNewFromInternalPtr(TextViewVarp))
+		})
+	}
+}
+
+// GetInsertEmoji gets the callback function.
+func (x *TextViewClass) GetInsertEmoji() func(*TextView) {
+	if x.xInsertEmoji == 0 {
+		return nil
+	}
+	var rawCallback func(TextViewVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xInsertEmoji)
+	return func(TextViewVar *TextView) {
+		rawCallback(TextViewVar.GoPointer())
+	}
 }
 
 type TextViewPrivate struct {

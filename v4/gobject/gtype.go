@@ -488,13 +488,163 @@ func (x *TypeQuery) GoPointer() uintptr {
 type TypeValueTable struct {
 	_ structs.HostLayout
 
+	xValueInit uintptr
+
+	xValueFree uintptr
+
+	xValueCopy uintptr
+
+	xValuePeekPointer uintptr
+
 	CollectFormat uintptr
 
+	xCollectValue uintptr
+
 	LcopyFormat uintptr
+
+	xLcopyValue uintptr
 }
 
 func (x *TypeValueTable) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideValueInit sets the callback function.
+func (x *TypeValueTable) OverrideValueInit(cb func(*Value)) {
+	if cb == nil {
+		x.xValueInit = 0
+	} else {
+		x.xValueInit = purego.NewCallback(func(ValueVarp *Value) {
+			cb(ValueVarp)
+		})
+	}
+}
+
+// GetValueInit gets the callback function.
+func (x *TypeValueTable) GetValueInit() func(*Value) {
+	if x.xValueInit == 0 {
+		return nil
+	}
+	var rawCallback func(ValueVarp *Value)
+	purego.RegisterFunc(&rawCallback, x.xValueInit)
+	return func(ValueVar *Value) {
+		rawCallback(ValueVar)
+	}
+}
+
+// OverrideValueFree sets the callback function.
+func (x *TypeValueTable) OverrideValueFree(cb func(*Value)) {
+	if cb == nil {
+		x.xValueFree = 0
+	} else {
+		x.xValueFree = purego.NewCallback(func(ValueVarp *Value) {
+			cb(ValueVarp)
+		})
+	}
+}
+
+// GetValueFree gets the callback function.
+func (x *TypeValueTable) GetValueFree() func(*Value) {
+	if x.xValueFree == 0 {
+		return nil
+	}
+	var rawCallback func(ValueVarp *Value)
+	purego.RegisterFunc(&rawCallback, x.xValueFree)
+	return func(ValueVar *Value) {
+		rawCallback(ValueVar)
+	}
+}
+
+// OverrideValueCopy sets the callback function.
+func (x *TypeValueTable) OverrideValueCopy(cb func(*Value, *Value)) {
+	if cb == nil {
+		x.xValueCopy = 0
+	} else {
+		x.xValueCopy = purego.NewCallback(func(SrcValueVarp *Value, DestValueVarp *Value) {
+			cb(SrcValueVarp, DestValueVarp)
+		})
+	}
+}
+
+// GetValueCopy gets the callback function.
+func (x *TypeValueTable) GetValueCopy() func(*Value, *Value) {
+	if x.xValueCopy == 0 {
+		return nil
+	}
+	var rawCallback func(SrcValueVarp *Value, DestValueVarp *Value)
+	purego.RegisterFunc(&rawCallback, x.xValueCopy)
+	return func(SrcValueVar *Value, DestValueVar *Value) {
+		rawCallback(SrcValueVar, DestValueVar)
+	}
+}
+
+// OverrideValuePeekPointer sets the callback function.
+func (x *TypeValueTable) OverrideValuePeekPointer(cb func(*Value) uintptr) {
+	if cb == nil {
+		x.xValuePeekPointer = 0
+	} else {
+		x.xValuePeekPointer = purego.NewCallback(func(ValueVarp *Value) uintptr {
+			return cb(ValueVarp)
+		})
+	}
+}
+
+// GetValuePeekPointer gets the callback function.
+func (x *TypeValueTable) GetValuePeekPointer() func(*Value) uintptr {
+	if x.xValuePeekPointer == 0 {
+		return nil
+	}
+	var rawCallback func(ValueVarp *Value) uintptr
+	purego.RegisterFunc(&rawCallback, x.xValuePeekPointer)
+	return func(ValueVar *Value) uintptr {
+		return rawCallback(ValueVar)
+	}
+}
+
+// OverrideCollectValue sets the callback function.
+func (x *TypeValueTable) OverrideCollectValue(cb func(*Value, uint, *TypeCValue, uint) string) {
+	if cb == nil {
+		x.xCollectValue = 0
+	} else {
+		x.xCollectValue = purego.NewCallback(func(ValueVarp *Value, NCollectValuesVarp uint, CollectValuesVarp *TypeCValue, CollectFlagsVarp uint) string {
+			return cb(ValueVarp, NCollectValuesVarp, CollectValuesVarp, CollectFlagsVarp)
+		})
+	}
+}
+
+// GetCollectValue gets the callback function.
+func (x *TypeValueTable) GetCollectValue() func(*Value, uint, *TypeCValue, uint) string {
+	if x.xCollectValue == 0 {
+		return nil
+	}
+	var rawCallback func(ValueVarp *Value, NCollectValuesVarp uint, CollectValuesVarp *TypeCValue, CollectFlagsVarp uint) string
+	purego.RegisterFunc(&rawCallback, x.xCollectValue)
+	return func(ValueVar *Value, NCollectValuesVar uint, CollectValuesVar *TypeCValue, CollectFlagsVar uint) string {
+		return rawCallback(ValueVar, NCollectValuesVar, CollectValuesVar, CollectFlagsVar)
+	}
+}
+
+// OverrideLcopyValue sets the callback function.
+func (x *TypeValueTable) OverrideLcopyValue(cb func(*Value, uint, *TypeCValue, uint) string) {
+	if cb == nil {
+		x.xLcopyValue = 0
+	} else {
+		x.xLcopyValue = purego.NewCallback(func(ValueVarp *Value, NCollectValuesVarp uint, CollectValuesVarp *TypeCValue, CollectFlagsVarp uint) string {
+			return cb(ValueVarp, NCollectValuesVarp, CollectValuesVarp, CollectFlagsVarp)
+		})
+	}
+}
+
+// GetLcopyValue gets the callback function.
+func (x *TypeValueTable) GetLcopyValue() func(*Value, uint, *TypeCValue, uint) string {
+	if x.xLcopyValue == 0 {
+		return nil
+	}
+	var rawCallback func(ValueVarp *Value, NCollectValuesVarp uint, CollectValuesVarp *TypeCValue, CollectFlagsVarp uint) string
+	purego.RegisterFunc(&rawCallback, x.xLcopyValue)
+	return func(ValueVar *Value, NCollectValuesVar uint, CollectValuesVar *TypeCValue, CollectFlagsVar uint) string {
+		return rawCallback(ValueVar, NCollectValuesVar, CollectValuesVar, CollectFlagsVar)
+	}
 }
 
 type TypeCValue = uintptr

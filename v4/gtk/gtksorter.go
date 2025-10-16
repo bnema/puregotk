@@ -16,11 +16,261 @@ import (
 type SorterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xCompare uintptr
+
+	xGetOrder uintptr
+
+	xGtkReserved1 uintptr
+
+	xGtkReserved2 uintptr
+
+	xGtkReserved3 uintptr
+
+	xGtkReserved4 uintptr
+
+	xGtkReserved5 uintptr
+
+	xGtkReserved6 uintptr
+
+	xGtkReserved7 uintptr
+
+	xGtkReserved8 uintptr
 }
 
 func (x *SorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideCompare sets the callback function.
+func (x *SorterClass) OverrideCompare(cb func(*Sorter, *gobject.Object, *gobject.Object) Ordering) {
+	if cb == nil {
+		x.xCompare = 0
+	} else {
+		x.xCompare = purego.NewCallback(func(SelfVarp uintptr, Item1Varp uintptr, Item2Varp uintptr) Ordering {
+			return cb(SorterNewFromInternalPtr(SelfVarp), gobject.ObjectNewFromInternalPtr(Item1Varp), gobject.ObjectNewFromInternalPtr(Item2Varp))
+		})
+	}
+}
+
+// GetCompare gets the callback function.
+func (x *SorterClass) GetCompare() func(*Sorter, *gobject.Object, *gobject.Object) Ordering {
+	if x.xCompare == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, Item1Varp uintptr, Item2Varp uintptr) Ordering
+	purego.RegisterFunc(&rawCallback, x.xCompare)
+	return func(SelfVar *Sorter, Item1Var *gobject.Object, Item2Var *gobject.Object) Ordering {
+		return rawCallback(SelfVar.GoPointer(), Item1Var.GoPointer(), Item2Var.GoPointer())
+	}
+}
+
+// OverrideGetOrder sets the callback function.
+func (x *SorterClass) OverrideGetOrder(cb func(*Sorter) SorterOrder) {
+	if cb == nil {
+		x.xGetOrder = 0
+	} else {
+		x.xGetOrder = purego.NewCallback(func(SelfVarp uintptr) SorterOrder {
+			return cb(SorterNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetGetOrder gets the callback function.
+func (x *SorterClass) GetGetOrder() func(*Sorter) SorterOrder {
+	if x.xGetOrder == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr) SorterOrder
+	purego.RegisterFunc(&rawCallback, x.xGetOrder)
+	return func(SelfVar *Sorter) SorterOrder {
+		return rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideGtkReserved1 sets the callback function.
+func (x *SorterClass) OverrideGtkReserved1(cb func()) {
+	if cb == nil {
+		x.xGtkReserved1 = 0
+	} else {
+		x.xGtkReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved1 gets the callback function.
+func (x *SorterClass) GetGtkReserved1() func() {
+	if x.xGtkReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved2 sets the callback function.
+func (x *SorterClass) OverrideGtkReserved2(cb func()) {
+	if cb == nil {
+		x.xGtkReserved2 = 0
+	} else {
+		x.xGtkReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved2 gets the callback function.
+func (x *SorterClass) GetGtkReserved2() func() {
+	if x.xGtkReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved3 sets the callback function.
+func (x *SorterClass) OverrideGtkReserved3(cb func()) {
+	if cb == nil {
+		x.xGtkReserved3 = 0
+	} else {
+		x.xGtkReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved3 gets the callback function.
+func (x *SorterClass) GetGtkReserved3() func() {
+	if x.xGtkReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved4 sets the callback function.
+func (x *SorterClass) OverrideGtkReserved4(cb func()) {
+	if cb == nil {
+		x.xGtkReserved4 = 0
+	} else {
+		x.xGtkReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved4 gets the callback function.
+func (x *SorterClass) GetGtkReserved4() func() {
+	if x.xGtkReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved5 sets the callback function.
+func (x *SorterClass) OverrideGtkReserved5(cb func()) {
+	if cb == nil {
+		x.xGtkReserved5 = 0
+	} else {
+		x.xGtkReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved5 gets the callback function.
+func (x *SorterClass) GetGtkReserved5() func() {
+	if x.xGtkReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved6 sets the callback function.
+func (x *SorterClass) OverrideGtkReserved6(cb func()) {
+	if cb == nil {
+		x.xGtkReserved6 = 0
+	} else {
+		x.xGtkReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved6 gets the callback function.
+func (x *SorterClass) GetGtkReserved6() func() {
+	if x.xGtkReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved6)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved7 sets the callback function.
+func (x *SorterClass) OverrideGtkReserved7(cb func()) {
+	if cb == nil {
+		x.xGtkReserved7 = 0
+	} else {
+		x.xGtkReserved7 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved7 gets the callback function.
+func (x *SorterClass) GetGtkReserved7() func() {
+	if x.xGtkReserved7 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved7)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved8 sets the callback function.
+func (x *SorterClass) OverrideGtkReserved8(cb func()) {
+	if cb == nil {
+		x.xGtkReserved8 = 0
+	} else {
+		x.xGtkReserved8 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved8 gets the callback function.
+func (x *SorterClass) GetGtkReserved8() func() {
+	if x.xGtkReserved8 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved8)
+	return func() {
+		rawCallback()
+	}
 }
 
 // Describes changes in a sorter in more detail and allows users

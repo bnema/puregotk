@@ -5,6 +5,7 @@ import (
 	"structs"
 	"unsafe"
 
+	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -17,10 +18,60 @@ type ShortcutManagerInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xAddController uintptr
+
+	xRemoveController uintptr
 }
 
 func (x *ShortcutManagerInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideAddController sets the callback function.
+func (x *ShortcutManagerInterface) OverrideAddController(cb func(ShortcutManager, *ShortcutController)) {
+	if cb == nil {
+		x.xAddController = 0
+	} else {
+		x.xAddController = purego.NewCallback(func(SelfVarp uintptr, ControllerVarp uintptr) {
+			cb(&ShortcutManagerBase{Ptr: SelfVarp}, ShortcutControllerNewFromInternalPtr(ControllerVarp))
+		})
+	}
+}
+
+// GetAddController gets the callback function.
+func (x *ShortcutManagerInterface) GetAddController() func(ShortcutManager, *ShortcutController) {
+	if x.xAddController == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ControllerVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xAddController)
+	return func(SelfVar ShortcutManager, ControllerVar *ShortcutController) {
+		rawCallback(SelfVar.GoPointer(), ControllerVar.GoPointer())
+	}
+}
+
+// OverrideRemoveController sets the callback function.
+func (x *ShortcutManagerInterface) OverrideRemoveController(cb func(ShortcutManager, *ShortcutController)) {
+	if cb == nil {
+		x.xRemoveController = 0
+	} else {
+		x.xRemoveController = purego.NewCallback(func(SelfVarp uintptr, ControllerVarp uintptr) {
+			cb(&ShortcutManagerBase{Ptr: SelfVarp}, ShortcutControllerNewFromInternalPtr(ControllerVarp))
+		})
+	}
+}
+
+// GetRemoveController gets the callback function.
+func (x *ShortcutManagerInterface) GetRemoveController() func(ShortcutManager, *ShortcutController) {
+	if x.xRemoveController == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ControllerVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRemoveController)
+	return func(SelfVar ShortcutManager, ControllerVar *ShortcutController) {
+		rawCallback(SelfVar.GoPointer(), ControllerVar.GoPointer())
+	}
 }
 
 // The `GtkShortcutManager` interface is used to implement

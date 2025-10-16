@@ -15,7 +15,7 @@ import (
 type InetAddressMaskClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *InetAddressMaskClass) GoPointer() uintptr {

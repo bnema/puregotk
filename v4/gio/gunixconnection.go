@@ -14,7 +14,7 @@ import (
 type UnixConnectionClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass SocketConnectionClass
 }
 
 func (x *UnixConnectionClass) GoPointer() uintptr {

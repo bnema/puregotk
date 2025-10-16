@@ -15,7 +15,7 @@ import (
 type NoSelectionClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *NoSelectionClass) GoPointer() uintptr {

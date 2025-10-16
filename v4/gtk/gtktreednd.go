@@ -16,20 +16,155 @@ type TreeDragDestIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xDragDataReceived uintptr
+
+	xRowDropPossible uintptr
 }
 
 func (x *TreeDragDestIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+// OverrideDragDataReceived sets the callback function.
+func (x *TreeDragDestIface) OverrideDragDataReceived(cb func(TreeDragDest, *TreePath, *gobject.Value) bool) {
+	if cb == nil {
+		x.xDragDataReceived = 0
+	} else {
+		x.xDragDataReceived = purego.NewCallback(func(DragDestVarp uintptr, DestVarp *TreePath, ValueVarp *gobject.Value) bool {
+			return cb(&TreeDragDestBase{Ptr: DragDestVarp}, DestVarp, ValueVarp)
+		})
+	}
+}
+
+// GetDragDataReceived gets the callback function.
+func (x *TreeDragDestIface) GetDragDataReceived() func(TreeDragDest, *TreePath, *gobject.Value) bool {
+	if x.xDragDataReceived == 0 {
+		return nil
+	}
+	var rawCallback func(DragDestVarp uintptr, DestVarp *TreePath, ValueVarp *gobject.Value) bool
+	purego.RegisterFunc(&rawCallback, x.xDragDataReceived)
+	return func(DragDestVar TreeDragDest, DestVar *TreePath, ValueVar *gobject.Value) bool {
+		return rawCallback(DragDestVar.GoPointer(), DestVar, ValueVar)
+	}
+}
+
+// OverrideRowDropPossible sets the callback function.
+func (x *TreeDragDestIface) OverrideRowDropPossible(cb func(TreeDragDest, *TreePath, *gobject.Value) bool) {
+	if cb == nil {
+		x.xRowDropPossible = 0
+	} else {
+		x.xRowDropPossible = purego.NewCallback(func(DragDestVarp uintptr, DestPathVarp *TreePath, ValueVarp *gobject.Value) bool {
+			return cb(&TreeDragDestBase{Ptr: DragDestVarp}, DestPathVarp, ValueVarp)
+		})
+	}
+}
+
+// GetRowDropPossible gets the callback function.
+func (x *TreeDragDestIface) GetRowDropPossible() func(TreeDragDest, *TreePath, *gobject.Value) bool {
+	if x.xRowDropPossible == 0 {
+		return nil
+	}
+	var rawCallback func(DragDestVarp uintptr, DestPathVarp *TreePath, ValueVarp *gobject.Value) bool
+	purego.RegisterFunc(&rawCallback, x.xRowDropPossible)
+	return func(DragDestVar TreeDragDest, DestPathVar *TreePath, ValueVar *gobject.Value) bool {
+		return rawCallback(DragDestVar.GoPointer(), DestPathVar, ValueVar)
+	}
+}
+
 type TreeDragSourceIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xRowDraggable uintptr
+
+	xDragDataGet uintptr
+
+	xDragDataDelete uintptr
 }
 
 func (x *TreeDragSourceIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideRowDraggable sets the callback function.
+func (x *TreeDragSourceIface) OverrideRowDraggable(cb func(TreeDragSource, *TreePath) bool) {
+	if cb == nil {
+		x.xRowDraggable = 0
+	} else {
+		x.xRowDraggable = purego.NewCallback(func(DragSourceVarp uintptr, PathVarp *TreePath) bool {
+			return cb(&TreeDragSourceBase{Ptr: DragSourceVarp}, PathVarp)
+		})
+	}
+}
+
+// GetRowDraggable gets the callback function.
+func (x *TreeDragSourceIface) GetRowDraggable() func(TreeDragSource, *TreePath) bool {
+	if x.xRowDraggable == 0 {
+		return nil
+	}
+	var rawCallback func(DragSourceVarp uintptr, PathVarp *TreePath) bool
+	purego.RegisterFunc(&rawCallback, x.xRowDraggable)
+	return func(DragSourceVar TreeDragSource, PathVar *TreePath) bool {
+		return rawCallback(DragSourceVar.GoPointer(), PathVar)
+	}
+}
+
+// OverrideDragDataGet sets the callback function.
+func (x *TreeDragSourceIface) OverrideDragDataGet(cb func(TreeDragSource, *TreePath) *gdk.ContentProvider) {
+	if cb == nil {
+		x.xDragDataGet = 0
+	} else {
+		x.xDragDataGet = purego.NewCallback(func(DragSourceVarp uintptr, PathVarp *TreePath) uintptr {
+			ret := cb(&TreeDragSourceBase{Ptr: DragSourceVarp}, PathVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetDragDataGet gets the callback function.
+func (x *TreeDragSourceIface) GetDragDataGet() func(TreeDragSource, *TreePath) *gdk.ContentProvider {
+	if x.xDragDataGet == 0 {
+		return nil
+	}
+	var rawCallback func(DragSourceVarp uintptr, PathVarp *TreePath) uintptr
+	purego.RegisterFunc(&rawCallback, x.xDragDataGet)
+	return func(DragSourceVar TreeDragSource, PathVar *TreePath) *gdk.ContentProvider {
+		rawRet := rawCallback(DragSourceVar.GoPointer(), PathVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &gdk.ContentProvider{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideDragDataDelete sets the callback function.
+func (x *TreeDragSourceIface) OverrideDragDataDelete(cb func(TreeDragSource, *TreePath) bool) {
+	if cb == nil {
+		x.xDragDataDelete = 0
+	} else {
+		x.xDragDataDelete = purego.NewCallback(func(DragSourceVarp uintptr, PathVarp *TreePath) bool {
+			return cb(&TreeDragSourceBase{Ptr: DragSourceVarp}, PathVarp)
+		})
+	}
+}
+
+// GetDragDataDelete gets the callback function.
+func (x *TreeDragSourceIface) GetDragDataDelete() func(TreeDragSource, *TreePath) bool {
+	if x.xDragDataDelete == 0 {
+		return nil
+	}
+	var rawCallback func(DragSourceVarp uintptr, PathVarp *TreePath) bool
+	purego.RegisterFunc(&rawCallback, x.xDragDataDelete)
+	return func(DragSourceVar TreeDragSource, PathVar *TreePath) bool {
+		return rawCallback(DragSourceVar.GoPointer(), PathVar)
+	}
 }
 
 // Interface for Drag-and-Drop destinations in `GtkTreeView`.

@@ -15,7 +15,7 @@ import (
 type ConstraintLayoutChildClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutChildClass
 }
 
 func (x *ConstraintLayoutChildClass) GoPointer() uintptr {
@@ -25,7 +25,7 @@ func (x *ConstraintLayoutChildClass) GoPointer() uintptr {
 type ConstraintLayoutClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutManagerClass
 }
 
 func (x *ConstraintLayoutClass) GoPointer() uintptr {

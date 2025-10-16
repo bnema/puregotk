@@ -42,13 +42,38 @@ type ListBoxUpdateHeaderFunc func(uintptr, uintptr, uintptr)
 type ListBoxRowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xActivate uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *ListBoxRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideActivate sets the callback function.
+func (x *ListBoxRowClass) OverrideActivate(cb func(*ListBoxRow)) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(RowVarp uintptr) {
+			cb(ListBoxRowNewFromInternalPtr(RowVarp))
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+func (x *ListBoxRowClass) GetActivate() func(*ListBoxRow) {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(RowVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(RowVar *ListBoxRow) {
+		rawCallback(RowVar.GoPointer())
+	}
 }
 
 // `GtkListBox` is a vertical list.

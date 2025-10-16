@@ -13,7 +13,7 @@ import (
 type OverlayLayoutChildClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutChildClass
 }
 
 func (x *OverlayLayoutChildClass) GoPointer() uintptr {
@@ -23,7 +23,7 @@ func (x *OverlayLayoutChildClass) GoPointer() uintptr {
 type OverlayLayoutClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutManagerClass
 }
 
 func (x *OverlayLayoutClass) GoPointer() uintptr {

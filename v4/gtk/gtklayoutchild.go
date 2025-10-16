@@ -14,7 +14,7 @@ import (
 type LayoutChildClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *LayoutChildClass) GoPointer() uintptr {

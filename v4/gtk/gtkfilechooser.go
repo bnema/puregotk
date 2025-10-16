@@ -55,7 +55,7 @@ type FileChooser interface {
 	SetGoPointer(uintptr)
 	AddChoice(IdVar string, LabelVar string, OptionsVar []string, OptionLabelsVar []string)
 	AddFilter(FilterVar *FileFilter)
-	AddShortcutFolder(FolderVar gio.File) bool
+	AddShortcutFolder(FolderVar gio.File) (bool, error)
 	GetAction() FileChooserAction
 	GetChoice(IdVar string) string
 	GetCreateFolders() bool
@@ -69,13 +69,13 @@ type FileChooser interface {
 	GetShortcutFolders() *gio.ListModelBase
 	RemoveChoice(IdVar string)
 	RemoveFilter(FilterVar *FileFilter)
-	RemoveShortcutFolder(FolderVar gio.File) bool
+	RemoveShortcutFolder(FolderVar gio.File) (bool, error)
 	SetAction(ActionVar FileChooserAction)
 	SetChoice(IdVar string, OptionVar string)
 	SetCreateFolders(CreateFoldersVar bool)
-	SetCurrentFolder(FileVar gio.File) bool
+	SetCurrentFolder(FileVar gio.File) (bool, error)
 	SetCurrentName(NameVar string)
-	SetFile(FileVar gio.File) bool
+	SetFile(FileVar gio.File) (bool, error)
 	SetFilter(FilterVar *FileFilter)
 	SetSelectMultiple(SelectMultipleVar bool)
 }

@@ -16,10 +16,105 @@ type SocketConnectableIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xEnumerate uintptr
+
+	xProxyEnumerate uintptr
+
+	xToString uintptr
 }
 
 func (x *SocketConnectableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideEnumerate sets the callback function.
+func (x *SocketConnectableIface) OverrideEnumerate(cb func(SocketConnectable) *SocketAddressEnumerator) {
+	if cb == nil {
+		x.xEnumerate = 0
+	} else {
+		x.xEnumerate = purego.NewCallback(func(ConnectableVarp uintptr) uintptr {
+			ret := cb(&SocketConnectableBase{Ptr: ConnectableVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetEnumerate gets the callback function.
+func (x *SocketConnectableIface) GetEnumerate() func(SocketConnectable) *SocketAddressEnumerator {
+	if x.xEnumerate == 0 {
+		return nil
+	}
+	var rawCallback func(ConnectableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xEnumerate)
+	return func(ConnectableVar SocketConnectable) *SocketAddressEnumerator {
+		rawRet := rawCallback(ConnectableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &SocketAddressEnumerator{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideProxyEnumerate sets the callback function.
+func (x *SocketConnectableIface) OverrideProxyEnumerate(cb func(SocketConnectable) *SocketAddressEnumerator) {
+	if cb == nil {
+		x.xProxyEnumerate = 0
+	} else {
+		x.xProxyEnumerate = purego.NewCallback(func(ConnectableVarp uintptr) uintptr {
+			ret := cb(&SocketConnectableBase{Ptr: ConnectableVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetProxyEnumerate gets the callback function.
+func (x *SocketConnectableIface) GetProxyEnumerate() func(SocketConnectable) *SocketAddressEnumerator {
+	if x.xProxyEnumerate == 0 {
+		return nil
+	}
+	var rawCallback func(ConnectableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xProxyEnumerate)
+	return func(ConnectableVar SocketConnectable) *SocketAddressEnumerator {
+		rawRet := rawCallback(ConnectableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &SocketAddressEnumerator{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideToString sets the callback function.
+func (x *SocketConnectableIface) OverrideToString(cb func(SocketConnectable) string) {
+	if cb == nil {
+		x.xToString = 0
+	} else {
+		x.xToString = purego.NewCallback(func(ConnectableVarp uintptr) string {
+			return cb(&SocketConnectableBase{Ptr: ConnectableVarp})
+		})
+	}
+}
+
+// GetToString gets the callback function.
+func (x *SocketConnectableIface) GetToString() func(SocketConnectable) string {
+	if x.xToString == 0 {
+		return nil
+	}
+	var rawCallback func(ConnectableVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xToString)
+	return func(ConnectableVar SocketConnectable) string {
+		return rawCallback(ConnectableVar.GoPointer())
+	}
 }
 
 // Objects that describe one or more potential socket endpoints

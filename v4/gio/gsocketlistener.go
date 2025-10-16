@@ -16,11 +16,186 @@ import (
 type SocketListenerClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xChanged uintptr
+
+	xEvent uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
+
+	xGReserved6 uintptr
 }
 
 func (x *SocketListenerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideChanged sets the callback function.
+func (x *SocketListenerClass) OverrideChanged(cb func(*SocketListener)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(ListenerVarp uintptr) {
+			cb(SocketListenerNewFromInternalPtr(ListenerVarp))
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *SocketListenerClass) GetChanged() func(*SocketListener) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ListenerVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(ListenerVar *SocketListener) {
+		rawCallback(ListenerVar.GoPointer())
+	}
+}
+
+// OverrideEvent sets the callback function.
+func (x *SocketListenerClass) OverrideEvent(cb func(*SocketListener, SocketListenerEvent, *Socket)) {
+	if cb == nil {
+		x.xEvent = 0
+	} else {
+		x.xEvent = purego.NewCallback(func(ListenerVarp uintptr, EventVarp SocketListenerEvent, SocketVarp uintptr) {
+			cb(SocketListenerNewFromInternalPtr(ListenerVarp), EventVarp, SocketNewFromInternalPtr(SocketVarp))
+		})
+	}
+}
+
+// GetEvent gets the callback function.
+func (x *SocketListenerClass) GetEvent() func(*SocketListener, SocketListenerEvent, *Socket) {
+	if x.xEvent == 0 {
+		return nil
+	}
+	var rawCallback func(ListenerVarp uintptr, EventVarp SocketListenerEvent, SocketVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEvent)
+	return func(ListenerVar *SocketListener, EventVar SocketListenerEvent, SocketVar *Socket) {
+		rawCallback(ListenerVar.GoPointer(), EventVar, SocketVar.GoPointer())
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *SocketListenerClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *SocketListenerClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *SocketListenerClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *SocketListenerClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *SocketListenerClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *SocketListenerClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *SocketListenerClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *SocketListenerClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved6 sets the callback function.
+func (x *SocketListenerClass) OverrideGReserved6(cb func()) {
+	if cb == nil {
+		x.xGReserved6 = 0
+	} else {
+		x.xGReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved6 gets the callback function.
+func (x *SocketListenerClass) GetGReserved6() func() {
+	if x.xGReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved6)
+	return func() {
+		rawCallback()
+	}
 }
 
 type SocketListenerPrivate struct {
@@ -79,7 +254,7 @@ func NewSocketListener() *SocketListener {
 	return cls
 }
 
-var xSocketListenerAccept func(uintptr, *uintptr, uintptr, **glib.Error) uintptr
+var xSocketListenerAccept func(uintptr, uintptr, uintptr, **glib.Error) uintptr
 
 // Blocks waiting for a client to connect to any of the sockets added
 // to the listener. Returns a #GSocketConnection for the socket that was
@@ -96,7 +271,7 @@ func (x *SocketListener) Accept(SourceObjectVar **gobject.Object, CancellableVar
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	cret := xSocketListenerAccept(x.GoPointer(), gobject.ConvertPtr(SourceObjectVar), CancellableVar.GoPointer(), &cerr)
+	cret := xSocketListenerAccept(x.GoPointer(), *gobject.ConvertPtr(SourceObjectVar), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -123,14 +298,14 @@ func (x *SocketListener) AcceptAsync(CancellableVar *Cancellable, CallbackVar *A
 
 }
 
-var xSocketListenerAcceptFinish func(uintptr, uintptr, *uintptr, **glib.Error) uintptr
+var xSocketListenerAcceptFinish func(uintptr, uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes an async accept operation. See g_socket_listener_accept_async()
 func (x *SocketListener) AcceptFinish(ResultVar AsyncResult, SourceObjectVar **gobject.Object) (*SocketConnection, error) {
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	cret := xSocketListenerAcceptFinish(x.GoPointer(), ResultVar.GoPointer(), gobject.ConvertPtr(SourceObjectVar), &cerr)
+	cret := xSocketListenerAcceptFinish(x.GoPointer(), ResultVar.GoPointer(), *gobject.ConvertPtr(SourceObjectVar), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -144,7 +319,7 @@ func (x *SocketListener) AcceptFinish(ResultVar AsyncResult, SourceObjectVar **g
 
 }
 
-var xSocketListenerAcceptSocket func(uintptr, *uintptr, uintptr, **glib.Error) uintptr
+var xSocketListenerAcceptSocket func(uintptr, uintptr, uintptr, **glib.Error) uintptr
 
 // Blocks waiting for a client to connect to any of the sockets added
 // to the listener. Returns the #GSocket that was accepted.
@@ -164,7 +339,7 @@ func (x *SocketListener) AcceptSocket(SourceObjectVar **gobject.Object, Cancella
 	var cls *Socket
 	var cerr *glib.Error
 
-	cret := xSocketListenerAcceptSocket(x.GoPointer(), gobject.ConvertPtr(SourceObjectVar), CancellableVar.GoPointer(), &cerr)
+	cret := xSocketListenerAcceptSocket(x.GoPointer(), *gobject.ConvertPtr(SourceObjectVar), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -191,14 +366,14 @@ func (x *SocketListener) AcceptSocketAsync(CancellableVar *Cancellable, Callback
 
 }
 
-var xSocketListenerAcceptSocketFinish func(uintptr, uintptr, *uintptr, **glib.Error) uintptr
+var xSocketListenerAcceptSocketFinish func(uintptr, uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes an async accept operation. See g_socket_listener_accept_socket_async()
 func (x *SocketListener) AcceptSocketFinish(ResultVar AsyncResult, SourceObjectVar **gobject.Object) (*Socket, error) {
 	var cls *Socket
 	var cerr *glib.Error
 
-	cret := xSocketListenerAcceptSocketFinish(x.GoPointer(), ResultVar.GoPointer(), gobject.ConvertPtr(SourceObjectVar), &cerr)
+	cret := xSocketListenerAcceptSocketFinish(x.GoPointer(), ResultVar.GoPointer(), *gobject.ConvertPtr(SourceObjectVar), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -212,7 +387,7 @@ func (x *SocketListener) AcceptSocketFinish(ResultVar AsyncResult, SourceObjectV
 
 }
 
-var xSocketListenerAddAddress func(uintptr, uintptr, SocketType, SocketProtocol, uintptr, *uintptr, **glib.Error) bool
+var xSocketListenerAddAddress func(uintptr, uintptr, SocketType, SocketProtocol, uintptr, uintptr, **glib.Error) bool
 
 // Creates a socket of type @type and protocol @protocol, binds
 // it to @address and adds it to the set of sockets we're accepting
@@ -240,7 +415,7 @@ var xSocketListenerAddAddress func(uintptr, uintptr, SocketType, SocketProtocol,
 func (x *SocketListener) AddAddress(AddressVar *SocketAddress, TypeVar SocketType, ProtocolVar SocketProtocol, SourceObjectVar *gobject.Object, EffectiveAddressVar **SocketAddress) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketListenerAddAddress(x.GoPointer(), AddressVar.GoPointer(), TypeVar, ProtocolVar, SourceObjectVar.GoPointer(), gobject.ConvertPtr(EffectiveAddressVar), &cerr)
+	cret := xSocketListenerAddAddress(x.GoPointer(), AddressVar.GoPointer(), TypeVar, ProtocolVar, SourceObjectVar.GoPointer(), *gobject.ConvertPtr(EffectiveAddressVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

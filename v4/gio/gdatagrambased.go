@@ -20,10 +20,135 @@ type DatagramBasedInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xReceiveMessages uintptr
+
+	xSendMessages uintptr
+
+	xCreateSource uintptr
+
+	xConditionCheck uintptr
+
+	xConditionWait uintptr
 }
 
 func (x *DatagramBasedInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideReceiveMessages sets the callback function.
+func (x *DatagramBasedInterface) OverrideReceiveMessages(cb func(DatagramBased, []InputMessage, uint, int, int64, *Cancellable) int) {
+	if cb == nil {
+		x.xReceiveMessages = 0
+	} else {
+		x.xReceiveMessages = purego.NewCallback(func(DatagramBasedVarp uintptr, MessagesVarp []InputMessage, NumMessagesVarp uint, FlagsVarp int, TimeoutVarp int64, CancellableVarp uintptr) int {
+			return cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, MessagesVarp, NumMessagesVarp, FlagsVarp, TimeoutVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetReceiveMessages gets the callback function.
+func (x *DatagramBasedInterface) GetReceiveMessages() func(DatagramBased, []InputMessage, uint, int, int64, *Cancellable) int {
+	if x.xReceiveMessages == 0 {
+		return nil
+	}
+	var rawCallback func(DatagramBasedVarp uintptr, MessagesVarp []InputMessage, NumMessagesVarp uint, FlagsVarp int, TimeoutVarp int64, CancellableVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xReceiveMessages)
+	return func(DatagramBasedVar DatagramBased, MessagesVar []InputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) int {
+		return rawCallback(DatagramBasedVar.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideSendMessages sets the callback function.
+func (x *DatagramBasedInterface) OverrideSendMessages(cb func(DatagramBased, []OutputMessage, uint, int, int64, *Cancellable) int) {
+	if cb == nil {
+		x.xSendMessages = 0
+	} else {
+		x.xSendMessages = purego.NewCallback(func(DatagramBasedVarp uintptr, MessagesVarp []OutputMessage, NumMessagesVarp uint, FlagsVarp int, TimeoutVarp int64, CancellableVarp uintptr) int {
+			return cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, MessagesVarp, NumMessagesVarp, FlagsVarp, TimeoutVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetSendMessages gets the callback function.
+func (x *DatagramBasedInterface) GetSendMessages() func(DatagramBased, []OutputMessage, uint, int, int64, *Cancellable) int {
+	if x.xSendMessages == 0 {
+		return nil
+	}
+	var rawCallback func(DatagramBasedVarp uintptr, MessagesVarp []OutputMessage, NumMessagesVarp uint, FlagsVarp int, TimeoutVarp int64, CancellableVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xSendMessages)
+	return func(DatagramBasedVar DatagramBased, MessagesVar []OutputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) int {
+		return rawCallback(DatagramBasedVar.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideCreateSource sets the callback function.
+func (x *DatagramBasedInterface) OverrideCreateSource(cb func(DatagramBased, glib.IOCondition, *Cancellable) *glib.Source) {
+	if cb == nil {
+		x.xCreateSource = 0
+	} else {
+		x.xCreateSource = purego.NewCallback(func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, CancellableVarp uintptr) *glib.Source {
+			return cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, ConditionVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetCreateSource gets the callback function.
+func (x *DatagramBasedInterface) GetCreateSource() func(DatagramBased, glib.IOCondition, *Cancellable) *glib.Source {
+	if x.xCreateSource == 0 {
+		return nil
+	}
+	var rawCallback func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, CancellableVarp uintptr) *glib.Source
+	purego.RegisterFunc(&rawCallback, x.xCreateSource)
+	return func(DatagramBasedVar DatagramBased, ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
+		return rawCallback(DatagramBasedVar.GoPointer(), ConditionVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideConditionCheck sets the callback function.
+func (x *DatagramBasedInterface) OverrideConditionCheck(cb func(DatagramBased, glib.IOCondition) glib.IOCondition) {
+	if cb == nil {
+		x.xConditionCheck = 0
+	} else {
+		x.xConditionCheck = purego.NewCallback(func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition) glib.IOCondition {
+			return cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, ConditionVarp)
+		})
+	}
+}
+
+// GetConditionCheck gets the callback function.
+func (x *DatagramBasedInterface) GetConditionCheck() func(DatagramBased, glib.IOCondition) glib.IOCondition {
+	if x.xConditionCheck == 0 {
+		return nil
+	}
+	var rawCallback func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition) glib.IOCondition
+	purego.RegisterFunc(&rawCallback, x.xConditionCheck)
+	return func(DatagramBasedVar DatagramBased, ConditionVar glib.IOCondition) glib.IOCondition {
+		return rawCallback(DatagramBasedVar.GoPointer(), ConditionVar)
+	}
+}
+
+// OverrideConditionWait sets the callback function.
+func (x *DatagramBasedInterface) OverrideConditionWait(cb func(DatagramBased, glib.IOCondition, int64, *Cancellable) bool) {
+	if cb == nil {
+		x.xConditionWait = 0
+	} else {
+		x.xConditionWait = purego.NewCallback(func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, TimeoutVarp int64, CancellableVarp uintptr) bool {
+			return cb(&DatagramBasedBase{Ptr: DatagramBasedVarp}, ConditionVarp, TimeoutVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetConditionWait gets the callback function.
+func (x *DatagramBasedInterface) GetConditionWait() func(DatagramBased, glib.IOCondition, int64, *Cancellable) bool {
+	if x.xConditionWait == 0 {
+		return nil
+	}
+	var rawCallback func(DatagramBasedVarp uintptr, ConditionVarp glib.IOCondition, TimeoutVarp int64, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xConditionWait)
+	return func(DatagramBasedVar DatagramBased, ConditionVar glib.IOCondition, TimeoutVar int64, CancellableVar *Cancellable) bool {
+		return rawCallback(DatagramBasedVar.GoPointer(), ConditionVar, TimeoutVar, CancellableVar.GoPointer())
+	}
 }
 
 // A #GDatagramBased is a networking interface for representing datagram-based
@@ -77,10 +202,10 @@ type DatagramBased interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
 	ConditionCheck(ConditionVar glib.IOCondition) glib.IOCondition
-	ConditionWait(ConditionVar glib.IOCondition, TimeoutVar int64, CancellableVar *Cancellable) bool
+	ConditionWait(ConditionVar glib.IOCondition, TimeoutVar int64, CancellableVar *Cancellable) (bool, error)
 	CreateSource(ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source
-	ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) int
-	SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) int
+	ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) (int, error)
+	SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint, FlagsVar int, TimeoutVar int64, CancellableVar *Cancellable) (int, error)
 }
 
 var xDatagramBasedGLibType func() types.GType

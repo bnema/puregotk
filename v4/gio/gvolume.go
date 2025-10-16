@@ -16,10 +16,585 @@ type VolumeIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xChanged uintptr
+
+	xRemoved uintptr
+
+	xGetName uintptr
+
+	xGetIcon uintptr
+
+	xGetUuid uintptr
+
+	xGetDrive uintptr
+
+	xGetMount uintptr
+
+	xCanMount uintptr
+
+	xCanEject uintptr
+
+	xMountFn uintptr
+
+	xMountFinish uintptr
+
+	xEject uintptr
+
+	xEjectFinish uintptr
+
+	xGetIdentifier uintptr
+
+	xEnumerateIdentifiers uintptr
+
+	xShouldAutomount uintptr
+
+	xGetActivationRoot uintptr
+
+	xEjectWithOperation uintptr
+
+	xEjectWithOperationFinish uintptr
+
+	xGetSortKey uintptr
+
+	xGetSymbolicIcon uintptr
 }
 
 func (x *VolumeIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideChanged sets the callback function.
+func (x *VolumeIface) OverrideChanged(cb func(Volume)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(VolumeVarp uintptr) {
+			cb(&VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *VolumeIface) GetChanged() func(Volume) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(VolumeVar Volume) {
+		rawCallback(VolumeVar.GoPointer())
+	}
+}
+
+// OverrideRemoved sets the callback function.
+func (x *VolumeIface) OverrideRemoved(cb func(Volume)) {
+	if cb == nil {
+		x.xRemoved = 0
+	} else {
+		x.xRemoved = purego.NewCallback(func(VolumeVarp uintptr) {
+			cb(&VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetRemoved gets the callback function.
+func (x *VolumeIface) GetRemoved() func(Volume) {
+	if x.xRemoved == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRemoved)
+	return func(VolumeVar Volume) {
+		rawCallback(VolumeVar.GoPointer())
+	}
+}
+
+// OverrideGetName sets the callback function.
+func (x *VolumeIface) OverrideGetName(cb func(Volume) string) {
+	if cb == nil {
+		x.xGetName = 0
+	} else {
+		x.xGetName = purego.NewCallback(func(VolumeVarp uintptr) string {
+			return cb(&VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetGetName gets the callback function.
+func (x *VolumeIface) GetGetName() func(Volume) string {
+	if x.xGetName == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetName)
+	return func(VolumeVar Volume) string {
+		return rawCallback(VolumeVar.GoPointer())
+	}
+}
+
+// OverrideGetIcon sets the callback function.
+func (x *VolumeIface) OverrideGetIcon(cb func(Volume) *IconBase) {
+	if cb == nil {
+		x.xGetIcon = 0
+	} else {
+		x.xGetIcon = purego.NewCallback(func(VolumeVarp uintptr) uintptr {
+			ret := cb(&VolumeBase{Ptr: VolumeVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetIcon gets the callback function.
+func (x *VolumeIface) GetGetIcon() func(Volume) *IconBase {
+	if x.xGetIcon == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetIcon)
+	return func(VolumeVar Volume) *IconBase {
+		rawRet := rawCallback(VolumeVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IconBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetUuid sets the callback function.
+func (x *VolumeIface) OverrideGetUuid(cb func(Volume) string) {
+	if cb == nil {
+		x.xGetUuid = 0
+	} else {
+		x.xGetUuid = purego.NewCallback(func(VolumeVarp uintptr) string {
+			return cb(&VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetGetUuid gets the callback function.
+func (x *VolumeIface) GetGetUuid() func(Volume) string {
+	if x.xGetUuid == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetUuid)
+	return func(VolumeVar Volume) string {
+		return rawCallback(VolumeVar.GoPointer())
+	}
+}
+
+// OverrideGetDrive sets the callback function.
+func (x *VolumeIface) OverrideGetDrive(cb func(Volume) *DriveBase) {
+	if cb == nil {
+		x.xGetDrive = 0
+	} else {
+		x.xGetDrive = purego.NewCallback(func(VolumeVarp uintptr) uintptr {
+			ret := cb(&VolumeBase{Ptr: VolumeVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetDrive gets the callback function.
+func (x *VolumeIface) GetGetDrive() func(Volume) *DriveBase {
+	if x.xGetDrive == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetDrive)
+	return func(VolumeVar Volume) *DriveBase {
+		rawRet := rawCallback(VolumeVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &DriveBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetMount sets the callback function.
+func (x *VolumeIface) OverrideGetMount(cb func(Volume) *MountBase) {
+	if cb == nil {
+		x.xGetMount = 0
+	} else {
+		x.xGetMount = purego.NewCallback(func(VolumeVarp uintptr) uintptr {
+			ret := cb(&VolumeBase{Ptr: VolumeVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetMount gets the callback function.
+func (x *VolumeIface) GetGetMount() func(Volume) *MountBase {
+	if x.xGetMount == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetMount)
+	return func(VolumeVar Volume) *MountBase {
+		rawRet := rawCallback(VolumeVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &MountBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCanMount sets the callback function.
+func (x *VolumeIface) OverrideCanMount(cb func(Volume) bool) {
+	if cb == nil {
+		x.xCanMount = 0
+	} else {
+		x.xCanMount = purego.NewCallback(func(VolumeVarp uintptr) bool {
+			return cb(&VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetCanMount gets the callback function.
+func (x *VolumeIface) GetCanMount() func(Volume) bool {
+	if x.xCanMount == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanMount)
+	return func(VolumeVar Volume) bool {
+		return rawCallback(VolumeVar.GoPointer())
+	}
+}
+
+// OverrideCanEject sets the callback function.
+func (x *VolumeIface) OverrideCanEject(cb func(Volume) bool) {
+	if cb == nil {
+		x.xCanEject = 0
+	} else {
+		x.xCanEject = purego.NewCallback(func(VolumeVarp uintptr) bool {
+			return cb(&VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetCanEject gets the callback function.
+func (x *VolumeIface) GetCanEject() func(Volume) bool {
+	if x.xCanEject == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanEject)
+	return func(VolumeVar Volume) bool {
+		return rawCallback(VolumeVar.GoPointer())
+	}
+}
+
+// OverrideMountFn sets the callback function.
+func (x *VolumeIface) OverrideMountFn(cb func(Volume, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xMountFn = 0
+	} else {
+		x.xMountFn = purego.NewCallback(func(VolumeVarp uintptr, FlagsVarp MountMountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&VolumeBase{Ptr: VolumeVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetMountFn gets the callback function.
+func (x *VolumeIface) GetMountFn() func(Volume, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xMountFn == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr, FlagsVarp MountMountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMountFn)
+	return func(VolumeVar Volume, FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(VolumeVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideMountFinish sets the callback function.
+func (x *VolumeIface) OverrideMountFinish(cb func(Volume, AsyncResult) bool) {
+	if cb == nil {
+		x.xMountFinish = 0
+	} else {
+		x.xMountFinish = purego.NewCallback(func(VolumeVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&VolumeBase{Ptr: VolumeVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetMountFinish gets the callback function.
+func (x *VolumeIface) GetMountFinish() func(Volume, AsyncResult) bool {
+	if x.xMountFinish == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xMountFinish)
+	return func(VolumeVar Volume, ResultVar AsyncResult) bool {
+		return rawCallback(VolumeVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideEject sets the callback function.
+func (x *VolumeIface) OverrideEject(cb func(Volume, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xEject = 0
+	} else {
+		x.xEject = purego.NewCallback(func(VolumeVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&VolumeBase{Ptr: VolumeVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetEject gets the callback function.
+func (x *VolumeIface) GetEject() func(Volume, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xEject == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEject)
+	return func(VolumeVar Volume, FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(VolumeVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideEjectFinish sets the callback function.
+func (x *VolumeIface) OverrideEjectFinish(cb func(Volume, AsyncResult) bool) {
+	if cb == nil {
+		x.xEjectFinish = 0
+	} else {
+		x.xEjectFinish = purego.NewCallback(func(VolumeVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&VolumeBase{Ptr: VolumeVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetEjectFinish gets the callback function.
+func (x *VolumeIface) GetEjectFinish() func(Volume, AsyncResult) bool {
+	if x.xEjectFinish == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEjectFinish)
+	return func(VolumeVar Volume, ResultVar AsyncResult) bool {
+		return rawCallback(VolumeVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGetIdentifier sets the callback function.
+func (x *VolumeIface) OverrideGetIdentifier(cb func(Volume, string) string) {
+	if cb == nil {
+		x.xGetIdentifier = 0
+	} else {
+		x.xGetIdentifier = purego.NewCallback(func(VolumeVarp uintptr, KindVarp string) string {
+			return cb(&VolumeBase{Ptr: VolumeVarp}, KindVarp)
+		})
+	}
+}
+
+// GetGetIdentifier gets the callback function.
+func (x *VolumeIface) GetGetIdentifier() func(Volume, string) string {
+	if x.xGetIdentifier == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr, KindVarp string) string
+	purego.RegisterFunc(&rawCallback, x.xGetIdentifier)
+	return func(VolumeVar Volume, KindVar string) string {
+		return rawCallback(VolumeVar.GoPointer(), KindVar)
+	}
+}
+
+// OverrideEnumerateIdentifiers sets the callback function.
+func (x *VolumeIface) OverrideEnumerateIdentifiers(cb func(Volume) []string) {
+	if cb == nil {
+		x.xEnumerateIdentifiers = 0
+	} else {
+		x.xEnumerateIdentifiers = purego.NewCallback(func(VolumeVarp uintptr) []string {
+			return cb(&VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetEnumerateIdentifiers gets the callback function.
+func (x *VolumeIface) GetEnumerateIdentifiers() func(Volume) []string {
+	if x.xEnumerateIdentifiers == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) []string
+	purego.RegisterFunc(&rawCallback, x.xEnumerateIdentifiers)
+	return func(VolumeVar Volume) []string {
+		return rawCallback(VolumeVar.GoPointer())
+	}
+}
+
+// OverrideShouldAutomount sets the callback function.
+func (x *VolumeIface) OverrideShouldAutomount(cb func(Volume) bool) {
+	if cb == nil {
+		x.xShouldAutomount = 0
+	} else {
+		x.xShouldAutomount = purego.NewCallback(func(VolumeVarp uintptr) bool {
+			return cb(&VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetShouldAutomount gets the callback function.
+func (x *VolumeIface) GetShouldAutomount() func(Volume) bool {
+	if x.xShouldAutomount == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xShouldAutomount)
+	return func(VolumeVar Volume) bool {
+		return rawCallback(VolumeVar.GoPointer())
+	}
+}
+
+// OverrideGetActivationRoot sets the callback function.
+func (x *VolumeIface) OverrideGetActivationRoot(cb func(Volume) *FileBase) {
+	if cb == nil {
+		x.xGetActivationRoot = 0
+	} else {
+		x.xGetActivationRoot = purego.NewCallback(func(VolumeVarp uintptr) uintptr {
+			ret := cb(&VolumeBase{Ptr: VolumeVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetActivationRoot gets the callback function.
+func (x *VolumeIface) GetGetActivationRoot() func(Volume) *FileBase {
+	if x.xGetActivationRoot == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetActivationRoot)
+	return func(VolumeVar Volume) *FileBase {
+		rawRet := rawCallback(VolumeVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideEjectWithOperation sets the callback function.
+func (x *VolumeIface) OverrideEjectWithOperation(cb func(Volume, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xEjectWithOperation = 0
+	} else {
+		x.xEjectWithOperation = purego.NewCallback(func(VolumeVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&VolumeBase{Ptr: VolumeVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetEjectWithOperation gets the callback function.
+func (x *VolumeIface) GetEjectWithOperation() func(Volume, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xEjectWithOperation == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEjectWithOperation)
+	return func(VolumeVar Volume, FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(VolumeVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideEjectWithOperationFinish sets the callback function.
+func (x *VolumeIface) OverrideEjectWithOperationFinish(cb func(Volume, AsyncResult) bool) {
+	if cb == nil {
+		x.xEjectWithOperationFinish = 0
+	} else {
+		x.xEjectWithOperationFinish = purego.NewCallback(func(VolumeVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&VolumeBase{Ptr: VolumeVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetEjectWithOperationFinish gets the callback function.
+func (x *VolumeIface) GetEjectWithOperationFinish() func(Volume, AsyncResult) bool {
+	if x.xEjectWithOperationFinish == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEjectWithOperationFinish)
+	return func(VolumeVar Volume, ResultVar AsyncResult) bool {
+		return rawCallback(VolumeVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGetSortKey sets the callback function.
+func (x *VolumeIface) OverrideGetSortKey(cb func(Volume) string) {
+	if cb == nil {
+		x.xGetSortKey = 0
+	} else {
+		x.xGetSortKey = purego.NewCallback(func(VolumeVarp uintptr) string {
+			return cb(&VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetGetSortKey gets the callback function.
+func (x *VolumeIface) GetGetSortKey() func(Volume) string {
+	if x.xGetSortKey == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetSortKey)
+	return func(VolumeVar Volume) string {
+		return rawCallback(VolumeVar.GoPointer())
+	}
+}
+
+// OverrideGetSymbolicIcon sets the callback function.
+func (x *VolumeIface) OverrideGetSymbolicIcon(cb func(Volume) *IconBase) {
+	if cb == nil {
+		x.xGetSymbolicIcon = 0
+	} else {
+		x.xGetSymbolicIcon = purego.NewCallback(func(VolumeVarp uintptr) uintptr {
+			ret := cb(&VolumeBase{Ptr: VolumeVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetSymbolicIcon gets the callback function.
+func (x *VolumeIface) GetGetSymbolicIcon() func(Volume) *IconBase {
+	if x.xGetSymbolicIcon == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetSymbolicIcon)
+	return func(VolumeVar Volume) *IconBase {
+		rawRet := rawCallback(VolumeVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IconBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // The #GVolume interface represents user-visible objects that can be
@@ -68,9 +643,9 @@ type Volume interface {
 	CanEject() bool
 	CanMount() bool
 	Eject(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	EjectFinish(ResultVar AsyncResult) bool
+	EjectFinish(ResultVar AsyncResult) (bool, error)
 	EjectWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	EjectWithOperationFinish(ResultVar AsyncResult) bool
+	EjectWithOperationFinish(ResultVar AsyncResult) (bool, error)
 	EnumerateIdentifiers() []string
 	GetActivationRoot() *FileBase
 	GetDrive() *DriveBase
@@ -82,7 +657,7 @@ type Volume interface {
 	GetSymbolicIcon() *IconBase
 	GetUuid() string
 	Mount(FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	MountFinish(ResultVar AsyncResult) bool
+	MountFinish(ResultVar AsyncResult) (bool, error)
 	ShouldAutomount() bool
 }
 

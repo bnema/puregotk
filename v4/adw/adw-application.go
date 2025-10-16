@@ -17,7 +17,7 @@ import (
 type ApplicationClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.ApplicationClass
 
 	Padding [4]uintptr
 }

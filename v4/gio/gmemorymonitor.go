@@ -15,10 +15,35 @@ type MemoryMonitorInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xLowMemoryWarning uintptr
 }
 
 func (x *MemoryMonitorInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideLowMemoryWarning sets the callback function.
+func (x *MemoryMonitorInterface) OverrideLowMemoryWarning(cb func(MemoryMonitor, MemoryMonitorWarningLevel)) {
+	if cb == nil {
+		x.xLowMemoryWarning = 0
+	} else {
+		x.xLowMemoryWarning = purego.NewCallback(func(MonitorVarp uintptr, LevelVarp MemoryMonitorWarningLevel) {
+			cb(&MemoryMonitorBase{Ptr: MonitorVarp}, LevelVarp)
+		})
+	}
+}
+
+// GetLowMemoryWarning gets the callback function.
+func (x *MemoryMonitorInterface) GetLowMemoryWarning() func(MemoryMonitor, MemoryMonitorWarningLevel) {
+	if x.xLowMemoryWarning == 0 {
+		return nil
+	}
+	var rawCallback func(MonitorVarp uintptr, LevelVarp MemoryMonitorWarningLevel)
+	purego.RegisterFunc(&rawCallback, x.xLowMemoryWarning)
+	return func(MonitorVar MemoryMonitor, LevelVar MemoryMonitorWarningLevel) {
+		rawCallback(MonitorVar.GoPointer(), LevelVar)
+	}
 }
 
 // #GMemoryMonitor will monitor system memory and suggest to the application

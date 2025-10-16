@@ -16,7 +16,7 @@ import (
 type ExpanderRowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass PreferencesRowClass
 
 	Padding [4]uintptr
 }

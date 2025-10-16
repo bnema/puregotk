@@ -29,13 +29,163 @@ import (
 type TlsInteractionClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xAskPassword uintptr
+
+	xAskPasswordAsync uintptr
+
+	xAskPasswordFinish uintptr
+
+	xRequestCertificate uintptr
+
+	xRequestCertificateAsync uintptr
+
+	xRequestCertificateFinish uintptr
 
 	Padding [21]uintptr
 }
 
 func (x *TlsInteractionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideAskPassword sets the callback function.
+func (x *TlsInteractionClass) OverrideAskPassword(cb func(*TlsInteraction, *TlsPassword, *Cancellable) TlsInteractionResult) {
+	if cb == nil {
+		x.xAskPassword = 0
+	} else {
+		x.xAskPassword = purego.NewCallback(func(InteractionVarp uintptr, PasswordVarp uintptr, CancellableVarp uintptr) TlsInteractionResult {
+			return cb(TlsInteractionNewFromInternalPtr(InteractionVarp), TlsPasswordNewFromInternalPtr(PasswordVarp), CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetAskPassword gets the callback function.
+func (x *TlsInteractionClass) GetAskPassword() func(*TlsInteraction, *TlsPassword, *Cancellable) TlsInteractionResult {
+	if x.xAskPassword == 0 {
+		return nil
+	}
+	var rawCallback func(InteractionVarp uintptr, PasswordVarp uintptr, CancellableVarp uintptr) TlsInteractionResult
+	purego.RegisterFunc(&rawCallback, x.xAskPassword)
+	return func(InteractionVar *TlsInteraction, PasswordVar *TlsPassword, CancellableVar *Cancellable) TlsInteractionResult {
+		return rawCallback(InteractionVar.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideAskPasswordAsync sets the callback function.
+func (x *TlsInteractionClass) OverrideAskPasswordAsync(cb func(*TlsInteraction, *TlsPassword, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xAskPasswordAsync = 0
+	} else {
+		x.xAskPasswordAsync = purego.NewCallback(func(InteractionVarp uintptr, PasswordVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(TlsInteractionNewFromInternalPtr(InteractionVarp), TlsPasswordNewFromInternalPtr(PasswordVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetAskPasswordAsync gets the callback function.
+func (x *TlsInteractionClass) GetAskPasswordAsync() func(*TlsInteraction, *TlsPassword, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xAskPasswordAsync == 0 {
+		return nil
+	}
+	var rawCallback func(InteractionVarp uintptr, PasswordVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xAskPasswordAsync)
+	return func(InteractionVar *TlsInteraction, PasswordVar *TlsPassword, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(InteractionVar.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideAskPasswordFinish sets the callback function.
+func (x *TlsInteractionClass) OverrideAskPasswordFinish(cb func(*TlsInteraction, AsyncResult) TlsInteractionResult) {
+	if cb == nil {
+		x.xAskPasswordFinish = 0
+	} else {
+		x.xAskPasswordFinish = purego.NewCallback(func(InteractionVarp uintptr, ResultVarp uintptr) TlsInteractionResult {
+			return cb(TlsInteractionNewFromInternalPtr(InteractionVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetAskPasswordFinish gets the callback function.
+func (x *TlsInteractionClass) GetAskPasswordFinish() func(*TlsInteraction, AsyncResult) TlsInteractionResult {
+	if x.xAskPasswordFinish == 0 {
+		return nil
+	}
+	var rawCallback func(InteractionVarp uintptr, ResultVarp uintptr) TlsInteractionResult
+	purego.RegisterFunc(&rawCallback, x.xAskPasswordFinish)
+	return func(InteractionVar *TlsInteraction, ResultVar AsyncResult) TlsInteractionResult {
+		return rawCallback(InteractionVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideRequestCertificate sets the callback function.
+func (x *TlsInteractionClass) OverrideRequestCertificate(cb func(*TlsInteraction, *TlsConnection, TlsCertificateRequestFlags, *Cancellable) TlsInteractionResult) {
+	if cb == nil {
+		x.xRequestCertificate = 0
+	} else {
+		x.xRequestCertificate = purego.NewCallback(func(InteractionVarp uintptr, ConnectionVarp uintptr, FlagsVarp TlsCertificateRequestFlags, CancellableVarp uintptr) TlsInteractionResult {
+			return cb(TlsInteractionNewFromInternalPtr(InteractionVarp), TlsConnectionNewFromInternalPtr(ConnectionVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetRequestCertificate gets the callback function.
+func (x *TlsInteractionClass) GetRequestCertificate() func(*TlsInteraction, *TlsConnection, TlsCertificateRequestFlags, *Cancellable) TlsInteractionResult {
+	if x.xRequestCertificate == 0 {
+		return nil
+	}
+	var rawCallback func(InteractionVarp uintptr, ConnectionVarp uintptr, FlagsVarp TlsCertificateRequestFlags, CancellableVarp uintptr) TlsInteractionResult
+	purego.RegisterFunc(&rawCallback, x.xRequestCertificate)
+	return func(InteractionVar *TlsInteraction, ConnectionVar *TlsConnection, FlagsVar TlsCertificateRequestFlags, CancellableVar *Cancellable) TlsInteractionResult {
+		return rawCallback(InteractionVar.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideRequestCertificateAsync sets the callback function.
+func (x *TlsInteractionClass) OverrideRequestCertificateAsync(cb func(*TlsInteraction, *TlsConnection, TlsCertificateRequestFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xRequestCertificateAsync = 0
+	} else {
+		x.xRequestCertificateAsync = purego.NewCallback(func(InteractionVarp uintptr, ConnectionVarp uintptr, FlagsVarp TlsCertificateRequestFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(TlsInteractionNewFromInternalPtr(InteractionVarp), TlsConnectionNewFromInternalPtr(ConnectionVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetRequestCertificateAsync gets the callback function.
+func (x *TlsInteractionClass) GetRequestCertificateAsync() func(*TlsInteraction, *TlsConnection, TlsCertificateRequestFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xRequestCertificateAsync == 0 {
+		return nil
+	}
+	var rawCallback func(InteractionVarp uintptr, ConnectionVarp uintptr, FlagsVarp TlsCertificateRequestFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRequestCertificateAsync)
+	return func(InteractionVar *TlsInteraction, ConnectionVar *TlsConnection, FlagsVar TlsCertificateRequestFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(InteractionVar.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideRequestCertificateFinish sets the callback function.
+func (x *TlsInteractionClass) OverrideRequestCertificateFinish(cb func(*TlsInteraction, AsyncResult) TlsInteractionResult) {
+	if cb == nil {
+		x.xRequestCertificateFinish = 0
+	} else {
+		x.xRequestCertificateFinish = purego.NewCallback(func(InteractionVarp uintptr, ResultVarp uintptr) TlsInteractionResult {
+			return cb(TlsInteractionNewFromInternalPtr(InteractionVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetRequestCertificateFinish gets the callback function.
+func (x *TlsInteractionClass) GetRequestCertificateFinish() func(*TlsInteraction, AsyncResult) TlsInteractionResult {
+	if x.xRequestCertificateFinish == 0 {
+		return nil
+	}
+	var rawCallback func(InteractionVarp uintptr, ResultVarp uintptr) TlsInteractionResult
+	purego.RegisterFunc(&rawCallback, x.xRequestCertificateFinish)
+	return func(InteractionVar *TlsInteraction, ResultVar AsyncResult) TlsInteractionResult {
+		return rawCallback(InteractionVar.GoPointer(), ResultVar.GoPointer())
+	}
 }
 
 type TlsInteractionPrivate struct {

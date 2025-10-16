@@ -16,13 +16,63 @@ import (
 type DBusObjectManagerClientClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xInterfaceProxySignal uintptr
+
+	xInterfaceProxyPropertiesChanged uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *DBusObjectManagerClientClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideInterfaceProxySignal sets the callback function.
+func (x *DBusObjectManagerClientClass) OverrideInterfaceProxySignal(cb func(*DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, string, string, *glib.Variant)) {
+	if cb == nil {
+		x.xInterfaceProxySignal = 0
+	} else {
+		x.xInterfaceProxySignal = purego.NewCallback(func(ManagerVarp uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp *glib.Variant) {
+			cb(DBusObjectManagerClientNewFromInternalPtr(ManagerVarp), DBusObjectProxyNewFromInternalPtr(ObjectProxyVarp), DBusProxyNewFromInternalPtr(InterfaceProxyVarp), SenderNameVarp, SignalNameVarp, ParametersVarp)
+		})
+	}
+}
+
+// GetInterfaceProxySignal gets the callback function.
+func (x *DBusObjectManagerClientClass) GetInterfaceProxySignal() func(*DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, string, string, *glib.Variant) {
+	if x.xInterfaceProxySignal == 0 {
+		return nil
+	}
+	var rawCallback func(ManagerVarp uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xInterfaceProxySignal)
+	return func(ManagerVar *DBusObjectManagerClient, ObjectProxyVar *DBusObjectProxy, InterfaceProxyVar *DBusProxy, SenderNameVar string, SignalNameVar string, ParametersVar *glib.Variant) {
+		rawCallback(ManagerVar.GoPointer(), ObjectProxyVar.GoPointer(), InterfaceProxyVar.GoPointer(), SenderNameVar, SignalNameVar, ParametersVar)
+	}
+}
+
+// OverrideInterfaceProxyPropertiesChanged sets the callback function.
+func (x *DBusObjectManagerClientClass) OverrideInterfaceProxyPropertiesChanged(cb func(*DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, *glib.Variant, string)) {
+	if cb == nil {
+		x.xInterfaceProxyPropertiesChanged = 0
+	} else {
+		x.xInterfaceProxyPropertiesChanged = purego.NewCallback(func(ManagerVarp uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, ChangedPropertiesVarp *glib.Variant, InvalidatedPropertiesVarp string) {
+			cb(DBusObjectManagerClientNewFromInternalPtr(ManagerVarp), DBusObjectProxyNewFromInternalPtr(ObjectProxyVarp), DBusProxyNewFromInternalPtr(InterfaceProxyVarp), ChangedPropertiesVarp, InvalidatedPropertiesVarp)
+		})
+	}
+}
+
+// GetInterfaceProxyPropertiesChanged gets the callback function.
+func (x *DBusObjectManagerClientClass) GetInterfaceProxyPropertiesChanged() func(*DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, *glib.Variant, string) {
+	if x.xInterfaceProxyPropertiesChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ManagerVarp uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, ChangedPropertiesVarp *glib.Variant, InvalidatedPropertiesVarp string)
+	purego.RegisterFunc(&rawCallback, x.xInterfaceProxyPropertiesChanged)
+	return func(ManagerVar *DBusObjectManagerClient, ObjectProxyVar *DBusObjectProxy, InterfaceProxyVar *DBusProxy, ChangedPropertiesVar *glib.Variant, InvalidatedPropertiesVar string) {
+		rawCallback(ManagerVar.GoPointer(), ObjectProxyVar.GoPointer(), InterfaceProxyVar.GoPointer(), ChangedPropertiesVar, InvalidatedPropertiesVar)
+	}
 }
 
 type DBusObjectManagerClientPrivate struct {

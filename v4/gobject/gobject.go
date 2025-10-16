@@ -47,6 +47,22 @@ type InitiallyUnownedClass struct {
 
 	ConstructProperties *glib.SList
 
+	xConstructor uintptr
+
+	xSetProperty uintptr
+
+	xGetProperty uintptr
+
+	xDispose uintptr
+
+	xFinalize uintptr
+
+	xDispatchPropertiesChanged uintptr
+
+	xNotify uintptr
+
+	xConstructed uintptr
+
 	Flags uint
 
 	Pdummy [6]uintptr
@@ -54,6 +70,200 @@ type InitiallyUnownedClass struct {
 
 func (x *InitiallyUnownedClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideConstructor sets the callback function.
+func (x *InitiallyUnownedClass) OverrideConstructor(cb func(types.GType, uint, *ObjectConstructParam) *Object) {
+	if cb == nil {
+		x.xConstructor = 0
+	} else {
+		x.xConstructor = purego.NewCallback(func(TypeVarp types.GType, NConstructPropertiesVarp uint, ConstructPropertiesVarp *ObjectConstructParam) uintptr {
+			ret := cb(TypeVarp, NConstructPropertiesVarp, ConstructPropertiesVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetConstructor gets the callback function.
+func (x *InitiallyUnownedClass) GetConstructor() func(types.GType, uint, *ObjectConstructParam) *Object {
+	if x.xConstructor == 0 {
+		return nil
+	}
+	var rawCallback func(TypeVarp types.GType, NConstructPropertiesVarp uint, ConstructPropertiesVarp *ObjectConstructParam) uintptr
+	purego.RegisterFunc(&rawCallback, x.xConstructor)
+	return func(TypeVar types.GType, NConstructPropertiesVar uint, ConstructPropertiesVar *ObjectConstructParam) *Object {
+		rawRet := rawCallback(TypeVar, NConstructPropertiesVar, ConstructPropertiesVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &Object{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideSetProperty sets the callback function.
+func (x *InitiallyUnownedClass) OverrideSetProperty(cb func(*Object, uint, *Value, *ParamSpec)) {
+	if cb == nil {
+		x.xSetProperty = 0
+	} else {
+		x.xSetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp), PropertyIdVarp, ValueVarp, ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetSetProperty gets the callback function.
+func (x *InitiallyUnownedClass) GetSetProperty() func(*Object, uint, *Value, *ParamSpec) {
+	if x.xSetProperty == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetProperty)
+	return func(ObjectVar *Object, PropertyIdVar uint, ValueVar *Value, PspecVar *ParamSpec) {
+		rawCallback(ObjectVar.GoPointer(), PropertyIdVar, ValueVar, PspecVar.GoPointer())
+	}
+}
+
+// OverrideGetProperty sets the callback function.
+func (x *InitiallyUnownedClass) OverrideGetProperty(cb func(*Object, uint, *Value, *ParamSpec)) {
+	if cb == nil {
+		x.xGetProperty = 0
+	} else {
+		x.xGetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp), PropertyIdVarp, ValueVarp, ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetGetProperty gets the callback function.
+func (x *InitiallyUnownedClass) GetGetProperty() func(*Object, uint, *Value, *ParamSpec) {
+	if x.xGetProperty == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xGetProperty)
+	return func(ObjectVar *Object, PropertyIdVar uint, ValueVar *Value, PspecVar *ParamSpec) {
+		rawCallback(ObjectVar.GoPointer(), PropertyIdVar, ValueVar, PspecVar.GoPointer())
+	}
+}
+
+// OverrideDispose sets the callback function.
+func (x *InitiallyUnownedClass) OverrideDispose(cb func(*Object)) {
+	if cb == nil {
+		x.xDispose = 0
+	} else {
+		x.xDispose = purego.NewCallback(func(ObjectVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp))
+		})
+	}
+}
+
+// GetDispose gets the callback function.
+func (x *InitiallyUnownedClass) GetDispose() func(*Object) {
+	if x.xDispose == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDispose)
+	return func(ObjectVar *Object) {
+		rawCallback(ObjectVar.GoPointer())
+	}
+}
+
+// OverrideFinalize sets the callback function.
+func (x *InitiallyUnownedClass) OverrideFinalize(cb func(*Object)) {
+	if cb == nil {
+		x.xFinalize = 0
+	} else {
+		x.xFinalize = purego.NewCallback(func(ObjectVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp))
+		})
+	}
+}
+
+// GetFinalize gets the callback function.
+func (x *InitiallyUnownedClass) GetFinalize() func(*Object) {
+	if x.xFinalize == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xFinalize)
+	return func(ObjectVar *Object) {
+		rawCallback(ObjectVar.GoPointer())
+	}
+}
+
+// OverrideDispatchPropertiesChanged sets the callback function.
+func (x *InitiallyUnownedClass) OverrideDispatchPropertiesChanged(cb func(*Object, uint, **ParamSpec)) {
+	if cb == nil {
+		x.xDispatchPropertiesChanged = 0
+	} else {
+		x.xDispatchPropertiesChanged = purego.NewCallback(func(ObjectVarp uintptr, NPspecsVarp uint, PspecsVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp), NPspecsVarp, (**ParamSpec)(unsafe.Pointer(PspecsVarp)))
+		})
+	}
+}
+
+// GetDispatchPropertiesChanged gets the callback function.
+func (x *InitiallyUnownedClass) GetDispatchPropertiesChanged() func(*Object, uint, **ParamSpec) {
+	if x.xDispatchPropertiesChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr, NPspecsVarp uint, PspecsVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDispatchPropertiesChanged)
+	return func(ObjectVar *Object, NPspecsVar uint, PspecsVar **ParamSpec) {
+		rawCallback(ObjectVar.GoPointer(), NPspecsVar, *ConvertPtr(PspecsVar))
+	}
+}
+
+// OverrideNotify sets the callback function.
+func (x *InitiallyUnownedClass) OverrideNotify(cb func(*Object, *ParamSpec)) {
+	if cb == nil {
+		x.xNotify = 0
+	} else {
+		x.xNotify = purego.NewCallback(func(ObjectVarp uintptr, PspecVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp), ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetNotify gets the callback function.
+func (x *InitiallyUnownedClass) GetNotify() func(*Object, *ParamSpec) {
+	if x.xNotify == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr, PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xNotify)
+	return func(ObjectVar *Object, PspecVar *ParamSpec) {
+		rawCallback(ObjectVar.GoPointer(), PspecVar.GoPointer())
+	}
+}
+
+// OverrideConstructed sets the callback function.
+func (x *InitiallyUnownedClass) OverrideConstructed(cb func(*Object)) {
+	if cb == nil {
+		x.xConstructed = 0
+	} else {
+		x.xConstructed = purego.NewCallback(func(ObjectVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp))
+		})
+	}
+}
+
+// GetConstructed gets the callback function.
+func (x *InitiallyUnownedClass) GetConstructed() func(*Object) {
+	if x.xConstructed == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xConstructed)
+	return func(ObjectVar *Object) {
+		rawCallback(ObjectVar.GoPointer())
+	}
 }
 
 // The class structure for the GObject type.
@@ -91,6 +301,22 @@ type ObjectClass struct {
 	GTypeClass uintptr
 
 	ConstructProperties *glib.SList
+
+	xConstructor uintptr
+
+	xSetProperty uintptr
+
+	xGetProperty uintptr
+
+	xDispose uintptr
+
+	xFinalize uintptr
+
+	xDispatchPropertiesChanged uintptr
+
+	xNotify uintptr
+
+	xConstructed uintptr
 
 	Flags uint
 
@@ -243,6 +469,206 @@ func (x *ObjectClass) OverrideProperty(PropertyIdVar uint, NameVar string) {
 
 }
 
+// OverrideConstructor sets the callback function.
+func (x *ObjectClass) OverrideConstructor(cb func(types.GType, uint, *ObjectConstructParam) *Object) {
+	if cb == nil {
+		x.xConstructor = 0
+	} else {
+		x.xConstructor = purego.NewCallback(func(TypeVarp types.GType, NConstructPropertiesVarp uint, ConstructPropertiesVarp *ObjectConstructParam) uintptr {
+			ret := cb(TypeVarp, NConstructPropertiesVarp, ConstructPropertiesVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetConstructor gets the callback function.
+func (x *ObjectClass) GetConstructor() func(types.GType, uint, *ObjectConstructParam) *Object {
+	if x.xConstructor == 0 {
+		return nil
+	}
+	var rawCallback func(TypeVarp types.GType, NConstructPropertiesVarp uint, ConstructPropertiesVarp *ObjectConstructParam) uintptr
+	purego.RegisterFunc(&rawCallback, x.xConstructor)
+	return func(TypeVar types.GType, NConstructPropertiesVar uint, ConstructPropertiesVar *ObjectConstructParam) *Object {
+		rawRet := rawCallback(TypeVar, NConstructPropertiesVar, ConstructPropertiesVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &Object{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideSetProperty sets the callback function.
+// The type of the @set_property function of #GObjectClass.
+func (x *ObjectClass) OverrideSetProperty(cb func(*Object, uint, *Value, *ParamSpec)) {
+	if cb == nil {
+		x.xSetProperty = 0
+	} else {
+		x.xSetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp), PropertyIdVarp, ValueVarp, ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetSetProperty gets the callback function.
+// The type of the @set_property function of #GObjectClass.
+func (x *ObjectClass) GetSetProperty() func(*Object, uint, *Value, *ParamSpec) {
+	if x.xSetProperty == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetProperty)
+	return func(ObjectVar *Object, PropertyIdVar uint, ValueVar *Value, PspecVar *ParamSpec) {
+		rawCallback(ObjectVar.GoPointer(), PropertyIdVar, ValueVar, PspecVar.GoPointer())
+	}
+}
+
+// OverrideGetProperty sets the callback function.
+// The type of the @get_property function of #GObjectClass.
+func (x *ObjectClass) OverrideGetProperty(cb func(*Object, uint, *Value, *ParamSpec)) {
+	if cb == nil {
+		x.xGetProperty = 0
+	} else {
+		x.xGetProperty = purego.NewCallback(func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp), PropertyIdVarp, ValueVarp, ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetGetProperty gets the callback function.
+// The type of the @get_property function of #GObjectClass.
+func (x *ObjectClass) GetGetProperty() func(*Object, uint, *Value, *ParamSpec) {
+	if x.xGetProperty == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr, PropertyIdVarp uint, ValueVarp *Value, PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xGetProperty)
+	return func(ObjectVar *Object, PropertyIdVar uint, ValueVar *Value, PspecVar *ParamSpec) {
+		rawCallback(ObjectVar.GoPointer(), PropertyIdVar, ValueVar, PspecVar.GoPointer())
+	}
+}
+
+// OverrideDispose sets the callback function.
+func (x *ObjectClass) OverrideDispose(cb func(*Object)) {
+	if cb == nil {
+		x.xDispose = 0
+	} else {
+		x.xDispose = purego.NewCallback(func(ObjectVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp))
+		})
+	}
+}
+
+// GetDispose gets the callback function.
+func (x *ObjectClass) GetDispose() func(*Object) {
+	if x.xDispose == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDispose)
+	return func(ObjectVar *Object) {
+		rawCallback(ObjectVar.GoPointer())
+	}
+}
+
+// OverrideFinalize sets the callback function.
+// The type of the @finalize function of #GObjectClass.
+func (x *ObjectClass) OverrideFinalize(cb func(*Object)) {
+	if cb == nil {
+		x.xFinalize = 0
+	} else {
+		x.xFinalize = purego.NewCallback(func(ObjectVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp))
+		})
+	}
+}
+
+// GetFinalize gets the callback function.
+// The type of the @finalize function of #GObjectClass.
+func (x *ObjectClass) GetFinalize() func(*Object) {
+	if x.xFinalize == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xFinalize)
+	return func(ObjectVar *Object) {
+		rawCallback(ObjectVar.GoPointer())
+	}
+}
+
+// OverrideDispatchPropertiesChanged sets the callback function.
+func (x *ObjectClass) OverrideDispatchPropertiesChanged(cb func(*Object, uint, **ParamSpec)) {
+	if cb == nil {
+		x.xDispatchPropertiesChanged = 0
+	} else {
+		x.xDispatchPropertiesChanged = purego.NewCallback(func(ObjectVarp uintptr, NPspecsVarp uint, PspecsVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp), NPspecsVarp, (**ParamSpec)(unsafe.Pointer(PspecsVarp)))
+		})
+	}
+}
+
+// GetDispatchPropertiesChanged gets the callback function.
+func (x *ObjectClass) GetDispatchPropertiesChanged() func(*Object, uint, **ParamSpec) {
+	if x.xDispatchPropertiesChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr, NPspecsVarp uint, PspecsVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDispatchPropertiesChanged)
+	return func(ObjectVar *Object, NPspecsVar uint, PspecsVar **ParamSpec) {
+		rawCallback(ObjectVar.GoPointer(), NPspecsVar, *ConvertPtr(PspecsVar))
+	}
+}
+
+// OverrideNotify sets the callback function.
+func (x *ObjectClass) OverrideNotify(cb func(*Object, *ParamSpec)) {
+	if cb == nil {
+		x.xNotify = 0
+	} else {
+		x.xNotify = purego.NewCallback(func(ObjectVarp uintptr, PspecVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp), ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetNotify gets the callback function.
+func (x *ObjectClass) GetNotify() func(*Object, *ParamSpec) {
+	if x.xNotify == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr, PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xNotify)
+	return func(ObjectVar *Object, PspecVar *ParamSpec) {
+		rawCallback(ObjectVar.GoPointer(), PspecVar.GoPointer())
+	}
+}
+
+// OverrideConstructed sets the callback function.
+func (x *ObjectClass) OverrideConstructed(cb func(*Object)) {
+	if cb == nil {
+		x.xConstructed = 0
+	} else {
+		x.xConstructed = purego.NewCallback(func(ObjectVarp uintptr) {
+			cb(ObjectNewFromInternalPtr(ObjectVarp))
+		})
+	}
+}
+
+// GetConstructed gets the callback function.
+func (x *ObjectClass) GetConstructed() func(*Object) {
+	if x.xConstructed == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xConstructed)
+	return func(ObjectVar *Object) {
+		rawCallback(ObjectVar.GoPointer())
+	}
+}
+
 // The GObjectConstructParam struct is an auxiliary structure used to hand
 // #GParamSpec/#GValue pairs to the @constructor of a #GObjectClass.
 type ObjectConstructParam struct {
@@ -382,7 +808,7 @@ func CclosureNewObjectSwap(CallbackFuncVar *Callback, ObjectVar *Object) *Closur
 	return cret
 }
 
-var xClearObject func(*uintptr)
+var xClearObject func(uintptr)
 
 // Clears a reference to a #GObject.
 //
@@ -396,7 +822,7 @@ var xClearObject func(*uintptr)
 // pointer casts.
 func ClearObject(ObjectPtrVar **Object) {
 
-	xClearObject(ConvertPtr(ObjectPtrVar))
+	xClearObject(*ConvertPtr(ObjectPtrVar))
 
 }
 

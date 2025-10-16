@@ -17,7 +17,7 @@ import (
 type BottomSheetClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *BottomSheetClass) GoPointer() uintptr {

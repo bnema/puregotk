@@ -15,7 +15,7 @@ import (
 type HeaderBarClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *HeaderBarClass) GoPointer() uintptr {

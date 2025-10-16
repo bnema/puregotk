@@ -16,7 +16,7 @@ import (
 type FlapClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *FlapClass) GoPointer() uintptr {

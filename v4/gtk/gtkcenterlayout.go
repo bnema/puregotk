@@ -14,7 +14,7 @@ import (
 type CenterLayoutClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutManagerClass
 }
 
 func (x *CenterLayoutClass) GoPointer() uintptr {

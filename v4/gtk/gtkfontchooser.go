@@ -24,11 +24,216 @@ type FontChooserIface struct {
 
 	BaseIface uintptr
 
+	xGetFontFamily uintptr
+
+	xGetFontFace uintptr
+
+	xGetFontSize uintptr
+
+	xSetFilterFunc uintptr
+
+	xFontActivated uintptr
+
+	xSetFontMap uintptr
+
+	xGetFontMap uintptr
+
 	Padding [10]uintptr
 }
 
 func (x *FontChooserIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetFontFamily sets the callback function.
+func (x *FontChooserIface) OverrideGetFontFamily(cb func(FontChooser) *pango.FontFamily) {
+	if cb == nil {
+		x.xGetFontFamily = 0
+	} else {
+		x.xGetFontFamily = purego.NewCallback(func(FontchooserVarp uintptr) uintptr {
+			ret := cb(&FontChooserBase{Ptr: FontchooserVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetFontFamily gets the callback function.
+func (x *FontChooserIface) GetGetFontFamily() func(FontChooser) *pango.FontFamily {
+	if x.xGetFontFamily == 0 {
+		return nil
+	}
+	var rawCallback func(FontchooserVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetFontFamily)
+	return func(FontchooserVar FontChooser) *pango.FontFamily {
+		rawRet := rawCallback(FontchooserVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &pango.FontFamily{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetFontFace sets the callback function.
+func (x *FontChooserIface) OverrideGetFontFace(cb func(FontChooser) *pango.FontFace) {
+	if cb == nil {
+		x.xGetFontFace = 0
+	} else {
+		x.xGetFontFace = purego.NewCallback(func(FontchooserVarp uintptr) uintptr {
+			ret := cb(&FontChooserBase{Ptr: FontchooserVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetFontFace gets the callback function.
+func (x *FontChooserIface) GetGetFontFace() func(FontChooser) *pango.FontFace {
+	if x.xGetFontFace == 0 {
+		return nil
+	}
+	var rawCallback func(FontchooserVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetFontFace)
+	return func(FontchooserVar FontChooser) *pango.FontFace {
+		rawRet := rawCallback(FontchooserVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &pango.FontFace{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetFontSize sets the callback function.
+func (x *FontChooserIface) OverrideGetFontSize(cb func(FontChooser) int) {
+	if cb == nil {
+		x.xGetFontSize = 0
+	} else {
+		x.xGetFontSize = purego.NewCallback(func(FontchooserVarp uintptr) int {
+			return cb(&FontChooserBase{Ptr: FontchooserVarp})
+		})
+	}
+}
+
+// GetGetFontSize gets the callback function.
+func (x *FontChooserIface) GetGetFontSize() func(FontChooser) int {
+	if x.xGetFontSize == 0 {
+		return nil
+	}
+	var rawCallback func(FontchooserVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xGetFontSize)
+	return func(FontchooserVar FontChooser) int {
+		return rawCallback(FontchooserVar.GoPointer())
+	}
+}
+
+// OverrideSetFilterFunc sets the callback function.
+func (x *FontChooserIface) OverrideSetFilterFunc(cb func(FontChooser, *FontFilterFunc, uintptr, *glib.DestroyNotify)) {
+	if cb == nil {
+		x.xSetFilterFunc = 0
+	} else {
+		x.xSetFilterFunc = purego.NewCallback(func(FontchooserVarp uintptr, FilterVarp uintptr, UserDataVarp uintptr, DestroyVarp uintptr) {
+			cb(&FontChooserBase{Ptr: FontchooserVarp}, (*FontFilterFunc)(unsafe.Pointer(FilterVarp)), UserDataVarp, (*glib.DestroyNotify)(unsafe.Pointer(DestroyVarp)))
+		})
+	}
+}
+
+// GetSetFilterFunc gets the callback function.
+func (x *FontChooserIface) GetSetFilterFunc() func(FontChooser, *FontFilterFunc, uintptr, *glib.DestroyNotify) {
+	if x.xSetFilterFunc == 0 {
+		return nil
+	}
+	var rawCallback func(FontchooserVarp uintptr, FilterVarp uintptr, UserDataVarp uintptr, DestroyVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetFilterFunc)
+	return func(FontchooserVar FontChooser, FilterVar *FontFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
+		rawCallback(FontchooserVar.GoPointer(), glib.NewCallbackNullable(FilterVar), UserDataVar, glib.NewCallback(DestroyVar))
+	}
+}
+
+// OverrideFontActivated sets the callback function.
+func (x *FontChooserIface) OverrideFontActivated(cb func(FontChooser, string)) {
+	if cb == nil {
+		x.xFontActivated = 0
+	} else {
+		x.xFontActivated = purego.NewCallback(func(ChooserVarp uintptr, FontnameVarp string) {
+			cb(&FontChooserBase{Ptr: ChooserVarp}, FontnameVarp)
+		})
+	}
+}
+
+// GetFontActivated gets the callback function.
+func (x *FontChooserIface) GetFontActivated() func(FontChooser, string) {
+	if x.xFontActivated == 0 {
+		return nil
+	}
+	var rawCallback func(ChooserVarp uintptr, FontnameVarp string)
+	purego.RegisterFunc(&rawCallback, x.xFontActivated)
+	return func(ChooserVar FontChooser, FontnameVar string) {
+		rawCallback(ChooserVar.GoPointer(), FontnameVar)
+	}
+}
+
+// OverrideSetFontMap sets the callback function.
+func (x *FontChooserIface) OverrideSetFontMap(cb func(FontChooser, *pango.FontMap)) {
+	if cb == nil {
+		x.xSetFontMap = 0
+	} else {
+		x.xSetFontMap = purego.NewCallback(func(FontchooserVarp uintptr, FontmapVarp uintptr) {
+			cb(&FontChooserBase{Ptr: FontchooserVarp}, pango.FontMapNewFromInternalPtr(FontmapVarp))
+		})
+	}
+}
+
+// GetSetFontMap gets the callback function.
+func (x *FontChooserIface) GetSetFontMap() func(FontChooser, *pango.FontMap) {
+	if x.xSetFontMap == 0 {
+		return nil
+	}
+	var rawCallback func(FontchooserVarp uintptr, FontmapVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetFontMap)
+	return func(FontchooserVar FontChooser, FontmapVar *pango.FontMap) {
+		rawCallback(FontchooserVar.GoPointer(), FontmapVar.GoPointer())
+	}
+}
+
+// OverrideGetFontMap sets the callback function.
+func (x *FontChooserIface) OverrideGetFontMap(cb func(FontChooser) *pango.FontMap) {
+	if cb == nil {
+		x.xGetFontMap = 0
+	} else {
+		x.xGetFontMap = purego.NewCallback(func(FontchooserVarp uintptr) uintptr {
+			ret := cb(&FontChooserBase{Ptr: FontchooserVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetFontMap gets the callback function.
+func (x *FontChooserIface) GetGetFontMap() func(FontChooser) *pango.FontMap {
+	if x.xGetFontMap == 0 {
+		return nil
+	}
+	var rawCallback func(FontchooserVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetFontMap)
+	return func(FontchooserVar FontChooser) *pango.FontMap {
+		rawRet := rawCallback(FontchooserVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &pango.FontMap{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // `GtkFontChooser` is an interface that can be implemented by widgets

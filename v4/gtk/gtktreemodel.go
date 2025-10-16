@@ -72,10 +72,510 @@ type TreeModelIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xRowChanged uintptr
+
+	xRowInserted uintptr
+
+	xRowHasChildToggled uintptr
+
+	xRowDeleted uintptr
+
+	xRowsReordered uintptr
+
+	xGetFlags uintptr
+
+	xGetNColumns uintptr
+
+	xGetColumnType uintptr
+
+	xGetIter uintptr
+
+	xGetPath uintptr
+
+	xGetValue uintptr
+
+	xIterNext uintptr
+
+	xIterPrevious uintptr
+
+	xIterChildren uintptr
+
+	xIterHasChild uintptr
+
+	xIterNChildren uintptr
+
+	xIterNthChild uintptr
+
+	xIterParent uintptr
+
+	xRefNode uintptr
+
+	xUnrefNode uintptr
 }
 
 func (x *TreeModelIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideRowChanged sets the callback function.
+func (x *TreeModelIface) OverrideRowChanged(cb func(TreeModel, *TreePath, *TreeIter)) {
+	if cb == nil {
+		x.xRowChanged = 0
+	} else {
+		x.xRowChanged = purego.NewCallback(func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter) {
+			cb(&TreeModelBase{Ptr: TreeModelVarp}, PathVarp, IterVarp)
+		})
+	}
+}
+
+// GetRowChanged gets the callback function.
+func (x *TreeModelIface) GetRowChanged() func(TreeModel, *TreePath, *TreeIter) {
+	if x.xRowChanged == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter)
+	purego.RegisterFunc(&rawCallback, x.xRowChanged)
+	return func(TreeModelVar TreeModel, PathVar *TreePath, IterVar *TreeIter) {
+		rawCallback(TreeModelVar.GoPointer(), PathVar, IterVar)
+	}
+}
+
+// OverrideRowInserted sets the callback function.
+func (x *TreeModelIface) OverrideRowInserted(cb func(TreeModel, *TreePath, *TreeIter)) {
+	if cb == nil {
+		x.xRowInserted = 0
+	} else {
+		x.xRowInserted = purego.NewCallback(func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter) {
+			cb(&TreeModelBase{Ptr: TreeModelVarp}, PathVarp, IterVarp)
+		})
+	}
+}
+
+// GetRowInserted gets the callback function.
+func (x *TreeModelIface) GetRowInserted() func(TreeModel, *TreePath, *TreeIter) {
+	if x.xRowInserted == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter)
+	purego.RegisterFunc(&rawCallback, x.xRowInserted)
+	return func(TreeModelVar TreeModel, PathVar *TreePath, IterVar *TreeIter) {
+		rawCallback(TreeModelVar.GoPointer(), PathVar, IterVar)
+	}
+}
+
+// OverrideRowHasChildToggled sets the callback function.
+func (x *TreeModelIface) OverrideRowHasChildToggled(cb func(TreeModel, *TreePath, *TreeIter)) {
+	if cb == nil {
+		x.xRowHasChildToggled = 0
+	} else {
+		x.xRowHasChildToggled = purego.NewCallback(func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter) {
+			cb(&TreeModelBase{Ptr: TreeModelVarp}, PathVarp, IterVarp)
+		})
+	}
+}
+
+// GetRowHasChildToggled gets the callback function.
+func (x *TreeModelIface) GetRowHasChildToggled() func(TreeModel, *TreePath, *TreeIter) {
+	if x.xRowHasChildToggled == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter)
+	purego.RegisterFunc(&rawCallback, x.xRowHasChildToggled)
+	return func(TreeModelVar TreeModel, PathVar *TreePath, IterVar *TreeIter) {
+		rawCallback(TreeModelVar.GoPointer(), PathVar, IterVar)
+	}
+}
+
+// OverrideRowDeleted sets the callback function.
+func (x *TreeModelIface) OverrideRowDeleted(cb func(TreeModel, *TreePath)) {
+	if cb == nil {
+		x.xRowDeleted = 0
+	} else {
+		x.xRowDeleted = purego.NewCallback(func(TreeModelVarp uintptr, PathVarp *TreePath) {
+			cb(&TreeModelBase{Ptr: TreeModelVarp}, PathVarp)
+		})
+	}
+}
+
+// GetRowDeleted gets the callback function.
+func (x *TreeModelIface) GetRowDeleted() func(TreeModel, *TreePath) {
+	if x.xRowDeleted == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, PathVarp *TreePath)
+	purego.RegisterFunc(&rawCallback, x.xRowDeleted)
+	return func(TreeModelVar TreeModel, PathVar *TreePath) {
+		rawCallback(TreeModelVar.GoPointer(), PathVar)
+	}
+}
+
+// OverrideRowsReordered sets the callback function.
+func (x *TreeModelIface) OverrideRowsReordered(cb func(TreeModel, *TreePath, *TreeIter, int)) {
+	if cb == nil {
+		x.xRowsReordered = 0
+	} else {
+		x.xRowsReordered = purego.NewCallback(func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter, NewOrderVarp int) {
+			cb(&TreeModelBase{Ptr: TreeModelVarp}, PathVarp, IterVarp, NewOrderVarp)
+		})
+	}
+}
+
+// GetRowsReordered gets the callback function.
+func (x *TreeModelIface) GetRowsReordered() func(TreeModel, *TreePath, *TreeIter, int) {
+	if x.xRowsReordered == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, PathVarp *TreePath, IterVarp *TreeIter, NewOrderVarp int)
+	purego.RegisterFunc(&rawCallback, x.xRowsReordered)
+	return func(TreeModelVar TreeModel, PathVar *TreePath, IterVar *TreeIter, NewOrderVar int) {
+		rawCallback(TreeModelVar.GoPointer(), PathVar, IterVar, NewOrderVar)
+	}
+}
+
+// OverrideGetFlags sets the callback function.
+func (x *TreeModelIface) OverrideGetFlags(cb func(TreeModel) TreeModelFlags) {
+	if cb == nil {
+		x.xGetFlags = 0
+	} else {
+		x.xGetFlags = purego.NewCallback(func(TreeModelVarp uintptr) TreeModelFlags {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp})
+		})
+	}
+}
+
+// GetGetFlags gets the callback function.
+func (x *TreeModelIface) GetGetFlags() func(TreeModel) TreeModelFlags {
+	if x.xGetFlags == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr) TreeModelFlags
+	purego.RegisterFunc(&rawCallback, x.xGetFlags)
+	return func(TreeModelVar TreeModel) TreeModelFlags {
+		return rawCallback(TreeModelVar.GoPointer())
+	}
+}
+
+// OverrideGetNColumns sets the callback function.
+func (x *TreeModelIface) OverrideGetNColumns(cb func(TreeModel) int) {
+	if cb == nil {
+		x.xGetNColumns = 0
+	} else {
+		x.xGetNColumns = purego.NewCallback(func(TreeModelVarp uintptr) int {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp})
+		})
+	}
+}
+
+// GetGetNColumns gets the callback function.
+func (x *TreeModelIface) GetGetNColumns() func(TreeModel) int {
+	if x.xGetNColumns == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xGetNColumns)
+	return func(TreeModelVar TreeModel) int {
+		return rawCallback(TreeModelVar.GoPointer())
+	}
+}
+
+// OverrideGetColumnType sets the callback function.
+func (x *TreeModelIface) OverrideGetColumnType(cb func(TreeModel, int) types.GType) {
+	if cb == nil {
+		x.xGetColumnType = 0
+	} else {
+		x.xGetColumnType = purego.NewCallback(func(TreeModelVarp uintptr, IndexVarp int) types.GType {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IndexVarp)
+		})
+	}
+}
+
+// GetGetColumnType gets the callback function.
+func (x *TreeModelIface) GetGetColumnType() func(TreeModel, int) types.GType {
+	if x.xGetColumnType == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IndexVarp int) types.GType
+	purego.RegisterFunc(&rawCallback, x.xGetColumnType)
+	return func(TreeModelVar TreeModel, IndexVar int) types.GType {
+		return rawCallback(TreeModelVar.GoPointer(), IndexVar)
+	}
+}
+
+// OverrideGetIter sets the callback function.
+func (x *TreeModelIface) OverrideGetIter(cb func(TreeModel, *TreeIter, *TreePath) bool) {
+	if cb == nil {
+		x.xGetIter = 0
+	} else {
+		x.xGetIter = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter, PathVarp *TreePath) bool {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp, PathVarp)
+		})
+	}
+}
+
+// GetGetIter gets the callback function.
+func (x *TreeModelIface) GetGetIter() func(TreeModel, *TreeIter, *TreePath) bool {
+	if x.xGetIter == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter, PathVarp *TreePath) bool
+	purego.RegisterFunc(&rawCallback, x.xGetIter)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter, PathVar *TreePath) bool {
+		return rawCallback(TreeModelVar.GoPointer(), IterVar, PathVar)
+	}
+}
+
+// OverrideGetPath sets the callback function.
+func (x *TreeModelIface) OverrideGetPath(cb func(TreeModel, *TreeIter) *TreePath) {
+	if cb == nil {
+		x.xGetPath = 0
+	} else {
+		x.xGetPath = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) *TreePath {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp)
+		})
+	}
+}
+
+// GetGetPath gets the callback function.
+func (x *TreeModelIface) GetGetPath() func(TreeModel, *TreeIter) *TreePath {
+	if x.xGetPath == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter) *TreePath
+	purego.RegisterFunc(&rawCallback, x.xGetPath)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter) *TreePath {
+		return rawCallback(TreeModelVar.GoPointer(), IterVar)
+	}
+}
+
+// OverrideGetValue sets the callback function.
+func (x *TreeModelIface) OverrideGetValue(cb func(TreeModel, *TreeIter, int, *gobject.Value)) {
+	if cb == nil {
+		x.xGetValue = 0
+	} else {
+		x.xGetValue = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter, ColumnVarp int, ValueVarp *gobject.Value) {
+			cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp, ColumnVarp, ValueVarp)
+		})
+	}
+}
+
+// GetGetValue gets the callback function.
+func (x *TreeModelIface) GetGetValue() func(TreeModel, *TreeIter, int, *gobject.Value) {
+	if x.xGetValue == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter, ColumnVarp int, ValueVarp *gobject.Value)
+	purego.RegisterFunc(&rawCallback, x.xGetValue)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter, ColumnVar int, ValueVar *gobject.Value) {
+		rawCallback(TreeModelVar.GoPointer(), IterVar, ColumnVar, ValueVar)
+	}
+}
+
+// OverrideIterNext sets the callback function.
+func (x *TreeModelIface) OverrideIterNext(cb func(TreeModel, *TreeIter) bool) {
+	if cb == nil {
+		x.xIterNext = 0
+	} else {
+		x.xIterNext = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) bool {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp)
+		})
+	}
+}
+
+// GetIterNext gets the callback function.
+func (x *TreeModelIface) GetIterNext() func(TreeModel, *TreeIter) bool {
+	if x.xIterNext == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter) bool
+	purego.RegisterFunc(&rawCallback, x.xIterNext)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter) bool {
+		return rawCallback(TreeModelVar.GoPointer(), IterVar)
+	}
+}
+
+// OverrideIterPrevious sets the callback function.
+func (x *TreeModelIface) OverrideIterPrevious(cb func(TreeModel, *TreeIter) bool) {
+	if cb == nil {
+		x.xIterPrevious = 0
+	} else {
+		x.xIterPrevious = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) bool {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp)
+		})
+	}
+}
+
+// GetIterPrevious gets the callback function.
+func (x *TreeModelIface) GetIterPrevious() func(TreeModel, *TreeIter) bool {
+	if x.xIterPrevious == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter) bool
+	purego.RegisterFunc(&rawCallback, x.xIterPrevious)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter) bool {
+		return rawCallback(TreeModelVar.GoPointer(), IterVar)
+	}
+}
+
+// OverrideIterChildren sets the callback function.
+func (x *TreeModelIface) OverrideIterChildren(cb func(TreeModel, *TreeIter, *TreeIter) bool) {
+	if cb == nil {
+		x.xIterChildren = 0
+	} else {
+		x.xIterChildren = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter, ParentVarp *TreeIter) bool {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp, ParentVarp)
+		})
+	}
+}
+
+// GetIterChildren gets the callback function.
+func (x *TreeModelIface) GetIterChildren() func(TreeModel, *TreeIter, *TreeIter) bool {
+	if x.xIterChildren == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter, ParentVarp *TreeIter) bool
+	purego.RegisterFunc(&rawCallback, x.xIterChildren)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter, ParentVar *TreeIter) bool {
+		return rawCallback(TreeModelVar.GoPointer(), IterVar, ParentVar)
+	}
+}
+
+// OverrideIterHasChild sets the callback function.
+func (x *TreeModelIface) OverrideIterHasChild(cb func(TreeModel, *TreeIter) bool) {
+	if cb == nil {
+		x.xIterHasChild = 0
+	} else {
+		x.xIterHasChild = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) bool {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp)
+		})
+	}
+}
+
+// GetIterHasChild gets the callback function.
+func (x *TreeModelIface) GetIterHasChild() func(TreeModel, *TreeIter) bool {
+	if x.xIterHasChild == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter) bool
+	purego.RegisterFunc(&rawCallback, x.xIterHasChild)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter) bool {
+		return rawCallback(TreeModelVar.GoPointer(), IterVar)
+	}
+}
+
+// OverrideIterNChildren sets the callback function.
+func (x *TreeModelIface) OverrideIterNChildren(cb func(TreeModel, *TreeIter) int) {
+	if cb == nil {
+		x.xIterNChildren = 0
+	} else {
+		x.xIterNChildren = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) int {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp)
+		})
+	}
+}
+
+// GetIterNChildren gets the callback function.
+func (x *TreeModelIface) GetIterNChildren() func(TreeModel, *TreeIter) int {
+	if x.xIterNChildren == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter) int
+	purego.RegisterFunc(&rawCallback, x.xIterNChildren)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter) int {
+		return rawCallback(TreeModelVar.GoPointer(), IterVar)
+	}
+}
+
+// OverrideIterNthChild sets the callback function.
+func (x *TreeModelIface) OverrideIterNthChild(cb func(TreeModel, *TreeIter, *TreeIter, int) bool) {
+	if cb == nil {
+		x.xIterNthChild = 0
+	} else {
+		x.xIterNthChild = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter, ParentVarp *TreeIter, NVarp int) bool {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp, ParentVarp, NVarp)
+		})
+	}
+}
+
+// GetIterNthChild gets the callback function.
+func (x *TreeModelIface) GetIterNthChild() func(TreeModel, *TreeIter, *TreeIter, int) bool {
+	if x.xIterNthChild == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter, ParentVarp *TreeIter, NVarp int) bool
+	purego.RegisterFunc(&rawCallback, x.xIterNthChild)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter, ParentVar *TreeIter, NVar int) bool {
+		return rawCallback(TreeModelVar.GoPointer(), IterVar, ParentVar, NVar)
+	}
+}
+
+// OverrideIterParent sets the callback function.
+func (x *TreeModelIface) OverrideIterParent(cb func(TreeModel, *TreeIter, *TreeIter) bool) {
+	if cb == nil {
+		x.xIterParent = 0
+	} else {
+		x.xIterParent = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter, ChildVarp *TreeIter) bool {
+			return cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp, ChildVarp)
+		})
+	}
+}
+
+// GetIterParent gets the callback function.
+func (x *TreeModelIface) GetIterParent() func(TreeModel, *TreeIter, *TreeIter) bool {
+	if x.xIterParent == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter, ChildVarp *TreeIter) bool
+	purego.RegisterFunc(&rawCallback, x.xIterParent)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter, ChildVar *TreeIter) bool {
+		return rawCallback(TreeModelVar.GoPointer(), IterVar, ChildVar)
+	}
+}
+
+// OverrideRefNode sets the callback function.
+func (x *TreeModelIface) OverrideRefNode(cb func(TreeModel, *TreeIter)) {
+	if cb == nil {
+		x.xRefNode = 0
+	} else {
+		x.xRefNode = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) {
+			cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp)
+		})
+	}
+}
+
+// GetRefNode gets the callback function.
+func (x *TreeModelIface) GetRefNode() func(TreeModel, *TreeIter) {
+	if x.xRefNode == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter)
+	purego.RegisterFunc(&rawCallback, x.xRefNode)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter) {
+		rawCallback(TreeModelVar.GoPointer(), IterVar)
+	}
+}
+
+// OverrideUnrefNode sets the callback function.
+func (x *TreeModelIface) OverrideUnrefNode(cb func(TreeModel, *TreeIter)) {
+	if cb == nil {
+		x.xUnrefNode = 0
+	} else {
+		x.xUnrefNode = purego.NewCallback(func(TreeModelVarp uintptr, IterVarp *TreeIter) {
+			cb(&TreeModelBase{Ptr: TreeModelVarp}, IterVarp)
+		})
+	}
+}
+
+// GetUnrefNode gets the callback function.
+func (x *TreeModelIface) GetUnrefNode() func(TreeModel, *TreeIter) {
+	if x.xUnrefNode == 0 {
+		return nil
+	}
+	var rawCallback func(TreeModelVarp uintptr, IterVarp *TreeIter)
+	purego.RegisterFunc(&rawCallback, x.xUnrefNode)
+	return func(TreeModelVar TreeModel, IterVar *TreeIter) {
+		rawCallback(TreeModelVar.GoPointer(), IterVar)
+	}
 }
 
 // An opaque structure representing a path to a row in a model.

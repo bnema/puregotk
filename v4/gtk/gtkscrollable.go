@@ -15,10 +15,35 @@ type ScrollableInterface struct {
 	_ structs.HostLayout
 
 	BaseIface uintptr
+
+	xGetBorder uintptr
 }
 
 func (x *ScrollableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetBorder sets the callback function.
+func (x *ScrollableInterface) OverrideGetBorder(cb func(Scrollable, *Border) bool) {
+	if cb == nil {
+		x.xGetBorder = 0
+	} else {
+		x.xGetBorder = purego.NewCallback(func(ScrollableVarp uintptr, BorderVarp *Border) bool {
+			return cb(&ScrollableBase{Ptr: ScrollableVarp}, BorderVarp)
+		})
+	}
+}
+
+// GetGetBorder gets the callback function.
+func (x *ScrollableInterface) GetGetBorder() func(Scrollable, *Border) bool {
+	if x.xGetBorder == 0 {
+		return nil
+	}
+	var rawCallback func(ScrollableVarp uintptr, BorderVarp *Border) bool
+	purego.RegisterFunc(&rawCallback, x.xGetBorder)
+	return func(ScrollableVar Scrollable, BorderVar *Border) bool {
+		return rawCallback(ScrollableVar.GoPointer(), BorderVar)
+	}
 }
 
 // `GtkScrollable` is an interface for widgets with native scrolling ability.

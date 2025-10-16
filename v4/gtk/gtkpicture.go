@@ -17,7 +17,7 @@ import (
 type PictureClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
 }
 
 func (x *PictureClass) GoPointer() uintptr {

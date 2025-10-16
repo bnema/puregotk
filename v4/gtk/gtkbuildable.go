@@ -7,6 +7,8 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/glib"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -17,10 +19,280 @@ type BuildableIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xSetId uintptr
+
+	xGetId uintptr
+
+	xAddChild uintptr
+
+	xSetBuildableProperty uintptr
+
+	xConstructChild uintptr
+
+	xCustomTagStart uintptr
+
+	xCustomTagEnd uintptr
+
+	xCustomFinished uintptr
+
+	xParserFinished uintptr
+
+	xGetInternalChild uintptr
 }
 
 func (x *BuildableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideSetId sets the callback function.
+func (x *BuildableIface) OverrideSetId(cb func(Buildable, string)) {
+	if cb == nil {
+		x.xSetId = 0
+	} else {
+		x.xSetId = purego.NewCallback(func(BuildableVarp uintptr, IdVarp string) {
+			cb(&BuildableBase{Ptr: BuildableVarp}, IdVarp)
+		})
+	}
+}
+
+// GetSetId gets the callback function.
+func (x *BuildableIface) GetSetId() func(Buildable, string) {
+	if x.xSetId == 0 {
+		return nil
+	}
+	var rawCallback func(BuildableVarp uintptr, IdVarp string)
+	purego.RegisterFunc(&rawCallback, x.xSetId)
+	return func(BuildableVar Buildable, IdVar string) {
+		rawCallback(BuildableVar.GoPointer(), IdVar)
+	}
+}
+
+// OverrideGetId sets the callback function.
+func (x *BuildableIface) OverrideGetId(cb func(Buildable) string) {
+	if cb == nil {
+		x.xGetId = 0
+	} else {
+		x.xGetId = purego.NewCallback(func(BuildableVarp uintptr) string {
+			return cb(&BuildableBase{Ptr: BuildableVarp})
+		})
+	}
+}
+
+// GetGetId gets the callback function.
+func (x *BuildableIface) GetGetId() func(Buildable) string {
+	if x.xGetId == 0 {
+		return nil
+	}
+	var rawCallback func(BuildableVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetId)
+	return func(BuildableVar Buildable) string {
+		return rawCallback(BuildableVar.GoPointer())
+	}
+}
+
+// OverrideAddChild sets the callback function.
+func (x *BuildableIface) OverrideAddChild(cb func(Buildable, *Builder, *gobject.Object, string)) {
+	if cb == nil {
+		x.xAddChild = 0
+	} else {
+		x.xAddChild = purego.NewCallback(func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TypeVarp string) {
+			cb(&BuildableBase{Ptr: BuildableVarp}, BuilderNewFromInternalPtr(BuilderVarp), gobject.ObjectNewFromInternalPtr(ChildVarp), TypeVarp)
+		})
+	}
+}
+
+// GetAddChild gets the callback function.
+func (x *BuildableIface) GetAddChild() func(Buildable, *Builder, *gobject.Object, string) {
+	if x.xAddChild == 0 {
+		return nil
+	}
+	var rawCallback func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TypeVarp string)
+	purego.RegisterFunc(&rawCallback, x.xAddChild)
+	return func(BuildableVar Buildable, BuilderVar *Builder, ChildVar *gobject.Object, TypeVar string) {
+		rawCallback(BuildableVar.GoPointer(), BuilderVar.GoPointer(), ChildVar.GoPointer(), TypeVar)
+	}
+}
+
+// OverrideSetBuildableProperty sets the callback function.
+func (x *BuildableIface) OverrideSetBuildableProperty(cb func(Buildable, *Builder, string, *gobject.Value)) {
+	if cb == nil {
+		x.xSetBuildableProperty = 0
+	} else {
+		x.xSetBuildableProperty = purego.NewCallback(func(BuildableVarp uintptr, BuilderVarp uintptr, NameVarp string, ValueVarp *gobject.Value) {
+			cb(&BuildableBase{Ptr: BuildableVarp}, BuilderNewFromInternalPtr(BuilderVarp), NameVarp, ValueVarp)
+		})
+	}
+}
+
+// GetSetBuildableProperty gets the callback function.
+func (x *BuildableIface) GetSetBuildableProperty() func(Buildable, *Builder, string, *gobject.Value) {
+	if x.xSetBuildableProperty == 0 {
+		return nil
+	}
+	var rawCallback func(BuildableVarp uintptr, BuilderVarp uintptr, NameVarp string, ValueVarp *gobject.Value)
+	purego.RegisterFunc(&rawCallback, x.xSetBuildableProperty)
+	return func(BuildableVar Buildable, BuilderVar *Builder, NameVar string, ValueVar *gobject.Value) {
+		rawCallback(BuildableVar.GoPointer(), BuilderVar.GoPointer(), NameVar, ValueVar)
+	}
+}
+
+// OverrideConstructChild sets the callback function.
+func (x *BuildableIface) OverrideConstructChild(cb func(Buildable, *Builder, string) *gobject.Object) {
+	if cb == nil {
+		x.xConstructChild = 0
+	} else {
+		x.xConstructChild = purego.NewCallback(func(BuildableVarp uintptr, BuilderVarp uintptr, NameVarp string) uintptr {
+			ret := cb(&BuildableBase{Ptr: BuildableVarp}, BuilderNewFromInternalPtr(BuilderVarp), NameVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetConstructChild gets the callback function.
+func (x *BuildableIface) GetConstructChild() func(Buildable, *Builder, string) *gobject.Object {
+	if x.xConstructChild == 0 {
+		return nil
+	}
+	var rawCallback func(BuildableVarp uintptr, BuilderVarp uintptr, NameVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xConstructChild)
+	return func(BuildableVar Buildable, BuilderVar *Builder, NameVar string) *gobject.Object {
+		rawRet := rawCallback(BuildableVar.GoPointer(), BuilderVar.GoPointer(), NameVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &gobject.Object{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCustomTagStart sets the callback function.
+func (x *BuildableIface) OverrideCustomTagStart(cb func(Buildable, *Builder, *gobject.Object, string, *BuildableParser, uintptr) bool) {
+	if cb == nil {
+		x.xCustomTagStart = 0
+	} else {
+		x.xCustomTagStart = purego.NewCallback(func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TagnameVarp string, ParserVarp *BuildableParser, DataVarp uintptr) bool {
+			return cb(&BuildableBase{Ptr: BuildableVarp}, BuilderNewFromInternalPtr(BuilderVarp), gobject.ObjectNewFromInternalPtr(ChildVarp), TagnameVarp, ParserVarp, DataVarp)
+		})
+	}
+}
+
+// GetCustomTagStart gets the callback function.
+func (x *BuildableIface) GetCustomTagStart() func(Buildable, *Builder, *gobject.Object, string, *BuildableParser, uintptr) bool {
+	if x.xCustomTagStart == 0 {
+		return nil
+	}
+	var rawCallback func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TagnameVarp string, ParserVarp *BuildableParser, DataVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCustomTagStart)
+	return func(BuildableVar Buildable, BuilderVar *Builder, ChildVar *gobject.Object, TagnameVar string, ParserVar *BuildableParser, DataVar uintptr) bool {
+		return rawCallback(BuildableVar.GoPointer(), BuilderVar.GoPointer(), ChildVar.GoPointer(), TagnameVar, ParserVar, DataVar)
+	}
+}
+
+// OverrideCustomTagEnd sets the callback function.
+func (x *BuildableIface) OverrideCustomTagEnd(cb func(Buildable, *Builder, *gobject.Object, string, uintptr)) {
+	if cb == nil {
+		x.xCustomTagEnd = 0
+	} else {
+		x.xCustomTagEnd = purego.NewCallback(func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TagnameVarp string, DataVarp uintptr) {
+			cb(&BuildableBase{Ptr: BuildableVarp}, BuilderNewFromInternalPtr(BuilderVarp), gobject.ObjectNewFromInternalPtr(ChildVarp), TagnameVarp, DataVarp)
+		})
+	}
+}
+
+// GetCustomTagEnd gets the callback function.
+func (x *BuildableIface) GetCustomTagEnd() func(Buildable, *Builder, *gobject.Object, string, uintptr) {
+	if x.xCustomTagEnd == 0 {
+		return nil
+	}
+	var rawCallback func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TagnameVarp string, DataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCustomTagEnd)
+	return func(BuildableVar Buildable, BuilderVar *Builder, ChildVar *gobject.Object, TagnameVar string, DataVar uintptr) {
+		rawCallback(BuildableVar.GoPointer(), BuilderVar.GoPointer(), ChildVar.GoPointer(), TagnameVar, DataVar)
+	}
+}
+
+// OverrideCustomFinished sets the callback function.
+func (x *BuildableIface) OverrideCustomFinished(cb func(Buildable, *Builder, *gobject.Object, string, uintptr)) {
+	if cb == nil {
+		x.xCustomFinished = 0
+	} else {
+		x.xCustomFinished = purego.NewCallback(func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TagnameVarp string, DataVarp uintptr) {
+			cb(&BuildableBase{Ptr: BuildableVarp}, BuilderNewFromInternalPtr(BuilderVarp), gobject.ObjectNewFromInternalPtr(ChildVarp), TagnameVarp, DataVarp)
+		})
+	}
+}
+
+// GetCustomFinished gets the callback function.
+func (x *BuildableIface) GetCustomFinished() func(Buildable, *Builder, *gobject.Object, string, uintptr) {
+	if x.xCustomFinished == 0 {
+		return nil
+	}
+	var rawCallback func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TagnameVarp string, DataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCustomFinished)
+	return func(BuildableVar Buildable, BuilderVar *Builder, ChildVar *gobject.Object, TagnameVar string, DataVar uintptr) {
+		rawCallback(BuildableVar.GoPointer(), BuilderVar.GoPointer(), ChildVar.GoPointer(), TagnameVar, DataVar)
+	}
+}
+
+// OverrideParserFinished sets the callback function.
+func (x *BuildableIface) OverrideParserFinished(cb func(Buildable, *Builder)) {
+	if cb == nil {
+		x.xParserFinished = 0
+	} else {
+		x.xParserFinished = purego.NewCallback(func(BuildableVarp uintptr, BuilderVarp uintptr) {
+			cb(&BuildableBase{Ptr: BuildableVarp}, BuilderNewFromInternalPtr(BuilderVarp))
+		})
+	}
+}
+
+// GetParserFinished gets the callback function.
+func (x *BuildableIface) GetParserFinished() func(Buildable, *Builder) {
+	if x.xParserFinished == 0 {
+		return nil
+	}
+	var rawCallback func(BuildableVarp uintptr, BuilderVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xParserFinished)
+	return func(BuildableVar Buildable, BuilderVar *Builder) {
+		rawCallback(BuildableVar.GoPointer(), BuilderVar.GoPointer())
+	}
+}
+
+// OverrideGetInternalChild sets the callback function.
+func (x *BuildableIface) OverrideGetInternalChild(cb func(Buildable, *Builder, string) *gobject.Object) {
+	if cb == nil {
+		x.xGetInternalChild = 0
+	} else {
+		x.xGetInternalChild = purego.NewCallback(func(BuildableVarp uintptr, BuilderVarp uintptr, ChildnameVarp string) uintptr {
+			ret := cb(&BuildableBase{Ptr: BuildableVarp}, BuilderNewFromInternalPtr(BuilderVarp), ChildnameVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetInternalChild gets the callback function.
+func (x *BuildableIface) GetGetInternalChild() func(Buildable, *Builder, string) *gobject.Object {
+	if x.xGetInternalChild == 0 {
+		return nil
+	}
+	var rawCallback func(BuildableVarp uintptr, BuilderVarp uintptr, ChildnameVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetInternalChild)
+	return func(BuildableVar Buildable, BuilderVar *Builder, ChildnameVar string) *gobject.Object {
+		rawRet := rawCallback(BuildableVar.GoPointer(), BuilderVar.GoPointer(), ChildnameVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &gobject.Object{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // An opaque context struct for `GtkBuildableParser`.
@@ -138,11 +410,111 @@ func (x *BuildableParseContext) Push(ParserVar *BuildableParser, UserDataVar uin
 type BuildableParser struct {
 	_ structs.HostLayout
 
+	xStartElement uintptr
+
+	xEndElement uintptr
+
+	xText uintptr
+
+	xError uintptr
+
 	Padding [4]uintptr
 }
 
 func (x *BuildableParser) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideStartElement sets the callback function.
+func (x *BuildableParser) OverrideStartElement(cb func(*BuildableParseContext, string, string, string, uintptr)) {
+	if cb == nil {
+		x.xStartElement = 0
+	} else {
+		x.xStartElement = purego.NewCallback(func(ContextVarp *BuildableParseContext, ElementNameVarp string, AttributeNamesVarp string, AttributeValuesVarp string, UserDataVarp uintptr) {
+			cb(ContextVarp, ElementNameVarp, AttributeNamesVarp, AttributeValuesVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetStartElement gets the callback function.
+func (x *BuildableParser) GetStartElement() func(*BuildableParseContext, string, string, string, uintptr) {
+	if x.xStartElement == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp *BuildableParseContext, ElementNameVarp string, AttributeNamesVarp string, AttributeValuesVarp string, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xStartElement)
+	return func(ContextVar *BuildableParseContext, ElementNameVar string, AttributeNamesVar string, AttributeValuesVar string, UserDataVar uintptr) {
+		rawCallback(ContextVar, ElementNameVar, AttributeNamesVar, AttributeValuesVar, UserDataVar)
+	}
+}
+
+// OverrideEndElement sets the callback function.
+func (x *BuildableParser) OverrideEndElement(cb func(*BuildableParseContext, string, uintptr)) {
+	if cb == nil {
+		x.xEndElement = 0
+	} else {
+		x.xEndElement = purego.NewCallback(func(ContextVarp *BuildableParseContext, ElementNameVarp string, UserDataVarp uintptr) {
+			cb(ContextVarp, ElementNameVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetEndElement gets the callback function.
+func (x *BuildableParser) GetEndElement() func(*BuildableParseContext, string, uintptr) {
+	if x.xEndElement == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp *BuildableParseContext, ElementNameVarp string, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEndElement)
+	return func(ContextVar *BuildableParseContext, ElementNameVar string, UserDataVar uintptr) {
+		rawCallback(ContextVar, ElementNameVar, UserDataVar)
+	}
+}
+
+// OverrideText sets the callback function.
+func (x *BuildableParser) OverrideText(cb func(*BuildableParseContext, string, uint, uintptr)) {
+	if cb == nil {
+		x.xText = 0
+	} else {
+		x.xText = purego.NewCallback(func(ContextVarp *BuildableParseContext, TextVarp string, TextLenVarp uint, UserDataVarp uintptr) {
+			cb(ContextVarp, TextVarp, TextLenVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetText gets the callback function.
+func (x *BuildableParser) GetText() func(*BuildableParseContext, string, uint, uintptr) {
+	if x.xText == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp *BuildableParseContext, TextVarp string, TextLenVarp uint, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xText)
+	return func(ContextVar *BuildableParseContext, TextVar string, TextLenVar uint, UserDataVar uintptr) {
+		rawCallback(ContextVar, TextVar, TextLenVar, UserDataVar)
+	}
+}
+
+// OverrideError sets the callback function.
+func (x *BuildableParser) OverrideError(cb func(*BuildableParseContext, *glib.Error, uintptr)) {
+	if cb == nil {
+		x.xError = 0
+	} else {
+		x.xError = purego.NewCallback(func(ContextVarp *BuildableParseContext, ErrorVarp *glib.Error, UserDataVarp uintptr) {
+			cb(ContextVarp, ErrorVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetError gets the callback function.
+func (x *BuildableParser) GetError() func(*BuildableParseContext, *glib.Error, uintptr) {
+	if x.xError == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp *BuildableParseContext, ErrorVarp *glib.Error, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xError)
+	return func(ContextVar *BuildableParseContext, ErrorVar *glib.Error, UserDataVar uintptr) {
+		rawCallback(ContextVar, ErrorVar, UserDataVar)
+	}
 }
 
 // `GtkBuildable` allows objects to extend and customize their deserialization

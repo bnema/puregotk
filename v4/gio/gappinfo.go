@@ -17,20 +17,865 @@ type AppInfoIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xDup uintptr
+
+	xEqual uintptr
+
+	xGetId uintptr
+
+	xGetName uintptr
+
+	xGetDescription uintptr
+
+	xGetExecutable uintptr
+
+	xGetIcon uintptr
+
+	xLaunch uintptr
+
+	xSupportsUris uintptr
+
+	xSupportsFiles uintptr
+
+	xLaunchUris uintptr
+
+	xShouldShow uintptr
+
+	xSetAsDefaultForType uintptr
+
+	xSetAsDefaultForExtension uintptr
+
+	xAddSupportsType uintptr
+
+	xCanRemoveSupportsType uintptr
+
+	xRemoveSupportsType uintptr
+
+	xCanDelete uintptr
+
+	xDoDelete uintptr
+
+	xGetCommandline uintptr
+
+	xGetDisplayName uintptr
+
+	xSetAsLastUsedForType uintptr
+
+	xGetSupportedTypes uintptr
+
+	xLaunchUrisAsync uintptr
+
+	xLaunchUrisFinish uintptr
 }
 
 func (x *AppInfoIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+// OverrideDup sets the callback function.
+func (x *AppInfoIface) OverrideDup(cb func(AppInfo) *AppInfoBase) {
+	if cb == nil {
+		x.xDup = 0
+	} else {
+		x.xDup = purego.NewCallback(func(AppinfoVarp uintptr) uintptr {
+			ret := cb(&AppInfoBase{Ptr: AppinfoVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetDup gets the callback function.
+func (x *AppInfoIface) GetDup() func(AppInfo) *AppInfoBase {
+	if x.xDup == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xDup)
+	return func(AppinfoVar AppInfo) *AppInfoBase {
+		rawRet := rawCallback(AppinfoVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &AppInfoBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideEqual sets the callback function.
+func (x *AppInfoIface) OverrideEqual(cb func(AppInfo, AppInfo) bool) {
+	if cb == nil {
+		x.xEqual = 0
+	} else {
+		x.xEqual = purego.NewCallback(func(Appinfo1Varp uintptr, Appinfo2Varp uintptr) bool {
+			return cb(&AppInfoBase{Ptr: Appinfo1Varp}, &AppInfoBase{Ptr: Appinfo2Varp})
+		})
+	}
+}
+
+// GetEqual gets the callback function.
+func (x *AppInfoIface) GetEqual() func(AppInfo, AppInfo) bool {
+	if x.xEqual == 0 {
+		return nil
+	}
+	var rawCallback func(Appinfo1Varp uintptr, Appinfo2Varp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEqual)
+	return func(Appinfo1Var AppInfo, Appinfo2Var AppInfo) bool {
+		return rawCallback(Appinfo1Var.GoPointer(), Appinfo2Var.GoPointer())
+	}
+}
+
+// OverrideGetId sets the callback function.
+func (x *AppInfoIface) OverrideGetId(cb func(AppInfo) string) {
+	if cb == nil {
+		x.xGetId = 0
+	} else {
+		x.xGetId = purego.NewCallback(func(AppinfoVarp uintptr) string {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetGetId gets the callback function.
+func (x *AppInfoIface) GetGetId() func(AppInfo) string {
+	if x.xGetId == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetId)
+	return func(AppinfoVar AppInfo) string {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideGetName sets the callback function.
+func (x *AppInfoIface) OverrideGetName(cb func(AppInfo) string) {
+	if cb == nil {
+		x.xGetName = 0
+	} else {
+		x.xGetName = purego.NewCallback(func(AppinfoVarp uintptr) string {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetGetName gets the callback function.
+func (x *AppInfoIface) GetGetName() func(AppInfo) string {
+	if x.xGetName == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetName)
+	return func(AppinfoVar AppInfo) string {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideGetDescription sets the callback function.
+func (x *AppInfoIface) OverrideGetDescription(cb func(AppInfo) string) {
+	if cb == nil {
+		x.xGetDescription = 0
+	} else {
+		x.xGetDescription = purego.NewCallback(func(AppinfoVarp uintptr) string {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetGetDescription gets the callback function.
+func (x *AppInfoIface) GetGetDescription() func(AppInfo) string {
+	if x.xGetDescription == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetDescription)
+	return func(AppinfoVar AppInfo) string {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideGetExecutable sets the callback function.
+func (x *AppInfoIface) OverrideGetExecutable(cb func(AppInfo) string) {
+	if cb == nil {
+		x.xGetExecutable = 0
+	} else {
+		x.xGetExecutable = purego.NewCallback(func(AppinfoVarp uintptr) string {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetGetExecutable gets the callback function.
+func (x *AppInfoIface) GetGetExecutable() func(AppInfo) string {
+	if x.xGetExecutable == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetExecutable)
+	return func(AppinfoVar AppInfo) string {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideGetIcon sets the callback function.
+func (x *AppInfoIface) OverrideGetIcon(cb func(AppInfo) *IconBase) {
+	if cb == nil {
+		x.xGetIcon = 0
+	} else {
+		x.xGetIcon = purego.NewCallback(func(AppinfoVarp uintptr) uintptr {
+			ret := cb(&AppInfoBase{Ptr: AppinfoVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetIcon gets the callback function.
+func (x *AppInfoIface) GetGetIcon() func(AppInfo) *IconBase {
+	if x.xGetIcon == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetIcon)
+	return func(AppinfoVar AppInfo) *IconBase {
+		rawRet := rawCallback(AppinfoVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IconBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideLaunch sets the callback function.
+func (x *AppInfoIface) OverrideLaunch(cb func(AppInfo, *glib.List, *AppLaunchContext) bool) {
+	if cb == nil {
+		x.xLaunch = 0
+	} else {
+		x.xLaunch = purego.NewCallback(func(AppinfoVarp uintptr, FilesVarp *glib.List, ContextVarp uintptr) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp}, FilesVarp, AppLaunchContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetLaunch gets the callback function.
+func (x *AppInfoIface) GetLaunch() func(AppInfo, *glib.List, *AppLaunchContext) bool {
+	if x.xLaunch == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr, FilesVarp *glib.List, ContextVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xLaunch)
+	return func(AppinfoVar AppInfo, FilesVar *glib.List, ContextVar *AppLaunchContext) bool {
+		return rawCallback(AppinfoVar.GoPointer(), FilesVar, ContextVar.GoPointer())
+	}
+}
+
+// OverrideSupportsUris sets the callback function.
+func (x *AppInfoIface) OverrideSupportsUris(cb func(AppInfo) bool) {
+	if cb == nil {
+		x.xSupportsUris = 0
+	} else {
+		x.xSupportsUris = purego.NewCallback(func(AppinfoVarp uintptr) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetSupportsUris gets the callback function.
+func (x *AppInfoIface) GetSupportsUris() func(AppInfo) bool {
+	if x.xSupportsUris == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSupportsUris)
+	return func(AppinfoVar AppInfo) bool {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideSupportsFiles sets the callback function.
+func (x *AppInfoIface) OverrideSupportsFiles(cb func(AppInfo) bool) {
+	if cb == nil {
+		x.xSupportsFiles = 0
+	} else {
+		x.xSupportsFiles = purego.NewCallback(func(AppinfoVarp uintptr) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetSupportsFiles gets the callback function.
+func (x *AppInfoIface) GetSupportsFiles() func(AppInfo) bool {
+	if x.xSupportsFiles == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSupportsFiles)
+	return func(AppinfoVar AppInfo) bool {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideLaunchUris sets the callback function.
+func (x *AppInfoIface) OverrideLaunchUris(cb func(AppInfo, *glib.List, *AppLaunchContext) bool) {
+	if cb == nil {
+		x.xLaunchUris = 0
+	} else {
+		x.xLaunchUris = purego.NewCallback(func(AppinfoVarp uintptr, UrisVarp *glib.List, ContextVarp uintptr) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp}, UrisVarp, AppLaunchContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetLaunchUris gets the callback function.
+func (x *AppInfoIface) GetLaunchUris() func(AppInfo, *glib.List, *AppLaunchContext) bool {
+	if x.xLaunchUris == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr, UrisVarp *glib.List, ContextVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xLaunchUris)
+	return func(AppinfoVar AppInfo, UrisVar *glib.List, ContextVar *AppLaunchContext) bool {
+		return rawCallback(AppinfoVar.GoPointer(), UrisVar, ContextVar.GoPointer())
+	}
+}
+
+// OverrideShouldShow sets the callback function.
+func (x *AppInfoIface) OverrideShouldShow(cb func(AppInfo) bool) {
+	if cb == nil {
+		x.xShouldShow = 0
+	} else {
+		x.xShouldShow = purego.NewCallback(func(AppinfoVarp uintptr) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetShouldShow gets the callback function.
+func (x *AppInfoIface) GetShouldShow() func(AppInfo) bool {
+	if x.xShouldShow == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xShouldShow)
+	return func(AppinfoVar AppInfo) bool {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideSetAsDefaultForType sets the callback function.
+func (x *AppInfoIface) OverrideSetAsDefaultForType(cb func(AppInfo, string) bool) {
+	if cb == nil {
+		x.xSetAsDefaultForType = 0
+	} else {
+		x.xSetAsDefaultForType = purego.NewCallback(func(AppinfoVarp uintptr, ContentTypeVarp string) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp}, ContentTypeVarp)
+		})
+	}
+}
+
+// GetSetAsDefaultForType gets the callback function.
+func (x *AppInfoIface) GetSetAsDefaultForType() func(AppInfo, string) bool {
+	if x.xSetAsDefaultForType == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr, ContentTypeVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xSetAsDefaultForType)
+	return func(AppinfoVar AppInfo, ContentTypeVar string) bool {
+		return rawCallback(AppinfoVar.GoPointer(), ContentTypeVar)
+	}
+}
+
+// OverrideSetAsDefaultForExtension sets the callback function.
+func (x *AppInfoIface) OverrideSetAsDefaultForExtension(cb func(AppInfo, string) bool) {
+	if cb == nil {
+		x.xSetAsDefaultForExtension = 0
+	} else {
+		x.xSetAsDefaultForExtension = purego.NewCallback(func(AppinfoVarp uintptr, ExtensionVarp string) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp}, ExtensionVarp)
+		})
+	}
+}
+
+// GetSetAsDefaultForExtension gets the callback function.
+func (x *AppInfoIface) GetSetAsDefaultForExtension() func(AppInfo, string) bool {
+	if x.xSetAsDefaultForExtension == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr, ExtensionVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xSetAsDefaultForExtension)
+	return func(AppinfoVar AppInfo, ExtensionVar string) bool {
+		return rawCallback(AppinfoVar.GoPointer(), ExtensionVar)
+	}
+}
+
+// OverrideAddSupportsType sets the callback function.
+func (x *AppInfoIface) OverrideAddSupportsType(cb func(AppInfo, string) bool) {
+	if cb == nil {
+		x.xAddSupportsType = 0
+	} else {
+		x.xAddSupportsType = purego.NewCallback(func(AppinfoVarp uintptr, ContentTypeVarp string) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp}, ContentTypeVarp)
+		})
+	}
+}
+
+// GetAddSupportsType gets the callback function.
+func (x *AppInfoIface) GetAddSupportsType() func(AppInfo, string) bool {
+	if x.xAddSupportsType == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr, ContentTypeVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xAddSupportsType)
+	return func(AppinfoVar AppInfo, ContentTypeVar string) bool {
+		return rawCallback(AppinfoVar.GoPointer(), ContentTypeVar)
+	}
+}
+
+// OverrideCanRemoveSupportsType sets the callback function.
+func (x *AppInfoIface) OverrideCanRemoveSupportsType(cb func(AppInfo) bool) {
+	if cb == nil {
+		x.xCanRemoveSupportsType = 0
+	} else {
+		x.xCanRemoveSupportsType = purego.NewCallback(func(AppinfoVarp uintptr) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetCanRemoveSupportsType gets the callback function.
+func (x *AppInfoIface) GetCanRemoveSupportsType() func(AppInfo) bool {
+	if x.xCanRemoveSupportsType == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanRemoveSupportsType)
+	return func(AppinfoVar AppInfo) bool {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideRemoveSupportsType sets the callback function.
+func (x *AppInfoIface) OverrideRemoveSupportsType(cb func(AppInfo, string) bool) {
+	if cb == nil {
+		x.xRemoveSupportsType = 0
+	} else {
+		x.xRemoveSupportsType = purego.NewCallback(func(AppinfoVarp uintptr, ContentTypeVarp string) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp}, ContentTypeVarp)
+		})
+	}
+}
+
+// GetRemoveSupportsType gets the callback function.
+func (x *AppInfoIface) GetRemoveSupportsType() func(AppInfo, string) bool {
+	if x.xRemoveSupportsType == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr, ContentTypeVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xRemoveSupportsType)
+	return func(AppinfoVar AppInfo, ContentTypeVar string) bool {
+		return rawCallback(AppinfoVar.GoPointer(), ContentTypeVar)
+	}
+}
+
+// OverrideCanDelete sets the callback function.
+func (x *AppInfoIface) OverrideCanDelete(cb func(AppInfo) bool) {
+	if cb == nil {
+		x.xCanDelete = 0
+	} else {
+		x.xCanDelete = purego.NewCallback(func(AppinfoVarp uintptr) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetCanDelete gets the callback function.
+func (x *AppInfoIface) GetCanDelete() func(AppInfo) bool {
+	if x.xCanDelete == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanDelete)
+	return func(AppinfoVar AppInfo) bool {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideDoDelete sets the callback function.
+func (x *AppInfoIface) OverrideDoDelete(cb func(AppInfo) bool) {
+	if cb == nil {
+		x.xDoDelete = 0
+	} else {
+		x.xDoDelete = purego.NewCallback(func(AppinfoVarp uintptr) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetDoDelete gets the callback function.
+func (x *AppInfoIface) GetDoDelete() func(AppInfo) bool {
+	if x.xDoDelete == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xDoDelete)
+	return func(AppinfoVar AppInfo) bool {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideGetCommandline sets the callback function.
+func (x *AppInfoIface) OverrideGetCommandline(cb func(AppInfo) string) {
+	if cb == nil {
+		x.xGetCommandline = 0
+	} else {
+		x.xGetCommandline = purego.NewCallback(func(AppinfoVarp uintptr) string {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetGetCommandline gets the callback function.
+func (x *AppInfoIface) GetGetCommandline() func(AppInfo) string {
+	if x.xGetCommandline == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetCommandline)
+	return func(AppinfoVar AppInfo) string {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideGetDisplayName sets the callback function.
+func (x *AppInfoIface) OverrideGetDisplayName(cb func(AppInfo) string) {
+	if cb == nil {
+		x.xGetDisplayName = 0
+	} else {
+		x.xGetDisplayName = purego.NewCallback(func(AppinfoVarp uintptr) string {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetGetDisplayName gets the callback function.
+func (x *AppInfoIface) GetGetDisplayName() func(AppInfo) string {
+	if x.xGetDisplayName == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetDisplayName)
+	return func(AppinfoVar AppInfo) string {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideSetAsLastUsedForType sets the callback function.
+func (x *AppInfoIface) OverrideSetAsLastUsedForType(cb func(AppInfo, string) bool) {
+	if cb == nil {
+		x.xSetAsLastUsedForType = 0
+	} else {
+		x.xSetAsLastUsedForType = purego.NewCallback(func(AppinfoVarp uintptr, ContentTypeVarp string) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp}, ContentTypeVarp)
+		})
+	}
+}
+
+// GetSetAsLastUsedForType gets the callback function.
+func (x *AppInfoIface) GetSetAsLastUsedForType() func(AppInfo, string) bool {
+	if x.xSetAsLastUsedForType == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr, ContentTypeVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xSetAsLastUsedForType)
+	return func(AppinfoVar AppInfo, ContentTypeVar string) bool {
+		return rawCallback(AppinfoVar.GoPointer(), ContentTypeVar)
+	}
+}
+
+// OverrideGetSupportedTypes sets the callback function.
+func (x *AppInfoIface) OverrideGetSupportedTypes(cb func(AppInfo) []string) {
+	if cb == nil {
+		x.xGetSupportedTypes = 0
+	} else {
+		x.xGetSupportedTypes = purego.NewCallback(func(AppinfoVarp uintptr) []string {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp})
+		})
+	}
+}
+
+// GetGetSupportedTypes gets the callback function.
+func (x *AppInfoIface) GetGetSupportedTypes() func(AppInfo) []string {
+	if x.xGetSupportedTypes == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr) []string
+	purego.RegisterFunc(&rawCallback, x.xGetSupportedTypes)
+	return func(AppinfoVar AppInfo) []string {
+		return rawCallback(AppinfoVar.GoPointer())
+	}
+}
+
+// OverrideLaunchUrisAsync sets the callback function.
+func (x *AppInfoIface) OverrideLaunchUrisAsync(cb func(AppInfo, *glib.List, *AppLaunchContext, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xLaunchUrisAsync = 0
+	} else {
+		x.xLaunchUrisAsync = purego.NewCallback(func(AppinfoVarp uintptr, UrisVarp *glib.List, ContextVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&AppInfoBase{Ptr: AppinfoVarp}, UrisVarp, AppLaunchContextNewFromInternalPtr(ContextVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetLaunchUrisAsync gets the callback function.
+func (x *AppInfoIface) GetLaunchUrisAsync() func(AppInfo, *glib.List, *AppLaunchContext, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xLaunchUrisAsync == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr, UrisVarp *glib.List, ContextVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xLaunchUrisAsync)
+	return func(AppinfoVar AppInfo, UrisVar *glib.List, ContextVar *AppLaunchContext, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(AppinfoVar.GoPointer(), UrisVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideLaunchUrisFinish sets the callback function.
+func (x *AppInfoIface) OverrideLaunchUrisFinish(cb func(AppInfo, AsyncResult) bool) {
+	if cb == nil {
+		x.xLaunchUrisFinish = 0
+	} else {
+		x.xLaunchUrisFinish = purego.NewCallback(func(AppinfoVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&AppInfoBase{Ptr: AppinfoVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetLaunchUrisFinish gets the callback function.
+func (x *AppInfoIface) GetLaunchUrisFinish() func(AppInfo, AsyncResult) bool {
+	if x.xLaunchUrisFinish == 0 {
+		return nil
+	}
+	var rawCallback func(AppinfoVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xLaunchUrisFinish)
+	return func(AppinfoVar AppInfo, ResultVar AsyncResult) bool {
+		return rawCallback(AppinfoVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
 type AppLaunchContextClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGetDisplay uintptr
+
+	xGetStartupNotifyId uintptr
+
+	xLaunchFailed uintptr
+
+	xLaunched uintptr
+
+	xLaunchStarted uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
 }
 
 func (x *AppLaunchContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetDisplay sets the callback function.
+func (x *AppLaunchContextClass) OverrideGetDisplay(cb func(*AppLaunchContext, AppInfo, *glib.List) string) {
+	if cb == nil {
+		x.xGetDisplay = 0
+	} else {
+		x.xGetDisplay = purego.NewCallback(func(ContextVarp uintptr, InfoVarp uintptr, FilesVarp *glib.List) string {
+			return cb(AppLaunchContextNewFromInternalPtr(ContextVarp), &AppInfoBase{Ptr: InfoVarp}, FilesVarp)
+		})
+	}
+}
+
+// GetGetDisplay gets the callback function.
+func (x *AppLaunchContextClass) GetGetDisplay() func(*AppLaunchContext, AppInfo, *glib.List) string {
+	if x.xGetDisplay == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, InfoVarp uintptr, FilesVarp *glib.List) string
+	purego.RegisterFunc(&rawCallback, x.xGetDisplay)
+	return func(ContextVar *AppLaunchContext, InfoVar AppInfo, FilesVar *glib.List) string {
+		return rawCallback(ContextVar.GoPointer(), InfoVar.GoPointer(), FilesVar)
+	}
+}
+
+// OverrideGetStartupNotifyId sets the callback function.
+func (x *AppLaunchContextClass) OverrideGetStartupNotifyId(cb func(*AppLaunchContext, AppInfo, *glib.List) string) {
+	if cb == nil {
+		x.xGetStartupNotifyId = 0
+	} else {
+		x.xGetStartupNotifyId = purego.NewCallback(func(ContextVarp uintptr, InfoVarp uintptr, FilesVarp *glib.List) string {
+			return cb(AppLaunchContextNewFromInternalPtr(ContextVarp), &AppInfoBase{Ptr: InfoVarp}, FilesVarp)
+		})
+	}
+}
+
+// GetGetStartupNotifyId gets the callback function.
+func (x *AppLaunchContextClass) GetGetStartupNotifyId() func(*AppLaunchContext, AppInfo, *glib.List) string {
+	if x.xGetStartupNotifyId == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, InfoVarp uintptr, FilesVarp *glib.List) string
+	purego.RegisterFunc(&rawCallback, x.xGetStartupNotifyId)
+	return func(ContextVar *AppLaunchContext, InfoVar AppInfo, FilesVar *glib.List) string {
+		return rawCallback(ContextVar.GoPointer(), InfoVar.GoPointer(), FilesVar)
+	}
+}
+
+// OverrideLaunchFailed sets the callback function.
+func (x *AppLaunchContextClass) OverrideLaunchFailed(cb func(*AppLaunchContext, string)) {
+	if cb == nil {
+		x.xLaunchFailed = 0
+	} else {
+		x.xLaunchFailed = purego.NewCallback(func(ContextVarp uintptr, StartupNotifyIdVarp string) {
+			cb(AppLaunchContextNewFromInternalPtr(ContextVarp), StartupNotifyIdVarp)
+		})
+	}
+}
+
+// GetLaunchFailed gets the callback function.
+func (x *AppLaunchContextClass) GetLaunchFailed() func(*AppLaunchContext, string) {
+	if x.xLaunchFailed == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, StartupNotifyIdVarp string)
+	purego.RegisterFunc(&rawCallback, x.xLaunchFailed)
+	return func(ContextVar *AppLaunchContext, StartupNotifyIdVar string) {
+		rawCallback(ContextVar.GoPointer(), StartupNotifyIdVar)
+	}
+}
+
+// OverrideLaunched sets the callback function.
+func (x *AppLaunchContextClass) OverrideLaunched(cb func(*AppLaunchContext, AppInfo, *glib.Variant)) {
+	if cb == nil {
+		x.xLaunched = 0
+	} else {
+		x.xLaunched = purego.NewCallback(func(ContextVarp uintptr, InfoVarp uintptr, PlatformDataVarp *glib.Variant) {
+			cb(AppLaunchContextNewFromInternalPtr(ContextVarp), &AppInfoBase{Ptr: InfoVarp}, PlatformDataVarp)
+		})
+	}
+}
+
+// GetLaunched gets the callback function.
+func (x *AppLaunchContextClass) GetLaunched() func(*AppLaunchContext, AppInfo, *glib.Variant) {
+	if x.xLaunched == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, InfoVarp uintptr, PlatformDataVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xLaunched)
+	return func(ContextVar *AppLaunchContext, InfoVar AppInfo, PlatformDataVar *glib.Variant) {
+		rawCallback(ContextVar.GoPointer(), InfoVar.GoPointer(), PlatformDataVar)
+	}
+}
+
+// OverrideLaunchStarted sets the callback function.
+func (x *AppLaunchContextClass) OverrideLaunchStarted(cb func(*AppLaunchContext, AppInfo, *glib.Variant)) {
+	if cb == nil {
+		x.xLaunchStarted = 0
+	} else {
+		x.xLaunchStarted = purego.NewCallback(func(ContextVarp uintptr, InfoVarp uintptr, PlatformDataVarp *glib.Variant) {
+			cb(AppLaunchContextNewFromInternalPtr(ContextVarp), &AppInfoBase{Ptr: InfoVarp}, PlatformDataVarp)
+		})
+	}
+}
+
+// GetLaunchStarted gets the callback function.
+func (x *AppLaunchContextClass) GetLaunchStarted() func(*AppLaunchContext, AppInfo, *glib.Variant) {
+	if x.xLaunchStarted == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, InfoVarp uintptr, PlatformDataVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xLaunchStarted)
+	return func(ContextVar *AppLaunchContext, InfoVar AppInfo, PlatformDataVar *glib.Variant) {
+		rawCallback(ContextVar.GoPointer(), InfoVar.GoPointer(), PlatformDataVar)
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *AppLaunchContextClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *AppLaunchContextClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *AppLaunchContextClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *AppLaunchContextClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *AppLaunchContextClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *AppLaunchContextClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
 }
 
 type AppLaunchContextPrivate struct {
@@ -94,7 +939,7 @@ func (x *AppLaunchContextPrivate) GoPointer() uintptr {
 type AppInfo interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	AddSupportsType(ContentTypeVar string) bool
+	AddSupportsType(ContentTypeVar string) (bool, error)
 	CanDelete() bool
 	CanRemoveSupportsType() bool
 	Delete() bool
@@ -108,14 +953,14 @@ type AppInfo interface {
 	GetId() string
 	GetName() string
 	GetSupportedTypes() []string
-	Launch(FilesVar *glib.List, ContextVar *AppLaunchContext) bool
-	LaunchUris(UrisVar *glib.List, ContextVar *AppLaunchContext) bool
+	Launch(FilesVar *glib.List, ContextVar *AppLaunchContext) (bool, error)
+	LaunchUris(UrisVar *glib.List, ContextVar *AppLaunchContext) (bool, error)
 	LaunchUrisAsync(UrisVar *glib.List, ContextVar *AppLaunchContext, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	LaunchUrisFinish(ResultVar AsyncResult) bool
-	RemoveSupportsType(ContentTypeVar string) bool
-	SetAsDefaultForExtension(ExtensionVar string) bool
-	SetAsDefaultForType(ContentTypeVar string) bool
-	SetAsLastUsedForType(ContentTypeVar string) bool
+	LaunchUrisFinish(ResultVar AsyncResult) (bool, error)
+	RemoveSupportsType(ContentTypeVar string) (bool, error)
+	SetAsDefaultForExtension(ExtensionVar string) (bool, error)
+	SetAsDefaultForType(ContentTypeVar string) (bool, error)
+	SetAsLastUsedForType(ContentTypeVar string) (bool, error)
 	ShouldShow() bool
 	SupportsFiles() bool
 	SupportsUris() bool

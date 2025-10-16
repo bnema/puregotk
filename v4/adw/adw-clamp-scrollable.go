@@ -15,7 +15,7 @@ import (
 type ClampScrollableClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *ClampScrollableClass) GoPointer() uintptr {

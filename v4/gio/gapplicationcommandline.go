@@ -17,13 +17,98 @@ import (
 type ApplicationCommandLineClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xPrintLiteral uintptr
+
+	xPrinterrLiteral uintptr
+
+	xGetStdin uintptr
 
 	Padding [11]uintptr
 }
 
 func (x *ApplicationCommandLineClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverridePrintLiteral sets the callback function.
+func (x *ApplicationCommandLineClass) OverridePrintLiteral(cb func(*ApplicationCommandLine, string)) {
+	if cb == nil {
+		x.xPrintLiteral = 0
+	} else {
+		x.xPrintLiteral = purego.NewCallback(func(CmdlineVarp uintptr, MessageVarp string) {
+			cb(ApplicationCommandLineNewFromInternalPtr(CmdlineVarp), MessageVarp)
+		})
+	}
+}
+
+// GetPrintLiteral gets the callback function.
+func (x *ApplicationCommandLineClass) GetPrintLiteral() func(*ApplicationCommandLine, string) {
+	if x.xPrintLiteral == 0 {
+		return nil
+	}
+	var rawCallback func(CmdlineVarp uintptr, MessageVarp string)
+	purego.RegisterFunc(&rawCallback, x.xPrintLiteral)
+	return func(CmdlineVar *ApplicationCommandLine, MessageVar string) {
+		rawCallback(CmdlineVar.GoPointer(), MessageVar)
+	}
+}
+
+// OverridePrinterrLiteral sets the callback function.
+func (x *ApplicationCommandLineClass) OverridePrinterrLiteral(cb func(*ApplicationCommandLine, string)) {
+	if cb == nil {
+		x.xPrinterrLiteral = 0
+	} else {
+		x.xPrinterrLiteral = purego.NewCallback(func(CmdlineVarp uintptr, MessageVarp string) {
+			cb(ApplicationCommandLineNewFromInternalPtr(CmdlineVarp), MessageVarp)
+		})
+	}
+}
+
+// GetPrinterrLiteral gets the callback function.
+func (x *ApplicationCommandLineClass) GetPrinterrLiteral() func(*ApplicationCommandLine, string) {
+	if x.xPrinterrLiteral == 0 {
+		return nil
+	}
+	var rawCallback func(CmdlineVarp uintptr, MessageVarp string)
+	purego.RegisterFunc(&rawCallback, x.xPrinterrLiteral)
+	return func(CmdlineVar *ApplicationCommandLine, MessageVar string) {
+		rawCallback(CmdlineVar.GoPointer(), MessageVar)
+	}
+}
+
+// OverrideGetStdin sets the callback function.
+func (x *ApplicationCommandLineClass) OverrideGetStdin(cb func(*ApplicationCommandLine) *InputStream) {
+	if cb == nil {
+		x.xGetStdin = 0
+	} else {
+		x.xGetStdin = purego.NewCallback(func(CmdlineVarp uintptr) uintptr {
+			ret := cb(ApplicationCommandLineNewFromInternalPtr(CmdlineVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetStdin gets the callback function.
+func (x *ApplicationCommandLineClass) GetGetStdin() func(*ApplicationCommandLine) *InputStream {
+	if x.xGetStdin == 0 {
+		return nil
+	}
+	var rawCallback func(CmdlineVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetStdin)
+	return func(CmdlineVar *ApplicationCommandLine) *InputStream {
+		rawRet := rawCallback(CmdlineVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &InputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 type ApplicationCommandLinePrivate struct {

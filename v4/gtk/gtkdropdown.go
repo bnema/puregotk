@@ -16,7 +16,7 @@ import (
 type DropDownClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
 }
 
 func (x *DropDownClass) GoPointer() uintptr {

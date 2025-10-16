@@ -16,13 +16,63 @@ import (
 type ApplicationClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gio.ApplicationClass
+
+	xWindowAdded uintptr
+
+	xWindowRemoved uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *ApplicationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideWindowAdded sets the callback function.
+func (x *ApplicationClass) OverrideWindowAdded(cb func(*Application, *Window)) {
+	if cb == nil {
+		x.xWindowAdded = 0
+	} else {
+		x.xWindowAdded = purego.NewCallback(func(ApplicationVarp uintptr, WindowVarp uintptr) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp), WindowNewFromInternalPtr(WindowVarp))
+		})
+	}
+}
+
+// GetWindowAdded gets the callback function.
+func (x *ApplicationClass) GetWindowAdded() func(*Application, *Window) {
+	if x.xWindowAdded == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, WindowVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xWindowAdded)
+	return func(ApplicationVar *Application, WindowVar *Window) {
+		rawCallback(ApplicationVar.GoPointer(), WindowVar.GoPointer())
+	}
+}
+
+// OverrideWindowRemoved sets the callback function.
+func (x *ApplicationClass) OverrideWindowRemoved(cb func(*Application, *Window)) {
+	if cb == nil {
+		x.xWindowRemoved = 0
+	} else {
+		x.xWindowRemoved = purego.NewCallback(func(ApplicationVarp uintptr, WindowVarp uintptr) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp), WindowNewFromInternalPtr(WindowVarp))
+		})
+	}
+}
+
+// GetWindowRemoved gets the callback function.
+func (x *ApplicationClass) GetWindowRemoved() func(*Application, *Window) {
+	if x.xWindowRemoved == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, WindowVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xWindowRemoved)
+	return func(ApplicationVar *Application, WindowVar *Window) {
+		rawCallback(ApplicationVar.GoPointer(), WindowVar.GoPointer())
+	}
 }
 
 // Types of user actions that may be blocked by `GtkApplication`.

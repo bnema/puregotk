@@ -16,7 +16,7 @@ import (
 type ToastClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *ToastClass) GoPointer() uintptr {

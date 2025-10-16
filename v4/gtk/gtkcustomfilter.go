@@ -20,7 +20,7 @@ type CustomFilterFunc func(uintptr, uintptr) bool
 type CustomFilterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass FilterClass
 }
 
 func (x *CustomFilterClass) GoPointer() uintptr {

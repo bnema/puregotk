@@ -15,11 +15,186 @@ import (
 type FileMonitorClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xChanged uintptr
+
+	xCancel uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
 }
 
 func (x *FileMonitorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideChanged sets the callback function.
+func (x *FileMonitorClass) OverrideChanged(cb func(*FileMonitor, File, File, FileMonitorEvent)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(MonitorVarp uintptr, FileVarp uintptr, OtherFileVarp uintptr, EventTypeVarp FileMonitorEvent) {
+			cb(FileMonitorNewFromInternalPtr(MonitorVarp), &FileBase{Ptr: FileVarp}, &FileBase{Ptr: OtherFileVarp}, EventTypeVarp)
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *FileMonitorClass) GetChanged() func(*FileMonitor, File, File, FileMonitorEvent) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(MonitorVarp uintptr, FileVarp uintptr, OtherFileVarp uintptr, EventTypeVarp FileMonitorEvent)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(MonitorVar *FileMonitor, FileVar File, OtherFileVar File, EventTypeVar FileMonitorEvent) {
+		rawCallback(MonitorVar.GoPointer(), FileVar.GoPointer(), OtherFileVar.GoPointer(), EventTypeVar)
+	}
+}
+
+// OverrideCancel sets the callback function.
+func (x *FileMonitorClass) OverrideCancel(cb func(*FileMonitor) bool) {
+	if cb == nil {
+		x.xCancel = 0
+	} else {
+		x.xCancel = purego.NewCallback(func(MonitorVarp uintptr) bool {
+			return cb(FileMonitorNewFromInternalPtr(MonitorVarp))
+		})
+	}
+}
+
+// GetCancel gets the callback function.
+func (x *FileMonitorClass) GetCancel() func(*FileMonitor) bool {
+	if x.xCancel == 0 {
+		return nil
+	}
+	var rawCallback func(MonitorVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCancel)
+	return func(MonitorVar *FileMonitor) bool {
+		return rawCallback(MonitorVar.GoPointer())
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *FileMonitorClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *FileMonitorClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *FileMonitorClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *FileMonitorClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *FileMonitorClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *FileMonitorClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *FileMonitorClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *FileMonitorClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *FileMonitorClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *FileMonitorClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
 }
 
 type FileMonitorPrivate struct {

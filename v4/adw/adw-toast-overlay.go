@@ -15,7 +15,7 @@ import (
 type ToastOverlayClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *ToastOverlayClass) GoPointer() uintptr {

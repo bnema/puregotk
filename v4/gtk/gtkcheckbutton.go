@@ -15,13 +15,63 @@ import (
 type CheckButtonClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xToggled uintptr
+
+	xActivate uintptr
 
 	Padding [7]uintptr
 }
 
 func (x *CheckButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideToggled sets the callback function.
+func (x *CheckButtonClass) OverrideToggled(cb func(*CheckButton)) {
+	if cb == nil {
+		x.xToggled = 0
+	} else {
+		x.xToggled = purego.NewCallback(func(CheckButtonVarp uintptr) {
+			cb(CheckButtonNewFromInternalPtr(CheckButtonVarp))
+		})
+	}
+}
+
+// GetToggled gets the callback function.
+func (x *CheckButtonClass) GetToggled() func(*CheckButton) {
+	if x.xToggled == 0 {
+		return nil
+	}
+	var rawCallback func(CheckButtonVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xToggled)
+	return func(CheckButtonVar *CheckButton) {
+		rawCallback(CheckButtonVar.GoPointer())
+	}
+}
+
+// OverrideActivate sets the callback function.
+func (x *CheckButtonClass) OverrideActivate(cb func(*CheckButton)) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(CheckButtonVarp uintptr) {
+			cb(CheckButtonNewFromInternalPtr(CheckButtonVarp))
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+func (x *CheckButtonClass) GetActivate() func(*CheckButton) {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(CheckButtonVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(CheckButtonVar *CheckButton) {
+		rawCallback(CheckButtonVar.GoPointer())
+	}
 }
 
 // A `GtkCheckButton` places a label next to an indicator.

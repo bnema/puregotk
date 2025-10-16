@@ -16,10 +16,745 @@ type MountIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xChanged uintptr
+
+	xUnmounted uintptr
+
+	xGetRoot uintptr
+
+	xGetName uintptr
+
+	xGetIcon uintptr
+
+	xGetUuid uintptr
+
+	xGetVolume uintptr
+
+	xGetDrive uintptr
+
+	xCanUnmount uintptr
+
+	xCanEject uintptr
+
+	xUnmount uintptr
+
+	xUnmountFinish uintptr
+
+	xEject uintptr
+
+	xEjectFinish uintptr
+
+	xRemount uintptr
+
+	xRemountFinish uintptr
+
+	xGuessContentType uintptr
+
+	xGuessContentTypeFinish uintptr
+
+	xGuessContentTypeSync uintptr
+
+	xPreUnmount uintptr
+
+	xUnmountWithOperation uintptr
+
+	xUnmountWithOperationFinish uintptr
+
+	xEjectWithOperation uintptr
+
+	xEjectWithOperationFinish uintptr
+
+	xGetDefaultLocation uintptr
+
+	xGetSortKey uintptr
+
+	xGetSymbolicIcon uintptr
 }
 
 func (x *MountIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideChanged sets the callback function.
+func (x *MountIface) OverrideChanged(cb func(Mount)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(MountVarp uintptr) {
+			cb(&MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *MountIface) GetChanged() func(Mount) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(MountVar Mount) {
+		rawCallback(MountVar.GoPointer())
+	}
+}
+
+// OverrideUnmounted sets the callback function.
+func (x *MountIface) OverrideUnmounted(cb func(Mount)) {
+	if cb == nil {
+		x.xUnmounted = 0
+	} else {
+		x.xUnmounted = purego.NewCallback(func(MountVarp uintptr) {
+			cb(&MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetUnmounted gets the callback function.
+func (x *MountIface) GetUnmounted() func(Mount) {
+	if x.xUnmounted == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnmounted)
+	return func(MountVar Mount) {
+		rawCallback(MountVar.GoPointer())
+	}
+}
+
+// OverrideGetRoot sets the callback function.
+func (x *MountIface) OverrideGetRoot(cb func(Mount) *FileBase) {
+	if cb == nil {
+		x.xGetRoot = 0
+	} else {
+		x.xGetRoot = purego.NewCallback(func(MountVarp uintptr) uintptr {
+			ret := cb(&MountBase{Ptr: MountVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetRoot gets the callback function.
+func (x *MountIface) GetGetRoot() func(Mount) *FileBase {
+	if x.xGetRoot == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetRoot)
+	return func(MountVar Mount) *FileBase {
+		rawRet := rawCallback(MountVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetName sets the callback function.
+func (x *MountIface) OverrideGetName(cb func(Mount) string) {
+	if cb == nil {
+		x.xGetName = 0
+	} else {
+		x.xGetName = purego.NewCallback(func(MountVarp uintptr) string {
+			return cb(&MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetGetName gets the callback function.
+func (x *MountIface) GetGetName() func(Mount) string {
+	if x.xGetName == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetName)
+	return func(MountVar Mount) string {
+		return rawCallback(MountVar.GoPointer())
+	}
+}
+
+// OverrideGetIcon sets the callback function.
+func (x *MountIface) OverrideGetIcon(cb func(Mount) *IconBase) {
+	if cb == nil {
+		x.xGetIcon = 0
+	} else {
+		x.xGetIcon = purego.NewCallback(func(MountVarp uintptr) uintptr {
+			ret := cb(&MountBase{Ptr: MountVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetIcon gets the callback function.
+func (x *MountIface) GetGetIcon() func(Mount) *IconBase {
+	if x.xGetIcon == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetIcon)
+	return func(MountVar Mount) *IconBase {
+		rawRet := rawCallback(MountVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IconBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetUuid sets the callback function.
+func (x *MountIface) OverrideGetUuid(cb func(Mount) string) {
+	if cb == nil {
+		x.xGetUuid = 0
+	} else {
+		x.xGetUuid = purego.NewCallback(func(MountVarp uintptr) string {
+			return cb(&MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetGetUuid gets the callback function.
+func (x *MountIface) GetGetUuid() func(Mount) string {
+	if x.xGetUuid == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetUuid)
+	return func(MountVar Mount) string {
+		return rawCallback(MountVar.GoPointer())
+	}
+}
+
+// OverrideGetVolume sets the callback function.
+func (x *MountIface) OverrideGetVolume(cb func(Mount) *VolumeBase) {
+	if cb == nil {
+		x.xGetVolume = 0
+	} else {
+		x.xGetVolume = purego.NewCallback(func(MountVarp uintptr) uintptr {
+			ret := cb(&MountBase{Ptr: MountVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetVolume gets the callback function.
+func (x *MountIface) GetGetVolume() func(Mount) *VolumeBase {
+	if x.xGetVolume == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetVolume)
+	return func(MountVar Mount) *VolumeBase {
+		rawRet := rawCallback(MountVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &VolumeBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetDrive sets the callback function.
+func (x *MountIface) OverrideGetDrive(cb func(Mount) *DriveBase) {
+	if cb == nil {
+		x.xGetDrive = 0
+	} else {
+		x.xGetDrive = purego.NewCallback(func(MountVarp uintptr) uintptr {
+			ret := cb(&MountBase{Ptr: MountVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetDrive gets the callback function.
+func (x *MountIface) GetGetDrive() func(Mount) *DriveBase {
+	if x.xGetDrive == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetDrive)
+	return func(MountVar Mount) *DriveBase {
+		rawRet := rawCallback(MountVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &DriveBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCanUnmount sets the callback function.
+func (x *MountIface) OverrideCanUnmount(cb func(Mount) bool) {
+	if cb == nil {
+		x.xCanUnmount = 0
+	} else {
+		x.xCanUnmount = purego.NewCallback(func(MountVarp uintptr) bool {
+			return cb(&MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetCanUnmount gets the callback function.
+func (x *MountIface) GetCanUnmount() func(Mount) bool {
+	if x.xCanUnmount == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanUnmount)
+	return func(MountVar Mount) bool {
+		return rawCallback(MountVar.GoPointer())
+	}
+}
+
+// OverrideCanEject sets the callback function.
+func (x *MountIface) OverrideCanEject(cb func(Mount) bool) {
+	if cb == nil {
+		x.xCanEject = 0
+	} else {
+		x.xCanEject = purego.NewCallback(func(MountVarp uintptr) bool {
+			return cb(&MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetCanEject gets the callback function.
+func (x *MountIface) GetCanEject() func(Mount) bool {
+	if x.xCanEject == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanEject)
+	return func(MountVar Mount) bool {
+		return rawCallback(MountVar.GoPointer())
+	}
+}
+
+// OverrideUnmount sets the callback function.
+func (x *MountIface) OverrideUnmount(cb func(Mount, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xUnmount = 0
+	} else {
+		x.xUnmount = purego.NewCallback(func(MountVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&MountBase{Ptr: MountVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetUnmount gets the callback function.
+func (x *MountIface) GetUnmount() func(Mount, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xUnmount == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnmount)
+	return func(MountVar Mount, FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(MountVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideUnmountFinish sets the callback function.
+func (x *MountIface) OverrideUnmountFinish(cb func(Mount, AsyncResult) bool) {
+	if cb == nil {
+		x.xUnmountFinish = 0
+	} else {
+		x.xUnmountFinish = purego.NewCallback(func(MountVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&MountBase{Ptr: MountVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetUnmountFinish gets the callback function.
+func (x *MountIface) GetUnmountFinish() func(Mount, AsyncResult) bool {
+	if x.xUnmountFinish == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xUnmountFinish)
+	return func(MountVar Mount, ResultVar AsyncResult) bool {
+		return rawCallback(MountVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideEject sets the callback function.
+func (x *MountIface) OverrideEject(cb func(Mount, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xEject = 0
+	} else {
+		x.xEject = purego.NewCallback(func(MountVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&MountBase{Ptr: MountVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetEject gets the callback function.
+func (x *MountIface) GetEject() func(Mount, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xEject == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEject)
+	return func(MountVar Mount, FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(MountVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideEjectFinish sets the callback function.
+func (x *MountIface) OverrideEjectFinish(cb func(Mount, AsyncResult) bool) {
+	if cb == nil {
+		x.xEjectFinish = 0
+	} else {
+		x.xEjectFinish = purego.NewCallback(func(MountVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&MountBase{Ptr: MountVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetEjectFinish gets the callback function.
+func (x *MountIface) GetEjectFinish() func(Mount, AsyncResult) bool {
+	if x.xEjectFinish == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEjectFinish)
+	return func(MountVar Mount, ResultVar AsyncResult) bool {
+		return rawCallback(MountVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideRemount sets the callback function.
+func (x *MountIface) OverrideRemount(cb func(Mount, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xRemount = 0
+	} else {
+		x.xRemount = purego.NewCallback(func(MountVarp uintptr, FlagsVarp MountMountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&MountBase{Ptr: MountVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetRemount gets the callback function.
+func (x *MountIface) GetRemount() func(Mount, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xRemount == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, FlagsVarp MountMountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRemount)
+	return func(MountVar Mount, FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(MountVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideRemountFinish sets the callback function.
+func (x *MountIface) OverrideRemountFinish(cb func(Mount, AsyncResult) bool) {
+	if cb == nil {
+		x.xRemountFinish = 0
+	} else {
+		x.xRemountFinish = purego.NewCallback(func(MountVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&MountBase{Ptr: MountVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetRemountFinish gets the callback function.
+func (x *MountIface) GetRemountFinish() func(Mount, AsyncResult) bool {
+	if x.xRemountFinish == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xRemountFinish)
+	return func(MountVar Mount, ResultVar AsyncResult) bool {
+		return rawCallback(MountVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGuessContentType sets the callback function.
+func (x *MountIface) OverrideGuessContentType(cb func(Mount, bool, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xGuessContentType = 0
+	} else {
+		x.xGuessContentType = purego.NewCallback(func(MountVarp uintptr, ForceRescanVarp bool, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&MountBase{Ptr: MountVarp}, ForceRescanVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetGuessContentType gets the callback function.
+func (x *MountIface) GetGuessContentType() func(Mount, bool, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xGuessContentType == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, ForceRescanVarp bool, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xGuessContentType)
+	return func(MountVar Mount, ForceRescanVar bool, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(MountVar.GoPointer(), ForceRescanVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideGuessContentTypeFinish sets the callback function.
+func (x *MountIface) OverrideGuessContentTypeFinish(cb func(Mount, AsyncResult) []string) {
+	if cb == nil {
+		x.xGuessContentTypeFinish = 0
+	} else {
+		x.xGuessContentTypeFinish = purego.NewCallback(func(MountVarp uintptr, ResultVarp uintptr) []string {
+			return cb(&MountBase{Ptr: MountVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetGuessContentTypeFinish gets the callback function.
+func (x *MountIface) GetGuessContentTypeFinish() func(Mount, AsyncResult) []string {
+	if x.xGuessContentTypeFinish == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, ResultVarp uintptr) []string
+	purego.RegisterFunc(&rawCallback, x.xGuessContentTypeFinish)
+	return func(MountVar Mount, ResultVar AsyncResult) []string {
+		return rawCallback(MountVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGuessContentTypeSync sets the callback function.
+func (x *MountIface) OverrideGuessContentTypeSync(cb func(Mount, bool, *Cancellable) []string) {
+	if cb == nil {
+		x.xGuessContentTypeSync = 0
+	} else {
+		x.xGuessContentTypeSync = purego.NewCallback(func(MountVarp uintptr, ForceRescanVarp bool, CancellableVarp uintptr) []string {
+			return cb(&MountBase{Ptr: MountVarp}, ForceRescanVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetGuessContentTypeSync gets the callback function.
+func (x *MountIface) GetGuessContentTypeSync() func(Mount, bool, *Cancellable) []string {
+	if x.xGuessContentTypeSync == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, ForceRescanVarp bool, CancellableVarp uintptr) []string
+	purego.RegisterFunc(&rawCallback, x.xGuessContentTypeSync)
+	return func(MountVar Mount, ForceRescanVar bool, CancellableVar *Cancellable) []string {
+		return rawCallback(MountVar.GoPointer(), ForceRescanVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverridePreUnmount sets the callback function.
+func (x *MountIface) OverridePreUnmount(cb func(Mount)) {
+	if cb == nil {
+		x.xPreUnmount = 0
+	} else {
+		x.xPreUnmount = purego.NewCallback(func(MountVarp uintptr) {
+			cb(&MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetPreUnmount gets the callback function.
+func (x *MountIface) GetPreUnmount() func(Mount) {
+	if x.xPreUnmount == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xPreUnmount)
+	return func(MountVar Mount) {
+		rawCallback(MountVar.GoPointer())
+	}
+}
+
+// OverrideUnmountWithOperation sets the callback function.
+func (x *MountIface) OverrideUnmountWithOperation(cb func(Mount, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xUnmountWithOperation = 0
+	} else {
+		x.xUnmountWithOperation = purego.NewCallback(func(MountVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&MountBase{Ptr: MountVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetUnmountWithOperation gets the callback function.
+func (x *MountIface) GetUnmountWithOperation() func(Mount, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xUnmountWithOperation == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnmountWithOperation)
+	return func(MountVar Mount, FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(MountVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideUnmountWithOperationFinish sets the callback function.
+func (x *MountIface) OverrideUnmountWithOperationFinish(cb func(Mount, AsyncResult) bool) {
+	if cb == nil {
+		x.xUnmountWithOperationFinish = 0
+	} else {
+		x.xUnmountWithOperationFinish = purego.NewCallback(func(MountVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&MountBase{Ptr: MountVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetUnmountWithOperationFinish gets the callback function.
+func (x *MountIface) GetUnmountWithOperationFinish() func(Mount, AsyncResult) bool {
+	if x.xUnmountWithOperationFinish == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xUnmountWithOperationFinish)
+	return func(MountVar Mount, ResultVar AsyncResult) bool {
+		return rawCallback(MountVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideEjectWithOperation sets the callback function.
+func (x *MountIface) OverrideEjectWithOperation(cb func(Mount, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xEjectWithOperation = 0
+	} else {
+		x.xEjectWithOperation = purego.NewCallback(func(MountVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&MountBase{Ptr: MountVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetEjectWithOperation gets the callback function.
+func (x *MountIface) GetEjectWithOperation() func(Mount, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xEjectWithOperation == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEjectWithOperation)
+	return func(MountVar Mount, FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(MountVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideEjectWithOperationFinish sets the callback function.
+func (x *MountIface) OverrideEjectWithOperationFinish(cb func(Mount, AsyncResult) bool) {
+	if cb == nil {
+		x.xEjectWithOperationFinish = 0
+	} else {
+		x.xEjectWithOperationFinish = purego.NewCallback(func(MountVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&MountBase{Ptr: MountVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetEjectWithOperationFinish gets the callback function.
+func (x *MountIface) GetEjectWithOperationFinish() func(Mount, AsyncResult) bool {
+	if x.xEjectWithOperationFinish == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEjectWithOperationFinish)
+	return func(MountVar Mount, ResultVar AsyncResult) bool {
+		return rawCallback(MountVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGetDefaultLocation sets the callback function.
+func (x *MountIface) OverrideGetDefaultLocation(cb func(Mount) *FileBase) {
+	if cb == nil {
+		x.xGetDefaultLocation = 0
+	} else {
+		x.xGetDefaultLocation = purego.NewCallback(func(MountVarp uintptr) uintptr {
+			ret := cb(&MountBase{Ptr: MountVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetDefaultLocation gets the callback function.
+func (x *MountIface) GetGetDefaultLocation() func(Mount) *FileBase {
+	if x.xGetDefaultLocation == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetDefaultLocation)
+	return func(MountVar Mount) *FileBase {
+		rawRet := rawCallback(MountVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetSortKey sets the callback function.
+func (x *MountIface) OverrideGetSortKey(cb func(Mount) string) {
+	if cb == nil {
+		x.xGetSortKey = 0
+	} else {
+		x.xGetSortKey = purego.NewCallback(func(MountVarp uintptr) string {
+			return cb(&MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetGetSortKey gets the callback function.
+func (x *MountIface) GetGetSortKey() func(Mount) string {
+	if x.xGetSortKey == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetSortKey)
+	return func(MountVar Mount) string {
+		return rawCallback(MountVar.GoPointer())
+	}
+}
+
+// OverrideGetSymbolicIcon sets the callback function.
+func (x *MountIface) OverrideGetSymbolicIcon(cb func(Mount) *IconBase) {
+	if cb == nil {
+		x.xGetSymbolicIcon = 0
+	} else {
+		x.xGetSymbolicIcon = purego.NewCallback(func(MountVarp uintptr) uintptr {
+			ret := cb(&MountBase{Ptr: MountVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetSymbolicIcon gets the callback function.
+func (x *MountIface) GetGetSymbolicIcon() func(Mount) *IconBase {
+	if x.xGetSymbolicIcon == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetSymbolicIcon)
+	return func(MountVar Mount) *IconBase {
+		rawRet := rawCallback(MountVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IconBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // The #GMount interface represents user-visible mounts. Note, when
@@ -47,9 +782,9 @@ type Mount interface {
 	CanEject() bool
 	CanUnmount() bool
 	Eject(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	EjectFinish(ResultVar AsyncResult) bool
+	EjectFinish(ResultVar AsyncResult) (bool, error)
 	EjectWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	EjectWithOperationFinish(ResultVar AsyncResult) bool
+	EjectWithOperationFinish(ResultVar AsyncResult) (bool, error)
 	GetDefaultLocation() *FileBase
 	GetDrive() *DriveBase
 	GetIcon() *IconBase
@@ -60,16 +795,16 @@ type Mount interface {
 	GetUuid() string
 	GetVolume() *VolumeBase
 	GuessContentType(ForceRescanVar bool, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	GuessContentTypeFinish(ResultVar AsyncResult) []string
-	GuessContentTypeSync(ForceRescanVar bool, CancellableVar *Cancellable) []string
+	GuessContentTypeFinish(ResultVar AsyncResult) ([]string, error)
+	GuessContentTypeSync(ForceRescanVar bool, CancellableVar *Cancellable) ([]string, error)
 	IsShadowed() bool
 	Remount(FlagsVar MountMountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	RemountFinish(ResultVar AsyncResult) bool
+	RemountFinish(ResultVar AsyncResult) (bool, error)
 	Shadow()
 	Unmount(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	UnmountFinish(ResultVar AsyncResult) bool
+	UnmountFinish(ResultVar AsyncResult) (bool, error)
 	UnmountWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	UnmountWithOperationFinish(ResultVar AsyncResult) bool
+	UnmountWithOperationFinish(ResultVar AsyncResult) (bool, error)
 	Unshadow()
 }
 

@@ -23,7 +23,7 @@ type CustomRequestModeFunc func(uintptr) SizeRequestMode
 type CustomLayoutClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutManagerClass
 }
 
 func (x *CustomLayoutClass) GoPointer() uintptr {

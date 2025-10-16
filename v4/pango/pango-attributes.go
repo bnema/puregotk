@@ -26,10 +26,85 @@ type AttrClass struct {
 	_ structs.HostLayout
 
 	Type AttrType
+
+	xCopy uintptr
+
+	xDestroy uintptr
+
+	xEqual uintptr
 }
 
 func (x *AttrClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideCopy sets the callback function.
+func (x *AttrClass) OverrideCopy(cb func(*Attribute) *Attribute) {
+	if cb == nil {
+		x.xCopy = 0
+	} else {
+		x.xCopy = purego.NewCallback(func(AttrVarp *Attribute) *Attribute {
+			return cb(AttrVarp)
+		})
+	}
+}
+
+// GetCopy gets the callback function.
+func (x *AttrClass) GetCopy() func(*Attribute) *Attribute {
+	if x.xCopy == 0 {
+		return nil
+	}
+	var rawCallback func(AttrVarp *Attribute) *Attribute
+	purego.RegisterFunc(&rawCallback, x.xCopy)
+	return func(AttrVar *Attribute) *Attribute {
+		return rawCallback(AttrVar)
+	}
+}
+
+// OverrideDestroy sets the callback function.
+func (x *AttrClass) OverrideDestroy(cb func(*Attribute)) {
+	if cb == nil {
+		x.xDestroy = 0
+	} else {
+		x.xDestroy = purego.NewCallback(func(AttrVarp *Attribute) {
+			cb(AttrVarp)
+		})
+	}
+}
+
+// GetDestroy gets the callback function.
+func (x *AttrClass) GetDestroy() func(*Attribute) {
+	if x.xDestroy == 0 {
+		return nil
+	}
+	var rawCallback func(AttrVarp *Attribute)
+	purego.RegisterFunc(&rawCallback, x.xDestroy)
+	return func(AttrVar *Attribute) {
+		rawCallback(AttrVar)
+	}
+}
+
+// OverrideEqual sets the callback function.
+func (x *AttrClass) OverrideEqual(cb func(*Attribute, *Attribute) bool) {
+	if cb == nil {
+		x.xEqual = 0
+	} else {
+		x.xEqual = purego.NewCallback(func(Attr1Varp *Attribute, Attr2Varp *Attribute) bool {
+			return cb(Attr1Varp, Attr2Varp)
+		})
+	}
+}
+
+// GetEqual gets the callback function.
+func (x *AttrClass) GetEqual() func(*Attribute, *Attribute) bool {
+	if x.xEqual == 0 {
+		return nil
+	}
+	var rawCallback func(Attr1Varp *Attribute, Attr2Varp *Attribute) bool
+	purego.RegisterFunc(&rawCallback, x.xEqual)
+	return func(Attr1Var *Attribute, Attr2Var *Attribute) bool {
+		return rawCallback(Attr1Var, Attr2Var)
+	}
 }
 
 // The `PangoAttrColor` structure is used to represent attributes that

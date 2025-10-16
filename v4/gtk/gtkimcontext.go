@@ -17,11 +17,586 @@ import (
 type IMContextClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xPreeditStart uintptr
+
+	xPreeditEnd uintptr
+
+	xPreeditChanged uintptr
+
+	xCommit uintptr
+
+	xRetrieveSurrounding uintptr
+
+	xDeleteSurrounding uintptr
+
+	xSetClientWidget uintptr
+
+	xGetPreeditString uintptr
+
+	xFilterKeypress uintptr
+
+	xFocusIn uintptr
+
+	xFocusOut uintptr
+
+	xReset uintptr
+
+	xSetCursorLocation uintptr
+
+	xSetUsePreedit uintptr
+
+	xSetSurrounding uintptr
+
+	xGetSurrounding uintptr
+
+	xSetSurroundingWithSelection uintptr
+
+	xGetSurroundingWithSelection uintptr
+
+	xGtkReserved1 uintptr
+
+	xGtkReserved2 uintptr
+
+	xGtkReserved3 uintptr
+
+	xGtkReserved4 uintptr
+
+	xGtkReserved5 uintptr
 }
 
 func (x *IMContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverridePreeditStart sets the callback function.
+func (x *IMContextClass) OverridePreeditStart(cb func(*IMContext)) {
+	if cb == nil {
+		x.xPreeditStart = 0
+	} else {
+		x.xPreeditStart = purego.NewCallback(func(ContextVarp uintptr) {
+			cb(IMContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetPreeditStart gets the callback function.
+func (x *IMContextClass) GetPreeditStart() func(*IMContext) {
+	if x.xPreeditStart == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xPreeditStart)
+	return func(ContextVar *IMContext) {
+		rawCallback(ContextVar.GoPointer())
+	}
+}
+
+// OverridePreeditEnd sets the callback function.
+func (x *IMContextClass) OverridePreeditEnd(cb func(*IMContext)) {
+	if cb == nil {
+		x.xPreeditEnd = 0
+	} else {
+		x.xPreeditEnd = purego.NewCallback(func(ContextVarp uintptr) {
+			cb(IMContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetPreeditEnd gets the callback function.
+func (x *IMContextClass) GetPreeditEnd() func(*IMContext) {
+	if x.xPreeditEnd == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xPreeditEnd)
+	return func(ContextVar *IMContext) {
+		rawCallback(ContextVar.GoPointer())
+	}
+}
+
+// OverridePreeditChanged sets the callback function.
+func (x *IMContextClass) OverridePreeditChanged(cb func(*IMContext)) {
+	if cb == nil {
+		x.xPreeditChanged = 0
+	} else {
+		x.xPreeditChanged = purego.NewCallback(func(ContextVarp uintptr) {
+			cb(IMContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetPreeditChanged gets the callback function.
+func (x *IMContextClass) GetPreeditChanged() func(*IMContext) {
+	if x.xPreeditChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xPreeditChanged)
+	return func(ContextVar *IMContext) {
+		rawCallback(ContextVar.GoPointer())
+	}
+}
+
+// OverrideCommit sets the callback function.
+func (x *IMContextClass) OverrideCommit(cb func(*IMContext, string)) {
+	if cb == nil {
+		x.xCommit = 0
+	} else {
+		x.xCommit = purego.NewCallback(func(ContextVarp uintptr, StrVarp string) {
+			cb(IMContextNewFromInternalPtr(ContextVarp), StrVarp)
+		})
+	}
+}
+
+// GetCommit gets the callback function.
+func (x *IMContextClass) GetCommit() func(*IMContext, string) {
+	if x.xCommit == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, StrVarp string)
+	purego.RegisterFunc(&rawCallback, x.xCommit)
+	return func(ContextVar *IMContext, StrVar string) {
+		rawCallback(ContextVar.GoPointer(), StrVar)
+	}
+}
+
+// OverrideRetrieveSurrounding sets the callback function.
+func (x *IMContextClass) OverrideRetrieveSurrounding(cb func(*IMContext) bool) {
+	if cb == nil {
+		x.xRetrieveSurrounding = 0
+	} else {
+		x.xRetrieveSurrounding = purego.NewCallback(func(ContextVarp uintptr) bool {
+			return cb(IMContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetRetrieveSurrounding gets the callback function.
+func (x *IMContextClass) GetRetrieveSurrounding() func(*IMContext) bool {
+	if x.xRetrieveSurrounding == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xRetrieveSurrounding)
+	return func(ContextVar *IMContext) bool {
+		return rawCallback(ContextVar.GoPointer())
+	}
+}
+
+// OverrideDeleteSurrounding sets the callback function.
+func (x *IMContextClass) OverrideDeleteSurrounding(cb func(*IMContext, int, int) bool) {
+	if cb == nil {
+		x.xDeleteSurrounding = 0
+	} else {
+		x.xDeleteSurrounding = purego.NewCallback(func(ContextVarp uintptr, OffsetVarp int, NCharsVarp int) bool {
+			return cb(IMContextNewFromInternalPtr(ContextVarp), OffsetVarp, NCharsVarp)
+		})
+	}
+}
+
+// GetDeleteSurrounding gets the callback function.
+func (x *IMContextClass) GetDeleteSurrounding() func(*IMContext, int, int) bool {
+	if x.xDeleteSurrounding == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, OffsetVarp int, NCharsVarp int) bool
+	purego.RegisterFunc(&rawCallback, x.xDeleteSurrounding)
+	return func(ContextVar *IMContext, OffsetVar int, NCharsVar int) bool {
+		return rawCallback(ContextVar.GoPointer(), OffsetVar, NCharsVar)
+	}
+}
+
+// OverrideSetClientWidget sets the callback function.
+func (x *IMContextClass) OverrideSetClientWidget(cb func(*IMContext, *Widget)) {
+	if cb == nil {
+		x.xSetClientWidget = 0
+	} else {
+		x.xSetClientWidget = purego.NewCallback(func(ContextVarp uintptr, WidgetVarp uintptr) {
+			cb(IMContextNewFromInternalPtr(ContextVarp), WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetSetClientWidget gets the callback function.
+func (x *IMContextClass) GetSetClientWidget() func(*IMContext, *Widget) {
+	if x.xSetClientWidget == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, WidgetVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetClientWidget)
+	return func(ContextVar *IMContext, WidgetVar *Widget) {
+		rawCallback(ContextVar.GoPointer(), WidgetVar.GoPointer())
+	}
+}
+
+// OverrideGetPreeditString sets the callback function.
+func (x *IMContextClass) OverrideGetPreeditString(cb func(*IMContext, string, **pango.AttrList, int)) {
+	if cb == nil {
+		x.xGetPreeditString = 0
+	} else {
+		x.xGetPreeditString = purego.NewCallback(func(ContextVarp uintptr, StrVarp string, AttrsVarp **pango.AttrList, CursorPosVarp int) {
+			cb(IMContextNewFromInternalPtr(ContextVarp), StrVarp, AttrsVarp, CursorPosVarp)
+		})
+	}
+}
+
+// GetGetPreeditString gets the callback function.
+func (x *IMContextClass) GetGetPreeditString() func(*IMContext, string, **pango.AttrList, int) {
+	if x.xGetPreeditString == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, StrVarp string, AttrsVarp **pango.AttrList, CursorPosVarp int)
+	purego.RegisterFunc(&rawCallback, x.xGetPreeditString)
+	return func(ContextVar *IMContext, StrVar string, AttrsVar **pango.AttrList, CursorPosVar int) {
+		rawCallback(ContextVar.GoPointer(), StrVar, AttrsVar, CursorPosVar)
+	}
+}
+
+// OverrideFilterKeypress sets the callback function.
+func (x *IMContextClass) OverrideFilterKeypress(cb func(*IMContext, *gdk.Event) bool) {
+	if cb == nil {
+		x.xFilterKeypress = 0
+	} else {
+		x.xFilterKeypress = purego.NewCallback(func(ContextVarp uintptr, EventVarp uintptr) bool {
+			return cb(IMContextNewFromInternalPtr(ContextVarp), gdk.EventNewFromInternalPtr(EventVarp))
+		})
+	}
+}
+
+// GetFilterKeypress gets the callback function.
+func (x *IMContextClass) GetFilterKeypress() func(*IMContext, *gdk.Event) bool {
+	if x.xFilterKeypress == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, EventVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xFilterKeypress)
+	return func(ContextVar *IMContext, EventVar *gdk.Event) bool {
+		return rawCallback(ContextVar.GoPointer(), EventVar.GoPointer())
+	}
+}
+
+// OverrideFocusIn sets the callback function.
+func (x *IMContextClass) OverrideFocusIn(cb func(*IMContext)) {
+	if cb == nil {
+		x.xFocusIn = 0
+	} else {
+		x.xFocusIn = purego.NewCallback(func(ContextVarp uintptr) {
+			cb(IMContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetFocusIn gets the callback function.
+func (x *IMContextClass) GetFocusIn() func(*IMContext) {
+	if x.xFocusIn == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xFocusIn)
+	return func(ContextVar *IMContext) {
+		rawCallback(ContextVar.GoPointer())
+	}
+}
+
+// OverrideFocusOut sets the callback function.
+func (x *IMContextClass) OverrideFocusOut(cb func(*IMContext)) {
+	if cb == nil {
+		x.xFocusOut = 0
+	} else {
+		x.xFocusOut = purego.NewCallback(func(ContextVarp uintptr) {
+			cb(IMContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetFocusOut gets the callback function.
+func (x *IMContextClass) GetFocusOut() func(*IMContext) {
+	if x.xFocusOut == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xFocusOut)
+	return func(ContextVar *IMContext) {
+		rawCallback(ContextVar.GoPointer())
+	}
+}
+
+// OverrideReset sets the callback function.
+func (x *IMContextClass) OverrideReset(cb func(*IMContext)) {
+	if cb == nil {
+		x.xReset = 0
+	} else {
+		x.xReset = purego.NewCallback(func(ContextVarp uintptr) {
+			cb(IMContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetReset gets the callback function.
+func (x *IMContextClass) GetReset() func(*IMContext) {
+	if x.xReset == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xReset)
+	return func(ContextVar *IMContext) {
+		rawCallback(ContextVar.GoPointer())
+	}
+}
+
+// OverrideSetCursorLocation sets the callback function.
+func (x *IMContextClass) OverrideSetCursorLocation(cb func(*IMContext, *gdk.Rectangle)) {
+	if cb == nil {
+		x.xSetCursorLocation = 0
+	} else {
+		x.xSetCursorLocation = purego.NewCallback(func(ContextVarp uintptr, AreaVarp *gdk.Rectangle) {
+			cb(IMContextNewFromInternalPtr(ContextVarp), AreaVarp)
+		})
+	}
+}
+
+// GetSetCursorLocation gets the callback function.
+func (x *IMContextClass) GetSetCursorLocation() func(*IMContext, *gdk.Rectangle) {
+	if x.xSetCursorLocation == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, AreaVarp *gdk.Rectangle)
+	purego.RegisterFunc(&rawCallback, x.xSetCursorLocation)
+	return func(ContextVar *IMContext, AreaVar *gdk.Rectangle) {
+		rawCallback(ContextVar.GoPointer(), AreaVar)
+	}
+}
+
+// OverrideSetUsePreedit sets the callback function.
+func (x *IMContextClass) OverrideSetUsePreedit(cb func(*IMContext, bool)) {
+	if cb == nil {
+		x.xSetUsePreedit = 0
+	} else {
+		x.xSetUsePreedit = purego.NewCallback(func(ContextVarp uintptr, UsePreeditVarp bool) {
+			cb(IMContextNewFromInternalPtr(ContextVarp), UsePreeditVarp)
+		})
+	}
+}
+
+// GetSetUsePreedit gets the callback function.
+func (x *IMContextClass) GetSetUsePreedit() func(*IMContext, bool) {
+	if x.xSetUsePreedit == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, UsePreeditVarp bool)
+	purego.RegisterFunc(&rawCallback, x.xSetUsePreedit)
+	return func(ContextVar *IMContext, UsePreeditVar bool) {
+		rawCallback(ContextVar.GoPointer(), UsePreeditVar)
+	}
+}
+
+// OverrideSetSurrounding sets the callback function.
+func (x *IMContextClass) OverrideSetSurrounding(cb func(*IMContext, string, int, int)) {
+	if cb == nil {
+		x.xSetSurrounding = 0
+	} else {
+		x.xSetSurrounding = purego.NewCallback(func(ContextVarp uintptr, TextVarp string, LenVarp int, CursorIndexVarp int) {
+			cb(IMContextNewFromInternalPtr(ContextVarp), TextVarp, LenVarp, CursorIndexVarp)
+		})
+	}
+}
+
+// GetSetSurrounding gets the callback function.
+func (x *IMContextClass) GetSetSurrounding() func(*IMContext, string, int, int) {
+	if x.xSetSurrounding == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, TextVarp string, LenVarp int, CursorIndexVarp int)
+	purego.RegisterFunc(&rawCallback, x.xSetSurrounding)
+	return func(ContextVar *IMContext, TextVar string, LenVar int, CursorIndexVar int) {
+		rawCallback(ContextVar.GoPointer(), TextVar, LenVar, CursorIndexVar)
+	}
+}
+
+// OverrideGetSurrounding sets the callback function.
+func (x *IMContextClass) OverrideGetSurrounding(cb func(*IMContext, string, int) bool) {
+	if cb == nil {
+		x.xGetSurrounding = 0
+	} else {
+		x.xGetSurrounding = purego.NewCallback(func(ContextVarp uintptr, TextVarp string, CursorIndexVarp int) bool {
+			return cb(IMContextNewFromInternalPtr(ContextVarp), TextVarp, CursorIndexVarp)
+		})
+	}
+}
+
+// GetGetSurrounding gets the callback function.
+func (x *IMContextClass) GetGetSurrounding() func(*IMContext, string, int) bool {
+	if x.xGetSurrounding == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, TextVarp string, CursorIndexVarp int) bool
+	purego.RegisterFunc(&rawCallback, x.xGetSurrounding)
+	return func(ContextVar *IMContext, TextVar string, CursorIndexVar int) bool {
+		return rawCallback(ContextVar.GoPointer(), TextVar, CursorIndexVar)
+	}
+}
+
+// OverrideSetSurroundingWithSelection sets the callback function.
+func (x *IMContextClass) OverrideSetSurroundingWithSelection(cb func(*IMContext, string, int, int, int)) {
+	if cb == nil {
+		x.xSetSurroundingWithSelection = 0
+	} else {
+		x.xSetSurroundingWithSelection = purego.NewCallback(func(ContextVarp uintptr, TextVarp string, LenVarp int, CursorIndexVarp int, AnchorIndexVarp int) {
+			cb(IMContextNewFromInternalPtr(ContextVarp), TextVarp, LenVarp, CursorIndexVarp, AnchorIndexVarp)
+		})
+	}
+}
+
+// GetSetSurroundingWithSelection gets the callback function.
+func (x *IMContextClass) GetSetSurroundingWithSelection() func(*IMContext, string, int, int, int) {
+	if x.xSetSurroundingWithSelection == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, TextVarp string, LenVarp int, CursorIndexVarp int, AnchorIndexVarp int)
+	purego.RegisterFunc(&rawCallback, x.xSetSurroundingWithSelection)
+	return func(ContextVar *IMContext, TextVar string, LenVar int, CursorIndexVar int, AnchorIndexVar int) {
+		rawCallback(ContextVar.GoPointer(), TextVar, LenVar, CursorIndexVar, AnchorIndexVar)
+	}
+}
+
+// OverrideGetSurroundingWithSelection sets the callback function.
+func (x *IMContextClass) OverrideGetSurroundingWithSelection(cb func(*IMContext, string, int, int) bool) {
+	if cb == nil {
+		x.xGetSurroundingWithSelection = 0
+	} else {
+		x.xGetSurroundingWithSelection = purego.NewCallback(func(ContextVarp uintptr, TextVarp string, CursorIndexVarp int, AnchorIndexVarp int) bool {
+			return cb(IMContextNewFromInternalPtr(ContextVarp), TextVarp, CursorIndexVarp, AnchorIndexVarp)
+		})
+	}
+}
+
+// GetGetSurroundingWithSelection gets the callback function.
+func (x *IMContextClass) GetGetSurroundingWithSelection() func(*IMContext, string, int, int) bool {
+	if x.xGetSurroundingWithSelection == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp uintptr, TextVarp string, CursorIndexVarp int, AnchorIndexVarp int) bool
+	purego.RegisterFunc(&rawCallback, x.xGetSurroundingWithSelection)
+	return func(ContextVar *IMContext, TextVar string, CursorIndexVar int, AnchorIndexVar int) bool {
+		return rawCallback(ContextVar.GoPointer(), TextVar, CursorIndexVar, AnchorIndexVar)
+	}
+}
+
+// OverrideGtkReserved1 sets the callback function.
+func (x *IMContextClass) OverrideGtkReserved1(cb func()) {
+	if cb == nil {
+		x.xGtkReserved1 = 0
+	} else {
+		x.xGtkReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved1 gets the callback function.
+func (x *IMContextClass) GetGtkReserved1() func() {
+	if x.xGtkReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved2 sets the callback function.
+func (x *IMContextClass) OverrideGtkReserved2(cb func()) {
+	if cb == nil {
+		x.xGtkReserved2 = 0
+	} else {
+		x.xGtkReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved2 gets the callback function.
+func (x *IMContextClass) GetGtkReserved2() func() {
+	if x.xGtkReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved3 sets the callback function.
+func (x *IMContextClass) OverrideGtkReserved3(cb func()) {
+	if cb == nil {
+		x.xGtkReserved3 = 0
+	} else {
+		x.xGtkReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved3 gets the callback function.
+func (x *IMContextClass) GetGtkReserved3() func() {
+	if x.xGtkReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved4 sets the callback function.
+func (x *IMContextClass) OverrideGtkReserved4(cb func()) {
+	if cb == nil {
+		x.xGtkReserved4 = 0
+	} else {
+		x.xGtkReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved4 gets the callback function.
+func (x *IMContextClass) GetGtkReserved4() func() {
+	if x.xGtkReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved5 sets the callback function.
+func (x *IMContextClass) OverrideGtkReserved5(cb func()) {
+	if cb == nil {
+		x.xGtkReserved5 = 0
+	} else {
+		x.xGtkReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved5 gets the callback function.
+func (x *IMContextClass) GetGtkReserved5() func() {
+	if x.xGtkReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved5)
+	return func() {
+		rawCallback()
+	}
 }
 
 // `GtkIMContext` defines the interface for GTK input methods.

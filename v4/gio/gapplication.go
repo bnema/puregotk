@@ -16,13 +16,388 @@ import (
 type ApplicationClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xStartup uintptr
+
+	xActivate uintptr
+
+	xOpen uintptr
+
+	xCommandLine uintptr
+
+	xLocalCommandLine uintptr
+
+	xBeforeEmit uintptr
+
+	xAfterEmit uintptr
+
+	xAddPlatformData uintptr
+
+	xQuitMainloop uintptr
+
+	xRunMainloop uintptr
+
+	xShutdown uintptr
+
+	xDbusRegister uintptr
+
+	xDbusUnregister uintptr
+
+	xHandleLocalOptions uintptr
+
+	xNameLost uintptr
 
 	Padding [7]uintptr
 }
 
 func (x *ApplicationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideStartup sets the callback function.
+func (x *ApplicationClass) OverrideStartup(cb func(*Application)) {
+	if cb == nil {
+		x.xStartup = 0
+	} else {
+		x.xStartup = purego.NewCallback(func(ApplicationVarp uintptr) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp))
+		})
+	}
+}
+
+// GetStartup gets the callback function.
+func (x *ApplicationClass) GetStartup() func(*Application) {
+	if x.xStartup == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xStartup)
+	return func(ApplicationVar *Application) {
+		rawCallback(ApplicationVar.GoPointer())
+	}
+}
+
+// OverrideActivate sets the callback function.
+func (x *ApplicationClass) OverrideActivate(cb func(*Application)) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(ApplicationVarp uintptr) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp))
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+func (x *ApplicationClass) GetActivate() func(*Application) {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(ApplicationVar *Application) {
+		rawCallback(ApplicationVar.GoPointer())
+	}
+}
+
+// OverrideOpen sets the callback function.
+func (x *ApplicationClass) OverrideOpen(cb func(*Application, uintptr, int, string)) {
+	if cb == nil {
+		x.xOpen = 0
+	} else {
+		x.xOpen = purego.NewCallback(func(ApplicationVarp uintptr, FilesVarp uintptr, NFilesVarp int, HintVarp string) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp), FilesVarp, NFilesVarp, HintVarp)
+		})
+	}
+}
+
+// GetOpen gets the callback function.
+func (x *ApplicationClass) GetOpen() func(*Application, uintptr, int, string) {
+	if x.xOpen == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, FilesVarp uintptr, NFilesVarp int, HintVarp string)
+	purego.RegisterFunc(&rawCallback, x.xOpen)
+	return func(ApplicationVar *Application, FilesVar uintptr, NFilesVar int, HintVar string) {
+		rawCallback(ApplicationVar.GoPointer(), FilesVar, NFilesVar, HintVar)
+	}
+}
+
+// OverrideCommandLine sets the callback function.
+func (x *ApplicationClass) OverrideCommandLine(cb func(*Application, *ApplicationCommandLine) int) {
+	if cb == nil {
+		x.xCommandLine = 0
+	} else {
+		x.xCommandLine = purego.NewCallback(func(ApplicationVarp uintptr, CommandLineVarp uintptr) int {
+			return cb(ApplicationNewFromInternalPtr(ApplicationVarp), ApplicationCommandLineNewFromInternalPtr(CommandLineVarp))
+		})
+	}
+}
+
+// GetCommandLine gets the callback function.
+func (x *ApplicationClass) GetCommandLine() func(*Application, *ApplicationCommandLine) int {
+	if x.xCommandLine == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, CommandLineVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xCommandLine)
+	return func(ApplicationVar *Application, CommandLineVar *ApplicationCommandLine) int {
+		return rawCallback(ApplicationVar.GoPointer(), CommandLineVar.GoPointer())
+	}
+}
+
+// OverrideLocalCommandLine sets the callback function.
+func (x *ApplicationClass) OverrideLocalCommandLine(cb func(*Application, []string, int) bool) {
+	if cb == nil {
+		x.xLocalCommandLine = 0
+	} else {
+		x.xLocalCommandLine = purego.NewCallback(func(ApplicationVarp uintptr, ArgumentsVarp []string, ExitStatusVarp int) bool {
+			return cb(ApplicationNewFromInternalPtr(ApplicationVarp), ArgumentsVarp, ExitStatusVarp)
+		})
+	}
+}
+
+// GetLocalCommandLine gets the callback function.
+func (x *ApplicationClass) GetLocalCommandLine() func(*Application, []string, int) bool {
+	if x.xLocalCommandLine == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, ArgumentsVarp []string, ExitStatusVarp int) bool
+	purego.RegisterFunc(&rawCallback, x.xLocalCommandLine)
+	return func(ApplicationVar *Application, ArgumentsVar []string, ExitStatusVar int) bool {
+		return rawCallback(ApplicationVar.GoPointer(), ArgumentsVar, ExitStatusVar)
+	}
+}
+
+// OverrideBeforeEmit sets the callback function.
+func (x *ApplicationClass) OverrideBeforeEmit(cb func(*Application, *glib.Variant)) {
+	if cb == nil {
+		x.xBeforeEmit = 0
+	} else {
+		x.xBeforeEmit = purego.NewCallback(func(ApplicationVarp uintptr, PlatformDataVarp *glib.Variant) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp), PlatformDataVarp)
+		})
+	}
+}
+
+// GetBeforeEmit gets the callback function.
+func (x *ApplicationClass) GetBeforeEmit() func(*Application, *glib.Variant) {
+	if x.xBeforeEmit == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, PlatformDataVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xBeforeEmit)
+	return func(ApplicationVar *Application, PlatformDataVar *glib.Variant) {
+		rawCallback(ApplicationVar.GoPointer(), PlatformDataVar)
+	}
+}
+
+// OverrideAfterEmit sets the callback function.
+func (x *ApplicationClass) OverrideAfterEmit(cb func(*Application, *glib.Variant)) {
+	if cb == nil {
+		x.xAfterEmit = 0
+	} else {
+		x.xAfterEmit = purego.NewCallback(func(ApplicationVarp uintptr, PlatformDataVarp *glib.Variant) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp), PlatformDataVarp)
+		})
+	}
+}
+
+// GetAfterEmit gets the callback function.
+func (x *ApplicationClass) GetAfterEmit() func(*Application, *glib.Variant) {
+	if x.xAfterEmit == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, PlatformDataVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xAfterEmit)
+	return func(ApplicationVar *Application, PlatformDataVar *glib.Variant) {
+		rawCallback(ApplicationVar.GoPointer(), PlatformDataVar)
+	}
+}
+
+// OverrideAddPlatformData sets the callback function.
+func (x *ApplicationClass) OverrideAddPlatformData(cb func(*Application, *glib.VariantBuilder)) {
+	if cb == nil {
+		x.xAddPlatformData = 0
+	} else {
+		x.xAddPlatformData = purego.NewCallback(func(ApplicationVarp uintptr, BuilderVarp *glib.VariantBuilder) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp), BuilderVarp)
+		})
+	}
+}
+
+// GetAddPlatformData gets the callback function.
+func (x *ApplicationClass) GetAddPlatformData() func(*Application, *glib.VariantBuilder) {
+	if x.xAddPlatformData == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, BuilderVarp *glib.VariantBuilder)
+	purego.RegisterFunc(&rawCallback, x.xAddPlatformData)
+	return func(ApplicationVar *Application, BuilderVar *glib.VariantBuilder) {
+		rawCallback(ApplicationVar.GoPointer(), BuilderVar)
+	}
+}
+
+// OverrideQuitMainloop sets the callback function.
+func (x *ApplicationClass) OverrideQuitMainloop(cb func(*Application)) {
+	if cb == nil {
+		x.xQuitMainloop = 0
+	} else {
+		x.xQuitMainloop = purego.NewCallback(func(ApplicationVarp uintptr) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp))
+		})
+	}
+}
+
+// GetQuitMainloop gets the callback function.
+func (x *ApplicationClass) GetQuitMainloop() func(*Application) {
+	if x.xQuitMainloop == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xQuitMainloop)
+	return func(ApplicationVar *Application) {
+		rawCallback(ApplicationVar.GoPointer())
+	}
+}
+
+// OverrideRunMainloop sets the callback function.
+func (x *ApplicationClass) OverrideRunMainloop(cb func(*Application)) {
+	if cb == nil {
+		x.xRunMainloop = 0
+	} else {
+		x.xRunMainloop = purego.NewCallback(func(ApplicationVarp uintptr) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp))
+		})
+	}
+}
+
+// GetRunMainloop gets the callback function.
+func (x *ApplicationClass) GetRunMainloop() func(*Application) {
+	if x.xRunMainloop == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRunMainloop)
+	return func(ApplicationVar *Application) {
+		rawCallback(ApplicationVar.GoPointer())
+	}
+}
+
+// OverrideShutdown sets the callback function.
+func (x *ApplicationClass) OverrideShutdown(cb func(*Application)) {
+	if cb == nil {
+		x.xShutdown = 0
+	} else {
+		x.xShutdown = purego.NewCallback(func(ApplicationVarp uintptr) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp))
+		})
+	}
+}
+
+// GetShutdown gets the callback function.
+func (x *ApplicationClass) GetShutdown() func(*Application) {
+	if x.xShutdown == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xShutdown)
+	return func(ApplicationVar *Application) {
+		rawCallback(ApplicationVar.GoPointer())
+	}
+}
+
+// OverrideDbusRegister sets the callback function.
+func (x *ApplicationClass) OverrideDbusRegister(cb func(*Application, *DBusConnection, string) bool) {
+	if cb == nil {
+		x.xDbusRegister = 0
+	} else {
+		x.xDbusRegister = purego.NewCallback(func(ApplicationVarp uintptr, ConnectionVarp uintptr, ObjectPathVarp string) bool {
+			return cb(ApplicationNewFromInternalPtr(ApplicationVarp), DBusConnectionNewFromInternalPtr(ConnectionVarp), ObjectPathVarp)
+		})
+	}
+}
+
+// GetDbusRegister gets the callback function.
+func (x *ApplicationClass) GetDbusRegister() func(*Application, *DBusConnection, string) bool {
+	if x.xDbusRegister == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, ConnectionVarp uintptr, ObjectPathVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xDbusRegister)
+	return func(ApplicationVar *Application, ConnectionVar *DBusConnection, ObjectPathVar string) bool {
+		return rawCallback(ApplicationVar.GoPointer(), ConnectionVar.GoPointer(), ObjectPathVar)
+	}
+}
+
+// OverrideDbusUnregister sets the callback function.
+func (x *ApplicationClass) OverrideDbusUnregister(cb func(*Application, *DBusConnection, string)) {
+	if cb == nil {
+		x.xDbusUnregister = 0
+	} else {
+		x.xDbusUnregister = purego.NewCallback(func(ApplicationVarp uintptr, ConnectionVarp uintptr, ObjectPathVarp string) {
+			cb(ApplicationNewFromInternalPtr(ApplicationVarp), DBusConnectionNewFromInternalPtr(ConnectionVarp), ObjectPathVarp)
+		})
+	}
+}
+
+// GetDbusUnregister gets the callback function.
+func (x *ApplicationClass) GetDbusUnregister() func(*Application, *DBusConnection, string) {
+	if x.xDbusUnregister == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, ConnectionVarp uintptr, ObjectPathVarp string)
+	purego.RegisterFunc(&rawCallback, x.xDbusUnregister)
+	return func(ApplicationVar *Application, ConnectionVar *DBusConnection, ObjectPathVar string) {
+		rawCallback(ApplicationVar.GoPointer(), ConnectionVar.GoPointer(), ObjectPathVar)
+	}
+}
+
+// OverrideHandleLocalOptions sets the callback function.
+func (x *ApplicationClass) OverrideHandleLocalOptions(cb func(*Application, *glib.VariantDict) int) {
+	if cb == nil {
+		x.xHandleLocalOptions = 0
+	} else {
+		x.xHandleLocalOptions = purego.NewCallback(func(ApplicationVarp uintptr, OptionsVarp *glib.VariantDict) int {
+			return cb(ApplicationNewFromInternalPtr(ApplicationVarp), OptionsVarp)
+		})
+	}
+}
+
+// GetHandleLocalOptions gets the callback function.
+func (x *ApplicationClass) GetHandleLocalOptions() func(*Application, *glib.VariantDict) int {
+	if x.xHandleLocalOptions == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr, OptionsVarp *glib.VariantDict) int
+	purego.RegisterFunc(&rawCallback, x.xHandleLocalOptions)
+	return func(ApplicationVar *Application, OptionsVar *glib.VariantDict) int {
+		return rawCallback(ApplicationVar.GoPointer(), OptionsVar)
+	}
+}
+
+// OverrideNameLost sets the callback function.
+func (x *ApplicationClass) OverrideNameLost(cb func(*Application) bool) {
+	if cb == nil {
+		x.xNameLost = 0
+	} else {
+		x.xNameLost = purego.NewCallback(func(ApplicationVarp uintptr) bool {
+			return cb(ApplicationNewFromInternalPtr(ApplicationVarp))
+		})
+	}
+}
+
+// GetNameLost gets the callback function.
+func (x *ApplicationClass) GetNameLost() func(*Application) bool {
+	if x.xNameLost == 0 {
+		return nil
+	}
+	var rawCallback func(ApplicationVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xNameLost)
+	return func(ApplicationVar *Application) bool {
+		return rawCallback(ApplicationVar.GoPointer())
+	}
 }
 
 type ApplicationPrivate struct {

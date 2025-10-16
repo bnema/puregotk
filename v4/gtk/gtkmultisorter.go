@@ -15,7 +15,7 @@ import (
 type MultiSorterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass SorterClass
 }
 
 func (x *MultiSorterClass) GoPointer() uintptr {

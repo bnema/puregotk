@@ -15,7 +15,7 @@ import (
 type PreferencesPageClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 
 	Padding [4]uintptr
 }

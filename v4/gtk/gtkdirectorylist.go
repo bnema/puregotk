@@ -16,7 +16,7 @@ import (
 type DirectoryListClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *DirectoryListClass) GoPointer() uintptr {

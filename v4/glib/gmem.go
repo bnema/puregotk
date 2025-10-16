@@ -16,10 +16,160 @@ import (
 // This functions related to this has been deprecated in 2.46, and no longer work.
 type MemVTable struct {
 	_ structs.HostLayout
+
+	xMalloc uintptr
+
+	xRealloc uintptr
+
+	xFree uintptr
+
+	xCalloc uintptr
+
+	xTryMalloc uintptr
+
+	xTryRealloc uintptr
 }
 
 func (x *MemVTable) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideMalloc sets the callback function.
+func (x *MemVTable) OverrideMalloc(cb func(uint) uintptr) {
+	if cb == nil {
+		x.xMalloc = 0
+	} else {
+		x.xMalloc = purego.NewCallback(func(NBytesVarp uint) uintptr {
+			return cb(NBytesVarp)
+		})
+	}
+}
+
+// GetMalloc gets the callback function.
+func (x *MemVTable) GetMalloc() func(uint) uintptr {
+	if x.xMalloc == 0 {
+		return nil
+	}
+	var rawCallback func(NBytesVarp uint) uintptr
+	purego.RegisterFunc(&rawCallback, x.xMalloc)
+	return func(NBytesVar uint) uintptr {
+		return rawCallback(NBytesVar)
+	}
+}
+
+// OverrideRealloc sets the callback function.
+func (x *MemVTable) OverrideRealloc(cb func(uintptr, uint) uintptr) {
+	if cb == nil {
+		x.xRealloc = 0
+	} else {
+		x.xRealloc = purego.NewCallback(func(MemVarp uintptr, NBytesVarp uint) uintptr {
+			return cb(MemVarp, NBytesVarp)
+		})
+	}
+}
+
+// GetRealloc gets the callback function.
+func (x *MemVTable) GetRealloc() func(uintptr, uint) uintptr {
+	if x.xRealloc == 0 {
+		return nil
+	}
+	var rawCallback func(MemVarp uintptr, NBytesVarp uint) uintptr
+	purego.RegisterFunc(&rawCallback, x.xRealloc)
+	return func(MemVar uintptr, NBytesVar uint) uintptr {
+		return rawCallback(MemVar, NBytesVar)
+	}
+}
+
+// OverrideFree sets the callback function.
+func (x *MemVTable) OverrideFree(cb func(uintptr)) {
+	if cb == nil {
+		x.xFree = 0
+	} else {
+		x.xFree = purego.NewCallback(func(MemVarp uintptr) {
+			cb(MemVarp)
+		})
+	}
+}
+
+// GetFree gets the callback function.
+func (x *MemVTable) GetFree() func(uintptr) {
+	if x.xFree == 0 {
+		return nil
+	}
+	var rawCallback func(MemVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xFree)
+	return func(MemVar uintptr) {
+		rawCallback(MemVar)
+	}
+}
+
+// OverrideCalloc sets the callback function.
+func (x *MemVTable) OverrideCalloc(cb func(uint, uint) uintptr) {
+	if cb == nil {
+		x.xCalloc = 0
+	} else {
+		x.xCalloc = purego.NewCallback(func(NBlocksVarp uint, NBlockBytesVarp uint) uintptr {
+			return cb(NBlocksVarp, NBlockBytesVarp)
+		})
+	}
+}
+
+// GetCalloc gets the callback function.
+func (x *MemVTable) GetCalloc() func(uint, uint) uintptr {
+	if x.xCalloc == 0 {
+		return nil
+	}
+	var rawCallback func(NBlocksVarp uint, NBlockBytesVarp uint) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCalloc)
+	return func(NBlocksVar uint, NBlockBytesVar uint) uintptr {
+		return rawCallback(NBlocksVar, NBlockBytesVar)
+	}
+}
+
+// OverrideTryMalloc sets the callback function.
+func (x *MemVTable) OverrideTryMalloc(cb func(uint) uintptr) {
+	if cb == nil {
+		x.xTryMalloc = 0
+	} else {
+		x.xTryMalloc = purego.NewCallback(func(NBytesVarp uint) uintptr {
+			return cb(NBytesVarp)
+		})
+	}
+}
+
+// GetTryMalloc gets the callback function.
+func (x *MemVTable) GetTryMalloc() func(uint) uintptr {
+	if x.xTryMalloc == 0 {
+		return nil
+	}
+	var rawCallback func(NBytesVarp uint) uintptr
+	purego.RegisterFunc(&rawCallback, x.xTryMalloc)
+	return func(NBytesVar uint) uintptr {
+		return rawCallback(NBytesVar)
+	}
+}
+
+// OverrideTryRealloc sets the callback function.
+func (x *MemVTable) OverrideTryRealloc(cb func(uintptr, uint) uintptr) {
+	if cb == nil {
+		x.xTryRealloc = 0
+	} else {
+		x.xTryRealloc = purego.NewCallback(func(MemVarp uintptr, NBytesVarp uint) uintptr {
+			return cb(MemVarp, NBytesVarp)
+		})
+	}
+}
+
+// GetTryRealloc gets the callback function.
+func (x *MemVTable) GetTryRealloc() func(uintptr, uint) uintptr {
+	if x.xTryRealloc == 0 {
+		return nil
+	}
+	var rawCallback func(MemVarp uintptr, NBytesVarp uint) uintptr
+	purego.RegisterFunc(&rawCallback, x.xTryRealloc)
+	return func(MemVar uintptr, NBytesVar uint) uintptr {
+		return rawCallback(MemVar, NBytesVar)
+	}
 }
 
 var xAlignedAlloc func(uint, uint, uint) uintptr

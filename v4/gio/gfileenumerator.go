@@ -15,11 +15,346 @@ import (
 type FileEnumeratorClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xNextFile uintptr
+
+	xCloseFn uintptr
+
+	xNextFilesAsync uintptr
+
+	xNextFilesFinish uintptr
+
+	xCloseAsync uintptr
+
+	xCloseFinish uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
+
+	xGReserved6 uintptr
+
+	xGReserved7 uintptr
 }
 
 func (x *FileEnumeratorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideNextFile sets the callback function.
+func (x *FileEnumeratorClass) OverrideNextFile(cb func(*FileEnumerator, *Cancellable) *FileInfo) {
+	if cb == nil {
+		x.xNextFile = 0
+	} else {
+		x.xNextFile = purego.NewCallback(func(EnumeratorVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(FileEnumeratorNewFromInternalPtr(EnumeratorVarp), CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetNextFile gets the callback function.
+func (x *FileEnumeratorClass) GetNextFile() func(*FileEnumerator, *Cancellable) *FileInfo {
+	if x.xNextFile == 0 {
+		return nil
+	}
+	var rawCallback func(EnumeratorVarp uintptr, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xNextFile)
+	return func(EnumeratorVar *FileEnumerator, CancellableVar *Cancellable) *FileInfo {
+		rawRet := rawCallback(EnumeratorVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileInfo{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCloseFn sets the callback function.
+func (x *FileEnumeratorClass) OverrideCloseFn(cb func(*FileEnumerator, *Cancellable) bool) {
+	if cb == nil {
+		x.xCloseFn = 0
+	} else {
+		x.xCloseFn = purego.NewCallback(func(EnumeratorVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(FileEnumeratorNewFromInternalPtr(EnumeratorVarp), CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetCloseFn gets the callback function.
+func (x *FileEnumeratorClass) GetCloseFn() func(*FileEnumerator, *Cancellable) bool {
+	if x.xCloseFn == 0 {
+		return nil
+	}
+	var rawCallback func(EnumeratorVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCloseFn)
+	return func(EnumeratorVar *FileEnumerator, CancellableVar *Cancellable) bool {
+		return rawCallback(EnumeratorVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideNextFilesAsync sets the callback function.
+func (x *FileEnumeratorClass) OverrideNextFilesAsync(cb func(*FileEnumerator, int, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xNextFilesAsync = 0
+	} else {
+		x.xNextFilesAsync = purego.NewCallback(func(EnumeratorVarp uintptr, NumFilesVarp int, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(FileEnumeratorNewFromInternalPtr(EnumeratorVarp), NumFilesVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetNextFilesAsync gets the callback function.
+func (x *FileEnumeratorClass) GetNextFilesAsync() func(*FileEnumerator, int, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xNextFilesAsync == 0 {
+		return nil
+	}
+	var rawCallback func(EnumeratorVarp uintptr, NumFilesVarp int, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xNextFilesAsync)
+	return func(EnumeratorVar *FileEnumerator, NumFilesVar int, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(EnumeratorVar.GoPointer(), NumFilesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideNextFilesFinish sets the callback function.
+func (x *FileEnumeratorClass) OverrideNextFilesFinish(cb func(*FileEnumerator, AsyncResult) *glib.List) {
+	if cb == nil {
+		x.xNextFilesFinish = 0
+	} else {
+		x.xNextFilesFinish = purego.NewCallback(func(EnumeratorVarp uintptr, ResultVarp uintptr) *glib.List {
+			return cb(FileEnumeratorNewFromInternalPtr(EnumeratorVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetNextFilesFinish gets the callback function.
+func (x *FileEnumeratorClass) GetNextFilesFinish() func(*FileEnumerator, AsyncResult) *glib.List {
+	if x.xNextFilesFinish == 0 {
+		return nil
+	}
+	var rawCallback func(EnumeratorVarp uintptr, ResultVarp uintptr) *glib.List
+	purego.RegisterFunc(&rawCallback, x.xNextFilesFinish)
+	return func(EnumeratorVar *FileEnumerator, ResultVar AsyncResult) *glib.List {
+		return rawCallback(EnumeratorVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideCloseAsync sets the callback function.
+func (x *FileEnumeratorClass) OverrideCloseAsync(cb func(*FileEnumerator, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xCloseAsync = 0
+	} else {
+		x.xCloseAsync = purego.NewCallback(func(EnumeratorVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(FileEnumeratorNewFromInternalPtr(EnumeratorVarp), IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetCloseAsync gets the callback function.
+func (x *FileEnumeratorClass) GetCloseAsync() func(*FileEnumerator, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xCloseAsync == 0 {
+		return nil
+	}
+	var rawCallback func(EnumeratorVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCloseAsync)
+	return func(EnumeratorVar *FileEnumerator, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(EnumeratorVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideCloseFinish sets the callback function.
+func (x *FileEnumeratorClass) OverrideCloseFinish(cb func(*FileEnumerator, AsyncResult) bool) {
+	if cb == nil {
+		x.xCloseFinish = 0
+	} else {
+		x.xCloseFinish = purego.NewCallback(func(EnumeratorVarp uintptr, ResultVarp uintptr) bool {
+			return cb(FileEnumeratorNewFromInternalPtr(EnumeratorVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetCloseFinish gets the callback function.
+func (x *FileEnumeratorClass) GetCloseFinish() func(*FileEnumerator, AsyncResult) bool {
+	if x.xCloseFinish == 0 {
+		return nil
+	}
+	var rawCallback func(EnumeratorVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCloseFinish)
+	return func(EnumeratorVar *FileEnumerator, ResultVar AsyncResult) bool {
+		return rawCallback(EnumeratorVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *FileEnumeratorClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *FileEnumeratorClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *FileEnumeratorClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *FileEnumeratorClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *FileEnumeratorClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *FileEnumeratorClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *FileEnumeratorClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *FileEnumeratorClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *FileEnumeratorClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *FileEnumeratorClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved6 sets the callback function.
+func (x *FileEnumeratorClass) OverrideGReserved6(cb func()) {
+	if cb == nil {
+		x.xGReserved6 = 0
+	} else {
+		x.xGReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved6 gets the callback function.
+func (x *FileEnumeratorClass) GetGReserved6() func() {
+	if x.xGReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved6)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved7 sets the callback function.
+func (x *FileEnumeratorClass) OverrideGReserved7(cb func()) {
+	if cb == nil {
+		x.xGReserved7 = 0
+	} else {
+		x.xGReserved7 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved7 gets the callback function.
+func (x *FileEnumeratorClass) GetGReserved7() func() {
+	if x.xGReserved7 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved7)
+	return func() {
+		rawCallback()
+	}
 }
 
 type FileEnumeratorPrivate struct {
@@ -193,7 +528,7 @@ func (x *FileEnumerator) IsClosed() bool {
 	return cret
 }
 
-var xFileEnumeratorIterate func(uintptr, *uintptr, *uintptr, uintptr, **glib.Error) bool
+var xFileEnumeratorIterate func(uintptr, uintptr, *uintptr, uintptr, **glib.Error) bool
 
 // This is a version of g_file_enumerator_next_file() that's easier to
 // use correctly from C programs.  With g_file_enumerator_next_file(),
@@ -239,7 +574,7 @@ var xFileEnumeratorIterate func(uintptr, *uintptr, *uintptr, uintptr, **glib.Err
 func (x *FileEnumerator) Iterate(OutInfoVar **FileInfo, OutChildVar *File, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xFileEnumeratorIterate(x.GoPointer(), gobject.ConvertPtr(OutInfoVar), gobject.ConvertPtr(OutChildVar), CancellableVar.GoPointer(), &cerr)
+	cret := xFileEnumeratorIterate(x.GoPointer(), *gobject.ConvertPtr(OutInfoVar), gobject.ConvertPtr(OutChildVar), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

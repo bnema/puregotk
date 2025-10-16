@@ -18,10 +18,60 @@ type ConverterIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xConvert uintptr
+
+	xReset uintptr
 }
 
 func (x *ConverterIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideConvert sets the callback function.
+func (x *ConverterIface) OverrideConvert(cb func(Converter, []byte, uint, []byte, uint, ConverterFlags, uint, uint) ConverterResult) {
+	if cb == nil {
+		x.xConvert = 0
+	} else {
+		x.xConvert = purego.NewCallback(func(ConverterVarp uintptr, InbufVarp []byte, InbufSizeVarp uint, OutbufVarp []byte, OutbufSizeVarp uint, FlagsVarp ConverterFlags, BytesReadVarp uint, BytesWrittenVarp uint) ConverterResult {
+			return cb(&ConverterBase{Ptr: ConverterVarp}, InbufVarp, InbufSizeVarp, OutbufVarp, OutbufSizeVarp, FlagsVarp, BytesReadVarp, BytesWrittenVarp)
+		})
+	}
+}
+
+// GetConvert gets the callback function.
+func (x *ConverterIface) GetConvert() func(Converter, []byte, uint, []byte, uint, ConverterFlags, uint, uint) ConverterResult {
+	if x.xConvert == 0 {
+		return nil
+	}
+	var rawCallback func(ConverterVarp uintptr, InbufVarp []byte, InbufSizeVarp uint, OutbufVarp []byte, OutbufSizeVarp uint, FlagsVarp ConverterFlags, BytesReadVarp uint, BytesWrittenVarp uint) ConverterResult
+	purego.RegisterFunc(&rawCallback, x.xConvert)
+	return func(ConverterVar Converter, InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar uint, BytesWrittenVar uint) ConverterResult {
+		return rawCallback(ConverterVar.GoPointer(), InbufVar, InbufSizeVar, OutbufVar, OutbufSizeVar, FlagsVar, BytesReadVar, BytesWrittenVar)
+	}
+}
+
+// OverrideReset sets the callback function.
+func (x *ConverterIface) OverrideReset(cb func(Converter)) {
+	if cb == nil {
+		x.xReset = 0
+	} else {
+		x.xReset = purego.NewCallback(func(ConverterVarp uintptr) {
+			cb(&ConverterBase{Ptr: ConverterVarp})
+		})
+	}
+}
+
+// GetReset gets the callback function.
+func (x *ConverterIface) GetReset() func(Converter) {
+	if x.xReset == 0 {
+		return nil
+	}
+	var rawCallback func(ConverterVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xReset)
+	return func(ConverterVar Converter) {
+		rawCallback(ConverterVar.GoPointer())
+	}
 }
 
 // #GConverter is implemented by objects that convert
@@ -34,7 +84,7 @@ func (x *ConverterIface) GoPointer() uintptr {
 type Converter interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar uint, BytesWrittenVar uint) ConverterResult
+	Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar uint, BytesWrittenVar uint) (ConverterResult, error)
 	Reset()
 }
 

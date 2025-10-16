@@ -15,11 +15,111 @@ import (
 type PixbufLoaderClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xSizePrepared uintptr
+
+	xAreaPrepared uintptr
+
+	xAreaUpdated uintptr
+
+	xClosed uintptr
 }
 
 func (x *PixbufLoaderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideSizePrepared sets the callback function.
+func (x *PixbufLoaderClass) OverrideSizePrepared(cb func(*PixbufLoader, int, int)) {
+	if cb == nil {
+		x.xSizePrepared = 0
+	} else {
+		x.xSizePrepared = purego.NewCallback(func(LoaderVarp uintptr, WidthVarp int, HeightVarp int) {
+			cb(PixbufLoaderNewFromInternalPtr(LoaderVarp), WidthVarp, HeightVarp)
+		})
+	}
+}
+
+// GetSizePrepared gets the callback function.
+func (x *PixbufLoaderClass) GetSizePrepared() func(*PixbufLoader, int, int) {
+	if x.xSizePrepared == 0 {
+		return nil
+	}
+	var rawCallback func(LoaderVarp uintptr, WidthVarp int, HeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xSizePrepared)
+	return func(LoaderVar *PixbufLoader, WidthVar int, HeightVar int) {
+		rawCallback(LoaderVar.GoPointer(), WidthVar, HeightVar)
+	}
+}
+
+// OverrideAreaPrepared sets the callback function.
+func (x *PixbufLoaderClass) OverrideAreaPrepared(cb func(*PixbufLoader)) {
+	if cb == nil {
+		x.xAreaPrepared = 0
+	} else {
+		x.xAreaPrepared = purego.NewCallback(func(LoaderVarp uintptr) {
+			cb(PixbufLoaderNewFromInternalPtr(LoaderVarp))
+		})
+	}
+}
+
+// GetAreaPrepared gets the callback function.
+func (x *PixbufLoaderClass) GetAreaPrepared() func(*PixbufLoader) {
+	if x.xAreaPrepared == 0 {
+		return nil
+	}
+	var rawCallback func(LoaderVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xAreaPrepared)
+	return func(LoaderVar *PixbufLoader) {
+		rawCallback(LoaderVar.GoPointer())
+	}
+}
+
+// OverrideAreaUpdated sets the callback function.
+func (x *PixbufLoaderClass) OverrideAreaUpdated(cb func(*PixbufLoader, int, int, int, int)) {
+	if cb == nil {
+		x.xAreaUpdated = 0
+	} else {
+		x.xAreaUpdated = purego.NewCallback(func(LoaderVarp uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int) {
+			cb(PixbufLoaderNewFromInternalPtr(LoaderVarp), XVarp, YVarp, WidthVarp, HeightVarp)
+		})
+	}
+}
+
+// GetAreaUpdated gets the callback function.
+func (x *PixbufLoaderClass) GetAreaUpdated() func(*PixbufLoader, int, int, int, int) {
+	if x.xAreaUpdated == 0 {
+		return nil
+	}
+	var rawCallback func(LoaderVarp uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xAreaUpdated)
+	return func(LoaderVar *PixbufLoader, XVar int, YVar int, WidthVar int, HeightVar int) {
+		rawCallback(LoaderVar.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	}
+}
+
+// OverrideClosed sets the callback function.
+func (x *PixbufLoaderClass) OverrideClosed(cb func(*PixbufLoader)) {
+	if cb == nil {
+		x.xClosed = 0
+	} else {
+		x.xClosed = purego.NewCallback(func(LoaderVarp uintptr) {
+			cb(PixbufLoaderNewFromInternalPtr(LoaderVarp))
+		})
+	}
+}
+
+// GetClosed gets the callback function.
+func (x *PixbufLoaderClass) GetClosed() func(*PixbufLoader) {
+	if x.xClosed == 0 {
+		return nil
+	}
+	var rawCallback func(LoaderVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xClosed)
+	return func(LoaderVar *PixbufLoader) {
+		rawCallback(LoaderVar.GoPointer())
+	}
 }
 
 // Incremental image loader.

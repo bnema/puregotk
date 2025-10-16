@@ -14,7 +14,7 @@ import (
 type TcpWrapperConnectionClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass TcpConnectionClass
 }
 
 func (x *TcpWrapperConnectionClass) GoPointer() uintptr {

@@ -16,15 +16,140 @@ import (
 type DBusInterfaceSkeletonClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGetInfo uintptr
+
+	xGetVtable uintptr
+
+	xGetProperties uintptr
+
+	xFlush uintptr
 
 	VfuncPadding [8]uintptr
+
+	xGAuthorizeMethod uintptr
 
 	SignalPadding [8]uintptr
 }
 
 func (x *DBusInterfaceSkeletonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetInfo sets the callback function.
+func (x *DBusInterfaceSkeletonClass) OverrideGetInfo(cb func(*DBusInterfaceSkeleton) *DBusInterfaceInfo) {
+	if cb == nil {
+		x.xGetInfo = 0
+	} else {
+		x.xGetInfo = purego.NewCallback(func(InterfaceVarp uintptr) *DBusInterfaceInfo {
+			return cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+		})
+	}
+}
+
+// GetGetInfo gets the callback function.
+func (x *DBusInterfaceSkeletonClass) GetGetInfo() func(*DBusInterfaceSkeleton) *DBusInterfaceInfo {
+	if x.xGetInfo == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr) *DBusInterfaceInfo
+	purego.RegisterFunc(&rawCallback, x.xGetInfo)
+	return func(InterfaceVar *DBusInterfaceSkeleton) *DBusInterfaceInfo {
+		return rawCallback(InterfaceVar.GoPointer())
+	}
+}
+
+// OverrideGetVtable sets the callback function.
+func (x *DBusInterfaceSkeletonClass) OverrideGetVtable(cb func(*DBusInterfaceSkeleton) *DBusInterfaceVTable) {
+	if cb == nil {
+		x.xGetVtable = 0
+	} else {
+		x.xGetVtable = purego.NewCallback(func(InterfaceVarp uintptr) *DBusInterfaceVTable {
+			return cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+		})
+	}
+}
+
+// GetGetVtable gets the callback function.
+func (x *DBusInterfaceSkeletonClass) GetGetVtable() func(*DBusInterfaceSkeleton) *DBusInterfaceVTable {
+	if x.xGetVtable == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr) *DBusInterfaceVTable
+	purego.RegisterFunc(&rawCallback, x.xGetVtable)
+	return func(InterfaceVar *DBusInterfaceSkeleton) *DBusInterfaceVTable {
+		return rawCallback(InterfaceVar.GoPointer())
+	}
+}
+
+// OverrideGetProperties sets the callback function.
+func (x *DBusInterfaceSkeletonClass) OverrideGetProperties(cb func(*DBusInterfaceSkeleton) *glib.Variant) {
+	if cb == nil {
+		x.xGetProperties = 0
+	} else {
+		x.xGetProperties = purego.NewCallback(func(InterfaceVarp uintptr) *glib.Variant {
+			return cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+		})
+	}
+}
+
+// GetGetProperties gets the callback function.
+func (x *DBusInterfaceSkeletonClass) GetGetProperties() func(*DBusInterfaceSkeleton) *glib.Variant {
+	if x.xGetProperties == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr) *glib.Variant
+	purego.RegisterFunc(&rawCallback, x.xGetProperties)
+	return func(InterfaceVar *DBusInterfaceSkeleton) *glib.Variant {
+		return rawCallback(InterfaceVar.GoPointer())
+	}
+}
+
+// OverrideFlush sets the callback function.
+func (x *DBusInterfaceSkeletonClass) OverrideFlush(cb func(*DBusInterfaceSkeleton)) {
+	if cb == nil {
+		x.xFlush = 0
+	} else {
+		x.xFlush = purego.NewCallback(func(InterfaceVarp uintptr) {
+			cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp))
+		})
+	}
+}
+
+// GetFlush gets the callback function.
+func (x *DBusInterfaceSkeletonClass) GetFlush() func(*DBusInterfaceSkeleton) {
+	if x.xFlush == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xFlush)
+	return func(InterfaceVar *DBusInterfaceSkeleton) {
+		rawCallback(InterfaceVar.GoPointer())
+	}
+}
+
+// OverrideGAuthorizeMethod sets the callback function.
+func (x *DBusInterfaceSkeletonClass) OverrideGAuthorizeMethod(cb func(*DBusInterfaceSkeleton, *DBusMethodInvocation) bool) {
+	if cb == nil {
+		x.xGAuthorizeMethod = 0
+	} else {
+		x.xGAuthorizeMethod = purego.NewCallback(func(InterfaceVarp uintptr, InvocationVarp uintptr) bool {
+			return cb(DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp), DBusMethodInvocationNewFromInternalPtr(InvocationVarp))
+		})
+	}
+}
+
+// GetGAuthorizeMethod gets the callback function.
+func (x *DBusInterfaceSkeletonClass) GetGAuthorizeMethod() func(*DBusInterfaceSkeleton, *DBusMethodInvocation) bool {
+	if x.xGAuthorizeMethod == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr, InvocationVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xGAuthorizeMethod)
+	return func(InterfaceVar *DBusInterfaceSkeleton, InvocationVar *DBusMethodInvocation) bool {
+		return rawCallback(InterfaceVar.GoPointer(), InvocationVar.GoPointer())
+	}
 }
 
 type DBusInterfaceSkeletonPrivate struct {

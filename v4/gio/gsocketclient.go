@@ -15,11 +15,136 @@ import (
 type SocketClientClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xEvent uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
 }
 
 func (x *SocketClientClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideEvent sets the callback function.
+func (x *SocketClientClass) OverrideEvent(cb func(*SocketClient, SocketClientEvent, SocketConnectable, *IOStream)) {
+	if cb == nil {
+		x.xEvent = 0
+	} else {
+		x.xEvent = purego.NewCallback(func(ClientVarp uintptr, EventVarp SocketClientEvent, ConnectableVarp uintptr, ConnectionVarp uintptr) {
+			cb(SocketClientNewFromInternalPtr(ClientVarp), EventVarp, &SocketConnectableBase{Ptr: ConnectableVarp}, IOStreamNewFromInternalPtr(ConnectionVarp))
+		})
+	}
+}
+
+// GetEvent gets the callback function.
+func (x *SocketClientClass) GetEvent() func(*SocketClient, SocketClientEvent, SocketConnectable, *IOStream) {
+	if x.xEvent == 0 {
+		return nil
+	}
+	var rawCallback func(ClientVarp uintptr, EventVarp SocketClientEvent, ConnectableVarp uintptr, ConnectionVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEvent)
+	return func(ClientVar *SocketClient, EventVar SocketClientEvent, ConnectableVar SocketConnectable, ConnectionVar *IOStream) {
+		rawCallback(ClientVar.GoPointer(), EventVar, ConnectableVar.GoPointer(), ConnectionVar.GoPointer())
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *SocketClientClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *SocketClientClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *SocketClientClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *SocketClientClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *SocketClientClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *SocketClientClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *SocketClientClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *SocketClientClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
 }
 
 type SocketClientPrivate struct {

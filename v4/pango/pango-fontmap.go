@@ -16,13 +16,228 @@ import (
 type FontMapClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xLoadFont uintptr
+
+	xListFamilies uintptr
+
+	xLoadFontset uintptr
 
 	ShapeEngineType uintptr
+
+	xGetSerial uintptr
+
+	xChanged uintptr
+
+	xGetFamily uintptr
+
+	xGetFace uintptr
 }
 
 func (x *FontMapClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideLoadFont sets the callback function.
+func (x *FontMapClass) OverrideLoadFont(cb func(*FontMap, *Context, *FontDescription) *Font) {
+	if cb == nil {
+		x.xLoadFont = 0
+	} else {
+		x.xLoadFont = purego.NewCallback(func(FontmapVarp uintptr, ContextVarp uintptr, DescVarp *FontDescription) uintptr {
+			ret := cb(FontMapNewFromInternalPtr(FontmapVarp), ContextNewFromInternalPtr(ContextVarp), DescVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetLoadFont gets the callback function.
+func (x *FontMapClass) GetLoadFont() func(*FontMap, *Context, *FontDescription) *Font {
+	if x.xLoadFont == 0 {
+		return nil
+	}
+	var rawCallback func(FontmapVarp uintptr, ContextVarp uintptr, DescVarp *FontDescription) uintptr
+	purego.RegisterFunc(&rawCallback, x.xLoadFont)
+	return func(FontmapVar *FontMap, ContextVar *Context, DescVar *FontDescription) *Font {
+		rawRet := rawCallback(FontmapVar.GoPointer(), ContextVar.GoPointer(), DescVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &Font{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideListFamilies sets the callback function.
+func (x *FontMapClass) OverrideListFamilies(cb func(*FontMap, uintptr, int)) {
+	if cb == nil {
+		x.xListFamilies = 0
+	} else {
+		x.xListFamilies = purego.NewCallback(func(FontmapVarp uintptr, FamiliesVarp uintptr, NFamiliesVarp int) {
+			cb(FontMapNewFromInternalPtr(FontmapVarp), FamiliesVarp, NFamiliesVarp)
+		})
+	}
+}
+
+// GetListFamilies gets the callback function.
+func (x *FontMapClass) GetListFamilies() func(*FontMap, uintptr, int) {
+	if x.xListFamilies == 0 {
+		return nil
+	}
+	var rawCallback func(FontmapVarp uintptr, FamiliesVarp uintptr, NFamiliesVarp int)
+	purego.RegisterFunc(&rawCallback, x.xListFamilies)
+	return func(FontmapVar *FontMap, FamiliesVar uintptr, NFamiliesVar int) {
+		rawCallback(FontmapVar.GoPointer(), FamiliesVar, NFamiliesVar)
+	}
+}
+
+// OverrideLoadFontset sets the callback function.
+func (x *FontMapClass) OverrideLoadFontset(cb func(*FontMap, *Context, *FontDescription, *Language) *Fontset) {
+	if cb == nil {
+		x.xLoadFontset = 0
+	} else {
+		x.xLoadFontset = purego.NewCallback(func(FontmapVarp uintptr, ContextVarp uintptr, DescVarp *FontDescription, LanguageVarp *Language) uintptr {
+			ret := cb(FontMapNewFromInternalPtr(FontmapVarp), ContextNewFromInternalPtr(ContextVarp), DescVarp, LanguageVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetLoadFontset gets the callback function.
+func (x *FontMapClass) GetLoadFontset() func(*FontMap, *Context, *FontDescription, *Language) *Fontset {
+	if x.xLoadFontset == 0 {
+		return nil
+	}
+	var rawCallback func(FontmapVarp uintptr, ContextVarp uintptr, DescVarp *FontDescription, LanguageVarp *Language) uintptr
+	purego.RegisterFunc(&rawCallback, x.xLoadFontset)
+	return func(FontmapVar *FontMap, ContextVar *Context, DescVar *FontDescription, LanguageVar *Language) *Fontset {
+		rawRet := rawCallback(FontmapVar.GoPointer(), ContextVar.GoPointer(), DescVar, LanguageVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &Fontset{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetSerial sets the callback function.
+func (x *FontMapClass) OverrideGetSerial(cb func(*FontMap) uint) {
+	if cb == nil {
+		x.xGetSerial = 0
+	} else {
+		x.xGetSerial = purego.NewCallback(func(FontmapVarp uintptr) uint {
+			return cb(FontMapNewFromInternalPtr(FontmapVarp))
+		})
+	}
+}
+
+// GetGetSerial gets the callback function.
+func (x *FontMapClass) GetGetSerial() func(*FontMap) uint {
+	if x.xGetSerial == 0 {
+		return nil
+	}
+	var rawCallback func(FontmapVarp uintptr) uint
+	purego.RegisterFunc(&rawCallback, x.xGetSerial)
+	return func(FontmapVar *FontMap) uint {
+		return rawCallback(FontmapVar.GoPointer())
+	}
+}
+
+// OverrideChanged sets the callback function.
+func (x *FontMapClass) OverrideChanged(cb func(*FontMap)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(FontmapVarp uintptr) {
+			cb(FontMapNewFromInternalPtr(FontmapVarp))
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *FontMapClass) GetChanged() func(*FontMap) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(FontmapVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(FontmapVar *FontMap) {
+		rawCallback(FontmapVar.GoPointer())
+	}
+}
+
+// OverrideGetFamily sets the callback function.
+func (x *FontMapClass) OverrideGetFamily(cb func(*FontMap, string) *FontFamily) {
+	if cb == nil {
+		x.xGetFamily = 0
+	} else {
+		x.xGetFamily = purego.NewCallback(func(FontmapVarp uintptr, NameVarp string) uintptr {
+			ret := cb(FontMapNewFromInternalPtr(FontmapVarp), NameVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetFamily gets the callback function.
+func (x *FontMapClass) GetGetFamily() func(*FontMap, string) *FontFamily {
+	if x.xGetFamily == 0 {
+		return nil
+	}
+	var rawCallback func(FontmapVarp uintptr, NameVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetFamily)
+	return func(FontmapVar *FontMap, NameVar string) *FontFamily {
+		rawRet := rawCallback(FontmapVar.GoPointer(), NameVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FontFamily{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetFace sets the callback function.
+func (x *FontMapClass) OverrideGetFace(cb func(*FontMap, *Font) *FontFace) {
+	if cb == nil {
+		x.xGetFace = 0
+	} else {
+		x.xGetFace = purego.NewCallback(func(FontmapVarp uintptr, FontVarp uintptr) uintptr {
+			ret := cb(FontMapNewFromInternalPtr(FontmapVarp), FontNewFromInternalPtr(FontVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetFace gets the callback function.
+func (x *FontMapClass) GetGetFace() func(*FontMap, *Font) *FontFace {
+	if x.xGetFace == 0 {
+		return nil
+	}
+	var rawCallback func(FontmapVarp uintptr, FontVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetFace)
+	return func(FontmapVar *FontMap, FontVar *Font) *FontFace {
+		rawRet := rawCallback(FontmapVar.GoPointer(), FontVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FontFace{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // A `PangoFontMap` represents the set of fonts available for a

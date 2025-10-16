@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/glib"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
@@ -26,9 +27,13 @@ type ActionEntry struct {
 
 	Name uintptr
 
+	xActivate uintptr
+
 	ParameterType uintptr
 
 	State uintptr
+
+	xChangeState uintptr
 
 	Padding [3]uint
 }
@@ -37,15 +42,146 @@ func (x *ActionEntry) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+// OverrideActivate sets the callback function.
+func (x *ActionEntry) OverrideActivate(cb func(*SimpleAction, *glib.Variant, uintptr)) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(ActionVarp uintptr, ParameterVarp *glib.Variant, UserDataVarp uintptr) {
+			cb(SimpleActionNewFromInternalPtr(ActionVarp), ParameterVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+func (x *ActionEntry) GetActivate() func(*SimpleAction, *glib.Variant, uintptr) {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(ActionVarp uintptr, ParameterVarp *glib.Variant, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(ActionVar *SimpleAction, ParameterVar *glib.Variant, UserDataVar uintptr) {
+		rawCallback(ActionVar.GoPointer(), ParameterVar, UserDataVar)
+	}
+}
+
+// OverrideChangeState sets the callback function.
+func (x *ActionEntry) OverrideChangeState(cb func(*SimpleAction, *glib.Variant, uintptr)) {
+	if cb == nil {
+		x.xChangeState = 0
+	} else {
+		x.xChangeState = purego.NewCallback(func(ActionVarp uintptr, ValueVarp *glib.Variant, UserDataVarp uintptr) {
+			cb(SimpleActionNewFromInternalPtr(ActionVarp), ValueVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetChangeState gets the callback function.
+func (x *ActionEntry) GetChangeState() func(*SimpleAction, *glib.Variant, uintptr) {
+	if x.xChangeState == 0 {
+		return nil
+	}
+	var rawCallback func(ActionVarp uintptr, ValueVarp *glib.Variant, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xChangeState)
+	return func(ActionVar *SimpleAction, ValueVar *glib.Variant, UserDataVar uintptr) {
+		rawCallback(ActionVar.GoPointer(), ValueVar, UserDataVar)
+	}
+}
+
 // The virtual function table for #GActionMap.
 type ActionMapInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xLookupAction uintptr
+
+	xAddAction uintptr
+
+	xRemoveAction uintptr
 }
 
 func (x *ActionMapInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideLookupAction sets the callback function.
+func (x *ActionMapInterface) OverrideLookupAction(cb func(ActionMap, string) *ActionBase) {
+	if cb == nil {
+		x.xLookupAction = 0
+	} else {
+		x.xLookupAction = purego.NewCallback(func(ActionMapVarp uintptr, ActionNameVarp string) uintptr {
+			ret := cb(&ActionMapBase{Ptr: ActionMapVarp}, ActionNameVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetLookupAction gets the callback function.
+func (x *ActionMapInterface) GetLookupAction() func(ActionMap, string) *ActionBase {
+	if x.xLookupAction == 0 {
+		return nil
+	}
+	var rawCallback func(ActionMapVarp uintptr, ActionNameVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xLookupAction)
+	return func(ActionMapVar ActionMap, ActionNameVar string) *ActionBase {
+		rawRet := rawCallback(ActionMapVar.GoPointer(), ActionNameVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &ActionBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideAddAction sets the callback function.
+func (x *ActionMapInterface) OverrideAddAction(cb func(ActionMap, Action)) {
+	if cb == nil {
+		x.xAddAction = 0
+	} else {
+		x.xAddAction = purego.NewCallback(func(ActionMapVarp uintptr, ActionVarp uintptr) {
+			cb(&ActionMapBase{Ptr: ActionMapVarp}, &ActionBase{Ptr: ActionVarp})
+		})
+	}
+}
+
+// GetAddAction gets the callback function.
+func (x *ActionMapInterface) GetAddAction() func(ActionMap, Action) {
+	if x.xAddAction == 0 {
+		return nil
+	}
+	var rawCallback func(ActionMapVarp uintptr, ActionVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xAddAction)
+	return func(ActionMapVar ActionMap, ActionVar Action) {
+		rawCallback(ActionMapVar.GoPointer(), ActionVar.GoPointer())
+	}
+}
+
+// OverrideRemoveAction sets the callback function.
+func (x *ActionMapInterface) OverrideRemoveAction(cb func(ActionMap, string)) {
+	if cb == nil {
+		x.xRemoveAction = 0
+	} else {
+		x.xRemoveAction = purego.NewCallback(func(ActionMapVarp uintptr, ActionNameVarp string) {
+			cb(&ActionMapBase{Ptr: ActionMapVarp}, ActionNameVarp)
+		})
+	}
+}
+
+// GetRemoveAction gets the callback function.
+func (x *ActionMapInterface) GetRemoveAction() func(ActionMap, string) {
+	if x.xRemoveAction == 0 {
+		return nil
+	}
+	var rawCallback func(ActionMapVarp uintptr, ActionNameVarp string)
+	purego.RegisterFunc(&rawCallback, x.xRemoveAction)
+	return func(ActionMapVar ActionMap, ActionNameVar string) {
+		rawCallback(ActionMapVar.GoPointer(), ActionNameVar)
+	}
 }
 
 // The GActionMap interface is implemented by #GActionGroup

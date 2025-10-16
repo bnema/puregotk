@@ -15,13 +15,63 @@ import (
 type ButtonClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xClicked uintptr
+
+	xActivate uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *ButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideClicked sets the callback function.
+func (x *ButtonClass) OverrideClicked(cb func(*Button)) {
+	if cb == nil {
+		x.xClicked = 0
+	} else {
+		x.xClicked = purego.NewCallback(func(ButtonVarp uintptr) {
+			cb(ButtonNewFromInternalPtr(ButtonVarp))
+		})
+	}
+}
+
+// GetClicked gets the callback function.
+func (x *ButtonClass) GetClicked() func(*Button) {
+	if x.xClicked == 0 {
+		return nil
+	}
+	var rawCallback func(ButtonVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xClicked)
+	return func(ButtonVar *Button) {
+		rawCallback(ButtonVar.GoPointer())
+	}
+}
+
+// OverrideActivate sets the callback function.
+func (x *ButtonClass) OverrideActivate(cb func(*Button)) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(ButtonVarp uintptr) {
+			cb(ButtonNewFromInternalPtr(ButtonVarp))
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+func (x *ButtonClass) GetActivate() func(*Button) {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(ButtonVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(ButtonVar *Button) {
+		rawCallback(ButtonVar.GoPointer())
+	}
 }
 
 type ButtonPrivate struct {

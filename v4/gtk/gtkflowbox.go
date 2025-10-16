@@ -36,13 +36,38 @@ type FlowBoxSortFunc func(uintptr, uintptr, uintptr) int
 type FlowBoxChildClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xActivate uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *FlowBoxChildClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideActivate sets the callback function.
+func (x *FlowBoxChildClass) OverrideActivate(cb func(*FlowBoxChild)) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(ChildVarp uintptr) {
+			cb(FlowBoxChildNewFromInternalPtr(ChildVarp))
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+func (x *FlowBoxChildClass) GetActivate() func(*FlowBoxChild) {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(ChildVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(ChildVar *FlowBoxChild) {
+		rawCallback(ChildVar.GoPointer())
+	}
 }
 
 // A `GtkFlowBox` puts child widgets in reflowing grid.

@@ -15,10 +15,35 @@ type FileDescriptorBasedIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xGetFd uintptr
 }
 
 func (x *FileDescriptorBasedIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetFd sets the callback function.
+func (x *FileDescriptorBasedIface) OverrideGetFd(cb func(FileDescriptorBased) int) {
+	if cb == nil {
+		x.xGetFd = 0
+	} else {
+		x.xGetFd = purego.NewCallback(func(FdBasedVarp uintptr) int {
+			return cb(&FileDescriptorBasedBase{Ptr: FdBasedVarp})
+		})
+	}
+}
+
+// GetGetFd gets the callback function.
+func (x *FileDescriptorBasedIface) GetGetFd() func(FileDescriptorBased) int {
+	if x.xGetFd == 0 {
+		return nil
+	}
+	var rawCallback func(FdBasedVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xGetFd)
+	return func(FdBasedVar FileDescriptorBased) int {
+		return rawCallback(FdBasedVar.GoPointer())
+	}
 }
 
 // #GFileDescriptorBased is implemented by streams (implementations of

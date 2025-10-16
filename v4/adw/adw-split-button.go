@@ -17,7 +17,7 @@ import (
 type SplitButtonClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *SplitButtonClass) GoPointer() uintptr {

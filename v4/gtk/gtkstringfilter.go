@@ -14,7 +14,7 @@ import (
 type StringFilterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass FilterClass
 }
 
 func (x *StringFilterClass) GoPointer() uintptr {

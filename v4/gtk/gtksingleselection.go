@@ -15,7 +15,7 @@ import (
 type SingleSelectionClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *SingleSelectionClass) GoPointer() uintptr {

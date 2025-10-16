@@ -336,10 +336,135 @@ func (x *MarkupParseContext) Unref() {
 // back to its caller.
 type MarkupParser struct {
 	_ structs.HostLayout
+
+	xStartElement uintptr
+
+	xEndElement uintptr
+
+	xText uintptr
+
+	xPassthrough uintptr
+
+	xError uintptr
 }
 
 func (x *MarkupParser) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideStartElement sets the callback function.
+func (x *MarkupParser) OverrideStartElement(cb func(*MarkupParseContext, string, string, string, uintptr)) {
+	if cb == nil {
+		x.xStartElement = 0
+	} else {
+		x.xStartElement = purego.NewCallback(func(ContextVarp *MarkupParseContext, ElementNameVarp string, AttributeNamesVarp string, AttributeValuesVarp string, UserDataVarp uintptr) {
+			cb(ContextVarp, ElementNameVarp, AttributeNamesVarp, AttributeValuesVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetStartElement gets the callback function.
+func (x *MarkupParser) GetStartElement() func(*MarkupParseContext, string, string, string, uintptr) {
+	if x.xStartElement == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp *MarkupParseContext, ElementNameVarp string, AttributeNamesVarp string, AttributeValuesVarp string, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xStartElement)
+	return func(ContextVar *MarkupParseContext, ElementNameVar string, AttributeNamesVar string, AttributeValuesVar string, UserDataVar uintptr) {
+		rawCallback(ContextVar, ElementNameVar, AttributeNamesVar, AttributeValuesVar, UserDataVar)
+	}
+}
+
+// OverrideEndElement sets the callback function.
+func (x *MarkupParser) OverrideEndElement(cb func(*MarkupParseContext, string, uintptr)) {
+	if cb == nil {
+		x.xEndElement = 0
+	} else {
+		x.xEndElement = purego.NewCallback(func(ContextVarp *MarkupParseContext, ElementNameVarp string, UserDataVarp uintptr) {
+			cb(ContextVarp, ElementNameVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetEndElement gets the callback function.
+func (x *MarkupParser) GetEndElement() func(*MarkupParseContext, string, uintptr) {
+	if x.xEndElement == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp *MarkupParseContext, ElementNameVarp string, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEndElement)
+	return func(ContextVar *MarkupParseContext, ElementNameVar string, UserDataVar uintptr) {
+		rawCallback(ContextVar, ElementNameVar, UserDataVar)
+	}
+}
+
+// OverrideText sets the callback function.
+func (x *MarkupParser) OverrideText(cb func(*MarkupParseContext, string, uint, uintptr)) {
+	if cb == nil {
+		x.xText = 0
+	} else {
+		x.xText = purego.NewCallback(func(ContextVarp *MarkupParseContext, TextVarp string, TextLenVarp uint, UserDataVarp uintptr) {
+			cb(ContextVarp, TextVarp, TextLenVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetText gets the callback function.
+func (x *MarkupParser) GetText() func(*MarkupParseContext, string, uint, uintptr) {
+	if x.xText == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp *MarkupParseContext, TextVarp string, TextLenVarp uint, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xText)
+	return func(ContextVar *MarkupParseContext, TextVar string, TextLenVar uint, UserDataVar uintptr) {
+		rawCallback(ContextVar, TextVar, TextLenVar, UserDataVar)
+	}
+}
+
+// OverridePassthrough sets the callback function.
+func (x *MarkupParser) OverridePassthrough(cb func(*MarkupParseContext, string, uint, uintptr)) {
+	if cb == nil {
+		x.xPassthrough = 0
+	} else {
+		x.xPassthrough = purego.NewCallback(func(ContextVarp *MarkupParseContext, PassthroughTextVarp string, TextLenVarp uint, UserDataVarp uintptr) {
+			cb(ContextVarp, PassthroughTextVarp, TextLenVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetPassthrough gets the callback function.
+func (x *MarkupParser) GetPassthrough() func(*MarkupParseContext, string, uint, uintptr) {
+	if x.xPassthrough == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp *MarkupParseContext, PassthroughTextVarp string, TextLenVarp uint, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xPassthrough)
+	return func(ContextVar *MarkupParseContext, PassthroughTextVar string, TextLenVar uint, UserDataVar uintptr) {
+		rawCallback(ContextVar, PassthroughTextVar, TextLenVar, UserDataVar)
+	}
+}
+
+// OverrideError sets the callback function.
+func (x *MarkupParser) OverrideError(cb func(*MarkupParseContext, *Error, uintptr)) {
+	if cb == nil {
+		x.xError = 0
+	} else {
+		x.xError = purego.NewCallback(func(ContextVarp *MarkupParseContext, ErrorVarp *Error, UserDataVarp uintptr) {
+			cb(ContextVarp, ErrorVarp, UserDataVarp)
+		})
+	}
+}
+
+// GetError gets the callback function.
+func (x *MarkupParser) GetError() func(*MarkupParseContext, *Error, uintptr) {
+	if x.xError == 0 {
+		return nil
+	}
+	var rawCallback func(ContextVarp *MarkupParseContext, ErrorVarp *Error, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xError)
+	return func(ContextVar *MarkupParseContext, ErrorVar *Error, UserDataVar uintptr) {
+		rawCallback(ContextVar, ErrorVar, UserDataVar)
+	}
 }
 
 // A mixed enumerated type and flags field. You must specify one type

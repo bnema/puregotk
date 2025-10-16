@@ -15,7 +15,7 @@ import (
 type StringListClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *StringListClass) GoPointer() uintptr {
@@ -25,7 +25,7 @@ func (x *StringListClass) GoPointer() uintptr {
 type StringObjectClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *StringObjectClass) GoPointer() uintptr {

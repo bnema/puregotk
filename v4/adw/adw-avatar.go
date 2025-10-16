@@ -16,7 +16,7 @@ import (
 type AvatarClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *AvatarClass) GoPointer() uintptr {

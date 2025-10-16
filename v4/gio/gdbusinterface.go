@@ -16,10 +16,130 @@ type DBusInterfaceIface struct {
 	_ structs.HostLayout
 
 	ParentIface uintptr
+
+	xGetInfo uintptr
+
+	xGetObject uintptr
+
+	xSetObject uintptr
+
+	xDupObject uintptr
 }
 
 func (x *DBusInterfaceIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetInfo sets the callback function.
+func (x *DBusInterfaceIface) OverrideGetInfo(cb func(DBusInterface) *DBusInterfaceInfo) {
+	if cb == nil {
+		x.xGetInfo = 0
+	} else {
+		x.xGetInfo = purego.NewCallback(func(InterfaceVarp uintptr) *DBusInterfaceInfo {
+			return cb(&DBusInterfaceBase{Ptr: InterfaceVarp})
+		})
+	}
+}
+
+// GetGetInfo gets the callback function.
+func (x *DBusInterfaceIface) GetGetInfo() func(DBusInterface) *DBusInterfaceInfo {
+	if x.xGetInfo == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr) *DBusInterfaceInfo
+	purego.RegisterFunc(&rawCallback, x.xGetInfo)
+	return func(InterfaceVar DBusInterface) *DBusInterfaceInfo {
+		return rawCallback(InterfaceVar.GoPointer())
+	}
+}
+
+// OverrideGetObject sets the callback function.
+func (x *DBusInterfaceIface) OverrideGetObject(cb func(DBusInterface) *DBusObjectBase) {
+	if cb == nil {
+		x.xGetObject = 0
+	} else {
+		x.xGetObject = purego.NewCallback(func(InterfaceVarp uintptr) uintptr {
+			ret := cb(&DBusInterfaceBase{Ptr: InterfaceVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetObject gets the callback function.
+func (x *DBusInterfaceIface) GetGetObject() func(DBusInterface) *DBusObjectBase {
+	if x.xGetObject == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetObject)
+	return func(InterfaceVar DBusInterface) *DBusObjectBase {
+		rawRet := rawCallback(InterfaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &DBusObjectBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideSetObject sets the callback function.
+func (x *DBusInterfaceIface) OverrideSetObject(cb func(DBusInterface, DBusObject)) {
+	if cb == nil {
+		x.xSetObject = 0
+	} else {
+		x.xSetObject = purego.NewCallback(func(InterfaceVarp uintptr, ObjectVarp uintptr) {
+			cb(&DBusInterfaceBase{Ptr: InterfaceVarp}, &DBusObjectBase{Ptr: ObjectVarp})
+		})
+	}
+}
+
+// GetSetObject gets the callback function.
+func (x *DBusInterfaceIface) GetSetObject() func(DBusInterface, DBusObject) {
+	if x.xSetObject == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr, ObjectVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetObject)
+	return func(InterfaceVar DBusInterface, ObjectVar DBusObject) {
+		rawCallback(InterfaceVar.GoPointer(), ObjectVar.GoPointer())
+	}
+}
+
+// OverrideDupObject sets the callback function.
+func (x *DBusInterfaceIface) OverrideDupObject(cb func(DBusInterface) *DBusObjectBase) {
+	if cb == nil {
+		x.xDupObject = 0
+	} else {
+		x.xDupObject = purego.NewCallback(func(InterfaceVarp uintptr) uintptr {
+			ret := cb(&DBusInterfaceBase{Ptr: InterfaceVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetDupObject gets the callback function.
+func (x *DBusInterfaceIface) GetDupObject() func(DBusInterface) *DBusObjectBase {
+	if x.xDupObject == 0 {
+		return nil
+	}
+	var rawCallback func(InterfaceVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xDupObject)
+	return func(InterfaceVar DBusInterface) *DBusObjectBase {
+		rawRet := rawCallback(InterfaceVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &DBusObjectBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // The #GDBusInterface type is the base type for D-Bus interfaces both

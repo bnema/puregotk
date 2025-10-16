@@ -15,7 +15,7 @@ import (
 type InscriptionClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
 }
 
 func (x *InscriptionClass) GoPointer() uintptr {

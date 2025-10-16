@@ -17,10 +17,260 @@ type DtlsConnectionInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xAcceptCertificate uintptr
+
+	xHandshake uintptr
+
+	xHandshakeAsync uintptr
+
+	xHandshakeFinish uintptr
+
+	xShutdown uintptr
+
+	xShutdownAsync uintptr
+
+	xShutdownFinish uintptr
+
+	xSetAdvertisedProtocols uintptr
+
+	xGetNegotiatedProtocol uintptr
+
+	xGetBindingData uintptr
 }
 
 func (x *DtlsConnectionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideAcceptCertificate sets the callback function.
+func (x *DtlsConnectionInterface) OverrideAcceptCertificate(cb func(DtlsConnection, *TlsCertificate, TlsCertificateFlags) bool) {
+	if cb == nil {
+		x.xAcceptCertificate = 0
+	} else {
+		x.xAcceptCertificate = purego.NewCallback(func(ConnectionVarp uintptr, PeerCertVarp uintptr, ErrorsVarp TlsCertificateFlags) bool {
+			return cb(&DtlsConnectionBase{Ptr: ConnectionVarp}, TlsCertificateNewFromInternalPtr(PeerCertVarp), ErrorsVarp)
+		})
+	}
+}
+
+// GetAcceptCertificate gets the callback function.
+func (x *DtlsConnectionInterface) GetAcceptCertificate() func(DtlsConnection, *TlsCertificate, TlsCertificateFlags) bool {
+	if x.xAcceptCertificate == 0 {
+		return nil
+	}
+	var rawCallback func(ConnectionVarp uintptr, PeerCertVarp uintptr, ErrorsVarp TlsCertificateFlags) bool
+	purego.RegisterFunc(&rawCallback, x.xAcceptCertificate)
+	return func(ConnectionVar DtlsConnection, PeerCertVar *TlsCertificate, ErrorsVar TlsCertificateFlags) bool {
+		return rawCallback(ConnectionVar.GoPointer(), PeerCertVar.GoPointer(), ErrorsVar)
+	}
+}
+
+// OverrideHandshake sets the callback function.
+func (x *DtlsConnectionInterface) OverrideHandshake(cb func(DtlsConnection, *Cancellable) bool) {
+	if cb == nil {
+		x.xHandshake = 0
+	} else {
+		x.xHandshake = purego.NewCallback(func(ConnVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(&DtlsConnectionBase{Ptr: ConnVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetHandshake gets the callback function.
+func (x *DtlsConnectionInterface) GetHandshake() func(DtlsConnection, *Cancellable) bool {
+	if x.xHandshake == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xHandshake)
+	return func(ConnVar DtlsConnection, CancellableVar *Cancellable) bool {
+		return rawCallback(ConnVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideHandshakeAsync sets the callback function.
+func (x *DtlsConnectionInterface) OverrideHandshakeAsync(cb func(DtlsConnection, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xHandshakeAsync = 0
+	} else {
+		x.xHandshakeAsync = purego.NewCallback(func(ConnVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&DtlsConnectionBase{Ptr: ConnVarp}, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetHandshakeAsync gets the callback function.
+func (x *DtlsConnectionInterface) GetHandshakeAsync() func(DtlsConnection, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xHandshakeAsync == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xHandshakeAsync)
+	return func(ConnVar DtlsConnection, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(ConnVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideHandshakeFinish sets the callback function.
+func (x *DtlsConnectionInterface) OverrideHandshakeFinish(cb func(DtlsConnection, AsyncResult) bool) {
+	if cb == nil {
+		x.xHandshakeFinish = 0
+	} else {
+		x.xHandshakeFinish = purego.NewCallback(func(ConnVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&DtlsConnectionBase{Ptr: ConnVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetHandshakeFinish gets the callback function.
+func (x *DtlsConnectionInterface) GetHandshakeFinish() func(DtlsConnection, AsyncResult) bool {
+	if x.xHandshakeFinish == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xHandshakeFinish)
+	return func(ConnVar DtlsConnection, ResultVar AsyncResult) bool {
+		return rawCallback(ConnVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideShutdown sets the callback function.
+func (x *DtlsConnectionInterface) OverrideShutdown(cb func(DtlsConnection, bool, bool, *Cancellable) bool) {
+	if cb == nil {
+		x.xShutdown = 0
+	} else {
+		x.xShutdown = purego.NewCallback(func(ConnVarp uintptr, ShutdownReadVarp bool, ShutdownWriteVarp bool, CancellableVarp uintptr) bool {
+			return cb(&DtlsConnectionBase{Ptr: ConnVarp}, ShutdownReadVarp, ShutdownWriteVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetShutdown gets the callback function.
+func (x *DtlsConnectionInterface) GetShutdown() func(DtlsConnection, bool, bool, *Cancellable) bool {
+	if x.xShutdown == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, ShutdownReadVarp bool, ShutdownWriteVarp bool, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xShutdown)
+	return func(ConnVar DtlsConnection, ShutdownReadVar bool, ShutdownWriteVar bool, CancellableVar *Cancellable) bool {
+		return rawCallback(ConnVar.GoPointer(), ShutdownReadVar, ShutdownWriteVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideShutdownAsync sets the callback function.
+func (x *DtlsConnectionInterface) OverrideShutdownAsync(cb func(DtlsConnection, bool, bool, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xShutdownAsync = 0
+	} else {
+		x.xShutdownAsync = purego.NewCallback(func(ConnVarp uintptr, ShutdownReadVarp bool, ShutdownWriteVarp bool, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&DtlsConnectionBase{Ptr: ConnVarp}, ShutdownReadVarp, ShutdownWriteVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetShutdownAsync gets the callback function.
+func (x *DtlsConnectionInterface) GetShutdownAsync() func(DtlsConnection, bool, bool, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xShutdownAsync == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, ShutdownReadVarp bool, ShutdownWriteVarp bool, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xShutdownAsync)
+	return func(ConnVar DtlsConnection, ShutdownReadVar bool, ShutdownWriteVar bool, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(ConnVar.GoPointer(), ShutdownReadVar, ShutdownWriteVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideShutdownFinish sets the callback function.
+func (x *DtlsConnectionInterface) OverrideShutdownFinish(cb func(DtlsConnection, AsyncResult) bool) {
+	if cb == nil {
+		x.xShutdownFinish = 0
+	} else {
+		x.xShutdownFinish = purego.NewCallback(func(ConnVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&DtlsConnectionBase{Ptr: ConnVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetShutdownFinish gets the callback function.
+func (x *DtlsConnectionInterface) GetShutdownFinish() func(DtlsConnection, AsyncResult) bool {
+	if x.xShutdownFinish == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xShutdownFinish)
+	return func(ConnVar DtlsConnection, ResultVar AsyncResult) bool {
+		return rawCallback(ConnVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideSetAdvertisedProtocols sets the callback function.
+func (x *DtlsConnectionInterface) OverrideSetAdvertisedProtocols(cb func(DtlsConnection, []string)) {
+	if cb == nil {
+		x.xSetAdvertisedProtocols = 0
+	} else {
+		x.xSetAdvertisedProtocols = purego.NewCallback(func(ConnVarp uintptr, ProtocolsVarp []string) {
+			cb(&DtlsConnectionBase{Ptr: ConnVarp}, ProtocolsVarp)
+		})
+	}
+}
+
+// GetSetAdvertisedProtocols gets the callback function.
+func (x *DtlsConnectionInterface) GetSetAdvertisedProtocols() func(DtlsConnection, []string) {
+	if x.xSetAdvertisedProtocols == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, ProtocolsVarp []string)
+	purego.RegisterFunc(&rawCallback, x.xSetAdvertisedProtocols)
+	return func(ConnVar DtlsConnection, ProtocolsVar []string) {
+		rawCallback(ConnVar.GoPointer(), ProtocolsVar)
+	}
+}
+
+// OverrideGetNegotiatedProtocol sets the callback function.
+func (x *DtlsConnectionInterface) OverrideGetNegotiatedProtocol(cb func(DtlsConnection) string) {
+	if cb == nil {
+		x.xGetNegotiatedProtocol = 0
+	} else {
+		x.xGetNegotiatedProtocol = purego.NewCallback(func(ConnVarp uintptr) string {
+			return cb(&DtlsConnectionBase{Ptr: ConnVarp})
+		})
+	}
+}
+
+// GetGetNegotiatedProtocol gets the callback function.
+func (x *DtlsConnectionInterface) GetGetNegotiatedProtocol() func(DtlsConnection) string {
+	if x.xGetNegotiatedProtocol == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetNegotiatedProtocol)
+	return func(ConnVar DtlsConnection) string {
+		return rawCallback(ConnVar.GoPointer())
+	}
+}
+
+// OverrideGetBindingData sets the callback function.
+func (x *DtlsConnectionInterface) OverrideGetBindingData(cb func(DtlsConnection, TlsChannelBindingType, []byte) bool) {
+	if cb == nil {
+		x.xGetBindingData = 0
+	} else {
+		x.xGetBindingData = purego.NewCallback(func(ConnVarp uintptr, TypeVarp TlsChannelBindingType, DataVarp []byte) bool {
+			return cb(&DtlsConnectionBase{Ptr: ConnVarp}, TypeVarp, DataVarp)
+		})
+	}
+}
+
+// GetGetBindingData gets the callback function.
+func (x *DtlsConnectionInterface) GetGetBindingData() func(DtlsConnection, TlsChannelBindingType, []byte) bool {
+	if x.xGetBindingData == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, TypeVarp TlsChannelBindingType, DataVarp []byte) bool
+	purego.RegisterFunc(&rawCallback, x.xGetBindingData)
+	return func(ConnVar DtlsConnection, TypeVar TlsChannelBindingType, DataVar []byte) bool {
+		return rawCallback(ConnVar.GoPointer(), TypeVar, DataVar)
+	}
 }
 
 // #GDtlsConnection is the base DTLS connection class type, which wraps
@@ -45,12 +295,12 @@ func (x *DtlsConnectionInterface) GoPointer() uintptr {
 type DtlsConnection interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	Close(CancellableVar *Cancellable) bool
+	Close(CancellableVar *Cancellable) (bool, error)
 	CloseAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	CloseFinish(ResultVar AsyncResult) bool
+	CloseFinish(ResultVar AsyncResult) (bool, error)
 	EmitAcceptCertificate(PeerCertVar *TlsCertificate, ErrorsVar TlsCertificateFlags) bool
 	GetCertificate() *TlsCertificate
-	GetChannelBindingData(TypeVar TlsChannelBindingType, DataVar []byte) bool
+	GetChannelBindingData(TypeVar TlsChannelBindingType, DataVar []byte) (bool, error)
 	GetCiphersuiteName() string
 	GetDatabase() *TlsDatabase
 	GetInteraction() *TlsInteraction
@@ -60,18 +310,18 @@ type DtlsConnection interface {
 	GetProtocolVersion() TlsProtocolVersion
 	GetRehandshakeMode() TlsRehandshakeMode
 	GetRequireCloseNotify() bool
-	Handshake(CancellableVar *Cancellable) bool
+	Handshake(CancellableVar *Cancellable) (bool, error)
 	HandshakeAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	HandshakeFinish(ResultVar AsyncResult) bool
+	HandshakeFinish(ResultVar AsyncResult) (bool, error)
 	SetAdvertisedProtocols(ProtocolsVar []string)
 	SetCertificate(CertificateVar *TlsCertificate)
 	SetDatabase(DatabaseVar *TlsDatabase)
 	SetInteraction(InteractionVar *TlsInteraction)
 	SetRehandshakeMode(ModeVar TlsRehandshakeMode)
 	SetRequireCloseNotify(RequireCloseNotifyVar bool)
-	Shutdown(ShutdownReadVar bool, ShutdownWriteVar bool, CancellableVar *Cancellable) bool
+	Shutdown(ShutdownReadVar bool, ShutdownWriteVar bool, CancellableVar *Cancellable) (bool, error)
 	ShutdownAsync(ShutdownReadVar bool, ShutdownWriteVar bool, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ShutdownFinish(ResultVar AsyncResult) bool
+	ShutdownFinish(ResultVar AsyncResult) (bool, error)
 }
 
 var xDtlsConnectionGLibType func() types.GType

@@ -17,10 +17,95 @@ type AsyncResultIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xGetUserData uintptr
+
+	xGetSourceObject uintptr
+
+	xIsTagged uintptr
 }
 
 func (x *AsyncResultIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetUserData sets the callback function.
+func (x *AsyncResultIface) OverrideGetUserData(cb func(AsyncResult) uintptr) {
+	if cb == nil {
+		x.xGetUserData = 0
+	} else {
+		x.xGetUserData = purego.NewCallback(func(ResVarp uintptr) uintptr {
+			return cb(&AsyncResultBase{Ptr: ResVarp})
+		})
+	}
+}
+
+// GetGetUserData gets the callback function.
+func (x *AsyncResultIface) GetGetUserData() func(AsyncResult) uintptr {
+	if x.xGetUserData == 0 {
+		return nil
+	}
+	var rawCallback func(ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetUserData)
+	return func(ResVar AsyncResult) uintptr {
+		return rawCallback(ResVar.GoPointer())
+	}
+}
+
+// OverrideGetSourceObject sets the callback function.
+func (x *AsyncResultIface) OverrideGetSourceObject(cb func(AsyncResult) *gobject.Object) {
+	if cb == nil {
+		x.xGetSourceObject = 0
+	} else {
+		x.xGetSourceObject = purego.NewCallback(func(ResVarp uintptr) uintptr {
+			ret := cb(&AsyncResultBase{Ptr: ResVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetSourceObject gets the callback function.
+func (x *AsyncResultIface) GetGetSourceObject() func(AsyncResult) *gobject.Object {
+	if x.xGetSourceObject == 0 {
+		return nil
+	}
+	var rawCallback func(ResVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetSourceObject)
+	return func(ResVar AsyncResult) *gobject.Object {
+		rawRet := rawCallback(ResVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &gobject.Object{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideIsTagged sets the callback function.
+func (x *AsyncResultIface) OverrideIsTagged(cb func(AsyncResult, uintptr) bool) {
+	if cb == nil {
+		x.xIsTagged = 0
+	} else {
+		x.xIsTagged = purego.NewCallback(func(ResVarp uintptr, SourceTagVarp uintptr) bool {
+			return cb(&AsyncResultBase{Ptr: ResVarp}, SourceTagVarp)
+		})
+	}
+}
+
+// GetIsTagged gets the callback function.
+func (x *AsyncResultIface) GetIsTagged() func(AsyncResult, uintptr) bool {
+	if x.xIsTagged == 0 {
+		return nil
+	}
+	var rawCallback func(ResVarp uintptr, SourceTagVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xIsTagged)
+	return func(ResVar AsyncResult, SourceTagVar uintptr) bool {
+		return rawCallback(ResVar.GoPointer(), SourceTagVar)
+	}
 }
 
 // Provides a base class for implementing asynchronous function results.
@@ -119,7 +204,7 @@ type AsyncResult interface {
 	GetSourceObject() *gobject.Object
 	GetUserData() uintptr
 	IsTagged(SourceTagVar uintptr) bool
-	LegacyPropagateError() bool
+	LegacyPropagateError() (bool, error)
 }
 
 var xAsyncResultGLibType func() types.GType

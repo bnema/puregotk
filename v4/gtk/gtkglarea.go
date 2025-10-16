@@ -17,13 +17,98 @@ import (
 type GLAreaClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xRender uintptr
+
+	xResize uintptr
+
+	xCreateContext uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *GLAreaClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideRender sets the callback function.
+func (x *GLAreaClass) OverrideRender(cb func(*GLArea, *gdk.GLContext) bool) {
+	if cb == nil {
+		x.xRender = 0
+	} else {
+		x.xRender = purego.NewCallback(func(AreaVarp uintptr, ContextVarp uintptr) bool {
+			return cb(GLAreaNewFromInternalPtr(AreaVarp), gdk.GLContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetRender gets the callback function.
+func (x *GLAreaClass) GetRender() func(*GLArea, *gdk.GLContext) bool {
+	if x.xRender == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, ContextVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xRender)
+	return func(AreaVar *GLArea, ContextVar *gdk.GLContext) bool {
+		return rawCallback(AreaVar.GoPointer(), ContextVar.GoPointer())
+	}
+}
+
+// OverrideResize sets the callback function.
+func (x *GLAreaClass) OverrideResize(cb func(*GLArea, int, int)) {
+	if cb == nil {
+		x.xResize = 0
+	} else {
+		x.xResize = purego.NewCallback(func(AreaVarp uintptr, WidthVarp int, HeightVarp int) {
+			cb(GLAreaNewFromInternalPtr(AreaVarp), WidthVarp, HeightVarp)
+		})
+	}
+}
+
+// GetResize gets the callback function.
+func (x *GLAreaClass) GetResize() func(*GLArea, int, int) {
+	if x.xResize == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr, WidthVarp int, HeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xResize)
+	return func(AreaVar *GLArea, WidthVar int, HeightVar int) {
+		rawCallback(AreaVar.GoPointer(), WidthVar, HeightVar)
+	}
+}
+
+// OverrideCreateContext sets the callback function.
+func (x *GLAreaClass) OverrideCreateContext(cb func(*GLArea) *gdk.GLContext) {
+	if cb == nil {
+		x.xCreateContext = 0
+	} else {
+		x.xCreateContext = purego.NewCallback(func(AreaVarp uintptr) uintptr {
+			ret := cb(GLAreaNewFromInternalPtr(AreaVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetCreateContext gets the callback function.
+func (x *GLAreaClass) GetCreateContext() func(*GLArea) *gdk.GLContext {
+	if x.xCreateContext == 0 {
+		return nil
+	}
+	var rawCallback func(AreaVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCreateContext)
+	return func(AreaVar *GLArea) *gdk.GLContext {
+		rawRet := rawCallback(AreaVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &gdk.GLContext{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // `GtkGLArea` is a widget that allows drawing with OpenGL.

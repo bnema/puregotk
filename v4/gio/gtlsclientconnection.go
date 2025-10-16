@@ -17,10 +17,35 @@ type TlsClientConnectionInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xCopySessionState uintptr
 }
 
 func (x *TlsClientConnectionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideCopySessionState sets the callback function.
+func (x *TlsClientConnectionInterface) OverrideCopySessionState(cb func(TlsClientConnection, TlsClientConnection)) {
+	if cb == nil {
+		x.xCopySessionState = 0
+	} else {
+		x.xCopySessionState = purego.NewCallback(func(ConnVarp uintptr, SourceVarp uintptr) {
+			cb(&TlsClientConnectionBase{Ptr: ConnVarp}, &TlsClientConnectionBase{Ptr: SourceVarp})
+		})
+	}
+}
+
+// GetCopySessionState gets the callback function.
+func (x *TlsClientConnectionInterface) GetCopySessionState() func(TlsClientConnection, TlsClientConnection) {
+	if x.xCopySessionState == 0 {
+		return nil
+	}
+	var rawCallback func(ConnVarp uintptr, SourceVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCopySessionState)
+	return func(ConnVar TlsClientConnection, SourceVar TlsClientConnection) {
+		rawCallback(ConnVar.GoPointer(), SourceVar.GoPointer())
+	}
 }
 
 // #GTlsClientConnection is the client-side subclass of

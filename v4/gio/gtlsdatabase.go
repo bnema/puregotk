@@ -18,13 +18,378 @@ import (
 type TlsDatabaseClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xVerifyChain uintptr
+
+	xVerifyChainAsync uintptr
+
+	xVerifyChainFinish uintptr
+
+	xCreateCertificateHandle uintptr
+
+	xLookupCertificateForHandle uintptr
+
+	xLookupCertificateForHandleAsync uintptr
+
+	xLookupCertificateForHandleFinish uintptr
+
+	xLookupCertificateIssuer uintptr
+
+	xLookupCertificateIssuerAsync uintptr
+
+	xLookupCertificateIssuerFinish uintptr
+
+	xLookupCertificatesIssuedBy uintptr
+
+	xLookupCertificatesIssuedByAsync uintptr
+
+	xLookupCertificatesIssuedByFinish uintptr
 
 	Padding [16]uintptr
 }
 
 func (x *TlsDatabaseClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideVerifyChain sets the callback function.
+func (x *TlsDatabaseClass) OverrideVerifyChain(cb func(*TlsDatabase, *TlsCertificate, string, SocketConnectable, *TlsInteraction, TlsDatabaseVerifyFlags, *Cancellable) TlsCertificateFlags) {
+	if cb == nil {
+		x.xVerifyChain = 0
+	} else {
+		x.xVerifyChain = purego.NewCallback(func(SelfVarp uintptr, ChainVarp uintptr, PurposeVarp string, IdentityVarp uintptr, InteractionVarp uintptr, FlagsVarp TlsDatabaseVerifyFlags, CancellableVarp uintptr) TlsCertificateFlags {
+			return cb(TlsDatabaseNewFromInternalPtr(SelfVarp), TlsCertificateNewFromInternalPtr(ChainVarp), PurposeVarp, &SocketConnectableBase{Ptr: IdentityVarp}, TlsInteractionNewFromInternalPtr(InteractionVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetVerifyChain gets the callback function.
+func (x *TlsDatabaseClass) GetVerifyChain() func(*TlsDatabase, *TlsCertificate, string, SocketConnectable, *TlsInteraction, TlsDatabaseVerifyFlags, *Cancellable) TlsCertificateFlags {
+	if x.xVerifyChain == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ChainVarp uintptr, PurposeVarp string, IdentityVarp uintptr, InteractionVarp uintptr, FlagsVarp TlsDatabaseVerifyFlags, CancellableVarp uintptr) TlsCertificateFlags
+	purego.RegisterFunc(&rawCallback, x.xVerifyChain)
+	return func(SelfVar *TlsDatabase, ChainVar *TlsCertificate, PurposeVar string, IdentityVar SocketConnectable, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseVerifyFlags, CancellableVar *Cancellable) TlsCertificateFlags {
+		return rawCallback(SelfVar.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideVerifyChainAsync sets the callback function.
+func (x *TlsDatabaseClass) OverrideVerifyChainAsync(cb func(*TlsDatabase, *TlsCertificate, string, SocketConnectable, *TlsInteraction, TlsDatabaseVerifyFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xVerifyChainAsync = 0
+	} else {
+		x.xVerifyChainAsync = purego.NewCallback(func(SelfVarp uintptr, ChainVarp uintptr, PurposeVarp string, IdentityVarp uintptr, InteractionVarp uintptr, FlagsVarp TlsDatabaseVerifyFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(TlsDatabaseNewFromInternalPtr(SelfVarp), TlsCertificateNewFromInternalPtr(ChainVarp), PurposeVarp, &SocketConnectableBase{Ptr: IdentityVarp}, TlsInteractionNewFromInternalPtr(InteractionVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetVerifyChainAsync gets the callback function.
+func (x *TlsDatabaseClass) GetVerifyChainAsync() func(*TlsDatabase, *TlsCertificate, string, SocketConnectable, *TlsInteraction, TlsDatabaseVerifyFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xVerifyChainAsync == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ChainVarp uintptr, PurposeVarp string, IdentityVarp uintptr, InteractionVarp uintptr, FlagsVarp TlsDatabaseVerifyFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xVerifyChainAsync)
+	return func(SelfVar *TlsDatabase, ChainVar *TlsCertificate, PurposeVar string, IdentityVar SocketConnectable, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseVerifyFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(SelfVar.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideVerifyChainFinish sets the callback function.
+func (x *TlsDatabaseClass) OverrideVerifyChainFinish(cb func(*TlsDatabase, AsyncResult) TlsCertificateFlags) {
+	if cb == nil {
+		x.xVerifyChainFinish = 0
+	} else {
+		x.xVerifyChainFinish = purego.NewCallback(func(SelfVarp uintptr, ResultVarp uintptr) TlsCertificateFlags {
+			return cb(TlsDatabaseNewFromInternalPtr(SelfVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetVerifyChainFinish gets the callback function.
+func (x *TlsDatabaseClass) GetVerifyChainFinish() func(*TlsDatabase, AsyncResult) TlsCertificateFlags {
+	if x.xVerifyChainFinish == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ResultVarp uintptr) TlsCertificateFlags
+	purego.RegisterFunc(&rawCallback, x.xVerifyChainFinish)
+	return func(SelfVar *TlsDatabase, ResultVar AsyncResult) TlsCertificateFlags {
+		return rawCallback(SelfVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideCreateCertificateHandle sets the callback function.
+func (x *TlsDatabaseClass) OverrideCreateCertificateHandle(cb func(*TlsDatabase, *TlsCertificate) string) {
+	if cb == nil {
+		x.xCreateCertificateHandle = 0
+	} else {
+		x.xCreateCertificateHandle = purego.NewCallback(func(SelfVarp uintptr, CertificateVarp uintptr) string {
+			return cb(TlsDatabaseNewFromInternalPtr(SelfVarp), TlsCertificateNewFromInternalPtr(CertificateVarp))
+		})
+	}
+}
+
+// GetCreateCertificateHandle gets the callback function.
+func (x *TlsDatabaseClass) GetCreateCertificateHandle() func(*TlsDatabase, *TlsCertificate) string {
+	if x.xCreateCertificateHandle == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, CertificateVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xCreateCertificateHandle)
+	return func(SelfVar *TlsDatabase, CertificateVar *TlsCertificate) string {
+		return rawCallback(SelfVar.GoPointer(), CertificateVar.GoPointer())
+	}
+}
+
+// OverrideLookupCertificateForHandle sets the callback function.
+func (x *TlsDatabaseClass) OverrideLookupCertificateForHandle(cb func(*TlsDatabase, string, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable) *TlsCertificate) {
+	if cb == nil {
+		x.xLookupCertificateForHandle = 0
+	} else {
+		x.xLookupCertificateForHandle = purego.NewCallback(func(SelfVarp uintptr, HandleVarp string, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(TlsDatabaseNewFromInternalPtr(SelfVarp), HandleVarp, TlsInteractionNewFromInternalPtr(InteractionVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetLookupCertificateForHandle gets the callback function.
+func (x *TlsDatabaseClass) GetLookupCertificateForHandle() func(*TlsDatabase, string, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable) *TlsCertificate {
+	if x.xLookupCertificateForHandle == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, HandleVarp string, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xLookupCertificateForHandle)
+	return func(SelfVar *TlsDatabase, HandleVar string, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseLookupFlags, CancellableVar *Cancellable) *TlsCertificate {
+		rawRet := rawCallback(SelfVar.GoPointer(), HandleVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &TlsCertificate{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideLookupCertificateForHandleAsync sets the callback function.
+func (x *TlsDatabaseClass) OverrideLookupCertificateForHandleAsync(cb func(*TlsDatabase, string, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xLookupCertificateForHandleAsync = 0
+	} else {
+		x.xLookupCertificateForHandleAsync = purego.NewCallback(func(SelfVarp uintptr, HandleVarp string, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(TlsDatabaseNewFromInternalPtr(SelfVarp), HandleVarp, TlsInteractionNewFromInternalPtr(InteractionVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetLookupCertificateForHandleAsync gets the callback function.
+func (x *TlsDatabaseClass) GetLookupCertificateForHandleAsync() func(*TlsDatabase, string, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xLookupCertificateForHandleAsync == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, HandleVarp string, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xLookupCertificateForHandleAsync)
+	return func(SelfVar *TlsDatabase, HandleVar string, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseLookupFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(SelfVar.GoPointer(), HandleVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideLookupCertificateForHandleFinish sets the callback function.
+func (x *TlsDatabaseClass) OverrideLookupCertificateForHandleFinish(cb func(*TlsDatabase, AsyncResult) *TlsCertificate) {
+	if cb == nil {
+		x.xLookupCertificateForHandleFinish = 0
+	} else {
+		x.xLookupCertificateForHandleFinish = purego.NewCallback(func(SelfVarp uintptr, ResultVarp uintptr) uintptr {
+			ret := cb(TlsDatabaseNewFromInternalPtr(SelfVarp), &AsyncResultBase{Ptr: ResultVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetLookupCertificateForHandleFinish gets the callback function.
+func (x *TlsDatabaseClass) GetLookupCertificateForHandleFinish() func(*TlsDatabase, AsyncResult) *TlsCertificate {
+	if x.xLookupCertificateForHandleFinish == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ResultVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xLookupCertificateForHandleFinish)
+	return func(SelfVar *TlsDatabase, ResultVar AsyncResult) *TlsCertificate {
+		rawRet := rawCallback(SelfVar.GoPointer(), ResultVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &TlsCertificate{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideLookupCertificateIssuer sets the callback function.
+func (x *TlsDatabaseClass) OverrideLookupCertificateIssuer(cb func(*TlsDatabase, *TlsCertificate, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable) *TlsCertificate) {
+	if cb == nil {
+		x.xLookupCertificateIssuer = 0
+	} else {
+		x.xLookupCertificateIssuer = purego.NewCallback(func(SelfVarp uintptr, CertificateVarp uintptr, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr) uintptr {
+			ret := cb(TlsDatabaseNewFromInternalPtr(SelfVarp), TlsCertificateNewFromInternalPtr(CertificateVarp), TlsInteractionNewFromInternalPtr(InteractionVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetLookupCertificateIssuer gets the callback function.
+func (x *TlsDatabaseClass) GetLookupCertificateIssuer() func(*TlsDatabase, *TlsCertificate, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable) *TlsCertificate {
+	if x.xLookupCertificateIssuer == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, CertificateVarp uintptr, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xLookupCertificateIssuer)
+	return func(SelfVar *TlsDatabase, CertificateVar *TlsCertificate, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseLookupFlags, CancellableVar *Cancellable) *TlsCertificate {
+		rawRet := rawCallback(SelfVar.GoPointer(), CertificateVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &TlsCertificate{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideLookupCertificateIssuerAsync sets the callback function.
+func (x *TlsDatabaseClass) OverrideLookupCertificateIssuerAsync(cb func(*TlsDatabase, *TlsCertificate, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xLookupCertificateIssuerAsync = 0
+	} else {
+		x.xLookupCertificateIssuerAsync = purego.NewCallback(func(SelfVarp uintptr, CertificateVarp uintptr, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(TlsDatabaseNewFromInternalPtr(SelfVarp), TlsCertificateNewFromInternalPtr(CertificateVarp), TlsInteractionNewFromInternalPtr(InteractionVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetLookupCertificateIssuerAsync gets the callback function.
+func (x *TlsDatabaseClass) GetLookupCertificateIssuerAsync() func(*TlsDatabase, *TlsCertificate, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xLookupCertificateIssuerAsync == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, CertificateVarp uintptr, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xLookupCertificateIssuerAsync)
+	return func(SelfVar *TlsDatabase, CertificateVar *TlsCertificate, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseLookupFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(SelfVar.GoPointer(), CertificateVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideLookupCertificateIssuerFinish sets the callback function.
+func (x *TlsDatabaseClass) OverrideLookupCertificateIssuerFinish(cb func(*TlsDatabase, AsyncResult) *TlsCertificate) {
+	if cb == nil {
+		x.xLookupCertificateIssuerFinish = 0
+	} else {
+		x.xLookupCertificateIssuerFinish = purego.NewCallback(func(SelfVarp uintptr, ResultVarp uintptr) uintptr {
+			ret := cb(TlsDatabaseNewFromInternalPtr(SelfVarp), &AsyncResultBase{Ptr: ResultVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetLookupCertificateIssuerFinish gets the callback function.
+func (x *TlsDatabaseClass) GetLookupCertificateIssuerFinish() func(*TlsDatabase, AsyncResult) *TlsCertificate {
+	if x.xLookupCertificateIssuerFinish == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ResultVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xLookupCertificateIssuerFinish)
+	return func(SelfVar *TlsDatabase, ResultVar AsyncResult) *TlsCertificate {
+		rawRet := rawCallback(SelfVar.GoPointer(), ResultVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &TlsCertificate{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideLookupCertificatesIssuedBy sets the callback function.
+func (x *TlsDatabaseClass) OverrideLookupCertificatesIssuedBy(cb func(*TlsDatabase, []byte, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable) *glib.List) {
+	if cb == nil {
+		x.xLookupCertificatesIssuedBy = 0
+	} else {
+		x.xLookupCertificatesIssuedBy = purego.NewCallback(func(SelfVarp uintptr, IssuerRawDnVarp []byte, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr) *glib.List {
+			return cb(TlsDatabaseNewFromInternalPtr(SelfVarp), IssuerRawDnVarp, TlsInteractionNewFromInternalPtr(InteractionVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetLookupCertificatesIssuedBy gets the callback function.
+func (x *TlsDatabaseClass) GetLookupCertificatesIssuedBy() func(*TlsDatabase, []byte, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable) *glib.List {
+	if x.xLookupCertificatesIssuedBy == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, IssuerRawDnVarp []byte, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr) *glib.List
+	purego.RegisterFunc(&rawCallback, x.xLookupCertificatesIssuedBy)
+	return func(SelfVar *TlsDatabase, IssuerRawDnVar []byte, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseLookupFlags, CancellableVar *Cancellable) *glib.List {
+		return rawCallback(SelfVar.GoPointer(), IssuerRawDnVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideLookupCertificatesIssuedByAsync sets the callback function.
+func (x *TlsDatabaseClass) OverrideLookupCertificatesIssuedByAsync(cb func(*TlsDatabase, []byte, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xLookupCertificatesIssuedByAsync = 0
+	} else {
+		x.xLookupCertificatesIssuedByAsync = purego.NewCallback(func(SelfVarp uintptr, IssuerRawDnVarp []byte, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(TlsDatabaseNewFromInternalPtr(SelfVarp), IssuerRawDnVarp, TlsInteractionNewFromInternalPtr(InteractionVarp), FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetLookupCertificatesIssuedByAsync gets the callback function.
+func (x *TlsDatabaseClass) GetLookupCertificatesIssuedByAsync() func(*TlsDatabase, []byte, *TlsInteraction, TlsDatabaseLookupFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xLookupCertificatesIssuedByAsync == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, IssuerRawDnVarp []byte, InteractionVarp uintptr, FlagsVarp TlsDatabaseLookupFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xLookupCertificatesIssuedByAsync)
+	return func(SelfVar *TlsDatabase, IssuerRawDnVar []byte, InteractionVar *TlsInteraction, FlagsVar TlsDatabaseLookupFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(SelfVar.GoPointer(), IssuerRawDnVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideLookupCertificatesIssuedByFinish sets the callback function.
+func (x *TlsDatabaseClass) OverrideLookupCertificatesIssuedByFinish(cb func(*TlsDatabase, AsyncResult) *glib.List) {
+	if cb == nil {
+		x.xLookupCertificatesIssuedByFinish = 0
+	} else {
+		x.xLookupCertificatesIssuedByFinish = purego.NewCallback(func(SelfVarp uintptr, ResultVarp uintptr) *glib.List {
+			return cb(TlsDatabaseNewFromInternalPtr(SelfVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetLookupCertificatesIssuedByFinish gets the callback function.
+func (x *TlsDatabaseClass) GetLookupCertificatesIssuedByFinish() func(*TlsDatabase, AsyncResult) *glib.List {
+	if x.xLookupCertificatesIssuedByFinish == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ResultVarp uintptr) *glib.List
+	purego.RegisterFunc(&rawCallback, x.xLookupCertificatesIssuedByFinish)
+	return func(SelfVar *TlsDatabase, ResultVar AsyncResult) *glib.List {
+		return rawCallback(SelfVar.GoPointer(), ResultVar.GoPointer())
+	}
 }
 
 type TlsDatabasePrivate struct {

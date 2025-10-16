@@ -16,10 +16,210 @@ type ActionInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xGetName uintptr
+
+	xGetParameterType uintptr
+
+	xGetStateType uintptr
+
+	xGetStateHint uintptr
+
+	xGetEnabled uintptr
+
+	xGetState uintptr
+
+	xChangeState uintptr
+
+	xActivate uintptr
 }
 
 func (x *ActionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetName sets the callback function.
+func (x *ActionInterface) OverrideGetName(cb func(Action) string) {
+	if cb == nil {
+		x.xGetName = 0
+	} else {
+		x.xGetName = purego.NewCallback(func(ActionVarp uintptr) string {
+			return cb(&ActionBase{Ptr: ActionVarp})
+		})
+	}
+}
+
+// GetGetName gets the callback function.
+func (x *ActionInterface) GetGetName() func(Action) string {
+	if x.xGetName == 0 {
+		return nil
+	}
+	var rawCallback func(ActionVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetName)
+	return func(ActionVar Action) string {
+		return rawCallback(ActionVar.GoPointer())
+	}
+}
+
+// OverrideGetParameterType sets the callback function.
+func (x *ActionInterface) OverrideGetParameterType(cb func(Action) *glib.VariantType) {
+	if cb == nil {
+		x.xGetParameterType = 0
+	} else {
+		x.xGetParameterType = purego.NewCallback(func(ActionVarp uintptr) *glib.VariantType {
+			return cb(&ActionBase{Ptr: ActionVarp})
+		})
+	}
+}
+
+// GetGetParameterType gets the callback function.
+func (x *ActionInterface) GetGetParameterType() func(Action) *glib.VariantType {
+	if x.xGetParameterType == 0 {
+		return nil
+	}
+	var rawCallback func(ActionVarp uintptr) *glib.VariantType
+	purego.RegisterFunc(&rawCallback, x.xGetParameterType)
+	return func(ActionVar Action) *glib.VariantType {
+		return rawCallback(ActionVar.GoPointer())
+	}
+}
+
+// OverrideGetStateType sets the callback function.
+func (x *ActionInterface) OverrideGetStateType(cb func(Action) *glib.VariantType) {
+	if cb == nil {
+		x.xGetStateType = 0
+	} else {
+		x.xGetStateType = purego.NewCallback(func(ActionVarp uintptr) *glib.VariantType {
+			return cb(&ActionBase{Ptr: ActionVarp})
+		})
+	}
+}
+
+// GetGetStateType gets the callback function.
+func (x *ActionInterface) GetGetStateType() func(Action) *glib.VariantType {
+	if x.xGetStateType == 0 {
+		return nil
+	}
+	var rawCallback func(ActionVarp uintptr) *glib.VariantType
+	purego.RegisterFunc(&rawCallback, x.xGetStateType)
+	return func(ActionVar Action) *glib.VariantType {
+		return rawCallback(ActionVar.GoPointer())
+	}
+}
+
+// OverrideGetStateHint sets the callback function.
+func (x *ActionInterface) OverrideGetStateHint(cb func(Action) *glib.Variant) {
+	if cb == nil {
+		x.xGetStateHint = 0
+	} else {
+		x.xGetStateHint = purego.NewCallback(func(ActionVarp uintptr) *glib.Variant {
+			return cb(&ActionBase{Ptr: ActionVarp})
+		})
+	}
+}
+
+// GetGetStateHint gets the callback function.
+func (x *ActionInterface) GetGetStateHint() func(Action) *glib.Variant {
+	if x.xGetStateHint == 0 {
+		return nil
+	}
+	var rawCallback func(ActionVarp uintptr) *glib.Variant
+	purego.RegisterFunc(&rawCallback, x.xGetStateHint)
+	return func(ActionVar Action) *glib.Variant {
+		return rawCallback(ActionVar.GoPointer())
+	}
+}
+
+// OverrideGetEnabled sets the callback function.
+func (x *ActionInterface) OverrideGetEnabled(cb func(Action) bool) {
+	if cb == nil {
+		x.xGetEnabled = 0
+	} else {
+		x.xGetEnabled = purego.NewCallback(func(ActionVarp uintptr) bool {
+			return cb(&ActionBase{Ptr: ActionVarp})
+		})
+	}
+}
+
+// GetGetEnabled gets the callback function.
+func (x *ActionInterface) GetGetEnabled() func(Action) bool {
+	if x.xGetEnabled == 0 {
+		return nil
+	}
+	var rawCallback func(ActionVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xGetEnabled)
+	return func(ActionVar Action) bool {
+		return rawCallback(ActionVar.GoPointer())
+	}
+}
+
+// OverrideGetState sets the callback function.
+func (x *ActionInterface) OverrideGetState(cb func(Action) *glib.Variant) {
+	if cb == nil {
+		x.xGetState = 0
+	} else {
+		x.xGetState = purego.NewCallback(func(ActionVarp uintptr) *glib.Variant {
+			return cb(&ActionBase{Ptr: ActionVarp})
+		})
+	}
+}
+
+// GetGetState gets the callback function.
+func (x *ActionInterface) GetGetState() func(Action) *glib.Variant {
+	if x.xGetState == 0 {
+		return nil
+	}
+	var rawCallback func(ActionVarp uintptr) *glib.Variant
+	purego.RegisterFunc(&rawCallback, x.xGetState)
+	return func(ActionVar Action) *glib.Variant {
+		return rawCallback(ActionVar.GoPointer())
+	}
+}
+
+// OverrideChangeState sets the callback function.
+func (x *ActionInterface) OverrideChangeState(cb func(Action, *glib.Variant)) {
+	if cb == nil {
+		x.xChangeState = 0
+	} else {
+		x.xChangeState = purego.NewCallback(func(ActionVarp uintptr, ValueVarp *glib.Variant) {
+			cb(&ActionBase{Ptr: ActionVarp}, ValueVarp)
+		})
+	}
+}
+
+// GetChangeState gets the callback function.
+func (x *ActionInterface) GetChangeState() func(Action, *glib.Variant) {
+	if x.xChangeState == 0 {
+		return nil
+	}
+	var rawCallback func(ActionVarp uintptr, ValueVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xChangeState)
+	return func(ActionVar Action, ValueVar *glib.Variant) {
+		rawCallback(ActionVar.GoPointer(), ValueVar)
+	}
+}
+
+// OverrideActivate sets the callback function.
+func (x *ActionInterface) OverrideActivate(cb func(Action, *glib.Variant)) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(ActionVarp uintptr, ParameterVarp *glib.Variant) {
+			cb(&ActionBase{Ptr: ActionVarp}, ParameterVarp)
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+func (x *ActionInterface) GetActivate() func(Action, *glib.Variant) {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(ActionVarp uintptr, ParameterVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(ActionVar Action, ParameterVar *glib.Variant) {
+		rawCallback(ActionVar.GoPointer(), ParameterVar)
+	}
 }
 
 // #GAction represents a single named action.

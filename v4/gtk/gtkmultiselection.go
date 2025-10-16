@@ -15,7 +15,7 @@ import (
 type MultiSelectionClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *MultiSelectionClass) GoPointer() uintptr {

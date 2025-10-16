@@ -13,7 +13,7 @@ import (
 type IMContextSimpleClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass IMContextClass
 }
 
 func (x *IMContextSimpleClass) GoPointer() uintptr {

@@ -16,13 +16,38 @@ import (
 type DebugControllerDBusClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xAuthorize uintptr
 
 	Padding [12]uintptr
 }
 
 func (x *DebugControllerDBusClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideAuthorize sets the callback function.
+func (x *DebugControllerDBusClass) OverrideAuthorize(cb func(*DebugControllerDBus, *DBusMethodInvocation) bool) {
+	if cb == nil {
+		x.xAuthorize = 0
+	} else {
+		x.xAuthorize = purego.NewCallback(func(ControllerVarp uintptr, InvocationVarp uintptr) bool {
+			return cb(DebugControllerDBusNewFromInternalPtr(ControllerVarp), DBusMethodInvocationNewFromInternalPtr(InvocationVarp))
+		})
+	}
+}
+
+// GetAuthorize gets the callback function.
+func (x *DebugControllerDBusClass) GetAuthorize() func(*DebugControllerDBus, *DBusMethodInvocation) bool {
+	if x.xAuthorize == 0 {
+		return nil
+	}
+	var rawCallback func(ControllerVarp uintptr, InvocationVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xAuthorize)
+	return func(ControllerVar *DebugControllerDBus, InvocationVar *DBusMethodInvocation) bool {
+		return rawCallback(ControllerVar.GoPointer(), InvocationVar.GoPointer())
+	}
 }
 
 // #GDebugControllerDBus is an implementation of #GDebugController which exposes

@@ -16,7 +16,7 @@ import (
 type GLShaderClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *GLShaderClass) GoPointer() uintptr {

@@ -18,7 +18,15 @@ import (
 type NavigationPageClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
+
+	xShowing uintptr
+
+	xShown uintptr
+
+	xHiding uintptr
+
+	xHidden uintptr
 
 	Padding [8]uintptr
 }
@@ -27,10 +35,102 @@ func (x *NavigationPageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+// OverrideShowing sets the callback function.
+func (x *NavigationPageClass) OverrideShowing(cb func(*NavigationPage)) {
+	if cb == nil {
+		x.xShowing = 0
+	} else {
+		x.xShowing = purego.NewCallback(func(SelfVarp uintptr) {
+			cb(NavigationPageNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetShowing gets the callback function.
+func (x *NavigationPageClass) GetShowing() func(*NavigationPage) {
+	if x.xShowing == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xShowing)
+	return func(SelfVar *NavigationPage) {
+		rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideShown sets the callback function.
+func (x *NavigationPageClass) OverrideShown(cb func(*NavigationPage)) {
+	if cb == nil {
+		x.xShown = 0
+	} else {
+		x.xShown = purego.NewCallback(func(SelfVarp uintptr) {
+			cb(NavigationPageNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetShown gets the callback function.
+func (x *NavigationPageClass) GetShown() func(*NavigationPage) {
+	if x.xShown == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xShown)
+	return func(SelfVar *NavigationPage) {
+		rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideHiding sets the callback function.
+func (x *NavigationPageClass) OverrideHiding(cb func(*NavigationPage)) {
+	if cb == nil {
+		x.xHiding = 0
+	} else {
+		x.xHiding = purego.NewCallback(func(SelfVarp uintptr) {
+			cb(NavigationPageNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetHiding gets the callback function.
+func (x *NavigationPageClass) GetHiding() func(*NavigationPage) {
+	if x.xHiding == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xHiding)
+	return func(SelfVar *NavigationPage) {
+		rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideHidden sets the callback function.
+func (x *NavigationPageClass) OverrideHidden(cb func(*NavigationPage)) {
+	if cb == nil {
+		x.xHidden = 0
+	} else {
+		x.xHidden = purego.NewCallback(func(SelfVarp uintptr) {
+			cb(NavigationPageNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetHidden gets the callback function.
+func (x *NavigationPageClass) GetHidden() func(*NavigationPage) {
+	if x.xHidden == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xHidden)
+	return func(SelfVar *NavigationPage) {
+		rawCallback(SelfVar.GoPointer())
+	}
+}
+
 type NavigationViewClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *NavigationViewClass) GoPointer() uintptr {

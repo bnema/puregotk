@@ -15,7 +15,7 @@ import (
 type StyleManagerClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *StyleManagerClass) GoPointer() uintptr {

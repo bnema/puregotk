@@ -17,13 +17,63 @@ import (
 type DialogClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WindowClass
+
+	xResponse uintptr
+
+	xClose uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *DialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideResponse sets the callback function.
+func (x *DialogClass) OverrideResponse(cb func(*Dialog, int)) {
+	if cb == nil {
+		x.xResponse = 0
+	} else {
+		x.xResponse = purego.NewCallback(func(DialogVarp uintptr, ResponseIdVarp int) {
+			cb(DialogNewFromInternalPtr(DialogVarp), ResponseIdVarp)
+		})
+	}
+}
+
+// GetResponse gets the callback function.
+func (x *DialogClass) GetResponse() func(*Dialog, int) {
+	if x.xResponse == 0 {
+		return nil
+	}
+	var rawCallback func(DialogVarp uintptr, ResponseIdVarp int)
+	purego.RegisterFunc(&rawCallback, x.xResponse)
+	return func(DialogVar *Dialog, ResponseIdVar int) {
+		rawCallback(DialogVar.GoPointer(), ResponseIdVar)
+	}
+}
+
+// OverrideClose sets the callback function.
+func (x *DialogClass) OverrideClose(cb func(*Dialog)) {
+	if cb == nil {
+		x.xClose = 0
+	} else {
+		x.xClose = purego.NewCallback(func(DialogVarp uintptr) {
+			cb(DialogNewFromInternalPtr(DialogVarp))
+		})
+	}
+}
+
+// GetClose gets the callback function.
+func (x *DialogClass) GetClose() func(*Dialog) {
+	if x.xClose == 0 {
+		return nil
+	}
+	var rawCallback func(DialogVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xClose)
+	return func(DialogVar *Dialog) {
+		rawCallback(DialogVar.GoPointer())
+	}
 }
 
 // Flags used to influence dialog construction.

@@ -17,15 +17,175 @@ import (
 type LayoutManagerClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGetRequestMode uintptr
+
+	xMeasure uintptr
+
+	xAllocate uintptr
 
 	LayoutChildType types.GType
+
+	xCreateLayoutChild uintptr
+
+	xRoot uintptr
+
+	xUnroot uintptr
 
 	Padding [16]uintptr
 }
 
 func (x *LayoutManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetRequestMode sets the callback function.
+func (x *LayoutManagerClass) OverrideGetRequestMode(cb func(*LayoutManager, *Widget) SizeRequestMode) {
+	if cb == nil {
+		x.xGetRequestMode = 0
+	} else {
+		x.xGetRequestMode = purego.NewCallback(func(ManagerVarp uintptr, WidgetVarp uintptr) SizeRequestMode {
+			return cb(LayoutManagerNewFromInternalPtr(ManagerVarp), WidgetNewFromInternalPtr(WidgetVarp))
+		})
+	}
+}
+
+// GetGetRequestMode gets the callback function.
+func (x *LayoutManagerClass) GetGetRequestMode() func(*LayoutManager, *Widget) SizeRequestMode {
+	if x.xGetRequestMode == 0 {
+		return nil
+	}
+	var rawCallback func(ManagerVarp uintptr, WidgetVarp uintptr) SizeRequestMode
+	purego.RegisterFunc(&rawCallback, x.xGetRequestMode)
+	return func(ManagerVar *LayoutManager, WidgetVar *Widget) SizeRequestMode {
+		return rawCallback(ManagerVar.GoPointer(), WidgetVar.GoPointer())
+	}
+}
+
+// OverrideMeasure sets the callback function.
+func (x *LayoutManagerClass) OverrideMeasure(cb func(*LayoutManager, *Widget, Orientation, int, int, int, int, int)) {
+	if cb == nil {
+		x.xMeasure = 0
+	} else {
+		x.xMeasure = purego.NewCallback(func(ManagerVarp uintptr, WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp int, NaturalVarp int, MinimumBaselineVarp int, NaturalBaselineVarp int) {
+			cb(LayoutManagerNewFromInternalPtr(ManagerVarp), WidgetNewFromInternalPtr(WidgetVarp), OrientationVarp, ForSizeVarp, MinimumVarp, NaturalVarp, MinimumBaselineVarp, NaturalBaselineVarp)
+		})
+	}
+}
+
+// GetMeasure gets the callback function.
+func (x *LayoutManagerClass) GetMeasure() func(*LayoutManager, *Widget, Orientation, int, int, int, int, int) {
+	if x.xMeasure == 0 {
+		return nil
+	}
+	var rawCallback func(ManagerVarp uintptr, WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp int, NaturalVarp int, MinimumBaselineVarp int, NaturalBaselineVarp int)
+	purego.RegisterFunc(&rawCallback, x.xMeasure)
+	return func(ManagerVar *LayoutManager, WidgetVar *Widget, OrientationVar Orientation, ForSizeVar int, MinimumVar int, NaturalVar int, MinimumBaselineVar int, NaturalBaselineVar int) {
+		rawCallback(ManagerVar.GoPointer(), WidgetVar.GoPointer(), OrientationVar, ForSizeVar, MinimumVar, NaturalVar, MinimumBaselineVar, NaturalBaselineVar)
+	}
+}
+
+// OverrideAllocate sets the callback function.
+func (x *LayoutManagerClass) OverrideAllocate(cb func(*LayoutManager, *Widget, int, int, int)) {
+	if cb == nil {
+		x.xAllocate = 0
+	} else {
+		x.xAllocate = purego.NewCallback(func(ManagerVarp uintptr, WidgetVarp uintptr, WidthVarp int, HeightVarp int, BaselineVarp int) {
+			cb(LayoutManagerNewFromInternalPtr(ManagerVarp), WidgetNewFromInternalPtr(WidgetVarp), WidthVarp, HeightVarp, BaselineVarp)
+		})
+	}
+}
+
+// GetAllocate gets the callback function.
+func (x *LayoutManagerClass) GetAllocate() func(*LayoutManager, *Widget, int, int, int) {
+	if x.xAllocate == 0 {
+		return nil
+	}
+	var rawCallback func(ManagerVarp uintptr, WidgetVarp uintptr, WidthVarp int, HeightVarp int, BaselineVarp int)
+	purego.RegisterFunc(&rawCallback, x.xAllocate)
+	return func(ManagerVar *LayoutManager, WidgetVar *Widget, WidthVar int, HeightVar int, BaselineVar int) {
+		rawCallback(ManagerVar.GoPointer(), WidgetVar.GoPointer(), WidthVar, HeightVar, BaselineVar)
+	}
+}
+
+// OverrideCreateLayoutChild sets the callback function.
+func (x *LayoutManagerClass) OverrideCreateLayoutChild(cb func(*LayoutManager, *Widget, *Widget) *LayoutChild) {
+	if cb == nil {
+		x.xCreateLayoutChild = 0
+	} else {
+		x.xCreateLayoutChild = purego.NewCallback(func(ManagerVarp uintptr, WidgetVarp uintptr, ForChildVarp uintptr) uintptr {
+			ret := cb(LayoutManagerNewFromInternalPtr(ManagerVarp), WidgetNewFromInternalPtr(WidgetVarp), WidgetNewFromInternalPtr(ForChildVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetCreateLayoutChild gets the callback function.
+func (x *LayoutManagerClass) GetCreateLayoutChild() func(*LayoutManager, *Widget, *Widget) *LayoutChild {
+	if x.xCreateLayoutChild == 0 {
+		return nil
+	}
+	var rawCallback func(ManagerVarp uintptr, WidgetVarp uintptr, ForChildVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xCreateLayoutChild)
+	return func(ManagerVar *LayoutManager, WidgetVar *Widget, ForChildVar *Widget) *LayoutChild {
+		rawRet := rawCallback(ManagerVar.GoPointer(), WidgetVar.GoPointer(), ForChildVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &LayoutChild{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideRoot sets the callback function.
+func (x *LayoutManagerClass) OverrideRoot(cb func(*LayoutManager)) {
+	if cb == nil {
+		x.xRoot = 0
+	} else {
+		x.xRoot = purego.NewCallback(func(ManagerVarp uintptr) {
+			cb(LayoutManagerNewFromInternalPtr(ManagerVarp))
+		})
+	}
+}
+
+// GetRoot gets the callback function.
+func (x *LayoutManagerClass) GetRoot() func(*LayoutManager) {
+	if x.xRoot == 0 {
+		return nil
+	}
+	var rawCallback func(ManagerVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRoot)
+	return func(ManagerVar *LayoutManager) {
+		rawCallback(ManagerVar.GoPointer())
+	}
+}
+
+// OverrideUnroot sets the callback function.
+func (x *LayoutManagerClass) OverrideUnroot(cb func(*LayoutManager)) {
+	if cb == nil {
+		x.xUnroot = 0
+	} else {
+		x.xUnroot = purego.NewCallback(func(ManagerVarp uintptr) {
+			cb(LayoutManagerNewFromInternalPtr(ManagerVarp))
+		})
+	}
+}
+
+// GetUnroot gets the callback function.
+func (x *LayoutManagerClass) GetUnroot() func(*LayoutManager) {
+	if x.xUnroot == 0 {
+		return nil
+	}
+	var rawCallback func(ManagerVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnroot)
+	return func(ManagerVar *LayoutManager) {
+		rawCallback(ManagerVar.GoPointer())
+	}
 }
 
 // Layout managers are delegate classes that handle the preferred size

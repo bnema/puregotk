@@ -16,13 +16,63 @@ import (
 type DBusProxyClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGPropertiesChanged uintptr
+
+	xGSignal uintptr
 
 	Padding [32]uintptr
 }
 
 func (x *DBusProxyClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGPropertiesChanged sets the callback function.
+func (x *DBusProxyClass) OverrideGPropertiesChanged(cb func(*DBusProxy, *glib.Variant, string)) {
+	if cb == nil {
+		x.xGPropertiesChanged = 0
+	} else {
+		x.xGPropertiesChanged = purego.NewCallback(func(ProxyVarp uintptr, ChangedPropertiesVarp *glib.Variant, InvalidatedPropertiesVarp string) {
+			cb(DBusProxyNewFromInternalPtr(ProxyVarp), ChangedPropertiesVarp, InvalidatedPropertiesVarp)
+		})
+	}
+}
+
+// GetGPropertiesChanged gets the callback function.
+func (x *DBusProxyClass) GetGPropertiesChanged() func(*DBusProxy, *glib.Variant, string) {
+	if x.xGPropertiesChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ProxyVarp uintptr, ChangedPropertiesVarp *glib.Variant, InvalidatedPropertiesVarp string)
+	purego.RegisterFunc(&rawCallback, x.xGPropertiesChanged)
+	return func(ProxyVar *DBusProxy, ChangedPropertiesVar *glib.Variant, InvalidatedPropertiesVar string) {
+		rawCallback(ProxyVar.GoPointer(), ChangedPropertiesVar, InvalidatedPropertiesVar)
+	}
+}
+
+// OverrideGSignal sets the callback function.
+func (x *DBusProxyClass) OverrideGSignal(cb func(*DBusProxy, string, string, *glib.Variant)) {
+	if cb == nil {
+		x.xGSignal = 0
+	} else {
+		x.xGSignal = purego.NewCallback(func(ProxyVarp uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp *glib.Variant) {
+			cb(DBusProxyNewFromInternalPtr(ProxyVarp), SenderNameVarp, SignalNameVarp, ParametersVarp)
+		})
+	}
+}
+
+// GetGSignal gets the callback function.
+func (x *DBusProxyClass) GetGSignal() func(*DBusProxy, string, string, *glib.Variant) {
+	if x.xGSignal == 0 {
+		return nil
+	}
+	var rawCallback func(ProxyVarp uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xGSignal)
+	return func(ProxyVar *DBusProxy, SenderNameVar string, SignalNameVar string, ParametersVar *glib.Variant) {
+		rawCallback(ProxyVar.GoPointer(), SenderNameVar, SignalNameVar, ParametersVar)
+	}
 }
 
 type DBusProxyPrivate struct {
@@ -326,13 +376,13 @@ func (x *DBusProxy) CallWithUnixFdList(MethodNameVar string, ParametersVar *glib
 
 }
 
-var xDBusProxyCallWithUnixFdListFinish func(uintptr, *uintptr, uintptr, **glib.Error) *glib.Variant
+var xDBusProxyCallWithUnixFdListFinish func(uintptr, uintptr, uintptr, **glib.Error) *glib.Variant
 
 // Finishes an operation started with g_dbus_proxy_call_with_unix_fd_list().
 func (x *DBusProxy) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, ResVar AsyncResult) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusProxyCallWithUnixFdListFinish(x.GoPointer(), gobject.ConvertPtr(OutFdListVar), ResVar.GoPointer(), &cerr)
+	cret := xDBusProxyCallWithUnixFdListFinish(x.GoPointer(), *gobject.ConvertPtr(OutFdListVar), ResVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -340,7 +390,7 @@ func (x *DBusProxy) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, ResVar A
 
 }
 
-var xDBusProxyCallWithUnixFdListSync func(uintptr, string, *glib.Variant, DBusCallFlags, int, uintptr, *uintptr, uintptr, **glib.Error) *glib.Variant
+var xDBusProxyCallWithUnixFdListSync func(uintptr, string, *glib.Variant, DBusCallFlags, int, uintptr, uintptr, uintptr, **glib.Error) *glib.Variant
 
 // Like g_dbus_proxy_call_sync() but also takes and returns #GUnixFDList objects.
 //
@@ -348,7 +398,7 @@ var xDBusProxyCallWithUnixFdListSync func(uintptr, string, *glib.Variant, DBusCa
 func (x *DBusProxy) CallWithUnixFdListSync(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusProxyCallWithUnixFdListSync(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), gobject.ConvertPtr(OutFdListVar), CancellableVar.GoPointer(), &cerr)
+	cret := xDBusProxyCallWithUnixFdListSync(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), *gobject.ConvertPtr(OutFdListVar), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

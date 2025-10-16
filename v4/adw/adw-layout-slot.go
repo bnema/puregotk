@@ -15,7 +15,7 @@ import (
 type LayoutSlotClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *LayoutSlotClass) GoPointer() uintptr {

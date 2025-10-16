@@ -15,11 +15,666 @@ import (
 type VolumeMonitorClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xVolumeAdded uintptr
+
+	xVolumeRemoved uintptr
+
+	xVolumeChanged uintptr
+
+	xMountAdded uintptr
+
+	xMountRemoved uintptr
+
+	xMountPreUnmount uintptr
+
+	xMountChanged uintptr
+
+	xDriveConnected uintptr
+
+	xDriveDisconnected uintptr
+
+	xDriveChanged uintptr
+
+	xIsSupported uintptr
+
+	xGetConnectedDrives uintptr
+
+	xGetVolumes uintptr
+
+	xGetMounts uintptr
+
+	xGetVolumeForUuid uintptr
+
+	xGetMountForUuid uintptr
+
+	xAdoptOrphanMount uintptr
+
+	xDriveEjectButton uintptr
+
+	xDriveStopButton uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
+
+	xGReserved6 uintptr
 }
 
 func (x *VolumeMonitorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideVolumeAdded sets the callback function.
+func (x *VolumeMonitorClass) OverrideVolumeAdded(cb func(*VolumeMonitor, Volume)) {
+	if cb == nil {
+		x.xVolumeAdded = 0
+	} else {
+		x.xVolumeAdded = purego.NewCallback(func(VolumeMonitorVarp uintptr, VolumeVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetVolumeAdded gets the callback function.
+func (x *VolumeMonitorClass) GetVolumeAdded() func(*VolumeMonitor, Volume) {
+	if x.xVolumeAdded == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, VolumeVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xVolumeAdded)
+	return func(VolumeMonitorVar *VolumeMonitor, VolumeVar Volume) {
+		rawCallback(VolumeMonitorVar.GoPointer(), VolumeVar.GoPointer())
+	}
+}
+
+// OverrideVolumeRemoved sets the callback function.
+func (x *VolumeMonitorClass) OverrideVolumeRemoved(cb func(*VolumeMonitor, Volume)) {
+	if cb == nil {
+		x.xVolumeRemoved = 0
+	} else {
+		x.xVolumeRemoved = purego.NewCallback(func(VolumeMonitorVarp uintptr, VolumeVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetVolumeRemoved gets the callback function.
+func (x *VolumeMonitorClass) GetVolumeRemoved() func(*VolumeMonitor, Volume) {
+	if x.xVolumeRemoved == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, VolumeVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xVolumeRemoved)
+	return func(VolumeMonitorVar *VolumeMonitor, VolumeVar Volume) {
+		rawCallback(VolumeMonitorVar.GoPointer(), VolumeVar.GoPointer())
+	}
+}
+
+// OverrideVolumeChanged sets the callback function.
+func (x *VolumeMonitorClass) OverrideVolumeChanged(cb func(*VolumeMonitor, Volume)) {
+	if cb == nil {
+		x.xVolumeChanged = 0
+	} else {
+		x.xVolumeChanged = purego.NewCallback(func(VolumeMonitorVarp uintptr, VolumeVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &VolumeBase{Ptr: VolumeVarp})
+		})
+	}
+}
+
+// GetVolumeChanged gets the callback function.
+func (x *VolumeMonitorClass) GetVolumeChanged() func(*VolumeMonitor, Volume) {
+	if x.xVolumeChanged == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, VolumeVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xVolumeChanged)
+	return func(VolumeMonitorVar *VolumeMonitor, VolumeVar Volume) {
+		rawCallback(VolumeMonitorVar.GoPointer(), VolumeVar.GoPointer())
+	}
+}
+
+// OverrideMountAdded sets the callback function.
+func (x *VolumeMonitorClass) OverrideMountAdded(cb func(*VolumeMonitor, Mount)) {
+	if cb == nil {
+		x.xMountAdded = 0
+	} else {
+		x.xMountAdded = purego.NewCallback(func(VolumeMonitorVarp uintptr, MountVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetMountAdded gets the callback function.
+func (x *VolumeMonitorClass) GetMountAdded() func(*VolumeMonitor, Mount) {
+	if x.xMountAdded == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, MountVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMountAdded)
+	return func(VolumeMonitorVar *VolumeMonitor, MountVar Mount) {
+		rawCallback(VolumeMonitorVar.GoPointer(), MountVar.GoPointer())
+	}
+}
+
+// OverrideMountRemoved sets the callback function.
+func (x *VolumeMonitorClass) OverrideMountRemoved(cb func(*VolumeMonitor, Mount)) {
+	if cb == nil {
+		x.xMountRemoved = 0
+	} else {
+		x.xMountRemoved = purego.NewCallback(func(VolumeMonitorVarp uintptr, MountVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetMountRemoved gets the callback function.
+func (x *VolumeMonitorClass) GetMountRemoved() func(*VolumeMonitor, Mount) {
+	if x.xMountRemoved == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, MountVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMountRemoved)
+	return func(VolumeMonitorVar *VolumeMonitor, MountVar Mount) {
+		rawCallback(VolumeMonitorVar.GoPointer(), MountVar.GoPointer())
+	}
+}
+
+// OverrideMountPreUnmount sets the callback function.
+func (x *VolumeMonitorClass) OverrideMountPreUnmount(cb func(*VolumeMonitor, Mount)) {
+	if cb == nil {
+		x.xMountPreUnmount = 0
+	} else {
+		x.xMountPreUnmount = purego.NewCallback(func(VolumeMonitorVarp uintptr, MountVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetMountPreUnmount gets the callback function.
+func (x *VolumeMonitorClass) GetMountPreUnmount() func(*VolumeMonitor, Mount) {
+	if x.xMountPreUnmount == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, MountVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMountPreUnmount)
+	return func(VolumeMonitorVar *VolumeMonitor, MountVar Mount) {
+		rawCallback(VolumeMonitorVar.GoPointer(), MountVar.GoPointer())
+	}
+}
+
+// OverrideMountChanged sets the callback function.
+func (x *VolumeMonitorClass) OverrideMountChanged(cb func(*VolumeMonitor, Mount)) {
+	if cb == nil {
+		x.xMountChanged = 0
+	} else {
+		x.xMountChanged = purego.NewCallback(func(VolumeMonitorVarp uintptr, MountVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &MountBase{Ptr: MountVarp})
+		})
+	}
+}
+
+// GetMountChanged gets the callback function.
+func (x *VolumeMonitorClass) GetMountChanged() func(*VolumeMonitor, Mount) {
+	if x.xMountChanged == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, MountVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xMountChanged)
+	return func(VolumeMonitorVar *VolumeMonitor, MountVar Mount) {
+		rawCallback(VolumeMonitorVar.GoPointer(), MountVar.GoPointer())
+	}
+}
+
+// OverrideDriveConnected sets the callback function.
+func (x *VolumeMonitorClass) OverrideDriveConnected(cb func(*VolumeMonitor, Drive)) {
+	if cb == nil {
+		x.xDriveConnected = 0
+	} else {
+		x.xDriveConnected = purego.NewCallback(func(VolumeMonitorVarp uintptr, DriveVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetDriveConnected gets the callback function.
+func (x *VolumeMonitorClass) GetDriveConnected() func(*VolumeMonitor, Drive) {
+	if x.xDriveConnected == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, DriveVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDriveConnected)
+	return func(VolumeMonitorVar *VolumeMonitor, DriveVar Drive) {
+		rawCallback(VolumeMonitorVar.GoPointer(), DriveVar.GoPointer())
+	}
+}
+
+// OverrideDriveDisconnected sets the callback function.
+func (x *VolumeMonitorClass) OverrideDriveDisconnected(cb func(*VolumeMonitor, Drive)) {
+	if cb == nil {
+		x.xDriveDisconnected = 0
+	} else {
+		x.xDriveDisconnected = purego.NewCallback(func(VolumeMonitorVarp uintptr, DriveVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetDriveDisconnected gets the callback function.
+func (x *VolumeMonitorClass) GetDriveDisconnected() func(*VolumeMonitor, Drive) {
+	if x.xDriveDisconnected == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, DriveVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDriveDisconnected)
+	return func(VolumeMonitorVar *VolumeMonitor, DriveVar Drive) {
+		rawCallback(VolumeMonitorVar.GoPointer(), DriveVar.GoPointer())
+	}
+}
+
+// OverrideDriveChanged sets the callback function.
+func (x *VolumeMonitorClass) OverrideDriveChanged(cb func(*VolumeMonitor, Drive)) {
+	if cb == nil {
+		x.xDriveChanged = 0
+	} else {
+		x.xDriveChanged = purego.NewCallback(func(VolumeMonitorVarp uintptr, DriveVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetDriveChanged gets the callback function.
+func (x *VolumeMonitorClass) GetDriveChanged() func(*VolumeMonitor, Drive) {
+	if x.xDriveChanged == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, DriveVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDriveChanged)
+	return func(VolumeMonitorVar *VolumeMonitor, DriveVar Drive) {
+		rawCallback(VolumeMonitorVar.GoPointer(), DriveVar.GoPointer())
+	}
+}
+
+// OverrideIsSupported sets the callback function.
+func (x *VolumeMonitorClass) OverrideIsSupported(cb func() bool) {
+	if cb == nil {
+		x.xIsSupported = 0
+	} else {
+		x.xIsSupported = purego.NewCallback(func() bool {
+			return cb()
+		})
+	}
+}
+
+// GetIsSupported gets the callback function.
+func (x *VolumeMonitorClass) GetIsSupported() func() bool {
+	if x.xIsSupported == 0 {
+		return nil
+	}
+	var rawCallback func() bool
+	purego.RegisterFunc(&rawCallback, x.xIsSupported)
+	return func() bool {
+		return rawCallback()
+	}
+}
+
+// OverrideGetConnectedDrives sets the callback function.
+func (x *VolumeMonitorClass) OverrideGetConnectedDrives(cb func(*VolumeMonitor) *glib.List) {
+	if cb == nil {
+		x.xGetConnectedDrives = 0
+	} else {
+		x.xGetConnectedDrives = purego.NewCallback(func(VolumeMonitorVarp uintptr) *glib.List {
+			return cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp))
+		})
+	}
+}
+
+// GetGetConnectedDrives gets the callback function.
+func (x *VolumeMonitorClass) GetGetConnectedDrives() func(*VolumeMonitor) *glib.List {
+	if x.xGetConnectedDrives == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr) *glib.List
+	purego.RegisterFunc(&rawCallback, x.xGetConnectedDrives)
+	return func(VolumeMonitorVar *VolumeMonitor) *glib.List {
+		return rawCallback(VolumeMonitorVar.GoPointer())
+	}
+}
+
+// OverrideGetVolumes sets the callback function.
+func (x *VolumeMonitorClass) OverrideGetVolumes(cb func(*VolumeMonitor) *glib.List) {
+	if cb == nil {
+		x.xGetVolumes = 0
+	} else {
+		x.xGetVolumes = purego.NewCallback(func(VolumeMonitorVarp uintptr) *glib.List {
+			return cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp))
+		})
+	}
+}
+
+// GetGetVolumes gets the callback function.
+func (x *VolumeMonitorClass) GetGetVolumes() func(*VolumeMonitor) *glib.List {
+	if x.xGetVolumes == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr) *glib.List
+	purego.RegisterFunc(&rawCallback, x.xGetVolumes)
+	return func(VolumeMonitorVar *VolumeMonitor) *glib.List {
+		return rawCallback(VolumeMonitorVar.GoPointer())
+	}
+}
+
+// OverrideGetMounts sets the callback function.
+func (x *VolumeMonitorClass) OverrideGetMounts(cb func(*VolumeMonitor) *glib.List) {
+	if cb == nil {
+		x.xGetMounts = 0
+	} else {
+		x.xGetMounts = purego.NewCallback(func(VolumeMonitorVarp uintptr) *glib.List {
+			return cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp))
+		})
+	}
+}
+
+// GetGetMounts gets the callback function.
+func (x *VolumeMonitorClass) GetGetMounts() func(*VolumeMonitor) *glib.List {
+	if x.xGetMounts == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr) *glib.List
+	purego.RegisterFunc(&rawCallback, x.xGetMounts)
+	return func(VolumeMonitorVar *VolumeMonitor) *glib.List {
+		return rawCallback(VolumeMonitorVar.GoPointer())
+	}
+}
+
+// OverrideGetVolumeForUuid sets the callback function.
+func (x *VolumeMonitorClass) OverrideGetVolumeForUuid(cb func(*VolumeMonitor, string) *VolumeBase) {
+	if cb == nil {
+		x.xGetVolumeForUuid = 0
+	} else {
+		x.xGetVolumeForUuid = purego.NewCallback(func(VolumeMonitorVarp uintptr, UuidVarp string) uintptr {
+			ret := cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), UuidVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetVolumeForUuid gets the callback function.
+func (x *VolumeMonitorClass) GetGetVolumeForUuid() func(*VolumeMonitor, string) *VolumeBase {
+	if x.xGetVolumeForUuid == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, UuidVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetVolumeForUuid)
+	return func(VolumeMonitorVar *VolumeMonitor, UuidVar string) *VolumeBase {
+		rawRet := rawCallback(VolumeMonitorVar.GoPointer(), UuidVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &VolumeBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetMountForUuid sets the callback function.
+func (x *VolumeMonitorClass) OverrideGetMountForUuid(cb func(*VolumeMonitor, string) *MountBase) {
+	if cb == nil {
+		x.xGetMountForUuid = 0
+	} else {
+		x.xGetMountForUuid = purego.NewCallback(func(VolumeMonitorVarp uintptr, UuidVarp string) uintptr {
+			ret := cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), UuidVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetMountForUuid gets the callback function.
+func (x *VolumeMonitorClass) GetGetMountForUuid() func(*VolumeMonitor, string) *MountBase {
+	if x.xGetMountForUuid == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, UuidVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetMountForUuid)
+	return func(VolumeMonitorVar *VolumeMonitor, UuidVar string) *MountBase {
+		rawRet := rawCallback(VolumeMonitorVar.GoPointer(), UuidVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &MountBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideAdoptOrphanMount sets the callback function.
+func (x *VolumeMonitorClass) OverrideAdoptOrphanMount(cb func(Mount, *VolumeMonitor) *VolumeBase) {
+	if cb == nil {
+		x.xAdoptOrphanMount = 0
+	} else {
+		x.xAdoptOrphanMount = purego.NewCallback(func(MountVarp uintptr, VolumeMonitorVarp uintptr) uintptr {
+			ret := cb(&MountBase{Ptr: MountVarp}, VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetAdoptOrphanMount gets the callback function.
+func (x *VolumeMonitorClass) GetAdoptOrphanMount() func(Mount, *VolumeMonitor) *VolumeBase {
+	if x.xAdoptOrphanMount == 0 {
+		return nil
+	}
+	var rawCallback func(MountVarp uintptr, VolumeMonitorVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xAdoptOrphanMount)
+	return func(MountVar Mount, VolumeMonitorVar *VolumeMonitor) *VolumeBase {
+		rawRet := rawCallback(MountVar.GoPointer(), VolumeMonitorVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &VolumeBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideDriveEjectButton sets the callback function.
+func (x *VolumeMonitorClass) OverrideDriveEjectButton(cb func(*VolumeMonitor, Drive)) {
+	if cb == nil {
+		x.xDriveEjectButton = 0
+	} else {
+		x.xDriveEjectButton = purego.NewCallback(func(VolumeMonitorVarp uintptr, DriveVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetDriveEjectButton gets the callback function.
+func (x *VolumeMonitorClass) GetDriveEjectButton() func(*VolumeMonitor, Drive) {
+	if x.xDriveEjectButton == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, DriveVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDriveEjectButton)
+	return func(VolumeMonitorVar *VolumeMonitor, DriveVar Drive) {
+		rawCallback(VolumeMonitorVar.GoPointer(), DriveVar.GoPointer())
+	}
+}
+
+// OverrideDriveStopButton sets the callback function.
+func (x *VolumeMonitorClass) OverrideDriveStopButton(cb func(*VolumeMonitor, Drive)) {
+	if cb == nil {
+		x.xDriveStopButton = 0
+	} else {
+		x.xDriveStopButton = purego.NewCallback(func(VolumeMonitorVarp uintptr, DriveVarp uintptr) {
+			cb(VolumeMonitorNewFromInternalPtr(VolumeMonitorVarp), &DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetDriveStopButton gets the callback function.
+func (x *VolumeMonitorClass) GetDriveStopButton() func(*VolumeMonitor, Drive) {
+	if x.xDriveStopButton == 0 {
+		return nil
+	}
+	var rawCallback func(VolumeMonitorVarp uintptr, DriveVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDriveStopButton)
+	return func(VolumeMonitorVar *VolumeMonitor, DriveVar Drive) {
+		rawCallback(VolumeMonitorVar.GoPointer(), DriveVar.GoPointer())
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *VolumeMonitorClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *VolumeMonitorClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *VolumeMonitorClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *VolumeMonitorClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *VolumeMonitorClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *VolumeMonitorClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *VolumeMonitorClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *VolumeMonitorClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *VolumeMonitorClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *VolumeMonitorClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved6 sets the callback function.
+func (x *VolumeMonitorClass) OverrideGReserved6(cb func()) {
+	if cb == nil {
+		x.xGReserved6 = 0
+	} else {
+		x.xGReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved6 gets the callback function.
+func (x *VolumeMonitorClass) GetGReserved6() func() {
+	if x.xGReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved6)
+	return func() {
+		rawCallback()
+	}
 }
 
 const (

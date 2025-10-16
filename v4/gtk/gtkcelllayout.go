@@ -20,10 +20,245 @@ type CellLayoutIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xPackStart uintptr
+
+	xPackEnd uintptr
+
+	xClear uintptr
+
+	xAddAttribute uintptr
+
+	xSetCellDataFunc uintptr
+
+	xClearAttributes uintptr
+
+	xReorder uintptr
+
+	xGetCells uintptr
+
+	xGetArea uintptr
 }
 
 func (x *CellLayoutIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverridePackStart sets the callback function.
+func (x *CellLayoutIface) OverridePackStart(cb func(CellLayout, *CellRenderer, bool)) {
+	if cb == nil {
+		x.xPackStart = 0
+	} else {
+		x.xPackStart = purego.NewCallback(func(CellLayoutVarp uintptr, CellVarp uintptr, ExpandVarp bool) {
+			cb(&CellLayoutBase{Ptr: CellLayoutVarp}, CellRendererNewFromInternalPtr(CellVarp), ExpandVarp)
+		})
+	}
+}
+
+// GetPackStart gets the callback function.
+func (x *CellLayoutIface) GetPackStart() func(CellLayout, *CellRenderer, bool) {
+	if x.xPackStart == 0 {
+		return nil
+	}
+	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, ExpandVarp bool)
+	purego.RegisterFunc(&rawCallback, x.xPackStart)
+	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, ExpandVar bool) {
+		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), ExpandVar)
+	}
+}
+
+// OverridePackEnd sets the callback function.
+func (x *CellLayoutIface) OverridePackEnd(cb func(CellLayout, *CellRenderer, bool)) {
+	if cb == nil {
+		x.xPackEnd = 0
+	} else {
+		x.xPackEnd = purego.NewCallback(func(CellLayoutVarp uintptr, CellVarp uintptr, ExpandVarp bool) {
+			cb(&CellLayoutBase{Ptr: CellLayoutVarp}, CellRendererNewFromInternalPtr(CellVarp), ExpandVarp)
+		})
+	}
+}
+
+// GetPackEnd gets the callback function.
+func (x *CellLayoutIface) GetPackEnd() func(CellLayout, *CellRenderer, bool) {
+	if x.xPackEnd == 0 {
+		return nil
+	}
+	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, ExpandVarp bool)
+	purego.RegisterFunc(&rawCallback, x.xPackEnd)
+	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, ExpandVar bool) {
+		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), ExpandVar)
+	}
+}
+
+// OverrideClear sets the callback function.
+func (x *CellLayoutIface) OverrideClear(cb func(CellLayout)) {
+	if cb == nil {
+		x.xClear = 0
+	} else {
+		x.xClear = purego.NewCallback(func(CellLayoutVarp uintptr) {
+			cb(&CellLayoutBase{Ptr: CellLayoutVarp})
+		})
+	}
+}
+
+// GetClear gets the callback function.
+func (x *CellLayoutIface) GetClear() func(CellLayout) {
+	if x.xClear == 0 {
+		return nil
+	}
+	var rawCallback func(CellLayoutVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xClear)
+	return func(CellLayoutVar CellLayout) {
+		rawCallback(CellLayoutVar.GoPointer())
+	}
+}
+
+// OverrideAddAttribute sets the callback function.
+func (x *CellLayoutIface) OverrideAddAttribute(cb func(CellLayout, *CellRenderer, string, int)) {
+	if cb == nil {
+		x.xAddAttribute = 0
+	} else {
+		x.xAddAttribute = purego.NewCallback(func(CellLayoutVarp uintptr, CellVarp uintptr, AttributeVarp string, ColumnVarp int) {
+			cb(&CellLayoutBase{Ptr: CellLayoutVarp}, CellRendererNewFromInternalPtr(CellVarp), AttributeVarp, ColumnVarp)
+		})
+	}
+}
+
+// GetAddAttribute gets the callback function.
+func (x *CellLayoutIface) GetAddAttribute() func(CellLayout, *CellRenderer, string, int) {
+	if x.xAddAttribute == 0 {
+		return nil
+	}
+	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, AttributeVarp string, ColumnVarp int)
+	purego.RegisterFunc(&rawCallback, x.xAddAttribute)
+	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, AttributeVar string, ColumnVar int) {
+		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), AttributeVar, ColumnVar)
+	}
+}
+
+// OverrideSetCellDataFunc sets the callback function.
+func (x *CellLayoutIface) OverrideSetCellDataFunc(cb func(CellLayout, *CellRenderer, *CellLayoutDataFunc, uintptr, *glib.DestroyNotify)) {
+	if cb == nil {
+		x.xSetCellDataFunc = 0
+	} else {
+		x.xSetCellDataFunc = purego.NewCallback(func(CellLayoutVarp uintptr, CellVarp uintptr, FuncVarp uintptr, FuncDataVarp uintptr, DestroyVarp uintptr) {
+			cb(&CellLayoutBase{Ptr: CellLayoutVarp}, CellRendererNewFromInternalPtr(CellVarp), (*CellLayoutDataFunc)(unsafe.Pointer(FuncVarp)), FuncDataVarp, (*glib.DestroyNotify)(unsafe.Pointer(DestroyVarp)))
+		})
+	}
+}
+
+// GetSetCellDataFunc gets the callback function.
+func (x *CellLayoutIface) GetSetCellDataFunc() func(CellLayout, *CellRenderer, *CellLayoutDataFunc, uintptr, *glib.DestroyNotify) {
+	if x.xSetCellDataFunc == 0 {
+		return nil
+	}
+	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, FuncVarp uintptr, FuncDataVarp uintptr, DestroyVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetCellDataFunc)
+	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, FuncVar *CellLayoutDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
+		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+	}
+}
+
+// OverrideClearAttributes sets the callback function.
+func (x *CellLayoutIface) OverrideClearAttributes(cb func(CellLayout, *CellRenderer)) {
+	if cb == nil {
+		x.xClearAttributes = 0
+	} else {
+		x.xClearAttributes = purego.NewCallback(func(CellLayoutVarp uintptr, CellVarp uintptr) {
+			cb(&CellLayoutBase{Ptr: CellLayoutVarp}, CellRendererNewFromInternalPtr(CellVarp))
+		})
+	}
+}
+
+// GetClearAttributes gets the callback function.
+func (x *CellLayoutIface) GetClearAttributes() func(CellLayout, *CellRenderer) {
+	if x.xClearAttributes == 0 {
+		return nil
+	}
+	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xClearAttributes)
+	return func(CellLayoutVar CellLayout, CellVar *CellRenderer) {
+		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer())
+	}
+}
+
+// OverrideReorder sets the callback function.
+func (x *CellLayoutIface) OverrideReorder(cb func(CellLayout, *CellRenderer, int)) {
+	if cb == nil {
+		x.xReorder = 0
+	} else {
+		x.xReorder = purego.NewCallback(func(CellLayoutVarp uintptr, CellVarp uintptr, PositionVarp int) {
+			cb(&CellLayoutBase{Ptr: CellLayoutVarp}, CellRendererNewFromInternalPtr(CellVarp), PositionVarp)
+		})
+	}
+}
+
+// GetReorder gets the callback function.
+func (x *CellLayoutIface) GetReorder() func(CellLayout, *CellRenderer, int) {
+	if x.xReorder == 0 {
+		return nil
+	}
+	var rawCallback func(CellLayoutVarp uintptr, CellVarp uintptr, PositionVarp int)
+	purego.RegisterFunc(&rawCallback, x.xReorder)
+	return func(CellLayoutVar CellLayout, CellVar *CellRenderer, PositionVar int) {
+		rawCallback(CellLayoutVar.GoPointer(), CellVar.GoPointer(), PositionVar)
+	}
+}
+
+// OverrideGetCells sets the callback function.
+func (x *CellLayoutIface) OverrideGetCells(cb func(CellLayout) *glib.List) {
+	if cb == nil {
+		x.xGetCells = 0
+	} else {
+		x.xGetCells = purego.NewCallback(func(CellLayoutVarp uintptr) *glib.List {
+			return cb(&CellLayoutBase{Ptr: CellLayoutVarp})
+		})
+	}
+}
+
+// GetGetCells gets the callback function.
+func (x *CellLayoutIface) GetGetCells() func(CellLayout) *glib.List {
+	if x.xGetCells == 0 {
+		return nil
+	}
+	var rawCallback func(CellLayoutVarp uintptr) *glib.List
+	purego.RegisterFunc(&rawCallback, x.xGetCells)
+	return func(CellLayoutVar CellLayout) *glib.List {
+		return rawCallback(CellLayoutVar.GoPointer())
+	}
+}
+
+// OverrideGetArea sets the callback function.
+func (x *CellLayoutIface) OverrideGetArea(cb func(CellLayout) *CellArea) {
+	if cb == nil {
+		x.xGetArea = 0
+	} else {
+		x.xGetArea = purego.NewCallback(func(CellLayoutVarp uintptr) uintptr {
+			ret := cb(&CellLayoutBase{Ptr: CellLayoutVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetArea gets the callback function.
+func (x *CellLayoutIface) GetGetArea() func(CellLayout) *CellArea {
+	if x.xGetArea == 0 {
+		return nil
+	}
+	var rawCallback func(CellLayoutVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetArea)
+	return func(CellLayoutVar CellLayout) *CellArea {
+		rawRet := rawCallback(CellLayoutVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &CellArea{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // An interface for packing cells

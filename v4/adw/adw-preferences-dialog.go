@@ -15,7 +15,7 @@ import (
 type PreferencesDialogClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass DialogClass
 
 	Padding [4]uintptr
 }

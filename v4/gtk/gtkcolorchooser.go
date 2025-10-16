@@ -16,11 +16,111 @@ type ColorChooserInterface struct {
 
 	BaseInterface uintptr
 
+	xGetRgba uintptr
+
+	xSetRgba uintptr
+
+	xAddPalette uintptr
+
+	xColorActivated uintptr
+
 	Padding [12]uintptr
 }
 
 func (x *ColorChooserInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetRgba sets the callback function.
+func (x *ColorChooserInterface) OverrideGetRgba(cb func(ColorChooser, *gdk.RGBA)) {
+	if cb == nil {
+		x.xGetRgba = 0
+	} else {
+		x.xGetRgba = purego.NewCallback(func(ChooserVarp uintptr, ColorVarp *gdk.RGBA) {
+			cb(&ColorChooserBase{Ptr: ChooserVarp}, ColorVarp)
+		})
+	}
+}
+
+// GetGetRgba gets the callback function.
+func (x *ColorChooserInterface) GetGetRgba() func(ColorChooser, *gdk.RGBA) {
+	if x.xGetRgba == 0 {
+		return nil
+	}
+	var rawCallback func(ChooserVarp uintptr, ColorVarp *gdk.RGBA)
+	purego.RegisterFunc(&rawCallback, x.xGetRgba)
+	return func(ChooserVar ColorChooser, ColorVar *gdk.RGBA) {
+		rawCallback(ChooserVar.GoPointer(), ColorVar)
+	}
+}
+
+// OverrideSetRgba sets the callback function.
+func (x *ColorChooserInterface) OverrideSetRgba(cb func(ColorChooser, *gdk.RGBA)) {
+	if cb == nil {
+		x.xSetRgba = 0
+	} else {
+		x.xSetRgba = purego.NewCallback(func(ChooserVarp uintptr, ColorVarp *gdk.RGBA) {
+			cb(&ColorChooserBase{Ptr: ChooserVarp}, ColorVarp)
+		})
+	}
+}
+
+// GetSetRgba gets the callback function.
+func (x *ColorChooserInterface) GetSetRgba() func(ColorChooser, *gdk.RGBA) {
+	if x.xSetRgba == 0 {
+		return nil
+	}
+	var rawCallback func(ChooserVarp uintptr, ColorVarp *gdk.RGBA)
+	purego.RegisterFunc(&rawCallback, x.xSetRgba)
+	return func(ChooserVar ColorChooser, ColorVar *gdk.RGBA) {
+		rawCallback(ChooserVar.GoPointer(), ColorVar)
+	}
+}
+
+// OverrideAddPalette sets the callback function.
+func (x *ColorChooserInterface) OverrideAddPalette(cb func(ColorChooser, Orientation, int, int, []gdk.RGBA)) {
+	if cb == nil {
+		x.xAddPalette = 0
+	} else {
+		x.xAddPalette = purego.NewCallback(func(ChooserVarp uintptr, OrientationVarp Orientation, ColorsPerLineVarp int, NColorsVarp int, ColorsVarp []gdk.RGBA) {
+			cb(&ColorChooserBase{Ptr: ChooserVarp}, OrientationVarp, ColorsPerLineVarp, NColorsVarp, ColorsVarp)
+		})
+	}
+}
+
+// GetAddPalette gets the callback function.
+func (x *ColorChooserInterface) GetAddPalette() func(ColorChooser, Orientation, int, int, []gdk.RGBA) {
+	if x.xAddPalette == 0 {
+		return nil
+	}
+	var rawCallback func(ChooserVarp uintptr, OrientationVarp Orientation, ColorsPerLineVarp int, NColorsVarp int, ColorsVarp []gdk.RGBA)
+	purego.RegisterFunc(&rawCallback, x.xAddPalette)
+	return func(ChooserVar ColorChooser, OrientationVar Orientation, ColorsPerLineVar int, NColorsVar int, ColorsVar []gdk.RGBA) {
+		rawCallback(ChooserVar.GoPointer(), OrientationVar, ColorsPerLineVar, NColorsVar, ColorsVar)
+	}
+}
+
+// OverrideColorActivated sets the callback function.
+func (x *ColorChooserInterface) OverrideColorActivated(cb func(ColorChooser, *gdk.RGBA)) {
+	if cb == nil {
+		x.xColorActivated = 0
+	} else {
+		x.xColorActivated = purego.NewCallback(func(ChooserVarp uintptr, ColorVarp *gdk.RGBA) {
+			cb(&ColorChooserBase{Ptr: ChooserVarp}, ColorVarp)
+		})
+	}
+}
+
+// GetColorActivated gets the callback function.
+func (x *ColorChooserInterface) GetColorActivated() func(ColorChooser, *gdk.RGBA) {
+	if x.xColorActivated == 0 {
+		return nil
+	}
+	var rawCallback func(ChooserVarp uintptr, ColorVarp *gdk.RGBA)
+	purego.RegisterFunc(&rawCallback, x.xColorActivated)
+	return func(ChooserVar ColorChooser, ColorVar *gdk.RGBA) {
+		rawCallback(ChooserVar.GoPointer(), ColorVar)
+	}
 }
 
 // `GtkColorChooser` is an interface that is implemented by widgets

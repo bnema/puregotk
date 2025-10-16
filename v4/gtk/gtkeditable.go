@@ -15,10 +15,245 @@ type EditableInterface struct {
 	_ structs.HostLayout
 
 	BaseIface uintptr
+
+	xInsertText uintptr
+
+	xDeleteText uintptr
+
+	xChanged uintptr
+
+	xGetText uintptr
+
+	xDoInsertText uintptr
+
+	xDoDeleteText uintptr
+
+	xGetSelectionBounds uintptr
+
+	xSetSelectionBounds uintptr
+
+	xGetDelegate uintptr
 }
 
 func (x *EditableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideInsertText sets the callback function.
+func (x *EditableInterface) OverrideInsertText(cb func(Editable, string, int, int)) {
+	if cb == nil {
+		x.xInsertText = 0
+	} else {
+		x.xInsertText = purego.NewCallback(func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp int) {
+			cb(&EditableBase{Ptr: EditableVarp}, TextVarp, LengthVarp, PositionVarp)
+		})
+	}
+}
+
+// GetInsertText gets the callback function.
+func (x *EditableInterface) GetInsertText() func(Editable, string, int, int) {
+	if x.xInsertText == 0 {
+		return nil
+	}
+	var rawCallback func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp int)
+	purego.RegisterFunc(&rawCallback, x.xInsertText)
+	return func(EditableVar Editable, TextVar string, LengthVar int, PositionVar int) {
+		rawCallback(EditableVar.GoPointer(), TextVar, LengthVar, PositionVar)
+	}
+}
+
+// OverrideDeleteText sets the callback function.
+func (x *EditableInterface) OverrideDeleteText(cb func(Editable, int, int)) {
+	if cb == nil {
+		x.xDeleteText = 0
+	} else {
+		x.xDeleteText = purego.NewCallback(func(EditableVarp uintptr, StartPosVarp int, EndPosVarp int) {
+			cb(&EditableBase{Ptr: EditableVarp}, StartPosVarp, EndPosVarp)
+		})
+	}
+}
+
+// GetDeleteText gets the callback function.
+func (x *EditableInterface) GetDeleteText() func(Editable, int, int) {
+	if x.xDeleteText == 0 {
+		return nil
+	}
+	var rawCallback func(EditableVarp uintptr, StartPosVarp int, EndPosVarp int)
+	purego.RegisterFunc(&rawCallback, x.xDeleteText)
+	return func(EditableVar Editable, StartPosVar int, EndPosVar int) {
+		rawCallback(EditableVar.GoPointer(), StartPosVar, EndPosVar)
+	}
+}
+
+// OverrideChanged sets the callback function.
+func (x *EditableInterface) OverrideChanged(cb func(Editable)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(EditableVarp uintptr) {
+			cb(&EditableBase{Ptr: EditableVarp})
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *EditableInterface) GetChanged() func(Editable) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(EditableVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(EditableVar Editable) {
+		rawCallback(EditableVar.GoPointer())
+	}
+}
+
+// OverrideGetText sets the callback function.
+func (x *EditableInterface) OverrideGetText(cb func(Editable) string) {
+	if cb == nil {
+		x.xGetText = 0
+	} else {
+		x.xGetText = purego.NewCallback(func(EditableVarp uintptr) string {
+			return cb(&EditableBase{Ptr: EditableVarp})
+		})
+	}
+}
+
+// GetGetText gets the callback function.
+func (x *EditableInterface) GetGetText() func(Editable) string {
+	if x.xGetText == 0 {
+		return nil
+	}
+	var rawCallback func(EditableVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetText)
+	return func(EditableVar Editable) string {
+		return rawCallback(EditableVar.GoPointer())
+	}
+}
+
+// OverrideDoInsertText sets the callback function.
+func (x *EditableInterface) OverrideDoInsertText(cb func(Editable, string, int, int)) {
+	if cb == nil {
+		x.xDoInsertText = 0
+	} else {
+		x.xDoInsertText = purego.NewCallback(func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp int) {
+			cb(&EditableBase{Ptr: EditableVarp}, TextVarp, LengthVarp, PositionVarp)
+		})
+	}
+}
+
+// GetDoInsertText gets the callback function.
+func (x *EditableInterface) GetDoInsertText() func(Editable, string, int, int) {
+	if x.xDoInsertText == 0 {
+		return nil
+	}
+	var rawCallback func(EditableVarp uintptr, TextVarp string, LengthVarp int, PositionVarp int)
+	purego.RegisterFunc(&rawCallback, x.xDoInsertText)
+	return func(EditableVar Editable, TextVar string, LengthVar int, PositionVar int) {
+		rawCallback(EditableVar.GoPointer(), TextVar, LengthVar, PositionVar)
+	}
+}
+
+// OverrideDoDeleteText sets the callback function.
+func (x *EditableInterface) OverrideDoDeleteText(cb func(Editable, int, int)) {
+	if cb == nil {
+		x.xDoDeleteText = 0
+	} else {
+		x.xDoDeleteText = purego.NewCallback(func(EditableVarp uintptr, StartPosVarp int, EndPosVarp int) {
+			cb(&EditableBase{Ptr: EditableVarp}, StartPosVarp, EndPosVarp)
+		})
+	}
+}
+
+// GetDoDeleteText gets the callback function.
+func (x *EditableInterface) GetDoDeleteText() func(Editable, int, int) {
+	if x.xDoDeleteText == 0 {
+		return nil
+	}
+	var rawCallback func(EditableVarp uintptr, StartPosVarp int, EndPosVarp int)
+	purego.RegisterFunc(&rawCallback, x.xDoDeleteText)
+	return func(EditableVar Editable, StartPosVar int, EndPosVar int) {
+		rawCallback(EditableVar.GoPointer(), StartPosVar, EndPosVar)
+	}
+}
+
+// OverrideGetSelectionBounds sets the callback function.
+func (x *EditableInterface) OverrideGetSelectionBounds(cb func(Editable, int, int) bool) {
+	if cb == nil {
+		x.xGetSelectionBounds = 0
+	} else {
+		x.xGetSelectionBounds = purego.NewCallback(func(EditableVarp uintptr, StartPosVarp int, EndPosVarp int) bool {
+			return cb(&EditableBase{Ptr: EditableVarp}, StartPosVarp, EndPosVarp)
+		})
+	}
+}
+
+// GetGetSelectionBounds gets the callback function.
+func (x *EditableInterface) GetGetSelectionBounds() func(Editable, int, int) bool {
+	if x.xGetSelectionBounds == 0 {
+		return nil
+	}
+	var rawCallback func(EditableVarp uintptr, StartPosVarp int, EndPosVarp int) bool
+	purego.RegisterFunc(&rawCallback, x.xGetSelectionBounds)
+	return func(EditableVar Editable, StartPosVar int, EndPosVar int) bool {
+		return rawCallback(EditableVar.GoPointer(), StartPosVar, EndPosVar)
+	}
+}
+
+// OverrideSetSelectionBounds sets the callback function.
+func (x *EditableInterface) OverrideSetSelectionBounds(cb func(Editable, int, int)) {
+	if cb == nil {
+		x.xSetSelectionBounds = 0
+	} else {
+		x.xSetSelectionBounds = purego.NewCallback(func(EditableVarp uintptr, StartPosVarp int, EndPosVarp int) {
+			cb(&EditableBase{Ptr: EditableVarp}, StartPosVarp, EndPosVarp)
+		})
+	}
+}
+
+// GetSetSelectionBounds gets the callback function.
+func (x *EditableInterface) GetSetSelectionBounds() func(Editable, int, int) {
+	if x.xSetSelectionBounds == 0 {
+		return nil
+	}
+	var rawCallback func(EditableVarp uintptr, StartPosVarp int, EndPosVarp int)
+	purego.RegisterFunc(&rawCallback, x.xSetSelectionBounds)
+	return func(EditableVar Editable, StartPosVar int, EndPosVar int) {
+		rawCallback(EditableVar.GoPointer(), StartPosVar, EndPosVar)
+	}
+}
+
+// OverrideGetDelegate sets the callback function.
+func (x *EditableInterface) OverrideGetDelegate(cb func(Editable) *EditableBase) {
+	if cb == nil {
+		x.xGetDelegate = 0
+	} else {
+		x.xGetDelegate = purego.NewCallback(func(EditableVarp uintptr) uintptr {
+			ret := cb(&EditableBase{Ptr: EditableVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetDelegate gets the callback function.
+func (x *EditableInterface) GetGetDelegate() func(Editable) *EditableBase {
+	if x.xGetDelegate == 0 {
+		return nil
+	}
+	var rawCallback func(EditableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetDelegate)
+	return func(EditableVar Editable) *EditableBase {
+		rawRet := rawCallback(EditableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &EditableBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // `GtkEditable` is an interface for text editing widgets.

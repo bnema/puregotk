@@ -16,10 +16,130 @@ type ProxyInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xConnect uintptr
+
+	xConnectAsync uintptr
+
+	xConnectFinish uintptr
+
+	xSupportsHostname uintptr
 }
 
 func (x *ProxyInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideConnect sets the callback function.
+func (x *ProxyInterface) OverrideConnect(cb func(Proxy, *IOStream, *ProxyAddress, *Cancellable) *IOStream) {
+	if cb == nil {
+		x.xConnect = 0
+	} else {
+		x.xConnect = purego.NewCallback(func(ProxyVarp uintptr, ConnectionVarp uintptr, ProxyAddressVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(&ProxyBase{Ptr: ProxyVarp}, IOStreamNewFromInternalPtr(ConnectionVarp), ProxyAddressNewFromInternalPtr(ProxyAddressVarp), CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetConnect gets the callback function.
+func (x *ProxyInterface) GetConnect() func(Proxy, *IOStream, *ProxyAddress, *Cancellable) *IOStream {
+	if x.xConnect == 0 {
+		return nil
+	}
+	var rawCallback func(ProxyVarp uintptr, ConnectionVarp uintptr, ProxyAddressVarp uintptr, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xConnect)
+	return func(ProxyVar Proxy, ConnectionVar *IOStream, ProxyAddressVar *ProxyAddress, CancellableVar *Cancellable) *IOStream {
+		rawRet := rawCallback(ProxyVar.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IOStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideConnectAsync sets the callback function.
+func (x *ProxyInterface) OverrideConnectAsync(cb func(Proxy, *IOStream, *ProxyAddress, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xConnectAsync = 0
+	} else {
+		x.xConnectAsync = purego.NewCallback(func(ProxyVarp uintptr, ConnectionVarp uintptr, ProxyAddressVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&ProxyBase{Ptr: ProxyVarp}, IOStreamNewFromInternalPtr(ConnectionVarp), ProxyAddressNewFromInternalPtr(ProxyAddressVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetConnectAsync gets the callback function.
+func (x *ProxyInterface) GetConnectAsync() func(Proxy, *IOStream, *ProxyAddress, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xConnectAsync == 0 {
+		return nil
+	}
+	var rawCallback func(ProxyVarp uintptr, ConnectionVarp uintptr, ProxyAddressVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xConnectAsync)
+	return func(ProxyVar Proxy, ConnectionVar *IOStream, ProxyAddressVar *ProxyAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(ProxyVar.GoPointer(), ConnectionVar.GoPointer(), ProxyAddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideConnectFinish sets the callback function.
+func (x *ProxyInterface) OverrideConnectFinish(cb func(Proxy, AsyncResult) *IOStream) {
+	if cb == nil {
+		x.xConnectFinish = 0
+	} else {
+		x.xConnectFinish = purego.NewCallback(func(ProxyVarp uintptr, ResultVarp uintptr) uintptr {
+			ret := cb(&ProxyBase{Ptr: ProxyVarp}, &AsyncResultBase{Ptr: ResultVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetConnectFinish gets the callback function.
+func (x *ProxyInterface) GetConnectFinish() func(Proxy, AsyncResult) *IOStream {
+	if x.xConnectFinish == 0 {
+		return nil
+	}
+	var rawCallback func(ProxyVarp uintptr, ResultVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xConnectFinish)
+	return func(ProxyVar Proxy, ResultVar AsyncResult) *IOStream {
+		rawRet := rawCallback(ProxyVar.GoPointer(), ResultVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IOStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideSupportsHostname sets the callback function.
+func (x *ProxyInterface) OverrideSupportsHostname(cb func(Proxy) bool) {
+	if cb == nil {
+		x.xSupportsHostname = 0
+	} else {
+		x.xSupportsHostname = purego.NewCallback(func(ProxyVarp uintptr) bool {
+			return cb(&ProxyBase{Ptr: ProxyVarp})
+		})
+	}
+}
+
+// GetSupportsHostname gets the callback function.
+func (x *ProxyInterface) GetSupportsHostname() func(Proxy) bool {
+	if x.xSupportsHostname == 0 {
+		return nil
+	}
+	var rawCallback func(ProxyVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSupportsHostname)
+	return func(ProxyVar Proxy) bool {
+		return rawCallback(ProxyVar.GoPointer())
+	}
 }
 
 // A #GProxy handles connecting to a remote host via a given type of
@@ -31,9 +151,9 @@ func (x *ProxyInterface) GoPointer() uintptr {
 type Proxy interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	Connect(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddress, CancellableVar *Cancellable) *IOStream
+	Connect(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddress, CancellableVar *Cancellable) (*IOStream, error)
 	ConnectAsync(ConnectionVar *IOStream, ProxyAddressVar *ProxyAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ConnectFinish(ResultVar AsyncResult) *IOStream
+	ConnectFinish(ResultVar AsyncResult) (*IOStream, error)
 	SupportsHostname() bool
 }
 

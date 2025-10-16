@@ -16,7 +16,7 @@ import (
 type SwipeTrackerClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *SwipeTrackerClass) GoPointer() uintptr {

@@ -16,7 +16,7 @@ import (
 type TabButtonClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *TabButtonClass) GoPointer() uintptr {

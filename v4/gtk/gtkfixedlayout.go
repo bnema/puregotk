@@ -14,7 +14,7 @@ import (
 type FixedLayoutChildClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutChildClass
 }
 
 func (x *FixedLayoutChildClass) GoPointer() uintptr {
@@ -24,7 +24,7 @@ func (x *FixedLayoutChildClass) GoPointer() uintptr {
 type FixedLayoutClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutManagerClass
 }
 
 func (x *FixedLayoutClass) GoPointer() uintptr {

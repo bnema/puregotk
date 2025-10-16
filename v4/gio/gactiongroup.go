@@ -16,10 +16,360 @@ type ActionGroupInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xHasAction uintptr
+
+	xListActions uintptr
+
+	xGetActionEnabled uintptr
+
+	xGetActionParameterType uintptr
+
+	xGetActionStateType uintptr
+
+	xGetActionStateHint uintptr
+
+	xGetActionState uintptr
+
+	xChangeActionState uintptr
+
+	xActivateAction uintptr
+
+	xActionAdded uintptr
+
+	xActionRemoved uintptr
+
+	xActionEnabledChanged uintptr
+
+	xActionStateChanged uintptr
+
+	xQueryAction uintptr
 }
 
 func (x *ActionGroupInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideHasAction sets the callback function.
+func (x *ActionGroupInterface) OverrideHasAction(cb func(ActionGroup, string) bool) {
+	if cb == nil {
+		x.xHasAction = 0
+	} else {
+		x.xHasAction = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) bool {
+			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		})
+	}
+}
+
+// GetHasAction gets the callback function.
+func (x *ActionGroupInterface) GetHasAction() func(ActionGroup, string) bool {
+	if x.xHasAction == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xHasAction)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string) bool {
+		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+	}
+}
+
+// OverrideListActions sets the callback function.
+func (x *ActionGroupInterface) OverrideListActions(cb func(ActionGroup) []string) {
+	if cb == nil {
+		x.xListActions = 0
+	} else {
+		x.xListActions = purego.NewCallback(func(ActionGroupVarp uintptr) []string {
+			return cb(&ActionGroupBase{Ptr: ActionGroupVarp})
+		})
+	}
+}
+
+// GetListActions gets the callback function.
+func (x *ActionGroupInterface) GetListActions() func(ActionGroup) []string {
+	if x.xListActions == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr) []string
+	purego.RegisterFunc(&rawCallback, x.xListActions)
+	return func(ActionGroupVar ActionGroup) []string {
+		return rawCallback(ActionGroupVar.GoPointer())
+	}
+}
+
+// OverrideGetActionEnabled sets the callback function.
+func (x *ActionGroupInterface) OverrideGetActionEnabled(cb func(ActionGroup, string) bool) {
+	if cb == nil {
+		x.xGetActionEnabled = 0
+	} else {
+		x.xGetActionEnabled = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) bool {
+			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		})
+	}
+}
+
+// GetGetActionEnabled gets the callback function.
+func (x *ActionGroupInterface) GetGetActionEnabled() func(ActionGroup, string) bool {
+	if x.xGetActionEnabled == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xGetActionEnabled)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string) bool {
+		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+	}
+}
+
+// OverrideGetActionParameterType sets the callback function.
+func (x *ActionGroupInterface) OverrideGetActionParameterType(cb func(ActionGroup, string) *glib.VariantType) {
+	if cb == nil {
+		x.xGetActionParameterType = 0
+	} else {
+		x.xGetActionParameterType = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.VariantType {
+			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		})
+	}
+}
+
+// GetGetActionParameterType gets the callback function.
+func (x *ActionGroupInterface) GetGetActionParameterType() func(ActionGroup, string) *glib.VariantType {
+	if x.xGetActionParameterType == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.VariantType
+	purego.RegisterFunc(&rawCallback, x.xGetActionParameterType)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string) *glib.VariantType {
+		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+	}
+}
+
+// OverrideGetActionStateType sets the callback function.
+func (x *ActionGroupInterface) OverrideGetActionStateType(cb func(ActionGroup, string) *glib.VariantType) {
+	if cb == nil {
+		x.xGetActionStateType = 0
+	} else {
+		x.xGetActionStateType = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.VariantType {
+			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		})
+	}
+}
+
+// GetGetActionStateType gets the callback function.
+func (x *ActionGroupInterface) GetGetActionStateType() func(ActionGroup, string) *glib.VariantType {
+	if x.xGetActionStateType == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.VariantType
+	purego.RegisterFunc(&rawCallback, x.xGetActionStateType)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string) *glib.VariantType {
+		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+	}
+}
+
+// OverrideGetActionStateHint sets the callback function.
+func (x *ActionGroupInterface) OverrideGetActionStateHint(cb func(ActionGroup, string) *glib.Variant) {
+	if cb == nil {
+		x.xGetActionStateHint = 0
+	} else {
+		x.xGetActionStateHint = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.Variant {
+			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		})
+	}
+}
+
+// GetGetActionStateHint gets the callback function.
+func (x *ActionGroupInterface) GetGetActionStateHint() func(ActionGroup, string) *glib.Variant {
+	if x.xGetActionStateHint == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.Variant
+	purego.RegisterFunc(&rawCallback, x.xGetActionStateHint)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string) *glib.Variant {
+		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+	}
+}
+
+// OverrideGetActionState sets the callback function.
+func (x *ActionGroupInterface) OverrideGetActionState(cb func(ActionGroup, string) *glib.Variant) {
+	if cb == nil {
+		x.xGetActionState = 0
+	} else {
+		x.xGetActionState = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.Variant {
+			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		})
+	}
+}
+
+// GetGetActionState gets the callback function.
+func (x *ActionGroupInterface) GetGetActionState() func(ActionGroup, string) *glib.Variant {
+	if x.xGetActionState == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string) *glib.Variant
+	purego.RegisterFunc(&rawCallback, x.xGetActionState)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string) *glib.Variant {
+		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+	}
+}
+
+// OverrideChangeActionState sets the callback function.
+func (x *ActionGroupInterface) OverrideChangeActionState(cb func(ActionGroup, string, *glib.Variant)) {
+	if cb == nil {
+		x.xChangeActionState = 0
+	} else {
+		x.xChangeActionState = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string, ValueVarp *glib.Variant) {
+			cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp, ValueVarp)
+		})
+	}
+}
+
+// GetChangeActionState gets the callback function.
+func (x *ActionGroupInterface) GetChangeActionState() func(ActionGroup, string, *glib.Variant) {
+	if x.xChangeActionState == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string, ValueVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xChangeActionState)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string, ValueVar *glib.Variant) {
+		rawCallback(ActionGroupVar.GoPointer(), ActionNameVar, ValueVar)
+	}
+}
+
+// OverrideActivateAction sets the callback function.
+func (x *ActionGroupInterface) OverrideActivateAction(cb func(ActionGroup, string, *glib.Variant)) {
+	if cb == nil {
+		x.xActivateAction = 0
+	} else {
+		x.xActivateAction = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string, ParameterVarp *glib.Variant) {
+			cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp, ParameterVarp)
+		})
+	}
+}
+
+// GetActivateAction gets the callback function.
+func (x *ActionGroupInterface) GetActivateAction() func(ActionGroup, string, *glib.Variant) {
+	if x.xActivateAction == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string, ParameterVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xActivateAction)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string, ParameterVar *glib.Variant) {
+		rawCallback(ActionGroupVar.GoPointer(), ActionNameVar, ParameterVar)
+	}
+}
+
+// OverrideActionAdded sets the callback function.
+func (x *ActionGroupInterface) OverrideActionAdded(cb func(ActionGroup, string)) {
+	if cb == nil {
+		x.xActionAdded = 0
+	} else {
+		x.xActionAdded = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) {
+			cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		})
+	}
+}
+
+// GetActionAdded gets the callback function.
+func (x *ActionGroupInterface) GetActionAdded() func(ActionGroup, string) {
+	if x.xActionAdded == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string)
+	purego.RegisterFunc(&rawCallback, x.xActionAdded)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string) {
+		rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+	}
+}
+
+// OverrideActionRemoved sets the callback function.
+func (x *ActionGroupInterface) OverrideActionRemoved(cb func(ActionGroup, string)) {
+	if cb == nil {
+		x.xActionRemoved = 0
+	} else {
+		x.xActionRemoved = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string) {
+			cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp)
+		})
+	}
+}
+
+// GetActionRemoved gets the callback function.
+func (x *ActionGroupInterface) GetActionRemoved() func(ActionGroup, string) {
+	if x.xActionRemoved == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string)
+	purego.RegisterFunc(&rawCallback, x.xActionRemoved)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string) {
+		rawCallback(ActionGroupVar.GoPointer(), ActionNameVar)
+	}
+}
+
+// OverrideActionEnabledChanged sets the callback function.
+func (x *ActionGroupInterface) OverrideActionEnabledChanged(cb func(ActionGroup, string, bool)) {
+	if cb == nil {
+		x.xActionEnabledChanged = 0
+	} else {
+		x.xActionEnabledChanged = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string, EnabledVarp bool) {
+			cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp, EnabledVarp)
+		})
+	}
+}
+
+// GetActionEnabledChanged gets the callback function.
+func (x *ActionGroupInterface) GetActionEnabledChanged() func(ActionGroup, string, bool) {
+	if x.xActionEnabledChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string, EnabledVarp bool)
+	purego.RegisterFunc(&rawCallback, x.xActionEnabledChanged)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string, EnabledVar bool) {
+		rawCallback(ActionGroupVar.GoPointer(), ActionNameVar, EnabledVar)
+	}
+}
+
+// OverrideActionStateChanged sets the callback function.
+func (x *ActionGroupInterface) OverrideActionStateChanged(cb func(ActionGroup, string, *glib.Variant)) {
+	if cb == nil {
+		x.xActionStateChanged = 0
+	} else {
+		x.xActionStateChanged = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string, StateVarp *glib.Variant) {
+			cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp, StateVarp)
+		})
+	}
+}
+
+// GetActionStateChanged gets the callback function.
+func (x *ActionGroupInterface) GetActionStateChanged() func(ActionGroup, string, *glib.Variant) {
+	if x.xActionStateChanged == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string, StateVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xActionStateChanged)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string, StateVar *glib.Variant) {
+		rawCallback(ActionGroupVar.GoPointer(), ActionNameVar, StateVar)
+	}
+}
+
+// OverrideQueryAction sets the callback function.
+func (x *ActionGroupInterface) OverrideQueryAction(cb func(ActionGroup, string, bool, **glib.VariantType, **glib.VariantType, **glib.Variant, **glib.Variant) bool) {
+	if cb == nil {
+		x.xQueryAction = 0
+	} else {
+		x.xQueryAction = purego.NewCallback(func(ActionGroupVarp uintptr, ActionNameVarp string, EnabledVarp bool, ParameterTypeVarp **glib.VariantType, StateTypeVarp **glib.VariantType, StateHintVarp **glib.Variant, StateVarp **glib.Variant) bool {
+			return cb(&ActionGroupBase{Ptr: ActionGroupVarp}, ActionNameVarp, EnabledVarp, ParameterTypeVarp, StateTypeVarp, StateHintVarp, StateVarp)
+		})
+	}
+}
+
+// GetQueryAction gets the callback function.
+func (x *ActionGroupInterface) GetQueryAction() func(ActionGroup, string, bool, **glib.VariantType, **glib.VariantType, **glib.Variant, **glib.Variant) bool {
+	if x.xQueryAction == 0 {
+		return nil
+	}
+	var rawCallback func(ActionGroupVarp uintptr, ActionNameVarp string, EnabledVarp bool, ParameterTypeVarp **glib.VariantType, StateTypeVarp **glib.VariantType, StateHintVarp **glib.Variant, StateVarp **glib.Variant) bool
+	purego.RegisterFunc(&rawCallback, x.xQueryAction)
+	return func(ActionGroupVar ActionGroup, ActionNameVar string, EnabledVar bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
+		return rawCallback(ActionGroupVar.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
+	}
 }
 
 // #GActionGroup represents a group of actions. Actions can be used to

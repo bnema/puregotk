@@ -14,7 +14,7 @@ import (
 type BoolFilterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass FilterClass
 }
 
 func (x *BoolFilterClass) GoPointer() uintptr {

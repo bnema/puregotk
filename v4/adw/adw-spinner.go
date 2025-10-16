@@ -15,7 +15,7 @@ import (
 type SpinnerClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *SpinnerClass) GoPointer() uintptr {

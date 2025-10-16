@@ -16,7 +16,7 @@ import (
 type BannerClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *BannerClass) GoPointer() uintptr {

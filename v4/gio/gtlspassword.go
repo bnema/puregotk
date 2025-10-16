@@ -16,13 +16,88 @@ import (
 type TlsPasswordClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGetValue uintptr
+
+	xSetValue uintptr
+
+	xGetDefaultWarning uintptr
 
 	Padding [4]uintptr
 }
 
 func (x *TlsPasswordClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetValue sets the callback function.
+func (x *TlsPasswordClass) OverrideGetValue(cb func(*TlsPassword, uint) uintptr) {
+	if cb == nil {
+		x.xGetValue = 0
+	} else {
+		x.xGetValue = purego.NewCallback(func(PasswordVarp uintptr, LengthVarp uint) uintptr {
+			return cb(TlsPasswordNewFromInternalPtr(PasswordVarp), LengthVarp)
+		})
+	}
+}
+
+// GetGetValue gets the callback function.
+func (x *TlsPasswordClass) GetGetValue() func(*TlsPassword, uint) uintptr {
+	if x.xGetValue == 0 {
+		return nil
+	}
+	var rawCallback func(PasswordVarp uintptr, LengthVarp uint) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetValue)
+	return func(PasswordVar *TlsPassword, LengthVar uint) uintptr {
+		return rawCallback(PasswordVar.GoPointer(), LengthVar)
+	}
+}
+
+// OverrideSetValue sets the callback function.
+func (x *TlsPasswordClass) OverrideSetValue(cb func(*TlsPassword, []byte, int, *glib.DestroyNotify)) {
+	if cb == nil {
+		x.xSetValue = 0
+	} else {
+		x.xSetValue = purego.NewCallback(func(PasswordVarp uintptr, ValueVarp []byte, LengthVarp int, DestroyVarp uintptr) {
+			cb(TlsPasswordNewFromInternalPtr(PasswordVarp), ValueVarp, LengthVarp, (*glib.DestroyNotify)(unsafe.Pointer(DestroyVarp)))
+		})
+	}
+}
+
+// GetSetValue gets the callback function.
+func (x *TlsPasswordClass) GetSetValue() func(*TlsPassword, []byte, int, *glib.DestroyNotify) {
+	if x.xSetValue == 0 {
+		return nil
+	}
+	var rawCallback func(PasswordVarp uintptr, ValueVarp []byte, LengthVarp int, DestroyVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetValue)
+	return func(PasswordVar *TlsPassword, ValueVar []byte, LengthVar int, DestroyVar *glib.DestroyNotify) {
+		rawCallback(PasswordVar.GoPointer(), ValueVar, LengthVar, glib.NewCallbackNullable(DestroyVar))
+	}
+}
+
+// OverrideGetDefaultWarning sets the callback function.
+func (x *TlsPasswordClass) OverrideGetDefaultWarning(cb func(*TlsPassword) string) {
+	if cb == nil {
+		x.xGetDefaultWarning = 0
+	} else {
+		x.xGetDefaultWarning = purego.NewCallback(func(PasswordVarp uintptr) string {
+			return cb(TlsPasswordNewFromInternalPtr(PasswordVarp))
+		})
+	}
+}
+
+// GetGetDefaultWarning gets the callback function.
+func (x *TlsPasswordClass) GetGetDefaultWarning() func(*TlsPassword) string {
+	if x.xGetDefaultWarning == 0 {
+		return nil
+	}
+	var rawCallback func(PasswordVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetDefaultWarning)
+	return func(PasswordVar *TlsPassword) string {
+		return rawCallback(PasswordVar.GoPointer())
+	}
 }
 
 type TlsPasswordPrivate struct {

@@ -16,7 +16,7 @@ import (
 type StatusPageClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *StatusPageClass) GoPointer() uintptr {

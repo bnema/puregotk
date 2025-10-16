@@ -16,13 +16,38 @@ import (
 type DBusObjectSkeletonClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xAuthorizeMethod uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *DBusObjectSkeletonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideAuthorizeMethod sets the callback function.
+func (x *DBusObjectSkeletonClass) OverrideAuthorizeMethod(cb func(*DBusObjectSkeleton, *DBusInterfaceSkeleton, *DBusMethodInvocation) bool) {
+	if cb == nil {
+		x.xAuthorizeMethod = 0
+	} else {
+		x.xAuthorizeMethod = purego.NewCallback(func(ObjectVarp uintptr, InterfaceVarp uintptr, InvocationVarp uintptr) bool {
+			return cb(DBusObjectSkeletonNewFromInternalPtr(ObjectVarp), DBusInterfaceSkeletonNewFromInternalPtr(InterfaceVarp), DBusMethodInvocationNewFromInternalPtr(InvocationVarp))
+		})
+	}
+}
+
+// GetAuthorizeMethod gets the callback function.
+func (x *DBusObjectSkeletonClass) GetAuthorizeMethod() func(*DBusObjectSkeleton, *DBusInterfaceSkeleton, *DBusMethodInvocation) bool {
+	if x.xAuthorizeMethod == 0 {
+		return nil
+	}
+	var rawCallback func(ObjectVarp uintptr, InterfaceVarp uintptr, InvocationVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xAuthorizeMethod)
+	return func(ObjectVar *DBusObjectSkeleton, InterfaceVar *DBusInterfaceSkeleton, InvocationVar *DBusMethodInvocation) bool {
+		return rawCallback(ObjectVar.GoPointer(), InterfaceVar.GoPointer(), InvocationVar.GoPointer())
+	}
 }
 
 type DBusObjectSkeletonPrivate struct {

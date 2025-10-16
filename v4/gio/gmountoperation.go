@@ -15,11 +15,386 @@ import (
 type MountOperationClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xAskPassword uintptr
+
+	xAskQuestion uintptr
+
+	xReply uintptr
+
+	xAborted uintptr
+
+	xShowProcesses uintptr
+
+	xShowUnmountProgress uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
+
+	xGReserved6 uintptr
+
+	xGReserved7 uintptr
+
+	xGReserved8 uintptr
+
+	xGReserved9 uintptr
 }
 
 func (x *MountOperationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideAskPassword sets the callback function.
+func (x *MountOperationClass) OverrideAskPassword(cb func(*MountOperation, string, string, string, AskPasswordFlags)) {
+	if cb == nil {
+		x.xAskPassword = 0
+	} else {
+		x.xAskPassword = purego.NewCallback(func(OpVarp uintptr, MessageVarp string, DefaultUserVarp string, DefaultDomainVarp string, FlagsVarp AskPasswordFlags) {
+			cb(MountOperationNewFromInternalPtr(OpVarp), MessageVarp, DefaultUserVarp, DefaultDomainVarp, FlagsVarp)
+		})
+	}
+}
+
+// GetAskPassword gets the callback function.
+func (x *MountOperationClass) GetAskPassword() func(*MountOperation, string, string, string, AskPasswordFlags) {
+	if x.xAskPassword == 0 {
+		return nil
+	}
+	var rawCallback func(OpVarp uintptr, MessageVarp string, DefaultUserVarp string, DefaultDomainVarp string, FlagsVarp AskPasswordFlags)
+	purego.RegisterFunc(&rawCallback, x.xAskPassword)
+	return func(OpVar *MountOperation, MessageVar string, DefaultUserVar string, DefaultDomainVar string, FlagsVar AskPasswordFlags) {
+		rawCallback(OpVar.GoPointer(), MessageVar, DefaultUserVar, DefaultDomainVar, FlagsVar)
+	}
+}
+
+// OverrideAskQuestion sets the callback function.
+func (x *MountOperationClass) OverrideAskQuestion(cb func(*MountOperation, string, []string)) {
+	if cb == nil {
+		x.xAskQuestion = 0
+	} else {
+		x.xAskQuestion = purego.NewCallback(func(OpVarp uintptr, MessageVarp string, ChoicesVarp []string) {
+			cb(MountOperationNewFromInternalPtr(OpVarp), MessageVarp, ChoicesVarp)
+		})
+	}
+}
+
+// GetAskQuestion gets the callback function.
+func (x *MountOperationClass) GetAskQuestion() func(*MountOperation, string, []string) {
+	if x.xAskQuestion == 0 {
+		return nil
+	}
+	var rawCallback func(OpVarp uintptr, MessageVarp string, ChoicesVarp []string)
+	purego.RegisterFunc(&rawCallback, x.xAskQuestion)
+	return func(OpVar *MountOperation, MessageVar string, ChoicesVar []string) {
+		rawCallback(OpVar.GoPointer(), MessageVar, ChoicesVar)
+	}
+}
+
+// OverrideReply sets the callback function.
+func (x *MountOperationClass) OverrideReply(cb func(*MountOperation, MountOperationResult)) {
+	if cb == nil {
+		x.xReply = 0
+	} else {
+		x.xReply = purego.NewCallback(func(OpVarp uintptr, ResultVarp MountOperationResult) {
+			cb(MountOperationNewFromInternalPtr(OpVarp), ResultVarp)
+		})
+	}
+}
+
+// GetReply gets the callback function.
+func (x *MountOperationClass) GetReply() func(*MountOperation, MountOperationResult) {
+	if x.xReply == 0 {
+		return nil
+	}
+	var rawCallback func(OpVarp uintptr, ResultVarp MountOperationResult)
+	purego.RegisterFunc(&rawCallback, x.xReply)
+	return func(OpVar *MountOperation, ResultVar MountOperationResult) {
+		rawCallback(OpVar.GoPointer(), ResultVar)
+	}
+}
+
+// OverrideAborted sets the callback function.
+func (x *MountOperationClass) OverrideAborted(cb func(*MountOperation)) {
+	if cb == nil {
+		x.xAborted = 0
+	} else {
+		x.xAborted = purego.NewCallback(func(OpVarp uintptr) {
+			cb(MountOperationNewFromInternalPtr(OpVarp))
+		})
+	}
+}
+
+// GetAborted gets the callback function.
+func (x *MountOperationClass) GetAborted() func(*MountOperation) {
+	if x.xAborted == 0 {
+		return nil
+	}
+	var rawCallback func(OpVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xAborted)
+	return func(OpVar *MountOperation) {
+		rawCallback(OpVar.GoPointer())
+	}
+}
+
+// OverrideShowProcesses sets the callback function.
+func (x *MountOperationClass) OverrideShowProcesses(cb func(*MountOperation, string, []glib.Pid, []string)) {
+	if cb == nil {
+		x.xShowProcesses = 0
+	} else {
+		x.xShowProcesses = purego.NewCallback(func(OpVarp uintptr, MessageVarp string, ProcessesVarp []glib.Pid, ChoicesVarp []string) {
+			cb(MountOperationNewFromInternalPtr(OpVarp), MessageVarp, ProcessesVarp, ChoicesVarp)
+		})
+	}
+}
+
+// GetShowProcesses gets the callback function.
+func (x *MountOperationClass) GetShowProcesses() func(*MountOperation, string, []glib.Pid, []string) {
+	if x.xShowProcesses == 0 {
+		return nil
+	}
+	var rawCallback func(OpVarp uintptr, MessageVarp string, ProcessesVarp []glib.Pid, ChoicesVarp []string)
+	purego.RegisterFunc(&rawCallback, x.xShowProcesses)
+	return func(OpVar *MountOperation, MessageVar string, ProcessesVar []glib.Pid, ChoicesVar []string) {
+		rawCallback(OpVar.GoPointer(), MessageVar, ProcessesVar, ChoicesVar)
+	}
+}
+
+// OverrideShowUnmountProgress sets the callback function.
+func (x *MountOperationClass) OverrideShowUnmountProgress(cb func(*MountOperation, string, int64, int64)) {
+	if cb == nil {
+		x.xShowUnmountProgress = 0
+	} else {
+		x.xShowUnmountProgress = purego.NewCallback(func(OpVarp uintptr, MessageVarp string, TimeLeftVarp int64, BytesLeftVarp int64) {
+			cb(MountOperationNewFromInternalPtr(OpVarp), MessageVarp, TimeLeftVarp, BytesLeftVarp)
+		})
+	}
+}
+
+// GetShowUnmountProgress gets the callback function.
+func (x *MountOperationClass) GetShowUnmountProgress() func(*MountOperation, string, int64, int64) {
+	if x.xShowUnmountProgress == 0 {
+		return nil
+	}
+	var rawCallback func(OpVarp uintptr, MessageVarp string, TimeLeftVarp int64, BytesLeftVarp int64)
+	purego.RegisterFunc(&rawCallback, x.xShowUnmountProgress)
+	return func(OpVar *MountOperation, MessageVar string, TimeLeftVar int64, BytesLeftVar int64) {
+		rawCallback(OpVar.GoPointer(), MessageVar, TimeLeftVar, BytesLeftVar)
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *MountOperationClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *MountOperationClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *MountOperationClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *MountOperationClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *MountOperationClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *MountOperationClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *MountOperationClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *MountOperationClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *MountOperationClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *MountOperationClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved6 sets the callback function.
+func (x *MountOperationClass) OverrideGReserved6(cb func()) {
+	if cb == nil {
+		x.xGReserved6 = 0
+	} else {
+		x.xGReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved6 gets the callback function.
+func (x *MountOperationClass) GetGReserved6() func() {
+	if x.xGReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved6)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved7 sets the callback function.
+func (x *MountOperationClass) OverrideGReserved7(cb func()) {
+	if cb == nil {
+		x.xGReserved7 = 0
+	} else {
+		x.xGReserved7 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved7 gets the callback function.
+func (x *MountOperationClass) GetGReserved7() func() {
+	if x.xGReserved7 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved7)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved8 sets the callback function.
+func (x *MountOperationClass) OverrideGReserved8(cb func()) {
+	if cb == nil {
+		x.xGReserved8 = 0
+	} else {
+		x.xGReserved8 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved8 gets the callback function.
+func (x *MountOperationClass) GetGReserved8() func() {
+	if x.xGReserved8 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved8)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved9 sets the callback function.
+func (x *MountOperationClass) OverrideGReserved9(cb func()) {
+	if cb == nil {
+		x.xGReserved9 = 0
+	} else {
+		x.xGReserved9 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved9 gets the callback function.
+func (x *MountOperationClass) GetGReserved9() func() {
+	if x.xGReserved9 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved9)
+	return func() {
+		rawCallback()
+	}
 }
 
 type MountOperationPrivate struct {

@@ -16,10 +16,105 @@ type LoadableIconIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xLoad uintptr
+
+	xLoadAsync uintptr
+
+	xLoadFinish uintptr
 }
 
 func (x *LoadableIconIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideLoad sets the callback function.
+func (x *LoadableIconIface) OverrideLoad(cb func(LoadableIcon, int, string, *Cancellable) *InputStream) {
+	if cb == nil {
+		x.xLoad = 0
+	} else {
+		x.xLoad = purego.NewCallback(func(IconVarp uintptr, SizeVarp int, TypeVarp string, CancellableVarp uintptr) uintptr {
+			ret := cb(&LoadableIconBase{Ptr: IconVarp}, SizeVarp, TypeVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetLoad gets the callback function.
+func (x *LoadableIconIface) GetLoad() func(LoadableIcon, int, string, *Cancellable) *InputStream {
+	if x.xLoad == 0 {
+		return nil
+	}
+	var rawCallback func(IconVarp uintptr, SizeVarp int, TypeVarp string, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xLoad)
+	return func(IconVar LoadableIcon, SizeVar int, TypeVar string, CancellableVar *Cancellable) *InputStream {
+		rawRet := rawCallback(IconVar.GoPointer(), SizeVar, TypeVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &InputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideLoadAsync sets the callback function.
+func (x *LoadableIconIface) OverrideLoadAsync(cb func(LoadableIcon, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xLoadAsync = 0
+	} else {
+		x.xLoadAsync = purego.NewCallback(func(IconVarp uintptr, SizeVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&LoadableIconBase{Ptr: IconVarp}, SizeVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetLoadAsync gets the callback function.
+func (x *LoadableIconIface) GetLoadAsync() func(LoadableIcon, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xLoadAsync == 0 {
+		return nil
+	}
+	var rawCallback func(IconVarp uintptr, SizeVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xLoadAsync)
+	return func(IconVar LoadableIcon, SizeVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(IconVar.GoPointer(), SizeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideLoadFinish sets the callback function.
+func (x *LoadableIconIface) OverrideLoadFinish(cb func(LoadableIcon, AsyncResult, string) *InputStream) {
+	if cb == nil {
+		x.xLoadFinish = 0
+	} else {
+		x.xLoadFinish = purego.NewCallback(func(IconVarp uintptr, ResVarp uintptr, TypeVarp string) uintptr {
+			ret := cb(&LoadableIconBase{Ptr: IconVarp}, &AsyncResultBase{Ptr: ResVarp}, TypeVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetLoadFinish gets the callback function.
+func (x *LoadableIconIface) GetLoadFinish() func(LoadableIcon, AsyncResult, string) *InputStream {
+	if x.xLoadFinish == 0 {
+		return nil
+	}
+	var rawCallback func(IconVarp uintptr, ResVarp uintptr, TypeVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xLoadFinish)
+	return func(IconVar LoadableIcon, ResVar AsyncResult, TypeVar string) *InputStream {
+		rawRet := rawCallback(IconVar.GoPointer(), ResVar.GoPointer(), TypeVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &InputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // Extends the #GIcon interface and adds the ability to
@@ -27,9 +122,9 @@ func (x *LoadableIconIface) GoPointer() uintptr {
 type LoadableIcon interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	Load(SizeVar int, TypeVar string, CancellableVar *Cancellable) *InputStream
+	Load(SizeVar int, TypeVar string, CancellableVar *Cancellable) (*InputStream, error)
 	LoadAsync(SizeVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	LoadFinish(ResVar AsyncResult, TypeVar string) *InputStream
+	LoadFinish(ResVar AsyncResult, TypeVar string) (*InputStream, error)
 }
 
 var xLoadableIconGLibType func() types.GType

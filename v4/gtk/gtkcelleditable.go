@@ -15,10 +15,85 @@ type CellEditableIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xEditingDone uintptr
+
+	xRemoveWidget uintptr
+
+	xStartEditing uintptr
 }
 
 func (x *CellEditableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideEditingDone sets the callback function.
+func (x *CellEditableIface) OverrideEditingDone(cb func(CellEditable)) {
+	if cb == nil {
+		x.xEditingDone = 0
+	} else {
+		x.xEditingDone = purego.NewCallback(func(CellEditableVarp uintptr) {
+			cb(&CellEditableBase{Ptr: CellEditableVarp})
+		})
+	}
+}
+
+// GetEditingDone gets the callback function.
+func (x *CellEditableIface) GetEditingDone() func(CellEditable) {
+	if x.xEditingDone == 0 {
+		return nil
+	}
+	var rawCallback func(CellEditableVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEditingDone)
+	return func(CellEditableVar CellEditable) {
+		rawCallback(CellEditableVar.GoPointer())
+	}
+}
+
+// OverrideRemoveWidget sets the callback function.
+func (x *CellEditableIface) OverrideRemoveWidget(cb func(CellEditable)) {
+	if cb == nil {
+		x.xRemoveWidget = 0
+	} else {
+		x.xRemoveWidget = purego.NewCallback(func(CellEditableVarp uintptr) {
+			cb(&CellEditableBase{Ptr: CellEditableVarp})
+		})
+	}
+}
+
+// GetRemoveWidget gets the callback function.
+func (x *CellEditableIface) GetRemoveWidget() func(CellEditable) {
+	if x.xRemoveWidget == 0 {
+		return nil
+	}
+	var rawCallback func(CellEditableVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRemoveWidget)
+	return func(CellEditableVar CellEditable) {
+		rawCallback(CellEditableVar.GoPointer())
+	}
+}
+
+// OverrideStartEditing sets the callback function.
+func (x *CellEditableIface) OverrideStartEditing(cb func(CellEditable, *gdk.Event)) {
+	if cb == nil {
+		x.xStartEditing = 0
+	} else {
+		x.xStartEditing = purego.NewCallback(func(CellEditableVarp uintptr, EventVarp uintptr) {
+			cb(&CellEditableBase{Ptr: CellEditableVarp}, gdk.EventNewFromInternalPtr(EventVarp))
+		})
+	}
+}
+
+// GetStartEditing gets the callback function.
+func (x *CellEditableIface) GetStartEditing() func(CellEditable, *gdk.Event) {
+	if x.xStartEditing == 0 {
+		return nil
+	}
+	var rawCallback func(CellEditableVarp uintptr, EventVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xStartEditing)
+	return func(CellEditableVar CellEditable, EventVar *gdk.Event) {
+		rawCallback(CellEditableVar.GoPointer(), EventVar.GoPointer())
+	}
 }
 
 // Interface for widgets that can be used for editing cells

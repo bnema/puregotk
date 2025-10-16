@@ -14,10 +14,335 @@ type PrintOperationPreviewIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xReady uintptr
+
+	xGotPageSize uintptr
+
+	xRenderPage uintptr
+
+	xIsSelected uintptr
+
+	xEndPreview uintptr
+
+	xGtkReserved1 uintptr
+
+	xGtkReserved2 uintptr
+
+	xGtkReserved3 uintptr
+
+	xGtkReserved4 uintptr
+
+	xGtkReserved5 uintptr
+
+	xGtkReserved6 uintptr
+
+	xGtkReserved7 uintptr
+
+	xGtkReserved8 uintptr
 }
 
 func (x *PrintOperationPreviewIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideReady sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideReady(cb func(PrintOperationPreview, *PrintContext)) {
+	if cb == nil {
+		x.xReady = 0
+	} else {
+		x.xReady = purego.NewCallback(func(PreviewVarp uintptr, ContextVarp uintptr) {
+			cb(&PrintOperationPreviewBase{Ptr: PreviewVarp}, PrintContextNewFromInternalPtr(ContextVarp))
+		})
+	}
+}
+
+// GetReady gets the callback function.
+func (x *PrintOperationPreviewIface) GetReady() func(PrintOperationPreview, *PrintContext) {
+	if x.xReady == 0 {
+		return nil
+	}
+	var rawCallback func(PreviewVarp uintptr, ContextVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xReady)
+	return func(PreviewVar PrintOperationPreview, ContextVar *PrintContext) {
+		rawCallback(PreviewVar.GoPointer(), ContextVar.GoPointer())
+	}
+}
+
+// OverrideGotPageSize sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideGotPageSize(cb func(PrintOperationPreview, *PrintContext, *PageSetup)) {
+	if cb == nil {
+		x.xGotPageSize = 0
+	} else {
+		x.xGotPageSize = purego.NewCallback(func(PreviewVarp uintptr, ContextVarp uintptr, PageSetupVarp uintptr) {
+			cb(&PrintOperationPreviewBase{Ptr: PreviewVarp}, PrintContextNewFromInternalPtr(ContextVarp), PageSetupNewFromInternalPtr(PageSetupVarp))
+		})
+	}
+}
+
+// GetGotPageSize gets the callback function.
+func (x *PrintOperationPreviewIface) GetGotPageSize() func(PrintOperationPreview, *PrintContext, *PageSetup) {
+	if x.xGotPageSize == 0 {
+		return nil
+	}
+	var rawCallback func(PreviewVarp uintptr, ContextVarp uintptr, PageSetupVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xGotPageSize)
+	return func(PreviewVar PrintOperationPreview, ContextVar *PrintContext, PageSetupVar *PageSetup) {
+		rawCallback(PreviewVar.GoPointer(), ContextVar.GoPointer(), PageSetupVar.GoPointer())
+	}
+}
+
+// OverrideRenderPage sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideRenderPage(cb func(PrintOperationPreview, int)) {
+	if cb == nil {
+		x.xRenderPage = 0
+	} else {
+		x.xRenderPage = purego.NewCallback(func(PreviewVarp uintptr, PageNrVarp int) {
+			cb(&PrintOperationPreviewBase{Ptr: PreviewVarp}, PageNrVarp)
+		})
+	}
+}
+
+// GetRenderPage gets the callback function.
+func (x *PrintOperationPreviewIface) GetRenderPage() func(PrintOperationPreview, int) {
+	if x.xRenderPage == 0 {
+		return nil
+	}
+	var rawCallback func(PreviewVarp uintptr, PageNrVarp int)
+	purego.RegisterFunc(&rawCallback, x.xRenderPage)
+	return func(PreviewVar PrintOperationPreview, PageNrVar int) {
+		rawCallback(PreviewVar.GoPointer(), PageNrVar)
+	}
+}
+
+// OverrideIsSelected sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideIsSelected(cb func(PrintOperationPreview, int) bool) {
+	if cb == nil {
+		x.xIsSelected = 0
+	} else {
+		x.xIsSelected = purego.NewCallback(func(PreviewVarp uintptr, PageNrVarp int) bool {
+			return cb(&PrintOperationPreviewBase{Ptr: PreviewVarp}, PageNrVarp)
+		})
+	}
+}
+
+// GetIsSelected gets the callback function.
+func (x *PrintOperationPreviewIface) GetIsSelected() func(PrintOperationPreview, int) bool {
+	if x.xIsSelected == 0 {
+		return nil
+	}
+	var rawCallback func(PreviewVarp uintptr, PageNrVarp int) bool
+	purego.RegisterFunc(&rawCallback, x.xIsSelected)
+	return func(PreviewVar PrintOperationPreview, PageNrVar int) bool {
+		return rawCallback(PreviewVar.GoPointer(), PageNrVar)
+	}
+}
+
+// OverrideEndPreview sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideEndPreview(cb func(PrintOperationPreview)) {
+	if cb == nil {
+		x.xEndPreview = 0
+	} else {
+		x.xEndPreview = purego.NewCallback(func(PreviewVarp uintptr) {
+			cb(&PrintOperationPreviewBase{Ptr: PreviewVarp})
+		})
+	}
+}
+
+// GetEndPreview gets the callback function.
+func (x *PrintOperationPreviewIface) GetEndPreview() func(PrintOperationPreview) {
+	if x.xEndPreview == 0 {
+		return nil
+	}
+	var rawCallback func(PreviewVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEndPreview)
+	return func(PreviewVar PrintOperationPreview) {
+		rawCallback(PreviewVar.GoPointer())
+	}
+}
+
+// OverrideGtkReserved1 sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideGtkReserved1(cb func()) {
+	if cb == nil {
+		x.xGtkReserved1 = 0
+	} else {
+		x.xGtkReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved1 gets the callback function.
+func (x *PrintOperationPreviewIface) GetGtkReserved1() func() {
+	if x.xGtkReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved2 sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideGtkReserved2(cb func()) {
+	if cb == nil {
+		x.xGtkReserved2 = 0
+	} else {
+		x.xGtkReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved2 gets the callback function.
+func (x *PrintOperationPreviewIface) GetGtkReserved2() func() {
+	if x.xGtkReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved3 sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideGtkReserved3(cb func()) {
+	if cb == nil {
+		x.xGtkReserved3 = 0
+	} else {
+		x.xGtkReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved3 gets the callback function.
+func (x *PrintOperationPreviewIface) GetGtkReserved3() func() {
+	if x.xGtkReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved4 sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideGtkReserved4(cb func()) {
+	if cb == nil {
+		x.xGtkReserved4 = 0
+	} else {
+		x.xGtkReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved4 gets the callback function.
+func (x *PrintOperationPreviewIface) GetGtkReserved4() func() {
+	if x.xGtkReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved5 sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideGtkReserved5(cb func()) {
+	if cb == nil {
+		x.xGtkReserved5 = 0
+	} else {
+		x.xGtkReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved5 gets the callback function.
+func (x *PrintOperationPreviewIface) GetGtkReserved5() func() {
+	if x.xGtkReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved6 sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideGtkReserved6(cb func()) {
+	if cb == nil {
+		x.xGtkReserved6 = 0
+	} else {
+		x.xGtkReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved6 gets the callback function.
+func (x *PrintOperationPreviewIface) GetGtkReserved6() func() {
+	if x.xGtkReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved6)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved7 sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideGtkReserved7(cb func()) {
+	if cb == nil {
+		x.xGtkReserved7 = 0
+	} else {
+		x.xGtkReserved7 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved7 gets the callback function.
+func (x *PrintOperationPreviewIface) GetGtkReserved7() func() {
+	if x.xGtkReserved7 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved7)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved8 sets the callback function.
+func (x *PrintOperationPreviewIface) OverrideGtkReserved8(cb func()) {
+	if cb == nil {
+		x.xGtkReserved8 = 0
+	} else {
+		x.xGtkReserved8 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved8 gets the callback function.
+func (x *PrintOperationPreviewIface) GetGtkReserved8() func() {
+	if x.xGtkReserved8 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved8)
+	return func() {
+		rawCallback()
+	}
 }
 
 // `GtkPrintOperationPreview` is the interface that is used to

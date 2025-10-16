@@ -15,7 +15,7 @@ import (
 type SelectionFilterModelClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *SelectionFilterModelClass) GoPointer() uintptr {

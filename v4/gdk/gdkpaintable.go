@@ -23,10 +23,170 @@ type PaintableInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xSnapshot uintptr
+
+	xGetCurrentImage uintptr
+
+	xGetFlags uintptr
+
+	xGetIntrinsicWidth uintptr
+
+	xGetIntrinsicHeight uintptr
+
+	xGetIntrinsicAspectRatio uintptr
 }
 
 func (x *PaintableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideSnapshot sets the callback function.
+func (x *PaintableInterface) OverrideSnapshot(cb func(Paintable, *Snapshot, float64, float64)) {
+	if cb == nil {
+		x.xSnapshot = 0
+	} else {
+		x.xSnapshot = purego.NewCallback(func(PaintableVarp uintptr, SnapshotVarp uintptr, WidthVarp float64, HeightVarp float64) {
+			cb(&PaintableBase{Ptr: PaintableVarp}, SnapshotNewFromInternalPtr(SnapshotVarp), WidthVarp, HeightVarp)
+		})
+	}
+}
+
+// GetSnapshot gets the callback function.
+func (x *PaintableInterface) GetSnapshot() func(Paintable, *Snapshot, float64, float64) {
+	if x.xSnapshot == 0 {
+		return nil
+	}
+	var rawCallback func(PaintableVarp uintptr, SnapshotVarp uintptr, WidthVarp float64, HeightVarp float64)
+	purego.RegisterFunc(&rawCallback, x.xSnapshot)
+	return func(PaintableVar Paintable, SnapshotVar *Snapshot, WidthVar float64, HeightVar float64) {
+		rawCallback(PaintableVar.GoPointer(), SnapshotVar.GoPointer(), WidthVar, HeightVar)
+	}
+}
+
+// OverrideGetCurrentImage sets the callback function.
+func (x *PaintableInterface) OverrideGetCurrentImage(cb func(Paintable) *PaintableBase) {
+	if cb == nil {
+		x.xGetCurrentImage = 0
+	} else {
+		x.xGetCurrentImage = purego.NewCallback(func(PaintableVarp uintptr) uintptr {
+			ret := cb(&PaintableBase{Ptr: PaintableVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetCurrentImage gets the callback function.
+func (x *PaintableInterface) GetGetCurrentImage() func(Paintable) *PaintableBase {
+	if x.xGetCurrentImage == 0 {
+		return nil
+	}
+	var rawCallback func(PaintableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetCurrentImage)
+	return func(PaintableVar Paintable) *PaintableBase {
+		rawRet := rawCallback(PaintableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &PaintableBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetFlags sets the callback function.
+func (x *PaintableInterface) OverrideGetFlags(cb func(Paintable) PaintableFlags) {
+	if cb == nil {
+		x.xGetFlags = 0
+	} else {
+		x.xGetFlags = purego.NewCallback(func(PaintableVarp uintptr) PaintableFlags {
+			return cb(&PaintableBase{Ptr: PaintableVarp})
+		})
+	}
+}
+
+// GetGetFlags gets the callback function.
+func (x *PaintableInterface) GetGetFlags() func(Paintable) PaintableFlags {
+	if x.xGetFlags == 0 {
+		return nil
+	}
+	var rawCallback func(PaintableVarp uintptr) PaintableFlags
+	purego.RegisterFunc(&rawCallback, x.xGetFlags)
+	return func(PaintableVar Paintable) PaintableFlags {
+		return rawCallback(PaintableVar.GoPointer())
+	}
+}
+
+// OverrideGetIntrinsicWidth sets the callback function.
+func (x *PaintableInterface) OverrideGetIntrinsicWidth(cb func(Paintable) int) {
+	if cb == nil {
+		x.xGetIntrinsicWidth = 0
+	} else {
+		x.xGetIntrinsicWidth = purego.NewCallback(func(PaintableVarp uintptr) int {
+			return cb(&PaintableBase{Ptr: PaintableVarp})
+		})
+	}
+}
+
+// GetGetIntrinsicWidth gets the callback function.
+func (x *PaintableInterface) GetGetIntrinsicWidth() func(Paintable) int {
+	if x.xGetIntrinsicWidth == 0 {
+		return nil
+	}
+	var rawCallback func(PaintableVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xGetIntrinsicWidth)
+	return func(PaintableVar Paintable) int {
+		return rawCallback(PaintableVar.GoPointer())
+	}
+}
+
+// OverrideGetIntrinsicHeight sets the callback function.
+func (x *PaintableInterface) OverrideGetIntrinsicHeight(cb func(Paintable) int) {
+	if cb == nil {
+		x.xGetIntrinsicHeight = 0
+	} else {
+		x.xGetIntrinsicHeight = purego.NewCallback(func(PaintableVarp uintptr) int {
+			return cb(&PaintableBase{Ptr: PaintableVarp})
+		})
+	}
+}
+
+// GetGetIntrinsicHeight gets the callback function.
+func (x *PaintableInterface) GetGetIntrinsicHeight() func(Paintable) int {
+	if x.xGetIntrinsicHeight == 0 {
+		return nil
+	}
+	var rawCallback func(PaintableVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xGetIntrinsicHeight)
+	return func(PaintableVar Paintable) int {
+		return rawCallback(PaintableVar.GoPointer())
+	}
+}
+
+// OverrideGetIntrinsicAspectRatio sets the callback function.
+func (x *PaintableInterface) OverrideGetIntrinsicAspectRatio(cb func(Paintable) float64) {
+	if cb == nil {
+		x.xGetIntrinsicAspectRatio = 0
+	} else {
+		x.xGetIntrinsicAspectRatio = purego.NewCallback(func(PaintableVarp uintptr) float64 {
+			return cb(&PaintableBase{Ptr: PaintableVarp})
+		})
+	}
+}
+
+// GetGetIntrinsicAspectRatio gets the callback function.
+func (x *PaintableInterface) GetGetIntrinsicAspectRatio() func(Paintable) float64 {
+	if x.xGetIntrinsicAspectRatio == 0 {
+		return nil
+	}
+	var rawCallback func(PaintableVarp uintptr) float64
+	purego.RegisterFunc(&rawCallback, x.xGetIntrinsicAspectRatio)
+	return func(PaintableVar Paintable) float64 {
+		return rawCallback(PaintableVar.GoPointer())
+	}
 }
 
 // `GdkPaintable` is a simple interface used by GTK to represent content that

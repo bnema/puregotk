@@ -1180,10 +1180,85 @@ func (x *Source) Unref() {
 // functions for managing callback objects.
 type SourceCallbackFuncs struct {
 	_ structs.HostLayout
+
+	xRef uintptr
+
+	xUnref uintptr
+
+	xGet uintptr
 }
 
 func (x *SourceCallbackFuncs) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideRef sets the callback function.
+func (x *SourceCallbackFuncs) OverrideRef(cb func(uintptr)) {
+	if cb == nil {
+		x.xRef = 0
+	} else {
+		x.xRef = purego.NewCallback(func(CbDataVarp uintptr) {
+			cb(CbDataVarp)
+		})
+	}
+}
+
+// GetRef gets the callback function.
+func (x *SourceCallbackFuncs) GetRef() func(uintptr) {
+	if x.xRef == 0 {
+		return nil
+	}
+	var rawCallback func(CbDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xRef)
+	return func(CbDataVar uintptr) {
+		rawCallback(CbDataVar)
+	}
+}
+
+// OverrideUnref sets the callback function.
+func (x *SourceCallbackFuncs) OverrideUnref(cb func(uintptr)) {
+	if cb == nil {
+		x.xUnref = 0
+	} else {
+		x.xUnref = purego.NewCallback(func(CbDataVarp uintptr) {
+			cb(CbDataVarp)
+		})
+	}
+}
+
+// GetUnref gets the callback function.
+func (x *SourceCallbackFuncs) GetUnref() func(uintptr) {
+	if x.xUnref == 0 {
+		return nil
+	}
+	var rawCallback func(CbDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xUnref)
+	return func(CbDataVar uintptr) {
+		rawCallback(CbDataVar)
+	}
+}
+
+// OverrideGet sets the callback function.
+func (x *SourceCallbackFuncs) OverrideGet(cb func(uintptr, *Source, *SourceFunc, uintptr)) {
+	if cb == nil {
+		x.xGet = 0
+	} else {
+		x.xGet = purego.NewCallback(func(CbDataVarp uintptr, SourceVarp *Source, FuncVarp uintptr, DataVarp uintptr) {
+			cb(CbDataVarp, SourceVarp, (*SourceFunc)(unsafe.Pointer(FuncVarp)), DataVarp)
+		})
+	}
+}
+
+// GetGet gets the callback function.
+func (x *SourceCallbackFuncs) GetGet() func(uintptr, *Source, *SourceFunc, uintptr) {
+	if x.xGet == 0 {
+		return nil
+	}
+	var rawCallback func(CbDataVarp uintptr, SourceVarp *Source, FuncVarp uintptr, DataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xGet)
+	return func(CbDataVar uintptr, SourceVar *Source, FuncVar *SourceFunc, DataVar uintptr) {
+		rawCallback(CbDataVar, SourceVar, NewCallback(FuncVar), DataVar)
+	}
 }
 
 // The `GSourceFuncs` struct contains a table of
@@ -1209,6 +1284,14 @@ func (x *SourceCallbackFuncs) GoPointer() uintptr {
 type SourceFuncs struct {
 	_ structs.HostLayout
 
+	xPrepare uintptr
+
+	xCheck uintptr
+
+	xDispatch uintptr
+
+	xFinalize uintptr
+
 	ClosureCallback SourceFunc
 
 	ClosureMarshal SourceDummyMarshal
@@ -1216,6 +1299,98 @@ type SourceFuncs struct {
 
 func (x *SourceFuncs) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverridePrepare sets the callback function.
+func (x *SourceFuncs) OverridePrepare(cb func(*Source, int) bool) {
+	if cb == nil {
+		x.xPrepare = 0
+	} else {
+		x.xPrepare = purego.NewCallback(func(SourceVarp *Source, TimeoutVarp int) bool {
+			return cb(SourceVarp, TimeoutVarp)
+		})
+	}
+}
+
+// GetPrepare gets the callback function.
+func (x *SourceFuncs) GetPrepare() func(*Source, int) bool {
+	if x.xPrepare == 0 {
+		return nil
+	}
+	var rawCallback func(SourceVarp *Source, TimeoutVarp int) bool
+	purego.RegisterFunc(&rawCallback, x.xPrepare)
+	return func(SourceVar *Source, TimeoutVar int) bool {
+		return rawCallback(SourceVar, TimeoutVar)
+	}
+}
+
+// OverrideCheck sets the callback function.
+func (x *SourceFuncs) OverrideCheck(cb func(*Source) bool) {
+	if cb == nil {
+		x.xCheck = 0
+	} else {
+		x.xCheck = purego.NewCallback(func(SourceVarp *Source) bool {
+			return cb(SourceVarp)
+		})
+	}
+}
+
+// GetCheck gets the callback function.
+func (x *SourceFuncs) GetCheck() func(*Source) bool {
+	if x.xCheck == 0 {
+		return nil
+	}
+	var rawCallback func(SourceVarp *Source) bool
+	purego.RegisterFunc(&rawCallback, x.xCheck)
+	return func(SourceVar *Source) bool {
+		return rawCallback(SourceVar)
+	}
+}
+
+// OverrideDispatch sets the callback function.
+func (x *SourceFuncs) OverrideDispatch(cb func(*Source, *SourceFunc, uintptr) bool) {
+	if cb == nil {
+		x.xDispatch = 0
+	} else {
+		x.xDispatch = purego.NewCallback(func(SourceVarp *Source, CallbackVarp uintptr, UserDataVarp uintptr) bool {
+			return cb(SourceVarp, (*SourceFunc)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetDispatch gets the callback function.
+func (x *SourceFuncs) GetDispatch() func(*Source, *SourceFunc, uintptr) bool {
+	if x.xDispatch == 0 {
+		return nil
+	}
+	var rawCallback func(SourceVarp *Source, CallbackVarp uintptr, UserDataVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xDispatch)
+	return func(SourceVar *Source, CallbackVar *SourceFunc, UserDataVar uintptr) bool {
+		return rawCallback(SourceVar, NewCallback(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideFinalize sets the callback function.
+func (x *SourceFuncs) OverrideFinalize(cb func(*Source)) {
+	if cb == nil {
+		x.xFinalize = 0
+	} else {
+		x.xFinalize = purego.NewCallback(func(SourceVarp *Source) {
+			cb(SourceVarp)
+		})
+	}
+}
+
+// GetFinalize gets the callback function.
+func (x *SourceFuncs) GetFinalize() func(*Source) {
+	if x.xFinalize == 0 {
+		return nil
+	}
+	var rawCallback func(SourceVarp *Source)
+	purego.RegisterFunc(&rawCallback, x.xFinalize)
+	return func(SourceVar *Source) {
+		rawCallback(SourceVar)
+	}
 }
 
 type SourcePrivate struct {

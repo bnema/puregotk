@@ -16,7 +16,7 @@ import (
 type LeafletClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *LeafletClass) GoPointer() uintptr {
@@ -26,7 +26,7 @@ func (x *LeafletClass) GoPointer() uintptr {
 type LeafletPageClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *LeafletPageClass) GoPointer() uintptr {

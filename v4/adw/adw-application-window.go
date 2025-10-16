@@ -19,7 +19,7 @@ import (
 type ApplicationWindowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.ApplicationWindowClass
 
 	Padding [4]uintptr
 }

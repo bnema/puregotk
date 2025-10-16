@@ -17,7 +17,7 @@ import (
 type TabPageClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *TabPageClass) GoPointer() uintptr {
@@ -27,7 +27,7 @@ func (x *TabPageClass) GoPointer() uintptr {
 type TabViewClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *TabViewClass) GoPointer() uintptr {

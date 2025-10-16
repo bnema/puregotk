@@ -15,7 +15,7 @@ import (
 type CarouselIndicatorDotsClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *CarouselIndicatorDotsClass) GoPointer() uintptr {

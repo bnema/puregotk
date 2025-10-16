@@ -16,7 +16,7 @@ import (
 type PreferencesRowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.ListBoxRowClass
 
 	Padding [4]uintptr
 }

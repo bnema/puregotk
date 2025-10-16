@@ -16,7 +16,7 @@ import (
 type ViewStackClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *ViewStackClass) GoPointer() uintptr {
@@ -26,7 +26,7 @@ func (x *ViewStackClass) GoPointer() uintptr {
 type ViewStackPageClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *ViewStackPageClass) GoPointer() uintptr {
@@ -36,7 +36,7 @@ func (x *ViewStackPageClass) GoPointer() uintptr {
 type ViewStackPagesClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *ViewStackPagesClass) GoPointer() uintptr {

@@ -21,11 +21,111 @@ type ParamSpecClass struct {
 
 	ValueType types.GType
 
+	xFinalize uintptr
+
+	xValueSetDefault uintptr
+
+	xValueValidate uintptr
+
+	xValuesCmp uintptr
+
 	Dummy [4]uintptr
 }
 
 func (x *ParamSpecClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideFinalize sets the callback function.
+func (x *ParamSpecClass) OverrideFinalize(cb func(*ParamSpec)) {
+	if cb == nil {
+		x.xFinalize = 0
+	} else {
+		x.xFinalize = purego.NewCallback(func(PspecVarp uintptr) {
+			cb(ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetFinalize gets the callback function.
+func (x *ParamSpecClass) GetFinalize() func(*ParamSpec) {
+	if x.xFinalize == 0 {
+		return nil
+	}
+	var rawCallback func(PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xFinalize)
+	return func(PspecVar *ParamSpec) {
+		rawCallback(PspecVar.GoPointer())
+	}
+}
+
+// OverrideValueSetDefault sets the callback function.
+func (x *ParamSpecClass) OverrideValueSetDefault(cb func(*ParamSpec, *Value)) {
+	if cb == nil {
+		x.xValueSetDefault = 0
+	} else {
+		x.xValueSetDefault = purego.NewCallback(func(PspecVarp uintptr, ValueVarp *Value) {
+			cb(ParamSpecNewFromInternalPtr(PspecVarp), ValueVarp)
+		})
+	}
+}
+
+// GetValueSetDefault gets the callback function.
+func (x *ParamSpecClass) GetValueSetDefault() func(*ParamSpec, *Value) {
+	if x.xValueSetDefault == 0 {
+		return nil
+	}
+	var rawCallback func(PspecVarp uintptr, ValueVarp *Value)
+	purego.RegisterFunc(&rawCallback, x.xValueSetDefault)
+	return func(PspecVar *ParamSpec, ValueVar *Value) {
+		rawCallback(PspecVar.GoPointer(), ValueVar)
+	}
+}
+
+// OverrideValueValidate sets the callback function.
+func (x *ParamSpecClass) OverrideValueValidate(cb func(*ParamSpec, *Value) bool) {
+	if cb == nil {
+		x.xValueValidate = 0
+	} else {
+		x.xValueValidate = purego.NewCallback(func(PspecVarp uintptr, ValueVarp *Value) bool {
+			return cb(ParamSpecNewFromInternalPtr(PspecVarp), ValueVarp)
+		})
+	}
+}
+
+// GetValueValidate gets the callback function.
+func (x *ParamSpecClass) GetValueValidate() func(*ParamSpec, *Value) bool {
+	if x.xValueValidate == 0 {
+		return nil
+	}
+	var rawCallback func(PspecVarp uintptr, ValueVarp *Value) bool
+	purego.RegisterFunc(&rawCallback, x.xValueValidate)
+	return func(PspecVar *ParamSpec, ValueVar *Value) bool {
+		return rawCallback(PspecVar.GoPointer(), ValueVar)
+	}
+}
+
+// OverrideValuesCmp sets the callback function.
+func (x *ParamSpecClass) OverrideValuesCmp(cb func(*ParamSpec, *Value, *Value) int) {
+	if cb == nil {
+		x.xValuesCmp = 0
+	} else {
+		x.xValuesCmp = purego.NewCallback(func(PspecVarp uintptr, Value1Varp *Value, Value2Varp *Value) int {
+			return cb(ParamSpecNewFromInternalPtr(PspecVarp), Value1Varp, Value2Varp)
+		})
+	}
+}
+
+// GetValuesCmp gets the callback function.
+func (x *ParamSpecClass) GetValuesCmp() func(*ParamSpec, *Value, *Value) int {
+	if x.xValuesCmp == 0 {
+		return nil
+	}
+	var rawCallback func(PspecVarp uintptr, Value1Varp *Value, Value2Varp *Value) int
+	purego.RegisterFunc(&rawCallback, x.xValuesCmp)
+	return func(PspecVar *ParamSpec, Value1Var *Value, Value2Var *Value) int {
+		return rawCallback(PspecVar.GoPointer(), Value1Var, Value2Var)
+	}
 }
 
 // A #GParamSpecPool maintains a collection of #GParamSpecs which can be
@@ -111,11 +211,136 @@ type ParamSpecTypeInfo struct {
 
 	NPreallocs uint16
 
+	xInstanceInit uintptr
+
 	ValueType types.GType
+
+	xFinalize uintptr
+
+	xValueSetDefault uintptr
+
+	xValueValidate uintptr
+
+	xValuesCmp uintptr
 }
 
 func (x *ParamSpecTypeInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideInstanceInit sets the callback function.
+func (x *ParamSpecTypeInfo) OverrideInstanceInit(cb func(*ParamSpec)) {
+	if cb == nil {
+		x.xInstanceInit = 0
+	} else {
+		x.xInstanceInit = purego.NewCallback(func(PspecVarp uintptr) {
+			cb(ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetInstanceInit gets the callback function.
+func (x *ParamSpecTypeInfo) GetInstanceInit() func(*ParamSpec) {
+	if x.xInstanceInit == 0 {
+		return nil
+	}
+	var rawCallback func(PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xInstanceInit)
+	return func(PspecVar *ParamSpec) {
+		rawCallback(PspecVar.GoPointer())
+	}
+}
+
+// OverrideFinalize sets the callback function.
+func (x *ParamSpecTypeInfo) OverrideFinalize(cb func(*ParamSpec)) {
+	if cb == nil {
+		x.xFinalize = 0
+	} else {
+		x.xFinalize = purego.NewCallback(func(PspecVarp uintptr) {
+			cb(ParamSpecNewFromInternalPtr(PspecVarp))
+		})
+	}
+}
+
+// GetFinalize gets the callback function.
+func (x *ParamSpecTypeInfo) GetFinalize() func(*ParamSpec) {
+	if x.xFinalize == 0 {
+		return nil
+	}
+	var rawCallback func(PspecVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xFinalize)
+	return func(PspecVar *ParamSpec) {
+		rawCallback(PspecVar.GoPointer())
+	}
+}
+
+// OverrideValueSetDefault sets the callback function.
+func (x *ParamSpecTypeInfo) OverrideValueSetDefault(cb func(*ParamSpec, *Value)) {
+	if cb == nil {
+		x.xValueSetDefault = 0
+	} else {
+		x.xValueSetDefault = purego.NewCallback(func(PspecVarp uintptr, ValueVarp *Value) {
+			cb(ParamSpecNewFromInternalPtr(PspecVarp), ValueVarp)
+		})
+	}
+}
+
+// GetValueSetDefault gets the callback function.
+func (x *ParamSpecTypeInfo) GetValueSetDefault() func(*ParamSpec, *Value) {
+	if x.xValueSetDefault == 0 {
+		return nil
+	}
+	var rawCallback func(PspecVarp uintptr, ValueVarp *Value)
+	purego.RegisterFunc(&rawCallback, x.xValueSetDefault)
+	return func(PspecVar *ParamSpec, ValueVar *Value) {
+		rawCallback(PspecVar.GoPointer(), ValueVar)
+	}
+}
+
+// OverrideValueValidate sets the callback function.
+func (x *ParamSpecTypeInfo) OverrideValueValidate(cb func(*ParamSpec, *Value) bool) {
+	if cb == nil {
+		x.xValueValidate = 0
+	} else {
+		x.xValueValidate = purego.NewCallback(func(PspecVarp uintptr, ValueVarp *Value) bool {
+			return cb(ParamSpecNewFromInternalPtr(PspecVarp), ValueVarp)
+		})
+	}
+}
+
+// GetValueValidate gets the callback function.
+func (x *ParamSpecTypeInfo) GetValueValidate() func(*ParamSpec, *Value) bool {
+	if x.xValueValidate == 0 {
+		return nil
+	}
+	var rawCallback func(PspecVarp uintptr, ValueVarp *Value) bool
+	purego.RegisterFunc(&rawCallback, x.xValueValidate)
+	return func(PspecVar *ParamSpec, ValueVar *Value) bool {
+		return rawCallback(PspecVar.GoPointer(), ValueVar)
+	}
+}
+
+// OverrideValuesCmp sets the callback function.
+func (x *ParamSpecTypeInfo) OverrideValuesCmp(cb func(*ParamSpec, *Value, *Value) int) {
+	if cb == nil {
+		x.xValuesCmp = 0
+	} else {
+		x.xValuesCmp = purego.NewCallback(func(PspecVarp uintptr, Value1Varp *Value, Value2Varp *Value) int {
+			return cb(ParamSpecNewFromInternalPtr(PspecVarp), Value1Varp, Value2Varp)
+		})
+	}
+}
+
+// GetValuesCmp gets the callback function.
+func (x *ParamSpecTypeInfo) GetValuesCmp() func(*ParamSpec, *Value, *Value) int {
+	if x.xValuesCmp == 0 {
+		return nil
+	}
+	var rawCallback func(PspecVarp uintptr, Value1Varp *Value, Value2Varp *Value) int
+	purego.RegisterFunc(&rawCallback, x.xValuesCmp)
+	return func(PspecVar *ParamSpec, Value1Var *Value, Value2Var *Value) int {
+		return rawCallback(PspecVar.GoPointer(), Value1Var, Value2Var)
+	}
 }
 
 // The GParameter struct is an auxiliary structure used

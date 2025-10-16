@@ -15,7 +15,7 @@ import (
 type NetworkAddressClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *NetworkAddressClass) GoPointer() uintptr {

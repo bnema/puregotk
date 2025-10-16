@@ -15,7 +15,7 @@ import (
 type ButtonContentClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *ButtonContentClass) GoPointer() uintptr {

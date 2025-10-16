@@ -30,11 +30,361 @@ import (
 type RendererClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xDrawGlyphs uintptr
+
+	xDrawRectangle uintptr
+
+	xDrawErrorUnderline uintptr
+
+	xDrawShape uintptr
+
+	xDrawTrapezoid uintptr
+
+	xDrawGlyph uintptr
+
+	xPartChanged uintptr
+
+	xBegin uintptr
+
+	xEnd uintptr
+
+	xPrepareRun uintptr
+
+	xDrawGlyphItem uintptr
+
+	xPangoReserved2 uintptr
+
+	xPangoReserved3 uintptr
+
+	xPangoReserved4 uintptr
 }
 
 func (x *RendererClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideDrawGlyphs sets the callback function.
+func (x *RendererClass) OverrideDrawGlyphs(cb func(*Renderer, *Font, *GlyphString, int, int)) {
+	if cb == nil {
+		x.xDrawGlyphs = 0
+	} else {
+		x.xDrawGlyphs = purego.NewCallback(func(RendererVarp uintptr, FontVarp uintptr, GlyphsVarp *GlyphString, XVarp int, YVarp int) {
+			cb(RendererNewFromInternalPtr(RendererVarp), FontNewFromInternalPtr(FontVarp), GlyphsVarp, XVarp, YVarp)
+		})
+	}
+}
+
+// GetDrawGlyphs gets the callback function.
+func (x *RendererClass) GetDrawGlyphs() func(*Renderer, *Font, *GlyphString, int, int) {
+	if x.xDrawGlyphs == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr, FontVarp uintptr, GlyphsVarp *GlyphString, XVarp int, YVarp int)
+	purego.RegisterFunc(&rawCallback, x.xDrawGlyphs)
+	return func(RendererVar *Renderer, FontVar *Font, GlyphsVar *GlyphString, XVar int, YVar int) {
+		rawCallback(RendererVar.GoPointer(), FontVar.GoPointer(), GlyphsVar, XVar, YVar)
+	}
+}
+
+// OverrideDrawRectangle sets the callback function.
+func (x *RendererClass) OverrideDrawRectangle(cb func(*Renderer, RenderPart, int, int, int, int)) {
+	if cb == nil {
+		x.xDrawRectangle = 0
+	} else {
+		x.xDrawRectangle = purego.NewCallback(func(RendererVarp uintptr, PartVarp RenderPart, XVarp int, YVarp int, WidthVarp int, HeightVarp int) {
+			cb(RendererNewFromInternalPtr(RendererVarp), PartVarp, XVarp, YVarp, WidthVarp, HeightVarp)
+		})
+	}
+}
+
+// GetDrawRectangle gets the callback function.
+func (x *RendererClass) GetDrawRectangle() func(*Renderer, RenderPart, int, int, int, int) {
+	if x.xDrawRectangle == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr, PartVarp RenderPart, XVarp int, YVarp int, WidthVarp int, HeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xDrawRectangle)
+	return func(RendererVar *Renderer, PartVar RenderPart, XVar int, YVar int, WidthVar int, HeightVar int) {
+		rawCallback(RendererVar.GoPointer(), PartVar, XVar, YVar, WidthVar, HeightVar)
+	}
+}
+
+// OverrideDrawErrorUnderline sets the callback function.
+func (x *RendererClass) OverrideDrawErrorUnderline(cb func(*Renderer, int, int, int, int)) {
+	if cb == nil {
+		x.xDrawErrorUnderline = 0
+	} else {
+		x.xDrawErrorUnderline = purego.NewCallback(func(RendererVarp uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int) {
+			cb(RendererNewFromInternalPtr(RendererVarp), XVarp, YVarp, WidthVarp, HeightVarp)
+		})
+	}
+}
+
+// GetDrawErrorUnderline gets the callback function.
+func (x *RendererClass) GetDrawErrorUnderline() func(*Renderer, int, int, int, int) {
+	if x.xDrawErrorUnderline == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int)
+	purego.RegisterFunc(&rawCallback, x.xDrawErrorUnderline)
+	return func(RendererVar *Renderer, XVar int, YVar int, WidthVar int, HeightVar int) {
+		rawCallback(RendererVar.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+	}
+}
+
+// OverrideDrawShape sets the callback function.
+func (x *RendererClass) OverrideDrawShape(cb func(*Renderer, *AttrShape, int, int)) {
+	if cb == nil {
+		x.xDrawShape = 0
+	} else {
+		x.xDrawShape = purego.NewCallback(func(RendererVarp uintptr, AttrVarp *AttrShape, XVarp int, YVarp int) {
+			cb(RendererNewFromInternalPtr(RendererVarp), AttrVarp, XVarp, YVarp)
+		})
+	}
+}
+
+// GetDrawShape gets the callback function.
+func (x *RendererClass) GetDrawShape() func(*Renderer, *AttrShape, int, int) {
+	if x.xDrawShape == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr, AttrVarp *AttrShape, XVarp int, YVarp int)
+	purego.RegisterFunc(&rawCallback, x.xDrawShape)
+	return func(RendererVar *Renderer, AttrVar *AttrShape, XVar int, YVar int) {
+		rawCallback(RendererVar.GoPointer(), AttrVar, XVar, YVar)
+	}
+}
+
+// OverrideDrawTrapezoid sets the callback function.
+func (x *RendererClass) OverrideDrawTrapezoid(cb func(*Renderer, RenderPart, float64, float64, float64, float64, float64, float64)) {
+	if cb == nil {
+		x.xDrawTrapezoid = 0
+	} else {
+		x.xDrawTrapezoid = purego.NewCallback(func(RendererVarp uintptr, PartVarp RenderPart, Y1Varp float64, X11Varp float64, X21Varp float64, Y2Varp float64, X12Varp float64, X22Varp float64) {
+			cb(RendererNewFromInternalPtr(RendererVarp), PartVarp, Y1Varp, X11Varp, X21Varp, Y2Varp, X12Varp, X22Varp)
+		})
+	}
+}
+
+// GetDrawTrapezoid gets the callback function.
+func (x *RendererClass) GetDrawTrapezoid() func(*Renderer, RenderPart, float64, float64, float64, float64, float64, float64) {
+	if x.xDrawTrapezoid == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr, PartVarp RenderPart, Y1Varp float64, X11Varp float64, X21Varp float64, Y2Varp float64, X12Varp float64, X22Varp float64)
+	purego.RegisterFunc(&rawCallback, x.xDrawTrapezoid)
+	return func(RendererVar *Renderer, PartVar RenderPart, Y1Var float64, X11Var float64, X21Var float64, Y2Var float64, X12Var float64, X22Var float64) {
+		rawCallback(RendererVar.GoPointer(), PartVar, Y1Var, X11Var, X21Var, Y2Var, X12Var, X22Var)
+	}
+}
+
+// OverrideDrawGlyph sets the callback function.
+func (x *RendererClass) OverrideDrawGlyph(cb func(*Renderer, *Font, Glyph, float64, float64)) {
+	if cb == nil {
+		x.xDrawGlyph = 0
+	} else {
+		x.xDrawGlyph = purego.NewCallback(func(RendererVarp uintptr, FontVarp uintptr, GlyphVarp Glyph, XVarp float64, YVarp float64) {
+			cb(RendererNewFromInternalPtr(RendererVarp), FontNewFromInternalPtr(FontVarp), GlyphVarp, XVarp, YVarp)
+		})
+	}
+}
+
+// GetDrawGlyph gets the callback function.
+func (x *RendererClass) GetDrawGlyph() func(*Renderer, *Font, Glyph, float64, float64) {
+	if x.xDrawGlyph == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr, FontVarp uintptr, GlyphVarp Glyph, XVarp float64, YVarp float64)
+	purego.RegisterFunc(&rawCallback, x.xDrawGlyph)
+	return func(RendererVar *Renderer, FontVar *Font, GlyphVar Glyph, XVar float64, YVar float64) {
+		rawCallback(RendererVar.GoPointer(), FontVar.GoPointer(), GlyphVar, XVar, YVar)
+	}
+}
+
+// OverridePartChanged sets the callback function.
+func (x *RendererClass) OverridePartChanged(cb func(*Renderer, RenderPart)) {
+	if cb == nil {
+		x.xPartChanged = 0
+	} else {
+		x.xPartChanged = purego.NewCallback(func(RendererVarp uintptr, PartVarp RenderPart) {
+			cb(RendererNewFromInternalPtr(RendererVarp), PartVarp)
+		})
+	}
+}
+
+// GetPartChanged gets the callback function.
+func (x *RendererClass) GetPartChanged() func(*Renderer, RenderPart) {
+	if x.xPartChanged == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr, PartVarp RenderPart)
+	purego.RegisterFunc(&rawCallback, x.xPartChanged)
+	return func(RendererVar *Renderer, PartVar RenderPart) {
+		rawCallback(RendererVar.GoPointer(), PartVar)
+	}
+}
+
+// OverrideBegin sets the callback function.
+func (x *RendererClass) OverrideBegin(cb func(*Renderer)) {
+	if cb == nil {
+		x.xBegin = 0
+	} else {
+		x.xBegin = purego.NewCallback(func(RendererVarp uintptr) {
+			cb(RendererNewFromInternalPtr(RendererVarp))
+		})
+	}
+}
+
+// GetBegin gets the callback function.
+func (x *RendererClass) GetBegin() func(*Renderer) {
+	if x.xBegin == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xBegin)
+	return func(RendererVar *Renderer) {
+		rawCallback(RendererVar.GoPointer())
+	}
+}
+
+// OverrideEnd sets the callback function.
+func (x *RendererClass) OverrideEnd(cb func(*Renderer)) {
+	if cb == nil {
+		x.xEnd = 0
+	} else {
+		x.xEnd = purego.NewCallback(func(RendererVarp uintptr) {
+			cb(RendererNewFromInternalPtr(RendererVarp))
+		})
+	}
+}
+
+// GetEnd gets the callback function.
+func (x *RendererClass) GetEnd() func(*Renderer) {
+	if x.xEnd == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEnd)
+	return func(RendererVar *Renderer) {
+		rawCallback(RendererVar.GoPointer())
+	}
+}
+
+// OverridePrepareRun sets the callback function.
+func (x *RendererClass) OverridePrepareRun(cb func(*Renderer, *LayoutRun)) {
+	if cb == nil {
+		x.xPrepareRun = 0
+	} else {
+		x.xPrepareRun = purego.NewCallback(func(RendererVarp uintptr, RunVarp *LayoutRun) {
+			cb(RendererNewFromInternalPtr(RendererVarp), RunVarp)
+		})
+	}
+}
+
+// GetPrepareRun gets the callback function.
+func (x *RendererClass) GetPrepareRun() func(*Renderer, *LayoutRun) {
+	if x.xPrepareRun == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr, RunVarp *LayoutRun)
+	purego.RegisterFunc(&rawCallback, x.xPrepareRun)
+	return func(RendererVar *Renderer, RunVar *LayoutRun) {
+		rawCallback(RendererVar.GoPointer(), RunVar)
+	}
+}
+
+// OverrideDrawGlyphItem sets the callback function.
+func (x *RendererClass) OverrideDrawGlyphItem(cb func(*Renderer, string, *GlyphItem, int, int)) {
+	if cb == nil {
+		x.xDrawGlyphItem = 0
+	} else {
+		x.xDrawGlyphItem = purego.NewCallback(func(RendererVarp uintptr, TextVarp string, GlyphItemVarp *GlyphItem, XVarp int, YVarp int) {
+			cb(RendererNewFromInternalPtr(RendererVarp), TextVarp, GlyphItemVarp, XVarp, YVarp)
+		})
+	}
+}
+
+// GetDrawGlyphItem gets the callback function.
+func (x *RendererClass) GetDrawGlyphItem() func(*Renderer, string, *GlyphItem, int, int) {
+	if x.xDrawGlyphItem == 0 {
+		return nil
+	}
+	var rawCallback func(RendererVarp uintptr, TextVarp string, GlyphItemVarp *GlyphItem, XVarp int, YVarp int)
+	purego.RegisterFunc(&rawCallback, x.xDrawGlyphItem)
+	return func(RendererVar *Renderer, TextVar string, GlyphItemVar *GlyphItem, XVar int, YVar int) {
+		rawCallback(RendererVar.GoPointer(), TextVar, GlyphItemVar, XVar, YVar)
+	}
+}
+
+// OverridePangoReserved2 sets the callback function.
+func (x *RendererClass) OverridePangoReserved2(cb func()) {
+	if cb == nil {
+		x.xPangoReserved2 = 0
+	} else {
+		x.xPangoReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetPangoReserved2 gets the callback function.
+func (x *RendererClass) GetPangoReserved2() func() {
+	if x.xPangoReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xPangoReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverridePangoReserved3 sets the callback function.
+func (x *RendererClass) OverridePangoReserved3(cb func()) {
+	if cb == nil {
+		x.xPangoReserved3 = 0
+	} else {
+		x.xPangoReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetPangoReserved3 gets the callback function.
+func (x *RendererClass) GetPangoReserved3() func() {
+	if x.xPangoReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xPangoReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverridePangoReserved4 sets the callback function.
+func (x *RendererClass) OverridePangoReserved4(cb func()) {
+	if cb == nil {
+		x.xPangoReserved4 = 0
+	} else {
+		x.xPangoReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetPangoReserved4 gets the callback function.
+func (x *RendererClass) GetPangoReserved4() func() {
+	if x.xPangoReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xPangoReserved4)
+	return func() {
+		rawCallback()
+	}
 }
 
 type RendererPrivate struct {

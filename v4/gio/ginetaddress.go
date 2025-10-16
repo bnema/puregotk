@@ -14,11 +14,61 @@ import (
 type InetAddressClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xToString uintptr
+
+	xToBytes uintptr
 }
 
 func (x *InetAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideToString sets the callback function.
+func (x *InetAddressClass) OverrideToString(cb func(*InetAddress) string) {
+	if cb == nil {
+		x.xToString = 0
+	} else {
+		x.xToString = purego.NewCallback(func(AddressVarp uintptr) string {
+			return cb(InetAddressNewFromInternalPtr(AddressVarp))
+		})
+	}
+}
+
+// GetToString gets the callback function.
+func (x *InetAddressClass) GetToString() func(*InetAddress) string {
+	if x.xToString == 0 {
+		return nil
+	}
+	var rawCallback func(AddressVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xToString)
+	return func(AddressVar *InetAddress) string {
+		return rawCallback(AddressVar.GoPointer())
+	}
+}
+
+// OverrideToBytes sets the callback function.
+func (x *InetAddressClass) OverrideToBytes(cb func(*InetAddress) byte) {
+	if cb == nil {
+		x.xToBytes = 0
+	} else {
+		x.xToBytes = purego.NewCallback(func(AddressVarp uintptr) byte {
+			return cb(InetAddressNewFromInternalPtr(AddressVarp))
+		})
+	}
+}
+
+// GetToBytes gets the callback function.
+func (x *InetAddressClass) GetToBytes() func(*InetAddress) byte {
+	if x.xToBytes == 0 {
+		return nil
+	}
+	var rawCallback func(AddressVarp uintptr) byte
+	purego.RegisterFunc(&rawCallback, x.xToBytes)
+	return func(AddressVar *InetAddress) byte {
+		return rawCallback(AddressVar.GoPointer())
+	}
 }
 
 type InetAddressPrivate struct {

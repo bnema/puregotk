@@ -29,10 +29,160 @@ type TreeSortableIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xSortColumnChanged uintptr
+
+	xGetSortColumnId uintptr
+
+	xSetSortColumnId uintptr
+
+	xSetSortFunc uintptr
+
+	xSetDefaultSortFunc uintptr
+
+	xHasDefaultSortFunc uintptr
 }
 
 func (x *TreeSortableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideSortColumnChanged sets the callback function.
+func (x *TreeSortableIface) OverrideSortColumnChanged(cb func(TreeSortable)) {
+	if cb == nil {
+		x.xSortColumnChanged = 0
+	} else {
+		x.xSortColumnChanged = purego.NewCallback(func(SortableVarp uintptr) {
+			cb(&TreeSortableBase{Ptr: SortableVarp})
+		})
+	}
+}
+
+// GetSortColumnChanged gets the callback function.
+func (x *TreeSortableIface) GetSortColumnChanged() func(TreeSortable) {
+	if x.xSortColumnChanged == 0 {
+		return nil
+	}
+	var rawCallback func(SortableVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSortColumnChanged)
+	return func(SortableVar TreeSortable) {
+		rawCallback(SortableVar.GoPointer())
+	}
+}
+
+// OverrideGetSortColumnId sets the callback function.
+func (x *TreeSortableIface) OverrideGetSortColumnId(cb func(TreeSortable, int, *SortType) bool) {
+	if cb == nil {
+		x.xGetSortColumnId = 0
+	} else {
+		x.xGetSortColumnId = purego.NewCallback(func(SortableVarp uintptr, SortColumnIdVarp int, OrderVarp *SortType) bool {
+			return cb(&TreeSortableBase{Ptr: SortableVarp}, SortColumnIdVarp, OrderVarp)
+		})
+	}
+}
+
+// GetGetSortColumnId gets the callback function.
+func (x *TreeSortableIface) GetGetSortColumnId() func(TreeSortable, int, *SortType) bool {
+	if x.xGetSortColumnId == 0 {
+		return nil
+	}
+	var rawCallback func(SortableVarp uintptr, SortColumnIdVarp int, OrderVarp *SortType) bool
+	purego.RegisterFunc(&rawCallback, x.xGetSortColumnId)
+	return func(SortableVar TreeSortable, SortColumnIdVar int, OrderVar *SortType) bool {
+		return rawCallback(SortableVar.GoPointer(), SortColumnIdVar, OrderVar)
+	}
+}
+
+// OverrideSetSortColumnId sets the callback function.
+func (x *TreeSortableIface) OverrideSetSortColumnId(cb func(TreeSortable, int, SortType)) {
+	if cb == nil {
+		x.xSetSortColumnId = 0
+	} else {
+		x.xSetSortColumnId = purego.NewCallback(func(SortableVarp uintptr, SortColumnIdVarp int, OrderVarp SortType) {
+			cb(&TreeSortableBase{Ptr: SortableVarp}, SortColumnIdVarp, OrderVarp)
+		})
+	}
+}
+
+// GetSetSortColumnId gets the callback function.
+func (x *TreeSortableIface) GetSetSortColumnId() func(TreeSortable, int, SortType) {
+	if x.xSetSortColumnId == 0 {
+		return nil
+	}
+	var rawCallback func(SortableVarp uintptr, SortColumnIdVarp int, OrderVarp SortType)
+	purego.RegisterFunc(&rawCallback, x.xSetSortColumnId)
+	return func(SortableVar TreeSortable, SortColumnIdVar int, OrderVar SortType) {
+		rawCallback(SortableVar.GoPointer(), SortColumnIdVar, OrderVar)
+	}
+}
+
+// OverrideSetSortFunc sets the callback function.
+func (x *TreeSortableIface) OverrideSetSortFunc(cb func(TreeSortable, int, *TreeIterCompareFunc, uintptr, *glib.DestroyNotify)) {
+	if cb == nil {
+		x.xSetSortFunc = 0
+	} else {
+		x.xSetSortFunc = purego.NewCallback(func(SortableVarp uintptr, SortColumnIdVarp int, SortFuncVarp uintptr, UserDataVarp uintptr, DestroyVarp uintptr) {
+			cb(&TreeSortableBase{Ptr: SortableVarp}, SortColumnIdVarp, (*TreeIterCompareFunc)(unsafe.Pointer(SortFuncVarp)), UserDataVarp, (*glib.DestroyNotify)(unsafe.Pointer(DestroyVarp)))
+		})
+	}
+}
+
+// GetSetSortFunc gets the callback function.
+func (x *TreeSortableIface) GetSetSortFunc() func(TreeSortable, int, *TreeIterCompareFunc, uintptr, *glib.DestroyNotify) {
+	if x.xSetSortFunc == 0 {
+		return nil
+	}
+	var rawCallback func(SortableVarp uintptr, SortColumnIdVarp int, SortFuncVarp uintptr, UserDataVarp uintptr, DestroyVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetSortFunc)
+	return func(SortableVar TreeSortable, SortColumnIdVar int, SortFuncVar *TreeIterCompareFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
+		rawCallback(SortableVar.GoPointer(), SortColumnIdVar, glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
+	}
+}
+
+// OverrideSetDefaultSortFunc sets the callback function.
+func (x *TreeSortableIface) OverrideSetDefaultSortFunc(cb func(TreeSortable, *TreeIterCompareFunc, uintptr, *glib.DestroyNotify)) {
+	if cb == nil {
+		x.xSetDefaultSortFunc = 0
+	} else {
+		x.xSetDefaultSortFunc = purego.NewCallback(func(SortableVarp uintptr, SortFuncVarp uintptr, UserDataVarp uintptr, DestroyVarp uintptr) {
+			cb(&TreeSortableBase{Ptr: SortableVarp}, (*TreeIterCompareFunc)(unsafe.Pointer(SortFuncVarp)), UserDataVarp, (*glib.DestroyNotify)(unsafe.Pointer(DestroyVarp)))
+		})
+	}
+}
+
+// GetSetDefaultSortFunc gets the callback function.
+func (x *TreeSortableIface) GetSetDefaultSortFunc() func(TreeSortable, *TreeIterCompareFunc, uintptr, *glib.DestroyNotify) {
+	if x.xSetDefaultSortFunc == 0 {
+		return nil
+	}
+	var rawCallback func(SortableVarp uintptr, SortFuncVarp uintptr, UserDataVarp uintptr, DestroyVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSetDefaultSortFunc)
+	return func(SortableVar TreeSortable, SortFuncVar *TreeIterCompareFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
+		rawCallback(SortableVar.GoPointer(), glib.NewCallback(SortFuncVar), UserDataVar, glib.NewCallbackNullable(DestroyVar))
+	}
+}
+
+// OverrideHasDefaultSortFunc sets the callback function.
+func (x *TreeSortableIface) OverrideHasDefaultSortFunc(cb func(TreeSortable) bool) {
+	if cb == nil {
+		x.xHasDefaultSortFunc = 0
+	} else {
+		x.xHasDefaultSortFunc = purego.NewCallback(func(SortableVarp uintptr) bool {
+			return cb(&TreeSortableBase{Ptr: SortableVarp})
+		})
+	}
+}
+
+// GetHasDefaultSortFunc gets the callback function.
+func (x *TreeSortableIface) GetHasDefaultSortFunc() func(TreeSortable) bool {
+	if x.xHasDefaultSortFunc == 0 {
+		return nil
+	}
+	var rawCallback func(SortableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xHasDefaultSortFunc)
+	return func(SortableVar TreeSortable) bool {
+		return rawCallback(SortableVar.GoPointer())
+	}
 }
 
 // The interface for sortable models used by GtkTreeView

@@ -15,11 +15,406 @@ import (
 type IOStreamClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGetInputStream uintptr
+
+	xGetOutputStream uintptr
+
+	xCloseFn uintptr
+
+	xCloseAsync uintptr
+
+	xCloseFinish uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
+
+	xGReserved6 uintptr
+
+	xGReserved7 uintptr
+
+	xGReserved8 uintptr
+
+	xGReserved9 uintptr
+
+	xGReserved10 uintptr
 }
 
 func (x *IOStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetInputStream sets the callback function.
+func (x *IOStreamClass) OverrideGetInputStream(cb func(*IOStream) *InputStream) {
+	if cb == nil {
+		x.xGetInputStream = 0
+	} else {
+		x.xGetInputStream = purego.NewCallback(func(StreamVarp uintptr) uintptr {
+			ret := cb(IOStreamNewFromInternalPtr(StreamVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetInputStream gets the callback function.
+func (x *IOStreamClass) GetGetInputStream() func(*IOStream) *InputStream {
+	if x.xGetInputStream == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetInputStream)
+	return func(StreamVar *IOStream) *InputStream {
+		rawRet := rawCallback(StreamVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &InputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetOutputStream sets the callback function.
+func (x *IOStreamClass) OverrideGetOutputStream(cb func(*IOStream) *OutputStream) {
+	if cb == nil {
+		x.xGetOutputStream = 0
+	} else {
+		x.xGetOutputStream = purego.NewCallback(func(StreamVarp uintptr) uintptr {
+			ret := cb(IOStreamNewFromInternalPtr(StreamVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetOutputStream gets the callback function.
+func (x *IOStreamClass) GetGetOutputStream() func(*IOStream) *OutputStream {
+	if x.xGetOutputStream == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetOutputStream)
+	return func(StreamVar *IOStream) *OutputStream {
+		rawRet := rawCallback(StreamVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &OutputStream{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideCloseFn sets the callback function.
+func (x *IOStreamClass) OverrideCloseFn(cb func(*IOStream, *Cancellable) bool) {
+	if cb == nil {
+		x.xCloseFn = 0
+	} else {
+		x.xCloseFn = purego.NewCallback(func(StreamVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(IOStreamNewFromInternalPtr(StreamVarp), CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetCloseFn gets the callback function.
+func (x *IOStreamClass) GetCloseFn() func(*IOStream, *Cancellable) bool {
+	if x.xCloseFn == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCloseFn)
+	return func(StreamVar *IOStream, CancellableVar *Cancellable) bool {
+		return rawCallback(StreamVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideCloseAsync sets the callback function.
+func (x *IOStreamClass) OverrideCloseAsync(cb func(*IOStream, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xCloseAsync = 0
+	} else {
+		x.xCloseAsync = purego.NewCallback(func(StreamVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(IOStreamNewFromInternalPtr(StreamVarp), IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetCloseAsync gets the callback function.
+func (x *IOStreamClass) GetCloseAsync() func(*IOStream, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xCloseAsync == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xCloseAsync)
+	return func(StreamVar *IOStream, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(StreamVar.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideCloseFinish sets the callback function.
+func (x *IOStreamClass) OverrideCloseFinish(cb func(*IOStream, AsyncResult) bool) {
+	if cb == nil {
+		x.xCloseFinish = 0
+	} else {
+		x.xCloseFinish = purego.NewCallback(func(StreamVarp uintptr, ResultVarp uintptr) bool {
+			return cb(IOStreamNewFromInternalPtr(StreamVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetCloseFinish gets the callback function.
+func (x *IOStreamClass) GetCloseFinish() func(*IOStream, AsyncResult) bool {
+	if x.xCloseFinish == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCloseFinish)
+	return func(StreamVar *IOStream, ResultVar AsyncResult) bool {
+		return rawCallback(StreamVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *IOStreamClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *IOStreamClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *IOStreamClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *IOStreamClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *IOStreamClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *IOStreamClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *IOStreamClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *IOStreamClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *IOStreamClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *IOStreamClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved6 sets the callback function.
+func (x *IOStreamClass) OverrideGReserved6(cb func()) {
+	if cb == nil {
+		x.xGReserved6 = 0
+	} else {
+		x.xGReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved6 gets the callback function.
+func (x *IOStreamClass) GetGReserved6() func() {
+	if x.xGReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved6)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved7 sets the callback function.
+func (x *IOStreamClass) OverrideGReserved7(cb func()) {
+	if cb == nil {
+		x.xGReserved7 = 0
+	} else {
+		x.xGReserved7 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved7 gets the callback function.
+func (x *IOStreamClass) GetGReserved7() func() {
+	if x.xGReserved7 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved7)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved8 sets the callback function.
+func (x *IOStreamClass) OverrideGReserved8(cb func()) {
+	if cb == nil {
+		x.xGReserved8 = 0
+	} else {
+		x.xGReserved8 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved8 gets the callback function.
+func (x *IOStreamClass) GetGReserved8() func() {
+	if x.xGReserved8 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved8)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved9 sets the callback function.
+func (x *IOStreamClass) OverrideGReserved9(cb func()) {
+	if cb == nil {
+		x.xGReserved9 = 0
+	} else {
+		x.xGReserved9 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved9 gets the callback function.
+func (x *IOStreamClass) GetGReserved9() func() {
+	if x.xGReserved9 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved9)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved10 sets the callback function.
+func (x *IOStreamClass) OverrideGReserved10(cb func()) {
+	if cb == nil {
+		x.xGReserved10 = 0
+	} else {
+		x.xGReserved10 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved10 gets the callback function.
+func (x *IOStreamClass) GetGReserved10() func() {
+	if x.xGReserved10 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved10)
+	return func() {
+		rawCallback()
+	}
 }
 
 type IOStreamPrivate struct {

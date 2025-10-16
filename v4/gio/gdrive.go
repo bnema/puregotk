@@ -16,10 +16,830 @@ type DriveIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xChanged uintptr
+
+	xDisconnected uintptr
+
+	xEjectButton uintptr
+
+	xGetName uintptr
+
+	xGetIcon uintptr
+
+	xHasVolumes uintptr
+
+	xGetVolumes uintptr
+
+	xIsMediaRemovable uintptr
+
+	xHasMedia uintptr
+
+	xIsMediaCheckAutomatic uintptr
+
+	xCanEject uintptr
+
+	xCanPollForMedia uintptr
+
+	xEject uintptr
+
+	xEjectFinish uintptr
+
+	xPollForMedia uintptr
+
+	xPollForMediaFinish uintptr
+
+	xGetIdentifier uintptr
+
+	xEnumerateIdentifiers uintptr
+
+	xGetStartStopType uintptr
+
+	xCanStart uintptr
+
+	xCanStartDegraded uintptr
+
+	xStart uintptr
+
+	xStartFinish uintptr
+
+	xCanStop uintptr
+
+	xStop uintptr
+
+	xStopFinish uintptr
+
+	xStopButton uintptr
+
+	xEjectWithOperation uintptr
+
+	xEjectWithOperationFinish uintptr
+
+	xGetSortKey uintptr
+
+	xGetSymbolicIcon uintptr
+
+	xIsRemovable uintptr
 }
 
 func (x *DriveIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideChanged sets the callback function.
+func (x *DriveIface) OverrideChanged(cb func(Drive)) {
+	if cb == nil {
+		x.xChanged = 0
+	} else {
+		x.xChanged = purego.NewCallback(func(DriveVarp uintptr) {
+			cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetChanged gets the callback function.
+func (x *DriveIface) GetChanged() func(Drive) {
+	if x.xChanged == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xChanged)
+	return func(DriveVar Drive) {
+		rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideDisconnected sets the callback function.
+func (x *DriveIface) OverrideDisconnected(cb func(Drive)) {
+	if cb == nil {
+		x.xDisconnected = 0
+	} else {
+		x.xDisconnected = purego.NewCallback(func(DriveVarp uintptr) {
+			cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetDisconnected gets the callback function.
+func (x *DriveIface) GetDisconnected() func(Drive) {
+	if x.xDisconnected == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xDisconnected)
+	return func(DriveVar Drive) {
+		rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideEjectButton sets the callback function.
+func (x *DriveIface) OverrideEjectButton(cb func(Drive)) {
+	if cb == nil {
+		x.xEjectButton = 0
+	} else {
+		x.xEjectButton = purego.NewCallback(func(DriveVarp uintptr) {
+			cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetEjectButton gets the callback function.
+func (x *DriveIface) GetEjectButton() func(Drive) {
+	if x.xEjectButton == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEjectButton)
+	return func(DriveVar Drive) {
+		rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideGetName sets the callback function.
+func (x *DriveIface) OverrideGetName(cb func(Drive) string) {
+	if cb == nil {
+		x.xGetName = 0
+	} else {
+		x.xGetName = purego.NewCallback(func(DriveVarp uintptr) string {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetGetName gets the callback function.
+func (x *DriveIface) GetGetName() func(Drive) string {
+	if x.xGetName == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetName)
+	return func(DriveVar Drive) string {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideGetIcon sets the callback function.
+func (x *DriveIface) OverrideGetIcon(cb func(Drive) *IconBase) {
+	if cb == nil {
+		x.xGetIcon = 0
+	} else {
+		x.xGetIcon = purego.NewCallback(func(DriveVarp uintptr) uintptr {
+			ret := cb(&DriveBase{Ptr: DriveVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetIcon gets the callback function.
+func (x *DriveIface) GetGetIcon() func(Drive) *IconBase {
+	if x.xGetIcon == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetIcon)
+	return func(DriveVar Drive) *IconBase {
+		rawRet := rawCallback(DriveVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IconBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideHasVolumes sets the callback function.
+func (x *DriveIface) OverrideHasVolumes(cb func(Drive) bool) {
+	if cb == nil {
+		x.xHasVolumes = 0
+	} else {
+		x.xHasVolumes = purego.NewCallback(func(DriveVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetHasVolumes gets the callback function.
+func (x *DriveIface) GetHasVolumes() func(Drive) bool {
+	if x.xHasVolumes == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xHasVolumes)
+	return func(DriveVar Drive) bool {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideGetVolumes sets the callback function.
+func (x *DriveIface) OverrideGetVolumes(cb func(Drive) *glib.List) {
+	if cb == nil {
+		x.xGetVolumes = 0
+	} else {
+		x.xGetVolumes = purego.NewCallback(func(DriveVarp uintptr) *glib.List {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetGetVolumes gets the callback function.
+func (x *DriveIface) GetGetVolumes() func(Drive) *glib.List {
+	if x.xGetVolumes == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) *glib.List
+	purego.RegisterFunc(&rawCallback, x.xGetVolumes)
+	return func(DriveVar Drive) *glib.List {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideIsMediaRemovable sets the callback function.
+func (x *DriveIface) OverrideIsMediaRemovable(cb func(Drive) bool) {
+	if cb == nil {
+		x.xIsMediaRemovable = 0
+	} else {
+		x.xIsMediaRemovable = purego.NewCallback(func(DriveVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetIsMediaRemovable gets the callback function.
+func (x *DriveIface) GetIsMediaRemovable() func(Drive) bool {
+	if x.xIsMediaRemovable == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xIsMediaRemovable)
+	return func(DriveVar Drive) bool {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideHasMedia sets the callback function.
+func (x *DriveIface) OverrideHasMedia(cb func(Drive) bool) {
+	if cb == nil {
+		x.xHasMedia = 0
+	} else {
+		x.xHasMedia = purego.NewCallback(func(DriveVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetHasMedia gets the callback function.
+func (x *DriveIface) GetHasMedia() func(Drive) bool {
+	if x.xHasMedia == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xHasMedia)
+	return func(DriveVar Drive) bool {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideIsMediaCheckAutomatic sets the callback function.
+func (x *DriveIface) OverrideIsMediaCheckAutomatic(cb func(Drive) bool) {
+	if cb == nil {
+		x.xIsMediaCheckAutomatic = 0
+	} else {
+		x.xIsMediaCheckAutomatic = purego.NewCallback(func(DriveVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetIsMediaCheckAutomatic gets the callback function.
+func (x *DriveIface) GetIsMediaCheckAutomatic() func(Drive) bool {
+	if x.xIsMediaCheckAutomatic == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xIsMediaCheckAutomatic)
+	return func(DriveVar Drive) bool {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideCanEject sets the callback function.
+func (x *DriveIface) OverrideCanEject(cb func(Drive) bool) {
+	if cb == nil {
+		x.xCanEject = 0
+	} else {
+		x.xCanEject = purego.NewCallback(func(DriveVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetCanEject gets the callback function.
+func (x *DriveIface) GetCanEject() func(Drive) bool {
+	if x.xCanEject == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanEject)
+	return func(DriveVar Drive) bool {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideCanPollForMedia sets the callback function.
+func (x *DriveIface) OverrideCanPollForMedia(cb func(Drive) bool) {
+	if cb == nil {
+		x.xCanPollForMedia = 0
+	} else {
+		x.xCanPollForMedia = purego.NewCallback(func(DriveVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetCanPollForMedia gets the callback function.
+func (x *DriveIface) GetCanPollForMedia() func(Drive) bool {
+	if x.xCanPollForMedia == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanPollForMedia)
+	return func(DriveVar Drive) bool {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideEject sets the callback function.
+func (x *DriveIface) OverrideEject(cb func(Drive, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xEject = 0
+	} else {
+		x.xEject = purego.NewCallback(func(DriveVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&DriveBase{Ptr: DriveVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetEject gets the callback function.
+func (x *DriveIface) GetEject() func(Drive, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xEject == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, FlagsVarp MountUnmountFlags, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEject)
+	return func(DriveVar Drive, FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(DriveVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideEjectFinish sets the callback function.
+func (x *DriveIface) OverrideEjectFinish(cb func(Drive, AsyncResult) bool) {
+	if cb == nil {
+		x.xEjectFinish = 0
+	} else {
+		x.xEjectFinish = purego.NewCallback(func(DriveVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetEjectFinish gets the callback function.
+func (x *DriveIface) GetEjectFinish() func(Drive, AsyncResult) bool {
+	if x.xEjectFinish == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEjectFinish)
+	return func(DriveVar Drive, ResultVar AsyncResult) bool {
+		return rawCallback(DriveVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverridePollForMedia sets the callback function.
+func (x *DriveIface) OverridePollForMedia(cb func(Drive, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xPollForMedia = 0
+	} else {
+		x.xPollForMedia = purego.NewCallback(func(DriveVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&DriveBase{Ptr: DriveVarp}, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetPollForMedia gets the callback function.
+func (x *DriveIface) GetPollForMedia() func(Drive, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xPollForMedia == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xPollForMedia)
+	return func(DriveVar Drive, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(DriveVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverridePollForMediaFinish sets the callback function.
+func (x *DriveIface) OverridePollForMediaFinish(cb func(Drive, AsyncResult) bool) {
+	if cb == nil {
+		x.xPollForMediaFinish = 0
+	} else {
+		x.xPollForMediaFinish = purego.NewCallback(func(DriveVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetPollForMediaFinish gets the callback function.
+func (x *DriveIface) GetPollForMediaFinish() func(Drive, AsyncResult) bool {
+	if x.xPollForMediaFinish == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xPollForMediaFinish)
+	return func(DriveVar Drive, ResultVar AsyncResult) bool {
+		return rawCallback(DriveVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGetIdentifier sets the callback function.
+func (x *DriveIface) OverrideGetIdentifier(cb func(Drive, string) string) {
+	if cb == nil {
+		x.xGetIdentifier = 0
+	} else {
+		x.xGetIdentifier = purego.NewCallback(func(DriveVarp uintptr, KindVarp string) string {
+			return cb(&DriveBase{Ptr: DriveVarp}, KindVarp)
+		})
+	}
+}
+
+// GetGetIdentifier gets the callback function.
+func (x *DriveIface) GetGetIdentifier() func(Drive, string) string {
+	if x.xGetIdentifier == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, KindVarp string) string
+	purego.RegisterFunc(&rawCallback, x.xGetIdentifier)
+	return func(DriveVar Drive, KindVar string) string {
+		return rawCallback(DriveVar.GoPointer(), KindVar)
+	}
+}
+
+// OverrideEnumerateIdentifiers sets the callback function.
+func (x *DriveIface) OverrideEnumerateIdentifiers(cb func(Drive) []string) {
+	if cb == nil {
+		x.xEnumerateIdentifiers = 0
+	} else {
+		x.xEnumerateIdentifiers = purego.NewCallback(func(DriveVarp uintptr) []string {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetEnumerateIdentifiers gets the callback function.
+func (x *DriveIface) GetEnumerateIdentifiers() func(Drive) []string {
+	if x.xEnumerateIdentifiers == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) []string
+	purego.RegisterFunc(&rawCallback, x.xEnumerateIdentifiers)
+	return func(DriveVar Drive) []string {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideGetStartStopType sets the callback function.
+func (x *DriveIface) OverrideGetStartStopType(cb func(Drive) DriveStartStopType) {
+	if cb == nil {
+		x.xGetStartStopType = 0
+	} else {
+		x.xGetStartStopType = purego.NewCallback(func(DriveVarp uintptr) DriveStartStopType {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetGetStartStopType gets the callback function.
+func (x *DriveIface) GetGetStartStopType() func(Drive) DriveStartStopType {
+	if x.xGetStartStopType == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) DriveStartStopType
+	purego.RegisterFunc(&rawCallback, x.xGetStartStopType)
+	return func(DriveVar Drive) DriveStartStopType {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideCanStart sets the callback function.
+func (x *DriveIface) OverrideCanStart(cb func(Drive) bool) {
+	if cb == nil {
+		x.xCanStart = 0
+	} else {
+		x.xCanStart = purego.NewCallback(func(DriveVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetCanStart gets the callback function.
+func (x *DriveIface) GetCanStart() func(Drive) bool {
+	if x.xCanStart == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanStart)
+	return func(DriveVar Drive) bool {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideCanStartDegraded sets the callback function.
+func (x *DriveIface) OverrideCanStartDegraded(cb func(Drive) bool) {
+	if cb == nil {
+		x.xCanStartDegraded = 0
+	} else {
+		x.xCanStartDegraded = purego.NewCallback(func(DriveVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetCanStartDegraded gets the callback function.
+func (x *DriveIface) GetCanStartDegraded() func(Drive) bool {
+	if x.xCanStartDegraded == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanStartDegraded)
+	return func(DriveVar Drive) bool {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideStart sets the callback function.
+func (x *DriveIface) OverrideStart(cb func(Drive, DriveStartFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xStart = 0
+	} else {
+		x.xStart = purego.NewCallback(func(DriveVarp uintptr, FlagsVarp DriveStartFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&DriveBase{Ptr: DriveVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetStart gets the callback function.
+func (x *DriveIface) GetStart() func(Drive, DriveStartFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xStart == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, FlagsVarp DriveStartFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xStart)
+	return func(DriveVar Drive, FlagsVar DriveStartFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(DriveVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideStartFinish sets the callback function.
+func (x *DriveIface) OverrideStartFinish(cb func(Drive, AsyncResult) bool) {
+	if cb == nil {
+		x.xStartFinish = 0
+	} else {
+		x.xStartFinish = purego.NewCallback(func(DriveVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetStartFinish gets the callback function.
+func (x *DriveIface) GetStartFinish() func(Drive, AsyncResult) bool {
+	if x.xStartFinish == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xStartFinish)
+	return func(DriveVar Drive, ResultVar AsyncResult) bool {
+		return rawCallback(DriveVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideCanStop sets the callback function.
+func (x *DriveIface) OverrideCanStop(cb func(Drive) bool) {
+	if cb == nil {
+		x.xCanStop = 0
+	} else {
+		x.xCanStop = purego.NewCallback(func(DriveVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetCanStop gets the callback function.
+func (x *DriveIface) GetCanStop() func(Drive) bool {
+	if x.xCanStop == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanStop)
+	return func(DriveVar Drive) bool {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideStop sets the callback function.
+func (x *DriveIface) OverrideStop(cb func(Drive, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xStop = 0
+	} else {
+		x.xStop = purego.NewCallback(func(DriveVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&DriveBase{Ptr: DriveVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetStop gets the callback function.
+func (x *DriveIface) GetStop() func(Drive, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xStop == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xStop)
+	return func(DriveVar Drive, FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(DriveVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideStopFinish sets the callback function.
+func (x *DriveIface) OverrideStopFinish(cb func(Drive, AsyncResult) bool) {
+	if cb == nil {
+		x.xStopFinish = 0
+	} else {
+		x.xStopFinish = purego.NewCallback(func(DriveVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetStopFinish gets the callback function.
+func (x *DriveIface) GetStopFinish() func(Drive, AsyncResult) bool {
+	if x.xStopFinish == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xStopFinish)
+	return func(DriveVar Drive, ResultVar AsyncResult) bool {
+		return rawCallback(DriveVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideStopButton sets the callback function.
+func (x *DriveIface) OverrideStopButton(cb func(Drive)) {
+	if cb == nil {
+		x.xStopButton = 0
+	} else {
+		x.xStopButton = purego.NewCallback(func(DriveVarp uintptr) {
+			cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetStopButton gets the callback function.
+func (x *DriveIface) GetStopButton() func(Drive) {
+	if x.xStopButton == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xStopButton)
+	return func(DriveVar Drive) {
+		rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideEjectWithOperation sets the callback function.
+func (x *DriveIface) OverrideEjectWithOperation(cb func(Drive, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xEjectWithOperation = 0
+	} else {
+		x.xEjectWithOperation = purego.NewCallback(func(DriveVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(&DriveBase{Ptr: DriveVarp}, FlagsVarp, MountOperationNewFromInternalPtr(MountOperationVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetEjectWithOperation gets the callback function.
+func (x *DriveIface) GetEjectWithOperation() func(Drive, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xEjectWithOperation == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, FlagsVarp MountUnmountFlags, MountOperationVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xEjectWithOperation)
+	return func(DriveVar Drive, FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(DriveVar.GoPointer(), FlagsVar, MountOperationVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideEjectWithOperationFinish sets the callback function.
+func (x *DriveIface) OverrideEjectWithOperationFinish(cb func(Drive, AsyncResult) bool) {
+	if cb == nil {
+		x.xEjectWithOperationFinish = 0
+	} else {
+		x.xEjectWithOperationFinish = purego.NewCallback(func(DriveVarp uintptr, ResultVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp}, &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetEjectWithOperationFinish gets the callback function.
+func (x *DriveIface) GetEjectWithOperationFinish() func(Drive, AsyncResult) bool {
+	if x.xEjectWithOperationFinish == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEjectWithOperationFinish)
+	return func(DriveVar Drive, ResultVar AsyncResult) bool {
+		return rawCallback(DriveVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideGetSortKey sets the callback function.
+func (x *DriveIface) OverrideGetSortKey(cb func(Drive) string) {
+	if cb == nil {
+		x.xGetSortKey = 0
+	} else {
+		x.xGetSortKey = purego.NewCallback(func(DriveVarp uintptr) string {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetGetSortKey gets the callback function.
+func (x *DriveIface) GetGetSortKey() func(Drive) string {
+	if x.xGetSortKey == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetSortKey)
+	return func(DriveVar Drive) string {
+		return rawCallback(DriveVar.GoPointer())
+	}
+}
+
+// OverrideGetSymbolicIcon sets the callback function.
+func (x *DriveIface) OverrideGetSymbolicIcon(cb func(Drive) *IconBase) {
+	if cb == nil {
+		x.xGetSymbolicIcon = 0
+	} else {
+		x.xGetSymbolicIcon = purego.NewCallback(func(DriveVarp uintptr) uintptr {
+			ret := cb(&DriveBase{Ptr: DriveVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetSymbolicIcon gets the callback function.
+func (x *DriveIface) GetGetSymbolicIcon() func(Drive) *IconBase {
+	if x.xGetSymbolicIcon == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetSymbolicIcon)
+	return func(DriveVar Drive) *IconBase {
+		rawRet := rawCallback(DriveVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IconBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideIsRemovable sets the callback function.
+func (x *DriveIface) OverrideIsRemovable(cb func(Drive) bool) {
+	if cb == nil {
+		x.xIsRemovable = 0
+	} else {
+		x.xIsRemovable = purego.NewCallback(func(DriveVarp uintptr) bool {
+			return cb(&DriveBase{Ptr: DriveVarp})
+		})
+	}
+}
+
+// GetIsRemovable gets the callback function.
+func (x *DriveIface) GetIsRemovable() func(Drive) bool {
+	if x.xIsRemovable == 0 {
+		return nil
+	}
+	var rawCallback func(DriveVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xIsRemovable)
+	return func(DriveVar Drive) bool {
+		return rawCallback(DriveVar.GoPointer())
+	}
 }
 
 // #GDrive - this represent a piece of hardware connected to the machine.
@@ -57,9 +877,9 @@ type Drive interface {
 	CanStartDegraded() bool
 	CanStop() bool
 	Eject(FlagsVar MountUnmountFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	EjectFinish(ResultVar AsyncResult) bool
+	EjectFinish(ResultVar AsyncResult) (bool, error)
 	EjectWithOperation(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	EjectWithOperationFinish(ResultVar AsyncResult) bool
+	EjectWithOperationFinish(ResultVar AsyncResult) (bool, error)
 	EnumerateIdentifiers() []string
 	GetIcon() *IconBase
 	GetIdentifier(KindVar string) string
@@ -74,11 +894,11 @@ type Drive interface {
 	IsMediaRemovable() bool
 	IsRemovable() bool
 	PollForMedia(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	PollForMediaFinish(ResultVar AsyncResult) bool
+	PollForMediaFinish(ResultVar AsyncResult) (bool, error)
 	Start(FlagsVar DriveStartFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	StartFinish(ResultVar AsyncResult) bool
+	StartFinish(ResultVar AsyncResult) (bool, error)
 	Stop(FlagsVar MountUnmountFlags, MountOperationVar *MountOperation, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	StopFinish(ResultVar AsyncResult) bool
+	StopFinish(ResultVar AsyncResult) (bool, error)
 }
 
 var xDriveGLibType func() types.GType

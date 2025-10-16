@@ -210,7 +210,7 @@ func (x *IconView) GetColumns() int {
 	return cret
 }
 
-var xIconViewGetCursor func(uintptr, **TreePath, *uintptr) bool
+var xIconViewGetCursor func(uintptr, **TreePath, uintptr) bool
 
 // Fills in @path and @cell with the current cursor path and cell.
 // If the cursor isn’t currently set, then *@path will be %NULL.
@@ -219,7 +219,7 @@ var xIconViewGetCursor func(uintptr, **TreePath, *uintptr) bool
 // The returned `GtkTreePath` must be freed with gtk_tree_path_free().
 func (x *IconView) GetCursor(PathVar **TreePath, CellVar **CellRenderer) bool {
 
-	cret := xIconViewGetCursor(x.GoPointer(), PathVar, gobject.ConvertPtr(CellVar))
+	cret := xIconViewGetCursor(x.GoPointer(), PathVar, *gobject.ConvertPtr(CellVar))
 	return cret
 }
 
@@ -241,12 +241,12 @@ func (x *IconView) GetDragDestItem(PathVar **TreePath, PosVar *IconViewDropPosit
 
 }
 
-var xIconViewGetItemAtPos func(uintptr, int, int, **TreePath, *uintptr) bool
+var xIconViewGetItemAtPos func(uintptr, int, int, **TreePath, uintptr) bool
 
 // Gets the path and cell for the icon at the given position.
 func (x *IconView) GetItemAtPos(XVar int, YVar int, PathVar **TreePath, CellVar **CellRenderer) bool {
 
-	cret := xIconViewGetItemAtPos(x.GoPointer(), XVar, YVar, PathVar, gobject.ConvertPtr(CellVar))
+	cret := xIconViewGetItemAtPos(x.GoPointer(), XVar, YVar, PathVar, *gobject.ConvertPtr(CellVar))
 	return cret
 }
 

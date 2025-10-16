@@ -16,7 +16,7 @@ import (
 type SwitchRowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass ActionRowClass
 }
 
 func (x *SwitchRowClass) GoPointer() uintptr {

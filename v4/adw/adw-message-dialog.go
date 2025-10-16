@@ -19,13 +19,38 @@ import (
 type MessageDialogClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WindowClass
+
+	xResponse uintptr
 
 	Padding [4]uintptr
 }
 
 func (x *MessageDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideResponse sets the callback function.
+func (x *MessageDialogClass) OverrideResponse(cb func(*MessageDialog, string)) {
+	if cb == nil {
+		x.xResponse = 0
+	} else {
+		x.xResponse = purego.NewCallback(func(SelfVarp uintptr, ResponseVarp string) {
+			cb(MessageDialogNewFromInternalPtr(SelfVarp), ResponseVarp)
+		})
+	}
+}
+
+// GetResponse gets the callback function.
+func (x *MessageDialogClass) GetResponse() func(*MessageDialog, string) {
+	if x.xResponse == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ResponseVarp string)
+	purego.RegisterFunc(&rawCallback, x.xResponse)
+	return func(SelfVar *MessageDialog, ResponseVar string) {
+		rawCallback(SelfVar.GoPointer(), ResponseVar)
+	}
 }
 
 // A dialog presenting a message or a question.

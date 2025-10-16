@@ -21,11 +21,225 @@ type FontsetForeachFunc func(uintptr, uintptr, uintptr) bool
 type FontsetClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGetFont uintptr
+
+	xGetMetrics uintptr
+
+	xGetLanguage uintptr
+
+	xForeach uintptr
+
+	xPangoReserved1 uintptr
+
+	xPangoReserved2 uintptr
+
+	xPangoReserved3 uintptr
+
+	xPangoReserved4 uintptr
 }
 
 func (x *FontsetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetFont sets the callback function.
+func (x *FontsetClass) OverrideGetFont(cb func(*Fontset, uint) *Font) {
+	if cb == nil {
+		x.xGetFont = 0
+	} else {
+		x.xGetFont = purego.NewCallback(func(FontsetVarp uintptr, WcVarp uint) uintptr {
+			ret := cb(FontsetNewFromInternalPtr(FontsetVarp), WcVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetFont gets the callback function.
+func (x *FontsetClass) GetGetFont() func(*Fontset, uint) *Font {
+	if x.xGetFont == 0 {
+		return nil
+	}
+	var rawCallback func(FontsetVarp uintptr, WcVarp uint) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetFont)
+	return func(FontsetVar *Fontset, WcVar uint) *Font {
+		rawRet := rawCallback(FontsetVar.GoPointer(), WcVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &Font{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetMetrics sets the callback function.
+func (x *FontsetClass) OverrideGetMetrics(cb func(*Fontset) *FontMetrics) {
+	if cb == nil {
+		x.xGetMetrics = 0
+	} else {
+		x.xGetMetrics = purego.NewCallback(func(FontsetVarp uintptr) *FontMetrics {
+			return cb(FontsetNewFromInternalPtr(FontsetVarp))
+		})
+	}
+}
+
+// GetGetMetrics gets the callback function.
+func (x *FontsetClass) GetGetMetrics() func(*Fontset) *FontMetrics {
+	if x.xGetMetrics == 0 {
+		return nil
+	}
+	var rawCallback func(FontsetVarp uintptr) *FontMetrics
+	purego.RegisterFunc(&rawCallback, x.xGetMetrics)
+	return func(FontsetVar *Fontset) *FontMetrics {
+		return rawCallback(FontsetVar.GoPointer())
+	}
+}
+
+// OverrideGetLanguage sets the callback function.
+func (x *FontsetClass) OverrideGetLanguage(cb func(*Fontset) *Language) {
+	if cb == nil {
+		x.xGetLanguage = 0
+	} else {
+		x.xGetLanguage = purego.NewCallback(func(FontsetVarp uintptr) *Language {
+			return cb(FontsetNewFromInternalPtr(FontsetVarp))
+		})
+	}
+}
+
+// GetGetLanguage gets the callback function.
+func (x *FontsetClass) GetGetLanguage() func(*Fontset) *Language {
+	if x.xGetLanguage == 0 {
+		return nil
+	}
+	var rawCallback func(FontsetVarp uintptr) *Language
+	purego.RegisterFunc(&rawCallback, x.xGetLanguage)
+	return func(FontsetVar *Fontset) *Language {
+		return rawCallback(FontsetVar.GoPointer())
+	}
+}
+
+// OverrideForeach sets the callback function.
+// Callback used by pango_fontset_foreach() when enumerating
+// fonts in a fontset.
+func (x *FontsetClass) OverrideForeach(cb func(*Fontset, *FontsetForeachFunc, uintptr)) {
+	if cb == nil {
+		x.xForeach = 0
+	} else {
+		x.xForeach = purego.NewCallback(func(FontsetVarp uintptr, FuncVarp uintptr, DataVarp uintptr) {
+			cb(FontsetNewFromInternalPtr(FontsetVarp), (*FontsetForeachFunc)(unsafe.Pointer(FuncVarp)), DataVarp)
+		})
+	}
+}
+
+// GetForeach gets the callback function.
+// Callback used by pango_fontset_foreach() when enumerating
+// fonts in a fontset.
+func (x *FontsetClass) GetForeach() func(*Fontset, *FontsetForeachFunc, uintptr) {
+	if x.xForeach == 0 {
+		return nil
+	}
+	var rawCallback func(FontsetVarp uintptr, FuncVarp uintptr, DataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xForeach)
+	return func(FontsetVar *Fontset, FuncVar *FontsetForeachFunc, DataVar uintptr) {
+		rawCallback(FontsetVar.GoPointer(), glib.NewCallback(FuncVar), DataVar)
+	}
+}
+
+// OverridePangoReserved1 sets the callback function.
+func (x *FontsetClass) OverridePangoReserved1(cb func()) {
+	if cb == nil {
+		x.xPangoReserved1 = 0
+	} else {
+		x.xPangoReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetPangoReserved1 gets the callback function.
+func (x *FontsetClass) GetPangoReserved1() func() {
+	if x.xPangoReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xPangoReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverridePangoReserved2 sets the callback function.
+func (x *FontsetClass) OverridePangoReserved2(cb func()) {
+	if cb == nil {
+		x.xPangoReserved2 = 0
+	} else {
+		x.xPangoReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetPangoReserved2 gets the callback function.
+func (x *FontsetClass) GetPangoReserved2() func() {
+	if x.xPangoReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xPangoReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverridePangoReserved3 sets the callback function.
+func (x *FontsetClass) OverridePangoReserved3(cb func()) {
+	if cb == nil {
+		x.xPangoReserved3 = 0
+	} else {
+		x.xPangoReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetPangoReserved3 gets the callback function.
+func (x *FontsetClass) GetPangoReserved3() func() {
+	if x.xPangoReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xPangoReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverridePangoReserved4 sets the callback function.
+func (x *FontsetClass) OverridePangoReserved4(cb func()) {
+	if cb == nil {
+		x.xPangoReserved4 = 0
+	} else {
+		x.xPangoReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetPangoReserved4 gets the callback function.
+func (x *FontsetClass) GetPangoReserved4() func() {
+	if x.xPangoReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xPangoReserved4)
+	return func() {
+		rawCallback()
+	}
 }
 
 type FontsetSimpleClass struct {

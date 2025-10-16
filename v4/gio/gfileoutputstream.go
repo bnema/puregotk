@@ -14,11 +14,381 @@ import (
 type FileOutputStreamClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass OutputStreamClass
+
+	xTell uintptr
+
+	xCanSeek uintptr
+
+	xSeek uintptr
+
+	xCanTruncate uintptr
+
+	xTruncateFn uintptr
+
+	xQueryInfo uintptr
+
+	xQueryInfoAsync uintptr
+
+	xQueryInfoFinish uintptr
+
+	xGetEtag uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
 }
 
 func (x *FileOutputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideTell sets the callback function.
+func (x *FileOutputStreamClass) OverrideTell(cb func(*FileOutputStream) int64) {
+	if cb == nil {
+		x.xTell = 0
+	} else {
+		x.xTell = purego.NewCallback(func(StreamVarp uintptr) int64 {
+			return cb(FileOutputStreamNewFromInternalPtr(StreamVarp))
+		})
+	}
+}
+
+// GetTell gets the callback function.
+func (x *FileOutputStreamClass) GetTell() func(*FileOutputStream) int64 {
+	if x.xTell == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr) int64
+	purego.RegisterFunc(&rawCallback, x.xTell)
+	return func(StreamVar *FileOutputStream) int64 {
+		return rawCallback(StreamVar.GoPointer())
+	}
+}
+
+// OverrideCanSeek sets the callback function.
+func (x *FileOutputStreamClass) OverrideCanSeek(cb func(*FileOutputStream) bool) {
+	if cb == nil {
+		x.xCanSeek = 0
+	} else {
+		x.xCanSeek = purego.NewCallback(func(StreamVarp uintptr) bool {
+			return cb(FileOutputStreamNewFromInternalPtr(StreamVarp))
+		})
+	}
+}
+
+// GetCanSeek gets the callback function.
+func (x *FileOutputStreamClass) GetCanSeek() func(*FileOutputStream) bool {
+	if x.xCanSeek == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanSeek)
+	return func(StreamVar *FileOutputStream) bool {
+		return rawCallback(StreamVar.GoPointer())
+	}
+}
+
+// OverrideSeek sets the callback function.
+func (x *FileOutputStreamClass) OverrideSeek(cb func(*FileOutputStream, int64, glib.SeekType, *Cancellable) bool) {
+	if cb == nil {
+		x.xSeek = 0
+	} else {
+		x.xSeek = purego.NewCallback(func(StreamVarp uintptr, OffsetVarp int64, TypeVarp glib.SeekType, CancellableVarp uintptr) bool {
+			return cb(FileOutputStreamNewFromInternalPtr(StreamVarp), OffsetVarp, TypeVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetSeek gets the callback function.
+func (x *FileOutputStreamClass) GetSeek() func(*FileOutputStream, int64, glib.SeekType, *Cancellable) bool {
+	if x.xSeek == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, OffsetVarp int64, TypeVarp glib.SeekType, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSeek)
+	return func(StreamVar *FileOutputStream, OffsetVar int64, TypeVar glib.SeekType, CancellableVar *Cancellable) bool {
+		return rawCallback(StreamVar.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideCanTruncate sets the callback function.
+func (x *FileOutputStreamClass) OverrideCanTruncate(cb func(*FileOutputStream) bool) {
+	if cb == nil {
+		x.xCanTruncate = 0
+	} else {
+		x.xCanTruncate = purego.NewCallback(func(StreamVarp uintptr) bool {
+			return cb(FileOutputStreamNewFromInternalPtr(StreamVarp))
+		})
+	}
+}
+
+// GetCanTruncate gets the callback function.
+func (x *FileOutputStreamClass) GetCanTruncate() func(*FileOutputStream) bool {
+	if x.xCanTruncate == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xCanTruncate)
+	return func(StreamVar *FileOutputStream) bool {
+		return rawCallback(StreamVar.GoPointer())
+	}
+}
+
+// OverrideTruncateFn sets the callback function.
+func (x *FileOutputStreamClass) OverrideTruncateFn(cb func(*FileOutputStream, int64, *Cancellable) bool) {
+	if cb == nil {
+		x.xTruncateFn = 0
+	} else {
+		x.xTruncateFn = purego.NewCallback(func(StreamVarp uintptr, SizeVarp int64, CancellableVarp uintptr) bool {
+			return cb(FileOutputStreamNewFromInternalPtr(StreamVarp), SizeVarp, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetTruncateFn gets the callback function.
+func (x *FileOutputStreamClass) GetTruncateFn() func(*FileOutputStream, int64, *Cancellable) bool {
+	if x.xTruncateFn == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, SizeVarp int64, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xTruncateFn)
+	return func(StreamVar *FileOutputStream, SizeVar int64, CancellableVar *Cancellable) bool {
+		return rawCallback(StreamVar.GoPointer(), SizeVar, CancellableVar.GoPointer())
+	}
+}
+
+// OverrideQueryInfo sets the callback function.
+func (x *FileOutputStreamClass) OverrideQueryInfo(cb func(*FileOutputStream, string, *Cancellable) *FileInfo) {
+	if cb == nil {
+		x.xQueryInfo = 0
+	} else {
+		x.xQueryInfo = purego.NewCallback(func(StreamVarp uintptr, AttributesVarp string, CancellableVarp uintptr) uintptr {
+			ret := cb(FileOutputStreamNewFromInternalPtr(StreamVarp), AttributesVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetQueryInfo gets the callback function.
+func (x *FileOutputStreamClass) GetQueryInfo() func(*FileOutputStream, string, *Cancellable) *FileInfo {
+	if x.xQueryInfo == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, AttributesVarp string, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xQueryInfo)
+	return func(StreamVar *FileOutputStream, AttributesVar string, CancellableVar *Cancellable) *FileInfo {
+		rawRet := rawCallback(StreamVar.GoPointer(), AttributesVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileInfo{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideQueryInfoAsync sets the callback function.
+func (x *FileOutputStreamClass) OverrideQueryInfoAsync(cb func(*FileOutputStream, string, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xQueryInfoAsync = 0
+	} else {
+		x.xQueryInfoAsync = purego.NewCallback(func(StreamVarp uintptr, AttributesVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(FileOutputStreamNewFromInternalPtr(StreamVarp), AttributesVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetQueryInfoAsync gets the callback function.
+func (x *FileOutputStreamClass) GetQueryInfoAsync() func(*FileOutputStream, string, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xQueryInfoAsync == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, AttributesVarp string, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xQueryInfoAsync)
+	return func(StreamVar *FileOutputStream, AttributesVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(StreamVar.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideQueryInfoFinish sets the callback function.
+func (x *FileOutputStreamClass) OverrideQueryInfoFinish(cb func(*FileOutputStream, AsyncResult) *FileInfo) {
+	if cb == nil {
+		x.xQueryInfoFinish = 0
+	} else {
+		x.xQueryInfoFinish = purego.NewCallback(func(StreamVarp uintptr, ResultVarp uintptr) uintptr {
+			ret := cb(FileOutputStreamNewFromInternalPtr(StreamVarp), &AsyncResultBase{Ptr: ResultVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetQueryInfoFinish gets the callback function.
+func (x *FileOutputStreamClass) GetQueryInfoFinish() func(*FileOutputStream, AsyncResult) *FileInfo {
+	if x.xQueryInfoFinish == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr, ResultVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xQueryInfoFinish)
+	return func(StreamVar *FileOutputStream, ResultVar AsyncResult) *FileInfo {
+		rawRet := rawCallback(StreamVar.GoPointer(), ResultVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &FileInfo{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGetEtag sets the callback function.
+func (x *FileOutputStreamClass) OverrideGetEtag(cb func(*FileOutputStream) string) {
+	if cb == nil {
+		x.xGetEtag = 0
+	} else {
+		x.xGetEtag = purego.NewCallback(func(StreamVarp uintptr) string {
+			return cb(FileOutputStreamNewFromInternalPtr(StreamVarp))
+		})
+	}
+}
+
+// GetGetEtag gets the callback function.
+func (x *FileOutputStreamClass) GetGetEtag() func(*FileOutputStream) string {
+	if x.xGetEtag == 0 {
+		return nil
+	}
+	var rawCallback func(StreamVarp uintptr) string
+	purego.RegisterFunc(&rawCallback, x.xGetEtag)
+	return func(StreamVar *FileOutputStream) string {
+		return rawCallback(StreamVar.GoPointer())
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *FileOutputStreamClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *FileOutputStreamClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *FileOutputStreamClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *FileOutputStreamClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *FileOutputStreamClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *FileOutputStreamClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *FileOutputStreamClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *FileOutputStreamClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *FileOutputStreamClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *FileOutputStreamClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
 }
 
 type FileOutputStreamPrivate struct {

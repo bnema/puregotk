@@ -15,13 +15,163 @@ import (
 type PermissionClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xAcquire uintptr
+
+	xAcquireAsync uintptr
+
+	xAcquireFinish uintptr
+
+	xRelease uintptr
+
+	xReleaseAsync uintptr
+
+	xReleaseFinish uintptr
 
 	Reserved [16]uintptr
 }
 
 func (x *PermissionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideAcquire sets the callback function.
+func (x *PermissionClass) OverrideAcquire(cb func(*Permission, *Cancellable) bool) {
+	if cb == nil {
+		x.xAcquire = 0
+	} else {
+		x.xAcquire = purego.NewCallback(func(PermissionVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(PermissionNewFromInternalPtr(PermissionVarp), CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetAcquire gets the callback function.
+func (x *PermissionClass) GetAcquire() func(*Permission, *Cancellable) bool {
+	if x.xAcquire == 0 {
+		return nil
+	}
+	var rawCallback func(PermissionVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xAcquire)
+	return func(PermissionVar *Permission, CancellableVar *Cancellable) bool {
+		return rawCallback(PermissionVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideAcquireAsync sets the callback function.
+func (x *PermissionClass) OverrideAcquireAsync(cb func(*Permission, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xAcquireAsync = 0
+	} else {
+		x.xAcquireAsync = purego.NewCallback(func(PermissionVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(PermissionNewFromInternalPtr(PermissionVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetAcquireAsync gets the callback function.
+func (x *PermissionClass) GetAcquireAsync() func(*Permission, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xAcquireAsync == 0 {
+		return nil
+	}
+	var rawCallback func(PermissionVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xAcquireAsync)
+	return func(PermissionVar *Permission, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(PermissionVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideAcquireFinish sets the callback function.
+func (x *PermissionClass) OverrideAcquireFinish(cb func(*Permission, AsyncResult) bool) {
+	if cb == nil {
+		x.xAcquireFinish = 0
+	} else {
+		x.xAcquireFinish = purego.NewCallback(func(PermissionVarp uintptr, ResultVarp uintptr) bool {
+			return cb(PermissionNewFromInternalPtr(PermissionVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetAcquireFinish gets the callback function.
+func (x *PermissionClass) GetAcquireFinish() func(*Permission, AsyncResult) bool {
+	if x.xAcquireFinish == 0 {
+		return nil
+	}
+	var rawCallback func(PermissionVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xAcquireFinish)
+	return func(PermissionVar *Permission, ResultVar AsyncResult) bool {
+		return rawCallback(PermissionVar.GoPointer(), ResultVar.GoPointer())
+	}
+}
+
+// OverrideRelease sets the callback function.
+func (x *PermissionClass) OverrideRelease(cb func(*Permission, *Cancellable) bool) {
+	if cb == nil {
+		x.xRelease = 0
+	} else {
+		x.xRelease = purego.NewCallback(func(PermissionVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(PermissionNewFromInternalPtr(PermissionVarp), CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetRelease gets the callback function.
+func (x *PermissionClass) GetRelease() func(*Permission, *Cancellable) bool {
+	if x.xRelease == 0 {
+		return nil
+	}
+	var rawCallback func(PermissionVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xRelease)
+	return func(PermissionVar *Permission, CancellableVar *Cancellable) bool {
+		return rawCallback(PermissionVar.GoPointer(), CancellableVar.GoPointer())
+	}
+}
+
+// OverrideReleaseAsync sets the callback function.
+func (x *PermissionClass) OverrideReleaseAsync(cb func(*Permission, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xReleaseAsync = 0
+	} else {
+		x.xReleaseAsync = purego.NewCallback(func(PermissionVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(PermissionNewFromInternalPtr(PermissionVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetReleaseAsync gets the callback function.
+func (x *PermissionClass) GetReleaseAsync() func(*Permission, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xReleaseAsync == 0 {
+		return nil
+	}
+	var rawCallback func(PermissionVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xReleaseAsync)
+	return func(PermissionVar *Permission, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(PermissionVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideReleaseFinish sets the callback function.
+func (x *PermissionClass) OverrideReleaseFinish(cb func(*Permission, AsyncResult) bool) {
+	if cb == nil {
+		x.xReleaseFinish = 0
+	} else {
+		x.xReleaseFinish = purego.NewCallback(func(PermissionVarp uintptr, ResultVarp uintptr) bool {
+			return cb(PermissionNewFromInternalPtr(PermissionVarp), &AsyncResultBase{Ptr: ResultVarp})
+		})
+	}
+}
+
+// GetReleaseFinish gets the callback function.
+func (x *PermissionClass) GetReleaseFinish() func(*Permission, AsyncResult) bool {
+	if x.xReleaseFinish == 0 {
+		return nil
+	}
+	var rawCallback func(PermissionVarp uintptr, ResultVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xReleaseFinish)
+	return func(PermissionVar *Permission, ResultVar AsyncResult) bool {
+		return rawCallback(PermissionVar.GoPointer(), ResultVar.GoPointer())
+	}
 }
 
 type PermissionPrivate struct {

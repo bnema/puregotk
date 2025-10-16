@@ -16,13 +16,40 @@ import (
 type ActionRowClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass PreferencesRowClass
+
+	xActivate uintptr
 
 	Padding [4]uintptr
 }
 
 func (x *ActionRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideActivate sets the callback function.
+// Activates the row to trigger its main action.
+func (x *ActionRowClass) OverrideActivate(cb func(*ActionRow)) {
+	if cb == nil {
+		x.xActivate = 0
+	} else {
+		x.xActivate = purego.NewCallback(func(SelfVarp uintptr) {
+			cb(ActionRowNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetActivate gets the callback function.
+// Activates the row to trigger its main action.
+func (x *ActionRowClass) GetActivate() func(*ActionRow) {
+	if x.xActivate == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xActivate)
+	return func(SelfVar *ActionRow) {
+		rawCallback(SelfVar.GoPointer())
+	}
 }
 
 // A [class@Gtk.ListBoxRow] used to present actions.

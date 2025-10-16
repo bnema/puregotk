@@ -16,7 +16,7 @@ import (
 type DragIconClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
 }
 
 func (x *DragIconClass) GoPointer() uintptr {

@@ -16,10 +16,60 @@ type RemoteActionGroupInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xActivateActionFull uintptr
+
+	xChangeActionStateFull uintptr
 }
 
 func (x *RemoteActionGroupInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideActivateActionFull sets the callback function.
+func (x *RemoteActionGroupInterface) OverrideActivateActionFull(cb func(RemoteActionGroup, string, *glib.Variant, *glib.Variant)) {
+	if cb == nil {
+		x.xActivateActionFull = 0
+	} else {
+		x.xActivateActionFull = purego.NewCallback(func(RemoteVarp uintptr, ActionNameVarp string, ParameterVarp *glib.Variant, PlatformDataVarp *glib.Variant) {
+			cb(&RemoteActionGroupBase{Ptr: RemoteVarp}, ActionNameVarp, ParameterVarp, PlatformDataVarp)
+		})
+	}
+}
+
+// GetActivateActionFull gets the callback function.
+func (x *RemoteActionGroupInterface) GetActivateActionFull() func(RemoteActionGroup, string, *glib.Variant, *glib.Variant) {
+	if x.xActivateActionFull == 0 {
+		return nil
+	}
+	var rawCallback func(RemoteVarp uintptr, ActionNameVarp string, ParameterVarp *glib.Variant, PlatformDataVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xActivateActionFull)
+	return func(RemoteVar RemoteActionGroup, ActionNameVar string, ParameterVar *glib.Variant, PlatformDataVar *glib.Variant) {
+		rawCallback(RemoteVar.GoPointer(), ActionNameVar, ParameterVar, PlatformDataVar)
+	}
+}
+
+// OverrideChangeActionStateFull sets the callback function.
+func (x *RemoteActionGroupInterface) OverrideChangeActionStateFull(cb func(RemoteActionGroup, string, *glib.Variant, *glib.Variant)) {
+	if cb == nil {
+		x.xChangeActionStateFull = 0
+	} else {
+		x.xChangeActionStateFull = purego.NewCallback(func(RemoteVarp uintptr, ActionNameVarp string, ValueVarp *glib.Variant, PlatformDataVarp *glib.Variant) {
+			cb(&RemoteActionGroupBase{Ptr: RemoteVarp}, ActionNameVarp, ValueVarp, PlatformDataVarp)
+		})
+	}
+}
+
+// GetChangeActionStateFull gets the callback function.
+func (x *RemoteActionGroupInterface) GetChangeActionStateFull() func(RemoteActionGroup, string, *glib.Variant, *glib.Variant) {
+	if x.xChangeActionStateFull == 0 {
+		return nil
+	}
+	var rawCallback func(RemoteVarp uintptr, ActionNameVarp string, ValueVarp *glib.Variant, PlatformDataVarp *glib.Variant)
+	purego.RegisterFunc(&rawCallback, x.xChangeActionStateFull)
+	return func(RemoteVar RemoteActionGroup, ActionNameVar string, ValueVar *glib.Variant, PlatformDataVar *glib.Variant) {
+		rawCallback(RemoteVar.GoPointer(), ActionNameVar, ValueVar, PlatformDataVar)
+	}
 }
 
 // The GRemoteActionGroup interface is implemented by #GActionGroup

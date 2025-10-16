@@ -16,10 +16,245 @@ type TlsBackendInterface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xSupportsTls uintptr
+
+	xGetCertificateType uintptr
+
+	xGetClientConnectionType uintptr
+
+	xGetServerConnectionType uintptr
+
+	xGetFileDatabaseType uintptr
+
+	xGetDefaultDatabase uintptr
+
+	xSupportsDtls uintptr
+
+	xGetDtlsClientConnectionType uintptr
+
+	xGetDtlsServerConnectionType uintptr
 }
 
 func (x *TlsBackendInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideSupportsTls sets the callback function.
+func (x *TlsBackendInterface) OverrideSupportsTls(cb func(TlsBackend) bool) {
+	if cb == nil {
+		x.xSupportsTls = 0
+	} else {
+		x.xSupportsTls = purego.NewCallback(func(BackendVarp uintptr) bool {
+			return cb(&TlsBackendBase{Ptr: BackendVarp})
+		})
+	}
+}
+
+// GetSupportsTls gets the callback function.
+func (x *TlsBackendInterface) GetSupportsTls() func(TlsBackend) bool {
+	if x.xSupportsTls == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSupportsTls)
+	return func(BackendVar TlsBackend) bool {
+		return rawCallback(BackendVar.GoPointer())
+	}
+}
+
+// OverrideGetCertificateType sets the callback function.
+func (x *TlsBackendInterface) OverrideGetCertificateType(cb func() types.GType) {
+	if cb == nil {
+		x.xGetCertificateType = 0
+	} else {
+		x.xGetCertificateType = purego.NewCallback(func() types.GType {
+			return cb()
+		})
+	}
+}
+
+// GetGetCertificateType gets the callback function.
+func (x *TlsBackendInterface) GetGetCertificateType() func() types.GType {
+	if x.xGetCertificateType == 0 {
+		return nil
+	}
+	var rawCallback func() types.GType
+	purego.RegisterFunc(&rawCallback, x.xGetCertificateType)
+	return func() types.GType {
+		return rawCallback()
+	}
+}
+
+// OverrideGetClientConnectionType sets the callback function.
+func (x *TlsBackendInterface) OverrideGetClientConnectionType(cb func() types.GType) {
+	if cb == nil {
+		x.xGetClientConnectionType = 0
+	} else {
+		x.xGetClientConnectionType = purego.NewCallback(func() types.GType {
+			return cb()
+		})
+	}
+}
+
+// GetGetClientConnectionType gets the callback function.
+func (x *TlsBackendInterface) GetGetClientConnectionType() func() types.GType {
+	if x.xGetClientConnectionType == 0 {
+		return nil
+	}
+	var rawCallback func() types.GType
+	purego.RegisterFunc(&rawCallback, x.xGetClientConnectionType)
+	return func() types.GType {
+		return rawCallback()
+	}
+}
+
+// OverrideGetServerConnectionType sets the callback function.
+func (x *TlsBackendInterface) OverrideGetServerConnectionType(cb func() types.GType) {
+	if cb == nil {
+		x.xGetServerConnectionType = 0
+	} else {
+		x.xGetServerConnectionType = purego.NewCallback(func() types.GType {
+			return cb()
+		})
+	}
+}
+
+// GetGetServerConnectionType gets the callback function.
+func (x *TlsBackendInterface) GetGetServerConnectionType() func() types.GType {
+	if x.xGetServerConnectionType == 0 {
+		return nil
+	}
+	var rawCallback func() types.GType
+	purego.RegisterFunc(&rawCallback, x.xGetServerConnectionType)
+	return func() types.GType {
+		return rawCallback()
+	}
+}
+
+// OverrideGetFileDatabaseType sets the callback function.
+func (x *TlsBackendInterface) OverrideGetFileDatabaseType(cb func() types.GType) {
+	if cb == nil {
+		x.xGetFileDatabaseType = 0
+	} else {
+		x.xGetFileDatabaseType = purego.NewCallback(func() types.GType {
+			return cb()
+		})
+	}
+}
+
+// GetGetFileDatabaseType gets the callback function.
+func (x *TlsBackendInterface) GetGetFileDatabaseType() func() types.GType {
+	if x.xGetFileDatabaseType == 0 {
+		return nil
+	}
+	var rawCallback func() types.GType
+	purego.RegisterFunc(&rawCallback, x.xGetFileDatabaseType)
+	return func() types.GType {
+		return rawCallback()
+	}
+}
+
+// OverrideGetDefaultDatabase sets the callback function.
+func (x *TlsBackendInterface) OverrideGetDefaultDatabase(cb func(TlsBackend) *TlsDatabase) {
+	if cb == nil {
+		x.xGetDefaultDatabase = 0
+	} else {
+		x.xGetDefaultDatabase = purego.NewCallback(func(BackendVarp uintptr) uintptr {
+			ret := cb(&TlsBackendBase{Ptr: BackendVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetDefaultDatabase gets the callback function.
+func (x *TlsBackendInterface) GetGetDefaultDatabase() func(TlsBackend) *TlsDatabase {
+	if x.xGetDefaultDatabase == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetDefaultDatabase)
+	return func(BackendVar TlsBackend) *TlsDatabase {
+		rawRet := rawCallback(BackendVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &TlsDatabase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideSupportsDtls sets the callback function.
+func (x *TlsBackendInterface) OverrideSupportsDtls(cb func(TlsBackend) bool) {
+	if cb == nil {
+		x.xSupportsDtls = 0
+	} else {
+		x.xSupportsDtls = purego.NewCallback(func(BackendVarp uintptr) bool {
+			return cb(&TlsBackendBase{Ptr: BackendVarp})
+		})
+	}
+}
+
+// GetSupportsDtls gets the callback function.
+func (x *TlsBackendInterface) GetSupportsDtls() func(TlsBackend) bool {
+	if x.xSupportsDtls == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xSupportsDtls)
+	return func(BackendVar TlsBackend) bool {
+		return rawCallback(BackendVar.GoPointer())
+	}
+}
+
+// OverrideGetDtlsClientConnectionType sets the callback function.
+func (x *TlsBackendInterface) OverrideGetDtlsClientConnectionType(cb func() types.GType) {
+	if cb == nil {
+		x.xGetDtlsClientConnectionType = 0
+	} else {
+		x.xGetDtlsClientConnectionType = purego.NewCallback(func() types.GType {
+			return cb()
+		})
+	}
+}
+
+// GetGetDtlsClientConnectionType gets the callback function.
+func (x *TlsBackendInterface) GetGetDtlsClientConnectionType() func() types.GType {
+	if x.xGetDtlsClientConnectionType == 0 {
+		return nil
+	}
+	var rawCallback func() types.GType
+	purego.RegisterFunc(&rawCallback, x.xGetDtlsClientConnectionType)
+	return func() types.GType {
+		return rawCallback()
+	}
+}
+
+// OverrideGetDtlsServerConnectionType sets the callback function.
+func (x *TlsBackendInterface) OverrideGetDtlsServerConnectionType(cb func() types.GType) {
+	if cb == nil {
+		x.xGetDtlsServerConnectionType = 0
+	} else {
+		x.xGetDtlsServerConnectionType = purego.NewCallback(func() types.GType {
+			return cb()
+		})
+	}
+}
+
+// GetGetDtlsServerConnectionType gets the callback function.
+func (x *TlsBackendInterface) GetGetDtlsServerConnectionType() func() types.GType {
+	if x.xGetDtlsServerConnectionType == 0 {
+		return nil
+	}
+	var rawCallback func() types.GType
+	purego.RegisterFunc(&rawCallback, x.xGetDtlsServerConnectionType)
+	return func() types.GType {
+		return rawCallback()
+	}
 }
 
 // TLS (Transport Layer Security, aka SSL) and DTLS backend.

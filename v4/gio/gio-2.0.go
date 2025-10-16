@@ -1136,7 +1136,7 @@ func (x *DBusConnection) CallWithUnixFdList(BusNameVar string, ObjectPathVar str
 
 }
 
-var xDBusConnectionCallWithUnixFdListFinish func(uintptr, *uintptr, uintptr, **glib.Error) *glib.Variant
+var xDBusConnectionCallWithUnixFdListFinish func(uintptr, uintptr, uintptr, **glib.Error) *glib.Variant
 
 // Finishes an operation started with g_dbus_connection_call_with_unix_fd_list().
 //
@@ -1153,7 +1153,7 @@ var xDBusConnectionCallWithUnixFdListFinish func(uintptr, *uintptr, uintptr, **g
 func (x *DBusConnection) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, ResVar AsyncResult) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionCallWithUnixFdListFinish(x.GoPointer(), gobject.ConvertPtr(OutFdListVar), ResVar.GoPointer(), &cerr)
+	cret := xDBusConnectionCallWithUnixFdListFinish(x.GoPointer(), *gobject.ConvertPtr(OutFdListVar), ResVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1161,7 +1161,7 @@ func (x *DBusConnection) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, Res
 
 }
 
-var xDBusConnectionCallWithUnixFdListSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, *uintptr, uintptr, **glib.Error) *glib.Variant
+var xDBusConnectionCallWithUnixFdListSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, uintptr, uintptr, **glib.Error) *glib.Variant
 
 // Like g_dbus_connection_call_sync() but also takes and returns #GUnixFDList objects.
 // See g_dbus_connection_call_with_unix_fd_list() and
@@ -1171,7 +1171,7 @@ var xDBusConnectionCallWithUnixFdListSync func(uintptr, string, string, string, 
 func (x *DBusConnection) CallWithUnixFdListSync(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), gobject.ConvertPtr(OutFdListVar), CancellableVar.GoPointer(), &cerr)
+	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), *gobject.ConvertPtr(OutFdListVar), CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

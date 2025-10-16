@@ -13,7 +13,7 @@ import (
 type TcpConnectionClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass SocketConnectionClass
 }
 
 func (x *TcpConnectionClass) GoPointer() uintptr {

@@ -15,7 +15,7 @@ import (
 type NavigationSplitViewClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gtk.WidgetClass
 }
 
 func (x *NavigationSplitViewClass) GoPointer() uintptr {

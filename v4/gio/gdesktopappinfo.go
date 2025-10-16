@@ -20,7 +20,7 @@ type DesktopAppLaunchCallback func(uintptr, glib.Pid, uintptr)
 type DesktopAppInfoClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *DesktopAppInfoClass) GoPointer() uintptr {
@@ -33,10 +33,45 @@ type DesktopAppInfoLookupIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xGetDefaultForUriScheme uintptr
 }
 
 func (x *DesktopAppInfoLookupIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetDefaultForUriScheme sets the callback function.
+func (x *DesktopAppInfoLookupIface) OverrideGetDefaultForUriScheme(cb func(DesktopAppInfoLookup, string) *AppInfoBase) {
+	if cb == nil {
+		x.xGetDefaultForUriScheme = 0
+	} else {
+		x.xGetDefaultForUriScheme = purego.NewCallback(func(LookupVarp uintptr, UriSchemeVarp string) uintptr {
+			ret := cb(&DesktopAppInfoLookupBase{Ptr: LookupVarp}, UriSchemeVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetDefaultForUriScheme gets the callback function.
+func (x *DesktopAppInfoLookupIface) GetGetDefaultForUriScheme() func(DesktopAppInfoLookup, string) *AppInfoBase {
+	if x.xGetDefaultForUriScheme == 0 {
+		return nil
+	}
+	var rawCallback func(LookupVarp uintptr, UriSchemeVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetDefaultForUriScheme)
+	return func(LookupVar DesktopAppInfoLookup, UriSchemeVar string) *AppInfoBase {
+		rawRet := rawCallback(LookupVar.GoPointer(), UriSchemeVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &AppInfoBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // #GDesktopAppInfoLookup is an opaque data structure and can only be accessed

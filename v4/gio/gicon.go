@@ -18,10 +18,145 @@ type IconIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xHash uintptr
+
+	xEqual uintptr
+
+	xToTokens uintptr
+
+	xFromTokens uintptr
+
+	xSerialize uintptr
 }
 
 func (x *IconIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideHash sets the callback function.
+func (x *IconIface) OverrideHash(cb func(Icon) uint) {
+	if cb == nil {
+		x.xHash = 0
+	} else {
+		x.xHash = purego.NewCallback(func(IconVarp uintptr) uint {
+			return cb(&IconBase{Ptr: IconVarp})
+		})
+	}
+}
+
+// GetHash gets the callback function.
+func (x *IconIface) GetHash() func(Icon) uint {
+	if x.xHash == 0 {
+		return nil
+	}
+	var rawCallback func(IconVarp uintptr) uint
+	purego.RegisterFunc(&rawCallback, x.xHash)
+	return func(IconVar Icon) uint {
+		return rawCallback(IconVar.GoPointer())
+	}
+}
+
+// OverrideEqual sets the callback function.
+func (x *IconIface) OverrideEqual(cb func(Icon, Icon) bool) {
+	if cb == nil {
+		x.xEqual = 0
+	} else {
+		x.xEqual = purego.NewCallback(func(Icon1Varp uintptr, Icon2Varp uintptr) bool {
+			return cb(&IconBase{Ptr: Icon1Varp}, &IconBase{Ptr: Icon2Varp})
+		})
+	}
+}
+
+// GetEqual gets the callback function.
+func (x *IconIface) GetEqual() func(Icon, Icon) bool {
+	if x.xEqual == 0 {
+		return nil
+	}
+	var rawCallback func(Icon1Varp uintptr, Icon2Varp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xEqual)
+	return func(Icon1Var Icon, Icon2Var Icon) bool {
+		return rawCallback(Icon1Var.GoPointer(), Icon2Var.GoPointer())
+	}
+}
+
+// OverrideToTokens sets the callback function.
+func (x *IconIface) OverrideToTokens(cb func(Icon, []uintptr, int) bool) {
+	if cb == nil {
+		x.xToTokens = 0
+	} else {
+		x.xToTokens = purego.NewCallback(func(IconVarp uintptr, TokensVarp []uintptr, OutVersionVarp int) bool {
+			return cb(&IconBase{Ptr: IconVarp}, TokensVarp, OutVersionVarp)
+		})
+	}
+}
+
+// GetToTokens gets the callback function.
+func (x *IconIface) GetToTokens() func(Icon, []uintptr, int) bool {
+	if x.xToTokens == 0 {
+		return nil
+	}
+	var rawCallback func(IconVarp uintptr, TokensVarp []uintptr, OutVersionVarp int) bool
+	purego.RegisterFunc(&rawCallback, x.xToTokens)
+	return func(IconVar Icon, TokensVar []uintptr, OutVersionVar int) bool {
+		return rawCallback(IconVar.GoPointer(), TokensVar, OutVersionVar)
+	}
+}
+
+// OverrideFromTokens sets the callback function.
+func (x *IconIface) OverrideFromTokens(cb func(string, int, int) *IconBase) {
+	if cb == nil {
+		x.xFromTokens = 0
+	} else {
+		x.xFromTokens = purego.NewCallback(func(TokensVarp string, NumTokensVarp int, VersionVarp int) uintptr {
+			ret := cb(TokensVarp, NumTokensVarp, VersionVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetFromTokens gets the callback function.
+func (x *IconIface) GetFromTokens() func(string, int, int) *IconBase {
+	if x.xFromTokens == 0 {
+		return nil
+	}
+	var rawCallback func(TokensVarp string, NumTokensVarp int, VersionVarp int) uintptr
+	purego.RegisterFunc(&rawCallback, x.xFromTokens)
+	return func(TokensVar string, NumTokensVar int, VersionVar int) *IconBase {
+		rawRet := rawCallback(TokensVar, NumTokensVar, VersionVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &IconBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideSerialize sets the callback function.
+func (x *IconIface) OverrideSerialize(cb func(Icon) *glib.Variant) {
+	if cb == nil {
+		x.xSerialize = 0
+	} else {
+		x.xSerialize = purego.NewCallback(func(IconVarp uintptr) *glib.Variant {
+			return cb(&IconBase{Ptr: IconVarp})
+		})
+	}
+}
+
+// GetSerialize gets the callback function.
+func (x *IconIface) GetSerialize() func(Icon) *glib.Variant {
+	if x.xSerialize == 0 {
+		return nil
+	}
+	var rawCallback func(IconVarp uintptr) *glib.Variant
+	purego.RegisterFunc(&rawCallback, x.xSerialize)
+	return func(IconVar Icon) *glib.Variant {
+		return rawCallback(IconVar.GoPointer())
+	}
 }
 
 // #GIcon is a very minimal interface for icons. It provides functions

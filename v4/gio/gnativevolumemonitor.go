@@ -5,17 +5,53 @@ import (
 	"structs"
 	"unsafe"
 
+	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
 type NativeVolumeMonitorClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass VolumeMonitorClass
+
+	xGetMountForMountPath uintptr
 }
 
 func (x *NativeVolumeMonitorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetMountForMountPath sets the callback function.
+func (x *NativeVolumeMonitorClass) OverrideGetMountForMountPath(cb func(string, *Cancellable) *MountBase) {
+	if cb == nil {
+		x.xGetMountForMountPath = 0
+	} else {
+		x.xGetMountForMountPath = purego.NewCallback(func(MountPathVarp string, CancellableVarp uintptr) uintptr {
+			ret := cb(MountPathVarp, CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetMountForMountPath gets the callback function.
+func (x *NativeVolumeMonitorClass) GetGetMountForMountPath() func(string, *Cancellable) *MountBase {
+	if x.xGetMountForMountPath == 0 {
+		return nil
+	}
+	var rawCallback func(MountPathVarp string, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetMountForMountPath)
+	return func(MountPathVar string, CancellableVar *Cancellable) *MountBase {
+		rawRet := rawCallback(MountPathVar, CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &MountBase{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 const (

@@ -16,13 +16,138 @@ import (
 type RangeClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
+
+	xValueChanged uintptr
+
+	xAdjustBounds uintptr
+
+	xMoveSlider uintptr
+
+	xGetRangeBorder uintptr
+
+	xChangeValue uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *RangeClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideValueChanged sets the callback function.
+func (x *RangeClass) OverrideValueChanged(cb func(*Range)) {
+	if cb == nil {
+		x.xValueChanged = 0
+	} else {
+		x.xValueChanged = purego.NewCallback(func(RangeVarp uintptr) {
+			cb(RangeNewFromInternalPtr(RangeVarp))
+		})
+	}
+}
+
+// GetValueChanged gets the callback function.
+func (x *RangeClass) GetValueChanged() func(*Range) {
+	if x.xValueChanged == 0 {
+		return nil
+	}
+	var rawCallback func(RangeVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xValueChanged)
+	return func(RangeVar *Range) {
+		rawCallback(RangeVar.GoPointer())
+	}
+}
+
+// OverrideAdjustBounds sets the callback function.
+func (x *RangeClass) OverrideAdjustBounds(cb func(*Range, float64)) {
+	if cb == nil {
+		x.xAdjustBounds = 0
+	} else {
+		x.xAdjustBounds = purego.NewCallback(func(RangeVarp uintptr, NewValueVarp float64) {
+			cb(RangeNewFromInternalPtr(RangeVarp), NewValueVarp)
+		})
+	}
+}
+
+// GetAdjustBounds gets the callback function.
+func (x *RangeClass) GetAdjustBounds() func(*Range, float64) {
+	if x.xAdjustBounds == 0 {
+		return nil
+	}
+	var rawCallback func(RangeVarp uintptr, NewValueVarp float64)
+	purego.RegisterFunc(&rawCallback, x.xAdjustBounds)
+	return func(RangeVar *Range, NewValueVar float64) {
+		rawCallback(RangeVar.GoPointer(), NewValueVar)
+	}
+}
+
+// OverrideMoveSlider sets the callback function.
+func (x *RangeClass) OverrideMoveSlider(cb func(*Range, ScrollType)) {
+	if cb == nil {
+		x.xMoveSlider = 0
+	} else {
+		x.xMoveSlider = purego.NewCallback(func(RangeVarp uintptr, ScrollVarp ScrollType) {
+			cb(RangeNewFromInternalPtr(RangeVarp), ScrollVarp)
+		})
+	}
+}
+
+// GetMoveSlider gets the callback function.
+func (x *RangeClass) GetMoveSlider() func(*Range, ScrollType) {
+	if x.xMoveSlider == 0 {
+		return nil
+	}
+	var rawCallback func(RangeVarp uintptr, ScrollVarp ScrollType)
+	purego.RegisterFunc(&rawCallback, x.xMoveSlider)
+	return func(RangeVar *Range, ScrollVar ScrollType) {
+		rawCallback(RangeVar.GoPointer(), ScrollVar)
+	}
+}
+
+// OverrideGetRangeBorder sets the callback function.
+func (x *RangeClass) OverrideGetRangeBorder(cb func(*Range, *Border)) {
+	if cb == nil {
+		x.xGetRangeBorder = 0
+	} else {
+		x.xGetRangeBorder = purego.NewCallback(func(RangeVarp uintptr, BorderVarp *Border) {
+			cb(RangeNewFromInternalPtr(RangeVarp), BorderVarp)
+		})
+	}
+}
+
+// GetGetRangeBorder gets the callback function.
+func (x *RangeClass) GetGetRangeBorder() func(*Range, *Border) {
+	if x.xGetRangeBorder == 0 {
+		return nil
+	}
+	var rawCallback func(RangeVarp uintptr, BorderVarp *Border)
+	purego.RegisterFunc(&rawCallback, x.xGetRangeBorder)
+	return func(RangeVar *Range, BorderVar *Border) {
+		rawCallback(RangeVar.GoPointer(), BorderVar)
+	}
+}
+
+// OverrideChangeValue sets the callback function.
+func (x *RangeClass) OverrideChangeValue(cb func(*Range, ScrollType, float64) bool) {
+	if cb == nil {
+		x.xChangeValue = 0
+	} else {
+		x.xChangeValue = purego.NewCallback(func(RangeVarp uintptr, ScrollVarp ScrollType, NewValueVarp float64) bool {
+			return cb(RangeNewFromInternalPtr(RangeVarp), ScrollVarp, NewValueVarp)
+		})
+	}
+}
+
+// GetChangeValue gets the callback function.
+func (x *RangeClass) GetChangeValue() func(*Range, ScrollType, float64) bool {
+	if x.xChangeValue == 0 {
+		return nil
+	}
+	var rawCallback func(RangeVarp uintptr, ScrollVarp ScrollType, NewValueVarp float64) bool
+	purego.RegisterFunc(&rawCallback, x.xChangeValue)
+	return func(RangeVar *Range, ScrollVar ScrollType, NewValueVar float64) bool {
+		return rawCallback(RangeVar.GoPointer(), ScrollVar, NewValueVar)
+	}
 }
 
 // `GtkRange` is the common base class for widgets which visualize an

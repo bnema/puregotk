@@ -16,13 +16,273 @@ import (
 type SettingsBackendClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xRead uintptr
+
+	xGetWritable uintptr
+
+	xWrite uintptr
+
+	xWriteTree uintptr
+
+	xReset uintptr
+
+	xSubscribe uintptr
+
+	xUnsubscribe uintptr
+
+	xSync uintptr
+
+	xGetPermission uintptr
+
+	xReadUserValue uintptr
 
 	Padding [23]uintptr
 }
 
 func (x *SettingsBackendClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideRead sets the callback function.
+func (x *SettingsBackendClass) OverrideRead(cb func(*SettingsBackend, string, *glib.VariantType, bool) *glib.Variant) {
+	if cb == nil {
+		x.xRead = 0
+	} else {
+		x.xRead = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType, DefaultValueVarp bool) *glib.Variant {
+			return cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ExpectedTypeVarp, DefaultValueVarp)
+		})
+	}
+}
+
+// GetRead gets the callback function.
+func (x *SettingsBackendClass) GetRead() func(*SettingsBackend, string, *glib.VariantType, bool) *glib.Variant {
+	if x.xRead == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType, DefaultValueVarp bool) *glib.Variant
+	purego.RegisterFunc(&rawCallback, x.xRead)
+	return func(BackendVar *SettingsBackend, KeyVar string, ExpectedTypeVar *glib.VariantType, DefaultValueVar bool) *glib.Variant {
+		return rawCallback(BackendVar.GoPointer(), KeyVar, ExpectedTypeVar, DefaultValueVar)
+	}
+}
+
+// OverrideGetWritable sets the callback function.
+func (x *SettingsBackendClass) OverrideGetWritable(cb func(*SettingsBackend, string) bool) {
+	if cb == nil {
+		x.xGetWritable = 0
+	} else {
+		x.xGetWritable = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string) bool {
+			return cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp)
+		})
+	}
+}
+
+// GetGetWritable gets the callback function.
+func (x *SettingsBackendClass) GetGetWritable() func(*SettingsBackend, string) bool {
+	if x.xGetWritable == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr, KeyVarp string) bool
+	purego.RegisterFunc(&rawCallback, x.xGetWritable)
+	return func(BackendVar *SettingsBackend, KeyVar string) bool {
+		return rawCallback(BackendVar.GoPointer(), KeyVar)
+	}
+}
+
+// OverrideWrite sets the callback function.
+func (x *SettingsBackendClass) OverrideWrite(cb func(*SettingsBackend, string, *glib.Variant, uintptr) bool) {
+	if cb == nil {
+		x.xWrite = 0
+	} else {
+		x.xWrite = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ValueVarp *glib.Variant, OriginTagVarp uintptr) bool {
+			return cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ValueVarp, OriginTagVarp)
+		})
+	}
+}
+
+// GetWrite gets the callback function.
+func (x *SettingsBackendClass) GetWrite() func(*SettingsBackend, string, *glib.Variant, uintptr) bool {
+	if x.xWrite == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr, KeyVarp string, ValueVarp *glib.Variant, OriginTagVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xWrite)
+	return func(BackendVar *SettingsBackend, KeyVar string, ValueVar *glib.Variant, OriginTagVar uintptr) bool {
+		return rawCallback(BackendVar.GoPointer(), KeyVar, ValueVar, OriginTagVar)
+	}
+}
+
+// OverrideWriteTree sets the callback function.
+func (x *SettingsBackendClass) OverrideWriteTree(cb func(*SettingsBackend, *glib.Tree, uintptr) bool) {
+	if cb == nil {
+		x.xWriteTree = 0
+	} else {
+		x.xWriteTree = purego.NewCallback(func(BackendVarp uintptr, TreeVarp *glib.Tree, OriginTagVarp uintptr) bool {
+			return cb(SettingsBackendNewFromInternalPtr(BackendVarp), TreeVarp, OriginTagVarp)
+		})
+	}
+}
+
+// GetWriteTree gets the callback function.
+func (x *SettingsBackendClass) GetWriteTree() func(*SettingsBackend, *glib.Tree, uintptr) bool {
+	if x.xWriteTree == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr, TreeVarp *glib.Tree, OriginTagVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xWriteTree)
+	return func(BackendVar *SettingsBackend, TreeVar *glib.Tree, OriginTagVar uintptr) bool {
+		return rawCallback(BackendVar.GoPointer(), TreeVar, OriginTagVar)
+	}
+}
+
+// OverrideReset sets the callback function.
+func (x *SettingsBackendClass) OverrideReset(cb func(*SettingsBackend, string, uintptr)) {
+	if cb == nil {
+		x.xReset = 0
+	} else {
+		x.xReset = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, OriginTagVarp uintptr) {
+			cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, OriginTagVarp)
+		})
+	}
+}
+
+// GetReset gets the callback function.
+func (x *SettingsBackendClass) GetReset() func(*SettingsBackend, string, uintptr) {
+	if x.xReset == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr, KeyVarp string, OriginTagVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xReset)
+	return func(BackendVar *SettingsBackend, KeyVar string, OriginTagVar uintptr) {
+		rawCallback(BackendVar.GoPointer(), KeyVar, OriginTagVar)
+	}
+}
+
+// OverrideSubscribe sets the callback function.
+func (x *SettingsBackendClass) OverrideSubscribe(cb func(*SettingsBackend, string)) {
+	if cb == nil {
+		x.xSubscribe = 0
+	} else {
+		x.xSubscribe = purego.NewCallback(func(BackendVarp uintptr, NameVarp string) {
+			cb(SettingsBackendNewFromInternalPtr(BackendVarp), NameVarp)
+		})
+	}
+}
+
+// GetSubscribe gets the callback function.
+func (x *SettingsBackendClass) GetSubscribe() func(*SettingsBackend, string) {
+	if x.xSubscribe == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr, NameVarp string)
+	purego.RegisterFunc(&rawCallback, x.xSubscribe)
+	return func(BackendVar *SettingsBackend, NameVar string) {
+		rawCallback(BackendVar.GoPointer(), NameVar)
+	}
+}
+
+// OverrideUnsubscribe sets the callback function.
+func (x *SettingsBackendClass) OverrideUnsubscribe(cb func(*SettingsBackend, string)) {
+	if cb == nil {
+		x.xUnsubscribe = 0
+	} else {
+		x.xUnsubscribe = purego.NewCallback(func(BackendVarp uintptr, NameVarp string) {
+			cb(SettingsBackendNewFromInternalPtr(BackendVarp), NameVarp)
+		})
+	}
+}
+
+// GetUnsubscribe gets the callback function.
+func (x *SettingsBackendClass) GetUnsubscribe() func(*SettingsBackend, string) {
+	if x.xUnsubscribe == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr, NameVarp string)
+	purego.RegisterFunc(&rawCallback, x.xUnsubscribe)
+	return func(BackendVar *SettingsBackend, NameVar string) {
+		rawCallback(BackendVar.GoPointer(), NameVar)
+	}
+}
+
+// OverrideSync sets the callback function.
+func (x *SettingsBackendClass) OverrideSync(cb func(*SettingsBackend)) {
+	if cb == nil {
+		x.xSync = 0
+	} else {
+		x.xSync = purego.NewCallback(func(BackendVarp uintptr) {
+			cb(SettingsBackendNewFromInternalPtr(BackendVarp))
+		})
+	}
+}
+
+// GetSync gets the callback function.
+func (x *SettingsBackendClass) GetSync() func(*SettingsBackend) {
+	if x.xSync == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSync)
+	return func(BackendVar *SettingsBackend) {
+		rawCallback(BackendVar.GoPointer())
+	}
+}
+
+// OverrideGetPermission sets the callback function.
+func (x *SettingsBackendClass) OverrideGetPermission(cb func(*SettingsBackend, string) *Permission) {
+	if cb == nil {
+		x.xGetPermission = 0
+	} else {
+		x.xGetPermission = purego.NewCallback(func(BackendVarp uintptr, PathVarp string) uintptr {
+			ret := cb(SettingsBackendNewFromInternalPtr(BackendVarp), PathVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetGetPermission gets the callback function.
+func (x *SettingsBackendClass) GetGetPermission() func(*SettingsBackend, string) *Permission {
+	if x.xGetPermission == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr, PathVarp string) uintptr
+	purego.RegisterFunc(&rawCallback, x.xGetPermission)
+	return func(BackendVar *SettingsBackend, PathVar string) *Permission {
+		rawRet := rawCallback(BackendVar.GoPointer(), PathVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &Permission{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideReadUserValue sets the callback function.
+func (x *SettingsBackendClass) OverrideReadUserValue(cb func(*SettingsBackend, string, *glib.VariantType) *glib.Variant) {
+	if cb == nil {
+		x.xReadUserValue = 0
+	} else {
+		x.xReadUserValue = purego.NewCallback(func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType) *glib.Variant {
+			return cb(SettingsBackendNewFromInternalPtr(BackendVarp), KeyVarp, ExpectedTypeVarp)
+		})
+	}
+}
+
+// GetReadUserValue gets the callback function.
+func (x *SettingsBackendClass) GetReadUserValue() func(*SettingsBackend, string, *glib.VariantType) *glib.Variant {
+	if x.xReadUserValue == 0 {
+		return nil
+	}
+	var rawCallback func(BackendVarp uintptr, KeyVarp string, ExpectedTypeVarp *glib.VariantType) *glib.Variant
+	purego.RegisterFunc(&rawCallback, x.xReadUserValue)
+	return func(BackendVar *SettingsBackend, KeyVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
+		return rawCallback(BackendVar.GoPointer(), KeyVar, ExpectedTypeVar)
+	}
 }
 
 type SettingsBackendPrivate struct {

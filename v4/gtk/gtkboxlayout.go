@@ -13,7 +13,7 @@ import (
 type BoxLayoutClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass LayoutManagerClass
 }
 
 func (x *BoxLayoutClass) GoPointer() uintptr {

@@ -18,10 +18,35 @@ type InitableIface struct {
 	_ structs.HostLayout
 
 	GIface uintptr
+
+	xInit uintptr
 }
 
 func (x *InitableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideInit sets the callback function.
+func (x *InitableIface) OverrideInit(cb func(Initable, *Cancellable) bool) {
+	if cb == nil {
+		x.xInit = 0
+	} else {
+		x.xInit = purego.NewCallback(func(InitableVarp uintptr, CancellableVarp uintptr) bool {
+			return cb(&InitableBase{Ptr: InitableVarp}, CancellableNewFromInternalPtr(CancellableVarp))
+		})
+	}
+}
+
+// GetInit gets the callback function.
+func (x *InitableIface) GetInit() func(Initable, *Cancellable) bool {
+	if x.xInit == 0 {
+		return nil
+	}
+	var rawCallback func(InitableVarp uintptr, CancellableVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xInit)
+	return func(InitableVar Initable, CancellableVar *Cancellable) bool {
+		return rawCallback(InitableVar.GoPointer(), CancellableVar.GoPointer())
+	}
 }
 
 // #GInitable is implemented by objects that can fail during
@@ -51,7 +76,7 @@ func (x *InitableIface) GoPointer() uintptr {
 type Initable interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	Init(CancellableVar *Cancellable) bool
+	Init(CancellableVar *Cancellable) (bool, error)
 }
 
 var xInitableGLibType func() types.GType

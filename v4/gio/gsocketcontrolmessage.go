@@ -15,11 +15,271 @@ import (
 type SocketControlMessageClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGetSize uintptr
+
+	xGetLevel uintptr
+
+	xGetType uintptr
+
+	xSerialize uintptr
+
+	xDeserialize uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
+
+	xGReserved4 uintptr
+
+	xGReserved5 uintptr
 }
 
 func (x *SocketControlMessageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetSize sets the callback function.
+func (x *SocketControlMessageClass) OverrideGetSize(cb func(*SocketControlMessage) uint) {
+	if cb == nil {
+		x.xGetSize = 0
+	} else {
+		x.xGetSize = purego.NewCallback(func(MessageVarp uintptr) uint {
+			return cb(SocketControlMessageNewFromInternalPtr(MessageVarp))
+		})
+	}
+}
+
+// GetGetSize gets the callback function.
+func (x *SocketControlMessageClass) GetGetSize() func(*SocketControlMessage) uint {
+	if x.xGetSize == 0 {
+		return nil
+	}
+	var rawCallback func(MessageVarp uintptr) uint
+	purego.RegisterFunc(&rawCallback, x.xGetSize)
+	return func(MessageVar *SocketControlMessage) uint {
+		return rawCallback(MessageVar.GoPointer())
+	}
+}
+
+// OverrideGetLevel sets the callback function.
+func (x *SocketControlMessageClass) OverrideGetLevel(cb func(*SocketControlMessage) int) {
+	if cb == nil {
+		x.xGetLevel = 0
+	} else {
+		x.xGetLevel = purego.NewCallback(func(MessageVarp uintptr) int {
+			return cb(SocketControlMessageNewFromInternalPtr(MessageVarp))
+		})
+	}
+}
+
+// GetGetLevel gets the callback function.
+func (x *SocketControlMessageClass) GetGetLevel() func(*SocketControlMessage) int {
+	if x.xGetLevel == 0 {
+		return nil
+	}
+	var rawCallback func(MessageVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xGetLevel)
+	return func(MessageVar *SocketControlMessage) int {
+		return rawCallback(MessageVar.GoPointer())
+	}
+}
+
+// OverrideGetType sets the callback function.
+func (x *SocketControlMessageClass) OverrideGetType(cb func(*SocketControlMessage) int) {
+	if cb == nil {
+		x.xGetType = 0
+	} else {
+		x.xGetType = purego.NewCallback(func(MessageVarp uintptr) int {
+			return cb(SocketControlMessageNewFromInternalPtr(MessageVarp))
+		})
+	}
+}
+
+// GetGetType gets the callback function.
+func (x *SocketControlMessageClass) GetGetType() func(*SocketControlMessage) int {
+	if x.xGetType == 0 {
+		return nil
+	}
+	var rawCallback func(MessageVarp uintptr) int
+	purego.RegisterFunc(&rawCallback, x.xGetType)
+	return func(MessageVar *SocketControlMessage) int {
+		return rawCallback(MessageVar.GoPointer())
+	}
+}
+
+// OverrideSerialize sets the callback function.
+func (x *SocketControlMessageClass) OverrideSerialize(cb func(*SocketControlMessage, uintptr)) {
+	if cb == nil {
+		x.xSerialize = 0
+	} else {
+		x.xSerialize = purego.NewCallback(func(MessageVarp uintptr, DataVarp uintptr) {
+			cb(SocketControlMessageNewFromInternalPtr(MessageVarp), DataVarp)
+		})
+	}
+}
+
+// GetSerialize gets the callback function.
+func (x *SocketControlMessageClass) GetSerialize() func(*SocketControlMessage, uintptr) {
+	if x.xSerialize == 0 {
+		return nil
+	}
+	var rawCallback func(MessageVarp uintptr, DataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xSerialize)
+	return func(MessageVar *SocketControlMessage, DataVar uintptr) {
+		rawCallback(MessageVar.GoPointer(), DataVar)
+	}
+}
+
+// OverrideDeserialize sets the callback function.
+func (x *SocketControlMessageClass) OverrideDeserialize(cb func(int, int, uint, uintptr) *SocketControlMessage) {
+	if cb == nil {
+		x.xDeserialize = 0
+	} else {
+		x.xDeserialize = purego.NewCallback(func(LevelVarp int, TypeVarp int, SizeVarp uint, DataVarp uintptr) uintptr {
+			ret := cb(LevelVarp, TypeVarp, SizeVarp, DataVarp)
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetDeserialize gets the callback function.
+func (x *SocketControlMessageClass) GetDeserialize() func(int, int, uint, uintptr) *SocketControlMessage {
+	if x.xDeserialize == 0 {
+		return nil
+	}
+	var rawCallback func(LevelVarp int, TypeVarp int, SizeVarp uint, DataVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xDeserialize)
+	return func(LevelVar int, TypeVar int, SizeVar uint, DataVar uintptr) *SocketControlMessage {
+		rawRet := rawCallback(LevelVar, TypeVar, SizeVar, DataVar)
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &SocketControlMessage{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *SocketControlMessageClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *SocketControlMessageClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *SocketControlMessageClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *SocketControlMessageClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *SocketControlMessageClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *SocketControlMessageClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved4 sets the callback function.
+func (x *SocketControlMessageClass) OverrideGReserved4(cb func()) {
+	if cb == nil {
+		x.xGReserved4 = 0
+	} else {
+		x.xGReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved4 gets the callback function.
+func (x *SocketControlMessageClass) GetGReserved4() func() {
+	if x.xGReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved5 sets the callback function.
+func (x *SocketControlMessageClass) OverrideGReserved5(cb func()) {
+	if cb == nil {
+		x.xGReserved5 = 0
+	} else {
+		x.xGReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved5 gets the callback function.
+func (x *SocketControlMessageClass) GetGReserved5() func() {
+	if x.xGReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved5)
+	return func() {
+		rawCallback()
+	}
 }
 
 type SocketControlMessagePrivate struct {

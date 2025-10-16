@@ -16,11 +16,106 @@ import (
 type SocketAddressEnumeratorClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xNext uintptr
+
+	xNextAsync uintptr
+
+	xNextFinish uintptr
 }
 
 func (x *SocketAddressEnumeratorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideNext sets the callback function.
+func (x *SocketAddressEnumeratorClass) OverrideNext(cb func(*SocketAddressEnumerator, *Cancellable) *SocketAddress) {
+	if cb == nil {
+		x.xNext = 0
+	} else {
+		x.xNext = purego.NewCallback(func(EnumeratorVarp uintptr, CancellableVarp uintptr) uintptr {
+			ret := cb(SocketAddressEnumeratorNewFromInternalPtr(EnumeratorVarp), CancellableNewFromInternalPtr(CancellableVarp))
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetNext gets the callback function.
+func (x *SocketAddressEnumeratorClass) GetNext() func(*SocketAddressEnumerator, *Cancellable) *SocketAddress {
+	if x.xNext == 0 {
+		return nil
+	}
+	var rawCallback func(EnumeratorVarp uintptr, CancellableVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xNext)
+	return func(EnumeratorVar *SocketAddressEnumerator, CancellableVar *Cancellable) *SocketAddress {
+		rawRet := rawCallback(EnumeratorVar.GoPointer(), CancellableVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &SocketAddress{}
+		ret.Ptr = rawRet
+		return ret
+	}
+}
+
+// OverrideNextAsync sets the callback function.
+func (x *SocketAddressEnumeratorClass) OverrideNextAsync(cb func(*SocketAddressEnumerator, *Cancellable, *AsyncReadyCallback, uintptr)) {
+	if cb == nil {
+		x.xNextAsync = 0
+	} else {
+		x.xNextAsync = purego.NewCallback(func(EnumeratorVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+			cb(SocketAddressEnumeratorNewFromInternalPtr(EnumeratorVarp), CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
+		})
+	}
+}
+
+// GetNextAsync gets the callback function.
+func (x *SocketAddressEnumeratorClass) GetNextAsync() func(*SocketAddressEnumerator, *Cancellable, *AsyncReadyCallback, uintptr) {
+	if x.xNextAsync == 0 {
+		return nil
+	}
+	var rawCallback func(EnumeratorVarp uintptr, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xNextAsync)
+	return func(EnumeratorVar *SocketAddressEnumerator, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+		rawCallback(EnumeratorVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	}
+}
+
+// OverrideNextFinish sets the callback function.
+func (x *SocketAddressEnumeratorClass) OverrideNextFinish(cb func(*SocketAddressEnumerator, AsyncResult) *SocketAddress) {
+	if cb == nil {
+		x.xNextFinish = 0
+	} else {
+		x.xNextFinish = purego.NewCallback(func(EnumeratorVarp uintptr, ResultVarp uintptr) uintptr {
+			ret := cb(SocketAddressEnumeratorNewFromInternalPtr(EnumeratorVarp), &AsyncResultBase{Ptr: ResultVarp})
+			if ret == nil {
+				return 0
+			}
+			return ret.GoPointer()
+		})
+	}
+}
+
+// GetNextFinish gets the callback function.
+func (x *SocketAddressEnumeratorClass) GetNextFinish() func(*SocketAddressEnumerator, AsyncResult) *SocketAddress {
+	if x.xNextFinish == 0 {
+		return nil
+	}
+	var rawCallback func(EnumeratorVarp uintptr, ResultVarp uintptr) uintptr
+	purego.RegisterFunc(&rawCallback, x.xNextFinish)
+	return func(EnumeratorVar *SocketAddressEnumerator, ResultVar AsyncResult) *SocketAddress {
+		rawRet := rawCallback(EnumeratorVar.GoPointer(), ResultVar.GoPointer())
+		if rawRet == 0 {
+			return nil
+		}
+		ret := &SocketAddress{}
+		ret.Ptr = rawRet
+		return ret
+	}
 }
 
 // #GSocketAddressEnumerator is an enumerator type for #GSocketAddress

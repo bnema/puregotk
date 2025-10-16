@@ -559,10 +559,210 @@ func (x *IOChannel) WriteUnichar(ThecharVar uint32) (IOStatus, error) {
 // in a generic way.
 type IOFuncs struct {
 	_ structs.HostLayout
+
+	xIoRead uintptr
+
+	xIoWrite uintptr
+
+	xIoSeek uintptr
+
+	xIoClose uintptr
+
+	xIoCreateWatch uintptr
+
+	xIoFree uintptr
+
+	xIoSetFlags uintptr
+
+	xIoGetFlags uintptr
 }
 
 func (x *IOFuncs) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideIoRead sets the callback function.
+func (x *IOFuncs) OverrideIoRead(cb func(*IOChannel, string, uint, uint) IOStatus) {
+	if cb == nil {
+		x.xIoRead = 0
+	} else {
+		x.xIoRead = purego.NewCallback(func(ChannelVarp *IOChannel, BufVarp string, CountVarp uint, BytesReadVarp uint) IOStatus {
+			return cb(ChannelVarp, BufVarp, CountVarp, BytesReadVarp)
+		})
+	}
+}
+
+// GetIoRead gets the callback function.
+func (x *IOFuncs) GetIoRead() func(*IOChannel, string, uint, uint) IOStatus {
+	if x.xIoRead == 0 {
+		return nil
+	}
+	var rawCallback func(ChannelVarp *IOChannel, BufVarp string, CountVarp uint, BytesReadVarp uint) IOStatus
+	purego.RegisterFunc(&rawCallback, x.xIoRead)
+	return func(ChannelVar *IOChannel, BufVar string, CountVar uint, BytesReadVar uint) IOStatus {
+		return rawCallback(ChannelVar, BufVar, CountVar, BytesReadVar)
+	}
+}
+
+// OverrideIoWrite sets the callback function.
+func (x *IOFuncs) OverrideIoWrite(cb func(*IOChannel, string, uint, uint) IOStatus) {
+	if cb == nil {
+		x.xIoWrite = 0
+	} else {
+		x.xIoWrite = purego.NewCallback(func(ChannelVarp *IOChannel, BufVarp string, CountVarp uint, BytesWrittenVarp uint) IOStatus {
+			return cb(ChannelVarp, BufVarp, CountVarp, BytesWrittenVarp)
+		})
+	}
+}
+
+// GetIoWrite gets the callback function.
+func (x *IOFuncs) GetIoWrite() func(*IOChannel, string, uint, uint) IOStatus {
+	if x.xIoWrite == 0 {
+		return nil
+	}
+	var rawCallback func(ChannelVarp *IOChannel, BufVarp string, CountVarp uint, BytesWrittenVarp uint) IOStatus
+	purego.RegisterFunc(&rawCallback, x.xIoWrite)
+	return func(ChannelVar *IOChannel, BufVar string, CountVar uint, BytesWrittenVar uint) IOStatus {
+		return rawCallback(ChannelVar, BufVar, CountVar, BytesWrittenVar)
+	}
+}
+
+// OverrideIoSeek sets the callback function.
+func (x *IOFuncs) OverrideIoSeek(cb func(*IOChannel, int64, SeekType) IOStatus) {
+	if cb == nil {
+		x.xIoSeek = 0
+	} else {
+		x.xIoSeek = purego.NewCallback(func(ChannelVarp *IOChannel, OffsetVarp int64, TypeVarp SeekType) IOStatus {
+			return cb(ChannelVarp, OffsetVarp, TypeVarp)
+		})
+	}
+}
+
+// GetIoSeek gets the callback function.
+func (x *IOFuncs) GetIoSeek() func(*IOChannel, int64, SeekType) IOStatus {
+	if x.xIoSeek == 0 {
+		return nil
+	}
+	var rawCallback func(ChannelVarp *IOChannel, OffsetVarp int64, TypeVarp SeekType) IOStatus
+	purego.RegisterFunc(&rawCallback, x.xIoSeek)
+	return func(ChannelVar *IOChannel, OffsetVar int64, TypeVar SeekType) IOStatus {
+		return rawCallback(ChannelVar, OffsetVar, TypeVar)
+	}
+}
+
+// OverrideIoClose sets the callback function.
+func (x *IOFuncs) OverrideIoClose(cb func(*IOChannel) IOStatus) {
+	if cb == nil {
+		x.xIoClose = 0
+	} else {
+		x.xIoClose = purego.NewCallback(func(ChannelVarp *IOChannel) IOStatus {
+			return cb(ChannelVarp)
+		})
+	}
+}
+
+// GetIoClose gets the callback function.
+func (x *IOFuncs) GetIoClose() func(*IOChannel) IOStatus {
+	if x.xIoClose == 0 {
+		return nil
+	}
+	var rawCallback func(ChannelVarp *IOChannel) IOStatus
+	purego.RegisterFunc(&rawCallback, x.xIoClose)
+	return func(ChannelVar *IOChannel) IOStatus {
+		return rawCallback(ChannelVar)
+	}
+}
+
+// OverrideIoCreateWatch sets the callback function.
+func (x *IOFuncs) OverrideIoCreateWatch(cb func(*IOChannel, IOCondition) *Source) {
+	if cb == nil {
+		x.xIoCreateWatch = 0
+	} else {
+		x.xIoCreateWatch = purego.NewCallback(func(ChannelVarp *IOChannel, ConditionVarp IOCondition) *Source {
+			return cb(ChannelVarp, ConditionVarp)
+		})
+	}
+}
+
+// GetIoCreateWatch gets the callback function.
+func (x *IOFuncs) GetIoCreateWatch() func(*IOChannel, IOCondition) *Source {
+	if x.xIoCreateWatch == 0 {
+		return nil
+	}
+	var rawCallback func(ChannelVarp *IOChannel, ConditionVarp IOCondition) *Source
+	purego.RegisterFunc(&rawCallback, x.xIoCreateWatch)
+	return func(ChannelVar *IOChannel, ConditionVar IOCondition) *Source {
+		return rawCallback(ChannelVar, ConditionVar)
+	}
+}
+
+// OverrideIoFree sets the callback function.
+func (x *IOFuncs) OverrideIoFree(cb func(*IOChannel)) {
+	if cb == nil {
+		x.xIoFree = 0
+	} else {
+		x.xIoFree = purego.NewCallback(func(ChannelVarp *IOChannel) {
+			cb(ChannelVarp)
+		})
+	}
+}
+
+// GetIoFree gets the callback function.
+func (x *IOFuncs) GetIoFree() func(*IOChannel) {
+	if x.xIoFree == 0 {
+		return nil
+	}
+	var rawCallback func(ChannelVarp *IOChannel)
+	purego.RegisterFunc(&rawCallback, x.xIoFree)
+	return func(ChannelVar *IOChannel) {
+		rawCallback(ChannelVar)
+	}
+}
+
+// OverrideIoSetFlags sets the callback function.
+func (x *IOFuncs) OverrideIoSetFlags(cb func(*IOChannel, IOFlags) IOStatus) {
+	if cb == nil {
+		x.xIoSetFlags = 0
+	} else {
+		x.xIoSetFlags = purego.NewCallback(func(ChannelVarp *IOChannel, FlagsVarp IOFlags) IOStatus {
+			return cb(ChannelVarp, FlagsVarp)
+		})
+	}
+}
+
+// GetIoSetFlags gets the callback function.
+func (x *IOFuncs) GetIoSetFlags() func(*IOChannel, IOFlags) IOStatus {
+	if x.xIoSetFlags == 0 {
+		return nil
+	}
+	var rawCallback func(ChannelVarp *IOChannel, FlagsVarp IOFlags) IOStatus
+	purego.RegisterFunc(&rawCallback, x.xIoSetFlags)
+	return func(ChannelVar *IOChannel, FlagsVar IOFlags) IOStatus {
+		return rawCallback(ChannelVar, FlagsVar)
+	}
+}
+
+// OverrideIoGetFlags sets the callback function.
+func (x *IOFuncs) OverrideIoGetFlags(cb func(*IOChannel) IOFlags) {
+	if cb == nil {
+		x.xIoGetFlags = 0
+	} else {
+		x.xIoGetFlags = purego.NewCallback(func(ChannelVarp *IOChannel) IOFlags {
+			return cb(ChannelVarp)
+		})
+	}
+}
+
+// GetIoGetFlags gets the callback function.
+func (x *IOFuncs) GetIoGetFlags() func(*IOChannel) IOFlags {
+	if x.xIoGetFlags == 0 {
+		return nil
+	}
+	var rawCallback func(ChannelVarp *IOChannel) IOFlags
+	purego.RegisterFunc(&rawCallback, x.xIoGetFlags)
+	return func(ChannelVar *IOChannel) IOFlags {
+		return rawCallback(ChannelVar)
+	}
 }
 
 const (

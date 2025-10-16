@@ -14,7 +14,7 @@ import (
 type TreeListRowSorterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass SorterClass
 }
 
 func (x *TreeListRowSorterClass) GoPointer() uintptr {

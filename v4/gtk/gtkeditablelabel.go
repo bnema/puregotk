@@ -14,7 +14,7 @@ import (
 type EditableLabelClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
 }
 
 func (x *EditableLabelClass) GoPointer() uintptr {

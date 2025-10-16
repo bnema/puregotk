@@ -15,11 +15,261 @@ import (
 type FilterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xMatch uintptr
+
+	xGetStrictness uintptr
+
+	xGtkReserved1 uintptr
+
+	xGtkReserved2 uintptr
+
+	xGtkReserved3 uintptr
+
+	xGtkReserved4 uintptr
+
+	xGtkReserved5 uintptr
+
+	xGtkReserved6 uintptr
+
+	xGtkReserved7 uintptr
+
+	xGtkReserved8 uintptr
 }
 
 func (x *FilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideMatch sets the callback function.
+func (x *FilterClass) OverrideMatch(cb func(*Filter, *gobject.Object) bool) {
+	if cb == nil {
+		x.xMatch = 0
+	} else {
+		x.xMatch = purego.NewCallback(func(SelfVarp uintptr, ItemVarp uintptr) bool {
+			return cb(FilterNewFromInternalPtr(SelfVarp), gobject.ObjectNewFromInternalPtr(ItemVarp))
+		})
+	}
+}
+
+// GetMatch gets the callback function.
+func (x *FilterClass) GetMatch() func(*Filter, *gobject.Object) bool {
+	if x.xMatch == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr, ItemVarp uintptr) bool
+	purego.RegisterFunc(&rawCallback, x.xMatch)
+	return func(SelfVar *Filter, ItemVar *gobject.Object) bool {
+		return rawCallback(SelfVar.GoPointer(), ItemVar.GoPointer())
+	}
+}
+
+// OverrideGetStrictness sets the callback function.
+func (x *FilterClass) OverrideGetStrictness(cb func(*Filter) FilterMatch) {
+	if cb == nil {
+		x.xGetStrictness = 0
+	} else {
+		x.xGetStrictness = purego.NewCallback(func(SelfVarp uintptr) FilterMatch {
+			return cb(FilterNewFromInternalPtr(SelfVarp))
+		})
+	}
+}
+
+// GetGetStrictness gets the callback function.
+func (x *FilterClass) GetGetStrictness() func(*Filter) FilterMatch {
+	if x.xGetStrictness == 0 {
+		return nil
+	}
+	var rawCallback func(SelfVarp uintptr) FilterMatch
+	purego.RegisterFunc(&rawCallback, x.xGetStrictness)
+	return func(SelfVar *Filter) FilterMatch {
+		return rawCallback(SelfVar.GoPointer())
+	}
+}
+
+// OverrideGtkReserved1 sets the callback function.
+func (x *FilterClass) OverrideGtkReserved1(cb func()) {
+	if cb == nil {
+		x.xGtkReserved1 = 0
+	} else {
+		x.xGtkReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved1 gets the callback function.
+func (x *FilterClass) GetGtkReserved1() func() {
+	if x.xGtkReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved2 sets the callback function.
+func (x *FilterClass) OverrideGtkReserved2(cb func()) {
+	if cb == nil {
+		x.xGtkReserved2 = 0
+	} else {
+		x.xGtkReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved2 gets the callback function.
+func (x *FilterClass) GetGtkReserved2() func() {
+	if x.xGtkReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved3 sets the callback function.
+func (x *FilterClass) OverrideGtkReserved3(cb func()) {
+	if cb == nil {
+		x.xGtkReserved3 = 0
+	} else {
+		x.xGtkReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved3 gets the callback function.
+func (x *FilterClass) GetGtkReserved3() func() {
+	if x.xGtkReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved3)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved4 sets the callback function.
+func (x *FilterClass) OverrideGtkReserved4(cb func()) {
+	if cb == nil {
+		x.xGtkReserved4 = 0
+	} else {
+		x.xGtkReserved4 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved4 gets the callback function.
+func (x *FilterClass) GetGtkReserved4() func() {
+	if x.xGtkReserved4 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved4)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved5 sets the callback function.
+func (x *FilterClass) OverrideGtkReserved5(cb func()) {
+	if cb == nil {
+		x.xGtkReserved5 = 0
+	} else {
+		x.xGtkReserved5 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved5 gets the callback function.
+func (x *FilterClass) GetGtkReserved5() func() {
+	if x.xGtkReserved5 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved5)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved6 sets the callback function.
+func (x *FilterClass) OverrideGtkReserved6(cb func()) {
+	if cb == nil {
+		x.xGtkReserved6 = 0
+	} else {
+		x.xGtkReserved6 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved6 gets the callback function.
+func (x *FilterClass) GetGtkReserved6() func() {
+	if x.xGtkReserved6 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved6)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved7 sets the callback function.
+func (x *FilterClass) OverrideGtkReserved7(cb func()) {
+	if cb == nil {
+		x.xGtkReserved7 = 0
+	} else {
+		x.xGtkReserved7 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved7 gets the callback function.
+func (x *FilterClass) GetGtkReserved7() func() {
+	if x.xGtkReserved7 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved7)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGtkReserved8 sets the callback function.
+func (x *FilterClass) OverrideGtkReserved8(cb func()) {
+	if cb == nil {
+		x.xGtkReserved8 = 0
+	} else {
+		x.xGtkReserved8 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGtkReserved8 gets the callback function.
+func (x *FilterClass) GetGtkReserved8() func() {
+	if x.xGtkReserved8 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGtkReserved8)
+	return func() {
+		rawCallback()
+	}
 }
 
 // Describes changes in a filter in more detail and allows objects

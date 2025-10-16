@@ -18,13 +18,38 @@ type ScaleFormatValueFunc func(uintptr, float64, uintptr) string
 type ScaleClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass RangeClass
+
+	xGetLayoutOffsets uintptr
 
 	Padding [8]uintptr
 }
 
 func (x *ScaleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGetLayoutOffsets sets the callback function.
+func (x *ScaleClass) OverrideGetLayoutOffsets(cb func(*Scale, int, int)) {
+	if cb == nil {
+		x.xGetLayoutOffsets = 0
+	} else {
+		x.xGetLayoutOffsets = purego.NewCallback(func(ScaleVarp uintptr, XVarp int, YVarp int) {
+			cb(ScaleNewFromInternalPtr(ScaleVarp), XVarp, YVarp)
+		})
+	}
+}
+
+// GetGetLayoutOffsets gets the callback function.
+func (x *ScaleClass) GetGetLayoutOffsets() func(*Scale, int, int) {
+	if x.xGetLayoutOffsets == 0 {
+		return nil
+	}
+	var rawCallback func(ScaleVarp uintptr, XVarp int, YVarp int)
+	purego.RegisterFunc(&rawCallback, x.xGetLayoutOffsets)
+	return func(ScaleVar *Scale, XVar int, YVar int) {
+		rawCallback(ScaleVar.GoPointer(), XVar, YVar)
+	}
 }
 
 // A `GtkScale` is a slider control used to select a numeric value.

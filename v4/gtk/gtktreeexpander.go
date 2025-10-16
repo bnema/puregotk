@@ -14,7 +14,7 @@ import (
 type TreeExpanderClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass WidgetClass
 }
 
 func (x *TreeExpanderClass) GoPointer() uintptr {

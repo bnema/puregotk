@@ -13,7 +13,7 @@ import (
 type PasswordEntryBufferClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass EntryBufferClass
 }
 
 func (x *PasswordEntryBufferClass) GoPointer() uintptr {

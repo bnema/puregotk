@@ -15,11 +15,111 @@ import (
 type FilenameCompleterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
+
+	xGotCompletionData uintptr
+
+	xGReserved1 uintptr
+
+	xGReserved2 uintptr
+
+	xGReserved3 uintptr
 }
 
 func (x *FilenameCompleterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
+}
+
+// OverrideGotCompletionData sets the callback function.
+func (x *FilenameCompleterClass) OverrideGotCompletionData(cb func(*FilenameCompleter)) {
+	if cb == nil {
+		x.xGotCompletionData = 0
+	} else {
+		x.xGotCompletionData = purego.NewCallback(func(FilenameCompleterVarp uintptr) {
+			cb(FilenameCompleterNewFromInternalPtr(FilenameCompleterVarp))
+		})
+	}
+}
+
+// GetGotCompletionData gets the callback function.
+func (x *FilenameCompleterClass) GetGotCompletionData() func(*FilenameCompleter) {
+	if x.xGotCompletionData == 0 {
+		return nil
+	}
+	var rawCallback func(FilenameCompleterVarp uintptr)
+	purego.RegisterFunc(&rawCallback, x.xGotCompletionData)
+	return func(FilenameCompleterVar *FilenameCompleter) {
+		rawCallback(FilenameCompleterVar.GoPointer())
+	}
+}
+
+// OverrideGReserved1 sets the callback function.
+func (x *FilenameCompleterClass) OverrideGReserved1(cb func()) {
+	if cb == nil {
+		x.xGReserved1 = 0
+	} else {
+		x.xGReserved1 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved1 gets the callback function.
+func (x *FilenameCompleterClass) GetGReserved1() func() {
+	if x.xGReserved1 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved1)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved2 sets the callback function.
+func (x *FilenameCompleterClass) OverrideGReserved2(cb func()) {
+	if cb == nil {
+		x.xGReserved2 = 0
+	} else {
+		x.xGReserved2 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved2 gets the callback function.
+func (x *FilenameCompleterClass) GetGReserved2() func() {
+	if x.xGReserved2 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved2)
+	return func() {
+		rawCallback()
+	}
+}
+
+// OverrideGReserved3 sets the callback function.
+func (x *FilenameCompleterClass) OverrideGReserved3(cb func()) {
+	if cb == nil {
+		x.xGReserved3 = 0
+	} else {
+		x.xGReserved3 = purego.NewCallback(func() {
+			cb()
+		})
+	}
+}
+
+// GetGReserved3 gets the callback function.
+func (x *FilenameCompleterClass) GetGReserved3() func() {
+	if x.xGReserved3 == 0 {
+		return nil
+	}
+	var rawCallback func()
+	purego.RegisterFunc(&rawCallback, x.xGReserved3)
+	return func() {
+		rawCallback()
+	}
 }
 
 // Completes partial file and directory names given a partial string by

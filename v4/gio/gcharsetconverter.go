@@ -15,7 +15,7 @@ import (
 type CharsetConverterClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *CharsetConverterClass) GoPointer() uintptr {

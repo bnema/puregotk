@@ -15,7 +15,7 @@ import (
 type FilterListModelClass struct {
 	_ structs.HostLayout
 
-	ParentClass uintptr
+	ParentClass gobject.ObjectClass
 }
 
 func (x *FilterListModelClass) GoPointer() uintptr {
