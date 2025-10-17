@@ -210,7 +210,7 @@ func AtomicIntXor(AtomicVar uint, ValVar uint) uint {
 	return cret
 }
 
-var xAtomicPointerAdd func(uintptr, int) gintptr
+var xAtomicPointerAdd func(uintptr, int) int
 
 // Atomically adds @val to the value of @atomic.
 //
@@ -225,7 +225,7 @@ var xAtomicPointerAdd func(uintptr, int) gintptr
 // In GLib 2.80, the return type was changed from #gssize to #gintptr to add
 // support for platforms with 128-bit pointers. This should not affect existing
 // code.
-func AtomicPointerAdd(AtomicVar uintptr, ValVar int) gintptr {
+func AtomicPointerAdd(AtomicVar uintptr, ValVar int) int {
 
 	cret := xAtomicPointerAdd(AtomicVar, ValVar)
 	return cret

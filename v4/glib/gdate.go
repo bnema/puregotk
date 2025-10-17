@@ -405,7 +405,7 @@ func (x *Date) SetTime(TimeVar Time) {
 
 }
 
-var xDateSetTimeT func(uintptr, time_t)
+var xDateSetTimeT func(uintptr, int)
 
 // Sets the value of a date to the date corresponding to a time
 // specified as a time_t. The time to date conversion is done using
@@ -420,7 +420,7 @@ var xDateSetTimeT func(uintptr, time_t)
 //	g_date_set_time_t (date, now);
 //
 // ]|
-func (x *Date) SetTimeT(TimetVar time_t) {
+func (x *Date) SetTimeT(TimetVar int) {
 
 	xDateSetTimeT(x.GoPointer(), TimetVar)
 

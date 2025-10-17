@@ -103,7 +103,7 @@ func (x *Credentials) GetNative(NativeTypeVar CredentialsType) uintptr {
 	return cret
 }
 
-var xCredentialsGetUnixPid func(uintptr) pid_t
+var xCredentialsGetUnixPid func(uintptr) int
 
 // Tries to get the UNIX process identifier from @credentials. This
 // method is only available on UNIX platforms.
@@ -111,7 +111,7 @@ var xCredentialsGetUnixPid func(uintptr) pid_t
 // This operation can fail if #GCredentials is not supported on the
 // OS or if the native credentials type does not contain information
 // about the UNIX process ID.
-func (x *Credentials) GetUnixPid() (pid_t, error) {
+func (x *Credentials) GetUnixPid() (int, error) {
 	var cerr *glib.Error
 
 	cret := xCredentialsGetUnixPid(x.GoPointer())
@@ -122,7 +122,7 @@ func (x *Credentials) GetUnixPid() (pid_t, error) {
 
 }
 
-var xCredentialsGetUnixUser func(uintptr) uid_t
+var xCredentialsGetUnixUser func(uintptr) uint
 
 // Tries to get the UNIX user identifier from @credentials. This
 // method is only available on UNIX platforms.
@@ -130,7 +130,7 @@ var xCredentialsGetUnixUser func(uintptr) uid_t
 // This operation can fail if #GCredentials is not supported on the
 // OS or if the native credentials type does not contain information
 // about the UNIX user.
-func (x *Credentials) GetUnixUser() (uid_t, error) {
+func (x *Credentials) GetUnixUser() (uint, error) {
 	var cerr *glib.Error
 
 	cret := xCredentialsGetUnixUser(x.GoPointer())
@@ -172,7 +172,7 @@ func (x *Credentials) SetNative(NativeTypeVar CredentialsType, NativeVar uintptr
 
 }
 
-var xCredentialsSetUnixUser func(uintptr, uid_t, **glib.Error) bool
+var xCredentialsSetUnixUser func(uintptr, uint, **glib.Error) bool
 
 // Tries to set the UNIX user identifier on @credentials. This method
 // is only available on UNIX platforms.
@@ -181,7 +181,7 @@ var xCredentialsSetUnixUser func(uintptr, uid_t, **glib.Error) bool
 // OS or if the native credentials type does not contain information
 // about the UNIX user. It can also fail if the OS does not allow the
 // use of "spoofed" credentials.
-func (x *Credentials) SetUnixUser(UidVar uid_t) (bool, error) {
+func (x *Credentials) SetUnixUser(UidVar uint) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xCredentialsSetUnixUser(x.GoPointer(), UidVar, &cerr)
