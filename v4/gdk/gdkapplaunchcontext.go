@@ -145,18 +145,22 @@ func (c *AppLaunchContext) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAppLaunchContextGLibType, lib, "gdk_app_launch_context_get_type")
+	core.PuregoSafeRegister(&xAppLaunchContextGLibType, libs, "gdk_app_launch_context_get_type")
 
-	core.PuregoSafeRegister(&xAppLaunchContextGetDisplay, lib, "gdk_app_launch_context_get_display")
-	core.PuregoSafeRegister(&xAppLaunchContextSetDesktop, lib, "gdk_app_launch_context_set_desktop")
-	core.PuregoSafeRegister(&xAppLaunchContextSetIcon, lib, "gdk_app_launch_context_set_icon")
-	core.PuregoSafeRegister(&xAppLaunchContextSetIconName, lib, "gdk_app_launch_context_set_icon_name")
-	core.PuregoSafeRegister(&xAppLaunchContextSetTimestamp, lib, "gdk_app_launch_context_set_timestamp")
+	core.PuregoSafeRegister(&xAppLaunchContextGetDisplay, libs, "gdk_app_launch_context_get_display")
+	core.PuregoSafeRegister(&xAppLaunchContextSetDesktop, libs, "gdk_app_launch_context_set_desktop")
+	core.PuregoSafeRegister(&xAppLaunchContextSetIcon, libs, "gdk_app_launch_context_set_icon")
+	core.PuregoSafeRegister(&xAppLaunchContextSetIconName, libs, "gdk_app_launch_context_set_icon_name")
+	core.PuregoSafeRegister(&xAppLaunchContextSetTimestamp, libs, "gdk_app_launch_context_set_timestamp")
 
 }

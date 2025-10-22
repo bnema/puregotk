@@ -218,18 +218,22 @@ func (x *FilenameCompleter) ConnectGotCompletionData(cb *func(FilenameCompleter)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFilenameCompleterGLibType, lib, "g_filename_completer_get_type")
+	core.PuregoSafeRegister(&xFilenameCompleterGLibType, libs, "g_filename_completer_get_type")
 
-	core.PuregoSafeRegister(&xNewFilenameCompleter, lib, "g_filename_completer_new")
+	core.PuregoSafeRegister(&xNewFilenameCompleter, libs, "g_filename_completer_new")
 
-	core.PuregoSafeRegister(&xFilenameCompleterGetCompletionSuffix, lib, "g_filename_completer_get_completion_suffix")
-	core.PuregoSafeRegister(&xFilenameCompleterGetCompletions, lib, "g_filename_completer_get_completions")
-	core.PuregoSafeRegister(&xFilenameCompleterSetDirsOnly, lib, "g_filename_completer_set_dirs_only")
+	core.PuregoSafeRegister(&xFilenameCompleterGetCompletionSuffix, libs, "g_filename_completer_get_completion_suffix")
+	core.PuregoSafeRegister(&xFilenameCompleterGetCompletions, libs, "g_filename_completer_get_completions")
+	core.PuregoSafeRegister(&xFilenameCompleterSetDirsOnly, libs, "g_filename_completer_set_dirs_only")
 
 }

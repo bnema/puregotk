@@ -1093,21 +1093,25 @@ func VolumeMonitorGet() *VolumeMonitor {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xVolumeMonitorGLibType, lib, "g_volume_monitor_get_type")
+	core.PuregoSafeRegister(&xVolumeMonitorGLibType, libs, "g_volume_monitor_get_type")
 
-	core.PuregoSafeRegister(&xVolumeMonitorGetConnectedDrives, lib, "g_volume_monitor_get_connected_drives")
-	core.PuregoSafeRegister(&xVolumeMonitorGetMountForUuid, lib, "g_volume_monitor_get_mount_for_uuid")
-	core.PuregoSafeRegister(&xVolumeMonitorGetMounts, lib, "g_volume_monitor_get_mounts")
-	core.PuregoSafeRegister(&xVolumeMonitorGetVolumeForUuid, lib, "g_volume_monitor_get_volume_for_uuid")
-	core.PuregoSafeRegister(&xVolumeMonitorGetVolumes, lib, "g_volume_monitor_get_volumes")
+	core.PuregoSafeRegister(&xVolumeMonitorGetConnectedDrives, libs, "g_volume_monitor_get_connected_drives")
+	core.PuregoSafeRegister(&xVolumeMonitorGetMountForUuid, libs, "g_volume_monitor_get_mount_for_uuid")
+	core.PuregoSafeRegister(&xVolumeMonitorGetMounts, libs, "g_volume_monitor_get_mounts")
+	core.PuregoSafeRegister(&xVolumeMonitorGetVolumeForUuid, libs, "g_volume_monitor_get_volume_for_uuid")
+	core.PuregoSafeRegister(&xVolumeMonitorGetVolumes, libs, "g_volume_monitor_get_volumes")
 
-	core.PuregoSafeRegister(&xVolumeMonitorAdoptOrphanMount, lib, "g_volume_monitor_adopt_orphan_mount")
-	core.PuregoSafeRegister(&xVolumeMonitorGet, lib, "g_volume_monitor_get")
+	core.PuregoSafeRegister(&xVolumeMonitorAdoptOrphanMount, libs, "g_volume_monitor_adopt_orphan_mount")
+	core.PuregoSafeRegister(&xVolumeMonitorGet, libs, "g_volume_monitor_get")
 
 }

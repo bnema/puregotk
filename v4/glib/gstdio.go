@@ -344,28 +344,32 @@ func Utime(FilenameVar string, UtbVar uintptr) int {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAccess, lib, "g_access")
-	core.PuregoSafeRegister(&xChdir, lib, "g_chdir")
-	core.PuregoSafeRegister(&xChmod, lib, "g_chmod")
-	core.PuregoSafeRegister(&xClose, lib, "g_close")
-	core.PuregoSafeRegister(&xCreat, lib, "g_creat")
-	core.PuregoSafeRegister(&xFopen, lib, "g_fopen")
-	core.PuregoSafeRegister(&xFreopen, lib, "g_freopen")
-	core.PuregoSafeRegister(&xFsync, lib, "g_fsync")
-	core.PuregoSafeRegister(&xLstat, lib, "g_lstat")
-	core.PuregoSafeRegister(&xMkdir, lib, "g_mkdir")
-	core.PuregoSafeRegister(&xOpen, lib, "g_open")
-	core.PuregoSafeRegister(&xRemove, lib, "g_remove")
-	core.PuregoSafeRegister(&xRename, lib, "g_rename")
-	core.PuregoSafeRegister(&xRmdir, lib, "g_rmdir")
-	core.PuregoSafeRegister(&xStat, lib, "g_stat")
-	core.PuregoSafeRegister(&xUnlink, lib, "g_unlink")
-	core.PuregoSafeRegister(&xUtime, lib, "g_utime")
+	core.PuregoSafeRegister(&xAccess, libs, "g_access")
+	core.PuregoSafeRegister(&xChdir, libs, "g_chdir")
+	core.PuregoSafeRegister(&xChmod, libs, "g_chmod")
+	core.PuregoSafeRegister(&xClose, libs, "g_close")
+	core.PuregoSafeRegister(&xCreat, libs, "g_creat")
+	core.PuregoSafeRegister(&xFopen, libs, "g_fopen")
+	core.PuregoSafeRegister(&xFreopen, libs, "g_freopen")
+	core.PuregoSafeRegister(&xFsync, libs, "g_fsync")
+	core.PuregoSafeRegister(&xLstat, libs, "g_lstat")
+	core.PuregoSafeRegister(&xMkdir, libs, "g_mkdir")
+	core.PuregoSafeRegister(&xOpen, libs, "g_open")
+	core.PuregoSafeRegister(&xRemove, libs, "g_remove")
+	core.PuregoSafeRegister(&xRename, libs, "g_rename")
+	core.PuregoSafeRegister(&xRmdir, libs, "g_rmdir")
+	core.PuregoSafeRegister(&xStat, libs, "g_stat")
+	core.PuregoSafeRegister(&xUnlink, libs, "g_unlink")
+	core.PuregoSafeRegister(&xUtime, libs, "g_utime")
 
 }

@@ -359,24 +359,28 @@ func (x *SortListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSortListModelGLibType, lib, "gtk_sort_list_model_get_type")
+	core.PuregoSafeRegister(&xSortListModelGLibType, libs, "gtk_sort_list_model_get_type")
 
-	core.PuregoSafeRegister(&xNewSortListModel, lib, "gtk_sort_list_model_new")
+	core.PuregoSafeRegister(&xNewSortListModel, libs, "gtk_sort_list_model_new")
 
-	core.PuregoSafeRegister(&xSortListModelGetIncremental, lib, "gtk_sort_list_model_get_incremental")
-	core.PuregoSafeRegister(&xSortListModelGetModel, lib, "gtk_sort_list_model_get_model")
-	core.PuregoSafeRegister(&xSortListModelGetPending, lib, "gtk_sort_list_model_get_pending")
-	core.PuregoSafeRegister(&xSortListModelGetSectionSorter, lib, "gtk_sort_list_model_get_section_sorter")
-	core.PuregoSafeRegister(&xSortListModelGetSorter, lib, "gtk_sort_list_model_get_sorter")
-	core.PuregoSafeRegister(&xSortListModelSetIncremental, lib, "gtk_sort_list_model_set_incremental")
-	core.PuregoSafeRegister(&xSortListModelSetModel, lib, "gtk_sort_list_model_set_model")
-	core.PuregoSafeRegister(&xSortListModelSetSectionSorter, lib, "gtk_sort_list_model_set_section_sorter")
-	core.PuregoSafeRegister(&xSortListModelSetSorter, lib, "gtk_sort_list_model_set_sorter")
+	core.PuregoSafeRegister(&xSortListModelGetIncremental, libs, "gtk_sort_list_model_get_incremental")
+	core.PuregoSafeRegister(&xSortListModelGetModel, libs, "gtk_sort_list_model_get_model")
+	core.PuregoSafeRegister(&xSortListModelGetPending, libs, "gtk_sort_list_model_get_pending")
+	core.PuregoSafeRegister(&xSortListModelGetSectionSorter, libs, "gtk_sort_list_model_get_section_sorter")
+	core.PuregoSafeRegister(&xSortListModelGetSorter, libs, "gtk_sort_list_model_get_sorter")
+	core.PuregoSafeRegister(&xSortListModelSetIncremental, libs, "gtk_sort_list_model_set_incremental")
+	core.PuregoSafeRegister(&xSortListModelSetModel, libs, "gtk_sort_list_model_set_model")
+	core.PuregoSafeRegister(&xSortListModelSetSectionSorter, libs, "gtk_sort_list_model_set_section_sorter")
+	core.PuregoSafeRegister(&xSortListModelSetSorter, libs, "gtk_sort_list_model_set_sorter")
 
 }

@@ -776,28 +776,32 @@ func (x *CheckButton) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCheckButtonGLibType, lib, "gtk_check_button_get_type")
+	core.PuregoSafeRegister(&xCheckButtonGLibType, libs, "gtk_check_button_get_type")
 
-	core.PuregoSafeRegister(&xNewCheckButton, lib, "gtk_check_button_new")
-	core.PuregoSafeRegister(&xNewCheckButtonWithLabel, lib, "gtk_check_button_new_with_label")
-	core.PuregoSafeRegister(&xNewCheckButtonWithMnemonic, lib, "gtk_check_button_new_with_mnemonic")
+	core.PuregoSafeRegister(&xNewCheckButton, libs, "gtk_check_button_new")
+	core.PuregoSafeRegister(&xNewCheckButtonWithLabel, libs, "gtk_check_button_new_with_label")
+	core.PuregoSafeRegister(&xNewCheckButtonWithMnemonic, libs, "gtk_check_button_new_with_mnemonic")
 
-	core.PuregoSafeRegister(&xCheckButtonGetActive, lib, "gtk_check_button_get_active")
-	core.PuregoSafeRegister(&xCheckButtonGetChild, lib, "gtk_check_button_get_child")
-	core.PuregoSafeRegister(&xCheckButtonGetInconsistent, lib, "gtk_check_button_get_inconsistent")
-	core.PuregoSafeRegister(&xCheckButtonGetLabel, lib, "gtk_check_button_get_label")
-	core.PuregoSafeRegister(&xCheckButtonGetUseUnderline, lib, "gtk_check_button_get_use_underline")
-	core.PuregoSafeRegister(&xCheckButtonSetActive, lib, "gtk_check_button_set_active")
-	core.PuregoSafeRegister(&xCheckButtonSetChild, lib, "gtk_check_button_set_child")
-	core.PuregoSafeRegister(&xCheckButtonSetGroup, lib, "gtk_check_button_set_group")
-	core.PuregoSafeRegister(&xCheckButtonSetInconsistent, lib, "gtk_check_button_set_inconsistent")
-	core.PuregoSafeRegister(&xCheckButtonSetLabel, lib, "gtk_check_button_set_label")
-	core.PuregoSafeRegister(&xCheckButtonSetUseUnderline, lib, "gtk_check_button_set_use_underline")
+	core.PuregoSafeRegister(&xCheckButtonGetActive, libs, "gtk_check_button_get_active")
+	core.PuregoSafeRegister(&xCheckButtonGetChild, libs, "gtk_check_button_get_child")
+	core.PuregoSafeRegister(&xCheckButtonGetInconsistent, libs, "gtk_check_button_get_inconsistent")
+	core.PuregoSafeRegister(&xCheckButtonGetLabel, libs, "gtk_check_button_get_label")
+	core.PuregoSafeRegister(&xCheckButtonGetUseUnderline, libs, "gtk_check_button_get_use_underline")
+	core.PuregoSafeRegister(&xCheckButtonSetActive, libs, "gtk_check_button_set_active")
+	core.PuregoSafeRegister(&xCheckButtonSetChild, libs, "gtk_check_button_set_child")
+	core.PuregoSafeRegister(&xCheckButtonSetGroup, libs, "gtk_check_button_set_group")
+	core.PuregoSafeRegister(&xCheckButtonSetInconsistent, libs, "gtk_check_button_set_inconsistent")
+	core.PuregoSafeRegister(&xCheckButtonSetLabel, libs, "gtk_check_button_set_label")
+	core.PuregoSafeRegister(&xCheckButtonSetUseUnderline, libs, "gtk_check_button_set_use_underline")
 
 }

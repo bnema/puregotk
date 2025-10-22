@@ -956,30 +956,34 @@ func (x *Dialog) SetFocus(FocusVar *Widget) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDialogFlagsGLibType, lib, "gtk_dialog_flags_get_type")
+	core.PuregoSafeRegister(&xDialogFlagsGLibType, libs, "gtk_dialog_flags_get_type")
 
-	core.PuregoSafeRegister(&xResponseTypeGLibType, lib, "gtk_response_type_get_type")
+	core.PuregoSafeRegister(&xResponseTypeGLibType, libs, "gtk_response_type_get_type")
 
-	core.PuregoSafeRegister(&xDialogGLibType, lib, "gtk_dialog_get_type")
+	core.PuregoSafeRegister(&xDialogGLibType, libs, "gtk_dialog_get_type")
 
-	core.PuregoSafeRegister(&xNewDialog, lib, "gtk_dialog_new")
-	core.PuregoSafeRegister(&xNewDialogWithButtons, lib, "gtk_dialog_new_with_buttons")
+	core.PuregoSafeRegister(&xNewDialog, libs, "gtk_dialog_new")
+	core.PuregoSafeRegister(&xNewDialogWithButtons, libs, "gtk_dialog_new_with_buttons")
 
-	core.PuregoSafeRegister(&xDialogAddActionWidget, lib, "gtk_dialog_add_action_widget")
-	core.PuregoSafeRegister(&xDialogAddButton, lib, "gtk_dialog_add_button")
-	core.PuregoSafeRegister(&xDialogAddButtons, lib, "gtk_dialog_add_buttons")
-	core.PuregoSafeRegister(&xDialogGetContentArea, lib, "gtk_dialog_get_content_area")
-	core.PuregoSafeRegister(&xDialogGetHeaderBar, lib, "gtk_dialog_get_header_bar")
-	core.PuregoSafeRegister(&xDialogGetResponseForWidget, lib, "gtk_dialog_get_response_for_widget")
-	core.PuregoSafeRegister(&xDialogGetWidgetForResponse, lib, "gtk_dialog_get_widget_for_response")
-	core.PuregoSafeRegister(&xDialogResponse, lib, "gtk_dialog_response")
-	core.PuregoSafeRegister(&xDialogSetDefaultResponse, lib, "gtk_dialog_set_default_response")
-	core.PuregoSafeRegister(&xDialogSetResponseSensitive, lib, "gtk_dialog_set_response_sensitive")
+	core.PuregoSafeRegister(&xDialogAddActionWidget, libs, "gtk_dialog_add_action_widget")
+	core.PuregoSafeRegister(&xDialogAddButton, libs, "gtk_dialog_add_button")
+	core.PuregoSafeRegister(&xDialogAddButtons, libs, "gtk_dialog_add_buttons")
+	core.PuregoSafeRegister(&xDialogGetContentArea, libs, "gtk_dialog_get_content_area")
+	core.PuregoSafeRegister(&xDialogGetHeaderBar, libs, "gtk_dialog_get_header_bar")
+	core.PuregoSafeRegister(&xDialogGetResponseForWidget, libs, "gtk_dialog_get_response_for_widget")
+	core.PuregoSafeRegister(&xDialogGetWidgetForResponse, libs, "gtk_dialog_get_widget_for_response")
+	core.PuregoSafeRegister(&xDialogResponse, libs, "gtk_dialog_response")
+	core.PuregoSafeRegister(&xDialogSetDefaultResponse, libs, "gtk_dialog_set_default_response")
+	core.PuregoSafeRegister(&xDialogSetResponseSensitive, libs, "gtk_dialog_set_response_sensitive")
 
 }

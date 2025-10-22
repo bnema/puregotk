@@ -642,29 +642,33 @@ func (x *LevelBar) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xLevelBarGLibType, lib, "gtk_level_bar_get_type")
+	core.PuregoSafeRegister(&xLevelBarGLibType, libs, "gtk_level_bar_get_type")
 
-	core.PuregoSafeRegister(&xNewLevelBar, lib, "gtk_level_bar_new")
-	core.PuregoSafeRegister(&xNewLevelBarForInterval, lib, "gtk_level_bar_new_for_interval")
+	core.PuregoSafeRegister(&xNewLevelBar, libs, "gtk_level_bar_new")
+	core.PuregoSafeRegister(&xNewLevelBarForInterval, libs, "gtk_level_bar_new_for_interval")
 
-	core.PuregoSafeRegister(&xLevelBarAddOffsetValue, lib, "gtk_level_bar_add_offset_value")
-	core.PuregoSafeRegister(&xLevelBarGetInverted, lib, "gtk_level_bar_get_inverted")
-	core.PuregoSafeRegister(&xLevelBarGetMaxValue, lib, "gtk_level_bar_get_max_value")
-	core.PuregoSafeRegister(&xLevelBarGetMinValue, lib, "gtk_level_bar_get_min_value")
-	core.PuregoSafeRegister(&xLevelBarGetMode, lib, "gtk_level_bar_get_mode")
-	core.PuregoSafeRegister(&xLevelBarGetOffsetValue, lib, "gtk_level_bar_get_offset_value")
-	core.PuregoSafeRegister(&xLevelBarGetValue, lib, "gtk_level_bar_get_value")
-	core.PuregoSafeRegister(&xLevelBarRemoveOffsetValue, lib, "gtk_level_bar_remove_offset_value")
-	core.PuregoSafeRegister(&xLevelBarSetInverted, lib, "gtk_level_bar_set_inverted")
-	core.PuregoSafeRegister(&xLevelBarSetMaxValue, lib, "gtk_level_bar_set_max_value")
-	core.PuregoSafeRegister(&xLevelBarSetMinValue, lib, "gtk_level_bar_set_min_value")
-	core.PuregoSafeRegister(&xLevelBarSetMode, lib, "gtk_level_bar_set_mode")
-	core.PuregoSafeRegister(&xLevelBarSetValue, lib, "gtk_level_bar_set_value")
+	core.PuregoSafeRegister(&xLevelBarAddOffsetValue, libs, "gtk_level_bar_add_offset_value")
+	core.PuregoSafeRegister(&xLevelBarGetInverted, libs, "gtk_level_bar_get_inverted")
+	core.PuregoSafeRegister(&xLevelBarGetMaxValue, libs, "gtk_level_bar_get_max_value")
+	core.PuregoSafeRegister(&xLevelBarGetMinValue, libs, "gtk_level_bar_get_min_value")
+	core.PuregoSafeRegister(&xLevelBarGetMode, libs, "gtk_level_bar_get_mode")
+	core.PuregoSafeRegister(&xLevelBarGetOffsetValue, libs, "gtk_level_bar_get_offset_value")
+	core.PuregoSafeRegister(&xLevelBarGetValue, libs, "gtk_level_bar_get_value")
+	core.PuregoSafeRegister(&xLevelBarRemoveOffsetValue, libs, "gtk_level_bar_remove_offset_value")
+	core.PuregoSafeRegister(&xLevelBarSetInverted, libs, "gtk_level_bar_set_inverted")
+	core.PuregoSafeRegister(&xLevelBarSetMaxValue, libs, "gtk_level_bar_set_max_value")
+	core.PuregoSafeRegister(&xLevelBarSetMinValue, libs, "gtk_level_bar_set_min_value")
+	core.PuregoSafeRegister(&xLevelBarSetMode, libs, "gtk_level_bar_set_mode")
+	core.PuregoSafeRegister(&xLevelBarSetValue, libs, "gtk_level_bar_set_value")
 
 }

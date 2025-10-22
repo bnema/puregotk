@@ -292,17 +292,21 @@ var XGAsyncResultLegacyPropagateError func(uintptr) bool
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAsyncResultGLibType, lib, "g_async_result_get_type")
+	core.PuregoSafeRegister(&xAsyncResultGLibType, libs, "g_async_result_get_type")
 
-	core.PuregoSafeRegister(&XGAsyncResultGetSourceObject, lib, "g_async_result_get_source_object")
-	core.PuregoSafeRegister(&XGAsyncResultGetUserData, lib, "g_async_result_get_user_data")
-	core.PuregoSafeRegister(&XGAsyncResultIsTagged, lib, "g_async_result_is_tagged")
-	core.PuregoSafeRegister(&XGAsyncResultLegacyPropagateError, lib, "g_async_result_legacy_propagate_error")
+	core.PuregoSafeRegister(&XGAsyncResultGetSourceObject, libs, "g_async_result_get_source_object")
+	core.PuregoSafeRegister(&XGAsyncResultGetUserData, libs, "g_async_result_get_user_data")
+	core.PuregoSafeRegister(&XGAsyncResultIsTagged, libs, "g_async_result_is_tagged")
+	core.PuregoSafeRegister(&XGAsyncResultLegacyPropagateError, libs, "g_async_result_legacy_propagate_error")
 
 }

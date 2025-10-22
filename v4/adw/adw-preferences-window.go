@@ -640,30 +640,34 @@ func (x *PreferencesWindow) SetFocus(FocusVar *gtk.Widget) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPreferencesWindowGLibType, lib, "adw_preferences_window_get_type")
+	core.PuregoSafeRegister(&xPreferencesWindowGLibType, libs, "adw_preferences_window_get_type")
 
-	core.PuregoSafeRegister(&xNewPreferencesWindow, lib, "adw_preferences_window_new")
+	core.PuregoSafeRegister(&xNewPreferencesWindow, libs, "adw_preferences_window_new")
 
-	core.PuregoSafeRegister(&xPreferencesWindowAdd, lib, "adw_preferences_window_add")
-	core.PuregoSafeRegister(&xPreferencesWindowAddToast, lib, "adw_preferences_window_add_toast")
-	core.PuregoSafeRegister(&xPreferencesWindowCloseSubpage, lib, "adw_preferences_window_close_subpage")
-	core.PuregoSafeRegister(&xPreferencesWindowGetCanNavigateBack, lib, "adw_preferences_window_get_can_navigate_back")
-	core.PuregoSafeRegister(&xPreferencesWindowGetSearchEnabled, lib, "adw_preferences_window_get_search_enabled")
-	core.PuregoSafeRegister(&xPreferencesWindowGetVisiblePage, lib, "adw_preferences_window_get_visible_page")
-	core.PuregoSafeRegister(&xPreferencesWindowGetVisiblePageName, lib, "adw_preferences_window_get_visible_page_name")
-	core.PuregoSafeRegister(&xPreferencesWindowPopSubpage, lib, "adw_preferences_window_pop_subpage")
-	core.PuregoSafeRegister(&xPreferencesWindowPresentSubpage, lib, "adw_preferences_window_present_subpage")
-	core.PuregoSafeRegister(&xPreferencesWindowPushSubpage, lib, "adw_preferences_window_push_subpage")
-	core.PuregoSafeRegister(&xPreferencesWindowRemove, lib, "adw_preferences_window_remove")
-	core.PuregoSafeRegister(&xPreferencesWindowSetCanNavigateBack, lib, "adw_preferences_window_set_can_navigate_back")
-	core.PuregoSafeRegister(&xPreferencesWindowSetSearchEnabled, lib, "adw_preferences_window_set_search_enabled")
-	core.PuregoSafeRegister(&xPreferencesWindowSetVisiblePage, lib, "adw_preferences_window_set_visible_page")
-	core.PuregoSafeRegister(&xPreferencesWindowSetVisiblePageName, lib, "adw_preferences_window_set_visible_page_name")
+	core.PuregoSafeRegister(&xPreferencesWindowAdd, libs, "adw_preferences_window_add")
+	core.PuregoSafeRegister(&xPreferencesWindowAddToast, libs, "adw_preferences_window_add_toast")
+	core.PuregoSafeRegister(&xPreferencesWindowCloseSubpage, libs, "adw_preferences_window_close_subpage")
+	core.PuregoSafeRegister(&xPreferencesWindowGetCanNavigateBack, libs, "adw_preferences_window_get_can_navigate_back")
+	core.PuregoSafeRegister(&xPreferencesWindowGetSearchEnabled, libs, "adw_preferences_window_get_search_enabled")
+	core.PuregoSafeRegister(&xPreferencesWindowGetVisiblePage, libs, "adw_preferences_window_get_visible_page")
+	core.PuregoSafeRegister(&xPreferencesWindowGetVisiblePageName, libs, "adw_preferences_window_get_visible_page_name")
+	core.PuregoSafeRegister(&xPreferencesWindowPopSubpage, libs, "adw_preferences_window_pop_subpage")
+	core.PuregoSafeRegister(&xPreferencesWindowPresentSubpage, libs, "adw_preferences_window_present_subpage")
+	core.PuregoSafeRegister(&xPreferencesWindowPushSubpage, libs, "adw_preferences_window_push_subpage")
+	core.PuregoSafeRegister(&xPreferencesWindowRemove, libs, "adw_preferences_window_remove")
+	core.PuregoSafeRegister(&xPreferencesWindowSetCanNavigateBack, libs, "adw_preferences_window_set_can_navigate_back")
+	core.PuregoSafeRegister(&xPreferencesWindowSetSearchEnabled, libs, "adw_preferences_window_set_search_enabled")
+	core.PuregoSafeRegister(&xPreferencesWindowSetVisiblePage, libs, "adw_preferences_window_set_visible_page")
+	core.PuregoSafeRegister(&xPreferencesWindowSetVisiblePageName, libs, "adw_preferences_window_set_visible_page_name")
 
 }

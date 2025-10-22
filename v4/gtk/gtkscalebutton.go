@@ -628,26 +628,30 @@ func (x *ScaleButton) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xScaleButtonGLibType, lib, "gtk_scale_button_get_type")
+	core.PuregoSafeRegister(&xScaleButtonGLibType, libs, "gtk_scale_button_get_type")
 
-	core.PuregoSafeRegister(&xNewScaleButton, lib, "gtk_scale_button_new")
+	core.PuregoSafeRegister(&xNewScaleButton, libs, "gtk_scale_button_new")
 
-	core.PuregoSafeRegister(&xScaleButtonGetActive, lib, "gtk_scale_button_get_active")
-	core.PuregoSafeRegister(&xScaleButtonGetAdjustment, lib, "gtk_scale_button_get_adjustment")
-	core.PuregoSafeRegister(&xScaleButtonGetHasFrame, lib, "gtk_scale_button_get_has_frame")
-	core.PuregoSafeRegister(&xScaleButtonGetMinusButton, lib, "gtk_scale_button_get_minus_button")
-	core.PuregoSafeRegister(&xScaleButtonGetPlusButton, lib, "gtk_scale_button_get_plus_button")
-	core.PuregoSafeRegister(&xScaleButtonGetPopup, lib, "gtk_scale_button_get_popup")
-	core.PuregoSafeRegister(&xScaleButtonGetValue, lib, "gtk_scale_button_get_value")
-	core.PuregoSafeRegister(&xScaleButtonSetAdjustment, lib, "gtk_scale_button_set_adjustment")
-	core.PuregoSafeRegister(&xScaleButtonSetHasFrame, lib, "gtk_scale_button_set_has_frame")
-	core.PuregoSafeRegister(&xScaleButtonSetIcons, lib, "gtk_scale_button_set_icons")
-	core.PuregoSafeRegister(&xScaleButtonSetValue, lib, "gtk_scale_button_set_value")
+	core.PuregoSafeRegister(&xScaleButtonGetActive, libs, "gtk_scale_button_get_active")
+	core.PuregoSafeRegister(&xScaleButtonGetAdjustment, libs, "gtk_scale_button_get_adjustment")
+	core.PuregoSafeRegister(&xScaleButtonGetHasFrame, libs, "gtk_scale_button_get_has_frame")
+	core.PuregoSafeRegister(&xScaleButtonGetMinusButton, libs, "gtk_scale_button_get_minus_button")
+	core.PuregoSafeRegister(&xScaleButtonGetPlusButton, libs, "gtk_scale_button_get_plus_button")
+	core.PuregoSafeRegister(&xScaleButtonGetPopup, libs, "gtk_scale_button_get_popup")
+	core.PuregoSafeRegister(&xScaleButtonGetValue, libs, "gtk_scale_button_get_value")
+	core.PuregoSafeRegister(&xScaleButtonSetAdjustment, libs, "gtk_scale_button_set_adjustment")
+	core.PuregoSafeRegister(&xScaleButtonSetHasFrame, libs, "gtk_scale_button_set_has_frame")
+	core.PuregoSafeRegister(&xScaleButtonSetIcons, libs, "gtk_scale_button_set_icons")
+	core.PuregoSafeRegister(&xScaleButtonSetValue, libs, "gtk_scale_button_set_value")
 
 }

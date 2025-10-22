@@ -88,17 +88,21 @@ func CairoSetSourceRgba(CrVar *cairo.Context, RgbaVar *RGBA) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCairoDrawFromGl, lib, "gdk_cairo_draw_from_gl")
-	core.PuregoSafeRegister(&xCairoRectangle, lib, "gdk_cairo_rectangle")
-	core.PuregoSafeRegister(&xCairoRegion, lib, "gdk_cairo_region")
-	core.PuregoSafeRegister(&xCairoRegionCreateFromSurface, lib, "gdk_cairo_region_create_from_surface")
-	core.PuregoSafeRegister(&xCairoSetSourcePixbuf, lib, "gdk_cairo_set_source_pixbuf")
-	core.PuregoSafeRegister(&xCairoSetSourceRgba, lib, "gdk_cairo_set_source_rgba")
+	core.PuregoSafeRegister(&xCairoDrawFromGl, libs, "gdk_cairo_draw_from_gl")
+	core.PuregoSafeRegister(&xCairoRectangle, libs, "gdk_cairo_rectangle")
+	core.PuregoSafeRegister(&xCairoRegion, libs, "gdk_cairo_region")
+	core.PuregoSafeRegister(&xCairoRegionCreateFromSurface, libs, "gdk_cairo_region_create_from_surface")
+	core.PuregoSafeRegister(&xCairoSetSourcePixbuf, libs, "gdk_cairo_set_source_pixbuf")
+	core.PuregoSafeRegister(&xCairoSetSourceRgba, libs, "gdk_cairo_set_source_rgba")
 
 }

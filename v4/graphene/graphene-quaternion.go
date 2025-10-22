@@ -277,38 +277,42 @@ func (x *Quaternion) ToVec4(ResVar *Vec4) {
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xQuaternionGLibType, lib, "graphene_quaternion_get_type")
+	core.PuregoSafeRegister(&xQuaternionGLibType, libs, "graphene_quaternion_get_type")
 
-	core.PuregoSafeRegister(&xQuaternionAlloc, lib, "graphene_quaternion_alloc")
+	core.PuregoSafeRegister(&xQuaternionAlloc, libs, "graphene_quaternion_alloc")
 
-	core.PuregoSafeRegister(&xQuaternionAdd, lib, "graphene_quaternion_add")
-	core.PuregoSafeRegister(&xQuaternionDot, lib, "graphene_quaternion_dot")
-	core.PuregoSafeRegister(&xQuaternionEqual, lib, "graphene_quaternion_equal")
-	core.PuregoSafeRegister(&xQuaternionFree, lib, "graphene_quaternion_free")
-	core.PuregoSafeRegister(&xQuaternionInit, lib, "graphene_quaternion_init")
-	core.PuregoSafeRegister(&xQuaternionInitFromAngleVec3, lib, "graphene_quaternion_init_from_angle_vec3")
-	core.PuregoSafeRegister(&xQuaternionInitFromAngles, lib, "graphene_quaternion_init_from_angles")
-	core.PuregoSafeRegister(&xQuaternionInitFromEuler, lib, "graphene_quaternion_init_from_euler")
-	core.PuregoSafeRegister(&xQuaternionInitFromMatrix, lib, "graphene_quaternion_init_from_matrix")
-	core.PuregoSafeRegister(&xQuaternionInitFromQuaternion, lib, "graphene_quaternion_init_from_quaternion")
-	core.PuregoSafeRegister(&xQuaternionInitFromRadians, lib, "graphene_quaternion_init_from_radians")
-	core.PuregoSafeRegister(&xQuaternionInitFromVec4, lib, "graphene_quaternion_init_from_vec4")
-	core.PuregoSafeRegister(&xQuaternionInitIdentity, lib, "graphene_quaternion_init_identity")
-	core.PuregoSafeRegister(&xQuaternionInvert, lib, "graphene_quaternion_invert")
-	core.PuregoSafeRegister(&xQuaternionMultiply, lib, "graphene_quaternion_multiply")
-	core.PuregoSafeRegister(&xQuaternionNormalize, lib, "graphene_quaternion_normalize")
-	core.PuregoSafeRegister(&xQuaternionScale, lib, "graphene_quaternion_scale")
-	core.PuregoSafeRegister(&xQuaternionSlerp, lib, "graphene_quaternion_slerp")
-	core.PuregoSafeRegister(&xQuaternionToAngleVec3, lib, "graphene_quaternion_to_angle_vec3")
-	core.PuregoSafeRegister(&xQuaternionToAngles, lib, "graphene_quaternion_to_angles")
-	core.PuregoSafeRegister(&xQuaternionToMatrix, lib, "graphene_quaternion_to_matrix")
-	core.PuregoSafeRegister(&xQuaternionToRadians, lib, "graphene_quaternion_to_radians")
-	core.PuregoSafeRegister(&xQuaternionToVec4, lib, "graphene_quaternion_to_vec4")
+	core.PuregoSafeRegister(&xQuaternionAdd, libs, "graphene_quaternion_add")
+	core.PuregoSafeRegister(&xQuaternionDot, libs, "graphene_quaternion_dot")
+	core.PuregoSafeRegister(&xQuaternionEqual, libs, "graphene_quaternion_equal")
+	core.PuregoSafeRegister(&xQuaternionFree, libs, "graphene_quaternion_free")
+	core.PuregoSafeRegister(&xQuaternionInit, libs, "graphene_quaternion_init")
+	core.PuregoSafeRegister(&xQuaternionInitFromAngleVec3, libs, "graphene_quaternion_init_from_angle_vec3")
+	core.PuregoSafeRegister(&xQuaternionInitFromAngles, libs, "graphene_quaternion_init_from_angles")
+	core.PuregoSafeRegister(&xQuaternionInitFromEuler, libs, "graphene_quaternion_init_from_euler")
+	core.PuregoSafeRegister(&xQuaternionInitFromMatrix, libs, "graphene_quaternion_init_from_matrix")
+	core.PuregoSafeRegister(&xQuaternionInitFromQuaternion, libs, "graphene_quaternion_init_from_quaternion")
+	core.PuregoSafeRegister(&xQuaternionInitFromRadians, libs, "graphene_quaternion_init_from_radians")
+	core.PuregoSafeRegister(&xQuaternionInitFromVec4, libs, "graphene_quaternion_init_from_vec4")
+	core.PuregoSafeRegister(&xQuaternionInitIdentity, libs, "graphene_quaternion_init_identity")
+	core.PuregoSafeRegister(&xQuaternionInvert, libs, "graphene_quaternion_invert")
+	core.PuregoSafeRegister(&xQuaternionMultiply, libs, "graphene_quaternion_multiply")
+	core.PuregoSafeRegister(&xQuaternionNormalize, libs, "graphene_quaternion_normalize")
+	core.PuregoSafeRegister(&xQuaternionScale, libs, "graphene_quaternion_scale")
+	core.PuregoSafeRegister(&xQuaternionSlerp, libs, "graphene_quaternion_slerp")
+	core.PuregoSafeRegister(&xQuaternionToAngleVec3, libs, "graphene_quaternion_to_angle_vec3")
+	core.PuregoSafeRegister(&xQuaternionToAngles, libs, "graphene_quaternion_to_angles")
+	core.PuregoSafeRegister(&xQuaternionToMatrix, libs, "graphene_quaternion_to_matrix")
+	core.PuregoSafeRegister(&xQuaternionToRadians, libs, "graphene_quaternion_to_radians")
+	core.PuregoSafeRegister(&xQuaternionToVec4, libs, "graphene_quaternion_to_vec4")
 
 }

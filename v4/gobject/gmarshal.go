@@ -236,33 +236,37 @@ func CclosureMarshalVOIDVOID(ClosureVar *Closure, ReturnValueVar *Value, NParamV
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCclosureMarshalBOOLEANBOXEDBOXED, lib, "g_cclosure_marshal_BOOLEAN__BOXED_BOXED")
-	core.PuregoSafeRegister(&xCclosureMarshalBOOLEANFLAGS, lib, "g_cclosure_marshal_BOOLEAN__FLAGS")
-	core.PuregoSafeRegister(&xCclosureMarshalSTRINGOBJECTPOINTER, lib, "g_cclosure_marshal_STRING__OBJECT_POINTER")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDBOOLEAN, lib, "g_cclosure_marshal_VOID__BOOLEAN")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDBOXED, lib, "g_cclosure_marshal_VOID__BOXED")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDCHAR, lib, "g_cclosure_marshal_VOID__CHAR")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDDOUBLE, lib, "g_cclosure_marshal_VOID__DOUBLE")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDENUM, lib, "g_cclosure_marshal_VOID__ENUM")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDFLAGS, lib, "g_cclosure_marshal_VOID__FLAGS")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDFLOAT, lib, "g_cclosure_marshal_VOID__FLOAT")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDINT, lib, "g_cclosure_marshal_VOID__INT")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDLONG, lib, "g_cclosure_marshal_VOID__LONG")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDOBJECT, lib, "g_cclosure_marshal_VOID__OBJECT")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDPARAM, lib, "g_cclosure_marshal_VOID__PARAM")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDPOINTER, lib, "g_cclosure_marshal_VOID__POINTER")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDSTRING, lib, "g_cclosure_marshal_VOID__STRING")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDUCHAR, lib, "g_cclosure_marshal_VOID__UCHAR")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDUINT, lib, "g_cclosure_marshal_VOID__UINT")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDUINTPOINTER, lib, "g_cclosure_marshal_VOID__UINT_POINTER")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDULONG, lib, "g_cclosure_marshal_VOID__ULONG")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDVARIANT, lib, "g_cclosure_marshal_VOID__VARIANT")
-	core.PuregoSafeRegister(&xCclosureMarshalVOIDVOID, lib, "g_cclosure_marshal_VOID__VOID")
+	core.PuregoSafeRegister(&xCclosureMarshalBOOLEANBOXEDBOXED, libs, "g_cclosure_marshal_BOOLEAN__BOXED_BOXED")
+	core.PuregoSafeRegister(&xCclosureMarshalBOOLEANFLAGS, libs, "g_cclosure_marshal_BOOLEAN__FLAGS")
+	core.PuregoSafeRegister(&xCclosureMarshalSTRINGOBJECTPOINTER, libs, "g_cclosure_marshal_STRING__OBJECT_POINTER")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDBOOLEAN, libs, "g_cclosure_marshal_VOID__BOOLEAN")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDBOXED, libs, "g_cclosure_marshal_VOID__BOXED")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDCHAR, libs, "g_cclosure_marshal_VOID__CHAR")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDDOUBLE, libs, "g_cclosure_marshal_VOID__DOUBLE")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDENUM, libs, "g_cclosure_marshal_VOID__ENUM")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDFLAGS, libs, "g_cclosure_marshal_VOID__FLAGS")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDFLOAT, libs, "g_cclosure_marshal_VOID__FLOAT")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDINT, libs, "g_cclosure_marshal_VOID__INT")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDLONG, libs, "g_cclosure_marshal_VOID__LONG")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDOBJECT, libs, "g_cclosure_marshal_VOID__OBJECT")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDPARAM, libs, "g_cclosure_marshal_VOID__PARAM")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDPOINTER, libs, "g_cclosure_marshal_VOID__POINTER")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDSTRING, libs, "g_cclosure_marshal_VOID__STRING")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDUCHAR, libs, "g_cclosure_marshal_VOID__UCHAR")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDUINT, libs, "g_cclosure_marshal_VOID__UINT")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDUINTPOINTER, libs, "g_cclosure_marshal_VOID__UINT_POINTER")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDULONG, libs, "g_cclosure_marshal_VOID__ULONG")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDVARIANT, libs, "g_cclosure_marshal_VOID__VARIANT")
+	core.PuregoSafeRegister(&xCclosureMarshalVOIDVOID, libs, "g_cclosure_marshal_VOID__VOID")
 
 }

@@ -244,23 +244,27 @@ func TlsClientConnectionNew(BaseIoStreamVar *IOStream, ServerIdentityVar SocketC
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTlsClientConnectionNew, lib, "g_tls_client_connection_new")
+	core.PuregoSafeRegister(&xTlsClientConnectionNew, libs, "g_tls_client_connection_new")
 
-	core.PuregoSafeRegister(&xTlsClientConnectionGLibType, lib, "g_tls_client_connection_get_type")
+	core.PuregoSafeRegister(&xTlsClientConnectionGLibType, libs, "g_tls_client_connection_get_type")
 
-	core.PuregoSafeRegister(&XGTlsClientConnectionCopySessionState, lib, "g_tls_client_connection_copy_session_state")
-	core.PuregoSafeRegister(&XGTlsClientConnectionGetAcceptedCas, lib, "g_tls_client_connection_get_accepted_cas")
-	core.PuregoSafeRegister(&XGTlsClientConnectionGetServerIdentity, lib, "g_tls_client_connection_get_server_identity")
-	core.PuregoSafeRegister(&XGTlsClientConnectionGetUseSsl3, lib, "g_tls_client_connection_get_use_ssl3")
-	core.PuregoSafeRegister(&XGTlsClientConnectionGetValidationFlags, lib, "g_tls_client_connection_get_validation_flags")
-	core.PuregoSafeRegister(&XGTlsClientConnectionSetServerIdentity, lib, "g_tls_client_connection_set_server_identity")
-	core.PuregoSafeRegister(&XGTlsClientConnectionSetUseSsl3, lib, "g_tls_client_connection_set_use_ssl3")
-	core.PuregoSafeRegister(&XGTlsClientConnectionSetValidationFlags, lib, "g_tls_client_connection_set_validation_flags")
+	core.PuregoSafeRegister(&XGTlsClientConnectionCopySessionState, libs, "g_tls_client_connection_copy_session_state")
+	core.PuregoSafeRegister(&XGTlsClientConnectionGetAcceptedCas, libs, "g_tls_client_connection_get_accepted_cas")
+	core.PuregoSafeRegister(&XGTlsClientConnectionGetServerIdentity, libs, "g_tls_client_connection_get_server_identity")
+	core.PuregoSafeRegister(&XGTlsClientConnectionGetUseSsl3, libs, "g_tls_client_connection_get_use_ssl3")
+	core.PuregoSafeRegister(&XGTlsClientConnectionGetValidationFlags, libs, "g_tls_client_connection_get_validation_flags")
+	core.PuregoSafeRegister(&XGTlsClientConnectionSetServerIdentity, libs, "g_tls_client_connection_set_server_identity")
+	core.PuregoSafeRegister(&XGTlsClientConnectionSetUseSsl3, libs, "g_tls_client_connection_set_use_ssl3")
+	core.PuregoSafeRegister(&XGTlsClientConnectionSetValidationFlags, libs, "g_tls_client_connection_set_validation_flags")
 
 }

@@ -939,31 +939,35 @@ func (x *Application) RemoveActionEntries(EntriesVar []gio.ActionEntry, NEntries
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xApplicationInhibitFlagsGLibType, lib, "gtk_application_inhibit_flags_get_type")
+	core.PuregoSafeRegister(&xApplicationInhibitFlagsGLibType, libs, "gtk_application_inhibit_flags_get_type")
 
-	core.PuregoSafeRegister(&xApplicationGLibType, lib, "gtk_application_get_type")
+	core.PuregoSafeRegister(&xApplicationGLibType, libs, "gtk_application_get_type")
 
-	core.PuregoSafeRegister(&xNewApplication, lib, "gtk_application_new")
+	core.PuregoSafeRegister(&xNewApplication, libs, "gtk_application_new")
 
-	core.PuregoSafeRegister(&xApplicationAddWindow, lib, "gtk_application_add_window")
-	core.PuregoSafeRegister(&xApplicationGetAccelsForAction, lib, "gtk_application_get_accels_for_action")
-	core.PuregoSafeRegister(&xApplicationGetActionsForAccel, lib, "gtk_application_get_actions_for_accel")
-	core.PuregoSafeRegister(&xApplicationGetActiveWindow, lib, "gtk_application_get_active_window")
-	core.PuregoSafeRegister(&xApplicationGetMenuById, lib, "gtk_application_get_menu_by_id")
-	core.PuregoSafeRegister(&xApplicationGetMenubar, lib, "gtk_application_get_menubar")
-	core.PuregoSafeRegister(&xApplicationGetWindowById, lib, "gtk_application_get_window_by_id")
-	core.PuregoSafeRegister(&xApplicationGetWindows, lib, "gtk_application_get_windows")
-	core.PuregoSafeRegister(&xApplicationInhibit, lib, "gtk_application_inhibit")
-	core.PuregoSafeRegister(&xApplicationListActionDescriptions, lib, "gtk_application_list_action_descriptions")
-	core.PuregoSafeRegister(&xApplicationRemoveWindow, lib, "gtk_application_remove_window")
-	core.PuregoSafeRegister(&xApplicationSetAccelsForAction, lib, "gtk_application_set_accels_for_action")
-	core.PuregoSafeRegister(&xApplicationSetMenubar, lib, "gtk_application_set_menubar")
-	core.PuregoSafeRegister(&xApplicationUninhibit, lib, "gtk_application_uninhibit")
+	core.PuregoSafeRegister(&xApplicationAddWindow, libs, "gtk_application_add_window")
+	core.PuregoSafeRegister(&xApplicationGetAccelsForAction, libs, "gtk_application_get_accels_for_action")
+	core.PuregoSafeRegister(&xApplicationGetActionsForAccel, libs, "gtk_application_get_actions_for_accel")
+	core.PuregoSafeRegister(&xApplicationGetActiveWindow, libs, "gtk_application_get_active_window")
+	core.PuregoSafeRegister(&xApplicationGetMenuById, libs, "gtk_application_get_menu_by_id")
+	core.PuregoSafeRegister(&xApplicationGetMenubar, libs, "gtk_application_get_menubar")
+	core.PuregoSafeRegister(&xApplicationGetWindowById, libs, "gtk_application_get_window_by_id")
+	core.PuregoSafeRegister(&xApplicationGetWindows, libs, "gtk_application_get_windows")
+	core.PuregoSafeRegister(&xApplicationInhibit, libs, "gtk_application_inhibit")
+	core.PuregoSafeRegister(&xApplicationListActionDescriptions, libs, "gtk_application_list_action_descriptions")
+	core.PuregoSafeRegister(&xApplicationRemoveWindow, libs, "gtk_application_remove_window")
+	core.PuregoSafeRegister(&xApplicationSetAccelsForAction, libs, "gtk_application_set_accels_for_action")
+	core.PuregoSafeRegister(&xApplicationSetMenubar, libs, "gtk_application_set_menubar")
+	core.PuregoSafeRegister(&xApplicationUninhibit, libs, "gtk_application_uninhibit")
 
 }

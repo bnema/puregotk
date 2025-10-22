@@ -180,20 +180,24 @@ func (x *NetworkService) ToString() string {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xNetworkServiceGLibType, lib, "g_network_service_get_type")
+	core.PuregoSafeRegister(&xNetworkServiceGLibType, libs, "g_network_service_get_type")
 
-	core.PuregoSafeRegister(&xNewNetworkService, lib, "g_network_service_new")
+	core.PuregoSafeRegister(&xNewNetworkService, libs, "g_network_service_new")
 
-	core.PuregoSafeRegister(&xNetworkServiceGetDomain, lib, "g_network_service_get_domain")
-	core.PuregoSafeRegister(&xNetworkServiceGetProtocol, lib, "g_network_service_get_protocol")
-	core.PuregoSafeRegister(&xNetworkServiceGetScheme, lib, "g_network_service_get_scheme")
-	core.PuregoSafeRegister(&xNetworkServiceGetService, lib, "g_network_service_get_service")
-	core.PuregoSafeRegister(&xNetworkServiceSetScheme, lib, "g_network_service_set_scheme")
+	core.PuregoSafeRegister(&xNetworkServiceGetDomain, libs, "g_network_service_get_domain")
+	core.PuregoSafeRegister(&xNetworkServiceGetProtocol, libs, "g_network_service_get_protocol")
+	core.PuregoSafeRegister(&xNetworkServiceGetScheme, libs, "g_network_service_get_scheme")
+	core.PuregoSafeRegister(&xNetworkServiceGetService, libs, "g_network_service_get_service")
+	core.PuregoSafeRegister(&xNetworkServiceSetScheme, libs, "g_network_service_set_scheme")
 
 }

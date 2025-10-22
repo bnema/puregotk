@@ -528,48 +528,52 @@ func (c *SignalAction) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xShortcutActionFlagsGLibType, lib, "gtk_shortcut_action_flags_get_type")
+	core.PuregoSafeRegister(&xShortcutActionFlagsGLibType, libs, "gtk_shortcut_action_flags_get_type")
 
-	core.PuregoSafeRegister(&xActivateActionGLibType, lib, "gtk_activate_action_get_type")
+	core.PuregoSafeRegister(&xActivateActionGLibType, libs, "gtk_activate_action_get_type")
 
-	core.PuregoSafeRegister(&xActivateActionGet, lib, "gtk_activate_action_get")
+	core.PuregoSafeRegister(&xActivateActionGet, libs, "gtk_activate_action_get")
 
-	core.PuregoSafeRegister(&xCallbackActionGLibType, lib, "gtk_callback_action_get_type")
+	core.PuregoSafeRegister(&xCallbackActionGLibType, libs, "gtk_callback_action_get_type")
 
-	core.PuregoSafeRegister(&xNewCallbackAction, lib, "gtk_callback_action_new")
+	core.PuregoSafeRegister(&xNewCallbackAction, libs, "gtk_callback_action_new")
 
-	core.PuregoSafeRegister(&xMnemonicActionGLibType, lib, "gtk_mnemonic_action_get_type")
+	core.PuregoSafeRegister(&xMnemonicActionGLibType, libs, "gtk_mnemonic_action_get_type")
 
-	core.PuregoSafeRegister(&xMnemonicActionGet, lib, "gtk_mnemonic_action_get")
+	core.PuregoSafeRegister(&xMnemonicActionGet, libs, "gtk_mnemonic_action_get")
 
-	core.PuregoSafeRegister(&xNamedActionGLibType, lib, "gtk_named_action_get_type")
+	core.PuregoSafeRegister(&xNamedActionGLibType, libs, "gtk_named_action_get_type")
 
-	core.PuregoSafeRegister(&xNewNamedAction, lib, "gtk_named_action_new")
+	core.PuregoSafeRegister(&xNewNamedAction, libs, "gtk_named_action_new")
 
-	core.PuregoSafeRegister(&xNamedActionGetActionName, lib, "gtk_named_action_get_action_name")
+	core.PuregoSafeRegister(&xNamedActionGetActionName, libs, "gtk_named_action_get_action_name")
 
-	core.PuregoSafeRegister(&xNothingActionGLibType, lib, "gtk_nothing_action_get_type")
+	core.PuregoSafeRegister(&xNothingActionGLibType, libs, "gtk_nothing_action_get_type")
 
-	core.PuregoSafeRegister(&xNothingActionGet, lib, "gtk_nothing_action_get")
+	core.PuregoSafeRegister(&xNothingActionGet, libs, "gtk_nothing_action_get")
 
-	core.PuregoSafeRegister(&xShortcutActionGLibType, lib, "gtk_shortcut_action_get_type")
+	core.PuregoSafeRegister(&xShortcutActionGLibType, libs, "gtk_shortcut_action_get_type")
 
-	core.PuregoSafeRegister(&xShortcutActionParseString, lib, "gtk_shortcut_action_parse_string")
+	core.PuregoSafeRegister(&xShortcutActionParseString, libs, "gtk_shortcut_action_parse_string")
 
-	core.PuregoSafeRegister(&xShortcutActionActivate, lib, "gtk_shortcut_action_activate")
-	core.PuregoSafeRegister(&xShortcutActionPrint, lib, "gtk_shortcut_action_print")
-	core.PuregoSafeRegister(&xShortcutActionToString, lib, "gtk_shortcut_action_to_string")
+	core.PuregoSafeRegister(&xShortcutActionActivate, libs, "gtk_shortcut_action_activate")
+	core.PuregoSafeRegister(&xShortcutActionPrint, libs, "gtk_shortcut_action_print")
+	core.PuregoSafeRegister(&xShortcutActionToString, libs, "gtk_shortcut_action_to_string")
 
-	core.PuregoSafeRegister(&xSignalActionGLibType, lib, "gtk_signal_action_get_type")
+	core.PuregoSafeRegister(&xSignalActionGLibType, libs, "gtk_signal_action_get_type")
 
-	core.PuregoSafeRegister(&xNewSignalAction, lib, "gtk_signal_action_new")
+	core.PuregoSafeRegister(&xNewSignalAction, libs, "gtk_signal_action_new")
 
-	core.PuregoSafeRegister(&xSignalActionGetSignalName, lib, "gtk_signal_action_get_signal_name")
+	core.PuregoSafeRegister(&xSignalActionGetSignalName, libs, "gtk_signal_action_get_signal_name")
 
 }

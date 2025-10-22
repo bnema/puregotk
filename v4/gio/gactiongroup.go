@@ -732,27 +732,31 @@ var XGActionGroupQueryAction func(uintptr, string, bool, **glib.VariantType, **g
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xActionGroupGLibType, lib, "g_action_group_get_type")
+	core.PuregoSafeRegister(&xActionGroupGLibType, libs, "g_action_group_get_type")
 
-	core.PuregoSafeRegister(&XGActionGroupActionAdded, lib, "g_action_group_action_added")
-	core.PuregoSafeRegister(&XGActionGroupActionEnabledChanged, lib, "g_action_group_action_enabled_changed")
-	core.PuregoSafeRegister(&XGActionGroupActionRemoved, lib, "g_action_group_action_removed")
-	core.PuregoSafeRegister(&XGActionGroupActionStateChanged, lib, "g_action_group_action_state_changed")
-	core.PuregoSafeRegister(&XGActionGroupActivateAction, lib, "g_action_group_activate_action")
-	core.PuregoSafeRegister(&XGActionGroupChangeActionState, lib, "g_action_group_change_action_state")
-	core.PuregoSafeRegister(&XGActionGroupGetActionEnabled, lib, "g_action_group_get_action_enabled")
-	core.PuregoSafeRegister(&XGActionGroupGetActionParameterType, lib, "g_action_group_get_action_parameter_type")
-	core.PuregoSafeRegister(&XGActionGroupGetActionState, lib, "g_action_group_get_action_state")
-	core.PuregoSafeRegister(&XGActionGroupGetActionStateHint, lib, "g_action_group_get_action_state_hint")
-	core.PuregoSafeRegister(&XGActionGroupGetActionStateType, lib, "g_action_group_get_action_state_type")
-	core.PuregoSafeRegister(&XGActionGroupHasAction, lib, "g_action_group_has_action")
-	core.PuregoSafeRegister(&XGActionGroupListActions, lib, "g_action_group_list_actions")
-	core.PuregoSafeRegister(&XGActionGroupQueryAction, lib, "g_action_group_query_action")
+	core.PuregoSafeRegister(&XGActionGroupActionAdded, libs, "g_action_group_action_added")
+	core.PuregoSafeRegister(&XGActionGroupActionEnabledChanged, libs, "g_action_group_action_enabled_changed")
+	core.PuregoSafeRegister(&XGActionGroupActionRemoved, libs, "g_action_group_action_removed")
+	core.PuregoSafeRegister(&XGActionGroupActionStateChanged, libs, "g_action_group_action_state_changed")
+	core.PuregoSafeRegister(&XGActionGroupActivateAction, libs, "g_action_group_activate_action")
+	core.PuregoSafeRegister(&XGActionGroupChangeActionState, libs, "g_action_group_change_action_state")
+	core.PuregoSafeRegister(&XGActionGroupGetActionEnabled, libs, "g_action_group_get_action_enabled")
+	core.PuregoSafeRegister(&XGActionGroupGetActionParameterType, libs, "g_action_group_get_action_parameter_type")
+	core.PuregoSafeRegister(&XGActionGroupGetActionState, libs, "g_action_group_get_action_state")
+	core.PuregoSafeRegister(&XGActionGroupGetActionStateHint, libs, "g_action_group_get_action_state_hint")
+	core.PuregoSafeRegister(&XGActionGroupGetActionStateType, libs, "g_action_group_get_action_state_type")
+	core.PuregoSafeRegister(&XGActionGroupHasAction, libs, "g_action_group_has_action")
+	core.PuregoSafeRegister(&XGActionGroupListActions, libs, "g_action_group_list_actions")
+	core.PuregoSafeRegister(&XGActionGroupQueryAction, libs, "g_action_group_query_action")
 
 }

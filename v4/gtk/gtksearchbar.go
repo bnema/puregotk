@@ -509,24 +509,28 @@ func (x *SearchBar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSearchBarGLibType, lib, "gtk_search_bar_get_type")
+	core.PuregoSafeRegister(&xSearchBarGLibType, libs, "gtk_search_bar_get_type")
 
-	core.PuregoSafeRegister(&xNewSearchBar, lib, "gtk_search_bar_new")
+	core.PuregoSafeRegister(&xNewSearchBar, libs, "gtk_search_bar_new")
 
-	core.PuregoSafeRegister(&xSearchBarConnectEntry, lib, "gtk_search_bar_connect_entry")
-	core.PuregoSafeRegister(&xSearchBarGetChild, lib, "gtk_search_bar_get_child")
-	core.PuregoSafeRegister(&xSearchBarGetKeyCaptureWidget, lib, "gtk_search_bar_get_key_capture_widget")
-	core.PuregoSafeRegister(&xSearchBarGetSearchMode, lib, "gtk_search_bar_get_search_mode")
-	core.PuregoSafeRegister(&xSearchBarGetShowCloseButton, lib, "gtk_search_bar_get_show_close_button")
-	core.PuregoSafeRegister(&xSearchBarSetChild, lib, "gtk_search_bar_set_child")
-	core.PuregoSafeRegister(&xSearchBarSetKeyCaptureWidget, lib, "gtk_search_bar_set_key_capture_widget")
-	core.PuregoSafeRegister(&xSearchBarSetSearchMode, lib, "gtk_search_bar_set_search_mode")
-	core.PuregoSafeRegister(&xSearchBarSetShowCloseButton, lib, "gtk_search_bar_set_show_close_button")
+	core.PuregoSafeRegister(&xSearchBarConnectEntry, libs, "gtk_search_bar_connect_entry")
+	core.PuregoSafeRegister(&xSearchBarGetChild, libs, "gtk_search_bar_get_child")
+	core.PuregoSafeRegister(&xSearchBarGetKeyCaptureWidget, libs, "gtk_search_bar_get_key_capture_widget")
+	core.PuregoSafeRegister(&xSearchBarGetSearchMode, libs, "gtk_search_bar_get_search_mode")
+	core.PuregoSafeRegister(&xSearchBarGetShowCloseButton, libs, "gtk_search_bar_get_show_close_button")
+	core.PuregoSafeRegister(&xSearchBarSetChild, libs, "gtk_search_bar_set_child")
+	core.PuregoSafeRegister(&xSearchBarSetKeyCaptureWidget, libs, "gtk_search_bar_set_key_capture_widget")
+	core.PuregoSafeRegister(&xSearchBarSetSearchMode, libs, "gtk_search_bar_set_search_mode")
+	core.PuregoSafeRegister(&xSearchBarSetShowCloseButton, libs, "gtk_search_bar_set_show_close_button")
 
 }

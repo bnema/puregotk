@@ -168,23 +168,27 @@ func RenderOption(ContextVar *StyleContext, CrVar *cairo.Context, XVar float64, 
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRenderActivity, lib, "gtk_render_activity")
-	core.PuregoSafeRegister(&xRenderArrow, lib, "gtk_render_arrow")
-	core.PuregoSafeRegister(&xRenderBackground, lib, "gtk_render_background")
-	core.PuregoSafeRegister(&xRenderCheck, lib, "gtk_render_check")
-	core.PuregoSafeRegister(&xRenderExpander, lib, "gtk_render_expander")
-	core.PuregoSafeRegister(&xRenderFocus, lib, "gtk_render_focus")
-	core.PuregoSafeRegister(&xRenderFrame, lib, "gtk_render_frame")
-	core.PuregoSafeRegister(&xRenderHandle, lib, "gtk_render_handle")
-	core.PuregoSafeRegister(&xRenderIcon, lib, "gtk_render_icon")
-	core.PuregoSafeRegister(&xRenderLayout, lib, "gtk_render_layout")
-	core.PuregoSafeRegister(&xRenderLine, lib, "gtk_render_line")
-	core.PuregoSafeRegister(&xRenderOption, lib, "gtk_render_option")
+	core.PuregoSafeRegister(&xRenderActivity, libs, "gtk_render_activity")
+	core.PuregoSafeRegister(&xRenderArrow, libs, "gtk_render_arrow")
+	core.PuregoSafeRegister(&xRenderBackground, libs, "gtk_render_background")
+	core.PuregoSafeRegister(&xRenderCheck, libs, "gtk_render_check")
+	core.PuregoSafeRegister(&xRenderExpander, libs, "gtk_render_expander")
+	core.PuregoSafeRegister(&xRenderFocus, libs, "gtk_render_focus")
+	core.PuregoSafeRegister(&xRenderFrame, libs, "gtk_render_frame")
+	core.PuregoSafeRegister(&xRenderHandle, libs, "gtk_render_handle")
+	core.PuregoSafeRegister(&xRenderIcon, libs, "gtk_render_icon")
+	core.PuregoSafeRegister(&xRenderLayout, libs, "gtk_render_layout")
+	core.PuregoSafeRegister(&xRenderLine, libs, "gtk_render_line")
+	core.PuregoSafeRegister(&xRenderOption, libs, "gtk_render_option")
 
 }

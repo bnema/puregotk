@@ -350,27 +350,31 @@ func (c *StringObject) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStringListGLibType, lib, "gtk_string_list_get_type")
+	core.PuregoSafeRegister(&xStringListGLibType, libs, "gtk_string_list_get_type")
 
-	core.PuregoSafeRegister(&xNewStringList, lib, "gtk_string_list_new")
+	core.PuregoSafeRegister(&xNewStringList, libs, "gtk_string_list_new")
 
-	core.PuregoSafeRegister(&xStringListAppend, lib, "gtk_string_list_append")
-	core.PuregoSafeRegister(&xStringListFind, lib, "gtk_string_list_find")
-	core.PuregoSafeRegister(&xStringListGetString, lib, "gtk_string_list_get_string")
-	core.PuregoSafeRegister(&xStringListRemove, lib, "gtk_string_list_remove")
-	core.PuregoSafeRegister(&xStringListSplice, lib, "gtk_string_list_splice")
-	core.PuregoSafeRegister(&xStringListTake, lib, "gtk_string_list_take")
+	core.PuregoSafeRegister(&xStringListAppend, libs, "gtk_string_list_append")
+	core.PuregoSafeRegister(&xStringListFind, libs, "gtk_string_list_find")
+	core.PuregoSafeRegister(&xStringListGetString, libs, "gtk_string_list_get_string")
+	core.PuregoSafeRegister(&xStringListRemove, libs, "gtk_string_list_remove")
+	core.PuregoSafeRegister(&xStringListSplice, libs, "gtk_string_list_splice")
+	core.PuregoSafeRegister(&xStringListTake, libs, "gtk_string_list_take")
 
-	core.PuregoSafeRegister(&xStringObjectGLibType, lib, "gtk_string_object_get_type")
+	core.PuregoSafeRegister(&xStringObjectGLibType, libs, "gtk_string_object_get_type")
 
-	core.PuregoSafeRegister(&xNewStringObject, lib, "gtk_string_object_new")
+	core.PuregoSafeRegister(&xNewStringObject, libs, "gtk_string_object_new")
 
-	core.PuregoSafeRegister(&xStringObjectGetString, lib, "gtk_string_object_get_string")
+	core.PuregoSafeRegister(&xStringObjectGetString, libs, "gtk_string_object_get_string")
 
 }

@@ -593,17 +593,21 @@ func (x *FileOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFileOutputStreamGLibType, lib, "g_file_output_stream_get_type")
+	core.PuregoSafeRegister(&xFileOutputStreamGLibType, libs, "g_file_output_stream_get_type")
 
-	core.PuregoSafeRegister(&xFileOutputStreamGetEtag, lib, "g_file_output_stream_get_etag")
-	core.PuregoSafeRegister(&xFileOutputStreamQueryInfo, lib, "g_file_output_stream_query_info")
-	core.PuregoSafeRegister(&xFileOutputStreamQueryInfoAsync, lib, "g_file_output_stream_query_info_async")
-	core.PuregoSafeRegister(&xFileOutputStreamQueryInfoFinish, lib, "g_file_output_stream_query_info_finish")
+	core.PuregoSafeRegister(&xFileOutputStreamGetEtag, libs, "g_file_output_stream_get_etag")
+	core.PuregoSafeRegister(&xFileOutputStreamQueryInfo, libs, "g_file_output_stream_query_info")
+	core.PuregoSafeRegister(&xFileOutputStreamQueryInfoAsync, libs, "g_file_output_stream_query_info_async")
+	core.PuregoSafeRegister(&xFileOutputStreamQueryInfoFinish, libs, "g_file_output_stream_query_info_finish")
 
 }

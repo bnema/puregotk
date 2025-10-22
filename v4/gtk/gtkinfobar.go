@@ -672,31 +672,35 @@ func (x *InfoBar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInfoBarGLibType, lib, "gtk_info_bar_get_type")
+	core.PuregoSafeRegister(&xInfoBarGLibType, libs, "gtk_info_bar_get_type")
 
-	core.PuregoSafeRegister(&xNewInfoBar, lib, "gtk_info_bar_new")
-	core.PuregoSafeRegister(&xNewInfoBarWithButtons, lib, "gtk_info_bar_new_with_buttons")
+	core.PuregoSafeRegister(&xNewInfoBar, libs, "gtk_info_bar_new")
+	core.PuregoSafeRegister(&xNewInfoBarWithButtons, libs, "gtk_info_bar_new_with_buttons")
 
-	core.PuregoSafeRegister(&xInfoBarAddActionWidget, lib, "gtk_info_bar_add_action_widget")
-	core.PuregoSafeRegister(&xInfoBarAddButton, lib, "gtk_info_bar_add_button")
-	core.PuregoSafeRegister(&xInfoBarAddButtons, lib, "gtk_info_bar_add_buttons")
-	core.PuregoSafeRegister(&xInfoBarAddChild, lib, "gtk_info_bar_add_child")
-	core.PuregoSafeRegister(&xInfoBarGetMessageType, lib, "gtk_info_bar_get_message_type")
-	core.PuregoSafeRegister(&xInfoBarGetRevealed, lib, "gtk_info_bar_get_revealed")
-	core.PuregoSafeRegister(&xInfoBarGetShowCloseButton, lib, "gtk_info_bar_get_show_close_button")
-	core.PuregoSafeRegister(&xInfoBarRemoveActionWidget, lib, "gtk_info_bar_remove_action_widget")
-	core.PuregoSafeRegister(&xInfoBarRemoveChild, lib, "gtk_info_bar_remove_child")
-	core.PuregoSafeRegister(&xInfoBarResponse, lib, "gtk_info_bar_response")
-	core.PuregoSafeRegister(&xInfoBarSetDefaultResponse, lib, "gtk_info_bar_set_default_response")
-	core.PuregoSafeRegister(&xInfoBarSetMessageType, lib, "gtk_info_bar_set_message_type")
-	core.PuregoSafeRegister(&xInfoBarSetResponseSensitive, lib, "gtk_info_bar_set_response_sensitive")
-	core.PuregoSafeRegister(&xInfoBarSetRevealed, lib, "gtk_info_bar_set_revealed")
-	core.PuregoSafeRegister(&xInfoBarSetShowCloseButton, lib, "gtk_info_bar_set_show_close_button")
+	core.PuregoSafeRegister(&xInfoBarAddActionWidget, libs, "gtk_info_bar_add_action_widget")
+	core.PuregoSafeRegister(&xInfoBarAddButton, libs, "gtk_info_bar_add_button")
+	core.PuregoSafeRegister(&xInfoBarAddButtons, libs, "gtk_info_bar_add_buttons")
+	core.PuregoSafeRegister(&xInfoBarAddChild, libs, "gtk_info_bar_add_child")
+	core.PuregoSafeRegister(&xInfoBarGetMessageType, libs, "gtk_info_bar_get_message_type")
+	core.PuregoSafeRegister(&xInfoBarGetRevealed, libs, "gtk_info_bar_get_revealed")
+	core.PuregoSafeRegister(&xInfoBarGetShowCloseButton, libs, "gtk_info_bar_get_show_close_button")
+	core.PuregoSafeRegister(&xInfoBarRemoveActionWidget, libs, "gtk_info_bar_remove_action_widget")
+	core.PuregoSafeRegister(&xInfoBarRemoveChild, libs, "gtk_info_bar_remove_child")
+	core.PuregoSafeRegister(&xInfoBarResponse, libs, "gtk_info_bar_response")
+	core.PuregoSafeRegister(&xInfoBarSetDefaultResponse, libs, "gtk_info_bar_set_default_response")
+	core.PuregoSafeRegister(&xInfoBarSetMessageType, libs, "gtk_info_bar_set_message_type")
+	core.PuregoSafeRegister(&xInfoBarSetResponseSensitive, libs, "gtk_info_bar_set_response_sensitive")
+	core.PuregoSafeRegister(&xInfoBarSetRevealed, libs, "gtk_info_bar_set_revealed")
+	core.PuregoSafeRegister(&xInfoBarSetShowCloseButton, libs, "gtk_info_bar_set_show_close_button")
 
 }

@@ -839,35 +839,39 @@ func (x *Popover) Unrealize() {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPopoverGLibType, lib, "gtk_popover_get_type")
+	core.PuregoSafeRegister(&xPopoverGLibType, libs, "gtk_popover_get_type")
 
-	core.PuregoSafeRegister(&xNewPopover, lib, "gtk_popover_new")
+	core.PuregoSafeRegister(&xNewPopover, libs, "gtk_popover_new")
 
-	core.PuregoSafeRegister(&xPopoverGetAutohide, lib, "gtk_popover_get_autohide")
-	core.PuregoSafeRegister(&xPopoverGetCascadePopdown, lib, "gtk_popover_get_cascade_popdown")
-	core.PuregoSafeRegister(&xPopoverGetChild, lib, "gtk_popover_get_child")
-	core.PuregoSafeRegister(&xPopoverGetHasArrow, lib, "gtk_popover_get_has_arrow")
-	core.PuregoSafeRegister(&xPopoverGetMnemonicsVisible, lib, "gtk_popover_get_mnemonics_visible")
-	core.PuregoSafeRegister(&xPopoverGetOffset, lib, "gtk_popover_get_offset")
-	core.PuregoSafeRegister(&xPopoverGetPointingTo, lib, "gtk_popover_get_pointing_to")
-	core.PuregoSafeRegister(&xPopoverGetPosition, lib, "gtk_popover_get_position")
-	core.PuregoSafeRegister(&xPopoverPopdown, lib, "gtk_popover_popdown")
-	core.PuregoSafeRegister(&xPopoverPopup, lib, "gtk_popover_popup")
-	core.PuregoSafeRegister(&xPopoverPresent, lib, "gtk_popover_present")
-	core.PuregoSafeRegister(&xPopoverSetAutohide, lib, "gtk_popover_set_autohide")
-	core.PuregoSafeRegister(&xPopoverSetCascadePopdown, lib, "gtk_popover_set_cascade_popdown")
-	core.PuregoSafeRegister(&xPopoverSetChild, lib, "gtk_popover_set_child")
-	core.PuregoSafeRegister(&xPopoverSetDefaultWidget, lib, "gtk_popover_set_default_widget")
-	core.PuregoSafeRegister(&xPopoverSetHasArrow, lib, "gtk_popover_set_has_arrow")
-	core.PuregoSafeRegister(&xPopoverSetMnemonicsVisible, lib, "gtk_popover_set_mnemonics_visible")
-	core.PuregoSafeRegister(&xPopoverSetOffset, lib, "gtk_popover_set_offset")
-	core.PuregoSafeRegister(&xPopoverSetPointingTo, lib, "gtk_popover_set_pointing_to")
-	core.PuregoSafeRegister(&xPopoverSetPosition, lib, "gtk_popover_set_position")
+	core.PuregoSafeRegister(&xPopoverGetAutohide, libs, "gtk_popover_get_autohide")
+	core.PuregoSafeRegister(&xPopoverGetCascadePopdown, libs, "gtk_popover_get_cascade_popdown")
+	core.PuregoSafeRegister(&xPopoverGetChild, libs, "gtk_popover_get_child")
+	core.PuregoSafeRegister(&xPopoverGetHasArrow, libs, "gtk_popover_get_has_arrow")
+	core.PuregoSafeRegister(&xPopoverGetMnemonicsVisible, libs, "gtk_popover_get_mnemonics_visible")
+	core.PuregoSafeRegister(&xPopoverGetOffset, libs, "gtk_popover_get_offset")
+	core.PuregoSafeRegister(&xPopoverGetPointingTo, libs, "gtk_popover_get_pointing_to")
+	core.PuregoSafeRegister(&xPopoverGetPosition, libs, "gtk_popover_get_position")
+	core.PuregoSafeRegister(&xPopoverPopdown, libs, "gtk_popover_popdown")
+	core.PuregoSafeRegister(&xPopoverPopup, libs, "gtk_popover_popup")
+	core.PuregoSafeRegister(&xPopoverPresent, libs, "gtk_popover_present")
+	core.PuregoSafeRegister(&xPopoverSetAutohide, libs, "gtk_popover_set_autohide")
+	core.PuregoSafeRegister(&xPopoverSetCascadePopdown, libs, "gtk_popover_set_cascade_popdown")
+	core.PuregoSafeRegister(&xPopoverSetChild, libs, "gtk_popover_set_child")
+	core.PuregoSafeRegister(&xPopoverSetDefaultWidget, libs, "gtk_popover_set_default_widget")
+	core.PuregoSafeRegister(&xPopoverSetHasArrow, libs, "gtk_popover_set_has_arrow")
+	core.PuregoSafeRegister(&xPopoverSetMnemonicsVisible, libs, "gtk_popover_set_mnemonics_visible")
+	core.PuregoSafeRegister(&xPopoverSetOffset, libs, "gtk_popover_set_offset")
+	core.PuregoSafeRegister(&xPopoverSetPointingTo, libs, "gtk_popover_set_pointing_to")
+	core.PuregoSafeRegister(&xPopoverSetPosition, libs, "gtk_popover_set_position")
 
 }

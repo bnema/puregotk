@@ -501,26 +501,30 @@ func (x *Avatar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAvatarGLibType, lib, "adw_avatar_get_type")
+	core.PuregoSafeRegister(&xAvatarGLibType, libs, "adw_avatar_get_type")
 
-	core.PuregoSafeRegister(&xNewAvatar, lib, "adw_avatar_new")
+	core.PuregoSafeRegister(&xNewAvatar, libs, "adw_avatar_new")
 
-	core.PuregoSafeRegister(&xAvatarDrawToTexture, lib, "adw_avatar_draw_to_texture")
-	core.PuregoSafeRegister(&xAvatarGetCustomImage, lib, "adw_avatar_get_custom_image")
-	core.PuregoSafeRegister(&xAvatarGetIconName, lib, "adw_avatar_get_icon_name")
-	core.PuregoSafeRegister(&xAvatarGetShowInitials, lib, "adw_avatar_get_show_initials")
-	core.PuregoSafeRegister(&xAvatarGetSize, lib, "adw_avatar_get_size")
-	core.PuregoSafeRegister(&xAvatarGetText, lib, "adw_avatar_get_text")
-	core.PuregoSafeRegister(&xAvatarSetCustomImage, lib, "adw_avatar_set_custom_image")
-	core.PuregoSafeRegister(&xAvatarSetIconName, lib, "adw_avatar_set_icon_name")
-	core.PuregoSafeRegister(&xAvatarSetShowInitials, lib, "adw_avatar_set_show_initials")
-	core.PuregoSafeRegister(&xAvatarSetSize, lib, "adw_avatar_set_size")
-	core.PuregoSafeRegister(&xAvatarSetText, lib, "adw_avatar_set_text")
+	core.PuregoSafeRegister(&xAvatarDrawToTexture, libs, "adw_avatar_draw_to_texture")
+	core.PuregoSafeRegister(&xAvatarGetCustomImage, libs, "adw_avatar_get_custom_image")
+	core.PuregoSafeRegister(&xAvatarGetIconName, libs, "adw_avatar_get_icon_name")
+	core.PuregoSafeRegister(&xAvatarGetShowInitials, libs, "adw_avatar_get_show_initials")
+	core.PuregoSafeRegister(&xAvatarGetSize, libs, "adw_avatar_get_size")
+	core.PuregoSafeRegister(&xAvatarGetText, libs, "adw_avatar_get_text")
+	core.PuregoSafeRegister(&xAvatarSetCustomImage, libs, "adw_avatar_set_custom_image")
+	core.PuregoSafeRegister(&xAvatarSetIconName, libs, "adw_avatar_set_icon_name")
+	core.PuregoSafeRegister(&xAvatarSetShowInitials, libs, "adw_avatar_set_show_initials")
+	core.PuregoSafeRegister(&xAvatarSetSize, libs, "adw_avatar_set_size")
+	core.PuregoSafeRegister(&xAvatarSetText, libs, "adw_avatar_set_text")
 
 }

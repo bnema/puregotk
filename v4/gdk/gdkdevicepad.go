@@ -124,19 +124,23 @@ const (
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDevicePadFeatureGLibType, lib, "gdk_device_pad_feature_get_type")
+	core.PuregoSafeRegister(&xDevicePadFeatureGLibType, libs, "gdk_device_pad_feature_get_type")
 
-	core.PuregoSafeRegister(&xDevicePadGLibType, lib, "gdk_device_pad_get_type")
+	core.PuregoSafeRegister(&xDevicePadGLibType, libs, "gdk_device_pad_get_type")
 
-	core.PuregoSafeRegister(&XGdkDevicePadGetFeatureGroup, lib, "gdk_device_pad_get_feature_group")
-	core.PuregoSafeRegister(&XGdkDevicePadGetGroupNModes, lib, "gdk_device_pad_get_group_n_modes")
-	core.PuregoSafeRegister(&XGdkDevicePadGetNFeatures, lib, "gdk_device_pad_get_n_features")
-	core.PuregoSafeRegister(&XGdkDevicePadGetNGroups, lib, "gdk_device_pad_get_n_groups")
+	core.PuregoSafeRegister(&XGdkDevicePadGetFeatureGroup, libs, "gdk_device_pad_get_feature_group")
+	core.PuregoSafeRegister(&XGdkDevicePadGetGroupNModes, libs, "gdk_device_pad_get_group_n_modes")
+	core.PuregoSafeRegister(&XGdkDevicePadGetNFeatures, libs, "gdk_device_pad_get_n_features")
+	core.PuregoSafeRegister(&XGdkDevicePadGetNGroups, libs, "gdk_device_pad_get_n_groups")
 
 }

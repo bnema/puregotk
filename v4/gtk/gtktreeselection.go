@@ -315,33 +315,37 @@ func (x *TreeSelection) ConnectChanged(cb *func(TreeSelection)) uint32 {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTreeSelectionGLibType, lib, "gtk_tree_selection_get_type")
+	core.PuregoSafeRegister(&xTreeSelectionGLibType, libs, "gtk_tree_selection_get_type")
 
-	core.PuregoSafeRegister(&xTreeSelectionCountSelectedRows, lib, "gtk_tree_selection_count_selected_rows")
-	core.PuregoSafeRegister(&xTreeSelectionGetMode, lib, "gtk_tree_selection_get_mode")
-	core.PuregoSafeRegister(&xTreeSelectionGetSelectFunction, lib, "gtk_tree_selection_get_select_function")
-	core.PuregoSafeRegister(&xTreeSelectionGetSelected, lib, "gtk_tree_selection_get_selected")
-	core.PuregoSafeRegister(&xTreeSelectionGetSelectedRows, lib, "gtk_tree_selection_get_selected_rows")
-	core.PuregoSafeRegister(&xTreeSelectionGetTreeView, lib, "gtk_tree_selection_get_tree_view")
-	core.PuregoSafeRegister(&xTreeSelectionGetUserData, lib, "gtk_tree_selection_get_user_data")
-	core.PuregoSafeRegister(&xTreeSelectionIterIsSelected, lib, "gtk_tree_selection_iter_is_selected")
-	core.PuregoSafeRegister(&xTreeSelectionPathIsSelected, lib, "gtk_tree_selection_path_is_selected")
-	core.PuregoSafeRegister(&xTreeSelectionSelectAll, lib, "gtk_tree_selection_select_all")
-	core.PuregoSafeRegister(&xTreeSelectionSelectIter, lib, "gtk_tree_selection_select_iter")
-	core.PuregoSafeRegister(&xTreeSelectionSelectPath, lib, "gtk_tree_selection_select_path")
-	core.PuregoSafeRegister(&xTreeSelectionSelectRange, lib, "gtk_tree_selection_select_range")
-	core.PuregoSafeRegister(&xTreeSelectionSelectedForeach, lib, "gtk_tree_selection_selected_foreach")
-	core.PuregoSafeRegister(&xTreeSelectionSetMode, lib, "gtk_tree_selection_set_mode")
-	core.PuregoSafeRegister(&xTreeSelectionSetSelectFunction, lib, "gtk_tree_selection_set_select_function")
-	core.PuregoSafeRegister(&xTreeSelectionUnselectAll, lib, "gtk_tree_selection_unselect_all")
-	core.PuregoSafeRegister(&xTreeSelectionUnselectIter, lib, "gtk_tree_selection_unselect_iter")
-	core.PuregoSafeRegister(&xTreeSelectionUnselectPath, lib, "gtk_tree_selection_unselect_path")
-	core.PuregoSafeRegister(&xTreeSelectionUnselectRange, lib, "gtk_tree_selection_unselect_range")
+	core.PuregoSafeRegister(&xTreeSelectionCountSelectedRows, libs, "gtk_tree_selection_count_selected_rows")
+	core.PuregoSafeRegister(&xTreeSelectionGetMode, libs, "gtk_tree_selection_get_mode")
+	core.PuregoSafeRegister(&xTreeSelectionGetSelectFunction, libs, "gtk_tree_selection_get_select_function")
+	core.PuregoSafeRegister(&xTreeSelectionGetSelected, libs, "gtk_tree_selection_get_selected")
+	core.PuregoSafeRegister(&xTreeSelectionGetSelectedRows, libs, "gtk_tree_selection_get_selected_rows")
+	core.PuregoSafeRegister(&xTreeSelectionGetTreeView, libs, "gtk_tree_selection_get_tree_view")
+	core.PuregoSafeRegister(&xTreeSelectionGetUserData, libs, "gtk_tree_selection_get_user_data")
+	core.PuregoSafeRegister(&xTreeSelectionIterIsSelected, libs, "gtk_tree_selection_iter_is_selected")
+	core.PuregoSafeRegister(&xTreeSelectionPathIsSelected, libs, "gtk_tree_selection_path_is_selected")
+	core.PuregoSafeRegister(&xTreeSelectionSelectAll, libs, "gtk_tree_selection_select_all")
+	core.PuregoSafeRegister(&xTreeSelectionSelectIter, libs, "gtk_tree_selection_select_iter")
+	core.PuregoSafeRegister(&xTreeSelectionSelectPath, libs, "gtk_tree_selection_select_path")
+	core.PuregoSafeRegister(&xTreeSelectionSelectRange, libs, "gtk_tree_selection_select_range")
+	core.PuregoSafeRegister(&xTreeSelectionSelectedForeach, libs, "gtk_tree_selection_selected_foreach")
+	core.PuregoSafeRegister(&xTreeSelectionSetMode, libs, "gtk_tree_selection_set_mode")
+	core.PuregoSafeRegister(&xTreeSelectionSetSelectFunction, libs, "gtk_tree_selection_set_select_function")
+	core.PuregoSafeRegister(&xTreeSelectionUnselectAll, libs, "gtk_tree_selection_unselect_all")
+	core.PuregoSafeRegister(&xTreeSelectionUnselectIter, libs, "gtk_tree_selection_unselect_iter")
+	core.PuregoSafeRegister(&xTreeSelectionUnselectPath, libs, "gtk_tree_selection_unselect_path")
+	core.PuregoSafeRegister(&xTreeSelectionUnselectRange, libs, "gtk_tree_selection_unselect_range")
 
 }

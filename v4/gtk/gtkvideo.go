@@ -580,31 +580,35 @@ func (x *Video) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xVideoGLibType, lib, "gtk_video_get_type")
+	core.PuregoSafeRegister(&xVideoGLibType, libs, "gtk_video_get_type")
 
-	core.PuregoSafeRegister(&xNewVideo, lib, "gtk_video_new")
-	core.PuregoSafeRegister(&xNewVideoForFile, lib, "gtk_video_new_for_file")
-	core.PuregoSafeRegister(&xNewVideoForFilename, lib, "gtk_video_new_for_filename")
-	core.PuregoSafeRegister(&xNewVideoForMediaStream, lib, "gtk_video_new_for_media_stream")
-	core.PuregoSafeRegister(&xNewVideoForResource, lib, "gtk_video_new_for_resource")
+	core.PuregoSafeRegister(&xNewVideo, libs, "gtk_video_new")
+	core.PuregoSafeRegister(&xNewVideoForFile, libs, "gtk_video_new_for_file")
+	core.PuregoSafeRegister(&xNewVideoForFilename, libs, "gtk_video_new_for_filename")
+	core.PuregoSafeRegister(&xNewVideoForMediaStream, libs, "gtk_video_new_for_media_stream")
+	core.PuregoSafeRegister(&xNewVideoForResource, libs, "gtk_video_new_for_resource")
 
-	core.PuregoSafeRegister(&xVideoGetAutoplay, lib, "gtk_video_get_autoplay")
-	core.PuregoSafeRegister(&xVideoGetFile, lib, "gtk_video_get_file")
-	core.PuregoSafeRegister(&xVideoGetGraphicsOffload, lib, "gtk_video_get_graphics_offload")
-	core.PuregoSafeRegister(&xVideoGetLoop, lib, "gtk_video_get_loop")
-	core.PuregoSafeRegister(&xVideoGetMediaStream, lib, "gtk_video_get_media_stream")
-	core.PuregoSafeRegister(&xVideoSetAutoplay, lib, "gtk_video_set_autoplay")
-	core.PuregoSafeRegister(&xVideoSetFile, lib, "gtk_video_set_file")
-	core.PuregoSafeRegister(&xVideoSetFilename, lib, "gtk_video_set_filename")
-	core.PuregoSafeRegister(&xVideoSetGraphicsOffload, lib, "gtk_video_set_graphics_offload")
-	core.PuregoSafeRegister(&xVideoSetLoop, lib, "gtk_video_set_loop")
-	core.PuregoSafeRegister(&xVideoSetMediaStream, lib, "gtk_video_set_media_stream")
-	core.PuregoSafeRegister(&xVideoSetResource, lib, "gtk_video_set_resource")
+	core.PuregoSafeRegister(&xVideoGetAutoplay, libs, "gtk_video_get_autoplay")
+	core.PuregoSafeRegister(&xVideoGetFile, libs, "gtk_video_get_file")
+	core.PuregoSafeRegister(&xVideoGetGraphicsOffload, libs, "gtk_video_get_graphics_offload")
+	core.PuregoSafeRegister(&xVideoGetLoop, libs, "gtk_video_get_loop")
+	core.PuregoSafeRegister(&xVideoGetMediaStream, libs, "gtk_video_get_media_stream")
+	core.PuregoSafeRegister(&xVideoSetAutoplay, libs, "gtk_video_set_autoplay")
+	core.PuregoSafeRegister(&xVideoSetFile, libs, "gtk_video_set_file")
+	core.PuregoSafeRegister(&xVideoSetFilename, libs, "gtk_video_set_filename")
+	core.PuregoSafeRegister(&xVideoSetGraphicsOffload, libs, "gtk_video_set_graphics_offload")
+	core.PuregoSafeRegister(&xVideoSetLoop, libs, "gtk_video_set_loop")
+	core.PuregoSafeRegister(&xVideoSetMediaStream, libs, "gtk_video_set_media_stream")
+	core.PuregoSafeRegister(&xVideoSetResource, libs, "gtk_video_set_resource")
 
 }

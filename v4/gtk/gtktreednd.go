@@ -354,24 +354,28 @@ func TreeGetRowDragData(ValueVar *gobject.Value, TreeModelVar *TreeModel, PathVa
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTreeCreateRowDragContent, lib, "gtk_tree_create_row_drag_content")
-	core.PuregoSafeRegister(&xTreeGetRowDragData, lib, "gtk_tree_get_row_drag_data")
+	core.PuregoSafeRegister(&xTreeCreateRowDragContent, libs, "gtk_tree_create_row_drag_content")
+	core.PuregoSafeRegister(&xTreeGetRowDragData, libs, "gtk_tree_get_row_drag_data")
 
-	core.PuregoSafeRegister(&xTreeDragDestGLibType, lib, "gtk_tree_drag_dest_get_type")
+	core.PuregoSafeRegister(&xTreeDragDestGLibType, libs, "gtk_tree_drag_dest_get_type")
 
-	core.PuregoSafeRegister(&XGtkTreeDragDestDragDataReceived, lib, "gtk_tree_drag_dest_drag_data_received")
-	core.PuregoSafeRegister(&XGtkTreeDragDestRowDropPossible, lib, "gtk_tree_drag_dest_row_drop_possible")
+	core.PuregoSafeRegister(&XGtkTreeDragDestDragDataReceived, libs, "gtk_tree_drag_dest_drag_data_received")
+	core.PuregoSafeRegister(&XGtkTreeDragDestRowDropPossible, libs, "gtk_tree_drag_dest_row_drop_possible")
 
-	core.PuregoSafeRegister(&xTreeDragSourceGLibType, lib, "gtk_tree_drag_source_get_type")
+	core.PuregoSafeRegister(&xTreeDragSourceGLibType, libs, "gtk_tree_drag_source_get_type")
 
-	core.PuregoSafeRegister(&XGtkTreeDragSourceDragDataDelete, lib, "gtk_tree_drag_source_drag_data_delete")
-	core.PuregoSafeRegister(&XGtkTreeDragSourceDragDataGet, lib, "gtk_tree_drag_source_drag_data_get")
-	core.PuregoSafeRegister(&XGtkTreeDragSourceRowDraggable, lib, "gtk_tree_drag_source_row_draggable")
+	core.PuregoSafeRegister(&XGtkTreeDragSourceDragDataDelete, libs, "gtk_tree_drag_source_drag_data_delete")
+	core.PuregoSafeRegister(&XGtkTreeDragSourceDragDataGet, libs, "gtk_tree_drag_source_drag_data_get")
+	core.PuregoSafeRegister(&XGtkTreeDragSourceRowDraggable, libs, "gtk_tree_drag_source_row_draggable")
 
 }

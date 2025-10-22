@@ -222,20 +222,24 @@ func (x *DBusObjectSkeleton) GetObjectPath() string {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDBusObjectSkeletonGLibType, lib, "g_dbus_object_skeleton_get_type")
+	core.PuregoSafeRegister(&xDBusObjectSkeletonGLibType, libs, "g_dbus_object_skeleton_get_type")
 
-	core.PuregoSafeRegister(&xNewDBusObjectSkeleton, lib, "g_dbus_object_skeleton_new")
+	core.PuregoSafeRegister(&xNewDBusObjectSkeleton, libs, "g_dbus_object_skeleton_new")
 
-	core.PuregoSafeRegister(&xDBusObjectSkeletonAddInterface, lib, "g_dbus_object_skeleton_add_interface")
-	core.PuregoSafeRegister(&xDBusObjectSkeletonFlush, lib, "g_dbus_object_skeleton_flush")
-	core.PuregoSafeRegister(&xDBusObjectSkeletonRemoveInterface, lib, "g_dbus_object_skeleton_remove_interface")
-	core.PuregoSafeRegister(&xDBusObjectSkeletonRemoveInterfaceByName, lib, "g_dbus_object_skeleton_remove_interface_by_name")
-	core.PuregoSafeRegister(&xDBusObjectSkeletonSetObjectPath, lib, "g_dbus_object_skeleton_set_object_path")
+	core.PuregoSafeRegister(&xDBusObjectSkeletonAddInterface, libs, "g_dbus_object_skeleton_add_interface")
+	core.PuregoSafeRegister(&xDBusObjectSkeletonFlush, libs, "g_dbus_object_skeleton_flush")
+	core.PuregoSafeRegister(&xDBusObjectSkeletonRemoveInterface, libs, "g_dbus_object_skeleton_remove_interface")
+	core.PuregoSafeRegister(&xDBusObjectSkeletonRemoveInterfaceByName, libs, "g_dbus_object_skeleton_remove_interface_by_name")
+	core.PuregoSafeRegister(&xDBusObjectSkeletonSetObjectPath, libs, "g_dbus_object_skeleton_set_object_path")
 
 }

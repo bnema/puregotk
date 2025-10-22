@@ -521,20 +521,24 @@ func (x *ColorButton) SetUseAlpha(UseAlphaVar bool) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColorButtonGLibType, lib, "gtk_color_button_get_type")
+	core.PuregoSafeRegister(&xColorButtonGLibType, libs, "gtk_color_button_get_type")
 
-	core.PuregoSafeRegister(&xNewColorButton, lib, "gtk_color_button_new")
-	core.PuregoSafeRegister(&xNewColorButtonWithRgba, lib, "gtk_color_button_new_with_rgba")
+	core.PuregoSafeRegister(&xNewColorButton, libs, "gtk_color_button_new")
+	core.PuregoSafeRegister(&xNewColorButtonWithRgba, libs, "gtk_color_button_new_with_rgba")
 
-	core.PuregoSafeRegister(&xColorButtonGetModal, lib, "gtk_color_button_get_modal")
-	core.PuregoSafeRegister(&xColorButtonGetTitle, lib, "gtk_color_button_get_title")
-	core.PuregoSafeRegister(&xColorButtonSetModal, lib, "gtk_color_button_set_modal")
-	core.PuregoSafeRegister(&xColorButtonSetTitle, lib, "gtk_color_button_set_title")
+	core.PuregoSafeRegister(&xColorButtonGetModal, libs, "gtk_color_button_get_modal")
+	core.PuregoSafeRegister(&xColorButtonGetTitle, libs, "gtk_color_button_get_title")
+	core.PuregoSafeRegister(&xColorButtonSetModal, libs, "gtk_color_button_set_modal")
+	core.PuregoSafeRegister(&xColorButtonSetTitle, libs, "gtk_color_button_set_title")
 
 }

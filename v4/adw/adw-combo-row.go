@@ -732,34 +732,38 @@ func (x *ComboRow) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xComboRowGLibType, lib, "adw_combo_row_get_type")
+	core.PuregoSafeRegister(&xComboRowGLibType, libs, "adw_combo_row_get_type")
 
-	core.PuregoSafeRegister(&xNewComboRow, lib, "adw_combo_row_new")
+	core.PuregoSafeRegister(&xNewComboRow, libs, "adw_combo_row_new")
 
-	core.PuregoSafeRegister(&xComboRowGetEnableSearch, lib, "adw_combo_row_get_enable_search")
-	core.PuregoSafeRegister(&xComboRowGetExpression, lib, "adw_combo_row_get_expression")
-	core.PuregoSafeRegister(&xComboRowGetFactory, lib, "adw_combo_row_get_factory")
-	core.PuregoSafeRegister(&xComboRowGetHeaderFactory, lib, "adw_combo_row_get_header_factory")
-	core.PuregoSafeRegister(&xComboRowGetListFactory, lib, "adw_combo_row_get_list_factory")
-	core.PuregoSafeRegister(&xComboRowGetModel, lib, "adw_combo_row_get_model")
-	core.PuregoSafeRegister(&xComboRowGetSearchMatchMode, lib, "adw_combo_row_get_search_match_mode")
-	core.PuregoSafeRegister(&xComboRowGetSelected, lib, "adw_combo_row_get_selected")
-	core.PuregoSafeRegister(&xComboRowGetSelectedItem, lib, "adw_combo_row_get_selected_item")
-	core.PuregoSafeRegister(&xComboRowGetUseSubtitle, lib, "adw_combo_row_get_use_subtitle")
-	core.PuregoSafeRegister(&xComboRowSetEnableSearch, lib, "adw_combo_row_set_enable_search")
-	core.PuregoSafeRegister(&xComboRowSetExpression, lib, "adw_combo_row_set_expression")
-	core.PuregoSafeRegister(&xComboRowSetFactory, lib, "adw_combo_row_set_factory")
-	core.PuregoSafeRegister(&xComboRowSetHeaderFactory, lib, "adw_combo_row_set_header_factory")
-	core.PuregoSafeRegister(&xComboRowSetListFactory, lib, "adw_combo_row_set_list_factory")
-	core.PuregoSafeRegister(&xComboRowSetModel, lib, "adw_combo_row_set_model")
-	core.PuregoSafeRegister(&xComboRowSetSearchMatchMode, lib, "adw_combo_row_set_search_match_mode")
-	core.PuregoSafeRegister(&xComboRowSetSelected, lib, "adw_combo_row_set_selected")
-	core.PuregoSafeRegister(&xComboRowSetUseSubtitle, lib, "adw_combo_row_set_use_subtitle")
+	core.PuregoSafeRegister(&xComboRowGetEnableSearch, libs, "adw_combo_row_get_enable_search")
+	core.PuregoSafeRegister(&xComboRowGetExpression, libs, "adw_combo_row_get_expression")
+	core.PuregoSafeRegister(&xComboRowGetFactory, libs, "adw_combo_row_get_factory")
+	core.PuregoSafeRegister(&xComboRowGetHeaderFactory, libs, "adw_combo_row_get_header_factory")
+	core.PuregoSafeRegister(&xComboRowGetListFactory, libs, "adw_combo_row_get_list_factory")
+	core.PuregoSafeRegister(&xComboRowGetModel, libs, "adw_combo_row_get_model")
+	core.PuregoSafeRegister(&xComboRowGetSearchMatchMode, libs, "adw_combo_row_get_search_match_mode")
+	core.PuregoSafeRegister(&xComboRowGetSelected, libs, "adw_combo_row_get_selected")
+	core.PuregoSafeRegister(&xComboRowGetSelectedItem, libs, "adw_combo_row_get_selected_item")
+	core.PuregoSafeRegister(&xComboRowGetUseSubtitle, libs, "adw_combo_row_get_use_subtitle")
+	core.PuregoSafeRegister(&xComboRowSetEnableSearch, libs, "adw_combo_row_set_enable_search")
+	core.PuregoSafeRegister(&xComboRowSetExpression, libs, "adw_combo_row_set_expression")
+	core.PuregoSafeRegister(&xComboRowSetFactory, libs, "adw_combo_row_set_factory")
+	core.PuregoSafeRegister(&xComboRowSetHeaderFactory, libs, "adw_combo_row_set_header_factory")
+	core.PuregoSafeRegister(&xComboRowSetListFactory, libs, "adw_combo_row_set_list_factory")
+	core.PuregoSafeRegister(&xComboRowSetModel, libs, "adw_combo_row_set_model")
+	core.PuregoSafeRegister(&xComboRowSetSearchMatchMode, libs, "adw_combo_row_set_search_match_mode")
+	core.PuregoSafeRegister(&xComboRowSetSelected, libs, "adw_combo_row_set_selected")
+	core.PuregoSafeRegister(&xComboRowSetUseSubtitle, libs, "adw_combo_row_set_use_subtitle")
 
 }

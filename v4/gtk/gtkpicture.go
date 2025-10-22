@@ -702,35 +702,39 @@ func (x *Picture) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPictureGLibType, lib, "gtk_picture_get_type")
+	core.PuregoSafeRegister(&xPictureGLibType, libs, "gtk_picture_get_type")
 
-	core.PuregoSafeRegister(&xNewPicture, lib, "gtk_picture_new")
-	core.PuregoSafeRegister(&xNewPictureForFile, lib, "gtk_picture_new_for_file")
-	core.PuregoSafeRegister(&xNewPictureForFilename, lib, "gtk_picture_new_for_filename")
-	core.PuregoSafeRegister(&xNewPictureForPaintable, lib, "gtk_picture_new_for_paintable")
-	core.PuregoSafeRegister(&xNewPictureForPixbuf, lib, "gtk_picture_new_for_pixbuf")
-	core.PuregoSafeRegister(&xNewPictureForResource, lib, "gtk_picture_new_for_resource")
+	core.PuregoSafeRegister(&xNewPicture, libs, "gtk_picture_new")
+	core.PuregoSafeRegister(&xNewPictureForFile, libs, "gtk_picture_new_for_file")
+	core.PuregoSafeRegister(&xNewPictureForFilename, libs, "gtk_picture_new_for_filename")
+	core.PuregoSafeRegister(&xNewPictureForPaintable, libs, "gtk_picture_new_for_paintable")
+	core.PuregoSafeRegister(&xNewPictureForPixbuf, libs, "gtk_picture_new_for_pixbuf")
+	core.PuregoSafeRegister(&xNewPictureForResource, libs, "gtk_picture_new_for_resource")
 
-	core.PuregoSafeRegister(&xPictureGetAlternativeText, lib, "gtk_picture_get_alternative_text")
-	core.PuregoSafeRegister(&xPictureGetCanShrink, lib, "gtk_picture_get_can_shrink")
-	core.PuregoSafeRegister(&xPictureGetContentFit, lib, "gtk_picture_get_content_fit")
-	core.PuregoSafeRegister(&xPictureGetFile, lib, "gtk_picture_get_file")
-	core.PuregoSafeRegister(&xPictureGetKeepAspectRatio, lib, "gtk_picture_get_keep_aspect_ratio")
-	core.PuregoSafeRegister(&xPictureGetPaintable, lib, "gtk_picture_get_paintable")
-	core.PuregoSafeRegister(&xPictureSetAlternativeText, lib, "gtk_picture_set_alternative_text")
-	core.PuregoSafeRegister(&xPictureSetCanShrink, lib, "gtk_picture_set_can_shrink")
-	core.PuregoSafeRegister(&xPictureSetContentFit, lib, "gtk_picture_set_content_fit")
-	core.PuregoSafeRegister(&xPictureSetFile, lib, "gtk_picture_set_file")
-	core.PuregoSafeRegister(&xPictureSetFilename, lib, "gtk_picture_set_filename")
-	core.PuregoSafeRegister(&xPictureSetKeepAspectRatio, lib, "gtk_picture_set_keep_aspect_ratio")
-	core.PuregoSafeRegister(&xPictureSetPaintable, lib, "gtk_picture_set_paintable")
-	core.PuregoSafeRegister(&xPictureSetPixbuf, lib, "gtk_picture_set_pixbuf")
-	core.PuregoSafeRegister(&xPictureSetResource, lib, "gtk_picture_set_resource")
+	core.PuregoSafeRegister(&xPictureGetAlternativeText, libs, "gtk_picture_get_alternative_text")
+	core.PuregoSafeRegister(&xPictureGetCanShrink, libs, "gtk_picture_get_can_shrink")
+	core.PuregoSafeRegister(&xPictureGetContentFit, libs, "gtk_picture_get_content_fit")
+	core.PuregoSafeRegister(&xPictureGetFile, libs, "gtk_picture_get_file")
+	core.PuregoSafeRegister(&xPictureGetKeepAspectRatio, libs, "gtk_picture_get_keep_aspect_ratio")
+	core.PuregoSafeRegister(&xPictureGetPaintable, libs, "gtk_picture_get_paintable")
+	core.PuregoSafeRegister(&xPictureSetAlternativeText, libs, "gtk_picture_set_alternative_text")
+	core.PuregoSafeRegister(&xPictureSetCanShrink, libs, "gtk_picture_set_can_shrink")
+	core.PuregoSafeRegister(&xPictureSetContentFit, libs, "gtk_picture_set_content_fit")
+	core.PuregoSafeRegister(&xPictureSetFile, libs, "gtk_picture_set_file")
+	core.PuregoSafeRegister(&xPictureSetFilename, libs, "gtk_picture_set_filename")
+	core.PuregoSafeRegister(&xPictureSetKeepAspectRatio, libs, "gtk_picture_set_keep_aspect_ratio")
+	core.PuregoSafeRegister(&xPictureSetPaintable, libs, "gtk_picture_set_paintable")
+	core.PuregoSafeRegister(&xPictureSetPixbuf, libs, "gtk_picture_set_pixbuf")
+	core.PuregoSafeRegister(&xPictureSetResource, libs, "gtk_picture_set_resource")
 
 }

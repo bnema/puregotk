@@ -668,34 +668,38 @@ func (x *HeaderBar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCenteringPolicyGLibType, lib, "adw_centering_policy_get_type")
+	core.PuregoSafeRegister(&xCenteringPolicyGLibType, libs, "adw_centering_policy_get_type")
 
-	core.PuregoSafeRegister(&xHeaderBarGLibType, lib, "adw_header_bar_get_type")
+	core.PuregoSafeRegister(&xHeaderBarGLibType, libs, "adw_header_bar_get_type")
 
-	core.PuregoSafeRegister(&xNewHeaderBar, lib, "adw_header_bar_new")
+	core.PuregoSafeRegister(&xNewHeaderBar, libs, "adw_header_bar_new")
 
-	core.PuregoSafeRegister(&xHeaderBarGetCenteringPolicy, lib, "adw_header_bar_get_centering_policy")
-	core.PuregoSafeRegister(&xHeaderBarGetDecorationLayout, lib, "adw_header_bar_get_decoration_layout")
-	core.PuregoSafeRegister(&xHeaderBarGetShowBackButton, lib, "adw_header_bar_get_show_back_button")
-	core.PuregoSafeRegister(&xHeaderBarGetShowEndTitleButtons, lib, "adw_header_bar_get_show_end_title_buttons")
-	core.PuregoSafeRegister(&xHeaderBarGetShowStartTitleButtons, lib, "adw_header_bar_get_show_start_title_buttons")
-	core.PuregoSafeRegister(&xHeaderBarGetShowTitle, lib, "adw_header_bar_get_show_title")
-	core.PuregoSafeRegister(&xHeaderBarGetTitleWidget, lib, "adw_header_bar_get_title_widget")
-	core.PuregoSafeRegister(&xHeaderBarPackEnd, lib, "adw_header_bar_pack_end")
-	core.PuregoSafeRegister(&xHeaderBarPackStart, lib, "adw_header_bar_pack_start")
-	core.PuregoSafeRegister(&xHeaderBarRemove, lib, "adw_header_bar_remove")
-	core.PuregoSafeRegister(&xHeaderBarSetCenteringPolicy, lib, "adw_header_bar_set_centering_policy")
-	core.PuregoSafeRegister(&xHeaderBarSetDecorationLayout, lib, "adw_header_bar_set_decoration_layout")
-	core.PuregoSafeRegister(&xHeaderBarSetShowBackButton, lib, "adw_header_bar_set_show_back_button")
-	core.PuregoSafeRegister(&xHeaderBarSetShowEndTitleButtons, lib, "adw_header_bar_set_show_end_title_buttons")
-	core.PuregoSafeRegister(&xHeaderBarSetShowStartTitleButtons, lib, "adw_header_bar_set_show_start_title_buttons")
-	core.PuregoSafeRegister(&xHeaderBarSetShowTitle, lib, "adw_header_bar_set_show_title")
-	core.PuregoSafeRegister(&xHeaderBarSetTitleWidget, lib, "adw_header_bar_set_title_widget")
+	core.PuregoSafeRegister(&xHeaderBarGetCenteringPolicy, libs, "adw_header_bar_get_centering_policy")
+	core.PuregoSafeRegister(&xHeaderBarGetDecorationLayout, libs, "adw_header_bar_get_decoration_layout")
+	core.PuregoSafeRegister(&xHeaderBarGetShowBackButton, libs, "adw_header_bar_get_show_back_button")
+	core.PuregoSafeRegister(&xHeaderBarGetShowEndTitleButtons, libs, "adw_header_bar_get_show_end_title_buttons")
+	core.PuregoSafeRegister(&xHeaderBarGetShowStartTitleButtons, libs, "adw_header_bar_get_show_start_title_buttons")
+	core.PuregoSafeRegister(&xHeaderBarGetShowTitle, libs, "adw_header_bar_get_show_title")
+	core.PuregoSafeRegister(&xHeaderBarGetTitleWidget, libs, "adw_header_bar_get_title_widget")
+	core.PuregoSafeRegister(&xHeaderBarPackEnd, libs, "adw_header_bar_pack_end")
+	core.PuregoSafeRegister(&xHeaderBarPackStart, libs, "adw_header_bar_pack_start")
+	core.PuregoSafeRegister(&xHeaderBarRemove, libs, "adw_header_bar_remove")
+	core.PuregoSafeRegister(&xHeaderBarSetCenteringPolicy, libs, "adw_header_bar_set_centering_policy")
+	core.PuregoSafeRegister(&xHeaderBarSetDecorationLayout, libs, "adw_header_bar_set_decoration_layout")
+	core.PuregoSafeRegister(&xHeaderBarSetShowBackButton, libs, "adw_header_bar_set_show_back_button")
+	core.PuregoSafeRegister(&xHeaderBarSetShowEndTitleButtons, libs, "adw_header_bar_set_show_end_title_buttons")
+	core.PuregoSafeRegister(&xHeaderBarSetShowStartTitleButtons, libs, "adw_header_bar_set_show_start_title_buttons")
+	core.PuregoSafeRegister(&xHeaderBarSetShowTitle, libs, "adw_header_bar_set_show_title")
+	core.PuregoSafeRegister(&xHeaderBarSetTitleWidget, libs, "adw_header_bar_set_title_widget")
 
 }

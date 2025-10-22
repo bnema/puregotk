@@ -548,22 +548,26 @@ func (x *FontMap) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uint)
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFontMapGLibType, lib, "pango_font_map_get_type")
+	core.PuregoSafeRegister(&xFontMapGLibType, libs, "pango_font_map_get_type")
 
-	core.PuregoSafeRegister(&xFontMapAddFontFile, lib, "pango_font_map_add_font_file")
-	core.PuregoSafeRegister(&xFontMapChanged, lib, "pango_font_map_changed")
-	core.PuregoSafeRegister(&xFontMapCreateContext, lib, "pango_font_map_create_context")
-	core.PuregoSafeRegister(&xFontMapGetFamily, lib, "pango_font_map_get_family")
-	core.PuregoSafeRegister(&xFontMapGetSerial, lib, "pango_font_map_get_serial")
-	core.PuregoSafeRegister(&xFontMapListFamilies, lib, "pango_font_map_list_families")
-	core.PuregoSafeRegister(&xFontMapLoadFont, lib, "pango_font_map_load_font")
-	core.PuregoSafeRegister(&xFontMapLoadFontset, lib, "pango_font_map_load_fontset")
-	core.PuregoSafeRegister(&xFontMapReloadFont, lib, "pango_font_map_reload_font")
+	core.PuregoSafeRegister(&xFontMapAddFontFile, libs, "pango_font_map_add_font_file")
+	core.PuregoSafeRegister(&xFontMapChanged, libs, "pango_font_map_changed")
+	core.PuregoSafeRegister(&xFontMapCreateContext, libs, "pango_font_map_create_context")
+	core.PuregoSafeRegister(&xFontMapGetFamily, libs, "pango_font_map_get_family")
+	core.PuregoSafeRegister(&xFontMapGetSerial, libs, "pango_font_map_get_serial")
+	core.PuregoSafeRegister(&xFontMapListFamilies, libs, "pango_font_map_list_families")
+	core.PuregoSafeRegister(&xFontMapLoadFont, libs, "pango_font_map_load_font")
+	core.PuregoSafeRegister(&xFontMapLoadFontset, libs, "pango_font_map_load_fontset")
+	core.PuregoSafeRegister(&xFontMapReloadFont, libs, "pango_font_map_reload_font")
 
 }

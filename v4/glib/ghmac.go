@@ -177,25 +177,29 @@ func ComputeHmacForString(DigestTypeVar ChecksumType, KeyVar []byte, KeyLenVar u
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xComputeHmacForBytes, lib, "g_compute_hmac_for_bytes")
-	core.PuregoSafeRegister(&xComputeHmacForData, lib, "g_compute_hmac_for_data")
-	core.PuregoSafeRegister(&xComputeHmacForString, lib, "g_compute_hmac_for_string")
+	core.PuregoSafeRegister(&xComputeHmacForBytes, libs, "g_compute_hmac_for_bytes")
+	core.PuregoSafeRegister(&xComputeHmacForData, libs, "g_compute_hmac_for_data")
+	core.PuregoSafeRegister(&xComputeHmacForString, libs, "g_compute_hmac_for_string")
 
-	core.PuregoSafeRegister(&xHmacGLibType, lib, "g_hmac_get_type")
+	core.PuregoSafeRegister(&xHmacGLibType, libs, "g_hmac_get_type")
 
-	core.PuregoSafeRegister(&xNewHmac, lib, "g_hmac_new")
+	core.PuregoSafeRegister(&xNewHmac, libs, "g_hmac_new")
 
-	core.PuregoSafeRegister(&xHmacCopy, lib, "g_hmac_copy")
-	core.PuregoSafeRegister(&xHmacGetDigest, lib, "g_hmac_get_digest")
-	core.PuregoSafeRegister(&xHmacGetString, lib, "g_hmac_get_string")
-	core.PuregoSafeRegister(&xHmacRef, lib, "g_hmac_ref")
-	core.PuregoSafeRegister(&xHmacUnref, lib, "g_hmac_unref")
-	core.PuregoSafeRegister(&xHmacUpdate, lib, "g_hmac_update")
+	core.PuregoSafeRegister(&xHmacCopy, libs, "g_hmac_copy")
+	core.PuregoSafeRegister(&xHmacGetDigest, libs, "g_hmac_get_digest")
+	core.PuregoSafeRegister(&xHmacGetString, libs, "g_hmac_get_string")
+	core.PuregoSafeRegister(&xHmacRef, libs, "g_hmac_ref")
+	core.PuregoSafeRegister(&xHmacUnref, libs, "g_hmac_unref")
+	core.PuregoSafeRegister(&xHmacUpdate, libs, "g_hmac_update")
 
 }

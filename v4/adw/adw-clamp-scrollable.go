@@ -556,23 +556,27 @@ func (x *ClampScrollable) SetVscrollPolicy(PolicyVar gtk.ScrollablePolicy) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xClampScrollableGLibType, lib, "adw_clamp_scrollable_get_type")
+	core.PuregoSafeRegister(&xClampScrollableGLibType, libs, "adw_clamp_scrollable_get_type")
 
-	core.PuregoSafeRegister(&xNewClampScrollable, lib, "adw_clamp_scrollable_new")
+	core.PuregoSafeRegister(&xNewClampScrollable, libs, "adw_clamp_scrollable_new")
 
-	core.PuregoSafeRegister(&xClampScrollableGetChild, lib, "adw_clamp_scrollable_get_child")
-	core.PuregoSafeRegister(&xClampScrollableGetMaximumSize, lib, "adw_clamp_scrollable_get_maximum_size")
-	core.PuregoSafeRegister(&xClampScrollableGetTighteningThreshold, lib, "adw_clamp_scrollable_get_tightening_threshold")
-	core.PuregoSafeRegister(&xClampScrollableGetUnit, lib, "adw_clamp_scrollable_get_unit")
-	core.PuregoSafeRegister(&xClampScrollableSetChild, lib, "adw_clamp_scrollable_set_child")
-	core.PuregoSafeRegister(&xClampScrollableSetMaximumSize, lib, "adw_clamp_scrollable_set_maximum_size")
-	core.PuregoSafeRegister(&xClampScrollableSetTighteningThreshold, lib, "adw_clamp_scrollable_set_tightening_threshold")
-	core.PuregoSafeRegister(&xClampScrollableSetUnit, lib, "adw_clamp_scrollable_set_unit")
+	core.PuregoSafeRegister(&xClampScrollableGetChild, libs, "adw_clamp_scrollable_get_child")
+	core.PuregoSafeRegister(&xClampScrollableGetMaximumSize, libs, "adw_clamp_scrollable_get_maximum_size")
+	core.PuregoSafeRegister(&xClampScrollableGetTighteningThreshold, libs, "adw_clamp_scrollable_get_tightening_threshold")
+	core.PuregoSafeRegister(&xClampScrollableGetUnit, libs, "adw_clamp_scrollable_get_unit")
+	core.PuregoSafeRegister(&xClampScrollableSetChild, libs, "adw_clamp_scrollable_set_child")
+	core.PuregoSafeRegister(&xClampScrollableSetMaximumSize, libs, "adw_clamp_scrollable_set_maximum_size")
+	core.PuregoSafeRegister(&xClampScrollableSetTighteningThreshold, libs, "adw_clamp_scrollable_set_tightening_threshold")
+	core.PuregoSafeRegister(&xClampScrollableSetUnit, libs, "adw_clamp_scrollable_set_unit")
 
 }

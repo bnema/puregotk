@@ -153,20 +153,24 @@ func PointerBitUnlockAndSet(AddressVar uintptr, LockBitVar uint, PtrVar uintptr,
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBitLock, lib, "g_bit_lock")
-	core.PuregoSafeRegister(&xBitTrylock, lib, "g_bit_trylock")
-	core.PuregoSafeRegister(&xBitUnlock, lib, "g_bit_unlock")
-	core.PuregoSafeRegister(&xPointerBitLock, lib, "g_pointer_bit_lock")
-	core.PuregoSafeRegister(&xPointerBitLockAndGet, lib, "g_pointer_bit_lock_and_get")
-	core.PuregoSafeRegister(&xPointerBitLockMaskPtr, lib, "g_pointer_bit_lock_mask_ptr")
-	core.PuregoSafeRegister(&xPointerBitTrylock, lib, "g_pointer_bit_trylock")
-	core.PuregoSafeRegister(&xPointerBitUnlock, lib, "g_pointer_bit_unlock")
-	core.PuregoSafeRegister(&xPointerBitUnlockAndSet, lib, "g_pointer_bit_unlock_and_set")
+	core.PuregoSafeRegister(&xBitLock, libs, "g_bit_lock")
+	core.PuregoSafeRegister(&xBitTrylock, libs, "g_bit_trylock")
+	core.PuregoSafeRegister(&xBitUnlock, libs, "g_bit_unlock")
+	core.PuregoSafeRegister(&xPointerBitLock, libs, "g_pointer_bit_lock")
+	core.PuregoSafeRegister(&xPointerBitLockAndGet, libs, "g_pointer_bit_lock_and_get")
+	core.PuregoSafeRegister(&xPointerBitLockMaskPtr, libs, "g_pointer_bit_lock_mask_ptr")
+	core.PuregoSafeRegister(&xPointerBitTrylock, libs, "g_pointer_bit_trylock")
+	core.PuregoSafeRegister(&xPointerBitUnlock, libs, "g_pointer_bit_unlock")
+	core.PuregoSafeRegister(&xPointerBitUnlockAndSet, libs, "g_pointer_bit_unlock_and_set")
 
 }

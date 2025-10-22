@@ -687,46 +687,50 @@ func AccessibleStateInitValue(StateVar AccessibleState, ValueVar *gobject.Value)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAccessiblePlatformStateGLibType, lib, "gtk_accessible_platform_state_get_type")
+	core.PuregoSafeRegister(&xAccessiblePlatformStateGLibType, libs, "gtk_accessible_platform_state_get_type")
 
-	core.PuregoSafeRegister(&xAccessiblePropertyInitValue, lib, "gtk_accessible_property_init_value")
-	core.PuregoSafeRegister(&xAccessibleRelationInitValue, lib, "gtk_accessible_relation_init_value")
-	core.PuregoSafeRegister(&xAccessibleStateInitValue, lib, "gtk_accessible_state_init_value")
+	core.PuregoSafeRegister(&xAccessiblePropertyInitValue, libs, "gtk_accessible_property_init_value")
+	core.PuregoSafeRegister(&xAccessibleRelationInitValue, libs, "gtk_accessible_relation_init_value")
+	core.PuregoSafeRegister(&xAccessibleStateInitValue, libs, "gtk_accessible_state_init_value")
 
-	core.PuregoSafeRegister(&xAccessibleListGLibType, lib, "gtk_accessible_list_get_type")
+	core.PuregoSafeRegister(&xAccessibleListGLibType, libs, "gtk_accessible_list_get_type")
 
-	core.PuregoSafeRegister(&xNewAccessibleListFromArray, lib, "gtk_accessible_list_new_from_array")
-	core.PuregoSafeRegister(&xNewAccessibleListFromList, lib, "gtk_accessible_list_new_from_list")
+	core.PuregoSafeRegister(&xNewAccessibleListFromArray, libs, "gtk_accessible_list_new_from_array")
+	core.PuregoSafeRegister(&xNewAccessibleListFromList, libs, "gtk_accessible_list_new_from_list")
 
-	core.PuregoSafeRegister(&xAccessibleListGetObjects, lib, "gtk_accessible_list_get_objects")
+	core.PuregoSafeRegister(&xAccessibleListGetObjects, libs, "gtk_accessible_list_get_objects")
 
-	core.PuregoSafeRegister(&xAccessibleGLibType, lib, "gtk_accessible_get_type")
+	core.PuregoSafeRegister(&xAccessibleGLibType, libs, "gtk_accessible_get_type")
 
-	core.PuregoSafeRegister(&XGtkAccessibleAnnounce, lib, "gtk_accessible_announce")
-	core.PuregoSafeRegister(&XGtkAccessibleGetAccessibleParent, lib, "gtk_accessible_get_accessible_parent")
-	core.PuregoSafeRegister(&XGtkAccessibleGetAccessibleRole, lib, "gtk_accessible_get_accessible_role")
-	core.PuregoSafeRegister(&XGtkAccessibleGetAtContext, lib, "gtk_accessible_get_at_context")
-	core.PuregoSafeRegister(&XGtkAccessibleGetBounds, lib, "gtk_accessible_get_bounds")
-	core.PuregoSafeRegister(&XGtkAccessibleGetFirstAccessibleChild, lib, "gtk_accessible_get_first_accessible_child")
-	core.PuregoSafeRegister(&XGtkAccessibleGetNextAccessibleSibling, lib, "gtk_accessible_get_next_accessible_sibling")
-	core.PuregoSafeRegister(&XGtkAccessibleGetPlatformState, lib, "gtk_accessible_get_platform_state")
-	core.PuregoSafeRegister(&XGtkAccessibleResetProperty, lib, "gtk_accessible_reset_property")
-	core.PuregoSafeRegister(&XGtkAccessibleResetRelation, lib, "gtk_accessible_reset_relation")
-	core.PuregoSafeRegister(&XGtkAccessibleResetState, lib, "gtk_accessible_reset_state")
-	core.PuregoSafeRegister(&XGtkAccessibleSetAccessibleParent, lib, "gtk_accessible_set_accessible_parent")
-	core.PuregoSafeRegister(&XGtkAccessibleUpdateNextAccessibleSibling, lib, "gtk_accessible_update_next_accessible_sibling")
-	core.PuregoSafeRegister(&XGtkAccessibleUpdatePlatformState, lib, "gtk_accessible_update_platform_state")
-	core.PuregoSafeRegister(&XGtkAccessibleUpdateProperty, lib, "gtk_accessible_update_property")
-	core.PuregoSafeRegister(&XGtkAccessibleUpdatePropertyValue, lib, "gtk_accessible_update_property_value")
-	core.PuregoSafeRegister(&XGtkAccessibleUpdateRelation, lib, "gtk_accessible_update_relation")
-	core.PuregoSafeRegister(&XGtkAccessibleUpdateRelationValue, lib, "gtk_accessible_update_relation_value")
-	core.PuregoSafeRegister(&XGtkAccessibleUpdateState, lib, "gtk_accessible_update_state")
-	core.PuregoSafeRegister(&XGtkAccessibleUpdateStateValue, lib, "gtk_accessible_update_state_value")
+	core.PuregoSafeRegister(&XGtkAccessibleAnnounce, libs, "gtk_accessible_announce")
+	core.PuregoSafeRegister(&XGtkAccessibleGetAccessibleParent, libs, "gtk_accessible_get_accessible_parent")
+	core.PuregoSafeRegister(&XGtkAccessibleGetAccessibleRole, libs, "gtk_accessible_get_accessible_role")
+	core.PuregoSafeRegister(&XGtkAccessibleGetAtContext, libs, "gtk_accessible_get_at_context")
+	core.PuregoSafeRegister(&XGtkAccessibleGetBounds, libs, "gtk_accessible_get_bounds")
+	core.PuregoSafeRegister(&XGtkAccessibleGetFirstAccessibleChild, libs, "gtk_accessible_get_first_accessible_child")
+	core.PuregoSafeRegister(&XGtkAccessibleGetNextAccessibleSibling, libs, "gtk_accessible_get_next_accessible_sibling")
+	core.PuregoSafeRegister(&XGtkAccessibleGetPlatformState, libs, "gtk_accessible_get_platform_state")
+	core.PuregoSafeRegister(&XGtkAccessibleResetProperty, libs, "gtk_accessible_reset_property")
+	core.PuregoSafeRegister(&XGtkAccessibleResetRelation, libs, "gtk_accessible_reset_relation")
+	core.PuregoSafeRegister(&XGtkAccessibleResetState, libs, "gtk_accessible_reset_state")
+	core.PuregoSafeRegister(&XGtkAccessibleSetAccessibleParent, libs, "gtk_accessible_set_accessible_parent")
+	core.PuregoSafeRegister(&XGtkAccessibleUpdateNextAccessibleSibling, libs, "gtk_accessible_update_next_accessible_sibling")
+	core.PuregoSafeRegister(&XGtkAccessibleUpdatePlatformState, libs, "gtk_accessible_update_platform_state")
+	core.PuregoSafeRegister(&XGtkAccessibleUpdateProperty, libs, "gtk_accessible_update_property")
+	core.PuregoSafeRegister(&XGtkAccessibleUpdatePropertyValue, libs, "gtk_accessible_update_property_value")
+	core.PuregoSafeRegister(&XGtkAccessibleUpdateRelation, libs, "gtk_accessible_update_relation")
+	core.PuregoSafeRegister(&XGtkAccessibleUpdateRelationValue, libs, "gtk_accessible_update_relation_value")
+	core.PuregoSafeRegister(&XGtkAccessibleUpdateState, libs, "gtk_accessible_update_state")
+	core.PuregoSafeRegister(&XGtkAccessibleUpdateStateValue, libs, "gtk_accessible_update_state_value")
 
 }

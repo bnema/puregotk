@@ -388,38 +388,42 @@ func (c *PrintDialog) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPrintSetupGLibType, lib, "gtk_print_setup_get_type")
+	core.PuregoSafeRegister(&xPrintSetupGLibType, libs, "gtk_print_setup_get_type")
 
-	core.PuregoSafeRegister(&xPrintSetupGetPageSetup, lib, "gtk_print_setup_get_page_setup")
-	core.PuregoSafeRegister(&xPrintSetupGetPrintSettings, lib, "gtk_print_setup_get_print_settings")
-	core.PuregoSafeRegister(&xPrintSetupRef, lib, "gtk_print_setup_ref")
-	core.PuregoSafeRegister(&xPrintSetupUnref, lib, "gtk_print_setup_unref")
+	core.PuregoSafeRegister(&xPrintSetupGetPageSetup, libs, "gtk_print_setup_get_page_setup")
+	core.PuregoSafeRegister(&xPrintSetupGetPrintSettings, libs, "gtk_print_setup_get_print_settings")
+	core.PuregoSafeRegister(&xPrintSetupRef, libs, "gtk_print_setup_ref")
+	core.PuregoSafeRegister(&xPrintSetupUnref, libs, "gtk_print_setup_unref")
 
-	core.PuregoSafeRegister(&xPrintDialogGLibType, lib, "gtk_print_dialog_get_type")
+	core.PuregoSafeRegister(&xPrintDialogGLibType, libs, "gtk_print_dialog_get_type")
 
-	core.PuregoSafeRegister(&xNewPrintDialog, lib, "gtk_print_dialog_new")
+	core.PuregoSafeRegister(&xNewPrintDialog, libs, "gtk_print_dialog_new")
 
-	core.PuregoSafeRegister(&xPrintDialogGetAcceptLabel, lib, "gtk_print_dialog_get_accept_label")
-	core.PuregoSafeRegister(&xPrintDialogGetModal, lib, "gtk_print_dialog_get_modal")
-	core.PuregoSafeRegister(&xPrintDialogGetPageSetup, lib, "gtk_print_dialog_get_page_setup")
-	core.PuregoSafeRegister(&xPrintDialogGetPrintSettings, lib, "gtk_print_dialog_get_print_settings")
-	core.PuregoSafeRegister(&xPrintDialogGetTitle, lib, "gtk_print_dialog_get_title")
-	core.PuregoSafeRegister(&xPrintDialogPrint, lib, "gtk_print_dialog_print")
-	core.PuregoSafeRegister(&xPrintDialogPrintFile, lib, "gtk_print_dialog_print_file")
-	core.PuregoSafeRegister(&xPrintDialogPrintFileFinish, lib, "gtk_print_dialog_print_file_finish")
-	core.PuregoSafeRegister(&xPrintDialogPrintFinish, lib, "gtk_print_dialog_print_finish")
-	core.PuregoSafeRegister(&xPrintDialogSetAcceptLabel, lib, "gtk_print_dialog_set_accept_label")
-	core.PuregoSafeRegister(&xPrintDialogSetModal, lib, "gtk_print_dialog_set_modal")
-	core.PuregoSafeRegister(&xPrintDialogSetPageSetup, lib, "gtk_print_dialog_set_page_setup")
-	core.PuregoSafeRegister(&xPrintDialogSetPrintSettings, lib, "gtk_print_dialog_set_print_settings")
-	core.PuregoSafeRegister(&xPrintDialogSetTitle, lib, "gtk_print_dialog_set_title")
-	core.PuregoSafeRegister(&xPrintDialogSetup, lib, "gtk_print_dialog_setup")
-	core.PuregoSafeRegister(&xPrintDialogSetupFinish, lib, "gtk_print_dialog_setup_finish")
+	core.PuregoSafeRegister(&xPrintDialogGetAcceptLabel, libs, "gtk_print_dialog_get_accept_label")
+	core.PuregoSafeRegister(&xPrintDialogGetModal, libs, "gtk_print_dialog_get_modal")
+	core.PuregoSafeRegister(&xPrintDialogGetPageSetup, libs, "gtk_print_dialog_get_page_setup")
+	core.PuregoSafeRegister(&xPrintDialogGetPrintSettings, libs, "gtk_print_dialog_get_print_settings")
+	core.PuregoSafeRegister(&xPrintDialogGetTitle, libs, "gtk_print_dialog_get_title")
+	core.PuregoSafeRegister(&xPrintDialogPrint, libs, "gtk_print_dialog_print")
+	core.PuregoSafeRegister(&xPrintDialogPrintFile, libs, "gtk_print_dialog_print_file")
+	core.PuregoSafeRegister(&xPrintDialogPrintFileFinish, libs, "gtk_print_dialog_print_file_finish")
+	core.PuregoSafeRegister(&xPrintDialogPrintFinish, libs, "gtk_print_dialog_print_finish")
+	core.PuregoSafeRegister(&xPrintDialogSetAcceptLabel, libs, "gtk_print_dialog_set_accept_label")
+	core.PuregoSafeRegister(&xPrintDialogSetModal, libs, "gtk_print_dialog_set_modal")
+	core.PuregoSafeRegister(&xPrintDialogSetPageSetup, libs, "gtk_print_dialog_set_page_setup")
+	core.PuregoSafeRegister(&xPrintDialogSetPrintSettings, libs, "gtk_print_dialog_set_print_settings")
+	core.PuregoSafeRegister(&xPrintDialogSetTitle, libs, "gtk_print_dialog_set_title")
+	core.PuregoSafeRegister(&xPrintDialogSetup, libs, "gtk_print_dialog_setup")
+	core.PuregoSafeRegister(&xPrintDialogSetupFinish, libs, "gtk_print_dialog_setup_finish")
 
 }

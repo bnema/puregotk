@@ -86,15 +86,19 @@ func (c *TcpConnection) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTcpConnectionGLibType, lib, "g_tcp_connection_get_type")
+	core.PuregoSafeRegister(&xTcpConnectionGLibType, libs, "g_tcp_connection_get_type")
 
-	core.PuregoSafeRegister(&xTcpConnectionGetGracefulDisconnect, lib, "g_tcp_connection_get_graceful_disconnect")
-	core.PuregoSafeRegister(&xTcpConnectionSetGracefulDisconnect, lib, "g_tcp_connection_set_graceful_disconnect")
+	core.PuregoSafeRegister(&xTcpConnectionGetGracefulDisconnect, libs, "g_tcp_connection_get_graceful_disconnect")
+	core.PuregoSafeRegister(&xTcpConnectionSetGracefulDisconnect, libs, "g_tcp_connection_set_graceful_disconnect")
 
 }

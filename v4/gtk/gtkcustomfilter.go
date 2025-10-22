@@ -95,16 +95,20 @@ func (c *CustomFilter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCustomFilterGLibType, lib, "gtk_custom_filter_get_type")
+	core.PuregoSafeRegister(&xCustomFilterGLibType, libs, "gtk_custom_filter_get_type")
 
-	core.PuregoSafeRegister(&xNewCustomFilter, lib, "gtk_custom_filter_new")
+	core.PuregoSafeRegister(&xNewCustomFilter, libs, "gtk_custom_filter_new")
 
-	core.PuregoSafeRegister(&xCustomFilterSetFilterFunc, lib, "gtk_custom_filter_set_filter_func")
+	core.PuregoSafeRegister(&xCustomFilterSetFilterFunc, libs, "gtk_custom_filter_set_filter_func")
 
 }

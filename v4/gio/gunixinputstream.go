@@ -312,18 +312,22 @@ func (x *UnixInputStream) ReadNonblocking(BufferVar []byte, CountVar uint, Cance
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xUnixInputStreamGLibType, lib, "g_unix_input_stream_get_type")
+	core.PuregoSafeRegister(&xUnixInputStreamGLibType, libs, "g_unix_input_stream_get_type")
 
-	core.PuregoSafeRegister(&xNewUnixInputStream, lib, "g_unix_input_stream_new")
+	core.PuregoSafeRegister(&xNewUnixInputStream, libs, "g_unix_input_stream_new")
 
-	core.PuregoSafeRegister(&xUnixInputStreamGetCloseFd, lib, "g_unix_input_stream_get_close_fd")
-	core.PuregoSafeRegister(&xUnixInputStreamGetFd, lib, "g_unix_input_stream_get_fd")
-	core.PuregoSafeRegister(&xUnixInputStreamSetCloseFd, lib, "g_unix_input_stream_set_close_fd")
+	core.PuregoSafeRegister(&xUnixInputStreamGetCloseFd, libs, "g_unix_input_stream_get_close_fd")
+	core.PuregoSafeRegister(&xUnixInputStreamGetFd, libs, "g_unix_input_stream_get_fd")
+	core.PuregoSafeRegister(&xUnixInputStreamSetCloseFd, libs, "g_unix_input_stream_set_close_fd")
 
 }

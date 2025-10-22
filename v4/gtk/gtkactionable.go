@@ -266,19 +266,23 @@ var XGtkActionableSetDetailedActionName func(uintptr, string)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xActionableGLibType, lib, "gtk_actionable_get_type")
+	core.PuregoSafeRegister(&xActionableGLibType, libs, "gtk_actionable_get_type")
 
-	core.PuregoSafeRegister(&XGtkActionableGetActionName, lib, "gtk_actionable_get_action_name")
-	core.PuregoSafeRegister(&XGtkActionableGetActionTargetValue, lib, "gtk_actionable_get_action_target_value")
-	core.PuregoSafeRegister(&XGtkActionableSetActionName, lib, "gtk_actionable_set_action_name")
-	core.PuregoSafeRegister(&XGtkActionableSetActionTarget, lib, "gtk_actionable_set_action_target")
-	core.PuregoSafeRegister(&XGtkActionableSetActionTargetValue, lib, "gtk_actionable_set_action_target_value")
-	core.PuregoSafeRegister(&XGtkActionableSetDetailedActionName, lib, "gtk_actionable_set_detailed_action_name")
+	core.PuregoSafeRegister(&XGtkActionableGetActionName, libs, "gtk_actionable_get_action_name")
+	core.PuregoSafeRegister(&XGtkActionableGetActionTargetValue, libs, "gtk_actionable_get_action_target_value")
+	core.PuregoSafeRegister(&XGtkActionableSetActionName, libs, "gtk_actionable_set_action_name")
+	core.PuregoSafeRegister(&XGtkActionableSetActionTarget, libs, "gtk_actionable_set_action_target")
+	core.PuregoSafeRegister(&XGtkActionableSetActionTargetValue, libs, "gtk_actionable_set_action_target_value")
+	core.PuregoSafeRegister(&XGtkActionableSetDetailedActionName, libs, "gtk_actionable_set_detailed_action_name")
 
 }

@@ -232,20 +232,24 @@ func (x *SizeGroup) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSizeGroupGLibType, lib, "gtk_size_group_get_type")
+	core.PuregoSafeRegister(&xSizeGroupGLibType, libs, "gtk_size_group_get_type")
 
-	core.PuregoSafeRegister(&xNewSizeGroup, lib, "gtk_size_group_new")
+	core.PuregoSafeRegister(&xNewSizeGroup, libs, "gtk_size_group_new")
 
-	core.PuregoSafeRegister(&xSizeGroupAddWidget, lib, "gtk_size_group_add_widget")
-	core.PuregoSafeRegister(&xSizeGroupGetMode, lib, "gtk_size_group_get_mode")
-	core.PuregoSafeRegister(&xSizeGroupGetWidgets, lib, "gtk_size_group_get_widgets")
-	core.PuregoSafeRegister(&xSizeGroupRemoveWidget, lib, "gtk_size_group_remove_widget")
-	core.PuregoSafeRegister(&xSizeGroupSetMode, lib, "gtk_size_group_set_mode")
+	core.PuregoSafeRegister(&xSizeGroupAddWidget, libs, "gtk_size_group_add_widget")
+	core.PuregoSafeRegister(&xSizeGroupGetMode, libs, "gtk_size_group_get_mode")
+	core.PuregoSafeRegister(&xSizeGroupGetWidgets, libs, "gtk_size_group_get_widgets")
+	core.PuregoSafeRegister(&xSizeGroupRemoveWidget, libs, "gtk_size_group_remove_widget")
+	core.PuregoSafeRegister(&xSizeGroupSetMode, libs, "gtk_size_group_set_mode")
 
 }

@@ -146,19 +146,23 @@ func AcceleratorValid(KeyvalVar uint, ModifiersVar gdk.ModifierType) bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAcceleratorGetDefaultModMask, lib, "gtk_accelerator_get_default_mod_mask")
-	core.PuregoSafeRegister(&xAcceleratorGetLabel, lib, "gtk_accelerator_get_label")
-	core.PuregoSafeRegister(&xAcceleratorGetLabelWithKeycode, lib, "gtk_accelerator_get_label_with_keycode")
-	core.PuregoSafeRegister(&xAcceleratorName, lib, "gtk_accelerator_name")
-	core.PuregoSafeRegister(&xAcceleratorNameWithKeycode, lib, "gtk_accelerator_name_with_keycode")
-	core.PuregoSafeRegister(&xAcceleratorParse, lib, "gtk_accelerator_parse")
-	core.PuregoSafeRegister(&xAcceleratorParseWithKeycode, lib, "gtk_accelerator_parse_with_keycode")
-	core.PuregoSafeRegister(&xAcceleratorValid, lib, "gtk_accelerator_valid")
+	core.PuregoSafeRegister(&xAcceleratorGetDefaultModMask, libs, "gtk_accelerator_get_default_mod_mask")
+	core.PuregoSafeRegister(&xAcceleratorGetLabel, libs, "gtk_accelerator_get_label")
+	core.PuregoSafeRegister(&xAcceleratorGetLabelWithKeycode, libs, "gtk_accelerator_get_label_with_keycode")
+	core.PuregoSafeRegister(&xAcceleratorName, libs, "gtk_accelerator_name")
+	core.PuregoSafeRegister(&xAcceleratorNameWithKeycode, libs, "gtk_accelerator_name_with_keycode")
+	core.PuregoSafeRegister(&xAcceleratorParse, libs, "gtk_accelerator_parse")
+	core.PuregoSafeRegister(&xAcceleratorParseWithKeycode, libs, "gtk_accelerator_parse_with_keycode")
+	core.PuregoSafeRegister(&xAcceleratorValid, libs, "gtk_accelerator_valid")
 
 }

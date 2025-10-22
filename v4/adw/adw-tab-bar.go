@@ -650,33 +650,37 @@ func (x *TabBar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTabBarGLibType, lib, "adw_tab_bar_get_type")
+	core.PuregoSafeRegister(&xTabBarGLibType, libs, "adw_tab_bar_get_type")
 
-	core.PuregoSafeRegister(&xNewTabBar, lib, "adw_tab_bar_new")
+	core.PuregoSafeRegister(&xNewTabBar, libs, "adw_tab_bar_new")
 
-	core.PuregoSafeRegister(&xTabBarGetAutohide, lib, "adw_tab_bar_get_autohide")
-	core.PuregoSafeRegister(&xTabBarGetEndActionWidget, lib, "adw_tab_bar_get_end_action_widget")
-	core.PuregoSafeRegister(&xTabBarGetExpandTabs, lib, "adw_tab_bar_get_expand_tabs")
-	core.PuregoSafeRegister(&xTabBarGetExtraDragPreferredAction, lib, "adw_tab_bar_get_extra_drag_preferred_action")
-	core.PuregoSafeRegister(&xTabBarGetExtraDragPreload, lib, "adw_tab_bar_get_extra_drag_preload")
-	core.PuregoSafeRegister(&xTabBarGetInverted, lib, "adw_tab_bar_get_inverted")
-	core.PuregoSafeRegister(&xTabBarGetIsOverflowing, lib, "adw_tab_bar_get_is_overflowing")
-	core.PuregoSafeRegister(&xTabBarGetStartActionWidget, lib, "adw_tab_bar_get_start_action_widget")
-	core.PuregoSafeRegister(&xTabBarGetTabsRevealed, lib, "adw_tab_bar_get_tabs_revealed")
-	core.PuregoSafeRegister(&xTabBarGetView, lib, "adw_tab_bar_get_view")
-	core.PuregoSafeRegister(&xTabBarSetAutohide, lib, "adw_tab_bar_set_autohide")
-	core.PuregoSafeRegister(&xTabBarSetEndActionWidget, lib, "adw_tab_bar_set_end_action_widget")
-	core.PuregoSafeRegister(&xTabBarSetExpandTabs, lib, "adw_tab_bar_set_expand_tabs")
-	core.PuregoSafeRegister(&xTabBarSetExtraDragPreload, lib, "adw_tab_bar_set_extra_drag_preload")
-	core.PuregoSafeRegister(&xTabBarSetInverted, lib, "adw_tab_bar_set_inverted")
-	core.PuregoSafeRegister(&xTabBarSetStartActionWidget, lib, "adw_tab_bar_set_start_action_widget")
-	core.PuregoSafeRegister(&xTabBarSetView, lib, "adw_tab_bar_set_view")
-	core.PuregoSafeRegister(&xTabBarSetupExtraDropTarget, lib, "adw_tab_bar_setup_extra_drop_target")
+	core.PuregoSafeRegister(&xTabBarGetAutohide, libs, "adw_tab_bar_get_autohide")
+	core.PuregoSafeRegister(&xTabBarGetEndActionWidget, libs, "adw_tab_bar_get_end_action_widget")
+	core.PuregoSafeRegister(&xTabBarGetExpandTabs, libs, "adw_tab_bar_get_expand_tabs")
+	core.PuregoSafeRegister(&xTabBarGetExtraDragPreferredAction, libs, "adw_tab_bar_get_extra_drag_preferred_action")
+	core.PuregoSafeRegister(&xTabBarGetExtraDragPreload, libs, "adw_tab_bar_get_extra_drag_preload")
+	core.PuregoSafeRegister(&xTabBarGetInverted, libs, "adw_tab_bar_get_inverted")
+	core.PuregoSafeRegister(&xTabBarGetIsOverflowing, libs, "adw_tab_bar_get_is_overflowing")
+	core.PuregoSafeRegister(&xTabBarGetStartActionWidget, libs, "adw_tab_bar_get_start_action_widget")
+	core.PuregoSafeRegister(&xTabBarGetTabsRevealed, libs, "adw_tab_bar_get_tabs_revealed")
+	core.PuregoSafeRegister(&xTabBarGetView, libs, "adw_tab_bar_get_view")
+	core.PuregoSafeRegister(&xTabBarSetAutohide, libs, "adw_tab_bar_set_autohide")
+	core.PuregoSafeRegister(&xTabBarSetEndActionWidget, libs, "adw_tab_bar_set_end_action_widget")
+	core.PuregoSafeRegister(&xTabBarSetExpandTabs, libs, "adw_tab_bar_set_expand_tabs")
+	core.PuregoSafeRegister(&xTabBarSetExtraDragPreload, libs, "adw_tab_bar_set_extra_drag_preload")
+	core.PuregoSafeRegister(&xTabBarSetInverted, libs, "adw_tab_bar_set_inverted")
+	core.PuregoSafeRegister(&xTabBarSetStartActionWidget, libs, "adw_tab_bar_set_start_action_widget")
+	core.PuregoSafeRegister(&xTabBarSetView, libs, "adw_tab_bar_set_view")
+	core.PuregoSafeRegister(&xTabBarSetupExtraDropTarget, libs, "adw_tab_bar_setup_extra_drop_target")
 
 }

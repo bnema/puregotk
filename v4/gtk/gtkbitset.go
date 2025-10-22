@@ -116,21 +116,25 @@ func BitsetIterInitLast(IterVar *BitsetIter, SetVar *Bitset, ValueVar uint) bool
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBitsetIterInitAt, lib, "gtk_bitset_iter_init_at")
-	core.PuregoSafeRegister(&xBitsetIterInitFirst, lib, "gtk_bitset_iter_init_first")
-	core.PuregoSafeRegister(&xBitsetIterInitLast, lib, "gtk_bitset_iter_init_last")
+	core.PuregoSafeRegister(&xBitsetIterInitAt, libs, "gtk_bitset_iter_init_at")
+	core.PuregoSafeRegister(&xBitsetIterInitFirst, libs, "gtk_bitset_iter_init_first")
+	core.PuregoSafeRegister(&xBitsetIterInitLast, libs, "gtk_bitset_iter_init_last")
 
-	core.PuregoSafeRegister(&xBitsetIterGLibType, lib, "gtk_bitset_iter_get_type")
+	core.PuregoSafeRegister(&xBitsetIterGLibType, libs, "gtk_bitset_iter_get_type")
 
-	core.PuregoSafeRegister(&xBitsetIterGetValue, lib, "gtk_bitset_iter_get_value")
-	core.PuregoSafeRegister(&xBitsetIterIsValid, lib, "gtk_bitset_iter_is_valid")
-	core.PuregoSafeRegister(&xBitsetIterNext, lib, "gtk_bitset_iter_next")
-	core.PuregoSafeRegister(&xBitsetIterPrevious, lib, "gtk_bitset_iter_previous")
+	core.PuregoSafeRegister(&xBitsetIterGetValue, libs, "gtk_bitset_iter_get_value")
+	core.PuregoSafeRegister(&xBitsetIterIsValid, libs, "gtk_bitset_iter_is_valid")
+	core.PuregoSafeRegister(&xBitsetIterNext, libs, "gtk_bitset_iter_next")
+	core.PuregoSafeRegister(&xBitsetIterPrevious, libs, "gtk_bitset_iter_previous")
 
 }

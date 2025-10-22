@@ -540,44 +540,48 @@ func FileChooserErrorQuark() glib.Quark {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFileChooserActionGLibType, lib, "gtk_file_chooser_action_get_type")
+	core.PuregoSafeRegister(&xFileChooserActionGLibType, libs, "gtk_file_chooser_action_get_type")
 
-	core.PuregoSafeRegister(&xFileChooserErrorGLibType, lib, "gtk_file_chooser_error_get_type")
+	core.PuregoSafeRegister(&xFileChooserErrorGLibType, libs, "gtk_file_chooser_error_get_type")
 
-	core.PuregoSafeRegister(&xFileChooserErrorQuark, lib, "gtk_file_chooser_error_quark")
+	core.PuregoSafeRegister(&xFileChooserErrorQuark, libs, "gtk_file_chooser_error_quark")
 
-	core.PuregoSafeRegister(&xFileChooserGLibType, lib, "gtk_file_chooser_get_type")
+	core.PuregoSafeRegister(&xFileChooserGLibType, libs, "gtk_file_chooser_get_type")
 
-	core.PuregoSafeRegister(&XGtkFileChooserAddChoice, lib, "gtk_file_chooser_add_choice")
-	core.PuregoSafeRegister(&XGtkFileChooserAddFilter, lib, "gtk_file_chooser_add_filter")
-	core.PuregoSafeRegister(&XGtkFileChooserAddShortcutFolder, lib, "gtk_file_chooser_add_shortcut_folder")
-	core.PuregoSafeRegister(&XGtkFileChooserGetAction, lib, "gtk_file_chooser_get_action")
-	core.PuregoSafeRegister(&XGtkFileChooserGetChoice, lib, "gtk_file_chooser_get_choice")
-	core.PuregoSafeRegister(&XGtkFileChooserGetCreateFolders, lib, "gtk_file_chooser_get_create_folders")
-	core.PuregoSafeRegister(&XGtkFileChooserGetCurrentFolder, lib, "gtk_file_chooser_get_current_folder")
-	core.PuregoSafeRegister(&XGtkFileChooserGetCurrentName, lib, "gtk_file_chooser_get_current_name")
-	core.PuregoSafeRegister(&XGtkFileChooserGetFile, lib, "gtk_file_chooser_get_file")
-	core.PuregoSafeRegister(&XGtkFileChooserGetFiles, lib, "gtk_file_chooser_get_files")
-	core.PuregoSafeRegister(&XGtkFileChooserGetFilter, lib, "gtk_file_chooser_get_filter")
-	core.PuregoSafeRegister(&XGtkFileChooserGetFilters, lib, "gtk_file_chooser_get_filters")
-	core.PuregoSafeRegister(&XGtkFileChooserGetSelectMultiple, lib, "gtk_file_chooser_get_select_multiple")
-	core.PuregoSafeRegister(&XGtkFileChooserGetShortcutFolders, lib, "gtk_file_chooser_get_shortcut_folders")
-	core.PuregoSafeRegister(&XGtkFileChooserRemoveChoice, lib, "gtk_file_chooser_remove_choice")
-	core.PuregoSafeRegister(&XGtkFileChooserRemoveFilter, lib, "gtk_file_chooser_remove_filter")
-	core.PuregoSafeRegister(&XGtkFileChooserRemoveShortcutFolder, lib, "gtk_file_chooser_remove_shortcut_folder")
-	core.PuregoSafeRegister(&XGtkFileChooserSetAction, lib, "gtk_file_chooser_set_action")
-	core.PuregoSafeRegister(&XGtkFileChooserSetChoice, lib, "gtk_file_chooser_set_choice")
-	core.PuregoSafeRegister(&XGtkFileChooserSetCreateFolders, lib, "gtk_file_chooser_set_create_folders")
-	core.PuregoSafeRegister(&XGtkFileChooserSetCurrentFolder, lib, "gtk_file_chooser_set_current_folder")
-	core.PuregoSafeRegister(&XGtkFileChooserSetCurrentName, lib, "gtk_file_chooser_set_current_name")
-	core.PuregoSafeRegister(&XGtkFileChooserSetFile, lib, "gtk_file_chooser_set_file")
-	core.PuregoSafeRegister(&XGtkFileChooserSetFilter, lib, "gtk_file_chooser_set_filter")
-	core.PuregoSafeRegister(&XGtkFileChooserSetSelectMultiple, lib, "gtk_file_chooser_set_select_multiple")
+	core.PuregoSafeRegister(&XGtkFileChooserAddChoice, libs, "gtk_file_chooser_add_choice")
+	core.PuregoSafeRegister(&XGtkFileChooserAddFilter, libs, "gtk_file_chooser_add_filter")
+	core.PuregoSafeRegister(&XGtkFileChooserAddShortcutFolder, libs, "gtk_file_chooser_add_shortcut_folder")
+	core.PuregoSafeRegister(&XGtkFileChooserGetAction, libs, "gtk_file_chooser_get_action")
+	core.PuregoSafeRegister(&XGtkFileChooserGetChoice, libs, "gtk_file_chooser_get_choice")
+	core.PuregoSafeRegister(&XGtkFileChooserGetCreateFolders, libs, "gtk_file_chooser_get_create_folders")
+	core.PuregoSafeRegister(&XGtkFileChooserGetCurrentFolder, libs, "gtk_file_chooser_get_current_folder")
+	core.PuregoSafeRegister(&XGtkFileChooserGetCurrentName, libs, "gtk_file_chooser_get_current_name")
+	core.PuregoSafeRegister(&XGtkFileChooserGetFile, libs, "gtk_file_chooser_get_file")
+	core.PuregoSafeRegister(&XGtkFileChooserGetFiles, libs, "gtk_file_chooser_get_files")
+	core.PuregoSafeRegister(&XGtkFileChooserGetFilter, libs, "gtk_file_chooser_get_filter")
+	core.PuregoSafeRegister(&XGtkFileChooserGetFilters, libs, "gtk_file_chooser_get_filters")
+	core.PuregoSafeRegister(&XGtkFileChooserGetSelectMultiple, libs, "gtk_file_chooser_get_select_multiple")
+	core.PuregoSafeRegister(&XGtkFileChooserGetShortcutFolders, libs, "gtk_file_chooser_get_shortcut_folders")
+	core.PuregoSafeRegister(&XGtkFileChooserRemoveChoice, libs, "gtk_file_chooser_remove_choice")
+	core.PuregoSafeRegister(&XGtkFileChooserRemoveFilter, libs, "gtk_file_chooser_remove_filter")
+	core.PuregoSafeRegister(&XGtkFileChooserRemoveShortcutFolder, libs, "gtk_file_chooser_remove_shortcut_folder")
+	core.PuregoSafeRegister(&XGtkFileChooserSetAction, libs, "gtk_file_chooser_set_action")
+	core.PuregoSafeRegister(&XGtkFileChooserSetChoice, libs, "gtk_file_chooser_set_choice")
+	core.PuregoSafeRegister(&XGtkFileChooserSetCreateFolders, libs, "gtk_file_chooser_set_create_folders")
+	core.PuregoSafeRegister(&XGtkFileChooserSetCurrentFolder, libs, "gtk_file_chooser_set_current_folder")
+	core.PuregoSafeRegister(&XGtkFileChooserSetCurrentName, libs, "gtk_file_chooser_set_current_name")
+	core.PuregoSafeRegister(&XGtkFileChooserSetFile, libs, "gtk_file_chooser_set_file")
+	core.PuregoSafeRegister(&XGtkFileChooserSetFilter, libs, "gtk_file_chooser_set_filter")
+	core.PuregoSafeRegister(&XGtkFileChooserSetSelectMultiple, libs, "gtk_file_chooser_set_select_multiple")
 
 }

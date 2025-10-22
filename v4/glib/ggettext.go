@@ -122,17 +122,21 @@ func StripContext(MsgidVar string, MsgvalVar string) string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDcgettext, lib, "g_dcgettext")
-	core.PuregoSafeRegister(&xDgettext, lib, "g_dgettext")
-	core.PuregoSafeRegister(&xDngettext, lib, "g_dngettext")
-	core.PuregoSafeRegister(&xDpgettext, lib, "g_dpgettext")
-	core.PuregoSafeRegister(&xDpgettext2, lib, "g_dpgettext2")
-	core.PuregoSafeRegister(&xStripContext, lib, "g_strip_context")
+	core.PuregoSafeRegister(&xDcgettext, libs, "g_dcgettext")
+	core.PuregoSafeRegister(&xDgettext, libs, "g_dgettext")
+	core.PuregoSafeRegister(&xDngettext, libs, "g_dngettext")
+	core.PuregoSafeRegister(&xDpgettext, libs, "g_dpgettext")
+	core.PuregoSafeRegister(&xDpgettext2, libs, "g_dpgettext2")
+	core.PuregoSafeRegister(&xStripContext, libs, "g_strip_context")
 
 }

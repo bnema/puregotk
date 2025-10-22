@@ -433,40 +433,44 @@ const (
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xToplevelStateGLibType, lib, "gdk_toplevel_state_get_type")
+	core.PuregoSafeRegister(&xToplevelStateGLibType, libs, "gdk_toplevel_state_get_type")
 
-	core.PuregoSafeRegister(&xFullscreenModeGLibType, lib, "gdk_fullscreen_mode_get_type")
+	core.PuregoSafeRegister(&xFullscreenModeGLibType, libs, "gdk_fullscreen_mode_get_type")
 
-	core.PuregoSafeRegister(&xSurfaceEdgeGLibType, lib, "gdk_surface_edge_get_type")
+	core.PuregoSafeRegister(&xSurfaceEdgeGLibType, libs, "gdk_surface_edge_get_type")
 
-	core.PuregoSafeRegister(&xTitlebarGestureGLibType, lib, "gdk_titlebar_gesture_get_type")
+	core.PuregoSafeRegister(&xTitlebarGestureGLibType, libs, "gdk_titlebar_gesture_get_type")
 
-	core.PuregoSafeRegister(&xToplevelGLibType, lib, "gdk_toplevel_get_type")
+	core.PuregoSafeRegister(&xToplevelGLibType, libs, "gdk_toplevel_get_type")
 
-	core.PuregoSafeRegister(&XGdkToplevelBeginMove, lib, "gdk_toplevel_begin_move")
-	core.PuregoSafeRegister(&XGdkToplevelBeginResize, lib, "gdk_toplevel_begin_resize")
-	core.PuregoSafeRegister(&XGdkToplevelFocus, lib, "gdk_toplevel_focus")
-	core.PuregoSafeRegister(&XGdkToplevelGetState, lib, "gdk_toplevel_get_state")
-	core.PuregoSafeRegister(&XGdkToplevelInhibitSystemShortcuts, lib, "gdk_toplevel_inhibit_system_shortcuts")
-	core.PuregoSafeRegister(&XGdkToplevelLower, lib, "gdk_toplevel_lower")
-	core.PuregoSafeRegister(&XGdkToplevelMinimize, lib, "gdk_toplevel_minimize")
-	core.PuregoSafeRegister(&XGdkToplevelPresent, lib, "gdk_toplevel_present")
-	core.PuregoSafeRegister(&XGdkToplevelRestoreSystemShortcuts, lib, "gdk_toplevel_restore_system_shortcuts")
-	core.PuregoSafeRegister(&XGdkToplevelSetDecorated, lib, "gdk_toplevel_set_decorated")
-	core.PuregoSafeRegister(&XGdkToplevelSetDeletable, lib, "gdk_toplevel_set_deletable")
-	core.PuregoSafeRegister(&XGdkToplevelSetIconList, lib, "gdk_toplevel_set_icon_list")
-	core.PuregoSafeRegister(&XGdkToplevelSetModal, lib, "gdk_toplevel_set_modal")
-	core.PuregoSafeRegister(&XGdkToplevelSetStartupId, lib, "gdk_toplevel_set_startup_id")
-	core.PuregoSafeRegister(&XGdkToplevelSetTitle, lib, "gdk_toplevel_set_title")
-	core.PuregoSafeRegister(&XGdkToplevelSetTransientFor, lib, "gdk_toplevel_set_transient_for")
-	core.PuregoSafeRegister(&XGdkToplevelShowWindowMenu, lib, "gdk_toplevel_show_window_menu")
-	core.PuregoSafeRegister(&XGdkToplevelSupportsEdgeConstraints, lib, "gdk_toplevel_supports_edge_constraints")
-	core.PuregoSafeRegister(&XGdkToplevelTitlebarGesture, lib, "gdk_toplevel_titlebar_gesture")
+	core.PuregoSafeRegister(&XGdkToplevelBeginMove, libs, "gdk_toplevel_begin_move")
+	core.PuregoSafeRegister(&XGdkToplevelBeginResize, libs, "gdk_toplevel_begin_resize")
+	core.PuregoSafeRegister(&XGdkToplevelFocus, libs, "gdk_toplevel_focus")
+	core.PuregoSafeRegister(&XGdkToplevelGetState, libs, "gdk_toplevel_get_state")
+	core.PuregoSafeRegister(&XGdkToplevelInhibitSystemShortcuts, libs, "gdk_toplevel_inhibit_system_shortcuts")
+	core.PuregoSafeRegister(&XGdkToplevelLower, libs, "gdk_toplevel_lower")
+	core.PuregoSafeRegister(&XGdkToplevelMinimize, libs, "gdk_toplevel_minimize")
+	core.PuregoSafeRegister(&XGdkToplevelPresent, libs, "gdk_toplevel_present")
+	core.PuregoSafeRegister(&XGdkToplevelRestoreSystemShortcuts, libs, "gdk_toplevel_restore_system_shortcuts")
+	core.PuregoSafeRegister(&XGdkToplevelSetDecorated, libs, "gdk_toplevel_set_decorated")
+	core.PuregoSafeRegister(&XGdkToplevelSetDeletable, libs, "gdk_toplevel_set_deletable")
+	core.PuregoSafeRegister(&XGdkToplevelSetIconList, libs, "gdk_toplevel_set_icon_list")
+	core.PuregoSafeRegister(&XGdkToplevelSetModal, libs, "gdk_toplevel_set_modal")
+	core.PuregoSafeRegister(&XGdkToplevelSetStartupId, libs, "gdk_toplevel_set_startup_id")
+	core.PuregoSafeRegister(&XGdkToplevelSetTitle, libs, "gdk_toplevel_set_title")
+	core.PuregoSafeRegister(&XGdkToplevelSetTransientFor, libs, "gdk_toplevel_set_transient_for")
+	core.PuregoSafeRegister(&XGdkToplevelShowWindowMenu, libs, "gdk_toplevel_show_window_menu")
+	core.PuregoSafeRegister(&XGdkToplevelSupportsEdgeConstraints, libs, "gdk_toplevel_supports_edge_constraints")
+	core.PuregoSafeRegister(&XGdkToplevelTitlebarGesture, libs, "gdk_toplevel_titlebar_gesture")
 
 }

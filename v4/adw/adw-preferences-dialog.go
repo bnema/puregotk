@@ -483,26 +483,30 @@ func (x *PreferencesDialog) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPreferencesDialogGLibType, lib, "adw_preferences_dialog_get_type")
+	core.PuregoSafeRegister(&xPreferencesDialogGLibType, libs, "adw_preferences_dialog_get_type")
 
-	core.PuregoSafeRegister(&xNewPreferencesDialog, lib, "adw_preferences_dialog_new")
+	core.PuregoSafeRegister(&xNewPreferencesDialog, libs, "adw_preferences_dialog_new")
 
-	core.PuregoSafeRegister(&xPreferencesDialogAdd, lib, "adw_preferences_dialog_add")
-	core.PuregoSafeRegister(&xPreferencesDialogAddToast, lib, "adw_preferences_dialog_add_toast")
-	core.PuregoSafeRegister(&xPreferencesDialogGetSearchEnabled, lib, "adw_preferences_dialog_get_search_enabled")
-	core.PuregoSafeRegister(&xPreferencesDialogGetVisiblePage, lib, "adw_preferences_dialog_get_visible_page")
-	core.PuregoSafeRegister(&xPreferencesDialogGetVisiblePageName, lib, "adw_preferences_dialog_get_visible_page_name")
-	core.PuregoSafeRegister(&xPreferencesDialogPopSubpage, lib, "adw_preferences_dialog_pop_subpage")
-	core.PuregoSafeRegister(&xPreferencesDialogPushSubpage, lib, "adw_preferences_dialog_push_subpage")
-	core.PuregoSafeRegister(&xPreferencesDialogRemove, lib, "adw_preferences_dialog_remove")
-	core.PuregoSafeRegister(&xPreferencesDialogSetSearchEnabled, lib, "adw_preferences_dialog_set_search_enabled")
-	core.PuregoSafeRegister(&xPreferencesDialogSetVisiblePage, lib, "adw_preferences_dialog_set_visible_page")
-	core.PuregoSafeRegister(&xPreferencesDialogSetVisiblePageName, lib, "adw_preferences_dialog_set_visible_page_name")
+	core.PuregoSafeRegister(&xPreferencesDialogAdd, libs, "adw_preferences_dialog_add")
+	core.PuregoSafeRegister(&xPreferencesDialogAddToast, libs, "adw_preferences_dialog_add_toast")
+	core.PuregoSafeRegister(&xPreferencesDialogGetSearchEnabled, libs, "adw_preferences_dialog_get_search_enabled")
+	core.PuregoSafeRegister(&xPreferencesDialogGetVisiblePage, libs, "adw_preferences_dialog_get_visible_page")
+	core.PuregoSafeRegister(&xPreferencesDialogGetVisiblePageName, libs, "adw_preferences_dialog_get_visible_page_name")
+	core.PuregoSafeRegister(&xPreferencesDialogPopSubpage, libs, "adw_preferences_dialog_pop_subpage")
+	core.PuregoSafeRegister(&xPreferencesDialogPushSubpage, libs, "adw_preferences_dialog_push_subpage")
+	core.PuregoSafeRegister(&xPreferencesDialogRemove, libs, "adw_preferences_dialog_remove")
+	core.PuregoSafeRegister(&xPreferencesDialogSetSearchEnabled, libs, "adw_preferences_dialog_set_search_enabled")
+	core.PuregoSafeRegister(&xPreferencesDialogSetVisiblePage, libs, "adw_preferences_dialog_set_visible_page")
+	core.PuregoSafeRegister(&xPreferencesDialogSetVisiblePageName, libs, "adw_preferences_dialog_set_visible_page_name")
 
 }

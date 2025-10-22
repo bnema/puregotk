@@ -131,17 +131,21 @@ func GetLocaleVariants(LocaleVar string) []string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGetCharset, lib, "g_get_charset")
-	core.PuregoSafeRegister(&xGetCodeset, lib, "g_get_codeset")
-	core.PuregoSafeRegister(&xGetConsoleCharset, lib, "g_get_console_charset")
-	core.PuregoSafeRegister(&xGetLanguageNames, lib, "g_get_language_names")
-	core.PuregoSafeRegister(&xGetLanguageNamesWithCategory, lib, "g_get_language_names_with_category")
-	core.PuregoSafeRegister(&xGetLocaleVariants, lib, "g_get_locale_variants")
+	core.PuregoSafeRegister(&xGetCharset, libs, "g_get_charset")
+	core.PuregoSafeRegister(&xGetCodeset, libs, "g_get_codeset")
+	core.PuregoSafeRegister(&xGetConsoleCharset, libs, "g_get_console_charset")
+	core.PuregoSafeRegister(&xGetLanguageNames, libs, "g_get_language_names")
+	core.PuregoSafeRegister(&xGetLanguageNamesWithCategory, libs, "g_get_language_names_with_category")
+	core.PuregoSafeRegister(&xGetLocaleVariants, libs, "g_get_locale_variants")
 
 }

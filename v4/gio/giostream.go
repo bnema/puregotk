@@ -688,25 +688,29 @@ func IOStreamSpliceFinish(ResultVar AsyncResult) (bool, error) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xIOStreamGLibType, lib, "g_io_stream_get_type")
+	core.PuregoSafeRegister(&xIOStreamGLibType, libs, "g_io_stream_get_type")
 
-	core.PuregoSafeRegister(&xIOStreamClearPending, lib, "g_io_stream_clear_pending")
-	core.PuregoSafeRegister(&xIOStreamClose, lib, "g_io_stream_close")
-	core.PuregoSafeRegister(&xIOStreamCloseAsync, lib, "g_io_stream_close_async")
-	core.PuregoSafeRegister(&xIOStreamCloseFinish, lib, "g_io_stream_close_finish")
-	core.PuregoSafeRegister(&xIOStreamGetInputStream, lib, "g_io_stream_get_input_stream")
-	core.PuregoSafeRegister(&xIOStreamGetOutputStream, lib, "g_io_stream_get_output_stream")
-	core.PuregoSafeRegister(&xIOStreamHasPending, lib, "g_io_stream_has_pending")
-	core.PuregoSafeRegister(&xIOStreamIsClosed, lib, "g_io_stream_is_closed")
-	core.PuregoSafeRegister(&xIOStreamSetPending, lib, "g_io_stream_set_pending")
-	core.PuregoSafeRegister(&xIOStreamSpliceAsync, lib, "g_io_stream_splice_async")
+	core.PuregoSafeRegister(&xIOStreamClearPending, libs, "g_io_stream_clear_pending")
+	core.PuregoSafeRegister(&xIOStreamClose, libs, "g_io_stream_close")
+	core.PuregoSafeRegister(&xIOStreamCloseAsync, libs, "g_io_stream_close_async")
+	core.PuregoSafeRegister(&xIOStreamCloseFinish, libs, "g_io_stream_close_finish")
+	core.PuregoSafeRegister(&xIOStreamGetInputStream, libs, "g_io_stream_get_input_stream")
+	core.PuregoSafeRegister(&xIOStreamGetOutputStream, libs, "g_io_stream_get_output_stream")
+	core.PuregoSafeRegister(&xIOStreamHasPending, libs, "g_io_stream_has_pending")
+	core.PuregoSafeRegister(&xIOStreamIsClosed, libs, "g_io_stream_is_closed")
+	core.PuregoSafeRegister(&xIOStreamSetPending, libs, "g_io_stream_set_pending")
+	core.PuregoSafeRegister(&xIOStreamSpliceAsync, libs, "g_io_stream_splice_async")
 
-	core.PuregoSafeRegister(&xIOStreamSpliceFinish, lib, "g_io_stream_splice_finish")
+	core.PuregoSafeRegister(&xIOStreamSpliceFinish, libs, "g_io_stream_splice_finish")
 
 }

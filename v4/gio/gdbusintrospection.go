@@ -465,57 +465,61 @@ func DbusAnnotationInfoLookup(AnnotationsVar uintptr, NameVar string) string {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDbusAnnotationInfoLookup, lib, "g_dbus_annotation_info_lookup")
+	core.PuregoSafeRegister(&xDbusAnnotationInfoLookup, libs, "g_dbus_annotation_info_lookup")
 
-	core.PuregoSafeRegister(&xDBusAnnotationInfoGLibType, lib, "g_dbus_annotation_info_get_type")
+	core.PuregoSafeRegister(&xDBusAnnotationInfoGLibType, libs, "g_dbus_annotation_info_get_type")
 
-	core.PuregoSafeRegister(&xDBusAnnotationInfoRef, lib, "g_dbus_annotation_info_ref")
-	core.PuregoSafeRegister(&xDBusAnnotationInfoUnref, lib, "g_dbus_annotation_info_unref")
+	core.PuregoSafeRegister(&xDBusAnnotationInfoRef, libs, "g_dbus_annotation_info_ref")
+	core.PuregoSafeRegister(&xDBusAnnotationInfoUnref, libs, "g_dbus_annotation_info_unref")
 
-	core.PuregoSafeRegister(&xDBusArgInfoGLibType, lib, "g_dbus_arg_info_get_type")
+	core.PuregoSafeRegister(&xDBusArgInfoGLibType, libs, "g_dbus_arg_info_get_type")
 
-	core.PuregoSafeRegister(&xDBusArgInfoRef, lib, "g_dbus_arg_info_ref")
-	core.PuregoSafeRegister(&xDBusArgInfoUnref, lib, "g_dbus_arg_info_unref")
+	core.PuregoSafeRegister(&xDBusArgInfoRef, libs, "g_dbus_arg_info_ref")
+	core.PuregoSafeRegister(&xDBusArgInfoUnref, libs, "g_dbus_arg_info_unref")
 
-	core.PuregoSafeRegister(&xDBusInterfaceInfoGLibType, lib, "g_dbus_interface_info_get_type")
+	core.PuregoSafeRegister(&xDBusInterfaceInfoGLibType, libs, "g_dbus_interface_info_get_type")
 
-	core.PuregoSafeRegister(&xDBusInterfaceInfoCacheBuild, lib, "g_dbus_interface_info_cache_build")
-	core.PuregoSafeRegister(&xDBusInterfaceInfoCacheRelease, lib, "g_dbus_interface_info_cache_release")
-	core.PuregoSafeRegister(&xDBusInterfaceInfoGenerateXml, lib, "g_dbus_interface_info_generate_xml")
-	core.PuregoSafeRegister(&xDBusInterfaceInfoLookupMethod, lib, "g_dbus_interface_info_lookup_method")
-	core.PuregoSafeRegister(&xDBusInterfaceInfoLookupProperty, lib, "g_dbus_interface_info_lookup_property")
-	core.PuregoSafeRegister(&xDBusInterfaceInfoLookupSignal, lib, "g_dbus_interface_info_lookup_signal")
-	core.PuregoSafeRegister(&xDBusInterfaceInfoRef, lib, "g_dbus_interface_info_ref")
-	core.PuregoSafeRegister(&xDBusInterfaceInfoUnref, lib, "g_dbus_interface_info_unref")
+	core.PuregoSafeRegister(&xDBusInterfaceInfoCacheBuild, libs, "g_dbus_interface_info_cache_build")
+	core.PuregoSafeRegister(&xDBusInterfaceInfoCacheRelease, libs, "g_dbus_interface_info_cache_release")
+	core.PuregoSafeRegister(&xDBusInterfaceInfoGenerateXml, libs, "g_dbus_interface_info_generate_xml")
+	core.PuregoSafeRegister(&xDBusInterfaceInfoLookupMethod, libs, "g_dbus_interface_info_lookup_method")
+	core.PuregoSafeRegister(&xDBusInterfaceInfoLookupProperty, libs, "g_dbus_interface_info_lookup_property")
+	core.PuregoSafeRegister(&xDBusInterfaceInfoLookupSignal, libs, "g_dbus_interface_info_lookup_signal")
+	core.PuregoSafeRegister(&xDBusInterfaceInfoRef, libs, "g_dbus_interface_info_ref")
+	core.PuregoSafeRegister(&xDBusInterfaceInfoUnref, libs, "g_dbus_interface_info_unref")
 
-	core.PuregoSafeRegister(&xDBusMethodInfoGLibType, lib, "g_dbus_method_info_get_type")
+	core.PuregoSafeRegister(&xDBusMethodInfoGLibType, libs, "g_dbus_method_info_get_type")
 
-	core.PuregoSafeRegister(&xDBusMethodInfoRef, lib, "g_dbus_method_info_ref")
-	core.PuregoSafeRegister(&xDBusMethodInfoUnref, lib, "g_dbus_method_info_unref")
+	core.PuregoSafeRegister(&xDBusMethodInfoRef, libs, "g_dbus_method_info_ref")
+	core.PuregoSafeRegister(&xDBusMethodInfoUnref, libs, "g_dbus_method_info_unref")
 
-	core.PuregoSafeRegister(&xDBusNodeInfoGLibType, lib, "g_dbus_node_info_get_type")
+	core.PuregoSafeRegister(&xDBusNodeInfoGLibType, libs, "g_dbus_node_info_get_type")
 
-	core.PuregoSafeRegister(&xNewDBusNodeInfoForXml, lib, "g_dbus_node_info_new_for_xml")
+	core.PuregoSafeRegister(&xNewDBusNodeInfoForXml, libs, "g_dbus_node_info_new_for_xml")
 
-	core.PuregoSafeRegister(&xDBusNodeInfoGenerateXml, lib, "g_dbus_node_info_generate_xml")
-	core.PuregoSafeRegister(&xDBusNodeInfoLookupInterface, lib, "g_dbus_node_info_lookup_interface")
-	core.PuregoSafeRegister(&xDBusNodeInfoRef, lib, "g_dbus_node_info_ref")
-	core.PuregoSafeRegister(&xDBusNodeInfoUnref, lib, "g_dbus_node_info_unref")
+	core.PuregoSafeRegister(&xDBusNodeInfoGenerateXml, libs, "g_dbus_node_info_generate_xml")
+	core.PuregoSafeRegister(&xDBusNodeInfoLookupInterface, libs, "g_dbus_node_info_lookup_interface")
+	core.PuregoSafeRegister(&xDBusNodeInfoRef, libs, "g_dbus_node_info_ref")
+	core.PuregoSafeRegister(&xDBusNodeInfoUnref, libs, "g_dbus_node_info_unref")
 
-	core.PuregoSafeRegister(&xDBusPropertyInfoGLibType, lib, "g_dbus_property_info_get_type")
+	core.PuregoSafeRegister(&xDBusPropertyInfoGLibType, libs, "g_dbus_property_info_get_type")
 
-	core.PuregoSafeRegister(&xDBusPropertyInfoRef, lib, "g_dbus_property_info_ref")
-	core.PuregoSafeRegister(&xDBusPropertyInfoUnref, lib, "g_dbus_property_info_unref")
+	core.PuregoSafeRegister(&xDBusPropertyInfoRef, libs, "g_dbus_property_info_ref")
+	core.PuregoSafeRegister(&xDBusPropertyInfoUnref, libs, "g_dbus_property_info_unref")
 
-	core.PuregoSafeRegister(&xDBusSignalInfoGLibType, lib, "g_dbus_signal_info_get_type")
+	core.PuregoSafeRegister(&xDBusSignalInfoGLibType, libs, "g_dbus_signal_info_get_type")
 
-	core.PuregoSafeRegister(&xDBusSignalInfoRef, lib, "g_dbus_signal_info_ref")
-	core.PuregoSafeRegister(&xDBusSignalInfoUnref, lib, "g_dbus_signal_info_unref")
+	core.PuregoSafeRegister(&xDBusSignalInfoRef, libs, "g_dbus_signal_info_ref")
+	core.PuregoSafeRegister(&xDBusSignalInfoUnref, libs, "g_dbus_signal_info_unref")
 
 }

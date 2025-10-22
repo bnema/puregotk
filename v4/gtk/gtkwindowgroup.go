@@ -213,18 +213,22 @@ func (c *WindowGroup) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xWindowGroupGLibType, lib, "gtk_window_group_get_type")
+	core.PuregoSafeRegister(&xWindowGroupGLibType, libs, "gtk_window_group_get_type")
 
-	core.PuregoSafeRegister(&xNewWindowGroup, lib, "gtk_window_group_new")
+	core.PuregoSafeRegister(&xNewWindowGroup, libs, "gtk_window_group_new")
 
-	core.PuregoSafeRegister(&xWindowGroupAddWindow, lib, "gtk_window_group_add_window")
-	core.PuregoSafeRegister(&xWindowGroupListWindows, lib, "gtk_window_group_list_windows")
-	core.PuregoSafeRegister(&xWindowGroupRemoveWindow, lib, "gtk_window_group_remove_window")
+	core.PuregoSafeRegister(&xWindowGroupAddWindow, libs, "gtk_window_group_add_window")
+	core.PuregoSafeRegister(&xWindowGroupListWindows, libs, "gtk_window_group_list_windows")
+	core.PuregoSafeRegister(&xWindowGroupRemoveWindow, libs, "gtk_window_group_remove_window")
 
 }

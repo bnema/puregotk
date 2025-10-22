@@ -246,23 +246,27 @@ func (x *EnumListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEnumListItemGLibType, lib, "adw_enum_list_item_get_type")
+	core.PuregoSafeRegister(&xEnumListItemGLibType, libs, "adw_enum_list_item_get_type")
 
-	core.PuregoSafeRegister(&xEnumListItemGetName, lib, "adw_enum_list_item_get_name")
-	core.PuregoSafeRegister(&xEnumListItemGetNick, lib, "adw_enum_list_item_get_nick")
-	core.PuregoSafeRegister(&xEnumListItemGetValue, lib, "adw_enum_list_item_get_value")
+	core.PuregoSafeRegister(&xEnumListItemGetName, libs, "adw_enum_list_item_get_name")
+	core.PuregoSafeRegister(&xEnumListItemGetNick, libs, "adw_enum_list_item_get_nick")
+	core.PuregoSafeRegister(&xEnumListItemGetValue, libs, "adw_enum_list_item_get_value")
 
-	core.PuregoSafeRegister(&xEnumListModelGLibType, lib, "adw_enum_list_model_get_type")
+	core.PuregoSafeRegister(&xEnumListModelGLibType, libs, "adw_enum_list_model_get_type")
 
-	core.PuregoSafeRegister(&xNewEnumListModel, lib, "adw_enum_list_model_new")
+	core.PuregoSafeRegister(&xNewEnumListModel, libs, "adw_enum_list_model_new")
 
-	core.PuregoSafeRegister(&xEnumListModelFindPosition, lib, "adw_enum_list_model_find_position")
-	core.PuregoSafeRegister(&xEnumListModelGetEnumType, lib, "adw_enum_list_model_get_enum_type")
+	core.PuregoSafeRegister(&xEnumListModelFindPosition, libs, "adw_enum_list_model_find_position")
+	core.PuregoSafeRegister(&xEnumListModelGetEnumType, libs, "adw_enum_list_model_get_enum_type")
 
 }

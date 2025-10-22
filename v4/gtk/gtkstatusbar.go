@@ -471,20 +471,24 @@ func (x *Statusbar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStatusbarGLibType, lib, "gtk_statusbar_get_type")
+	core.PuregoSafeRegister(&xStatusbarGLibType, libs, "gtk_statusbar_get_type")
 
-	core.PuregoSafeRegister(&xNewStatusbar, lib, "gtk_statusbar_new")
+	core.PuregoSafeRegister(&xNewStatusbar, libs, "gtk_statusbar_new")
 
-	core.PuregoSafeRegister(&xStatusbarGetContextId, lib, "gtk_statusbar_get_context_id")
-	core.PuregoSafeRegister(&xStatusbarPop, lib, "gtk_statusbar_pop")
-	core.PuregoSafeRegister(&xStatusbarPush, lib, "gtk_statusbar_push")
-	core.PuregoSafeRegister(&xStatusbarRemove, lib, "gtk_statusbar_remove")
-	core.PuregoSafeRegister(&xStatusbarRemoveAll, lib, "gtk_statusbar_remove_all")
+	core.PuregoSafeRegister(&xStatusbarGetContextId, libs, "gtk_statusbar_get_context_id")
+	core.PuregoSafeRegister(&xStatusbarPop, libs, "gtk_statusbar_pop")
+	core.PuregoSafeRegister(&xStatusbarPush, libs, "gtk_statusbar_push")
+	core.PuregoSafeRegister(&xStatusbarRemove, libs, "gtk_statusbar_remove")
+	core.PuregoSafeRegister(&xStatusbarRemoveAll, libs, "gtk_statusbar_remove_all")
 
 }

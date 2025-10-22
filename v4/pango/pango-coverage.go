@@ -192,26 +192,30 @@ func CoverageFromBytes(BytesVar []byte, NBytesVar int) *Coverage {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCoverageLevelGLibType, lib, "pango_coverage_level_get_type")
+	core.PuregoSafeRegister(&xCoverageLevelGLibType, libs, "pango_coverage_level_get_type")
 
-	core.PuregoSafeRegister(&xCoverageGLibType, lib, "pango_coverage_get_type")
+	core.PuregoSafeRegister(&xCoverageGLibType, libs, "pango_coverage_get_type")
 
-	core.PuregoSafeRegister(&xNewCoverage, lib, "pango_coverage_new")
+	core.PuregoSafeRegister(&xNewCoverage, libs, "pango_coverage_new")
 
-	core.PuregoSafeRegister(&xCoverageCopy, lib, "pango_coverage_copy")
-	core.PuregoSafeRegister(&xCoverageGet, lib, "pango_coverage_get")
-	core.PuregoSafeRegister(&xCoverageMax, lib, "pango_coverage_max")
-	core.PuregoSafeRegister(&xCoverageRef, lib, "pango_coverage_ref")
-	core.PuregoSafeRegister(&xCoverageSet, lib, "pango_coverage_set")
-	core.PuregoSafeRegister(&xCoverageToBytes, lib, "pango_coverage_to_bytes")
-	core.PuregoSafeRegister(&xCoverageUnref, lib, "pango_coverage_unref")
+	core.PuregoSafeRegister(&xCoverageCopy, libs, "pango_coverage_copy")
+	core.PuregoSafeRegister(&xCoverageGet, libs, "pango_coverage_get")
+	core.PuregoSafeRegister(&xCoverageMax, libs, "pango_coverage_max")
+	core.PuregoSafeRegister(&xCoverageRef, libs, "pango_coverage_ref")
+	core.PuregoSafeRegister(&xCoverageSet, libs, "pango_coverage_set")
+	core.PuregoSafeRegister(&xCoverageToBytes, libs, "pango_coverage_to_bytes")
+	core.PuregoSafeRegister(&xCoverageUnref, libs, "pango_coverage_unref")
 
-	core.PuregoSafeRegister(&xCoverageFromBytes, lib, "pango_coverage_from_bytes")
+	core.PuregoSafeRegister(&xCoverageFromBytes, libs, "pango_coverage_from_bytes")
 
 }

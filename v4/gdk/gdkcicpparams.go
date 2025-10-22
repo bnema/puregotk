@@ -201,26 +201,30 @@ func (c *CicpParams) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCicpRangeGLibType, lib, "gdk_cicp_range_get_type")
+	core.PuregoSafeRegister(&xCicpRangeGLibType, libs, "gdk_cicp_range_get_type")
 
-	core.PuregoSafeRegister(&xCicpParamsGLibType, lib, "gdk_cicp_params_get_type")
+	core.PuregoSafeRegister(&xCicpParamsGLibType, libs, "gdk_cicp_params_get_type")
 
-	core.PuregoSafeRegister(&xNewCicpParams, lib, "gdk_cicp_params_new")
+	core.PuregoSafeRegister(&xNewCicpParams, libs, "gdk_cicp_params_new")
 
-	core.PuregoSafeRegister(&xCicpParamsBuildColorState, lib, "gdk_cicp_params_build_color_state")
-	core.PuregoSafeRegister(&xCicpParamsGetColorPrimaries, lib, "gdk_cicp_params_get_color_primaries")
-	core.PuregoSafeRegister(&xCicpParamsGetMatrixCoefficients, lib, "gdk_cicp_params_get_matrix_coefficients")
-	core.PuregoSafeRegister(&xCicpParamsGetRange, lib, "gdk_cicp_params_get_range")
-	core.PuregoSafeRegister(&xCicpParamsGetTransferFunction, lib, "gdk_cicp_params_get_transfer_function")
-	core.PuregoSafeRegister(&xCicpParamsSetColorPrimaries, lib, "gdk_cicp_params_set_color_primaries")
-	core.PuregoSafeRegister(&xCicpParamsSetMatrixCoefficients, lib, "gdk_cicp_params_set_matrix_coefficients")
-	core.PuregoSafeRegister(&xCicpParamsSetRange, lib, "gdk_cicp_params_set_range")
-	core.PuregoSafeRegister(&xCicpParamsSetTransferFunction, lib, "gdk_cicp_params_set_transfer_function")
+	core.PuregoSafeRegister(&xCicpParamsBuildColorState, libs, "gdk_cicp_params_build_color_state")
+	core.PuregoSafeRegister(&xCicpParamsGetColorPrimaries, libs, "gdk_cicp_params_get_color_primaries")
+	core.PuregoSafeRegister(&xCicpParamsGetMatrixCoefficients, libs, "gdk_cicp_params_get_matrix_coefficients")
+	core.PuregoSafeRegister(&xCicpParamsGetRange, libs, "gdk_cicp_params_get_range")
+	core.PuregoSafeRegister(&xCicpParamsGetTransferFunction, libs, "gdk_cicp_params_get_transfer_function")
+	core.PuregoSafeRegister(&xCicpParamsSetColorPrimaries, libs, "gdk_cicp_params_set_color_primaries")
+	core.PuregoSafeRegister(&xCicpParamsSetMatrixCoefficients, libs, "gdk_cicp_params_set_matrix_coefficients")
+	core.PuregoSafeRegister(&xCicpParamsSetRange, libs, "gdk_cicp_params_set_range")
+	core.PuregoSafeRegister(&xCicpParamsSetTransferFunction, libs, "gdk_cicp_params_set_transfer_function")
 
 }

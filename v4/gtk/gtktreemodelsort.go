@@ -704,23 +704,27 @@ func (x *TreeModelSort) SortColumnChanged() {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTreeModelSortGLibType, lib, "gtk_tree_model_sort_get_type")
+	core.PuregoSafeRegister(&xTreeModelSortGLibType, libs, "gtk_tree_model_sort_get_type")
 
-	core.PuregoSafeRegister(&xNewTreeModelSortWithModel, lib, "gtk_tree_model_sort_new_with_model")
+	core.PuregoSafeRegister(&xNewTreeModelSortWithModel, libs, "gtk_tree_model_sort_new_with_model")
 
-	core.PuregoSafeRegister(&xTreeModelSortClearCache, lib, "gtk_tree_model_sort_clear_cache")
-	core.PuregoSafeRegister(&xTreeModelSortConvertChildIterToIter, lib, "gtk_tree_model_sort_convert_child_iter_to_iter")
-	core.PuregoSafeRegister(&xTreeModelSortConvertChildPathToPath, lib, "gtk_tree_model_sort_convert_child_path_to_path")
-	core.PuregoSafeRegister(&xTreeModelSortConvertIterToChildIter, lib, "gtk_tree_model_sort_convert_iter_to_child_iter")
-	core.PuregoSafeRegister(&xTreeModelSortConvertPathToChildPath, lib, "gtk_tree_model_sort_convert_path_to_child_path")
-	core.PuregoSafeRegister(&xTreeModelSortGetModel, lib, "gtk_tree_model_sort_get_model")
-	core.PuregoSafeRegister(&xTreeModelSortIterIsValid, lib, "gtk_tree_model_sort_iter_is_valid")
-	core.PuregoSafeRegister(&xTreeModelSortResetDefaultSortFunc, lib, "gtk_tree_model_sort_reset_default_sort_func")
+	core.PuregoSafeRegister(&xTreeModelSortClearCache, libs, "gtk_tree_model_sort_clear_cache")
+	core.PuregoSafeRegister(&xTreeModelSortConvertChildIterToIter, libs, "gtk_tree_model_sort_convert_child_iter_to_iter")
+	core.PuregoSafeRegister(&xTreeModelSortConvertChildPathToPath, libs, "gtk_tree_model_sort_convert_child_path_to_path")
+	core.PuregoSafeRegister(&xTreeModelSortConvertIterToChildIter, libs, "gtk_tree_model_sort_convert_iter_to_child_iter")
+	core.PuregoSafeRegister(&xTreeModelSortConvertPathToChildPath, libs, "gtk_tree_model_sort_convert_path_to_child_path")
+	core.PuregoSafeRegister(&xTreeModelSortGetModel, libs, "gtk_tree_model_sort_get_model")
+	core.PuregoSafeRegister(&xTreeModelSortIterIsValid, libs, "gtk_tree_model_sort_iter_is_valid")
+	core.PuregoSafeRegister(&xTreeModelSortResetDefaultSortFunc, libs, "gtk_tree_model_sort_reset_default_sort_func")
 
 }

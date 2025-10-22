@@ -198,32 +198,36 @@ func Point3dZero() *Point3D {
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPoint3dZero, lib, "graphene_point3d_zero")
+	core.PuregoSafeRegister(&xPoint3dZero, libs, "graphene_point3d_zero")
 
-	core.PuregoSafeRegister(&xPoint3DGLibType, lib, "graphene_point3d_get_type")
+	core.PuregoSafeRegister(&xPoint3DGLibType, libs, "graphene_point3d_get_type")
 
-	core.PuregoSafeRegister(&xPoint3DAlloc, lib, "graphene_point3d_alloc")
+	core.PuregoSafeRegister(&xPoint3DAlloc, libs, "graphene_point3d_alloc")
 
-	core.PuregoSafeRegister(&xPoint3DCross, lib, "graphene_point3d_cross")
-	core.PuregoSafeRegister(&xPoint3DDistance, lib, "graphene_point3d_distance")
-	core.PuregoSafeRegister(&xPoint3DDot, lib, "graphene_point3d_dot")
-	core.PuregoSafeRegister(&xPoint3DEqual, lib, "graphene_point3d_equal")
-	core.PuregoSafeRegister(&xPoint3DFree, lib, "graphene_point3d_free")
-	core.PuregoSafeRegister(&xPoint3DInit, lib, "graphene_point3d_init")
-	core.PuregoSafeRegister(&xPoint3DInitFromPoint, lib, "graphene_point3d_init_from_point")
-	core.PuregoSafeRegister(&xPoint3DInitFromVec3, lib, "graphene_point3d_init_from_vec3")
-	core.PuregoSafeRegister(&xPoint3DInterpolate, lib, "graphene_point3d_interpolate")
-	core.PuregoSafeRegister(&xPoint3DLength, lib, "graphene_point3d_length")
-	core.PuregoSafeRegister(&xPoint3DNear, lib, "graphene_point3d_near")
-	core.PuregoSafeRegister(&xPoint3DNormalize, lib, "graphene_point3d_normalize")
-	core.PuregoSafeRegister(&xPoint3DNormalizeViewport, lib, "graphene_point3d_normalize_viewport")
-	core.PuregoSafeRegister(&xPoint3DScale, lib, "graphene_point3d_scale")
-	core.PuregoSafeRegister(&xPoint3DToVec3, lib, "graphene_point3d_to_vec3")
+	core.PuregoSafeRegister(&xPoint3DCross, libs, "graphene_point3d_cross")
+	core.PuregoSafeRegister(&xPoint3DDistance, libs, "graphene_point3d_distance")
+	core.PuregoSafeRegister(&xPoint3DDot, libs, "graphene_point3d_dot")
+	core.PuregoSafeRegister(&xPoint3DEqual, libs, "graphene_point3d_equal")
+	core.PuregoSafeRegister(&xPoint3DFree, libs, "graphene_point3d_free")
+	core.PuregoSafeRegister(&xPoint3DInit, libs, "graphene_point3d_init")
+	core.PuregoSafeRegister(&xPoint3DInitFromPoint, libs, "graphene_point3d_init_from_point")
+	core.PuregoSafeRegister(&xPoint3DInitFromVec3, libs, "graphene_point3d_init_from_vec3")
+	core.PuregoSafeRegister(&xPoint3DInterpolate, libs, "graphene_point3d_interpolate")
+	core.PuregoSafeRegister(&xPoint3DLength, libs, "graphene_point3d_length")
+	core.PuregoSafeRegister(&xPoint3DNear, libs, "graphene_point3d_near")
+	core.PuregoSafeRegister(&xPoint3DNormalize, libs, "graphene_point3d_normalize")
+	core.PuregoSafeRegister(&xPoint3DNormalizeViewport, libs, "graphene_point3d_normalize_viewport")
+	core.PuregoSafeRegister(&xPoint3DScale, libs, "graphene_point3d_scale")
+	core.PuregoSafeRegister(&xPoint3DToVec3, libs, "graphene_point3d_to_vec3")
 
 }

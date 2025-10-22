@@ -559,19 +559,23 @@ func (x *Switch) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSwitchGLibType, lib, "gtk_switch_get_type")
+	core.PuregoSafeRegister(&xSwitchGLibType, libs, "gtk_switch_get_type")
 
-	core.PuregoSafeRegister(&xNewSwitch, lib, "gtk_switch_new")
+	core.PuregoSafeRegister(&xNewSwitch, libs, "gtk_switch_new")
 
-	core.PuregoSafeRegister(&xSwitchGetActive, lib, "gtk_switch_get_active")
-	core.PuregoSafeRegister(&xSwitchGetState, lib, "gtk_switch_get_state")
-	core.PuregoSafeRegister(&xSwitchSetActive, lib, "gtk_switch_set_active")
-	core.PuregoSafeRegister(&xSwitchSetState, lib, "gtk_switch_set_state")
+	core.PuregoSafeRegister(&xSwitchGetActive, libs, "gtk_switch_get_active")
+	core.PuregoSafeRegister(&xSwitchGetState, libs, "gtk_switch_get_state")
+	core.PuregoSafeRegister(&xSwitchSetActive, libs, "gtk_switch_set_active")
+	core.PuregoSafeRegister(&xSwitchSetState, libs, "gtk_switch_set_state")
 
 }

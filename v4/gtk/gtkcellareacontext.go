@@ -369,23 +369,27 @@ func (c *CellAreaContext) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCellAreaContextGLibType, lib, "gtk_cell_area_context_get_type")
+	core.PuregoSafeRegister(&xCellAreaContextGLibType, libs, "gtk_cell_area_context_get_type")
 
-	core.PuregoSafeRegister(&xCellAreaContextAllocate, lib, "gtk_cell_area_context_allocate")
-	core.PuregoSafeRegister(&xCellAreaContextGetAllocation, lib, "gtk_cell_area_context_get_allocation")
-	core.PuregoSafeRegister(&xCellAreaContextGetArea, lib, "gtk_cell_area_context_get_area")
-	core.PuregoSafeRegister(&xCellAreaContextGetPreferredHeight, lib, "gtk_cell_area_context_get_preferred_height")
-	core.PuregoSafeRegister(&xCellAreaContextGetPreferredHeightForWidth, lib, "gtk_cell_area_context_get_preferred_height_for_width")
-	core.PuregoSafeRegister(&xCellAreaContextGetPreferredWidth, lib, "gtk_cell_area_context_get_preferred_width")
-	core.PuregoSafeRegister(&xCellAreaContextGetPreferredWidthForHeight, lib, "gtk_cell_area_context_get_preferred_width_for_height")
-	core.PuregoSafeRegister(&xCellAreaContextPushPreferredHeight, lib, "gtk_cell_area_context_push_preferred_height")
-	core.PuregoSafeRegister(&xCellAreaContextPushPreferredWidth, lib, "gtk_cell_area_context_push_preferred_width")
-	core.PuregoSafeRegister(&xCellAreaContextReset, lib, "gtk_cell_area_context_reset")
+	core.PuregoSafeRegister(&xCellAreaContextAllocate, libs, "gtk_cell_area_context_allocate")
+	core.PuregoSafeRegister(&xCellAreaContextGetAllocation, libs, "gtk_cell_area_context_get_allocation")
+	core.PuregoSafeRegister(&xCellAreaContextGetArea, libs, "gtk_cell_area_context_get_area")
+	core.PuregoSafeRegister(&xCellAreaContextGetPreferredHeight, libs, "gtk_cell_area_context_get_preferred_height")
+	core.PuregoSafeRegister(&xCellAreaContextGetPreferredHeightForWidth, libs, "gtk_cell_area_context_get_preferred_height_for_width")
+	core.PuregoSafeRegister(&xCellAreaContextGetPreferredWidth, libs, "gtk_cell_area_context_get_preferred_width")
+	core.PuregoSafeRegister(&xCellAreaContextGetPreferredWidthForHeight, libs, "gtk_cell_area_context_get_preferred_width_for_height")
+	core.PuregoSafeRegister(&xCellAreaContextPushPreferredHeight, libs, "gtk_cell_area_context_push_preferred_height")
+	core.PuregoSafeRegister(&xCellAreaContextPushPreferredWidth, libs, "gtk_cell_area_context_push_preferred_width")
+	core.PuregoSafeRegister(&xCellAreaContextReset, libs, "gtk_cell_area_context_reset")
 
 }

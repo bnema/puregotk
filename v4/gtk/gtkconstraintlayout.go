@@ -521,28 +521,32 @@ func (c *ConstraintLayoutChild) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xConstraintVflParserErrorQuark, lib, "gtk_constraint_vfl_parser_error_quark")
+	core.PuregoSafeRegister(&xConstraintVflParserErrorQuark, libs, "gtk_constraint_vfl_parser_error_quark")
 
-	core.PuregoSafeRegister(&xConstraintLayoutGLibType, lib, "gtk_constraint_layout_get_type")
+	core.PuregoSafeRegister(&xConstraintLayoutGLibType, libs, "gtk_constraint_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewConstraintLayout, lib, "gtk_constraint_layout_new")
+	core.PuregoSafeRegister(&xNewConstraintLayout, libs, "gtk_constraint_layout_new")
 
-	core.PuregoSafeRegister(&xConstraintLayoutAddConstraint, lib, "gtk_constraint_layout_add_constraint")
-	core.PuregoSafeRegister(&xConstraintLayoutAddConstraintsFromDescription, lib, "gtk_constraint_layout_add_constraints_from_description")
-	core.PuregoSafeRegister(&xConstraintLayoutAddConstraintsFromDescriptionv, lib, "gtk_constraint_layout_add_constraints_from_descriptionv")
-	core.PuregoSafeRegister(&xConstraintLayoutAddGuide, lib, "gtk_constraint_layout_add_guide")
-	core.PuregoSafeRegister(&xConstraintLayoutObserveConstraints, lib, "gtk_constraint_layout_observe_constraints")
-	core.PuregoSafeRegister(&xConstraintLayoutObserveGuides, lib, "gtk_constraint_layout_observe_guides")
-	core.PuregoSafeRegister(&xConstraintLayoutRemoveAllConstraints, lib, "gtk_constraint_layout_remove_all_constraints")
-	core.PuregoSafeRegister(&xConstraintLayoutRemoveConstraint, lib, "gtk_constraint_layout_remove_constraint")
-	core.PuregoSafeRegister(&xConstraintLayoutRemoveGuide, lib, "gtk_constraint_layout_remove_guide")
+	core.PuregoSafeRegister(&xConstraintLayoutAddConstraint, libs, "gtk_constraint_layout_add_constraint")
+	core.PuregoSafeRegister(&xConstraintLayoutAddConstraintsFromDescription, libs, "gtk_constraint_layout_add_constraints_from_description")
+	core.PuregoSafeRegister(&xConstraintLayoutAddConstraintsFromDescriptionv, libs, "gtk_constraint_layout_add_constraints_from_descriptionv")
+	core.PuregoSafeRegister(&xConstraintLayoutAddGuide, libs, "gtk_constraint_layout_add_guide")
+	core.PuregoSafeRegister(&xConstraintLayoutObserveConstraints, libs, "gtk_constraint_layout_observe_constraints")
+	core.PuregoSafeRegister(&xConstraintLayoutObserveGuides, libs, "gtk_constraint_layout_observe_guides")
+	core.PuregoSafeRegister(&xConstraintLayoutRemoveAllConstraints, libs, "gtk_constraint_layout_remove_all_constraints")
+	core.PuregoSafeRegister(&xConstraintLayoutRemoveConstraint, libs, "gtk_constraint_layout_remove_constraint")
+	core.PuregoSafeRegister(&xConstraintLayoutRemoveGuide, libs, "gtk_constraint_layout_remove_guide")
 
-	core.PuregoSafeRegister(&xConstraintLayoutChildGLibType, lib, "gtk_constraint_layout_child_get_type")
+	core.PuregoSafeRegister(&xConstraintLayoutChildGLibType, libs, "gtk_constraint_layout_child_get_type")
 
 }

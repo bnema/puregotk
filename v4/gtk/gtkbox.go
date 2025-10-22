@@ -541,28 +541,32 @@ func (x *Box) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBoxGLibType, lib, "gtk_box_get_type")
+	core.PuregoSafeRegister(&xBoxGLibType, libs, "gtk_box_get_type")
 
-	core.PuregoSafeRegister(&xNewBox, lib, "gtk_box_new")
+	core.PuregoSafeRegister(&xNewBox, libs, "gtk_box_new")
 
-	core.PuregoSafeRegister(&xBoxAppend, lib, "gtk_box_append")
-	core.PuregoSafeRegister(&xBoxGetBaselineChild, lib, "gtk_box_get_baseline_child")
-	core.PuregoSafeRegister(&xBoxGetBaselinePosition, lib, "gtk_box_get_baseline_position")
-	core.PuregoSafeRegister(&xBoxGetHomogeneous, lib, "gtk_box_get_homogeneous")
-	core.PuregoSafeRegister(&xBoxGetSpacing, lib, "gtk_box_get_spacing")
-	core.PuregoSafeRegister(&xBoxInsertChildAfter, lib, "gtk_box_insert_child_after")
-	core.PuregoSafeRegister(&xBoxPrepend, lib, "gtk_box_prepend")
-	core.PuregoSafeRegister(&xBoxRemove, lib, "gtk_box_remove")
-	core.PuregoSafeRegister(&xBoxReorderChildAfter, lib, "gtk_box_reorder_child_after")
-	core.PuregoSafeRegister(&xBoxSetBaselineChild, lib, "gtk_box_set_baseline_child")
-	core.PuregoSafeRegister(&xBoxSetBaselinePosition, lib, "gtk_box_set_baseline_position")
-	core.PuregoSafeRegister(&xBoxSetHomogeneous, lib, "gtk_box_set_homogeneous")
-	core.PuregoSafeRegister(&xBoxSetSpacing, lib, "gtk_box_set_spacing")
+	core.PuregoSafeRegister(&xBoxAppend, libs, "gtk_box_append")
+	core.PuregoSafeRegister(&xBoxGetBaselineChild, libs, "gtk_box_get_baseline_child")
+	core.PuregoSafeRegister(&xBoxGetBaselinePosition, libs, "gtk_box_get_baseline_position")
+	core.PuregoSafeRegister(&xBoxGetHomogeneous, libs, "gtk_box_get_homogeneous")
+	core.PuregoSafeRegister(&xBoxGetSpacing, libs, "gtk_box_get_spacing")
+	core.PuregoSafeRegister(&xBoxInsertChildAfter, libs, "gtk_box_insert_child_after")
+	core.PuregoSafeRegister(&xBoxPrepend, libs, "gtk_box_prepend")
+	core.PuregoSafeRegister(&xBoxRemove, libs, "gtk_box_remove")
+	core.PuregoSafeRegister(&xBoxReorderChildAfter, libs, "gtk_box_reorder_child_after")
+	core.PuregoSafeRegister(&xBoxSetBaselineChild, libs, "gtk_box_set_baseline_child")
+	core.PuregoSafeRegister(&xBoxSetBaselinePosition, libs, "gtk_box_set_baseline_position")
+	core.PuregoSafeRegister(&xBoxSetHomogeneous, libs, "gtk_box_set_homogeneous")
+	core.PuregoSafeRegister(&xBoxSetSpacing, libs, "gtk_box_set_spacing")
 
 }

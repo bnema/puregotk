@@ -281,41 +281,45 @@ func Vec2Zero() *Vec2 {
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xVec2One, lib, "graphene_vec2_one")
-	core.PuregoSafeRegister(&xVec2XAxis, lib, "graphene_vec2_x_axis")
-	core.PuregoSafeRegister(&xVec2YAxis, lib, "graphene_vec2_y_axis")
-	core.PuregoSafeRegister(&xVec2Zero, lib, "graphene_vec2_zero")
+	core.PuregoSafeRegister(&xVec2One, libs, "graphene_vec2_one")
+	core.PuregoSafeRegister(&xVec2XAxis, libs, "graphene_vec2_x_axis")
+	core.PuregoSafeRegister(&xVec2YAxis, libs, "graphene_vec2_y_axis")
+	core.PuregoSafeRegister(&xVec2Zero, libs, "graphene_vec2_zero")
 
-	core.PuregoSafeRegister(&xVec2GLibType, lib, "graphene_vec2_get_type")
+	core.PuregoSafeRegister(&xVec2GLibType, libs, "graphene_vec2_get_type")
 
-	core.PuregoSafeRegister(&xVec2Alloc, lib, "graphene_vec2_alloc")
+	core.PuregoSafeRegister(&xVec2Alloc, libs, "graphene_vec2_alloc")
 
-	core.PuregoSafeRegister(&xVec2Add, lib, "graphene_vec2_add")
-	core.PuregoSafeRegister(&xVec2Divide, lib, "graphene_vec2_divide")
-	core.PuregoSafeRegister(&xVec2Dot, lib, "graphene_vec2_dot")
-	core.PuregoSafeRegister(&xVec2Equal, lib, "graphene_vec2_equal")
-	core.PuregoSafeRegister(&xVec2Free, lib, "graphene_vec2_free")
-	core.PuregoSafeRegister(&xVec2GetX, lib, "graphene_vec2_get_x")
-	core.PuregoSafeRegister(&xVec2GetY, lib, "graphene_vec2_get_y")
-	core.PuregoSafeRegister(&xVec2Init, lib, "graphene_vec2_init")
-	core.PuregoSafeRegister(&xVec2InitFromFloat, lib, "graphene_vec2_init_from_float")
-	core.PuregoSafeRegister(&xVec2InitFromVec2, lib, "graphene_vec2_init_from_vec2")
-	core.PuregoSafeRegister(&xVec2Interpolate, lib, "graphene_vec2_interpolate")
-	core.PuregoSafeRegister(&xVec2Length, lib, "graphene_vec2_length")
-	core.PuregoSafeRegister(&xVec2Max, lib, "graphene_vec2_max")
-	core.PuregoSafeRegister(&xVec2Min, lib, "graphene_vec2_min")
-	core.PuregoSafeRegister(&xVec2Multiply, lib, "graphene_vec2_multiply")
-	core.PuregoSafeRegister(&xVec2Near, lib, "graphene_vec2_near")
-	core.PuregoSafeRegister(&xVec2Negate, lib, "graphene_vec2_negate")
-	core.PuregoSafeRegister(&xVec2Normalize, lib, "graphene_vec2_normalize")
-	core.PuregoSafeRegister(&xVec2Scale, lib, "graphene_vec2_scale")
-	core.PuregoSafeRegister(&xVec2Subtract, lib, "graphene_vec2_subtract")
-	core.PuregoSafeRegister(&xVec2ToFloat, lib, "graphene_vec2_to_float")
+	core.PuregoSafeRegister(&xVec2Add, libs, "graphene_vec2_add")
+	core.PuregoSafeRegister(&xVec2Divide, libs, "graphene_vec2_divide")
+	core.PuregoSafeRegister(&xVec2Dot, libs, "graphene_vec2_dot")
+	core.PuregoSafeRegister(&xVec2Equal, libs, "graphene_vec2_equal")
+	core.PuregoSafeRegister(&xVec2Free, libs, "graphene_vec2_free")
+	core.PuregoSafeRegister(&xVec2GetX, libs, "graphene_vec2_get_x")
+	core.PuregoSafeRegister(&xVec2GetY, libs, "graphene_vec2_get_y")
+	core.PuregoSafeRegister(&xVec2Init, libs, "graphene_vec2_init")
+	core.PuregoSafeRegister(&xVec2InitFromFloat, libs, "graphene_vec2_init_from_float")
+	core.PuregoSafeRegister(&xVec2InitFromVec2, libs, "graphene_vec2_init_from_vec2")
+	core.PuregoSafeRegister(&xVec2Interpolate, libs, "graphene_vec2_interpolate")
+	core.PuregoSafeRegister(&xVec2Length, libs, "graphene_vec2_length")
+	core.PuregoSafeRegister(&xVec2Max, libs, "graphene_vec2_max")
+	core.PuregoSafeRegister(&xVec2Min, libs, "graphene_vec2_min")
+	core.PuregoSafeRegister(&xVec2Multiply, libs, "graphene_vec2_multiply")
+	core.PuregoSafeRegister(&xVec2Near, libs, "graphene_vec2_near")
+	core.PuregoSafeRegister(&xVec2Negate, libs, "graphene_vec2_negate")
+	core.PuregoSafeRegister(&xVec2Normalize, libs, "graphene_vec2_normalize")
+	core.PuregoSafeRegister(&xVec2Scale, libs, "graphene_vec2_scale")
+	core.PuregoSafeRegister(&xVec2Subtract, libs, "graphene_vec2_subtract")
+	core.PuregoSafeRegister(&xVec2ToFloat, libs, "graphene_vec2_to_float")
 
 }

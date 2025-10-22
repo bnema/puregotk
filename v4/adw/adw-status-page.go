@@ -494,25 +494,29 @@ func (x *StatusPage) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStatusPageGLibType, lib, "adw_status_page_get_type")
+	core.PuregoSafeRegister(&xStatusPageGLibType, libs, "adw_status_page_get_type")
 
-	core.PuregoSafeRegister(&xNewStatusPage, lib, "adw_status_page_new")
+	core.PuregoSafeRegister(&xNewStatusPage, libs, "adw_status_page_new")
 
-	core.PuregoSafeRegister(&xStatusPageGetChild, lib, "adw_status_page_get_child")
-	core.PuregoSafeRegister(&xStatusPageGetDescription, lib, "adw_status_page_get_description")
-	core.PuregoSafeRegister(&xStatusPageGetIconName, lib, "adw_status_page_get_icon_name")
-	core.PuregoSafeRegister(&xStatusPageGetPaintable, lib, "adw_status_page_get_paintable")
-	core.PuregoSafeRegister(&xStatusPageGetTitle, lib, "adw_status_page_get_title")
-	core.PuregoSafeRegister(&xStatusPageSetChild, lib, "adw_status_page_set_child")
-	core.PuregoSafeRegister(&xStatusPageSetDescription, lib, "adw_status_page_set_description")
-	core.PuregoSafeRegister(&xStatusPageSetIconName, lib, "adw_status_page_set_icon_name")
-	core.PuregoSafeRegister(&xStatusPageSetPaintable, lib, "adw_status_page_set_paintable")
-	core.PuregoSafeRegister(&xStatusPageSetTitle, lib, "adw_status_page_set_title")
+	core.PuregoSafeRegister(&xStatusPageGetChild, libs, "adw_status_page_get_child")
+	core.PuregoSafeRegister(&xStatusPageGetDescription, libs, "adw_status_page_get_description")
+	core.PuregoSafeRegister(&xStatusPageGetIconName, libs, "adw_status_page_get_icon_name")
+	core.PuregoSafeRegister(&xStatusPageGetPaintable, libs, "adw_status_page_get_paintable")
+	core.PuregoSafeRegister(&xStatusPageGetTitle, libs, "adw_status_page_get_title")
+	core.PuregoSafeRegister(&xStatusPageSetChild, libs, "adw_status_page_set_child")
+	core.PuregoSafeRegister(&xStatusPageSetDescription, libs, "adw_status_page_set_description")
+	core.PuregoSafeRegister(&xStatusPageSetIconName, libs, "adw_status_page_set_icon_name")
+	core.PuregoSafeRegister(&xStatusPageSetPaintable, libs, "adw_status_page_set_paintable")
+	core.PuregoSafeRegister(&xStatusPageSetTitle, libs, "adw_status_page_set_title")
 
 }

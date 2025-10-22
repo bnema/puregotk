@@ -73,14 +73,18 @@ func DtlsServerConnectionNew(BaseSocketVar DatagramBased, CertificateVar *TlsCer
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDtlsServerConnectionNew, lib, "g_dtls_server_connection_new")
+	core.PuregoSafeRegister(&xDtlsServerConnectionNew, libs, "g_dtls_server_connection_new")
 
-	core.PuregoSafeRegister(&xDtlsServerConnectionGLibType, lib, "g_dtls_server_connection_get_type")
+	core.PuregoSafeRegister(&xDtlsServerConnectionGLibType, libs, "g_dtls_server_connection_get_type")
 
 }

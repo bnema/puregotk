@@ -386,14 +386,18 @@ func (x *Spinner) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSpinnerGLibType, lib, "adw_spinner_get_type")
+	core.PuregoSafeRegister(&xSpinnerGLibType, libs, "adw_spinner_get_type")
 
-	core.PuregoSafeRegister(&xNewSpinner, lib, "adw_spinner_new")
+	core.PuregoSafeRegister(&xNewSpinner, libs, "adw_spinner_new")
 
 }

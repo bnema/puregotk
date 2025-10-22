@@ -267,29 +267,33 @@ func (c *Constraint) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xConstraintGLibType, lib, "gtk_constraint_get_type")
+	core.PuregoSafeRegister(&xConstraintGLibType, libs, "gtk_constraint_get_type")
 
-	core.PuregoSafeRegister(&xNewConstraint, lib, "gtk_constraint_new")
-	core.PuregoSafeRegister(&xNewConstraintConstant, lib, "gtk_constraint_new_constant")
+	core.PuregoSafeRegister(&xNewConstraint, libs, "gtk_constraint_new")
+	core.PuregoSafeRegister(&xNewConstraintConstant, libs, "gtk_constraint_new_constant")
 
-	core.PuregoSafeRegister(&xConstraintGetConstant, lib, "gtk_constraint_get_constant")
-	core.PuregoSafeRegister(&xConstraintGetMultiplier, lib, "gtk_constraint_get_multiplier")
-	core.PuregoSafeRegister(&xConstraintGetRelation, lib, "gtk_constraint_get_relation")
-	core.PuregoSafeRegister(&xConstraintGetSource, lib, "gtk_constraint_get_source")
-	core.PuregoSafeRegister(&xConstraintGetSourceAttribute, lib, "gtk_constraint_get_source_attribute")
-	core.PuregoSafeRegister(&xConstraintGetStrength, lib, "gtk_constraint_get_strength")
-	core.PuregoSafeRegister(&xConstraintGetTarget, lib, "gtk_constraint_get_target")
-	core.PuregoSafeRegister(&xConstraintGetTargetAttribute, lib, "gtk_constraint_get_target_attribute")
-	core.PuregoSafeRegister(&xConstraintIsAttached, lib, "gtk_constraint_is_attached")
-	core.PuregoSafeRegister(&xConstraintIsConstant, lib, "gtk_constraint_is_constant")
-	core.PuregoSafeRegister(&xConstraintIsRequired, lib, "gtk_constraint_is_required")
+	core.PuregoSafeRegister(&xConstraintGetConstant, libs, "gtk_constraint_get_constant")
+	core.PuregoSafeRegister(&xConstraintGetMultiplier, libs, "gtk_constraint_get_multiplier")
+	core.PuregoSafeRegister(&xConstraintGetRelation, libs, "gtk_constraint_get_relation")
+	core.PuregoSafeRegister(&xConstraintGetSource, libs, "gtk_constraint_get_source")
+	core.PuregoSafeRegister(&xConstraintGetSourceAttribute, libs, "gtk_constraint_get_source_attribute")
+	core.PuregoSafeRegister(&xConstraintGetStrength, libs, "gtk_constraint_get_strength")
+	core.PuregoSafeRegister(&xConstraintGetTarget, libs, "gtk_constraint_get_target")
+	core.PuregoSafeRegister(&xConstraintGetTargetAttribute, libs, "gtk_constraint_get_target_attribute")
+	core.PuregoSafeRegister(&xConstraintIsAttached, libs, "gtk_constraint_is_attached")
+	core.PuregoSafeRegister(&xConstraintIsConstant, libs, "gtk_constraint_is_constant")
+	core.PuregoSafeRegister(&xConstraintIsRequired, libs, "gtk_constraint_is_required")
 
-	core.PuregoSafeRegister(&xConstraintTargetGLibType, lib, "gtk_constraint_target_get_type")
+	core.PuregoSafeRegister(&xConstraintTargetGLibType, libs, "gtk_constraint_target_get_type")
 
 }

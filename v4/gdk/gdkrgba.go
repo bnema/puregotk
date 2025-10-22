@@ -153,21 +153,25 @@ func (x *RGBA) ToString() string {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRGBAGLibType, lib, "gdk_rgba_get_type")
+	core.PuregoSafeRegister(&xRGBAGLibType, libs, "gdk_rgba_get_type")
 
-	core.PuregoSafeRegister(&xRGBACopy, lib, "gdk_rgba_copy")
-	core.PuregoSafeRegister(&xRGBAEqual, lib, "gdk_rgba_equal")
-	core.PuregoSafeRegister(&xRGBAFree, lib, "gdk_rgba_free")
-	core.PuregoSafeRegister(&xRGBAHash, lib, "gdk_rgba_hash")
-	core.PuregoSafeRegister(&xRGBAIsClear, lib, "gdk_rgba_is_clear")
-	core.PuregoSafeRegister(&xRGBAIsOpaque, lib, "gdk_rgba_is_opaque")
-	core.PuregoSafeRegister(&xRGBAParse, lib, "gdk_rgba_parse")
-	core.PuregoSafeRegister(&xRGBAToString, lib, "gdk_rgba_to_string")
+	core.PuregoSafeRegister(&xRGBACopy, libs, "gdk_rgba_copy")
+	core.PuregoSafeRegister(&xRGBAEqual, libs, "gdk_rgba_equal")
+	core.PuregoSafeRegister(&xRGBAFree, libs, "gdk_rgba_free")
+	core.PuregoSafeRegister(&xRGBAHash, libs, "gdk_rgba_hash")
+	core.PuregoSafeRegister(&xRGBAIsClear, libs, "gdk_rgba_is_clear")
+	core.PuregoSafeRegister(&xRGBAIsOpaque, libs, "gdk_rgba_is_opaque")
+	core.PuregoSafeRegister(&xRGBAParse, libs, "gdk_rgba_parse")
+	core.PuregoSafeRegister(&xRGBAToString, libs, "gdk_rgba_to_string")
 
 }

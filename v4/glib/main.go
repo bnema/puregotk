@@ -136,27 +136,31 @@ func VariantParseErrorQuark() Quark {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBookmarkFileErrorQuark, lib, "g_bookmark_file_error_quark")
-	core.PuregoSafeRegister(&xConvertErrorQuark, lib, "g_convert_error_quark")
-	core.PuregoSafeRegister(&xFileErrorQuark, lib, "g_file_error_quark")
-	core.PuregoSafeRegister(&xIoChannelErrorQuark, lib, "g_io_channel_error_quark")
-	core.PuregoSafeRegister(&xKeyFileErrorQuark, lib, "g_key_file_error_quark")
-	core.PuregoSafeRegister(&xMarkupErrorQuark, lib, "g_markup_error_quark")
-	core.PuregoSafeRegister(&xNumberParserErrorQuark, lib, "g_number_parser_error_quark")
-	core.PuregoSafeRegister(&xOptionErrorQuark, lib, "g_option_error_quark")
-	core.PuregoSafeRegister(&xRegexErrorQuark, lib, "g_regex_error_quark")
-	core.PuregoSafeRegister(&xShellErrorQuark, lib, "g_shell_error_quark")
-	core.PuregoSafeRegister(&xSpawnErrorQuark, lib, "g_spawn_error_quark")
-	core.PuregoSafeRegister(&xSpawnExitErrorQuark, lib, "g_spawn_exit_error_quark")
-	core.PuregoSafeRegister(&xThreadErrorQuark, lib, "g_thread_error_quark")
-	core.PuregoSafeRegister(&xUnixErrorQuark, lib, "g_unix_error_quark")
-	core.PuregoSafeRegister(&xUriErrorQuark, lib, "g_uri_error_quark")
-	core.PuregoSafeRegister(&xVariantParseErrorQuark, lib, "g_variant_parse_error_quark")
+	core.PuregoSafeRegister(&xBookmarkFileErrorQuark, libs, "g_bookmark_file_error_quark")
+	core.PuregoSafeRegister(&xConvertErrorQuark, libs, "g_convert_error_quark")
+	core.PuregoSafeRegister(&xFileErrorQuark, libs, "g_file_error_quark")
+	core.PuregoSafeRegister(&xIoChannelErrorQuark, libs, "g_io_channel_error_quark")
+	core.PuregoSafeRegister(&xKeyFileErrorQuark, libs, "g_key_file_error_quark")
+	core.PuregoSafeRegister(&xMarkupErrorQuark, libs, "g_markup_error_quark")
+	core.PuregoSafeRegister(&xNumberParserErrorQuark, libs, "g_number_parser_error_quark")
+	core.PuregoSafeRegister(&xOptionErrorQuark, libs, "g_option_error_quark")
+	core.PuregoSafeRegister(&xRegexErrorQuark, libs, "g_regex_error_quark")
+	core.PuregoSafeRegister(&xShellErrorQuark, libs, "g_shell_error_quark")
+	core.PuregoSafeRegister(&xSpawnErrorQuark, libs, "g_spawn_error_quark")
+	core.PuregoSafeRegister(&xSpawnExitErrorQuark, libs, "g_spawn_exit_error_quark")
+	core.PuregoSafeRegister(&xThreadErrorQuark, libs, "g_thread_error_quark")
+	core.PuregoSafeRegister(&xUnixErrorQuark, libs, "g_unix_error_quark")
+	core.PuregoSafeRegister(&xUriErrorQuark, libs, "g_uri_error_quark")
+	core.PuregoSafeRegister(&xVariantParseErrorQuark, libs, "g_variant_parse_error_quark")
 
 }

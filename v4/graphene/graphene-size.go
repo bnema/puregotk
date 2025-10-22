@@ -108,23 +108,27 @@ func SizeZero() *Size {
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSizeZero, lib, "graphene_size_zero")
+	core.PuregoSafeRegister(&xSizeZero, libs, "graphene_size_zero")
 
-	core.PuregoSafeRegister(&xSizeGLibType, lib, "graphene_size_get_type")
+	core.PuregoSafeRegister(&xSizeGLibType, libs, "graphene_size_get_type")
 
-	core.PuregoSafeRegister(&xSizeAlloc, lib, "graphene_size_alloc")
+	core.PuregoSafeRegister(&xSizeAlloc, libs, "graphene_size_alloc")
 
-	core.PuregoSafeRegister(&xSizeEqual, lib, "graphene_size_equal")
-	core.PuregoSafeRegister(&xSizeFree, lib, "graphene_size_free")
-	core.PuregoSafeRegister(&xSizeInit, lib, "graphene_size_init")
-	core.PuregoSafeRegister(&xSizeInitFromSize, lib, "graphene_size_init_from_size")
-	core.PuregoSafeRegister(&xSizeInterpolate, lib, "graphene_size_interpolate")
-	core.PuregoSafeRegister(&xSizeScale, lib, "graphene_size_scale")
+	core.PuregoSafeRegister(&xSizeEqual, libs, "graphene_size_equal")
+	core.PuregoSafeRegister(&xSizeFree, libs, "graphene_size_free")
+	core.PuregoSafeRegister(&xSizeInit, libs, "graphene_size_init")
+	core.PuregoSafeRegister(&xSizeInitFromSize, libs, "graphene_size_init_from_size")
+	core.PuregoSafeRegister(&xSizeInterpolate, libs, "graphene_size_interpolate")
+	core.PuregoSafeRegister(&xSizeScale, libs, "graphene_size_scale")
 
 }

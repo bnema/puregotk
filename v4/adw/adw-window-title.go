@@ -402,19 +402,23 @@ func (x *WindowTitle) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xWindowTitleGLibType, lib, "adw_window_title_get_type")
+	core.PuregoSafeRegister(&xWindowTitleGLibType, libs, "adw_window_title_get_type")
 
-	core.PuregoSafeRegister(&xNewWindowTitle, lib, "adw_window_title_new")
+	core.PuregoSafeRegister(&xNewWindowTitle, libs, "adw_window_title_new")
 
-	core.PuregoSafeRegister(&xWindowTitleGetSubtitle, lib, "adw_window_title_get_subtitle")
-	core.PuregoSafeRegister(&xWindowTitleGetTitle, lib, "adw_window_title_get_title")
-	core.PuregoSafeRegister(&xWindowTitleSetSubtitle, lib, "adw_window_title_set_subtitle")
-	core.PuregoSafeRegister(&xWindowTitleSetTitle, lib, "adw_window_title_set_title")
+	core.PuregoSafeRegister(&xWindowTitleGetSubtitle, libs, "adw_window_title_get_subtitle")
+	core.PuregoSafeRegister(&xWindowTitleGetTitle, libs, "adw_window_title_get_title")
+	core.PuregoSafeRegister(&xWindowTitleSetSubtitle, libs, "adw_window_title_set_subtitle")
+	core.PuregoSafeRegister(&xWindowTitleSetTitle, libs, "adw_window_title_set_title")
 
 }

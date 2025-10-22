@@ -268,24 +268,28 @@ func (c *TlsPassword) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTlsPasswordGLibType, lib, "g_tls_password_get_type")
+	core.PuregoSafeRegister(&xTlsPasswordGLibType, libs, "g_tls_password_get_type")
 
-	core.PuregoSafeRegister(&xNewTlsPassword, lib, "g_tls_password_new")
+	core.PuregoSafeRegister(&xNewTlsPassword, libs, "g_tls_password_new")
 
-	core.PuregoSafeRegister(&xTlsPasswordGetDescription, lib, "g_tls_password_get_description")
-	core.PuregoSafeRegister(&xTlsPasswordGetFlags, lib, "g_tls_password_get_flags")
-	core.PuregoSafeRegister(&xTlsPasswordGetValue, lib, "g_tls_password_get_value")
-	core.PuregoSafeRegister(&xTlsPasswordGetWarning, lib, "g_tls_password_get_warning")
-	core.PuregoSafeRegister(&xTlsPasswordSetDescription, lib, "g_tls_password_set_description")
-	core.PuregoSafeRegister(&xTlsPasswordSetFlags, lib, "g_tls_password_set_flags")
-	core.PuregoSafeRegister(&xTlsPasswordSetValue, lib, "g_tls_password_set_value")
-	core.PuregoSafeRegister(&xTlsPasswordSetValueFull, lib, "g_tls_password_set_value_full")
-	core.PuregoSafeRegister(&xTlsPasswordSetWarning, lib, "g_tls_password_set_warning")
+	core.PuregoSafeRegister(&xTlsPasswordGetDescription, libs, "g_tls_password_get_description")
+	core.PuregoSafeRegister(&xTlsPasswordGetFlags, libs, "g_tls_password_get_flags")
+	core.PuregoSafeRegister(&xTlsPasswordGetValue, libs, "g_tls_password_get_value")
+	core.PuregoSafeRegister(&xTlsPasswordGetWarning, libs, "g_tls_password_get_warning")
+	core.PuregoSafeRegister(&xTlsPasswordSetDescription, libs, "g_tls_password_set_description")
+	core.PuregoSafeRegister(&xTlsPasswordSetFlags, libs, "g_tls_password_set_flags")
+	core.PuregoSafeRegister(&xTlsPasswordSetValue, libs, "g_tls_password_set_value")
+	core.PuregoSafeRegister(&xTlsPasswordSetValueFull, libs, "g_tls_password_set_value_full")
+	core.PuregoSafeRegister(&xTlsPasswordSetWarning, libs, "g_tls_password_set_warning")
 
 }

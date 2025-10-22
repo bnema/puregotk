@@ -420,25 +420,29 @@ func (x *FrameClock) ConnectUpdate(cb *func(FrameClock)) uint32 {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFrameClockPhaseGLibType, lib, "gdk_frame_clock_phase_get_type")
+	core.PuregoSafeRegister(&xFrameClockPhaseGLibType, libs, "gdk_frame_clock_phase_get_type")
 
-	core.PuregoSafeRegister(&xFrameClockGLibType, lib, "gdk_frame_clock_get_type")
+	core.PuregoSafeRegister(&xFrameClockGLibType, libs, "gdk_frame_clock_get_type")
 
-	core.PuregoSafeRegister(&xFrameClockBeginUpdating, lib, "gdk_frame_clock_begin_updating")
-	core.PuregoSafeRegister(&xFrameClockEndUpdating, lib, "gdk_frame_clock_end_updating")
-	core.PuregoSafeRegister(&xFrameClockGetCurrentTimings, lib, "gdk_frame_clock_get_current_timings")
-	core.PuregoSafeRegister(&xFrameClockGetFps, lib, "gdk_frame_clock_get_fps")
-	core.PuregoSafeRegister(&xFrameClockGetFrameCounter, lib, "gdk_frame_clock_get_frame_counter")
-	core.PuregoSafeRegister(&xFrameClockGetFrameTime, lib, "gdk_frame_clock_get_frame_time")
-	core.PuregoSafeRegister(&xFrameClockGetHistoryStart, lib, "gdk_frame_clock_get_history_start")
-	core.PuregoSafeRegister(&xFrameClockGetRefreshInfo, lib, "gdk_frame_clock_get_refresh_info")
-	core.PuregoSafeRegister(&xFrameClockGetTimings, lib, "gdk_frame_clock_get_timings")
-	core.PuregoSafeRegister(&xFrameClockRequestPhase, lib, "gdk_frame_clock_request_phase")
+	core.PuregoSafeRegister(&xFrameClockBeginUpdating, libs, "gdk_frame_clock_begin_updating")
+	core.PuregoSafeRegister(&xFrameClockEndUpdating, libs, "gdk_frame_clock_end_updating")
+	core.PuregoSafeRegister(&xFrameClockGetCurrentTimings, libs, "gdk_frame_clock_get_current_timings")
+	core.PuregoSafeRegister(&xFrameClockGetFps, libs, "gdk_frame_clock_get_fps")
+	core.PuregoSafeRegister(&xFrameClockGetFrameCounter, libs, "gdk_frame_clock_get_frame_counter")
+	core.PuregoSafeRegister(&xFrameClockGetFrameTime, libs, "gdk_frame_clock_get_frame_time")
+	core.PuregoSafeRegister(&xFrameClockGetHistoryStart, libs, "gdk_frame_clock_get_history_start")
+	core.PuregoSafeRegister(&xFrameClockGetRefreshInfo, libs, "gdk_frame_clock_get_refresh_info")
+	core.PuregoSafeRegister(&xFrameClockGetTimings, libs, "gdk_frame_clock_get_timings")
+	core.PuregoSafeRegister(&xFrameClockRequestPhase, libs, "gdk_frame_clock_request_phase")
 
 }

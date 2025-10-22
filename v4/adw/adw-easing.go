@@ -130,14 +130,18 @@ func EasingEase(SelfVar Easing, ValueVar float64) float64 {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEasingGLibType, lib, "adw_easing_get_type")
+	core.PuregoSafeRegister(&xEasingGLibType, libs, "adw_easing_get_type")
 
-	core.PuregoSafeRegister(&xEasingEase, lib, "adw_easing_ease")
+	core.PuregoSafeRegister(&xEasingEase, libs, "adw_easing_ease")
 
 }

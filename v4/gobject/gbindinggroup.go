@@ -136,20 +136,24 @@ func (c *BindingGroup) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBindingGroupGLibType, lib, "g_binding_group_get_type")
+	core.PuregoSafeRegister(&xBindingGroupGLibType, libs, "g_binding_group_get_type")
 
-	core.PuregoSafeRegister(&xNewBindingGroup, lib, "g_binding_group_new")
+	core.PuregoSafeRegister(&xNewBindingGroup, libs, "g_binding_group_new")
 
-	core.PuregoSafeRegister(&xBindingGroupBind, lib, "g_binding_group_bind")
-	core.PuregoSafeRegister(&xBindingGroupBindFull, lib, "g_binding_group_bind_full")
-	core.PuregoSafeRegister(&xBindingGroupBindWithClosures, lib, "g_binding_group_bind_with_closures")
-	core.PuregoSafeRegister(&xBindingGroupDupSource, lib, "g_binding_group_dup_source")
-	core.PuregoSafeRegister(&xBindingGroupSetSource, lib, "g_binding_group_set_source")
+	core.PuregoSafeRegister(&xBindingGroupBind, libs, "g_binding_group_bind")
+	core.PuregoSafeRegister(&xBindingGroupBindFull, libs, "g_binding_group_bind_full")
+	core.PuregoSafeRegister(&xBindingGroupBindWithClosures, libs, "g_binding_group_bind_with_closures")
+	core.PuregoSafeRegister(&xBindingGroupDupSource, libs, "g_binding_group_dup_source")
+	core.PuregoSafeRegister(&xBindingGroupSetSource, libs, "g_binding_group_set_source")
 
 }

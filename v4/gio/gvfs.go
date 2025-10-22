@@ -675,23 +675,27 @@ func VfsGetLocal() *Vfs {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xVfsGLibType, lib, "g_vfs_get_type")
+	core.PuregoSafeRegister(&xVfsGLibType, libs, "g_vfs_get_type")
 
-	core.PuregoSafeRegister(&xVfsGetFileForPath, lib, "g_vfs_get_file_for_path")
-	core.PuregoSafeRegister(&xVfsGetFileForUri, lib, "g_vfs_get_file_for_uri")
-	core.PuregoSafeRegister(&xVfsGetSupportedUriSchemes, lib, "g_vfs_get_supported_uri_schemes")
-	core.PuregoSafeRegister(&xVfsIsActive, lib, "g_vfs_is_active")
-	core.PuregoSafeRegister(&xVfsParseName, lib, "g_vfs_parse_name")
-	core.PuregoSafeRegister(&xVfsRegisterUriScheme, lib, "g_vfs_register_uri_scheme")
-	core.PuregoSafeRegister(&xVfsUnregisterUriScheme, lib, "g_vfs_unregister_uri_scheme")
+	core.PuregoSafeRegister(&xVfsGetFileForPath, libs, "g_vfs_get_file_for_path")
+	core.PuregoSafeRegister(&xVfsGetFileForUri, libs, "g_vfs_get_file_for_uri")
+	core.PuregoSafeRegister(&xVfsGetSupportedUriSchemes, libs, "g_vfs_get_supported_uri_schemes")
+	core.PuregoSafeRegister(&xVfsIsActive, libs, "g_vfs_is_active")
+	core.PuregoSafeRegister(&xVfsParseName, libs, "g_vfs_parse_name")
+	core.PuregoSafeRegister(&xVfsRegisterUriScheme, libs, "g_vfs_register_uri_scheme")
+	core.PuregoSafeRegister(&xVfsUnregisterUriScheme, libs, "g_vfs_unregister_uri_scheme")
 
-	core.PuregoSafeRegister(&xVfsGetDefault, lib, "g_vfs_get_default")
-	core.PuregoSafeRegister(&xVfsGetLocal, lib, "g_vfs_get_local")
+	core.PuregoSafeRegister(&xVfsGetDefault, libs, "g_vfs_get_default")
+	core.PuregoSafeRegister(&xVfsGetLocal, libs, "g_vfs_get_local")
 
 }

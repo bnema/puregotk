@@ -299,23 +299,27 @@ func (c *Binding) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBindingFlagsGLibType, lib, "g_binding_flags_get_type")
+	core.PuregoSafeRegister(&xBindingFlagsGLibType, libs, "g_binding_flags_get_type")
 
-	core.PuregoSafeRegister(&xBindingGLibType, lib, "g_binding_get_type")
+	core.PuregoSafeRegister(&xBindingGLibType, libs, "g_binding_get_type")
 
-	core.PuregoSafeRegister(&xBindingDupSource, lib, "g_binding_dup_source")
-	core.PuregoSafeRegister(&xBindingDupTarget, lib, "g_binding_dup_target")
-	core.PuregoSafeRegister(&xBindingGetFlags, lib, "g_binding_get_flags")
-	core.PuregoSafeRegister(&xBindingGetSource, lib, "g_binding_get_source")
-	core.PuregoSafeRegister(&xBindingGetSourceProperty, lib, "g_binding_get_source_property")
-	core.PuregoSafeRegister(&xBindingGetTarget, lib, "g_binding_get_target")
-	core.PuregoSafeRegister(&xBindingGetTargetProperty, lib, "g_binding_get_target_property")
-	core.PuregoSafeRegister(&xBindingUnbind, lib, "g_binding_unbind")
+	core.PuregoSafeRegister(&xBindingDupSource, libs, "g_binding_dup_source")
+	core.PuregoSafeRegister(&xBindingDupTarget, libs, "g_binding_dup_target")
+	core.PuregoSafeRegister(&xBindingGetFlags, libs, "g_binding_get_flags")
+	core.PuregoSafeRegister(&xBindingGetSource, libs, "g_binding_get_source")
+	core.PuregoSafeRegister(&xBindingGetSourceProperty, libs, "g_binding_get_source_property")
+	core.PuregoSafeRegister(&xBindingGetTarget, libs, "g_binding_get_target")
+	core.PuregoSafeRegister(&xBindingGetTargetProperty, libs, "g_binding_get_target_property")
+	core.PuregoSafeRegister(&xBindingUnbind, libs, "g_binding_unbind")
 
 }

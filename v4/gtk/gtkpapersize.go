@@ -309,40 +309,44 @@ func PaperSizeGetPaperSizes(IncludeCustomVar bool) *glib.List {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPaperSizeGetDefault, lib, "gtk_paper_size_get_default")
-	core.PuregoSafeRegister(&xPaperSizeGetPaperSizes, lib, "gtk_paper_size_get_paper_sizes")
+	core.PuregoSafeRegister(&xPaperSizeGetDefault, libs, "gtk_paper_size_get_default")
+	core.PuregoSafeRegister(&xPaperSizeGetPaperSizes, libs, "gtk_paper_size_get_paper_sizes")
 
-	core.PuregoSafeRegister(&xPaperSizeGLibType, lib, "gtk_paper_size_get_type")
+	core.PuregoSafeRegister(&xPaperSizeGLibType, libs, "gtk_paper_size_get_type")
 
-	core.PuregoSafeRegister(&xNewPaperSize, lib, "gtk_paper_size_new")
-	core.PuregoSafeRegister(&xNewPaperSizeCustom, lib, "gtk_paper_size_new_custom")
-	core.PuregoSafeRegister(&xNewPaperSizeFromGvariant, lib, "gtk_paper_size_new_from_gvariant")
-	core.PuregoSafeRegister(&xNewPaperSizeFromIpp, lib, "gtk_paper_size_new_from_ipp")
-	core.PuregoSafeRegister(&xNewPaperSizeFromKeyFile, lib, "gtk_paper_size_new_from_key_file")
-	core.PuregoSafeRegister(&xNewPaperSizeFromPpd, lib, "gtk_paper_size_new_from_ppd")
+	core.PuregoSafeRegister(&xNewPaperSize, libs, "gtk_paper_size_new")
+	core.PuregoSafeRegister(&xNewPaperSizeCustom, libs, "gtk_paper_size_new_custom")
+	core.PuregoSafeRegister(&xNewPaperSizeFromGvariant, libs, "gtk_paper_size_new_from_gvariant")
+	core.PuregoSafeRegister(&xNewPaperSizeFromIpp, libs, "gtk_paper_size_new_from_ipp")
+	core.PuregoSafeRegister(&xNewPaperSizeFromKeyFile, libs, "gtk_paper_size_new_from_key_file")
+	core.PuregoSafeRegister(&xNewPaperSizeFromPpd, libs, "gtk_paper_size_new_from_ppd")
 
-	core.PuregoSafeRegister(&xPaperSizeCopy, lib, "gtk_paper_size_copy")
-	core.PuregoSafeRegister(&xPaperSizeFree, lib, "gtk_paper_size_free")
-	core.PuregoSafeRegister(&xPaperSizeGetDefaultBottomMargin, lib, "gtk_paper_size_get_default_bottom_margin")
-	core.PuregoSafeRegister(&xPaperSizeGetDefaultLeftMargin, lib, "gtk_paper_size_get_default_left_margin")
-	core.PuregoSafeRegister(&xPaperSizeGetDefaultRightMargin, lib, "gtk_paper_size_get_default_right_margin")
-	core.PuregoSafeRegister(&xPaperSizeGetDefaultTopMargin, lib, "gtk_paper_size_get_default_top_margin")
-	core.PuregoSafeRegister(&xPaperSizeGetDisplayName, lib, "gtk_paper_size_get_display_name")
-	core.PuregoSafeRegister(&xPaperSizeGetHeight, lib, "gtk_paper_size_get_height")
-	core.PuregoSafeRegister(&xPaperSizeGetName, lib, "gtk_paper_size_get_name")
-	core.PuregoSafeRegister(&xPaperSizeGetPpdName, lib, "gtk_paper_size_get_ppd_name")
-	core.PuregoSafeRegister(&xPaperSizeGetWidth, lib, "gtk_paper_size_get_width")
-	core.PuregoSafeRegister(&xPaperSizeIsCustom, lib, "gtk_paper_size_is_custom")
-	core.PuregoSafeRegister(&xPaperSizeIsEqual, lib, "gtk_paper_size_is_equal")
-	core.PuregoSafeRegister(&xPaperSizeIsIpp, lib, "gtk_paper_size_is_ipp")
-	core.PuregoSafeRegister(&xPaperSizeSetSize, lib, "gtk_paper_size_set_size")
-	core.PuregoSafeRegister(&xPaperSizeToGvariant, lib, "gtk_paper_size_to_gvariant")
-	core.PuregoSafeRegister(&xPaperSizeToKeyFile, lib, "gtk_paper_size_to_key_file")
+	core.PuregoSafeRegister(&xPaperSizeCopy, libs, "gtk_paper_size_copy")
+	core.PuregoSafeRegister(&xPaperSizeFree, libs, "gtk_paper_size_free")
+	core.PuregoSafeRegister(&xPaperSizeGetDefaultBottomMargin, libs, "gtk_paper_size_get_default_bottom_margin")
+	core.PuregoSafeRegister(&xPaperSizeGetDefaultLeftMargin, libs, "gtk_paper_size_get_default_left_margin")
+	core.PuregoSafeRegister(&xPaperSizeGetDefaultRightMargin, libs, "gtk_paper_size_get_default_right_margin")
+	core.PuregoSafeRegister(&xPaperSizeGetDefaultTopMargin, libs, "gtk_paper_size_get_default_top_margin")
+	core.PuregoSafeRegister(&xPaperSizeGetDisplayName, libs, "gtk_paper_size_get_display_name")
+	core.PuregoSafeRegister(&xPaperSizeGetHeight, libs, "gtk_paper_size_get_height")
+	core.PuregoSafeRegister(&xPaperSizeGetName, libs, "gtk_paper_size_get_name")
+	core.PuregoSafeRegister(&xPaperSizeGetPpdName, libs, "gtk_paper_size_get_ppd_name")
+	core.PuregoSafeRegister(&xPaperSizeGetWidth, libs, "gtk_paper_size_get_width")
+	core.PuregoSafeRegister(&xPaperSizeIsCustom, libs, "gtk_paper_size_is_custom")
+	core.PuregoSafeRegister(&xPaperSizeIsEqual, libs, "gtk_paper_size_is_equal")
+	core.PuregoSafeRegister(&xPaperSizeIsIpp, libs, "gtk_paper_size_is_ipp")
+	core.PuregoSafeRegister(&xPaperSizeSetSize, libs, "gtk_paper_size_set_size")
+	core.PuregoSafeRegister(&xPaperSizeToGvariant, libs, "gtk_paper_size_to_gvariant")
+	core.PuregoSafeRegister(&xPaperSizeToKeyFile, libs, "gtk_paper_size_to_key_file")
 
 }

@@ -367,31 +367,35 @@ func (c *DBusMethodInvocation) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDBusMethodInvocationGLibType, lib, "g_dbus_method_invocation_get_type")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGLibType, libs, "g_dbus_method_invocation_get_type")
 
-	core.PuregoSafeRegister(&xDBusMethodInvocationGetConnection, lib, "g_dbus_method_invocation_get_connection")
-	core.PuregoSafeRegister(&xDBusMethodInvocationGetInterfaceName, lib, "g_dbus_method_invocation_get_interface_name")
-	core.PuregoSafeRegister(&xDBusMethodInvocationGetMessage, lib, "g_dbus_method_invocation_get_message")
-	core.PuregoSafeRegister(&xDBusMethodInvocationGetMethodInfo, lib, "g_dbus_method_invocation_get_method_info")
-	core.PuregoSafeRegister(&xDBusMethodInvocationGetMethodName, lib, "g_dbus_method_invocation_get_method_name")
-	core.PuregoSafeRegister(&xDBusMethodInvocationGetObjectPath, lib, "g_dbus_method_invocation_get_object_path")
-	core.PuregoSafeRegister(&xDBusMethodInvocationGetParameters, lib, "g_dbus_method_invocation_get_parameters")
-	core.PuregoSafeRegister(&xDBusMethodInvocationGetPropertyInfo, lib, "g_dbus_method_invocation_get_property_info")
-	core.PuregoSafeRegister(&xDBusMethodInvocationGetSender, lib, "g_dbus_method_invocation_get_sender")
-	core.PuregoSafeRegister(&xDBusMethodInvocationGetUserData, lib, "g_dbus_method_invocation_get_user_data")
-	core.PuregoSafeRegister(&xDBusMethodInvocationReturnDbusError, lib, "g_dbus_method_invocation_return_dbus_error")
-	core.PuregoSafeRegister(&xDBusMethodInvocationReturnError, lib, "g_dbus_method_invocation_return_error")
-	core.PuregoSafeRegister(&xDBusMethodInvocationReturnErrorLiteral, lib, "g_dbus_method_invocation_return_error_literal")
-	core.PuregoSafeRegister(&xDBusMethodInvocationReturnErrorValist, lib, "g_dbus_method_invocation_return_error_valist")
-	core.PuregoSafeRegister(&xDBusMethodInvocationReturnGerror, lib, "g_dbus_method_invocation_return_gerror")
-	core.PuregoSafeRegister(&xDBusMethodInvocationReturnValue, lib, "g_dbus_method_invocation_return_value")
-	core.PuregoSafeRegister(&xDBusMethodInvocationReturnValueWithUnixFdList, lib, "g_dbus_method_invocation_return_value_with_unix_fd_list")
-	core.PuregoSafeRegister(&xDBusMethodInvocationTakeError, lib, "g_dbus_method_invocation_take_error")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGetConnection, libs, "g_dbus_method_invocation_get_connection")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGetInterfaceName, libs, "g_dbus_method_invocation_get_interface_name")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGetMessage, libs, "g_dbus_method_invocation_get_message")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGetMethodInfo, libs, "g_dbus_method_invocation_get_method_info")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGetMethodName, libs, "g_dbus_method_invocation_get_method_name")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGetObjectPath, libs, "g_dbus_method_invocation_get_object_path")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGetParameters, libs, "g_dbus_method_invocation_get_parameters")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGetPropertyInfo, libs, "g_dbus_method_invocation_get_property_info")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGetSender, libs, "g_dbus_method_invocation_get_sender")
+	core.PuregoSafeRegister(&xDBusMethodInvocationGetUserData, libs, "g_dbus_method_invocation_get_user_data")
+	core.PuregoSafeRegister(&xDBusMethodInvocationReturnDbusError, libs, "g_dbus_method_invocation_return_dbus_error")
+	core.PuregoSafeRegister(&xDBusMethodInvocationReturnError, libs, "g_dbus_method_invocation_return_error")
+	core.PuregoSafeRegister(&xDBusMethodInvocationReturnErrorLiteral, libs, "g_dbus_method_invocation_return_error_literal")
+	core.PuregoSafeRegister(&xDBusMethodInvocationReturnErrorValist, libs, "g_dbus_method_invocation_return_error_valist")
+	core.PuregoSafeRegister(&xDBusMethodInvocationReturnGerror, libs, "g_dbus_method_invocation_return_gerror")
+	core.PuregoSafeRegister(&xDBusMethodInvocationReturnValue, libs, "g_dbus_method_invocation_return_value")
+	core.PuregoSafeRegister(&xDBusMethodInvocationReturnValueWithUnixFdList, libs, "g_dbus_method_invocation_return_value_with_unix_fd_list")
+	core.PuregoSafeRegister(&xDBusMethodInvocationTakeError, libs, "g_dbus_method_invocation_take_error")
 
 }

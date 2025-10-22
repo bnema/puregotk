@@ -147,18 +147,22 @@ func DbusIsSupportedAddress(StringVar string) (bool, error) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDbusAddressEscapeValue, lib, "g_dbus_address_escape_value")
-	core.PuregoSafeRegister(&xDbusAddressGetForBusSync, lib, "g_dbus_address_get_for_bus_sync")
-	core.PuregoSafeRegister(&xDbusAddressGetStream, lib, "g_dbus_address_get_stream")
-	core.PuregoSafeRegister(&xDbusAddressGetStreamFinish, lib, "g_dbus_address_get_stream_finish")
-	core.PuregoSafeRegister(&xDbusAddressGetStreamSync, lib, "g_dbus_address_get_stream_sync")
-	core.PuregoSafeRegister(&xDbusIsAddress, lib, "g_dbus_is_address")
-	core.PuregoSafeRegister(&xDbusIsSupportedAddress, lib, "g_dbus_is_supported_address")
+	core.PuregoSafeRegister(&xDbusAddressEscapeValue, libs, "g_dbus_address_escape_value")
+	core.PuregoSafeRegister(&xDbusAddressGetForBusSync, libs, "g_dbus_address_get_for_bus_sync")
+	core.PuregoSafeRegister(&xDbusAddressGetStream, libs, "g_dbus_address_get_stream")
+	core.PuregoSafeRegister(&xDbusAddressGetStreamFinish, libs, "g_dbus_address_get_stream_finish")
+	core.PuregoSafeRegister(&xDbusAddressGetStreamSync, libs, "g_dbus_address_get_stream_sync")
+	core.PuregoSafeRegister(&xDbusIsAddress, libs, "g_dbus_is_address")
+	core.PuregoSafeRegister(&xDbusIsSupportedAddress, libs, "g_dbus_is_supported_address")
 
 }

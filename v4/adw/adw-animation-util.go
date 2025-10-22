@@ -30,13 +30,17 @@ func Lerp(AVar float64, BVar float64, TVar float64) float64 {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGetEnableAnimations, lib, "adw_get_enable_animations")
-	core.PuregoSafeRegister(&xLerp, lib, "adw_lerp")
+	core.PuregoSafeRegister(&xGetEnableAnimations, libs, "adw_get_enable_animations")
+	core.PuregoSafeRegister(&xLerp, libs, "adw_lerp")
 
 }

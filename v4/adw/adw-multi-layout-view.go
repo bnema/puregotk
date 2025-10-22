@@ -539,24 +539,28 @@ func (x *MultiLayoutView) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMultiLayoutViewGLibType, lib, "adw_multi_layout_view_get_type")
+	core.PuregoSafeRegister(&xMultiLayoutViewGLibType, libs, "adw_multi_layout_view_get_type")
 
-	core.PuregoSafeRegister(&xNewMultiLayoutView, lib, "adw_multi_layout_view_new")
+	core.PuregoSafeRegister(&xNewMultiLayoutView, libs, "adw_multi_layout_view_new")
 
-	core.PuregoSafeRegister(&xMultiLayoutViewAddLayout, lib, "adw_multi_layout_view_add_layout")
-	core.PuregoSafeRegister(&xMultiLayoutViewGetChild, lib, "adw_multi_layout_view_get_child")
-	core.PuregoSafeRegister(&xMultiLayoutViewGetLayout, lib, "adw_multi_layout_view_get_layout")
-	core.PuregoSafeRegister(&xMultiLayoutViewGetLayoutByName, lib, "adw_multi_layout_view_get_layout_by_name")
-	core.PuregoSafeRegister(&xMultiLayoutViewGetLayoutName, lib, "adw_multi_layout_view_get_layout_name")
-	core.PuregoSafeRegister(&xMultiLayoutViewRemoveLayout, lib, "adw_multi_layout_view_remove_layout")
-	core.PuregoSafeRegister(&xMultiLayoutViewSetChild, lib, "adw_multi_layout_view_set_child")
-	core.PuregoSafeRegister(&xMultiLayoutViewSetLayout, lib, "adw_multi_layout_view_set_layout")
-	core.PuregoSafeRegister(&xMultiLayoutViewSetLayoutName, lib, "adw_multi_layout_view_set_layout_name")
+	core.PuregoSafeRegister(&xMultiLayoutViewAddLayout, libs, "adw_multi_layout_view_add_layout")
+	core.PuregoSafeRegister(&xMultiLayoutViewGetChild, libs, "adw_multi_layout_view_get_child")
+	core.PuregoSafeRegister(&xMultiLayoutViewGetLayout, libs, "adw_multi_layout_view_get_layout")
+	core.PuregoSafeRegister(&xMultiLayoutViewGetLayoutByName, libs, "adw_multi_layout_view_get_layout_by_name")
+	core.PuregoSafeRegister(&xMultiLayoutViewGetLayoutName, libs, "adw_multi_layout_view_get_layout_name")
+	core.PuregoSafeRegister(&xMultiLayoutViewRemoveLayout, libs, "adw_multi_layout_view_remove_layout")
+	core.PuregoSafeRegister(&xMultiLayoutViewSetChild, libs, "adw_multi_layout_view_set_child")
+	core.PuregoSafeRegister(&xMultiLayoutViewSetLayout, libs, "adw_multi_layout_view_set_layout")
+	core.PuregoSafeRegister(&xMultiLayoutViewSetLayoutName, libs, "adw_multi_layout_view_set_layout_name")
 
 }

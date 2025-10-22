@@ -513,24 +513,28 @@ func (x *ViewSwitcherTitle) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xViewSwitcherTitleGLibType, lib, "adw_view_switcher_title_get_type")
+	core.PuregoSafeRegister(&xViewSwitcherTitleGLibType, libs, "adw_view_switcher_title_get_type")
 
-	core.PuregoSafeRegister(&xNewViewSwitcherTitle, lib, "adw_view_switcher_title_new")
+	core.PuregoSafeRegister(&xNewViewSwitcherTitle, libs, "adw_view_switcher_title_new")
 
-	core.PuregoSafeRegister(&xViewSwitcherTitleGetStack, lib, "adw_view_switcher_title_get_stack")
-	core.PuregoSafeRegister(&xViewSwitcherTitleGetSubtitle, lib, "adw_view_switcher_title_get_subtitle")
-	core.PuregoSafeRegister(&xViewSwitcherTitleGetTitle, lib, "adw_view_switcher_title_get_title")
-	core.PuregoSafeRegister(&xViewSwitcherTitleGetTitleVisible, lib, "adw_view_switcher_title_get_title_visible")
-	core.PuregoSafeRegister(&xViewSwitcherTitleGetViewSwitcherEnabled, lib, "adw_view_switcher_title_get_view_switcher_enabled")
-	core.PuregoSafeRegister(&xViewSwitcherTitleSetStack, lib, "adw_view_switcher_title_set_stack")
-	core.PuregoSafeRegister(&xViewSwitcherTitleSetSubtitle, lib, "adw_view_switcher_title_set_subtitle")
-	core.PuregoSafeRegister(&xViewSwitcherTitleSetTitle, lib, "adw_view_switcher_title_set_title")
-	core.PuregoSafeRegister(&xViewSwitcherTitleSetViewSwitcherEnabled, lib, "adw_view_switcher_title_set_view_switcher_enabled")
+	core.PuregoSafeRegister(&xViewSwitcherTitleGetStack, libs, "adw_view_switcher_title_get_stack")
+	core.PuregoSafeRegister(&xViewSwitcherTitleGetSubtitle, libs, "adw_view_switcher_title_get_subtitle")
+	core.PuregoSafeRegister(&xViewSwitcherTitleGetTitle, libs, "adw_view_switcher_title_get_title")
+	core.PuregoSafeRegister(&xViewSwitcherTitleGetTitleVisible, libs, "adw_view_switcher_title_get_title_visible")
+	core.PuregoSafeRegister(&xViewSwitcherTitleGetViewSwitcherEnabled, libs, "adw_view_switcher_title_get_view_switcher_enabled")
+	core.PuregoSafeRegister(&xViewSwitcherTitleSetStack, libs, "adw_view_switcher_title_set_stack")
+	core.PuregoSafeRegister(&xViewSwitcherTitleSetSubtitle, libs, "adw_view_switcher_title_set_subtitle")
+	core.PuregoSafeRegister(&xViewSwitcherTitleSetTitle, libs, "adw_view_switcher_title_set_title")
+	core.PuregoSafeRegister(&xViewSwitcherTitleSetViewSwitcherEnabled, libs, "adw_view_switcher_title_set_view_switcher_enabled")
 
 }

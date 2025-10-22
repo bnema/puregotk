@@ -93,15 +93,19 @@ func (c *LayoutChild) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xLayoutChildGLibType, lib, "gtk_layout_child_get_type")
+	core.PuregoSafeRegister(&xLayoutChildGLibType, libs, "gtk_layout_child_get_type")
 
-	core.PuregoSafeRegister(&xLayoutChildGetChildWidget, lib, "gtk_layout_child_get_child_widget")
-	core.PuregoSafeRegister(&xLayoutChildGetLayoutManager, lib, "gtk_layout_child_get_layout_manager")
+	core.PuregoSafeRegister(&xLayoutChildGetChildWidget, libs, "gtk_layout_child_get_child_widget")
+	core.PuregoSafeRegister(&xLayoutChildGetLayoutManager, libs, "gtk_layout_child_get_layout_manager")
 
 }

@@ -192,19 +192,23 @@ func (c *PadController) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPadActionTypeGLibType, lib, "gtk_pad_action_type_get_type")
+	core.PuregoSafeRegister(&xPadActionTypeGLibType, libs, "gtk_pad_action_type_get_type")
 
-	core.PuregoSafeRegister(&xPadControllerGLibType, lib, "gtk_pad_controller_get_type")
+	core.PuregoSafeRegister(&xPadControllerGLibType, libs, "gtk_pad_controller_get_type")
 
-	core.PuregoSafeRegister(&xNewPadController, lib, "gtk_pad_controller_new")
+	core.PuregoSafeRegister(&xNewPadController, libs, "gtk_pad_controller_new")
 
-	core.PuregoSafeRegister(&xPadControllerSetAction, lib, "gtk_pad_controller_set_action")
-	core.PuregoSafeRegister(&xPadControllerSetActionEntries, lib, "gtk_pad_controller_set_action_entries")
+	core.PuregoSafeRegister(&xPadControllerSetAction, libs, "gtk_pad_controller_set_action")
+	core.PuregoSafeRegister(&xPadControllerSetActionEntries, libs, "gtk_pad_controller_set_action_entries")
 
 }

@@ -150,19 +150,23 @@ func DbusErrorUnregisterError(ErrorDomainVar glib.Quark, ErrorCodeVar int, DbusE
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDbusErrorEncodeGerror, lib, "g_dbus_error_encode_gerror")
-	core.PuregoSafeRegister(&xDbusErrorGetRemoteError, lib, "g_dbus_error_get_remote_error")
-	core.PuregoSafeRegister(&xDbusErrorIsRemoteError, lib, "g_dbus_error_is_remote_error")
-	core.PuregoSafeRegister(&xDbusErrorNewForDbusError, lib, "g_dbus_error_new_for_dbus_error")
-	core.PuregoSafeRegister(&xDbusErrorRegisterError, lib, "g_dbus_error_register_error")
-	core.PuregoSafeRegister(&xDbusErrorRegisterErrorDomain, lib, "g_dbus_error_register_error_domain")
-	core.PuregoSafeRegister(&xDbusErrorStripRemoteError, lib, "g_dbus_error_strip_remote_error")
-	core.PuregoSafeRegister(&xDbusErrorUnregisterError, lib, "g_dbus_error_unregister_error")
+	core.PuregoSafeRegister(&xDbusErrorEncodeGerror, libs, "g_dbus_error_encode_gerror")
+	core.PuregoSafeRegister(&xDbusErrorGetRemoteError, libs, "g_dbus_error_get_remote_error")
+	core.PuregoSafeRegister(&xDbusErrorIsRemoteError, libs, "g_dbus_error_is_remote_error")
+	core.PuregoSafeRegister(&xDbusErrorNewForDbusError, libs, "g_dbus_error_new_for_dbus_error")
+	core.PuregoSafeRegister(&xDbusErrorRegisterError, libs, "g_dbus_error_register_error")
+	core.PuregoSafeRegister(&xDbusErrorRegisterErrorDomain, libs, "g_dbus_error_register_error_domain")
+	core.PuregoSafeRegister(&xDbusErrorStripRemoteError, libs, "g_dbus_error_strip_remote_error")
+	core.PuregoSafeRegister(&xDbusErrorUnregisterError, libs, "g_dbus_error_unregister_error")
 
 }

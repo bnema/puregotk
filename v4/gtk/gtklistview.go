@@ -773,30 +773,34 @@ func (x *ListView) SetVscrollPolicy(PolicyVar ScrollablePolicy) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xListViewGLibType, lib, "gtk_list_view_get_type")
+	core.PuregoSafeRegister(&xListViewGLibType, libs, "gtk_list_view_get_type")
 
-	core.PuregoSafeRegister(&xNewListView, lib, "gtk_list_view_new")
+	core.PuregoSafeRegister(&xNewListView, libs, "gtk_list_view_new")
 
-	core.PuregoSafeRegister(&xListViewGetEnableRubberband, lib, "gtk_list_view_get_enable_rubberband")
-	core.PuregoSafeRegister(&xListViewGetFactory, lib, "gtk_list_view_get_factory")
-	core.PuregoSafeRegister(&xListViewGetHeaderFactory, lib, "gtk_list_view_get_header_factory")
-	core.PuregoSafeRegister(&xListViewGetModel, lib, "gtk_list_view_get_model")
-	core.PuregoSafeRegister(&xListViewGetShowSeparators, lib, "gtk_list_view_get_show_separators")
-	core.PuregoSafeRegister(&xListViewGetSingleClickActivate, lib, "gtk_list_view_get_single_click_activate")
-	core.PuregoSafeRegister(&xListViewGetTabBehavior, lib, "gtk_list_view_get_tab_behavior")
-	core.PuregoSafeRegister(&xListViewScrollTo, lib, "gtk_list_view_scroll_to")
-	core.PuregoSafeRegister(&xListViewSetEnableRubberband, lib, "gtk_list_view_set_enable_rubberband")
-	core.PuregoSafeRegister(&xListViewSetFactory, lib, "gtk_list_view_set_factory")
-	core.PuregoSafeRegister(&xListViewSetHeaderFactory, lib, "gtk_list_view_set_header_factory")
-	core.PuregoSafeRegister(&xListViewSetModel, lib, "gtk_list_view_set_model")
-	core.PuregoSafeRegister(&xListViewSetShowSeparators, lib, "gtk_list_view_set_show_separators")
-	core.PuregoSafeRegister(&xListViewSetSingleClickActivate, lib, "gtk_list_view_set_single_click_activate")
-	core.PuregoSafeRegister(&xListViewSetTabBehavior, lib, "gtk_list_view_set_tab_behavior")
+	core.PuregoSafeRegister(&xListViewGetEnableRubberband, libs, "gtk_list_view_get_enable_rubberband")
+	core.PuregoSafeRegister(&xListViewGetFactory, libs, "gtk_list_view_get_factory")
+	core.PuregoSafeRegister(&xListViewGetHeaderFactory, libs, "gtk_list_view_get_header_factory")
+	core.PuregoSafeRegister(&xListViewGetModel, libs, "gtk_list_view_get_model")
+	core.PuregoSafeRegister(&xListViewGetShowSeparators, libs, "gtk_list_view_get_show_separators")
+	core.PuregoSafeRegister(&xListViewGetSingleClickActivate, libs, "gtk_list_view_get_single_click_activate")
+	core.PuregoSafeRegister(&xListViewGetTabBehavior, libs, "gtk_list_view_get_tab_behavior")
+	core.PuregoSafeRegister(&xListViewScrollTo, libs, "gtk_list_view_scroll_to")
+	core.PuregoSafeRegister(&xListViewSetEnableRubberband, libs, "gtk_list_view_set_enable_rubberband")
+	core.PuregoSafeRegister(&xListViewSetFactory, libs, "gtk_list_view_set_factory")
+	core.PuregoSafeRegister(&xListViewSetHeaderFactory, libs, "gtk_list_view_set_header_factory")
+	core.PuregoSafeRegister(&xListViewSetModel, libs, "gtk_list_view_set_model")
+	core.PuregoSafeRegister(&xListViewSetShowSeparators, libs, "gtk_list_view_set_show_separators")
+	core.PuregoSafeRegister(&xListViewSetSingleClickActivate, libs, "gtk_list_view_set_single_click_activate")
+	core.PuregoSafeRegister(&xListViewSetTabBehavior, libs, "gtk_list_view_set_tab_behavior")
 
 }

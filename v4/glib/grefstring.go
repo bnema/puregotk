@@ -96,18 +96,22 @@ func RefStringRelease(StrVar string) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRefStringAcquire, lib, "g_ref_string_acquire")
-	core.PuregoSafeRegister(&xRefStringEqual, lib, "g_ref_string_equal")
-	core.PuregoSafeRegister(&xRefStringLength, lib, "g_ref_string_length")
-	core.PuregoSafeRegister(&xRefStringNew, lib, "g_ref_string_new")
-	core.PuregoSafeRegister(&xRefStringNewIntern, lib, "g_ref_string_new_intern")
-	core.PuregoSafeRegister(&xRefStringNewLen, lib, "g_ref_string_new_len")
-	core.PuregoSafeRegister(&xRefStringRelease, lib, "g_ref_string_release")
+	core.PuregoSafeRegister(&xRefStringAcquire, libs, "g_ref_string_acquire")
+	core.PuregoSafeRegister(&xRefStringEqual, libs, "g_ref_string_equal")
+	core.PuregoSafeRegister(&xRefStringLength, libs, "g_ref_string_length")
+	core.PuregoSafeRegister(&xRefStringNew, libs, "g_ref_string_new")
+	core.PuregoSafeRegister(&xRefStringNewIntern, libs, "g_ref_string_new_intern")
+	core.PuregoSafeRegister(&xRefStringNewLen, libs, "g_ref_string_new_len")
+	core.PuregoSafeRegister(&xRefStringRelease, libs, "g_ref_string_release")
 
 }

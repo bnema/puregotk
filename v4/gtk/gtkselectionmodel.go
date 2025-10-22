@@ -526,24 +526,28 @@ var XGtkSelectionModelUnselectRange func(uintptr, uint, uint) bool
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSelectionModelGLibType, lib, "gtk_selection_model_get_type")
+	core.PuregoSafeRegister(&xSelectionModelGLibType, libs, "gtk_selection_model_get_type")
 
-	core.PuregoSafeRegister(&XGtkSelectionModelGetSelection, lib, "gtk_selection_model_get_selection")
-	core.PuregoSafeRegister(&XGtkSelectionModelGetSelectionInRange, lib, "gtk_selection_model_get_selection_in_range")
-	core.PuregoSafeRegister(&XGtkSelectionModelIsSelected, lib, "gtk_selection_model_is_selected")
-	core.PuregoSafeRegister(&XGtkSelectionModelSelectAll, lib, "gtk_selection_model_select_all")
-	core.PuregoSafeRegister(&XGtkSelectionModelSelectItem, lib, "gtk_selection_model_select_item")
-	core.PuregoSafeRegister(&XGtkSelectionModelSelectRange, lib, "gtk_selection_model_select_range")
-	core.PuregoSafeRegister(&XGtkSelectionModelSelectionChanged, lib, "gtk_selection_model_selection_changed")
-	core.PuregoSafeRegister(&XGtkSelectionModelSetSelection, lib, "gtk_selection_model_set_selection")
-	core.PuregoSafeRegister(&XGtkSelectionModelUnselectAll, lib, "gtk_selection_model_unselect_all")
-	core.PuregoSafeRegister(&XGtkSelectionModelUnselectItem, lib, "gtk_selection_model_unselect_item")
-	core.PuregoSafeRegister(&XGtkSelectionModelUnselectRange, lib, "gtk_selection_model_unselect_range")
+	core.PuregoSafeRegister(&XGtkSelectionModelGetSelection, libs, "gtk_selection_model_get_selection")
+	core.PuregoSafeRegister(&XGtkSelectionModelGetSelectionInRange, libs, "gtk_selection_model_get_selection_in_range")
+	core.PuregoSafeRegister(&XGtkSelectionModelIsSelected, libs, "gtk_selection_model_is_selected")
+	core.PuregoSafeRegister(&XGtkSelectionModelSelectAll, libs, "gtk_selection_model_select_all")
+	core.PuregoSafeRegister(&XGtkSelectionModelSelectItem, libs, "gtk_selection_model_select_item")
+	core.PuregoSafeRegister(&XGtkSelectionModelSelectRange, libs, "gtk_selection_model_select_range")
+	core.PuregoSafeRegister(&XGtkSelectionModelSelectionChanged, libs, "gtk_selection_model_selection_changed")
+	core.PuregoSafeRegister(&XGtkSelectionModelSetSelection, libs, "gtk_selection_model_set_selection")
+	core.PuregoSafeRegister(&XGtkSelectionModelUnselectAll, libs, "gtk_selection_model_unselect_all")
+	core.PuregoSafeRegister(&XGtkSelectionModelUnselectItem, libs, "gtk_selection_model_unselect_item")
+	core.PuregoSafeRegister(&XGtkSelectionModelUnselectRange, libs, "gtk_selection_model_unselect_range")
 
 }

@@ -549,34 +549,38 @@ const (
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFontChooserLevelGLibType, lib, "gtk_font_chooser_level_get_type")
+	core.PuregoSafeRegister(&xFontChooserLevelGLibType, libs, "gtk_font_chooser_level_get_type")
 
-	core.PuregoSafeRegister(&xFontChooserGLibType, lib, "gtk_font_chooser_get_type")
+	core.PuregoSafeRegister(&xFontChooserGLibType, libs, "gtk_font_chooser_get_type")
 
-	core.PuregoSafeRegister(&XGtkFontChooserGetFont, lib, "gtk_font_chooser_get_font")
-	core.PuregoSafeRegister(&XGtkFontChooserGetFontDesc, lib, "gtk_font_chooser_get_font_desc")
-	core.PuregoSafeRegister(&XGtkFontChooserGetFontFace, lib, "gtk_font_chooser_get_font_face")
-	core.PuregoSafeRegister(&XGtkFontChooserGetFontFamily, lib, "gtk_font_chooser_get_font_family")
-	core.PuregoSafeRegister(&XGtkFontChooserGetFontFeatures, lib, "gtk_font_chooser_get_font_features")
-	core.PuregoSafeRegister(&XGtkFontChooserGetFontMap, lib, "gtk_font_chooser_get_font_map")
-	core.PuregoSafeRegister(&XGtkFontChooserGetFontSize, lib, "gtk_font_chooser_get_font_size")
-	core.PuregoSafeRegister(&XGtkFontChooserGetLanguage, lib, "gtk_font_chooser_get_language")
-	core.PuregoSafeRegister(&XGtkFontChooserGetLevel, lib, "gtk_font_chooser_get_level")
-	core.PuregoSafeRegister(&XGtkFontChooserGetPreviewText, lib, "gtk_font_chooser_get_preview_text")
-	core.PuregoSafeRegister(&XGtkFontChooserGetShowPreviewEntry, lib, "gtk_font_chooser_get_show_preview_entry")
-	core.PuregoSafeRegister(&XGtkFontChooserSetFilterFunc, lib, "gtk_font_chooser_set_filter_func")
-	core.PuregoSafeRegister(&XGtkFontChooserSetFont, lib, "gtk_font_chooser_set_font")
-	core.PuregoSafeRegister(&XGtkFontChooserSetFontDesc, lib, "gtk_font_chooser_set_font_desc")
-	core.PuregoSafeRegister(&XGtkFontChooserSetFontMap, lib, "gtk_font_chooser_set_font_map")
-	core.PuregoSafeRegister(&XGtkFontChooserSetLanguage, lib, "gtk_font_chooser_set_language")
-	core.PuregoSafeRegister(&XGtkFontChooserSetLevel, lib, "gtk_font_chooser_set_level")
-	core.PuregoSafeRegister(&XGtkFontChooserSetPreviewText, lib, "gtk_font_chooser_set_preview_text")
-	core.PuregoSafeRegister(&XGtkFontChooserSetShowPreviewEntry, lib, "gtk_font_chooser_set_show_preview_entry")
+	core.PuregoSafeRegister(&XGtkFontChooserGetFont, libs, "gtk_font_chooser_get_font")
+	core.PuregoSafeRegister(&XGtkFontChooserGetFontDesc, libs, "gtk_font_chooser_get_font_desc")
+	core.PuregoSafeRegister(&XGtkFontChooserGetFontFace, libs, "gtk_font_chooser_get_font_face")
+	core.PuregoSafeRegister(&XGtkFontChooserGetFontFamily, libs, "gtk_font_chooser_get_font_family")
+	core.PuregoSafeRegister(&XGtkFontChooserGetFontFeatures, libs, "gtk_font_chooser_get_font_features")
+	core.PuregoSafeRegister(&XGtkFontChooserGetFontMap, libs, "gtk_font_chooser_get_font_map")
+	core.PuregoSafeRegister(&XGtkFontChooserGetFontSize, libs, "gtk_font_chooser_get_font_size")
+	core.PuregoSafeRegister(&XGtkFontChooserGetLanguage, libs, "gtk_font_chooser_get_language")
+	core.PuregoSafeRegister(&XGtkFontChooserGetLevel, libs, "gtk_font_chooser_get_level")
+	core.PuregoSafeRegister(&XGtkFontChooserGetPreviewText, libs, "gtk_font_chooser_get_preview_text")
+	core.PuregoSafeRegister(&XGtkFontChooserGetShowPreviewEntry, libs, "gtk_font_chooser_get_show_preview_entry")
+	core.PuregoSafeRegister(&XGtkFontChooserSetFilterFunc, libs, "gtk_font_chooser_set_filter_func")
+	core.PuregoSafeRegister(&XGtkFontChooserSetFont, libs, "gtk_font_chooser_set_font")
+	core.PuregoSafeRegister(&XGtkFontChooserSetFontDesc, libs, "gtk_font_chooser_set_font_desc")
+	core.PuregoSafeRegister(&XGtkFontChooserSetFontMap, libs, "gtk_font_chooser_set_font_map")
+	core.PuregoSafeRegister(&XGtkFontChooserSetLanguage, libs, "gtk_font_chooser_set_language")
+	core.PuregoSafeRegister(&XGtkFontChooserSetLevel, libs, "gtk_font_chooser_set_level")
+	core.PuregoSafeRegister(&XGtkFontChooserSetPreviewText, libs, "gtk_font_chooser_set_preview_text")
+	core.PuregoSafeRegister(&XGtkFontChooserSetShowPreviewEntry, libs, "gtk_font_chooser_set_show_preview_entry")
 
 }

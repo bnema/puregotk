@@ -455,24 +455,28 @@ func (x *ContentProvider) ConnectContentChanged(cb *func(ContentProvider)) uint3
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xContentProviderGLibType, lib, "gdk_content_provider_get_type")
+	core.PuregoSafeRegister(&xContentProviderGLibType, libs, "gdk_content_provider_get_type")
 
-	core.PuregoSafeRegister(&xNewContentProviderForBytes, lib, "gdk_content_provider_new_for_bytes")
-	core.PuregoSafeRegister(&xNewContentProviderForValue, lib, "gdk_content_provider_new_for_value")
-	core.PuregoSafeRegister(&xNewContentProviderTyped, lib, "gdk_content_provider_new_typed")
-	core.PuregoSafeRegister(&xNewContentProviderUnion, lib, "gdk_content_provider_new_union")
+	core.PuregoSafeRegister(&xNewContentProviderForBytes, libs, "gdk_content_provider_new_for_bytes")
+	core.PuregoSafeRegister(&xNewContentProviderForValue, libs, "gdk_content_provider_new_for_value")
+	core.PuregoSafeRegister(&xNewContentProviderTyped, libs, "gdk_content_provider_new_typed")
+	core.PuregoSafeRegister(&xNewContentProviderUnion, libs, "gdk_content_provider_new_union")
 
-	core.PuregoSafeRegister(&xContentProviderContentChanged, lib, "gdk_content_provider_content_changed")
-	core.PuregoSafeRegister(&xContentProviderGetValue, lib, "gdk_content_provider_get_value")
-	core.PuregoSafeRegister(&xContentProviderRefFormats, lib, "gdk_content_provider_ref_formats")
-	core.PuregoSafeRegister(&xContentProviderRefStorableFormats, lib, "gdk_content_provider_ref_storable_formats")
-	core.PuregoSafeRegister(&xContentProviderWriteMimeTypeAsync, lib, "gdk_content_provider_write_mime_type_async")
-	core.PuregoSafeRegister(&xContentProviderWriteMimeTypeFinish, lib, "gdk_content_provider_write_mime_type_finish")
+	core.PuregoSafeRegister(&xContentProviderContentChanged, libs, "gdk_content_provider_content_changed")
+	core.PuregoSafeRegister(&xContentProviderGetValue, libs, "gdk_content_provider_get_value")
+	core.PuregoSafeRegister(&xContentProviderRefFormats, libs, "gdk_content_provider_ref_formats")
+	core.PuregoSafeRegister(&xContentProviderRefStorableFormats, libs, "gdk_content_provider_ref_storable_formats")
+	core.PuregoSafeRegister(&xContentProviderWriteMimeTypeAsync, libs, "gdk_content_provider_write_mime_type_async")
+	core.PuregoSafeRegister(&xContentProviderWriteMimeTypeFinish, libs, "gdk_content_provider_write_mime_type_finish")
 
 }

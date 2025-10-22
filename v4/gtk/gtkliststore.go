@@ -972,35 +972,39 @@ func (x *ListStore) SortColumnChanged() {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xListStoreGLibType, lib, "gtk_list_store_get_type")
+	core.PuregoSafeRegister(&xListStoreGLibType, libs, "gtk_list_store_get_type")
 
-	core.PuregoSafeRegister(&xNewListStore, lib, "gtk_list_store_new")
-	core.PuregoSafeRegister(&xNewListStorev, lib, "gtk_list_store_newv")
+	core.PuregoSafeRegister(&xNewListStore, libs, "gtk_list_store_new")
+	core.PuregoSafeRegister(&xNewListStorev, libs, "gtk_list_store_newv")
 
-	core.PuregoSafeRegister(&xListStoreAppend, lib, "gtk_list_store_append")
-	core.PuregoSafeRegister(&xListStoreClear, lib, "gtk_list_store_clear")
-	core.PuregoSafeRegister(&xListStoreInsert, lib, "gtk_list_store_insert")
-	core.PuregoSafeRegister(&xListStoreInsertAfter, lib, "gtk_list_store_insert_after")
-	core.PuregoSafeRegister(&xListStoreInsertBefore, lib, "gtk_list_store_insert_before")
-	core.PuregoSafeRegister(&xListStoreInsertWithValues, lib, "gtk_list_store_insert_with_values")
-	core.PuregoSafeRegister(&xListStoreInsertWithValuesv, lib, "gtk_list_store_insert_with_valuesv")
-	core.PuregoSafeRegister(&xListStoreIterIsValid, lib, "gtk_list_store_iter_is_valid")
-	core.PuregoSafeRegister(&xListStoreMoveAfter, lib, "gtk_list_store_move_after")
-	core.PuregoSafeRegister(&xListStoreMoveBefore, lib, "gtk_list_store_move_before")
-	core.PuregoSafeRegister(&xListStorePrepend, lib, "gtk_list_store_prepend")
-	core.PuregoSafeRegister(&xListStoreRemove, lib, "gtk_list_store_remove")
-	core.PuregoSafeRegister(&xListStoreReorder, lib, "gtk_list_store_reorder")
-	core.PuregoSafeRegister(&xListStoreSet, lib, "gtk_list_store_set")
-	core.PuregoSafeRegister(&xListStoreSetColumnTypes, lib, "gtk_list_store_set_column_types")
-	core.PuregoSafeRegister(&xListStoreSetValist, lib, "gtk_list_store_set_valist")
-	core.PuregoSafeRegister(&xListStoreSetValue, lib, "gtk_list_store_set_value")
-	core.PuregoSafeRegister(&xListStoreSetValuesv, lib, "gtk_list_store_set_valuesv")
-	core.PuregoSafeRegister(&xListStoreSwap, lib, "gtk_list_store_swap")
+	core.PuregoSafeRegister(&xListStoreAppend, libs, "gtk_list_store_append")
+	core.PuregoSafeRegister(&xListStoreClear, libs, "gtk_list_store_clear")
+	core.PuregoSafeRegister(&xListStoreInsert, libs, "gtk_list_store_insert")
+	core.PuregoSafeRegister(&xListStoreInsertAfter, libs, "gtk_list_store_insert_after")
+	core.PuregoSafeRegister(&xListStoreInsertBefore, libs, "gtk_list_store_insert_before")
+	core.PuregoSafeRegister(&xListStoreInsertWithValues, libs, "gtk_list_store_insert_with_values")
+	core.PuregoSafeRegister(&xListStoreInsertWithValuesv, libs, "gtk_list_store_insert_with_valuesv")
+	core.PuregoSafeRegister(&xListStoreIterIsValid, libs, "gtk_list_store_iter_is_valid")
+	core.PuregoSafeRegister(&xListStoreMoveAfter, libs, "gtk_list_store_move_after")
+	core.PuregoSafeRegister(&xListStoreMoveBefore, libs, "gtk_list_store_move_before")
+	core.PuregoSafeRegister(&xListStorePrepend, libs, "gtk_list_store_prepend")
+	core.PuregoSafeRegister(&xListStoreRemove, libs, "gtk_list_store_remove")
+	core.PuregoSafeRegister(&xListStoreReorder, libs, "gtk_list_store_reorder")
+	core.PuregoSafeRegister(&xListStoreSet, libs, "gtk_list_store_set")
+	core.PuregoSafeRegister(&xListStoreSetColumnTypes, libs, "gtk_list_store_set_column_types")
+	core.PuregoSafeRegister(&xListStoreSetValist, libs, "gtk_list_store_set_valist")
+	core.PuregoSafeRegister(&xListStoreSetValue, libs, "gtk_list_store_set_value")
+	core.PuregoSafeRegister(&xListStoreSetValuesv, libs, "gtk_list_store_set_valuesv")
+	core.PuregoSafeRegister(&xListStoreSwap, libs, "gtk_list_store_swap")
 
 }

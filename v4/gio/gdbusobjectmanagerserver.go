@@ -226,21 +226,25 @@ func (x *DBusObjectManagerServer) GetObjects() *glib.List {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDBusObjectManagerServerGLibType, lib, "g_dbus_object_manager_server_get_type")
+	core.PuregoSafeRegister(&xDBusObjectManagerServerGLibType, libs, "g_dbus_object_manager_server_get_type")
 
-	core.PuregoSafeRegister(&xNewDBusObjectManagerServer, lib, "g_dbus_object_manager_server_new")
+	core.PuregoSafeRegister(&xNewDBusObjectManagerServer, libs, "g_dbus_object_manager_server_new")
 
-	core.PuregoSafeRegister(&xDBusObjectManagerServerExport, lib, "g_dbus_object_manager_server_export")
-	core.PuregoSafeRegister(&xDBusObjectManagerServerExportUniquely, lib, "g_dbus_object_manager_server_export_uniquely")
-	core.PuregoSafeRegister(&xDBusObjectManagerServerGetConnection, lib, "g_dbus_object_manager_server_get_connection")
-	core.PuregoSafeRegister(&xDBusObjectManagerServerIsExported, lib, "g_dbus_object_manager_server_is_exported")
-	core.PuregoSafeRegister(&xDBusObjectManagerServerSetConnection, lib, "g_dbus_object_manager_server_set_connection")
-	core.PuregoSafeRegister(&xDBusObjectManagerServerUnexport, lib, "g_dbus_object_manager_server_unexport")
+	core.PuregoSafeRegister(&xDBusObjectManagerServerExport, libs, "g_dbus_object_manager_server_export")
+	core.PuregoSafeRegister(&xDBusObjectManagerServerExportUniquely, libs, "g_dbus_object_manager_server_export_uniquely")
+	core.PuregoSafeRegister(&xDBusObjectManagerServerGetConnection, libs, "g_dbus_object_manager_server_get_connection")
+	core.PuregoSafeRegister(&xDBusObjectManagerServerIsExported, libs, "g_dbus_object_manager_server_is_exported")
+	core.PuregoSafeRegister(&xDBusObjectManagerServerSetConnection, libs, "g_dbus_object_manager_server_set_connection")
+	core.PuregoSafeRegister(&xDBusObjectManagerServerUnexport, libs, "g_dbus_object_manager_server_unexport")
 
 }

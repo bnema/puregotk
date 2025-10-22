@@ -64,17 +64,21 @@ func (x *Border) Free() {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBorderGLibType, lib, "gtk_border_get_type")
+	core.PuregoSafeRegister(&xBorderGLibType, libs, "gtk_border_get_type")
 
-	core.PuregoSafeRegister(&xNewBorder, lib, "gtk_border_new")
+	core.PuregoSafeRegister(&xNewBorder, libs, "gtk_border_new")
 
-	core.PuregoSafeRegister(&xBorderCopy, lib, "gtk_border_copy")
-	core.PuregoSafeRegister(&xBorderFree, lib, "gtk_border_free")
+	core.PuregoSafeRegister(&xBorderCopy, libs, "gtk_border_copy")
+	core.PuregoSafeRegister(&xBorderFree, libs, "gtk_border_free")
 
 }

@@ -153,21 +153,25 @@ func (c *GestureSingle) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGestureSingleGLibType, lib, "gtk_gesture_single_get_type")
+	core.PuregoSafeRegister(&xGestureSingleGLibType, libs, "gtk_gesture_single_get_type")
 
-	core.PuregoSafeRegister(&xGestureSingleGetButton, lib, "gtk_gesture_single_get_button")
-	core.PuregoSafeRegister(&xGestureSingleGetCurrentButton, lib, "gtk_gesture_single_get_current_button")
-	core.PuregoSafeRegister(&xGestureSingleGetCurrentSequence, lib, "gtk_gesture_single_get_current_sequence")
-	core.PuregoSafeRegister(&xGestureSingleGetExclusive, lib, "gtk_gesture_single_get_exclusive")
-	core.PuregoSafeRegister(&xGestureSingleGetTouchOnly, lib, "gtk_gesture_single_get_touch_only")
-	core.PuregoSafeRegister(&xGestureSingleSetButton, lib, "gtk_gesture_single_set_button")
-	core.PuregoSafeRegister(&xGestureSingleSetExclusive, lib, "gtk_gesture_single_set_exclusive")
-	core.PuregoSafeRegister(&xGestureSingleSetTouchOnly, lib, "gtk_gesture_single_set_touch_only")
+	core.PuregoSafeRegister(&xGestureSingleGetButton, libs, "gtk_gesture_single_get_button")
+	core.PuregoSafeRegister(&xGestureSingleGetCurrentButton, libs, "gtk_gesture_single_get_current_button")
+	core.PuregoSafeRegister(&xGestureSingleGetCurrentSequence, libs, "gtk_gesture_single_get_current_sequence")
+	core.PuregoSafeRegister(&xGestureSingleGetExclusive, libs, "gtk_gesture_single_get_exclusive")
+	core.PuregoSafeRegister(&xGestureSingleGetTouchOnly, libs, "gtk_gesture_single_get_touch_only")
+	core.PuregoSafeRegister(&xGestureSingleSetButton, libs, "gtk_gesture_single_set_button")
+	core.PuregoSafeRegister(&xGestureSingleSetExclusive, libs, "gtk_gesture_single_set_exclusive")
+	core.PuregoSafeRegister(&xGestureSingleSetTouchOnly, libs, "gtk_gesture_single_set_touch_only")
 
 }

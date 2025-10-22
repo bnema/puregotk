@@ -406,17 +406,21 @@ func (x *CarouselIndicatorDots) SetOrientation(OrientationVar gtk.Orientation) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCarouselIndicatorDotsGLibType, lib, "adw_carousel_indicator_dots_get_type")
+	core.PuregoSafeRegister(&xCarouselIndicatorDotsGLibType, libs, "adw_carousel_indicator_dots_get_type")
 
-	core.PuregoSafeRegister(&xNewCarouselIndicatorDots, lib, "adw_carousel_indicator_dots_new")
+	core.PuregoSafeRegister(&xNewCarouselIndicatorDots, libs, "adw_carousel_indicator_dots_new")
 
-	core.PuregoSafeRegister(&xCarouselIndicatorDotsGetCarousel, lib, "adw_carousel_indicator_dots_get_carousel")
-	core.PuregoSafeRegister(&xCarouselIndicatorDotsSetCarousel, lib, "adw_carousel_indicator_dots_set_carousel")
+	core.PuregoSafeRegister(&xCarouselIndicatorDotsGetCarousel, libs, "adw_carousel_indicator_dots_get_carousel")
+	core.PuregoSafeRegister(&xCarouselIndicatorDotsSetCarousel, libs, "adw_carousel_indicator_dots_set_carousel")
 
 }

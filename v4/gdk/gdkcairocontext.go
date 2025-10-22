@@ -58,14 +58,18 @@ func (c *CairoContext) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCairoContextGLibType, lib, "gdk_cairo_context_get_type")
+	core.PuregoSafeRegister(&xCairoContextGLibType, libs, "gdk_cairo_context_get_type")
 
-	core.PuregoSafeRegister(&xCairoContextCairoCreate, lib, "gdk_cairo_context_cairo_create")
+	core.PuregoSafeRegister(&xCairoContextCairoCreate, libs, "gdk_cairo_context_cairo_create")
 
 }

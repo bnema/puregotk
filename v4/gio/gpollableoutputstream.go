@@ -334,18 +334,22 @@ var XGPollableOutputStreamWritevNonblocking func(uintptr, []OutputVector, uint, 
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPollableOutputStreamGLibType, lib, "g_pollable_output_stream_get_type")
+	core.PuregoSafeRegister(&xPollableOutputStreamGLibType, libs, "g_pollable_output_stream_get_type")
 
-	core.PuregoSafeRegister(&XGPollableOutputStreamCanPoll, lib, "g_pollable_output_stream_can_poll")
-	core.PuregoSafeRegister(&XGPollableOutputStreamCreateSource, lib, "g_pollable_output_stream_create_source")
-	core.PuregoSafeRegister(&XGPollableOutputStreamIsWritable, lib, "g_pollable_output_stream_is_writable")
-	core.PuregoSafeRegister(&XGPollableOutputStreamWriteNonblocking, lib, "g_pollable_output_stream_write_nonblocking")
-	core.PuregoSafeRegister(&XGPollableOutputStreamWritevNonblocking, lib, "g_pollable_output_stream_writev_nonblocking")
+	core.PuregoSafeRegister(&XGPollableOutputStreamCanPoll, libs, "g_pollable_output_stream_can_poll")
+	core.PuregoSafeRegister(&XGPollableOutputStreamCreateSource, libs, "g_pollable_output_stream_create_source")
+	core.PuregoSafeRegister(&XGPollableOutputStreamIsWritable, libs, "g_pollable_output_stream_is_writable")
+	core.PuregoSafeRegister(&XGPollableOutputStreamWriteNonblocking, libs, "g_pollable_output_stream_write_nonblocking")
+	core.PuregoSafeRegister(&XGPollableOutputStreamWritevNonblocking, libs, "g_pollable_output_stream_writev_nonblocking")
 
 }

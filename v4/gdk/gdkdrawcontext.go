@@ -158,19 +158,23 @@ func (c *DrawContext) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDrawContextGLibType, lib, "gdk_draw_context_get_type")
+	core.PuregoSafeRegister(&xDrawContextGLibType, libs, "gdk_draw_context_get_type")
 
-	core.PuregoSafeRegister(&xDrawContextBeginFrame, lib, "gdk_draw_context_begin_frame")
-	core.PuregoSafeRegister(&xDrawContextEndFrame, lib, "gdk_draw_context_end_frame")
-	core.PuregoSafeRegister(&xDrawContextGetDisplay, lib, "gdk_draw_context_get_display")
-	core.PuregoSafeRegister(&xDrawContextGetFrameRegion, lib, "gdk_draw_context_get_frame_region")
-	core.PuregoSafeRegister(&xDrawContextGetSurface, lib, "gdk_draw_context_get_surface")
-	core.PuregoSafeRegister(&xDrawContextIsInFrame, lib, "gdk_draw_context_is_in_frame")
+	core.PuregoSafeRegister(&xDrawContextBeginFrame, libs, "gdk_draw_context_begin_frame")
+	core.PuregoSafeRegister(&xDrawContextEndFrame, libs, "gdk_draw_context_end_frame")
+	core.PuregoSafeRegister(&xDrawContextGetDisplay, libs, "gdk_draw_context_get_display")
+	core.PuregoSafeRegister(&xDrawContextGetFrameRegion, libs, "gdk_draw_context_get_frame_region")
+	core.PuregoSafeRegister(&xDrawContextGetSurface, libs, "gdk_draw_context_get_surface")
+	core.PuregoSafeRegister(&xDrawContextIsInFrame, libs, "gdk_draw_context_is_in_frame")
 
 }

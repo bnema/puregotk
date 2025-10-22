@@ -306,38 +306,42 @@ func (c *GridLayoutChild) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGridLayoutGLibType, lib, "gtk_grid_layout_get_type")
+	core.PuregoSafeRegister(&xGridLayoutGLibType, libs, "gtk_grid_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewGridLayout, lib, "gtk_grid_layout_new")
+	core.PuregoSafeRegister(&xNewGridLayout, libs, "gtk_grid_layout_new")
 
-	core.PuregoSafeRegister(&xGridLayoutGetBaselineRow, lib, "gtk_grid_layout_get_baseline_row")
-	core.PuregoSafeRegister(&xGridLayoutGetColumnHomogeneous, lib, "gtk_grid_layout_get_column_homogeneous")
-	core.PuregoSafeRegister(&xGridLayoutGetColumnSpacing, lib, "gtk_grid_layout_get_column_spacing")
-	core.PuregoSafeRegister(&xGridLayoutGetRowBaselinePosition, lib, "gtk_grid_layout_get_row_baseline_position")
-	core.PuregoSafeRegister(&xGridLayoutGetRowHomogeneous, lib, "gtk_grid_layout_get_row_homogeneous")
-	core.PuregoSafeRegister(&xGridLayoutGetRowSpacing, lib, "gtk_grid_layout_get_row_spacing")
-	core.PuregoSafeRegister(&xGridLayoutSetBaselineRow, lib, "gtk_grid_layout_set_baseline_row")
-	core.PuregoSafeRegister(&xGridLayoutSetColumnHomogeneous, lib, "gtk_grid_layout_set_column_homogeneous")
-	core.PuregoSafeRegister(&xGridLayoutSetColumnSpacing, lib, "gtk_grid_layout_set_column_spacing")
-	core.PuregoSafeRegister(&xGridLayoutSetRowBaselinePosition, lib, "gtk_grid_layout_set_row_baseline_position")
-	core.PuregoSafeRegister(&xGridLayoutSetRowHomogeneous, lib, "gtk_grid_layout_set_row_homogeneous")
-	core.PuregoSafeRegister(&xGridLayoutSetRowSpacing, lib, "gtk_grid_layout_set_row_spacing")
+	core.PuregoSafeRegister(&xGridLayoutGetBaselineRow, libs, "gtk_grid_layout_get_baseline_row")
+	core.PuregoSafeRegister(&xGridLayoutGetColumnHomogeneous, libs, "gtk_grid_layout_get_column_homogeneous")
+	core.PuregoSafeRegister(&xGridLayoutGetColumnSpacing, libs, "gtk_grid_layout_get_column_spacing")
+	core.PuregoSafeRegister(&xGridLayoutGetRowBaselinePosition, libs, "gtk_grid_layout_get_row_baseline_position")
+	core.PuregoSafeRegister(&xGridLayoutGetRowHomogeneous, libs, "gtk_grid_layout_get_row_homogeneous")
+	core.PuregoSafeRegister(&xGridLayoutGetRowSpacing, libs, "gtk_grid_layout_get_row_spacing")
+	core.PuregoSafeRegister(&xGridLayoutSetBaselineRow, libs, "gtk_grid_layout_set_baseline_row")
+	core.PuregoSafeRegister(&xGridLayoutSetColumnHomogeneous, libs, "gtk_grid_layout_set_column_homogeneous")
+	core.PuregoSafeRegister(&xGridLayoutSetColumnSpacing, libs, "gtk_grid_layout_set_column_spacing")
+	core.PuregoSafeRegister(&xGridLayoutSetRowBaselinePosition, libs, "gtk_grid_layout_set_row_baseline_position")
+	core.PuregoSafeRegister(&xGridLayoutSetRowHomogeneous, libs, "gtk_grid_layout_set_row_homogeneous")
+	core.PuregoSafeRegister(&xGridLayoutSetRowSpacing, libs, "gtk_grid_layout_set_row_spacing")
 
-	core.PuregoSafeRegister(&xGridLayoutChildGLibType, lib, "gtk_grid_layout_child_get_type")
+	core.PuregoSafeRegister(&xGridLayoutChildGLibType, libs, "gtk_grid_layout_child_get_type")
 
-	core.PuregoSafeRegister(&xGridLayoutChildGetColumn, lib, "gtk_grid_layout_child_get_column")
-	core.PuregoSafeRegister(&xGridLayoutChildGetColumnSpan, lib, "gtk_grid_layout_child_get_column_span")
-	core.PuregoSafeRegister(&xGridLayoutChildGetRow, lib, "gtk_grid_layout_child_get_row")
-	core.PuregoSafeRegister(&xGridLayoutChildGetRowSpan, lib, "gtk_grid_layout_child_get_row_span")
-	core.PuregoSafeRegister(&xGridLayoutChildSetColumn, lib, "gtk_grid_layout_child_set_column")
-	core.PuregoSafeRegister(&xGridLayoutChildSetColumnSpan, lib, "gtk_grid_layout_child_set_column_span")
-	core.PuregoSafeRegister(&xGridLayoutChildSetRow, lib, "gtk_grid_layout_child_set_row")
-	core.PuregoSafeRegister(&xGridLayoutChildSetRowSpan, lib, "gtk_grid_layout_child_set_row_span")
+	core.PuregoSafeRegister(&xGridLayoutChildGetColumn, libs, "gtk_grid_layout_child_get_column")
+	core.PuregoSafeRegister(&xGridLayoutChildGetColumnSpan, libs, "gtk_grid_layout_child_get_column_span")
+	core.PuregoSafeRegister(&xGridLayoutChildGetRow, libs, "gtk_grid_layout_child_get_row")
+	core.PuregoSafeRegister(&xGridLayoutChildGetRowSpan, libs, "gtk_grid_layout_child_get_row_span")
+	core.PuregoSafeRegister(&xGridLayoutChildSetColumn, libs, "gtk_grid_layout_child_set_column")
+	core.PuregoSafeRegister(&xGridLayoutChildSetColumnSpan, libs, "gtk_grid_layout_child_set_column_span")
+	core.PuregoSafeRegister(&xGridLayoutChildSetRow, libs, "gtk_grid_layout_child_set_row")
+	core.PuregoSafeRegister(&xGridLayoutChildSetRowSpan, libs, "gtk_grid_layout_child_set_row_span")
 
 }

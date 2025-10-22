@@ -805,34 +805,38 @@ func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, str
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMountOperationGLibType, lib, "g_mount_operation_get_type")
+	core.PuregoSafeRegister(&xMountOperationGLibType, libs, "g_mount_operation_get_type")
 
-	core.PuregoSafeRegister(&xNewMountOperation, lib, "g_mount_operation_new")
+	core.PuregoSafeRegister(&xNewMountOperation, libs, "g_mount_operation_new")
 
-	core.PuregoSafeRegister(&xMountOperationGetAnonymous, lib, "g_mount_operation_get_anonymous")
-	core.PuregoSafeRegister(&xMountOperationGetChoice, lib, "g_mount_operation_get_choice")
-	core.PuregoSafeRegister(&xMountOperationGetDomain, lib, "g_mount_operation_get_domain")
-	core.PuregoSafeRegister(&xMountOperationGetIsTcryptHiddenVolume, lib, "g_mount_operation_get_is_tcrypt_hidden_volume")
-	core.PuregoSafeRegister(&xMountOperationGetIsTcryptSystemVolume, lib, "g_mount_operation_get_is_tcrypt_system_volume")
-	core.PuregoSafeRegister(&xMountOperationGetPassword, lib, "g_mount_operation_get_password")
-	core.PuregoSafeRegister(&xMountOperationGetPasswordSave, lib, "g_mount_operation_get_password_save")
-	core.PuregoSafeRegister(&xMountOperationGetPim, lib, "g_mount_operation_get_pim")
-	core.PuregoSafeRegister(&xMountOperationGetUsername, lib, "g_mount_operation_get_username")
-	core.PuregoSafeRegister(&xMountOperationReply, lib, "g_mount_operation_reply")
-	core.PuregoSafeRegister(&xMountOperationSetAnonymous, lib, "g_mount_operation_set_anonymous")
-	core.PuregoSafeRegister(&xMountOperationSetChoice, lib, "g_mount_operation_set_choice")
-	core.PuregoSafeRegister(&xMountOperationSetDomain, lib, "g_mount_operation_set_domain")
-	core.PuregoSafeRegister(&xMountOperationSetIsTcryptHiddenVolume, lib, "g_mount_operation_set_is_tcrypt_hidden_volume")
-	core.PuregoSafeRegister(&xMountOperationSetIsTcryptSystemVolume, lib, "g_mount_operation_set_is_tcrypt_system_volume")
-	core.PuregoSafeRegister(&xMountOperationSetPassword, lib, "g_mount_operation_set_password")
-	core.PuregoSafeRegister(&xMountOperationSetPasswordSave, lib, "g_mount_operation_set_password_save")
-	core.PuregoSafeRegister(&xMountOperationSetPim, lib, "g_mount_operation_set_pim")
-	core.PuregoSafeRegister(&xMountOperationSetUsername, lib, "g_mount_operation_set_username")
+	core.PuregoSafeRegister(&xMountOperationGetAnonymous, libs, "g_mount_operation_get_anonymous")
+	core.PuregoSafeRegister(&xMountOperationGetChoice, libs, "g_mount_operation_get_choice")
+	core.PuregoSafeRegister(&xMountOperationGetDomain, libs, "g_mount_operation_get_domain")
+	core.PuregoSafeRegister(&xMountOperationGetIsTcryptHiddenVolume, libs, "g_mount_operation_get_is_tcrypt_hidden_volume")
+	core.PuregoSafeRegister(&xMountOperationGetIsTcryptSystemVolume, libs, "g_mount_operation_get_is_tcrypt_system_volume")
+	core.PuregoSafeRegister(&xMountOperationGetPassword, libs, "g_mount_operation_get_password")
+	core.PuregoSafeRegister(&xMountOperationGetPasswordSave, libs, "g_mount_operation_get_password_save")
+	core.PuregoSafeRegister(&xMountOperationGetPim, libs, "g_mount_operation_get_pim")
+	core.PuregoSafeRegister(&xMountOperationGetUsername, libs, "g_mount_operation_get_username")
+	core.PuregoSafeRegister(&xMountOperationReply, libs, "g_mount_operation_reply")
+	core.PuregoSafeRegister(&xMountOperationSetAnonymous, libs, "g_mount_operation_set_anonymous")
+	core.PuregoSafeRegister(&xMountOperationSetChoice, libs, "g_mount_operation_set_choice")
+	core.PuregoSafeRegister(&xMountOperationSetDomain, libs, "g_mount_operation_set_domain")
+	core.PuregoSafeRegister(&xMountOperationSetIsTcryptHiddenVolume, libs, "g_mount_operation_set_is_tcrypt_hidden_volume")
+	core.PuregoSafeRegister(&xMountOperationSetIsTcryptSystemVolume, libs, "g_mount_operation_set_is_tcrypt_system_volume")
+	core.PuregoSafeRegister(&xMountOperationSetPassword, libs, "g_mount_operation_set_password")
+	core.PuregoSafeRegister(&xMountOperationSetPasswordSave, libs, "g_mount_operation_set_password_save")
+	core.PuregoSafeRegister(&xMountOperationSetPim, libs, "g_mount_operation_set_pim")
+	core.PuregoSafeRegister(&xMountOperationSetUsername, libs, "g_mount_operation_set_username")
 
 }

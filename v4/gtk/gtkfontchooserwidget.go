@@ -564,14 +564,18 @@ func (x *FontChooserWidget) SetShowPreviewEntry(ShowPreviewEntryVar bool) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFontChooserWidgetGLibType, lib, "gtk_font_chooser_widget_get_type")
+	core.PuregoSafeRegister(&xFontChooserWidgetGLibType, libs, "gtk_font_chooser_widget_get_type")
 
-	core.PuregoSafeRegister(&xNewFontChooserWidget, lib, "gtk_font_chooser_widget_new")
+	core.PuregoSafeRegister(&xNewFontChooserWidget, libs, "gtk_font_chooser_widget_new")
 
 }

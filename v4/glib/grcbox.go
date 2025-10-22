@@ -189,25 +189,29 @@ func RcBoxReleaseFull(MemBlockVar uintptr, ClearFuncVar *DestroyNotify) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAtomicRcBoxAcquire, lib, "g_atomic_rc_box_acquire")
-	core.PuregoSafeRegister(&xAtomicRcBoxAlloc, lib, "g_atomic_rc_box_alloc")
-	core.PuregoSafeRegister(&xAtomicRcBoxAlloc0, lib, "g_atomic_rc_box_alloc0")
-	core.PuregoSafeRegister(&xAtomicRcBoxDup, lib, "g_atomic_rc_box_dup")
-	core.PuregoSafeRegister(&xAtomicRcBoxGetSize, lib, "g_atomic_rc_box_get_size")
-	core.PuregoSafeRegister(&xAtomicRcBoxRelease, lib, "g_atomic_rc_box_release")
-	core.PuregoSafeRegister(&xAtomicRcBoxReleaseFull, lib, "g_atomic_rc_box_release_full")
-	core.PuregoSafeRegister(&xRcBoxAcquire, lib, "g_rc_box_acquire")
-	core.PuregoSafeRegister(&xRcBoxAlloc, lib, "g_rc_box_alloc")
-	core.PuregoSafeRegister(&xRcBoxAlloc0, lib, "g_rc_box_alloc0")
-	core.PuregoSafeRegister(&xRcBoxDup, lib, "g_rc_box_dup")
-	core.PuregoSafeRegister(&xRcBoxGetSize, lib, "g_rc_box_get_size")
-	core.PuregoSafeRegister(&xRcBoxRelease, lib, "g_rc_box_release")
-	core.PuregoSafeRegister(&xRcBoxReleaseFull, lib, "g_rc_box_release_full")
+	core.PuregoSafeRegister(&xAtomicRcBoxAcquire, libs, "g_atomic_rc_box_acquire")
+	core.PuregoSafeRegister(&xAtomicRcBoxAlloc, libs, "g_atomic_rc_box_alloc")
+	core.PuregoSafeRegister(&xAtomicRcBoxAlloc0, libs, "g_atomic_rc_box_alloc0")
+	core.PuregoSafeRegister(&xAtomicRcBoxDup, libs, "g_atomic_rc_box_dup")
+	core.PuregoSafeRegister(&xAtomicRcBoxGetSize, libs, "g_atomic_rc_box_get_size")
+	core.PuregoSafeRegister(&xAtomicRcBoxRelease, libs, "g_atomic_rc_box_release")
+	core.PuregoSafeRegister(&xAtomicRcBoxReleaseFull, libs, "g_atomic_rc_box_release_full")
+	core.PuregoSafeRegister(&xRcBoxAcquire, libs, "g_rc_box_acquire")
+	core.PuregoSafeRegister(&xRcBoxAlloc, libs, "g_rc_box_alloc")
+	core.PuregoSafeRegister(&xRcBoxAlloc0, libs, "g_rc_box_alloc0")
+	core.PuregoSafeRegister(&xRcBoxDup, libs, "g_rc_box_dup")
+	core.PuregoSafeRegister(&xRcBoxGetSize, libs, "g_rc_box_get_size")
+	core.PuregoSafeRegister(&xRcBoxRelease, libs, "g_rc_box_release")
+	core.PuregoSafeRegister(&xRcBoxReleaseFull, libs, "g_rc_box_release_full")
 
 }

@@ -831,64 +831,68 @@ func (c *PropertyExpression) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xNewParamSpecExpression, lib, "gtk_param_spec_expression")
-	core.PuregoSafeRegister(&xValueDupExpression, lib, "gtk_value_dup_expression")
-	core.PuregoSafeRegister(&xValueGetExpression, lib, "gtk_value_get_expression")
-	core.PuregoSafeRegister(&xValueSetExpression, lib, "gtk_value_set_expression")
-	core.PuregoSafeRegister(&xValueTakeExpression, lib, "gtk_value_take_expression")
+	core.PuregoSafeRegister(&xNewParamSpecExpression, libs, "gtk_param_spec_expression")
+	core.PuregoSafeRegister(&xValueDupExpression, libs, "gtk_value_dup_expression")
+	core.PuregoSafeRegister(&xValueGetExpression, libs, "gtk_value_get_expression")
+	core.PuregoSafeRegister(&xValueSetExpression, libs, "gtk_value_set_expression")
+	core.PuregoSafeRegister(&xValueTakeExpression, libs, "gtk_value_take_expression")
 
-	core.PuregoSafeRegister(&xExpressionWatchGLibType, lib, "gtk_expression_watch_get_type")
+	core.PuregoSafeRegister(&xExpressionWatchGLibType, libs, "gtk_expression_watch_get_type")
 
-	core.PuregoSafeRegister(&xExpressionWatchEvaluate, lib, "gtk_expression_watch_evaluate")
-	core.PuregoSafeRegister(&xExpressionWatchRef, lib, "gtk_expression_watch_ref")
-	core.PuregoSafeRegister(&xExpressionWatchUnref, lib, "gtk_expression_watch_unref")
-	core.PuregoSafeRegister(&xExpressionWatchUnwatch, lib, "gtk_expression_watch_unwatch")
+	core.PuregoSafeRegister(&xExpressionWatchEvaluate, libs, "gtk_expression_watch_evaluate")
+	core.PuregoSafeRegister(&xExpressionWatchRef, libs, "gtk_expression_watch_ref")
+	core.PuregoSafeRegister(&xExpressionWatchUnref, libs, "gtk_expression_watch_unref")
+	core.PuregoSafeRegister(&xExpressionWatchUnwatch, libs, "gtk_expression_watch_unwatch")
 
-	core.PuregoSafeRegister(&xCClosureExpressionGLibType, lib, "gtk_cclosure_expression_get_type")
+	core.PuregoSafeRegister(&xCClosureExpressionGLibType, libs, "gtk_cclosure_expression_get_type")
 
-	core.PuregoSafeRegister(&xNewCClosureExpression, lib, "gtk_cclosure_expression_new")
+	core.PuregoSafeRegister(&xNewCClosureExpression, libs, "gtk_cclosure_expression_new")
 
-	core.PuregoSafeRegister(&xClosureExpressionGLibType, lib, "gtk_closure_expression_get_type")
+	core.PuregoSafeRegister(&xClosureExpressionGLibType, libs, "gtk_closure_expression_get_type")
 
-	core.PuregoSafeRegister(&xNewClosureExpression, lib, "gtk_closure_expression_new")
+	core.PuregoSafeRegister(&xNewClosureExpression, libs, "gtk_closure_expression_new")
 
-	core.PuregoSafeRegister(&xConstantExpressionGLibType, lib, "gtk_constant_expression_get_type")
+	core.PuregoSafeRegister(&xConstantExpressionGLibType, libs, "gtk_constant_expression_get_type")
 
-	core.PuregoSafeRegister(&xNewConstantExpression, lib, "gtk_constant_expression_new")
-	core.PuregoSafeRegister(&xNewConstantExpressionForValue, lib, "gtk_constant_expression_new_for_value")
+	core.PuregoSafeRegister(&xNewConstantExpression, libs, "gtk_constant_expression_new")
+	core.PuregoSafeRegister(&xNewConstantExpressionForValue, libs, "gtk_constant_expression_new_for_value")
 
-	core.PuregoSafeRegister(&xConstantExpressionGetValue, lib, "gtk_constant_expression_get_value")
+	core.PuregoSafeRegister(&xConstantExpressionGetValue, libs, "gtk_constant_expression_get_value")
 
-	core.PuregoSafeRegister(&xExpressionGLibType, lib, "gtk_expression_get_type")
+	core.PuregoSafeRegister(&xExpressionGLibType, libs, "gtk_expression_get_type")
 
-	core.PuregoSafeRegister(&xExpressionBind, lib, "gtk_expression_bind")
-	core.PuregoSafeRegister(&xExpressionEvaluate, lib, "gtk_expression_evaluate")
-	core.PuregoSafeRegister(&xExpressionGetValueType, lib, "gtk_expression_get_value_type")
-	core.PuregoSafeRegister(&xExpressionIsStatic, lib, "gtk_expression_is_static")
-	core.PuregoSafeRegister(&xExpressionRef, lib, "gtk_expression_ref")
-	core.PuregoSafeRegister(&xExpressionUnref, lib, "gtk_expression_unref")
-	core.PuregoSafeRegister(&xExpressionWatch, lib, "gtk_expression_watch")
+	core.PuregoSafeRegister(&xExpressionBind, libs, "gtk_expression_bind")
+	core.PuregoSafeRegister(&xExpressionEvaluate, libs, "gtk_expression_evaluate")
+	core.PuregoSafeRegister(&xExpressionGetValueType, libs, "gtk_expression_get_value_type")
+	core.PuregoSafeRegister(&xExpressionIsStatic, libs, "gtk_expression_is_static")
+	core.PuregoSafeRegister(&xExpressionRef, libs, "gtk_expression_ref")
+	core.PuregoSafeRegister(&xExpressionUnref, libs, "gtk_expression_unref")
+	core.PuregoSafeRegister(&xExpressionWatch, libs, "gtk_expression_watch")
 
-	core.PuregoSafeRegister(&xObjectExpressionGLibType, lib, "gtk_object_expression_get_type")
+	core.PuregoSafeRegister(&xObjectExpressionGLibType, libs, "gtk_object_expression_get_type")
 
-	core.PuregoSafeRegister(&xNewObjectExpression, lib, "gtk_object_expression_new")
+	core.PuregoSafeRegister(&xNewObjectExpression, libs, "gtk_object_expression_new")
 
-	core.PuregoSafeRegister(&xObjectExpressionGetObject, lib, "gtk_object_expression_get_object")
+	core.PuregoSafeRegister(&xObjectExpressionGetObject, libs, "gtk_object_expression_get_object")
 
-	core.PuregoSafeRegister(&xParamSpecExpressionGLibType, lib, "gtk_param_expression_get_type")
+	core.PuregoSafeRegister(&xParamSpecExpressionGLibType, libs, "gtk_param_expression_get_type")
 
-	core.PuregoSafeRegister(&xPropertyExpressionGLibType, lib, "gtk_property_expression_get_type")
+	core.PuregoSafeRegister(&xPropertyExpressionGLibType, libs, "gtk_property_expression_get_type")
 
-	core.PuregoSafeRegister(&xNewPropertyExpression, lib, "gtk_property_expression_new")
-	core.PuregoSafeRegister(&xNewPropertyExpressionForPspec, lib, "gtk_property_expression_new_for_pspec")
+	core.PuregoSafeRegister(&xNewPropertyExpression, libs, "gtk_property_expression_new")
+	core.PuregoSafeRegister(&xNewPropertyExpressionForPspec, libs, "gtk_property_expression_new_for_pspec")
 
-	core.PuregoSafeRegister(&xPropertyExpressionGetExpression, lib, "gtk_property_expression_get_expression")
-	core.PuregoSafeRegister(&xPropertyExpressionGetPspec, lib, "gtk_property_expression_get_pspec")
+	core.PuregoSafeRegister(&xPropertyExpressionGetExpression, libs, "gtk_property_expression_get_expression")
+	core.PuregoSafeRegister(&xPropertyExpressionGetPspec, libs, "gtk_property_expression_get_pspec")
 
 }

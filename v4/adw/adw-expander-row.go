@@ -655,34 +655,38 @@ func (x *ExpanderRow) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xExpanderRowGLibType, lib, "adw_expander_row_get_type")
+	core.PuregoSafeRegister(&xExpanderRowGLibType, libs, "adw_expander_row_get_type")
 
-	core.PuregoSafeRegister(&xNewExpanderRow, lib, "adw_expander_row_new")
+	core.PuregoSafeRegister(&xNewExpanderRow, libs, "adw_expander_row_new")
 
-	core.PuregoSafeRegister(&xExpanderRowAddAction, lib, "adw_expander_row_add_action")
-	core.PuregoSafeRegister(&xExpanderRowAddPrefix, lib, "adw_expander_row_add_prefix")
-	core.PuregoSafeRegister(&xExpanderRowAddRow, lib, "adw_expander_row_add_row")
-	core.PuregoSafeRegister(&xExpanderRowAddSuffix, lib, "adw_expander_row_add_suffix")
-	core.PuregoSafeRegister(&xExpanderRowGetEnableExpansion, lib, "adw_expander_row_get_enable_expansion")
-	core.PuregoSafeRegister(&xExpanderRowGetExpanded, lib, "adw_expander_row_get_expanded")
-	core.PuregoSafeRegister(&xExpanderRowGetIconName, lib, "adw_expander_row_get_icon_name")
-	core.PuregoSafeRegister(&xExpanderRowGetShowEnableSwitch, lib, "adw_expander_row_get_show_enable_switch")
-	core.PuregoSafeRegister(&xExpanderRowGetSubtitle, lib, "adw_expander_row_get_subtitle")
-	core.PuregoSafeRegister(&xExpanderRowGetSubtitleLines, lib, "adw_expander_row_get_subtitle_lines")
-	core.PuregoSafeRegister(&xExpanderRowGetTitleLines, lib, "adw_expander_row_get_title_lines")
-	core.PuregoSafeRegister(&xExpanderRowRemove, lib, "adw_expander_row_remove")
-	core.PuregoSafeRegister(&xExpanderRowSetEnableExpansion, lib, "adw_expander_row_set_enable_expansion")
-	core.PuregoSafeRegister(&xExpanderRowSetExpanded, lib, "adw_expander_row_set_expanded")
-	core.PuregoSafeRegister(&xExpanderRowSetIconName, lib, "adw_expander_row_set_icon_name")
-	core.PuregoSafeRegister(&xExpanderRowSetShowEnableSwitch, lib, "adw_expander_row_set_show_enable_switch")
-	core.PuregoSafeRegister(&xExpanderRowSetSubtitle, lib, "adw_expander_row_set_subtitle")
-	core.PuregoSafeRegister(&xExpanderRowSetSubtitleLines, lib, "adw_expander_row_set_subtitle_lines")
-	core.PuregoSafeRegister(&xExpanderRowSetTitleLines, lib, "adw_expander_row_set_title_lines")
+	core.PuregoSafeRegister(&xExpanderRowAddAction, libs, "adw_expander_row_add_action")
+	core.PuregoSafeRegister(&xExpanderRowAddPrefix, libs, "adw_expander_row_add_prefix")
+	core.PuregoSafeRegister(&xExpanderRowAddRow, libs, "adw_expander_row_add_row")
+	core.PuregoSafeRegister(&xExpanderRowAddSuffix, libs, "adw_expander_row_add_suffix")
+	core.PuregoSafeRegister(&xExpanderRowGetEnableExpansion, libs, "adw_expander_row_get_enable_expansion")
+	core.PuregoSafeRegister(&xExpanderRowGetExpanded, libs, "adw_expander_row_get_expanded")
+	core.PuregoSafeRegister(&xExpanderRowGetIconName, libs, "adw_expander_row_get_icon_name")
+	core.PuregoSafeRegister(&xExpanderRowGetShowEnableSwitch, libs, "adw_expander_row_get_show_enable_switch")
+	core.PuregoSafeRegister(&xExpanderRowGetSubtitle, libs, "adw_expander_row_get_subtitle")
+	core.PuregoSafeRegister(&xExpanderRowGetSubtitleLines, libs, "adw_expander_row_get_subtitle_lines")
+	core.PuregoSafeRegister(&xExpanderRowGetTitleLines, libs, "adw_expander_row_get_title_lines")
+	core.PuregoSafeRegister(&xExpanderRowRemove, libs, "adw_expander_row_remove")
+	core.PuregoSafeRegister(&xExpanderRowSetEnableExpansion, libs, "adw_expander_row_set_enable_expansion")
+	core.PuregoSafeRegister(&xExpanderRowSetExpanded, libs, "adw_expander_row_set_expanded")
+	core.PuregoSafeRegister(&xExpanderRowSetIconName, libs, "adw_expander_row_set_icon_name")
+	core.PuregoSafeRegister(&xExpanderRowSetShowEnableSwitch, libs, "adw_expander_row_set_show_enable_switch")
+	core.PuregoSafeRegister(&xExpanderRowSetSubtitle, libs, "adw_expander_row_set_subtitle")
+	core.PuregoSafeRegister(&xExpanderRowSetSubtitleLines, libs, "adw_expander_row_set_subtitle_lines")
+	core.PuregoSafeRegister(&xExpanderRowSetTitleLines, libs, "adw_expander_row_set_title_lines")
 
 }

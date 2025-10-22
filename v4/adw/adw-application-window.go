@@ -960,23 +960,27 @@ func (x *ApplicationWindow) SetFocus(FocusVar *gtk.Widget) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xApplicationWindowGLibType, lib, "adw_application_window_get_type")
+	core.PuregoSafeRegister(&xApplicationWindowGLibType, libs, "adw_application_window_get_type")
 
-	core.PuregoSafeRegister(&xNewApplicationWindow, lib, "adw_application_window_new")
+	core.PuregoSafeRegister(&xNewApplicationWindow, libs, "adw_application_window_new")
 
-	core.PuregoSafeRegister(&xApplicationWindowAddBreakpoint, lib, "adw_application_window_add_breakpoint")
-	core.PuregoSafeRegister(&xApplicationWindowGetAdaptivePreview, lib, "adw_application_window_get_adaptive_preview")
-	core.PuregoSafeRegister(&xApplicationWindowGetContent, lib, "adw_application_window_get_content")
-	core.PuregoSafeRegister(&xApplicationWindowGetCurrentBreakpoint, lib, "adw_application_window_get_current_breakpoint")
-	core.PuregoSafeRegister(&xApplicationWindowGetDialogs, lib, "adw_application_window_get_dialogs")
-	core.PuregoSafeRegister(&xApplicationWindowGetVisibleDialog, lib, "adw_application_window_get_visible_dialog")
-	core.PuregoSafeRegister(&xApplicationWindowSetAdaptivePreview, lib, "adw_application_window_set_adaptive_preview")
-	core.PuregoSafeRegister(&xApplicationWindowSetContent, lib, "adw_application_window_set_content")
+	core.PuregoSafeRegister(&xApplicationWindowAddBreakpoint, libs, "adw_application_window_add_breakpoint")
+	core.PuregoSafeRegister(&xApplicationWindowGetAdaptivePreview, libs, "adw_application_window_get_adaptive_preview")
+	core.PuregoSafeRegister(&xApplicationWindowGetContent, libs, "adw_application_window_get_content")
+	core.PuregoSafeRegister(&xApplicationWindowGetCurrentBreakpoint, libs, "adw_application_window_get_current_breakpoint")
+	core.PuregoSafeRegister(&xApplicationWindowGetDialogs, libs, "adw_application_window_get_dialogs")
+	core.PuregoSafeRegister(&xApplicationWindowGetVisibleDialog, libs, "adw_application_window_get_visible_dialog")
+	core.PuregoSafeRegister(&xApplicationWindowSetAdaptivePreview, libs, "adw_application_window_set_adaptive_preview")
+	core.PuregoSafeRegister(&xApplicationWindowSetContent, libs, "adw_application_window_set_content")
 
 }

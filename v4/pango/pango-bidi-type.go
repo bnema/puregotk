@@ -123,17 +123,21 @@ func UnicharDirection(ChVar uint32) Direction {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBidiTypeGLibType, lib, "pango_bidi_type_get_type")
+	core.PuregoSafeRegister(&xBidiTypeGLibType, libs, "pango_bidi_type_get_type")
 
-	core.PuregoSafeRegister(&xBidiTypeForUnichar, lib, "pango_bidi_type_for_unichar")
-	core.PuregoSafeRegister(&xFindBaseDir, lib, "pango_find_base_dir")
-	core.PuregoSafeRegister(&xGetMirrorChar, lib, "pango_get_mirror_char")
-	core.PuregoSafeRegister(&xUnicharDirection, lib, "pango_unichar_direction")
+	core.PuregoSafeRegister(&xBidiTypeForUnichar, libs, "pango_bidi_type_for_unichar")
+	core.PuregoSafeRegister(&xFindBaseDir, libs, "pango_find_base_dir")
+	core.PuregoSafeRegister(&xGetMirrorChar, libs, "pango_get_mirror_char")
+	core.PuregoSafeRegister(&xUnicharDirection, libs, "pango_unichar_direction")
 
 }

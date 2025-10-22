@@ -454,31 +454,35 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xScannerCurLine, lib, "g_scanner_cur_line")
-	core.PuregoSafeRegister(&xScannerCurPosition, lib, "g_scanner_cur_position")
-	core.PuregoSafeRegister(&xScannerCurToken, lib, "g_scanner_cur_token")
-	core.PuregoSafeRegister(&xScannerCurValue, lib, "g_scanner_cur_value")
-	core.PuregoSafeRegister(&xScannerDestroy, lib, "g_scanner_destroy")
-	core.PuregoSafeRegister(&xScannerEof, lib, "g_scanner_eof")
-	core.PuregoSafeRegister(&xScannerError, lib, "g_scanner_error")
-	core.PuregoSafeRegister(&xScannerGetNextToken, lib, "g_scanner_get_next_token")
-	core.PuregoSafeRegister(&xScannerInputFile, lib, "g_scanner_input_file")
-	core.PuregoSafeRegister(&xScannerInputText, lib, "g_scanner_input_text")
-	core.PuregoSafeRegister(&xScannerLookupSymbol, lib, "g_scanner_lookup_symbol")
-	core.PuregoSafeRegister(&xScannerPeekNextToken, lib, "g_scanner_peek_next_token")
-	core.PuregoSafeRegister(&xScannerScopeAddSymbol, lib, "g_scanner_scope_add_symbol")
-	core.PuregoSafeRegister(&xScannerScopeForeachSymbol, lib, "g_scanner_scope_foreach_symbol")
-	core.PuregoSafeRegister(&xScannerScopeLookupSymbol, lib, "g_scanner_scope_lookup_symbol")
-	core.PuregoSafeRegister(&xScannerScopeRemoveSymbol, lib, "g_scanner_scope_remove_symbol")
-	core.PuregoSafeRegister(&xScannerSetScope, lib, "g_scanner_set_scope")
-	core.PuregoSafeRegister(&xScannerSyncFileOffset, lib, "g_scanner_sync_file_offset")
-	core.PuregoSafeRegister(&xScannerUnexpToken, lib, "g_scanner_unexp_token")
-	core.PuregoSafeRegister(&xScannerWarn, lib, "g_scanner_warn")
+	core.PuregoSafeRegister(&xScannerCurLine, libs, "g_scanner_cur_line")
+	core.PuregoSafeRegister(&xScannerCurPosition, libs, "g_scanner_cur_position")
+	core.PuregoSafeRegister(&xScannerCurToken, libs, "g_scanner_cur_token")
+	core.PuregoSafeRegister(&xScannerCurValue, libs, "g_scanner_cur_value")
+	core.PuregoSafeRegister(&xScannerDestroy, libs, "g_scanner_destroy")
+	core.PuregoSafeRegister(&xScannerEof, libs, "g_scanner_eof")
+	core.PuregoSafeRegister(&xScannerError, libs, "g_scanner_error")
+	core.PuregoSafeRegister(&xScannerGetNextToken, libs, "g_scanner_get_next_token")
+	core.PuregoSafeRegister(&xScannerInputFile, libs, "g_scanner_input_file")
+	core.PuregoSafeRegister(&xScannerInputText, libs, "g_scanner_input_text")
+	core.PuregoSafeRegister(&xScannerLookupSymbol, libs, "g_scanner_lookup_symbol")
+	core.PuregoSafeRegister(&xScannerPeekNextToken, libs, "g_scanner_peek_next_token")
+	core.PuregoSafeRegister(&xScannerScopeAddSymbol, libs, "g_scanner_scope_add_symbol")
+	core.PuregoSafeRegister(&xScannerScopeForeachSymbol, libs, "g_scanner_scope_foreach_symbol")
+	core.PuregoSafeRegister(&xScannerScopeLookupSymbol, libs, "g_scanner_scope_lookup_symbol")
+	core.PuregoSafeRegister(&xScannerScopeRemoveSymbol, libs, "g_scanner_scope_remove_symbol")
+	core.PuregoSafeRegister(&xScannerSetScope, libs, "g_scanner_set_scope")
+	core.PuregoSafeRegister(&xScannerSyncFileOffset, libs, "g_scanner_sync_file_offset")
+	core.PuregoSafeRegister(&xScannerUnexpToken, libs, "g_scanner_unexp_token")
+	core.PuregoSafeRegister(&xScannerWarn, libs, "g_scanner_warn")
 
 }

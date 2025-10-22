@@ -36,14 +36,18 @@ func (x *DragSurfaceSize) SetSize(WidthVar int, HeightVar int) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDragSurfaceSizeGLibType, lib, "gdk_drag_surface_size_get_type")
+	core.PuregoSafeRegister(&xDragSurfaceSizeGLibType, libs, "gdk_drag_surface_size_get_type")
 
-	core.PuregoSafeRegister(&xDragSurfaceSizeSetSize, lib, "gdk_drag_surface_size_set_size")
+	core.PuregoSafeRegister(&xDragSurfaceSizeSetSize, libs, "gdk_drag_surface_size_set_size")
 
 }

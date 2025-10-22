@@ -257,23 +257,27 @@ func UnixSocketAddressAbstractNamesSupported() bool {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xUnixSocketAddressGLibType, lib, "g_unix_socket_address_get_type")
+	core.PuregoSafeRegister(&xUnixSocketAddressGLibType, libs, "g_unix_socket_address_get_type")
 
-	core.PuregoSafeRegister(&xNewUnixSocketAddress, lib, "g_unix_socket_address_new")
-	core.PuregoSafeRegister(&xNewUnixSocketAddressAbstract, lib, "g_unix_socket_address_new_abstract")
-	core.PuregoSafeRegister(&xNewUnixSocketAddressWithType, lib, "g_unix_socket_address_new_with_type")
+	core.PuregoSafeRegister(&xNewUnixSocketAddress, libs, "g_unix_socket_address_new")
+	core.PuregoSafeRegister(&xNewUnixSocketAddressAbstract, libs, "g_unix_socket_address_new_abstract")
+	core.PuregoSafeRegister(&xNewUnixSocketAddressWithType, libs, "g_unix_socket_address_new_with_type")
 
-	core.PuregoSafeRegister(&xUnixSocketAddressGetAddressType, lib, "g_unix_socket_address_get_address_type")
-	core.PuregoSafeRegister(&xUnixSocketAddressGetIsAbstract, lib, "g_unix_socket_address_get_is_abstract")
-	core.PuregoSafeRegister(&xUnixSocketAddressGetPath, lib, "g_unix_socket_address_get_path")
-	core.PuregoSafeRegister(&xUnixSocketAddressGetPathLen, lib, "g_unix_socket_address_get_path_len")
+	core.PuregoSafeRegister(&xUnixSocketAddressGetAddressType, libs, "g_unix_socket_address_get_address_type")
+	core.PuregoSafeRegister(&xUnixSocketAddressGetIsAbstract, libs, "g_unix_socket_address_get_is_abstract")
+	core.PuregoSafeRegister(&xUnixSocketAddressGetPath, libs, "g_unix_socket_address_get_path")
+	core.PuregoSafeRegister(&xUnixSocketAddressGetPathLen, libs, "g_unix_socket_address_get_path_len")
 
-	core.PuregoSafeRegister(&xUnixSocketAddressAbstractNamesSupported, lib, "g_unix_socket_address_abstract_names_supported")
+	core.PuregoSafeRegister(&xUnixSocketAddressAbstractNamesSupported, libs, "g_unix_socket_address_abstract_names_supported")
 
 }

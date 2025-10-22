@@ -113,18 +113,22 @@ func (x *Layout) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xLayoutGLibType, lib, "adw_layout_get_type")
+	core.PuregoSafeRegister(&xLayoutGLibType, libs, "adw_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewLayout, lib, "adw_layout_new")
+	core.PuregoSafeRegister(&xNewLayout, libs, "adw_layout_new")
 
-	core.PuregoSafeRegister(&xLayoutGetContent, lib, "adw_layout_get_content")
-	core.PuregoSafeRegister(&xLayoutGetName, lib, "adw_layout_get_name")
-	core.PuregoSafeRegister(&xLayoutSetName, lib, "adw_layout_set_name")
+	core.PuregoSafeRegister(&xLayoutGetContent, libs, "adw_layout_get_content")
+	core.PuregoSafeRegister(&xLayoutGetName, libs, "adw_layout_get_name")
+	core.PuregoSafeRegister(&xLayoutSetName, libs, "adw_layout_set_name")
 
 }

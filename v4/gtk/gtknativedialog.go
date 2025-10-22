@@ -403,23 +403,27 @@ func (x *NativeDialog) ConnectResponse(cb *func(NativeDialog, int)) uint32 {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xNativeDialogGLibType, lib, "gtk_native_dialog_get_type")
+	core.PuregoSafeRegister(&xNativeDialogGLibType, libs, "gtk_native_dialog_get_type")
 
-	core.PuregoSafeRegister(&xNativeDialogDestroy, lib, "gtk_native_dialog_destroy")
-	core.PuregoSafeRegister(&xNativeDialogGetModal, lib, "gtk_native_dialog_get_modal")
-	core.PuregoSafeRegister(&xNativeDialogGetTitle, lib, "gtk_native_dialog_get_title")
-	core.PuregoSafeRegister(&xNativeDialogGetTransientFor, lib, "gtk_native_dialog_get_transient_for")
-	core.PuregoSafeRegister(&xNativeDialogGetVisible, lib, "gtk_native_dialog_get_visible")
-	core.PuregoSafeRegister(&xNativeDialogHide, lib, "gtk_native_dialog_hide")
-	core.PuregoSafeRegister(&xNativeDialogSetModal, lib, "gtk_native_dialog_set_modal")
-	core.PuregoSafeRegister(&xNativeDialogSetTitle, lib, "gtk_native_dialog_set_title")
-	core.PuregoSafeRegister(&xNativeDialogSetTransientFor, lib, "gtk_native_dialog_set_transient_for")
-	core.PuregoSafeRegister(&xNativeDialogShow, lib, "gtk_native_dialog_show")
+	core.PuregoSafeRegister(&xNativeDialogDestroy, libs, "gtk_native_dialog_destroy")
+	core.PuregoSafeRegister(&xNativeDialogGetModal, libs, "gtk_native_dialog_get_modal")
+	core.PuregoSafeRegister(&xNativeDialogGetTitle, libs, "gtk_native_dialog_get_title")
+	core.PuregoSafeRegister(&xNativeDialogGetTransientFor, libs, "gtk_native_dialog_get_transient_for")
+	core.PuregoSafeRegister(&xNativeDialogGetVisible, libs, "gtk_native_dialog_get_visible")
+	core.PuregoSafeRegister(&xNativeDialogHide, libs, "gtk_native_dialog_hide")
+	core.PuregoSafeRegister(&xNativeDialogSetModal, libs, "gtk_native_dialog_set_modal")
+	core.PuregoSafeRegister(&xNativeDialogSetTitle, libs, "gtk_native_dialog_set_title")
+	core.PuregoSafeRegister(&xNativeDialogSetTransientFor, libs, "gtk_native_dialog_set_transient_for")
+	core.PuregoSafeRegister(&xNativeDialogShow, libs, "gtk_native_dialog_show")
 
 }

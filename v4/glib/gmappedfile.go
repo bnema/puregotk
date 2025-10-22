@@ -150,22 +150,26 @@ func (x *MappedFile) Unref() {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMappedFileGLibType, lib, "g_mapped_file_get_type")
+	core.PuregoSafeRegister(&xMappedFileGLibType, libs, "g_mapped_file_get_type")
 
-	core.PuregoSafeRegister(&xNewMappedFile, lib, "g_mapped_file_new")
-	core.PuregoSafeRegister(&xNewMappedFileFromFd, lib, "g_mapped_file_new_from_fd")
+	core.PuregoSafeRegister(&xNewMappedFile, libs, "g_mapped_file_new")
+	core.PuregoSafeRegister(&xNewMappedFileFromFd, libs, "g_mapped_file_new_from_fd")
 
-	core.PuregoSafeRegister(&xMappedFileFree, lib, "g_mapped_file_free")
-	core.PuregoSafeRegister(&xMappedFileGetBytes, lib, "g_mapped_file_get_bytes")
-	core.PuregoSafeRegister(&xMappedFileGetContents, lib, "g_mapped_file_get_contents")
-	core.PuregoSafeRegister(&xMappedFileGetLength, lib, "g_mapped_file_get_length")
-	core.PuregoSafeRegister(&xMappedFileRef, lib, "g_mapped_file_ref")
-	core.PuregoSafeRegister(&xMappedFileUnref, lib, "g_mapped_file_unref")
+	core.PuregoSafeRegister(&xMappedFileFree, libs, "g_mapped_file_free")
+	core.PuregoSafeRegister(&xMappedFileGetBytes, libs, "g_mapped_file_get_bytes")
+	core.PuregoSafeRegister(&xMappedFileGetContents, libs, "g_mapped_file_get_contents")
+	core.PuregoSafeRegister(&xMappedFileGetLength, libs, "g_mapped_file_get_length")
+	core.PuregoSafeRegister(&xMappedFileRef, libs, "g_mapped_file_ref")
+	core.PuregoSafeRegister(&xMappedFileUnref, libs, "g_mapped_file_unref")
 
 }

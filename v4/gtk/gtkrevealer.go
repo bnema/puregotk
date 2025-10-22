@@ -492,26 +492,30 @@ func (x *Revealer) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRevealerTransitionTypeGLibType, lib, "gtk_revealer_transition_type_get_type")
+	core.PuregoSafeRegister(&xRevealerTransitionTypeGLibType, libs, "gtk_revealer_transition_type_get_type")
 
-	core.PuregoSafeRegister(&xRevealerGLibType, lib, "gtk_revealer_get_type")
+	core.PuregoSafeRegister(&xRevealerGLibType, libs, "gtk_revealer_get_type")
 
-	core.PuregoSafeRegister(&xNewRevealer, lib, "gtk_revealer_new")
+	core.PuregoSafeRegister(&xNewRevealer, libs, "gtk_revealer_new")
 
-	core.PuregoSafeRegister(&xRevealerGetChild, lib, "gtk_revealer_get_child")
-	core.PuregoSafeRegister(&xRevealerGetChildRevealed, lib, "gtk_revealer_get_child_revealed")
-	core.PuregoSafeRegister(&xRevealerGetRevealChild, lib, "gtk_revealer_get_reveal_child")
-	core.PuregoSafeRegister(&xRevealerGetTransitionDuration, lib, "gtk_revealer_get_transition_duration")
-	core.PuregoSafeRegister(&xRevealerGetTransitionType, lib, "gtk_revealer_get_transition_type")
-	core.PuregoSafeRegister(&xRevealerSetChild, lib, "gtk_revealer_set_child")
-	core.PuregoSafeRegister(&xRevealerSetRevealChild, lib, "gtk_revealer_set_reveal_child")
-	core.PuregoSafeRegister(&xRevealerSetTransitionDuration, lib, "gtk_revealer_set_transition_duration")
-	core.PuregoSafeRegister(&xRevealerSetTransitionType, lib, "gtk_revealer_set_transition_type")
+	core.PuregoSafeRegister(&xRevealerGetChild, libs, "gtk_revealer_get_child")
+	core.PuregoSafeRegister(&xRevealerGetChildRevealed, libs, "gtk_revealer_get_child_revealed")
+	core.PuregoSafeRegister(&xRevealerGetRevealChild, libs, "gtk_revealer_get_reveal_child")
+	core.PuregoSafeRegister(&xRevealerGetTransitionDuration, libs, "gtk_revealer_get_transition_duration")
+	core.PuregoSafeRegister(&xRevealerGetTransitionType, libs, "gtk_revealer_get_transition_type")
+	core.PuregoSafeRegister(&xRevealerSetChild, libs, "gtk_revealer_set_child")
+	core.PuregoSafeRegister(&xRevealerSetRevealChild, libs, "gtk_revealer_set_reveal_child")
+	core.PuregoSafeRegister(&xRevealerSetTransitionDuration, libs, "gtk_revealer_set_transition_duration")
+	core.PuregoSafeRegister(&xRevealerSetTransitionType, libs, "gtk_revealer_set_transition_type")
 
 }

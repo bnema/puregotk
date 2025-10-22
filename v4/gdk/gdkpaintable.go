@@ -519,26 +519,30 @@ func PaintableNewEmpty(IntrinsicWidthVar int, IntrinsicHeightVar int) *Paintable
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPaintableFlagsGLibType, lib, "gdk_paintable_flags_get_type")
+	core.PuregoSafeRegister(&xPaintableFlagsGLibType, libs, "gdk_paintable_flags_get_type")
 
-	core.PuregoSafeRegister(&xPaintableNewEmpty, lib, "gdk_paintable_new_empty")
+	core.PuregoSafeRegister(&xPaintableNewEmpty, libs, "gdk_paintable_new_empty")
 
-	core.PuregoSafeRegister(&xPaintableGLibType, lib, "gdk_paintable_get_type")
+	core.PuregoSafeRegister(&xPaintableGLibType, libs, "gdk_paintable_get_type")
 
-	core.PuregoSafeRegister(&XGdkPaintableComputeConcreteSize, lib, "gdk_paintable_compute_concrete_size")
-	core.PuregoSafeRegister(&XGdkPaintableGetCurrentImage, lib, "gdk_paintable_get_current_image")
-	core.PuregoSafeRegister(&XGdkPaintableGetFlags, lib, "gdk_paintable_get_flags")
-	core.PuregoSafeRegister(&XGdkPaintableGetIntrinsicAspectRatio, lib, "gdk_paintable_get_intrinsic_aspect_ratio")
-	core.PuregoSafeRegister(&XGdkPaintableGetIntrinsicHeight, lib, "gdk_paintable_get_intrinsic_height")
-	core.PuregoSafeRegister(&XGdkPaintableGetIntrinsicWidth, lib, "gdk_paintable_get_intrinsic_width")
-	core.PuregoSafeRegister(&XGdkPaintableInvalidateContents, lib, "gdk_paintable_invalidate_contents")
-	core.PuregoSafeRegister(&XGdkPaintableInvalidateSize, lib, "gdk_paintable_invalidate_size")
-	core.PuregoSafeRegister(&XGdkPaintableSnapshot, lib, "gdk_paintable_snapshot")
+	core.PuregoSafeRegister(&XGdkPaintableComputeConcreteSize, libs, "gdk_paintable_compute_concrete_size")
+	core.PuregoSafeRegister(&XGdkPaintableGetCurrentImage, libs, "gdk_paintable_get_current_image")
+	core.PuregoSafeRegister(&XGdkPaintableGetFlags, libs, "gdk_paintable_get_flags")
+	core.PuregoSafeRegister(&XGdkPaintableGetIntrinsicAspectRatio, libs, "gdk_paintable_get_intrinsic_aspect_ratio")
+	core.PuregoSafeRegister(&XGdkPaintableGetIntrinsicHeight, libs, "gdk_paintable_get_intrinsic_height")
+	core.PuregoSafeRegister(&XGdkPaintableGetIntrinsicWidth, libs, "gdk_paintable_get_intrinsic_width")
+	core.PuregoSafeRegister(&XGdkPaintableInvalidateContents, libs, "gdk_paintable_invalidate_contents")
+	core.PuregoSafeRegister(&XGdkPaintableInvalidateSize, libs, "gdk_paintable_invalidate_size")
+	core.PuregoSafeRegister(&XGdkPaintableSnapshot, libs, "gdk_paintable_snapshot")
 
 }

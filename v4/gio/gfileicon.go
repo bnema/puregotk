@@ -181,16 +181,20 @@ func (x *FileIcon) LoadFinish(ResVar AsyncResult, TypeVar string) (*InputStream,
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFileIconGLibType, lib, "g_file_icon_get_type")
+	core.PuregoSafeRegister(&xFileIconGLibType, libs, "g_file_icon_get_type")
 
-	core.PuregoSafeRegister(&xNewFileIcon, lib, "g_file_icon_new")
+	core.PuregoSafeRegister(&xNewFileIcon, libs, "g_file_icon_new")
 
-	core.PuregoSafeRegister(&xFileIconGetFile, lib, "g_file_icon_get_file")
+	core.PuregoSafeRegister(&xFileIconGetFile, libs, "g_file_icon_get_file")
 
 }

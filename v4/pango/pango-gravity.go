@@ -134,19 +134,23 @@ func GravityToRotation(GravityVar Gravity) float64 {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGravityGLibType, lib, "pango_gravity_get_type")
+	core.PuregoSafeRegister(&xGravityGLibType, libs, "pango_gravity_get_type")
 
-	core.PuregoSafeRegister(&xGravityHintGLibType, lib, "pango_gravity_hint_get_type")
+	core.PuregoSafeRegister(&xGravityHintGLibType, libs, "pango_gravity_hint_get_type")
 
-	core.PuregoSafeRegister(&xGravityGetForMatrix, lib, "pango_gravity_get_for_matrix")
-	core.PuregoSafeRegister(&xGravityGetForScript, lib, "pango_gravity_get_for_script")
-	core.PuregoSafeRegister(&xGravityGetForScriptAndWidth, lib, "pango_gravity_get_for_script_and_width")
-	core.PuregoSafeRegister(&xGravityToRotation, lib, "pango_gravity_to_rotation")
+	core.PuregoSafeRegister(&xGravityGetForMatrix, libs, "pango_gravity_get_for_matrix")
+	core.PuregoSafeRegister(&xGravityGetForScript, libs, "pango_gravity_get_for_script")
+	core.PuregoSafeRegister(&xGravityGetForScriptAndWidth, libs, "pango_gravity_get_for_script_and_width")
+	core.PuregoSafeRegister(&xGravityToRotation, libs, "pango_gravity_to_rotation")
 
 }

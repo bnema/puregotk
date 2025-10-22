@@ -739,19 +739,23 @@ func (x *PasswordEntry) SetWidthChars(NCharsVar int) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPasswordEntryGLibType, lib, "gtk_password_entry_get_type")
+	core.PuregoSafeRegister(&xPasswordEntryGLibType, libs, "gtk_password_entry_get_type")
 
-	core.PuregoSafeRegister(&xNewPasswordEntry, lib, "gtk_password_entry_new")
+	core.PuregoSafeRegister(&xNewPasswordEntry, libs, "gtk_password_entry_new")
 
-	core.PuregoSafeRegister(&xPasswordEntryGetExtraMenu, lib, "gtk_password_entry_get_extra_menu")
-	core.PuregoSafeRegister(&xPasswordEntryGetShowPeekIcon, lib, "gtk_password_entry_get_show_peek_icon")
-	core.PuregoSafeRegister(&xPasswordEntrySetExtraMenu, lib, "gtk_password_entry_set_extra_menu")
-	core.PuregoSafeRegister(&xPasswordEntrySetShowPeekIcon, lib, "gtk_password_entry_set_show_peek_icon")
+	core.PuregoSafeRegister(&xPasswordEntryGetExtraMenu, libs, "gtk_password_entry_get_extra_menu")
+	core.PuregoSafeRegister(&xPasswordEntryGetShowPeekIcon, libs, "gtk_password_entry_get_show_peek_icon")
+	core.PuregoSafeRegister(&xPasswordEntrySetExtraMenu, libs, "gtk_password_entry_set_extra_menu")
+	core.PuregoSafeRegister(&xPasswordEntrySetShowPeekIcon, libs, "gtk_password_entry_set_show_peek_icon")
 
 }

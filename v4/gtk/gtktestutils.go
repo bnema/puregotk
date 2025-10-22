@@ -63,15 +63,19 @@ func TestWidgetWaitForDraw(WidgetVar *Widget) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTestInit, lib, "gtk_test_init")
-	core.PuregoSafeRegister(&xTestListAllTypes, lib, "gtk_test_list_all_types")
-	core.PuregoSafeRegister(&xTestRegisterAllTypes, lib, "gtk_test_register_all_types")
-	core.PuregoSafeRegister(&xTestWidgetWaitForDraw, lib, "gtk_test_widget_wait_for_draw")
+	core.PuregoSafeRegister(&xTestInit, libs, "gtk_test_init")
+	core.PuregoSafeRegister(&xTestListAllTypes, libs, "gtk_test_list_all_types")
+	core.PuregoSafeRegister(&xTestRegisterAllTypes, libs, "gtk_test_register_all_types")
+	core.PuregoSafeRegister(&xTestWidgetWaitForDraw, libs, "gtk_test_widget_wait_for_draw")
 
 }

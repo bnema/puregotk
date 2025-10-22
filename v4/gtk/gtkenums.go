@@ -2073,142 +2073,146 @@ func OrderingFromCmpfunc(CmpfuncResultVar int) Ordering {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInputHintsGLibType, lib, "gtk_input_hints_get_type")
+	core.PuregoSafeRegister(&xInputHintsGLibType, libs, "gtk_input_hints_get_type")
 
-	core.PuregoSafeRegister(&xListScrollFlagsGLibType, lib, "gtk_list_scroll_flags_get_type")
+	core.PuregoSafeRegister(&xListScrollFlagsGLibType, libs, "gtk_list_scroll_flags_get_type")
 
-	core.PuregoSafeRegister(&xPickFlagsGLibType, lib, "gtk_pick_flags_get_type")
+	core.PuregoSafeRegister(&xPickFlagsGLibType, libs, "gtk_pick_flags_get_type")
 
-	core.PuregoSafeRegister(&xPopoverMenuFlagsGLibType, lib, "gtk_popover_menu_flags_get_type")
+	core.PuregoSafeRegister(&xPopoverMenuFlagsGLibType, libs, "gtk_popover_menu_flags_get_type")
 
-	core.PuregoSafeRegister(&xStateFlagsGLibType, lib, "gtk_state_flags_get_type")
+	core.PuregoSafeRegister(&xStateFlagsGLibType, libs, "gtk_state_flags_get_type")
 
-	core.PuregoSafeRegister(&xTextBufferNotifyFlagsGLibType, lib, "gtk_text_buffer_notify_flags_get_type")
+	core.PuregoSafeRegister(&xTextBufferNotifyFlagsGLibType, libs, "gtk_text_buffer_notify_flags_get_type")
 
-	core.PuregoSafeRegister(&xAccessibleAnnouncementPriorityGLibType, lib, "gtk_accessible_announcement_priority_get_type")
+	core.PuregoSafeRegister(&xAccessibleAnnouncementPriorityGLibType, libs, "gtk_accessible_announcement_priority_get_type")
 
-	core.PuregoSafeRegister(&xAccessibleAutocompleteGLibType, lib, "gtk_accessible_autocomplete_get_type")
+	core.PuregoSafeRegister(&xAccessibleAutocompleteGLibType, libs, "gtk_accessible_autocomplete_get_type")
 
-	core.PuregoSafeRegister(&xAccessibleInvalidStateGLibType, lib, "gtk_accessible_invalid_state_get_type")
+	core.PuregoSafeRegister(&xAccessibleInvalidStateGLibType, libs, "gtk_accessible_invalid_state_get_type")
 
-	core.PuregoSafeRegister(&xAccessiblePropertyGLibType, lib, "gtk_accessible_property_get_type")
+	core.PuregoSafeRegister(&xAccessiblePropertyGLibType, libs, "gtk_accessible_property_get_type")
 
-	core.PuregoSafeRegister(&xAccessibleRelationGLibType, lib, "gtk_accessible_relation_get_type")
+	core.PuregoSafeRegister(&xAccessibleRelationGLibType, libs, "gtk_accessible_relation_get_type")
 
-	core.PuregoSafeRegister(&xAccessibleRoleGLibType, lib, "gtk_accessible_role_get_type")
+	core.PuregoSafeRegister(&xAccessibleRoleGLibType, libs, "gtk_accessible_role_get_type")
 
-	core.PuregoSafeRegister(&xAccessibleSortGLibType, lib, "gtk_accessible_sort_get_type")
+	core.PuregoSafeRegister(&xAccessibleSortGLibType, libs, "gtk_accessible_sort_get_type")
 
-	core.PuregoSafeRegister(&xAccessibleStateGLibType, lib, "gtk_accessible_state_get_type")
+	core.PuregoSafeRegister(&xAccessibleStateGLibType, libs, "gtk_accessible_state_get_type")
 
-	core.PuregoSafeRegister(&xAccessibleTristateGLibType, lib, "gtk_accessible_tristate_get_type")
+	core.PuregoSafeRegister(&xAccessibleTristateGLibType, libs, "gtk_accessible_tristate_get_type")
 
-	core.PuregoSafeRegister(&xAlignGLibType, lib, "gtk_align_get_type")
+	core.PuregoSafeRegister(&xAlignGLibType, libs, "gtk_align_get_type")
 
-	core.PuregoSafeRegister(&xArrowTypeGLibType, lib, "gtk_arrow_type_get_type")
+	core.PuregoSafeRegister(&xArrowTypeGLibType, libs, "gtk_arrow_type_get_type")
 
-	core.PuregoSafeRegister(&xBaselinePositionGLibType, lib, "gtk_baseline_position_get_type")
+	core.PuregoSafeRegister(&xBaselinePositionGLibType, libs, "gtk_baseline_position_get_type")
 
-	core.PuregoSafeRegister(&xBorderStyleGLibType, lib, "gtk_border_style_get_type")
+	core.PuregoSafeRegister(&xBorderStyleGLibType, libs, "gtk_border_style_get_type")
 
-	core.PuregoSafeRegister(&xConstraintAttributeGLibType, lib, "gtk_constraint_attribute_get_type")
+	core.PuregoSafeRegister(&xConstraintAttributeGLibType, libs, "gtk_constraint_attribute_get_type")
 
-	core.PuregoSafeRegister(&xConstraintRelationGLibType, lib, "gtk_constraint_relation_get_type")
+	core.PuregoSafeRegister(&xConstraintRelationGLibType, libs, "gtk_constraint_relation_get_type")
 
-	core.PuregoSafeRegister(&xConstraintStrengthGLibType, lib, "gtk_constraint_strength_get_type")
+	core.PuregoSafeRegister(&xConstraintStrengthGLibType, libs, "gtk_constraint_strength_get_type")
 
-	core.PuregoSafeRegister(&xConstraintVflParserErrorGLibType, lib, "gtk_constraint_vfl_parser_error_get_type")
+	core.PuregoSafeRegister(&xConstraintVflParserErrorGLibType, libs, "gtk_constraint_vfl_parser_error_get_type")
 
-	core.PuregoSafeRegister(&xContentFitGLibType, lib, "gtk_content_fit_get_type")
+	core.PuregoSafeRegister(&xContentFitGLibType, libs, "gtk_content_fit_get_type")
 
-	core.PuregoSafeRegister(&xDeleteTypeGLibType, lib, "gtk_delete_type_get_type")
+	core.PuregoSafeRegister(&xDeleteTypeGLibType, libs, "gtk_delete_type_get_type")
 
-	core.PuregoSafeRegister(&xDirectionTypeGLibType, lib, "gtk_direction_type_get_type")
+	core.PuregoSafeRegister(&xDirectionTypeGLibType, libs, "gtk_direction_type_get_type")
 
-	core.PuregoSafeRegister(&xEventSequenceStateGLibType, lib, "gtk_event_sequence_state_get_type")
+	core.PuregoSafeRegister(&xEventSequenceStateGLibType, libs, "gtk_event_sequence_state_get_type")
 
-	core.PuregoSafeRegister(&xFontRenderingGLibType, lib, "gtk_font_rendering_get_type")
+	core.PuregoSafeRegister(&xFontRenderingGLibType, libs, "gtk_font_rendering_get_type")
 
-	core.PuregoSafeRegister(&xIconSizeGLibType, lib, "gtk_icon_size_get_type")
+	core.PuregoSafeRegister(&xIconSizeGLibType, libs, "gtk_icon_size_get_type")
 
-	core.PuregoSafeRegister(&xInputPurposeGLibType, lib, "gtk_input_purpose_get_type")
+	core.PuregoSafeRegister(&xInputPurposeGLibType, libs, "gtk_input_purpose_get_type")
 
-	core.PuregoSafeRegister(&xJustificationGLibType, lib, "gtk_justification_get_type")
+	core.PuregoSafeRegister(&xJustificationGLibType, libs, "gtk_justification_get_type")
 
-	core.PuregoSafeRegister(&xLevelBarModeGLibType, lib, "gtk_level_bar_mode_get_type")
+	core.PuregoSafeRegister(&xLevelBarModeGLibType, libs, "gtk_level_bar_mode_get_type")
 
-	core.PuregoSafeRegister(&xListTabBehaviorGLibType, lib, "gtk_list_tab_behavior_get_type")
+	core.PuregoSafeRegister(&xListTabBehaviorGLibType, libs, "gtk_list_tab_behavior_get_type")
 
-	core.PuregoSafeRegister(&xMessageTypeGLibType, lib, "gtk_message_type_get_type")
+	core.PuregoSafeRegister(&xMessageTypeGLibType, libs, "gtk_message_type_get_type")
 
-	core.PuregoSafeRegister(&xMovementStepGLibType, lib, "gtk_movement_step_get_type")
+	core.PuregoSafeRegister(&xMovementStepGLibType, libs, "gtk_movement_step_get_type")
 
-	core.PuregoSafeRegister(&xNaturalWrapModeGLibType, lib, "gtk_natural_wrap_mode_get_type")
+	core.PuregoSafeRegister(&xNaturalWrapModeGLibType, libs, "gtk_natural_wrap_mode_get_type")
 
-	core.PuregoSafeRegister(&xNumberUpLayoutGLibType, lib, "gtk_number_up_layout_get_type")
+	core.PuregoSafeRegister(&xNumberUpLayoutGLibType, libs, "gtk_number_up_layout_get_type")
 
-	core.PuregoSafeRegister(&xOrderingGLibType, lib, "gtk_ordering_get_type")
+	core.PuregoSafeRegister(&xOrderingGLibType, libs, "gtk_ordering_get_type")
 
-	core.PuregoSafeRegister(&xOrientationGLibType, lib, "gtk_orientation_get_type")
+	core.PuregoSafeRegister(&xOrientationGLibType, libs, "gtk_orientation_get_type")
 
-	core.PuregoSafeRegister(&xOverflowGLibType, lib, "gtk_overflow_get_type")
+	core.PuregoSafeRegister(&xOverflowGLibType, libs, "gtk_overflow_get_type")
 
-	core.PuregoSafeRegister(&xPackTypeGLibType, lib, "gtk_pack_type_get_type")
+	core.PuregoSafeRegister(&xPackTypeGLibType, libs, "gtk_pack_type_get_type")
 
-	core.PuregoSafeRegister(&xPageOrientationGLibType, lib, "gtk_page_orientation_get_type")
+	core.PuregoSafeRegister(&xPageOrientationGLibType, libs, "gtk_page_orientation_get_type")
 
-	core.PuregoSafeRegister(&xPageSetGLibType, lib, "gtk_page_set_get_type")
+	core.PuregoSafeRegister(&xPageSetGLibType, libs, "gtk_page_set_get_type")
 
-	core.PuregoSafeRegister(&xPanDirectionGLibType, lib, "gtk_pan_direction_get_type")
+	core.PuregoSafeRegister(&xPanDirectionGLibType, libs, "gtk_pan_direction_get_type")
 
-	core.PuregoSafeRegister(&xPositionTypeGLibType, lib, "gtk_position_type_get_type")
+	core.PuregoSafeRegister(&xPositionTypeGLibType, libs, "gtk_position_type_get_type")
 
-	core.PuregoSafeRegister(&xPrintDuplexGLibType, lib, "gtk_print_duplex_get_type")
+	core.PuregoSafeRegister(&xPrintDuplexGLibType, libs, "gtk_print_duplex_get_type")
 
-	core.PuregoSafeRegister(&xPrintPagesGLibType, lib, "gtk_print_pages_get_type")
+	core.PuregoSafeRegister(&xPrintPagesGLibType, libs, "gtk_print_pages_get_type")
 
-	core.PuregoSafeRegister(&xPrintQualityGLibType, lib, "gtk_print_quality_get_type")
+	core.PuregoSafeRegister(&xPrintQualityGLibType, libs, "gtk_print_quality_get_type")
 
-	core.PuregoSafeRegister(&xPropagationLimitGLibType, lib, "gtk_propagation_limit_get_type")
+	core.PuregoSafeRegister(&xPropagationLimitGLibType, libs, "gtk_propagation_limit_get_type")
 
-	core.PuregoSafeRegister(&xPropagationPhaseGLibType, lib, "gtk_propagation_phase_get_type")
+	core.PuregoSafeRegister(&xPropagationPhaseGLibType, libs, "gtk_propagation_phase_get_type")
 
-	core.PuregoSafeRegister(&xScrollStepGLibType, lib, "gtk_scroll_step_get_type")
+	core.PuregoSafeRegister(&xScrollStepGLibType, libs, "gtk_scroll_step_get_type")
 
-	core.PuregoSafeRegister(&xScrollTypeGLibType, lib, "gtk_scroll_type_get_type")
+	core.PuregoSafeRegister(&xScrollTypeGLibType, libs, "gtk_scroll_type_get_type")
 
-	core.PuregoSafeRegister(&xScrollablePolicyGLibType, lib, "gtk_scrollable_policy_get_type")
+	core.PuregoSafeRegister(&xScrollablePolicyGLibType, libs, "gtk_scrollable_policy_get_type")
 
-	core.PuregoSafeRegister(&xSelectionModeGLibType, lib, "gtk_selection_mode_get_type")
+	core.PuregoSafeRegister(&xSelectionModeGLibType, libs, "gtk_selection_mode_get_type")
 
-	core.PuregoSafeRegister(&xSensitivityTypeGLibType, lib, "gtk_sensitivity_type_get_type")
+	core.PuregoSafeRegister(&xSensitivityTypeGLibType, libs, "gtk_sensitivity_type_get_type")
 
-	core.PuregoSafeRegister(&xShortcutScopeGLibType, lib, "gtk_shortcut_scope_get_type")
+	core.PuregoSafeRegister(&xShortcutScopeGLibType, libs, "gtk_shortcut_scope_get_type")
 
-	core.PuregoSafeRegister(&xSizeGroupModeGLibType, lib, "gtk_size_group_mode_get_type")
+	core.PuregoSafeRegister(&xSizeGroupModeGLibType, libs, "gtk_size_group_mode_get_type")
 
-	core.PuregoSafeRegister(&xSizeRequestModeGLibType, lib, "gtk_size_request_mode_get_type")
+	core.PuregoSafeRegister(&xSizeRequestModeGLibType, libs, "gtk_size_request_mode_get_type")
 
-	core.PuregoSafeRegister(&xSortTypeGLibType, lib, "gtk_sort_type_get_type")
+	core.PuregoSafeRegister(&xSortTypeGLibType, libs, "gtk_sort_type_get_type")
 
-	core.PuregoSafeRegister(&xSymbolicColorGLibType, lib, "gtk_symbolic_color_get_type")
+	core.PuregoSafeRegister(&xSymbolicColorGLibType, libs, "gtk_symbolic_color_get_type")
 
-	core.PuregoSafeRegister(&xSystemSettingGLibType, lib, "gtk_system_setting_get_type")
+	core.PuregoSafeRegister(&xSystemSettingGLibType, libs, "gtk_system_setting_get_type")
 
-	core.PuregoSafeRegister(&xTextDirectionGLibType, lib, "gtk_text_direction_get_type")
+	core.PuregoSafeRegister(&xTextDirectionGLibType, libs, "gtk_text_direction_get_type")
 
-	core.PuregoSafeRegister(&xTreeViewGridLinesGLibType, lib, "gtk_tree_view_grid_lines_get_type")
+	core.PuregoSafeRegister(&xTreeViewGridLinesGLibType, libs, "gtk_tree_view_grid_lines_get_type")
 
-	core.PuregoSafeRegister(&xUnitGLibType, lib, "gtk_unit_get_type")
+	core.PuregoSafeRegister(&xUnitGLibType, libs, "gtk_unit_get_type")
 
-	core.PuregoSafeRegister(&xWrapModeGLibType, lib, "gtk_wrap_mode_get_type")
+	core.PuregoSafeRegister(&xWrapModeGLibType, libs, "gtk_wrap_mode_get_type")
 
-	core.PuregoSafeRegister(&xOrderingFromCmpfunc, lib, "gtk_ordering_from_cmpfunc")
+	core.PuregoSafeRegister(&xOrderingFromCmpfunc, libs, "gtk_ordering_from_cmpfunc")
 
 }

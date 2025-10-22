@@ -419,16 +419,20 @@ var XGtkPrintOperationPreviewRenderPage func(uintptr, int)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPrintOperationPreviewGLibType, lib, "gtk_print_operation_preview_get_type")
+	core.PuregoSafeRegister(&xPrintOperationPreviewGLibType, libs, "gtk_print_operation_preview_get_type")
 
-	core.PuregoSafeRegister(&XGtkPrintOperationPreviewEndPreview, lib, "gtk_print_operation_preview_end_preview")
-	core.PuregoSafeRegister(&XGtkPrintOperationPreviewIsSelected, lib, "gtk_print_operation_preview_is_selected")
-	core.PuregoSafeRegister(&XGtkPrintOperationPreviewRenderPage, lib, "gtk_print_operation_preview_render_page")
+	core.PuregoSafeRegister(&XGtkPrintOperationPreviewEndPreview, libs, "gtk_print_operation_preview_end_preview")
+	core.PuregoSafeRegister(&XGtkPrintOperationPreviewIsSelected, libs, "gtk_print_operation_preview_is_selected")
+	core.PuregoSafeRegister(&XGtkPrintOperationPreviewRenderPage, libs, "gtk_print_operation_preview_render_page")
 
 }

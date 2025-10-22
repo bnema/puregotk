@@ -492,25 +492,29 @@ func (x *PreferencesGroup) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPreferencesGroupGLibType, lib, "adw_preferences_group_get_type")
+	core.PuregoSafeRegister(&xPreferencesGroupGLibType, libs, "adw_preferences_group_get_type")
 
-	core.PuregoSafeRegister(&xNewPreferencesGroup, lib, "adw_preferences_group_new")
+	core.PuregoSafeRegister(&xNewPreferencesGroup, libs, "adw_preferences_group_new")
 
-	core.PuregoSafeRegister(&xPreferencesGroupAdd, lib, "adw_preferences_group_add")
-	core.PuregoSafeRegister(&xPreferencesGroupGetDescription, lib, "adw_preferences_group_get_description")
-	core.PuregoSafeRegister(&xPreferencesGroupGetHeaderSuffix, lib, "adw_preferences_group_get_header_suffix")
-	core.PuregoSafeRegister(&xPreferencesGroupGetSeparateRows, lib, "adw_preferences_group_get_separate_rows")
-	core.PuregoSafeRegister(&xPreferencesGroupGetTitle, lib, "adw_preferences_group_get_title")
-	core.PuregoSafeRegister(&xPreferencesGroupRemove, lib, "adw_preferences_group_remove")
-	core.PuregoSafeRegister(&xPreferencesGroupSetDescription, lib, "adw_preferences_group_set_description")
-	core.PuregoSafeRegister(&xPreferencesGroupSetHeaderSuffix, lib, "adw_preferences_group_set_header_suffix")
-	core.PuregoSafeRegister(&xPreferencesGroupSetSeparateRows, lib, "adw_preferences_group_set_separate_rows")
-	core.PuregoSafeRegister(&xPreferencesGroupSetTitle, lib, "adw_preferences_group_set_title")
+	core.PuregoSafeRegister(&xPreferencesGroupAdd, libs, "adw_preferences_group_add")
+	core.PuregoSafeRegister(&xPreferencesGroupGetDescription, libs, "adw_preferences_group_get_description")
+	core.PuregoSafeRegister(&xPreferencesGroupGetHeaderSuffix, libs, "adw_preferences_group_get_header_suffix")
+	core.PuregoSafeRegister(&xPreferencesGroupGetSeparateRows, libs, "adw_preferences_group_get_separate_rows")
+	core.PuregoSafeRegister(&xPreferencesGroupGetTitle, libs, "adw_preferences_group_get_title")
+	core.PuregoSafeRegister(&xPreferencesGroupRemove, libs, "adw_preferences_group_remove")
+	core.PuregoSafeRegister(&xPreferencesGroupSetDescription, libs, "adw_preferences_group_set_description")
+	core.PuregoSafeRegister(&xPreferencesGroupSetHeaderSuffix, libs, "adw_preferences_group_set_header_suffix")
+	core.PuregoSafeRegister(&xPreferencesGroupSetSeparateRows, libs, "adw_preferences_group_set_separate_rows")
+	core.PuregoSafeRegister(&xPreferencesGroupSetTitle, libs, "adw_preferences_group_set_title")
 
 }

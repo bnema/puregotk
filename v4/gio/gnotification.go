@@ -263,27 +263,31 @@ func (c *Notification) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xNotificationGLibType, lib, "g_notification_get_type")
+	core.PuregoSafeRegister(&xNotificationGLibType, libs, "g_notification_get_type")
 
-	core.PuregoSafeRegister(&xNewNotification, lib, "g_notification_new")
+	core.PuregoSafeRegister(&xNewNotification, libs, "g_notification_new")
 
-	core.PuregoSafeRegister(&xNotificationAddButton, lib, "g_notification_add_button")
-	core.PuregoSafeRegister(&xNotificationAddButtonWithTarget, lib, "g_notification_add_button_with_target")
-	core.PuregoSafeRegister(&xNotificationAddButtonWithTargetValue, lib, "g_notification_add_button_with_target_value")
-	core.PuregoSafeRegister(&xNotificationSetBody, lib, "g_notification_set_body")
-	core.PuregoSafeRegister(&xNotificationSetCategory, lib, "g_notification_set_category")
-	core.PuregoSafeRegister(&xNotificationSetDefaultAction, lib, "g_notification_set_default_action")
-	core.PuregoSafeRegister(&xNotificationSetDefaultActionAndTarget, lib, "g_notification_set_default_action_and_target")
-	core.PuregoSafeRegister(&xNotificationSetDefaultActionAndTargetValue, lib, "g_notification_set_default_action_and_target_value")
-	core.PuregoSafeRegister(&xNotificationSetIcon, lib, "g_notification_set_icon")
-	core.PuregoSafeRegister(&xNotificationSetPriority, lib, "g_notification_set_priority")
-	core.PuregoSafeRegister(&xNotificationSetTitle, lib, "g_notification_set_title")
-	core.PuregoSafeRegister(&xNotificationSetUrgent, lib, "g_notification_set_urgent")
+	core.PuregoSafeRegister(&xNotificationAddButton, libs, "g_notification_add_button")
+	core.PuregoSafeRegister(&xNotificationAddButtonWithTarget, libs, "g_notification_add_button_with_target")
+	core.PuregoSafeRegister(&xNotificationAddButtonWithTargetValue, libs, "g_notification_add_button_with_target_value")
+	core.PuregoSafeRegister(&xNotificationSetBody, libs, "g_notification_set_body")
+	core.PuregoSafeRegister(&xNotificationSetCategory, libs, "g_notification_set_category")
+	core.PuregoSafeRegister(&xNotificationSetDefaultAction, libs, "g_notification_set_default_action")
+	core.PuregoSafeRegister(&xNotificationSetDefaultActionAndTarget, libs, "g_notification_set_default_action_and_target")
+	core.PuregoSafeRegister(&xNotificationSetDefaultActionAndTargetValue, libs, "g_notification_set_default_action_and_target_value")
+	core.PuregoSafeRegister(&xNotificationSetIcon, libs, "g_notification_set_icon")
+	core.PuregoSafeRegister(&xNotificationSetPriority, libs, "g_notification_set_priority")
+	core.PuregoSafeRegister(&xNotificationSetTitle, libs, "g_notification_set_title")
+	core.PuregoSafeRegister(&xNotificationSetUrgent, libs, "g_notification_set_urgent")
 
 }

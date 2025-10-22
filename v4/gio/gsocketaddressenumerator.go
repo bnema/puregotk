@@ -238,16 +238,20 @@ func (c *SocketAddressEnumerator) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSocketAddressEnumeratorGLibType, lib, "g_socket_address_enumerator_get_type")
+	core.PuregoSafeRegister(&xSocketAddressEnumeratorGLibType, libs, "g_socket_address_enumerator_get_type")
 
-	core.PuregoSafeRegister(&xSocketAddressEnumeratorNext, lib, "g_socket_address_enumerator_next")
-	core.PuregoSafeRegister(&xSocketAddressEnumeratorNextAsync, lib, "g_socket_address_enumerator_next_async")
-	core.PuregoSafeRegister(&xSocketAddressEnumeratorNextFinish, lib, "g_socket_address_enumerator_next_finish")
+	core.PuregoSafeRegister(&xSocketAddressEnumeratorNext, libs, "g_socket_address_enumerator_next")
+	core.PuregoSafeRegister(&xSocketAddressEnumeratorNextAsync, libs, "g_socket_address_enumerator_next_async")
+	core.PuregoSafeRegister(&xSocketAddressEnumeratorNextFinish, libs, "g_socket_address_enumerator_next_finish")
 
 }

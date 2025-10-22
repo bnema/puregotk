@@ -230,26 +230,30 @@ func (x *Matrix) Translate(TxVar float64, TyVar float64) {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMatrixGLibType, lib, "pango_matrix_get_type")
+	core.PuregoSafeRegister(&xMatrixGLibType, libs, "pango_matrix_get_type")
 
-	core.PuregoSafeRegister(&xMatrixConcat, lib, "pango_matrix_concat")
-	core.PuregoSafeRegister(&xMatrixCopy, lib, "pango_matrix_copy")
-	core.PuregoSafeRegister(&xMatrixFree, lib, "pango_matrix_free")
-	core.PuregoSafeRegister(&xMatrixGetFontScaleFactor, lib, "pango_matrix_get_font_scale_factor")
-	core.PuregoSafeRegister(&xMatrixGetFontScaleFactors, lib, "pango_matrix_get_font_scale_factors")
-	core.PuregoSafeRegister(&xMatrixGetSlantRatio, lib, "pango_matrix_get_slant_ratio")
-	core.PuregoSafeRegister(&xMatrixRotate, lib, "pango_matrix_rotate")
-	core.PuregoSafeRegister(&xMatrixScale, lib, "pango_matrix_scale")
-	core.PuregoSafeRegister(&xMatrixTransformDistance, lib, "pango_matrix_transform_distance")
-	core.PuregoSafeRegister(&xMatrixTransformPixelRectangle, lib, "pango_matrix_transform_pixel_rectangle")
-	core.PuregoSafeRegister(&xMatrixTransformPoint, lib, "pango_matrix_transform_point")
-	core.PuregoSafeRegister(&xMatrixTransformRectangle, lib, "pango_matrix_transform_rectangle")
-	core.PuregoSafeRegister(&xMatrixTranslate, lib, "pango_matrix_translate")
+	core.PuregoSafeRegister(&xMatrixConcat, libs, "pango_matrix_concat")
+	core.PuregoSafeRegister(&xMatrixCopy, libs, "pango_matrix_copy")
+	core.PuregoSafeRegister(&xMatrixFree, libs, "pango_matrix_free")
+	core.PuregoSafeRegister(&xMatrixGetFontScaleFactor, libs, "pango_matrix_get_font_scale_factor")
+	core.PuregoSafeRegister(&xMatrixGetFontScaleFactors, libs, "pango_matrix_get_font_scale_factors")
+	core.PuregoSafeRegister(&xMatrixGetSlantRatio, libs, "pango_matrix_get_slant_ratio")
+	core.PuregoSafeRegister(&xMatrixRotate, libs, "pango_matrix_rotate")
+	core.PuregoSafeRegister(&xMatrixScale, libs, "pango_matrix_scale")
+	core.PuregoSafeRegister(&xMatrixTransformDistance, libs, "pango_matrix_transform_distance")
+	core.PuregoSafeRegister(&xMatrixTransformPixelRectangle, libs, "pango_matrix_transform_pixel_rectangle")
+	core.PuregoSafeRegister(&xMatrixTransformPoint, libs, "pango_matrix_transform_point")
+	core.PuregoSafeRegister(&xMatrixTransformRectangle, libs, "pango_matrix_transform_rectangle")
+	core.PuregoSafeRegister(&xMatrixTranslate, libs, "pango_matrix_translate")
 
 }

@@ -221,23 +221,27 @@ func TestDBusUnset() {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTestDBusGLibType, lib, "g_test_dbus_get_type")
+	core.PuregoSafeRegister(&xTestDBusGLibType, libs, "g_test_dbus_get_type")
 
-	core.PuregoSafeRegister(&xNewTestDBus, lib, "g_test_dbus_new")
+	core.PuregoSafeRegister(&xNewTestDBus, libs, "g_test_dbus_new")
 
-	core.PuregoSafeRegister(&xTestDBusAddServiceDir, lib, "g_test_dbus_add_service_dir")
-	core.PuregoSafeRegister(&xTestDBusDown, lib, "g_test_dbus_down")
-	core.PuregoSafeRegister(&xTestDBusGetBusAddress, lib, "g_test_dbus_get_bus_address")
-	core.PuregoSafeRegister(&xTestDBusGetFlags, lib, "g_test_dbus_get_flags")
-	core.PuregoSafeRegister(&xTestDBusStop, lib, "g_test_dbus_stop")
-	core.PuregoSafeRegister(&xTestDBusUp, lib, "g_test_dbus_up")
+	core.PuregoSafeRegister(&xTestDBusAddServiceDir, libs, "g_test_dbus_add_service_dir")
+	core.PuregoSafeRegister(&xTestDBusDown, libs, "g_test_dbus_down")
+	core.PuregoSafeRegister(&xTestDBusGetBusAddress, libs, "g_test_dbus_get_bus_address")
+	core.PuregoSafeRegister(&xTestDBusGetFlags, libs, "g_test_dbus_get_flags")
+	core.PuregoSafeRegister(&xTestDBusStop, libs, "g_test_dbus_stop")
+	core.PuregoSafeRegister(&xTestDBusUp, libs, "g_test_dbus_up")
 
-	core.PuregoSafeRegister(&xTestDBusUnset, lib, "g_test_dbus_unset")
+	core.PuregoSafeRegister(&xTestDBusUnset, libs, "g_test_dbus_unset")
 
 }

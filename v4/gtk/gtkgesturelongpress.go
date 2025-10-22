@@ -143,17 +143,21 @@ func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, fl
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGestureLongPressGLibType, lib, "gtk_gesture_long_press_get_type")
+	core.PuregoSafeRegister(&xGestureLongPressGLibType, libs, "gtk_gesture_long_press_get_type")
 
-	core.PuregoSafeRegister(&xNewGestureLongPress, lib, "gtk_gesture_long_press_new")
+	core.PuregoSafeRegister(&xNewGestureLongPress, libs, "gtk_gesture_long_press_new")
 
-	core.PuregoSafeRegister(&xGestureLongPressGetDelayFactor, lib, "gtk_gesture_long_press_get_delay_factor")
-	core.PuregoSafeRegister(&xGestureLongPressSetDelayFactor, lib, "gtk_gesture_long_press_set_delay_factor")
+	core.PuregoSafeRegister(&xGestureLongPressGetDelayFactor, libs, "gtk_gesture_long_press_get_delay_factor")
+	core.PuregoSafeRegister(&xGestureLongPressSetDelayFactor, libs, "gtk_gesture_long_press_set_delay_factor")
 
 }

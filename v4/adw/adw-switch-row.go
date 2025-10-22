@@ -482,17 +482,21 @@ func (x *SwitchRow) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSwitchRowGLibType, lib, "adw_switch_row_get_type")
+	core.PuregoSafeRegister(&xSwitchRowGLibType, libs, "adw_switch_row_get_type")
 
-	core.PuregoSafeRegister(&xNewSwitchRow, lib, "adw_switch_row_new")
+	core.PuregoSafeRegister(&xNewSwitchRow, libs, "adw_switch_row_new")
 
-	core.PuregoSafeRegister(&xSwitchRowGetActive, lib, "adw_switch_row_get_active")
-	core.PuregoSafeRegister(&xSwitchRowSetActive, lib, "adw_switch_row_set_active")
+	core.PuregoSafeRegister(&xSwitchRowGetActive, libs, "adw_switch_row_get_active")
+	core.PuregoSafeRegister(&xSwitchRowSetActive, libs, "adw_switch_row_set_active")
 
 }

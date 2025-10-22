@@ -311,18 +311,22 @@ var XGListModelItemsChanged func(uintptr, uint, uint, uint)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xListModelGLibType, lib, "g_list_model_get_type")
+	core.PuregoSafeRegister(&xListModelGLibType, libs, "g_list_model_get_type")
 
-	core.PuregoSafeRegister(&XGListModelGetItem, lib, "g_list_model_get_item")
-	core.PuregoSafeRegister(&XGListModelGetItemType, lib, "g_list_model_get_item_type")
-	core.PuregoSafeRegister(&XGListModelGetNItems, lib, "g_list_model_get_n_items")
-	core.PuregoSafeRegister(&XGListModelGetObject, lib, "g_list_model_get_object")
-	core.PuregoSafeRegister(&XGListModelItemsChanged, lib, "g_list_model_items_changed")
+	core.PuregoSafeRegister(&XGListModelGetItem, libs, "g_list_model_get_item")
+	core.PuregoSafeRegister(&XGListModelGetItemType, libs, "g_list_model_get_item_type")
+	core.PuregoSafeRegister(&XGListModelGetNItems, libs, "g_list_model_get_n_items")
+	core.PuregoSafeRegister(&XGListModelGetObject, libs, "g_list_model_get_object")
+	core.PuregoSafeRegister(&XGListModelItemsChanged, libs, "g_list_model_items_changed")
 
 }

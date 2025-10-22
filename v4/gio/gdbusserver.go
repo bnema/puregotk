@@ -247,21 +247,25 @@ func (x *DBusServer) Init(CancellableVar *Cancellable) (bool, error) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDBusServerGLibType, lib, "g_dbus_server_get_type")
+	core.PuregoSafeRegister(&xDBusServerGLibType, libs, "g_dbus_server_get_type")
 
-	core.PuregoSafeRegister(&xNewDBusServerSync, lib, "g_dbus_server_new_sync")
+	core.PuregoSafeRegister(&xNewDBusServerSync, libs, "g_dbus_server_new_sync")
 
-	core.PuregoSafeRegister(&xDBusServerGetClientAddress, lib, "g_dbus_server_get_client_address")
-	core.PuregoSafeRegister(&xDBusServerGetFlags, lib, "g_dbus_server_get_flags")
-	core.PuregoSafeRegister(&xDBusServerGetGuid, lib, "g_dbus_server_get_guid")
-	core.PuregoSafeRegister(&xDBusServerIsActive, lib, "g_dbus_server_is_active")
-	core.PuregoSafeRegister(&xDBusServerStart, lib, "g_dbus_server_start")
-	core.PuregoSafeRegister(&xDBusServerStop, lib, "g_dbus_server_stop")
+	core.PuregoSafeRegister(&xDBusServerGetClientAddress, libs, "g_dbus_server_get_client_address")
+	core.PuregoSafeRegister(&xDBusServerGetFlags, libs, "g_dbus_server_get_flags")
+	core.PuregoSafeRegister(&xDBusServerGetGuid, libs, "g_dbus_server_get_guid")
+	core.PuregoSafeRegister(&xDBusServerIsActive, libs, "g_dbus_server_is_active")
+	core.PuregoSafeRegister(&xDBusServerStart, libs, "g_dbus_server_start")
+	core.PuregoSafeRegister(&xDBusServerStop, libs, "g_dbus_server_stop")
 
 }

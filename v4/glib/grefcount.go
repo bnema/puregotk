@@ -129,19 +129,23 @@ func RefCountInit(RcVar int) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAtomicRefCountCompare, lib, "g_atomic_ref_count_compare")
-	core.PuregoSafeRegister(&xAtomicRefCountDec, lib, "g_atomic_ref_count_dec")
-	core.PuregoSafeRegister(&xAtomicRefCountInc, lib, "g_atomic_ref_count_inc")
-	core.PuregoSafeRegister(&xAtomicRefCountInit, lib, "g_atomic_ref_count_init")
-	core.PuregoSafeRegister(&xRefCountCompare, lib, "g_ref_count_compare")
-	core.PuregoSafeRegister(&xRefCountDec, lib, "g_ref_count_dec")
-	core.PuregoSafeRegister(&xRefCountInc, lib, "g_ref_count_inc")
-	core.PuregoSafeRegister(&xRefCountInit, lib, "g_ref_count_init")
+	core.PuregoSafeRegister(&xAtomicRefCountCompare, libs, "g_atomic_ref_count_compare")
+	core.PuregoSafeRegister(&xAtomicRefCountDec, libs, "g_atomic_ref_count_dec")
+	core.PuregoSafeRegister(&xAtomicRefCountInc, libs, "g_atomic_ref_count_inc")
+	core.PuregoSafeRegister(&xAtomicRefCountInit, libs, "g_atomic_ref_count_init")
+	core.PuregoSafeRegister(&xRefCountCompare, libs, "g_ref_count_compare")
+	core.PuregoSafeRegister(&xRefCountDec, libs, "g_ref_count_dec")
+	core.PuregoSafeRegister(&xRefCountInc, libs, "g_ref_count_inc")
+	core.PuregoSafeRegister(&xRefCountInit, libs, "g_ref_count_init")
 
 }

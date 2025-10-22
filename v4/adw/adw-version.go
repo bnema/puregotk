@@ -68,14 +68,18 @@ func GetMinorVersion() uint {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGetMajorVersion, lib, "adw_get_major_version")
-	core.PuregoSafeRegister(&xGetMicroVersion, lib, "adw_get_micro_version")
-	core.PuregoSafeRegister(&xGetMinorVersion, lib, "adw_get_minor_version")
+	core.PuregoSafeRegister(&xGetMajorVersion, libs, "adw_get_major_version")
+	core.PuregoSafeRegister(&xGetMicroVersion, libs, "adw_get_micro_version")
+	core.PuregoSafeRegister(&xGetMinorVersion, libs, "adw_get_minor_version")
 
 }

@@ -267,29 +267,33 @@ func DatasetIdSetDataFull(DatasetLocationVar uintptr, KeyIdVar Quark, DataVar ui
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDatalistClear, lib, "g_datalist_clear")
-	core.PuregoSafeRegister(&xDatalistForeach, lib, "g_datalist_foreach")
-	core.PuregoSafeRegister(&xDatalistGetData, lib, "g_datalist_get_data")
-	core.PuregoSafeRegister(&xDatalistGetFlags, lib, "g_datalist_get_flags")
-	core.PuregoSafeRegister(&xDatalistIdDupData, lib, "g_datalist_id_dup_data")
-	core.PuregoSafeRegister(&xDatalistIdGetData, lib, "g_datalist_id_get_data")
-	core.PuregoSafeRegister(&xDatalistIdRemoveMultiple, lib, "g_datalist_id_remove_multiple")
-	core.PuregoSafeRegister(&xDatalistIdRemoveNoNotify, lib, "g_datalist_id_remove_no_notify")
-	core.PuregoSafeRegister(&xDatalistIdReplaceData, lib, "g_datalist_id_replace_data")
-	core.PuregoSafeRegister(&xDatalistIdSetDataFull, lib, "g_datalist_id_set_data_full")
-	core.PuregoSafeRegister(&xDatalistInit, lib, "g_datalist_init")
-	core.PuregoSafeRegister(&xDatalistSetFlags, lib, "g_datalist_set_flags")
-	core.PuregoSafeRegister(&xDatalistUnsetFlags, lib, "g_datalist_unset_flags")
-	core.PuregoSafeRegister(&xDatasetDestroy, lib, "g_dataset_destroy")
-	core.PuregoSafeRegister(&xDatasetForeach, lib, "g_dataset_foreach")
-	core.PuregoSafeRegister(&xDatasetIdGetData, lib, "g_dataset_id_get_data")
-	core.PuregoSafeRegister(&xDatasetIdRemoveNoNotify, lib, "g_dataset_id_remove_no_notify")
-	core.PuregoSafeRegister(&xDatasetIdSetDataFull, lib, "g_dataset_id_set_data_full")
+	core.PuregoSafeRegister(&xDatalistClear, libs, "g_datalist_clear")
+	core.PuregoSafeRegister(&xDatalistForeach, libs, "g_datalist_foreach")
+	core.PuregoSafeRegister(&xDatalistGetData, libs, "g_datalist_get_data")
+	core.PuregoSafeRegister(&xDatalistGetFlags, libs, "g_datalist_get_flags")
+	core.PuregoSafeRegister(&xDatalistIdDupData, libs, "g_datalist_id_dup_data")
+	core.PuregoSafeRegister(&xDatalistIdGetData, libs, "g_datalist_id_get_data")
+	core.PuregoSafeRegister(&xDatalistIdRemoveMultiple, libs, "g_datalist_id_remove_multiple")
+	core.PuregoSafeRegister(&xDatalistIdRemoveNoNotify, libs, "g_datalist_id_remove_no_notify")
+	core.PuregoSafeRegister(&xDatalistIdReplaceData, libs, "g_datalist_id_replace_data")
+	core.PuregoSafeRegister(&xDatalistIdSetDataFull, libs, "g_datalist_id_set_data_full")
+	core.PuregoSafeRegister(&xDatalistInit, libs, "g_datalist_init")
+	core.PuregoSafeRegister(&xDatalistSetFlags, libs, "g_datalist_set_flags")
+	core.PuregoSafeRegister(&xDatalistUnsetFlags, libs, "g_datalist_unset_flags")
+	core.PuregoSafeRegister(&xDatasetDestroy, libs, "g_dataset_destroy")
+	core.PuregoSafeRegister(&xDatasetForeach, libs, "g_dataset_foreach")
+	core.PuregoSafeRegister(&xDatasetIdGetData, libs, "g_dataset_id_get_data")
+	core.PuregoSafeRegister(&xDatasetIdRemoveNoNotify, libs, "g_dataset_id_remove_no_notify")
+	core.PuregoSafeRegister(&xDatasetIdSetDataFull, libs, "g_dataset_id_set_data_full")
 
 }

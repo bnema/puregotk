@@ -2421,245 +2421,249 @@ func (c *TransformNode) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibrary("GSK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GSK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GSK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBlendNodeGLibType, lib, "gsk_blend_node_get_type")
+	core.PuregoSafeRegister(&xBlendNodeGLibType, libs, "gsk_blend_node_get_type")
 
-	core.PuregoSafeRegister(&xNewBlendNode, lib, "gsk_blend_node_new")
+	core.PuregoSafeRegister(&xNewBlendNode, libs, "gsk_blend_node_new")
 
-	core.PuregoSafeRegister(&xBlendNodeGetBlendMode, lib, "gsk_blend_node_get_blend_mode")
-	core.PuregoSafeRegister(&xBlendNodeGetBottomChild, lib, "gsk_blend_node_get_bottom_child")
-	core.PuregoSafeRegister(&xBlendNodeGetTopChild, lib, "gsk_blend_node_get_top_child")
+	core.PuregoSafeRegister(&xBlendNodeGetBlendMode, libs, "gsk_blend_node_get_blend_mode")
+	core.PuregoSafeRegister(&xBlendNodeGetBottomChild, libs, "gsk_blend_node_get_bottom_child")
+	core.PuregoSafeRegister(&xBlendNodeGetTopChild, libs, "gsk_blend_node_get_top_child")
 
-	core.PuregoSafeRegister(&xBlurNodeGLibType, lib, "gsk_blur_node_get_type")
+	core.PuregoSafeRegister(&xBlurNodeGLibType, libs, "gsk_blur_node_get_type")
 
-	core.PuregoSafeRegister(&xNewBlurNode, lib, "gsk_blur_node_new")
+	core.PuregoSafeRegister(&xNewBlurNode, libs, "gsk_blur_node_new")
 
-	core.PuregoSafeRegister(&xBlurNodeGetChild, lib, "gsk_blur_node_get_child")
-	core.PuregoSafeRegister(&xBlurNodeGetRadius, lib, "gsk_blur_node_get_radius")
+	core.PuregoSafeRegister(&xBlurNodeGetChild, libs, "gsk_blur_node_get_child")
+	core.PuregoSafeRegister(&xBlurNodeGetRadius, libs, "gsk_blur_node_get_radius")
 
-	core.PuregoSafeRegister(&xBorderNodeGLibType, lib, "gsk_border_node_get_type")
+	core.PuregoSafeRegister(&xBorderNodeGLibType, libs, "gsk_border_node_get_type")
 
-	core.PuregoSafeRegister(&xNewBorderNode, lib, "gsk_border_node_new")
+	core.PuregoSafeRegister(&xNewBorderNode, libs, "gsk_border_node_new")
 
-	core.PuregoSafeRegister(&xBorderNodeGetColors, lib, "gsk_border_node_get_colors")
-	core.PuregoSafeRegister(&xBorderNodeGetOutline, lib, "gsk_border_node_get_outline")
-	core.PuregoSafeRegister(&xBorderNodeGetWidths, lib, "gsk_border_node_get_widths")
+	core.PuregoSafeRegister(&xBorderNodeGetColors, libs, "gsk_border_node_get_colors")
+	core.PuregoSafeRegister(&xBorderNodeGetOutline, libs, "gsk_border_node_get_outline")
+	core.PuregoSafeRegister(&xBorderNodeGetWidths, libs, "gsk_border_node_get_widths")
 
-	core.PuregoSafeRegister(&xCairoNodeGLibType, lib, "gsk_cairo_node_get_type")
+	core.PuregoSafeRegister(&xCairoNodeGLibType, libs, "gsk_cairo_node_get_type")
 
-	core.PuregoSafeRegister(&xNewCairoNode, lib, "gsk_cairo_node_new")
+	core.PuregoSafeRegister(&xNewCairoNode, libs, "gsk_cairo_node_new")
 
-	core.PuregoSafeRegister(&xCairoNodeGetDrawContext, lib, "gsk_cairo_node_get_draw_context")
-	core.PuregoSafeRegister(&xCairoNodeGetSurface, lib, "gsk_cairo_node_get_surface")
+	core.PuregoSafeRegister(&xCairoNodeGetDrawContext, libs, "gsk_cairo_node_get_draw_context")
+	core.PuregoSafeRegister(&xCairoNodeGetSurface, libs, "gsk_cairo_node_get_surface")
 
-	core.PuregoSafeRegister(&xClipNodeGLibType, lib, "gsk_clip_node_get_type")
+	core.PuregoSafeRegister(&xClipNodeGLibType, libs, "gsk_clip_node_get_type")
 
-	core.PuregoSafeRegister(&xNewClipNode, lib, "gsk_clip_node_new")
+	core.PuregoSafeRegister(&xNewClipNode, libs, "gsk_clip_node_new")
 
-	core.PuregoSafeRegister(&xClipNodeGetChild, lib, "gsk_clip_node_get_child")
-	core.PuregoSafeRegister(&xClipNodeGetClip, lib, "gsk_clip_node_get_clip")
+	core.PuregoSafeRegister(&xClipNodeGetChild, libs, "gsk_clip_node_get_child")
+	core.PuregoSafeRegister(&xClipNodeGetClip, libs, "gsk_clip_node_get_clip")
 
-	core.PuregoSafeRegister(&xColorMatrixNodeGLibType, lib, "gsk_color_matrix_node_get_type")
+	core.PuregoSafeRegister(&xColorMatrixNodeGLibType, libs, "gsk_color_matrix_node_get_type")
 
-	core.PuregoSafeRegister(&xNewColorMatrixNode, lib, "gsk_color_matrix_node_new")
+	core.PuregoSafeRegister(&xNewColorMatrixNode, libs, "gsk_color_matrix_node_new")
 
-	core.PuregoSafeRegister(&xColorMatrixNodeGetChild, lib, "gsk_color_matrix_node_get_child")
-	core.PuregoSafeRegister(&xColorMatrixNodeGetColorMatrix, lib, "gsk_color_matrix_node_get_color_matrix")
-	core.PuregoSafeRegister(&xColorMatrixNodeGetColorOffset, lib, "gsk_color_matrix_node_get_color_offset")
+	core.PuregoSafeRegister(&xColorMatrixNodeGetChild, libs, "gsk_color_matrix_node_get_child")
+	core.PuregoSafeRegister(&xColorMatrixNodeGetColorMatrix, libs, "gsk_color_matrix_node_get_color_matrix")
+	core.PuregoSafeRegister(&xColorMatrixNodeGetColorOffset, libs, "gsk_color_matrix_node_get_color_offset")
 
-	core.PuregoSafeRegister(&xColorNodeGLibType, lib, "gsk_color_node_get_type")
+	core.PuregoSafeRegister(&xColorNodeGLibType, libs, "gsk_color_node_get_type")
 
-	core.PuregoSafeRegister(&xNewColorNode, lib, "gsk_color_node_new")
+	core.PuregoSafeRegister(&xNewColorNode, libs, "gsk_color_node_new")
 
-	core.PuregoSafeRegister(&xColorNodeGetColor, lib, "gsk_color_node_get_color")
+	core.PuregoSafeRegister(&xColorNodeGetColor, libs, "gsk_color_node_get_color")
 
-	core.PuregoSafeRegister(&xConicGradientNodeGLibType, lib, "gsk_conic_gradient_node_get_type")
+	core.PuregoSafeRegister(&xConicGradientNodeGLibType, libs, "gsk_conic_gradient_node_get_type")
 
-	core.PuregoSafeRegister(&xNewConicGradientNode, lib, "gsk_conic_gradient_node_new")
+	core.PuregoSafeRegister(&xNewConicGradientNode, libs, "gsk_conic_gradient_node_new")
 
-	core.PuregoSafeRegister(&xConicGradientNodeGetAngle, lib, "gsk_conic_gradient_node_get_angle")
-	core.PuregoSafeRegister(&xConicGradientNodeGetCenter, lib, "gsk_conic_gradient_node_get_center")
-	core.PuregoSafeRegister(&xConicGradientNodeGetColorStops, lib, "gsk_conic_gradient_node_get_color_stops")
-	core.PuregoSafeRegister(&xConicGradientNodeGetNColorStops, lib, "gsk_conic_gradient_node_get_n_color_stops")
-	core.PuregoSafeRegister(&xConicGradientNodeGetRotation, lib, "gsk_conic_gradient_node_get_rotation")
+	core.PuregoSafeRegister(&xConicGradientNodeGetAngle, libs, "gsk_conic_gradient_node_get_angle")
+	core.PuregoSafeRegister(&xConicGradientNodeGetCenter, libs, "gsk_conic_gradient_node_get_center")
+	core.PuregoSafeRegister(&xConicGradientNodeGetColorStops, libs, "gsk_conic_gradient_node_get_color_stops")
+	core.PuregoSafeRegister(&xConicGradientNodeGetNColorStops, libs, "gsk_conic_gradient_node_get_n_color_stops")
+	core.PuregoSafeRegister(&xConicGradientNodeGetRotation, libs, "gsk_conic_gradient_node_get_rotation")
 
-	core.PuregoSafeRegister(&xContainerNodeGLibType, lib, "gsk_container_node_get_type")
+	core.PuregoSafeRegister(&xContainerNodeGLibType, libs, "gsk_container_node_get_type")
 
-	core.PuregoSafeRegister(&xNewContainerNode, lib, "gsk_container_node_new")
+	core.PuregoSafeRegister(&xNewContainerNode, libs, "gsk_container_node_new")
 
-	core.PuregoSafeRegister(&xContainerNodeGetChild, lib, "gsk_container_node_get_child")
-	core.PuregoSafeRegister(&xContainerNodeGetNChildren, lib, "gsk_container_node_get_n_children")
+	core.PuregoSafeRegister(&xContainerNodeGetChild, libs, "gsk_container_node_get_child")
+	core.PuregoSafeRegister(&xContainerNodeGetNChildren, libs, "gsk_container_node_get_n_children")
 
-	core.PuregoSafeRegister(&xCrossFadeNodeGLibType, lib, "gsk_cross_fade_node_get_type")
+	core.PuregoSafeRegister(&xCrossFadeNodeGLibType, libs, "gsk_cross_fade_node_get_type")
 
-	core.PuregoSafeRegister(&xNewCrossFadeNode, lib, "gsk_cross_fade_node_new")
+	core.PuregoSafeRegister(&xNewCrossFadeNode, libs, "gsk_cross_fade_node_new")
 
-	core.PuregoSafeRegister(&xCrossFadeNodeGetEndChild, lib, "gsk_cross_fade_node_get_end_child")
-	core.PuregoSafeRegister(&xCrossFadeNodeGetProgress, lib, "gsk_cross_fade_node_get_progress")
-	core.PuregoSafeRegister(&xCrossFadeNodeGetStartChild, lib, "gsk_cross_fade_node_get_start_child")
+	core.PuregoSafeRegister(&xCrossFadeNodeGetEndChild, libs, "gsk_cross_fade_node_get_end_child")
+	core.PuregoSafeRegister(&xCrossFadeNodeGetProgress, libs, "gsk_cross_fade_node_get_progress")
+	core.PuregoSafeRegister(&xCrossFadeNodeGetStartChild, libs, "gsk_cross_fade_node_get_start_child")
 
-	core.PuregoSafeRegister(&xDebugNodeGLibType, lib, "gsk_debug_node_get_type")
+	core.PuregoSafeRegister(&xDebugNodeGLibType, libs, "gsk_debug_node_get_type")
 
-	core.PuregoSafeRegister(&xNewDebugNode, lib, "gsk_debug_node_new")
+	core.PuregoSafeRegister(&xNewDebugNode, libs, "gsk_debug_node_new")
 
-	core.PuregoSafeRegister(&xDebugNodeGetChild, lib, "gsk_debug_node_get_child")
-	core.PuregoSafeRegister(&xDebugNodeGetMessage, lib, "gsk_debug_node_get_message")
+	core.PuregoSafeRegister(&xDebugNodeGetChild, libs, "gsk_debug_node_get_child")
+	core.PuregoSafeRegister(&xDebugNodeGetMessage, libs, "gsk_debug_node_get_message")
 
-	core.PuregoSafeRegister(&xFillNodeGLibType, lib, "gsk_fill_node_get_type")
+	core.PuregoSafeRegister(&xFillNodeGLibType, libs, "gsk_fill_node_get_type")
 
-	core.PuregoSafeRegister(&xNewFillNode, lib, "gsk_fill_node_new")
+	core.PuregoSafeRegister(&xNewFillNode, libs, "gsk_fill_node_new")
 
-	core.PuregoSafeRegister(&xFillNodeGetChild, lib, "gsk_fill_node_get_child")
-	core.PuregoSafeRegister(&xFillNodeGetFillRule, lib, "gsk_fill_node_get_fill_rule")
-	core.PuregoSafeRegister(&xFillNodeGetPath, lib, "gsk_fill_node_get_path")
+	core.PuregoSafeRegister(&xFillNodeGetChild, libs, "gsk_fill_node_get_child")
+	core.PuregoSafeRegister(&xFillNodeGetFillRule, libs, "gsk_fill_node_get_fill_rule")
+	core.PuregoSafeRegister(&xFillNodeGetPath, libs, "gsk_fill_node_get_path")
 
-	core.PuregoSafeRegister(&xGLShaderNodeGLibType, lib, "gsk_gl_shader_node_get_type")
+	core.PuregoSafeRegister(&xGLShaderNodeGLibType, libs, "gsk_gl_shader_node_get_type")
 
-	core.PuregoSafeRegister(&xNewGLShaderNode, lib, "gsk_gl_shader_node_new")
+	core.PuregoSafeRegister(&xNewGLShaderNode, libs, "gsk_gl_shader_node_new")
 
-	core.PuregoSafeRegister(&xGLShaderNodeGetArgs, lib, "gsk_gl_shader_node_get_args")
-	core.PuregoSafeRegister(&xGLShaderNodeGetChild, lib, "gsk_gl_shader_node_get_child")
-	core.PuregoSafeRegister(&xGLShaderNodeGetNChildren, lib, "gsk_gl_shader_node_get_n_children")
-	core.PuregoSafeRegister(&xGLShaderNodeGetShader, lib, "gsk_gl_shader_node_get_shader")
+	core.PuregoSafeRegister(&xGLShaderNodeGetArgs, libs, "gsk_gl_shader_node_get_args")
+	core.PuregoSafeRegister(&xGLShaderNodeGetChild, libs, "gsk_gl_shader_node_get_child")
+	core.PuregoSafeRegister(&xGLShaderNodeGetNChildren, libs, "gsk_gl_shader_node_get_n_children")
+	core.PuregoSafeRegister(&xGLShaderNodeGetShader, libs, "gsk_gl_shader_node_get_shader")
 
-	core.PuregoSafeRegister(&xInsetShadowNodeGLibType, lib, "gsk_inset_shadow_node_get_type")
+	core.PuregoSafeRegister(&xInsetShadowNodeGLibType, libs, "gsk_inset_shadow_node_get_type")
 
-	core.PuregoSafeRegister(&xNewInsetShadowNode, lib, "gsk_inset_shadow_node_new")
+	core.PuregoSafeRegister(&xNewInsetShadowNode, libs, "gsk_inset_shadow_node_new")
 
-	core.PuregoSafeRegister(&xInsetShadowNodeGetBlurRadius, lib, "gsk_inset_shadow_node_get_blur_radius")
-	core.PuregoSafeRegister(&xInsetShadowNodeGetColor, lib, "gsk_inset_shadow_node_get_color")
-	core.PuregoSafeRegister(&xInsetShadowNodeGetDx, lib, "gsk_inset_shadow_node_get_dx")
-	core.PuregoSafeRegister(&xInsetShadowNodeGetDy, lib, "gsk_inset_shadow_node_get_dy")
-	core.PuregoSafeRegister(&xInsetShadowNodeGetOutline, lib, "gsk_inset_shadow_node_get_outline")
-	core.PuregoSafeRegister(&xInsetShadowNodeGetSpread, lib, "gsk_inset_shadow_node_get_spread")
+	core.PuregoSafeRegister(&xInsetShadowNodeGetBlurRadius, libs, "gsk_inset_shadow_node_get_blur_radius")
+	core.PuregoSafeRegister(&xInsetShadowNodeGetColor, libs, "gsk_inset_shadow_node_get_color")
+	core.PuregoSafeRegister(&xInsetShadowNodeGetDx, libs, "gsk_inset_shadow_node_get_dx")
+	core.PuregoSafeRegister(&xInsetShadowNodeGetDy, libs, "gsk_inset_shadow_node_get_dy")
+	core.PuregoSafeRegister(&xInsetShadowNodeGetOutline, libs, "gsk_inset_shadow_node_get_outline")
+	core.PuregoSafeRegister(&xInsetShadowNodeGetSpread, libs, "gsk_inset_shadow_node_get_spread")
 
-	core.PuregoSafeRegister(&xLinearGradientNodeGLibType, lib, "gsk_linear_gradient_node_get_type")
+	core.PuregoSafeRegister(&xLinearGradientNodeGLibType, libs, "gsk_linear_gradient_node_get_type")
 
-	core.PuregoSafeRegister(&xNewLinearGradientNode, lib, "gsk_linear_gradient_node_new")
+	core.PuregoSafeRegister(&xNewLinearGradientNode, libs, "gsk_linear_gradient_node_new")
 
-	core.PuregoSafeRegister(&xLinearGradientNodeGetColorStops, lib, "gsk_linear_gradient_node_get_color_stops")
-	core.PuregoSafeRegister(&xLinearGradientNodeGetEnd, lib, "gsk_linear_gradient_node_get_end")
-	core.PuregoSafeRegister(&xLinearGradientNodeGetNColorStops, lib, "gsk_linear_gradient_node_get_n_color_stops")
-	core.PuregoSafeRegister(&xLinearGradientNodeGetStart, lib, "gsk_linear_gradient_node_get_start")
+	core.PuregoSafeRegister(&xLinearGradientNodeGetColorStops, libs, "gsk_linear_gradient_node_get_color_stops")
+	core.PuregoSafeRegister(&xLinearGradientNodeGetEnd, libs, "gsk_linear_gradient_node_get_end")
+	core.PuregoSafeRegister(&xLinearGradientNodeGetNColorStops, libs, "gsk_linear_gradient_node_get_n_color_stops")
+	core.PuregoSafeRegister(&xLinearGradientNodeGetStart, libs, "gsk_linear_gradient_node_get_start")
 
-	core.PuregoSafeRegister(&xMaskNodeGLibType, lib, "gsk_mask_node_get_type")
+	core.PuregoSafeRegister(&xMaskNodeGLibType, libs, "gsk_mask_node_get_type")
 
-	core.PuregoSafeRegister(&xNewMaskNode, lib, "gsk_mask_node_new")
+	core.PuregoSafeRegister(&xNewMaskNode, libs, "gsk_mask_node_new")
 
-	core.PuregoSafeRegister(&xMaskNodeGetMask, lib, "gsk_mask_node_get_mask")
-	core.PuregoSafeRegister(&xMaskNodeGetMaskMode, lib, "gsk_mask_node_get_mask_mode")
-	core.PuregoSafeRegister(&xMaskNodeGetSource, lib, "gsk_mask_node_get_source")
+	core.PuregoSafeRegister(&xMaskNodeGetMask, libs, "gsk_mask_node_get_mask")
+	core.PuregoSafeRegister(&xMaskNodeGetMaskMode, libs, "gsk_mask_node_get_mask_mode")
+	core.PuregoSafeRegister(&xMaskNodeGetSource, libs, "gsk_mask_node_get_source")
 
-	core.PuregoSafeRegister(&xOpacityNodeGLibType, lib, "gsk_opacity_node_get_type")
+	core.PuregoSafeRegister(&xOpacityNodeGLibType, libs, "gsk_opacity_node_get_type")
 
-	core.PuregoSafeRegister(&xNewOpacityNode, lib, "gsk_opacity_node_new")
+	core.PuregoSafeRegister(&xNewOpacityNode, libs, "gsk_opacity_node_new")
 
-	core.PuregoSafeRegister(&xOpacityNodeGetChild, lib, "gsk_opacity_node_get_child")
-	core.PuregoSafeRegister(&xOpacityNodeGetOpacity, lib, "gsk_opacity_node_get_opacity")
+	core.PuregoSafeRegister(&xOpacityNodeGetChild, libs, "gsk_opacity_node_get_child")
+	core.PuregoSafeRegister(&xOpacityNodeGetOpacity, libs, "gsk_opacity_node_get_opacity")
 
-	core.PuregoSafeRegister(&xOutsetShadowNodeGLibType, lib, "gsk_outset_shadow_node_get_type")
+	core.PuregoSafeRegister(&xOutsetShadowNodeGLibType, libs, "gsk_outset_shadow_node_get_type")
 
-	core.PuregoSafeRegister(&xNewOutsetShadowNode, lib, "gsk_outset_shadow_node_new")
+	core.PuregoSafeRegister(&xNewOutsetShadowNode, libs, "gsk_outset_shadow_node_new")
 
-	core.PuregoSafeRegister(&xOutsetShadowNodeGetBlurRadius, lib, "gsk_outset_shadow_node_get_blur_radius")
-	core.PuregoSafeRegister(&xOutsetShadowNodeGetColor, lib, "gsk_outset_shadow_node_get_color")
-	core.PuregoSafeRegister(&xOutsetShadowNodeGetDx, lib, "gsk_outset_shadow_node_get_dx")
-	core.PuregoSafeRegister(&xOutsetShadowNodeGetDy, lib, "gsk_outset_shadow_node_get_dy")
-	core.PuregoSafeRegister(&xOutsetShadowNodeGetOutline, lib, "gsk_outset_shadow_node_get_outline")
-	core.PuregoSafeRegister(&xOutsetShadowNodeGetSpread, lib, "gsk_outset_shadow_node_get_spread")
+	core.PuregoSafeRegister(&xOutsetShadowNodeGetBlurRadius, libs, "gsk_outset_shadow_node_get_blur_radius")
+	core.PuregoSafeRegister(&xOutsetShadowNodeGetColor, libs, "gsk_outset_shadow_node_get_color")
+	core.PuregoSafeRegister(&xOutsetShadowNodeGetDx, libs, "gsk_outset_shadow_node_get_dx")
+	core.PuregoSafeRegister(&xOutsetShadowNodeGetDy, libs, "gsk_outset_shadow_node_get_dy")
+	core.PuregoSafeRegister(&xOutsetShadowNodeGetOutline, libs, "gsk_outset_shadow_node_get_outline")
+	core.PuregoSafeRegister(&xOutsetShadowNodeGetSpread, libs, "gsk_outset_shadow_node_get_spread")
 
-	core.PuregoSafeRegister(&xRadialGradientNodeGLibType, lib, "gsk_radial_gradient_node_get_type")
+	core.PuregoSafeRegister(&xRadialGradientNodeGLibType, libs, "gsk_radial_gradient_node_get_type")
 
-	core.PuregoSafeRegister(&xNewRadialGradientNode, lib, "gsk_radial_gradient_node_new")
+	core.PuregoSafeRegister(&xNewRadialGradientNode, libs, "gsk_radial_gradient_node_new")
 
-	core.PuregoSafeRegister(&xRadialGradientNodeGetCenter, lib, "gsk_radial_gradient_node_get_center")
-	core.PuregoSafeRegister(&xRadialGradientNodeGetColorStops, lib, "gsk_radial_gradient_node_get_color_stops")
-	core.PuregoSafeRegister(&xRadialGradientNodeGetEnd, lib, "gsk_radial_gradient_node_get_end")
-	core.PuregoSafeRegister(&xRadialGradientNodeGetHradius, lib, "gsk_radial_gradient_node_get_hradius")
-	core.PuregoSafeRegister(&xRadialGradientNodeGetNColorStops, lib, "gsk_radial_gradient_node_get_n_color_stops")
-	core.PuregoSafeRegister(&xRadialGradientNodeGetStart, lib, "gsk_radial_gradient_node_get_start")
-	core.PuregoSafeRegister(&xRadialGradientNodeGetVradius, lib, "gsk_radial_gradient_node_get_vradius")
+	core.PuregoSafeRegister(&xRadialGradientNodeGetCenter, libs, "gsk_radial_gradient_node_get_center")
+	core.PuregoSafeRegister(&xRadialGradientNodeGetColorStops, libs, "gsk_radial_gradient_node_get_color_stops")
+	core.PuregoSafeRegister(&xRadialGradientNodeGetEnd, libs, "gsk_radial_gradient_node_get_end")
+	core.PuregoSafeRegister(&xRadialGradientNodeGetHradius, libs, "gsk_radial_gradient_node_get_hradius")
+	core.PuregoSafeRegister(&xRadialGradientNodeGetNColorStops, libs, "gsk_radial_gradient_node_get_n_color_stops")
+	core.PuregoSafeRegister(&xRadialGradientNodeGetStart, libs, "gsk_radial_gradient_node_get_start")
+	core.PuregoSafeRegister(&xRadialGradientNodeGetVradius, libs, "gsk_radial_gradient_node_get_vradius")
 
-	core.PuregoSafeRegister(&xRepeatNodeGLibType, lib, "gsk_repeat_node_get_type")
+	core.PuregoSafeRegister(&xRepeatNodeGLibType, libs, "gsk_repeat_node_get_type")
 
-	core.PuregoSafeRegister(&xNewRepeatNode, lib, "gsk_repeat_node_new")
+	core.PuregoSafeRegister(&xNewRepeatNode, libs, "gsk_repeat_node_new")
 
-	core.PuregoSafeRegister(&xRepeatNodeGetChild, lib, "gsk_repeat_node_get_child")
-	core.PuregoSafeRegister(&xRepeatNodeGetChildBounds, lib, "gsk_repeat_node_get_child_bounds")
+	core.PuregoSafeRegister(&xRepeatNodeGetChild, libs, "gsk_repeat_node_get_child")
+	core.PuregoSafeRegister(&xRepeatNodeGetChildBounds, libs, "gsk_repeat_node_get_child_bounds")
 
-	core.PuregoSafeRegister(&xRepeatingLinearGradientNodeGLibType, lib, "gsk_repeating_linear_gradient_node_get_type")
+	core.PuregoSafeRegister(&xRepeatingLinearGradientNodeGLibType, libs, "gsk_repeating_linear_gradient_node_get_type")
 
-	core.PuregoSafeRegister(&xNewRepeatingLinearGradientNode, lib, "gsk_repeating_linear_gradient_node_new")
+	core.PuregoSafeRegister(&xNewRepeatingLinearGradientNode, libs, "gsk_repeating_linear_gradient_node_new")
 
-	core.PuregoSafeRegister(&xRepeatingRadialGradientNodeGLibType, lib, "gsk_repeating_radial_gradient_node_get_type")
+	core.PuregoSafeRegister(&xRepeatingRadialGradientNodeGLibType, libs, "gsk_repeating_radial_gradient_node_get_type")
 
-	core.PuregoSafeRegister(&xNewRepeatingRadialGradientNode, lib, "gsk_repeating_radial_gradient_node_new")
+	core.PuregoSafeRegister(&xNewRepeatingRadialGradientNode, libs, "gsk_repeating_radial_gradient_node_new")
 
-	core.PuregoSafeRegister(&xRoundedClipNodeGLibType, lib, "gsk_rounded_clip_node_get_type")
+	core.PuregoSafeRegister(&xRoundedClipNodeGLibType, libs, "gsk_rounded_clip_node_get_type")
 
-	core.PuregoSafeRegister(&xNewRoundedClipNode, lib, "gsk_rounded_clip_node_new")
+	core.PuregoSafeRegister(&xNewRoundedClipNode, libs, "gsk_rounded_clip_node_new")
 
-	core.PuregoSafeRegister(&xRoundedClipNodeGetChild, lib, "gsk_rounded_clip_node_get_child")
-	core.PuregoSafeRegister(&xRoundedClipNodeGetClip, lib, "gsk_rounded_clip_node_get_clip")
+	core.PuregoSafeRegister(&xRoundedClipNodeGetChild, libs, "gsk_rounded_clip_node_get_child")
+	core.PuregoSafeRegister(&xRoundedClipNodeGetClip, libs, "gsk_rounded_clip_node_get_clip")
 
-	core.PuregoSafeRegister(&xShadowNodeGLibType, lib, "gsk_shadow_node_get_type")
+	core.PuregoSafeRegister(&xShadowNodeGLibType, libs, "gsk_shadow_node_get_type")
 
-	core.PuregoSafeRegister(&xNewShadowNode, lib, "gsk_shadow_node_new")
+	core.PuregoSafeRegister(&xNewShadowNode, libs, "gsk_shadow_node_new")
 
-	core.PuregoSafeRegister(&xShadowNodeGetChild, lib, "gsk_shadow_node_get_child")
-	core.PuregoSafeRegister(&xShadowNodeGetNShadows, lib, "gsk_shadow_node_get_n_shadows")
-	core.PuregoSafeRegister(&xShadowNodeGetShadow, lib, "gsk_shadow_node_get_shadow")
+	core.PuregoSafeRegister(&xShadowNodeGetChild, libs, "gsk_shadow_node_get_child")
+	core.PuregoSafeRegister(&xShadowNodeGetNShadows, libs, "gsk_shadow_node_get_n_shadows")
+	core.PuregoSafeRegister(&xShadowNodeGetShadow, libs, "gsk_shadow_node_get_shadow")
 
-	core.PuregoSafeRegister(&xStrokeNodeGLibType, lib, "gsk_stroke_node_get_type")
+	core.PuregoSafeRegister(&xStrokeNodeGLibType, libs, "gsk_stroke_node_get_type")
 
-	core.PuregoSafeRegister(&xNewStrokeNode, lib, "gsk_stroke_node_new")
+	core.PuregoSafeRegister(&xNewStrokeNode, libs, "gsk_stroke_node_new")
 
-	core.PuregoSafeRegister(&xStrokeNodeGetChild, lib, "gsk_stroke_node_get_child")
-	core.PuregoSafeRegister(&xStrokeNodeGetPath, lib, "gsk_stroke_node_get_path")
-	core.PuregoSafeRegister(&xStrokeNodeGetStroke, lib, "gsk_stroke_node_get_stroke")
+	core.PuregoSafeRegister(&xStrokeNodeGetChild, libs, "gsk_stroke_node_get_child")
+	core.PuregoSafeRegister(&xStrokeNodeGetPath, libs, "gsk_stroke_node_get_path")
+	core.PuregoSafeRegister(&xStrokeNodeGetStroke, libs, "gsk_stroke_node_get_stroke")
 
-	core.PuregoSafeRegister(&xSubsurfaceNodeGLibType, lib, "gsk_subsurface_node_get_type")
+	core.PuregoSafeRegister(&xSubsurfaceNodeGLibType, libs, "gsk_subsurface_node_get_type")
 
-	core.PuregoSafeRegister(&xNewSubsurfaceNode, lib, "gsk_subsurface_node_new")
+	core.PuregoSafeRegister(&xNewSubsurfaceNode, libs, "gsk_subsurface_node_new")
 
-	core.PuregoSafeRegister(&xSubsurfaceNodeGetChild, lib, "gsk_subsurface_node_get_child")
+	core.PuregoSafeRegister(&xSubsurfaceNodeGetChild, libs, "gsk_subsurface_node_get_child")
 
-	core.PuregoSafeRegister(&xSubsurfaceNodeGetSubsurface, lib, "gsk_subsurface_node_get_subsurface")
+	core.PuregoSafeRegister(&xSubsurfaceNodeGetSubsurface, libs, "gsk_subsurface_node_get_subsurface")
 
-	core.PuregoSafeRegister(&xTextNodeGLibType, lib, "gsk_text_node_get_type")
+	core.PuregoSafeRegister(&xTextNodeGLibType, libs, "gsk_text_node_get_type")
 
-	core.PuregoSafeRegister(&xNewTextNode, lib, "gsk_text_node_new")
+	core.PuregoSafeRegister(&xNewTextNode, libs, "gsk_text_node_new")
 
-	core.PuregoSafeRegister(&xTextNodeGetColor, lib, "gsk_text_node_get_color")
-	core.PuregoSafeRegister(&xTextNodeGetFont, lib, "gsk_text_node_get_font")
-	core.PuregoSafeRegister(&xTextNodeGetGlyphs, lib, "gsk_text_node_get_glyphs")
-	core.PuregoSafeRegister(&xTextNodeGetNumGlyphs, lib, "gsk_text_node_get_num_glyphs")
-	core.PuregoSafeRegister(&xTextNodeGetOffset, lib, "gsk_text_node_get_offset")
-	core.PuregoSafeRegister(&xTextNodeHasColorGlyphs, lib, "gsk_text_node_has_color_glyphs")
+	core.PuregoSafeRegister(&xTextNodeGetColor, libs, "gsk_text_node_get_color")
+	core.PuregoSafeRegister(&xTextNodeGetFont, libs, "gsk_text_node_get_font")
+	core.PuregoSafeRegister(&xTextNodeGetGlyphs, libs, "gsk_text_node_get_glyphs")
+	core.PuregoSafeRegister(&xTextNodeGetNumGlyphs, libs, "gsk_text_node_get_num_glyphs")
+	core.PuregoSafeRegister(&xTextNodeGetOffset, libs, "gsk_text_node_get_offset")
+	core.PuregoSafeRegister(&xTextNodeHasColorGlyphs, libs, "gsk_text_node_has_color_glyphs")
 
-	core.PuregoSafeRegister(&xTextureNodeGLibType, lib, "gsk_texture_node_get_type")
+	core.PuregoSafeRegister(&xTextureNodeGLibType, libs, "gsk_texture_node_get_type")
 
-	core.PuregoSafeRegister(&xNewTextureNode, lib, "gsk_texture_node_new")
+	core.PuregoSafeRegister(&xNewTextureNode, libs, "gsk_texture_node_new")
 
-	core.PuregoSafeRegister(&xTextureNodeGetTexture, lib, "gsk_texture_node_get_texture")
+	core.PuregoSafeRegister(&xTextureNodeGetTexture, libs, "gsk_texture_node_get_texture")
 
-	core.PuregoSafeRegister(&xTextureScaleNodeGLibType, lib, "gsk_texture_scale_node_get_type")
+	core.PuregoSafeRegister(&xTextureScaleNodeGLibType, libs, "gsk_texture_scale_node_get_type")
 
-	core.PuregoSafeRegister(&xNewTextureScaleNode, lib, "gsk_texture_scale_node_new")
+	core.PuregoSafeRegister(&xNewTextureScaleNode, libs, "gsk_texture_scale_node_new")
 
-	core.PuregoSafeRegister(&xTextureScaleNodeGetFilter, lib, "gsk_texture_scale_node_get_filter")
-	core.PuregoSafeRegister(&xTextureScaleNodeGetTexture, lib, "gsk_texture_scale_node_get_texture")
+	core.PuregoSafeRegister(&xTextureScaleNodeGetFilter, libs, "gsk_texture_scale_node_get_filter")
+	core.PuregoSafeRegister(&xTextureScaleNodeGetTexture, libs, "gsk_texture_scale_node_get_texture")
 
-	core.PuregoSafeRegister(&xTransformNodeGLibType, lib, "gsk_transform_node_get_type")
+	core.PuregoSafeRegister(&xTransformNodeGLibType, libs, "gsk_transform_node_get_type")
 
-	core.PuregoSafeRegister(&xNewTransformNode, lib, "gsk_transform_node_new")
+	core.PuregoSafeRegister(&xNewTransformNode, libs, "gsk_transform_node_new")
 
-	core.PuregoSafeRegister(&xTransformNodeGetChild, lib, "gsk_transform_node_get_child")
-	core.PuregoSafeRegister(&xTransformNodeGetTransform, lib, "gsk_transform_node_get_transform")
+	core.PuregoSafeRegister(&xTransformNodeGetChild, libs, "gsk_transform_node_get_child")
+	core.PuregoSafeRegister(&xTransformNodeGetTransform, libs, "gsk_transform_node_get_transform")
 
 }

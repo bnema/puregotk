@@ -443,31 +443,35 @@ func TlsCertificateListNewFromFile(FileVar string) (*glib.List, error) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTlsCertificateGLibType, lib, "g_tls_certificate_get_type")
+	core.PuregoSafeRegister(&xTlsCertificateGLibType, libs, "g_tls_certificate_get_type")
 
-	core.PuregoSafeRegister(&xNewTlsCertificateFromFile, lib, "g_tls_certificate_new_from_file")
-	core.PuregoSafeRegister(&xNewTlsCertificateFromFileWithPassword, lib, "g_tls_certificate_new_from_file_with_password")
-	core.PuregoSafeRegister(&xNewTlsCertificateFromFiles, lib, "g_tls_certificate_new_from_files")
-	core.PuregoSafeRegister(&xNewTlsCertificateFromPem, lib, "g_tls_certificate_new_from_pem")
-	core.PuregoSafeRegister(&xNewTlsCertificateFromPkcs11Uris, lib, "g_tls_certificate_new_from_pkcs11_uris")
-	core.PuregoSafeRegister(&xNewTlsCertificateFromPkcs12, lib, "g_tls_certificate_new_from_pkcs12")
+	core.PuregoSafeRegister(&xNewTlsCertificateFromFile, libs, "g_tls_certificate_new_from_file")
+	core.PuregoSafeRegister(&xNewTlsCertificateFromFileWithPassword, libs, "g_tls_certificate_new_from_file_with_password")
+	core.PuregoSafeRegister(&xNewTlsCertificateFromFiles, libs, "g_tls_certificate_new_from_files")
+	core.PuregoSafeRegister(&xNewTlsCertificateFromPem, libs, "g_tls_certificate_new_from_pem")
+	core.PuregoSafeRegister(&xNewTlsCertificateFromPkcs11Uris, libs, "g_tls_certificate_new_from_pkcs11_uris")
+	core.PuregoSafeRegister(&xNewTlsCertificateFromPkcs12, libs, "g_tls_certificate_new_from_pkcs12")
 
-	core.PuregoSafeRegister(&xTlsCertificateGetDnsNames, lib, "g_tls_certificate_get_dns_names")
-	core.PuregoSafeRegister(&xTlsCertificateGetIpAddresses, lib, "g_tls_certificate_get_ip_addresses")
-	core.PuregoSafeRegister(&xTlsCertificateGetIssuer, lib, "g_tls_certificate_get_issuer")
-	core.PuregoSafeRegister(&xTlsCertificateGetIssuerName, lib, "g_tls_certificate_get_issuer_name")
-	core.PuregoSafeRegister(&xTlsCertificateGetNotValidAfter, lib, "g_tls_certificate_get_not_valid_after")
-	core.PuregoSafeRegister(&xTlsCertificateGetNotValidBefore, lib, "g_tls_certificate_get_not_valid_before")
-	core.PuregoSafeRegister(&xTlsCertificateGetSubjectName, lib, "g_tls_certificate_get_subject_name")
-	core.PuregoSafeRegister(&xTlsCertificateIsSame, lib, "g_tls_certificate_is_same")
-	core.PuregoSafeRegister(&xTlsCertificateVerify, lib, "g_tls_certificate_verify")
+	core.PuregoSafeRegister(&xTlsCertificateGetDnsNames, libs, "g_tls_certificate_get_dns_names")
+	core.PuregoSafeRegister(&xTlsCertificateGetIpAddresses, libs, "g_tls_certificate_get_ip_addresses")
+	core.PuregoSafeRegister(&xTlsCertificateGetIssuer, libs, "g_tls_certificate_get_issuer")
+	core.PuregoSafeRegister(&xTlsCertificateGetIssuerName, libs, "g_tls_certificate_get_issuer_name")
+	core.PuregoSafeRegister(&xTlsCertificateGetNotValidAfter, libs, "g_tls_certificate_get_not_valid_after")
+	core.PuregoSafeRegister(&xTlsCertificateGetNotValidBefore, libs, "g_tls_certificate_get_not_valid_before")
+	core.PuregoSafeRegister(&xTlsCertificateGetSubjectName, libs, "g_tls_certificate_get_subject_name")
+	core.PuregoSafeRegister(&xTlsCertificateIsSame, libs, "g_tls_certificate_is_same")
+	core.PuregoSafeRegister(&xTlsCertificateVerify, libs, "g_tls_certificate_verify")
 
-	core.PuregoSafeRegister(&xTlsCertificateListNewFromFile, lib, "g_tls_certificate_list_new_from_file")
+	core.PuregoSafeRegister(&xTlsCertificateListNewFromFile, libs, "g_tls_certificate_list_new_from_file")
 
 }

@@ -189,21 +189,25 @@ func (c *TextMark) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTextMarkGLibType, lib, "gtk_text_mark_get_type")
+	core.PuregoSafeRegister(&xTextMarkGLibType, libs, "gtk_text_mark_get_type")
 
-	core.PuregoSafeRegister(&xNewTextMark, lib, "gtk_text_mark_new")
+	core.PuregoSafeRegister(&xNewTextMark, libs, "gtk_text_mark_new")
 
-	core.PuregoSafeRegister(&xTextMarkGetBuffer, lib, "gtk_text_mark_get_buffer")
-	core.PuregoSafeRegister(&xTextMarkGetDeleted, lib, "gtk_text_mark_get_deleted")
-	core.PuregoSafeRegister(&xTextMarkGetLeftGravity, lib, "gtk_text_mark_get_left_gravity")
-	core.PuregoSafeRegister(&xTextMarkGetName, lib, "gtk_text_mark_get_name")
-	core.PuregoSafeRegister(&xTextMarkGetVisible, lib, "gtk_text_mark_get_visible")
-	core.PuregoSafeRegister(&xTextMarkSetVisible, lib, "gtk_text_mark_set_visible")
+	core.PuregoSafeRegister(&xTextMarkGetBuffer, libs, "gtk_text_mark_get_buffer")
+	core.PuregoSafeRegister(&xTextMarkGetDeleted, libs, "gtk_text_mark_get_deleted")
+	core.PuregoSafeRegister(&xTextMarkGetLeftGravity, libs, "gtk_text_mark_get_left_gravity")
+	core.PuregoSafeRegister(&xTextMarkGetName, libs, "gtk_text_mark_get_name")
+	core.PuregoSafeRegister(&xTextMarkGetVisible, libs, "gtk_text_mark_get_visible")
+	core.PuregoSafeRegister(&xTextMarkSetVisible, libs, "gtk_text_mark_set_visible")
 
 }

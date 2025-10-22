@@ -149,20 +149,24 @@ func NativeGetForSurface(SurfaceVar *gdk.Surface) *NativeBase {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xNativeGetForSurface, lib, "gtk_native_get_for_surface")
+	core.PuregoSafeRegister(&xNativeGetForSurface, libs, "gtk_native_get_for_surface")
 
-	core.PuregoSafeRegister(&xNativeGLibType, lib, "gtk_native_get_type")
+	core.PuregoSafeRegister(&xNativeGLibType, libs, "gtk_native_get_type")
 
-	core.PuregoSafeRegister(&XGtkNativeGetRenderer, lib, "gtk_native_get_renderer")
-	core.PuregoSafeRegister(&XGtkNativeGetSurface, lib, "gtk_native_get_surface")
-	core.PuregoSafeRegister(&XGtkNativeGetSurfaceTransform, lib, "gtk_native_get_surface_transform")
-	core.PuregoSafeRegister(&XGtkNativeRealize, lib, "gtk_native_realize")
-	core.PuregoSafeRegister(&XGtkNativeUnrealize, lib, "gtk_native_unrealize")
+	core.PuregoSafeRegister(&XGtkNativeGetRenderer, libs, "gtk_native_get_renderer")
+	core.PuregoSafeRegister(&XGtkNativeGetSurface, libs, "gtk_native_get_surface")
+	core.PuregoSafeRegister(&XGtkNativeGetSurfaceTransform, libs, "gtk_native_get_surface_transform")
+	core.PuregoSafeRegister(&XGtkNativeRealize, libs, "gtk_native_realize")
+	core.PuregoSafeRegister(&XGtkNativeUnrealize, libs, "gtk_native_unrealize")
 
 }

@@ -783,39 +783,43 @@ func (x *BottomSheet) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBottomSheetGLibType, lib, "adw_bottom_sheet_get_type")
+	core.PuregoSafeRegister(&xBottomSheetGLibType, libs, "adw_bottom_sheet_get_type")
 
-	core.PuregoSafeRegister(&xNewBottomSheet, lib, "adw_bottom_sheet_new")
+	core.PuregoSafeRegister(&xNewBottomSheet, libs, "adw_bottom_sheet_new")
 
-	core.PuregoSafeRegister(&xBottomSheetGetAlign, lib, "adw_bottom_sheet_get_align")
-	core.PuregoSafeRegister(&xBottomSheetGetBottomBar, lib, "adw_bottom_sheet_get_bottom_bar")
-	core.PuregoSafeRegister(&xBottomSheetGetBottomBarHeight, lib, "adw_bottom_sheet_get_bottom_bar_height")
-	core.PuregoSafeRegister(&xBottomSheetGetCanClose, lib, "adw_bottom_sheet_get_can_close")
-	core.PuregoSafeRegister(&xBottomSheetGetCanOpen, lib, "adw_bottom_sheet_get_can_open")
-	core.PuregoSafeRegister(&xBottomSheetGetContent, lib, "adw_bottom_sheet_get_content")
-	core.PuregoSafeRegister(&xBottomSheetGetFullWidth, lib, "adw_bottom_sheet_get_full_width")
-	core.PuregoSafeRegister(&xBottomSheetGetModal, lib, "adw_bottom_sheet_get_modal")
-	core.PuregoSafeRegister(&xBottomSheetGetOpen, lib, "adw_bottom_sheet_get_open")
-	core.PuregoSafeRegister(&xBottomSheetGetRevealBottomBar, lib, "adw_bottom_sheet_get_reveal_bottom_bar")
-	core.PuregoSafeRegister(&xBottomSheetGetSheet, lib, "adw_bottom_sheet_get_sheet")
-	core.PuregoSafeRegister(&xBottomSheetGetSheetHeight, lib, "adw_bottom_sheet_get_sheet_height")
-	core.PuregoSafeRegister(&xBottomSheetGetShowDragHandle, lib, "adw_bottom_sheet_get_show_drag_handle")
-	core.PuregoSafeRegister(&xBottomSheetSetAlign, lib, "adw_bottom_sheet_set_align")
-	core.PuregoSafeRegister(&xBottomSheetSetBottomBar, lib, "adw_bottom_sheet_set_bottom_bar")
-	core.PuregoSafeRegister(&xBottomSheetSetCanClose, lib, "adw_bottom_sheet_set_can_close")
-	core.PuregoSafeRegister(&xBottomSheetSetCanOpen, lib, "adw_bottom_sheet_set_can_open")
-	core.PuregoSafeRegister(&xBottomSheetSetContent, lib, "adw_bottom_sheet_set_content")
-	core.PuregoSafeRegister(&xBottomSheetSetFullWidth, lib, "adw_bottom_sheet_set_full_width")
-	core.PuregoSafeRegister(&xBottomSheetSetModal, lib, "adw_bottom_sheet_set_modal")
-	core.PuregoSafeRegister(&xBottomSheetSetOpen, lib, "adw_bottom_sheet_set_open")
-	core.PuregoSafeRegister(&xBottomSheetSetRevealBottomBar, lib, "adw_bottom_sheet_set_reveal_bottom_bar")
-	core.PuregoSafeRegister(&xBottomSheetSetSheet, lib, "adw_bottom_sheet_set_sheet")
-	core.PuregoSafeRegister(&xBottomSheetSetShowDragHandle, lib, "adw_bottom_sheet_set_show_drag_handle")
+	core.PuregoSafeRegister(&xBottomSheetGetAlign, libs, "adw_bottom_sheet_get_align")
+	core.PuregoSafeRegister(&xBottomSheetGetBottomBar, libs, "adw_bottom_sheet_get_bottom_bar")
+	core.PuregoSafeRegister(&xBottomSheetGetBottomBarHeight, libs, "adw_bottom_sheet_get_bottom_bar_height")
+	core.PuregoSafeRegister(&xBottomSheetGetCanClose, libs, "adw_bottom_sheet_get_can_close")
+	core.PuregoSafeRegister(&xBottomSheetGetCanOpen, libs, "adw_bottom_sheet_get_can_open")
+	core.PuregoSafeRegister(&xBottomSheetGetContent, libs, "adw_bottom_sheet_get_content")
+	core.PuregoSafeRegister(&xBottomSheetGetFullWidth, libs, "adw_bottom_sheet_get_full_width")
+	core.PuregoSafeRegister(&xBottomSheetGetModal, libs, "adw_bottom_sheet_get_modal")
+	core.PuregoSafeRegister(&xBottomSheetGetOpen, libs, "adw_bottom_sheet_get_open")
+	core.PuregoSafeRegister(&xBottomSheetGetRevealBottomBar, libs, "adw_bottom_sheet_get_reveal_bottom_bar")
+	core.PuregoSafeRegister(&xBottomSheetGetSheet, libs, "adw_bottom_sheet_get_sheet")
+	core.PuregoSafeRegister(&xBottomSheetGetSheetHeight, libs, "adw_bottom_sheet_get_sheet_height")
+	core.PuregoSafeRegister(&xBottomSheetGetShowDragHandle, libs, "adw_bottom_sheet_get_show_drag_handle")
+	core.PuregoSafeRegister(&xBottomSheetSetAlign, libs, "adw_bottom_sheet_set_align")
+	core.PuregoSafeRegister(&xBottomSheetSetBottomBar, libs, "adw_bottom_sheet_set_bottom_bar")
+	core.PuregoSafeRegister(&xBottomSheetSetCanClose, libs, "adw_bottom_sheet_set_can_close")
+	core.PuregoSafeRegister(&xBottomSheetSetCanOpen, libs, "adw_bottom_sheet_set_can_open")
+	core.PuregoSafeRegister(&xBottomSheetSetContent, libs, "adw_bottom_sheet_set_content")
+	core.PuregoSafeRegister(&xBottomSheetSetFullWidth, libs, "adw_bottom_sheet_set_full_width")
+	core.PuregoSafeRegister(&xBottomSheetSetModal, libs, "adw_bottom_sheet_set_modal")
+	core.PuregoSafeRegister(&xBottomSheetSetOpen, libs, "adw_bottom_sheet_set_open")
+	core.PuregoSafeRegister(&xBottomSheetSetRevealBottomBar, libs, "adw_bottom_sheet_set_reveal_bottom_bar")
+	core.PuregoSafeRegister(&xBottomSheetSetSheet, libs, "adw_bottom_sheet_set_sheet")
+	core.PuregoSafeRegister(&xBottomSheetSetShowDragHandle, libs, "adw_bottom_sheet_set_show_drag_handle")
 
 }

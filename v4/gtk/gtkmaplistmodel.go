@@ -290,19 +290,23 @@ func (x *MapListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMapListModelGLibType, lib, "gtk_map_list_model_get_type")
+	core.PuregoSafeRegister(&xMapListModelGLibType, libs, "gtk_map_list_model_get_type")
 
-	core.PuregoSafeRegister(&xNewMapListModel, lib, "gtk_map_list_model_new")
+	core.PuregoSafeRegister(&xNewMapListModel, libs, "gtk_map_list_model_new")
 
-	core.PuregoSafeRegister(&xMapListModelGetModel, lib, "gtk_map_list_model_get_model")
-	core.PuregoSafeRegister(&xMapListModelHasMap, lib, "gtk_map_list_model_has_map")
-	core.PuregoSafeRegister(&xMapListModelSetMapFunc, lib, "gtk_map_list_model_set_map_func")
-	core.PuregoSafeRegister(&xMapListModelSetModel, lib, "gtk_map_list_model_set_model")
+	core.PuregoSafeRegister(&xMapListModelGetModel, libs, "gtk_map_list_model_get_model")
+	core.PuregoSafeRegister(&xMapListModelHasMap, libs, "gtk_map_list_model_has_map")
+	core.PuregoSafeRegister(&xMapListModelSetMapFunc, libs, "gtk_map_list_model_set_map_func")
+	core.PuregoSafeRegister(&xMapListModelSetModel, libs, "gtk_map_list_model_set_model")
 
 }

@@ -685,33 +685,37 @@ func (x *Calendar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCalendarGLibType, lib, "gtk_calendar_get_type")
+	core.PuregoSafeRegister(&xCalendarGLibType, libs, "gtk_calendar_get_type")
 
-	core.PuregoSafeRegister(&xNewCalendar, lib, "gtk_calendar_new")
+	core.PuregoSafeRegister(&xNewCalendar, libs, "gtk_calendar_new")
 
-	core.PuregoSafeRegister(&xCalendarClearMarks, lib, "gtk_calendar_clear_marks")
-	core.PuregoSafeRegister(&xCalendarGetDate, lib, "gtk_calendar_get_date")
-	core.PuregoSafeRegister(&xCalendarGetDay, lib, "gtk_calendar_get_day")
-	core.PuregoSafeRegister(&xCalendarGetDayIsMarked, lib, "gtk_calendar_get_day_is_marked")
-	core.PuregoSafeRegister(&xCalendarGetMonth, lib, "gtk_calendar_get_month")
-	core.PuregoSafeRegister(&xCalendarGetShowDayNames, lib, "gtk_calendar_get_show_day_names")
-	core.PuregoSafeRegister(&xCalendarGetShowHeading, lib, "gtk_calendar_get_show_heading")
-	core.PuregoSafeRegister(&xCalendarGetShowWeekNumbers, lib, "gtk_calendar_get_show_week_numbers")
-	core.PuregoSafeRegister(&xCalendarGetYear, lib, "gtk_calendar_get_year")
-	core.PuregoSafeRegister(&xCalendarMarkDay, lib, "gtk_calendar_mark_day")
-	core.PuregoSafeRegister(&xCalendarSelectDay, lib, "gtk_calendar_select_day")
-	core.PuregoSafeRegister(&xCalendarSetDay, lib, "gtk_calendar_set_day")
-	core.PuregoSafeRegister(&xCalendarSetMonth, lib, "gtk_calendar_set_month")
-	core.PuregoSafeRegister(&xCalendarSetShowDayNames, lib, "gtk_calendar_set_show_day_names")
-	core.PuregoSafeRegister(&xCalendarSetShowHeading, lib, "gtk_calendar_set_show_heading")
-	core.PuregoSafeRegister(&xCalendarSetShowWeekNumbers, lib, "gtk_calendar_set_show_week_numbers")
-	core.PuregoSafeRegister(&xCalendarSetYear, lib, "gtk_calendar_set_year")
-	core.PuregoSafeRegister(&xCalendarUnmarkDay, lib, "gtk_calendar_unmark_day")
+	core.PuregoSafeRegister(&xCalendarClearMarks, libs, "gtk_calendar_clear_marks")
+	core.PuregoSafeRegister(&xCalendarGetDate, libs, "gtk_calendar_get_date")
+	core.PuregoSafeRegister(&xCalendarGetDay, libs, "gtk_calendar_get_day")
+	core.PuregoSafeRegister(&xCalendarGetDayIsMarked, libs, "gtk_calendar_get_day_is_marked")
+	core.PuregoSafeRegister(&xCalendarGetMonth, libs, "gtk_calendar_get_month")
+	core.PuregoSafeRegister(&xCalendarGetShowDayNames, libs, "gtk_calendar_get_show_day_names")
+	core.PuregoSafeRegister(&xCalendarGetShowHeading, libs, "gtk_calendar_get_show_heading")
+	core.PuregoSafeRegister(&xCalendarGetShowWeekNumbers, libs, "gtk_calendar_get_show_week_numbers")
+	core.PuregoSafeRegister(&xCalendarGetYear, libs, "gtk_calendar_get_year")
+	core.PuregoSafeRegister(&xCalendarMarkDay, libs, "gtk_calendar_mark_day")
+	core.PuregoSafeRegister(&xCalendarSelectDay, libs, "gtk_calendar_select_day")
+	core.PuregoSafeRegister(&xCalendarSetDay, libs, "gtk_calendar_set_day")
+	core.PuregoSafeRegister(&xCalendarSetMonth, libs, "gtk_calendar_set_month")
+	core.PuregoSafeRegister(&xCalendarSetShowDayNames, libs, "gtk_calendar_set_show_day_names")
+	core.PuregoSafeRegister(&xCalendarSetShowHeading, libs, "gtk_calendar_set_show_heading")
+	core.PuregoSafeRegister(&xCalendarSetShowWeekNumbers, libs, "gtk_calendar_set_show_week_numbers")
+	core.PuregoSafeRegister(&xCalendarSetYear, libs, "gtk_calendar_set_year")
+	core.PuregoSafeRegister(&xCalendarUnmarkDay, libs, "gtk_calendar_unmark_day")
 
 }

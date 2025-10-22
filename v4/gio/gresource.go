@@ -227,24 +227,28 @@ func ResourcesUnregister(ResourceVar *Resource) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xResourceErrorQuark, lib, "g_resource_error_quark")
-	core.PuregoSafeRegister(&xResourceLoad, lib, "g_resource_load")
-	core.PuregoSafeRegister(&xResourcesEnumerateChildren, lib, "g_resources_enumerate_children")
-	core.PuregoSafeRegister(&xResourcesGetInfo, lib, "g_resources_get_info")
-	core.PuregoSafeRegister(&xResourcesHasChildren, lib, "g_resources_has_children")
-	core.PuregoSafeRegister(&xResourcesLookupData, lib, "g_resources_lookup_data")
-	core.PuregoSafeRegister(&xResourcesOpenStream, lib, "g_resources_open_stream")
-	core.PuregoSafeRegister(&xResourcesRegister, lib, "g_resources_register")
-	core.PuregoSafeRegister(&xResourcesUnregister, lib, "g_resources_unregister")
+	core.PuregoSafeRegister(&xResourceErrorQuark, libs, "g_resource_error_quark")
+	core.PuregoSafeRegister(&xResourceLoad, libs, "g_resource_load")
+	core.PuregoSafeRegister(&xResourcesEnumerateChildren, libs, "g_resources_enumerate_children")
+	core.PuregoSafeRegister(&xResourcesGetInfo, libs, "g_resources_get_info")
+	core.PuregoSafeRegister(&xResourcesHasChildren, libs, "g_resources_has_children")
+	core.PuregoSafeRegister(&xResourcesLookupData, libs, "g_resources_lookup_data")
+	core.PuregoSafeRegister(&xResourcesOpenStream, libs, "g_resources_open_stream")
+	core.PuregoSafeRegister(&xResourcesRegister, libs, "g_resources_register")
+	core.PuregoSafeRegister(&xResourcesUnregister, libs, "g_resources_unregister")
 
-	core.PuregoSafeRegister(&xStaticResourceFini, lib, "g_static_resource_fini")
-	core.PuregoSafeRegister(&xStaticResourceGetResource, lib, "g_static_resource_get_resource")
-	core.PuregoSafeRegister(&xStaticResourceInit, lib, "g_static_resource_init")
+	core.PuregoSafeRegister(&xStaticResourceFini, libs, "g_static_resource_fini")
+	core.PuregoSafeRegister(&xStaticResourceGetResource, libs, "g_static_resource_get_resource")
+	core.PuregoSafeRegister(&xStaticResourceInit, libs, "g_static_resource_init")
 
 }

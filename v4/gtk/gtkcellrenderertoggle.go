@@ -155,21 +155,25 @@ func (x *CellRendererToggle) ConnectToggled(cb *func(CellRendererToggle, string)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCellRendererToggleGLibType, lib, "gtk_cell_renderer_toggle_get_type")
+	core.PuregoSafeRegister(&xCellRendererToggleGLibType, libs, "gtk_cell_renderer_toggle_get_type")
 
-	core.PuregoSafeRegister(&xNewCellRendererToggle, lib, "gtk_cell_renderer_toggle_new")
+	core.PuregoSafeRegister(&xNewCellRendererToggle, libs, "gtk_cell_renderer_toggle_new")
 
-	core.PuregoSafeRegister(&xCellRendererToggleGetActivatable, lib, "gtk_cell_renderer_toggle_get_activatable")
-	core.PuregoSafeRegister(&xCellRendererToggleGetActive, lib, "gtk_cell_renderer_toggle_get_active")
-	core.PuregoSafeRegister(&xCellRendererToggleGetRadio, lib, "gtk_cell_renderer_toggle_get_radio")
-	core.PuregoSafeRegister(&xCellRendererToggleSetActivatable, lib, "gtk_cell_renderer_toggle_set_activatable")
-	core.PuregoSafeRegister(&xCellRendererToggleSetActive, lib, "gtk_cell_renderer_toggle_set_active")
-	core.PuregoSafeRegister(&xCellRendererToggleSetRadio, lib, "gtk_cell_renderer_toggle_set_radio")
+	core.PuregoSafeRegister(&xCellRendererToggleGetActivatable, libs, "gtk_cell_renderer_toggle_get_activatable")
+	core.PuregoSafeRegister(&xCellRendererToggleGetActive, libs, "gtk_cell_renderer_toggle_get_active")
+	core.PuregoSafeRegister(&xCellRendererToggleGetRadio, libs, "gtk_cell_renderer_toggle_get_radio")
+	core.PuregoSafeRegister(&xCellRendererToggleSetActivatable, libs, "gtk_cell_renderer_toggle_set_activatable")
+	core.PuregoSafeRegister(&xCellRendererToggleSetActive, libs, "gtk_cell_renderer_toggle_set_active")
+	core.PuregoSafeRegister(&xCellRendererToggleSetRadio, libs, "gtk_cell_renderer_toggle_set_radio")
 
 }

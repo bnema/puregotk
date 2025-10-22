@@ -325,27 +325,31 @@ func (x *Animation) ConnectDone(cb *func(Animation)) uint32 {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAnimationStateGLibType, lib, "adw_animation_state_get_type")
+	core.PuregoSafeRegister(&xAnimationStateGLibType, libs, "adw_animation_state_get_type")
 
-	core.PuregoSafeRegister(&xAnimationGLibType, lib, "adw_animation_get_type")
+	core.PuregoSafeRegister(&xAnimationGLibType, libs, "adw_animation_get_type")
 
-	core.PuregoSafeRegister(&xAnimationGetFollowEnableAnimationsSetting, lib, "adw_animation_get_follow_enable_animations_setting")
-	core.PuregoSafeRegister(&xAnimationGetState, lib, "adw_animation_get_state")
-	core.PuregoSafeRegister(&xAnimationGetTarget, lib, "adw_animation_get_target")
-	core.PuregoSafeRegister(&xAnimationGetValue, lib, "adw_animation_get_value")
-	core.PuregoSafeRegister(&xAnimationGetWidget, lib, "adw_animation_get_widget")
-	core.PuregoSafeRegister(&xAnimationPause, lib, "adw_animation_pause")
-	core.PuregoSafeRegister(&xAnimationPlay, lib, "adw_animation_play")
-	core.PuregoSafeRegister(&xAnimationReset, lib, "adw_animation_reset")
-	core.PuregoSafeRegister(&xAnimationResume, lib, "adw_animation_resume")
-	core.PuregoSafeRegister(&xAnimationSetFollowEnableAnimationsSetting, lib, "adw_animation_set_follow_enable_animations_setting")
-	core.PuregoSafeRegister(&xAnimationSetTarget, lib, "adw_animation_set_target")
-	core.PuregoSafeRegister(&xAnimationSkip, lib, "adw_animation_skip")
+	core.PuregoSafeRegister(&xAnimationGetFollowEnableAnimationsSetting, libs, "adw_animation_get_follow_enable_animations_setting")
+	core.PuregoSafeRegister(&xAnimationGetState, libs, "adw_animation_get_state")
+	core.PuregoSafeRegister(&xAnimationGetTarget, libs, "adw_animation_get_target")
+	core.PuregoSafeRegister(&xAnimationGetValue, libs, "adw_animation_get_value")
+	core.PuregoSafeRegister(&xAnimationGetWidget, libs, "adw_animation_get_widget")
+	core.PuregoSafeRegister(&xAnimationPause, libs, "adw_animation_pause")
+	core.PuregoSafeRegister(&xAnimationPlay, libs, "adw_animation_play")
+	core.PuregoSafeRegister(&xAnimationReset, libs, "adw_animation_reset")
+	core.PuregoSafeRegister(&xAnimationResume, libs, "adw_animation_resume")
+	core.PuregoSafeRegister(&xAnimationSetFollowEnableAnimationsSetting, libs, "adw_animation_set_follow_enable_animations_setting")
+	core.PuregoSafeRegister(&xAnimationSetTarget, libs, "adw_animation_set_target")
+	core.PuregoSafeRegister(&xAnimationSkip, libs, "adw_animation_skip")
 
 }

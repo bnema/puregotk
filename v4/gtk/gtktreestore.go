@@ -924,37 +924,41 @@ func (x *TreeStore) SortColumnChanged() {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTreeStoreGLibType, lib, "gtk_tree_store_get_type")
+	core.PuregoSafeRegister(&xTreeStoreGLibType, libs, "gtk_tree_store_get_type")
 
-	core.PuregoSafeRegister(&xNewTreeStore, lib, "gtk_tree_store_new")
-	core.PuregoSafeRegister(&xNewTreeStorev, lib, "gtk_tree_store_newv")
+	core.PuregoSafeRegister(&xNewTreeStore, libs, "gtk_tree_store_new")
+	core.PuregoSafeRegister(&xNewTreeStorev, libs, "gtk_tree_store_newv")
 
-	core.PuregoSafeRegister(&xTreeStoreAppend, lib, "gtk_tree_store_append")
-	core.PuregoSafeRegister(&xTreeStoreClear, lib, "gtk_tree_store_clear")
-	core.PuregoSafeRegister(&xTreeStoreInsert, lib, "gtk_tree_store_insert")
-	core.PuregoSafeRegister(&xTreeStoreInsertAfter, lib, "gtk_tree_store_insert_after")
-	core.PuregoSafeRegister(&xTreeStoreInsertBefore, lib, "gtk_tree_store_insert_before")
-	core.PuregoSafeRegister(&xTreeStoreInsertWithValues, lib, "gtk_tree_store_insert_with_values")
-	core.PuregoSafeRegister(&xTreeStoreInsertWithValuesv, lib, "gtk_tree_store_insert_with_valuesv")
-	core.PuregoSafeRegister(&xTreeStoreIsAncestor, lib, "gtk_tree_store_is_ancestor")
-	core.PuregoSafeRegister(&xTreeStoreIterDepth, lib, "gtk_tree_store_iter_depth")
-	core.PuregoSafeRegister(&xTreeStoreIterIsValid, lib, "gtk_tree_store_iter_is_valid")
-	core.PuregoSafeRegister(&xTreeStoreMoveAfter, lib, "gtk_tree_store_move_after")
-	core.PuregoSafeRegister(&xTreeStoreMoveBefore, lib, "gtk_tree_store_move_before")
-	core.PuregoSafeRegister(&xTreeStorePrepend, lib, "gtk_tree_store_prepend")
-	core.PuregoSafeRegister(&xTreeStoreRemove, lib, "gtk_tree_store_remove")
-	core.PuregoSafeRegister(&xTreeStoreReorder, lib, "gtk_tree_store_reorder")
-	core.PuregoSafeRegister(&xTreeStoreSet, lib, "gtk_tree_store_set")
-	core.PuregoSafeRegister(&xTreeStoreSetColumnTypes, lib, "gtk_tree_store_set_column_types")
-	core.PuregoSafeRegister(&xTreeStoreSetValist, lib, "gtk_tree_store_set_valist")
-	core.PuregoSafeRegister(&xTreeStoreSetValue, lib, "gtk_tree_store_set_value")
-	core.PuregoSafeRegister(&xTreeStoreSetValuesv, lib, "gtk_tree_store_set_valuesv")
-	core.PuregoSafeRegister(&xTreeStoreSwap, lib, "gtk_tree_store_swap")
+	core.PuregoSafeRegister(&xTreeStoreAppend, libs, "gtk_tree_store_append")
+	core.PuregoSafeRegister(&xTreeStoreClear, libs, "gtk_tree_store_clear")
+	core.PuregoSafeRegister(&xTreeStoreInsert, libs, "gtk_tree_store_insert")
+	core.PuregoSafeRegister(&xTreeStoreInsertAfter, libs, "gtk_tree_store_insert_after")
+	core.PuregoSafeRegister(&xTreeStoreInsertBefore, libs, "gtk_tree_store_insert_before")
+	core.PuregoSafeRegister(&xTreeStoreInsertWithValues, libs, "gtk_tree_store_insert_with_values")
+	core.PuregoSafeRegister(&xTreeStoreInsertWithValuesv, libs, "gtk_tree_store_insert_with_valuesv")
+	core.PuregoSafeRegister(&xTreeStoreIsAncestor, libs, "gtk_tree_store_is_ancestor")
+	core.PuregoSafeRegister(&xTreeStoreIterDepth, libs, "gtk_tree_store_iter_depth")
+	core.PuregoSafeRegister(&xTreeStoreIterIsValid, libs, "gtk_tree_store_iter_is_valid")
+	core.PuregoSafeRegister(&xTreeStoreMoveAfter, libs, "gtk_tree_store_move_after")
+	core.PuregoSafeRegister(&xTreeStoreMoveBefore, libs, "gtk_tree_store_move_before")
+	core.PuregoSafeRegister(&xTreeStorePrepend, libs, "gtk_tree_store_prepend")
+	core.PuregoSafeRegister(&xTreeStoreRemove, libs, "gtk_tree_store_remove")
+	core.PuregoSafeRegister(&xTreeStoreReorder, libs, "gtk_tree_store_reorder")
+	core.PuregoSafeRegister(&xTreeStoreSet, libs, "gtk_tree_store_set")
+	core.PuregoSafeRegister(&xTreeStoreSetColumnTypes, libs, "gtk_tree_store_set_column_types")
+	core.PuregoSafeRegister(&xTreeStoreSetValist, libs, "gtk_tree_store_set_valist")
+	core.PuregoSafeRegister(&xTreeStoreSetValue, libs, "gtk_tree_store_set_value")
+	core.PuregoSafeRegister(&xTreeStoreSetValuesv, libs, "gtk_tree_store_set_valuesv")
+	core.PuregoSafeRegister(&xTreeStoreSwap, libs, "gtk_tree_store_swap")
 
 }

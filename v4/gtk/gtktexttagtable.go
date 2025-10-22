@@ -224,20 +224,24 @@ func (x *TextTagTable) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTextTagTableGLibType, lib, "gtk_text_tag_table_get_type")
+	core.PuregoSafeRegister(&xTextTagTableGLibType, libs, "gtk_text_tag_table_get_type")
 
-	core.PuregoSafeRegister(&xNewTextTagTable, lib, "gtk_text_tag_table_new")
+	core.PuregoSafeRegister(&xNewTextTagTable, libs, "gtk_text_tag_table_new")
 
-	core.PuregoSafeRegister(&xTextTagTableAdd, lib, "gtk_text_tag_table_add")
-	core.PuregoSafeRegister(&xTextTagTableForeach, lib, "gtk_text_tag_table_foreach")
-	core.PuregoSafeRegister(&xTextTagTableGetSize, lib, "gtk_text_tag_table_get_size")
-	core.PuregoSafeRegister(&xTextTagTableLookup, lib, "gtk_text_tag_table_lookup")
-	core.PuregoSafeRegister(&xTextTagTableRemove, lib, "gtk_text_tag_table_remove")
+	core.PuregoSafeRegister(&xTextTagTableAdd, libs, "gtk_text_tag_table_add")
+	core.PuregoSafeRegister(&xTextTagTableForeach, libs, "gtk_text_tag_table_foreach")
+	core.PuregoSafeRegister(&xTextTagTableGetSize, libs, "gtk_text_tag_table_get_size")
+	core.PuregoSafeRegister(&xTextTagTableLookup, libs, "gtk_text_tag_table_lookup")
+	core.PuregoSafeRegister(&xTextTagTableRemove, libs, "gtk_text_tag_table_remove")
 
 }

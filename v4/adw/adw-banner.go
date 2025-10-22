@@ -614,27 +614,31 @@ func (x *Banner) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBannerButtonStyleGLibType, lib, "adw_banner_button_style_get_type")
+	core.PuregoSafeRegister(&xBannerButtonStyleGLibType, libs, "adw_banner_button_style_get_type")
 
-	core.PuregoSafeRegister(&xBannerGLibType, lib, "adw_banner_get_type")
+	core.PuregoSafeRegister(&xBannerGLibType, libs, "adw_banner_get_type")
 
-	core.PuregoSafeRegister(&xNewBanner, lib, "adw_banner_new")
+	core.PuregoSafeRegister(&xNewBanner, libs, "adw_banner_new")
 
-	core.PuregoSafeRegister(&xBannerGetButtonLabel, lib, "adw_banner_get_button_label")
-	core.PuregoSafeRegister(&xBannerGetButtonStyle, lib, "adw_banner_get_button_style")
-	core.PuregoSafeRegister(&xBannerGetRevealed, lib, "adw_banner_get_revealed")
-	core.PuregoSafeRegister(&xBannerGetTitle, lib, "adw_banner_get_title")
-	core.PuregoSafeRegister(&xBannerGetUseMarkup, lib, "adw_banner_get_use_markup")
-	core.PuregoSafeRegister(&xBannerSetButtonLabel, lib, "adw_banner_set_button_label")
-	core.PuregoSafeRegister(&xBannerSetButtonStyle, lib, "adw_banner_set_button_style")
-	core.PuregoSafeRegister(&xBannerSetRevealed, lib, "adw_banner_set_revealed")
-	core.PuregoSafeRegister(&xBannerSetTitle, lib, "adw_banner_set_title")
-	core.PuregoSafeRegister(&xBannerSetUseMarkup, lib, "adw_banner_set_use_markup")
+	core.PuregoSafeRegister(&xBannerGetButtonLabel, libs, "adw_banner_get_button_label")
+	core.PuregoSafeRegister(&xBannerGetButtonStyle, libs, "adw_banner_get_button_style")
+	core.PuregoSafeRegister(&xBannerGetRevealed, libs, "adw_banner_get_revealed")
+	core.PuregoSafeRegister(&xBannerGetTitle, libs, "adw_banner_get_title")
+	core.PuregoSafeRegister(&xBannerGetUseMarkup, libs, "adw_banner_get_use_markup")
+	core.PuregoSafeRegister(&xBannerSetButtonLabel, libs, "adw_banner_set_button_label")
+	core.PuregoSafeRegister(&xBannerSetButtonStyle, libs, "adw_banner_set_button_style")
+	core.PuregoSafeRegister(&xBannerSetRevealed, libs, "adw_banner_set_revealed")
+	core.PuregoSafeRegister(&xBannerSetTitle, libs, "adw_banner_set_title")
+	core.PuregoSafeRegister(&xBannerSetUseMarkup, libs, "adw_banner_set_use_markup")
 
 }

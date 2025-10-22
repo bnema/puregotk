@@ -167,26 +167,30 @@ func (x *ToplevelLayout) Unref() {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xToplevelLayoutGLibType, lib, "gdk_toplevel_layout_get_type")
+	core.PuregoSafeRegister(&xToplevelLayoutGLibType, libs, "gdk_toplevel_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewToplevelLayout, lib, "gdk_toplevel_layout_new")
+	core.PuregoSafeRegister(&xNewToplevelLayout, libs, "gdk_toplevel_layout_new")
 
-	core.PuregoSafeRegister(&xToplevelLayoutCopy, lib, "gdk_toplevel_layout_copy")
-	core.PuregoSafeRegister(&xToplevelLayoutEqual, lib, "gdk_toplevel_layout_equal")
-	core.PuregoSafeRegister(&xToplevelLayoutGetFullscreen, lib, "gdk_toplevel_layout_get_fullscreen")
-	core.PuregoSafeRegister(&xToplevelLayoutGetFullscreenMonitor, lib, "gdk_toplevel_layout_get_fullscreen_monitor")
-	core.PuregoSafeRegister(&xToplevelLayoutGetMaximized, lib, "gdk_toplevel_layout_get_maximized")
-	core.PuregoSafeRegister(&xToplevelLayoutGetResizable, lib, "gdk_toplevel_layout_get_resizable")
-	core.PuregoSafeRegister(&xToplevelLayoutRef, lib, "gdk_toplevel_layout_ref")
-	core.PuregoSafeRegister(&xToplevelLayoutSetFullscreen, lib, "gdk_toplevel_layout_set_fullscreen")
-	core.PuregoSafeRegister(&xToplevelLayoutSetMaximized, lib, "gdk_toplevel_layout_set_maximized")
-	core.PuregoSafeRegister(&xToplevelLayoutSetResizable, lib, "gdk_toplevel_layout_set_resizable")
-	core.PuregoSafeRegister(&xToplevelLayoutUnref, lib, "gdk_toplevel_layout_unref")
+	core.PuregoSafeRegister(&xToplevelLayoutCopy, libs, "gdk_toplevel_layout_copy")
+	core.PuregoSafeRegister(&xToplevelLayoutEqual, libs, "gdk_toplevel_layout_equal")
+	core.PuregoSafeRegister(&xToplevelLayoutGetFullscreen, libs, "gdk_toplevel_layout_get_fullscreen")
+	core.PuregoSafeRegister(&xToplevelLayoutGetFullscreenMonitor, libs, "gdk_toplevel_layout_get_fullscreen_monitor")
+	core.PuregoSafeRegister(&xToplevelLayoutGetMaximized, libs, "gdk_toplevel_layout_get_maximized")
+	core.PuregoSafeRegister(&xToplevelLayoutGetResizable, libs, "gdk_toplevel_layout_get_resizable")
+	core.PuregoSafeRegister(&xToplevelLayoutRef, libs, "gdk_toplevel_layout_ref")
+	core.PuregoSafeRegister(&xToplevelLayoutSetFullscreen, libs, "gdk_toplevel_layout_set_fullscreen")
+	core.PuregoSafeRegister(&xToplevelLayoutSetMaximized, libs, "gdk_toplevel_layout_set_maximized")
+	core.PuregoSafeRegister(&xToplevelLayoutSetResizable, libs, "gdk_toplevel_layout_set_resizable")
+	core.PuregoSafeRegister(&xToplevelLayoutUnref, libs, "gdk_toplevel_layout_unref")
 
 }

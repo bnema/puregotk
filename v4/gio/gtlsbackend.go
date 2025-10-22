@@ -436,25 +436,29 @@ func TlsBackendGetDefault() *TlsBackendBase {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTlsBackendGetDefault, lib, "g_tls_backend_get_default")
+	core.PuregoSafeRegister(&xTlsBackendGetDefault, libs, "g_tls_backend_get_default")
 
-	core.PuregoSafeRegister(&xTlsBackendGLibType, lib, "g_tls_backend_get_type")
+	core.PuregoSafeRegister(&xTlsBackendGLibType, libs, "g_tls_backend_get_type")
 
-	core.PuregoSafeRegister(&XGTlsBackendGetCertificateType, lib, "g_tls_backend_get_certificate_type")
-	core.PuregoSafeRegister(&XGTlsBackendGetClientConnectionType, lib, "g_tls_backend_get_client_connection_type")
-	core.PuregoSafeRegister(&XGTlsBackendGetDefaultDatabase, lib, "g_tls_backend_get_default_database")
-	core.PuregoSafeRegister(&XGTlsBackendGetDtlsClientConnectionType, lib, "g_tls_backend_get_dtls_client_connection_type")
-	core.PuregoSafeRegister(&XGTlsBackendGetDtlsServerConnectionType, lib, "g_tls_backend_get_dtls_server_connection_type")
-	core.PuregoSafeRegister(&XGTlsBackendGetFileDatabaseType, lib, "g_tls_backend_get_file_database_type")
-	core.PuregoSafeRegister(&XGTlsBackendGetServerConnectionType, lib, "g_tls_backend_get_server_connection_type")
-	core.PuregoSafeRegister(&XGTlsBackendSetDefaultDatabase, lib, "g_tls_backend_set_default_database")
-	core.PuregoSafeRegister(&XGTlsBackendSupportsDtls, lib, "g_tls_backend_supports_dtls")
-	core.PuregoSafeRegister(&XGTlsBackendSupportsTls, lib, "g_tls_backend_supports_tls")
+	core.PuregoSafeRegister(&XGTlsBackendGetCertificateType, libs, "g_tls_backend_get_certificate_type")
+	core.PuregoSafeRegister(&XGTlsBackendGetClientConnectionType, libs, "g_tls_backend_get_client_connection_type")
+	core.PuregoSafeRegister(&XGTlsBackendGetDefaultDatabase, libs, "g_tls_backend_get_default_database")
+	core.PuregoSafeRegister(&XGTlsBackendGetDtlsClientConnectionType, libs, "g_tls_backend_get_dtls_client_connection_type")
+	core.PuregoSafeRegister(&XGTlsBackendGetDtlsServerConnectionType, libs, "g_tls_backend_get_dtls_server_connection_type")
+	core.PuregoSafeRegister(&XGTlsBackendGetFileDatabaseType, libs, "g_tls_backend_get_file_database_type")
+	core.PuregoSafeRegister(&XGTlsBackendGetServerConnectionType, libs, "g_tls_backend_get_server_connection_type")
+	core.PuregoSafeRegister(&XGTlsBackendSetDefaultDatabase, libs, "g_tls_backend_set_default_database")
+	core.PuregoSafeRegister(&XGTlsBackendSupportsDtls, libs, "g_tls_backend_supports_dtls")
+	core.PuregoSafeRegister(&XGTlsBackendSupportsTls, libs, "g_tls_backend_supports_tls")
 
 }

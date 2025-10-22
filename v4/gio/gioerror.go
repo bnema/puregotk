@@ -55,14 +55,18 @@ func IoErrorQuark() glib.Quark {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xIoErrorFromErrno, lib, "g_io_error_from_errno")
-	core.PuregoSafeRegister(&xIoErrorFromFileError, lib, "g_io_error_from_file_error")
-	core.PuregoSafeRegister(&xIoErrorQuark, lib, "g_io_error_quark")
+	core.PuregoSafeRegister(&xIoErrorFromErrno, libs, "g_io_error_from_errno")
+	core.PuregoSafeRegister(&xIoErrorFromFileError, libs, "g_io_error_from_file_error")
+	core.PuregoSafeRegister(&xIoErrorQuark, libs, "g_io_error_quark")
 
 }

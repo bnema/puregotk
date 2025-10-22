@@ -561,28 +561,32 @@ func (x *ProgressBar) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xProgressBarGLibType, lib, "gtk_progress_bar_get_type")
+	core.PuregoSafeRegister(&xProgressBarGLibType, libs, "gtk_progress_bar_get_type")
 
-	core.PuregoSafeRegister(&xNewProgressBar, lib, "gtk_progress_bar_new")
+	core.PuregoSafeRegister(&xNewProgressBar, libs, "gtk_progress_bar_new")
 
-	core.PuregoSafeRegister(&xProgressBarGetEllipsize, lib, "gtk_progress_bar_get_ellipsize")
-	core.PuregoSafeRegister(&xProgressBarGetFraction, lib, "gtk_progress_bar_get_fraction")
-	core.PuregoSafeRegister(&xProgressBarGetInverted, lib, "gtk_progress_bar_get_inverted")
-	core.PuregoSafeRegister(&xProgressBarGetPulseStep, lib, "gtk_progress_bar_get_pulse_step")
-	core.PuregoSafeRegister(&xProgressBarGetShowText, lib, "gtk_progress_bar_get_show_text")
-	core.PuregoSafeRegister(&xProgressBarGetText, lib, "gtk_progress_bar_get_text")
-	core.PuregoSafeRegister(&xProgressBarPulse, lib, "gtk_progress_bar_pulse")
-	core.PuregoSafeRegister(&xProgressBarSetEllipsize, lib, "gtk_progress_bar_set_ellipsize")
-	core.PuregoSafeRegister(&xProgressBarSetFraction, lib, "gtk_progress_bar_set_fraction")
-	core.PuregoSafeRegister(&xProgressBarSetInverted, lib, "gtk_progress_bar_set_inverted")
-	core.PuregoSafeRegister(&xProgressBarSetPulseStep, lib, "gtk_progress_bar_set_pulse_step")
-	core.PuregoSafeRegister(&xProgressBarSetShowText, lib, "gtk_progress_bar_set_show_text")
-	core.PuregoSafeRegister(&xProgressBarSetText, lib, "gtk_progress_bar_set_text")
+	core.PuregoSafeRegister(&xProgressBarGetEllipsize, libs, "gtk_progress_bar_get_ellipsize")
+	core.PuregoSafeRegister(&xProgressBarGetFraction, libs, "gtk_progress_bar_get_fraction")
+	core.PuregoSafeRegister(&xProgressBarGetInverted, libs, "gtk_progress_bar_get_inverted")
+	core.PuregoSafeRegister(&xProgressBarGetPulseStep, libs, "gtk_progress_bar_get_pulse_step")
+	core.PuregoSafeRegister(&xProgressBarGetShowText, libs, "gtk_progress_bar_get_show_text")
+	core.PuregoSafeRegister(&xProgressBarGetText, libs, "gtk_progress_bar_get_text")
+	core.PuregoSafeRegister(&xProgressBarPulse, libs, "gtk_progress_bar_pulse")
+	core.PuregoSafeRegister(&xProgressBarSetEllipsize, libs, "gtk_progress_bar_set_ellipsize")
+	core.PuregoSafeRegister(&xProgressBarSetFraction, libs, "gtk_progress_bar_set_fraction")
+	core.PuregoSafeRegister(&xProgressBarSetInverted, libs, "gtk_progress_bar_set_inverted")
+	core.PuregoSafeRegister(&xProgressBarSetPulseStep, libs, "gtk_progress_bar_set_pulse_step")
+	core.PuregoSafeRegister(&xProgressBarSetShowText, libs, "gtk_progress_bar_set_show_text")
+	core.PuregoSafeRegister(&xProgressBarSetText, libs, "gtk_progress_bar_set_text")
 
 }

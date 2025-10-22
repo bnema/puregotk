@@ -103,16 +103,20 @@ func (x *GestureRotate) ConnectAngleChanged(cb *func(GestureRotate, float64, flo
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGestureRotateGLibType, lib, "gtk_gesture_rotate_get_type")
+	core.PuregoSafeRegister(&xGestureRotateGLibType, libs, "gtk_gesture_rotate_get_type")
 
-	core.PuregoSafeRegister(&xNewGestureRotate, lib, "gtk_gesture_rotate_new")
+	core.PuregoSafeRegister(&xNewGestureRotate, libs, "gtk_gesture_rotate_new")
 
-	core.PuregoSafeRegister(&xGestureRotateGetAngleDelta, lib, "gtk_gesture_rotate_get_angle_delta")
+	core.PuregoSafeRegister(&xGestureRotateGetAngleDelta, libs, "gtk_gesture_rotate_get_angle_delta")
 
 }

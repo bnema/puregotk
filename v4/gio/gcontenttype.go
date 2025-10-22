@@ -217,27 +217,31 @@ func ContentTypesGetRegistered() *glib.List {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xContentTypeCanBeExecutable, lib, "g_content_type_can_be_executable")
-	core.PuregoSafeRegister(&xContentTypeEquals, lib, "g_content_type_equals")
-	core.PuregoSafeRegister(&xContentTypeFromMimeType, lib, "g_content_type_from_mime_type")
-	core.PuregoSafeRegister(&xContentTypeGetDescription, lib, "g_content_type_get_description")
-	core.PuregoSafeRegister(&xContentTypeGetGenericIconName, lib, "g_content_type_get_generic_icon_name")
-	core.PuregoSafeRegister(&xContentTypeGetIcon, lib, "g_content_type_get_icon")
-	core.PuregoSafeRegister(&xContentTypeGetMimeDirs, lib, "g_content_type_get_mime_dirs")
-	core.PuregoSafeRegister(&xContentTypeGetMimeType, lib, "g_content_type_get_mime_type")
-	core.PuregoSafeRegister(&xContentTypeGetSymbolicIcon, lib, "g_content_type_get_symbolic_icon")
-	core.PuregoSafeRegister(&xContentTypeGuess, lib, "g_content_type_guess")
-	core.PuregoSafeRegister(&xContentTypeGuessForTree, lib, "g_content_type_guess_for_tree")
-	core.PuregoSafeRegister(&xContentTypeIsA, lib, "g_content_type_is_a")
-	core.PuregoSafeRegister(&xContentTypeIsMimeType, lib, "g_content_type_is_mime_type")
-	core.PuregoSafeRegister(&xContentTypeIsUnknown, lib, "g_content_type_is_unknown")
-	core.PuregoSafeRegister(&xContentTypeSetMimeDirs, lib, "g_content_type_set_mime_dirs")
-	core.PuregoSafeRegister(&xContentTypesGetRegistered, lib, "g_content_types_get_registered")
+	core.PuregoSafeRegister(&xContentTypeCanBeExecutable, libs, "g_content_type_can_be_executable")
+	core.PuregoSafeRegister(&xContentTypeEquals, libs, "g_content_type_equals")
+	core.PuregoSafeRegister(&xContentTypeFromMimeType, libs, "g_content_type_from_mime_type")
+	core.PuregoSafeRegister(&xContentTypeGetDescription, libs, "g_content_type_get_description")
+	core.PuregoSafeRegister(&xContentTypeGetGenericIconName, libs, "g_content_type_get_generic_icon_name")
+	core.PuregoSafeRegister(&xContentTypeGetIcon, libs, "g_content_type_get_icon")
+	core.PuregoSafeRegister(&xContentTypeGetMimeDirs, libs, "g_content_type_get_mime_dirs")
+	core.PuregoSafeRegister(&xContentTypeGetMimeType, libs, "g_content_type_get_mime_type")
+	core.PuregoSafeRegister(&xContentTypeGetSymbolicIcon, libs, "g_content_type_get_symbolic_icon")
+	core.PuregoSafeRegister(&xContentTypeGuess, libs, "g_content_type_guess")
+	core.PuregoSafeRegister(&xContentTypeGuessForTree, libs, "g_content_type_guess_for_tree")
+	core.PuregoSafeRegister(&xContentTypeIsA, libs, "g_content_type_is_a")
+	core.PuregoSafeRegister(&xContentTypeIsMimeType, libs, "g_content_type_is_mime_type")
+	core.PuregoSafeRegister(&xContentTypeIsUnknown, libs, "g_content_type_is_unknown")
+	core.PuregoSafeRegister(&xContentTypeSetMimeDirs, libs, "g_content_type_set_mime_dirs")
+	core.PuregoSafeRegister(&xContentTypesGetRegistered, libs, "g_content_types_get_registered")
 
 }

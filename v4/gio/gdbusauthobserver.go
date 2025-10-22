@@ -184,17 +184,21 @@ func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthOb
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDBusAuthObserverGLibType, lib, "g_dbus_auth_observer_get_type")
+	core.PuregoSafeRegister(&xDBusAuthObserverGLibType, libs, "g_dbus_auth_observer_get_type")
 
-	core.PuregoSafeRegister(&xNewDBusAuthObserver, lib, "g_dbus_auth_observer_new")
+	core.PuregoSafeRegister(&xNewDBusAuthObserver, libs, "g_dbus_auth_observer_new")
 
-	core.PuregoSafeRegister(&xDBusAuthObserverAllowMechanism, lib, "g_dbus_auth_observer_allow_mechanism")
-	core.PuregoSafeRegister(&xDBusAuthObserverAuthorizeAuthenticatedPeer, lib, "g_dbus_auth_observer_authorize_authenticated_peer")
+	core.PuregoSafeRegister(&xDBusAuthObserverAllowMechanism, libs, "g_dbus_auth_observer_allow_mechanism")
+	core.PuregoSafeRegister(&xDBusAuthObserverAuthorizeAuthenticatedPeer, libs, "g_dbus_auth_observer_authorize_authenticated_peer")
 
 }

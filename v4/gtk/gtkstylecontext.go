@@ -501,37 +501,41 @@ func StyleContextRemoveProviderForDisplay(DisplayVar *gdk.Display, ProviderVar S
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStyleContextPrintFlagsGLibType, lib, "gtk_style_context_print_flags_get_type")
+	core.PuregoSafeRegister(&xStyleContextPrintFlagsGLibType, libs, "gtk_style_context_print_flags_get_type")
 
-	core.PuregoSafeRegister(&xStyleContextGLibType, lib, "gtk_style_context_get_type")
+	core.PuregoSafeRegister(&xStyleContextGLibType, libs, "gtk_style_context_get_type")
 
-	core.PuregoSafeRegister(&xStyleContextAddClass, lib, "gtk_style_context_add_class")
-	core.PuregoSafeRegister(&xStyleContextAddProvider, lib, "gtk_style_context_add_provider")
-	core.PuregoSafeRegister(&xStyleContextGetBorder, lib, "gtk_style_context_get_border")
-	core.PuregoSafeRegister(&xStyleContextGetColor, lib, "gtk_style_context_get_color")
-	core.PuregoSafeRegister(&xStyleContextGetDisplay, lib, "gtk_style_context_get_display")
-	core.PuregoSafeRegister(&xStyleContextGetMargin, lib, "gtk_style_context_get_margin")
-	core.PuregoSafeRegister(&xStyleContextGetPadding, lib, "gtk_style_context_get_padding")
-	core.PuregoSafeRegister(&xStyleContextGetScale, lib, "gtk_style_context_get_scale")
-	core.PuregoSafeRegister(&xStyleContextGetState, lib, "gtk_style_context_get_state")
-	core.PuregoSafeRegister(&xStyleContextHasClass, lib, "gtk_style_context_has_class")
-	core.PuregoSafeRegister(&xStyleContextLookupColor, lib, "gtk_style_context_lookup_color")
-	core.PuregoSafeRegister(&xStyleContextRemoveClass, lib, "gtk_style_context_remove_class")
-	core.PuregoSafeRegister(&xStyleContextRemoveProvider, lib, "gtk_style_context_remove_provider")
-	core.PuregoSafeRegister(&xStyleContextRestore, lib, "gtk_style_context_restore")
-	core.PuregoSafeRegister(&xStyleContextSave, lib, "gtk_style_context_save")
-	core.PuregoSafeRegister(&xStyleContextSetDisplay, lib, "gtk_style_context_set_display")
-	core.PuregoSafeRegister(&xStyleContextSetScale, lib, "gtk_style_context_set_scale")
-	core.PuregoSafeRegister(&xStyleContextSetState, lib, "gtk_style_context_set_state")
-	core.PuregoSafeRegister(&xStyleContextToString, lib, "gtk_style_context_to_string")
+	core.PuregoSafeRegister(&xStyleContextAddClass, libs, "gtk_style_context_add_class")
+	core.PuregoSafeRegister(&xStyleContextAddProvider, libs, "gtk_style_context_add_provider")
+	core.PuregoSafeRegister(&xStyleContextGetBorder, libs, "gtk_style_context_get_border")
+	core.PuregoSafeRegister(&xStyleContextGetColor, libs, "gtk_style_context_get_color")
+	core.PuregoSafeRegister(&xStyleContextGetDisplay, libs, "gtk_style_context_get_display")
+	core.PuregoSafeRegister(&xStyleContextGetMargin, libs, "gtk_style_context_get_margin")
+	core.PuregoSafeRegister(&xStyleContextGetPadding, libs, "gtk_style_context_get_padding")
+	core.PuregoSafeRegister(&xStyleContextGetScale, libs, "gtk_style_context_get_scale")
+	core.PuregoSafeRegister(&xStyleContextGetState, libs, "gtk_style_context_get_state")
+	core.PuregoSafeRegister(&xStyleContextHasClass, libs, "gtk_style_context_has_class")
+	core.PuregoSafeRegister(&xStyleContextLookupColor, libs, "gtk_style_context_lookup_color")
+	core.PuregoSafeRegister(&xStyleContextRemoveClass, libs, "gtk_style_context_remove_class")
+	core.PuregoSafeRegister(&xStyleContextRemoveProvider, libs, "gtk_style_context_remove_provider")
+	core.PuregoSafeRegister(&xStyleContextRestore, libs, "gtk_style_context_restore")
+	core.PuregoSafeRegister(&xStyleContextSave, libs, "gtk_style_context_save")
+	core.PuregoSafeRegister(&xStyleContextSetDisplay, libs, "gtk_style_context_set_display")
+	core.PuregoSafeRegister(&xStyleContextSetScale, libs, "gtk_style_context_set_scale")
+	core.PuregoSafeRegister(&xStyleContextSetState, libs, "gtk_style_context_set_state")
+	core.PuregoSafeRegister(&xStyleContextToString, libs, "gtk_style_context_to_string")
 
-	core.PuregoSafeRegister(&xStyleContextAddProviderForDisplay, lib, "gtk_style_context_add_provider_for_display")
-	core.PuregoSafeRegister(&xStyleContextRemoveProviderForDisplay, lib, "gtk_style_context_remove_provider_for_display")
+	core.PuregoSafeRegister(&xStyleContextAddProviderForDisplay, libs, "gtk_style_context_add_provider_for_display")
+	core.PuregoSafeRegister(&xStyleContextRemoveProviderForDisplay, libs, "gtk_style_context_remove_provider_for_display")
 
 }

@@ -708,33 +708,37 @@ func (x *NavigationSplitView) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xNavigationSplitViewGLibType, lib, "adw_navigation_split_view_get_type")
+	core.PuregoSafeRegister(&xNavigationSplitViewGLibType, libs, "adw_navigation_split_view_get_type")
 
-	core.PuregoSafeRegister(&xNewNavigationSplitView, lib, "adw_navigation_split_view_new")
+	core.PuregoSafeRegister(&xNewNavigationSplitView, libs, "adw_navigation_split_view_new")
 
-	core.PuregoSafeRegister(&xNavigationSplitViewGetCollapsed, lib, "adw_navigation_split_view_get_collapsed")
-	core.PuregoSafeRegister(&xNavigationSplitViewGetContent, lib, "adw_navigation_split_view_get_content")
-	core.PuregoSafeRegister(&xNavigationSplitViewGetMaxSidebarWidth, lib, "adw_navigation_split_view_get_max_sidebar_width")
-	core.PuregoSafeRegister(&xNavigationSplitViewGetMinSidebarWidth, lib, "adw_navigation_split_view_get_min_sidebar_width")
-	core.PuregoSafeRegister(&xNavigationSplitViewGetShowContent, lib, "adw_navigation_split_view_get_show_content")
-	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebar, lib, "adw_navigation_split_view_get_sidebar")
-	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebarPosition, lib, "adw_navigation_split_view_get_sidebar_position")
-	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebarWidthFraction, lib, "adw_navigation_split_view_get_sidebar_width_fraction")
-	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebarWidthUnit, lib, "adw_navigation_split_view_get_sidebar_width_unit")
-	core.PuregoSafeRegister(&xNavigationSplitViewSetCollapsed, lib, "adw_navigation_split_view_set_collapsed")
-	core.PuregoSafeRegister(&xNavigationSplitViewSetContent, lib, "adw_navigation_split_view_set_content")
-	core.PuregoSafeRegister(&xNavigationSplitViewSetMaxSidebarWidth, lib, "adw_navigation_split_view_set_max_sidebar_width")
-	core.PuregoSafeRegister(&xNavigationSplitViewSetMinSidebarWidth, lib, "adw_navigation_split_view_set_min_sidebar_width")
-	core.PuregoSafeRegister(&xNavigationSplitViewSetShowContent, lib, "adw_navigation_split_view_set_show_content")
-	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebar, lib, "adw_navigation_split_view_set_sidebar")
-	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarPosition, lib, "adw_navigation_split_view_set_sidebar_position")
-	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarWidthFraction, lib, "adw_navigation_split_view_set_sidebar_width_fraction")
-	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarWidthUnit, lib, "adw_navigation_split_view_set_sidebar_width_unit")
+	core.PuregoSafeRegister(&xNavigationSplitViewGetCollapsed, libs, "adw_navigation_split_view_get_collapsed")
+	core.PuregoSafeRegister(&xNavigationSplitViewGetContent, libs, "adw_navigation_split_view_get_content")
+	core.PuregoSafeRegister(&xNavigationSplitViewGetMaxSidebarWidth, libs, "adw_navigation_split_view_get_max_sidebar_width")
+	core.PuregoSafeRegister(&xNavigationSplitViewGetMinSidebarWidth, libs, "adw_navigation_split_view_get_min_sidebar_width")
+	core.PuregoSafeRegister(&xNavigationSplitViewGetShowContent, libs, "adw_navigation_split_view_get_show_content")
+	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebar, libs, "adw_navigation_split_view_get_sidebar")
+	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebarPosition, libs, "adw_navigation_split_view_get_sidebar_position")
+	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebarWidthFraction, libs, "adw_navigation_split_view_get_sidebar_width_fraction")
+	core.PuregoSafeRegister(&xNavigationSplitViewGetSidebarWidthUnit, libs, "adw_navigation_split_view_get_sidebar_width_unit")
+	core.PuregoSafeRegister(&xNavigationSplitViewSetCollapsed, libs, "adw_navigation_split_view_set_collapsed")
+	core.PuregoSafeRegister(&xNavigationSplitViewSetContent, libs, "adw_navigation_split_view_set_content")
+	core.PuregoSafeRegister(&xNavigationSplitViewSetMaxSidebarWidth, libs, "adw_navigation_split_view_set_max_sidebar_width")
+	core.PuregoSafeRegister(&xNavigationSplitViewSetMinSidebarWidth, libs, "adw_navigation_split_view_set_min_sidebar_width")
+	core.PuregoSafeRegister(&xNavigationSplitViewSetShowContent, libs, "adw_navigation_split_view_set_show_content")
+	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebar, libs, "adw_navigation_split_view_set_sidebar")
+	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarPosition, libs, "adw_navigation_split_view_set_sidebar_position")
+	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarWidthFraction, libs, "adw_navigation_split_view_set_sidebar_width_fraction")
+	core.PuregoSafeRegister(&xNavigationSplitViewSetSidebarWidthUnit, libs, "adw_navigation_split_view_set_sidebar_width_unit")
 
 }

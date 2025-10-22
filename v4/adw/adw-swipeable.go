@@ -251,18 +251,22 @@ var XAdwSwipeableGetSwipeArea func(uintptr, NavigationDirection, bool, *gdk.Rect
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSwipeableGLibType, lib, "adw_swipeable_get_type")
+	core.PuregoSafeRegister(&xSwipeableGLibType, libs, "adw_swipeable_get_type")
 
-	core.PuregoSafeRegister(&XAdwSwipeableGetCancelProgress, lib, "adw_swipeable_get_cancel_progress")
-	core.PuregoSafeRegister(&XAdwSwipeableGetDistance, lib, "adw_swipeable_get_distance")
-	core.PuregoSafeRegister(&XAdwSwipeableGetProgress, lib, "adw_swipeable_get_progress")
-	core.PuregoSafeRegister(&XAdwSwipeableGetSnapPoints, lib, "adw_swipeable_get_snap_points")
-	core.PuregoSafeRegister(&XAdwSwipeableGetSwipeArea, lib, "adw_swipeable_get_swipe_area")
+	core.PuregoSafeRegister(&XAdwSwipeableGetCancelProgress, libs, "adw_swipeable_get_cancel_progress")
+	core.PuregoSafeRegister(&XAdwSwipeableGetDistance, libs, "adw_swipeable_get_distance")
+	core.PuregoSafeRegister(&XAdwSwipeableGetProgress, libs, "adw_swipeable_get_progress")
+	core.PuregoSafeRegister(&XAdwSwipeableGetSnapPoints, libs, "adw_swipeable_get_snap_points")
+	core.PuregoSafeRegister(&XAdwSwipeableGetSwipeArea, libs, "adw_swipeable_get_swipe_area")
 
 }

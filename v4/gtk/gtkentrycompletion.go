@@ -607,38 +607,42 @@ func (x *EntryCompletion) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLa
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEntryCompletionGLibType, lib, "gtk_entry_completion_get_type")
+	core.PuregoSafeRegister(&xEntryCompletionGLibType, libs, "gtk_entry_completion_get_type")
 
-	core.PuregoSafeRegister(&xNewEntryCompletion, lib, "gtk_entry_completion_new")
-	core.PuregoSafeRegister(&xNewEntryCompletionWithArea, lib, "gtk_entry_completion_new_with_area")
+	core.PuregoSafeRegister(&xNewEntryCompletion, libs, "gtk_entry_completion_new")
+	core.PuregoSafeRegister(&xNewEntryCompletionWithArea, libs, "gtk_entry_completion_new_with_area")
 
-	core.PuregoSafeRegister(&xEntryCompletionComplete, lib, "gtk_entry_completion_complete")
-	core.PuregoSafeRegister(&xEntryCompletionComputePrefix, lib, "gtk_entry_completion_compute_prefix")
-	core.PuregoSafeRegister(&xEntryCompletionGetCompletionPrefix, lib, "gtk_entry_completion_get_completion_prefix")
-	core.PuregoSafeRegister(&xEntryCompletionGetEntry, lib, "gtk_entry_completion_get_entry")
-	core.PuregoSafeRegister(&xEntryCompletionGetInlineCompletion, lib, "gtk_entry_completion_get_inline_completion")
-	core.PuregoSafeRegister(&xEntryCompletionGetInlineSelection, lib, "gtk_entry_completion_get_inline_selection")
-	core.PuregoSafeRegister(&xEntryCompletionGetMinimumKeyLength, lib, "gtk_entry_completion_get_minimum_key_length")
-	core.PuregoSafeRegister(&xEntryCompletionGetModel, lib, "gtk_entry_completion_get_model")
-	core.PuregoSafeRegister(&xEntryCompletionGetPopupCompletion, lib, "gtk_entry_completion_get_popup_completion")
-	core.PuregoSafeRegister(&xEntryCompletionGetPopupSetWidth, lib, "gtk_entry_completion_get_popup_set_width")
-	core.PuregoSafeRegister(&xEntryCompletionGetPopupSingleMatch, lib, "gtk_entry_completion_get_popup_single_match")
-	core.PuregoSafeRegister(&xEntryCompletionGetTextColumn, lib, "gtk_entry_completion_get_text_column")
-	core.PuregoSafeRegister(&xEntryCompletionInsertPrefix, lib, "gtk_entry_completion_insert_prefix")
-	core.PuregoSafeRegister(&xEntryCompletionSetInlineCompletion, lib, "gtk_entry_completion_set_inline_completion")
-	core.PuregoSafeRegister(&xEntryCompletionSetInlineSelection, lib, "gtk_entry_completion_set_inline_selection")
-	core.PuregoSafeRegister(&xEntryCompletionSetMatchFunc, lib, "gtk_entry_completion_set_match_func")
-	core.PuregoSafeRegister(&xEntryCompletionSetMinimumKeyLength, lib, "gtk_entry_completion_set_minimum_key_length")
-	core.PuregoSafeRegister(&xEntryCompletionSetModel, lib, "gtk_entry_completion_set_model")
-	core.PuregoSafeRegister(&xEntryCompletionSetPopupCompletion, lib, "gtk_entry_completion_set_popup_completion")
-	core.PuregoSafeRegister(&xEntryCompletionSetPopupSetWidth, lib, "gtk_entry_completion_set_popup_set_width")
-	core.PuregoSafeRegister(&xEntryCompletionSetPopupSingleMatch, lib, "gtk_entry_completion_set_popup_single_match")
-	core.PuregoSafeRegister(&xEntryCompletionSetTextColumn, lib, "gtk_entry_completion_set_text_column")
+	core.PuregoSafeRegister(&xEntryCompletionComplete, libs, "gtk_entry_completion_complete")
+	core.PuregoSafeRegister(&xEntryCompletionComputePrefix, libs, "gtk_entry_completion_compute_prefix")
+	core.PuregoSafeRegister(&xEntryCompletionGetCompletionPrefix, libs, "gtk_entry_completion_get_completion_prefix")
+	core.PuregoSafeRegister(&xEntryCompletionGetEntry, libs, "gtk_entry_completion_get_entry")
+	core.PuregoSafeRegister(&xEntryCompletionGetInlineCompletion, libs, "gtk_entry_completion_get_inline_completion")
+	core.PuregoSafeRegister(&xEntryCompletionGetInlineSelection, libs, "gtk_entry_completion_get_inline_selection")
+	core.PuregoSafeRegister(&xEntryCompletionGetMinimumKeyLength, libs, "gtk_entry_completion_get_minimum_key_length")
+	core.PuregoSafeRegister(&xEntryCompletionGetModel, libs, "gtk_entry_completion_get_model")
+	core.PuregoSafeRegister(&xEntryCompletionGetPopupCompletion, libs, "gtk_entry_completion_get_popup_completion")
+	core.PuregoSafeRegister(&xEntryCompletionGetPopupSetWidth, libs, "gtk_entry_completion_get_popup_set_width")
+	core.PuregoSafeRegister(&xEntryCompletionGetPopupSingleMatch, libs, "gtk_entry_completion_get_popup_single_match")
+	core.PuregoSafeRegister(&xEntryCompletionGetTextColumn, libs, "gtk_entry_completion_get_text_column")
+	core.PuregoSafeRegister(&xEntryCompletionInsertPrefix, libs, "gtk_entry_completion_insert_prefix")
+	core.PuregoSafeRegister(&xEntryCompletionSetInlineCompletion, libs, "gtk_entry_completion_set_inline_completion")
+	core.PuregoSafeRegister(&xEntryCompletionSetInlineSelection, libs, "gtk_entry_completion_set_inline_selection")
+	core.PuregoSafeRegister(&xEntryCompletionSetMatchFunc, libs, "gtk_entry_completion_set_match_func")
+	core.PuregoSafeRegister(&xEntryCompletionSetMinimumKeyLength, libs, "gtk_entry_completion_set_minimum_key_length")
+	core.PuregoSafeRegister(&xEntryCompletionSetModel, libs, "gtk_entry_completion_set_model")
+	core.PuregoSafeRegister(&xEntryCompletionSetPopupCompletion, libs, "gtk_entry_completion_set_popup_completion")
+	core.PuregoSafeRegister(&xEntryCompletionSetPopupSetWidth, libs, "gtk_entry_completion_set_popup_set_width")
+	core.PuregoSafeRegister(&xEntryCompletionSetPopupSingleMatch, libs, "gtk_entry_completion_set_popup_single_match")
+	core.PuregoSafeRegister(&xEntryCompletionSetTextColumn, libs, "gtk_entry_completion_set_text_column")
 
 }

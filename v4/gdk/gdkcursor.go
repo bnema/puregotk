@@ -264,22 +264,26 @@ func (c *Cursor) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCursorGLibType, lib, "gdk_cursor_get_type")
+	core.PuregoSafeRegister(&xCursorGLibType, libs, "gdk_cursor_get_type")
 
-	core.PuregoSafeRegister(&xNewCursorFromCallback, lib, "gdk_cursor_new_from_callback")
-	core.PuregoSafeRegister(&xNewCursorFromName, lib, "gdk_cursor_new_from_name")
-	core.PuregoSafeRegister(&xNewCursorFromTexture, lib, "gdk_cursor_new_from_texture")
+	core.PuregoSafeRegister(&xNewCursorFromCallback, libs, "gdk_cursor_new_from_callback")
+	core.PuregoSafeRegister(&xNewCursorFromName, libs, "gdk_cursor_new_from_name")
+	core.PuregoSafeRegister(&xNewCursorFromTexture, libs, "gdk_cursor_new_from_texture")
 
-	core.PuregoSafeRegister(&xCursorGetFallback, lib, "gdk_cursor_get_fallback")
-	core.PuregoSafeRegister(&xCursorGetHotspotX, lib, "gdk_cursor_get_hotspot_x")
-	core.PuregoSafeRegister(&xCursorGetHotspotY, lib, "gdk_cursor_get_hotspot_y")
-	core.PuregoSafeRegister(&xCursorGetName, lib, "gdk_cursor_get_name")
-	core.PuregoSafeRegister(&xCursorGetTexture, lib, "gdk_cursor_get_texture")
+	core.PuregoSafeRegister(&xCursorGetFallback, libs, "gdk_cursor_get_fallback")
+	core.PuregoSafeRegister(&xCursorGetHotspotX, libs, "gdk_cursor_get_hotspot_x")
+	core.PuregoSafeRegister(&xCursorGetHotspotY, libs, "gdk_cursor_get_hotspot_y")
+	core.PuregoSafeRegister(&xCursorGetName, libs, "gdk_cursor_get_name")
+	core.PuregoSafeRegister(&xCursorGetTexture, libs, "gdk_cursor_get_texture")
 
 }

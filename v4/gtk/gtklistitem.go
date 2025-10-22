@@ -261,28 +261,32 @@ func (c *ListItem) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xListItemGLibType, lib, "gtk_list_item_get_type")
+	core.PuregoSafeRegister(&xListItemGLibType, libs, "gtk_list_item_get_type")
 
-	core.PuregoSafeRegister(&xListItemGetAccessibleDescription, lib, "gtk_list_item_get_accessible_description")
-	core.PuregoSafeRegister(&xListItemGetAccessibleLabel, lib, "gtk_list_item_get_accessible_label")
-	core.PuregoSafeRegister(&xListItemGetActivatable, lib, "gtk_list_item_get_activatable")
-	core.PuregoSafeRegister(&xListItemGetChild, lib, "gtk_list_item_get_child")
-	core.PuregoSafeRegister(&xListItemGetFocusable, lib, "gtk_list_item_get_focusable")
-	core.PuregoSafeRegister(&xListItemGetItem, lib, "gtk_list_item_get_item")
-	core.PuregoSafeRegister(&xListItemGetPosition, lib, "gtk_list_item_get_position")
-	core.PuregoSafeRegister(&xListItemGetSelectable, lib, "gtk_list_item_get_selectable")
-	core.PuregoSafeRegister(&xListItemGetSelected, lib, "gtk_list_item_get_selected")
-	core.PuregoSafeRegister(&xListItemSetAccessibleDescription, lib, "gtk_list_item_set_accessible_description")
-	core.PuregoSafeRegister(&xListItemSetAccessibleLabel, lib, "gtk_list_item_set_accessible_label")
-	core.PuregoSafeRegister(&xListItemSetActivatable, lib, "gtk_list_item_set_activatable")
-	core.PuregoSafeRegister(&xListItemSetChild, lib, "gtk_list_item_set_child")
-	core.PuregoSafeRegister(&xListItemSetFocusable, lib, "gtk_list_item_set_focusable")
-	core.PuregoSafeRegister(&xListItemSetSelectable, lib, "gtk_list_item_set_selectable")
+	core.PuregoSafeRegister(&xListItemGetAccessibleDescription, libs, "gtk_list_item_get_accessible_description")
+	core.PuregoSafeRegister(&xListItemGetAccessibleLabel, libs, "gtk_list_item_get_accessible_label")
+	core.PuregoSafeRegister(&xListItemGetActivatable, libs, "gtk_list_item_get_activatable")
+	core.PuregoSafeRegister(&xListItemGetChild, libs, "gtk_list_item_get_child")
+	core.PuregoSafeRegister(&xListItemGetFocusable, libs, "gtk_list_item_get_focusable")
+	core.PuregoSafeRegister(&xListItemGetItem, libs, "gtk_list_item_get_item")
+	core.PuregoSafeRegister(&xListItemGetPosition, libs, "gtk_list_item_get_position")
+	core.PuregoSafeRegister(&xListItemGetSelectable, libs, "gtk_list_item_get_selectable")
+	core.PuregoSafeRegister(&xListItemGetSelected, libs, "gtk_list_item_get_selected")
+	core.PuregoSafeRegister(&xListItemSetAccessibleDescription, libs, "gtk_list_item_set_accessible_description")
+	core.PuregoSafeRegister(&xListItemSetAccessibleLabel, libs, "gtk_list_item_set_accessible_label")
+	core.PuregoSafeRegister(&xListItemSetActivatable, libs, "gtk_list_item_set_activatable")
+	core.PuregoSafeRegister(&xListItemSetChild, libs, "gtk_list_item_set_child")
+	core.PuregoSafeRegister(&xListItemSetFocusable, libs, "gtk_list_item_set_focusable")
+	core.PuregoSafeRegister(&xListItemSetSelectable, libs, "gtk_list_item_set_selectable")
 
 }

@@ -483,19 +483,23 @@ func (x *SimpleActionGroup) RemoveActionEntries(EntriesVar []ActionEntry, NEntri
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSimpleActionGroupGLibType, lib, "g_simple_action_group_get_type")
+	core.PuregoSafeRegister(&xSimpleActionGroupGLibType, libs, "g_simple_action_group_get_type")
 
-	core.PuregoSafeRegister(&xNewSimpleActionGroup, lib, "g_simple_action_group_new")
+	core.PuregoSafeRegister(&xNewSimpleActionGroup, libs, "g_simple_action_group_new")
 
-	core.PuregoSafeRegister(&xSimpleActionGroupAddEntries, lib, "g_simple_action_group_add_entries")
-	core.PuregoSafeRegister(&xSimpleActionGroupInsert, lib, "g_simple_action_group_insert")
-	core.PuregoSafeRegister(&xSimpleActionGroupLookup, lib, "g_simple_action_group_lookup")
-	core.PuregoSafeRegister(&xSimpleActionGroupRemove, lib, "g_simple_action_group_remove")
+	core.PuregoSafeRegister(&xSimpleActionGroupAddEntries, libs, "g_simple_action_group_add_entries")
+	core.PuregoSafeRegister(&xSimpleActionGroupInsert, libs, "g_simple_action_group_insert")
+	core.PuregoSafeRegister(&xSimpleActionGroupLookup, libs, "g_simple_action_group_lookup")
+	core.PuregoSafeRegister(&xSimpleActionGroupRemove, libs, "g_simple_action_group_remove")
 
 }

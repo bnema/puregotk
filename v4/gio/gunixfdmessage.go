@@ -220,19 +220,23 @@ func (c *UnixFDMessage) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xUnixFDMessageGLibType, lib, "g_unix_fd_message_get_type")
+	core.PuregoSafeRegister(&xUnixFDMessageGLibType, libs, "g_unix_fd_message_get_type")
 
-	core.PuregoSafeRegister(&xNewUnixFDMessage, lib, "g_unix_fd_message_new")
-	core.PuregoSafeRegister(&xNewUnixFDMessageWithFdList, lib, "g_unix_fd_message_new_with_fd_list")
+	core.PuregoSafeRegister(&xNewUnixFDMessage, libs, "g_unix_fd_message_new")
+	core.PuregoSafeRegister(&xNewUnixFDMessageWithFdList, libs, "g_unix_fd_message_new_with_fd_list")
 
-	core.PuregoSafeRegister(&xUnixFDMessageAppendFd, lib, "g_unix_fd_message_append_fd")
-	core.PuregoSafeRegister(&xUnixFDMessageGetFdList, lib, "g_unix_fd_message_get_fd_list")
-	core.PuregoSafeRegister(&xUnixFDMessageStealFds, lib, "g_unix_fd_message_steal_fds")
+	core.PuregoSafeRegister(&xUnixFDMessageAppendFd, libs, "g_unix_fd_message_append_fd")
+	core.PuregoSafeRegister(&xUnixFDMessageGetFdList, libs, "g_unix_fd_message_get_fd_list")
+	core.PuregoSafeRegister(&xUnixFDMessageStealFds, libs, "g_unix_fd_message_steal_fds")
 
 }

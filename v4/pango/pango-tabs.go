@@ -250,33 +250,37 @@ func TabArrayFromString(TextVar string) *TabArray {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTabAlignGLibType, lib, "pango_tab_align_get_type")
+	core.PuregoSafeRegister(&xTabAlignGLibType, libs, "pango_tab_align_get_type")
 
-	core.PuregoSafeRegister(&xTabArrayFromString, lib, "pango_tab_array_from_string")
+	core.PuregoSafeRegister(&xTabArrayFromString, libs, "pango_tab_array_from_string")
 
-	core.PuregoSafeRegister(&xTabArrayGLibType, lib, "pango_tab_array_get_type")
+	core.PuregoSafeRegister(&xTabArrayGLibType, libs, "pango_tab_array_get_type")
 
-	core.PuregoSafeRegister(&xNewTabArray, lib, "pango_tab_array_new")
-	core.PuregoSafeRegister(&xNewTabArrayWithPositions, lib, "pango_tab_array_new_with_positions")
+	core.PuregoSafeRegister(&xNewTabArray, libs, "pango_tab_array_new")
+	core.PuregoSafeRegister(&xNewTabArrayWithPositions, libs, "pango_tab_array_new_with_positions")
 
-	core.PuregoSafeRegister(&xTabArrayCopy, lib, "pango_tab_array_copy")
-	core.PuregoSafeRegister(&xTabArrayFree, lib, "pango_tab_array_free")
-	core.PuregoSafeRegister(&xTabArrayGetDecimalPoint, lib, "pango_tab_array_get_decimal_point")
-	core.PuregoSafeRegister(&xTabArrayGetPositionsInPixels, lib, "pango_tab_array_get_positions_in_pixels")
-	core.PuregoSafeRegister(&xTabArrayGetSize, lib, "pango_tab_array_get_size")
-	core.PuregoSafeRegister(&xTabArrayGetTab, lib, "pango_tab_array_get_tab")
-	core.PuregoSafeRegister(&xTabArrayGetTabs, lib, "pango_tab_array_get_tabs")
-	core.PuregoSafeRegister(&xTabArrayResize, lib, "pango_tab_array_resize")
-	core.PuregoSafeRegister(&xTabArraySetDecimalPoint, lib, "pango_tab_array_set_decimal_point")
-	core.PuregoSafeRegister(&xTabArraySetPositionsInPixels, lib, "pango_tab_array_set_positions_in_pixels")
-	core.PuregoSafeRegister(&xTabArraySetTab, lib, "pango_tab_array_set_tab")
-	core.PuregoSafeRegister(&xTabArraySort, lib, "pango_tab_array_sort")
-	core.PuregoSafeRegister(&xTabArrayToString, lib, "pango_tab_array_to_string")
+	core.PuregoSafeRegister(&xTabArrayCopy, libs, "pango_tab_array_copy")
+	core.PuregoSafeRegister(&xTabArrayFree, libs, "pango_tab_array_free")
+	core.PuregoSafeRegister(&xTabArrayGetDecimalPoint, libs, "pango_tab_array_get_decimal_point")
+	core.PuregoSafeRegister(&xTabArrayGetPositionsInPixels, libs, "pango_tab_array_get_positions_in_pixels")
+	core.PuregoSafeRegister(&xTabArrayGetSize, libs, "pango_tab_array_get_size")
+	core.PuregoSafeRegister(&xTabArrayGetTab, libs, "pango_tab_array_get_tab")
+	core.PuregoSafeRegister(&xTabArrayGetTabs, libs, "pango_tab_array_get_tabs")
+	core.PuregoSafeRegister(&xTabArrayResize, libs, "pango_tab_array_resize")
+	core.PuregoSafeRegister(&xTabArraySetDecimalPoint, libs, "pango_tab_array_set_decimal_point")
+	core.PuregoSafeRegister(&xTabArraySetPositionsInPixels, libs, "pango_tab_array_set_positions_in_pixels")
+	core.PuregoSafeRegister(&xTabArraySetTab, libs, "pango_tab_array_set_tab")
+	core.PuregoSafeRegister(&xTabArraySort, libs, "pango_tab_array_sort")
+	core.PuregoSafeRegister(&xTabArrayToString, libs, "pango_tab_array_to_string")
 
 }

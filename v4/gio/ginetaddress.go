@@ -326,33 +326,37 @@ func (c *InetAddress) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInetAddressGLibType, lib, "g_inet_address_get_type")
+	core.PuregoSafeRegister(&xInetAddressGLibType, libs, "g_inet_address_get_type")
 
-	core.PuregoSafeRegister(&xNewInetAddressAny, lib, "g_inet_address_new_any")
-	core.PuregoSafeRegister(&xNewInetAddressFromBytes, lib, "g_inet_address_new_from_bytes")
-	core.PuregoSafeRegister(&xNewInetAddressFromString, lib, "g_inet_address_new_from_string")
-	core.PuregoSafeRegister(&xNewInetAddressLoopback, lib, "g_inet_address_new_loopback")
+	core.PuregoSafeRegister(&xNewInetAddressAny, libs, "g_inet_address_new_any")
+	core.PuregoSafeRegister(&xNewInetAddressFromBytes, libs, "g_inet_address_new_from_bytes")
+	core.PuregoSafeRegister(&xNewInetAddressFromString, libs, "g_inet_address_new_from_string")
+	core.PuregoSafeRegister(&xNewInetAddressLoopback, libs, "g_inet_address_new_loopback")
 
-	core.PuregoSafeRegister(&xInetAddressEqual, lib, "g_inet_address_equal")
-	core.PuregoSafeRegister(&xInetAddressGetFamily, lib, "g_inet_address_get_family")
-	core.PuregoSafeRegister(&xInetAddressGetIsAny, lib, "g_inet_address_get_is_any")
-	core.PuregoSafeRegister(&xInetAddressGetIsLinkLocal, lib, "g_inet_address_get_is_link_local")
-	core.PuregoSafeRegister(&xInetAddressGetIsLoopback, lib, "g_inet_address_get_is_loopback")
-	core.PuregoSafeRegister(&xInetAddressGetIsMcGlobal, lib, "g_inet_address_get_is_mc_global")
-	core.PuregoSafeRegister(&xInetAddressGetIsMcLinkLocal, lib, "g_inet_address_get_is_mc_link_local")
-	core.PuregoSafeRegister(&xInetAddressGetIsMcNodeLocal, lib, "g_inet_address_get_is_mc_node_local")
-	core.PuregoSafeRegister(&xInetAddressGetIsMcOrgLocal, lib, "g_inet_address_get_is_mc_org_local")
-	core.PuregoSafeRegister(&xInetAddressGetIsMcSiteLocal, lib, "g_inet_address_get_is_mc_site_local")
-	core.PuregoSafeRegister(&xInetAddressGetIsMulticast, lib, "g_inet_address_get_is_multicast")
-	core.PuregoSafeRegister(&xInetAddressGetIsSiteLocal, lib, "g_inet_address_get_is_site_local")
-	core.PuregoSafeRegister(&xInetAddressGetNativeSize, lib, "g_inet_address_get_native_size")
-	core.PuregoSafeRegister(&xInetAddressToBytes, lib, "g_inet_address_to_bytes")
-	core.PuregoSafeRegister(&xInetAddressToString, lib, "g_inet_address_to_string")
+	core.PuregoSafeRegister(&xInetAddressEqual, libs, "g_inet_address_equal")
+	core.PuregoSafeRegister(&xInetAddressGetFamily, libs, "g_inet_address_get_family")
+	core.PuregoSafeRegister(&xInetAddressGetIsAny, libs, "g_inet_address_get_is_any")
+	core.PuregoSafeRegister(&xInetAddressGetIsLinkLocal, libs, "g_inet_address_get_is_link_local")
+	core.PuregoSafeRegister(&xInetAddressGetIsLoopback, libs, "g_inet_address_get_is_loopback")
+	core.PuregoSafeRegister(&xInetAddressGetIsMcGlobal, libs, "g_inet_address_get_is_mc_global")
+	core.PuregoSafeRegister(&xInetAddressGetIsMcLinkLocal, libs, "g_inet_address_get_is_mc_link_local")
+	core.PuregoSafeRegister(&xInetAddressGetIsMcNodeLocal, libs, "g_inet_address_get_is_mc_node_local")
+	core.PuregoSafeRegister(&xInetAddressGetIsMcOrgLocal, libs, "g_inet_address_get_is_mc_org_local")
+	core.PuregoSafeRegister(&xInetAddressGetIsMcSiteLocal, libs, "g_inet_address_get_is_mc_site_local")
+	core.PuregoSafeRegister(&xInetAddressGetIsMulticast, libs, "g_inet_address_get_is_multicast")
+	core.PuregoSafeRegister(&xInetAddressGetIsSiteLocal, libs, "g_inet_address_get_is_site_local")
+	core.PuregoSafeRegister(&xInetAddressGetNativeSize, libs, "g_inet_address_get_native_size")
+	core.PuregoSafeRegister(&xInetAddressToBytes, libs, "g_inet_address_to_bytes")
+	core.PuregoSafeRegister(&xInetAddressToString, libs, "g_inet_address_to_string")
 
 }

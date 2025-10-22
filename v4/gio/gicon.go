@@ -333,20 +333,24 @@ func IconNewForString(StrVar string) (*IconBase, error) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xIconDeserialize, lib, "g_icon_deserialize")
-	core.PuregoSafeRegister(&xIconNewForString, lib, "g_icon_new_for_string")
+	core.PuregoSafeRegister(&xIconDeserialize, libs, "g_icon_deserialize")
+	core.PuregoSafeRegister(&xIconNewForString, libs, "g_icon_new_for_string")
 
-	core.PuregoSafeRegister(&xIconGLibType, lib, "g_icon_get_type")
+	core.PuregoSafeRegister(&xIconGLibType, libs, "g_icon_get_type")
 
-	core.PuregoSafeRegister(&XGIconEqual, lib, "g_icon_equal")
-	core.PuregoSafeRegister(&XGIconHash, lib, "g_icon_hash")
-	core.PuregoSafeRegister(&XGIconSerialize, lib, "g_icon_serialize")
-	core.PuregoSafeRegister(&XGIconToString, lib, "g_icon_to_string")
+	core.PuregoSafeRegister(&XGIconEqual, libs, "g_icon_equal")
+	core.PuregoSafeRegister(&XGIconHash, libs, "g_icon_hash")
+	core.PuregoSafeRegister(&XGIconSerialize, libs, "g_icon_serialize")
+	core.PuregoSafeRegister(&XGIconToString, libs, "g_icon_to_string")
 
 }

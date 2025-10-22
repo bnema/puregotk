@@ -236,16 +236,20 @@ var XGConverterReset func(uintptr)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xConverterGLibType, lib, "g_converter_get_type")
+	core.PuregoSafeRegister(&xConverterGLibType, libs, "g_converter_get_type")
 
-	core.PuregoSafeRegister(&XGConverterConvert, lib, "g_converter_convert")
-	core.PuregoSafeRegister(&XGConverterConvertBytes, lib, "g_converter_convert_bytes")
-	core.PuregoSafeRegister(&XGConverterReset, lib, "g_converter_reset")
+	core.PuregoSafeRegister(&XGConverterConvert, libs, "g_converter_convert")
+	core.PuregoSafeRegister(&XGConverterConvertBytes, libs, "g_converter_convert_bytes")
+	core.PuregoSafeRegister(&XGConverterReset, libs, "g_converter_reset")
 
 }

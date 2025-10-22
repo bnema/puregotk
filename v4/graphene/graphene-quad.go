@@ -107,22 +107,26 @@ func (x *Quad) InitFromRect(RVar *Rect) *Quad {
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xQuadGLibType, lib, "graphene_quad_get_type")
+	core.PuregoSafeRegister(&xQuadGLibType, libs, "graphene_quad_get_type")
 
-	core.PuregoSafeRegister(&xQuadAlloc, lib, "graphene_quad_alloc")
+	core.PuregoSafeRegister(&xQuadAlloc, libs, "graphene_quad_alloc")
 
-	core.PuregoSafeRegister(&xQuadBounds, lib, "graphene_quad_bounds")
-	core.PuregoSafeRegister(&xQuadContains, lib, "graphene_quad_contains")
-	core.PuregoSafeRegister(&xQuadFree, lib, "graphene_quad_free")
-	core.PuregoSafeRegister(&xQuadGetPoint, lib, "graphene_quad_get_point")
-	core.PuregoSafeRegister(&xQuadInit, lib, "graphene_quad_init")
-	core.PuregoSafeRegister(&xQuadInitFromPoints, lib, "graphene_quad_init_from_points")
-	core.PuregoSafeRegister(&xQuadInitFromRect, lib, "graphene_quad_init_from_rect")
+	core.PuregoSafeRegister(&xQuadBounds, libs, "graphene_quad_bounds")
+	core.PuregoSafeRegister(&xQuadContains, libs, "graphene_quad_contains")
+	core.PuregoSafeRegister(&xQuadFree, libs, "graphene_quad_free")
+	core.PuregoSafeRegister(&xQuadGetPoint, libs, "graphene_quad_get_point")
+	core.PuregoSafeRegister(&xQuadInit, libs, "graphene_quad_init")
+	core.PuregoSafeRegister(&xQuadInitFromPoints, libs, "graphene_quad_init_from_points")
+	core.PuregoSafeRegister(&xQuadInitFromRect, libs, "graphene_quad_init_from_rect")
 
 }

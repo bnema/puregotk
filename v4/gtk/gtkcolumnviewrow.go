@@ -216,26 +216,30 @@ func (c *ColumnViewRow) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColumnViewRowGLibType, lib, "gtk_column_view_row_get_type")
+	core.PuregoSafeRegister(&xColumnViewRowGLibType, libs, "gtk_column_view_row_get_type")
 
-	core.PuregoSafeRegister(&xColumnViewRowGetAccessibleDescription, lib, "gtk_column_view_row_get_accessible_description")
-	core.PuregoSafeRegister(&xColumnViewRowGetAccessibleLabel, lib, "gtk_column_view_row_get_accessible_label")
-	core.PuregoSafeRegister(&xColumnViewRowGetActivatable, lib, "gtk_column_view_row_get_activatable")
-	core.PuregoSafeRegister(&xColumnViewRowGetFocusable, lib, "gtk_column_view_row_get_focusable")
-	core.PuregoSafeRegister(&xColumnViewRowGetItem, lib, "gtk_column_view_row_get_item")
-	core.PuregoSafeRegister(&xColumnViewRowGetPosition, lib, "gtk_column_view_row_get_position")
-	core.PuregoSafeRegister(&xColumnViewRowGetSelectable, lib, "gtk_column_view_row_get_selectable")
-	core.PuregoSafeRegister(&xColumnViewRowGetSelected, lib, "gtk_column_view_row_get_selected")
-	core.PuregoSafeRegister(&xColumnViewRowSetAccessibleDescription, lib, "gtk_column_view_row_set_accessible_description")
-	core.PuregoSafeRegister(&xColumnViewRowSetAccessibleLabel, lib, "gtk_column_view_row_set_accessible_label")
-	core.PuregoSafeRegister(&xColumnViewRowSetActivatable, lib, "gtk_column_view_row_set_activatable")
-	core.PuregoSafeRegister(&xColumnViewRowSetFocusable, lib, "gtk_column_view_row_set_focusable")
-	core.PuregoSafeRegister(&xColumnViewRowSetSelectable, lib, "gtk_column_view_row_set_selectable")
+	core.PuregoSafeRegister(&xColumnViewRowGetAccessibleDescription, libs, "gtk_column_view_row_get_accessible_description")
+	core.PuregoSafeRegister(&xColumnViewRowGetAccessibleLabel, libs, "gtk_column_view_row_get_accessible_label")
+	core.PuregoSafeRegister(&xColumnViewRowGetActivatable, libs, "gtk_column_view_row_get_activatable")
+	core.PuregoSafeRegister(&xColumnViewRowGetFocusable, libs, "gtk_column_view_row_get_focusable")
+	core.PuregoSafeRegister(&xColumnViewRowGetItem, libs, "gtk_column_view_row_get_item")
+	core.PuregoSafeRegister(&xColumnViewRowGetPosition, libs, "gtk_column_view_row_get_position")
+	core.PuregoSafeRegister(&xColumnViewRowGetSelectable, libs, "gtk_column_view_row_get_selectable")
+	core.PuregoSafeRegister(&xColumnViewRowGetSelected, libs, "gtk_column_view_row_get_selected")
+	core.PuregoSafeRegister(&xColumnViewRowSetAccessibleDescription, libs, "gtk_column_view_row_set_accessible_description")
+	core.PuregoSafeRegister(&xColumnViewRowSetAccessibleLabel, libs, "gtk_column_view_row_set_accessible_label")
+	core.PuregoSafeRegister(&xColumnViewRowSetActivatable, libs, "gtk_column_view_row_set_activatable")
+	core.PuregoSafeRegister(&xColumnViewRowSetFocusable, libs, "gtk_column_view_row_set_focusable")
+	core.PuregoSafeRegister(&xColumnViewRowSetSelectable, libs, "gtk_column_view_row_set_selectable")
 
 }

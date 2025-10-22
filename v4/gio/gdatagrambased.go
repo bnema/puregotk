@@ -445,18 +445,22 @@ var XGDatagramBasedSendMessages func(uintptr, []OutputMessage, uint, int, int64,
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDatagramBasedGLibType, lib, "g_datagram_based_get_type")
+	core.PuregoSafeRegister(&xDatagramBasedGLibType, libs, "g_datagram_based_get_type")
 
-	core.PuregoSafeRegister(&XGDatagramBasedConditionCheck, lib, "g_datagram_based_condition_check")
-	core.PuregoSafeRegister(&XGDatagramBasedConditionWait, lib, "g_datagram_based_condition_wait")
-	core.PuregoSafeRegister(&XGDatagramBasedCreateSource, lib, "g_datagram_based_create_source")
-	core.PuregoSafeRegister(&XGDatagramBasedReceiveMessages, lib, "g_datagram_based_receive_messages")
-	core.PuregoSafeRegister(&XGDatagramBasedSendMessages, lib, "g_datagram_based_send_messages")
+	core.PuregoSafeRegister(&XGDatagramBasedConditionCheck, libs, "g_datagram_based_condition_check")
+	core.PuregoSafeRegister(&XGDatagramBasedConditionWait, libs, "g_datagram_based_condition_wait")
+	core.PuregoSafeRegister(&XGDatagramBasedCreateSource, libs, "g_datagram_based_create_source")
+	core.PuregoSafeRegister(&XGDatagramBasedReceiveMessages, libs, "g_datagram_based_receive_messages")
+	core.PuregoSafeRegister(&XGDatagramBasedSendMessages, libs, "g_datagram_based_send_messages")
 
 }

@@ -600,41 +600,45 @@ func SimpleAsyncResultIsValid(ResultVar AsyncResult, SourceVar *gobject.Object, 
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSimpleAsyncReportErrorInIdle, lib, "g_simple_async_report_error_in_idle")
-	core.PuregoSafeRegister(&xSimpleAsyncReportGerrorInIdle, lib, "g_simple_async_report_gerror_in_idle")
-	core.PuregoSafeRegister(&xSimpleAsyncReportTakeGerrorInIdle, lib, "g_simple_async_report_take_gerror_in_idle")
+	core.PuregoSafeRegister(&xSimpleAsyncReportErrorInIdle, libs, "g_simple_async_report_error_in_idle")
+	core.PuregoSafeRegister(&xSimpleAsyncReportGerrorInIdle, libs, "g_simple_async_report_gerror_in_idle")
+	core.PuregoSafeRegister(&xSimpleAsyncReportTakeGerrorInIdle, libs, "g_simple_async_report_take_gerror_in_idle")
 
-	core.PuregoSafeRegister(&xSimpleAsyncResultGLibType, lib, "g_simple_async_result_get_type")
+	core.PuregoSafeRegister(&xSimpleAsyncResultGLibType, libs, "g_simple_async_result_get_type")
 
-	core.PuregoSafeRegister(&xNewSimpleAsyncResult, lib, "g_simple_async_result_new")
-	core.PuregoSafeRegister(&xNewSimpleAsyncResultError, lib, "g_simple_async_result_new_error")
-	core.PuregoSafeRegister(&xNewSimpleAsyncResultFromError, lib, "g_simple_async_result_new_from_error")
-	core.PuregoSafeRegister(&xNewSimpleAsyncResultTakeError, lib, "g_simple_async_result_new_take_error")
+	core.PuregoSafeRegister(&xNewSimpleAsyncResult, libs, "g_simple_async_result_new")
+	core.PuregoSafeRegister(&xNewSimpleAsyncResultError, libs, "g_simple_async_result_new_error")
+	core.PuregoSafeRegister(&xNewSimpleAsyncResultFromError, libs, "g_simple_async_result_new_from_error")
+	core.PuregoSafeRegister(&xNewSimpleAsyncResultTakeError, libs, "g_simple_async_result_new_take_error")
 
-	core.PuregoSafeRegister(&xSimpleAsyncResultComplete, lib, "g_simple_async_result_complete")
-	core.PuregoSafeRegister(&xSimpleAsyncResultCompleteInIdle, lib, "g_simple_async_result_complete_in_idle")
-	core.PuregoSafeRegister(&xSimpleAsyncResultGetOpResGboolean, lib, "g_simple_async_result_get_op_res_gboolean")
-	core.PuregoSafeRegister(&xSimpleAsyncResultGetOpResGpointer, lib, "g_simple_async_result_get_op_res_gpointer")
-	core.PuregoSafeRegister(&xSimpleAsyncResultGetOpResGssize, lib, "g_simple_async_result_get_op_res_gssize")
-	core.PuregoSafeRegister(&xSimpleAsyncResultGetSourceTag, lib, "g_simple_async_result_get_source_tag")
-	core.PuregoSafeRegister(&xSimpleAsyncResultPropagateError, lib, "g_simple_async_result_propagate_error")
-	core.PuregoSafeRegister(&xSimpleAsyncResultRunInThread, lib, "g_simple_async_result_run_in_thread")
-	core.PuregoSafeRegister(&xSimpleAsyncResultSetCheckCancellable, lib, "g_simple_async_result_set_check_cancellable")
-	core.PuregoSafeRegister(&xSimpleAsyncResultSetError, lib, "g_simple_async_result_set_error")
-	core.PuregoSafeRegister(&xSimpleAsyncResultSetErrorVa, lib, "g_simple_async_result_set_error_va")
-	core.PuregoSafeRegister(&xSimpleAsyncResultSetFromError, lib, "g_simple_async_result_set_from_error")
-	core.PuregoSafeRegister(&xSimpleAsyncResultSetHandleCancellation, lib, "g_simple_async_result_set_handle_cancellation")
-	core.PuregoSafeRegister(&xSimpleAsyncResultSetOpResGboolean, lib, "g_simple_async_result_set_op_res_gboolean")
-	core.PuregoSafeRegister(&xSimpleAsyncResultSetOpResGpointer, lib, "g_simple_async_result_set_op_res_gpointer")
-	core.PuregoSafeRegister(&xSimpleAsyncResultSetOpResGssize, lib, "g_simple_async_result_set_op_res_gssize")
-	core.PuregoSafeRegister(&xSimpleAsyncResultTakeError, lib, "g_simple_async_result_take_error")
+	core.PuregoSafeRegister(&xSimpleAsyncResultComplete, libs, "g_simple_async_result_complete")
+	core.PuregoSafeRegister(&xSimpleAsyncResultCompleteInIdle, libs, "g_simple_async_result_complete_in_idle")
+	core.PuregoSafeRegister(&xSimpleAsyncResultGetOpResGboolean, libs, "g_simple_async_result_get_op_res_gboolean")
+	core.PuregoSafeRegister(&xSimpleAsyncResultGetOpResGpointer, libs, "g_simple_async_result_get_op_res_gpointer")
+	core.PuregoSafeRegister(&xSimpleAsyncResultGetOpResGssize, libs, "g_simple_async_result_get_op_res_gssize")
+	core.PuregoSafeRegister(&xSimpleAsyncResultGetSourceTag, libs, "g_simple_async_result_get_source_tag")
+	core.PuregoSafeRegister(&xSimpleAsyncResultPropagateError, libs, "g_simple_async_result_propagate_error")
+	core.PuregoSafeRegister(&xSimpleAsyncResultRunInThread, libs, "g_simple_async_result_run_in_thread")
+	core.PuregoSafeRegister(&xSimpleAsyncResultSetCheckCancellable, libs, "g_simple_async_result_set_check_cancellable")
+	core.PuregoSafeRegister(&xSimpleAsyncResultSetError, libs, "g_simple_async_result_set_error")
+	core.PuregoSafeRegister(&xSimpleAsyncResultSetErrorVa, libs, "g_simple_async_result_set_error_va")
+	core.PuregoSafeRegister(&xSimpleAsyncResultSetFromError, libs, "g_simple_async_result_set_from_error")
+	core.PuregoSafeRegister(&xSimpleAsyncResultSetHandleCancellation, libs, "g_simple_async_result_set_handle_cancellation")
+	core.PuregoSafeRegister(&xSimpleAsyncResultSetOpResGboolean, libs, "g_simple_async_result_set_op_res_gboolean")
+	core.PuregoSafeRegister(&xSimpleAsyncResultSetOpResGpointer, libs, "g_simple_async_result_set_op_res_gpointer")
+	core.PuregoSafeRegister(&xSimpleAsyncResultSetOpResGssize, libs, "g_simple_async_result_set_op_res_gssize")
+	core.PuregoSafeRegister(&xSimpleAsyncResultTakeError, libs, "g_simple_async_result_take_error")
 
-	core.PuregoSafeRegister(&xSimpleAsyncResultIsValid, lib, "g_simple_async_result_is_valid")
+	core.PuregoSafeRegister(&xSimpleAsyncResultIsValid, libs, "g_simple_async_result_is_valid")
 
 }

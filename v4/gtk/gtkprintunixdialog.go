@@ -697,32 +697,36 @@ func (x *PrintUnixDialog) SetFocus(FocusVar *Widget) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPrintUnixDialogGLibType, lib, "gtk_print_unix_dialog_get_type")
+	core.PuregoSafeRegister(&xPrintUnixDialogGLibType, libs, "gtk_print_unix_dialog_get_type")
 
-	core.PuregoSafeRegister(&xNewPrintUnixDialog, lib, "gtk_print_unix_dialog_new")
+	core.PuregoSafeRegister(&xNewPrintUnixDialog, libs, "gtk_print_unix_dialog_new")
 
-	core.PuregoSafeRegister(&xPrintUnixDialogAddCustomTab, lib, "gtk_print_unix_dialog_add_custom_tab")
-	core.PuregoSafeRegister(&xPrintUnixDialogGetCurrentPage, lib, "gtk_print_unix_dialog_get_current_page")
-	core.PuregoSafeRegister(&xPrintUnixDialogGetEmbedPageSetup, lib, "gtk_print_unix_dialog_get_embed_page_setup")
-	core.PuregoSafeRegister(&xPrintUnixDialogGetHasSelection, lib, "gtk_print_unix_dialog_get_has_selection")
-	core.PuregoSafeRegister(&xPrintUnixDialogGetManualCapabilities, lib, "gtk_print_unix_dialog_get_manual_capabilities")
-	core.PuregoSafeRegister(&xPrintUnixDialogGetPageSetup, lib, "gtk_print_unix_dialog_get_page_setup")
-	core.PuregoSafeRegister(&xPrintUnixDialogGetPageSetupSet, lib, "gtk_print_unix_dialog_get_page_setup_set")
-	core.PuregoSafeRegister(&xPrintUnixDialogGetSelectedPrinter, lib, "gtk_print_unix_dialog_get_selected_printer")
-	core.PuregoSafeRegister(&xPrintUnixDialogGetSettings, lib, "gtk_print_unix_dialog_get_settings")
-	core.PuregoSafeRegister(&xPrintUnixDialogGetSupportSelection, lib, "gtk_print_unix_dialog_get_support_selection")
-	core.PuregoSafeRegister(&xPrintUnixDialogSetCurrentPage, lib, "gtk_print_unix_dialog_set_current_page")
-	core.PuregoSafeRegister(&xPrintUnixDialogSetEmbedPageSetup, lib, "gtk_print_unix_dialog_set_embed_page_setup")
-	core.PuregoSafeRegister(&xPrintUnixDialogSetHasSelection, lib, "gtk_print_unix_dialog_set_has_selection")
-	core.PuregoSafeRegister(&xPrintUnixDialogSetManualCapabilities, lib, "gtk_print_unix_dialog_set_manual_capabilities")
-	core.PuregoSafeRegister(&xPrintUnixDialogSetPageSetup, lib, "gtk_print_unix_dialog_set_page_setup")
-	core.PuregoSafeRegister(&xPrintUnixDialogSetSettings, lib, "gtk_print_unix_dialog_set_settings")
-	core.PuregoSafeRegister(&xPrintUnixDialogSetSupportSelection, lib, "gtk_print_unix_dialog_set_support_selection")
+	core.PuregoSafeRegister(&xPrintUnixDialogAddCustomTab, libs, "gtk_print_unix_dialog_add_custom_tab")
+	core.PuregoSafeRegister(&xPrintUnixDialogGetCurrentPage, libs, "gtk_print_unix_dialog_get_current_page")
+	core.PuregoSafeRegister(&xPrintUnixDialogGetEmbedPageSetup, libs, "gtk_print_unix_dialog_get_embed_page_setup")
+	core.PuregoSafeRegister(&xPrintUnixDialogGetHasSelection, libs, "gtk_print_unix_dialog_get_has_selection")
+	core.PuregoSafeRegister(&xPrintUnixDialogGetManualCapabilities, libs, "gtk_print_unix_dialog_get_manual_capabilities")
+	core.PuregoSafeRegister(&xPrintUnixDialogGetPageSetup, libs, "gtk_print_unix_dialog_get_page_setup")
+	core.PuregoSafeRegister(&xPrintUnixDialogGetPageSetupSet, libs, "gtk_print_unix_dialog_get_page_setup_set")
+	core.PuregoSafeRegister(&xPrintUnixDialogGetSelectedPrinter, libs, "gtk_print_unix_dialog_get_selected_printer")
+	core.PuregoSafeRegister(&xPrintUnixDialogGetSettings, libs, "gtk_print_unix_dialog_get_settings")
+	core.PuregoSafeRegister(&xPrintUnixDialogGetSupportSelection, libs, "gtk_print_unix_dialog_get_support_selection")
+	core.PuregoSafeRegister(&xPrintUnixDialogSetCurrentPage, libs, "gtk_print_unix_dialog_set_current_page")
+	core.PuregoSafeRegister(&xPrintUnixDialogSetEmbedPageSetup, libs, "gtk_print_unix_dialog_set_embed_page_setup")
+	core.PuregoSafeRegister(&xPrintUnixDialogSetHasSelection, libs, "gtk_print_unix_dialog_set_has_selection")
+	core.PuregoSafeRegister(&xPrintUnixDialogSetManualCapabilities, libs, "gtk_print_unix_dialog_set_manual_capabilities")
+	core.PuregoSafeRegister(&xPrintUnixDialogSetPageSetup, libs, "gtk_print_unix_dialog_set_page_setup")
+	core.PuregoSafeRegister(&xPrintUnixDialogSetSettings, libs, "gtk_print_unix_dialog_set_settings")
+	core.PuregoSafeRegister(&xPrintUnixDialogSetSupportSelection, libs, "gtk_print_unix_dialog_set_support_selection")
 
 }

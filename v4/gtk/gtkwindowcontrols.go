@@ -487,22 +487,26 @@ func (x *WindowControls) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xWindowControlsGLibType, lib, "gtk_window_controls_get_type")
+	core.PuregoSafeRegister(&xWindowControlsGLibType, libs, "gtk_window_controls_get_type")
 
-	core.PuregoSafeRegister(&xNewWindowControls, lib, "gtk_window_controls_new")
+	core.PuregoSafeRegister(&xNewWindowControls, libs, "gtk_window_controls_new")
 
-	core.PuregoSafeRegister(&xWindowControlsGetDecorationLayout, lib, "gtk_window_controls_get_decoration_layout")
-	core.PuregoSafeRegister(&xWindowControlsGetEmpty, lib, "gtk_window_controls_get_empty")
-	core.PuregoSafeRegister(&xWindowControlsGetSide, lib, "gtk_window_controls_get_side")
-	core.PuregoSafeRegister(&xWindowControlsGetUseNativeControls, lib, "gtk_window_controls_get_use_native_controls")
-	core.PuregoSafeRegister(&xWindowControlsSetDecorationLayout, lib, "gtk_window_controls_set_decoration_layout")
-	core.PuregoSafeRegister(&xWindowControlsSetSide, lib, "gtk_window_controls_set_side")
-	core.PuregoSafeRegister(&xWindowControlsSetUseNativeControls, lib, "gtk_window_controls_set_use_native_controls")
+	core.PuregoSafeRegister(&xWindowControlsGetDecorationLayout, libs, "gtk_window_controls_get_decoration_layout")
+	core.PuregoSafeRegister(&xWindowControlsGetEmpty, libs, "gtk_window_controls_get_empty")
+	core.PuregoSafeRegister(&xWindowControlsGetSide, libs, "gtk_window_controls_get_side")
+	core.PuregoSafeRegister(&xWindowControlsGetUseNativeControls, libs, "gtk_window_controls_get_use_native_controls")
+	core.PuregoSafeRegister(&xWindowControlsSetDecorationLayout, libs, "gtk_window_controls_set_decoration_layout")
+	core.PuregoSafeRegister(&xWindowControlsSetSide, libs, "gtk_window_controls_set_side")
+	core.PuregoSafeRegister(&xWindowControlsSetUseNativeControls, libs, "gtk_window_controls_set_use_native_controls")
 
 }

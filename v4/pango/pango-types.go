@@ -219,22 +219,26 @@ func UnitsToDouble(IVar int) float64 {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xExtentsToPixels, lib, "pango_extents_to_pixels")
-	core.PuregoSafeRegister(&xUnitsFromDouble, lib, "pango_units_from_double")
-	core.PuregoSafeRegister(&xUnitsToDouble, lib, "pango_units_to_double")
+	core.PuregoSafeRegister(&xExtentsToPixels, libs, "pango_extents_to_pixels")
+	core.PuregoSafeRegister(&xUnitsFromDouble, libs, "pango_units_from_double")
+	core.PuregoSafeRegister(&xUnitsToDouble, libs, "pango_units_to_double")
 
-	core.PuregoSafeRegister(&xLanguageGLibType, lib, "pango_language_get_type")
+	core.PuregoSafeRegister(&xLanguageGLibType, libs, "pango_language_get_type")
 
-	core.PuregoSafeRegister(&xLanguageGetSampleString, lib, "pango_language_get_sample_string")
-	core.PuregoSafeRegister(&xLanguageGetScripts, lib, "pango_language_get_scripts")
-	core.PuregoSafeRegister(&xLanguageIncludesScript, lib, "pango_language_includes_script")
-	core.PuregoSafeRegister(&xLanguageMatches, lib, "pango_language_matches")
-	core.PuregoSafeRegister(&xLanguageToString, lib, "pango_language_to_string")
+	core.PuregoSafeRegister(&xLanguageGetSampleString, libs, "pango_language_get_sample_string")
+	core.PuregoSafeRegister(&xLanguageGetScripts, libs, "pango_language_get_scripts")
+	core.PuregoSafeRegister(&xLanguageIncludesScript, libs, "pango_language_includes_script")
+	core.PuregoSafeRegister(&xLanguageMatches, libs, "pango_language_matches")
+	core.PuregoSafeRegister(&xLanguageToString, libs, "pango_language_to_string")
 
 }

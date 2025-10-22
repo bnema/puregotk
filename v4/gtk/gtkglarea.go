@@ -887,34 +887,38 @@ func (x *GLArea) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGLAreaGLibType, lib, "gtk_gl_area_get_type")
+	core.PuregoSafeRegister(&xGLAreaGLibType, libs, "gtk_gl_area_get_type")
 
-	core.PuregoSafeRegister(&xNewGLArea, lib, "gtk_gl_area_new")
+	core.PuregoSafeRegister(&xNewGLArea, libs, "gtk_gl_area_new")
 
-	core.PuregoSafeRegister(&xGLAreaAttachBuffers, lib, "gtk_gl_area_attach_buffers")
-	core.PuregoSafeRegister(&xGLAreaGetAllowedApis, lib, "gtk_gl_area_get_allowed_apis")
-	core.PuregoSafeRegister(&xGLAreaGetApi, lib, "gtk_gl_area_get_api")
-	core.PuregoSafeRegister(&xGLAreaGetAutoRender, lib, "gtk_gl_area_get_auto_render")
-	core.PuregoSafeRegister(&xGLAreaGetContext, lib, "gtk_gl_area_get_context")
-	core.PuregoSafeRegister(&xGLAreaGetError, lib, "gtk_gl_area_get_error")
-	core.PuregoSafeRegister(&xGLAreaGetHasDepthBuffer, lib, "gtk_gl_area_get_has_depth_buffer")
-	core.PuregoSafeRegister(&xGLAreaGetHasStencilBuffer, lib, "gtk_gl_area_get_has_stencil_buffer")
-	core.PuregoSafeRegister(&xGLAreaGetRequiredVersion, lib, "gtk_gl_area_get_required_version")
-	core.PuregoSafeRegister(&xGLAreaGetUseEs, lib, "gtk_gl_area_get_use_es")
-	core.PuregoSafeRegister(&xGLAreaMakeCurrent, lib, "gtk_gl_area_make_current")
-	core.PuregoSafeRegister(&xGLAreaQueueRender, lib, "gtk_gl_area_queue_render")
-	core.PuregoSafeRegister(&xGLAreaSetAllowedApis, lib, "gtk_gl_area_set_allowed_apis")
-	core.PuregoSafeRegister(&xGLAreaSetAutoRender, lib, "gtk_gl_area_set_auto_render")
-	core.PuregoSafeRegister(&xGLAreaSetError, lib, "gtk_gl_area_set_error")
-	core.PuregoSafeRegister(&xGLAreaSetHasDepthBuffer, lib, "gtk_gl_area_set_has_depth_buffer")
-	core.PuregoSafeRegister(&xGLAreaSetHasStencilBuffer, lib, "gtk_gl_area_set_has_stencil_buffer")
-	core.PuregoSafeRegister(&xGLAreaSetRequiredVersion, lib, "gtk_gl_area_set_required_version")
-	core.PuregoSafeRegister(&xGLAreaSetUseEs, lib, "gtk_gl_area_set_use_es")
+	core.PuregoSafeRegister(&xGLAreaAttachBuffers, libs, "gtk_gl_area_attach_buffers")
+	core.PuregoSafeRegister(&xGLAreaGetAllowedApis, libs, "gtk_gl_area_get_allowed_apis")
+	core.PuregoSafeRegister(&xGLAreaGetApi, libs, "gtk_gl_area_get_api")
+	core.PuregoSafeRegister(&xGLAreaGetAutoRender, libs, "gtk_gl_area_get_auto_render")
+	core.PuregoSafeRegister(&xGLAreaGetContext, libs, "gtk_gl_area_get_context")
+	core.PuregoSafeRegister(&xGLAreaGetError, libs, "gtk_gl_area_get_error")
+	core.PuregoSafeRegister(&xGLAreaGetHasDepthBuffer, libs, "gtk_gl_area_get_has_depth_buffer")
+	core.PuregoSafeRegister(&xGLAreaGetHasStencilBuffer, libs, "gtk_gl_area_get_has_stencil_buffer")
+	core.PuregoSafeRegister(&xGLAreaGetRequiredVersion, libs, "gtk_gl_area_get_required_version")
+	core.PuregoSafeRegister(&xGLAreaGetUseEs, libs, "gtk_gl_area_get_use_es")
+	core.PuregoSafeRegister(&xGLAreaMakeCurrent, libs, "gtk_gl_area_make_current")
+	core.PuregoSafeRegister(&xGLAreaQueueRender, libs, "gtk_gl_area_queue_render")
+	core.PuregoSafeRegister(&xGLAreaSetAllowedApis, libs, "gtk_gl_area_set_allowed_apis")
+	core.PuregoSafeRegister(&xGLAreaSetAutoRender, libs, "gtk_gl_area_set_auto_render")
+	core.PuregoSafeRegister(&xGLAreaSetError, libs, "gtk_gl_area_set_error")
+	core.PuregoSafeRegister(&xGLAreaSetHasDepthBuffer, libs, "gtk_gl_area_set_has_depth_buffer")
+	core.PuregoSafeRegister(&xGLAreaSetHasStencilBuffer, libs, "gtk_gl_area_set_has_stencil_buffer")
+	core.PuregoSafeRegister(&xGLAreaSetRequiredVersion, libs, "gtk_gl_area_set_required_version")
+	core.PuregoSafeRegister(&xGLAreaSetUseEs, libs, "gtk_gl_area_set_use_es")
 
 }

@@ -103,16 +103,20 @@ func BusWatchNameWithClosures(BusTypeVar BusType, NameVar string, FlagsVar BusNa
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBusUnwatchName, lib, "g_bus_unwatch_name")
-	core.PuregoSafeRegister(&xBusWatchName, lib, "g_bus_watch_name")
-	core.PuregoSafeRegister(&xBusWatchNameOnConnection, lib, "g_bus_watch_name_on_connection")
-	core.PuregoSafeRegister(&xBusWatchNameOnConnectionWithClosures, lib, "g_bus_watch_name_on_connection_with_closures")
-	core.PuregoSafeRegister(&xBusWatchNameWithClosures, lib, "g_bus_watch_name_with_closures")
+	core.PuregoSafeRegister(&xBusUnwatchName, libs, "g_bus_unwatch_name")
+	core.PuregoSafeRegister(&xBusWatchName, libs, "g_bus_watch_name")
+	core.PuregoSafeRegister(&xBusWatchNameOnConnection, libs, "g_bus_watch_name_on_connection")
+	core.PuregoSafeRegister(&xBusWatchNameOnConnectionWithClosures, libs, "g_bus_watch_name_on_connection_with_closures")
+	core.PuregoSafeRegister(&xBusWatchNameWithClosures, libs, "g_bus_watch_name_with_closures")
 
 }

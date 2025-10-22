@@ -115,19 +115,23 @@ func (c *BoolFilter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBoolFilterGLibType, lib, "gtk_bool_filter_get_type")
+	core.PuregoSafeRegister(&xBoolFilterGLibType, libs, "gtk_bool_filter_get_type")
 
-	core.PuregoSafeRegister(&xNewBoolFilter, lib, "gtk_bool_filter_new")
+	core.PuregoSafeRegister(&xNewBoolFilter, libs, "gtk_bool_filter_new")
 
-	core.PuregoSafeRegister(&xBoolFilterGetExpression, lib, "gtk_bool_filter_get_expression")
-	core.PuregoSafeRegister(&xBoolFilterGetInvert, lib, "gtk_bool_filter_get_invert")
-	core.PuregoSafeRegister(&xBoolFilterSetExpression, lib, "gtk_bool_filter_set_expression")
-	core.PuregoSafeRegister(&xBoolFilterSetInvert, lib, "gtk_bool_filter_set_invert")
+	core.PuregoSafeRegister(&xBoolFilterGetExpression, libs, "gtk_bool_filter_get_expression")
+	core.PuregoSafeRegister(&xBoolFilterGetInvert, libs, "gtk_bool_filter_get_invert")
+	core.PuregoSafeRegister(&xBoolFilterSetExpression, libs, "gtk_bool_filter_set_expression")
+	core.PuregoSafeRegister(&xBoolFilterSetInvert, libs, "gtk_bool_filter_set_invert")
 
 }

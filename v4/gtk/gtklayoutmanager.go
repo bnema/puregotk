@@ -391,19 +391,23 @@ func (c *LayoutManager) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xLayoutManagerGLibType, lib, "gtk_layout_manager_get_type")
+	core.PuregoSafeRegister(&xLayoutManagerGLibType, libs, "gtk_layout_manager_get_type")
 
-	core.PuregoSafeRegister(&xLayoutManagerAllocate, lib, "gtk_layout_manager_allocate")
-	core.PuregoSafeRegister(&xLayoutManagerGetLayoutChild, lib, "gtk_layout_manager_get_layout_child")
-	core.PuregoSafeRegister(&xLayoutManagerGetRequestMode, lib, "gtk_layout_manager_get_request_mode")
-	core.PuregoSafeRegister(&xLayoutManagerGetWidget, lib, "gtk_layout_manager_get_widget")
-	core.PuregoSafeRegister(&xLayoutManagerLayoutChanged, lib, "gtk_layout_manager_layout_changed")
-	core.PuregoSafeRegister(&xLayoutManagerMeasure, lib, "gtk_layout_manager_measure")
+	core.PuregoSafeRegister(&xLayoutManagerAllocate, libs, "gtk_layout_manager_allocate")
+	core.PuregoSafeRegister(&xLayoutManagerGetLayoutChild, libs, "gtk_layout_manager_get_layout_child")
+	core.PuregoSafeRegister(&xLayoutManagerGetRequestMode, libs, "gtk_layout_manager_get_request_mode")
+	core.PuregoSafeRegister(&xLayoutManagerGetWidget, libs, "gtk_layout_manager_get_widget")
+	core.PuregoSafeRegister(&xLayoutManagerLayoutChanged, libs, "gtk_layout_manager_layout_changed")
+	core.PuregoSafeRegister(&xLayoutManagerMeasure, libs, "gtk_layout_manager_measure")
 
 }

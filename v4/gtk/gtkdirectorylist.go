@@ -317,25 +317,29 @@ func (x *DirectoryList) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDirectoryListGLibType, lib, "gtk_directory_list_get_type")
+	core.PuregoSafeRegister(&xDirectoryListGLibType, libs, "gtk_directory_list_get_type")
 
-	core.PuregoSafeRegister(&xNewDirectoryList, lib, "gtk_directory_list_new")
+	core.PuregoSafeRegister(&xNewDirectoryList, libs, "gtk_directory_list_new")
 
-	core.PuregoSafeRegister(&xDirectoryListGetAttributes, lib, "gtk_directory_list_get_attributes")
-	core.PuregoSafeRegister(&xDirectoryListGetError, lib, "gtk_directory_list_get_error")
-	core.PuregoSafeRegister(&xDirectoryListGetFile, lib, "gtk_directory_list_get_file")
-	core.PuregoSafeRegister(&xDirectoryListGetIoPriority, lib, "gtk_directory_list_get_io_priority")
-	core.PuregoSafeRegister(&xDirectoryListGetMonitored, lib, "gtk_directory_list_get_monitored")
-	core.PuregoSafeRegister(&xDirectoryListIsLoading, lib, "gtk_directory_list_is_loading")
-	core.PuregoSafeRegister(&xDirectoryListSetAttributes, lib, "gtk_directory_list_set_attributes")
-	core.PuregoSafeRegister(&xDirectoryListSetFile, lib, "gtk_directory_list_set_file")
-	core.PuregoSafeRegister(&xDirectoryListSetIoPriority, lib, "gtk_directory_list_set_io_priority")
-	core.PuregoSafeRegister(&xDirectoryListSetMonitored, lib, "gtk_directory_list_set_monitored")
+	core.PuregoSafeRegister(&xDirectoryListGetAttributes, libs, "gtk_directory_list_get_attributes")
+	core.PuregoSafeRegister(&xDirectoryListGetError, libs, "gtk_directory_list_get_error")
+	core.PuregoSafeRegister(&xDirectoryListGetFile, libs, "gtk_directory_list_get_file")
+	core.PuregoSafeRegister(&xDirectoryListGetIoPriority, libs, "gtk_directory_list_get_io_priority")
+	core.PuregoSafeRegister(&xDirectoryListGetMonitored, libs, "gtk_directory_list_get_monitored")
+	core.PuregoSafeRegister(&xDirectoryListIsLoading, libs, "gtk_directory_list_is_loading")
+	core.PuregoSafeRegister(&xDirectoryListSetAttributes, libs, "gtk_directory_list_set_attributes")
+	core.PuregoSafeRegister(&xDirectoryListSetFile, libs, "gtk_directory_list_set_file")
+	core.PuregoSafeRegister(&xDirectoryListSetIoPriority, libs, "gtk_directory_list_set_io_priority")
+	core.PuregoSafeRegister(&xDirectoryListSetMonitored, libs, "gtk_directory_list_set_monitored")
 
 }

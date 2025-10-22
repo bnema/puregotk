@@ -243,24 +243,28 @@ func (x *FileFilter) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFileFilterGLibType, lib, "gtk_file_filter_get_type")
+	core.PuregoSafeRegister(&xFileFilterGLibType, libs, "gtk_file_filter_get_type")
 
-	core.PuregoSafeRegister(&xNewFileFilter, lib, "gtk_file_filter_new")
-	core.PuregoSafeRegister(&xNewFileFilterFromGvariant, lib, "gtk_file_filter_new_from_gvariant")
+	core.PuregoSafeRegister(&xNewFileFilter, libs, "gtk_file_filter_new")
+	core.PuregoSafeRegister(&xNewFileFilterFromGvariant, libs, "gtk_file_filter_new_from_gvariant")
 
-	core.PuregoSafeRegister(&xFileFilterAddMimeType, lib, "gtk_file_filter_add_mime_type")
-	core.PuregoSafeRegister(&xFileFilterAddPattern, lib, "gtk_file_filter_add_pattern")
-	core.PuregoSafeRegister(&xFileFilterAddPixbufFormats, lib, "gtk_file_filter_add_pixbuf_formats")
-	core.PuregoSafeRegister(&xFileFilterAddSuffix, lib, "gtk_file_filter_add_suffix")
-	core.PuregoSafeRegister(&xFileFilterGetAttributes, lib, "gtk_file_filter_get_attributes")
-	core.PuregoSafeRegister(&xFileFilterGetName, lib, "gtk_file_filter_get_name")
-	core.PuregoSafeRegister(&xFileFilterSetName, lib, "gtk_file_filter_set_name")
-	core.PuregoSafeRegister(&xFileFilterToGvariant, lib, "gtk_file_filter_to_gvariant")
+	core.PuregoSafeRegister(&xFileFilterAddMimeType, libs, "gtk_file_filter_add_mime_type")
+	core.PuregoSafeRegister(&xFileFilterAddPattern, libs, "gtk_file_filter_add_pattern")
+	core.PuregoSafeRegister(&xFileFilterAddPixbufFormats, libs, "gtk_file_filter_add_pixbuf_formats")
+	core.PuregoSafeRegister(&xFileFilterAddSuffix, libs, "gtk_file_filter_add_suffix")
+	core.PuregoSafeRegister(&xFileFilterGetAttributes, libs, "gtk_file_filter_get_attributes")
+	core.PuregoSafeRegister(&xFileFilterGetName, libs, "gtk_file_filter_get_name")
+	core.PuregoSafeRegister(&xFileFilterSetName, libs, "gtk_file_filter_set_name")
+	core.PuregoSafeRegister(&xFileFilterToGvariant, libs, "gtk_file_filter_to_gvariant")
 
 }

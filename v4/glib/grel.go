@@ -177,22 +177,26 @@ func (x *Tuples) Index(IndexVar int, FieldVar int) uintptr {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRelationCount, lib, "g_relation_count")
-	core.PuregoSafeRegister(&xRelationDelete, lib, "g_relation_delete")
-	core.PuregoSafeRegister(&xRelationDestroy, lib, "g_relation_destroy")
-	core.PuregoSafeRegister(&xRelationExists, lib, "g_relation_exists")
-	core.PuregoSafeRegister(&xRelationIndex, lib, "g_relation_index")
-	core.PuregoSafeRegister(&xRelationInsert, lib, "g_relation_insert")
-	core.PuregoSafeRegister(&xRelationPrint, lib, "g_relation_print")
-	core.PuregoSafeRegister(&xRelationSelect, lib, "g_relation_select")
+	core.PuregoSafeRegister(&xRelationCount, libs, "g_relation_count")
+	core.PuregoSafeRegister(&xRelationDelete, libs, "g_relation_delete")
+	core.PuregoSafeRegister(&xRelationDestroy, libs, "g_relation_destroy")
+	core.PuregoSafeRegister(&xRelationExists, libs, "g_relation_exists")
+	core.PuregoSafeRegister(&xRelationIndex, libs, "g_relation_index")
+	core.PuregoSafeRegister(&xRelationInsert, libs, "g_relation_insert")
+	core.PuregoSafeRegister(&xRelationPrint, libs, "g_relation_print")
+	core.PuregoSafeRegister(&xRelationSelect, libs, "g_relation_select")
 
-	core.PuregoSafeRegister(&xTuplesDestroy, lib, "g_tuples_destroy")
-	core.PuregoSafeRegister(&xTuplesIndex, lib, "g_tuples_index")
+	core.PuregoSafeRegister(&xTuplesDestroy, libs, "g_tuples_destroy")
+	core.PuregoSafeRegister(&xTuplesIndex, libs, "g_tuples_index")
 
 }

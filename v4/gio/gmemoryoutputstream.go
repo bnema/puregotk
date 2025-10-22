@@ -509,21 +509,25 @@ func (x *MemoryOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancellab
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMemoryOutputStreamGLibType, lib, "g_memory_output_stream_get_type")
+	core.PuregoSafeRegister(&xMemoryOutputStreamGLibType, libs, "g_memory_output_stream_get_type")
 
-	core.PuregoSafeRegister(&xNewMemoryOutputStream, lib, "g_memory_output_stream_new")
-	core.PuregoSafeRegister(&xNewMemoryOutputStreamResizable, lib, "g_memory_output_stream_new_resizable")
+	core.PuregoSafeRegister(&xNewMemoryOutputStream, libs, "g_memory_output_stream_new")
+	core.PuregoSafeRegister(&xNewMemoryOutputStreamResizable, libs, "g_memory_output_stream_new_resizable")
 
-	core.PuregoSafeRegister(&xMemoryOutputStreamGetData, lib, "g_memory_output_stream_get_data")
-	core.PuregoSafeRegister(&xMemoryOutputStreamGetDataSize, lib, "g_memory_output_stream_get_data_size")
-	core.PuregoSafeRegister(&xMemoryOutputStreamGetSize, lib, "g_memory_output_stream_get_size")
-	core.PuregoSafeRegister(&xMemoryOutputStreamStealAsBytes, lib, "g_memory_output_stream_steal_as_bytes")
-	core.PuregoSafeRegister(&xMemoryOutputStreamStealData, lib, "g_memory_output_stream_steal_data")
+	core.PuregoSafeRegister(&xMemoryOutputStreamGetData, libs, "g_memory_output_stream_get_data")
+	core.PuregoSafeRegister(&xMemoryOutputStreamGetDataSize, libs, "g_memory_output_stream_get_data_size")
+	core.PuregoSafeRegister(&xMemoryOutputStreamGetSize, libs, "g_memory_output_stream_get_size")
+	core.PuregoSafeRegister(&xMemoryOutputStreamStealAsBytes, libs, "g_memory_output_stream_steal_as_bytes")
+	core.PuregoSafeRegister(&xMemoryOutputStreamStealData, libs, "g_memory_output_stream_steal_data")
 
 }

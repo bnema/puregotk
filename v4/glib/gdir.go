@@ -118,20 +118,24 @@ func (x *Dir) Unref() {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDirGLibType, lib, "g_dir_get_type")
+	core.PuregoSafeRegister(&xDirGLibType, libs, "g_dir_get_type")
 
-	core.PuregoSafeRegister(&xDirOpen, lib, "g_dir_open")
+	core.PuregoSafeRegister(&xDirOpen, libs, "g_dir_open")
 
-	core.PuregoSafeRegister(&xDirClose, lib, "g_dir_close")
-	core.PuregoSafeRegister(&xDirReadName, lib, "g_dir_read_name")
-	core.PuregoSafeRegister(&xDirRef, lib, "g_dir_ref")
-	core.PuregoSafeRegister(&xDirRewind, lib, "g_dir_rewind")
-	core.PuregoSafeRegister(&xDirUnref, lib, "g_dir_unref")
+	core.PuregoSafeRegister(&xDirClose, libs, "g_dir_close")
+	core.PuregoSafeRegister(&xDirReadName, libs, "g_dir_read_name")
+	core.PuregoSafeRegister(&xDirRef, libs, "g_dir_ref")
+	core.PuregoSafeRegister(&xDirRewind, libs, "g_dir_rewind")
+	core.PuregoSafeRegister(&xDirUnref, libs, "g_dir_unref")
 
 }

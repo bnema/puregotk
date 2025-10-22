@@ -98,17 +98,21 @@ func ColorStateGetSrgbLinear() *ColorState {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColorStateGetOklab, lib, "gdk_color_state_get_oklab")
-	core.PuregoSafeRegister(&xColorStateGetOklch, lib, "gdk_color_state_get_oklch")
-	core.PuregoSafeRegister(&xColorStateGetRec2100Linear, lib, "gdk_color_state_get_rec2100_linear")
-	core.PuregoSafeRegister(&xColorStateGetRec2100Pq, lib, "gdk_color_state_get_rec2100_pq")
-	core.PuregoSafeRegister(&xColorStateGetSrgb, lib, "gdk_color_state_get_srgb")
-	core.PuregoSafeRegister(&xColorStateGetSrgbLinear, lib, "gdk_color_state_get_srgb_linear")
+	core.PuregoSafeRegister(&xColorStateGetOklab, libs, "gdk_color_state_get_oklab")
+	core.PuregoSafeRegister(&xColorStateGetOklch, libs, "gdk_color_state_get_oklch")
+	core.PuregoSafeRegister(&xColorStateGetRec2100Linear, libs, "gdk_color_state_get_rec2100_linear")
+	core.PuregoSafeRegister(&xColorStateGetRec2100Pq, libs, "gdk_color_state_get_rec2100_pq")
+	core.PuregoSafeRegister(&xColorStateGetSrgb, libs, "gdk_color_state_get_srgb")
+	core.PuregoSafeRegister(&xColorStateGetSrgbLinear, libs, "gdk_color_state_get_srgb_linear")
 
 }

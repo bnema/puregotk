@@ -139,19 +139,23 @@ func Unsetenv(VariableVar string) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEnvironGetenv, lib, "g_environ_getenv")
-	core.PuregoSafeRegister(&xEnvironSetenv, lib, "g_environ_setenv")
-	core.PuregoSafeRegister(&xEnvironUnsetenv, lib, "g_environ_unsetenv")
-	core.PuregoSafeRegister(&xGetEnviron, lib, "g_get_environ")
-	core.PuregoSafeRegister(&xGetenv, lib, "g_getenv")
-	core.PuregoSafeRegister(&xListenv, lib, "g_listenv")
-	core.PuregoSafeRegister(&xSetenv, lib, "g_setenv")
-	core.PuregoSafeRegister(&xUnsetenv, lib, "g_unsetenv")
+	core.PuregoSafeRegister(&xEnvironGetenv, libs, "g_environ_getenv")
+	core.PuregoSafeRegister(&xEnvironSetenv, libs, "g_environ_setenv")
+	core.PuregoSafeRegister(&xEnvironUnsetenv, libs, "g_environ_unsetenv")
+	core.PuregoSafeRegister(&xGetEnviron, libs, "g_get_environ")
+	core.PuregoSafeRegister(&xGetenv, libs, "g_getenv")
+	core.PuregoSafeRegister(&xListenv, libs, "g_listenv")
+	core.PuregoSafeRegister(&xSetenv, libs, "g_setenv")
+	core.PuregoSafeRegister(&xUnsetenv, libs, "g_unsetenv")
 
 }

@@ -179,25 +179,29 @@ func (c *ConstraintGuide) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xConstraintGuideGLibType, lib, "gtk_constraint_guide_get_type")
+	core.PuregoSafeRegister(&xConstraintGuideGLibType, libs, "gtk_constraint_guide_get_type")
 
-	core.PuregoSafeRegister(&xNewConstraintGuide, lib, "gtk_constraint_guide_new")
+	core.PuregoSafeRegister(&xNewConstraintGuide, libs, "gtk_constraint_guide_new")
 
-	core.PuregoSafeRegister(&xConstraintGuideGetMaxSize, lib, "gtk_constraint_guide_get_max_size")
-	core.PuregoSafeRegister(&xConstraintGuideGetMinSize, lib, "gtk_constraint_guide_get_min_size")
-	core.PuregoSafeRegister(&xConstraintGuideGetName, lib, "gtk_constraint_guide_get_name")
-	core.PuregoSafeRegister(&xConstraintGuideGetNatSize, lib, "gtk_constraint_guide_get_nat_size")
-	core.PuregoSafeRegister(&xConstraintGuideGetStrength, lib, "gtk_constraint_guide_get_strength")
-	core.PuregoSafeRegister(&xConstraintGuideSetMaxSize, lib, "gtk_constraint_guide_set_max_size")
-	core.PuregoSafeRegister(&xConstraintGuideSetMinSize, lib, "gtk_constraint_guide_set_min_size")
-	core.PuregoSafeRegister(&xConstraintGuideSetName, lib, "gtk_constraint_guide_set_name")
-	core.PuregoSafeRegister(&xConstraintGuideSetNatSize, lib, "gtk_constraint_guide_set_nat_size")
-	core.PuregoSafeRegister(&xConstraintGuideSetStrength, lib, "gtk_constraint_guide_set_strength")
+	core.PuregoSafeRegister(&xConstraintGuideGetMaxSize, libs, "gtk_constraint_guide_get_max_size")
+	core.PuregoSafeRegister(&xConstraintGuideGetMinSize, libs, "gtk_constraint_guide_get_min_size")
+	core.PuregoSafeRegister(&xConstraintGuideGetName, libs, "gtk_constraint_guide_get_name")
+	core.PuregoSafeRegister(&xConstraintGuideGetNatSize, libs, "gtk_constraint_guide_get_nat_size")
+	core.PuregoSafeRegister(&xConstraintGuideGetStrength, libs, "gtk_constraint_guide_get_strength")
+	core.PuregoSafeRegister(&xConstraintGuideSetMaxSize, libs, "gtk_constraint_guide_set_max_size")
+	core.PuregoSafeRegister(&xConstraintGuideSetMinSize, libs, "gtk_constraint_guide_set_min_size")
+	core.PuregoSafeRegister(&xConstraintGuideSetName, libs, "gtk_constraint_guide_set_name")
+	core.PuregoSafeRegister(&xConstraintGuideSetNatSize, libs, "gtk_constraint_guide_set_nat_size")
+	core.PuregoSafeRegister(&xConstraintGuideSetStrength, libs, "gtk_constraint_guide_set_strength")
 
 }

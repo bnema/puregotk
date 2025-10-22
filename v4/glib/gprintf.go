@@ -108,18 +108,22 @@ func Vsprintf(StringVar string, FormatVar string, ArgsVar []interface{}) int {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFprintf, lib, "g_fprintf")
-	core.PuregoSafeRegister(&xPrintf, lib, "g_printf")
-	core.PuregoSafeRegister(&xSprintf, lib, "g_sprintf")
-	core.PuregoSafeRegister(&xVasprintf, lib, "g_vasprintf")
-	core.PuregoSafeRegister(&xVfprintf, lib, "g_vfprintf")
-	core.PuregoSafeRegister(&xVprintf, lib, "g_vprintf")
-	core.PuregoSafeRegister(&xVsprintf, lib, "g_vsprintf")
+	core.PuregoSafeRegister(&xFprintf, libs, "g_fprintf")
+	core.PuregoSafeRegister(&xPrintf, libs, "g_printf")
+	core.PuregoSafeRegister(&xSprintf, libs, "g_sprintf")
+	core.PuregoSafeRegister(&xVasprintf, libs, "g_vasprintf")
+	core.PuregoSafeRegister(&xVfprintf, libs, "g_vfprintf")
+	core.PuregoSafeRegister(&xVprintf, libs, "g_vprintf")
+	core.PuregoSafeRegister(&xVsprintf, libs, "g_vsprintf")
 
 }

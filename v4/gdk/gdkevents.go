@@ -1354,118 +1354,122 @@ func (c *TouchpadEvent) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCrossingModeGLibType, lib, "gdk_crossing_mode_get_type")
+	core.PuregoSafeRegister(&xCrossingModeGLibType, libs, "gdk_crossing_mode_get_type")
 
-	core.PuregoSafeRegister(&xEventTypeGLibType, lib, "gdk_event_type_get_type")
+	core.PuregoSafeRegister(&xEventTypeGLibType, libs, "gdk_event_type_get_type")
 
-	core.PuregoSafeRegister(&xKeyMatchGLibType, lib, "gdk_key_match_get_type")
+	core.PuregoSafeRegister(&xKeyMatchGLibType, libs, "gdk_key_match_get_type")
 
-	core.PuregoSafeRegister(&xNotifyTypeGLibType, lib, "gdk_notify_type_get_type")
+	core.PuregoSafeRegister(&xNotifyTypeGLibType, libs, "gdk_notify_type_get_type")
 
-	core.PuregoSafeRegister(&xScrollDirectionGLibType, lib, "gdk_scroll_direction_get_type")
+	core.PuregoSafeRegister(&xScrollDirectionGLibType, libs, "gdk_scroll_direction_get_type")
 
-	core.PuregoSafeRegister(&xScrollUnitGLibType, lib, "gdk_scroll_unit_get_type")
+	core.PuregoSafeRegister(&xScrollUnitGLibType, libs, "gdk_scroll_unit_get_type")
 
-	core.PuregoSafeRegister(&xTouchpadGesturePhaseGLibType, lib, "gdk_touchpad_gesture_phase_get_type")
+	core.PuregoSafeRegister(&xTouchpadGesturePhaseGLibType, libs, "gdk_touchpad_gesture_phase_get_type")
 
-	core.PuregoSafeRegister(&xEventsGetAngle, lib, "gdk_events_get_angle")
-	core.PuregoSafeRegister(&xEventsGetCenter, lib, "gdk_events_get_center")
-	core.PuregoSafeRegister(&xEventsGetDistance, lib, "gdk_events_get_distance")
+	core.PuregoSafeRegister(&xEventsGetAngle, libs, "gdk_events_get_angle")
+	core.PuregoSafeRegister(&xEventsGetCenter, libs, "gdk_events_get_center")
+	core.PuregoSafeRegister(&xEventsGetDistance, libs, "gdk_events_get_distance")
 
-	core.PuregoSafeRegister(&xEventSequenceGLibType, lib, "gdk_event_sequence_get_type")
+	core.PuregoSafeRegister(&xEventSequenceGLibType, libs, "gdk_event_sequence_get_type")
 
-	core.PuregoSafeRegister(&xButtonEventGLibType, lib, "gdk_button_event_get_type")
+	core.PuregoSafeRegister(&xButtonEventGLibType, libs, "gdk_button_event_get_type")
 
-	core.PuregoSafeRegister(&xButtonEventGetButton, lib, "gdk_button_event_get_button")
+	core.PuregoSafeRegister(&xButtonEventGetButton, libs, "gdk_button_event_get_button")
 
-	core.PuregoSafeRegister(&xCrossingEventGLibType, lib, "gdk_crossing_event_get_type")
+	core.PuregoSafeRegister(&xCrossingEventGLibType, libs, "gdk_crossing_event_get_type")
 
-	core.PuregoSafeRegister(&xCrossingEventGetDetail, lib, "gdk_crossing_event_get_detail")
-	core.PuregoSafeRegister(&xCrossingEventGetFocus, lib, "gdk_crossing_event_get_focus")
-	core.PuregoSafeRegister(&xCrossingEventGetMode, lib, "gdk_crossing_event_get_mode")
+	core.PuregoSafeRegister(&xCrossingEventGetDetail, libs, "gdk_crossing_event_get_detail")
+	core.PuregoSafeRegister(&xCrossingEventGetFocus, libs, "gdk_crossing_event_get_focus")
+	core.PuregoSafeRegister(&xCrossingEventGetMode, libs, "gdk_crossing_event_get_mode")
 
-	core.PuregoSafeRegister(&xDNDEventGLibType, lib, "gdk_dnd_event_get_type")
+	core.PuregoSafeRegister(&xDNDEventGLibType, libs, "gdk_dnd_event_get_type")
 
-	core.PuregoSafeRegister(&xDNDEventGetDrop, lib, "gdk_dnd_event_get_drop")
+	core.PuregoSafeRegister(&xDNDEventGetDrop, libs, "gdk_dnd_event_get_drop")
 
-	core.PuregoSafeRegister(&xDeleteEventGLibType, lib, "gdk_delete_event_get_type")
+	core.PuregoSafeRegister(&xDeleteEventGLibType, libs, "gdk_delete_event_get_type")
 
-	core.PuregoSafeRegister(&xEventGLibType, lib, "gdk_event_get_type")
+	core.PuregoSafeRegister(&xEventGLibType, libs, "gdk_event_get_type")
 
-	core.PuregoSafeRegister(&xEventGetAngle, lib, "gdk_events_get_angle")
-	core.PuregoSafeRegister(&xEventGetCenter, lib, "gdk_events_get_center")
-	core.PuregoSafeRegister(&xEventGetDistance, lib, "gdk_events_get_distance")
-	core.PuregoSafeRegister(&xEventGetAxes, lib, "gdk_event_get_axes")
-	core.PuregoSafeRegister(&xEventGetAxis, lib, "gdk_event_get_axis")
-	core.PuregoSafeRegister(&xEventGetDevice, lib, "gdk_event_get_device")
-	core.PuregoSafeRegister(&xEventGetDeviceTool, lib, "gdk_event_get_device_tool")
-	core.PuregoSafeRegister(&xEventGetDisplay, lib, "gdk_event_get_display")
-	core.PuregoSafeRegister(&xEventGetEventSequence, lib, "gdk_event_get_event_sequence")
-	core.PuregoSafeRegister(&xEventGetEventType, lib, "gdk_event_get_event_type")
-	core.PuregoSafeRegister(&xEventGetHistory, lib, "gdk_event_get_history")
-	core.PuregoSafeRegister(&xEventGetModifierState, lib, "gdk_event_get_modifier_state")
-	core.PuregoSafeRegister(&xEventGetPointerEmulated, lib, "gdk_event_get_pointer_emulated")
-	core.PuregoSafeRegister(&xEventGetPosition, lib, "gdk_event_get_position")
-	core.PuregoSafeRegister(&xEventGetSeat, lib, "gdk_event_get_seat")
-	core.PuregoSafeRegister(&xEventGetSurface, lib, "gdk_event_get_surface")
-	core.PuregoSafeRegister(&xEventGetTime, lib, "gdk_event_get_time")
-	core.PuregoSafeRegister(&xEventRef, lib, "gdk_event_ref")
-	core.PuregoSafeRegister(&xEventTriggersContextMenu, lib, "gdk_event_triggers_context_menu")
-	core.PuregoSafeRegister(&xEventUnref, lib, "gdk_event_unref")
+	core.PuregoSafeRegister(&xEventGetAngle, libs, "gdk_events_get_angle")
+	core.PuregoSafeRegister(&xEventGetCenter, libs, "gdk_events_get_center")
+	core.PuregoSafeRegister(&xEventGetDistance, libs, "gdk_events_get_distance")
+	core.PuregoSafeRegister(&xEventGetAxes, libs, "gdk_event_get_axes")
+	core.PuregoSafeRegister(&xEventGetAxis, libs, "gdk_event_get_axis")
+	core.PuregoSafeRegister(&xEventGetDevice, libs, "gdk_event_get_device")
+	core.PuregoSafeRegister(&xEventGetDeviceTool, libs, "gdk_event_get_device_tool")
+	core.PuregoSafeRegister(&xEventGetDisplay, libs, "gdk_event_get_display")
+	core.PuregoSafeRegister(&xEventGetEventSequence, libs, "gdk_event_get_event_sequence")
+	core.PuregoSafeRegister(&xEventGetEventType, libs, "gdk_event_get_event_type")
+	core.PuregoSafeRegister(&xEventGetHistory, libs, "gdk_event_get_history")
+	core.PuregoSafeRegister(&xEventGetModifierState, libs, "gdk_event_get_modifier_state")
+	core.PuregoSafeRegister(&xEventGetPointerEmulated, libs, "gdk_event_get_pointer_emulated")
+	core.PuregoSafeRegister(&xEventGetPosition, libs, "gdk_event_get_position")
+	core.PuregoSafeRegister(&xEventGetSeat, libs, "gdk_event_get_seat")
+	core.PuregoSafeRegister(&xEventGetSurface, libs, "gdk_event_get_surface")
+	core.PuregoSafeRegister(&xEventGetTime, libs, "gdk_event_get_time")
+	core.PuregoSafeRegister(&xEventRef, libs, "gdk_event_ref")
+	core.PuregoSafeRegister(&xEventTriggersContextMenu, libs, "gdk_event_triggers_context_menu")
+	core.PuregoSafeRegister(&xEventUnref, libs, "gdk_event_unref")
 
-	core.PuregoSafeRegister(&xFocusEventGLibType, lib, "gdk_focus_event_get_type")
+	core.PuregoSafeRegister(&xFocusEventGLibType, libs, "gdk_focus_event_get_type")
 
-	core.PuregoSafeRegister(&xFocusEventGetIn, lib, "gdk_focus_event_get_in")
+	core.PuregoSafeRegister(&xFocusEventGetIn, libs, "gdk_focus_event_get_in")
 
-	core.PuregoSafeRegister(&xGrabBrokenEventGLibType, lib, "gdk_grab_broken_event_get_type")
+	core.PuregoSafeRegister(&xGrabBrokenEventGLibType, libs, "gdk_grab_broken_event_get_type")
 
-	core.PuregoSafeRegister(&xGrabBrokenEventGetGrabSurface, lib, "gdk_grab_broken_event_get_grab_surface")
-	core.PuregoSafeRegister(&xGrabBrokenEventGetImplicit, lib, "gdk_grab_broken_event_get_implicit")
+	core.PuregoSafeRegister(&xGrabBrokenEventGetGrabSurface, libs, "gdk_grab_broken_event_get_grab_surface")
+	core.PuregoSafeRegister(&xGrabBrokenEventGetImplicit, libs, "gdk_grab_broken_event_get_implicit")
 
-	core.PuregoSafeRegister(&xKeyEventGLibType, lib, "gdk_key_event_get_type")
+	core.PuregoSafeRegister(&xKeyEventGLibType, libs, "gdk_key_event_get_type")
 
-	core.PuregoSafeRegister(&xKeyEventGetConsumedModifiers, lib, "gdk_key_event_get_consumed_modifiers")
-	core.PuregoSafeRegister(&xKeyEventGetKeycode, lib, "gdk_key_event_get_keycode")
-	core.PuregoSafeRegister(&xKeyEventGetKeyval, lib, "gdk_key_event_get_keyval")
-	core.PuregoSafeRegister(&xKeyEventGetLayout, lib, "gdk_key_event_get_layout")
-	core.PuregoSafeRegister(&xKeyEventGetLevel, lib, "gdk_key_event_get_level")
-	core.PuregoSafeRegister(&xKeyEventGetMatch, lib, "gdk_key_event_get_match")
-	core.PuregoSafeRegister(&xKeyEventIsModifier, lib, "gdk_key_event_is_modifier")
-	core.PuregoSafeRegister(&xKeyEventMatches, lib, "gdk_key_event_matches")
+	core.PuregoSafeRegister(&xKeyEventGetConsumedModifiers, libs, "gdk_key_event_get_consumed_modifiers")
+	core.PuregoSafeRegister(&xKeyEventGetKeycode, libs, "gdk_key_event_get_keycode")
+	core.PuregoSafeRegister(&xKeyEventGetKeyval, libs, "gdk_key_event_get_keyval")
+	core.PuregoSafeRegister(&xKeyEventGetLayout, libs, "gdk_key_event_get_layout")
+	core.PuregoSafeRegister(&xKeyEventGetLevel, libs, "gdk_key_event_get_level")
+	core.PuregoSafeRegister(&xKeyEventGetMatch, libs, "gdk_key_event_get_match")
+	core.PuregoSafeRegister(&xKeyEventIsModifier, libs, "gdk_key_event_is_modifier")
+	core.PuregoSafeRegister(&xKeyEventMatches, libs, "gdk_key_event_matches")
 
-	core.PuregoSafeRegister(&xMotionEventGLibType, lib, "gdk_motion_event_get_type")
+	core.PuregoSafeRegister(&xMotionEventGLibType, libs, "gdk_motion_event_get_type")
 
-	core.PuregoSafeRegister(&xPadEventGLibType, lib, "gdk_pad_event_get_type")
+	core.PuregoSafeRegister(&xPadEventGLibType, libs, "gdk_pad_event_get_type")
 
-	core.PuregoSafeRegister(&xPadEventGetAxisValue, lib, "gdk_pad_event_get_axis_value")
-	core.PuregoSafeRegister(&xPadEventGetButton, lib, "gdk_pad_event_get_button")
-	core.PuregoSafeRegister(&xPadEventGetGroupMode, lib, "gdk_pad_event_get_group_mode")
+	core.PuregoSafeRegister(&xPadEventGetAxisValue, libs, "gdk_pad_event_get_axis_value")
+	core.PuregoSafeRegister(&xPadEventGetButton, libs, "gdk_pad_event_get_button")
+	core.PuregoSafeRegister(&xPadEventGetGroupMode, libs, "gdk_pad_event_get_group_mode")
 
-	core.PuregoSafeRegister(&xProximityEventGLibType, lib, "gdk_proximity_event_get_type")
+	core.PuregoSafeRegister(&xProximityEventGLibType, libs, "gdk_proximity_event_get_type")
 
-	core.PuregoSafeRegister(&xScrollEventGLibType, lib, "gdk_scroll_event_get_type")
+	core.PuregoSafeRegister(&xScrollEventGLibType, libs, "gdk_scroll_event_get_type")
 
-	core.PuregoSafeRegister(&xScrollEventGetDeltas, lib, "gdk_scroll_event_get_deltas")
-	core.PuregoSafeRegister(&xScrollEventGetDirection, lib, "gdk_scroll_event_get_direction")
-	core.PuregoSafeRegister(&xScrollEventGetUnit, lib, "gdk_scroll_event_get_unit")
-	core.PuregoSafeRegister(&xScrollEventIsStop, lib, "gdk_scroll_event_is_stop")
+	core.PuregoSafeRegister(&xScrollEventGetDeltas, libs, "gdk_scroll_event_get_deltas")
+	core.PuregoSafeRegister(&xScrollEventGetDirection, libs, "gdk_scroll_event_get_direction")
+	core.PuregoSafeRegister(&xScrollEventGetUnit, libs, "gdk_scroll_event_get_unit")
+	core.PuregoSafeRegister(&xScrollEventIsStop, libs, "gdk_scroll_event_is_stop")
 
-	core.PuregoSafeRegister(&xTouchEventGLibType, lib, "gdk_touch_event_get_type")
+	core.PuregoSafeRegister(&xTouchEventGLibType, libs, "gdk_touch_event_get_type")
 
-	core.PuregoSafeRegister(&xTouchEventGetEmulatingPointer, lib, "gdk_touch_event_get_emulating_pointer")
+	core.PuregoSafeRegister(&xTouchEventGetEmulatingPointer, libs, "gdk_touch_event_get_emulating_pointer")
 
-	core.PuregoSafeRegister(&xTouchpadEventGLibType, lib, "gdk_touchpad_event_get_type")
+	core.PuregoSafeRegister(&xTouchpadEventGLibType, libs, "gdk_touchpad_event_get_type")
 
-	core.PuregoSafeRegister(&xTouchpadEventGetDeltas, lib, "gdk_touchpad_event_get_deltas")
-	core.PuregoSafeRegister(&xTouchpadEventGetGesturePhase, lib, "gdk_touchpad_event_get_gesture_phase")
-	core.PuregoSafeRegister(&xTouchpadEventGetNFingers, lib, "gdk_touchpad_event_get_n_fingers")
-	core.PuregoSafeRegister(&xTouchpadEventGetPinchAngleDelta, lib, "gdk_touchpad_event_get_pinch_angle_delta")
-	core.PuregoSafeRegister(&xTouchpadEventGetPinchScale, lib, "gdk_touchpad_event_get_pinch_scale")
+	core.PuregoSafeRegister(&xTouchpadEventGetDeltas, libs, "gdk_touchpad_event_get_deltas")
+	core.PuregoSafeRegister(&xTouchpadEventGetGesturePhase, libs, "gdk_touchpad_event_get_gesture_phase")
+	core.PuregoSafeRegister(&xTouchpadEventGetNFingers, libs, "gdk_touchpad_event_get_n_fingers")
+	core.PuregoSafeRegister(&xTouchpadEventGetPinchAngleDelta, libs, "gdk_touchpad_event_get_pinch_angle_delta")
+	core.PuregoSafeRegister(&xTouchpadEventGetPinchScale, libs, "gdk_touchpad_event_get_pinch_scale")
 
 }

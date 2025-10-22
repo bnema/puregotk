@@ -172,19 +172,23 @@ func (x *EmblemedIcon) ToString() string {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEmblemedIconGLibType, lib, "g_emblemed_icon_get_type")
+	core.PuregoSafeRegister(&xEmblemedIconGLibType, libs, "g_emblemed_icon_get_type")
 
-	core.PuregoSafeRegister(&xNewEmblemedIcon, lib, "g_emblemed_icon_new")
+	core.PuregoSafeRegister(&xNewEmblemedIcon, libs, "g_emblemed_icon_new")
 
-	core.PuregoSafeRegister(&xEmblemedIconAddEmblem, lib, "g_emblemed_icon_add_emblem")
-	core.PuregoSafeRegister(&xEmblemedIconClearEmblems, lib, "g_emblemed_icon_clear_emblems")
-	core.PuregoSafeRegister(&xEmblemedIconGetEmblems, lib, "g_emblemed_icon_get_emblems")
-	core.PuregoSafeRegister(&xEmblemedIconGetIcon, lib, "g_emblemed_icon_get_icon")
+	core.PuregoSafeRegister(&xEmblemedIconAddEmblem, libs, "g_emblemed_icon_add_emblem")
+	core.PuregoSafeRegister(&xEmblemedIconClearEmblems, libs, "g_emblemed_icon_clear_emblems")
+	core.PuregoSafeRegister(&xEmblemedIconGetEmblems, libs, "g_emblemed_icon_get_emblems")
+	core.PuregoSafeRegister(&xEmblemedIconGetIcon, libs, "g_emblemed_icon_get_icon")
 
 }

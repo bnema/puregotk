@@ -167,29 +167,33 @@ func SlistPushAllocator(AllocatorVar *Allocator) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBlowChunks, lib, "g_blow_chunks")
-	core.PuregoSafeRegister(&xListPopAllocator, lib, "g_list_pop_allocator")
-	core.PuregoSafeRegister(&xListPushAllocator, lib, "g_list_push_allocator")
-	core.PuregoSafeRegister(&xMemChunkInfo, lib, "g_mem_chunk_info")
-	core.PuregoSafeRegister(&xNodePopAllocator, lib, "g_node_pop_allocator")
-	core.PuregoSafeRegister(&xNodePushAllocator, lib, "g_node_push_allocator")
-	core.PuregoSafeRegister(&xSlistPopAllocator, lib, "g_slist_pop_allocator")
-	core.PuregoSafeRegister(&xSlistPushAllocator, lib, "g_slist_push_allocator")
+	core.PuregoSafeRegister(&xBlowChunks, libs, "g_blow_chunks")
+	core.PuregoSafeRegister(&xListPopAllocator, libs, "g_list_pop_allocator")
+	core.PuregoSafeRegister(&xListPushAllocator, libs, "g_list_push_allocator")
+	core.PuregoSafeRegister(&xMemChunkInfo, libs, "g_mem_chunk_info")
+	core.PuregoSafeRegister(&xNodePopAllocator, libs, "g_node_pop_allocator")
+	core.PuregoSafeRegister(&xNodePushAllocator, libs, "g_node_push_allocator")
+	core.PuregoSafeRegister(&xSlistPopAllocator, libs, "g_slist_pop_allocator")
+	core.PuregoSafeRegister(&xSlistPushAllocator, libs, "g_slist_push_allocator")
 
-	core.PuregoSafeRegister(&xAllocatorFree, lib, "g_allocator_free")
+	core.PuregoSafeRegister(&xAllocatorFree, libs, "g_allocator_free")
 
-	core.PuregoSafeRegister(&xMemChunkAlloc, lib, "g_mem_chunk_alloc")
-	core.PuregoSafeRegister(&xMemChunkAlloc0, lib, "g_mem_chunk_alloc0")
-	core.PuregoSafeRegister(&xMemChunkClean, lib, "g_mem_chunk_clean")
-	core.PuregoSafeRegister(&xMemChunkDestroy, lib, "g_mem_chunk_destroy")
-	core.PuregoSafeRegister(&xMemChunkFree, lib, "g_mem_chunk_free")
-	core.PuregoSafeRegister(&xMemChunkPrint, lib, "g_mem_chunk_print")
-	core.PuregoSafeRegister(&xMemChunkReset, lib, "g_mem_chunk_reset")
+	core.PuregoSafeRegister(&xMemChunkAlloc, libs, "g_mem_chunk_alloc")
+	core.PuregoSafeRegister(&xMemChunkAlloc0, libs, "g_mem_chunk_alloc0")
+	core.PuregoSafeRegister(&xMemChunkClean, libs, "g_mem_chunk_clean")
+	core.PuregoSafeRegister(&xMemChunkDestroy, libs, "g_mem_chunk_destroy")
+	core.PuregoSafeRegister(&xMemChunkFree, libs, "g_mem_chunk_free")
+	core.PuregoSafeRegister(&xMemChunkPrint, libs, "g_mem_chunk_print")
+	core.PuregoSafeRegister(&xMemChunkReset, libs, "g_mem_chunk_reset")
 
 }

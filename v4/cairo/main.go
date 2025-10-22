@@ -760,76 +760,80 @@ func ImageSurfaceCreate() {
 
 func init() {
 	core.SetPackageName("CAIRO", "cairo-gobject")
-	core.SetSharedLibrary("CAIRO", "libcairo-gobject.so.2")
-	lib, err := purego.Dlopen(core.GetPath("CAIRO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("CAIRO", []string{"libcairo-gobject.so.2"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("CAIRO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStatusGLibType, lib, "cairo_gobject_status_get_type")
+	core.PuregoSafeRegister(&xStatusGLibType, libs, "cairo_gobject_status_get_type")
 
-	core.PuregoSafeRegister(&xContentGLibType, lib, "cairo_gobject_content_get_type")
+	core.PuregoSafeRegister(&xContentGLibType, libs, "cairo_gobject_content_get_type")
 
-	core.PuregoSafeRegister(&xOperatorGLibType, lib, "cairo_gobject_operator_get_type")
+	core.PuregoSafeRegister(&xOperatorGLibType, libs, "cairo_gobject_operator_get_type")
 
-	core.PuregoSafeRegister(&xAntialiasGLibType, lib, "cairo_gobject_antialias_get_type")
+	core.PuregoSafeRegister(&xAntialiasGLibType, libs, "cairo_gobject_antialias_get_type")
 
-	core.PuregoSafeRegister(&xFillRuleGLibType, lib, "cairo_gobject_fill_rule_get_type")
+	core.PuregoSafeRegister(&xFillRuleGLibType, libs, "cairo_gobject_fill_rule_get_type")
 
-	core.PuregoSafeRegister(&xLineCapGLibType, lib, "cairo_gobject_line_cap_get_type")
+	core.PuregoSafeRegister(&xLineCapGLibType, libs, "cairo_gobject_line_cap_get_type")
 
-	core.PuregoSafeRegister(&xLineJoinGLibType, lib, "cairo_gobject_line_join_get_type")
+	core.PuregoSafeRegister(&xLineJoinGLibType, libs, "cairo_gobject_line_join_get_type")
 
-	core.PuregoSafeRegister(&xTextClusterFlagsGLibType, lib, "cairo_gobject_text_cluster_flags_get_type")
+	core.PuregoSafeRegister(&xTextClusterFlagsGLibType, libs, "cairo_gobject_text_cluster_flags_get_type")
 
-	core.PuregoSafeRegister(&xFontSlantGLibType, lib, "cairo_gobject_font_slant_get_type")
+	core.PuregoSafeRegister(&xFontSlantGLibType, libs, "cairo_gobject_font_slant_get_type")
 
-	core.PuregoSafeRegister(&xFontWeightGLibType, lib, "cairo_gobject_font_weight_get_type")
+	core.PuregoSafeRegister(&xFontWeightGLibType, libs, "cairo_gobject_font_weight_get_type")
 
-	core.PuregoSafeRegister(&xSubpixelOrderGLibType, lib, "cairo_gobject_subpixel_order_get_type")
+	core.PuregoSafeRegister(&xSubpixelOrderGLibType, libs, "cairo_gobject_subpixel_order_get_type")
 
-	core.PuregoSafeRegister(&xHintStyleGLibType, lib, "cairo_gobject_hint_style_get_type")
+	core.PuregoSafeRegister(&xHintStyleGLibType, libs, "cairo_gobject_hint_style_get_type")
 
-	core.PuregoSafeRegister(&xHintMetricsGLibType, lib, "cairo_gobject_hint_metrics_get_type")
+	core.PuregoSafeRegister(&xHintMetricsGLibType, libs, "cairo_gobject_hint_metrics_get_type")
 
-	core.PuregoSafeRegister(&xFontTypeGLibType, lib, "cairo_gobject_font_type_get_type")
+	core.PuregoSafeRegister(&xFontTypeGLibType, libs, "cairo_gobject_font_type_get_type")
 
-	core.PuregoSafeRegister(&xPathDataTypeGLibType, lib, "cairo_gobject_path_data_type_get_type")
+	core.PuregoSafeRegister(&xPathDataTypeGLibType, libs, "cairo_gobject_path_data_type_get_type")
 
-	core.PuregoSafeRegister(&xDeviceTypeGLibType, lib, "cairo_gobject_device_type_get_type")
+	core.PuregoSafeRegister(&xDeviceTypeGLibType, libs, "cairo_gobject_device_type_get_type")
 
-	core.PuregoSafeRegister(&xSurfaceTypeGLibType, lib, "cairo_gobject_surface_type_get_type")
+	core.PuregoSafeRegister(&xSurfaceTypeGLibType, libs, "cairo_gobject_surface_type_get_type")
 
-	core.PuregoSafeRegister(&xFormatGLibType, lib, "cairo_gobject_format_get_type")
+	core.PuregoSafeRegister(&xFormatGLibType, libs, "cairo_gobject_format_get_type")
 
-	core.PuregoSafeRegister(&xPatternTypeGLibType, lib, "cairo_gobject_pattern_type_get_type")
+	core.PuregoSafeRegister(&xPatternTypeGLibType, libs, "cairo_gobject_pattern_type_get_type")
 
-	core.PuregoSafeRegister(&xExtendGLibType, lib, "cairo_gobject_extend_get_type")
+	core.PuregoSafeRegister(&xExtendGLibType, libs, "cairo_gobject_extend_get_type")
 
-	core.PuregoSafeRegister(&xFilterGLibType, lib, "cairo_gobject_filter_get_type")
+	core.PuregoSafeRegister(&xFilterGLibType, libs, "cairo_gobject_filter_get_type")
 
-	core.PuregoSafeRegister(&xRegionOverlapGLibType, lib, "cairo_gobject_region_overlap_get_type")
+	core.PuregoSafeRegister(&xRegionOverlapGLibType, libs, "cairo_gobject_region_overlap_get_type")
 
-	core.PuregoSafeRegister(&xImageSurfaceCreate, lib, "cairo_image_surface_create")
+	core.PuregoSafeRegister(&xImageSurfaceCreate, libs, "cairo_image_surface_create")
 
-	core.PuregoSafeRegister(&xContextGLibType, lib, "cairo_gobject_context_get_type")
+	core.PuregoSafeRegister(&xContextGLibType, libs, "cairo_gobject_context_get_type")
 
-	core.PuregoSafeRegister(&xDeviceGLibType, lib, "cairo_gobject_device_get_type")
+	core.PuregoSafeRegister(&xDeviceGLibType, libs, "cairo_gobject_device_get_type")
 
-	core.PuregoSafeRegister(&xSurfaceGLibType, lib, "cairo_gobject_surface_get_type")
+	core.PuregoSafeRegister(&xSurfaceGLibType, libs, "cairo_gobject_surface_get_type")
 
-	core.PuregoSafeRegister(&xPatternGLibType, lib, "cairo_gobject_pattern_get_type")
+	core.PuregoSafeRegister(&xPatternGLibType, libs, "cairo_gobject_pattern_get_type")
 
-	core.PuregoSafeRegister(&xRegionGLibType, lib, "cairo_gobject_region_get_type")
+	core.PuregoSafeRegister(&xRegionGLibType, libs, "cairo_gobject_region_get_type")
 
-	core.PuregoSafeRegister(&xFontOptionsGLibType, lib, "cairo_gobject_font_options_get_type")
+	core.PuregoSafeRegister(&xFontOptionsGLibType, libs, "cairo_gobject_font_options_get_type")
 
-	core.PuregoSafeRegister(&xFontFaceGLibType, lib, "cairo_gobject_font_face_get_type")
+	core.PuregoSafeRegister(&xFontFaceGLibType, libs, "cairo_gobject_font_face_get_type")
 
-	core.PuregoSafeRegister(&xScaledFontGLibType, lib, "cairo_gobject_scaled_font_get_type")
+	core.PuregoSafeRegister(&xScaledFontGLibType, libs, "cairo_gobject_scaled_font_get_type")
 
-	core.PuregoSafeRegister(&xRectangleGLibType, lib, "cairo_gobject_rectangle_get_type")
+	core.PuregoSafeRegister(&xRectangleGLibType, libs, "cairo_gobject_rectangle_get_type")
 
-	core.PuregoSafeRegister(&xRectangleIntGLibType, lib, "cairo_gobject_rectangle_int_get_type")
+	core.PuregoSafeRegister(&xRectangleIntGLibType, libs, "cairo_gobject_rectangle_int_get_type")
 
 }

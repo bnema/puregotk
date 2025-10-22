@@ -237,32 +237,36 @@ const (
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRayGLibType, lib, "graphene_ray_get_type")
+	core.PuregoSafeRegister(&xRayGLibType, libs, "graphene_ray_get_type")
 
-	core.PuregoSafeRegister(&xRayAlloc, lib, "graphene_ray_alloc")
+	core.PuregoSafeRegister(&xRayAlloc, libs, "graphene_ray_alloc")
 
-	core.PuregoSafeRegister(&xRayEqual, lib, "graphene_ray_equal")
-	core.PuregoSafeRegister(&xRayFree, lib, "graphene_ray_free")
-	core.PuregoSafeRegister(&xRayGetClosestPointToPoint, lib, "graphene_ray_get_closest_point_to_point")
-	core.PuregoSafeRegister(&xRayGetDirection, lib, "graphene_ray_get_direction")
-	core.PuregoSafeRegister(&xRayGetDistanceToPlane, lib, "graphene_ray_get_distance_to_plane")
-	core.PuregoSafeRegister(&xRayGetDistanceToPoint, lib, "graphene_ray_get_distance_to_point")
-	core.PuregoSafeRegister(&xRayGetOrigin, lib, "graphene_ray_get_origin")
-	core.PuregoSafeRegister(&xRayGetPositionAt, lib, "graphene_ray_get_position_at")
-	core.PuregoSafeRegister(&xRayInit, lib, "graphene_ray_init")
-	core.PuregoSafeRegister(&xRayInitFromRay, lib, "graphene_ray_init_from_ray")
-	core.PuregoSafeRegister(&xRayInitFromVec3, lib, "graphene_ray_init_from_vec3")
-	core.PuregoSafeRegister(&xRayIntersectBox, lib, "graphene_ray_intersect_box")
-	core.PuregoSafeRegister(&xRayIntersectSphere, lib, "graphene_ray_intersect_sphere")
-	core.PuregoSafeRegister(&xRayIntersectTriangle, lib, "graphene_ray_intersect_triangle")
-	core.PuregoSafeRegister(&xRayIntersectsBox, lib, "graphene_ray_intersects_box")
-	core.PuregoSafeRegister(&xRayIntersectsSphere, lib, "graphene_ray_intersects_sphere")
-	core.PuregoSafeRegister(&xRayIntersectsTriangle, lib, "graphene_ray_intersects_triangle")
+	core.PuregoSafeRegister(&xRayEqual, libs, "graphene_ray_equal")
+	core.PuregoSafeRegister(&xRayFree, libs, "graphene_ray_free")
+	core.PuregoSafeRegister(&xRayGetClosestPointToPoint, libs, "graphene_ray_get_closest_point_to_point")
+	core.PuregoSafeRegister(&xRayGetDirection, libs, "graphene_ray_get_direction")
+	core.PuregoSafeRegister(&xRayGetDistanceToPlane, libs, "graphene_ray_get_distance_to_plane")
+	core.PuregoSafeRegister(&xRayGetDistanceToPoint, libs, "graphene_ray_get_distance_to_point")
+	core.PuregoSafeRegister(&xRayGetOrigin, libs, "graphene_ray_get_origin")
+	core.PuregoSafeRegister(&xRayGetPositionAt, libs, "graphene_ray_get_position_at")
+	core.PuregoSafeRegister(&xRayInit, libs, "graphene_ray_init")
+	core.PuregoSafeRegister(&xRayInitFromRay, libs, "graphene_ray_init_from_ray")
+	core.PuregoSafeRegister(&xRayInitFromVec3, libs, "graphene_ray_init_from_vec3")
+	core.PuregoSafeRegister(&xRayIntersectBox, libs, "graphene_ray_intersect_box")
+	core.PuregoSafeRegister(&xRayIntersectSphere, libs, "graphene_ray_intersect_sphere")
+	core.PuregoSafeRegister(&xRayIntersectTriangle, libs, "graphene_ray_intersect_triangle")
+	core.PuregoSafeRegister(&xRayIntersectsBox, libs, "graphene_ray_intersects_box")
+	core.PuregoSafeRegister(&xRayIntersectsSphere, libs, "graphene_ray_intersects_sphere")
+	core.PuregoSafeRegister(&xRayIntersectsTriangle, libs, "graphene_ray_intersects_triangle")
 
 }

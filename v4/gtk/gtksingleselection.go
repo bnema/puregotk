@@ -443,24 +443,28 @@ func (x *SingleSelection) UnselectRange(PositionVar uint, NItemsVar uint) bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSingleSelectionGLibType, lib, "gtk_single_selection_get_type")
+	core.PuregoSafeRegister(&xSingleSelectionGLibType, libs, "gtk_single_selection_get_type")
 
-	core.PuregoSafeRegister(&xNewSingleSelection, lib, "gtk_single_selection_new")
+	core.PuregoSafeRegister(&xNewSingleSelection, libs, "gtk_single_selection_new")
 
-	core.PuregoSafeRegister(&xSingleSelectionGetAutoselect, lib, "gtk_single_selection_get_autoselect")
-	core.PuregoSafeRegister(&xSingleSelectionGetCanUnselect, lib, "gtk_single_selection_get_can_unselect")
-	core.PuregoSafeRegister(&xSingleSelectionGetModel, lib, "gtk_single_selection_get_model")
-	core.PuregoSafeRegister(&xSingleSelectionGetSelected, lib, "gtk_single_selection_get_selected")
-	core.PuregoSafeRegister(&xSingleSelectionGetSelectedItem, lib, "gtk_single_selection_get_selected_item")
-	core.PuregoSafeRegister(&xSingleSelectionSetAutoselect, lib, "gtk_single_selection_set_autoselect")
-	core.PuregoSafeRegister(&xSingleSelectionSetCanUnselect, lib, "gtk_single_selection_set_can_unselect")
-	core.PuregoSafeRegister(&xSingleSelectionSetModel, lib, "gtk_single_selection_set_model")
-	core.PuregoSafeRegister(&xSingleSelectionSetSelected, lib, "gtk_single_selection_set_selected")
+	core.PuregoSafeRegister(&xSingleSelectionGetAutoselect, libs, "gtk_single_selection_get_autoselect")
+	core.PuregoSafeRegister(&xSingleSelectionGetCanUnselect, libs, "gtk_single_selection_get_can_unselect")
+	core.PuregoSafeRegister(&xSingleSelectionGetModel, libs, "gtk_single_selection_get_model")
+	core.PuregoSafeRegister(&xSingleSelectionGetSelected, libs, "gtk_single_selection_get_selected")
+	core.PuregoSafeRegister(&xSingleSelectionGetSelectedItem, libs, "gtk_single_selection_get_selected_item")
+	core.PuregoSafeRegister(&xSingleSelectionSetAutoselect, libs, "gtk_single_selection_set_autoselect")
+	core.PuregoSafeRegister(&xSingleSelectionSetCanUnselect, libs, "gtk_single_selection_set_can_unselect")
+	core.PuregoSafeRegister(&xSingleSelectionSetModel, libs, "gtk_single_selection_set_model")
+	core.PuregoSafeRegister(&xSingleSelectionSetSelected, libs, "gtk_single_selection_set_selected")
 
 }

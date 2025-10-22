@@ -435,29 +435,33 @@ func UriListExtractUris(UriListVar string) []string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xConvert, lib, "g_convert")
-	core.PuregoSafeRegister(&xConvertWithFallback, lib, "g_convert_with_fallback")
-	core.PuregoSafeRegister(&xConvertWithIconv, lib, "g_convert_with_iconv")
-	core.PuregoSafeRegister(&xFilenameDisplayBasename, lib, "g_filename_display_basename")
-	core.PuregoSafeRegister(&xFilenameDisplayName, lib, "g_filename_display_name")
-	core.PuregoSafeRegister(&xFilenameFromUri, lib, "g_filename_from_uri")
-	core.PuregoSafeRegister(&xFilenameFromUtf8, lib, "g_filename_from_utf8")
-	core.PuregoSafeRegister(&xFilenameToUri, lib, "g_filename_to_uri")
-	core.PuregoSafeRegister(&xFilenameToUtf8, lib, "g_filename_to_utf8")
-	core.PuregoSafeRegister(&xGetFilenameCharsets, lib, "g_get_filename_charsets")
-	core.PuregoSafeRegister(&xIconv, lib, "g_iconv")
-	core.PuregoSafeRegister(&xIconvOpen, lib, "g_iconv_open")
-	core.PuregoSafeRegister(&xLocaleFromUtf8, lib, "g_locale_from_utf8")
-	core.PuregoSafeRegister(&xLocaleToUtf8, lib, "g_locale_to_utf8")
-	core.PuregoSafeRegister(&xUriListExtractUris, lib, "g_uri_list_extract_uris")
+	core.PuregoSafeRegister(&xConvert, libs, "g_convert")
+	core.PuregoSafeRegister(&xConvertWithFallback, libs, "g_convert_with_fallback")
+	core.PuregoSafeRegister(&xConvertWithIconv, libs, "g_convert_with_iconv")
+	core.PuregoSafeRegister(&xFilenameDisplayBasename, libs, "g_filename_display_basename")
+	core.PuregoSafeRegister(&xFilenameDisplayName, libs, "g_filename_display_name")
+	core.PuregoSafeRegister(&xFilenameFromUri, libs, "g_filename_from_uri")
+	core.PuregoSafeRegister(&xFilenameFromUtf8, libs, "g_filename_from_utf8")
+	core.PuregoSafeRegister(&xFilenameToUri, libs, "g_filename_to_uri")
+	core.PuregoSafeRegister(&xFilenameToUtf8, libs, "g_filename_to_utf8")
+	core.PuregoSafeRegister(&xGetFilenameCharsets, libs, "g_get_filename_charsets")
+	core.PuregoSafeRegister(&xIconv, libs, "g_iconv")
+	core.PuregoSafeRegister(&xIconvOpen, libs, "g_iconv_open")
+	core.PuregoSafeRegister(&xLocaleFromUtf8, libs, "g_locale_from_utf8")
+	core.PuregoSafeRegister(&xLocaleToUtf8, libs, "g_locale_to_utf8")
+	core.PuregoSafeRegister(&xUriListExtractUris, libs, "g_uri_list_extract_uris")
 
-	core.PuregoSafeRegister(&xIConvGIconv, lib, "g_iconv")
-	core.PuregoSafeRegister(&xIConvClose, lib, "g_iconv_close")
+	core.PuregoSafeRegister(&xIConvGIconv, libs, "g_iconv")
+	core.PuregoSafeRegister(&xIConvClose, libs, "g_iconv_close")
 
 }

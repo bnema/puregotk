@@ -493,21 +493,25 @@ func (c *TlsInteraction) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTlsInteractionGLibType, lib, "g_tls_interaction_get_type")
+	core.PuregoSafeRegister(&xTlsInteractionGLibType, libs, "g_tls_interaction_get_type")
 
-	core.PuregoSafeRegister(&xTlsInteractionAskPassword, lib, "g_tls_interaction_ask_password")
-	core.PuregoSafeRegister(&xTlsInteractionAskPasswordAsync, lib, "g_tls_interaction_ask_password_async")
-	core.PuregoSafeRegister(&xTlsInteractionAskPasswordFinish, lib, "g_tls_interaction_ask_password_finish")
-	core.PuregoSafeRegister(&xTlsInteractionInvokeAskPassword, lib, "g_tls_interaction_invoke_ask_password")
-	core.PuregoSafeRegister(&xTlsInteractionInvokeRequestCertificate, lib, "g_tls_interaction_invoke_request_certificate")
-	core.PuregoSafeRegister(&xTlsInteractionRequestCertificate, lib, "g_tls_interaction_request_certificate")
-	core.PuregoSafeRegister(&xTlsInteractionRequestCertificateAsync, lib, "g_tls_interaction_request_certificate_async")
-	core.PuregoSafeRegister(&xTlsInteractionRequestCertificateFinish, lib, "g_tls_interaction_request_certificate_finish")
+	core.PuregoSafeRegister(&xTlsInteractionAskPassword, libs, "g_tls_interaction_ask_password")
+	core.PuregoSafeRegister(&xTlsInteractionAskPasswordAsync, libs, "g_tls_interaction_ask_password_async")
+	core.PuregoSafeRegister(&xTlsInteractionAskPasswordFinish, libs, "g_tls_interaction_ask_password_finish")
+	core.PuregoSafeRegister(&xTlsInteractionInvokeAskPassword, libs, "g_tls_interaction_invoke_ask_password")
+	core.PuregoSafeRegister(&xTlsInteractionInvokeRequestCertificate, libs, "g_tls_interaction_invoke_request_certificate")
+	core.PuregoSafeRegister(&xTlsInteractionRequestCertificate, libs, "g_tls_interaction_request_certificate")
+	core.PuregoSafeRegister(&xTlsInteractionRequestCertificateAsync, libs, "g_tls_interaction_request_certificate_async")
+	core.PuregoSafeRegister(&xTlsInteractionRequestCertificateFinish, libs, "g_tls_interaction_request_certificate_finish")
 
 }

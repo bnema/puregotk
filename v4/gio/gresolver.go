@@ -892,39 +892,43 @@ func ResolverGetDefault() *Resolver {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xResolverNameLookupFlagsGLibType, lib, "g_resolver_name_lookup_flags_get_type")
+	core.PuregoSafeRegister(&xResolverNameLookupFlagsGLibType, libs, "g_resolver_name_lookup_flags_get_type")
 
-	core.PuregoSafeRegister(&xResolverErrorQuark, lib, "g_resolver_error_quark")
+	core.PuregoSafeRegister(&xResolverErrorQuark, libs, "g_resolver_error_quark")
 
-	core.PuregoSafeRegister(&xResolverGLibType, lib, "g_resolver_get_type")
+	core.PuregoSafeRegister(&xResolverGLibType, libs, "g_resolver_get_type")
 
-	core.PuregoSafeRegister(&xResolverGetTimeout, lib, "g_resolver_get_timeout")
-	core.PuregoSafeRegister(&xResolverLookupByAddress, lib, "g_resolver_lookup_by_address")
-	core.PuregoSafeRegister(&xResolverLookupByAddressAsync, lib, "g_resolver_lookup_by_address_async")
-	core.PuregoSafeRegister(&xResolverLookupByAddressFinish, lib, "g_resolver_lookup_by_address_finish")
-	core.PuregoSafeRegister(&xResolverLookupByName, lib, "g_resolver_lookup_by_name")
-	core.PuregoSafeRegister(&xResolverLookupByNameAsync, lib, "g_resolver_lookup_by_name_async")
-	core.PuregoSafeRegister(&xResolverLookupByNameFinish, lib, "g_resolver_lookup_by_name_finish")
-	core.PuregoSafeRegister(&xResolverLookupByNameWithFlags, lib, "g_resolver_lookup_by_name_with_flags")
-	core.PuregoSafeRegister(&xResolverLookupByNameWithFlagsAsync, lib, "g_resolver_lookup_by_name_with_flags_async")
-	core.PuregoSafeRegister(&xResolverLookupByNameWithFlagsFinish, lib, "g_resolver_lookup_by_name_with_flags_finish")
-	core.PuregoSafeRegister(&xResolverLookupRecords, lib, "g_resolver_lookup_records")
-	core.PuregoSafeRegister(&xResolverLookupRecordsAsync, lib, "g_resolver_lookup_records_async")
-	core.PuregoSafeRegister(&xResolverLookupRecordsFinish, lib, "g_resolver_lookup_records_finish")
-	core.PuregoSafeRegister(&xResolverLookupService, lib, "g_resolver_lookup_service")
-	core.PuregoSafeRegister(&xResolverLookupServiceAsync, lib, "g_resolver_lookup_service_async")
-	core.PuregoSafeRegister(&xResolverLookupServiceFinish, lib, "g_resolver_lookup_service_finish")
-	core.PuregoSafeRegister(&xResolverSetDefault, lib, "g_resolver_set_default")
-	core.PuregoSafeRegister(&xResolverSetTimeout, lib, "g_resolver_set_timeout")
+	core.PuregoSafeRegister(&xResolverGetTimeout, libs, "g_resolver_get_timeout")
+	core.PuregoSafeRegister(&xResolverLookupByAddress, libs, "g_resolver_lookup_by_address")
+	core.PuregoSafeRegister(&xResolverLookupByAddressAsync, libs, "g_resolver_lookup_by_address_async")
+	core.PuregoSafeRegister(&xResolverLookupByAddressFinish, libs, "g_resolver_lookup_by_address_finish")
+	core.PuregoSafeRegister(&xResolverLookupByName, libs, "g_resolver_lookup_by_name")
+	core.PuregoSafeRegister(&xResolverLookupByNameAsync, libs, "g_resolver_lookup_by_name_async")
+	core.PuregoSafeRegister(&xResolverLookupByNameFinish, libs, "g_resolver_lookup_by_name_finish")
+	core.PuregoSafeRegister(&xResolverLookupByNameWithFlags, libs, "g_resolver_lookup_by_name_with_flags")
+	core.PuregoSafeRegister(&xResolverLookupByNameWithFlagsAsync, libs, "g_resolver_lookup_by_name_with_flags_async")
+	core.PuregoSafeRegister(&xResolverLookupByNameWithFlagsFinish, libs, "g_resolver_lookup_by_name_with_flags_finish")
+	core.PuregoSafeRegister(&xResolverLookupRecords, libs, "g_resolver_lookup_records")
+	core.PuregoSafeRegister(&xResolverLookupRecordsAsync, libs, "g_resolver_lookup_records_async")
+	core.PuregoSafeRegister(&xResolverLookupRecordsFinish, libs, "g_resolver_lookup_records_finish")
+	core.PuregoSafeRegister(&xResolverLookupService, libs, "g_resolver_lookup_service")
+	core.PuregoSafeRegister(&xResolverLookupServiceAsync, libs, "g_resolver_lookup_service_async")
+	core.PuregoSafeRegister(&xResolverLookupServiceFinish, libs, "g_resolver_lookup_service_finish")
+	core.PuregoSafeRegister(&xResolverSetDefault, libs, "g_resolver_set_default")
+	core.PuregoSafeRegister(&xResolverSetTimeout, libs, "g_resolver_set_timeout")
 
-	core.PuregoSafeRegister(&xResolverFreeAddresses, lib, "g_resolver_free_addresses")
-	core.PuregoSafeRegister(&xResolverFreeTargets, lib, "g_resolver_free_targets")
-	core.PuregoSafeRegister(&xResolverGetDefault, lib, "g_resolver_get_default")
+	core.PuregoSafeRegister(&xResolverFreeAddresses, libs, "g_resolver_free_addresses")
+	core.PuregoSafeRegister(&xResolverFreeTargets, libs, "g_resolver_free_targets")
+	core.PuregoSafeRegister(&xResolverGetDefault, libs, "g_resolver_get_default")
 
 }

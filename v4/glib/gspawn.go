@@ -590,21 +590,25 @@ func SpawnSync(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, F
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSpawnAsync, lib, "g_spawn_async")
-	core.PuregoSafeRegister(&xSpawnAsyncWithFds, lib, "g_spawn_async_with_fds")
-	core.PuregoSafeRegister(&xSpawnAsyncWithPipes, lib, "g_spawn_async_with_pipes")
-	core.PuregoSafeRegister(&xSpawnAsyncWithPipesAndFds, lib, "g_spawn_async_with_pipes_and_fds")
-	core.PuregoSafeRegister(&xSpawnCheckExitStatus, lib, "g_spawn_check_exit_status")
-	core.PuregoSafeRegister(&xSpawnCheckWaitStatus, lib, "g_spawn_check_wait_status")
-	core.PuregoSafeRegister(&xSpawnClosePid, lib, "g_spawn_close_pid")
-	core.PuregoSafeRegister(&xSpawnCommandLineAsync, lib, "g_spawn_command_line_async")
-	core.PuregoSafeRegister(&xSpawnCommandLineSync, lib, "g_spawn_command_line_sync")
-	core.PuregoSafeRegister(&xSpawnSync, lib, "g_spawn_sync")
+	core.PuregoSafeRegister(&xSpawnAsync, libs, "g_spawn_async")
+	core.PuregoSafeRegister(&xSpawnAsyncWithFds, libs, "g_spawn_async_with_fds")
+	core.PuregoSafeRegister(&xSpawnAsyncWithPipes, libs, "g_spawn_async_with_pipes")
+	core.PuregoSafeRegister(&xSpawnAsyncWithPipesAndFds, libs, "g_spawn_async_with_pipes_and_fds")
+	core.PuregoSafeRegister(&xSpawnCheckExitStatus, libs, "g_spawn_check_exit_status")
+	core.PuregoSafeRegister(&xSpawnCheckWaitStatus, libs, "g_spawn_check_wait_status")
+	core.PuregoSafeRegister(&xSpawnClosePid, libs, "g_spawn_close_pid")
+	core.PuregoSafeRegister(&xSpawnCommandLineAsync, libs, "g_spawn_command_line_async")
+	core.PuregoSafeRegister(&xSpawnCommandLineSync, libs, "g_spawn_command_line_sync")
+	core.PuregoSafeRegister(&xSpawnSync, libs, "g_spawn_sync")
 
 }

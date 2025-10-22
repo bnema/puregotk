@@ -160,18 +160,22 @@ func IsInitialized() bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDisablePortals, lib, "gtk_disable_portals")
-	core.PuregoSafeRegister(&xDisableSetlocale, lib, "gtk_disable_setlocale")
-	core.PuregoSafeRegister(&xGetDefaultLanguage, lib, "gtk_get_default_language")
-	core.PuregoSafeRegister(&xGetLocaleDirection, lib, "gtk_get_locale_direction")
-	core.PuregoSafeRegister(&xInit, lib, "gtk_init")
-	core.PuregoSafeRegister(&xInitCheck, lib, "gtk_init_check")
-	core.PuregoSafeRegister(&xIsInitialized, lib, "gtk_is_initialized")
+	core.PuregoSafeRegister(&xDisablePortals, libs, "gtk_disable_portals")
+	core.PuregoSafeRegister(&xDisableSetlocale, libs, "gtk_disable_setlocale")
+	core.PuregoSafeRegister(&xGetDefaultLanguage, libs, "gtk_get_default_language")
+	core.PuregoSafeRegister(&xGetLocaleDirection, libs, "gtk_get_locale_direction")
+	core.PuregoSafeRegister(&xInit, libs, "gtk_init")
+	core.PuregoSafeRegister(&xInitCheck, libs, "gtk_init_check")
+	core.PuregoSafeRegister(&xIsInitialized, libs, "gtk_is_initialized")
 
 }

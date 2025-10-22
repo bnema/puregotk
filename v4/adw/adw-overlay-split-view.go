@@ -802,39 +802,43 @@ func (x *OverlaySplitView) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xOverlaySplitViewGLibType, lib, "adw_overlay_split_view_get_type")
+	core.PuregoSafeRegister(&xOverlaySplitViewGLibType, libs, "adw_overlay_split_view_get_type")
 
-	core.PuregoSafeRegister(&xNewOverlaySplitView, lib, "adw_overlay_split_view_new")
+	core.PuregoSafeRegister(&xNewOverlaySplitView, libs, "adw_overlay_split_view_new")
 
-	core.PuregoSafeRegister(&xOverlaySplitViewGetCollapsed, lib, "adw_overlay_split_view_get_collapsed")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetContent, lib, "adw_overlay_split_view_get_content")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetEnableHideGesture, lib, "adw_overlay_split_view_get_enable_hide_gesture")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetEnableShowGesture, lib, "adw_overlay_split_view_get_enable_show_gesture")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetMaxSidebarWidth, lib, "adw_overlay_split_view_get_max_sidebar_width")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetMinSidebarWidth, lib, "adw_overlay_split_view_get_min_sidebar_width")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetPinSidebar, lib, "adw_overlay_split_view_get_pin_sidebar")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetShowSidebar, lib, "adw_overlay_split_view_get_show_sidebar")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetSidebar, lib, "adw_overlay_split_view_get_sidebar")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetSidebarPosition, lib, "adw_overlay_split_view_get_sidebar_position")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetSidebarWidthFraction, lib, "adw_overlay_split_view_get_sidebar_width_fraction")
-	core.PuregoSafeRegister(&xOverlaySplitViewGetSidebarWidthUnit, lib, "adw_overlay_split_view_get_sidebar_width_unit")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetCollapsed, lib, "adw_overlay_split_view_set_collapsed")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetContent, lib, "adw_overlay_split_view_set_content")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetEnableHideGesture, lib, "adw_overlay_split_view_set_enable_hide_gesture")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetEnableShowGesture, lib, "adw_overlay_split_view_set_enable_show_gesture")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetMaxSidebarWidth, lib, "adw_overlay_split_view_set_max_sidebar_width")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetMinSidebarWidth, lib, "adw_overlay_split_view_set_min_sidebar_width")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetPinSidebar, lib, "adw_overlay_split_view_set_pin_sidebar")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetShowSidebar, lib, "adw_overlay_split_view_set_show_sidebar")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebar, lib, "adw_overlay_split_view_set_sidebar")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebarPosition, lib, "adw_overlay_split_view_set_sidebar_position")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebarWidthFraction, lib, "adw_overlay_split_view_set_sidebar_width_fraction")
-	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebarWidthUnit, lib, "adw_overlay_split_view_set_sidebar_width_unit")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetCollapsed, libs, "adw_overlay_split_view_get_collapsed")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetContent, libs, "adw_overlay_split_view_get_content")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetEnableHideGesture, libs, "adw_overlay_split_view_get_enable_hide_gesture")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetEnableShowGesture, libs, "adw_overlay_split_view_get_enable_show_gesture")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetMaxSidebarWidth, libs, "adw_overlay_split_view_get_max_sidebar_width")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetMinSidebarWidth, libs, "adw_overlay_split_view_get_min_sidebar_width")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetPinSidebar, libs, "adw_overlay_split_view_get_pin_sidebar")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetShowSidebar, libs, "adw_overlay_split_view_get_show_sidebar")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetSidebar, libs, "adw_overlay_split_view_get_sidebar")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetSidebarPosition, libs, "adw_overlay_split_view_get_sidebar_position")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetSidebarWidthFraction, libs, "adw_overlay_split_view_get_sidebar_width_fraction")
+	core.PuregoSafeRegister(&xOverlaySplitViewGetSidebarWidthUnit, libs, "adw_overlay_split_view_get_sidebar_width_unit")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetCollapsed, libs, "adw_overlay_split_view_set_collapsed")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetContent, libs, "adw_overlay_split_view_set_content")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetEnableHideGesture, libs, "adw_overlay_split_view_set_enable_hide_gesture")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetEnableShowGesture, libs, "adw_overlay_split_view_set_enable_show_gesture")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetMaxSidebarWidth, libs, "adw_overlay_split_view_set_max_sidebar_width")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetMinSidebarWidth, libs, "adw_overlay_split_view_set_min_sidebar_width")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetPinSidebar, libs, "adw_overlay_split_view_set_pin_sidebar")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetShowSidebar, libs, "adw_overlay_split_view_set_show_sidebar")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebar, libs, "adw_overlay_split_view_set_sidebar")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebarPosition, libs, "adw_overlay_split_view_set_sidebar_position")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebarWidthFraction, libs, "adw_overlay_split_view_set_sidebar_width_fraction")
+	core.PuregoSafeRegister(&xOverlaySplitViewSetSidebarWidthUnit, libs, "adw_overlay_split_view_set_sidebar_width_unit")
 
 }

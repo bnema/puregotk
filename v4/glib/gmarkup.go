@@ -704,31 +704,35 @@ func MarkupVprintfEscaped(FormatVar string, ArgsVar []interface{}) string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMarkupCollectAttributes, lib, "g_markup_collect_attributes")
-	core.PuregoSafeRegister(&xMarkupEscapeText, lib, "g_markup_escape_text")
-	core.PuregoSafeRegister(&xMarkupPrintfEscaped, lib, "g_markup_printf_escaped")
-	core.PuregoSafeRegister(&xMarkupVprintfEscaped, lib, "g_markup_vprintf_escaped")
+	core.PuregoSafeRegister(&xMarkupCollectAttributes, libs, "g_markup_collect_attributes")
+	core.PuregoSafeRegister(&xMarkupEscapeText, libs, "g_markup_escape_text")
+	core.PuregoSafeRegister(&xMarkupPrintfEscaped, libs, "g_markup_printf_escaped")
+	core.PuregoSafeRegister(&xMarkupVprintfEscaped, libs, "g_markup_vprintf_escaped")
 
-	core.PuregoSafeRegister(&xMarkupParseContextGLibType, lib, "g_markup_parse_context_get_type")
+	core.PuregoSafeRegister(&xMarkupParseContextGLibType, libs, "g_markup_parse_context_get_type")
 
-	core.PuregoSafeRegister(&xNewMarkupParseContext, lib, "g_markup_parse_context_new")
+	core.PuregoSafeRegister(&xNewMarkupParseContext, libs, "g_markup_parse_context_new")
 
-	core.PuregoSafeRegister(&xMarkupParseContextEndParse, lib, "g_markup_parse_context_end_parse")
-	core.PuregoSafeRegister(&xMarkupParseContextFree, lib, "g_markup_parse_context_free")
-	core.PuregoSafeRegister(&xMarkupParseContextGetElement, lib, "g_markup_parse_context_get_element")
-	core.PuregoSafeRegister(&xMarkupParseContextGetElementStack, lib, "g_markup_parse_context_get_element_stack")
-	core.PuregoSafeRegister(&xMarkupParseContextGetPosition, lib, "g_markup_parse_context_get_position")
-	core.PuregoSafeRegister(&xMarkupParseContextGetUserData, lib, "g_markup_parse_context_get_user_data")
-	core.PuregoSafeRegister(&xMarkupParseContextParse, lib, "g_markup_parse_context_parse")
-	core.PuregoSafeRegister(&xMarkupParseContextPop, lib, "g_markup_parse_context_pop")
-	core.PuregoSafeRegister(&xMarkupParseContextPush, lib, "g_markup_parse_context_push")
-	core.PuregoSafeRegister(&xMarkupParseContextRef, lib, "g_markup_parse_context_ref")
-	core.PuregoSafeRegister(&xMarkupParseContextUnref, lib, "g_markup_parse_context_unref")
+	core.PuregoSafeRegister(&xMarkupParseContextEndParse, libs, "g_markup_parse_context_end_parse")
+	core.PuregoSafeRegister(&xMarkupParseContextFree, libs, "g_markup_parse_context_free")
+	core.PuregoSafeRegister(&xMarkupParseContextGetElement, libs, "g_markup_parse_context_get_element")
+	core.PuregoSafeRegister(&xMarkupParseContextGetElementStack, libs, "g_markup_parse_context_get_element_stack")
+	core.PuregoSafeRegister(&xMarkupParseContextGetPosition, libs, "g_markup_parse_context_get_position")
+	core.PuregoSafeRegister(&xMarkupParseContextGetUserData, libs, "g_markup_parse_context_get_user_data")
+	core.PuregoSafeRegister(&xMarkupParseContextParse, libs, "g_markup_parse_context_parse")
+	core.PuregoSafeRegister(&xMarkupParseContextPop, libs, "g_markup_parse_context_pop")
+	core.PuregoSafeRegister(&xMarkupParseContextPush, libs, "g_markup_parse_context_push")
+	core.PuregoSafeRegister(&xMarkupParseContextRef, libs, "g_markup_parse_context_ref")
+	core.PuregoSafeRegister(&xMarkupParseContextUnref, libs, "g_markup_parse_context_unref")
 
 }

@@ -281,19 +281,23 @@ func ProxyGetDefaultForProtocol(ProtocolVar string) *ProxyBase {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xProxyGetDefaultForProtocol, lib, "g_proxy_get_default_for_protocol")
+	core.PuregoSafeRegister(&xProxyGetDefaultForProtocol, libs, "g_proxy_get_default_for_protocol")
 
-	core.PuregoSafeRegister(&xProxyGLibType, lib, "g_proxy_get_type")
+	core.PuregoSafeRegister(&xProxyGLibType, libs, "g_proxy_get_type")
 
-	core.PuregoSafeRegister(&XGProxyConnect, lib, "g_proxy_connect")
-	core.PuregoSafeRegister(&XGProxyConnectAsync, lib, "g_proxy_connect_async")
-	core.PuregoSafeRegister(&XGProxyConnectFinish, lib, "g_proxy_connect_finish")
-	core.PuregoSafeRegister(&XGProxySupportsHostname, lib, "g_proxy_supports_hostname")
+	core.PuregoSafeRegister(&XGProxyConnect, libs, "g_proxy_connect")
+	core.PuregoSafeRegister(&XGProxyConnectAsync, libs, "g_proxy_connect_async")
+	core.PuregoSafeRegister(&XGProxyConnectFinish, libs, "g_proxy_connect_finish")
+	core.PuregoSafeRegister(&XGProxySupportsHostname, libs, "g_proxy_supports_hostname")
 
 }

@@ -957,42 +957,46 @@ func (c *Builder) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBuilderErrorGLibType, lib, "gtk_builder_error_get_type")
+	core.PuregoSafeRegister(&xBuilderErrorGLibType, libs, "gtk_builder_error_get_type")
 
-	core.PuregoSafeRegister(&xBuilderErrorQuark, lib, "gtk_builder_error_quark")
+	core.PuregoSafeRegister(&xBuilderErrorQuark, libs, "gtk_builder_error_quark")
 
-	core.PuregoSafeRegister(&xBuilderGLibType, lib, "gtk_builder_get_type")
+	core.PuregoSafeRegister(&xBuilderGLibType, libs, "gtk_builder_get_type")
 
-	core.PuregoSafeRegister(&xNewBuilder, lib, "gtk_builder_new")
-	core.PuregoSafeRegister(&xNewBuilderFromFile, lib, "gtk_builder_new_from_file")
-	core.PuregoSafeRegister(&xNewBuilderFromResource, lib, "gtk_builder_new_from_resource")
-	core.PuregoSafeRegister(&xNewBuilderFromString, lib, "gtk_builder_new_from_string")
+	core.PuregoSafeRegister(&xNewBuilder, libs, "gtk_builder_new")
+	core.PuregoSafeRegister(&xNewBuilderFromFile, libs, "gtk_builder_new_from_file")
+	core.PuregoSafeRegister(&xNewBuilderFromResource, libs, "gtk_builder_new_from_resource")
+	core.PuregoSafeRegister(&xNewBuilderFromString, libs, "gtk_builder_new_from_string")
 
-	core.PuregoSafeRegister(&xBuilderAddFromFile, lib, "gtk_builder_add_from_file")
-	core.PuregoSafeRegister(&xBuilderAddFromResource, lib, "gtk_builder_add_from_resource")
-	core.PuregoSafeRegister(&xBuilderAddFromString, lib, "gtk_builder_add_from_string")
-	core.PuregoSafeRegister(&xBuilderAddObjectsFromFile, lib, "gtk_builder_add_objects_from_file")
-	core.PuregoSafeRegister(&xBuilderAddObjectsFromResource, lib, "gtk_builder_add_objects_from_resource")
-	core.PuregoSafeRegister(&xBuilderAddObjectsFromString, lib, "gtk_builder_add_objects_from_string")
-	core.PuregoSafeRegister(&xBuilderCreateClosure, lib, "gtk_builder_create_closure")
-	core.PuregoSafeRegister(&xBuilderExposeObject, lib, "gtk_builder_expose_object")
-	core.PuregoSafeRegister(&xBuilderExtendWithTemplate, lib, "gtk_builder_extend_with_template")
-	core.PuregoSafeRegister(&xBuilderGetCurrentObject, lib, "gtk_builder_get_current_object")
-	core.PuregoSafeRegister(&xBuilderGetObject, lib, "gtk_builder_get_object")
-	core.PuregoSafeRegister(&xBuilderGetObjects, lib, "gtk_builder_get_objects")
-	core.PuregoSafeRegister(&xBuilderGetScope, lib, "gtk_builder_get_scope")
-	core.PuregoSafeRegister(&xBuilderGetTranslationDomain, lib, "gtk_builder_get_translation_domain")
-	core.PuregoSafeRegister(&xBuilderGetTypeFromName, lib, "gtk_builder_get_type_from_name")
-	core.PuregoSafeRegister(&xBuilderSetCurrentObject, lib, "gtk_builder_set_current_object")
-	core.PuregoSafeRegister(&xBuilderSetScope, lib, "gtk_builder_set_scope")
-	core.PuregoSafeRegister(&xBuilderSetTranslationDomain, lib, "gtk_builder_set_translation_domain")
-	core.PuregoSafeRegister(&xBuilderValueFromString, lib, "gtk_builder_value_from_string")
-	core.PuregoSafeRegister(&xBuilderValueFromStringType, lib, "gtk_builder_value_from_string_type")
+	core.PuregoSafeRegister(&xBuilderAddFromFile, libs, "gtk_builder_add_from_file")
+	core.PuregoSafeRegister(&xBuilderAddFromResource, libs, "gtk_builder_add_from_resource")
+	core.PuregoSafeRegister(&xBuilderAddFromString, libs, "gtk_builder_add_from_string")
+	core.PuregoSafeRegister(&xBuilderAddObjectsFromFile, libs, "gtk_builder_add_objects_from_file")
+	core.PuregoSafeRegister(&xBuilderAddObjectsFromResource, libs, "gtk_builder_add_objects_from_resource")
+	core.PuregoSafeRegister(&xBuilderAddObjectsFromString, libs, "gtk_builder_add_objects_from_string")
+	core.PuregoSafeRegister(&xBuilderCreateClosure, libs, "gtk_builder_create_closure")
+	core.PuregoSafeRegister(&xBuilderExposeObject, libs, "gtk_builder_expose_object")
+	core.PuregoSafeRegister(&xBuilderExtendWithTemplate, libs, "gtk_builder_extend_with_template")
+	core.PuregoSafeRegister(&xBuilderGetCurrentObject, libs, "gtk_builder_get_current_object")
+	core.PuregoSafeRegister(&xBuilderGetObject, libs, "gtk_builder_get_object")
+	core.PuregoSafeRegister(&xBuilderGetObjects, libs, "gtk_builder_get_objects")
+	core.PuregoSafeRegister(&xBuilderGetScope, libs, "gtk_builder_get_scope")
+	core.PuregoSafeRegister(&xBuilderGetTranslationDomain, libs, "gtk_builder_get_translation_domain")
+	core.PuregoSafeRegister(&xBuilderGetTypeFromName, libs, "gtk_builder_get_type_from_name")
+	core.PuregoSafeRegister(&xBuilderSetCurrentObject, libs, "gtk_builder_set_current_object")
+	core.PuregoSafeRegister(&xBuilderSetScope, libs, "gtk_builder_set_scope")
+	core.PuregoSafeRegister(&xBuilderSetTranslationDomain, libs, "gtk_builder_set_translation_domain")
+	core.PuregoSafeRegister(&xBuilderValueFromString, libs, "gtk_builder_value_from_string")
+	core.PuregoSafeRegister(&xBuilderValueFromStringType, libs, "gtk_builder_value_from_string_type")
 
 }

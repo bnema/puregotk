@@ -522,23 +522,27 @@ func (x *PreferencesRow) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPreferencesRowGLibType, lib, "adw_preferences_row_get_type")
+	core.PuregoSafeRegister(&xPreferencesRowGLibType, libs, "adw_preferences_row_get_type")
 
-	core.PuregoSafeRegister(&xNewPreferencesRow, lib, "adw_preferences_row_new")
+	core.PuregoSafeRegister(&xNewPreferencesRow, libs, "adw_preferences_row_new")
 
-	core.PuregoSafeRegister(&xPreferencesRowGetTitle, lib, "adw_preferences_row_get_title")
-	core.PuregoSafeRegister(&xPreferencesRowGetTitleSelectable, lib, "adw_preferences_row_get_title_selectable")
-	core.PuregoSafeRegister(&xPreferencesRowGetUseMarkup, lib, "adw_preferences_row_get_use_markup")
-	core.PuregoSafeRegister(&xPreferencesRowGetUseUnderline, lib, "adw_preferences_row_get_use_underline")
-	core.PuregoSafeRegister(&xPreferencesRowSetTitle, lib, "adw_preferences_row_set_title")
-	core.PuregoSafeRegister(&xPreferencesRowSetTitleSelectable, lib, "adw_preferences_row_set_title_selectable")
-	core.PuregoSafeRegister(&xPreferencesRowSetUseMarkup, lib, "adw_preferences_row_set_use_markup")
-	core.PuregoSafeRegister(&xPreferencesRowSetUseUnderline, lib, "adw_preferences_row_set_use_underline")
+	core.PuregoSafeRegister(&xPreferencesRowGetTitle, libs, "adw_preferences_row_get_title")
+	core.PuregoSafeRegister(&xPreferencesRowGetTitleSelectable, libs, "adw_preferences_row_get_title_selectable")
+	core.PuregoSafeRegister(&xPreferencesRowGetUseMarkup, libs, "adw_preferences_row_get_use_markup")
+	core.PuregoSafeRegister(&xPreferencesRowGetUseUnderline, libs, "adw_preferences_row_get_use_underline")
+	core.PuregoSafeRegister(&xPreferencesRowSetTitle, libs, "adw_preferences_row_set_title")
+	core.PuregoSafeRegister(&xPreferencesRowSetTitleSelectable, libs, "adw_preferences_row_set_title_selectable")
+	core.PuregoSafeRegister(&xPreferencesRowSetUseMarkup, libs, "adw_preferences_row_set_use_markup")
+	core.PuregoSafeRegister(&xPreferencesRowSetUseUnderline, libs, "adw_preferences_row_set_use_underline")
 
 }

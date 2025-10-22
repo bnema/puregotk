@@ -216,17 +216,21 @@ func (x *ZlibCompressor) Reset() {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xZlibCompressorGLibType, lib, "g_zlib_compressor_get_type")
+	core.PuregoSafeRegister(&xZlibCompressorGLibType, libs, "g_zlib_compressor_get_type")
 
-	core.PuregoSafeRegister(&xNewZlibCompressor, lib, "g_zlib_compressor_new")
+	core.PuregoSafeRegister(&xNewZlibCompressor, libs, "g_zlib_compressor_new")
 
-	core.PuregoSafeRegister(&xZlibCompressorGetFileInfo, lib, "g_zlib_compressor_get_file_info")
-	core.PuregoSafeRegister(&xZlibCompressorSetFileInfo, lib, "g_zlib_compressor_set_file_info")
+	core.PuregoSafeRegister(&xZlibCompressorGetFileInfo, libs, "g_zlib_compressor_get_file_info")
+	core.PuregoSafeRegister(&xZlibCompressorSetFileInfo, libs, "g_zlib_compressor_set_file_info")
 
 }

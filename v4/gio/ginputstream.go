@@ -834,32 +834,36 @@ func (c *InputStream) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInputStreamGLibType, lib, "g_input_stream_get_type")
+	core.PuregoSafeRegister(&xInputStreamGLibType, libs, "g_input_stream_get_type")
 
-	core.PuregoSafeRegister(&xInputStreamClearPending, lib, "g_input_stream_clear_pending")
-	core.PuregoSafeRegister(&xInputStreamClose, lib, "g_input_stream_close")
-	core.PuregoSafeRegister(&xInputStreamCloseAsync, lib, "g_input_stream_close_async")
-	core.PuregoSafeRegister(&xInputStreamCloseFinish, lib, "g_input_stream_close_finish")
-	core.PuregoSafeRegister(&xInputStreamHasPending, lib, "g_input_stream_has_pending")
-	core.PuregoSafeRegister(&xInputStreamIsClosed, lib, "g_input_stream_is_closed")
-	core.PuregoSafeRegister(&xInputStreamRead, lib, "g_input_stream_read")
-	core.PuregoSafeRegister(&xInputStreamReadAll, lib, "g_input_stream_read_all")
-	core.PuregoSafeRegister(&xInputStreamReadAllAsync, lib, "g_input_stream_read_all_async")
-	core.PuregoSafeRegister(&xInputStreamReadAllFinish, lib, "g_input_stream_read_all_finish")
-	core.PuregoSafeRegister(&xInputStreamReadAsync, lib, "g_input_stream_read_async")
-	core.PuregoSafeRegister(&xInputStreamReadBytes, lib, "g_input_stream_read_bytes")
-	core.PuregoSafeRegister(&xInputStreamReadBytesAsync, lib, "g_input_stream_read_bytes_async")
-	core.PuregoSafeRegister(&xInputStreamReadBytesFinish, lib, "g_input_stream_read_bytes_finish")
-	core.PuregoSafeRegister(&xInputStreamReadFinish, lib, "g_input_stream_read_finish")
-	core.PuregoSafeRegister(&xInputStreamSetPending, lib, "g_input_stream_set_pending")
-	core.PuregoSafeRegister(&xInputStreamSkip, lib, "g_input_stream_skip")
-	core.PuregoSafeRegister(&xInputStreamSkipAsync, lib, "g_input_stream_skip_async")
-	core.PuregoSafeRegister(&xInputStreamSkipFinish, lib, "g_input_stream_skip_finish")
+	core.PuregoSafeRegister(&xInputStreamClearPending, libs, "g_input_stream_clear_pending")
+	core.PuregoSafeRegister(&xInputStreamClose, libs, "g_input_stream_close")
+	core.PuregoSafeRegister(&xInputStreamCloseAsync, libs, "g_input_stream_close_async")
+	core.PuregoSafeRegister(&xInputStreamCloseFinish, libs, "g_input_stream_close_finish")
+	core.PuregoSafeRegister(&xInputStreamHasPending, libs, "g_input_stream_has_pending")
+	core.PuregoSafeRegister(&xInputStreamIsClosed, libs, "g_input_stream_is_closed")
+	core.PuregoSafeRegister(&xInputStreamRead, libs, "g_input_stream_read")
+	core.PuregoSafeRegister(&xInputStreamReadAll, libs, "g_input_stream_read_all")
+	core.PuregoSafeRegister(&xInputStreamReadAllAsync, libs, "g_input_stream_read_all_async")
+	core.PuregoSafeRegister(&xInputStreamReadAllFinish, libs, "g_input_stream_read_all_finish")
+	core.PuregoSafeRegister(&xInputStreamReadAsync, libs, "g_input_stream_read_async")
+	core.PuregoSafeRegister(&xInputStreamReadBytes, libs, "g_input_stream_read_bytes")
+	core.PuregoSafeRegister(&xInputStreamReadBytesAsync, libs, "g_input_stream_read_bytes_async")
+	core.PuregoSafeRegister(&xInputStreamReadBytesFinish, libs, "g_input_stream_read_bytes_finish")
+	core.PuregoSafeRegister(&xInputStreamReadFinish, libs, "g_input_stream_read_finish")
+	core.PuregoSafeRegister(&xInputStreamSetPending, libs, "g_input_stream_set_pending")
+	core.PuregoSafeRegister(&xInputStreamSkip, libs, "g_input_stream_skip")
+	core.PuregoSafeRegister(&xInputStreamSkipAsync, libs, "g_input_stream_skip_async")
+	core.PuregoSafeRegister(&xInputStreamSkipFinish, libs, "g_input_stream_skip_finish")
 
 }

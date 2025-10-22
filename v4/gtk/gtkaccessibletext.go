@@ -479,20 +479,24 @@ const (
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAccessibleTextContentChangeGLibType, lib, "gtk_accessible_text_content_change_get_type")
+	core.PuregoSafeRegister(&xAccessibleTextContentChangeGLibType, libs, "gtk_accessible_text_content_change_get_type")
 
-	core.PuregoSafeRegister(&xAccessibleTextGranularityGLibType, lib, "gtk_accessible_text_granularity_get_type")
+	core.PuregoSafeRegister(&xAccessibleTextGranularityGLibType, libs, "gtk_accessible_text_granularity_get_type")
 
-	core.PuregoSafeRegister(&xAccessibleTextGLibType, lib, "gtk_accessible_text_get_type")
+	core.PuregoSafeRegister(&xAccessibleTextGLibType, libs, "gtk_accessible_text_get_type")
 
-	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateCaretPosition, lib, "gtk_accessible_text_update_caret_position")
-	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateContents, lib, "gtk_accessible_text_update_contents")
-	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateSelectionBound, lib, "gtk_accessible_text_update_selection_bound")
+	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateCaretPosition, libs, "gtk_accessible_text_update_caret_position")
+	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateContents, libs, "gtk_accessible_text_update_contents")
+	core.PuregoSafeRegister(&XGtkAccessibleTextUpdateSelectionBound, libs, "gtk_accessible_text_update_selection_bound")
 
 }

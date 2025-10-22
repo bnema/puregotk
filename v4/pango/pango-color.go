@@ -110,18 +110,22 @@ func (x *Color) ToString() string {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColorGLibType, lib, "pango_color_get_type")
+	core.PuregoSafeRegister(&xColorGLibType, libs, "pango_color_get_type")
 
-	core.PuregoSafeRegister(&xColorCopy, lib, "pango_color_copy")
-	core.PuregoSafeRegister(&xColorFree, lib, "pango_color_free")
-	core.PuregoSafeRegister(&xColorParse, lib, "pango_color_parse")
-	core.PuregoSafeRegister(&xColorParseWithAlpha, lib, "pango_color_parse_with_alpha")
-	core.PuregoSafeRegister(&xColorToString, lib, "pango_color_to_string")
+	core.PuregoSafeRegister(&xColorCopy, libs, "pango_color_copy")
+	core.PuregoSafeRegister(&xColorFree, libs, "pango_color_free")
+	core.PuregoSafeRegister(&xColorParse, libs, "pango_color_parse")
+	core.PuregoSafeRegister(&xColorParseWithAlpha, libs, "pango_color_parse_with_alpha")
+	core.PuregoSafeRegister(&xColorToString, libs, "pango_color_to_string")
 
 }

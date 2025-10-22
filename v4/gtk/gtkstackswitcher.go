@@ -409,17 +409,21 @@ func (x *StackSwitcher) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStackSwitcherGLibType, lib, "gtk_stack_switcher_get_type")
+	core.PuregoSafeRegister(&xStackSwitcherGLibType, libs, "gtk_stack_switcher_get_type")
 
-	core.PuregoSafeRegister(&xNewStackSwitcher, lib, "gtk_stack_switcher_new")
+	core.PuregoSafeRegister(&xNewStackSwitcher, libs, "gtk_stack_switcher_new")
 
-	core.PuregoSafeRegister(&xStackSwitcherGetStack, lib, "gtk_stack_switcher_get_stack")
-	core.PuregoSafeRegister(&xStackSwitcherSetStack, lib, "gtk_stack_switcher_set_stack")
+	core.PuregoSafeRegister(&xStackSwitcherGetStack, libs, "gtk_stack_switcher_get_stack")
+	core.PuregoSafeRegister(&xStackSwitcherSetStack, libs, "gtk_stack_switcher_set_stack")
 
 }

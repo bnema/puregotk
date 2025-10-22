@@ -398,25 +398,29 @@ func (x *DataOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDataOutputStreamGLibType, lib, "g_data_output_stream_get_type")
+	core.PuregoSafeRegister(&xDataOutputStreamGLibType, libs, "g_data_output_stream_get_type")
 
-	core.PuregoSafeRegister(&xNewDataOutputStream, lib, "g_data_output_stream_new")
+	core.PuregoSafeRegister(&xNewDataOutputStream, libs, "g_data_output_stream_new")
 
-	core.PuregoSafeRegister(&xDataOutputStreamGetByteOrder, lib, "g_data_output_stream_get_byte_order")
-	core.PuregoSafeRegister(&xDataOutputStreamPutByte, lib, "g_data_output_stream_put_byte")
-	core.PuregoSafeRegister(&xDataOutputStreamPutInt16, lib, "g_data_output_stream_put_int16")
-	core.PuregoSafeRegister(&xDataOutputStreamPutInt32, lib, "g_data_output_stream_put_int32")
-	core.PuregoSafeRegister(&xDataOutputStreamPutInt64, lib, "g_data_output_stream_put_int64")
-	core.PuregoSafeRegister(&xDataOutputStreamPutString, lib, "g_data_output_stream_put_string")
-	core.PuregoSafeRegister(&xDataOutputStreamPutUint16, lib, "g_data_output_stream_put_uint16")
-	core.PuregoSafeRegister(&xDataOutputStreamPutUint32, lib, "g_data_output_stream_put_uint32")
-	core.PuregoSafeRegister(&xDataOutputStreamPutUint64, lib, "g_data_output_stream_put_uint64")
-	core.PuregoSafeRegister(&xDataOutputStreamSetByteOrder, lib, "g_data_output_stream_set_byte_order")
+	core.PuregoSafeRegister(&xDataOutputStreamGetByteOrder, libs, "g_data_output_stream_get_byte_order")
+	core.PuregoSafeRegister(&xDataOutputStreamPutByte, libs, "g_data_output_stream_put_byte")
+	core.PuregoSafeRegister(&xDataOutputStreamPutInt16, libs, "g_data_output_stream_put_int16")
+	core.PuregoSafeRegister(&xDataOutputStreamPutInt32, libs, "g_data_output_stream_put_int32")
+	core.PuregoSafeRegister(&xDataOutputStreamPutInt64, libs, "g_data_output_stream_put_int64")
+	core.PuregoSafeRegister(&xDataOutputStreamPutString, libs, "g_data_output_stream_put_string")
+	core.PuregoSafeRegister(&xDataOutputStreamPutUint16, libs, "g_data_output_stream_put_uint16")
+	core.PuregoSafeRegister(&xDataOutputStreamPutUint32, libs, "g_data_output_stream_put_uint32")
+	core.PuregoSafeRegister(&xDataOutputStreamPutUint64, libs, "g_data_output_stream_put_uint64")
+	core.PuregoSafeRegister(&xDataOutputStreamSetByteOrder, libs, "g_data_output_stream_set_byte_order")
 
 }

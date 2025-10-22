@@ -77,16 +77,20 @@ func HostnameToUnicode(HostnameVar string) string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xHostnameIsAsciiEncoded, lib, "g_hostname_is_ascii_encoded")
-	core.PuregoSafeRegister(&xHostnameIsIpAddress, lib, "g_hostname_is_ip_address")
-	core.PuregoSafeRegister(&xHostnameIsNonAscii, lib, "g_hostname_is_non_ascii")
-	core.PuregoSafeRegister(&xHostnameToAscii, lib, "g_hostname_to_ascii")
-	core.PuregoSafeRegister(&xHostnameToUnicode, lib, "g_hostname_to_unicode")
+	core.PuregoSafeRegister(&xHostnameIsAsciiEncoded, libs, "g_hostname_is_ascii_encoded")
+	core.PuregoSafeRegister(&xHostnameIsIpAddress, libs, "g_hostname_is_ip_address")
+	core.PuregoSafeRegister(&xHostnameIsNonAscii, libs, "g_hostname_is_non_ascii")
+	core.PuregoSafeRegister(&xHostnameToAscii, libs, "g_hostname_to_ascii")
+	core.PuregoSafeRegister(&xHostnameToUnicode, libs, "g_hostname_to_unicode")
 
 }

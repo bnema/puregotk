@@ -753,31 +753,35 @@ func (x *Paned) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPanedGLibType, lib, "gtk_paned_get_type")
+	core.PuregoSafeRegister(&xPanedGLibType, libs, "gtk_paned_get_type")
 
-	core.PuregoSafeRegister(&xNewPaned, lib, "gtk_paned_new")
+	core.PuregoSafeRegister(&xNewPaned, libs, "gtk_paned_new")
 
-	core.PuregoSafeRegister(&xPanedGetEndChild, lib, "gtk_paned_get_end_child")
-	core.PuregoSafeRegister(&xPanedGetPosition, lib, "gtk_paned_get_position")
-	core.PuregoSafeRegister(&xPanedGetResizeEndChild, lib, "gtk_paned_get_resize_end_child")
-	core.PuregoSafeRegister(&xPanedGetResizeStartChild, lib, "gtk_paned_get_resize_start_child")
-	core.PuregoSafeRegister(&xPanedGetShrinkEndChild, lib, "gtk_paned_get_shrink_end_child")
-	core.PuregoSafeRegister(&xPanedGetShrinkStartChild, lib, "gtk_paned_get_shrink_start_child")
-	core.PuregoSafeRegister(&xPanedGetStartChild, lib, "gtk_paned_get_start_child")
-	core.PuregoSafeRegister(&xPanedGetWideHandle, lib, "gtk_paned_get_wide_handle")
-	core.PuregoSafeRegister(&xPanedSetEndChild, lib, "gtk_paned_set_end_child")
-	core.PuregoSafeRegister(&xPanedSetPosition, lib, "gtk_paned_set_position")
-	core.PuregoSafeRegister(&xPanedSetResizeEndChild, lib, "gtk_paned_set_resize_end_child")
-	core.PuregoSafeRegister(&xPanedSetResizeStartChild, lib, "gtk_paned_set_resize_start_child")
-	core.PuregoSafeRegister(&xPanedSetShrinkEndChild, lib, "gtk_paned_set_shrink_end_child")
-	core.PuregoSafeRegister(&xPanedSetShrinkStartChild, lib, "gtk_paned_set_shrink_start_child")
-	core.PuregoSafeRegister(&xPanedSetStartChild, lib, "gtk_paned_set_start_child")
-	core.PuregoSafeRegister(&xPanedSetWideHandle, lib, "gtk_paned_set_wide_handle")
+	core.PuregoSafeRegister(&xPanedGetEndChild, libs, "gtk_paned_get_end_child")
+	core.PuregoSafeRegister(&xPanedGetPosition, libs, "gtk_paned_get_position")
+	core.PuregoSafeRegister(&xPanedGetResizeEndChild, libs, "gtk_paned_get_resize_end_child")
+	core.PuregoSafeRegister(&xPanedGetResizeStartChild, libs, "gtk_paned_get_resize_start_child")
+	core.PuregoSafeRegister(&xPanedGetShrinkEndChild, libs, "gtk_paned_get_shrink_end_child")
+	core.PuregoSafeRegister(&xPanedGetShrinkStartChild, libs, "gtk_paned_get_shrink_start_child")
+	core.PuregoSafeRegister(&xPanedGetStartChild, libs, "gtk_paned_get_start_child")
+	core.PuregoSafeRegister(&xPanedGetWideHandle, libs, "gtk_paned_get_wide_handle")
+	core.PuregoSafeRegister(&xPanedSetEndChild, libs, "gtk_paned_set_end_child")
+	core.PuregoSafeRegister(&xPanedSetPosition, libs, "gtk_paned_set_position")
+	core.PuregoSafeRegister(&xPanedSetResizeEndChild, libs, "gtk_paned_set_resize_end_child")
+	core.PuregoSafeRegister(&xPanedSetResizeStartChild, libs, "gtk_paned_set_resize_start_child")
+	core.PuregoSafeRegister(&xPanedSetShrinkEndChild, libs, "gtk_paned_set_shrink_end_child")
+	core.PuregoSafeRegister(&xPanedSetShrinkStartChild, libs, "gtk_paned_set_shrink_start_child")
+	core.PuregoSafeRegister(&xPanedSetStartChild, libs, "gtk_paned_set_start_child")
+	core.PuregoSafeRegister(&xPanedSetWideHandle, libs, "gtk_paned_set_wide_handle")
 
 }

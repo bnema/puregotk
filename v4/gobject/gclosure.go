@@ -496,33 +496,37 @@ func SignalTypeCclosureNew(ItypeVar types.GType, StructOffsetVar uint) *Closure 
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCclosureMarshalGeneric, lib, "g_cclosure_marshal_generic")
-	core.PuregoSafeRegister(&xCclosureNew, lib, "g_cclosure_new")
-	core.PuregoSafeRegister(&xCclosureNewSwap, lib, "g_cclosure_new_swap")
-	core.PuregoSafeRegister(&xSignalTypeCclosureNew, lib, "g_signal_type_cclosure_new")
+	core.PuregoSafeRegister(&xCclosureMarshalGeneric, libs, "g_cclosure_marshal_generic")
+	core.PuregoSafeRegister(&xCclosureNew, libs, "g_cclosure_new")
+	core.PuregoSafeRegister(&xCclosureNewSwap, libs, "g_cclosure_new_swap")
+	core.PuregoSafeRegister(&xSignalTypeCclosureNew, libs, "g_signal_type_cclosure_new")
 
-	core.PuregoSafeRegister(&xClosureGLibType, lib, "g_closure_get_type")
+	core.PuregoSafeRegister(&xClosureGLibType, libs, "g_closure_get_type")
 
-	core.PuregoSafeRegister(&xNewClosureObject, lib, "g_closure_new_object")
-	core.PuregoSafeRegister(&xNewClosureSimple, lib, "g_closure_new_simple")
+	core.PuregoSafeRegister(&xNewClosureObject, libs, "g_closure_new_object")
+	core.PuregoSafeRegister(&xNewClosureSimple, libs, "g_closure_new_simple")
 
-	core.PuregoSafeRegister(&xClosureAddFinalizeNotifier, lib, "g_closure_add_finalize_notifier")
-	core.PuregoSafeRegister(&xClosureAddInvalidateNotifier, lib, "g_closure_add_invalidate_notifier")
-	core.PuregoSafeRegister(&xClosureAddMarshalGuards, lib, "g_closure_add_marshal_guards")
-	core.PuregoSafeRegister(&xClosureInvalidate, lib, "g_closure_invalidate")
-	core.PuregoSafeRegister(&xClosureInvoke, lib, "g_closure_invoke")
-	core.PuregoSafeRegister(&xClosureRef, lib, "g_closure_ref")
-	core.PuregoSafeRegister(&xClosureRemoveFinalizeNotifier, lib, "g_closure_remove_finalize_notifier")
-	core.PuregoSafeRegister(&xClosureRemoveInvalidateNotifier, lib, "g_closure_remove_invalidate_notifier")
-	core.PuregoSafeRegister(&xClosureSetMarshal, lib, "g_closure_set_marshal")
-	core.PuregoSafeRegister(&xClosureSetMetaMarshal, lib, "g_closure_set_meta_marshal")
-	core.PuregoSafeRegister(&xClosureSink, lib, "g_closure_sink")
-	core.PuregoSafeRegister(&xClosureUnref, lib, "g_closure_unref")
+	core.PuregoSafeRegister(&xClosureAddFinalizeNotifier, libs, "g_closure_add_finalize_notifier")
+	core.PuregoSafeRegister(&xClosureAddInvalidateNotifier, libs, "g_closure_add_invalidate_notifier")
+	core.PuregoSafeRegister(&xClosureAddMarshalGuards, libs, "g_closure_add_marshal_guards")
+	core.PuregoSafeRegister(&xClosureInvalidate, libs, "g_closure_invalidate")
+	core.PuregoSafeRegister(&xClosureInvoke, libs, "g_closure_invoke")
+	core.PuregoSafeRegister(&xClosureRef, libs, "g_closure_ref")
+	core.PuregoSafeRegister(&xClosureRemoveFinalizeNotifier, libs, "g_closure_remove_finalize_notifier")
+	core.PuregoSafeRegister(&xClosureRemoveInvalidateNotifier, libs, "g_closure_remove_invalidate_notifier")
+	core.PuregoSafeRegister(&xClosureSetMarshal, libs, "g_closure_set_marshal")
+	core.PuregoSafeRegister(&xClosureSetMetaMarshal, libs, "g_closure_set_meta_marshal")
+	core.PuregoSafeRegister(&xClosureSink, libs, "g_closure_sink")
+	core.PuregoSafeRegister(&xClosureUnref, libs, "g_closure_unref")
 
 }

@@ -574,31 +574,35 @@ func (x *FontDialogButton) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFontLevelGLibType, lib, "gtk_font_level_get_type")
+	core.PuregoSafeRegister(&xFontLevelGLibType, libs, "gtk_font_level_get_type")
 
-	core.PuregoSafeRegister(&xFontDialogButtonGLibType, lib, "gtk_font_dialog_button_get_type")
+	core.PuregoSafeRegister(&xFontDialogButtonGLibType, libs, "gtk_font_dialog_button_get_type")
 
-	core.PuregoSafeRegister(&xNewFontDialogButton, lib, "gtk_font_dialog_button_new")
+	core.PuregoSafeRegister(&xNewFontDialogButton, libs, "gtk_font_dialog_button_new")
 
-	core.PuregoSafeRegister(&xFontDialogButtonGetDialog, lib, "gtk_font_dialog_button_get_dialog")
-	core.PuregoSafeRegister(&xFontDialogButtonGetFontDesc, lib, "gtk_font_dialog_button_get_font_desc")
-	core.PuregoSafeRegister(&xFontDialogButtonGetFontFeatures, lib, "gtk_font_dialog_button_get_font_features")
-	core.PuregoSafeRegister(&xFontDialogButtonGetLanguage, lib, "gtk_font_dialog_button_get_language")
-	core.PuregoSafeRegister(&xFontDialogButtonGetLevel, lib, "gtk_font_dialog_button_get_level")
-	core.PuregoSafeRegister(&xFontDialogButtonGetUseFont, lib, "gtk_font_dialog_button_get_use_font")
-	core.PuregoSafeRegister(&xFontDialogButtonGetUseSize, lib, "gtk_font_dialog_button_get_use_size")
-	core.PuregoSafeRegister(&xFontDialogButtonSetDialog, lib, "gtk_font_dialog_button_set_dialog")
-	core.PuregoSafeRegister(&xFontDialogButtonSetFontDesc, lib, "gtk_font_dialog_button_set_font_desc")
-	core.PuregoSafeRegister(&xFontDialogButtonSetFontFeatures, lib, "gtk_font_dialog_button_set_font_features")
-	core.PuregoSafeRegister(&xFontDialogButtonSetLanguage, lib, "gtk_font_dialog_button_set_language")
-	core.PuregoSafeRegister(&xFontDialogButtonSetLevel, lib, "gtk_font_dialog_button_set_level")
-	core.PuregoSafeRegister(&xFontDialogButtonSetUseFont, lib, "gtk_font_dialog_button_set_use_font")
-	core.PuregoSafeRegister(&xFontDialogButtonSetUseSize, lib, "gtk_font_dialog_button_set_use_size")
+	core.PuregoSafeRegister(&xFontDialogButtonGetDialog, libs, "gtk_font_dialog_button_get_dialog")
+	core.PuregoSafeRegister(&xFontDialogButtonGetFontDesc, libs, "gtk_font_dialog_button_get_font_desc")
+	core.PuregoSafeRegister(&xFontDialogButtonGetFontFeatures, libs, "gtk_font_dialog_button_get_font_features")
+	core.PuregoSafeRegister(&xFontDialogButtonGetLanguage, libs, "gtk_font_dialog_button_get_language")
+	core.PuregoSafeRegister(&xFontDialogButtonGetLevel, libs, "gtk_font_dialog_button_get_level")
+	core.PuregoSafeRegister(&xFontDialogButtonGetUseFont, libs, "gtk_font_dialog_button_get_use_font")
+	core.PuregoSafeRegister(&xFontDialogButtonGetUseSize, libs, "gtk_font_dialog_button_get_use_size")
+	core.PuregoSafeRegister(&xFontDialogButtonSetDialog, libs, "gtk_font_dialog_button_set_dialog")
+	core.PuregoSafeRegister(&xFontDialogButtonSetFontDesc, libs, "gtk_font_dialog_button_set_font_desc")
+	core.PuregoSafeRegister(&xFontDialogButtonSetFontFeatures, libs, "gtk_font_dialog_button_set_font_features")
+	core.PuregoSafeRegister(&xFontDialogButtonSetLanguage, libs, "gtk_font_dialog_button_set_language")
+	core.PuregoSafeRegister(&xFontDialogButtonSetLevel, libs, "gtk_font_dialog_button_set_level")
+	core.PuregoSafeRegister(&xFontDialogButtonSetUseFont, libs, "gtk_font_dialog_button_set_use_font")
+	core.PuregoSafeRegister(&xFontDialogButtonSetUseSize, libs, "gtk_font_dialog_button_set_use_size")
 
 }

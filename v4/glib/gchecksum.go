@@ -197,26 +197,30 @@ func ComputeChecksumForString(ChecksumTypeVar ChecksumType, StrVar string, Lengt
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xChecksumTypeGetLength, lib, "g_checksum_type_get_length")
-	core.PuregoSafeRegister(&xComputeChecksumForBytes, lib, "g_compute_checksum_for_bytes")
-	core.PuregoSafeRegister(&xComputeChecksumForData, lib, "g_compute_checksum_for_data")
-	core.PuregoSafeRegister(&xComputeChecksumForString, lib, "g_compute_checksum_for_string")
+	core.PuregoSafeRegister(&xChecksumTypeGetLength, libs, "g_checksum_type_get_length")
+	core.PuregoSafeRegister(&xComputeChecksumForBytes, libs, "g_compute_checksum_for_bytes")
+	core.PuregoSafeRegister(&xComputeChecksumForData, libs, "g_compute_checksum_for_data")
+	core.PuregoSafeRegister(&xComputeChecksumForString, libs, "g_compute_checksum_for_string")
 
-	core.PuregoSafeRegister(&xChecksumGLibType, lib, "g_checksum_get_type")
+	core.PuregoSafeRegister(&xChecksumGLibType, libs, "g_checksum_get_type")
 
-	core.PuregoSafeRegister(&xNewChecksum, lib, "g_checksum_new")
+	core.PuregoSafeRegister(&xNewChecksum, libs, "g_checksum_new")
 
-	core.PuregoSafeRegister(&xChecksumCopy, lib, "g_checksum_copy")
-	core.PuregoSafeRegister(&xChecksumFree, lib, "g_checksum_free")
-	core.PuregoSafeRegister(&xChecksumGetDigest, lib, "g_checksum_get_digest")
-	core.PuregoSafeRegister(&xChecksumGetString, lib, "g_checksum_get_string")
-	core.PuregoSafeRegister(&xChecksumReset, lib, "g_checksum_reset")
-	core.PuregoSafeRegister(&xChecksumUpdate, lib, "g_checksum_update")
+	core.PuregoSafeRegister(&xChecksumCopy, libs, "g_checksum_copy")
+	core.PuregoSafeRegister(&xChecksumFree, libs, "g_checksum_free")
+	core.PuregoSafeRegister(&xChecksumGetDigest, libs, "g_checksum_get_digest")
+	core.PuregoSafeRegister(&xChecksumGetString, libs, "g_checksum_get_string")
+	core.PuregoSafeRegister(&xChecksumReset, libs, "g_checksum_reset")
+	core.PuregoSafeRegister(&xChecksumUpdate, libs, "g_checksum_update")
 
 }

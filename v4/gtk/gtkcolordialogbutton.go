@@ -448,19 +448,23 @@ func (x *ColorDialogButton) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColorDialogButtonGLibType, lib, "gtk_color_dialog_button_get_type")
+	core.PuregoSafeRegister(&xColorDialogButtonGLibType, libs, "gtk_color_dialog_button_get_type")
 
-	core.PuregoSafeRegister(&xNewColorDialogButton, lib, "gtk_color_dialog_button_new")
+	core.PuregoSafeRegister(&xNewColorDialogButton, libs, "gtk_color_dialog_button_new")
 
-	core.PuregoSafeRegister(&xColorDialogButtonGetDialog, lib, "gtk_color_dialog_button_get_dialog")
-	core.PuregoSafeRegister(&xColorDialogButtonGetRgba, lib, "gtk_color_dialog_button_get_rgba")
-	core.PuregoSafeRegister(&xColorDialogButtonSetDialog, lib, "gtk_color_dialog_button_set_dialog")
-	core.PuregoSafeRegister(&xColorDialogButtonSetRgba, lib, "gtk_color_dialog_button_set_rgba")
+	core.PuregoSafeRegister(&xColorDialogButtonGetDialog, libs, "gtk_color_dialog_button_get_dialog")
+	core.PuregoSafeRegister(&xColorDialogButtonGetRgba, libs, "gtk_color_dialog_button_get_rgba")
+	core.PuregoSafeRegister(&xColorDialogButtonSetDialog, libs, "gtk_color_dialog_button_set_dialog")
+	core.PuregoSafeRegister(&xColorDialogButtonSetRgba, libs, "gtk_color_dialog_button_set_rgba")
 
 }

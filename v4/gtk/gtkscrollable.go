@@ -211,22 +211,26 @@ var XGtkScrollableSetVscrollPolicy func(uintptr, ScrollablePolicy)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xScrollableGLibType, lib, "gtk_scrollable_get_type")
+	core.PuregoSafeRegister(&xScrollableGLibType, libs, "gtk_scrollable_get_type")
 
-	core.PuregoSafeRegister(&XGtkScrollableGetBorder, lib, "gtk_scrollable_get_border")
-	core.PuregoSafeRegister(&XGtkScrollableGetHadjustment, lib, "gtk_scrollable_get_hadjustment")
-	core.PuregoSafeRegister(&XGtkScrollableGetHscrollPolicy, lib, "gtk_scrollable_get_hscroll_policy")
-	core.PuregoSafeRegister(&XGtkScrollableGetVadjustment, lib, "gtk_scrollable_get_vadjustment")
-	core.PuregoSafeRegister(&XGtkScrollableGetVscrollPolicy, lib, "gtk_scrollable_get_vscroll_policy")
-	core.PuregoSafeRegister(&XGtkScrollableSetHadjustment, lib, "gtk_scrollable_set_hadjustment")
-	core.PuregoSafeRegister(&XGtkScrollableSetHscrollPolicy, lib, "gtk_scrollable_set_hscroll_policy")
-	core.PuregoSafeRegister(&XGtkScrollableSetVadjustment, lib, "gtk_scrollable_set_vadjustment")
-	core.PuregoSafeRegister(&XGtkScrollableSetVscrollPolicy, lib, "gtk_scrollable_set_vscroll_policy")
+	core.PuregoSafeRegister(&XGtkScrollableGetBorder, libs, "gtk_scrollable_get_border")
+	core.PuregoSafeRegister(&XGtkScrollableGetHadjustment, libs, "gtk_scrollable_get_hadjustment")
+	core.PuregoSafeRegister(&XGtkScrollableGetHscrollPolicy, libs, "gtk_scrollable_get_hscroll_policy")
+	core.PuregoSafeRegister(&XGtkScrollableGetVadjustment, libs, "gtk_scrollable_get_vadjustment")
+	core.PuregoSafeRegister(&XGtkScrollableGetVscrollPolicy, libs, "gtk_scrollable_get_vscroll_policy")
+	core.PuregoSafeRegister(&XGtkScrollableSetHadjustment, libs, "gtk_scrollable_set_hadjustment")
+	core.PuregoSafeRegister(&XGtkScrollableSetHscrollPolicy, libs, "gtk_scrollable_set_hscroll_policy")
+	core.PuregoSafeRegister(&XGtkScrollableSetVadjustment, libs, "gtk_scrollable_set_vadjustment")
+	core.PuregoSafeRegister(&XGtkScrollableSetVscrollPolicy, libs, "gtk_scrollable_set_vscroll_policy")
 
 }

@@ -255,25 +255,29 @@ func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint32 {
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSignalGroupGLibType, lib, "g_signal_group_get_type")
+	core.PuregoSafeRegister(&xSignalGroupGLibType, libs, "g_signal_group_get_type")
 
-	core.PuregoSafeRegister(&xNewSignalGroup, lib, "g_signal_group_new")
+	core.PuregoSafeRegister(&xNewSignalGroup, libs, "g_signal_group_new")
 
-	core.PuregoSafeRegister(&xSignalGroupBlock, lib, "g_signal_group_block")
-	core.PuregoSafeRegister(&xSignalGroupConnect, lib, "g_signal_group_connect")
-	core.PuregoSafeRegister(&xSignalGroupConnectAfter, lib, "g_signal_group_connect_after")
-	core.PuregoSafeRegister(&xSignalGroupConnectClosure, lib, "g_signal_group_connect_closure")
-	core.PuregoSafeRegister(&xSignalGroupConnectData, lib, "g_signal_group_connect_data")
-	core.PuregoSafeRegister(&xSignalGroupConnectObject, lib, "g_signal_group_connect_object")
-	core.PuregoSafeRegister(&xSignalGroupConnectSwapped, lib, "g_signal_group_connect_swapped")
-	core.PuregoSafeRegister(&xSignalGroupDupTarget, lib, "g_signal_group_dup_target")
-	core.PuregoSafeRegister(&xSignalGroupSetTarget, lib, "g_signal_group_set_target")
-	core.PuregoSafeRegister(&xSignalGroupUnblock, lib, "g_signal_group_unblock")
+	core.PuregoSafeRegister(&xSignalGroupBlock, libs, "g_signal_group_block")
+	core.PuregoSafeRegister(&xSignalGroupConnect, libs, "g_signal_group_connect")
+	core.PuregoSafeRegister(&xSignalGroupConnectAfter, libs, "g_signal_group_connect_after")
+	core.PuregoSafeRegister(&xSignalGroupConnectClosure, libs, "g_signal_group_connect_closure")
+	core.PuregoSafeRegister(&xSignalGroupConnectData, libs, "g_signal_group_connect_data")
+	core.PuregoSafeRegister(&xSignalGroupConnectObject, libs, "g_signal_group_connect_object")
+	core.PuregoSafeRegister(&xSignalGroupConnectSwapped, libs, "g_signal_group_connect_swapped")
+	core.PuregoSafeRegister(&xSignalGroupDupTarget, libs, "g_signal_group_dup_target")
+	core.PuregoSafeRegister(&xSignalGroupSetTarget, libs, "g_signal_group_set_target")
+	core.PuregoSafeRegister(&xSignalGroupUnblock, libs, "g_signal_group_unblock")
 
 }

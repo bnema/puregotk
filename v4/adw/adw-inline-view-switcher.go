@@ -524,25 +524,29 @@ func (x *InlineViewSwitcher) SetOrientation(OrientationVar gtk.Orientation) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInlineViewSwitcherDisplayModeGLibType, lib, "adw_inline_view_switcher_display_mode_get_type")
+	core.PuregoSafeRegister(&xInlineViewSwitcherDisplayModeGLibType, libs, "adw_inline_view_switcher_display_mode_get_type")
 
-	core.PuregoSafeRegister(&xInlineViewSwitcherGLibType, lib, "adw_inline_view_switcher_get_type")
+	core.PuregoSafeRegister(&xInlineViewSwitcherGLibType, libs, "adw_inline_view_switcher_get_type")
 
-	core.PuregoSafeRegister(&xNewInlineViewSwitcher, lib, "adw_inline_view_switcher_new")
+	core.PuregoSafeRegister(&xNewInlineViewSwitcher, libs, "adw_inline_view_switcher_new")
 
-	core.PuregoSafeRegister(&xInlineViewSwitcherGetCanShrink, lib, "adw_inline_view_switcher_get_can_shrink")
-	core.PuregoSafeRegister(&xInlineViewSwitcherGetDisplayMode, lib, "adw_inline_view_switcher_get_display_mode")
-	core.PuregoSafeRegister(&xInlineViewSwitcherGetHomogeneous, lib, "adw_inline_view_switcher_get_homogeneous")
-	core.PuregoSafeRegister(&xInlineViewSwitcherGetStack, lib, "adw_inline_view_switcher_get_stack")
-	core.PuregoSafeRegister(&xInlineViewSwitcherSetCanShrink, lib, "adw_inline_view_switcher_set_can_shrink")
-	core.PuregoSafeRegister(&xInlineViewSwitcherSetDisplayMode, lib, "adw_inline_view_switcher_set_display_mode")
-	core.PuregoSafeRegister(&xInlineViewSwitcherSetHomogeneous, lib, "adw_inline_view_switcher_set_homogeneous")
-	core.PuregoSafeRegister(&xInlineViewSwitcherSetStack, lib, "adw_inline_view_switcher_set_stack")
+	core.PuregoSafeRegister(&xInlineViewSwitcherGetCanShrink, libs, "adw_inline_view_switcher_get_can_shrink")
+	core.PuregoSafeRegister(&xInlineViewSwitcherGetDisplayMode, libs, "adw_inline_view_switcher_get_display_mode")
+	core.PuregoSafeRegister(&xInlineViewSwitcherGetHomogeneous, libs, "adw_inline_view_switcher_get_homogeneous")
+	core.PuregoSafeRegister(&xInlineViewSwitcherGetStack, libs, "adw_inline_view_switcher_get_stack")
+	core.PuregoSafeRegister(&xInlineViewSwitcherSetCanShrink, libs, "adw_inline_view_switcher_set_can_shrink")
+	core.PuregoSafeRegister(&xInlineViewSwitcherSetDisplayMode, libs, "adw_inline_view_switcher_set_display_mode")
+	core.PuregoSafeRegister(&xInlineViewSwitcherSetHomogeneous, libs, "adw_inline_view_switcher_set_homogeneous")
+	core.PuregoSafeRegister(&xInlineViewSwitcherSetStack, libs, "adw_inline_view_switcher_set_stack")
 
 }

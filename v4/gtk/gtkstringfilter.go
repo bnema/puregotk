@@ -187,25 +187,29 @@ func (c *StringFilter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStringFilterMatchModeGLibType, lib, "gtk_string_filter_match_mode_get_type")
+	core.PuregoSafeRegister(&xStringFilterMatchModeGLibType, libs, "gtk_string_filter_match_mode_get_type")
 
-	core.PuregoSafeRegister(&xStringFilterGLibType, lib, "gtk_string_filter_get_type")
+	core.PuregoSafeRegister(&xStringFilterGLibType, libs, "gtk_string_filter_get_type")
 
-	core.PuregoSafeRegister(&xNewStringFilter, lib, "gtk_string_filter_new")
+	core.PuregoSafeRegister(&xNewStringFilter, libs, "gtk_string_filter_new")
 
-	core.PuregoSafeRegister(&xStringFilterGetExpression, lib, "gtk_string_filter_get_expression")
-	core.PuregoSafeRegister(&xStringFilterGetIgnoreCase, lib, "gtk_string_filter_get_ignore_case")
-	core.PuregoSafeRegister(&xStringFilterGetMatchMode, lib, "gtk_string_filter_get_match_mode")
-	core.PuregoSafeRegister(&xStringFilterGetSearch, lib, "gtk_string_filter_get_search")
-	core.PuregoSafeRegister(&xStringFilterSetExpression, lib, "gtk_string_filter_set_expression")
-	core.PuregoSafeRegister(&xStringFilterSetIgnoreCase, lib, "gtk_string_filter_set_ignore_case")
-	core.PuregoSafeRegister(&xStringFilterSetMatchMode, lib, "gtk_string_filter_set_match_mode")
-	core.PuregoSafeRegister(&xStringFilterSetSearch, lib, "gtk_string_filter_set_search")
+	core.PuregoSafeRegister(&xStringFilterGetExpression, libs, "gtk_string_filter_get_expression")
+	core.PuregoSafeRegister(&xStringFilterGetIgnoreCase, libs, "gtk_string_filter_get_ignore_case")
+	core.PuregoSafeRegister(&xStringFilterGetMatchMode, libs, "gtk_string_filter_get_match_mode")
+	core.PuregoSafeRegister(&xStringFilterGetSearch, libs, "gtk_string_filter_get_search")
+	core.PuregoSafeRegister(&xStringFilterSetExpression, libs, "gtk_string_filter_set_expression")
+	core.PuregoSafeRegister(&xStringFilterSetIgnoreCase, libs, "gtk_string_filter_set_ignore_case")
+	core.PuregoSafeRegister(&xStringFilterSetMatchMode, libs, "gtk_string_filter_set_match_mode")
+	core.PuregoSafeRegister(&xStringFilterSetSearch, libs, "gtk_string_filter_set_search")
 
 }

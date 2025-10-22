@@ -361,18 +361,22 @@ func (x *SocketService) ConnectIncoming(cb *func(SocketService, uintptr, uintptr
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSocketServiceGLibType, lib, "g_socket_service_get_type")
+	core.PuregoSafeRegister(&xSocketServiceGLibType, libs, "g_socket_service_get_type")
 
-	core.PuregoSafeRegister(&xNewSocketService, lib, "g_socket_service_new")
+	core.PuregoSafeRegister(&xNewSocketService, libs, "g_socket_service_new")
 
-	core.PuregoSafeRegister(&xSocketServiceIsActive, lib, "g_socket_service_is_active")
-	core.PuregoSafeRegister(&xSocketServiceStart, lib, "g_socket_service_start")
-	core.PuregoSafeRegister(&xSocketServiceStop, lib, "g_socket_service_stop")
+	core.PuregoSafeRegister(&xSocketServiceIsActive, libs, "g_socket_service_is_active")
+	core.PuregoSafeRegister(&xSocketServiceStart, libs, "g_socket_service_start")
+	core.PuregoSafeRegister(&xSocketServiceStop, libs, "g_socket_service_stop")
 
 }

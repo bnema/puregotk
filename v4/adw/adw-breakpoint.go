@@ -487,38 +487,42 @@ func (x *Breakpoint) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBreakpointConditionLengthTypeGLibType, lib, "adw_breakpoint_condition_length_type_get_type")
+	core.PuregoSafeRegister(&xBreakpointConditionLengthTypeGLibType, libs, "adw_breakpoint_condition_length_type_get_type")
 
-	core.PuregoSafeRegister(&xBreakpointConditionRatioTypeGLibType, lib, "adw_breakpoint_condition_ratio_type_get_type")
+	core.PuregoSafeRegister(&xBreakpointConditionRatioTypeGLibType, libs, "adw_breakpoint_condition_ratio_type_get_type")
 
-	core.PuregoSafeRegister(&xBreakpointConditionParse, lib, "adw_breakpoint_condition_parse")
+	core.PuregoSafeRegister(&xBreakpointConditionParse, libs, "adw_breakpoint_condition_parse")
 
-	core.PuregoSafeRegister(&xBreakpointConditionGLibType, lib, "adw_breakpoint_condition_get_type")
+	core.PuregoSafeRegister(&xBreakpointConditionGLibType, libs, "adw_breakpoint_condition_get_type")
 
-	core.PuregoSafeRegister(&xNewBreakpointConditionAnd, lib, "adw_breakpoint_condition_new_and")
-	core.PuregoSafeRegister(&xNewBreakpointConditionLength, lib, "adw_breakpoint_condition_new_length")
-	core.PuregoSafeRegister(&xNewBreakpointConditionOr, lib, "adw_breakpoint_condition_new_or")
-	core.PuregoSafeRegister(&xNewBreakpointConditionRatio, lib, "adw_breakpoint_condition_new_ratio")
+	core.PuregoSafeRegister(&xNewBreakpointConditionAnd, libs, "adw_breakpoint_condition_new_and")
+	core.PuregoSafeRegister(&xNewBreakpointConditionLength, libs, "adw_breakpoint_condition_new_length")
+	core.PuregoSafeRegister(&xNewBreakpointConditionOr, libs, "adw_breakpoint_condition_new_or")
+	core.PuregoSafeRegister(&xNewBreakpointConditionRatio, libs, "adw_breakpoint_condition_new_ratio")
 
-	core.PuregoSafeRegister(&xBreakpointConditionCopy, lib, "adw_breakpoint_condition_copy")
-	core.PuregoSafeRegister(&xBreakpointConditionFree, lib, "adw_breakpoint_condition_free")
-	core.PuregoSafeRegister(&xBreakpointConditionToString, lib, "adw_breakpoint_condition_to_string")
+	core.PuregoSafeRegister(&xBreakpointConditionCopy, libs, "adw_breakpoint_condition_copy")
+	core.PuregoSafeRegister(&xBreakpointConditionFree, libs, "adw_breakpoint_condition_free")
+	core.PuregoSafeRegister(&xBreakpointConditionToString, libs, "adw_breakpoint_condition_to_string")
 
-	core.PuregoSafeRegister(&xBreakpointGLibType, lib, "adw_breakpoint_get_type")
+	core.PuregoSafeRegister(&xBreakpointGLibType, libs, "adw_breakpoint_get_type")
 
-	core.PuregoSafeRegister(&xNewBreakpoint, lib, "adw_breakpoint_new")
+	core.PuregoSafeRegister(&xNewBreakpoint, libs, "adw_breakpoint_new")
 
-	core.PuregoSafeRegister(&xBreakpointAddSetter, lib, "adw_breakpoint_add_setter")
-	core.PuregoSafeRegister(&xBreakpointAddSetters, lib, "adw_breakpoint_add_setters")
-	core.PuregoSafeRegister(&xBreakpointAddSettersValist, lib, "adw_breakpoint_add_setters_valist")
-	core.PuregoSafeRegister(&xBreakpointAddSettersv, lib, "adw_breakpoint_add_settersv")
-	core.PuregoSafeRegister(&xBreakpointGetCondition, lib, "adw_breakpoint_get_condition")
-	core.PuregoSafeRegister(&xBreakpointSetCondition, lib, "adw_breakpoint_set_condition")
+	core.PuregoSafeRegister(&xBreakpointAddSetter, libs, "adw_breakpoint_add_setter")
+	core.PuregoSafeRegister(&xBreakpointAddSetters, libs, "adw_breakpoint_add_setters")
+	core.PuregoSafeRegister(&xBreakpointAddSettersValist, libs, "adw_breakpoint_add_setters_valist")
+	core.PuregoSafeRegister(&xBreakpointAddSettersv, libs, "adw_breakpoint_add_settersv")
+	core.PuregoSafeRegister(&xBreakpointGetCondition, libs, "adw_breakpoint_get_condition")
+	core.PuregoSafeRegister(&xBreakpointSetCondition, libs, "adw_breakpoint_set_condition")
 
 }

@@ -240,27 +240,31 @@ func HookUnref(HookListVar *HookList, HookVar *Hook) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xHookDestroy, lib, "g_hook_destroy")
-	core.PuregoSafeRegister(&xHookDestroyLink, lib, "g_hook_destroy_link")
-	core.PuregoSafeRegister(&xHookFree, lib, "g_hook_free")
-	core.PuregoSafeRegister(&xHookInsertBefore, lib, "g_hook_insert_before")
-	core.PuregoSafeRegister(&xHookInsertSorted, lib, "g_hook_insert_sorted")
-	core.PuregoSafeRegister(&xHookPrepend, lib, "g_hook_prepend")
-	core.PuregoSafeRegister(&xHookUnref, lib, "g_hook_unref")
+	core.PuregoSafeRegister(&xHookDestroy, libs, "g_hook_destroy")
+	core.PuregoSafeRegister(&xHookDestroyLink, libs, "g_hook_destroy_link")
+	core.PuregoSafeRegister(&xHookFree, libs, "g_hook_free")
+	core.PuregoSafeRegister(&xHookInsertBefore, libs, "g_hook_insert_before")
+	core.PuregoSafeRegister(&xHookInsertSorted, libs, "g_hook_insert_sorted")
+	core.PuregoSafeRegister(&xHookPrepend, libs, "g_hook_prepend")
+	core.PuregoSafeRegister(&xHookUnref, libs, "g_hook_unref")
 
-	core.PuregoSafeRegister(&xHookCompareIds, lib, "g_hook_compare_ids")
+	core.PuregoSafeRegister(&xHookCompareIds, libs, "g_hook_compare_ids")
 
-	core.PuregoSafeRegister(&xHookListClear, lib, "g_hook_list_clear")
-	core.PuregoSafeRegister(&xHookListInit, lib, "g_hook_list_init")
-	core.PuregoSafeRegister(&xHookListInvoke, lib, "g_hook_list_invoke")
-	core.PuregoSafeRegister(&xHookListInvokeCheck, lib, "g_hook_list_invoke_check")
-	core.PuregoSafeRegister(&xHookListMarshal, lib, "g_hook_list_marshal")
-	core.PuregoSafeRegister(&xHookListMarshalCheck, lib, "g_hook_list_marshal_check")
+	core.PuregoSafeRegister(&xHookListClear, libs, "g_hook_list_clear")
+	core.PuregoSafeRegister(&xHookListInit, libs, "g_hook_list_init")
+	core.PuregoSafeRegister(&xHookListInvoke, libs, "g_hook_list_invoke")
+	core.PuregoSafeRegister(&xHookListInvokeCheck, libs, "g_hook_list_invoke_check")
+	core.PuregoSafeRegister(&xHookListMarshal, libs, "g_hook_list_marshal")
+	core.PuregoSafeRegister(&xHookListMarshalCheck, libs, "g_hook_list_marshal_check")
 
 }

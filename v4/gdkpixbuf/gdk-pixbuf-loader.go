@@ -520,24 +520,28 @@ func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int, int)) uin
 
 func init() {
 	core.SetPackageName("GDKPIXBUF", "gdk-pixbuf-2.0")
-	core.SetSharedLibrary("GDKPIXBUF", "libgdk_pixbuf-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GDKPIXBUF"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDKPIXBUF") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPixbufLoaderGLibType, lib, "gdk_pixbuf_loader_get_type")
+	core.PuregoSafeRegister(&xPixbufLoaderGLibType, libs, "gdk_pixbuf_loader_get_type")
 
-	core.PuregoSafeRegister(&xNewPixbufLoader, lib, "gdk_pixbuf_loader_new")
-	core.PuregoSafeRegister(&xNewPixbufLoaderWithMimeType, lib, "gdk_pixbuf_loader_new_with_mime_type")
-	core.PuregoSafeRegister(&xNewPixbufLoaderWithType, lib, "gdk_pixbuf_loader_new_with_type")
+	core.PuregoSafeRegister(&xNewPixbufLoader, libs, "gdk_pixbuf_loader_new")
+	core.PuregoSafeRegister(&xNewPixbufLoaderWithMimeType, libs, "gdk_pixbuf_loader_new_with_mime_type")
+	core.PuregoSafeRegister(&xNewPixbufLoaderWithType, libs, "gdk_pixbuf_loader_new_with_type")
 
-	core.PuregoSafeRegister(&xPixbufLoaderClose, lib, "gdk_pixbuf_loader_close")
-	core.PuregoSafeRegister(&xPixbufLoaderGetAnimation, lib, "gdk_pixbuf_loader_get_animation")
-	core.PuregoSafeRegister(&xPixbufLoaderGetFormat, lib, "gdk_pixbuf_loader_get_format")
-	core.PuregoSafeRegister(&xPixbufLoaderGetPixbuf, lib, "gdk_pixbuf_loader_get_pixbuf")
-	core.PuregoSafeRegister(&xPixbufLoaderSetSize, lib, "gdk_pixbuf_loader_set_size")
-	core.PuregoSafeRegister(&xPixbufLoaderWrite, lib, "gdk_pixbuf_loader_write")
-	core.PuregoSafeRegister(&xPixbufLoaderWriteBytes, lib, "gdk_pixbuf_loader_write_bytes")
+	core.PuregoSafeRegister(&xPixbufLoaderClose, libs, "gdk_pixbuf_loader_close")
+	core.PuregoSafeRegister(&xPixbufLoaderGetAnimation, libs, "gdk_pixbuf_loader_get_animation")
+	core.PuregoSafeRegister(&xPixbufLoaderGetFormat, libs, "gdk_pixbuf_loader_get_format")
+	core.PuregoSafeRegister(&xPixbufLoaderGetPixbuf, libs, "gdk_pixbuf_loader_get_pixbuf")
+	core.PuregoSafeRegister(&xPixbufLoaderSetSize, libs, "gdk_pixbuf_loader_set_size")
+	core.PuregoSafeRegister(&xPixbufLoaderWrite, libs, "gdk_pixbuf_loader_write")
+	core.PuregoSafeRegister(&xPixbufLoaderWriteBytes, libs, "gdk_pixbuf_loader_write_bytes")
 
 }

@@ -480,33 +480,37 @@ func (c *TreeListRow) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTreeListModelGLibType, lib, "gtk_tree_list_model_get_type")
+	core.PuregoSafeRegister(&xTreeListModelGLibType, libs, "gtk_tree_list_model_get_type")
 
-	core.PuregoSafeRegister(&xNewTreeListModel, lib, "gtk_tree_list_model_new")
+	core.PuregoSafeRegister(&xNewTreeListModel, libs, "gtk_tree_list_model_new")
 
-	core.PuregoSafeRegister(&xTreeListModelGetAutoexpand, lib, "gtk_tree_list_model_get_autoexpand")
-	core.PuregoSafeRegister(&xTreeListModelGetChildRow, lib, "gtk_tree_list_model_get_child_row")
-	core.PuregoSafeRegister(&xTreeListModelGetModel, lib, "gtk_tree_list_model_get_model")
-	core.PuregoSafeRegister(&xTreeListModelGetPassthrough, lib, "gtk_tree_list_model_get_passthrough")
-	core.PuregoSafeRegister(&xTreeListModelGetRow, lib, "gtk_tree_list_model_get_row")
-	core.PuregoSafeRegister(&xTreeListModelSetAutoexpand, lib, "gtk_tree_list_model_set_autoexpand")
+	core.PuregoSafeRegister(&xTreeListModelGetAutoexpand, libs, "gtk_tree_list_model_get_autoexpand")
+	core.PuregoSafeRegister(&xTreeListModelGetChildRow, libs, "gtk_tree_list_model_get_child_row")
+	core.PuregoSafeRegister(&xTreeListModelGetModel, libs, "gtk_tree_list_model_get_model")
+	core.PuregoSafeRegister(&xTreeListModelGetPassthrough, libs, "gtk_tree_list_model_get_passthrough")
+	core.PuregoSafeRegister(&xTreeListModelGetRow, libs, "gtk_tree_list_model_get_row")
+	core.PuregoSafeRegister(&xTreeListModelSetAutoexpand, libs, "gtk_tree_list_model_set_autoexpand")
 
-	core.PuregoSafeRegister(&xTreeListRowGLibType, lib, "gtk_tree_list_row_get_type")
+	core.PuregoSafeRegister(&xTreeListRowGLibType, libs, "gtk_tree_list_row_get_type")
 
-	core.PuregoSafeRegister(&xTreeListRowGetChildRow, lib, "gtk_tree_list_row_get_child_row")
-	core.PuregoSafeRegister(&xTreeListRowGetChildren, lib, "gtk_tree_list_row_get_children")
-	core.PuregoSafeRegister(&xTreeListRowGetDepth, lib, "gtk_tree_list_row_get_depth")
-	core.PuregoSafeRegister(&xTreeListRowGetExpanded, lib, "gtk_tree_list_row_get_expanded")
-	core.PuregoSafeRegister(&xTreeListRowGetItem, lib, "gtk_tree_list_row_get_item")
-	core.PuregoSafeRegister(&xTreeListRowGetParent, lib, "gtk_tree_list_row_get_parent")
-	core.PuregoSafeRegister(&xTreeListRowGetPosition, lib, "gtk_tree_list_row_get_position")
-	core.PuregoSafeRegister(&xTreeListRowIsExpandable, lib, "gtk_tree_list_row_is_expandable")
-	core.PuregoSafeRegister(&xTreeListRowSetExpanded, lib, "gtk_tree_list_row_set_expanded")
+	core.PuregoSafeRegister(&xTreeListRowGetChildRow, libs, "gtk_tree_list_row_get_child_row")
+	core.PuregoSafeRegister(&xTreeListRowGetChildren, libs, "gtk_tree_list_row_get_children")
+	core.PuregoSafeRegister(&xTreeListRowGetDepth, libs, "gtk_tree_list_row_get_depth")
+	core.PuregoSafeRegister(&xTreeListRowGetExpanded, libs, "gtk_tree_list_row_get_expanded")
+	core.PuregoSafeRegister(&xTreeListRowGetItem, libs, "gtk_tree_list_row_get_item")
+	core.PuregoSafeRegister(&xTreeListRowGetParent, libs, "gtk_tree_list_row_get_parent")
+	core.PuregoSafeRegister(&xTreeListRowGetPosition, libs, "gtk_tree_list_row_get_position")
+	core.PuregoSafeRegister(&xTreeListRowIsExpandable, libs, "gtk_tree_list_row_is_expandable")
+	core.PuregoSafeRegister(&xTreeListRowSetExpanded, libs, "gtk_tree_list_row_set_expanded")
 
 }

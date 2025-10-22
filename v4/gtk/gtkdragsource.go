@@ -352,22 +352,26 @@ func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.C
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDragSourceGLibType, lib, "gtk_drag_source_get_type")
+	core.PuregoSafeRegister(&xDragSourceGLibType, libs, "gtk_drag_source_get_type")
 
-	core.PuregoSafeRegister(&xNewDragSource, lib, "gtk_drag_source_new")
+	core.PuregoSafeRegister(&xNewDragSource, libs, "gtk_drag_source_new")
 
-	core.PuregoSafeRegister(&xDragSourceDragCancel, lib, "gtk_drag_source_drag_cancel")
-	core.PuregoSafeRegister(&xDragSourceGetActions, lib, "gtk_drag_source_get_actions")
-	core.PuregoSafeRegister(&xDragSourceGetContent, lib, "gtk_drag_source_get_content")
-	core.PuregoSafeRegister(&xDragSourceGetDrag, lib, "gtk_drag_source_get_drag")
-	core.PuregoSafeRegister(&xDragSourceSetActions, lib, "gtk_drag_source_set_actions")
-	core.PuregoSafeRegister(&xDragSourceSetContent, lib, "gtk_drag_source_set_content")
-	core.PuregoSafeRegister(&xDragSourceSetIcon, lib, "gtk_drag_source_set_icon")
+	core.PuregoSafeRegister(&xDragSourceDragCancel, libs, "gtk_drag_source_drag_cancel")
+	core.PuregoSafeRegister(&xDragSourceGetActions, libs, "gtk_drag_source_get_actions")
+	core.PuregoSafeRegister(&xDragSourceGetContent, libs, "gtk_drag_source_get_content")
+	core.PuregoSafeRegister(&xDragSourceGetDrag, libs, "gtk_drag_source_get_drag")
+	core.PuregoSafeRegister(&xDragSourceSetActions, libs, "gtk_drag_source_set_actions")
+	core.PuregoSafeRegister(&xDragSourceSetContent, libs, "gtk_drag_source_set_content")
+	core.PuregoSafeRegister(&xDragSourceSetIcon, libs, "gtk_drag_source_set_icon")
 
 }

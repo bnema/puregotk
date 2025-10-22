@@ -248,20 +248,24 @@ func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEventControllerScrollFlagsGLibType, lib, "gtk_event_controller_scroll_flags_get_type")
+	core.PuregoSafeRegister(&xEventControllerScrollFlagsGLibType, libs, "gtk_event_controller_scroll_flags_get_type")
 
-	core.PuregoSafeRegister(&xEventControllerScrollGLibType, lib, "gtk_event_controller_scroll_get_type")
+	core.PuregoSafeRegister(&xEventControllerScrollGLibType, libs, "gtk_event_controller_scroll_get_type")
 
-	core.PuregoSafeRegister(&xNewEventControllerScroll, lib, "gtk_event_controller_scroll_new")
+	core.PuregoSafeRegister(&xNewEventControllerScroll, libs, "gtk_event_controller_scroll_new")
 
-	core.PuregoSafeRegister(&xEventControllerScrollGetFlags, lib, "gtk_event_controller_scroll_get_flags")
-	core.PuregoSafeRegister(&xEventControllerScrollGetUnit, lib, "gtk_event_controller_scroll_get_unit")
-	core.PuregoSafeRegister(&xEventControllerScrollSetFlags, lib, "gtk_event_controller_scroll_set_flags")
+	core.PuregoSafeRegister(&xEventControllerScrollGetFlags, libs, "gtk_event_controller_scroll_get_flags")
+	core.PuregoSafeRegister(&xEventControllerScrollGetUnit, libs, "gtk_event_controller_scroll_get_unit")
+	core.PuregoSafeRegister(&xEventControllerScrollSetFlags, libs, "gtk_event_controller_scroll_set_flags")
 
 }

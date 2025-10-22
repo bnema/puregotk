@@ -112,18 +112,22 @@ func (c *NglRenderer) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibrary("GSK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GSK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GSK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGLRendererGLibType, lib, "gsk_gl_renderer_get_type")
+	core.PuregoSafeRegister(&xGLRendererGLibType, libs, "gsk_gl_renderer_get_type")
 
-	core.PuregoSafeRegister(&xNewGLRenderer, lib, "gsk_gl_renderer_new")
+	core.PuregoSafeRegister(&xNewGLRenderer, libs, "gsk_gl_renderer_new")
 
-	core.PuregoSafeRegister(&xNglRendererGLibType, lib, "gsk_ngl_renderer_get_type")
+	core.PuregoSafeRegister(&xNglRendererGLibType, libs, "gsk_ngl_renderer_get_type")
 
-	core.PuregoSafeRegister(&xNewNglRenderer, lib, "gsk_ngl_renderer_new")
+	core.PuregoSafeRegister(&xNewNglRenderer, libs, "gsk_ngl_renderer_new")
 
 }

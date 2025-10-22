@@ -993,61 +993,65 @@ func (x *SrvTarget) GetWeight() uint16 {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFileAttributeMatcherGLibType, lib, "g_file_attribute_matcher_get_type")
+	core.PuregoSafeRegister(&xFileAttributeMatcherGLibType, libs, "g_file_attribute_matcher_get_type")
 
-	core.PuregoSafeRegister(&xNewFileAttributeMatcher, lib, "g_file_attribute_matcher_new")
+	core.PuregoSafeRegister(&xNewFileAttributeMatcher, libs, "g_file_attribute_matcher_new")
 
-	core.PuregoSafeRegister(&xFileAttributeMatcherEnumerateNamespace, lib, "g_file_attribute_matcher_enumerate_namespace")
-	core.PuregoSafeRegister(&xFileAttributeMatcherEnumerateNext, lib, "g_file_attribute_matcher_enumerate_next")
-	core.PuregoSafeRegister(&xFileAttributeMatcherMatches, lib, "g_file_attribute_matcher_matches")
-	core.PuregoSafeRegister(&xFileAttributeMatcherMatchesOnly, lib, "g_file_attribute_matcher_matches_only")
-	core.PuregoSafeRegister(&xFileAttributeMatcherRef, lib, "g_file_attribute_matcher_ref")
-	core.PuregoSafeRegister(&xFileAttributeMatcherSubtract, lib, "g_file_attribute_matcher_subtract")
-	core.PuregoSafeRegister(&xFileAttributeMatcherToString, lib, "g_file_attribute_matcher_to_string")
-	core.PuregoSafeRegister(&xFileAttributeMatcherUnref, lib, "g_file_attribute_matcher_unref")
+	core.PuregoSafeRegister(&xFileAttributeMatcherEnumerateNamespace, libs, "g_file_attribute_matcher_enumerate_namespace")
+	core.PuregoSafeRegister(&xFileAttributeMatcherEnumerateNext, libs, "g_file_attribute_matcher_enumerate_next")
+	core.PuregoSafeRegister(&xFileAttributeMatcherMatches, libs, "g_file_attribute_matcher_matches")
+	core.PuregoSafeRegister(&xFileAttributeMatcherMatchesOnly, libs, "g_file_attribute_matcher_matches_only")
+	core.PuregoSafeRegister(&xFileAttributeMatcherRef, libs, "g_file_attribute_matcher_ref")
+	core.PuregoSafeRegister(&xFileAttributeMatcherSubtract, libs, "g_file_attribute_matcher_subtract")
+	core.PuregoSafeRegister(&xFileAttributeMatcherToString, libs, "g_file_attribute_matcher_to_string")
+	core.PuregoSafeRegister(&xFileAttributeMatcherUnref, libs, "g_file_attribute_matcher_unref")
 
-	core.PuregoSafeRegister(&xIOExtensionGetName, lib, "g_io_extension_get_name")
-	core.PuregoSafeRegister(&xIOExtensionGetPriority, lib, "g_io_extension_get_priority")
-	core.PuregoSafeRegister(&xIOExtensionGetType, lib, "g_io_extension_get_type")
-	core.PuregoSafeRegister(&xIOExtensionRefClass, lib, "g_io_extension_ref_class")
+	core.PuregoSafeRegister(&xIOExtensionGetName, libs, "g_io_extension_get_name")
+	core.PuregoSafeRegister(&xIOExtensionGetPriority, libs, "g_io_extension_get_priority")
+	core.PuregoSafeRegister(&xIOExtensionGetType, libs, "g_io_extension_get_type")
+	core.PuregoSafeRegister(&xIOExtensionRefClass, libs, "g_io_extension_ref_class")
 
-	core.PuregoSafeRegister(&xIOExtensionPointGetExtensionByName, lib, "g_io_extension_point_get_extension_by_name")
-	core.PuregoSafeRegister(&xIOExtensionPointGetExtensions, lib, "g_io_extension_point_get_extensions")
-	core.PuregoSafeRegister(&xIOExtensionPointGetRequiredType, lib, "g_io_extension_point_get_required_type")
-	core.PuregoSafeRegister(&xIOExtensionPointSetRequiredType, lib, "g_io_extension_point_set_required_type")
+	core.PuregoSafeRegister(&xIOExtensionPointGetExtensionByName, libs, "g_io_extension_point_get_extension_by_name")
+	core.PuregoSafeRegister(&xIOExtensionPointGetExtensions, libs, "g_io_extension_point_get_extensions")
+	core.PuregoSafeRegister(&xIOExtensionPointGetRequiredType, libs, "g_io_extension_point_get_required_type")
+	core.PuregoSafeRegister(&xIOExtensionPointSetRequiredType, libs, "g_io_extension_point_set_required_type")
 
-	core.PuregoSafeRegister(&xIOSchedulerJobSendToMainloop, lib, "g_io_scheduler_job_send_to_mainloop")
-	core.PuregoSafeRegister(&xIOSchedulerJobSendToMainloopAsync, lib, "g_io_scheduler_job_send_to_mainloop_async")
+	core.PuregoSafeRegister(&xIOSchedulerJobSendToMainloop, libs, "g_io_scheduler_job_send_to_mainloop")
+	core.PuregoSafeRegister(&xIOSchedulerJobSendToMainloopAsync, libs, "g_io_scheduler_job_send_to_mainloop_async")
 
-	core.PuregoSafeRegister(&xResourceGLibType, lib, "g_resource_get_type")
+	core.PuregoSafeRegister(&xResourceGLibType, libs, "g_resource_get_type")
 
-	core.PuregoSafeRegister(&xNewResourceFromData, lib, "g_resource_new_from_data")
+	core.PuregoSafeRegister(&xNewResourceFromData, libs, "g_resource_new_from_data")
 
-	core.PuregoSafeRegister(&xResourceRegister, lib, "g_resources_register")
-	core.PuregoSafeRegister(&xResourceUnregister, lib, "g_resources_unregister")
-	core.PuregoSafeRegister(&xResourceEnumerateChildren, lib, "g_resource_enumerate_children")
-	core.PuregoSafeRegister(&xResourceGetInfo, lib, "g_resource_get_info")
-	core.PuregoSafeRegister(&xResourceHasChildren, lib, "g_resource_has_children")
-	core.PuregoSafeRegister(&xResourceLookupData, lib, "g_resource_lookup_data")
-	core.PuregoSafeRegister(&xResourceOpenStream, lib, "g_resource_open_stream")
-	core.PuregoSafeRegister(&xResourceRef, lib, "g_resource_ref")
-	core.PuregoSafeRegister(&xResourceUnref, lib, "g_resource_unref")
+	core.PuregoSafeRegister(&xResourceRegister, libs, "g_resources_register")
+	core.PuregoSafeRegister(&xResourceUnregister, libs, "g_resources_unregister")
+	core.PuregoSafeRegister(&xResourceEnumerateChildren, libs, "g_resource_enumerate_children")
+	core.PuregoSafeRegister(&xResourceGetInfo, libs, "g_resource_get_info")
+	core.PuregoSafeRegister(&xResourceHasChildren, libs, "g_resource_has_children")
+	core.PuregoSafeRegister(&xResourceLookupData, libs, "g_resource_lookup_data")
+	core.PuregoSafeRegister(&xResourceOpenStream, libs, "g_resource_open_stream")
+	core.PuregoSafeRegister(&xResourceRef, libs, "g_resource_ref")
+	core.PuregoSafeRegister(&xResourceUnref, libs, "g_resource_unref")
 
-	core.PuregoSafeRegister(&xSrvTargetGLibType, lib, "g_srv_target_get_type")
+	core.PuregoSafeRegister(&xSrvTargetGLibType, libs, "g_srv_target_get_type")
 
-	core.PuregoSafeRegister(&xNewSrvTarget, lib, "g_srv_target_new")
+	core.PuregoSafeRegister(&xNewSrvTarget, libs, "g_srv_target_new")
 
-	core.PuregoSafeRegister(&xSrvTargetCopy, lib, "g_srv_target_copy")
-	core.PuregoSafeRegister(&xSrvTargetFree, lib, "g_srv_target_free")
-	core.PuregoSafeRegister(&xSrvTargetGetHostname, lib, "g_srv_target_get_hostname")
-	core.PuregoSafeRegister(&xSrvTargetGetPort, lib, "g_srv_target_get_port")
-	core.PuregoSafeRegister(&xSrvTargetGetPriority, lib, "g_srv_target_get_priority")
-	core.PuregoSafeRegister(&xSrvTargetGetWeight, lib, "g_srv_target_get_weight")
+	core.PuregoSafeRegister(&xSrvTargetCopy, libs, "g_srv_target_copy")
+	core.PuregoSafeRegister(&xSrvTargetFree, libs, "g_srv_target_free")
+	core.PuregoSafeRegister(&xSrvTargetGetHostname, libs, "g_srv_target_get_hostname")
+	core.PuregoSafeRegister(&xSrvTargetGetPort, libs, "g_srv_target_get_port")
+	core.PuregoSafeRegister(&xSrvTargetGetPriority, libs, "g_srv_target_get_priority")
+	core.PuregoSafeRegister(&xSrvTargetGetWeight, libs, "g_srv_target_get_weight")
 
 }

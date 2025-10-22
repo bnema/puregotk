@@ -1039,35 +1039,39 @@ func (x *SpinRow) SetWidthChars(NCharsVar int) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSpinRowGLibType, lib, "adw_spin_row_get_type")
+	core.PuregoSafeRegister(&xSpinRowGLibType, libs, "adw_spin_row_get_type")
 
-	core.PuregoSafeRegister(&xNewSpinRow, lib, "adw_spin_row_new")
-	core.PuregoSafeRegister(&xNewSpinRowWithRange, lib, "adw_spin_row_new_with_range")
+	core.PuregoSafeRegister(&xNewSpinRow, libs, "adw_spin_row_new")
+	core.PuregoSafeRegister(&xNewSpinRowWithRange, libs, "adw_spin_row_new_with_range")
 
-	core.PuregoSafeRegister(&xSpinRowConfigure, lib, "adw_spin_row_configure")
-	core.PuregoSafeRegister(&xSpinRowGetAdjustment, lib, "adw_spin_row_get_adjustment")
-	core.PuregoSafeRegister(&xSpinRowGetClimbRate, lib, "adw_spin_row_get_climb_rate")
-	core.PuregoSafeRegister(&xSpinRowGetDigits, lib, "adw_spin_row_get_digits")
-	core.PuregoSafeRegister(&xSpinRowGetNumeric, lib, "adw_spin_row_get_numeric")
-	core.PuregoSafeRegister(&xSpinRowGetSnapToTicks, lib, "adw_spin_row_get_snap_to_ticks")
-	core.PuregoSafeRegister(&xSpinRowGetUpdatePolicy, lib, "adw_spin_row_get_update_policy")
-	core.PuregoSafeRegister(&xSpinRowGetValue, lib, "adw_spin_row_get_value")
-	core.PuregoSafeRegister(&xSpinRowGetWrap, lib, "adw_spin_row_get_wrap")
-	core.PuregoSafeRegister(&xSpinRowSetAdjustment, lib, "adw_spin_row_set_adjustment")
-	core.PuregoSafeRegister(&xSpinRowSetClimbRate, lib, "adw_spin_row_set_climb_rate")
-	core.PuregoSafeRegister(&xSpinRowSetDigits, lib, "adw_spin_row_set_digits")
-	core.PuregoSafeRegister(&xSpinRowSetNumeric, lib, "adw_spin_row_set_numeric")
-	core.PuregoSafeRegister(&xSpinRowSetRange, lib, "adw_spin_row_set_range")
-	core.PuregoSafeRegister(&xSpinRowSetSnapToTicks, lib, "adw_spin_row_set_snap_to_ticks")
-	core.PuregoSafeRegister(&xSpinRowSetUpdatePolicy, lib, "adw_spin_row_set_update_policy")
-	core.PuregoSafeRegister(&xSpinRowSetValue, lib, "adw_spin_row_set_value")
-	core.PuregoSafeRegister(&xSpinRowSetWrap, lib, "adw_spin_row_set_wrap")
-	core.PuregoSafeRegister(&xSpinRowUpdate, lib, "adw_spin_row_update")
+	core.PuregoSafeRegister(&xSpinRowConfigure, libs, "adw_spin_row_configure")
+	core.PuregoSafeRegister(&xSpinRowGetAdjustment, libs, "adw_spin_row_get_adjustment")
+	core.PuregoSafeRegister(&xSpinRowGetClimbRate, libs, "adw_spin_row_get_climb_rate")
+	core.PuregoSafeRegister(&xSpinRowGetDigits, libs, "adw_spin_row_get_digits")
+	core.PuregoSafeRegister(&xSpinRowGetNumeric, libs, "adw_spin_row_get_numeric")
+	core.PuregoSafeRegister(&xSpinRowGetSnapToTicks, libs, "adw_spin_row_get_snap_to_ticks")
+	core.PuregoSafeRegister(&xSpinRowGetUpdatePolicy, libs, "adw_spin_row_get_update_policy")
+	core.PuregoSafeRegister(&xSpinRowGetValue, libs, "adw_spin_row_get_value")
+	core.PuregoSafeRegister(&xSpinRowGetWrap, libs, "adw_spin_row_get_wrap")
+	core.PuregoSafeRegister(&xSpinRowSetAdjustment, libs, "adw_spin_row_set_adjustment")
+	core.PuregoSafeRegister(&xSpinRowSetClimbRate, libs, "adw_spin_row_set_climb_rate")
+	core.PuregoSafeRegister(&xSpinRowSetDigits, libs, "adw_spin_row_set_digits")
+	core.PuregoSafeRegister(&xSpinRowSetNumeric, libs, "adw_spin_row_set_numeric")
+	core.PuregoSafeRegister(&xSpinRowSetRange, libs, "adw_spin_row_set_range")
+	core.PuregoSafeRegister(&xSpinRowSetSnapToTicks, libs, "adw_spin_row_set_snap_to_ticks")
+	core.PuregoSafeRegister(&xSpinRowSetUpdatePolicy, libs, "adw_spin_row_set_update_policy")
+	core.PuregoSafeRegister(&xSpinRowSetValue, libs, "adw_spin_row_set_value")
+	core.PuregoSafeRegister(&xSpinRowSetWrap, libs, "adw_spin_row_set_wrap")
+	core.PuregoSafeRegister(&xSpinRowUpdate, libs, "adw_spin_row_update")
 
 }

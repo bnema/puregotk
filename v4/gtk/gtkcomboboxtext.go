@@ -669,25 +669,29 @@ func (x *ComboBoxText) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayou
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xComboBoxTextGLibType, lib, "gtk_combo_box_text_get_type")
+	core.PuregoSafeRegister(&xComboBoxTextGLibType, libs, "gtk_combo_box_text_get_type")
 
-	core.PuregoSafeRegister(&xNewComboBoxText, lib, "gtk_combo_box_text_new")
-	core.PuregoSafeRegister(&xNewComboBoxTextWithEntry, lib, "gtk_combo_box_text_new_with_entry")
+	core.PuregoSafeRegister(&xNewComboBoxText, libs, "gtk_combo_box_text_new")
+	core.PuregoSafeRegister(&xNewComboBoxTextWithEntry, libs, "gtk_combo_box_text_new_with_entry")
 
-	core.PuregoSafeRegister(&xComboBoxTextAppend, lib, "gtk_combo_box_text_append")
-	core.PuregoSafeRegister(&xComboBoxTextAppendText, lib, "gtk_combo_box_text_append_text")
-	core.PuregoSafeRegister(&xComboBoxTextGetActiveText, lib, "gtk_combo_box_text_get_active_text")
-	core.PuregoSafeRegister(&xComboBoxTextInsert, lib, "gtk_combo_box_text_insert")
-	core.PuregoSafeRegister(&xComboBoxTextInsertText, lib, "gtk_combo_box_text_insert_text")
-	core.PuregoSafeRegister(&xComboBoxTextPrepend, lib, "gtk_combo_box_text_prepend")
-	core.PuregoSafeRegister(&xComboBoxTextPrependText, lib, "gtk_combo_box_text_prepend_text")
-	core.PuregoSafeRegister(&xComboBoxTextRemove, lib, "gtk_combo_box_text_remove")
-	core.PuregoSafeRegister(&xComboBoxTextRemoveAll, lib, "gtk_combo_box_text_remove_all")
+	core.PuregoSafeRegister(&xComboBoxTextAppend, libs, "gtk_combo_box_text_append")
+	core.PuregoSafeRegister(&xComboBoxTextAppendText, libs, "gtk_combo_box_text_append_text")
+	core.PuregoSafeRegister(&xComboBoxTextGetActiveText, libs, "gtk_combo_box_text_get_active_text")
+	core.PuregoSafeRegister(&xComboBoxTextInsert, libs, "gtk_combo_box_text_insert")
+	core.PuregoSafeRegister(&xComboBoxTextInsertText, libs, "gtk_combo_box_text_insert_text")
+	core.PuregoSafeRegister(&xComboBoxTextPrepend, libs, "gtk_combo_box_text_prepend")
+	core.PuregoSafeRegister(&xComboBoxTextPrependText, libs, "gtk_combo_box_text_prepend_text")
+	core.PuregoSafeRegister(&xComboBoxTextRemove, libs, "gtk_combo_box_text_remove")
+	core.PuregoSafeRegister(&xComboBoxTextRemoveAll, libs, "gtk_combo_box_text_remove_all")
 
 }

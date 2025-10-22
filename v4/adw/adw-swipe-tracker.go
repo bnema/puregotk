@@ -348,31 +348,35 @@ func (x *SwipeTracker) SetOrientation(OrientationVar gtk.Orientation) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSwipeTrackerGLibType, lib, "adw_swipe_tracker_get_type")
+	core.PuregoSafeRegister(&xSwipeTrackerGLibType, libs, "adw_swipe_tracker_get_type")
 
-	core.PuregoSafeRegister(&xNewSwipeTracker, lib, "adw_swipe_tracker_new")
+	core.PuregoSafeRegister(&xNewSwipeTracker, libs, "adw_swipe_tracker_new")
 
-	core.PuregoSafeRegister(&xSwipeTrackerGetAllowLongSwipes, lib, "adw_swipe_tracker_get_allow_long_swipes")
-	core.PuregoSafeRegister(&xSwipeTrackerGetAllowMouseDrag, lib, "adw_swipe_tracker_get_allow_mouse_drag")
-	core.PuregoSafeRegister(&xSwipeTrackerGetAllowWindowHandle, lib, "adw_swipe_tracker_get_allow_window_handle")
-	core.PuregoSafeRegister(&xSwipeTrackerGetEnabled, lib, "adw_swipe_tracker_get_enabled")
-	core.PuregoSafeRegister(&xSwipeTrackerGetLowerOvershoot, lib, "adw_swipe_tracker_get_lower_overshoot")
-	core.PuregoSafeRegister(&xSwipeTrackerGetReversed, lib, "adw_swipe_tracker_get_reversed")
-	core.PuregoSafeRegister(&xSwipeTrackerGetSwipeable, lib, "adw_swipe_tracker_get_swipeable")
-	core.PuregoSafeRegister(&xSwipeTrackerGetUpperOvershoot, lib, "adw_swipe_tracker_get_upper_overshoot")
-	core.PuregoSafeRegister(&xSwipeTrackerSetAllowLongSwipes, lib, "adw_swipe_tracker_set_allow_long_swipes")
-	core.PuregoSafeRegister(&xSwipeTrackerSetAllowMouseDrag, lib, "adw_swipe_tracker_set_allow_mouse_drag")
-	core.PuregoSafeRegister(&xSwipeTrackerSetAllowWindowHandle, lib, "adw_swipe_tracker_set_allow_window_handle")
-	core.PuregoSafeRegister(&xSwipeTrackerSetEnabled, lib, "adw_swipe_tracker_set_enabled")
-	core.PuregoSafeRegister(&xSwipeTrackerSetLowerOvershoot, lib, "adw_swipe_tracker_set_lower_overshoot")
-	core.PuregoSafeRegister(&xSwipeTrackerSetReversed, lib, "adw_swipe_tracker_set_reversed")
-	core.PuregoSafeRegister(&xSwipeTrackerSetUpperOvershoot, lib, "adw_swipe_tracker_set_upper_overshoot")
-	core.PuregoSafeRegister(&xSwipeTrackerShiftPosition, lib, "adw_swipe_tracker_shift_position")
+	core.PuregoSafeRegister(&xSwipeTrackerGetAllowLongSwipes, libs, "adw_swipe_tracker_get_allow_long_swipes")
+	core.PuregoSafeRegister(&xSwipeTrackerGetAllowMouseDrag, libs, "adw_swipe_tracker_get_allow_mouse_drag")
+	core.PuregoSafeRegister(&xSwipeTrackerGetAllowWindowHandle, libs, "adw_swipe_tracker_get_allow_window_handle")
+	core.PuregoSafeRegister(&xSwipeTrackerGetEnabled, libs, "adw_swipe_tracker_get_enabled")
+	core.PuregoSafeRegister(&xSwipeTrackerGetLowerOvershoot, libs, "adw_swipe_tracker_get_lower_overshoot")
+	core.PuregoSafeRegister(&xSwipeTrackerGetReversed, libs, "adw_swipe_tracker_get_reversed")
+	core.PuregoSafeRegister(&xSwipeTrackerGetSwipeable, libs, "adw_swipe_tracker_get_swipeable")
+	core.PuregoSafeRegister(&xSwipeTrackerGetUpperOvershoot, libs, "adw_swipe_tracker_get_upper_overshoot")
+	core.PuregoSafeRegister(&xSwipeTrackerSetAllowLongSwipes, libs, "adw_swipe_tracker_set_allow_long_swipes")
+	core.PuregoSafeRegister(&xSwipeTrackerSetAllowMouseDrag, libs, "adw_swipe_tracker_set_allow_mouse_drag")
+	core.PuregoSafeRegister(&xSwipeTrackerSetAllowWindowHandle, libs, "adw_swipe_tracker_set_allow_window_handle")
+	core.PuregoSafeRegister(&xSwipeTrackerSetEnabled, libs, "adw_swipe_tracker_set_enabled")
+	core.PuregoSafeRegister(&xSwipeTrackerSetLowerOvershoot, libs, "adw_swipe_tracker_set_lower_overshoot")
+	core.PuregoSafeRegister(&xSwipeTrackerSetReversed, libs, "adw_swipe_tracker_set_reversed")
+	core.PuregoSafeRegister(&xSwipeTrackerSetUpperOvershoot, libs, "adw_swipe_tracker_set_upper_overshoot")
+	core.PuregoSafeRegister(&xSwipeTrackerShiftPosition, libs, "adw_swipe_tracker_shift_position")
 
 }

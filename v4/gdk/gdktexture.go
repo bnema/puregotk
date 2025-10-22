@@ -631,32 +631,36 @@ func (x *Texture) LoadFinish(ResVar gio.AsyncResult, TypeVar string) (*gio.Input
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTextureErrorGLibType, lib, "gdk_texture_error_get_type")
+	core.PuregoSafeRegister(&xTextureErrorGLibType, libs, "gdk_texture_error_get_type")
 
-	core.PuregoSafeRegister(&xTextureErrorQuark, lib, "gdk_texture_error_quark")
+	core.PuregoSafeRegister(&xTextureErrorQuark, libs, "gdk_texture_error_quark")
 
-	core.PuregoSafeRegister(&xTextureGLibType, lib, "gdk_texture_get_type")
+	core.PuregoSafeRegister(&xTextureGLibType, libs, "gdk_texture_get_type")
 
-	core.PuregoSafeRegister(&xNewTextureForPixbuf, lib, "gdk_texture_new_for_pixbuf")
-	core.PuregoSafeRegister(&xNewTextureFromBytes, lib, "gdk_texture_new_from_bytes")
-	core.PuregoSafeRegister(&xNewTextureFromFile, lib, "gdk_texture_new_from_file")
-	core.PuregoSafeRegister(&xNewTextureFromFilename, lib, "gdk_texture_new_from_filename")
-	core.PuregoSafeRegister(&xNewTextureFromResource, lib, "gdk_texture_new_from_resource")
+	core.PuregoSafeRegister(&xNewTextureForPixbuf, libs, "gdk_texture_new_for_pixbuf")
+	core.PuregoSafeRegister(&xNewTextureFromBytes, libs, "gdk_texture_new_from_bytes")
+	core.PuregoSafeRegister(&xNewTextureFromFile, libs, "gdk_texture_new_from_file")
+	core.PuregoSafeRegister(&xNewTextureFromFilename, libs, "gdk_texture_new_from_filename")
+	core.PuregoSafeRegister(&xNewTextureFromResource, libs, "gdk_texture_new_from_resource")
 
-	core.PuregoSafeRegister(&xTextureDownload, lib, "gdk_texture_download")
-	core.PuregoSafeRegister(&xTextureGetColorState, lib, "gdk_texture_get_color_state")
-	core.PuregoSafeRegister(&xTextureGetFormat, lib, "gdk_texture_get_format")
-	core.PuregoSafeRegister(&xTextureGetHeight, lib, "gdk_texture_get_height")
-	core.PuregoSafeRegister(&xTextureGetWidth, lib, "gdk_texture_get_width")
-	core.PuregoSafeRegister(&xTextureSaveToPng, lib, "gdk_texture_save_to_png")
-	core.PuregoSafeRegister(&xTextureSaveToPngBytes, lib, "gdk_texture_save_to_png_bytes")
-	core.PuregoSafeRegister(&xTextureSaveToTiff, lib, "gdk_texture_save_to_tiff")
-	core.PuregoSafeRegister(&xTextureSaveToTiffBytes, lib, "gdk_texture_save_to_tiff_bytes")
+	core.PuregoSafeRegister(&xTextureDownload, libs, "gdk_texture_download")
+	core.PuregoSafeRegister(&xTextureGetColorState, libs, "gdk_texture_get_color_state")
+	core.PuregoSafeRegister(&xTextureGetFormat, libs, "gdk_texture_get_format")
+	core.PuregoSafeRegister(&xTextureGetHeight, libs, "gdk_texture_get_height")
+	core.PuregoSafeRegister(&xTextureGetWidth, libs, "gdk_texture_get_width")
+	core.PuregoSafeRegister(&xTextureSaveToPng, libs, "gdk_texture_save_to_png")
+	core.PuregoSafeRegister(&xTextureSaveToPngBytes, libs, "gdk_texture_save_to_png_bytes")
+	core.PuregoSafeRegister(&xTextureSaveToTiff, libs, "gdk_texture_save_to_tiff")
+	core.PuregoSafeRegister(&xTextureSaveToTiffBytes, libs, "gdk_texture_save_to_tiff_bytes")
 
 }

@@ -796,30 +796,34 @@ func (x *Button) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xButtonGLibType, lib, "gtk_button_get_type")
+	core.PuregoSafeRegister(&xButtonGLibType, libs, "gtk_button_get_type")
 
-	core.PuregoSafeRegister(&xNewButton, lib, "gtk_button_new")
-	core.PuregoSafeRegister(&xNewButtonFromIconName, lib, "gtk_button_new_from_icon_name")
-	core.PuregoSafeRegister(&xNewButtonWithLabel, lib, "gtk_button_new_with_label")
-	core.PuregoSafeRegister(&xNewButtonWithMnemonic, lib, "gtk_button_new_with_mnemonic")
+	core.PuregoSafeRegister(&xNewButton, libs, "gtk_button_new")
+	core.PuregoSafeRegister(&xNewButtonFromIconName, libs, "gtk_button_new_from_icon_name")
+	core.PuregoSafeRegister(&xNewButtonWithLabel, libs, "gtk_button_new_with_label")
+	core.PuregoSafeRegister(&xNewButtonWithMnemonic, libs, "gtk_button_new_with_mnemonic")
 
-	core.PuregoSafeRegister(&xButtonGetCanShrink, lib, "gtk_button_get_can_shrink")
-	core.PuregoSafeRegister(&xButtonGetChild, lib, "gtk_button_get_child")
-	core.PuregoSafeRegister(&xButtonGetHasFrame, lib, "gtk_button_get_has_frame")
-	core.PuregoSafeRegister(&xButtonGetIconName, lib, "gtk_button_get_icon_name")
-	core.PuregoSafeRegister(&xButtonGetLabel, lib, "gtk_button_get_label")
-	core.PuregoSafeRegister(&xButtonGetUseUnderline, lib, "gtk_button_get_use_underline")
-	core.PuregoSafeRegister(&xButtonSetCanShrink, lib, "gtk_button_set_can_shrink")
-	core.PuregoSafeRegister(&xButtonSetChild, lib, "gtk_button_set_child")
-	core.PuregoSafeRegister(&xButtonSetHasFrame, lib, "gtk_button_set_has_frame")
-	core.PuregoSafeRegister(&xButtonSetIconName, lib, "gtk_button_set_icon_name")
-	core.PuregoSafeRegister(&xButtonSetLabel, lib, "gtk_button_set_label")
-	core.PuregoSafeRegister(&xButtonSetUseUnderline, lib, "gtk_button_set_use_underline")
+	core.PuregoSafeRegister(&xButtonGetCanShrink, libs, "gtk_button_get_can_shrink")
+	core.PuregoSafeRegister(&xButtonGetChild, libs, "gtk_button_get_child")
+	core.PuregoSafeRegister(&xButtonGetHasFrame, libs, "gtk_button_get_has_frame")
+	core.PuregoSafeRegister(&xButtonGetIconName, libs, "gtk_button_get_icon_name")
+	core.PuregoSafeRegister(&xButtonGetLabel, libs, "gtk_button_get_label")
+	core.PuregoSafeRegister(&xButtonGetUseUnderline, libs, "gtk_button_get_use_underline")
+	core.PuregoSafeRegister(&xButtonSetCanShrink, libs, "gtk_button_set_can_shrink")
+	core.PuregoSafeRegister(&xButtonSetChild, libs, "gtk_button_set_child")
+	core.PuregoSafeRegister(&xButtonSetHasFrame, libs, "gtk_button_set_has_frame")
+	core.PuregoSafeRegister(&xButtonSetIconName, libs, "gtk_button_set_icon_name")
+	core.PuregoSafeRegister(&xButtonSetLabel, libs, "gtk_button_set_label")
+	core.PuregoSafeRegister(&xButtonSetUseUnderline, libs, "gtk_button_set_use_underline")
 
 }

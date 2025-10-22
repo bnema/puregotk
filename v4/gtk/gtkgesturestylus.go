@@ -245,21 +245,25 @@ func (x *GestureStylus) ConnectUp(cb *func(GestureStylus, float64, float64)) uin
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGestureStylusGLibType, lib, "gtk_gesture_stylus_get_type")
+	core.PuregoSafeRegister(&xGestureStylusGLibType, libs, "gtk_gesture_stylus_get_type")
 
-	core.PuregoSafeRegister(&xNewGestureStylus, lib, "gtk_gesture_stylus_new")
+	core.PuregoSafeRegister(&xNewGestureStylus, libs, "gtk_gesture_stylus_new")
 
-	core.PuregoSafeRegister(&xGestureStylusGetAxes, lib, "gtk_gesture_stylus_get_axes")
-	core.PuregoSafeRegister(&xGestureStylusGetAxis, lib, "gtk_gesture_stylus_get_axis")
-	core.PuregoSafeRegister(&xGestureStylusGetBacklog, lib, "gtk_gesture_stylus_get_backlog")
-	core.PuregoSafeRegister(&xGestureStylusGetDeviceTool, lib, "gtk_gesture_stylus_get_device_tool")
-	core.PuregoSafeRegister(&xGestureStylusGetStylusOnly, lib, "gtk_gesture_stylus_get_stylus_only")
-	core.PuregoSafeRegister(&xGestureStylusSetStylusOnly, lib, "gtk_gesture_stylus_set_stylus_only")
+	core.PuregoSafeRegister(&xGestureStylusGetAxes, libs, "gtk_gesture_stylus_get_axes")
+	core.PuregoSafeRegister(&xGestureStylusGetAxis, libs, "gtk_gesture_stylus_get_axis")
+	core.PuregoSafeRegister(&xGestureStylusGetBacklog, libs, "gtk_gesture_stylus_get_backlog")
+	core.PuregoSafeRegister(&xGestureStylusGetDeviceTool, libs, "gtk_gesture_stylus_get_device_tool")
+	core.PuregoSafeRegister(&xGestureStylusGetStylusOnly, libs, "gtk_gesture_stylus_get_stylus_only")
+	core.PuregoSafeRegister(&xGestureStylusSetStylusOnly, libs, "gtk_gesture_stylus_set_stylus_only")
 
 }

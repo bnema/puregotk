@@ -403,26 +403,30 @@ func (x *DropTarget) ConnectMotion(cb *func(DropTarget, float64, float64) gdk.Dr
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDropTargetGLibType, lib, "gtk_drop_target_get_type")
+	core.PuregoSafeRegister(&xDropTargetGLibType, libs, "gtk_drop_target_get_type")
 
-	core.PuregoSafeRegister(&xNewDropTarget, lib, "gtk_drop_target_new")
+	core.PuregoSafeRegister(&xNewDropTarget, libs, "gtk_drop_target_new")
 
-	core.PuregoSafeRegister(&xDropTargetGetActions, lib, "gtk_drop_target_get_actions")
-	core.PuregoSafeRegister(&xDropTargetGetCurrentDrop, lib, "gtk_drop_target_get_current_drop")
-	core.PuregoSafeRegister(&xDropTargetGetDrop, lib, "gtk_drop_target_get_drop")
-	core.PuregoSafeRegister(&xDropTargetGetFormats, lib, "gtk_drop_target_get_formats")
-	core.PuregoSafeRegister(&xDropTargetGetGtypes, lib, "gtk_drop_target_get_gtypes")
-	core.PuregoSafeRegister(&xDropTargetGetPreload, lib, "gtk_drop_target_get_preload")
-	core.PuregoSafeRegister(&xDropTargetGetValue, lib, "gtk_drop_target_get_value")
-	core.PuregoSafeRegister(&xDropTargetReject, lib, "gtk_drop_target_reject")
-	core.PuregoSafeRegister(&xDropTargetSetActions, lib, "gtk_drop_target_set_actions")
-	core.PuregoSafeRegister(&xDropTargetSetGtypes, lib, "gtk_drop_target_set_gtypes")
-	core.PuregoSafeRegister(&xDropTargetSetPreload, lib, "gtk_drop_target_set_preload")
+	core.PuregoSafeRegister(&xDropTargetGetActions, libs, "gtk_drop_target_get_actions")
+	core.PuregoSafeRegister(&xDropTargetGetCurrentDrop, libs, "gtk_drop_target_get_current_drop")
+	core.PuregoSafeRegister(&xDropTargetGetDrop, libs, "gtk_drop_target_get_drop")
+	core.PuregoSafeRegister(&xDropTargetGetFormats, libs, "gtk_drop_target_get_formats")
+	core.PuregoSafeRegister(&xDropTargetGetGtypes, libs, "gtk_drop_target_get_gtypes")
+	core.PuregoSafeRegister(&xDropTargetGetPreload, libs, "gtk_drop_target_get_preload")
+	core.PuregoSafeRegister(&xDropTargetGetValue, libs, "gtk_drop_target_get_value")
+	core.PuregoSafeRegister(&xDropTargetReject, libs, "gtk_drop_target_reject")
+	core.PuregoSafeRegister(&xDropTargetSetActions, libs, "gtk_drop_target_set_actions")
+	core.PuregoSafeRegister(&xDropTargetSetGtypes, libs, "gtk_drop_target_set_gtypes")
+	core.PuregoSafeRegister(&xDropTargetSetPreload, libs, "gtk_drop_target_set_preload")
 
 }

@@ -17,12 +17,16 @@ func ModuleErrorQuark() glib.Quark {
 
 func init() {
 	core.SetPackageName("GMODULE", "gmodule-2.0")
-	core.SetSharedLibrary("GMODULE", "libgmodule-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GMODULE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GMODULE", []string{"libgmodule-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GMODULE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xModuleErrorQuark, lib, "g_module_error_quark")
+	core.PuregoSafeRegister(&xModuleErrorQuark, libs, "g_module_error_quark")
 
 }

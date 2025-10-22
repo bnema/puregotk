@@ -703,31 +703,35 @@ func (x *ActionRow) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xActionRowGLibType, lib, "adw_action_row_get_type")
+	core.PuregoSafeRegister(&xActionRowGLibType, libs, "adw_action_row_get_type")
 
-	core.PuregoSafeRegister(&xNewActionRow, lib, "adw_action_row_new")
+	core.PuregoSafeRegister(&xNewActionRow, libs, "adw_action_row_new")
 
-	core.PuregoSafeRegister(&xActionRowActivate, lib, "adw_action_row_activate")
-	core.PuregoSafeRegister(&xActionRowAddPrefix, lib, "adw_action_row_add_prefix")
-	core.PuregoSafeRegister(&xActionRowAddSuffix, lib, "adw_action_row_add_suffix")
-	core.PuregoSafeRegister(&xActionRowGetActivatableWidget, lib, "adw_action_row_get_activatable_widget")
-	core.PuregoSafeRegister(&xActionRowGetIconName, lib, "adw_action_row_get_icon_name")
-	core.PuregoSafeRegister(&xActionRowGetSubtitle, lib, "adw_action_row_get_subtitle")
-	core.PuregoSafeRegister(&xActionRowGetSubtitleLines, lib, "adw_action_row_get_subtitle_lines")
-	core.PuregoSafeRegister(&xActionRowGetSubtitleSelectable, lib, "adw_action_row_get_subtitle_selectable")
-	core.PuregoSafeRegister(&xActionRowGetTitleLines, lib, "adw_action_row_get_title_lines")
-	core.PuregoSafeRegister(&xActionRowRemove, lib, "adw_action_row_remove")
-	core.PuregoSafeRegister(&xActionRowSetActivatableWidget, lib, "adw_action_row_set_activatable_widget")
-	core.PuregoSafeRegister(&xActionRowSetIconName, lib, "adw_action_row_set_icon_name")
-	core.PuregoSafeRegister(&xActionRowSetSubtitle, lib, "adw_action_row_set_subtitle")
-	core.PuregoSafeRegister(&xActionRowSetSubtitleLines, lib, "adw_action_row_set_subtitle_lines")
-	core.PuregoSafeRegister(&xActionRowSetSubtitleSelectable, lib, "adw_action_row_set_subtitle_selectable")
-	core.PuregoSafeRegister(&xActionRowSetTitleLines, lib, "adw_action_row_set_title_lines")
+	core.PuregoSafeRegister(&xActionRowActivate, libs, "adw_action_row_activate")
+	core.PuregoSafeRegister(&xActionRowAddPrefix, libs, "adw_action_row_add_prefix")
+	core.PuregoSafeRegister(&xActionRowAddSuffix, libs, "adw_action_row_add_suffix")
+	core.PuregoSafeRegister(&xActionRowGetActivatableWidget, libs, "adw_action_row_get_activatable_widget")
+	core.PuregoSafeRegister(&xActionRowGetIconName, libs, "adw_action_row_get_icon_name")
+	core.PuregoSafeRegister(&xActionRowGetSubtitle, libs, "adw_action_row_get_subtitle")
+	core.PuregoSafeRegister(&xActionRowGetSubtitleLines, libs, "adw_action_row_get_subtitle_lines")
+	core.PuregoSafeRegister(&xActionRowGetSubtitleSelectable, libs, "adw_action_row_get_subtitle_selectable")
+	core.PuregoSafeRegister(&xActionRowGetTitleLines, libs, "adw_action_row_get_title_lines")
+	core.PuregoSafeRegister(&xActionRowRemove, libs, "adw_action_row_remove")
+	core.PuregoSafeRegister(&xActionRowSetActivatableWidget, libs, "adw_action_row_set_activatable_widget")
+	core.PuregoSafeRegister(&xActionRowSetIconName, libs, "adw_action_row_set_icon_name")
+	core.PuregoSafeRegister(&xActionRowSetSubtitle, libs, "adw_action_row_set_subtitle")
+	core.PuregoSafeRegister(&xActionRowSetSubtitleLines, libs, "adw_action_row_set_subtitle_lines")
+	core.PuregoSafeRegister(&xActionRowSetSubtitleSelectable, libs, "adw_action_row_set_subtitle_selectable")
+	core.PuregoSafeRegister(&xActionRowSetTitleLines, libs, "adw_action_row_set_title_lines")
 
 }

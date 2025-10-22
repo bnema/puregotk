@@ -211,30 +211,34 @@ func (x *Triangle) InitFromVec3(AVar *Vec3, BVar *Vec3, CVar *Vec3) *Triangle {
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTriangleGLibType, lib, "graphene_triangle_get_type")
+	core.PuregoSafeRegister(&xTriangleGLibType, libs, "graphene_triangle_get_type")
 
-	core.PuregoSafeRegister(&xTriangleAlloc, lib, "graphene_triangle_alloc")
+	core.PuregoSafeRegister(&xTriangleAlloc, libs, "graphene_triangle_alloc")
 
-	core.PuregoSafeRegister(&xTriangleContainsPoint, lib, "graphene_triangle_contains_point")
-	core.PuregoSafeRegister(&xTriangleEqual, lib, "graphene_triangle_equal")
-	core.PuregoSafeRegister(&xTriangleFree, lib, "graphene_triangle_free")
-	core.PuregoSafeRegister(&xTriangleGetArea, lib, "graphene_triangle_get_area")
-	core.PuregoSafeRegister(&xTriangleGetBarycoords, lib, "graphene_triangle_get_barycoords")
-	core.PuregoSafeRegister(&xTriangleGetBoundingBox, lib, "graphene_triangle_get_bounding_box")
-	core.PuregoSafeRegister(&xTriangleGetMidpoint, lib, "graphene_triangle_get_midpoint")
-	core.PuregoSafeRegister(&xTriangleGetNormal, lib, "graphene_triangle_get_normal")
-	core.PuregoSafeRegister(&xTriangleGetPlane, lib, "graphene_triangle_get_plane")
-	core.PuregoSafeRegister(&xTriangleGetPoints, lib, "graphene_triangle_get_points")
-	core.PuregoSafeRegister(&xTriangleGetUv, lib, "graphene_triangle_get_uv")
-	core.PuregoSafeRegister(&xTriangleGetVertices, lib, "graphene_triangle_get_vertices")
-	core.PuregoSafeRegister(&xTriangleInitFromFloat, lib, "graphene_triangle_init_from_float")
-	core.PuregoSafeRegister(&xTriangleInitFromPoint3d, lib, "graphene_triangle_init_from_point3d")
-	core.PuregoSafeRegister(&xTriangleInitFromVec3, lib, "graphene_triangle_init_from_vec3")
+	core.PuregoSafeRegister(&xTriangleContainsPoint, libs, "graphene_triangle_contains_point")
+	core.PuregoSafeRegister(&xTriangleEqual, libs, "graphene_triangle_equal")
+	core.PuregoSafeRegister(&xTriangleFree, libs, "graphene_triangle_free")
+	core.PuregoSafeRegister(&xTriangleGetArea, libs, "graphene_triangle_get_area")
+	core.PuregoSafeRegister(&xTriangleGetBarycoords, libs, "graphene_triangle_get_barycoords")
+	core.PuregoSafeRegister(&xTriangleGetBoundingBox, libs, "graphene_triangle_get_bounding_box")
+	core.PuregoSafeRegister(&xTriangleGetMidpoint, libs, "graphene_triangle_get_midpoint")
+	core.PuregoSafeRegister(&xTriangleGetNormal, libs, "graphene_triangle_get_normal")
+	core.PuregoSafeRegister(&xTriangleGetPlane, libs, "graphene_triangle_get_plane")
+	core.PuregoSafeRegister(&xTriangleGetPoints, libs, "graphene_triangle_get_points")
+	core.PuregoSafeRegister(&xTriangleGetUv, libs, "graphene_triangle_get_uv")
+	core.PuregoSafeRegister(&xTriangleGetVertices, libs, "graphene_triangle_get_vertices")
+	core.PuregoSafeRegister(&xTriangleInitFromFloat, libs, "graphene_triangle_init_from_float")
+	core.PuregoSafeRegister(&xTriangleInitFromPoint3d, libs, "graphene_triangle_init_from_point3d")
+	core.PuregoSafeRegister(&xTriangleInitFromVec3, libs, "graphene_triangle_init_from_vec3")
 
 }

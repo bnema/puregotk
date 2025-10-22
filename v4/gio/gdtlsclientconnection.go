@@ -148,20 +148,24 @@ func DtlsClientConnectionNew(BaseSocketVar DatagramBased, ServerIdentityVar Sock
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDtlsClientConnectionNew, lib, "g_dtls_client_connection_new")
+	core.PuregoSafeRegister(&xDtlsClientConnectionNew, libs, "g_dtls_client_connection_new")
 
-	core.PuregoSafeRegister(&xDtlsClientConnectionGLibType, lib, "g_dtls_client_connection_get_type")
+	core.PuregoSafeRegister(&xDtlsClientConnectionGLibType, libs, "g_dtls_client_connection_get_type")
 
-	core.PuregoSafeRegister(&XGDtlsClientConnectionGetAcceptedCas, lib, "g_dtls_client_connection_get_accepted_cas")
-	core.PuregoSafeRegister(&XGDtlsClientConnectionGetServerIdentity, lib, "g_dtls_client_connection_get_server_identity")
-	core.PuregoSafeRegister(&XGDtlsClientConnectionGetValidationFlags, lib, "g_dtls_client_connection_get_validation_flags")
-	core.PuregoSafeRegister(&XGDtlsClientConnectionSetServerIdentity, lib, "g_dtls_client_connection_set_server_identity")
-	core.PuregoSafeRegister(&XGDtlsClientConnectionSetValidationFlags, lib, "g_dtls_client_connection_set_validation_flags")
+	core.PuregoSafeRegister(&XGDtlsClientConnectionGetAcceptedCas, libs, "g_dtls_client_connection_get_accepted_cas")
+	core.PuregoSafeRegister(&XGDtlsClientConnectionGetServerIdentity, libs, "g_dtls_client_connection_get_server_identity")
+	core.PuregoSafeRegister(&XGDtlsClientConnectionGetValidationFlags, libs, "g_dtls_client_connection_get_validation_flags")
+	core.PuregoSafeRegister(&XGDtlsClientConnectionSetServerIdentity, libs, "g_dtls_client_connection_set_server_identity")
+	core.PuregoSafeRegister(&XGDtlsClientConnectionSetValidationFlags, libs, "g_dtls_client_connection_set_validation_flags")
 
 }

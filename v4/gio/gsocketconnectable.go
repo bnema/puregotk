@@ -269,16 +269,20 @@ var XGSocketConnectableToString func(uintptr) string
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSocketConnectableGLibType, lib, "g_socket_connectable_get_type")
+	core.PuregoSafeRegister(&xSocketConnectableGLibType, libs, "g_socket_connectable_get_type")
 
-	core.PuregoSafeRegister(&XGSocketConnectableEnumerate, lib, "g_socket_connectable_enumerate")
-	core.PuregoSafeRegister(&XGSocketConnectableProxyEnumerate, lib, "g_socket_connectable_proxy_enumerate")
-	core.PuregoSafeRegister(&XGSocketConnectableToString, lib, "g_socket_connectable_to_string")
+	core.PuregoSafeRegister(&XGSocketConnectableEnumerate, libs, "g_socket_connectable_enumerate")
+	core.PuregoSafeRegister(&XGSocketConnectableProxyEnumerate, libs, "g_socket_connectable_proxy_enumerate")
+	core.PuregoSafeRegister(&XGSocketConnectableToString, libs, "g_socket_connectable_to_string")
 
 }

@@ -259,20 +259,24 @@ func (x *BufferedOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancell
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBufferedOutputStreamGLibType, lib, "g_buffered_output_stream_get_type")
+	core.PuregoSafeRegister(&xBufferedOutputStreamGLibType, libs, "g_buffered_output_stream_get_type")
 
-	core.PuregoSafeRegister(&xNewBufferedOutputStream, lib, "g_buffered_output_stream_new")
-	core.PuregoSafeRegister(&xNewBufferedOutputStreamSized, lib, "g_buffered_output_stream_new_sized")
+	core.PuregoSafeRegister(&xNewBufferedOutputStream, libs, "g_buffered_output_stream_new")
+	core.PuregoSafeRegister(&xNewBufferedOutputStreamSized, libs, "g_buffered_output_stream_new_sized")
 
-	core.PuregoSafeRegister(&xBufferedOutputStreamGetAutoGrow, lib, "g_buffered_output_stream_get_auto_grow")
-	core.PuregoSafeRegister(&xBufferedOutputStreamGetBufferSize, lib, "g_buffered_output_stream_get_buffer_size")
-	core.PuregoSafeRegister(&xBufferedOutputStreamSetAutoGrow, lib, "g_buffered_output_stream_set_auto_grow")
-	core.PuregoSafeRegister(&xBufferedOutputStreamSetBufferSize, lib, "g_buffered_output_stream_set_buffer_size")
+	core.PuregoSafeRegister(&xBufferedOutputStreamGetAutoGrow, libs, "g_buffered_output_stream_get_auto_grow")
+	core.PuregoSafeRegister(&xBufferedOutputStreamGetBufferSize, libs, "g_buffered_output_stream_get_buffer_size")
+	core.PuregoSafeRegister(&xBufferedOutputStreamSetAutoGrow, libs, "g_buffered_output_stream_set_auto_grow")
+	core.PuregoSafeRegister(&xBufferedOutputStreamSetBufferSize, libs, "g_buffered_output_stream_set_buffer_size")
 
 }

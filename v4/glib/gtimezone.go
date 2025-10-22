@@ -330,27 +330,31 @@ const (
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTimeZoneGLibType, lib, "g_time_zone_get_type")
+	core.PuregoSafeRegister(&xTimeZoneGLibType, libs, "g_time_zone_get_type")
 
-	core.PuregoSafeRegister(&xNewTimeZone, lib, "g_time_zone_new")
-	core.PuregoSafeRegister(&xNewTimeZoneIdentifier, lib, "g_time_zone_new_identifier")
-	core.PuregoSafeRegister(&xNewTimeZoneLocal, lib, "g_time_zone_new_local")
-	core.PuregoSafeRegister(&xNewTimeZoneOffset, lib, "g_time_zone_new_offset")
-	core.PuregoSafeRegister(&xNewTimeZoneUtc, lib, "g_time_zone_new_utc")
+	core.PuregoSafeRegister(&xNewTimeZone, libs, "g_time_zone_new")
+	core.PuregoSafeRegister(&xNewTimeZoneIdentifier, libs, "g_time_zone_new_identifier")
+	core.PuregoSafeRegister(&xNewTimeZoneLocal, libs, "g_time_zone_new_local")
+	core.PuregoSafeRegister(&xNewTimeZoneOffset, libs, "g_time_zone_new_offset")
+	core.PuregoSafeRegister(&xNewTimeZoneUtc, libs, "g_time_zone_new_utc")
 
-	core.PuregoSafeRegister(&xTimeZoneAdjustTime, lib, "g_time_zone_adjust_time")
-	core.PuregoSafeRegister(&xTimeZoneFindInterval, lib, "g_time_zone_find_interval")
-	core.PuregoSafeRegister(&xTimeZoneGetAbbreviation, lib, "g_time_zone_get_abbreviation")
-	core.PuregoSafeRegister(&xTimeZoneGetIdentifier, lib, "g_time_zone_get_identifier")
-	core.PuregoSafeRegister(&xTimeZoneGetOffset, lib, "g_time_zone_get_offset")
-	core.PuregoSafeRegister(&xTimeZoneIsDst, lib, "g_time_zone_is_dst")
-	core.PuregoSafeRegister(&xTimeZoneRef, lib, "g_time_zone_ref")
-	core.PuregoSafeRegister(&xTimeZoneUnref, lib, "g_time_zone_unref")
+	core.PuregoSafeRegister(&xTimeZoneAdjustTime, libs, "g_time_zone_adjust_time")
+	core.PuregoSafeRegister(&xTimeZoneFindInterval, libs, "g_time_zone_find_interval")
+	core.PuregoSafeRegister(&xTimeZoneGetAbbreviation, libs, "g_time_zone_get_abbreviation")
+	core.PuregoSafeRegister(&xTimeZoneGetIdentifier, libs, "g_time_zone_get_identifier")
+	core.PuregoSafeRegister(&xTimeZoneGetOffset, libs, "g_time_zone_get_offset")
+	core.PuregoSafeRegister(&xTimeZoneIsDst, libs, "g_time_zone_is_dst")
+	core.PuregoSafeRegister(&xTimeZoneRef, libs, "g_time_zone_ref")
+	core.PuregoSafeRegister(&xTimeZoneUnref, libs, "g_time_zone_unref")
 
 }

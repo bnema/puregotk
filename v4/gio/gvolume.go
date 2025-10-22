@@ -1028,32 +1028,36 @@ const (
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xVolumeGLibType, lib, "g_volume_get_type")
+	core.PuregoSafeRegister(&xVolumeGLibType, libs, "g_volume_get_type")
 
-	core.PuregoSafeRegister(&XGVolumeCanEject, lib, "g_volume_can_eject")
-	core.PuregoSafeRegister(&XGVolumeCanMount, lib, "g_volume_can_mount")
-	core.PuregoSafeRegister(&XGVolumeEject, lib, "g_volume_eject")
-	core.PuregoSafeRegister(&XGVolumeEjectFinish, lib, "g_volume_eject_finish")
-	core.PuregoSafeRegister(&XGVolumeEjectWithOperation, lib, "g_volume_eject_with_operation")
-	core.PuregoSafeRegister(&XGVolumeEjectWithOperationFinish, lib, "g_volume_eject_with_operation_finish")
-	core.PuregoSafeRegister(&XGVolumeEnumerateIdentifiers, lib, "g_volume_enumerate_identifiers")
-	core.PuregoSafeRegister(&XGVolumeGetActivationRoot, lib, "g_volume_get_activation_root")
-	core.PuregoSafeRegister(&XGVolumeGetDrive, lib, "g_volume_get_drive")
-	core.PuregoSafeRegister(&XGVolumeGetIcon, lib, "g_volume_get_icon")
-	core.PuregoSafeRegister(&XGVolumeGetIdentifier, lib, "g_volume_get_identifier")
-	core.PuregoSafeRegister(&XGVolumeGetMount, lib, "g_volume_get_mount")
-	core.PuregoSafeRegister(&XGVolumeGetName, lib, "g_volume_get_name")
-	core.PuregoSafeRegister(&XGVolumeGetSortKey, lib, "g_volume_get_sort_key")
-	core.PuregoSafeRegister(&XGVolumeGetSymbolicIcon, lib, "g_volume_get_symbolic_icon")
-	core.PuregoSafeRegister(&XGVolumeGetUuid, lib, "g_volume_get_uuid")
-	core.PuregoSafeRegister(&XGVolumeMount, lib, "g_volume_mount")
-	core.PuregoSafeRegister(&XGVolumeMountFinish, lib, "g_volume_mount_finish")
-	core.PuregoSafeRegister(&XGVolumeShouldAutomount, lib, "g_volume_should_automount")
+	core.PuregoSafeRegister(&XGVolumeCanEject, libs, "g_volume_can_eject")
+	core.PuregoSafeRegister(&XGVolumeCanMount, libs, "g_volume_can_mount")
+	core.PuregoSafeRegister(&XGVolumeEject, libs, "g_volume_eject")
+	core.PuregoSafeRegister(&XGVolumeEjectFinish, libs, "g_volume_eject_finish")
+	core.PuregoSafeRegister(&XGVolumeEjectWithOperation, libs, "g_volume_eject_with_operation")
+	core.PuregoSafeRegister(&XGVolumeEjectWithOperationFinish, libs, "g_volume_eject_with_operation_finish")
+	core.PuregoSafeRegister(&XGVolumeEnumerateIdentifiers, libs, "g_volume_enumerate_identifiers")
+	core.PuregoSafeRegister(&XGVolumeGetActivationRoot, libs, "g_volume_get_activation_root")
+	core.PuregoSafeRegister(&XGVolumeGetDrive, libs, "g_volume_get_drive")
+	core.PuregoSafeRegister(&XGVolumeGetIcon, libs, "g_volume_get_icon")
+	core.PuregoSafeRegister(&XGVolumeGetIdentifier, libs, "g_volume_get_identifier")
+	core.PuregoSafeRegister(&XGVolumeGetMount, libs, "g_volume_get_mount")
+	core.PuregoSafeRegister(&XGVolumeGetName, libs, "g_volume_get_name")
+	core.PuregoSafeRegister(&XGVolumeGetSortKey, libs, "g_volume_get_sort_key")
+	core.PuregoSafeRegister(&XGVolumeGetSymbolicIcon, libs, "g_volume_get_symbolic_icon")
+	core.PuregoSafeRegister(&XGVolumeGetUuid, libs, "g_volume_get_uuid")
+	core.PuregoSafeRegister(&XGVolumeMount, libs, "g_volume_mount")
+	core.PuregoSafeRegister(&XGVolumeMountFinish, libs, "g_volume_mount_finish")
+	core.PuregoSafeRegister(&XGVolumeShouldAutomount, libs, "g_volume_should_automount")
 
 }

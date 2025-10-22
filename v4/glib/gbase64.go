@@ -97,17 +97,21 @@ func Base64EncodeStep(InVar []byte, LenVar uint, BreakLinesVar bool, OutVar []by
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBase64Decode, lib, "g_base64_decode")
-	core.PuregoSafeRegister(&xBase64DecodeInplace, lib, "g_base64_decode_inplace")
-	core.PuregoSafeRegister(&xBase64DecodeStep, lib, "g_base64_decode_step")
-	core.PuregoSafeRegister(&xBase64Encode, lib, "g_base64_encode")
-	core.PuregoSafeRegister(&xBase64EncodeClose, lib, "g_base64_encode_close")
-	core.PuregoSafeRegister(&xBase64EncodeStep, lib, "g_base64_encode_step")
+	core.PuregoSafeRegister(&xBase64Decode, libs, "g_base64_decode")
+	core.PuregoSafeRegister(&xBase64DecodeInplace, libs, "g_base64_decode_inplace")
+	core.PuregoSafeRegister(&xBase64DecodeStep, libs, "g_base64_decode_step")
+	core.PuregoSafeRegister(&xBase64Encode, libs, "g_base64_encode")
+	core.PuregoSafeRegister(&xBase64EncodeClose, libs, "g_base64_encode_close")
+	core.PuregoSafeRegister(&xBase64EncodeStep, libs, "g_base64_encode_step")
 
 }

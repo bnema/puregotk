@@ -137,18 +137,22 @@ func (x *Completion) SetCompare(StrncmpFuncVar *CompletionStrncmpFunc) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCompletionAddItems, lib, "g_completion_add_items")
-	core.PuregoSafeRegister(&xCompletionClearItems, lib, "g_completion_clear_items")
-	core.PuregoSafeRegister(&xCompletionComplete, lib, "g_completion_complete")
-	core.PuregoSafeRegister(&xCompletionCompleteUtf8, lib, "g_completion_complete_utf8")
-	core.PuregoSafeRegister(&xCompletionFree, lib, "g_completion_free")
-	core.PuregoSafeRegister(&xCompletionRemoveItems, lib, "g_completion_remove_items")
-	core.PuregoSafeRegister(&xCompletionSetCompare, lib, "g_completion_set_compare")
+	core.PuregoSafeRegister(&xCompletionAddItems, libs, "g_completion_add_items")
+	core.PuregoSafeRegister(&xCompletionClearItems, libs, "g_completion_clear_items")
+	core.PuregoSafeRegister(&xCompletionComplete, libs, "g_completion_complete")
+	core.PuregoSafeRegister(&xCompletionCompleteUtf8, libs, "g_completion_complete_utf8")
+	core.PuregoSafeRegister(&xCompletionFree, libs, "g_completion_free")
+	core.PuregoSafeRegister(&xCompletionRemoveItems, libs, "g_completion_remove_items")
+	core.PuregoSafeRegister(&xCompletionSetCompare, libs, "g_completion_set_compare")
 
 }

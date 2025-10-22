@@ -332,19 +332,23 @@ func (x *SimpleAction) GetStateType() *glib.VariantType {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSimpleActionGLibType, lib, "g_simple_action_get_type")
+	core.PuregoSafeRegister(&xSimpleActionGLibType, libs, "g_simple_action_get_type")
 
-	core.PuregoSafeRegister(&xNewSimpleAction, lib, "g_simple_action_new")
-	core.PuregoSafeRegister(&xNewSimpleActionStateful, lib, "g_simple_action_new_stateful")
+	core.PuregoSafeRegister(&xNewSimpleAction, libs, "g_simple_action_new")
+	core.PuregoSafeRegister(&xNewSimpleActionStateful, libs, "g_simple_action_new_stateful")
 
-	core.PuregoSafeRegister(&xSimpleActionSetEnabled, lib, "g_simple_action_set_enabled")
-	core.PuregoSafeRegister(&xSimpleActionSetState, lib, "g_simple_action_set_state")
-	core.PuregoSafeRegister(&xSimpleActionSetStateHint, lib, "g_simple_action_set_state_hint")
+	core.PuregoSafeRegister(&xSimpleActionSetEnabled, libs, "g_simple_action_set_enabled")
+	core.PuregoSafeRegister(&xSimpleActionSetState, libs, "g_simple_action_set_state")
+	core.PuregoSafeRegister(&xSimpleActionSetStateHint, libs, "g_simple_action_set_state_hint")
 
 }

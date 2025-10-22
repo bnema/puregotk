@@ -526,45 +526,49 @@ func UpdateLayout(CrVar *cairo.Context, LayoutVar *pango.Layout) {
 
 func init() {
 	core.SetPackageName("PANGOCAIRO", "pangocairo")
-	core.SetSharedLibrary("PANGOCAIRO", "libpangocairo-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGOCAIRO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGOCAIRO", []string{"libpangocairo-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGOCAIRO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xContextGetFontOptions, lib, "pango_cairo_context_get_font_options")
-	core.PuregoSafeRegister(&xContextGetResolution, lib, "pango_cairo_context_get_resolution")
-	core.PuregoSafeRegister(&xContextGetShapeRenderer, lib, "pango_cairo_context_get_shape_renderer")
-	core.PuregoSafeRegister(&xContextSetFontOptions, lib, "pango_cairo_context_set_font_options")
-	core.PuregoSafeRegister(&xContextSetResolution, lib, "pango_cairo_context_set_resolution")
-	core.PuregoSafeRegister(&xContextSetShapeRenderer, lib, "pango_cairo_context_set_shape_renderer")
-	core.PuregoSafeRegister(&xCreateContext, lib, "pango_cairo_create_context")
-	core.PuregoSafeRegister(&xCreateLayout, lib, "pango_cairo_create_layout")
-	core.PuregoSafeRegister(&xErrorUnderlinePath, lib, "pango_cairo_error_underline_path")
-	core.PuregoSafeRegister(&xFontMapGetDefault, lib, "pango_cairo_font_map_get_default")
-	core.PuregoSafeRegister(&xFontMapNew, lib, "pango_cairo_font_map_new")
-	core.PuregoSafeRegister(&xFontMapNewForFontType, lib, "pango_cairo_font_map_new_for_font_type")
-	core.PuregoSafeRegister(&xGlyphStringPath, lib, "pango_cairo_glyph_string_path")
-	core.PuregoSafeRegister(&xLayoutLinePath, lib, "pango_cairo_layout_line_path")
-	core.PuregoSafeRegister(&xLayoutPath, lib, "pango_cairo_layout_path")
-	core.PuregoSafeRegister(&xShowErrorUnderline, lib, "pango_cairo_show_error_underline")
-	core.PuregoSafeRegister(&xShowGlyphItem, lib, "pango_cairo_show_glyph_item")
-	core.PuregoSafeRegister(&xShowGlyphString, lib, "pango_cairo_show_glyph_string")
-	core.PuregoSafeRegister(&xShowLayout, lib, "pango_cairo_show_layout")
-	core.PuregoSafeRegister(&xShowLayoutLine, lib, "pango_cairo_show_layout_line")
-	core.PuregoSafeRegister(&xUpdateContext, lib, "pango_cairo_update_context")
-	core.PuregoSafeRegister(&xUpdateLayout, lib, "pango_cairo_update_layout")
+	core.PuregoSafeRegister(&xContextGetFontOptions, libs, "pango_cairo_context_get_font_options")
+	core.PuregoSafeRegister(&xContextGetResolution, libs, "pango_cairo_context_get_resolution")
+	core.PuregoSafeRegister(&xContextGetShapeRenderer, libs, "pango_cairo_context_get_shape_renderer")
+	core.PuregoSafeRegister(&xContextSetFontOptions, libs, "pango_cairo_context_set_font_options")
+	core.PuregoSafeRegister(&xContextSetResolution, libs, "pango_cairo_context_set_resolution")
+	core.PuregoSafeRegister(&xContextSetShapeRenderer, libs, "pango_cairo_context_set_shape_renderer")
+	core.PuregoSafeRegister(&xCreateContext, libs, "pango_cairo_create_context")
+	core.PuregoSafeRegister(&xCreateLayout, libs, "pango_cairo_create_layout")
+	core.PuregoSafeRegister(&xErrorUnderlinePath, libs, "pango_cairo_error_underline_path")
+	core.PuregoSafeRegister(&xFontMapGetDefault, libs, "pango_cairo_font_map_get_default")
+	core.PuregoSafeRegister(&xFontMapNew, libs, "pango_cairo_font_map_new")
+	core.PuregoSafeRegister(&xFontMapNewForFontType, libs, "pango_cairo_font_map_new_for_font_type")
+	core.PuregoSafeRegister(&xGlyphStringPath, libs, "pango_cairo_glyph_string_path")
+	core.PuregoSafeRegister(&xLayoutLinePath, libs, "pango_cairo_layout_line_path")
+	core.PuregoSafeRegister(&xLayoutPath, libs, "pango_cairo_layout_path")
+	core.PuregoSafeRegister(&xShowErrorUnderline, libs, "pango_cairo_show_error_underline")
+	core.PuregoSafeRegister(&xShowGlyphItem, libs, "pango_cairo_show_glyph_item")
+	core.PuregoSafeRegister(&xShowGlyphString, libs, "pango_cairo_show_glyph_string")
+	core.PuregoSafeRegister(&xShowLayout, libs, "pango_cairo_show_layout")
+	core.PuregoSafeRegister(&xShowLayoutLine, libs, "pango_cairo_show_layout_line")
+	core.PuregoSafeRegister(&xUpdateContext, libs, "pango_cairo_update_context")
+	core.PuregoSafeRegister(&xUpdateLayout, libs, "pango_cairo_update_layout")
 
-	core.PuregoSafeRegister(&xFontGLibType, lib, "pango_cairo_font_get_type")
+	core.PuregoSafeRegister(&xFontGLibType, libs, "pango_cairo_font_get_type")
 
-	core.PuregoSafeRegister(&XPangoCairoFontGetScaledFont, lib, "pango_cairo_font_get_scaled_font")
+	core.PuregoSafeRegister(&XPangoCairoFontGetScaledFont, libs, "pango_cairo_font_get_scaled_font")
 
-	core.PuregoSafeRegister(&xFontMapGLibType, lib, "pango_cairo_font_map_get_type")
+	core.PuregoSafeRegister(&xFontMapGLibType, libs, "pango_cairo_font_map_get_type")
 
-	core.PuregoSafeRegister(&XPangoCairoFontMapCreateContext, lib, "pango_cairo_font_map_create_context")
-	core.PuregoSafeRegister(&XPangoCairoFontMapGetFontType, lib, "pango_cairo_font_map_get_font_type")
-	core.PuregoSafeRegister(&XPangoCairoFontMapGetResolution, lib, "pango_cairo_font_map_get_resolution")
-	core.PuregoSafeRegister(&XPangoCairoFontMapSetDefault, lib, "pango_cairo_font_map_set_default")
-	core.PuregoSafeRegister(&XPangoCairoFontMapSetResolution, lib, "pango_cairo_font_map_set_resolution")
+	core.PuregoSafeRegister(&XPangoCairoFontMapCreateContext, libs, "pango_cairo_font_map_create_context")
+	core.PuregoSafeRegister(&XPangoCairoFontMapGetFontType, libs, "pango_cairo_font_map_get_font_type")
+	core.PuregoSafeRegister(&XPangoCairoFontMapGetResolution, libs, "pango_cairo_font_map_get_resolution")
+	core.PuregoSafeRegister(&XPangoCairoFontMapSetDefault, libs, "pango_cairo_font_map_set_default")
+	core.PuregoSafeRegister(&XPangoCairoFontMapSetResolution, libs, "pango_cairo_font_map_set_resolution")
 
 }

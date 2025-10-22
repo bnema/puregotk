@@ -39,14 +39,18 @@ func StrdupValueContents(ValueVar *Value) string {
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGtypeGetType, lib, "g_gtype_get_type")
-	core.PuregoSafeRegister(&xPointerTypeRegisterStatic, lib, "g_pointer_type_register_static")
-	core.PuregoSafeRegister(&xStrdupValueContents, lib, "g_strdup_value_contents")
+	core.PuregoSafeRegister(&xGtypeGetType, libs, "g_gtype_get_type")
+	core.PuregoSafeRegister(&xPointerTypeRegisterStatic, libs, "g_pointer_type_register_static")
+	core.PuregoSafeRegister(&xStrdupValueContents, libs, "g_strdup_value_contents")
 
 }

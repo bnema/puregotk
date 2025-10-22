@@ -51,13 +51,17 @@ func PangoLayoutLineGetClipRegion(LineVar *pango.LayoutLine, XOriginVar int, YOr
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPangoLayoutGetClipRegion, lib, "gdk_pango_layout_get_clip_region")
-	core.PuregoSafeRegister(&xPangoLayoutLineGetClipRegion, lib, "gdk_pango_layout_line_get_clip_region")
+	core.PuregoSafeRegister(&xPangoLayoutGetClipRegion, libs, "gdk_pango_layout_get_clip_region")
+	core.PuregoSafeRegister(&xPangoLayoutLineGetClipRegion, libs, "gdk_pango_layout_line_get_clip_region")
 
 }

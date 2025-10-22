@@ -17,12 +17,16 @@ func StrokeEqual(Stroke1Var uintptr, Stroke2Var uintptr) bool {
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibrary("GSK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GSK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GSK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStrokeEqual, lib, "gsk_stroke_equal")
+	core.PuregoSafeRegister(&xStrokeEqual, libs, "gsk_stroke_equal")
 
 }

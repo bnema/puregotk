@@ -837,43 +837,47 @@ func DesktopAppInfoSetDesktopEnv(DesktopEnvVar string) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDesktopAppInfoGLibType, lib, "g_desktop_app_info_get_type")
+	core.PuregoSafeRegister(&xDesktopAppInfoGLibType, libs, "g_desktop_app_info_get_type")
 
-	core.PuregoSafeRegister(&xNewDesktopAppInfo, lib, "g_desktop_app_info_new")
-	core.PuregoSafeRegister(&xNewDesktopAppInfoFromFilename, lib, "g_desktop_app_info_new_from_filename")
-	core.PuregoSafeRegister(&xNewDesktopAppInfoFromKeyfile, lib, "g_desktop_app_info_new_from_keyfile")
+	core.PuregoSafeRegister(&xNewDesktopAppInfo, libs, "g_desktop_app_info_new")
+	core.PuregoSafeRegister(&xNewDesktopAppInfoFromFilename, libs, "g_desktop_app_info_new_from_filename")
+	core.PuregoSafeRegister(&xNewDesktopAppInfoFromKeyfile, libs, "g_desktop_app_info_new_from_keyfile")
 
-	core.PuregoSafeRegister(&xDesktopAppInfoGetActionName, lib, "g_desktop_app_info_get_action_name")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetBoolean, lib, "g_desktop_app_info_get_boolean")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetCategories, lib, "g_desktop_app_info_get_categories")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetFilename, lib, "g_desktop_app_info_get_filename")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetGenericName, lib, "g_desktop_app_info_get_generic_name")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetIsHidden, lib, "g_desktop_app_info_get_is_hidden")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetKeywords, lib, "g_desktop_app_info_get_keywords")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetLocaleString, lib, "g_desktop_app_info_get_locale_string")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetNodisplay, lib, "g_desktop_app_info_get_nodisplay")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetShowIn, lib, "g_desktop_app_info_get_show_in")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetStartupWmClass, lib, "g_desktop_app_info_get_startup_wm_class")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetString, lib, "g_desktop_app_info_get_string")
-	core.PuregoSafeRegister(&xDesktopAppInfoGetStringList, lib, "g_desktop_app_info_get_string_list")
-	core.PuregoSafeRegister(&xDesktopAppInfoHasKey, lib, "g_desktop_app_info_has_key")
-	core.PuregoSafeRegister(&xDesktopAppInfoLaunchAction, lib, "g_desktop_app_info_launch_action")
-	core.PuregoSafeRegister(&xDesktopAppInfoLaunchUrisAsManager, lib, "g_desktop_app_info_launch_uris_as_manager")
-	core.PuregoSafeRegister(&xDesktopAppInfoLaunchUrisAsManagerWithFds, lib, "g_desktop_app_info_launch_uris_as_manager_with_fds")
-	core.PuregoSafeRegister(&xDesktopAppInfoListActions, lib, "g_desktop_app_info_list_actions")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetActionName, libs, "g_desktop_app_info_get_action_name")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetBoolean, libs, "g_desktop_app_info_get_boolean")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetCategories, libs, "g_desktop_app_info_get_categories")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetFilename, libs, "g_desktop_app_info_get_filename")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetGenericName, libs, "g_desktop_app_info_get_generic_name")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetIsHidden, libs, "g_desktop_app_info_get_is_hidden")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetKeywords, libs, "g_desktop_app_info_get_keywords")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetLocaleString, libs, "g_desktop_app_info_get_locale_string")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetNodisplay, libs, "g_desktop_app_info_get_nodisplay")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetShowIn, libs, "g_desktop_app_info_get_show_in")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetStartupWmClass, libs, "g_desktop_app_info_get_startup_wm_class")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetString, libs, "g_desktop_app_info_get_string")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetStringList, libs, "g_desktop_app_info_get_string_list")
+	core.PuregoSafeRegister(&xDesktopAppInfoHasKey, libs, "g_desktop_app_info_has_key")
+	core.PuregoSafeRegister(&xDesktopAppInfoLaunchAction, libs, "g_desktop_app_info_launch_action")
+	core.PuregoSafeRegister(&xDesktopAppInfoLaunchUrisAsManager, libs, "g_desktop_app_info_launch_uris_as_manager")
+	core.PuregoSafeRegister(&xDesktopAppInfoLaunchUrisAsManagerWithFds, libs, "g_desktop_app_info_launch_uris_as_manager_with_fds")
+	core.PuregoSafeRegister(&xDesktopAppInfoListActions, libs, "g_desktop_app_info_list_actions")
 
-	core.PuregoSafeRegister(&xDesktopAppInfoGetImplementations, lib, "g_desktop_app_info_get_implementations")
-	core.PuregoSafeRegister(&xDesktopAppInfoSearch, lib, "g_desktop_app_info_search")
-	core.PuregoSafeRegister(&xDesktopAppInfoSetDesktopEnv, lib, "g_desktop_app_info_set_desktop_env")
+	core.PuregoSafeRegister(&xDesktopAppInfoGetImplementations, libs, "g_desktop_app_info_get_implementations")
+	core.PuregoSafeRegister(&xDesktopAppInfoSearch, libs, "g_desktop_app_info_search")
+	core.PuregoSafeRegister(&xDesktopAppInfoSetDesktopEnv, libs, "g_desktop_app_info_set_desktop_env")
 
-	core.PuregoSafeRegister(&xDesktopAppInfoLookupGLibType, lib, "g_desktop_app_info_lookup_get_type")
+	core.PuregoSafeRegister(&xDesktopAppInfoLookupGLibType, libs, "g_desktop_app_info_lookup_get_type")
 
-	core.PuregoSafeRegister(&XGDesktopAppInfoLookupGetDefaultForUriScheme, lib, "g_desktop_app_info_lookup_get_default_for_uri_scheme")
+	core.PuregoSafeRegister(&XGDesktopAppInfoLookupGetDefaultForUriScheme, libs, "g_desktop_app_info_lookup_get_default_for_uri_scheme")
 
 }

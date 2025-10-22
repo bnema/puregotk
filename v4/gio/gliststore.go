@@ -306,25 +306,29 @@ func (x *ListStore) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uin
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xListStoreGLibType, lib, "g_list_store_get_type")
+	core.PuregoSafeRegister(&xListStoreGLibType, libs, "g_list_store_get_type")
 
-	core.PuregoSafeRegister(&xNewListStore, lib, "g_list_store_new")
+	core.PuregoSafeRegister(&xNewListStore, libs, "g_list_store_new")
 
-	core.PuregoSafeRegister(&xListStoreAppend, lib, "g_list_store_append")
-	core.PuregoSafeRegister(&xListStoreFind, lib, "g_list_store_find")
-	core.PuregoSafeRegister(&xListStoreFindWithEqualFunc, lib, "g_list_store_find_with_equal_func")
-	core.PuregoSafeRegister(&xListStoreFindWithEqualFuncFull, lib, "g_list_store_find_with_equal_func_full")
-	core.PuregoSafeRegister(&xListStoreInsert, lib, "g_list_store_insert")
-	core.PuregoSafeRegister(&xListStoreInsertSorted, lib, "g_list_store_insert_sorted")
-	core.PuregoSafeRegister(&xListStoreRemove, lib, "g_list_store_remove")
-	core.PuregoSafeRegister(&xListStoreRemoveAll, lib, "g_list_store_remove_all")
-	core.PuregoSafeRegister(&xListStoreSort, lib, "g_list_store_sort")
-	core.PuregoSafeRegister(&xListStoreSplice, lib, "g_list_store_splice")
+	core.PuregoSafeRegister(&xListStoreAppend, libs, "g_list_store_append")
+	core.PuregoSafeRegister(&xListStoreFind, libs, "g_list_store_find")
+	core.PuregoSafeRegister(&xListStoreFindWithEqualFunc, libs, "g_list_store_find_with_equal_func")
+	core.PuregoSafeRegister(&xListStoreFindWithEqualFuncFull, libs, "g_list_store_find_with_equal_func_full")
+	core.PuregoSafeRegister(&xListStoreInsert, libs, "g_list_store_insert")
+	core.PuregoSafeRegister(&xListStoreInsertSorted, libs, "g_list_store_insert_sorted")
+	core.PuregoSafeRegister(&xListStoreRemove, libs, "g_list_store_remove")
+	core.PuregoSafeRegister(&xListStoreRemoveAll, libs, "g_list_store_remove_all")
+	core.PuregoSafeRegister(&xListStoreSort, libs, "g_list_store_sort")
+	core.PuregoSafeRegister(&xListStoreSplice, libs, "g_list_store_splice")
 
 }

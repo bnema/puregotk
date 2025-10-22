@@ -131,17 +131,21 @@ func QuarkTryString(StringVar string) Quark {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInternStaticString, lib, "g_intern_static_string")
-	core.PuregoSafeRegister(&xInternString, lib, "g_intern_string")
-	core.PuregoSafeRegister(&xQuarkFromStaticString, lib, "g_quark_from_static_string")
-	core.PuregoSafeRegister(&xQuarkFromString, lib, "g_quark_from_string")
-	core.PuregoSafeRegister(&xQuarkToString, lib, "g_quark_to_string")
-	core.PuregoSafeRegister(&xQuarkTryString, lib, "g_quark_try_string")
+	core.PuregoSafeRegister(&xInternStaticString, libs, "g_intern_static_string")
+	core.PuregoSafeRegister(&xInternString, libs, "g_intern_string")
+	core.PuregoSafeRegister(&xQuarkFromStaticString, libs, "g_quark_from_static_string")
+	core.PuregoSafeRegister(&xQuarkFromString, libs, "g_quark_from_string")
+	core.PuregoSafeRegister(&xQuarkToString, libs, "g_quark_to_string")
+	core.PuregoSafeRegister(&xQuarkTryString, libs, "g_quark_try_string")
 
 }

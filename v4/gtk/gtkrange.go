@@ -858,35 +858,39 @@ func (x *Range) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRangeGLibType, lib, "gtk_range_get_type")
+	core.PuregoSafeRegister(&xRangeGLibType, libs, "gtk_range_get_type")
 
-	core.PuregoSafeRegister(&xRangeGetAdjustment, lib, "gtk_range_get_adjustment")
-	core.PuregoSafeRegister(&xRangeGetFillLevel, lib, "gtk_range_get_fill_level")
-	core.PuregoSafeRegister(&xRangeGetFlippable, lib, "gtk_range_get_flippable")
-	core.PuregoSafeRegister(&xRangeGetInverted, lib, "gtk_range_get_inverted")
-	core.PuregoSafeRegister(&xRangeGetRangeRect, lib, "gtk_range_get_range_rect")
-	core.PuregoSafeRegister(&xRangeGetRestrictToFillLevel, lib, "gtk_range_get_restrict_to_fill_level")
-	core.PuregoSafeRegister(&xRangeGetRoundDigits, lib, "gtk_range_get_round_digits")
-	core.PuregoSafeRegister(&xRangeGetShowFillLevel, lib, "gtk_range_get_show_fill_level")
-	core.PuregoSafeRegister(&xRangeGetSliderRange, lib, "gtk_range_get_slider_range")
-	core.PuregoSafeRegister(&xRangeGetSliderSizeFixed, lib, "gtk_range_get_slider_size_fixed")
-	core.PuregoSafeRegister(&xRangeGetValue, lib, "gtk_range_get_value")
-	core.PuregoSafeRegister(&xRangeSetAdjustment, lib, "gtk_range_set_adjustment")
-	core.PuregoSafeRegister(&xRangeSetFillLevel, lib, "gtk_range_set_fill_level")
-	core.PuregoSafeRegister(&xRangeSetFlippable, lib, "gtk_range_set_flippable")
-	core.PuregoSafeRegister(&xRangeSetIncrements, lib, "gtk_range_set_increments")
-	core.PuregoSafeRegister(&xRangeSetInverted, lib, "gtk_range_set_inverted")
-	core.PuregoSafeRegister(&xRangeSetRange, lib, "gtk_range_set_range")
-	core.PuregoSafeRegister(&xRangeSetRestrictToFillLevel, lib, "gtk_range_set_restrict_to_fill_level")
-	core.PuregoSafeRegister(&xRangeSetRoundDigits, lib, "gtk_range_set_round_digits")
-	core.PuregoSafeRegister(&xRangeSetShowFillLevel, lib, "gtk_range_set_show_fill_level")
-	core.PuregoSafeRegister(&xRangeSetSliderSizeFixed, lib, "gtk_range_set_slider_size_fixed")
-	core.PuregoSafeRegister(&xRangeSetValue, lib, "gtk_range_set_value")
+	core.PuregoSafeRegister(&xRangeGetAdjustment, libs, "gtk_range_get_adjustment")
+	core.PuregoSafeRegister(&xRangeGetFillLevel, libs, "gtk_range_get_fill_level")
+	core.PuregoSafeRegister(&xRangeGetFlippable, libs, "gtk_range_get_flippable")
+	core.PuregoSafeRegister(&xRangeGetInverted, libs, "gtk_range_get_inverted")
+	core.PuregoSafeRegister(&xRangeGetRangeRect, libs, "gtk_range_get_range_rect")
+	core.PuregoSafeRegister(&xRangeGetRestrictToFillLevel, libs, "gtk_range_get_restrict_to_fill_level")
+	core.PuregoSafeRegister(&xRangeGetRoundDigits, libs, "gtk_range_get_round_digits")
+	core.PuregoSafeRegister(&xRangeGetShowFillLevel, libs, "gtk_range_get_show_fill_level")
+	core.PuregoSafeRegister(&xRangeGetSliderRange, libs, "gtk_range_get_slider_range")
+	core.PuregoSafeRegister(&xRangeGetSliderSizeFixed, libs, "gtk_range_get_slider_size_fixed")
+	core.PuregoSafeRegister(&xRangeGetValue, libs, "gtk_range_get_value")
+	core.PuregoSafeRegister(&xRangeSetAdjustment, libs, "gtk_range_set_adjustment")
+	core.PuregoSafeRegister(&xRangeSetFillLevel, libs, "gtk_range_set_fill_level")
+	core.PuregoSafeRegister(&xRangeSetFlippable, libs, "gtk_range_set_flippable")
+	core.PuregoSafeRegister(&xRangeSetIncrements, libs, "gtk_range_set_increments")
+	core.PuregoSafeRegister(&xRangeSetInverted, libs, "gtk_range_set_inverted")
+	core.PuregoSafeRegister(&xRangeSetRange, libs, "gtk_range_set_range")
+	core.PuregoSafeRegister(&xRangeSetRestrictToFillLevel, libs, "gtk_range_set_restrict_to_fill_level")
+	core.PuregoSafeRegister(&xRangeSetRoundDigits, libs, "gtk_range_set_round_digits")
+	core.PuregoSafeRegister(&xRangeSetShowFillLevel, libs, "gtk_range_set_show_fill_level")
+	core.PuregoSafeRegister(&xRangeSetSliderSizeFixed, libs, "gtk_range_set_slider_size_fixed")
+	core.PuregoSafeRegister(&xRangeSetValue, libs, "gtk_range_set_value")
 
 }

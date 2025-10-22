@@ -144,19 +144,23 @@ func ModuleSupported() bool {
 
 func init() {
 	core.SetPackageName("GMODULE", "gmodule-2.0")
-	core.SetSharedLibrary("GMODULE", "libgmodule-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GMODULE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GMODULE", []string{"libgmodule-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GMODULE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xModuleBuildPath, lib, "g_module_build_path")
-	core.PuregoSafeRegister(&xNewModuleError, lib, "g_module_error")
-	core.PuregoSafeRegister(&xModuleSupported, lib, "g_module_supported")
+	core.PuregoSafeRegister(&xModuleBuildPath, libs, "g_module_build_path")
+	core.PuregoSafeRegister(&xNewModuleError, libs, "g_module_error")
+	core.PuregoSafeRegister(&xModuleSupported, libs, "g_module_supported")
 
-	core.PuregoSafeRegister(&xModuleClose, lib, "g_module_close")
-	core.PuregoSafeRegister(&xModuleMakeResident, lib, "g_module_make_resident")
-	core.PuregoSafeRegister(&xModuleName, lib, "g_module_name")
-	core.PuregoSafeRegister(&xModuleSymbol, lib, "g_module_symbol")
+	core.PuregoSafeRegister(&xModuleClose, libs, "g_module_close")
+	core.PuregoSafeRegister(&xModuleMakeResident, libs, "g_module_make_resident")
+	core.PuregoSafeRegister(&xModuleName, libs, "g_module_name")
+	core.PuregoSafeRegister(&xModuleSymbol, libs, "g_module_symbol")
 
 }

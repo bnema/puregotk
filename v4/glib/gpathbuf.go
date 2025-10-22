@@ -276,25 +276,29 @@ func PathBufEqual(V1Var uintptr, V2Var uintptr) bool {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPathBufEqual, lib, "g_path_buf_equal")
+	core.PuregoSafeRegister(&xPathBufEqual, libs, "g_path_buf_equal")
 
-	core.PuregoSafeRegister(&xPathBufClear, lib, "g_path_buf_clear")
-	core.PuregoSafeRegister(&xPathBufClearToPath, lib, "g_path_buf_clear_to_path")
-	core.PuregoSafeRegister(&xPathBufCopy, lib, "g_path_buf_copy")
-	core.PuregoSafeRegister(&xPathBufFree, lib, "g_path_buf_free")
-	core.PuregoSafeRegister(&xPathBufFreeToPath, lib, "g_path_buf_free_to_path")
-	core.PuregoSafeRegister(&xPathBufInit, lib, "g_path_buf_init")
-	core.PuregoSafeRegister(&xPathBufInitFromPath, lib, "g_path_buf_init_from_path")
-	core.PuregoSafeRegister(&xPathBufPop, lib, "g_path_buf_pop")
-	core.PuregoSafeRegister(&xPathBufPush, lib, "g_path_buf_push")
-	core.PuregoSafeRegister(&xPathBufSetExtension, lib, "g_path_buf_set_extension")
-	core.PuregoSafeRegister(&xPathBufSetFilename, lib, "g_path_buf_set_filename")
-	core.PuregoSafeRegister(&xPathBufToPath, lib, "g_path_buf_to_path")
+	core.PuregoSafeRegister(&xPathBufClear, libs, "g_path_buf_clear")
+	core.PuregoSafeRegister(&xPathBufClearToPath, libs, "g_path_buf_clear_to_path")
+	core.PuregoSafeRegister(&xPathBufCopy, libs, "g_path_buf_copy")
+	core.PuregoSafeRegister(&xPathBufFree, libs, "g_path_buf_free")
+	core.PuregoSafeRegister(&xPathBufFreeToPath, libs, "g_path_buf_free_to_path")
+	core.PuregoSafeRegister(&xPathBufInit, libs, "g_path_buf_init")
+	core.PuregoSafeRegister(&xPathBufInitFromPath, libs, "g_path_buf_init_from_path")
+	core.PuregoSafeRegister(&xPathBufPop, libs, "g_path_buf_pop")
+	core.PuregoSafeRegister(&xPathBufPush, libs, "g_path_buf_push")
+	core.PuregoSafeRegister(&xPathBufSetExtension, libs, "g_path_buf_set_extension")
+	core.PuregoSafeRegister(&xPathBufSetFilename, libs, "g_path_buf_set_filename")
+	core.PuregoSafeRegister(&xPathBufToPath, libs, "g_path_buf_to_path")
 
 }

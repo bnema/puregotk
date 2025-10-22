@@ -494,47 +494,51 @@ func (x *WrapLayout) SetOrientation(OrientationVar gtk.Orientation) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xJustifyModeGLibType, lib, "adw_justify_mode_get_type")
+	core.PuregoSafeRegister(&xJustifyModeGLibType, libs, "adw_justify_mode_get_type")
 
-	core.PuregoSafeRegister(&xPackDirectionGLibType, lib, "adw_pack_direction_get_type")
+	core.PuregoSafeRegister(&xPackDirectionGLibType, libs, "adw_pack_direction_get_type")
 
-	core.PuregoSafeRegister(&xWrapPolicyGLibType, lib, "adw_wrap_policy_get_type")
+	core.PuregoSafeRegister(&xWrapPolicyGLibType, libs, "adw_wrap_policy_get_type")
 
-	core.PuregoSafeRegister(&xWrapLayoutGLibType, lib, "adw_wrap_layout_get_type")
+	core.PuregoSafeRegister(&xWrapLayoutGLibType, libs, "adw_wrap_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewWrapLayout, lib, "adw_wrap_layout_new")
+	core.PuregoSafeRegister(&xNewWrapLayout, libs, "adw_wrap_layout_new")
 
-	core.PuregoSafeRegister(&xWrapLayoutGetAlign, lib, "adw_wrap_layout_get_align")
-	core.PuregoSafeRegister(&xWrapLayoutGetChildSpacing, lib, "adw_wrap_layout_get_child_spacing")
-	core.PuregoSafeRegister(&xWrapLayoutGetChildSpacingUnit, lib, "adw_wrap_layout_get_child_spacing_unit")
-	core.PuregoSafeRegister(&xWrapLayoutGetJustify, lib, "adw_wrap_layout_get_justify")
-	core.PuregoSafeRegister(&xWrapLayoutGetJustifyLastLine, lib, "adw_wrap_layout_get_justify_last_line")
-	core.PuregoSafeRegister(&xWrapLayoutGetLineHomogeneous, lib, "adw_wrap_layout_get_line_homogeneous")
-	core.PuregoSafeRegister(&xWrapLayoutGetLineSpacing, lib, "adw_wrap_layout_get_line_spacing")
-	core.PuregoSafeRegister(&xWrapLayoutGetLineSpacingUnit, lib, "adw_wrap_layout_get_line_spacing_unit")
-	core.PuregoSafeRegister(&xWrapLayoutGetNaturalLineLength, lib, "adw_wrap_layout_get_natural_line_length")
-	core.PuregoSafeRegister(&xWrapLayoutGetNaturalLineLengthUnit, lib, "adw_wrap_layout_get_natural_line_length_unit")
-	core.PuregoSafeRegister(&xWrapLayoutGetPackDirection, lib, "adw_wrap_layout_get_pack_direction")
-	core.PuregoSafeRegister(&xWrapLayoutGetWrapPolicy, lib, "adw_wrap_layout_get_wrap_policy")
-	core.PuregoSafeRegister(&xWrapLayoutGetWrapReverse, lib, "adw_wrap_layout_get_wrap_reverse")
-	core.PuregoSafeRegister(&xWrapLayoutSetAlign, lib, "adw_wrap_layout_set_align")
-	core.PuregoSafeRegister(&xWrapLayoutSetChildSpacing, lib, "adw_wrap_layout_set_child_spacing")
-	core.PuregoSafeRegister(&xWrapLayoutSetChildSpacingUnit, lib, "adw_wrap_layout_set_child_spacing_unit")
-	core.PuregoSafeRegister(&xWrapLayoutSetJustify, lib, "adw_wrap_layout_set_justify")
-	core.PuregoSafeRegister(&xWrapLayoutSetJustifyLastLine, lib, "adw_wrap_layout_set_justify_last_line")
-	core.PuregoSafeRegister(&xWrapLayoutSetLineHomogeneous, lib, "adw_wrap_layout_set_line_homogeneous")
-	core.PuregoSafeRegister(&xWrapLayoutSetLineSpacing, lib, "adw_wrap_layout_set_line_spacing")
-	core.PuregoSafeRegister(&xWrapLayoutSetLineSpacingUnit, lib, "adw_wrap_layout_set_line_spacing_unit")
-	core.PuregoSafeRegister(&xWrapLayoutSetNaturalLineLength, lib, "adw_wrap_layout_set_natural_line_length")
-	core.PuregoSafeRegister(&xWrapLayoutSetNaturalLineLengthUnit, lib, "adw_wrap_layout_set_natural_line_length_unit")
-	core.PuregoSafeRegister(&xWrapLayoutSetPackDirection, lib, "adw_wrap_layout_set_pack_direction")
-	core.PuregoSafeRegister(&xWrapLayoutSetWrapPolicy, lib, "adw_wrap_layout_set_wrap_policy")
-	core.PuregoSafeRegister(&xWrapLayoutSetWrapReverse, lib, "adw_wrap_layout_set_wrap_reverse")
+	core.PuregoSafeRegister(&xWrapLayoutGetAlign, libs, "adw_wrap_layout_get_align")
+	core.PuregoSafeRegister(&xWrapLayoutGetChildSpacing, libs, "adw_wrap_layout_get_child_spacing")
+	core.PuregoSafeRegister(&xWrapLayoutGetChildSpacingUnit, libs, "adw_wrap_layout_get_child_spacing_unit")
+	core.PuregoSafeRegister(&xWrapLayoutGetJustify, libs, "adw_wrap_layout_get_justify")
+	core.PuregoSafeRegister(&xWrapLayoutGetJustifyLastLine, libs, "adw_wrap_layout_get_justify_last_line")
+	core.PuregoSafeRegister(&xWrapLayoutGetLineHomogeneous, libs, "adw_wrap_layout_get_line_homogeneous")
+	core.PuregoSafeRegister(&xWrapLayoutGetLineSpacing, libs, "adw_wrap_layout_get_line_spacing")
+	core.PuregoSafeRegister(&xWrapLayoutGetLineSpacingUnit, libs, "adw_wrap_layout_get_line_spacing_unit")
+	core.PuregoSafeRegister(&xWrapLayoutGetNaturalLineLength, libs, "adw_wrap_layout_get_natural_line_length")
+	core.PuregoSafeRegister(&xWrapLayoutGetNaturalLineLengthUnit, libs, "adw_wrap_layout_get_natural_line_length_unit")
+	core.PuregoSafeRegister(&xWrapLayoutGetPackDirection, libs, "adw_wrap_layout_get_pack_direction")
+	core.PuregoSafeRegister(&xWrapLayoutGetWrapPolicy, libs, "adw_wrap_layout_get_wrap_policy")
+	core.PuregoSafeRegister(&xWrapLayoutGetWrapReverse, libs, "adw_wrap_layout_get_wrap_reverse")
+	core.PuregoSafeRegister(&xWrapLayoutSetAlign, libs, "adw_wrap_layout_set_align")
+	core.PuregoSafeRegister(&xWrapLayoutSetChildSpacing, libs, "adw_wrap_layout_set_child_spacing")
+	core.PuregoSafeRegister(&xWrapLayoutSetChildSpacingUnit, libs, "adw_wrap_layout_set_child_spacing_unit")
+	core.PuregoSafeRegister(&xWrapLayoutSetJustify, libs, "adw_wrap_layout_set_justify")
+	core.PuregoSafeRegister(&xWrapLayoutSetJustifyLastLine, libs, "adw_wrap_layout_set_justify_last_line")
+	core.PuregoSafeRegister(&xWrapLayoutSetLineHomogeneous, libs, "adw_wrap_layout_set_line_homogeneous")
+	core.PuregoSafeRegister(&xWrapLayoutSetLineSpacing, libs, "adw_wrap_layout_set_line_spacing")
+	core.PuregoSafeRegister(&xWrapLayoutSetLineSpacingUnit, libs, "adw_wrap_layout_set_line_spacing_unit")
+	core.PuregoSafeRegister(&xWrapLayoutSetNaturalLineLength, libs, "adw_wrap_layout_set_natural_line_length")
+	core.PuregoSafeRegister(&xWrapLayoutSetNaturalLineLengthUnit, libs, "adw_wrap_layout_set_natural_line_length_unit")
+	core.PuregoSafeRegister(&xWrapLayoutSetPackDirection, libs, "adw_wrap_layout_set_pack_direction")
+	core.PuregoSafeRegister(&xWrapLayoutSetWrapPolicy, libs, "adw_wrap_layout_set_wrap_policy")
+	core.PuregoSafeRegister(&xWrapLayoutSetWrapReverse, libs, "adw_wrap_layout_set_wrap_reverse")
 
 }

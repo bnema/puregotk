@@ -261,22 +261,26 @@ func NetworkAddressParseUri(UriVar string, DefaultPortVar uint16) (*NetworkAddre
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xNetworkAddressGLibType, lib, "g_network_address_get_type")
+	core.PuregoSafeRegister(&xNetworkAddressGLibType, libs, "g_network_address_get_type")
 
-	core.PuregoSafeRegister(&xNewNetworkAddress, lib, "g_network_address_new")
-	core.PuregoSafeRegister(&xNewNetworkAddressLoopback, lib, "g_network_address_new_loopback")
+	core.PuregoSafeRegister(&xNewNetworkAddress, libs, "g_network_address_new")
+	core.PuregoSafeRegister(&xNewNetworkAddressLoopback, libs, "g_network_address_new_loopback")
 
-	core.PuregoSafeRegister(&xNetworkAddressGetHostname, lib, "g_network_address_get_hostname")
-	core.PuregoSafeRegister(&xNetworkAddressGetPort, lib, "g_network_address_get_port")
-	core.PuregoSafeRegister(&xNetworkAddressGetScheme, lib, "g_network_address_get_scheme")
+	core.PuregoSafeRegister(&xNetworkAddressGetHostname, libs, "g_network_address_get_hostname")
+	core.PuregoSafeRegister(&xNetworkAddressGetPort, libs, "g_network_address_get_port")
+	core.PuregoSafeRegister(&xNetworkAddressGetScheme, libs, "g_network_address_get_scheme")
 
-	core.PuregoSafeRegister(&xNetworkAddressParse, lib, "g_network_address_parse")
-	core.PuregoSafeRegister(&xNetworkAddressParseUri, lib, "g_network_address_parse_uri")
+	core.PuregoSafeRegister(&xNetworkAddressParse, libs, "g_network_address_parse")
+	core.PuregoSafeRegister(&xNetworkAddressParseUri, libs, "g_network_address_parse_uri")
 
 }

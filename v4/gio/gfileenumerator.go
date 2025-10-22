@@ -728,25 +728,29 @@ func (c *FileEnumerator) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFileEnumeratorGLibType, lib, "g_file_enumerator_get_type")
+	core.PuregoSafeRegister(&xFileEnumeratorGLibType, libs, "g_file_enumerator_get_type")
 
-	core.PuregoSafeRegister(&xFileEnumeratorClose, lib, "g_file_enumerator_close")
-	core.PuregoSafeRegister(&xFileEnumeratorCloseAsync, lib, "g_file_enumerator_close_async")
-	core.PuregoSafeRegister(&xFileEnumeratorCloseFinish, lib, "g_file_enumerator_close_finish")
-	core.PuregoSafeRegister(&xFileEnumeratorGetChild, lib, "g_file_enumerator_get_child")
-	core.PuregoSafeRegister(&xFileEnumeratorGetContainer, lib, "g_file_enumerator_get_container")
-	core.PuregoSafeRegister(&xFileEnumeratorHasPending, lib, "g_file_enumerator_has_pending")
-	core.PuregoSafeRegister(&xFileEnumeratorIsClosed, lib, "g_file_enumerator_is_closed")
-	core.PuregoSafeRegister(&xFileEnumeratorIterate, lib, "g_file_enumerator_iterate")
-	core.PuregoSafeRegister(&xFileEnumeratorNextFile, lib, "g_file_enumerator_next_file")
-	core.PuregoSafeRegister(&xFileEnumeratorNextFilesAsync, lib, "g_file_enumerator_next_files_async")
-	core.PuregoSafeRegister(&xFileEnumeratorNextFilesFinish, lib, "g_file_enumerator_next_files_finish")
-	core.PuregoSafeRegister(&xFileEnumeratorSetPending, lib, "g_file_enumerator_set_pending")
+	core.PuregoSafeRegister(&xFileEnumeratorClose, libs, "g_file_enumerator_close")
+	core.PuregoSafeRegister(&xFileEnumeratorCloseAsync, libs, "g_file_enumerator_close_async")
+	core.PuregoSafeRegister(&xFileEnumeratorCloseFinish, libs, "g_file_enumerator_close_finish")
+	core.PuregoSafeRegister(&xFileEnumeratorGetChild, libs, "g_file_enumerator_get_child")
+	core.PuregoSafeRegister(&xFileEnumeratorGetContainer, libs, "g_file_enumerator_get_container")
+	core.PuregoSafeRegister(&xFileEnumeratorHasPending, libs, "g_file_enumerator_has_pending")
+	core.PuregoSafeRegister(&xFileEnumeratorIsClosed, libs, "g_file_enumerator_is_closed")
+	core.PuregoSafeRegister(&xFileEnumeratorIterate, libs, "g_file_enumerator_iterate")
+	core.PuregoSafeRegister(&xFileEnumeratorNextFile, libs, "g_file_enumerator_next_file")
+	core.PuregoSafeRegister(&xFileEnumeratorNextFilesAsync, libs, "g_file_enumerator_next_files_async")
+	core.PuregoSafeRegister(&xFileEnumeratorNextFilesFinish, libs, "g_file_enumerator_next_files_finish")
+	core.PuregoSafeRegister(&xFileEnumeratorSetPending, libs, "g_file_enumerator_set_pending")
 
 }

@@ -558,27 +558,31 @@ func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEve
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSocketListenerGLibType, lib, "g_socket_listener_get_type")
+	core.PuregoSafeRegister(&xSocketListenerGLibType, libs, "g_socket_listener_get_type")
 
-	core.PuregoSafeRegister(&xNewSocketListener, lib, "g_socket_listener_new")
+	core.PuregoSafeRegister(&xNewSocketListener, libs, "g_socket_listener_new")
 
-	core.PuregoSafeRegister(&xSocketListenerAccept, lib, "g_socket_listener_accept")
-	core.PuregoSafeRegister(&xSocketListenerAcceptAsync, lib, "g_socket_listener_accept_async")
-	core.PuregoSafeRegister(&xSocketListenerAcceptFinish, lib, "g_socket_listener_accept_finish")
-	core.PuregoSafeRegister(&xSocketListenerAcceptSocket, lib, "g_socket_listener_accept_socket")
-	core.PuregoSafeRegister(&xSocketListenerAcceptSocketAsync, lib, "g_socket_listener_accept_socket_async")
-	core.PuregoSafeRegister(&xSocketListenerAcceptSocketFinish, lib, "g_socket_listener_accept_socket_finish")
-	core.PuregoSafeRegister(&xSocketListenerAddAddress, lib, "g_socket_listener_add_address")
-	core.PuregoSafeRegister(&xSocketListenerAddAnyInetPort, lib, "g_socket_listener_add_any_inet_port")
-	core.PuregoSafeRegister(&xSocketListenerAddInetPort, lib, "g_socket_listener_add_inet_port")
-	core.PuregoSafeRegister(&xSocketListenerAddSocket, lib, "g_socket_listener_add_socket")
-	core.PuregoSafeRegister(&xSocketListenerClose, lib, "g_socket_listener_close")
-	core.PuregoSafeRegister(&xSocketListenerSetBacklog, lib, "g_socket_listener_set_backlog")
+	core.PuregoSafeRegister(&xSocketListenerAccept, libs, "g_socket_listener_accept")
+	core.PuregoSafeRegister(&xSocketListenerAcceptAsync, libs, "g_socket_listener_accept_async")
+	core.PuregoSafeRegister(&xSocketListenerAcceptFinish, libs, "g_socket_listener_accept_finish")
+	core.PuregoSafeRegister(&xSocketListenerAcceptSocket, libs, "g_socket_listener_accept_socket")
+	core.PuregoSafeRegister(&xSocketListenerAcceptSocketAsync, libs, "g_socket_listener_accept_socket_async")
+	core.PuregoSafeRegister(&xSocketListenerAcceptSocketFinish, libs, "g_socket_listener_accept_socket_finish")
+	core.PuregoSafeRegister(&xSocketListenerAddAddress, libs, "g_socket_listener_add_address")
+	core.PuregoSafeRegister(&xSocketListenerAddAnyInetPort, libs, "g_socket_listener_add_any_inet_port")
+	core.PuregoSafeRegister(&xSocketListenerAddInetPort, libs, "g_socket_listener_add_inet_port")
+	core.PuregoSafeRegister(&xSocketListenerAddSocket, libs, "g_socket_listener_add_socket")
+	core.PuregoSafeRegister(&xSocketListenerClose, libs, "g_socket_listener_close")
+	core.PuregoSafeRegister(&xSocketListenerSetBacklog, libs, "g_socket_listener_set_backlog")
 
 }

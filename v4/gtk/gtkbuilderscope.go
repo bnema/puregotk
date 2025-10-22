@@ -313,22 +313,26 @@ func (c *BuilderCScope) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBuilderClosureFlagsGLibType, lib, "gtk_builder_closure_flags_get_type")
+	core.PuregoSafeRegister(&xBuilderClosureFlagsGLibType, libs, "gtk_builder_closure_flags_get_type")
 
-	core.PuregoSafeRegister(&xBuilderCScopeGLibType, lib, "gtk_builder_cscope_get_type")
+	core.PuregoSafeRegister(&xBuilderCScopeGLibType, libs, "gtk_builder_cscope_get_type")
 
-	core.PuregoSafeRegister(&xNewBuilderCScope, lib, "gtk_builder_cscope_new")
+	core.PuregoSafeRegister(&xNewBuilderCScope, libs, "gtk_builder_cscope_new")
 
-	core.PuregoSafeRegister(&xBuilderCScopeAddCallbackSymbol, lib, "gtk_builder_cscope_add_callback_symbol")
-	core.PuregoSafeRegister(&xBuilderCScopeAddCallbackSymbols, lib, "gtk_builder_cscope_add_callback_symbols")
-	core.PuregoSafeRegister(&xBuilderCScopeLookupCallbackSymbol, lib, "gtk_builder_cscope_lookup_callback_symbol")
+	core.PuregoSafeRegister(&xBuilderCScopeAddCallbackSymbol, libs, "gtk_builder_cscope_add_callback_symbol")
+	core.PuregoSafeRegister(&xBuilderCScopeAddCallbackSymbols, libs, "gtk_builder_cscope_add_callback_symbols")
+	core.PuregoSafeRegister(&xBuilderCScopeLookupCallbackSymbol, libs, "gtk_builder_cscope_lookup_callback_symbol")
 
-	core.PuregoSafeRegister(&xBuilderScopeGLibType, lib, "gtk_builder_scope_get_type")
+	core.PuregoSafeRegister(&xBuilderScopeGLibType, libs, "gtk_builder_scope_get_type")
 
 }

@@ -481,23 +481,27 @@ func (x *ButtonContent) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xButtonContentGLibType, lib, "adw_button_content_get_type")
+	core.PuregoSafeRegister(&xButtonContentGLibType, libs, "adw_button_content_get_type")
 
-	core.PuregoSafeRegister(&xNewButtonContent, lib, "adw_button_content_new")
+	core.PuregoSafeRegister(&xNewButtonContent, libs, "adw_button_content_new")
 
-	core.PuregoSafeRegister(&xButtonContentGetCanShrink, lib, "adw_button_content_get_can_shrink")
-	core.PuregoSafeRegister(&xButtonContentGetIconName, lib, "adw_button_content_get_icon_name")
-	core.PuregoSafeRegister(&xButtonContentGetLabel, lib, "adw_button_content_get_label")
-	core.PuregoSafeRegister(&xButtonContentGetUseUnderline, lib, "adw_button_content_get_use_underline")
-	core.PuregoSafeRegister(&xButtonContentSetCanShrink, lib, "adw_button_content_set_can_shrink")
-	core.PuregoSafeRegister(&xButtonContentSetIconName, lib, "adw_button_content_set_icon_name")
-	core.PuregoSafeRegister(&xButtonContentSetLabel, lib, "adw_button_content_set_label")
-	core.PuregoSafeRegister(&xButtonContentSetUseUnderline, lib, "adw_button_content_set_use_underline")
+	core.PuregoSafeRegister(&xButtonContentGetCanShrink, libs, "adw_button_content_get_can_shrink")
+	core.PuregoSafeRegister(&xButtonContentGetIconName, libs, "adw_button_content_get_icon_name")
+	core.PuregoSafeRegister(&xButtonContentGetLabel, libs, "adw_button_content_get_label")
+	core.PuregoSafeRegister(&xButtonContentGetUseUnderline, libs, "adw_button_content_get_use_underline")
+	core.PuregoSafeRegister(&xButtonContentSetCanShrink, libs, "adw_button_content_set_can_shrink")
+	core.PuregoSafeRegister(&xButtonContentSetIconName, libs, "adw_button_content_set_icon_name")
+	core.PuregoSafeRegister(&xButtonContentSetLabel, libs, "adw_button_content_set_label")
+	core.PuregoSafeRegister(&xButtonContentSetUseUnderline, libs, "adw_button_content_set_use_underline")
 
 }

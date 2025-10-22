@@ -104,20 +104,24 @@ func UnicodeToKeyval(WcVar uint32) uint {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xKeyvalConvertCase, lib, "gdk_keyval_convert_case")
-	core.PuregoSafeRegister(&xKeyvalFromName, lib, "gdk_keyval_from_name")
-	core.PuregoSafeRegister(&xKeyvalIsLower, lib, "gdk_keyval_is_lower")
-	core.PuregoSafeRegister(&xKeyvalIsUpper, lib, "gdk_keyval_is_upper")
-	core.PuregoSafeRegister(&xKeyvalName, lib, "gdk_keyval_name")
-	core.PuregoSafeRegister(&xKeyvalToLower, lib, "gdk_keyval_to_lower")
-	core.PuregoSafeRegister(&xKeyvalToUnicode, lib, "gdk_keyval_to_unicode")
-	core.PuregoSafeRegister(&xKeyvalToUpper, lib, "gdk_keyval_to_upper")
-	core.PuregoSafeRegister(&xUnicodeToKeyval, lib, "gdk_unicode_to_keyval")
+	core.PuregoSafeRegister(&xKeyvalConvertCase, libs, "gdk_keyval_convert_case")
+	core.PuregoSafeRegister(&xKeyvalFromName, libs, "gdk_keyval_from_name")
+	core.PuregoSafeRegister(&xKeyvalIsLower, libs, "gdk_keyval_is_lower")
+	core.PuregoSafeRegister(&xKeyvalIsUpper, libs, "gdk_keyval_is_upper")
+	core.PuregoSafeRegister(&xKeyvalName, libs, "gdk_keyval_name")
+	core.PuregoSafeRegister(&xKeyvalToLower, libs, "gdk_keyval_to_lower")
+	core.PuregoSafeRegister(&xKeyvalToUnicode, libs, "gdk_keyval_to_unicode")
+	core.PuregoSafeRegister(&xKeyvalToUpper, libs, "gdk_keyval_to_upper")
+	core.PuregoSafeRegister(&xUnicodeToKeyval, libs, "gdk_unicode_to_keyval")
 
 }

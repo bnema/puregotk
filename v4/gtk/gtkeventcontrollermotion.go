@@ -151,17 +151,21 @@ func (x *EventControllerMotion) ConnectMotion(cb *func(EventControllerMotion, fl
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEventControllerMotionGLibType, lib, "gtk_event_controller_motion_get_type")
+	core.PuregoSafeRegister(&xEventControllerMotionGLibType, libs, "gtk_event_controller_motion_get_type")
 
-	core.PuregoSafeRegister(&xNewEventControllerMotion, lib, "gtk_event_controller_motion_new")
+	core.PuregoSafeRegister(&xNewEventControllerMotion, libs, "gtk_event_controller_motion_new")
 
-	core.PuregoSafeRegister(&xEventControllerMotionContainsPointer, lib, "gtk_event_controller_motion_contains_pointer")
-	core.PuregoSafeRegister(&xEventControllerMotionIsPointer, lib, "gtk_event_controller_motion_is_pointer")
+	core.PuregoSafeRegister(&xEventControllerMotionContainsPointer, libs, "gtk_event_controller_motion_contains_pointer")
+	core.PuregoSafeRegister(&xEventControllerMotionIsPointer, libs, "gtk_event_controller_motion_is_pointer")
 
 }

@@ -191,32 +191,36 @@ func InternMimeType(StringVar string) string {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xContentFormatsParse, lib, "gdk_content_formats_parse")
-	core.PuregoSafeRegister(&xInternMimeType, lib, "gdk_intern_mime_type")
+	core.PuregoSafeRegister(&xContentFormatsParse, libs, "gdk_content_formats_parse")
+	core.PuregoSafeRegister(&xInternMimeType, libs, "gdk_intern_mime_type")
 
-	core.PuregoSafeRegister(&xContentFormatsBuilderGLibType, lib, "gdk_content_formats_builder_get_type")
+	core.PuregoSafeRegister(&xContentFormatsBuilderGLibType, libs, "gdk_content_formats_builder_get_type")
 
-	core.PuregoSafeRegister(&xNewContentFormatsBuilder, lib, "gdk_content_formats_builder_new")
+	core.PuregoSafeRegister(&xNewContentFormatsBuilder, libs, "gdk_content_formats_builder_new")
 
-	core.PuregoSafeRegister(&xContentFormatsBuilderAddFormats, lib, "gdk_content_formats_builder_add_formats")
-	core.PuregoSafeRegister(&xContentFormatsBuilderAddGtype, lib, "gdk_content_formats_builder_add_gtype")
-	core.PuregoSafeRegister(&xContentFormatsBuilderAddMimeType, lib, "gdk_content_formats_builder_add_mime_type")
-	core.PuregoSafeRegister(&xContentFormatsBuilderFreeToFormats, lib, "gdk_content_formats_builder_free_to_formats")
-	core.PuregoSafeRegister(&xContentFormatsBuilderRef, lib, "gdk_content_formats_builder_ref")
-	core.PuregoSafeRegister(&xContentFormatsBuilderToFormats, lib, "gdk_content_formats_builder_to_formats")
-	core.PuregoSafeRegister(&xContentFormatsBuilderUnref, lib, "gdk_content_formats_builder_unref")
+	core.PuregoSafeRegister(&xContentFormatsBuilderAddFormats, libs, "gdk_content_formats_builder_add_formats")
+	core.PuregoSafeRegister(&xContentFormatsBuilderAddGtype, libs, "gdk_content_formats_builder_add_gtype")
+	core.PuregoSafeRegister(&xContentFormatsBuilderAddMimeType, libs, "gdk_content_formats_builder_add_mime_type")
+	core.PuregoSafeRegister(&xContentFormatsBuilderFreeToFormats, libs, "gdk_content_formats_builder_free_to_formats")
+	core.PuregoSafeRegister(&xContentFormatsBuilderRef, libs, "gdk_content_formats_builder_ref")
+	core.PuregoSafeRegister(&xContentFormatsBuilderToFormats, libs, "gdk_content_formats_builder_to_formats")
+	core.PuregoSafeRegister(&xContentFormatsBuilderUnref, libs, "gdk_content_formats_builder_unref")
 
-	core.PuregoSafeRegister(&xFileListGLibType, lib, "gdk_file_list_get_type")
+	core.PuregoSafeRegister(&xFileListGLibType, libs, "gdk_file_list_get_type")
 
-	core.PuregoSafeRegister(&xNewFileListFromArray, lib, "gdk_file_list_new_from_array")
-	core.PuregoSafeRegister(&xNewFileListFromList, lib, "gdk_file_list_new_from_list")
+	core.PuregoSafeRegister(&xNewFileListFromArray, libs, "gdk_file_list_new_from_array")
+	core.PuregoSafeRegister(&xNewFileListFromList, libs, "gdk_file_list_new_from_list")
 
-	core.PuregoSafeRegister(&xFileListGetFiles, lib, "gdk_file_list_get_files")
+	core.PuregoSafeRegister(&xFileListGetFiles, libs, "gdk_file_list_get_files")
 
 }

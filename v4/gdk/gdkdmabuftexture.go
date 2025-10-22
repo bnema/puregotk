@@ -303,14 +303,18 @@ func (x *DmabufTexture) LoadFinish(ResVar gio.AsyncResult, TypeVar string) (*gio
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDmabufErrorQuark, lib, "gdk_dmabuf_error_quark")
+	core.PuregoSafeRegister(&xDmabufErrorQuark, libs, "gdk_dmabuf_error_quark")
 
-	core.PuregoSafeRegister(&xDmabufTextureGLibType, lib, "gdk_dmabuf_texture_get_type")
+	core.PuregoSafeRegister(&xDmabufTextureGLibType, libs, "gdk_dmabuf_texture_get_type")
 
 }

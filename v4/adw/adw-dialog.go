@@ -816,40 +816,44 @@ func (x *Dialog) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDialogPresentationModeGLibType, lib, "adw_dialog_presentation_mode_get_type")
+	core.PuregoSafeRegister(&xDialogPresentationModeGLibType, libs, "adw_dialog_presentation_mode_get_type")
 
-	core.PuregoSafeRegister(&xDialogGLibType, lib, "adw_dialog_get_type")
+	core.PuregoSafeRegister(&xDialogGLibType, libs, "adw_dialog_get_type")
 
-	core.PuregoSafeRegister(&xNewDialog, lib, "adw_dialog_new")
+	core.PuregoSafeRegister(&xNewDialog, libs, "adw_dialog_new")
 
-	core.PuregoSafeRegister(&xDialogAddBreakpoint, lib, "adw_dialog_add_breakpoint")
-	core.PuregoSafeRegister(&xDialogClose, lib, "adw_dialog_close")
-	core.PuregoSafeRegister(&xDialogForceClose, lib, "adw_dialog_force_close")
-	core.PuregoSafeRegister(&xDialogGetCanClose, lib, "adw_dialog_get_can_close")
-	core.PuregoSafeRegister(&xDialogGetChild, lib, "adw_dialog_get_child")
-	core.PuregoSafeRegister(&xDialogGetContentHeight, lib, "adw_dialog_get_content_height")
-	core.PuregoSafeRegister(&xDialogGetContentWidth, lib, "adw_dialog_get_content_width")
-	core.PuregoSafeRegister(&xDialogGetCurrentBreakpoint, lib, "adw_dialog_get_current_breakpoint")
-	core.PuregoSafeRegister(&xDialogGetDefaultWidget, lib, "adw_dialog_get_default_widget")
-	core.PuregoSafeRegister(&xDialogGetFocus, lib, "adw_dialog_get_focus")
-	core.PuregoSafeRegister(&xDialogGetFollowsContentSize, lib, "adw_dialog_get_follows_content_size")
-	core.PuregoSafeRegister(&xDialogGetPresentationMode, lib, "adw_dialog_get_presentation_mode")
-	core.PuregoSafeRegister(&xDialogGetTitle, lib, "adw_dialog_get_title")
-	core.PuregoSafeRegister(&xDialogPresent, lib, "adw_dialog_present")
-	core.PuregoSafeRegister(&xDialogSetCanClose, lib, "adw_dialog_set_can_close")
-	core.PuregoSafeRegister(&xDialogSetChild, lib, "adw_dialog_set_child")
-	core.PuregoSafeRegister(&xDialogSetContentHeight, lib, "adw_dialog_set_content_height")
-	core.PuregoSafeRegister(&xDialogSetContentWidth, lib, "adw_dialog_set_content_width")
-	core.PuregoSafeRegister(&xDialogSetDefaultWidget, lib, "adw_dialog_set_default_widget")
-	core.PuregoSafeRegister(&xDialogSetFocus, lib, "adw_dialog_set_focus")
-	core.PuregoSafeRegister(&xDialogSetFollowsContentSize, lib, "adw_dialog_set_follows_content_size")
-	core.PuregoSafeRegister(&xDialogSetPresentationMode, lib, "adw_dialog_set_presentation_mode")
-	core.PuregoSafeRegister(&xDialogSetTitle, lib, "adw_dialog_set_title")
+	core.PuregoSafeRegister(&xDialogAddBreakpoint, libs, "adw_dialog_add_breakpoint")
+	core.PuregoSafeRegister(&xDialogClose, libs, "adw_dialog_close")
+	core.PuregoSafeRegister(&xDialogForceClose, libs, "adw_dialog_force_close")
+	core.PuregoSafeRegister(&xDialogGetCanClose, libs, "adw_dialog_get_can_close")
+	core.PuregoSafeRegister(&xDialogGetChild, libs, "adw_dialog_get_child")
+	core.PuregoSafeRegister(&xDialogGetContentHeight, libs, "adw_dialog_get_content_height")
+	core.PuregoSafeRegister(&xDialogGetContentWidth, libs, "adw_dialog_get_content_width")
+	core.PuregoSafeRegister(&xDialogGetCurrentBreakpoint, libs, "adw_dialog_get_current_breakpoint")
+	core.PuregoSafeRegister(&xDialogGetDefaultWidget, libs, "adw_dialog_get_default_widget")
+	core.PuregoSafeRegister(&xDialogGetFocus, libs, "adw_dialog_get_focus")
+	core.PuregoSafeRegister(&xDialogGetFollowsContentSize, libs, "adw_dialog_get_follows_content_size")
+	core.PuregoSafeRegister(&xDialogGetPresentationMode, libs, "adw_dialog_get_presentation_mode")
+	core.PuregoSafeRegister(&xDialogGetTitle, libs, "adw_dialog_get_title")
+	core.PuregoSafeRegister(&xDialogPresent, libs, "adw_dialog_present")
+	core.PuregoSafeRegister(&xDialogSetCanClose, libs, "adw_dialog_set_can_close")
+	core.PuregoSafeRegister(&xDialogSetChild, libs, "adw_dialog_set_child")
+	core.PuregoSafeRegister(&xDialogSetContentHeight, libs, "adw_dialog_set_content_height")
+	core.PuregoSafeRegister(&xDialogSetContentWidth, libs, "adw_dialog_set_content_width")
+	core.PuregoSafeRegister(&xDialogSetDefaultWidget, libs, "adw_dialog_set_default_widget")
+	core.PuregoSafeRegister(&xDialogSetFocus, libs, "adw_dialog_set_focus")
+	core.PuregoSafeRegister(&xDialogSetFollowsContentSize, libs, "adw_dialog_set_follows_content_size")
+	core.PuregoSafeRegister(&xDialogSetPresentationMode, libs, "adw_dialog_set_presentation_mode")
+	core.PuregoSafeRegister(&xDialogSetTitle, libs, "adw_dialog_set_title")
 
 }

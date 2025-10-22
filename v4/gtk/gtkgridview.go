@@ -694,30 +694,34 @@ func (x *GridView) SetVscrollPolicy(PolicyVar ScrollablePolicy) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGridViewGLibType, lib, "gtk_grid_view_get_type")
+	core.PuregoSafeRegister(&xGridViewGLibType, libs, "gtk_grid_view_get_type")
 
-	core.PuregoSafeRegister(&xNewGridView, lib, "gtk_grid_view_new")
+	core.PuregoSafeRegister(&xNewGridView, libs, "gtk_grid_view_new")
 
-	core.PuregoSafeRegister(&xGridViewGetEnableRubberband, lib, "gtk_grid_view_get_enable_rubberband")
-	core.PuregoSafeRegister(&xGridViewGetFactory, lib, "gtk_grid_view_get_factory")
-	core.PuregoSafeRegister(&xGridViewGetMaxColumns, lib, "gtk_grid_view_get_max_columns")
-	core.PuregoSafeRegister(&xGridViewGetMinColumns, lib, "gtk_grid_view_get_min_columns")
-	core.PuregoSafeRegister(&xGridViewGetModel, lib, "gtk_grid_view_get_model")
-	core.PuregoSafeRegister(&xGridViewGetSingleClickActivate, lib, "gtk_grid_view_get_single_click_activate")
-	core.PuregoSafeRegister(&xGridViewGetTabBehavior, lib, "gtk_grid_view_get_tab_behavior")
-	core.PuregoSafeRegister(&xGridViewScrollTo, lib, "gtk_grid_view_scroll_to")
-	core.PuregoSafeRegister(&xGridViewSetEnableRubberband, lib, "gtk_grid_view_set_enable_rubberband")
-	core.PuregoSafeRegister(&xGridViewSetFactory, lib, "gtk_grid_view_set_factory")
-	core.PuregoSafeRegister(&xGridViewSetMaxColumns, lib, "gtk_grid_view_set_max_columns")
-	core.PuregoSafeRegister(&xGridViewSetMinColumns, lib, "gtk_grid_view_set_min_columns")
-	core.PuregoSafeRegister(&xGridViewSetModel, lib, "gtk_grid_view_set_model")
-	core.PuregoSafeRegister(&xGridViewSetSingleClickActivate, lib, "gtk_grid_view_set_single_click_activate")
-	core.PuregoSafeRegister(&xGridViewSetTabBehavior, lib, "gtk_grid_view_set_tab_behavior")
+	core.PuregoSafeRegister(&xGridViewGetEnableRubberband, libs, "gtk_grid_view_get_enable_rubberband")
+	core.PuregoSafeRegister(&xGridViewGetFactory, libs, "gtk_grid_view_get_factory")
+	core.PuregoSafeRegister(&xGridViewGetMaxColumns, libs, "gtk_grid_view_get_max_columns")
+	core.PuregoSafeRegister(&xGridViewGetMinColumns, libs, "gtk_grid_view_get_min_columns")
+	core.PuregoSafeRegister(&xGridViewGetModel, libs, "gtk_grid_view_get_model")
+	core.PuregoSafeRegister(&xGridViewGetSingleClickActivate, libs, "gtk_grid_view_get_single_click_activate")
+	core.PuregoSafeRegister(&xGridViewGetTabBehavior, libs, "gtk_grid_view_get_tab_behavior")
+	core.PuregoSafeRegister(&xGridViewScrollTo, libs, "gtk_grid_view_scroll_to")
+	core.PuregoSafeRegister(&xGridViewSetEnableRubberband, libs, "gtk_grid_view_set_enable_rubberband")
+	core.PuregoSafeRegister(&xGridViewSetFactory, libs, "gtk_grid_view_set_factory")
+	core.PuregoSafeRegister(&xGridViewSetMaxColumns, libs, "gtk_grid_view_set_max_columns")
+	core.PuregoSafeRegister(&xGridViewSetMinColumns, libs, "gtk_grid_view_set_min_columns")
+	core.PuregoSafeRegister(&xGridViewSetModel, libs, "gtk_grid_view_set_model")
+	core.PuregoSafeRegister(&xGridViewSetSingleClickActivate, libs, "gtk_grid_view_set_single_click_activate")
+	core.PuregoSafeRegister(&xGridViewSetTabBehavior, libs, "gtk_grid_view_set_tab_behavior")
 
 }

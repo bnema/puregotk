@@ -76,16 +76,20 @@ func RgbaToStandalone(RgbaVar *gdk.RGBA, DarkVar bool, StandaloneRgbaVar *gdk.RG
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAccentColorGLibType, lib, "adw_accent_color_get_type")
+	core.PuregoSafeRegister(&xAccentColorGLibType, libs, "adw_accent_color_get_type")
 
-	core.PuregoSafeRegister(&xAccentColorToRgba, lib, "adw_accent_color_to_rgba")
-	core.PuregoSafeRegister(&xAccentColorToStandaloneRgba, lib, "adw_accent_color_to_standalone_rgba")
-	core.PuregoSafeRegister(&xRgbaToStandalone, lib, "adw_rgba_to_standalone")
+	core.PuregoSafeRegister(&xAccentColorToRgba, libs, "adw_accent_color_to_rgba")
+	core.PuregoSafeRegister(&xAccentColorToStandaloneRgba, libs, "adw_accent_color_to_standalone_rgba")
+	core.PuregoSafeRegister(&xRgbaToStandalone, libs, "adw_rgba_to_standalone")
 
 }

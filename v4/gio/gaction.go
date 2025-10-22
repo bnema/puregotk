@@ -509,25 +509,29 @@ func ActionPrintDetailedName(ActionNameVar string, TargetValueVar *glib.Variant)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xActionNameIsValid, lib, "g_action_name_is_valid")
-	core.PuregoSafeRegister(&xActionParseDetailedName, lib, "g_action_parse_detailed_name")
-	core.PuregoSafeRegister(&xActionPrintDetailedName, lib, "g_action_print_detailed_name")
+	core.PuregoSafeRegister(&xActionNameIsValid, libs, "g_action_name_is_valid")
+	core.PuregoSafeRegister(&xActionParseDetailedName, libs, "g_action_parse_detailed_name")
+	core.PuregoSafeRegister(&xActionPrintDetailedName, libs, "g_action_print_detailed_name")
 
-	core.PuregoSafeRegister(&xActionGLibType, lib, "g_action_get_type")
+	core.PuregoSafeRegister(&xActionGLibType, libs, "g_action_get_type")
 
-	core.PuregoSafeRegister(&XGActionActivate, lib, "g_action_activate")
-	core.PuregoSafeRegister(&XGActionChangeState, lib, "g_action_change_state")
-	core.PuregoSafeRegister(&XGActionGetEnabled, lib, "g_action_get_enabled")
-	core.PuregoSafeRegister(&XGActionGetName, lib, "g_action_get_name")
-	core.PuregoSafeRegister(&XGActionGetParameterType, lib, "g_action_get_parameter_type")
-	core.PuregoSafeRegister(&XGActionGetState, lib, "g_action_get_state")
-	core.PuregoSafeRegister(&XGActionGetStateHint, lib, "g_action_get_state_hint")
-	core.PuregoSafeRegister(&XGActionGetStateType, lib, "g_action_get_state_type")
+	core.PuregoSafeRegister(&XGActionActivate, libs, "g_action_activate")
+	core.PuregoSafeRegister(&XGActionChangeState, libs, "g_action_change_state")
+	core.PuregoSafeRegister(&XGActionGetEnabled, libs, "g_action_get_enabled")
+	core.PuregoSafeRegister(&XGActionGetName, libs, "g_action_get_name")
+	core.PuregoSafeRegister(&XGActionGetParameterType, libs, "g_action_get_parameter_type")
+	core.PuregoSafeRegister(&XGActionGetState, libs, "g_action_get_state")
+	core.PuregoSafeRegister(&XGActionGetStateHint, libs, "g_action_get_state_hint")
+	core.PuregoSafeRegister(&XGActionGetStateType, libs, "g_action_get_state_type")
 
 }

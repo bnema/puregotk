@@ -551,20 +551,24 @@ func (x *LinkButton) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xLinkButtonGLibType, lib, "gtk_link_button_get_type")
+	core.PuregoSafeRegister(&xLinkButtonGLibType, libs, "gtk_link_button_get_type")
 
-	core.PuregoSafeRegister(&xNewLinkButton, lib, "gtk_link_button_new")
-	core.PuregoSafeRegister(&xNewLinkButtonWithLabel, lib, "gtk_link_button_new_with_label")
+	core.PuregoSafeRegister(&xNewLinkButton, libs, "gtk_link_button_new")
+	core.PuregoSafeRegister(&xNewLinkButtonWithLabel, libs, "gtk_link_button_new_with_label")
 
-	core.PuregoSafeRegister(&xLinkButtonGetUri, lib, "gtk_link_button_get_uri")
-	core.PuregoSafeRegister(&xLinkButtonGetVisited, lib, "gtk_link_button_get_visited")
-	core.PuregoSafeRegister(&xLinkButtonSetUri, lib, "gtk_link_button_set_uri")
-	core.PuregoSafeRegister(&xLinkButtonSetVisited, lib, "gtk_link_button_set_visited")
+	core.PuregoSafeRegister(&xLinkButtonGetUri, libs, "gtk_link_button_get_uri")
+	core.PuregoSafeRegister(&xLinkButtonGetVisited, libs, "gtk_link_button_get_visited")
+	core.PuregoSafeRegister(&xLinkButtonSetUri, libs, "gtk_link_button_set_uri")
+	core.PuregoSafeRegister(&xLinkButtonSetVisited, libs, "gtk_link_button_set_visited")
 
 }

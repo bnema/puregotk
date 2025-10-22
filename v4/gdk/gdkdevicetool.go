@@ -117,19 +117,23 @@ func (c *DeviceTool) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDeviceToolTypeGLibType, lib, "gdk_device_tool_type_get_type")
+	core.PuregoSafeRegister(&xDeviceToolTypeGLibType, libs, "gdk_device_tool_type_get_type")
 
-	core.PuregoSafeRegister(&xDeviceToolGLibType, lib, "gdk_device_tool_get_type")
+	core.PuregoSafeRegister(&xDeviceToolGLibType, libs, "gdk_device_tool_get_type")
 
-	core.PuregoSafeRegister(&xDeviceToolGetAxes, lib, "gdk_device_tool_get_axes")
-	core.PuregoSafeRegister(&xDeviceToolGetHardwareId, lib, "gdk_device_tool_get_hardware_id")
-	core.PuregoSafeRegister(&xDeviceToolGetSerial, lib, "gdk_device_tool_get_serial")
-	core.PuregoSafeRegister(&xDeviceToolGetToolType, lib, "gdk_device_tool_get_tool_type")
+	core.PuregoSafeRegister(&xDeviceToolGetAxes, libs, "gdk_device_tool_get_axes")
+	core.PuregoSafeRegister(&xDeviceToolGetHardwareId, libs, "gdk_device_tool_get_hardware_id")
+	core.PuregoSafeRegister(&xDeviceToolGetSerial, libs, "gdk_device_tool_get_serial")
+	core.PuregoSafeRegister(&xDeviceToolGetToolType, libs, "gdk_device_tool_get_tool_type")
 
 }

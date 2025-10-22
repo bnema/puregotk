@@ -421,17 +421,21 @@ func (x *Scrollbar) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xScrollbarGLibType, lib, "gtk_scrollbar_get_type")
+	core.PuregoSafeRegister(&xScrollbarGLibType, libs, "gtk_scrollbar_get_type")
 
-	core.PuregoSafeRegister(&xNewScrollbar, lib, "gtk_scrollbar_new")
+	core.PuregoSafeRegister(&xNewScrollbar, libs, "gtk_scrollbar_new")
 
-	core.PuregoSafeRegister(&xScrollbarGetAdjustment, lib, "gtk_scrollbar_get_adjustment")
-	core.PuregoSafeRegister(&xScrollbarSetAdjustment, lib, "gtk_scrollbar_set_adjustment")
+	core.PuregoSafeRegister(&xScrollbarGetAdjustment, libs, "gtk_scrollbar_get_adjustment")
+	core.PuregoSafeRegister(&xScrollbarSetAdjustment, libs, "gtk_scrollbar_set_adjustment")
 
 }

@@ -748,38 +748,42 @@ func (x *Image) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xImageTypeGLibType, lib, "gtk_image_type_get_type")
+	core.PuregoSafeRegister(&xImageTypeGLibType, libs, "gtk_image_type_get_type")
 
-	core.PuregoSafeRegister(&xImageGLibType, lib, "gtk_image_get_type")
+	core.PuregoSafeRegister(&xImageGLibType, libs, "gtk_image_get_type")
 
-	core.PuregoSafeRegister(&xNewImage, lib, "gtk_image_new")
-	core.PuregoSafeRegister(&xNewImageFromFile, lib, "gtk_image_new_from_file")
-	core.PuregoSafeRegister(&xNewImageFromGicon, lib, "gtk_image_new_from_gicon")
-	core.PuregoSafeRegister(&xNewImageFromIconName, lib, "gtk_image_new_from_icon_name")
-	core.PuregoSafeRegister(&xNewImageFromPaintable, lib, "gtk_image_new_from_paintable")
-	core.PuregoSafeRegister(&xNewImageFromPixbuf, lib, "gtk_image_new_from_pixbuf")
-	core.PuregoSafeRegister(&xNewImageFromResource, lib, "gtk_image_new_from_resource")
+	core.PuregoSafeRegister(&xNewImage, libs, "gtk_image_new")
+	core.PuregoSafeRegister(&xNewImageFromFile, libs, "gtk_image_new_from_file")
+	core.PuregoSafeRegister(&xNewImageFromGicon, libs, "gtk_image_new_from_gicon")
+	core.PuregoSafeRegister(&xNewImageFromIconName, libs, "gtk_image_new_from_icon_name")
+	core.PuregoSafeRegister(&xNewImageFromPaintable, libs, "gtk_image_new_from_paintable")
+	core.PuregoSafeRegister(&xNewImageFromPixbuf, libs, "gtk_image_new_from_pixbuf")
+	core.PuregoSafeRegister(&xNewImageFromResource, libs, "gtk_image_new_from_resource")
 
-	core.PuregoSafeRegister(&xImageClear, lib, "gtk_image_clear")
-	core.PuregoSafeRegister(&xImageGetGicon, lib, "gtk_image_get_gicon")
-	core.PuregoSafeRegister(&xImageGetIconName, lib, "gtk_image_get_icon_name")
-	core.PuregoSafeRegister(&xImageGetIconSize, lib, "gtk_image_get_icon_size")
-	core.PuregoSafeRegister(&xImageGetPaintable, lib, "gtk_image_get_paintable")
-	core.PuregoSafeRegister(&xImageGetPixelSize, lib, "gtk_image_get_pixel_size")
-	core.PuregoSafeRegister(&xImageGetStorageType, lib, "gtk_image_get_storage_type")
-	core.PuregoSafeRegister(&xImageSetFromFile, lib, "gtk_image_set_from_file")
-	core.PuregoSafeRegister(&xImageSetFromGicon, lib, "gtk_image_set_from_gicon")
-	core.PuregoSafeRegister(&xImageSetFromIconName, lib, "gtk_image_set_from_icon_name")
-	core.PuregoSafeRegister(&xImageSetFromPaintable, lib, "gtk_image_set_from_paintable")
-	core.PuregoSafeRegister(&xImageSetFromPixbuf, lib, "gtk_image_set_from_pixbuf")
-	core.PuregoSafeRegister(&xImageSetFromResource, lib, "gtk_image_set_from_resource")
-	core.PuregoSafeRegister(&xImageSetIconSize, lib, "gtk_image_set_icon_size")
-	core.PuregoSafeRegister(&xImageSetPixelSize, lib, "gtk_image_set_pixel_size")
+	core.PuregoSafeRegister(&xImageClear, libs, "gtk_image_clear")
+	core.PuregoSafeRegister(&xImageGetGicon, libs, "gtk_image_get_gicon")
+	core.PuregoSafeRegister(&xImageGetIconName, libs, "gtk_image_get_icon_name")
+	core.PuregoSafeRegister(&xImageGetIconSize, libs, "gtk_image_get_icon_size")
+	core.PuregoSafeRegister(&xImageGetPaintable, libs, "gtk_image_get_paintable")
+	core.PuregoSafeRegister(&xImageGetPixelSize, libs, "gtk_image_get_pixel_size")
+	core.PuregoSafeRegister(&xImageGetStorageType, libs, "gtk_image_get_storage_type")
+	core.PuregoSafeRegister(&xImageSetFromFile, libs, "gtk_image_set_from_file")
+	core.PuregoSafeRegister(&xImageSetFromGicon, libs, "gtk_image_set_from_gicon")
+	core.PuregoSafeRegister(&xImageSetFromIconName, libs, "gtk_image_set_from_icon_name")
+	core.PuregoSafeRegister(&xImageSetFromPaintable, libs, "gtk_image_set_from_paintable")
+	core.PuregoSafeRegister(&xImageSetFromPixbuf, libs, "gtk_image_set_from_pixbuf")
+	core.PuregoSafeRegister(&xImageSetFromResource, libs, "gtk_image_set_from_resource")
+	core.PuregoSafeRegister(&xImageSetIconSize, libs, "gtk_image_set_icon_size")
+	core.PuregoSafeRegister(&xImageSetPixelSize, libs, "gtk_image_set_pixel_size")
 
 }

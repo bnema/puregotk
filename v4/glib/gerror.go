@@ -254,30 +254,34 @@ func SetErrorLiteral(ErrVar **Error, DomainVar Quark, CodeVar int, MessageVar st
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xClearError, lib, "g_clear_error")
-	core.PuregoSafeRegister(&xErrorDomainRegister, lib, "g_error_domain_register")
-	core.PuregoSafeRegister(&xErrorDomainRegisterStatic, lib, "g_error_domain_register_static")
-	core.PuregoSafeRegister(&xPrefixError, lib, "g_prefix_error")
-	core.PuregoSafeRegister(&xPrefixErrorLiteral, lib, "g_prefix_error_literal")
-	core.PuregoSafeRegister(&xPropagateError, lib, "g_propagate_error")
-	core.PuregoSafeRegister(&xPropagatePrefixedError, lib, "g_propagate_prefixed_error")
-	core.PuregoSafeRegister(&xSetError, lib, "g_set_error")
-	core.PuregoSafeRegister(&xSetErrorLiteral, lib, "g_set_error_literal")
+	core.PuregoSafeRegister(&xClearError, libs, "g_clear_error")
+	core.PuregoSafeRegister(&xErrorDomainRegister, libs, "g_error_domain_register")
+	core.PuregoSafeRegister(&xErrorDomainRegisterStatic, libs, "g_error_domain_register_static")
+	core.PuregoSafeRegister(&xPrefixError, libs, "g_prefix_error")
+	core.PuregoSafeRegister(&xPrefixErrorLiteral, libs, "g_prefix_error_literal")
+	core.PuregoSafeRegister(&xPropagateError, libs, "g_propagate_error")
+	core.PuregoSafeRegister(&xPropagatePrefixedError, libs, "g_propagate_prefixed_error")
+	core.PuregoSafeRegister(&xSetError, libs, "g_set_error")
+	core.PuregoSafeRegister(&xSetErrorLiteral, libs, "g_set_error_literal")
 
-	core.PuregoSafeRegister(&xErrorGLibType, lib, "g_error_get_type")
+	core.PuregoSafeRegister(&xErrorGLibType, libs, "g_error_get_type")
 
-	core.PuregoSafeRegister(&xNewError, lib, "g_error_new")
-	core.PuregoSafeRegister(&xNewErrorLiteral, lib, "g_error_new_literal")
-	core.PuregoSafeRegister(&xNewErrorValist, lib, "g_error_new_valist")
+	core.PuregoSafeRegister(&xNewError, libs, "g_error_new")
+	core.PuregoSafeRegister(&xNewErrorLiteral, libs, "g_error_new_literal")
+	core.PuregoSafeRegister(&xNewErrorValist, libs, "g_error_new_valist")
 
-	core.PuregoSafeRegister(&xErrorCopy, lib, "g_error_copy")
-	core.PuregoSafeRegister(&xErrorFree, lib, "g_error_free")
-	core.PuregoSafeRegister(&xErrorMatches, lib, "g_error_matches")
+	core.PuregoSafeRegister(&xErrorCopy, libs, "g_error_copy")
+	core.PuregoSafeRegister(&xErrorFree, libs, "g_error_free")
+	core.PuregoSafeRegister(&xErrorMatches, libs, "g_error_matches")
 
 }

@@ -63,14 +63,18 @@ func Poll(FdsVar *PollFD, NfdsVar uint, TimeoutVar int) int {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPoll, lib, "g_poll")
+	core.PuregoSafeRegister(&xPoll, libs, "g_poll")
 
-	core.PuregoSafeRegister(&xPollFDGLibType, lib, "g_pollfd_get_type")
+	core.PuregoSafeRegister(&xPollFDGLibType, libs, "g_pollfd_get_type")
 
 }

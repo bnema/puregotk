@@ -121,16 +121,20 @@ func (x *StringChunk) InsertLen(StringVar string, LenVar int) string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStringChunkClear, lib, "g_string_chunk_clear")
-	core.PuregoSafeRegister(&xStringChunkFree, lib, "g_string_chunk_free")
-	core.PuregoSafeRegister(&xStringChunkInsert, lib, "g_string_chunk_insert")
-	core.PuregoSafeRegister(&xStringChunkInsertConst, lib, "g_string_chunk_insert_const")
-	core.PuregoSafeRegister(&xStringChunkInsertLen, lib, "g_string_chunk_insert_len")
+	core.PuregoSafeRegister(&xStringChunkClear, libs, "g_string_chunk_clear")
+	core.PuregoSafeRegister(&xStringChunkFree, libs, "g_string_chunk_free")
+	core.PuregoSafeRegister(&xStringChunkInsert, libs, "g_string_chunk_insert")
+	core.PuregoSafeRegister(&xStringChunkInsertConst, libs, "g_string_chunk_insert_const")
+	core.PuregoSafeRegister(&xStringChunkInsertLen, libs, "g_string_chunk_insert_len")
 
 }

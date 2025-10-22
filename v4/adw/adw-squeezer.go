@@ -755,45 +755,49 @@ func (c *SqueezerPage) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSqueezerTransitionTypeGLibType, lib, "adw_squeezer_transition_type_get_type")
+	core.PuregoSafeRegister(&xSqueezerTransitionTypeGLibType, libs, "adw_squeezer_transition_type_get_type")
 
-	core.PuregoSafeRegister(&xSqueezerGLibType, lib, "adw_squeezer_get_type")
+	core.PuregoSafeRegister(&xSqueezerGLibType, libs, "adw_squeezer_get_type")
 
-	core.PuregoSafeRegister(&xNewSqueezer, lib, "adw_squeezer_new")
+	core.PuregoSafeRegister(&xNewSqueezer, libs, "adw_squeezer_new")
 
-	core.PuregoSafeRegister(&xSqueezerAdd, lib, "adw_squeezer_add")
-	core.PuregoSafeRegister(&xSqueezerGetAllowNone, lib, "adw_squeezer_get_allow_none")
-	core.PuregoSafeRegister(&xSqueezerGetHomogeneous, lib, "adw_squeezer_get_homogeneous")
-	core.PuregoSafeRegister(&xSqueezerGetInterpolateSize, lib, "adw_squeezer_get_interpolate_size")
-	core.PuregoSafeRegister(&xSqueezerGetPage, lib, "adw_squeezer_get_page")
-	core.PuregoSafeRegister(&xSqueezerGetPages, lib, "adw_squeezer_get_pages")
-	core.PuregoSafeRegister(&xSqueezerGetSwitchThresholdPolicy, lib, "adw_squeezer_get_switch_threshold_policy")
-	core.PuregoSafeRegister(&xSqueezerGetTransitionDuration, lib, "adw_squeezer_get_transition_duration")
-	core.PuregoSafeRegister(&xSqueezerGetTransitionRunning, lib, "adw_squeezer_get_transition_running")
-	core.PuregoSafeRegister(&xSqueezerGetTransitionType, lib, "adw_squeezer_get_transition_type")
-	core.PuregoSafeRegister(&xSqueezerGetVisibleChild, lib, "adw_squeezer_get_visible_child")
-	core.PuregoSafeRegister(&xSqueezerGetXalign, lib, "adw_squeezer_get_xalign")
-	core.PuregoSafeRegister(&xSqueezerGetYalign, lib, "adw_squeezer_get_yalign")
-	core.PuregoSafeRegister(&xSqueezerRemove, lib, "adw_squeezer_remove")
-	core.PuregoSafeRegister(&xSqueezerSetAllowNone, lib, "adw_squeezer_set_allow_none")
-	core.PuregoSafeRegister(&xSqueezerSetHomogeneous, lib, "adw_squeezer_set_homogeneous")
-	core.PuregoSafeRegister(&xSqueezerSetInterpolateSize, lib, "adw_squeezer_set_interpolate_size")
-	core.PuregoSafeRegister(&xSqueezerSetSwitchThresholdPolicy, lib, "adw_squeezer_set_switch_threshold_policy")
-	core.PuregoSafeRegister(&xSqueezerSetTransitionDuration, lib, "adw_squeezer_set_transition_duration")
-	core.PuregoSafeRegister(&xSqueezerSetTransitionType, lib, "adw_squeezer_set_transition_type")
-	core.PuregoSafeRegister(&xSqueezerSetXalign, lib, "adw_squeezer_set_xalign")
-	core.PuregoSafeRegister(&xSqueezerSetYalign, lib, "adw_squeezer_set_yalign")
+	core.PuregoSafeRegister(&xSqueezerAdd, libs, "adw_squeezer_add")
+	core.PuregoSafeRegister(&xSqueezerGetAllowNone, libs, "adw_squeezer_get_allow_none")
+	core.PuregoSafeRegister(&xSqueezerGetHomogeneous, libs, "adw_squeezer_get_homogeneous")
+	core.PuregoSafeRegister(&xSqueezerGetInterpolateSize, libs, "adw_squeezer_get_interpolate_size")
+	core.PuregoSafeRegister(&xSqueezerGetPage, libs, "adw_squeezer_get_page")
+	core.PuregoSafeRegister(&xSqueezerGetPages, libs, "adw_squeezer_get_pages")
+	core.PuregoSafeRegister(&xSqueezerGetSwitchThresholdPolicy, libs, "adw_squeezer_get_switch_threshold_policy")
+	core.PuregoSafeRegister(&xSqueezerGetTransitionDuration, libs, "adw_squeezer_get_transition_duration")
+	core.PuregoSafeRegister(&xSqueezerGetTransitionRunning, libs, "adw_squeezer_get_transition_running")
+	core.PuregoSafeRegister(&xSqueezerGetTransitionType, libs, "adw_squeezer_get_transition_type")
+	core.PuregoSafeRegister(&xSqueezerGetVisibleChild, libs, "adw_squeezer_get_visible_child")
+	core.PuregoSafeRegister(&xSqueezerGetXalign, libs, "adw_squeezer_get_xalign")
+	core.PuregoSafeRegister(&xSqueezerGetYalign, libs, "adw_squeezer_get_yalign")
+	core.PuregoSafeRegister(&xSqueezerRemove, libs, "adw_squeezer_remove")
+	core.PuregoSafeRegister(&xSqueezerSetAllowNone, libs, "adw_squeezer_set_allow_none")
+	core.PuregoSafeRegister(&xSqueezerSetHomogeneous, libs, "adw_squeezer_set_homogeneous")
+	core.PuregoSafeRegister(&xSqueezerSetInterpolateSize, libs, "adw_squeezer_set_interpolate_size")
+	core.PuregoSafeRegister(&xSqueezerSetSwitchThresholdPolicy, libs, "adw_squeezer_set_switch_threshold_policy")
+	core.PuregoSafeRegister(&xSqueezerSetTransitionDuration, libs, "adw_squeezer_set_transition_duration")
+	core.PuregoSafeRegister(&xSqueezerSetTransitionType, libs, "adw_squeezer_set_transition_type")
+	core.PuregoSafeRegister(&xSqueezerSetXalign, libs, "adw_squeezer_set_xalign")
+	core.PuregoSafeRegister(&xSqueezerSetYalign, libs, "adw_squeezer_set_yalign")
 
-	core.PuregoSafeRegister(&xSqueezerPageGLibType, lib, "adw_squeezer_page_get_type")
+	core.PuregoSafeRegister(&xSqueezerPageGLibType, libs, "adw_squeezer_page_get_type")
 
-	core.PuregoSafeRegister(&xSqueezerPageGetChild, lib, "adw_squeezer_page_get_child")
-	core.PuregoSafeRegister(&xSqueezerPageGetEnabled, lib, "adw_squeezer_page_get_enabled")
-	core.PuregoSafeRegister(&xSqueezerPageSetEnabled, lib, "adw_squeezer_page_set_enabled")
+	core.PuregoSafeRegister(&xSqueezerPageGetChild, libs, "adw_squeezer_page_get_child")
+	core.PuregoSafeRegister(&xSqueezerPageGetEnabled, libs, "adw_squeezer_page_get_enabled")
+	core.PuregoSafeRegister(&xSqueezerPageSetEnabled, libs, "adw_squeezer_page_set_enabled")
 
 }

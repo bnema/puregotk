@@ -356,35 +356,39 @@ const (
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEulerGLibType, lib, "graphene_euler_get_type")
+	core.PuregoSafeRegister(&xEulerGLibType, libs, "graphene_euler_get_type")
 
-	core.PuregoSafeRegister(&xEulerAlloc, lib, "graphene_euler_alloc")
+	core.PuregoSafeRegister(&xEulerAlloc, libs, "graphene_euler_alloc")
 
-	core.PuregoSafeRegister(&xEulerEqual, lib, "graphene_euler_equal")
-	core.PuregoSafeRegister(&xEulerFree, lib, "graphene_euler_free")
-	core.PuregoSafeRegister(&xEulerGetAlpha, lib, "graphene_euler_get_alpha")
-	core.PuregoSafeRegister(&xEulerGetBeta, lib, "graphene_euler_get_beta")
-	core.PuregoSafeRegister(&xEulerGetGamma, lib, "graphene_euler_get_gamma")
-	core.PuregoSafeRegister(&xEulerGetOrder, lib, "graphene_euler_get_order")
-	core.PuregoSafeRegister(&xEulerGetX, lib, "graphene_euler_get_x")
-	core.PuregoSafeRegister(&xEulerGetY, lib, "graphene_euler_get_y")
-	core.PuregoSafeRegister(&xEulerGetZ, lib, "graphene_euler_get_z")
-	core.PuregoSafeRegister(&xEulerInit, lib, "graphene_euler_init")
-	core.PuregoSafeRegister(&xEulerInitFromEuler, lib, "graphene_euler_init_from_euler")
-	core.PuregoSafeRegister(&xEulerInitFromMatrix, lib, "graphene_euler_init_from_matrix")
-	core.PuregoSafeRegister(&xEulerInitFromQuaternion, lib, "graphene_euler_init_from_quaternion")
-	core.PuregoSafeRegister(&xEulerInitFromRadians, lib, "graphene_euler_init_from_radians")
-	core.PuregoSafeRegister(&xEulerInitFromVec3, lib, "graphene_euler_init_from_vec3")
-	core.PuregoSafeRegister(&xEulerInitWithOrder, lib, "graphene_euler_init_with_order")
-	core.PuregoSafeRegister(&xEulerReorder, lib, "graphene_euler_reorder")
-	core.PuregoSafeRegister(&xEulerToMatrix, lib, "graphene_euler_to_matrix")
-	core.PuregoSafeRegister(&xEulerToQuaternion, lib, "graphene_euler_to_quaternion")
-	core.PuregoSafeRegister(&xEulerToVec3, lib, "graphene_euler_to_vec3")
+	core.PuregoSafeRegister(&xEulerEqual, libs, "graphene_euler_equal")
+	core.PuregoSafeRegister(&xEulerFree, libs, "graphene_euler_free")
+	core.PuregoSafeRegister(&xEulerGetAlpha, libs, "graphene_euler_get_alpha")
+	core.PuregoSafeRegister(&xEulerGetBeta, libs, "graphene_euler_get_beta")
+	core.PuregoSafeRegister(&xEulerGetGamma, libs, "graphene_euler_get_gamma")
+	core.PuregoSafeRegister(&xEulerGetOrder, libs, "graphene_euler_get_order")
+	core.PuregoSafeRegister(&xEulerGetX, libs, "graphene_euler_get_x")
+	core.PuregoSafeRegister(&xEulerGetY, libs, "graphene_euler_get_y")
+	core.PuregoSafeRegister(&xEulerGetZ, libs, "graphene_euler_get_z")
+	core.PuregoSafeRegister(&xEulerInit, libs, "graphene_euler_init")
+	core.PuregoSafeRegister(&xEulerInitFromEuler, libs, "graphene_euler_init_from_euler")
+	core.PuregoSafeRegister(&xEulerInitFromMatrix, libs, "graphene_euler_init_from_matrix")
+	core.PuregoSafeRegister(&xEulerInitFromQuaternion, libs, "graphene_euler_init_from_quaternion")
+	core.PuregoSafeRegister(&xEulerInitFromRadians, libs, "graphene_euler_init_from_radians")
+	core.PuregoSafeRegister(&xEulerInitFromVec3, libs, "graphene_euler_init_from_vec3")
+	core.PuregoSafeRegister(&xEulerInitWithOrder, libs, "graphene_euler_init_with_order")
+	core.PuregoSafeRegister(&xEulerReorder, libs, "graphene_euler_reorder")
+	core.PuregoSafeRegister(&xEulerToMatrix, libs, "graphene_euler_to_matrix")
+	core.PuregoSafeRegister(&xEulerToQuaternion, libs, "graphene_euler_to_quaternion")
+	core.PuregoSafeRegister(&xEulerToVec3, libs, "graphene_euler_to_vec3")
 
 }

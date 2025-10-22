@@ -387,17 +387,21 @@ func (x *WindowHandle) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xWindowHandleGLibType, lib, "gtk_window_handle_get_type")
+	core.PuregoSafeRegister(&xWindowHandleGLibType, libs, "gtk_window_handle_get_type")
 
-	core.PuregoSafeRegister(&xNewWindowHandle, lib, "gtk_window_handle_new")
+	core.PuregoSafeRegister(&xNewWindowHandle, libs, "gtk_window_handle_new")
 
-	core.PuregoSafeRegister(&xWindowHandleGetChild, lib, "gtk_window_handle_get_child")
-	core.PuregoSafeRegister(&xWindowHandleSetChild, lib, "gtk_window_handle_set_child")
+	core.PuregoSafeRegister(&xWindowHandleGetChild, libs, "gtk_window_handle_get_child")
+	core.PuregoSafeRegister(&xWindowHandleSetChild, libs, "gtk_window_handle_set_child")
 
 }

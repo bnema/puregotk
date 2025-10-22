@@ -191,20 +191,24 @@ func (x *InetSocketAddress) ToString() string {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInetSocketAddressGLibType, lib, "g_inet_socket_address_get_type")
+	core.PuregoSafeRegister(&xInetSocketAddressGLibType, libs, "g_inet_socket_address_get_type")
 
-	core.PuregoSafeRegister(&xNewInetSocketAddress, lib, "g_inet_socket_address_new")
-	core.PuregoSafeRegister(&xNewInetSocketAddressFromString, lib, "g_inet_socket_address_new_from_string")
+	core.PuregoSafeRegister(&xNewInetSocketAddress, libs, "g_inet_socket_address_new")
+	core.PuregoSafeRegister(&xNewInetSocketAddressFromString, libs, "g_inet_socket_address_new_from_string")
 
-	core.PuregoSafeRegister(&xInetSocketAddressGetAddress, lib, "g_inet_socket_address_get_address")
-	core.PuregoSafeRegister(&xInetSocketAddressGetFlowinfo, lib, "g_inet_socket_address_get_flowinfo")
-	core.PuregoSafeRegister(&xInetSocketAddressGetPort, lib, "g_inet_socket_address_get_port")
-	core.PuregoSafeRegister(&xInetSocketAddressGetScopeId, lib, "g_inet_socket_address_get_scope_id")
+	core.PuregoSafeRegister(&xInetSocketAddressGetAddress, libs, "g_inet_socket_address_get_address")
+	core.PuregoSafeRegister(&xInetSocketAddressGetFlowinfo, libs, "g_inet_socket_address_get_flowinfo")
+	core.PuregoSafeRegister(&xInetSocketAddressGetPort, libs, "g_inet_socket_address_get_port")
+	core.PuregoSafeRegister(&xInetSocketAddressGetScopeId, libs, "g_inet_socket_address_get_scope_id")
 
 }

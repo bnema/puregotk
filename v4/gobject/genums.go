@@ -229,23 +229,27 @@ func FlagsToString(FlagsTypeVar types.GType, ValueVar uint) string {
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEnumCompleteTypeInfo, lib, "g_enum_complete_type_info")
-	core.PuregoSafeRegister(&xEnumGetValue, lib, "g_enum_get_value")
-	core.PuregoSafeRegister(&xEnumGetValueByName, lib, "g_enum_get_value_by_name")
-	core.PuregoSafeRegister(&xEnumGetValueByNick, lib, "g_enum_get_value_by_nick")
-	core.PuregoSafeRegister(&xEnumRegisterStatic, lib, "g_enum_register_static")
-	core.PuregoSafeRegister(&xEnumToString, lib, "g_enum_to_string")
-	core.PuregoSafeRegister(&xFlagsCompleteTypeInfo, lib, "g_flags_complete_type_info")
-	core.PuregoSafeRegister(&xFlagsGetFirstValue, lib, "g_flags_get_first_value")
-	core.PuregoSafeRegister(&xFlagsGetValueByName, lib, "g_flags_get_value_by_name")
-	core.PuregoSafeRegister(&xFlagsGetValueByNick, lib, "g_flags_get_value_by_nick")
-	core.PuregoSafeRegister(&xFlagsRegisterStatic, lib, "g_flags_register_static")
-	core.PuregoSafeRegister(&xFlagsToString, lib, "g_flags_to_string")
+	core.PuregoSafeRegister(&xEnumCompleteTypeInfo, libs, "g_enum_complete_type_info")
+	core.PuregoSafeRegister(&xEnumGetValue, libs, "g_enum_get_value")
+	core.PuregoSafeRegister(&xEnumGetValueByName, libs, "g_enum_get_value_by_name")
+	core.PuregoSafeRegister(&xEnumGetValueByNick, libs, "g_enum_get_value_by_nick")
+	core.PuregoSafeRegister(&xEnumRegisterStatic, libs, "g_enum_register_static")
+	core.PuregoSafeRegister(&xEnumToString, libs, "g_enum_to_string")
+	core.PuregoSafeRegister(&xFlagsCompleteTypeInfo, libs, "g_flags_complete_type_info")
+	core.PuregoSafeRegister(&xFlagsGetFirstValue, libs, "g_flags_get_first_value")
+	core.PuregoSafeRegister(&xFlagsGetValueByName, libs, "g_flags_get_value_by_name")
+	core.PuregoSafeRegister(&xFlagsGetValueByNick, libs, "g_flags_get_value_by_nick")
+	core.PuregoSafeRegister(&xFlagsRegisterStatic, libs, "g_flags_register_static")
+	core.PuregoSafeRegister(&xFlagsToString, libs, "g_flags_to_string")
 
 }

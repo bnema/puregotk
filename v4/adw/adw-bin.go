@@ -386,17 +386,21 @@ func (x *Bin) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBinGLibType, lib, "adw_bin_get_type")
+	core.PuregoSafeRegister(&xBinGLibType, libs, "adw_bin_get_type")
 
-	core.PuregoSafeRegister(&xNewBin, lib, "adw_bin_new")
+	core.PuregoSafeRegister(&xNewBin, libs, "adw_bin_new")
 
-	core.PuregoSafeRegister(&xBinGetChild, lib, "adw_bin_get_child")
-	core.PuregoSafeRegister(&xBinSetChild, lib, "adw_bin_set_child")
+	core.PuregoSafeRegister(&xBinGetChild, libs, "adw_bin_get_child")
+	core.PuregoSafeRegister(&xBinSetChild, libs, "adw_bin_set_child")
 
 }

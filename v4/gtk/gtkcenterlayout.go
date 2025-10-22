@@ -218,27 +218,31 @@ func (c *CenterLayout) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCenterLayoutGLibType, lib, "gtk_center_layout_get_type")
+	core.PuregoSafeRegister(&xCenterLayoutGLibType, libs, "gtk_center_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewCenterLayout, lib, "gtk_center_layout_new")
+	core.PuregoSafeRegister(&xNewCenterLayout, libs, "gtk_center_layout_new")
 
-	core.PuregoSafeRegister(&xCenterLayoutGetBaselinePosition, lib, "gtk_center_layout_get_baseline_position")
-	core.PuregoSafeRegister(&xCenterLayoutGetCenterWidget, lib, "gtk_center_layout_get_center_widget")
-	core.PuregoSafeRegister(&xCenterLayoutGetEndWidget, lib, "gtk_center_layout_get_end_widget")
-	core.PuregoSafeRegister(&xCenterLayoutGetOrientation, lib, "gtk_center_layout_get_orientation")
-	core.PuregoSafeRegister(&xCenterLayoutGetShrinkCenterLast, lib, "gtk_center_layout_get_shrink_center_last")
-	core.PuregoSafeRegister(&xCenterLayoutGetStartWidget, lib, "gtk_center_layout_get_start_widget")
-	core.PuregoSafeRegister(&xCenterLayoutSetBaselinePosition, lib, "gtk_center_layout_set_baseline_position")
-	core.PuregoSafeRegister(&xCenterLayoutSetCenterWidget, lib, "gtk_center_layout_set_center_widget")
-	core.PuregoSafeRegister(&xCenterLayoutSetEndWidget, lib, "gtk_center_layout_set_end_widget")
-	core.PuregoSafeRegister(&xCenterLayoutSetOrientation, lib, "gtk_center_layout_set_orientation")
-	core.PuregoSafeRegister(&xCenterLayoutSetShrinkCenterLast, lib, "gtk_center_layout_set_shrink_center_last")
-	core.PuregoSafeRegister(&xCenterLayoutSetStartWidget, lib, "gtk_center_layout_set_start_widget")
+	core.PuregoSafeRegister(&xCenterLayoutGetBaselinePosition, libs, "gtk_center_layout_get_baseline_position")
+	core.PuregoSafeRegister(&xCenterLayoutGetCenterWidget, libs, "gtk_center_layout_get_center_widget")
+	core.PuregoSafeRegister(&xCenterLayoutGetEndWidget, libs, "gtk_center_layout_get_end_widget")
+	core.PuregoSafeRegister(&xCenterLayoutGetOrientation, libs, "gtk_center_layout_get_orientation")
+	core.PuregoSafeRegister(&xCenterLayoutGetShrinkCenterLast, libs, "gtk_center_layout_get_shrink_center_last")
+	core.PuregoSafeRegister(&xCenterLayoutGetStartWidget, libs, "gtk_center_layout_get_start_widget")
+	core.PuregoSafeRegister(&xCenterLayoutSetBaselinePosition, libs, "gtk_center_layout_set_baseline_position")
+	core.PuregoSafeRegister(&xCenterLayoutSetCenterWidget, libs, "gtk_center_layout_set_center_widget")
+	core.PuregoSafeRegister(&xCenterLayoutSetEndWidget, libs, "gtk_center_layout_set_end_widget")
+	core.PuregoSafeRegister(&xCenterLayoutSetOrientation, libs, "gtk_center_layout_set_orientation")
+	core.PuregoSafeRegister(&xCenterLayoutSetShrinkCenterLast, libs, "gtk_center_layout_set_shrink_center_last")
+	core.PuregoSafeRegister(&xCenterLayoutSetStartWidget, libs, "gtk_center_layout_set_start_widget")
 
 }

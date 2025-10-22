@@ -140,21 +140,25 @@ func (x *FrameTimings) Unref() {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFrameTimingsGLibType, lib, "gdk_frame_timings_get_type")
+	core.PuregoSafeRegister(&xFrameTimingsGLibType, libs, "gdk_frame_timings_get_type")
 
-	core.PuregoSafeRegister(&xFrameTimingsGetComplete, lib, "gdk_frame_timings_get_complete")
-	core.PuregoSafeRegister(&xFrameTimingsGetFrameCounter, lib, "gdk_frame_timings_get_frame_counter")
-	core.PuregoSafeRegister(&xFrameTimingsGetFrameTime, lib, "gdk_frame_timings_get_frame_time")
-	core.PuregoSafeRegister(&xFrameTimingsGetPredictedPresentationTime, lib, "gdk_frame_timings_get_predicted_presentation_time")
-	core.PuregoSafeRegister(&xFrameTimingsGetPresentationTime, lib, "gdk_frame_timings_get_presentation_time")
-	core.PuregoSafeRegister(&xFrameTimingsGetRefreshInterval, lib, "gdk_frame_timings_get_refresh_interval")
-	core.PuregoSafeRegister(&xFrameTimingsRef, lib, "gdk_frame_timings_ref")
-	core.PuregoSafeRegister(&xFrameTimingsUnref, lib, "gdk_frame_timings_unref")
+	core.PuregoSafeRegister(&xFrameTimingsGetComplete, libs, "gdk_frame_timings_get_complete")
+	core.PuregoSafeRegister(&xFrameTimingsGetFrameCounter, libs, "gdk_frame_timings_get_frame_counter")
+	core.PuregoSafeRegister(&xFrameTimingsGetFrameTime, libs, "gdk_frame_timings_get_frame_time")
+	core.PuregoSafeRegister(&xFrameTimingsGetPredictedPresentationTime, libs, "gdk_frame_timings_get_predicted_presentation_time")
+	core.PuregoSafeRegister(&xFrameTimingsGetPresentationTime, libs, "gdk_frame_timings_get_presentation_time")
+	core.PuregoSafeRegister(&xFrameTimingsGetRefreshInterval, libs, "gdk_frame_timings_get_refresh_interval")
+	core.PuregoSafeRegister(&xFrameTimingsRef, libs, "gdk_frame_timings_ref")
+	core.PuregoSafeRegister(&xFrameTimingsUnref, libs, "gdk_frame_timings_unref")
 
 }

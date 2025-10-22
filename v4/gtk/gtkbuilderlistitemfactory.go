@@ -152,19 +152,23 @@ func (c *BuilderListItemFactory) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBuilderListItemFactoryGLibType, lib, "gtk_builder_list_item_factory_get_type")
+	core.PuregoSafeRegister(&xBuilderListItemFactoryGLibType, libs, "gtk_builder_list_item_factory_get_type")
 
-	core.PuregoSafeRegister(&xNewBuilderListItemFactoryFromBytes, lib, "gtk_builder_list_item_factory_new_from_bytes")
-	core.PuregoSafeRegister(&xNewBuilderListItemFactoryFromResource, lib, "gtk_builder_list_item_factory_new_from_resource")
+	core.PuregoSafeRegister(&xNewBuilderListItemFactoryFromBytes, libs, "gtk_builder_list_item_factory_new_from_bytes")
+	core.PuregoSafeRegister(&xNewBuilderListItemFactoryFromResource, libs, "gtk_builder_list_item_factory_new_from_resource")
 
-	core.PuregoSafeRegister(&xBuilderListItemFactoryGetBytes, lib, "gtk_builder_list_item_factory_get_bytes")
-	core.PuregoSafeRegister(&xBuilderListItemFactoryGetResource, lib, "gtk_builder_list_item_factory_get_resource")
-	core.PuregoSafeRegister(&xBuilderListItemFactoryGetScope, lib, "gtk_builder_list_item_factory_get_scope")
+	core.PuregoSafeRegister(&xBuilderListItemFactoryGetBytes, libs, "gtk_builder_list_item_factory_get_bytes")
+	core.PuregoSafeRegister(&xBuilderListItemFactoryGetResource, libs, "gtk_builder_list_item_factory_get_resource")
+	core.PuregoSafeRegister(&xBuilderListItemFactoryGetScope, libs, "gtk_builder_list_item_factory_get_scope")
 
 }

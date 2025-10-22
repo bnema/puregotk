@@ -89,17 +89,21 @@ func (x *ToplevelSize) SetSize(WidthVar int, HeightVar int) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xToplevelSizeGLibType, lib, "gdk_toplevel_size_get_type")
+	core.PuregoSafeRegister(&xToplevelSizeGLibType, libs, "gdk_toplevel_size_get_type")
 
-	core.PuregoSafeRegister(&xToplevelSizeGetBounds, lib, "gdk_toplevel_size_get_bounds")
-	core.PuregoSafeRegister(&xToplevelSizeSetMinSize, lib, "gdk_toplevel_size_set_min_size")
-	core.PuregoSafeRegister(&xToplevelSizeSetShadowWidth, lib, "gdk_toplevel_size_set_shadow_width")
-	core.PuregoSafeRegister(&xToplevelSizeSetSize, lib, "gdk_toplevel_size_set_size")
+	core.PuregoSafeRegister(&xToplevelSizeGetBounds, libs, "gdk_toplevel_size_get_bounds")
+	core.PuregoSafeRegister(&xToplevelSizeSetMinSize, libs, "gdk_toplevel_size_set_min_size")
+	core.PuregoSafeRegister(&xToplevelSizeSetShadowWidth, libs, "gdk_toplevel_size_set_shadow_width")
+	core.PuregoSafeRegister(&xToplevelSizeSetSize, libs, "gdk_toplevel_size_set_size")
 
 }

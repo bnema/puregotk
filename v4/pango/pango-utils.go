@@ -279,30 +279,34 @@ func VersionString() string {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFindParagraphBoundary, lib, "pango_find_paragraph_boundary")
-	core.PuregoSafeRegister(&xIsZeroWidth, lib, "pango_is_zero_width")
-	core.PuregoSafeRegister(&xLog2visGetEmbeddingLevels, lib, "pango_log2vis_get_embedding_levels")
-	core.PuregoSafeRegister(&xParseEnum, lib, "pango_parse_enum")
-	core.PuregoSafeRegister(&xParseStretch, lib, "pango_parse_stretch")
-	core.PuregoSafeRegister(&xParseStyle, lib, "pango_parse_style")
-	core.PuregoSafeRegister(&xParseVariant, lib, "pango_parse_variant")
-	core.PuregoSafeRegister(&xParseWeight, lib, "pango_parse_weight")
-	core.PuregoSafeRegister(&xQuantizeLineGeometry, lib, "pango_quantize_line_geometry")
-	core.PuregoSafeRegister(&xReadLine, lib, "pango_read_line")
-	core.PuregoSafeRegister(&xScanInt, lib, "pango_scan_int")
-	core.PuregoSafeRegister(&xScanString, lib, "pango_scan_string")
-	core.PuregoSafeRegister(&xScanWord, lib, "pango_scan_word")
-	core.PuregoSafeRegister(&xSkipSpace, lib, "pango_skip_space")
-	core.PuregoSafeRegister(&xSplitFileList, lib, "pango_split_file_list")
-	core.PuregoSafeRegister(&xTrimString, lib, "pango_trim_string")
-	core.PuregoSafeRegister(&xVersion, lib, "pango_version")
-	core.PuregoSafeRegister(&xVersionCheck, lib, "pango_version_check")
-	core.PuregoSafeRegister(&xVersionString, lib, "pango_version_string")
+	core.PuregoSafeRegister(&xFindParagraphBoundary, libs, "pango_find_paragraph_boundary")
+	core.PuregoSafeRegister(&xIsZeroWidth, libs, "pango_is_zero_width")
+	core.PuregoSafeRegister(&xLog2visGetEmbeddingLevels, libs, "pango_log2vis_get_embedding_levels")
+	core.PuregoSafeRegister(&xParseEnum, libs, "pango_parse_enum")
+	core.PuregoSafeRegister(&xParseStretch, libs, "pango_parse_stretch")
+	core.PuregoSafeRegister(&xParseStyle, libs, "pango_parse_style")
+	core.PuregoSafeRegister(&xParseVariant, libs, "pango_parse_variant")
+	core.PuregoSafeRegister(&xParseWeight, libs, "pango_parse_weight")
+	core.PuregoSafeRegister(&xQuantizeLineGeometry, libs, "pango_quantize_line_geometry")
+	core.PuregoSafeRegister(&xReadLine, libs, "pango_read_line")
+	core.PuregoSafeRegister(&xScanInt, libs, "pango_scan_int")
+	core.PuregoSafeRegister(&xScanString, libs, "pango_scan_string")
+	core.PuregoSafeRegister(&xScanWord, libs, "pango_scan_word")
+	core.PuregoSafeRegister(&xSkipSpace, libs, "pango_skip_space")
+	core.PuregoSafeRegister(&xSplitFileList, libs, "pango_split_file_list")
+	core.PuregoSafeRegister(&xTrimString, libs, "pango_trim_string")
+	core.PuregoSafeRegister(&xVersion, libs, "pango_version")
+	core.PuregoSafeRegister(&xVersionCheck, libs, "pango_version_check")
+	core.PuregoSafeRegister(&xVersionString, libs, "pango_version_string")
 
 }

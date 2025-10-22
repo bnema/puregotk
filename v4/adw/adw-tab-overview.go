@@ -755,38 +755,42 @@ func (x *TabOverview) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTabOverviewGLibType, lib, "adw_tab_overview_get_type")
+	core.PuregoSafeRegister(&xTabOverviewGLibType, libs, "adw_tab_overview_get_type")
 
-	core.PuregoSafeRegister(&xNewTabOverview, lib, "adw_tab_overview_new")
+	core.PuregoSafeRegister(&xNewTabOverview, libs, "adw_tab_overview_new")
 
-	core.PuregoSafeRegister(&xTabOverviewGetChild, lib, "adw_tab_overview_get_child")
-	core.PuregoSafeRegister(&xTabOverviewGetEnableNewTab, lib, "adw_tab_overview_get_enable_new_tab")
-	core.PuregoSafeRegister(&xTabOverviewGetEnableSearch, lib, "adw_tab_overview_get_enable_search")
-	core.PuregoSafeRegister(&xTabOverviewGetExtraDragPreferredAction, lib, "adw_tab_overview_get_extra_drag_preferred_action")
-	core.PuregoSafeRegister(&xTabOverviewGetExtraDragPreload, lib, "adw_tab_overview_get_extra_drag_preload")
-	core.PuregoSafeRegister(&xTabOverviewGetInverted, lib, "adw_tab_overview_get_inverted")
-	core.PuregoSafeRegister(&xTabOverviewGetOpen, lib, "adw_tab_overview_get_open")
-	core.PuregoSafeRegister(&xTabOverviewGetSearchActive, lib, "adw_tab_overview_get_search_active")
-	core.PuregoSafeRegister(&xTabOverviewGetSecondaryMenu, lib, "adw_tab_overview_get_secondary_menu")
-	core.PuregoSafeRegister(&xTabOverviewGetShowEndTitleButtons, lib, "adw_tab_overview_get_show_end_title_buttons")
-	core.PuregoSafeRegister(&xTabOverviewGetShowStartTitleButtons, lib, "adw_tab_overview_get_show_start_title_buttons")
-	core.PuregoSafeRegister(&xTabOverviewGetView, lib, "adw_tab_overview_get_view")
-	core.PuregoSafeRegister(&xTabOverviewSetChild, lib, "adw_tab_overview_set_child")
-	core.PuregoSafeRegister(&xTabOverviewSetEnableNewTab, lib, "adw_tab_overview_set_enable_new_tab")
-	core.PuregoSafeRegister(&xTabOverviewSetEnableSearch, lib, "adw_tab_overview_set_enable_search")
-	core.PuregoSafeRegister(&xTabOverviewSetExtraDragPreload, lib, "adw_tab_overview_set_extra_drag_preload")
-	core.PuregoSafeRegister(&xTabOverviewSetInverted, lib, "adw_tab_overview_set_inverted")
-	core.PuregoSafeRegister(&xTabOverviewSetOpen, lib, "adw_tab_overview_set_open")
-	core.PuregoSafeRegister(&xTabOverviewSetSecondaryMenu, lib, "adw_tab_overview_set_secondary_menu")
-	core.PuregoSafeRegister(&xTabOverviewSetShowEndTitleButtons, lib, "adw_tab_overview_set_show_end_title_buttons")
-	core.PuregoSafeRegister(&xTabOverviewSetShowStartTitleButtons, lib, "adw_tab_overview_set_show_start_title_buttons")
-	core.PuregoSafeRegister(&xTabOverviewSetView, lib, "adw_tab_overview_set_view")
-	core.PuregoSafeRegister(&xTabOverviewSetupExtraDropTarget, lib, "adw_tab_overview_setup_extra_drop_target")
+	core.PuregoSafeRegister(&xTabOverviewGetChild, libs, "adw_tab_overview_get_child")
+	core.PuregoSafeRegister(&xTabOverviewGetEnableNewTab, libs, "adw_tab_overview_get_enable_new_tab")
+	core.PuregoSafeRegister(&xTabOverviewGetEnableSearch, libs, "adw_tab_overview_get_enable_search")
+	core.PuregoSafeRegister(&xTabOverviewGetExtraDragPreferredAction, libs, "adw_tab_overview_get_extra_drag_preferred_action")
+	core.PuregoSafeRegister(&xTabOverviewGetExtraDragPreload, libs, "adw_tab_overview_get_extra_drag_preload")
+	core.PuregoSafeRegister(&xTabOverviewGetInverted, libs, "adw_tab_overview_get_inverted")
+	core.PuregoSafeRegister(&xTabOverviewGetOpen, libs, "adw_tab_overview_get_open")
+	core.PuregoSafeRegister(&xTabOverviewGetSearchActive, libs, "adw_tab_overview_get_search_active")
+	core.PuregoSafeRegister(&xTabOverviewGetSecondaryMenu, libs, "adw_tab_overview_get_secondary_menu")
+	core.PuregoSafeRegister(&xTabOverviewGetShowEndTitleButtons, libs, "adw_tab_overview_get_show_end_title_buttons")
+	core.PuregoSafeRegister(&xTabOverviewGetShowStartTitleButtons, libs, "adw_tab_overview_get_show_start_title_buttons")
+	core.PuregoSafeRegister(&xTabOverviewGetView, libs, "adw_tab_overview_get_view")
+	core.PuregoSafeRegister(&xTabOverviewSetChild, libs, "adw_tab_overview_set_child")
+	core.PuregoSafeRegister(&xTabOverviewSetEnableNewTab, libs, "adw_tab_overview_set_enable_new_tab")
+	core.PuregoSafeRegister(&xTabOverviewSetEnableSearch, libs, "adw_tab_overview_set_enable_search")
+	core.PuregoSafeRegister(&xTabOverviewSetExtraDragPreload, libs, "adw_tab_overview_set_extra_drag_preload")
+	core.PuregoSafeRegister(&xTabOverviewSetInverted, libs, "adw_tab_overview_set_inverted")
+	core.PuregoSafeRegister(&xTabOverviewSetOpen, libs, "adw_tab_overview_set_open")
+	core.PuregoSafeRegister(&xTabOverviewSetSecondaryMenu, libs, "adw_tab_overview_set_secondary_menu")
+	core.PuregoSafeRegister(&xTabOverviewSetShowEndTitleButtons, libs, "adw_tab_overview_set_show_end_title_buttons")
+	core.PuregoSafeRegister(&xTabOverviewSetShowStartTitleButtons, libs, "adw_tab_overview_set_show_start_title_buttons")
+	core.PuregoSafeRegister(&xTabOverviewSetView, libs, "adw_tab_overview_set_view")
+	core.PuregoSafeRegister(&xTabOverviewSetupExtraDropTarget, libs, "adw_tab_overview_setup_extra_drop_target")
 
 }

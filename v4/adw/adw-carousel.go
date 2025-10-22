@@ -698,38 +698,42 @@ func (x *Carousel) SetOrientation(OrientationVar gtk.Orientation) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCarouselGLibType, lib, "adw_carousel_get_type")
+	core.PuregoSafeRegister(&xCarouselGLibType, libs, "adw_carousel_get_type")
 
-	core.PuregoSafeRegister(&xNewCarousel, lib, "adw_carousel_new")
+	core.PuregoSafeRegister(&xNewCarousel, libs, "adw_carousel_new")
 
-	core.PuregoSafeRegister(&xCarouselAppend, lib, "adw_carousel_append")
-	core.PuregoSafeRegister(&xCarouselGetAllowLongSwipes, lib, "adw_carousel_get_allow_long_swipes")
-	core.PuregoSafeRegister(&xCarouselGetAllowMouseDrag, lib, "adw_carousel_get_allow_mouse_drag")
-	core.PuregoSafeRegister(&xCarouselGetAllowScrollWheel, lib, "adw_carousel_get_allow_scroll_wheel")
-	core.PuregoSafeRegister(&xCarouselGetInteractive, lib, "adw_carousel_get_interactive")
-	core.PuregoSafeRegister(&xCarouselGetNPages, lib, "adw_carousel_get_n_pages")
-	core.PuregoSafeRegister(&xCarouselGetNthPage, lib, "adw_carousel_get_nth_page")
-	core.PuregoSafeRegister(&xCarouselGetPosition, lib, "adw_carousel_get_position")
-	core.PuregoSafeRegister(&xCarouselGetRevealDuration, lib, "adw_carousel_get_reveal_duration")
-	core.PuregoSafeRegister(&xCarouselGetScrollParams, lib, "adw_carousel_get_scroll_params")
-	core.PuregoSafeRegister(&xCarouselGetSpacing, lib, "adw_carousel_get_spacing")
-	core.PuregoSafeRegister(&xCarouselInsert, lib, "adw_carousel_insert")
-	core.PuregoSafeRegister(&xCarouselPrepend, lib, "adw_carousel_prepend")
-	core.PuregoSafeRegister(&xCarouselRemove, lib, "adw_carousel_remove")
-	core.PuregoSafeRegister(&xCarouselReorder, lib, "adw_carousel_reorder")
-	core.PuregoSafeRegister(&xCarouselScrollTo, lib, "adw_carousel_scroll_to")
-	core.PuregoSafeRegister(&xCarouselSetAllowLongSwipes, lib, "adw_carousel_set_allow_long_swipes")
-	core.PuregoSafeRegister(&xCarouselSetAllowMouseDrag, lib, "adw_carousel_set_allow_mouse_drag")
-	core.PuregoSafeRegister(&xCarouselSetAllowScrollWheel, lib, "adw_carousel_set_allow_scroll_wheel")
-	core.PuregoSafeRegister(&xCarouselSetInteractive, lib, "adw_carousel_set_interactive")
-	core.PuregoSafeRegister(&xCarouselSetRevealDuration, lib, "adw_carousel_set_reveal_duration")
-	core.PuregoSafeRegister(&xCarouselSetScrollParams, lib, "adw_carousel_set_scroll_params")
-	core.PuregoSafeRegister(&xCarouselSetSpacing, lib, "adw_carousel_set_spacing")
+	core.PuregoSafeRegister(&xCarouselAppend, libs, "adw_carousel_append")
+	core.PuregoSafeRegister(&xCarouselGetAllowLongSwipes, libs, "adw_carousel_get_allow_long_swipes")
+	core.PuregoSafeRegister(&xCarouselGetAllowMouseDrag, libs, "adw_carousel_get_allow_mouse_drag")
+	core.PuregoSafeRegister(&xCarouselGetAllowScrollWheel, libs, "adw_carousel_get_allow_scroll_wheel")
+	core.PuregoSafeRegister(&xCarouselGetInteractive, libs, "adw_carousel_get_interactive")
+	core.PuregoSafeRegister(&xCarouselGetNPages, libs, "adw_carousel_get_n_pages")
+	core.PuregoSafeRegister(&xCarouselGetNthPage, libs, "adw_carousel_get_nth_page")
+	core.PuregoSafeRegister(&xCarouselGetPosition, libs, "adw_carousel_get_position")
+	core.PuregoSafeRegister(&xCarouselGetRevealDuration, libs, "adw_carousel_get_reveal_duration")
+	core.PuregoSafeRegister(&xCarouselGetScrollParams, libs, "adw_carousel_get_scroll_params")
+	core.PuregoSafeRegister(&xCarouselGetSpacing, libs, "adw_carousel_get_spacing")
+	core.PuregoSafeRegister(&xCarouselInsert, libs, "adw_carousel_insert")
+	core.PuregoSafeRegister(&xCarouselPrepend, libs, "adw_carousel_prepend")
+	core.PuregoSafeRegister(&xCarouselRemove, libs, "adw_carousel_remove")
+	core.PuregoSafeRegister(&xCarouselReorder, libs, "adw_carousel_reorder")
+	core.PuregoSafeRegister(&xCarouselScrollTo, libs, "adw_carousel_scroll_to")
+	core.PuregoSafeRegister(&xCarouselSetAllowLongSwipes, libs, "adw_carousel_set_allow_long_swipes")
+	core.PuregoSafeRegister(&xCarouselSetAllowMouseDrag, libs, "adw_carousel_set_allow_mouse_drag")
+	core.PuregoSafeRegister(&xCarouselSetAllowScrollWheel, libs, "adw_carousel_set_allow_scroll_wheel")
+	core.PuregoSafeRegister(&xCarouselSetInteractive, libs, "adw_carousel_set_interactive")
+	core.PuregoSafeRegister(&xCarouselSetRevealDuration, libs, "adw_carousel_set_reveal_duration")
+	core.PuregoSafeRegister(&xCarouselSetScrollParams, libs, "adw_carousel_set_scroll_params")
+	core.PuregoSafeRegister(&xCarouselSetSpacing, libs, "adw_carousel_set_spacing")
 
 }

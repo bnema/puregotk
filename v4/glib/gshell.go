@@ -110,14 +110,18 @@ func ShellUnquote(QuotedStringVar string) (string, error) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xShellParseArgv, lib, "g_shell_parse_argv")
-	core.PuregoSafeRegister(&xShellQuote, lib, "g_shell_quote")
-	core.PuregoSafeRegister(&xShellUnquote, lib, "g_shell_unquote")
+	core.PuregoSafeRegister(&xShellParseArgv, libs, "g_shell_parse_argv")
+	core.PuregoSafeRegister(&xShellQuote, libs, "g_shell_quote")
+	core.PuregoSafeRegister(&xShellUnquote, libs, "g_shell_unquote")
 
 }

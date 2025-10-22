@@ -583,26 +583,30 @@ func (x *AppChooserButton) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAppChooserButtonGLibType, lib, "gtk_app_chooser_button_get_type")
+	core.PuregoSafeRegister(&xAppChooserButtonGLibType, libs, "gtk_app_chooser_button_get_type")
 
-	core.PuregoSafeRegister(&xNewAppChooserButton, lib, "gtk_app_chooser_button_new")
+	core.PuregoSafeRegister(&xNewAppChooserButton, libs, "gtk_app_chooser_button_new")
 
-	core.PuregoSafeRegister(&xAppChooserButtonAppendCustomItem, lib, "gtk_app_chooser_button_append_custom_item")
-	core.PuregoSafeRegister(&xAppChooserButtonAppendSeparator, lib, "gtk_app_chooser_button_append_separator")
-	core.PuregoSafeRegister(&xAppChooserButtonGetHeading, lib, "gtk_app_chooser_button_get_heading")
-	core.PuregoSafeRegister(&xAppChooserButtonGetModal, lib, "gtk_app_chooser_button_get_modal")
-	core.PuregoSafeRegister(&xAppChooserButtonGetShowDefaultItem, lib, "gtk_app_chooser_button_get_show_default_item")
-	core.PuregoSafeRegister(&xAppChooserButtonGetShowDialogItem, lib, "gtk_app_chooser_button_get_show_dialog_item")
-	core.PuregoSafeRegister(&xAppChooserButtonSetActiveCustomItem, lib, "gtk_app_chooser_button_set_active_custom_item")
-	core.PuregoSafeRegister(&xAppChooserButtonSetHeading, lib, "gtk_app_chooser_button_set_heading")
-	core.PuregoSafeRegister(&xAppChooserButtonSetModal, lib, "gtk_app_chooser_button_set_modal")
-	core.PuregoSafeRegister(&xAppChooserButtonSetShowDefaultItem, lib, "gtk_app_chooser_button_set_show_default_item")
-	core.PuregoSafeRegister(&xAppChooserButtonSetShowDialogItem, lib, "gtk_app_chooser_button_set_show_dialog_item")
+	core.PuregoSafeRegister(&xAppChooserButtonAppendCustomItem, libs, "gtk_app_chooser_button_append_custom_item")
+	core.PuregoSafeRegister(&xAppChooserButtonAppendSeparator, libs, "gtk_app_chooser_button_append_separator")
+	core.PuregoSafeRegister(&xAppChooserButtonGetHeading, libs, "gtk_app_chooser_button_get_heading")
+	core.PuregoSafeRegister(&xAppChooserButtonGetModal, libs, "gtk_app_chooser_button_get_modal")
+	core.PuregoSafeRegister(&xAppChooserButtonGetShowDefaultItem, libs, "gtk_app_chooser_button_get_show_default_item")
+	core.PuregoSafeRegister(&xAppChooserButtonGetShowDialogItem, libs, "gtk_app_chooser_button_get_show_dialog_item")
+	core.PuregoSafeRegister(&xAppChooserButtonSetActiveCustomItem, libs, "gtk_app_chooser_button_set_active_custom_item")
+	core.PuregoSafeRegister(&xAppChooserButtonSetHeading, libs, "gtk_app_chooser_button_set_heading")
+	core.PuregoSafeRegister(&xAppChooserButtonSetModal, libs, "gtk_app_chooser_button_set_modal")
+	core.PuregoSafeRegister(&xAppChooserButtonSetShowDefaultItem, libs, "gtk_app_chooser_button_set_show_default_item")
+	core.PuregoSafeRegister(&xAppChooserButtonSetShowDialogItem, libs, "gtk_app_chooser_button_set_show_dialog_item")
 
 }

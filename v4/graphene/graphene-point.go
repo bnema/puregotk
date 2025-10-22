@@ -161,26 +161,30 @@ func PointZero() *Point {
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPointZero, lib, "graphene_point_zero")
+	core.PuregoSafeRegister(&xPointZero, libs, "graphene_point_zero")
 
-	core.PuregoSafeRegister(&xPointGLibType, lib, "graphene_point_get_type")
+	core.PuregoSafeRegister(&xPointGLibType, libs, "graphene_point_get_type")
 
-	core.PuregoSafeRegister(&xPointAlloc, lib, "graphene_point_alloc")
+	core.PuregoSafeRegister(&xPointAlloc, libs, "graphene_point_alloc")
 
-	core.PuregoSafeRegister(&xPointDistance, lib, "graphene_point_distance")
-	core.PuregoSafeRegister(&xPointEqual, lib, "graphene_point_equal")
-	core.PuregoSafeRegister(&xPointFree, lib, "graphene_point_free")
-	core.PuregoSafeRegister(&xPointInit, lib, "graphene_point_init")
-	core.PuregoSafeRegister(&xPointInitFromPoint, lib, "graphene_point_init_from_point")
-	core.PuregoSafeRegister(&xPointInitFromVec2, lib, "graphene_point_init_from_vec2")
-	core.PuregoSafeRegister(&xPointInterpolate, lib, "graphene_point_interpolate")
-	core.PuregoSafeRegister(&xPointNear, lib, "graphene_point_near")
-	core.PuregoSafeRegister(&xPointToVec2, lib, "graphene_point_to_vec2")
+	core.PuregoSafeRegister(&xPointDistance, libs, "graphene_point_distance")
+	core.PuregoSafeRegister(&xPointEqual, libs, "graphene_point_equal")
+	core.PuregoSafeRegister(&xPointFree, libs, "graphene_point_free")
+	core.PuregoSafeRegister(&xPointInit, libs, "graphene_point_init")
+	core.PuregoSafeRegister(&xPointInitFromPoint, libs, "graphene_point_init_from_point")
+	core.PuregoSafeRegister(&xPointInitFromVec2, libs, "graphene_point_init_from_vec2")
+	core.PuregoSafeRegister(&xPointInterpolate, libs, "graphene_point_interpolate")
+	core.PuregoSafeRegister(&xPointNear, libs, "graphene_point_near")
+	core.PuregoSafeRegister(&xPointToVec2, libs, "graphene_point_to_vec2")
 
 }

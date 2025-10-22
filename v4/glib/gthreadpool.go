@@ -260,26 +260,30 @@ func ThreadPoolStopUnusedThreads() {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xThreadPoolGetMaxIdleTime, lib, "g_thread_pool_get_max_idle_time")
-	core.PuregoSafeRegister(&xThreadPoolGetMaxUnusedThreads, lib, "g_thread_pool_get_max_unused_threads")
-	core.PuregoSafeRegister(&xThreadPoolGetNumUnusedThreads, lib, "g_thread_pool_get_num_unused_threads")
-	core.PuregoSafeRegister(&xThreadPoolSetMaxIdleTime, lib, "g_thread_pool_set_max_idle_time")
-	core.PuregoSafeRegister(&xThreadPoolSetMaxUnusedThreads, lib, "g_thread_pool_set_max_unused_threads")
-	core.PuregoSafeRegister(&xThreadPoolStopUnusedThreads, lib, "g_thread_pool_stop_unused_threads")
+	core.PuregoSafeRegister(&xThreadPoolGetMaxIdleTime, libs, "g_thread_pool_get_max_idle_time")
+	core.PuregoSafeRegister(&xThreadPoolGetMaxUnusedThreads, libs, "g_thread_pool_get_max_unused_threads")
+	core.PuregoSafeRegister(&xThreadPoolGetNumUnusedThreads, libs, "g_thread_pool_get_num_unused_threads")
+	core.PuregoSafeRegister(&xThreadPoolSetMaxIdleTime, libs, "g_thread_pool_set_max_idle_time")
+	core.PuregoSafeRegister(&xThreadPoolSetMaxUnusedThreads, libs, "g_thread_pool_set_max_unused_threads")
+	core.PuregoSafeRegister(&xThreadPoolStopUnusedThreads, libs, "g_thread_pool_stop_unused_threads")
 
-	core.PuregoSafeRegister(&xThreadPoolFree, lib, "g_thread_pool_free")
-	core.PuregoSafeRegister(&xThreadPoolGetMaxThreads, lib, "g_thread_pool_get_max_threads")
-	core.PuregoSafeRegister(&xThreadPoolGetNumThreads, lib, "g_thread_pool_get_num_threads")
-	core.PuregoSafeRegister(&xThreadPoolMoveToFront, lib, "g_thread_pool_move_to_front")
-	core.PuregoSafeRegister(&xThreadPoolPush, lib, "g_thread_pool_push")
-	core.PuregoSafeRegister(&xThreadPoolSetMaxThreads, lib, "g_thread_pool_set_max_threads")
-	core.PuregoSafeRegister(&xThreadPoolSetSortFunction, lib, "g_thread_pool_set_sort_function")
-	core.PuregoSafeRegister(&xThreadPoolUnprocessed, lib, "g_thread_pool_unprocessed")
+	core.PuregoSafeRegister(&xThreadPoolFree, libs, "g_thread_pool_free")
+	core.PuregoSafeRegister(&xThreadPoolGetMaxThreads, libs, "g_thread_pool_get_max_threads")
+	core.PuregoSafeRegister(&xThreadPoolGetNumThreads, libs, "g_thread_pool_get_num_threads")
+	core.PuregoSafeRegister(&xThreadPoolMoveToFront, libs, "g_thread_pool_move_to_front")
+	core.PuregoSafeRegister(&xThreadPoolPush, libs, "g_thread_pool_push")
+	core.PuregoSafeRegister(&xThreadPoolSetMaxThreads, libs, "g_thread_pool_set_max_threads")
+	core.PuregoSafeRegister(&xThreadPoolSetSortFunction, libs, "g_thread_pool_set_sort_function")
+	core.PuregoSafeRegister(&xThreadPoolUnprocessed, libs, "g_thread_pool_unprocessed")
 
 }

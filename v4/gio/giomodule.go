@@ -313,30 +313,34 @@ func IOModuleQuery() []string {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xIoExtensionPointImplement, lib, "g_io_extension_point_implement")
-	core.PuregoSafeRegister(&xIoExtensionPointLookup, lib, "g_io_extension_point_lookup")
-	core.PuregoSafeRegister(&xIoExtensionPointRegister, lib, "g_io_extension_point_register")
-	core.PuregoSafeRegister(&xIoModulesLoadAllInDirectory, lib, "g_io_modules_load_all_in_directory")
-	core.PuregoSafeRegister(&xIoModulesLoadAllInDirectoryWithScope, lib, "g_io_modules_load_all_in_directory_with_scope")
-	core.PuregoSafeRegister(&xIoModulesScanAllInDirectory, lib, "g_io_modules_scan_all_in_directory")
-	core.PuregoSafeRegister(&xIoModulesScanAllInDirectoryWithScope, lib, "g_io_modules_scan_all_in_directory_with_scope")
+	core.PuregoSafeRegister(&xIoExtensionPointImplement, libs, "g_io_extension_point_implement")
+	core.PuregoSafeRegister(&xIoExtensionPointLookup, libs, "g_io_extension_point_lookup")
+	core.PuregoSafeRegister(&xIoExtensionPointRegister, libs, "g_io_extension_point_register")
+	core.PuregoSafeRegister(&xIoModulesLoadAllInDirectory, libs, "g_io_modules_load_all_in_directory")
+	core.PuregoSafeRegister(&xIoModulesLoadAllInDirectoryWithScope, libs, "g_io_modules_load_all_in_directory_with_scope")
+	core.PuregoSafeRegister(&xIoModulesScanAllInDirectory, libs, "g_io_modules_scan_all_in_directory")
+	core.PuregoSafeRegister(&xIoModulesScanAllInDirectoryWithScope, libs, "g_io_modules_scan_all_in_directory_with_scope")
 
-	core.PuregoSafeRegister(&xIOModuleScopeBlock, lib, "g_io_module_scope_block")
-	core.PuregoSafeRegister(&xIOModuleScopeFree, lib, "g_io_module_scope_free")
+	core.PuregoSafeRegister(&xIOModuleScopeBlock, libs, "g_io_module_scope_block")
+	core.PuregoSafeRegister(&xIOModuleScopeFree, libs, "g_io_module_scope_free")
 
-	core.PuregoSafeRegister(&xIOModuleGLibType, lib, "g_io_module_get_type")
+	core.PuregoSafeRegister(&xIOModuleGLibType, libs, "g_io_module_get_type")
 
-	core.PuregoSafeRegister(&xNewIOModule, lib, "g_io_module_new")
+	core.PuregoSafeRegister(&xNewIOModule, libs, "g_io_module_new")
 
-	core.PuregoSafeRegister(&xIOModuleLoad, lib, "g_io_module_load")
-	core.PuregoSafeRegister(&xIOModuleUnload, lib, "g_io_module_unload")
+	core.PuregoSafeRegister(&xIOModuleLoad, libs, "g_io_module_load")
+	core.PuregoSafeRegister(&xIOModuleUnload, libs, "g_io_module_unload")
 
-	core.PuregoSafeRegister(&xIOModuleQuery, lib, "g_io_module_query")
+	core.PuregoSafeRegister(&xIOModuleQuery, libs, "g_io_module_query")
 
 }

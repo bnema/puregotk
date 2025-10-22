@@ -884,40 +884,44 @@ func DBusProxyNewForBus(BusTypeVar BusType, FlagsVar DBusProxyFlags, InfoVar *DB
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDBusProxyGLibType, lib, "g_dbus_proxy_get_type")
+	core.PuregoSafeRegister(&xDBusProxyGLibType, libs, "g_dbus_proxy_get_type")
 
-	core.PuregoSafeRegister(&xNewDBusProxyFinish, lib, "g_dbus_proxy_new_finish")
-	core.PuregoSafeRegister(&xNewDBusProxyForBusFinish, lib, "g_dbus_proxy_new_for_bus_finish")
-	core.PuregoSafeRegister(&xNewDBusProxyForBusSync, lib, "g_dbus_proxy_new_for_bus_sync")
-	core.PuregoSafeRegister(&xNewDBusProxySync, lib, "g_dbus_proxy_new_sync")
+	core.PuregoSafeRegister(&xNewDBusProxyFinish, libs, "g_dbus_proxy_new_finish")
+	core.PuregoSafeRegister(&xNewDBusProxyForBusFinish, libs, "g_dbus_proxy_new_for_bus_finish")
+	core.PuregoSafeRegister(&xNewDBusProxyForBusSync, libs, "g_dbus_proxy_new_for_bus_sync")
+	core.PuregoSafeRegister(&xNewDBusProxySync, libs, "g_dbus_proxy_new_sync")
 
-	core.PuregoSafeRegister(&xDBusProxyCall, lib, "g_dbus_proxy_call")
-	core.PuregoSafeRegister(&xDBusProxyCallFinish, lib, "g_dbus_proxy_call_finish")
-	core.PuregoSafeRegister(&xDBusProxyCallSync, lib, "g_dbus_proxy_call_sync")
-	core.PuregoSafeRegister(&xDBusProxyCallWithUnixFdList, lib, "g_dbus_proxy_call_with_unix_fd_list")
-	core.PuregoSafeRegister(&xDBusProxyCallWithUnixFdListFinish, lib, "g_dbus_proxy_call_with_unix_fd_list_finish")
-	core.PuregoSafeRegister(&xDBusProxyCallWithUnixFdListSync, lib, "g_dbus_proxy_call_with_unix_fd_list_sync")
-	core.PuregoSafeRegister(&xDBusProxyGetCachedProperty, lib, "g_dbus_proxy_get_cached_property")
-	core.PuregoSafeRegister(&xDBusProxyGetCachedPropertyNames, lib, "g_dbus_proxy_get_cached_property_names")
-	core.PuregoSafeRegister(&xDBusProxyGetConnection, lib, "g_dbus_proxy_get_connection")
-	core.PuregoSafeRegister(&xDBusProxyGetDefaultTimeout, lib, "g_dbus_proxy_get_default_timeout")
-	core.PuregoSafeRegister(&xDBusProxyGetFlags, lib, "g_dbus_proxy_get_flags")
-	core.PuregoSafeRegister(&xDBusProxyGetInterfaceInfo, lib, "g_dbus_proxy_get_interface_info")
-	core.PuregoSafeRegister(&xDBusProxyGetInterfaceName, lib, "g_dbus_proxy_get_interface_name")
-	core.PuregoSafeRegister(&xDBusProxyGetName, lib, "g_dbus_proxy_get_name")
-	core.PuregoSafeRegister(&xDBusProxyGetNameOwner, lib, "g_dbus_proxy_get_name_owner")
-	core.PuregoSafeRegister(&xDBusProxyGetObjectPath, lib, "g_dbus_proxy_get_object_path")
-	core.PuregoSafeRegister(&xDBusProxySetCachedProperty, lib, "g_dbus_proxy_set_cached_property")
-	core.PuregoSafeRegister(&xDBusProxySetDefaultTimeout, lib, "g_dbus_proxy_set_default_timeout")
-	core.PuregoSafeRegister(&xDBusProxySetInterfaceInfo, lib, "g_dbus_proxy_set_interface_info")
+	core.PuregoSafeRegister(&xDBusProxyCall, libs, "g_dbus_proxy_call")
+	core.PuregoSafeRegister(&xDBusProxyCallFinish, libs, "g_dbus_proxy_call_finish")
+	core.PuregoSafeRegister(&xDBusProxyCallSync, libs, "g_dbus_proxy_call_sync")
+	core.PuregoSafeRegister(&xDBusProxyCallWithUnixFdList, libs, "g_dbus_proxy_call_with_unix_fd_list")
+	core.PuregoSafeRegister(&xDBusProxyCallWithUnixFdListFinish, libs, "g_dbus_proxy_call_with_unix_fd_list_finish")
+	core.PuregoSafeRegister(&xDBusProxyCallWithUnixFdListSync, libs, "g_dbus_proxy_call_with_unix_fd_list_sync")
+	core.PuregoSafeRegister(&xDBusProxyGetCachedProperty, libs, "g_dbus_proxy_get_cached_property")
+	core.PuregoSafeRegister(&xDBusProxyGetCachedPropertyNames, libs, "g_dbus_proxy_get_cached_property_names")
+	core.PuregoSafeRegister(&xDBusProxyGetConnection, libs, "g_dbus_proxy_get_connection")
+	core.PuregoSafeRegister(&xDBusProxyGetDefaultTimeout, libs, "g_dbus_proxy_get_default_timeout")
+	core.PuregoSafeRegister(&xDBusProxyGetFlags, libs, "g_dbus_proxy_get_flags")
+	core.PuregoSafeRegister(&xDBusProxyGetInterfaceInfo, libs, "g_dbus_proxy_get_interface_info")
+	core.PuregoSafeRegister(&xDBusProxyGetInterfaceName, libs, "g_dbus_proxy_get_interface_name")
+	core.PuregoSafeRegister(&xDBusProxyGetName, libs, "g_dbus_proxy_get_name")
+	core.PuregoSafeRegister(&xDBusProxyGetNameOwner, libs, "g_dbus_proxy_get_name_owner")
+	core.PuregoSafeRegister(&xDBusProxyGetObjectPath, libs, "g_dbus_proxy_get_object_path")
+	core.PuregoSafeRegister(&xDBusProxySetCachedProperty, libs, "g_dbus_proxy_set_cached_property")
+	core.PuregoSafeRegister(&xDBusProxySetDefaultTimeout, libs, "g_dbus_proxy_set_default_timeout")
+	core.PuregoSafeRegister(&xDBusProxySetInterfaceInfo, libs, "g_dbus_proxy_set_interface_info")
 
-	core.PuregoSafeRegister(&xDBusProxyNew, lib, "g_dbus_proxy_new")
-	core.PuregoSafeRegister(&xDBusProxyNewForBus, lib, "g_dbus_proxy_new_for_bus")
+	core.PuregoSafeRegister(&xDBusProxyNew, libs, "g_dbus_proxy_new")
+	core.PuregoSafeRegister(&xDBusProxyNewForBus, libs, "g_dbus_proxy_new_for_bus")
 
 }

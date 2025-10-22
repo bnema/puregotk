@@ -505,33 +505,37 @@ func TryReallocN(MemVar uintptr, NBlocksVar uint, NBlockBytesVar uint) uintptr {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAlignedAlloc, lib, "g_aligned_alloc")
-	core.PuregoSafeRegister(&xAlignedAlloc0, lib, "g_aligned_alloc0")
-	core.PuregoSafeRegister(&xAlignedFree, lib, "g_aligned_free")
-	core.PuregoSafeRegister(&xAlignedFreeSized, lib, "g_aligned_free_sized")
-	core.PuregoSafeRegister(&xClearPointer, lib, "g_clear_pointer")
-	core.PuregoSafeRegister(&xFree, lib, "g_free")
-	core.PuregoSafeRegister(&xFreeSized, lib, "g_free_sized")
-	core.PuregoSafeRegister(&xMalloc, lib, "g_malloc")
-	core.PuregoSafeRegister(&xMalloc0, lib, "g_malloc0")
-	core.PuregoSafeRegister(&xMalloc0N, lib, "g_malloc0_n")
-	core.PuregoSafeRegister(&xMallocN, lib, "g_malloc_n")
-	core.PuregoSafeRegister(&xMemIsSystemMalloc, lib, "g_mem_is_system_malloc")
-	core.PuregoSafeRegister(&xMemProfile, lib, "g_mem_profile")
-	core.PuregoSafeRegister(&xMemSetVtable, lib, "g_mem_set_vtable")
-	core.PuregoSafeRegister(&xRealloc, lib, "g_realloc")
-	core.PuregoSafeRegister(&xReallocN, lib, "g_realloc_n")
-	core.PuregoSafeRegister(&xTryMalloc, lib, "g_try_malloc")
-	core.PuregoSafeRegister(&xTryMalloc0, lib, "g_try_malloc0")
-	core.PuregoSafeRegister(&xTryMalloc0N, lib, "g_try_malloc0_n")
-	core.PuregoSafeRegister(&xTryMallocN, lib, "g_try_malloc_n")
-	core.PuregoSafeRegister(&xTryRealloc, lib, "g_try_realloc")
-	core.PuregoSafeRegister(&xTryReallocN, lib, "g_try_realloc_n")
+	core.PuregoSafeRegister(&xAlignedAlloc, libs, "g_aligned_alloc")
+	core.PuregoSafeRegister(&xAlignedAlloc0, libs, "g_aligned_alloc0")
+	core.PuregoSafeRegister(&xAlignedFree, libs, "g_aligned_free")
+	core.PuregoSafeRegister(&xAlignedFreeSized, libs, "g_aligned_free_sized")
+	core.PuregoSafeRegister(&xClearPointer, libs, "g_clear_pointer")
+	core.PuregoSafeRegister(&xFree, libs, "g_free")
+	core.PuregoSafeRegister(&xFreeSized, libs, "g_free_sized")
+	core.PuregoSafeRegister(&xMalloc, libs, "g_malloc")
+	core.PuregoSafeRegister(&xMalloc0, libs, "g_malloc0")
+	core.PuregoSafeRegister(&xMalloc0N, libs, "g_malloc0_n")
+	core.PuregoSafeRegister(&xMallocN, libs, "g_malloc_n")
+	core.PuregoSafeRegister(&xMemIsSystemMalloc, libs, "g_mem_is_system_malloc")
+	core.PuregoSafeRegister(&xMemProfile, libs, "g_mem_profile")
+	core.PuregoSafeRegister(&xMemSetVtable, libs, "g_mem_set_vtable")
+	core.PuregoSafeRegister(&xRealloc, libs, "g_realloc")
+	core.PuregoSafeRegister(&xReallocN, libs, "g_realloc_n")
+	core.PuregoSafeRegister(&xTryMalloc, libs, "g_try_malloc")
+	core.PuregoSafeRegister(&xTryMalloc0, libs, "g_try_malloc0")
+	core.PuregoSafeRegister(&xTryMalloc0N, libs, "g_try_malloc0_n")
+	core.PuregoSafeRegister(&xTryMallocN, libs, "g_try_malloc_n")
+	core.PuregoSafeRegister(&xTryRealloc, libs, "g_try_realloc")
+	core.PuregoSafeRegister(&xTryReallocN, libs, "g_try_realloc_n")
 
 }

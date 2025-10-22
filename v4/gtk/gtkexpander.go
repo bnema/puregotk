@@ -643,30 +643,34 @@ func (x *Expander) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xExpanderGLibType, lib, "gtk_expander_get_type")
+	core.PuregoSafeRegister(&xExpanderGLibType, libs, "gtk_expander_get_type")
 
-	core.PuregoSafeRegister(&xNewExpander, lib, "gtk_expander_new")
-	core.PuregoSafeRegister(&xNewExpanderWithMnemonic, lib, "gtk_expander_new_with_mnemonic")
+	core.PuregoSafeRegister(&xNewExpander, libs, "gtk_expander_new")
+	core.PuregoSafeRegister(&xNewExpanderWithMnemonic, libs, "gtk_expander_new_with_mnemonic")
 
-	core.PuregoSafeRegister(&xExpanderGetChild, lib, "gtk_expander_get_child")
-	core.PuregoSafeRegister(&xExpanderGetExpanded, lib, "gtk_expander_get_expanded")
-	core.PuregoSafeRegister(&xExpanderGetLabel, lib, "gtk_expander_get_label")
-	core.PuregoSafeRegister(&xExpanderGetLabelWidget, lib, "gtk_expander_get_label_widget")
-	core.PuregoSafeRegister(&xExpanderGetResizeToplevel, lib, "gtk_expander_get_resize_toplevel")
-	core.PuregoSafeRegister(&xExpanderGetUseMarkup, lib, "gtk_expander_get_use_markup")
-	core.PuregoSafeRegister(&xExpanderGetUseUnderline, lib, "gtk_expander_get_use_underline")
-	core.PuregoSafeRegister(&xExpanderSetChild, lib, "gtk_expander_set_child")
-	core.PuregoSafeRegister(&xExpanderSetExpanded, lib, "gtk_expander_set_expanded")
-	core.PuregoSafeRegister(&xExpanderSetLabel, lib, "gtk_expander_set_label")
-	core.PuregoSafeRegister(&xExpanderSetLabelWidget, lib, "gtk_expander_set_label_widget")
-	core.PuregoSafeRegister(&xExpanderSetResizeToplevel, lib, "gtk_expander_set_resize_toplevel")
-	core.PuregoSafeRegister(&xExpanderSetUseMarkup, lib, "gtk_expander_set_use_markup")
-	core.PuregoSafeRegister(&xExpanderSetUseUnderline, lib, "gtk_expander_set_use_underline")
+	core.PuregoSafeRegister(&xExpanderGetChild, libs, "gtk_expander_get_child")
+	core.PuregoSafeRegister(&xExpanderGetExpanded, libs, "gtk_expander_get_expanded")
+	core.PuregoSafeRegister(&xExpanderGetLabel, libs, "gtk_expander_get_label")
+	core.PuregoSafeRegister(&xExpanderGetLabelWidget, libs, "gtk_expander_get_label_widget")
+	core.PuregoSafeRegister(&xExpanderGetResizeToplevel, libs, "gtk_expander_get_resize_toplevel")
+	core.PuregoSafeRegister(&xExpanderGetUseMarkup, libs, "gtk_expander_get_use_markup")
+	core.PuregoSafeRegister(&xExpanderGetUseUnderline, libs, "gtk_expander_get_use_underline")
+	core.PuregoSafeRegister(&xExpanderSetChild, libs, "gtk_expander_set_child")
+	core.PuregoSafeRegister(&xExpanderSetExpanded, libs, "gtk_expander_set_expanded")
+	core.PuregoSafeRegister(&xExpanderSetLabel, libs, "gtk_expander_set_label")
+	core.PuregoSafeRegister(&xExpanderSetLabelWidget, libs, "gtk_expander_set_label_widget")
+	core.PuregoSafeRegister(&xExpanderSetResizeToplevel, libs, "gtk_expander_set_resize_toplevel")
+	core.PuregoSafeRegister(&xExpanderSetUseMarkup, libs, "gtk_expander_set_use_markup")
+	core.PuregoSafeRegister(&xExpanderSetUseUnderline, libs, "gtk_expander_set_use_underline")
 
 }

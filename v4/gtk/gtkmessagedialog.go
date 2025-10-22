@@ -672,22 +672,26 @@ func (x *MessageDialog) SetFocus(FocusVar *Widget) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xButtonsTypeGLibType, lib, "gtk_buttons_type_get_type")
+	core.PuregoSafeRegister(&xButtonsTypeGLibType, libs, "gtk_buttons_type_get_type")
 
-	core.PuregoSafeRegister(&xMessageDialogGLibType, lib, "gtk_message_dialog_get_type")
+	core.PuregoSafeRegister(&xMessageDialogGLibType, libs, "gtk_message_dialog_get_type")
 
-	core.PuregoSafeRegister(&xNewMessageDialog, lib, "gtk_message_dialog_new")
-	core.PuregoSafeRegister(&xNewMessageDialogWithMarkup, lib, "gtk_message_dialog_new_with_markup")
+	core.PuregoSafeRegister(&xNewMessageDialog, libs, "gtk_message_dialog_new")
+	core.PuregoSafeRegister(&xNewMessageDialogWithMarkup, libs, "gtk_message_dialog_new_with_markup")
 
-	core.PuregoSafeRegister(&xMessageDialogFormatSecondaryMarkup, lib, "gtk_message_dialog_format_secondary_markup")
-	core.PuregoSafeRegister(&xMessageDialogFormatSecondaryText, lib, "gtk_message_dialog_format_secondary_text")
-	core.PuregoSafeRegister(&xMessageDialogGetMessageArea, lib, "gtk_message_dialog_get_message_area")
-	core.PuregoSafeRegister(&xMessageDialogSetMarkup, lib, "gtk_message_dialog_set_markup")
+	core.PuregoSafeRegister(&xMessageDialogFormatSecondaryMarkup, libs, "gtk_message_dialog_format_secondary_markup")
+	core.PuregoSafeRegister(&xMessageDialogFormatSecondaryText, libs, "gtk_message_dialog_format_secondary_text")
+	core.PuregoSafeRegister(&xMessageDialogGetMessageArea, libs, "gtk_message_dialog_get_message_area")
+	core.PuregoSafeRegister(&xMessageDialogSetMarkup, libs, "gtk_message_dialog_set_markup")
 
 }

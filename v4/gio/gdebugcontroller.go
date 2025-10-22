@@ -90,15 +90,19 @@ const (
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDebugControllerGLibType, lib, "g_debug_controller_get_type")
+	core.PuregoSafeRegister(&xDebugControllerGLibType, libs, "g_debug_controller_get_type")
 
-	core.PuregoSafeRegister(&XGDebugControllerGetDebugEnabled, lib, "g_debug_controller_get_debug_enabled")
-	core.PuregoSafeRegister(&XGDebugControllerSetDebugEnabled, lib, "g_debug_controller_set_debug_enabled")
+	core.PuregoSafeRegister(&XGDebugControllerGetDebugEnabled, libs, "g_debug_controller_get_debug_enabled")
+	core.PuregoSafeRegister(&XGDebugControllerSetDebugEnabled, libs, "g_debug_controller_set_debug_enabled")
 
 }

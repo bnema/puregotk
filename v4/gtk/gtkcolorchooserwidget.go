@@ -416,14 +416,18 @@ func (x *ColorChooserWidget) SetUseAlpha(UseAlphaVar bool) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColorChooserWidgetGLibType, lib, "gtk_color_chooser_widget_get_type")
+	core.PuregoSafeRegister(&xColorChooserWidgetGLibType, libs, "gtk_color_chooser_widget_get_type")
 
-	core.PuregoSafeRegister(&xNewColorChooserWidget, lib, "gtk_color_chooser_widget_new")
+	core.PuregoSafeRegister(&xNewColorChooserWidget, libs, "gtk_color_chooser_widget_new")
 
 }

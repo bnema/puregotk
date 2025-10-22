@@ -181,28 +181,32 @@ func (x *Plane) Transform(MatrixVar *Matrix, NormalMatrixVar *Matrix, ResVar *Pl
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPlaneGLibType, lib, "graphene_plane_get_type")
+	core.PuregoSafeRegister(&xPlaneGLibType, libs, "graphene_plane_get_type")
 
-	core.PuregoSafeRegister(&xPlaneAlloc, lib, "graphene_plane_alloc")
+	core.PuregoSafeRegister(&xPlaneAlloc, libs, "graphene_plane_alloc")
 
-	core.PuregoSafeRegister(&xPlaneDistance, lib, "graphene_plane_distance")
-	core.PuregoSafeRegister(&xPlaneEqual, lib, "graphene_plane_equal")
-	core.PuregoSafeRegister(&xPlaneFree, lib, "graphene_plane_free")
-	core.PuregoSafeRegister(&xPlaneGetConstant, lib, "graphene_plane_get_constant")
-	core.PuregoSafeRegister(&xPlaneGetNormal, lib, "graphene_plane_get_normal")
-	core.PuregoSafeRegister(&xPlaneInit, lib, "graphene_plane_init")
-	core.PuregoSafeRegister(&xPlaneInitFromPlane, lib, "graphene_plane_init_from_plane")
-	core.PuregoSafeRegister(&xPlaneInitFromPoint, lib, "graphene_plane_init_from_point")
-	core.PuregoSafeRegister(&xPlaneInitFromPoints, lib, "graphene_plane_init_from_points")
-	core.PuregoSafeRegister(&xPlaneInitFromVec4, lib, "graphene_plane_init_from_vec4")
-	core.PuregoSafeRegister(&xPlaneNegate, lib, "graphene_plane_negate")
-	core.PuregoSafeRegister(&xPlaneNormalize, lib, "graphene_plane_normalize")
-	core.PuregoSafeRegister(&xPlaneTransform, lib, "graphene_plane_transform")
+	core.PuregoSafeRegister(&xPlaneDistance, libs, "graphene_plane_distance")
+	core.PuregoSafeRegister(&xPlaneEqual, libs, "graphene_plane_equal")
+	core.PuregoSafeRegister(&xPlaneFree, libs, "graphene_plane_free")
+	core.PuregoSafeRegister(&xPlaneGetConstant, libs, "graphene_plane_get_constant")
+	core.PuregoSafeRegister(&xPlaneGetNormal, libs, "graphene_plane_get_normal")
+	core.PuregoSafeRegister(&xPlaneInit, libs, "graphene_plane_init")
+	core.PuregoSafeRegister(&xPlaneInitFromPlane, libs, "graphene_plane_init_from_plane")
+	core.PuregoSafeRegister(&xPlaneInitFromPoint, libs, "graphene_plane_init_from_point")
+	core.PuregoSafeRegister(&xPlaneInitFromPoints, libs, "graphene_plane_init_from_points")
+	core.PuregoSafeRegister(&xPlaneInitFromVec4, libs, "graphene_plane_init_from_vec4")
+	core.PuregoSafeRegister(&xPlaneNegate, libs, "graphene_plane_negate")
+	core.PuregoSafeRegister(&xPlaneNormalize, libs, "graphene_plane_normalize")
+	core.PuregoSafeRegister(&xPlaneTransform, libs, "graphene_plane_transform")
 
 }

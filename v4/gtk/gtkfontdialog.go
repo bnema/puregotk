@@ -326,33 +326,37 @@ func (c *FontDialog) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFontDialogGLibType, lib, "gtk_font_dialog_get_type")
+	core.PuregoSafeRegister(&xFontDialogGLibType, libs, "gtk_font_dialog_get_type")
 
-	core.PuregoSafeRegister(&xNewFontDialog, lib, "gtk_font_dialog_new")
+	core.PuregoSafeRegister(&xNewFontDialog, libs, "gtk_font_dialog_new")
 
-	core.PuregoSafeRegister(&xFontDialogChooseFace, lib, "gtk_font_dialog_choose_face")
-	core.PuregoSafeRegister(&xFontDialogChooseFaceFinish, lib, "gtk_font_dialog_choose_face_finish")
-	core.PuregoSafeRegister(&xFontDialogChooseFamily, lib, "gtk_font_dialog_choose_family")
-	core.PuregoSafeRegister(&xFontDialogChooseFamilyFinish, lib, "gtk_font_dialog_choose_family_finish")
-	core.PuregoSafeRegister(&xFontDialogChooseFont, lib, "gtk_font_dialog_choose_font")
-	core.PuregoSafeRegister(&xFontDialogChooseFontAndFeatures, lib, "gtk_font_dialog_choose_font_and_features")
-	core.PuregoSafeRegister(&xFontDialogChooseFontAndFeaturesFinish, lib, "gtk_font_dialog_choose_font_and_features_finish")
-	core.PuregoSafeRegister(&xFontDialogChooseFontFinish, lib, "gtk_font_dialog_choose_font_finish")
-	core.PuregoSafeRegister(&xFontDialogGetFilter, lib, "gtk_font_dialog_get_filter")
-	core.PuregoSafeRegister(&xFontDialogGetFontMap, lib, "gtk_font_dialog_get_font_map")
-	core.PuregoSafeRegister(&xFontDialogGetLanguage, lib, "gtk_font_dialog_get_language")
-	core.PuregoSafeRegister(&xFontDialogGetModal, lib, "gtk_font_dialog_get_modal")
-	core.PuregoSafeRegister(&xFontDialogGetTitle, lib, "gtk_font_dialog_get_title")
-	core.PuregoSafeRegister(&xFontDialogSetFilter, lib, "gtk_font_dialog_set_filter")
-	core.PuregoSafeRegister(&xFontDialogSetFontMap, lib, "gtk_font_dialog_set_font_map")
-	core.PuregoSafeRegister(&xFontDialogSetLanguage, lib, "gtk_font_dialog_set_language")
-	core.PuregoSafeRegister(&xFontDialogSetModal, lib, "gtk_font_dialog_set_modal")
-	core.PuregoSafeRegister(&xFontDialogSetTitle, lib, "gtk_font_dialog_set_title")
+	core.PuregoSafeRegister(&xFontDialogChooseFace, libs, "gtk_font_dialog_choose_face")
+	core.PuregoSafeRegister(&xFontDialogChooseFaceFinish, libs, "gtk_font_dialog_choose_face_finish")
+	core.PuregoSafeRegister(&xFontDialogChooseFamily, libs, "gtk_font_dialog_choose_family")
+	core.PuregoSafeRegister(&xFontDialogChooseFamilyFinish, libs, "gtk_font_dialog_choose_family_finish")
+	core.PuregoSafeRegister(&xFontDialogChooseFont, libs, "gtk_font_dialog_choose_font")
+	core.PuregoSafeRegister(&xFontDialogChooseFontAndFeatures, libs, "gtk_font_dialog_choose_font_and_features")
+	core.PuregoSafeRegister(&xFontDialogChooseFontAndFeaturesFinish, libs, "gtk_font_dialog_choose_font_and_features_finish")
+	core.PuregoSafeRegister(&xFontDialogChooseFontFinish, libs, "gtk_font_dialog_choose_font_finish")
+	core.PuregoSafeRegister(&xFontDialogGetFilter, libs, "gtk_font_dialog_get_filter")
+	core.PuregoSafeRegister(&xFontDialogGetFontMap, libs, "gtk_font_dialog_get_font_map")
+	core.PuregoSafeRegister(&xFontDialogGetLanguage, libs, "gtk_font_dialog_get_language")
+	core.PuregoSafeRegister(&xFontDialogGetModal, libs, "gtk_font_dialog_get_modal")
+	core.PuregoSafeRegister(&xFontDialogGetTitle, libs, "gtk_font_dialog_get_title")
+	core.PuregoSafeRegister(&xFontDialogSetFilter, libs, "gtk_font_dialog_set_filter")
+	core.PuregoSafeRegister(&xFontDialogSetFontMap, libs, "gtk_font_dialog_set_font_map")
+	core.PuregoSafeRegister(&xFontDialogSetLanguage, libs, "gtk_font_dialog_set_language")
+	core.PuregoSafeRegister(&xFontDialogSetModal, libs, "gtk_font_dialog_set_modal")
+	core.PuregoSafeRegister(&xFontDialogSetTitle, libs, "gtk_font_dialog_set_title")
 
 }

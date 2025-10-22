@@ -685,35 +685,39 @@ func (x *DropDown) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDropDownGLibType, lib, "gtk_drop_down_get_type")
+	core.PuregoSafeRegister(&xDropDownGLibType, libs, "gtk_drop_down_get_type")
 
-	core.PuregoSafeRegister(&xNewDropDown, lib, "gtk_drop_down_new")
-	core.PuregoSafeRegister(&xNewDropDownFromStrings, lib, "gtk_drop_down_new_from_strings")
+	core.PuregoSafeRegister(&xNewDropDown, libs, "gtk_drop_down_new")
+	core.PuregoSafeRegister(&xNewDropDownFromStrings, libs, "gtk_drop_down_new_from_strings")
 
-	core.PuregoSafeRegister(&xDropDownGetEnableSearch, lib, "gtk_drop_down_get_enable_search")
-	core.PuregoSafeRegister(&xDropDownGetExpression, lib, "gtk_drop_down_get_expression")
-	core.PuregoSafeRegister(&xDropDownGetFactory, lib, "gtk_drop_down_get_factory")
-	core.PuregoSafeRegister(&xDropDownGetHeaderFactory, lib, "gtk_drop_down_get_header_factory")
-	core.PuregoSafeRegister(&xDropDownGetListFactory, lib, "gtk_drop_down_get_list_factory")
-	core.PuregoSafeRegister(&xDropDownGetModel, lib, "gtk_drop_down_get_model")
-	core.PuregoSafeRegister(&xDropDownGetSearchMatchMode, lib, "gtk_drop_down_get_search_match_mode")
-	core.PuregoSafeRegister(&xDropDownGetSelected, lib, "gtk_drop_down_get_selected")
-	core.PuregoSafeRegister(&xDropDownGetSelectedItem, lib, "gtk_drop_down_get_selected_item")
-	core.PuregoSafeRegister(&xDropDownGetShowArrow, lib, "gtk_drop_down_get_show_arrow")
-	core.PuregoSafeRegister(&xDropDownSetEnableSearch, lib, "gtk_drop_down_set_enable_search")
-	core.PuregoSafeRegister(&xDropDownSetExpression, lib, "gtk_drop_down_set_expression")
-	core.PuregoSafeRegister(&xDropDownSetFactory, lib, "gtk_drop_down_set_factory")
-	core.PuregoSafeRegister(&xDropDownSetHeaderFactory, lib, "gtk_drop_down_set_header_factory")
-	core.PuregoSafeRegister(&xDropDownSetListFactory, lib, "gtk_drop_down_set_list_factory")
-	core.PuregoSafeRegister(&xDropDownSetModel, lib, "gtk_drop_down_set_model")
-	core.PuregoSafeRegister(&xDropDownSetSearchMatchMode, lib, "gtk_drop_down_set_search_match_mode")
-	core.PuregoSafeRegister(&xDropDownSetSelected, lib, "gtk_drop_down_set_selected")
-	core.PuregoSafeRegister(&xDropDownSetShowArrow, lib, "gtk_drop_down_set_show_arrow")
+	core.PuregoSafeRegister(&xDropDownGetEnableSearch, libs, "gtk_drop_down_get_enable_search")
+	core.PuregoSafeRegister(&xDropDownGetExpression, libs, "gtk_drop_down_get_expression")
+	core.PuregoSafeRegister(&xDropDownGetFactory, libs, "gtk_drop_down_get_factory")
+	core.PuregoSafeRegister(&xDropDownGetHeaderFactory, libs, "gtk_drop_down_get_header_factory")
+	core.PuregoSafeRegister(&xDropDownGetListFactory, libs, "gtk_drop_down_get_list_factory")
+	core.PuregoSafeRegister(&xDropDownGetModel, libs, "gtk_drop_down_get_model")
+	core.PuregoSafeRegister(&xDropDownGetSearchMatchMode, libs, "gtk_drop_down_get_search_match_mode")
+	core.PuregoSafeRegister(&xDropDownGetSelected, libs, "gtk_drop_down_get_selected")
+	core.PuregoSafeRegister(&xDropDownGetSelectedItem, libs, "gtk_drop_down_get_selected_item")
+	core.PuregoSafeRegister(&xDropDownGetShowArrow, libs, "gtk_drop_down_get_show_arrow")
+	core.PuregoSafeRegister(&xDropDownSetEnableSearch, libs, "gtk_drop_down_set_enable_search")
+	core.PuregoSafeRegister(&xDropDownSetExpression, libs, "gtk_drop_down_set_expression")
+	core.PuregoSafeRegister(&xDropDownSetFactory, libs, "gtk_drop_down_set_factory")
+	core.PuregoSafeRegister(&xDropDownSetHeaderFactory, libs, "gtk_drop_down_set_header_factory")
+	core.PuregoSafeRegister(&xDropDownSetListFactory, libs, "gtk_drop_down_set_list_factory")
+	core.PuregoSafeRegister(&xDropDownSetModel, libs, "gtk_drop_down_set_model")
+	core.PuregoSafeRegister(&xDropDownSetSearchMatchMode, libs, "gtk_drop_down_set_search_match_mode")
+	core.PuregoSafeRegister(&xDropDownSetSelected, libs, "gtk_drop_down_set_selected")
+	core.PuregoSafeRegister(&xDropDownSetShowArrow, libs, "gtk_drop_down_set_show_arrow")
 
 }

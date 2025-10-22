@@ -553,27 +553,31 @@ func (x *AppChooserWidget) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAppChooserWidgetGLibType, lib, "gtk_app_chooser_widget_get_type")
+	core.PuregoSafeRegister(&xAppChooserWidgetGLibType, libs, "gtk_app_chooser_widget_get_type")
 
-	core.PuregoSafeRegister(&xNewAppChooserWidget, lib, "gtk_app_chooser_widget_new")
+	core.PuregoSafeRegister(&xNewAppChooserWidget, libs, "gtk_app_chooser_widget_new")
 
-	core.PuregoSafeRegister(&xAppChooserWidgetGetDefaultText, lib, "gtk_app_chooser_widget_get_default_text")
-	core.PuregoSafeRegister(&xAppChooserWidgetGetShowAll, lib, "gtk_app_chooser_widget_get_show_all")
-	core.PuregoSafeRegister(&xAppChooserWidgetGetShowDefault, lib, "gtk_app_chooser_widget_get_show_default")
-	core.PuregoSafeRegister(&xAppChooserWidgetGetShowFallback, lib, "gtk_app_chooser_widget_get_show_fallback")
-	core.PuregoSafeRegister(&xAppChooserWidgetGetShowOther, lib, "gtk_app_chooser_widget_get_show_other")
-	core.PuregoSafeRegister(&xAppChooserWidgetGetShowRecommended, lib, "gtk_app_chooser_widget_get_show_recommended")
-	core.PuregoSafeRegister(&xAppChooserWidgetSetDefaultText, lib, "gtk_app_chooser_widget_set_default_text")
-	core.PuregoSafeRegister(&xAppChooserWidgetSetShowAll, lib, "gtk_app_chooser_widget_set_show_all")
-	core.PuregoSafeRegister(&xAppChooserWidgetSetShowDefault, lib, "gtk_app_chooser_widget_set_show_default")
-	core.PuregoSafeRegister(&xAppChooserWidgetSetShowFallback, lib, "gtk_app_chooser_widget_set_show_fallback")
-	core.PuregoSafeRegister(&xAppChooserWidgetSetShowOther, lib, "gtk_app_chooser_widget_set_show_other")
-	core.PuregoSafeRegister(&xAppChooserWidgetSetShowRecommended, lib, "gtk_app_chooser_widget_set_show_recommended")
+	core.PuregoSafeRegister(&xAppChooserWidgetGetDefaultText, libs, "gtk_app_chooser_widget_get_default_text")
+	core.PuregoSafeRegister(&xAppChooserWidgetGetShowAll, libs, "gtk_app_chooser_widget_get_show_all")
+	core.PuregoSafeRegister(&xAppChooserWidgetGetShowDefault, libs, "gtk_app_chooser_widget_get_show_default")
+	core.PuregoSafeRegister(&xAppChooserWidgetGetShowFallback, libs, "gtk_app_chooser_widget_get_show_fallback")
+	core.PuregoSafeRegister(&xAppChooserWidgetGetShowOther, libs, "gtk_app_chooser_widget_get_show_other")
+	core.PuregoSafeRegister(&xAppChooserWidgetGetShowRecommended, libs, "gtk_app_chooser_widget_get_show_recommended")
+	core.PuregoSafeRegister(&xAppChooserWidgetSetDefaultText, libs, "gtk_app_chooser_widget_set_default_text")
+	core.PuregoSafeRegister(&xAppChooserWidgetSetShowAll, libs, "gtk_app_chooser_widget_set_show_all")
+	core.PuregoSafeRegister(&xAppChooserWidgetSetShowDefault, libs, "gtk_app_chooser_widget_set_show_default")
+	core.PuregoSafeRegister(&xAppChooserWidgetSetShowFallback, libs, "gtk_app_chooser_widget_set_show_fallback")
+	core.PuregoSafeRegister(&xAppChooserWidgetSetShowOther, libs, "gtk_app_chooser_widget_set_show_other")
+	core.PuregoSafeRegister(&xAppChooserWidgetSetShowRecommended, libs, "gtk_app_chooser_widget_set_show_recommended")
 
 }

@@ -277,18 +277,22 @@ var XGSeekableTruncate func(uintptr, int64, uintptr, **glib.Error) bool
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSeekableGLibType, lib, "g_seekable_get_type")
+	core.PuregoSafeRegister(&xSeekableGLibType, libs, "g_seekable_get_type")
 
-	core.PuregoSafeRegister(&XGSeekableCanSeek, lib, "g_seekable_can_seek")
-	core.PuregoSafeRegister(&XGSeekableCanTruncate, lib, "g_seekable_can_truncate")
-	core.PuregoSafeRegister(&XGSeekableSeek, lib, "g_seekable_seek")
-	core.PuregoSafeRegister(&XGSeekableTell, lib, "g_seekable_tell")
-	core.PuregoSafeRegister(&XGSeekableTruncate, lib, "g_seekable_truncate")
+	core.PuregoSafeRegister(&XGSeekableCanSeek, libs, "g_seekable_can_seek")
+	core.PuregoSafeRegister(&XGSeekableCanTruncate, libs, "g_seekable_can_truncate")
+	core.PuregoSafeRegister(&XGSeekableSeek, libs, "g_seekable_seek")
+	core.PuregoSafeRegister(&XGSeekableTell, libs, "g_seekable_tell")
+	core.PuregoSafeRegister(&XGSeekableTruncate, libs, "g_seekable_truncate")
 
 }

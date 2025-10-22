@@ -451,25 +451,29 @@ func (x *AspectFrame) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAspectFrameGLibType, lib, "gtk_aspect_frame_get_type")
+	core.PuregoSafeRegister(&xAspectFrameGLibType, libs, "gtk_aspect_frame_get_type")
 
-	core.PuregoSafeRegister(&xNewAspectFrame, lib, "gtk_aspect_frame_new")
+	core.PuregoSafeRegister(&xNewAspectFrame, libs, "gtk_aspect_frame_new")
 
-	core.PuregoSafeRegister(&xAspectFrameGetChild, lib, "gtk_aspect_frame_get_child")
-	core.PuregoSafeRegister(&xAspectFrameGetObeyChild, lib, "gtk_aspect_frame_get_obey_child")
-	core.PuregoSafeRegister(&xAspectFrameGetRatio, lib, "gtk_aspect_frame_get_ratio")
-	core.PuregoSafeRegister(&xAspectFrameGetXalign, lib, "gtk_aspect_frame_get_xalign")
-	core.PuregoSafeRegister(&xAspectFrameGetYalign, lib, "gtk_aspect_frame_get_yalign")
-	core.PuregoSafeRegister(&xAspectFrameSetChild, lib, "gtk_aspect_frame_set_child")
-	core.PuregoSafeRegister(&xAspectFrameSetObeyChild, lib, "gtk_aspect_frame_set_obey_child")
-	core.PuregoSafeRegister(&xAspectFrameSetRatio, lib, "gtk_aspect_frame_set_ratio")
-	core.PuregoSafeRegister(&xAspectFrameSetXalign, lib, "gtk_aspect_frame_set_xalign")
-	core.PuregoSafeRegister(&xAspectFrameSetYalign, lib, "gtk_aspect_frame_set_yalign")
+	core.PuregoSafeRegister(&xAspectFrameGetChild, libs, "gtk_aspect_frame_get_child")
+	core.PuregoSafeRegister(&xAspectFrameGetObeyChild, libs, "gtk_aspect_frame_get_obey_child")
+	core.PuregoSafeRegister(&xAspectFrameGetRatio, libs, "gtk_aspect_frame_get_ratio")
+	core.PuregoSafeRegister(&xAspectFrameGetXalign, libs, "gtk_aspect_frame_get_xalign")
+	core.PuregoSafeRegister(&xAspectFrameGetYalign, libs, "gtk_aspect_frame_get_yalign")
+	core.PuregoSafeRegister(&xAspectFrameSetChild, libs, "gtk_aspect_frame_set_child")
+	core.PuregoSafeRegister(&xAspectFrameSetObeyChild, libs, "gtk_aspect_frame_set_obey_child")
+	core.PuregoSafeRegister(&xAspectFrameSetRatio, libs, "gtk_aspect_frame_set_ratio")
+	core.PuregoSafeRegister(&xAspectFrameSetXalign, libs, "gtk_aspect_frame_set_xalign")
+	core.PuregoSafeRegister(&xAspectFrameSetYalign, libs, "gtk_aspect_frame_set_yalign")
 
 }

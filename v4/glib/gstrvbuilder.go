@@ -154,23 +154,27 @@ func (x *StrvBuilder) UnrefToStrv() []string {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStrvBuilderGLibType, lib, "g_strv_builder_get_type")
+	core.PuregoSafeRegister(&xStrvBuilderGLibType, libs, "g_strv_builder_get_type")
 
-	core.PuregoSafeRegister(&xNewStrvBuilder, lib, "g_strv_builder_new")
+	core.PuregoSafeRegister(&xNewStrvBuilder, libs, "g_strv_builder_new")
 
-	core.PuregoSafeRegister(&xStrvBuilderAdd, lib, "g_strv_builder_add")
-	core.PuregoSafeRegister(&xStrvBuilderAddMany, lib, "g_strv_builder_add_many")
-	core.PuregoSafeRegister(&xStrvBuilderAddv, lib, "g_strv_builder_addv")
-	core.PuregoSafeRegister(&xStrvBuilderEnd, lib, "g_strv_builder_end")
-	core.PuregoSafeRegister(&xStrvBuilderRef, lib, "g_strv_builder_ref")
-	core.PuregoSafeRegister(&xStrvBuilderTake, lib, "g_strv_builder_take")
-	core.PuregoSafeRegister(&xStrvBuilderUnref, lib, "g_strv_builder_unref")
-	core.PuregoSafeRegister(&xStrvBuilderUnrefToStrv, lib, "g_strv_builder_unref_to_strv")
+	core.PuregoSafeRegister(&xStrvBuilderAdd, libs, "g_strv_builder_add")
+	core.PuregoSafeRegister(&xStrvBuilderAddMany, libs, "g_strv_builder_add_many")
+	core.PuregoSafeRegister(&xStrvBuilderAddv, libs, "g_strv_builder_addv")
+	core.PuregoSafeRegister(&xStrvBuilderEnd, libs, "g_strv_builder_end")
+	core.PuregoSafeRegister(&xStrvBuilderRef, libs, "g_strv_builder_ref")
+	core.PuregoSafeRegister(&xStrvBuilderTake, libs, "g_strv_builder_take")
+	core.PuregoSafeRegister(&xStrvBuilderUnref, libs, "g_strv_builder_unref")
+	core.PuregoSafeRegister(&xStrvBuilderUnrefToStrv, libs, "g_strv_builder_unref_to_strv")
 
 }

@@ -523,37 +523,41 @@ func (x *Toast) ConnectDismissed(cb *func(Toast)) uint32 {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xToastPriorityGLibType, lib, "adw_toast_priority_get_type")
+	core.PuregoSafeRegister(&xToastPriorityGLibType, libs, "adw_toast_priority_get_type")
 
-	core.PuregoSafeRegister(&xToastGLibType, lib, "adw_toast_get_type")
+	core.PuregoSafeRegister(&xToastGLibType, libs, "adw_toast_get_type")
 
-	core.PuregoSafeRegister(&xNewToast, lib, "adw_toast_new")
-	core.PuregoSafeRegister(&xNewToastFormat, lib, "adw_toast_new_format")
+	core.PuregoSafeRegister(&xNewToast, libs, "adw_toast_new")
+	core.PuregoSafeRegister(&xNewToastFormat, libs, "adw_toast_new_format")
 
-	core.PuregoSafeRegister(&xToastDismiss, lib, "adw_toast_dismiss")
-	core.PuregoSafeRegister(&xToastGetActionName, lib, "adw_toast_get_action_name")
-	core.PuregoSafeRegister(&xToastGetActionTargetValue, lib, "adw_toast_get_action_target_value")
-	core.PuregoSafeRegister(&xToastGetButtonLabel, lib, "adw_toast_get_button_label")
-	core.PuregoSafeRegister(&xToastGetCustomTitle, lib, "adw_toast_get_custom_title")
-	core.PuregoSafeRegister(&xToastGetPriority, lib, "adw_toast_get_priority")
-	core.PuregoSafeRegister(&xToastGetTimeout, lib, "adw_toast_get_timeout")
-	core.PuregoSafeRegister(&xToastGetTitle, lib, "adw_toast_get_title")
-	core.PuregoSafeRegister(&xToastGetUseMarkup, lib, "adw_toast_get_use_markup")
-	core.PuregoSafeRegister(&xToastSetActionName, lib, "adw_toast_set_action_name")
-	core.PuregoSafeRegister(&xToastSetActionTarget, lib, "adw_toast_set_action_target")
-	core.PuregoSafeRegister(&xToastSetActionTargetValue, lib, "adw_toast_set_action_target_value")
-	core.PuregoSafeRegister(&xToastSetButtonLabel, lib, "adw_toast_set_button_label")
-	core.PuregoSafeRegister(&xToastSetCustomTitle, lib, "adw_toast_set_custom_title")
-	core.PuregoSafeRegister(&xToastSetDetailedActionName, lib, "adw_toast_set_detailed_action_name")
-	core.PuregoSafeRegister(&xToastSetPriority, lib, "adw_toast_set_priority")
-	core.PuregoSafeRegister(&xToastSetTimeout, lib, "adw_toast_set_timeout")
-	core.PuregoSafeRegister(&xToastSetTitle, lib, "adw_toast_set_title")
-	core.PuregoSafeRegister(&xToastSetUseMarkup, lib, "adw_toast_set_use_markup")
+	core.PuregoSafeRegister(&xToastDismiss, libs, "adw_toast_dismiss")
+	core.PuregoSafeRegister(&xToastGetActionName, libs, "adw_toast_get_action_name")
+	core.PuregoSafeRegister(&xToastGetActionTargetValue, libs, "adw_toast_get_action_target_value")
+	core.PuregoSafeRegister(&xToastGetButtonLabel, libs, "adw_toast_get_button_label")
+	core.PuregoSafeRegister(&xToastGetCustomTitle, libs, "adw_toast_get_custom_title")
+	core.PuregoSafeRegister(&xToastGetPriority, libs, "adw_toast_get_priority")
+	core.PuregoSafeRegister(&xToastGetTimeout, libs, "adw_toast_get_timeout")
+	core.PuregoSafeRegister(&xToastGetTitle, libs, "adw_toast_get_title")
+	core.PuregoSafeRegister(&xToastGetUseMarkup, libs, "adw_toast_get_use_markup")
+	core.PuregoSafeRegister(&xToastSetActionName, libs, "adw_toast_set_action_name")
+	core.PuregoSafeRegister(&xToastSetActionTarget, libs, "adw_toast_set_action_target")
+	core.PuregoSafeRegister(&xToastSetActionTargetValue, libs, "adw_toast_set_action_target_value")
+	core.PuregoSafeRegister(&xToastSetButtonLabel, libs, "adw_toast_set_button_label")
+	core.PuregoSafeRegister(&xToastSetCustomTitle, libs, "adw_toast_set_custom_title")
+	core.PuregoSafeRegister(&xToastSetDetailedActionName, libs, "adw_toast_set_detailed_action_name")
+	core.PuregoSafeRegister(&xToastSetPriority, libs, "adw_toast_set_priority")
+	core.PuregoSafeRegister(&xToastSetTimeout, libs, "adw_toast_set_timeout")
+	core.PuregoSafeRegister(&xToastSetTitle, libs, "adw_toast_set_title")
+	core.PuregoSafeRegister(&xToastSetUseMarkup, libs, "adw_toast_set_use_markup")
 
 }

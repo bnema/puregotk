@@ -408,37 +408,41 @@ func GLContextGetCurrent() *GLContext {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGlErrorQuark, lib, "gdk_gl_error_quark")
+	core.PuregoSafeRegister(&xGlErrorQuark, libs, "gdk_gl_error_quark")
 
-	core.PuregoSafeRegister(&xGLContextGLibType, lib, "gdk_gl_context_get_type")
+	core.PuregoSafeRegister(&xGLContextGLibType, libs, "gdk_gl_context_get_type")
 
-	core.PuregoSafeRegister(&xGLContextGetAllowedApis, lib, "gdk_gl_context_get_allowed_apis")
-	core.PuregoSafeRegister(&xGLContextGetApi, lib, "gdk_gl_context_get_api")
-	core.PuregoSafeRegister(&xGLContextGetDebugEnabled, lib, "gdk_gl_context_get_debug_enabled")
-	core.PuregoSafeRegister(&xGLContextGetDisplay, lib, "gdk_gl_context_get_display")
-	core.PuregoSafeRegister(&xGLContextGetForwardCompatible, lib, "gdk_gl_context_get_forward_compatible")
-	core.PuregoSafeRegister(&xGLContextGetRequiredVersion, lib, "gdk_gl_context_get_required_version")
-	core.PuregoSafeRegister(&xGLContextGetSharedContext, lib, "gdk_gl_context_get_shared_context")
-	core.PuregoSafeRegister(&xGLContextGetSurface, lib, "gdk_gl_context_get_surface")
-	core.PuregoSafeRegister(&xGLContextGetUseEs, lib, "gdk_gl_context_get_use_es")
-	core.PuregoSafeRegister(&xGLContextGetVersion, lib, "gdk_gl_context_get_version")
-	core.PuregoSafeRegister(&xGLContextIsLegacy, lib, "gdk_gl_context_is_legacy")
-	core.PuregoSafeRegister(&xGLContextIsShared, lib, "gdk_gl_context_is_shared")
-	core.PuregoSafeRegister(&xGLContextMakeCurrent, lib, "gdk_gl_context_make_current")
-	core.PuregoSafeRegister(&xGLContextRealize, lib, "gdk_gl_context_realize")
-	core.PuregoSafeRegister(&xGLContextSetAllowedApis, lib, "gdk_gl_context_set_allowed_apis")
-	core.PuregoSafeRegister(&xGLContextSetDebugEnabled, lib, "gdk_gl_context_set_debug_enabled")
-	core.PuregoSafeRegister(&xGLContextSetForwardCompatible, lib, "gdk_gl_context_set_forward_compatible")
-	core.PuregoSafeRegister(&xGLContextSetRequiredVersion, lib, "gdk_gl_context_set_required_version")
-	core.PuregoSafeRegister(&xGLContextSetUseEs, lib, "gdk_gl_context_set_use_es")
+	core.PuregoSafeRegister(&xGLContextGetAllowedApis, libs, "gdk_gl_context_get_allowed_apis")
+	core.PuregoSafeRegister(&xGLContextGetApi, libs, "gdk_gl_context_get_api")
+	core.PuregoSafeRegister(&xGLContextGetDebugEnabled, libs, "gdk_gl_context_get_debug_enabled")
+	core.PuregoSafeRegister(&xGLContextGetDisplay, libs, "gdk_gl_context_get_display")
+	core.PuregoSafeRegister(&xGLContextGetForwardCompatible, libs, "gdk_gl_context_get_forward_compatible")
+	core.PuregoSafeRegister(&xGLContextGetRequiredVersion, libs, "gdk_gl_context_get_required_version")
+	core.PuregoSafeRegister(&xGLContextGetSharedContext, libs, "gdk_gl_context_get_shared_context")
+	core.PuregoSafeRegister(&xGLContextGetSurface, libs, "gdk_gl_context_get_surface")
+	core.PuregoSafeRegister(&xGLContextGetUseEs, libs, "gdk_gl_context_get_use_es")
+	core.PuregoSafeRegister(&xGLContextGetVersion, libs, "gdk_gl_context_get_version")
+	core.PuregoSafeRegister(&xGLContextIsLegacy, libs, "gdk_gl_context_is_legacy")
+	core.PuregoSafeRegister(&xGLContextIsShared, libs, "gdk_gl_context_is_shared")
+	core.PuregoSafeRegister(&xGLContextMakeCurrent, libs, "gdk_gl_context_make_current")
+	core.PuregoSafeRegister(&xGLContextRealize, libs, "gdk_gl_context_realize")
+	core.PuregoSafeRegister(&xGLContextSetAllowedApis, libs, "gdk_gl_context_set_allowed_apis")
+	core.PuregoSafeRegister(&xGLContextSetDebugEnabled, libs, "gdk_gl_context_set_debug_enabled")
+	core.PuregoSafeRegister(&xGLContextSetForwardCompatible, libs, "gdk_gl_context_set_forward_compatible")
+	core.PuregoSafeRegister(&xGLContextSetRequiredVersion, libs, "gdk_gl_context_set_required_version")
+	core.PuregoSafeRegister(&xGLContextSetUseEs, libs, "gdk_gl_context_set_use_es")
 
-	core.PuregoSafeRegister(&xGLContextClearCurrent, lib, "gdk_gl_context_clear_current")
-	core.PuregoSafeRegister(&xGLContextGetCurrent, lib, "gdk_gl_context_get_current")
+	core.PuregoSafeRegister(&xGLContextClearCurrent, libs, "gdk_gl_context_clear_current")
+	core.PuregoSafeRegister(&xGLContextGetCurrent, libs, "gdk_gl_context_get_current")
 
 }

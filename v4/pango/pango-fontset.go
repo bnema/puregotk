@@ -332,16 +332,20 @@ func (c *Fontset) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFontsetGLibType, lib, "pango_fontset_get_type")
+	core.PuregoSafeRegister(&xFontsetGLibType, libs, "pango_fontset_get_type")
 
-	core.PuregoSafeRegister(&xFontsetForeach, lib, "pango_fontset_foreach")
-	core.PuregoSafeRegister(&xFontsetGetFont, lib, "pango_fontset_get_font")
-	core.PuregoSafeRegister(&xFontsetGetMetrics, lib, "pango_fontset_get_metrics")
+	core.PuregoSafeRegister(&xFontsetForeach, libs, "pango_fontset_foreach")
+	core.PuregoSafeRegister(&xFontsetGetFont, libs, "pango_fontset_get_font")
+	core.PuregoSafeRegister(&xFontsetGetMetrics, libs, "pango_fontset_get_metrics")
 
 }

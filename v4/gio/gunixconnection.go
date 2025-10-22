@@ -247,21 +247,25 @@ func (c *UnixConnection) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xUnixConnectionGLibType, lib, "g_unix_connection_get_type")
+	core.PuregoSafeRegister(&xUnixConnectionGLibType, libs, "g_unix_connection_get_type")
 
-	core.PuregoSafeRegister(&xUnixConnectionReceiveCredentials, lib, "g_unix_connection_receive_credentials")
-	core.PuregoSafeRegister(&xUnixConnectionReceiveCredentialsAsync, lib, "g_unix_connection_receive_credentials_async")
-	core.PuregoSafeRegister(&xUnixConnectionReceiveCredentialsFinish, lib, "g_unix_connection_receive_credentials_finish")
-	core.PuregoSafeRegister(&xUnixConnectionReceiveFd, lib, "g_unix_connection_receive_fd")
-	core.PuregoSafeRegister(&xUnixConnectionSendCredentials, lib, "g_unix_connection_send_credentials")
-	core.PuregoSafeRegister(&xUnixConnectionSendCredentialsAsync, lib, "g_unix_connection_send_credentials_async")
-	core.PuregoSafeRegister(&xUnixConnectionSendCredentialsFinish, lib, "g_unix_connection_send_credentials_finish")
-	core.PuregoSafeRegister(&xUnixConnectionSendFd, lib, "g_unix_connection_send_fd")
+	core.PuregoSafeRegister(&xUnixConnectionReceiveCredentials, libs, "g_unix_connection_receive_credentials")
+	core.PuregoSafeRegister(&xUnixConnectionReceiveCredentialsAsync, libs, "g_unix_connection_receive_credentials_async")
+	core.PuregoSafeRegister(&xUnixConnectionReceiveCredentialsFinish, libs, "g_unix_connection_receive_credentials_finish")
+	core.PuregoSafeRegister(&xUnixConnectionReceiveFd, libs, "g_unix_connection_receive_fd")
+	core.PuregoSafeRegister(&xUnixConnectionSendCredentials, libs, "g_unix_connection_send_credentials")
+	core.PuregoSafeRegister(&xUnixConnectionSendCredentialsAsync, libs, "g_unix_connection_send_credentials_async")
+	core.PuregoSafeRegister(&xUnixConnectionSendCredentialsFinish, libs, "g_unix_connection_send_credentials_finish")
+	core.PuregoSafeRegister(&xUnixConnectionSendFd, libs, "g_unix_connection_send_fd")
 
 }

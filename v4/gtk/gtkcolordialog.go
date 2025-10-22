@@ -163,23 +163,27 @@ func (c *ColorDialog) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColorDialogGLibType, lib, "gtk_color_dialog_get_type")
+	core.PuregoSafeRegister(&xColorDialogGLibType, libs, "gtk_color_dialog_get_type")
 
-	core.PuregoSafeRegister(&xNewColorDialog, lib, "gtk_color_dialog_new")
+	core.PuregoSafeRegister(&xNewColorDialog, libs, "gtk_color_dialog_new")
 
-	core.PuregoSafeRegister(&xColorDialogChooseRgba, lib, "gtk_color_dialog_choose_rgba")
-	core.PuregoSafeRegister(&xColorDialogChooseRgbaFinish, lib, "gtk_color_dialog_choose_rgba_finish")
-	core.PuregoSafeRegister(&xColorDialogGetModal, lib, "gtk_color_dialog_get_modal")
-	core.PuregoSafeRegister(&xColorDialogGetTitle, lib, "gtk_color_dialog_get_title")
-	core.PuregoSafeRegister(&xColorDialogGetWithAlpha, lib, "gtk_color_dialog_get_with_alpha")
-	core.PuregoSafeRegister(&xColorDialogSetModal, lib, "gtk_color_dialog_set_modal")
-	core.PuregoSafeRegister(&xColorDialogSetTitle, lib, "gtk_color_dialog_set_title")
-	core.PuregoSafeRegister(&xColorDialogSetWithAlpha, lib, "gtk_color_dialog_set_with_alpha")
+	core.PuregoSafeRegister(&xColorDialogChooseRgba, libs, "gtk_color_dialog_choose_rgba")
+	core.PuregoSafeRegister(&xColorDialogChooseRgbaFinish, libs, "gtk_color_dialog_choose_rgba_finish")
+	core.PuregoSafeRegister(&xColorDialogGetModal, libs, "gtk_color_dialog_get_modal")
+	core.PuregoSafeRegister(&xColorDialogGetTitle, libs, "gtk_color_dialog_get_title")
+	core.PuregoSafeRegister(&xColorDialogGetWithAlpha, libs, "gtk_color_dialog_get_with_alpha")
+	core.PuregoSafeRegister(&xColorDialogSetModal, libs, "gtk_color_dialog_set_modal")
+	core.PuregoSafeRegister(&xColorDialogSetTitle, libs, "gtk_color_dialog_set_title")
+	core.PuregoSafeRegister(&xColorDialogSetWithAlpha, libs, "gtk_color_dialog_set_with_alpha")
 
 }

@@ -32,13 +32,17 @@ func RgbToHsv(RVar float32, GVar float32, BVar float32, HVar float32, SVar float
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xHsvToRgb, lib, "gtk_hsv_to_rgb")
-	core.PuregoSafeRegister(&xRgbToHsv, lib, "gtk_rgb_to_hsv")
+	core.PuregoSafeRegister(&xHsvToRgb, libs, "gtk_hsv_to_rgb")
+	core.PuregoSafeRegister(&xRgbToHsv, libs, "gtk_rgb_to_hsv")
 
 }

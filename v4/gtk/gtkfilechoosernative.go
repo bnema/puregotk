@@ -623,19 +623,23 @@ func (x *FileChooserNative) SetSelectMultiple(SelectMultipleVar bool) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFileChooserNativeGLibType, lib, "gtk_file_chooser_native_get_type")
+	core.PuregoSafeRegister(&xFileChooserNativeGLibType, libs, "gtk_file_chooser_native_get_type")
 
-	core.PuregoSafeRegister(&xNewFileChooserNative, lib, "gtk_file_chooser_native_new")
+	core.PuregoSafeRegister(&xNewFileChooserNative, libs, "gtk_file_chooser_native_new")
 
-	core.PuregoSafeRegister(&xFileChooserNativeGetAcceptLabel, lib, "gtk_file_chooser_native_get_accept_label")
-	core.PuregoSafeRegister(&xFileChooserNativeGetCancelLabel, lib, "gtk_file_chooser_native_get_cancel_label")
-	core.PuregoSafeRegister(&xFileChooserNativeSetAcceptLabel, lib, "gtk_file_chooser_native_set_accept_label")
-	core.PuregoSafeRegister(&xFileChooserNativeSetCancelLabel, lib, "gtk_file_chooser_native_set_cancel_label")
+	core.PuregoSafeRegister(&xFileChooserNativeGetAcceptLabel, libs, "gtk_file_chooser_native_get_accept_label")
+	core.PuregoSafeRegister(&xFileChooserNativeGetCancelLabel, libs, "gtk_file_chooser_native_get_cancel_label")
+	core.PuregoSafeRegister(&xFileChooserNativeSetAcceptLabel, libs, "gtk_file_chooser_native_set_accept_label")
+	core.PuregoSafeRegister(&xFileChooserNativeSetCancelLabel, libs, "gtk_file_chooser_native_set_cancel_label")
 
 }

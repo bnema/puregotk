@@ -1184,28 +1184,32 @@ func (x *IMContext) ConnectRetrieveSurrounding(cb *func(IMContext) bool) uint32 
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xIMContextGLibType, lib, "gtk_im_context_get_type")
+	core.PuregoSafeRegister(&xIMContextGLibType, libs, "gtk_im_context_get_type")
 
-	core.PuregoSafeRegister(&xIMContextActivateOsk, lib, "gtk_im_context_activate_osk")
-	core.PuregoSafeRegister(&xIMContextDeleteSurrounding, lib, "gtk_im_context_delete_surrounding")
-	core.PuregoSafeRegister(&xIMContextFilterKey, lib, "gtk_im_context_filter_key")
-	core.PuregoSafeRegister(&xIMContextFilterKeypress, lib, "gtk_im_context_filter_keypress")
-	core.PuregoSafeRegister(&xIMContextFocusIn, lib, "gtk_im_context_focus_in")
-	core.PuregoSafeRegister(&xIMContextFocusOut, lib, "gtk_im_context_focus_out")
-	core.PuregoSafeRegister(&xIMContextGetPreeditString, lib, "gtk_im_context_get_preedit_string")
-	core.PuregoSafeRegister(&xIMContextGetSurrounding, lib, "gtk_im_context_get_surrounding")
-	core.PuregoSafeRegister(&xIMContextGetSurroundingWithSelection, lib, "gtk_im_context_get_surrounding_with_selection")
-	core.PuregoSafeRegister(&xIMContextReset, lib, "gtk_im_context_reset")
-	core.PuregoSafeRegister(&xIMContextSetClientWidget, lib, "gtk_im_context_set_client_widget")
-	core.PuregoSafeRegister(&xIMContextSetCursorLocation, lib, "gtk_im_context_set_cursor_location")
-	core.PuregoSafeRegister(&xIMContextSetSurrounding, lib, "gtk_im_context_set_surrounding")
-	core.PuregoSafeRegister(&xIMContextSetSurroundingWithSelection, lib, "gtk_im_context_set_surrounding_with_selection")
-	core.PuregoSafeRegister(&xIMContextSetUsePreedit, lib, "gtk_im_context_set_use_preedit")
+	core.PuregoSafeRegister(&xIMContextActivateOsk, libs, "gtk_im_context_activate_osk")
+	core.PuregoSafeRegister(&xIMContextDeleteSurrounding, libs, "gtk_im_context_delete_surrounding")
+	core.PuregoSafeRegister(&xIMContextFilterKey, libs, "gtk_im_context_filter_key")
+	core.PuregoSafeRegister(&xIMContextFilterKeypress, libs, "gtk_im_context_filter_keypress")
+	core.PuregoSafeRegister(&xIMContextFocusIn, libs, "gtk_im_context_focus_in")
+	core.PuregoSafeRegister(&xIMContextFocusOut, libs, "gtk_im_context_focus_out")
+	core.PuregoSafeRegister(&xIMContextGetPreeditString, libs, "gtk_im_context_get_preedit_string")
+	core.PuregoSafeRegister(&xIMContextGetSurrounding, libs, "gtk_im_context_get_surrounding")
+	core.PuregoSafeRegister(&xIMContextGetSurroundingWithSelection, libs, "gtk_im_context_get_surrounding_with_selection")
+	core.PuregoSafeRegister(&xIMContextReset, libs, "gtk_im_context_reset")
+	core.PuregoSafeRegister(&xIMContextSetClientWidget, libs, "gtk_im_context_set_client_widget")
+	core.PuregoSafeRegister(&xIMContextSetCursorLocation, libs, "gtk_im_context_set_cursor_location")
+	core.PuregoSafeRegister(&xIMContextSetSurrounding, libs, "gtk_im_context_set_surrounding")
+	core.PuregoSafeRegister(&xIMContextSetSurroundingWithSelection, libs, "gtk_im_context_set_surrounding_with_selection")
+	core.PuregoSafeRegister(&xIMContextSetUsePreedit, libs, "gtk_im_context_set_use_preedit")
 
 }

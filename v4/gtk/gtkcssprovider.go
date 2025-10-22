@@ -235,23 +235,27 @@ func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, uintptr
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCssProviderGLibType, lib, "gtk_css_provider_get_type")
+	core.PuregoSafeRegister(&xCssProviderGLibType, libs, "gtk_css_provider_get_type")
 
-	core.PuregoSafeRegister(&xNewCssProvider, lib, "gtk_css_provider_new")
+	core.PuregoSafeRegister(&xNewCssProvider, libs, "gtk_css_provider_new")
 
-	core.PuregoSafeRegister(&xCssProviderLoadFromBytes, lib, "gtk_css_provider_load_from_bytes")
-	core.PuregoSafeRegister(&xCssProviderLoadFromData, lib, "gtk_css_provider_load_from_data")
-	core.PuregoSafeRegister(&xCssProviderLoadFromFile, lib, "gtk_css_provider_load_from_file")
-	core.PuregoSafeRegister(&xCssProviderLoadFromPath, lib, "gtk_css_provider_load_from_path")
-	core.PuregoSafeRegister(&xCssProviderLoadFromResource, lib, "gtk_css_provider_load_from_resource")
-	core.PuregoSafeRegister(&xCssProviderLoadFromString, lib, "gtk_css_provider_load_from_string")
-	core.PuregoSafeRegister(&xCssProviderLoadNamed, lib, "gtk_css_provider_load_named")
-	core.PuregoSafeRegister(&xCssProviderToString, lib, "gtk_css_provider_to_string")
+	core.PuregoSafeRegister(&xCssProviderLoadFromBytes, libs, "gtk_css_provider_load_from_bytes")
+	core.PuregoSafeRegister(&xCssProviderLoadFromData, libs, "gtk_css_provider_load_from_data")
+	core.PuregoSafeRegister(&xCssProviderLoadFromFile, libs, "gtk_css_provider_load_from_file")
+	core.PuregoSafeRegister(&xCssProviderLoadFromPath, libs, "gtk_css_provider_load_from_path")
+	core.PuregoSafeRegister(&xCssProviderLoadFromResource, libs, "gtk_css_provider_load_from_resource")
+	core.PuregoSafeRegister(&xCssProviderLoadFromString, libs, "gtk_css_provider_load_from_string")
+	core.PuregoSafeRegister(&xCssProviderLoadNamed, libs, "gtk_css_provider_load_named")
+	core.PuregoSafeRegister(&xCssProviderToString, libs, "gtk_css_provider_to_string")
 
 }

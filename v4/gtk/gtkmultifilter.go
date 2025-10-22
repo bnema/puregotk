@@ -494,23 +494,27 @@ func (x *MultiFilter) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAnyFilterGLibType, lib, "gtk_any_filter_get_type")
+	core.PuregoSafeRegister(&xAnyFilterGLibType, libs, "gtk_any_filter_get_type")
 
-	core.PuregoSafeRegister(&xNewAnyFilter, lib, "gtk_any_filter_new")
+	core.PuregoSafeRegister(&xNewAnyFilter, libs, "gtk_any_filter_new")
 
-	core.PuregoSafeRegister(&xEveryFilterGLibType, lib, "gtk_every_filter_get_type")
+	core.PuregoSafeRegister(&xEveryFilterGLibType, libs, "gtk_every_filter_get_type")
 
-	core.PuregoSafeRegister(&xNewEveryFilter, lib, "gtk_every_filter_new")
+	core.PuregoSafeRegister(&xNewEveryFilter, libs, "gtk_every_filter_new")
 
-	core.PuregoSafeRegister(&xMultiFilterGLibType, lib, "gtk_multi_filter_get_type")
+	core.PuregoSafeRegister(&xMultiFilterGLibType, libs, "gtk_multi_filter_get_type")
 
-	core.PuregoSafeRegister(&xMultiFilterAppend, lib, "gtk_multi_filter_append")
-	core.PuregoSafeRegister(&xMultiFilterRemove, lib, "gtk_multi_filter_remove")
+	core.PuregoSafeRegister(&xMultiFilterAppend, libs, "gtk_multi_filter_append")
+	core.PuregoSafeRegister(&xMultiFilterRemove, libs, "gtk_multi_filter_remove")
 
 }

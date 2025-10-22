@@ -447,19 +447,23 @@ func (x *ToastOverlay) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xToastOverlayGLibType, lib, "adw_toast_overlay_get_type")
+	core.PuregoSafeRegister(&xToastOverlayGLibType, libs, "adw_toast_overlay_get_type")
 
-	core.PuregoSafeRegister(&xNewToastOverlay, lib, "adw_toast_overlay_new")
+	core.PuregoSafeRegister(&xNewToastOverlay, libs, "adw_toast_overlay_new")
 
-	core.PuregoSafeRegister(&xToastOverlayAddToast, lib, "adw_toast_overlay_add_toast")
-	core.PuregoSafeRegister(&xToastOverlayDismissAll, lib, "adw_toast_overlay_dismiss_all")
-	core.PuregoSafeRegister(&xToastOverlayGetChild, lib, "adw_toast_overlay_get_child")
-	core.PuregoSafeRegister(&xToastOverlaySetChild, lib, "adw_toast_overlay_set_child")
+	core.PuregoSafeRegister(&xToastOverlayAddToast, libs, "adw_toast_overlay_add_toast")
+	core.PuregoSafeRegister(&xToastOverlayDismissAll, libs, "adw_toast_overlay_dismiss_all")
+	core.PuregoSafeRegister(&xToastOverlayGetChild, libs, "adw_toast_overlay_get_child")
+	core.PuregoSafeRegister(&xToastOverlaySetChild, libs, "adw_toast_overlay_set_child")
 
 }

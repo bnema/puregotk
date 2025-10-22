@@ -531,17 +531,21 @@ func (x *TabButton) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTabButtonGLibType, lib, "adw_tab_button_get_type")
+	core.PuregoSafeRegister(&xTabButtonGLibType, libs, "adw_tab_button_get_type")
 
-	core.PuregoSafeRegister(&xNewTabButton, lib, "adw_tab_button_new")
+	core.PuregoSafeRegister(&xNewTabButton, libs, "adw_tab_button_new")
 
-	core.PuregoSafeRegister(&xTabButtonGetView, lib, "adw_tab_button_get_view")
-	core.PuregoSafeRegister(&xTabButtonSetView, lib, "adw_tab_button_set_view")
+	core.PuregoSafeRegister(&xTabButtonGetView, libs, "adw_tab_button_get_view")
+	core.PuregoSafeRegister(&xTabButtonSetView, libs, "adw_tab_button_set_view")
 
 }

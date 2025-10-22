@@ -392,18 +392,22 @@ var XGActionMapRemoveActionEntries func(uintptr, []ActionEntry, int)
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xActionMapGLibType, lib, "g_action_map_get_type")
+	core.PuregoSafeRegister(&xActionMapGLibType, libs, "g_action_map_get_type")
 
-	core.PuregoSafeRegister(&XGActionMapAddAction, lib, "g_action_map_add_action")
-	core.PuregoSafeRegister(&XGActionMapAddActionEntries, lib, "g_action_map_add_action_entries")
-	core.PuregoSafeRegister(&XGActionMapLookupAction, lib, "g_action_map_lookup_action")
-	core.PuregoSafeRegister(&XGActionMapRemoveAction, lib, "g_action_map_remove_action")
-	core.PuregoSafeRegister(&XGActionMapRemoveActionEntries, lib, "g_action_map_remove_action_entries")
+	core.PuregoSafeRegister(&XGActionMapAddAction, libs, "g_action_map_add_action")
+	core.PuregoSafeRegister(&XGActionMapAddActionEntries, libs, "g_action_map_add_action_entries")
+	core.PuregoSafeRegister(&XGActionMapLookupAction, libs, "g_action_map_lookup_action")
+	core.PuregoSafeRegister(&XGActionMapRemoveAction, libs, "g_action_map_remove_action")
+	core.PuregoSafeRegister(&XGActionMapRemoveActionEntries, libs, "g_action_map_remove_action_entries")
 
 }

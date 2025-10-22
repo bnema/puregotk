@@ -322,16 +322,20 @@ func (x *GLTexture) LoadFinish(ResVar gio.AsyncResult, TypeVar string) (*gio.Inp
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGLTextureGLibType, lib, "gdk_gl_texture_get_type")
+	core.PuregoSafeRegister(&xGLTextureGLibType, libs, "gdk_gl_texture_get_type")
 
-	core.PuregoSafeRegister(&xNewGLTexture, lib, "gdk_gl_texture_new")
+	core.PuregoSafeRegister(&xNewGLTexture, libs, "gdk_gl_texture_new")
 
-	core.PuregoSafeRegister(&xGLTextureRelease, lib, "gdk_gl_texture_release")
+	core.PuregoSafeRegister(&xGLTextureRelease, libs, "gdk_gl_texture_release")
 
 }

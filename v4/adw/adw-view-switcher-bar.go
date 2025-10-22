@@ -453,19 +453,23 @@ func (x *ViewSwitcherBar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xViewSwitcherBarGLibType, lib, "adw_view_switcher_bar_get_type")
+	core.PuregoSafeRegister(&xViewSwitcherBarGLibType, libs, "adw_view_switcher_bar_get_type")
 
-	core.PuregoSafeRegister(&xNewViewSwitcherBar, lib, "adw_view_switcher_bar_new")
+	core.PuregoSafeRegister(&xNewViewSwitcherBar, libs, "adw_view_switcher_bar_new")
 
-	core.PuregoSafeRegister(&xViewSwitcherBarGetReveal, lib, "adw_view_switcher_bar_get_reveal")
-	core.PuregoSafeRegister(&xViewSwitcherBarGetStack, lib, "adw_view_switcher_bar_get_stack")
-	core.PuregoSafeRegister(&xViewSwitcherBarSetReveal, lib, "adw_view_switcher_bar_set_reveal")
-	core.PuregoSafeRegister(&xViewSwitcherBarSetStack, lib, "adw_view_switcher_bar_set_stack")
+	core.PuregoSafeRegister(&xViewSwitcherBarGetReveal, libs, "adw_view_switcher_bar_get_reveal")
+	core.PuregoSafeRegister(&xViewSwitcherBarGetStack, libs, "adw_view_switcher_bar_get_stack")
+	core.PuregoSafeRegister(&xViewSwitcherBarSetReveal, libs, "adw_view_switcher_bar_set_reveal")
+	core.PuregoSafeRegister(&xViewSwitcherBarSetStack, libs, "adw_view_switcher_bar_set_stack")
 
 }

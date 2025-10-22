@@ -475,23 +475,27 @@ func (x *GraphicsOffload) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGraphicsOffloadEnabledGLibType, lib, "gtk_graphics_offload_enabled_get_type")
+	core.PuregoSafeRegister(&xGraphicsOffloadEnabledGLibType, libs, "gtk_graphics_offload_enabled_get_type")
 
-	core.PuregoSafeRegister(&xGraphicsOffloadGLibType, lib, "gtk_graphics_offload_get_type")
+	core.PuregoSafeRegister(&xGraphicsOffloadGLibType, libs, "gtk_graphics_offload_get_type")
 
-	core.PuregoSafeRegister(&xNewGraphicsOffload, lib, "gtk_graphics_offload_new")
+	core.PuregoSafeRegister(&xNewGraphicsOffload, libs, "gtk_graphics_offload_new")
 
-	core.PuregoSafeRegister(&xGraphicsOffloadGetBlackBackground, lib, "gtk_graphics_offload_get_black_background")
-	core.PuregoSafeRegister(&xGraphicsOffloadGetChild, lib, "gtk_graphics_offload_get_child")
-	core.PuregoSafeRegister(&xGraphicsOffloadGetEnabled, lib, "gtk_graphics_offload_get_enabled")
-	core.PuregoSafeRegister(&xGraphicsOffloadSetBlackBackground, lib, "gtk_graphics_offload_set_black_background")
-	core.PuregoSafeRegister(&xGraphicsOffloadSetChild, lib, "gtk_graphics_offload_set_child")
-	core.PuregoSafeRegister(&xGraphicsOffloadSetEnabled, lib, "gtk_graphics_offload_set_enabled")
+	core.PuregoSafeRegister(&xGraphicsOffloadGetBlackBackground, libs, "gtk_graphics_offload_get_black_background")
+	core.PuregoSafeRegister(&xGraphicsOffloadGetChild, libs, "gtk_graphics_offload_get_child")
+	core.PuregoSafeRegister(&xGraphicsOffloadGetEnabled, libs, "gtk_graphics_offload_get_enabled")
+	core.PuregoSafeRegister(&xGraphicsOffloadSetBlackBackground, libs, "gtk_graphics_offload_set_black_background")
+	core.PuregoSafeRegister(&xGraphicsOffloadSetChild, libs, "gtk_graphics_offload_set_child")
+	core.PuregoSafeRegister(&xGraphicsOffloadSetEnabled, libs, "gtk_graphics_offload_set_enabled")
 
 }

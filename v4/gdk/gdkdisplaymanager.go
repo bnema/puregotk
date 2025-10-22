@@ -227,21 +227,25 @@ func DisplayManagerGet() *DisplayManager {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSetAllowedBackends, lib, "gdk_set_allowed_backends")
+	core.PuregoSafeRegister(&xSetAllowedBackends, libs, "gdk_set_allowed_backends")
 
-	core.PuregoSafeRegister(&xDisplayManagerGLibType, lib, "gdk_display_manager_get_type")
+	core.PuregoSafeRegister(&xDisplayManagerGLibType, libs, "gdk_display_manager_get_type")
 
-	core.PuregoSafeRegister(&xDisplayManagerGetDefaultDisplay, lib, "gdk_display_manager_get_default_display")
-	core.PuregoSafeRegister(&xDisplayManagerListDisplays, lib, "gdk_display_manager_list_displays")
-	core.PuregoSafeRegister(&xDisplayManagerOpenDisplay, lib, "gdk_display_manager_open_display")
-	core.PuregoSafeRegister(&xDisplayManagerSetDefaultDisplay, lib, "gdk_display_manager_set_default_display")
+	core.PuregoSafeRegister(&xDisplayManagerGetDefaultDisplay, libs, "gdk_display_manager_get_default_display")
+	core.PuregoSafeRegister(&xDisplayManagerListDisplays, libs, "gdk_display_manager_list_displays")
+	core.PuregoSafeRegister(&xDisplayManagerOpenDisplay, libs, "gdk_display_manager_open_display")
+	core.PuregoSafeRegister(&xDisplayManagerSetDefaultDisplay, libs, "gdk_display_manager_set_default_display")
 
-	core.PuregoSafeRegister(&xDisplayManagerGet, lib, "gdk_display_manager_get")
+	core.PuregoSafeRegister(&xDisplayManagerGet, libs, "gdk_display_manager_get")
 
 }

@@ -237,30 +237,34 @@ func (c *AlertDialog) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAlertDialogGLibType, lib, "gtk_alert_dialog_get_type")
+	core.PuregoSafeRegister(&xAlertDialogGLibType, libs, "gtk_alert_dialog_get_type")
 
-	core.PuregoSafeRegister(&xNewAlertDialog, lib, "gtk_alert_dialog_new")
+	core.PuregoSafeRegister(&xNewAlertDialog, libs, "gtk_alert_dialog_new")
 
-	core.PuregoSafeRegister(&xAlertDialogChoose, lib, "gtk_alert_dialog_choose")
-	core.PuregoSafeRegister(&xAlertDialogChooseFinish, lib, "gtk_alert_dialog_choose_finish")
-	core.PuregoSafeRegister(&xAlertDialogGetButtons, lib, "gtk_alert_dialog_get_buttons")
-	core.PuregoSafeRegister(&xAlertDialogGetCancelButton, lib, "gtk_alert_dialog_get_cancel_button")
-	core.PuregoSafeRegister(&xAlertDialogGetDefaultButton, lib, "gtk_alert_dialog_get_default_button")
-	core.PuregoSafeRegister(&xAlertDialogGetDetail, lib, "gtk_alert_dialog_get_detail")
-	core.PuregoSafeRegister(&xAlertDialogGetMessage, lib, "gtk_alert_dialog_get_message")
-	core.PuregoSafeRegister(&xAlertDialogGetModal, lib, "gtk_alert_dialog_get_modal")
-	core.PuregoSafeRegister(&xAlertDialogSetButtons, lib, "gtk_alert_dialog_set_buttons")
-	core.PuregoSafeRegister(&xAlertDialogSetCancelButton, lib, "gtk_alert_dialog_set_cancel_button")
-	core.PuregoSafeRegister(&xAlertDialogSetDefaultButton, lib, "gtk_alert_dialog_set_default_button")
-	core.PuregoSafeRegister(&xAlertDialogSetDetail, lib, "gtk_alert_dialog_set_detail")
-	core.PuregoSafeRegister(&xAlertDialogSetMessage, lib, "gtk_alert_dialog_set_message")
-	core.PuregoSafeRegister(&xAlertDialogSetModal, lib, "gtk_alert_dialog_set_modal")
-	core.PuregoSafeRegister(&xAlertDialogShow, lib, "gtk_alert_dialog_show")
+	core.PuregoSafeRegister(&xAlertDialogChoose, libs, "gtk_alert_dialog_choose")
+	core.PuregoSafeRegister(&xAlertDialogChooseFinish, libs, "gtk_alert_dialog_choose_finish")
+	core.PuregoSafeRegister(&xAlertDialogGetButtons, libs, "gtk_alert_dialog_get_buttons")
+	core.PuregoSafeRegister(&xAlertDialogGetCancelButton, libs, "gtk_alert_dialog_get_cancel_button")
+	core.PuregoSafeRegister(&xAlertDialogGetDefaultButton, libs, "gtk_alert_dialog_get_default_button")
+	core.PuregoSafeRegister(&xAlertDialogGetDetail, libs, "gtk_alert_dialog_get_detail")
+	core.PuregoSafeRegister(&xAlertDialogGetMessage, libs, "gtk_alert_dialog_get_message")
+	core.PuregoSafeRegister(&xAlertDialogGetModal, libs, "gtk_alert_dialog_get_modal")
+	core.PuregoSafeRegister(&xAlertDialogSetButtons, libs, "gtk_alert_dialog_set_buttons")
+	core.PuregoSafeRegister(&xAlertDialogSetCancelButton, libs, "gtk_alert_dialog_set_cancel_button")
+	core.PuregoSafeRegister(&xAlertDialogSetDefaultButton, libs, "gtk_alert_dialog_set_default_button")
+	core.PuregoSafeRegister(&xAlertDialogSetDetail, libs, "gtk_alert_dialog_set_detail")
+	core.PuregoSafeRegister(&xAlertDialogSetMessage, libs, "gtk_alert_dialog_set_message")
+	core.PuregoSafeRegister(&xAlertDialogSetModal, libs, "gtk_alert_dialog_set_modal")
+	core.PuregoSafeRegister(&xAlertDialogShow, libs, "gtk_alert_dialog_show")
 
 }

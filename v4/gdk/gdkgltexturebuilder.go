@@ -355,36 +355,40 @@ func (c *GLTextureBuilder) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGLTextureBuilderGLibType, lib, "gdk_gl_texture_builder_get_type")
+	core.PuregoSafeRegister(&xGLTextureBuilderGLibType, libs, "gdk_gl_texture_builder_get_type")
 
-	core.PuregoSafeRegister(&xNewGLTextureBuilder, lib, "gdk_gl_texture_builder_new")
+	core.PuregoSafeRegister(&xNewGLTextureBuilder, libs, "gdk_gl_texture_builder_new")
 
-	core.PuregoSafeRegister(&xGLTextureBuilderBuild, lib, "gdk_gl_texture_builder_build")
-	core.PuregoSafeRegister(&xGLTextureBuilderGetColorState, lib, "gdk_gl_texture_builder_get_color_state")
-	core.PuregoSafeRegister(&xGLTextureBuilderGetContext, lib, "gdk_gl_texture_builder_get_context")
-	core.PuregoSafeRegister(&xGLTextureBuilderGetFormat, lib, "gdk_gl_texture_builder_get_format")
-	core.PuregoSafeRegister(&xGLTextureBuilderGetHasMipmap, lib, "gdk_gl_texture_builder_get_has_mipmap")
-	core.PuregoSafeRegister(&xGLTextureBuilderGetHeight, lib, "gdk_gl_texture_builder_get_height")
-	core.PuregoSafeRegister(&xGLTextureBuilderGetId, lib, "gdk_gl_texture_builder_get_id")
-	core.PuregoSafeRegister(&xGLTextureBuilderGetSync, lib, "gdk_gl_texture_builder_get_sync")
-	core.PuregoSafeRegister(&xGLTextureBuilderGetUpdateRegion, lib, "gdk_gl_texture_builder_get_update_region")
-	core.PuregoSafeRegister(&xGLTextureBuilderGetUpdateTexture, lib, "gdk_gl_texture_builder_get_update_texture")
-	core.PuregoSafeRegister(&xGLTextureBuilderGetWidth, lib, "gdk_gl_texture_builder_get_width")
-	core.PuregoSafeRegister(&xGLTextureBuilderSetColorState, lib, "gdk_gl_texture_builder_set_color_state")
-	core.PuregoSafeRegister(&xGLTextureBuilderSetContext, lib, "gdk_gl_texture_builder_set_context")
-	core.PuregoSafeRegister(&xGLTextureBuilderSetFormat, lib, "gdk_gl_texture_builder_set_format")
-	core.PuregoSafeRegister(&xGLTextureBuilderSetHasMipmap, lib, "gdk_gl_texture_builder_set_has_mipmap")
-	core.PuregoSafeRegister(&xGLTextureBuilderSetHeight, lib, "gdk_gl_texture_builder_set_height")
-	core.PuregoSafeRegister(&xGLTextureBuilderSetId, lib, "gdk_gl_texture_builder_set_id")
-	core.PuregoSafeRegister(&xGLTextureBuilderSetSync, lib, "gdk_gl_texture_builder_set_sync")
-	core.PuregoSafeRegister(&xGLTextureBuilderSetUpdateRegion, lib, "gdk_gl_texture_builder_set_update_region")
-	core.PuregoSafeRegister(&xGLTextureBuilderSetUpdateTexture, lib, "gdk_gl_texture_builder_set_update_texture")
-	core.PuregoSafeRegister(&xGLTextureBuilderSetWidth, lib, "gdk_gl_texture_builder_set_width")
+	core.PuregoSafeRegister(&xGLTextureBuilderBuild, libs, "gdk_gl_texture_builder_build")
+	core.PuregoSafeRegister(&xGLTextureBuilderGetColorState, libs, "gdk_gl_texture_builder_get_color_state")
+	core.PuregoSafeRegister(&xGLTextureBuilderGetContext, libs, "gdk_gl_texture_builder_get_context")
+	core.PuregoSafeRegister(&xGLTextureBuilderGetFormat, libs, "gdk_gl_texture_builder_get_format")
+	core.PuregoSafeRegister(&xGLTextureBuilderGetHasMipmap, libs, "gdk_gl_texture_builder_get_has_mipmap")
+	core.PuregoSafeRegister(&xGLTextureBuilderGetHeight, libs, "gdk_gl_texture_builder_get_height")
+	core.PuregoSafeRegister(&xGLTextureBuilderGetId, libs, "gdk_gl_texture_builder_get_id")
+	core.PuregoSafeRegister(&xGLTextureBuilderGetSync, libs, "gdk_gl_texture_builder_get_sync")
+	core.PuregoSafeRegister(&xGLTextureBuilderGetUpdateRegion, libs, "gdk_gl_texture_builder_get_update_region")
+	core.PuregoSafeRegister(&xGLTextureBuilderGetUpdateTexture, libs, "gdk_gl_texture_builder_get_update_texture")
+	core.PuregoSafeRegister(&xGLTextureBuilderGetWidth, libs, "gdk_gl_texture_builder_get_width")
+	core.PuregoSafeRegister(&xGLTextureBuilderSetColorState, libs, "gdk_gl_texture_builder_set_color_state")
+	core.PuregoSafeRegister(&xGLTextureBuilderSetContext, libs, "gdk_gl_texture_builder_set_context")
+	core.PuregoSafeRegister(&xGLTextureBuilderSetFormat, libs, "gdk_gl_texture_builder_set_format")
+	core.PuregoSafeRegister(&xGLTextureBuilderSetHasMipmap, libs, "gdk_gl_texture_builder_set_has_mipmap")
+	core.PuregoSafeRegister(&xGLTextureBuilderSetHeight, libs, "gdk_gl_texture_builder_set_height")
+	core.PuregoSafeRegister(&xGLTextureBuilderSetId, libs, "gdk_gl_texture_builder_set_id")
+	core.PuregoSafeRegister(&xGLTextureBuilderSetSync, libs, "gdk_gl_texture_builder_set_sync")
+	core.PuregoSafeRegister(&xGLTextureBuilderSetUpdateRegion, libs, "gdk_gl_texture_builder_set_update_region")
+	core.PuregoSafeRegister(&xGLTextureBuilderSetUpdateTexture, libs, "gdk_gl_texture_builder_set_update_texture")
+	core.PuregoSafeRegister(&xGLTextureBuilderSetWidth, libs, "gdk_gl_texture_builder_set_width")
 
 }

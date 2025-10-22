@@ -344,21 +344,25 @@ func (c *UnixFDList) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xUnixFDListGLibType, lib, "g_unix_fd_list_get_type")
+	core.PuregoSafeRegister(&xUnixFDListGLibType, libs, "g_unix_fd_list_get_type")
 
-	core.PuregoSafeRegister(&xNewUnixFDList, lib, "g_unix_fd_list_new")
-	core.PuregoSafeRegister(&xNewUnixFDListFromArray, lib, "g_unix_fd_list_new_from_array")
+	core.PuregoSafeRegister(&xNewUnixFDList, libs, "g_unix_fd_list_new")
+	core.PuregoSafeRegister(&xNewUnixFDListFromArray, libs, "g_unix_fd_list_new_from_array")
 
-	core.PuregoSafeRegister(&xUnixFDListAppend, lib, "g_unix_fd_list_append")
-	core.PuregoSafeRegister(&xUnixFDListGet, lib, "g_unix_fd_list_get")
-	core.PuregoSafeRegister(&xUnixFDListGetLength, lib, "g_unix_fd_list_get_length")
-	core.PuregoSafeRegister(&xUnixFDListPeekFds, lib, "g_unix_fd_list_peek_fds")
-	core.PuregoSafeRegister(&xUnixFDListStealFds, lib, "g_unix_fd_list_steal_fds")
+	core.PuregoSafeRegister(&xUnixFDListAppend, libs, "g_unix_fd_list_append")
+	core.PuregoSafeRegister(&xUnixFDListGet, libs, "g_unix_fd_list_get")
+	core.PuregoSafeRegister(&xUnixFDListGetLength, libs, "g_unix_fd_list_get_length")
+	core.PuregoSafeRegister(&xUnixFDListPeekFds, libs, "g_unix_fd_list_peek_fds")
+	core.PuregoSafeRegister(&xUnixFDListStealFds, libs, "g_unix_fd_list_steal_fds")
 
 }

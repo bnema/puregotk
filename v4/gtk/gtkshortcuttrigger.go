@@ -506,47 +506,51 @@ func (c *ShortcutTrigger) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAlternativeTriggerGLibType, lib, "gtk_alternative_trigger_get_type")
+	core.PuregoSafeRegister(&xAlternativeTriggerGLibType, libs, "gtk_alternative_trigger_get_type")
 
-	core.PuregoSafeRegister(&xNewAlternativeTrigger, lib, "gtk_alternative_trigger_new")
+	core.PuregoSafeRegister(&xNewAlternativeTrigger, libs, "gtk_alternative_trigger_new")
 
-	core.PuregoSafeRegister(&xAlternativeTriggerGetFirst, lib, "gtk_alternative_trigger_get_first")
-	core.PuregoSafeRegister(&xAlternativeTriggerGetSecond, lib, "gtk_alternative_trigger_get_second")
+	core.PuregoSafeRegister(&xAlternativeTriggerGetFirst, libs, "gtk_alternative_trigger_get_first")
+	core.PuregoSafeRegister(&xAlternativeTriggerGetSecond, libs, "gtk_alternative_trigger_get_second")
 
-	core.PuregoSafeRegister(&xKeyvalTriggerGLibType, lib, "gtk_keyval_trigger_get_type")
+	core.PuregoSafeRegister(&xKeyvalTriggerGLibType, libs, "gtk_keyval_trigger_get_type")
 
-	core.PuregoSafeRegister(&xNewKeyvalTrigger, lib, "gtk_keyval_trigger_new")
+	core.PuregoSafeRegister(&xNewKeyvalTrigger, libs, "gtk_keyval_trigger_new")
 
-	core.PuregoSafeRegister(&xKeyvalTriggerGetKeyval, lib, "gtk_keyval_trigger_get_keyval")
-	core.PuregoSafeRegister(&xKeyvalTriggerGetModifiers, lib, "gtk_keyval_trigger_get_modifiers")
+	core.PuregoSafeRegister(&xKeyvalTriggerGetKeyval, libs, "gtk_keyval_trigger_get_keyval")
+	core.PuregoSafeRegister(&xKeyvalTriggerGetModifiers, libs, "gtk_keyval_trigger_get_modifiers")
 
-	core.PuregoSafeRegister(&xMnemonicTriggerGLibType, lib, "gtk_mnemonic_trigger_get_type")
+	core.PuregoSafeRegister(&xMnemonicTriggerGLibType, libs, "gtk_mnemonic_trigger_get_type")
 
-	core.PuregoSafeRegister(&xNewMnemonicTrigger, lib, "gtk_mnemonic_trigger_new")
+	core.PuregoSafeRegister(&xNewMnemonicTrigger, libs, "gtk_mnemonic_trigger_new")
 
-	core.PuregoSafeRegister(&xMnemonicTriggerGetKeyval, lib, "gtk_mnemonic_trigger_get_keyval")
+	core.PuregoSafeRegister(&xMnemonicTriggerGetKeyval, libs, "gtk_mnemonic_trigger_get_keyval")
 
-	core.PuregoSafeRegister(&xNeverTriggerGLibType, lib, "gtk_never_trigger_get_type")
+	core.PuregoSafeRegister(&xNeverTriggerGLibType, libs, "gtk_never_trigger_get_type")
 
-	core.PuregoSafeRegister(&xNeverTriggerGet, lib, "gtk_never_trigger_get")
+	core.PuregoSafeRegister(&xNeverTriggerGet, libs, "gtk_never_trigger_get")
 
-	core.PuregoSafeRegister(&xShortcutTriggerGLibType, lib, "gtk_shortcut_trigger_get_type")
+	core.PuregoSafeRegister(&xShortcutTriggerGLibType, libs, "gtk_shortcut_trigger_get_type")
 
-	core.PuregoSafeRegister(&xShortcutTriggerParseString, lib, "gtk_shortcut_trigger_parse_string")
+	core.PuregoSafeRegister(&xShortcutTriggerParseString, libs, "gtk_shortcut_trigger_parse_string")
 
-	core.PuregoSafeRegister(&xShortcutTriggerCompare, lib, "gtk_shortcut_trigger_compare")
-	core.PuregoSafeRegister(&xShortcutTriggerEqual, lib, "gtk_shortcut_trigger_equal")
-	core.PuregoSafeRegister(&xShortcutTriggerHash, lib, "gtk_shortcut_trigger_hash")
-	core.PuregoSafeRegister(&xShortcutTriggerPrint, lib, "gtk_shortcut_trigger_print")
-	core.PuregoSafeRegister(&xShortcutTriggerPrintLabel, lib, "gtk_shortcut_trigger_print_label")
-	core.PuregoSafeRegister(&xShortcutTriggerToLabel, lib, "gtk_shortcut_trigger_to_label")
-	core.PuregoSafeRegister(&xShortcutTriggerToString, lib, "gtk_shortcut_trigger_to_string")
-	core.PuregoSafeRegister(&xShortcutTriggerTrigger, lib, "gtk_shortcut_trigger_trigger")
+	core.PuregoSafeRegister(&xShortcutTriggerCompare, libs, "gtk_shortcut_trigger_compare")
+	core.PuregoSafeRegister(&xShortcutTriggerEqual, libs, "gtk_shortcut_trigger_equal")
+	core.PuregoSafeRegister(&xShortcutTriggerHash, libs, "gtk_shortcut_trigger_hash")
+	core.PuregoSafeRegister(&xShortcutTriggerPrint, libs, "gtk_shortcut_trigger_print")
+	core.PuregoSafeRegister(&xShortcutTriggerPrintLabel, libs, "gtk_shortcut_trigger_print_label")
+	core.PuregoSafeRegister(&xShortcutTriggerToLabel, libs, "gtk_shortcut_trigger_to_label")
+	core.PuregoSafeRegister(&xShortcutTriggerToString, libs, "gtk_shortcut_trigger_to_string")
+	core.PuregoSafeRegister(&xShortcutTriggerTrigger, libs, "gtk_shortcut_trigger_trigger")
 
 }

@@ -401,41 +401,45 @@ func (x *Printer) ConnectDetailsAcquired(cb *func(Printer, bool)) uint32 {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPrintCapabilitiesGLibType, lib, "gtk_print_capabilities_get_type")
+	core.PuregoSafeRegister(&xPrintCapabilitiesGLibType, libs, "gtk_print_capabilities_get_type")
 
-	core.PuregoSafeRegister(&xEnumeratePrinters, lib, "gtk_enumerate_printers")
+	core.PuregoSafeRegister(&xEnumeratePrinters, libs, "gtk_enumerate_printers")
 
-	core.PuregoSafeRegister(&xPrinterGLibType, lib, "gtk_printer_get_type")
+	core.PuregoSafeRegister(&xPrinterGLibType, libs, "gtk_printer_get_type")
 
-	core.PuregoSafeRegister(&xNewPrinter, lib, "gtk_printer_new")
+	core.PuregoSafeRegister(&xNewPrinter, libs, "gtk_printer_new")
 
-	core.PuregoSafeRegister(&xPrinterAcceptsPdf, lib, "gtk_printer_accepts_pdf")
-	core.PuregoSafeRegister(&xPrinterAcceptsPs, lib, "gtk_printer_accepts_ps")
-	core.PuregoSafeRegister(&xPrinterCompare, lib, "gtk_printer_compare")
-	core.PuregoSafeRegister(&xPrinterGetBackend, lib, "gtk_printer_get_backend")
-	core.PuregoSafeRegister(&xPrinterGetCapabilities, lib, "gtk_printer_get_capabilities")
-	core.PuregoSafeRegister(&xPrinterGetDefaultPageSize, lib, "gtk_printer_get_default_page_size")
-	core.PuregoSafeRegister(&xPrinterGetDescription, lib, "gtk_printer_get_description")
-	core.PuregoSafeRegister(&xPrinterGetHardMargins, lib, "gtk_printer_get_hard_margins")
-	core.PuregoSafeRegister(&xPrinterGetHardMarginsForPaperSize, lib, "gtk_printer_get_hard_margins_for_paper_size")
-	core.PuregoSafeRegister(&xPrinterGetIconName, lib, "gtk_printer_get_icon_name")
-	core.PuregoSafeRegister(&xPrinterGetJobCount, lib, "gtk_printer_get_job_count")
-	core.PuregoSafeRegister(&xPrinterGetLocation, lib, "gtk_printer_get_location")
-	core.PuregoSafeRegister(&xPrinterGetName, lib, "gtk_printer_get_name")
-	core.PuregoSafeRegister(&xPrinterGetStateMessage, lib, "gtk_printer_get_state_message")
-	core.PuregoSafeRegister(&xPrinterHasDetails, lib, "gtk_printer_has_details")
-	core.PuregoSafeRegister(&xPrinterIsAcceptingJobs, lib, "gtk_printer_is_accepting_jobs")
-	core.PuregoSafeRegister(&xPrinterIsActive, lib, "gtk_printer_is_active")
-	core.PuregoSafeRegister(&xPrinterIsDefault, lib, "gtk_printer_is_default")
-	core.PuregoSafeRegister(&xPrinterIsPaused, lib, "gtk_printer_is_paused")
-	core.PuregoSafeRegister(&xPrinterIsVirtual, lib, "gtk_printer_is_virtual")
-	core.PuregoSafeRegister(&xPrinterListPapers, lib, "gtk_printer_list_papers")
-	core.PuregoSafeRegister(&xPrinterRequestDetails, lib, "gtk_printer_request_details")
+	core.PuregoSafeRegister(&xPrinterAcceptsPdf, libs, "gtk_printer_accepts_pdf")
+	core.PuregoSafeRegister(&xPrinterAcceptsPs, libs, "gtk_printer_accepts_ps")
+	core.PuregoSafeRegister(&xPrinterCompare, libs, "gtk_printer_compare")
+	core.PuregoSafeRegister(&xPrinterGetBackend, libs, "gtk_printer_get_backend")
+	core.PuregoSafeRegister(&xPrinterGetCapabilities, libs, "gtk_printer_get_capabilities")
+	core.PuregoSafeRegister(&xPrinterGetDefaultPageSize, libs, "gtk_printer_get_default_page_size")
+	core.PuregoSafeRegister(&xPrinterGetDescription, libs, "gtk_printer_get_description")
+	core.PuregoSafeRegister(&xPrinterGetHardMargins, libs, "gtk_printer_get_hard_margins")
+	core.PuregoSafeRegister(&xPrinterGetHardMarginsForPaperSize, libs, "gtk_printer_get_hard_margins_for_paper_size")
+	core.PuregoSafeRegister(&xPrinterGetIconName, libs, "gtk_printer_get_icon_name")
+	core.PuregoSafeRegister(&xPrinterGetJobCount, libs, "gtk_printer_get_job_count")
+	core.PuregoSafeRegister(&xPrinterGetLocation, libs, "gtk_printer_get_location")
+	core.PuregoSafeRegister(&xPrinterGetName, libs, "gtk_printer_get_name")
+	core.PuregoSafeRegister(&xPrinterGetStateMessage, libs, "gtk_printer_get_state_message")
+	core.PuregoSafeRegister(&xPrinterHasDetails, libs, "gtk_printer_has_details")
+	core.PuregoSafeRegister(&xPrinterIsAcceptingJobs, libs, "gtk_printer_is_accepting_jobs")
+	core.PuregoSafeRegister(&xPrinterIsActive, libs, "gtk_printer_is_active")
+	core.PuregoSafeRegister(&xPrinterIsDefault, libs, "gtk_printer_is_default")
+	core.PuregoSafeRegister(&xPrinterIsPaused, libs, "gtk_printer_is_paused")
+	core.PuregoSafeRegister(&xPrinterIsVirtual, libs, "gtk_printer_is_virtual")
+	core.PuregoSafeRegister(&xPrinterListPapers, libs, "gtk_printer_list_papers")
+	core.PuregoSafeRegister(&xPrinterRequestDetails, libs, "gtk_printer_request_details")
 
 }

@@ -785,36 +785,40 @@ func (x *ToolbarView) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xToolbarStyleGLibType, lib, "adw_toolbar_style_get_type")
+	core.PuregoSafeRegister(&xToolbarStyleGLibType, libs, "adw_toolbar_style_get_type")
 
-	core.PuregoSafeRegister(&xToolbarViewGLibType, lib, "adw_toolbar_view_get_type")
+	core.PuregoSafeRegister(&xToolbarViewGLibType, libs, "adw_toolbar_view_get_type")
 
-	core.PuregoSafeRegister(&xNewToolbarView, lib, "adw_toolbar_view_new")
+	core.PuregoSafeRegister(&xNewToolbarView, libs, "adw_toolbar_view_new")
 
-	core.PuregoSafeRegister(&xToolbarViewAddBottomBar, lib, "adw_toolbar_view_add_bottom_bar")
-	core.PuregoSafeRegister(&xToolbarViewAddTopBar, lib, "adw_toolbar_view_add_top_bar")
-	core.PuregoSafeRegister(&xToolbarViewGetBottomBarHeight, lib, "adw_toolbar_view_get_bottom_bar_height")
-	core.PuregoSafeRegister(&xToolbarViewGetBottomBarStyle, lib, "adw_toolbar_view_get_bottom_bar_style")
-	core.PuregoSafeRegister(&xToolbarViewGetContent, lib, "adw_toolbar_view_get_content")
-	core.PuregoSafeRegister(&xToolbarViewGetExtendContentToBottomEdge, lib, "adw_toolbar_view_get_extend_content_to_bottom_edge")
-	core.PuregoSafeRegister(&xToolbarViewGetExtendContentToTopEdge, lib, "adw_toolbar_view_get_extend_content_to_top_edge")
-	core.PuregoSafeRegister(&xToolbarViewGetRevealBottomBars, lib, "adw_toolbar_view_get_reveal_bottom_bars")
-	core.PuregoSafeRegister(&xToolbarViewGetRevealTopBars, lib, "adw_toolbar_view_get_reveal_top_bars")
-	core.PuregoSafeRegister(&xToolbarViewGetTopBarHeight, lib, "adw_toolbar_view_get_top_bar_height")
-	core.PuregoSafeRegister(&xToolbarViewGetTopBarStyle, lib, "adw_toolbar_view_get_top_bar_style")
-	core.PuregoSafeRegister(&xToolbarViewRemove, lib, "adw_toolbar_view_remove")
-	core.PuregoSafeRegister(&xToolbarViewSetBottomBarStyle, lib, "adw_toolbar_view_set_bottom_bar_style")
-	core.PuregoSafeRegister(&xToolbarViewSetContent, lib, "adw_toolbar_view_set_content")
-	core.PuregoSafeRegister(&xToolbarViewSetExtendContentToBottomEdge, lib, "adw_toolbar_view_set_extend_content_to_bottom_edge")
-	core.PuregoSafeRegister(&xToolbarViewSetExtendContentToTopEdge, lib, "adw_toolbar_view_set_extend_content_to_top_edge")
-	core.PuregoSafeRegister(&xToolbarViewSetRevealBottomBars, lib, "adw_toolbar_view_set_reveal_bottom_bars")
-	core.PuregoSafeRegister(&xToolbarViewSetRevealTopBars, lib, "adw_toolbar_view_set_reveal_top_bars")
-	core.PuregoSafeRegister(&xToolbarViewSetTopBarStyle, lib, "adw_toolbar_view_set_top_bar_style")
+	core.PuregoSafeRegister(&xToolbarViewAddBottomBar, libs, "adw_toolbar_view_add_bottom_bar")
+	core.PuregoSafeRegister(&xToolbarViewAddTopBar, libs, "adw_toolbar_view_add_top_bar")
+	core.PuregoSafeRegister(&xToolbarViewGetBottomBarHeight, libs, "adw_toolbar_view_get_bottom_bar_height")
+	core.PuregoSafeRegister(&xToolbarViewGetBottomBarStyle, libs, "adw_toolbar_view_get_bottom_bar_style")
+	core.PuregoSafeRegister(&xToolbarViewGetContent, libs, "adw_toolbar_view_get_content")
+	core.PuregoSafeRegister(&xToolbarViewGetExtendContentToBottomEdge, libs, "adw_toolbar_view_get_extend_content_to_bottom_edge")
+	core.PuregoSafeRegister(&xToolbarViewGetExtendContentToTopEdge, libs, "adw_toolbar_view_get_extend_content_to_top_edge")
+	core.PuregoSafeRegister(&xToolbarViewGetRevealBottomBars, libs, "adw_toolbar_view_get_reveal_bottom_bars")
+	core.PuregoSafeRegister(&xToolbarViewGetRevealTopBars, libs, "adw_toolbar_view_get_reveal_top_bars")
+	core.PuregoSafeRegister(&xToolbarViewGetTopBarHeight, libs, "adw_toolbar_view_get_top_bar_height")
+	core.PuregoSafeRegister(&xToolbarViewGetTopBarStyle, libs, "adw_toolbar_view_get_top_bar_style")
+	core.PuregoSafeRegister(&xToolbarViewRemove, libs, "adw_toolbar_view_remove")
+	core.PuregoSafeRegister(&xToolbarViewSetBottomBarStyle, libs, "adw_toolbar_view_set_bottom_bar_style")
+	core.PuregoSafeRegister(&xToolbarViewSetContent, libs, "adw_toolbar_view_set_content")
+	core.PuregoSafeRegister(&xToolbarViewSetExtendContentToBottomEdge, libs, "adw_toolbar_view_set_extend_content_to_bottom_edge")
+	core.PuregoSafeRegister(&xToolbarViewSetExtendContentToTopEdge, libs, "adw_toolbar_view_set_extend_content_to_top_edge")
+	core.PuregoSafeRegister(&xToolbarViewSetRevealBottomBars, libs, "adw_toolbar_view_set_reveal_bottom_bars")
+	core.PuregoSafeRegister(&xToolbarViewSetRevealTopBars, libs, "adw_toolbar_view_set_reveal_top_bars")
+	core.PuregoSafeRegister(&xToolbarViewSetTopBarStyle, libs, "adw_toolbar_view_set_top_bar_style")
 
 }

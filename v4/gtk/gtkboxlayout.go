@@ -172,23 +172,27 @@ func (x *BoxLayout) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBoxLayoutGLibType, lib, "gtk_box_layout_get_type")
+	core.PuregoSafeRegister(&xBoxLayoutGLibType, libs, "gtk_box_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewBoxLayout, lib, "gtk_box_layout_new")
+	core.PuregoSafeRegister(&xNewBoxLayout, libs, "gtk_box_layout_new")
 
-	core.PuregoSafeRegister(&xBoxLayoutGetBaselineChild, lib, "gtk_box_layout_get_baseline_child")
-	core.PuregoSafeRegister(&xBoxLayoutGetBaselinePosition, lib, "gtk_box_layout_get_baseline_position")
-	core.PuregoSafeRegister(&xBoxLayoutGetHomogeneous, lib, "gtk_box_layout_get_homogeneous")
-	core.PuregoSafeRegister(&xBoxLayoutGetSpacing, lib, "gtk_box_layout_get_spacing")
-	core.PuregoSafeRegister(&xBoxLayoutSetBaselineChild, lib, "gtk_box_layout_set_baseline_child")
-	core.PuregoSafeRegister(&xBoxLayoutSetBaselinePosition, lib, "gtk_box_layout_set_baseline_position")
-	core.PuregoSafeRegister(&xBoxLayoutSetHomogeneous, lib, "gtk_box_layout_set_homogeneous")
-	core.PuregoSafeRegister(&xBoxLayoutSetSpacing, lib, "gtk_box_layout_set_spacing")
+	core.PuregoSafeRegister(&xBoxLayoutGetBaselineChild, libs, "gtk_box_layout_get_baseline_child")
+	core.PuregoSafeRegister(&xBoxLayoutGetBaselinePosition, libs, "gtk_box_layout_get_baseline_position")
+	core.PuregoSafeRegister(&xBoxLayoutGetHomogeneous, libs, "gtk_box_layout_get_homogeneous")
+	core.PuregoSafeRegister(&xBoxLayoutGetSpacing, libs, "gtk_box_layout_get_spacing")
+	core.PuregoSafeRegister(&xBoxLayoutSetBaselineChild, libs, "gtk_box_layout_set_baseline_child")
+	core.PuregoSafeRegister(&xBoxLayoutSetBaselinePosition, libs, "gtk_box_layout_set_baseline_position")
+	core.PuregoSafeRegister(&xBoxLayoutSetHomogeneous, libs, "gtk_box_layout_set_homogeneous")
+	core.PuregoSafeRegister(&xBoxLayoutSetSpacing, libs, "gtk_box_layout_set_spacing")
 
 }

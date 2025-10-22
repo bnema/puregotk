@@ -536,19 +536,23 @@ func (x *ButtonRow) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xButtonRowGLibType, lib, "adw_button_row_get_type")
+	core.PuregoSafeRegister(&xButtonRowGLibType, libs, "adw_button_row_get_type")
 
-	core.PuregoSafeRegister(&xNewButtonRow, lib, "adw_button_row_new")
+	core.PuregoSafeRegister(&xNewButtonRow, libs, "adw_button_row_new")
 
-	core.PuregoSafeRegister(&xButtonRowGetEndIconName, lib, "adw_button_row_get_end_icon_name")
-	core.PuregoSafeRegister(&xButtonRowGetStartIconName, lib, "adw_button_row_get_start_icon_name")
-	core.PuregoSafeRegister(&xButtonRowSetEndIconName, lib, "adw_button_row_set_end_icon_name")
-	core.PuregoSafeRegister(&xButtonRowSetStartIconName, lib, "adw_button_row_set_start_icon_name")
+	core.PuregoSafeRegister(&xButtonRowGetEndIconName, libs, "adw_button_row_get_end_icon_name")
+	core.PuregoSafeRegister(&xButtonRowGetStartIconName, libs, "adw_button_row_get_start_icon_name")
+	core.PuregoSafeRegister(&xButtonRowSetEndIconName, libs, "adw_button_row_set_end_icon_name")
+	core.PuregoSafeRegister(&xButtonRowSetStartIconName, libs, "adw_button_row_set_start_icon_name")
 
 }

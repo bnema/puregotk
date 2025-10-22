@@ -361,16 +361,20 @@ func (x *LayoutSlot) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xLayoutSlotGLibType, lib, "adw_layout_slot_get_type")
+	core.PuregoSafeRegister(&xLayoutSlotGLibType, libs, "adw_layout_slot_get_type")
 
-	core.PuregoSafeRegister(&xNewLayoutSlot, lib, "adw_layout_slot_new")
+	core.PuregoSafeRegister(&xNewLayoutSlot, libs, "adw_layout_slot_new")
 
-	core.PuregoSafeRegister(&xLayoutSlotGetSlotId, lib, "adw_layout_slot_get_slot_id")
+	core.PuregoSafeRegister(&xLayoutSlotGetSlotId, libs, "adw_layout_slot_get_slot_id")
 
 }

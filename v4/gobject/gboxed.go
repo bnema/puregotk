@@ -53,14 +53,18 @@ func BoxedTypeRegisterStatic(NameVar string, BoxedCopyVar *BoxedCopyFunc, BoxedF
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBoxedCopy, lib, "g_boxed_copy")
-	core.PuregoSafeRegister(&xBoxedFree, lib, "g_boxed_free")
-	core.PuregoSafeRegister(&xBoxedTypeRegisterStatic, lib, "g_boxed_type_register_static")
+	core.PuregoSafeRegister(&xBoxedCopy, libs, "g_boxed_copy")
+	core.PuregoSafeRegister(&xBoxedFree, libs, "g_boxed_free")
+	core.PuregoSafeRegister(&xBoxedTypeRegisterStatic, libs, "g_boxed_type_register_static")
 
 }

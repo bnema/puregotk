@@ -204,16 +204,20 @@ func (x *ZlibDecompressor) Reset() {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xZlibDecompressorGLibType, lib, "g_zlib_decompressor_get_type")
+	core.PuregoSafeRegister(&xZlibDecompressorGLibType, libs, "g_zlib_decompressor_get_type")
 
-	core.PuregoSafeRegister(&xNewZlibDecompressor, lib, "g_zlib_decompressor_new")
+	core.PuregoSafeRegister(&xNewZlibDecompressor, libs, "g_zlib_decompressor_new")
 
-	core.PuregoSafeRegister(&xZlibDecompressorGetFileInfo, lib, "g_zlib_decompressor_get_file_info")
+	core.PuregoSafeRegister(&xZlibDecompressorGetFileInfo, libs, "g_zlib_decompressor_get_file_info")
 
 }

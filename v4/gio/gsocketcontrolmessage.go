@@ -415,19 +415,23 @@ func SocketControlMessageDeserialize(LevelVar int, TypeVar int, SizeVar uint, Da
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSocketControlMessageGLibType, lib, "g_socket_control_message_get_type")
+	core.PuregoSafeRegister(&xSocketControlMessageGLibType, libs, "g_socket_control_message_get_type")
 
-	core.PuregoSafeRegister(&xSocketControlMessageGetLevel, lib, "g_socket_control_message_get_level")
-	core.PuregoSafeRegister(&xSocketControlMessageGetMsgType, lib, "g_socket_control_message_get_msg_type")
-	core.PuregoSafeRegister(&xSocketControlMessageGetSize, lib, "g_socket_control_message_get_size")
-	core.PuregoSafeRegister(&xSocketControlMessageSerialize, lib, "g_socket_control_message_serialize")
+	core.PuregoSafeRegister(&xSocketControlMessageGetLevel, libs, "g_socket_control_message_get_level")
+	core.PuregoSafeRegister(&xSocketControlMessageGetMsgType, libs, "g_socket_control_message_get_msg_type")
+	core.PuregoSafeRegister(&xSocketControlMessageGetSize, libs, "g_socket_control_message_get_size")
+	core.PuregoSafeRegister(&xSocketControlMessageSerialize, libs, "g_socket_control_message_serialize")
 
-	core.PuregoSafeRegister(&xSocketControlMessageDeserialize, lib, "g_socket_control_message_deserialize")
+	core.PuregoSafeRegister(&xSocketControlMessageDeserialize, libs, "g_socket_control_message_deserialize")
 
 }

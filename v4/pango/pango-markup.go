@@ -88,14 +88,18 @@ func ParseMarkup(MarkupTextVar string, LengthVar int, AccelMarkerVar uint32, Att
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMarkupParserFinish, lib, "pango_markup_parser_finish")
-	core.PuregoSafeRegister(&xMarkupParserNew, lib, "pango_markup_parser_new")
-	core.PuregoSafeRegister(&xParseMarkup, lib, "pango_parse_markup")
+	core.PuregoSafeRegister(&xMarkupParserFinish, libs, "pango_markup_parser_finish")
+	core.PuregoSafeRegister(&xMarkupParserNew, libs, "pango_markup_parser_new")
+	core.PuregoSafeRegister(&xParseMarkup, libs, "pango_parse_markup")
 
 }

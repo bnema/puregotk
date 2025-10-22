@@ -715,39 +715,43 @@ func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, uintptr
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTlsChannelBindingErrorQuark, lib, "g_tls_channel_binding_error_quark")
-	core.PuregoSafeRegister(&xTlsErrorQuark, lib, "g_tls_error_quark")
+	core.PuregoSafeRegister(&xTlsChannelBindingErrorQuark, libs, "g_tls_channel_binding_error_quark")
+	core.PuregoSafeRegister(&xTlsErrorQuark, libs, "g_tls_error_quark")
 
-	core.PuregoSafeRegister(&xTlsConnectionGLibType, lib, "g_tls_connection_get_type")
+	core.PuregoSafeRegister(&xTlsConnectionGLibType, libs, "g_tls_connection_get_type")
 
-	core.PuregoSafeRegister(&xTlsConnectionEmitAcceptCertificate, lib, "g_tls_connection_emit_accept_certificate")
-	core.PuregoSafeRegister(&xTlsConnectionGetCertificate, lib, "g_tls_connection_get_certificate")
-	core.PuregoSafeRegister(&xTlsConnectionGetChannelBindingData, lib, "g_tls_connection_get_channel_binding_data")
-	core.PuregoSafeRegister(&xTlsConnectionGetCiphersuiteName, lib, "g_tls_connection_get_ciphersuite_name")
-	core.PuregoSafeRegister(&xTlsConnectionGetDatabase, lib, "g_tls_connection_get_database")
-	core.PuregoSafeRegister(&xTlsConnectionGetInteraction, lib, "g_tls_connection_get_interaction")
-	core.PuregoSafeRegister(&xTlsConnectionGetNegotiatedProtocol, lib, "g_tls_connection_get_negotiated_protocol")
-	core.PuregoSafeRegister(&xTlsConnectionGetPeerCertificate, lib, "g_tls_connection_get_peer_certificate")
-	core.PuregoSafeRegister(&xTlsConnectionGetPeerCertificateErrors, lib, "g_tls_connection_get_peer_certificate_errors")
-	core.PuregoSafeRegister(&xTlsConnectionGetProtocolVersion, lib, "g_tls_connection_get_protocol_version")
-	core.PuregoSafeRegister(&xTlsConnectionGetRehandshakeMode, lib, "g_tls_connection_get_rehandshake_mode")
-	core.PuregoSafeRegister(&xTlsConnectionGetRequireCloseNotify, lib, "g_tls_connection_get_require_close_notify")
-	core.PuregoSafeRegister(&xTlsConnectionGetUseSystemCertdb, lib, "g_tls_connection_get_use_system_certdb")
-	core.PuregoSafeRegister(&xTlsConnectionHandshake, lib, "g_tls_connection_handshake")
-	core.PuregoSafeRegister(&xTlsConnectionHandshakeAsync, lib, "g_tls_connection_handshake_async")
-	core.PuregoSafeRegister(&xTlsConnectionHandshakeFinish, lib, "g_tls_connection_handshake_finish")
-	core.PuregoSafeRegister(&xTlsConnectionSetAdvertisedProtocols, lib, "g_tls_connection_set_advertised_protocols")
-	core.PuregoSafeRegister(&xTlsConnectionSetCertificate, lib, "g_tls_connection_set_certificate")
-	core.PuregoSafeRegister(&xTlsConnectionSetDatabase, lib, "g_tls_connection_set_database")
-	core.PuregoSafeRegister(&xTlsConnectionSetInteraction, lib, "g_tls_connection_set_interaction")
-	core.PuregoSafeRegister(&xTlsConnectionSetRehandshakeMode, lib, "g_tls_connection_set_rehandshake_mode")
-	core.PuregoSafeRegister(&xTlsConnectionSetRequireCloseNotify, lib, "g_tls_connection_set_require_close_notify")
-	core.PuregoSafeRegister(&xTlsConnectionSetUseSystemCertdb, lib, "g_tls_connection_set_use_system_certdb")
+	core.PuregoSafeRegister(&xTlsConnectionEmitAcceptCertificate, libs, "g_tls_connection_emit_accept_certificate")
+	core.PuregoSafeRegister(&xTlsConnectionGetCertificate, libs, "g_tls_connection_get_certificate")
+	core.PuregoSafeRegister(&xTlsConnectionGetChannelBindingData, libs, "g_tls_connection_get_channel_binding_data")
+	core.PuregoSafeRegister(&xTlsConnectionGetCiphersuiteName, libs, "g_tls_connection_get_ciphersuite_name")
+	core.PuregoSafeRegister(&xTlsConnectionGetDatabase, libs, "g_tls_connection_get_database")
+	core.PuregoSafeRegister(&xTlsConnectionGetInteraction, libs, "g_tls_connection_get_interaction")
+	core.PuregoSafeRegister(&xTlsConnectionGetNegotiatedProtocol, libs, "g_tls_connection_get_negotiated_protocol")
+	core.PuregoSafeRegister(&xTlsConnectionGetPeerCertificate, libs, "g_tls_connection_get_peer_certificate")
+	core.PuregoSafeRegister(&xTlsConnectionGetPeerCertificateErrors, libs, "g_tls_connection_get_peer_certificate_errors")
+	core.PuregoSafeRegister(&xTlsConnectionGetProtocolVersion, libs, "g_tls_connection_get_protocol_version")
+	core.PuregoSafeRegister(&xTlsConnectionGetRehandshakeMode, libs, "g_tls_connection_get_rehandshake_mode")
+	core.PuregoSafeRegister(&xTlsConnectionGetRequireCloseNotify, libs, "g_tls_connection_get_require_close_notify")
+	core.PuregoSafeRegister(&xTlsConnectionGetUseSystemCertdb, libs, "g_tls_connection_get_use_system_certdb")
+	core.PuregoSafeRegister(&xTlsConnectionHandshake, libs, "g_tls_connection_handshake")
+	core.PuregoSafeRegister(&xTlsConnectionHandshakeAsync, libs, "g_tls_connection_handshake_async")
+	core.PuregoSafeRegister(&xTlsConnectionHandshakeFinish, libs, "g_tls_connection_handshake_finish")
+	core.PuregoSafeRegister(&xTlsConnectionSetAdvertisedProtocols, libs, "g_tls_connection_set_advertised_protocols")
+	core.PuregoSafeRegister(&xTlsConnectionSetCertificate, libs, "g_tls_connection_set_certificate")
+	core.PuregoSafeRegister(&xTlsConnectionSetDatabase, libs, "g_tls_connection_set_database")
+	core.PuregoSafeRegister(&xTlsConnectionSetInteraction, libs, "g_tls_connection_set_interaction")
+	core.PuregoSafeRegister(&xTlsConnectionSetRehandshakeMode, libs, "g_tls_connection_set_rehandshake_mode")
+	core.PuregoSafeRegister(&xTlsConnectionSetRequireCloseNotify, libs, "g_tls_connection_set_require_close_notify")
+	core.PuregoSafeRegister(&xTlsConnectionSetUseSystemCertdb, libs, "g_tls_connection_set_use_system_certdb")
 
 }

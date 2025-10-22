@@ -373,23 +373,27 @@ func SocketConnectionFactoryRegisterType(GTypeVar types.GType, FamilyVar SocketF
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSocketConnectionGLibType, lib, "g_socket_connection_get_type")
+	core.PuregoSafeRegister(&xSocketConnectionGLibType, libs, "g_socket_connection_get_type")
 
-	core.PuregoSafeRegister(&xSocketConnectionConnect, lib, "g_socket_connection_connect")
-	core.PuregoSafeRegister(&xSocketConnectionConnectAsync, lib, "g_socket_connection_connect_async")
-	core.PuregoSafeRegister(&xSocketConnectionConnectFinish, lib, "g_socket_connection_connect_finish")
-	core.PuregoSafeRegister(&xSocketConnectionGetLocalAddress, lib, "g_socket_connection_get_local_address")
-	core.PuregoSafeRegister(&xSocketConnectionGetRemoteAddress, lib, "g_socket_connection_get_remote_address")
-	core.PuregoSafeRegister(&xSocketConnectionGetSocket, lib, "g_socket_connection_get_socket")
-	core.PuregoSafeRegister(&xSocketConnectionIsConnected, lib, "g_socket_connection_is_connected")
+	core.PuregoSafeRegister(&xSocketConnectionConnect, libs, "g_socket_connection_connect")
+	core.PuregoSafeRegister(&xSocketConnectionConnectAsync, libs, "g_socket_connection_connect_async")
+	core.PuregoSafeRegister(&xSocketConnectionConnectFinish, libs, "g_socket_connection_connect_finish")
+	core.PuregoSafeRegister(&xSocketConnectionGetLocalAddress, libs, "g_socket_connection_get_local_address")
+	core.PuregoSafeRegister(&xSocketConnectionGetRemoteAddress, libs, "g_socket_connection_get_remote_address")
+	core.PuregoSafeRegister(&xSocketConnectionGetSocket, libs, "g_socket_connection_get_socket")
+	core.PuregoSafeRegister(&xSocketConnectionIsConnected, libs, "g_socket_connection_is_connected")
 
-	core.PuregoSafeRegister(&xSocketConnectionFactoryLookupType, lib, "g_socket_connection_factory_lookup_type")
-	core.PuregoSafeRegister(&xSocketConnectionFactoryRegisterType, lib, "g_socket_connection_factory_register_type")
+	core.PuregoSafeRegister(&xSocketConnectionFactoryLookupType, libs, "g_socket_connection_factory_lookup_type")
+	core.PuregoSafeRegister(&xSocketConnectionFactoryRegisterType, libs, "g_socket_connection_factory_register_type")
 
 }

@@ -622,22 +622,26 @@ func (x *PopoverMenu) Unrealize() {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPopoverMenuGLibType, lib, "gtk_popover_menu_get_type")
+	core.PuregoSafeRegister(&xPopoverMenuGLibType, libs, "gtk_popover_menu_get_type")
 
-	core.PuregoSafeRegister(&xNewPopoverMenuFromModel, lib, "gtk_popover_menu_new_from_model")
-	core.PuregoSafeRegister(&xNewPopoverMenuFromModelFull, lib, "gtk_popover_menu_new_from_model_full")
+	core.PuregoSafeRegister(&xNewPopoverMenuFromModel, libs, "gtk_popover_menu_new_from_model")
+	core.PuregoSafeRegister(&xNewPopoverMenuFromModelFull, libs, "gtk_popover_menu_new_from_model_full")
 
-	core.PuregoSafeRegister(&xPopoverMenuAddChild, lib, "gtk_popover_menu_add_child")
-	core.PuregoSafeRegister(&xPopoverMenuGetFlags, lib, "gtk_popover_menu_get_flags")
-	core.PuregoSafeRegister(&xPopoverMenuGetMenuModel, lib, "gtk_popover_menu_get_menu_model")
-	core.PuregoSafeRegister(&xPopoverMenuRemoveChild, lib, "gtk_popover_menu_remove_child")
-	core.PuregoSafeRegister(&xPopoverMenuSetFlags, lib, "gtk_popover_menu_set_flags")
-	core.PuregoSafeRegister(&xPopoverMenuSetMenuModel, lib, "gtk_popover_menu_set_menu_model")
+	core.PuregoSafeRegister(&xPopoverMenuAddChild, libs, "gtk_popover_menu_add_child")
+	core.PuregoSafeRegister(&xPopoverMenuGetFlags, libs, "gtk_popover_menu_get_flags")
+	core.PuregoSafeRegister(&xPopoverMenuGetMenuModel, libs, "gtk_popover_menu_get_menu_model")
+	core.PuregoSafeRegister(&xPopoverMenuRemoveChild, libs, "gtk_popover_menu_remove_child")
+	core.PuregoSafeRegister(&xPopoverMenuSetFlags, libs, "gtk_popover_menu_set_flags")
+	core.PuregoSafeRegister(&xPopoverMenuSetMenuModel, libs, "gtk_popover_menu_set_menu_model")
 
 }

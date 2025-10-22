@@ -1107,80 +1107,84 @@ func (c *ParamSpecVariant) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xNewParamSpecBoolean, lib, "g_param_spec_boolean")
-	core.PuregoSafeRegister(&xNewParamSpecBoxed, lib, "g_param_spec_boxed")
-	core.PuregoSafeRegister(&xNewParamSpecChar, lib, "g_param_spec_char")
-	core.PuregoSafeRegister(&xNewParamSpecDouble, lib, "g_param_spec_double")
-	core.PuregoSafeRegister(&xNewParamSpecEnum, lib, "g_param_spec_enum")
-	core.PuregoSafeRegister(&xNewParamSpecFlags, lib, "g_param_spec_flags")
-	core.PuregoSafeRegister(&xNewParamSpecFloat, lib, "g_param_spec_float")
-	core.PuregoSafeRegister(&xParamSpecGtype, lib, "g_param_spec_gtype")
-	core.PuregoSafeRegister(&xNewParamSpecInt, lib, "g_param_spec_int")
-	core.PuregoSafeRegister(&xNewParamSpecInt64, lib, "g_param_spec_int64")
-	core.PuregoSafeRegister(&xNewParamSpecLong, lib, "g_param_spec_long")
-	core.PuregoSafeRegister(&xNewParamSpecObject, lib, "g_param_spec_object")
-	core.PuregoSafeRegister(&xNewParamSpecOverride, lib, "g_param_spec_override")
-	core.PuregoSafeRegister(&xNewParamSpecParam, lib, "g_param_spec_param")
-	core.PuregoSafeRegister(&xNewParamSpecPointer, lib, "g_param_spec_pointer")
-	core.PuregoSafeRegister(&xNewParamSpecString, lib, "g_param_spec_string")
-	core.PuregoSafeRegister(&xParamSpecUchar, lib, "g_param_spec_uchar")
-	core.PuregoSafeRegister(&xParamSpecUint, lib, "g_param_spec_uint")
-	core.PuregoSafeRegister(&xParamSpecUint64, lib, "g_param_spec_uint64")
-	core.PuregoSafeRegister(&xParamSpecUlong, lib, "g_param_spec_ulong")
-	core.PuregoSafeRegister(&xNewParamSpecUnichar, lib, "g_param_spec_unichar")
-	core.PuregoSafeRegister(&xNewParamSpecValueArray, lib, "g_param_spec_value_array")
-	core.PuregoSafeRegister(&xNewParamSpecVariant, lib, "g_param_spec_variant")
+	core.PuregoSafeRegister(&xNewParamSpecBoolean, libs, "g_param_spec_boolean")
+	core.PuregoSafeRegister(&xNewParamSpecBoxed, libs, "g_param_spec_boxed")
+	core.PuregoSafeRegister(&xNewParamSpecChar, libs, "g_param_spec_char")
+	core.PuregoSafeRegister(&xNewParamSpecDouble, libs, "g_param_spec_double")
+	core.PuregoSafeRegister(&xNewParamSpecEnum, libs, "g_param_spec_enum")
+	core.PuregoSafeRegister(&xNewParamSpecFlags, libs, "g_param_spec_flags")
+	core.PuregoSafeRegister(&xNewParamSpecFloat, libs, "g_param_spec_float")
+	core.PuregoSafeRegister(&xParamSpecGtype, libs, "g_param_spec_gtype")
+	core.PuregoSafeRegister(&xNewParamSpecInt, libs, "g_param_spec_int")
+	core.PuregoSafeRegister(&xNewParamSpecInt64, libs, "g_param_spec_int64")
+	core.PuregoSafeRegister(&xNewParamSpecLong, libs, "g_param_spec_long")
+	core.PuregoSafeRegister(&xNewParamSpecObject, libs, "g_param_spec_object")
+	core.PuregoSafeRegister(&xNewParamSpecOverride, libs, "g_param_spec_override")
+	core.PuregoSafeRegister(&xNewParamSpecParam, libs, "g_param_spec_param")
+	core.PuregoSafeRegister(&xNewParamSpecPointer, libs, "g_param_spec_pointer")
+	core.PuregoSafeRegister(&xNewParamSpecString, libs, "g_param_spec_string")
+	core.PuregoSafeRegister(&xParamSpecUchar, libs, "g_param_spec_uchar")
+	core.PuregoSafeRegister(&xParamSpecUint, libs, "g_param_spec_uint")
+	core.PuregoSafeRegister(&xParamSpecUint64, libs, "g_param_spec_uint64")
+	core.PuregoSafeRegister(&xParamSpecUlong, libs, "g_param_spec_ulong")
+	core.PuregoSafeRegister(&xNewParamSpecUnichar, libs, "g_param_spec_unichar")
+	core.PuregoSafeRegister(&xNewParamSpecValueArray, libs, "g_param_spec_value_array")
+	core.PuregoSafeRegister(&xNewParamSpecVariant, libs, "g_param_spec_variant")
 
-	core.PuregoSafeRegister(&xParamSpecBooleanGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecBooleanGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecBoxedGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecBoxedGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecCharGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecCharGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecDoubleGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecDoubleGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecEnumGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecEnumGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecFlagsGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecFlagsGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecFloatGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecFloatGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecGTypeGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecGTypeGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecIntGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecIntGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecInt64GLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecInt64GLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecLongGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecLongGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecObjectGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecObjectGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecOverrideGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecOverrideGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecParamGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecParamGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecPointerGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecPointerGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecStringGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecStringGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecUCharGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecUCharGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecUIntGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecUIntGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecUInt64GLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecUInt64GLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecULongGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecULongGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecUnicharGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecUnicharGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecValueArrayGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecValueArrayGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecVariantGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecVariantGLibType, libs, "intern")
 
 }

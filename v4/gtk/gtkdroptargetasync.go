@@ -282,20 +282,24 @@ func (x *DropTargetAsync) ConnectDrop(cb *func(DropTargetAsync, uintptr, float64
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDropTargetAsyncGLibType, lib, "gtk_drop_target_async_get_type")
+	core.PuregoSafeRegister(&xDropTargetAsyncGLibType, libs, "gtk_drop_target_async_get_type")
 
-	core.PuregoSafeRegister(&xNewDropTargetAsync, lib, "gtk_drop_target_async_new")
+	core.PuregoSafeRegister(&xNewDropTargetAsync, libs, "gtk_drop_target_async_new")
 
-	core.PuregoSafeRegister(&xDropTargetAsyncGetActions, lib, "gtk_drop_target_async_get_actions")
-	core.PuregoSafeRegister(&xDropTargetAsyncGetFormats, lib, "gtk_drop_target_async_get_formats")
-	core.PuregoSafeRegister(&xDropTargetAsyncRejectDrop, lib, "gtk_drop_target_async_reject_drop")
-	core.PuregoSafeRegister(&xDropTargetAsyncSetActions, lib, "gtk_drop_target_async_set_actions")
-	core.PuregoSafeRegister(&xDropTargetAsyncSetFormats, lib, "gtk_drop_target_async_set_formats")
+	core.PuregoSafeRegister(&xDropTargetAsyncGetActions, libs, "gtk_drop_target_async_get_actions")
+	core.PuregoSafeRegister(&xDropTargetAsyncGetFormats, libs, "gtk_drop_target_async_get_formats")
+	core.PuregoSafeRegister(&xDropTargetAsyncRejectDrop, libs, "gtk_drop_target_async_reject_drop")
+	core.PuregoSafeRegister(&xDropTargetAsyncSetActions, libs, "gtk_drop_target_async_set_actions")
+	core.PuregoSafeRegister(&xDropTargetAsyncSetFormats, libs, "gtk_drop_target_async_set_formats")
 
 }

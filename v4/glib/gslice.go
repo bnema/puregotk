@@ -132,19 +132,23 @@ func SliceSetConfig(CkeyVar SliceConfig, ValueVar int64) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSliceAlloc, lib, "g_slice_alloc")
-	core.PuregoSafeRegister(&xSliceAlloc0, lib, "g_slice_alloc0")
-	core.PuregoSafeRegister(&xSliceCopy, lib, "g_slice_copy")
-	core.PuregoSafeRegister(&xSliceFree1, lib, "g_slice_free1")
-	core.PuregoSafeRegister(&xSliceFreeChainWithOffset, lib, "g_slice_free_chain_with_offset")
-	core.PuregoSafeRegister(&xSliceGetConfig, lib, "g_slice_get_config")
-	core.PuregoSafeRegister(&xSliceGetConfigState, lib, "g_slice_get_config_state")
-	core.PuregoSafeRegister(&xSliceSetConfig, lib, "g_slice_set_config")
+	core.PuregoSafeRegister(&xSliceAlloc, libs, "g_slice_alloc")
+	core.PuregoSafeRegister(&xSliceAlloc0, libs, "g_slice_alloc0")
+	core.PuregoSafeRegister(&xSliceCopy, libs, "g_slice_copy")
+	core.PuregoSafeRegister(&xSliceFree1, libs, "g_slice_free1")
+	core.PuregoSafeRegister(&xSliceFreeChainWithOffset, libs, "g_slice_free_chain_with_offset")
+	core.PuregoSafeRegister(&xSliceGetConfig, libs, "g_slice_get_config")
+	core.PuregoSafeRegister(&xSliceGetConfigState, libs, "g_slice_get_config_state")
+	core.PuregoSafeRegister(&xSliceSetConfig, libs, "g_slice_set_config")
 
 }

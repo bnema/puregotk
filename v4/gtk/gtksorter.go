@@ -462,20 +462,24 @@ func (x *Sorter) ConnectChanged(cb *func(Sorter, SorterChange)) uint32 {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSorterChangeGLibType, lib, "gtk_sorter_change_get_type")
+	core.PuregoSafeRegister(&xSorterChangeGLibType, libs, "gtk_sorter_change_get_type")
 
-	core.PuregoSafeRegister(&xSorterOrderGLibType, lib, "gtk_sorter_order_get_type")
+	core.PuregoSafeRegister(&xSorterOrderGLibType, libs, "gtk_sorter_order_get_type")
 
-	core.PuregoSafeRegister(&xSorterGLibType, lib, "gtk_sorter_get_type")
+	core.PuregoSafeRegister(&xSorterGLibType, libs, "gtk_sorter_get_type")
 
-	core.PuregoSafeRegister(&xSorterChanged, lib, "gtk_sorter_changed")
-	core.PuregoSafeRegister(&xSorterCompare, lib, "gtk_sorter_compare")
-	core.PuregoSafeRegister(&xSorterGetOrder, lib, "gtk_sorter_get_order")
+	core.PuregoSafeRegister(&xSorterChanged, libs, "gtk_sorter_changed")
+	core.PuregoSafeRegister(&xSorterCompare, libs, "gtk_sorter_compare")
+	core.PuregoSafeRegister(&xSorterGetOrder, libs, "gtk_sorter_get_order")
 
 }

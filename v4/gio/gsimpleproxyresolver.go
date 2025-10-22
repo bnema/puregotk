@@ -311,18 +311,22 @@ func SimpleProxyResolverNew(DefaultProxyVar string, IgnoreHostsVar []string) *Pr
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSimpleProxyResolverGLibType, lib, "g_simple_proxy_resolver_get_type")
+	core.PuregoSafeRegister(&xSimpleProxyResolverGLibType, libs, "g_simple_proxy_resolver_get_type")
 
-	core.PuregoSafeRegister(&xSimpleProxyResolverSetDefaultProxy, lib, "g_simple_proxy_resolver_set_default_proxy")
-	core.PuregoSafeRegister(&xSimpleProxyResolverSetIgnoreHosts, lib, "g_simple_proxy_resolver_set_ignore_hosts")
-	core.PuregoSafeRegister(&xSimpleProxyResolverSetUriProxy, lib, "g_simple_proxy_resolver_set_uri_proxy")
+	core.PuregoSafeRegister(&xSimpleProxyResolverSetDefaultProxy, libs, "g_simple_proxy_resolver_set_default_proxy")
+	core.PuregoSafeRegister(&xSimpleProxyResolverSetIgnoreHosts, libs, "g_simple_proxy_resolver_set_ignore_hosts")
+	core.PuregoSafeRegister(&xSimpleProxyResolverSetUriProxy, libs, "g_simple_proxy_resolver_set_uri_proxy")
 
-	core.PuregoSafeRegister(&xSimpleProxyResolverNew, lib, "g_simple_proxy_resolver_new")
+	core.PuregoSafeRegister(&xSimpleProxyResolverNew, libs, "g_simple_proxy_resolver_new")
 
 }

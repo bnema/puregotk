@@ -74,15 +74,19 @@ func TrashStackPush(StackPVar **TrashStack, DataPVar uintptr) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTrashStackHeight, lib, "g_trash_stack_height")
-	core.PuregoSafeRegister(&xTrashStackPeek, lib, "g_trash_stack_peek")
-	core.PuregoSafeRegister(&xTrashStackPop, lib, "g_trash_stack_pop")
-	core.PuregoSafeRegister(&xTrashStackPush, lib, "g_trash_stack_push")
+	core.PuregoSafeRegister(&xTrashStackHeight, libs, "g_trash_stack_height")
+	core.PuregoSafeRegister(&xTrashStackPeek, libs, "g_trash_stack_peek")
+	core.PuregoSafeRegister(&xTrashStackPop, libs, "g_trash_stack_pop")
+	core.PuregoSafeRegister(&xTrashStackPush, libs, "g_trash_stack_push")
 
 }

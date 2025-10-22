@@ -178,21 +178,25 @@ func (x *ClampLayout) SetOrientation(OrientationVar gtk.Orientation) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xClampLayoutGLibType, lib, "adw_clamp_layout_get_type")
+	core.PuregoSafeRegister(&xClampLayoutGLibType, libs, "adw_clamp_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewClampLayout, lib, "adw_clamp_layout_new")
+	core.PuregoSafeRegister(&xNewClampLayout, libs, "adw_clamp_layout_new")
 
-	core.PuregoSafeRegister(&xClampLayoutGetMaximumSize, lib, "adw_clamp_layout_get_maximum_size")
-	core.PuregoSafeRegister(&xClampLayoutGetTighteningThreshold, lib, "adw_clamp_layout_get_tightening_threshold")
-	core.PuregoSafeRegister(&xClampLayoutGetUnit, lib, "adw_clamp_layout_get_unit")
-	core.PuregoSafeRegister(&xClampLayoutSetMaximumSize, lib, "adw_clamp_layout_set_maximum_size")
-	core.PuregoSafeRegister(&xClampLayoutSetTighteningThreshold, lib, "adw_clamp_layout_set_tightening_threshold")
-	core.PuregoSafeRegister(&xClampLayoutSetUnit, lib, "adw_clamp_layout_set_unit")
+	core.PuregoSafeRegister(&xClampLayoutGetMaximumSize, libs, "adw_clamp_layout_get_maximum_size")
+	core.PuregoSafeRegister(&xClampLayoutGetTighteningThreshold, libs, "adw_clamp_layout_get_tightening_threshold")
+	core.PuregoSafeRegister(&xClampLayoutGetUnit, libs, "adw_clamp_layout_get_unit")
+	core.PuregoSafeRegister(&xClampLayoutSetMaximumSize, libs, "adw_clamp_layout_set_maximum_size")
+	core.PuregoSafeRegister(&xClampLayoutSetTighteningThreshold, libs, "adw_clamp_layout_set_tightening_threshold")
+	core.PuregoSafeRegister(&xClampLayoutSetUnit, libs, "adw_clamp_layout_set_unit")
 
 }

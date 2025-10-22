@@ -714,24 +714,28 @@ func (x *FontButton) SetShowPreviewEntry(ShowPreviewEntryVar bool) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFontButtonGLibType, lib, "gtk_font_button_get_type")
+	core.PuregoSafeRegister(&xFontButtonGLibType, libs, "gtk_font_button_get_type")
 
-	core.PuregoSafeRegister(&xNewFontButton, lib, "gtk_font_button_new")
-	core.PuregoSafeRegister(&xNewFontButtonWithFont, lib, "gtk_font_button_new_with_font")
+	core.PuregoSafeRegister(&xNewFontButton, libs, "gtk_font_button_new")
+	core.PuregoSafeRegister(&xNewFontButtonWithFont, libs, "gtk_font_button_new_with_font")
 
-	core.PuregoSafeRegister(&xFontButtonGetModal, lib, "gtk_font_button_get_modal")
-	core.PuregoSafeRegister(&xFontButtonGetTitle, lib, "gtk_font_button_get_title")
-	core.PuregoSafeRegister(&xFontButtonGetUseFont, lib, "gtk_font_button_get_use_font")
-	core.PuregoSafeRegister(&xFontButtonGetUseSize, lib, "gtk_font_button_get_use_size")
-	core.PuregoSafeRegister(&xFontButtonSetModal, lib, "gtk_font_button_set_modal")
-	core.PuregoSafeRegister(&xFontButtonSetTitle, lib, "gtk_font_button_set_title")
-	core.PuregoSafeRegister(&xFontButtonSetUseFont, lib, "gtk_font_button_set_use_font")
-	core.PuregoSafeRegister(&xFontButtonSetUseSize, lib, "gtk_font_button_set_use_size")
+	core.PuregoSafeRegister(&xFontButtonGetModal, libs, "gtk_font_button_get_modal")
+	core.PuregoSafeRegister(&xFontButtonGetTitle, libs, "gtk_font_button_get_title")
+	core.PuregoSafeRegister(&xFontButtonGetUseFont, libs, "gtk_font_button_get_use_font")
+	core.PuregoSafeRegister(&xFontButtonGetUseSize, libs, "gtk_font_button_get_use_size")
+	core.PuregoSafeRegister(&xFontButtonSetModal, libs, "gtk_font_button_set_modal")
+	core.PuregoSafeRegister(&xFontButtonSetTitle, libs, "gtk_font_button_set_title")
+	core.PuregoSafeRegister(&xFontButtonSetUseFont, libs, "gtk_font_button_set_use_font")
+	core.PuregoSafeRegister(&xFontButtonSetUseSize, libs, "gtk_font_button_set_use_size")
 
 }

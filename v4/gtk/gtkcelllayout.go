@@ -583,23 +583,27 @@ var XGtkCellLayoutSetCellDataFunc func(uintptr, uintptr, uintptr, uintptr, uintp
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCellLayoutGLibType, lib, "gtk_cell_layout_get_type")
+	core.PuregoSafeRegister(&xCellLayoutGLibType, libs, "gtk_cell_layout_get_type")
 
-	core.PuregoSafeRegister(&XGtkCellLayoutAddAttribute, lib, "gtk_cell_layout_add_attribute")
-	core.PuregoSafeRegister(&XGtkCellLayoutClear, lib, "gtk_cell_layout_clear")
-	core.PuregoSafeRegister(&XGtkCellLayoutClearAttributes, lib, "gtk_cell_layout_clear_attributes")
-	core.PuregoSafeRegister(&XGtkCellLayoutGetArea, lib, "gtk_cell_layout_get_area")
-	core.PuregoSafeRegister(&XGtkCellLayoutGetCells, lib, "gtk_cell_layout_get_cells")
-	core.PuregoSafeRegister(&XGtkCellLayoutPackEnd, lib, "gtk_cell_layout_pack_end")
-	core.PuregoSafeRegister(&XGtkCellLayoutPackStart, lib, "gtk_cell_layout_pack_start")
-	core.PuregoSafeRegister(&XGtkCellLayoutReorder, lib, "gtk_cell_layout_reorder")
-	core.PuregoSafeRegister(&XGtkCellLayoutSetAttributes, lib, "gtk_cell_layout_set_attributes")
-	core.PuregoSafeRegister(&XGtkCellLayoutSetCellDataFunc, lib, "gtk_cell_layout_set_cell_data_func")
+	core.PuregoSafeRegister(&XGtkCellLayoutAddAttribute, libs, "gtk_cell_layout_add_attribute")
+	core.PuregoSafeRegister(&XGtkCellLayoutClear, libs, "gtk_cell_layout_clear")
+	core.PuregoSafeRegister(&XGtkCellLayoutClearAttributes, libs, "gtk_cell_layout_clear_attributes")
+	core.PuregoSafeRegister(&XGtkCellLayoutGetArea, libs, "gtk_cell_layout_get_area")
+	core.PuregoSafeRegister(&XGtkCellLayoutGetCells, libs, "gtk_cell_layout_get_cells")
+	core.PuregoSafeRegister(&XGtkCellLayoutPackEnd, libs, "gtk_cell_layout_pack_end")
+	core.PuregoSafeRegister(&XGtkCellLayoutPackStart, libs, "gtk_cell_layout_pack_start")
+	core.PuregoSafeRegister(&XGtkCellLayoutReorder, libs, "gtk_cell_layout_reorder")
+	core.PuregoSafeRegister(&XGtkCellLayoutSetAttributes, libs, "gtk_cell_layout_set_attributes")
+	core.PuregoSafeRegister(&XGtkCellLayoutSetCellDataFunc, libs, "gtk_cell_layout_set_cell_data_func")
 
 }

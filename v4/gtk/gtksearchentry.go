@@ -940,25 +940,29 @@ func (x *SearchEntry) SetWidthChars(NCharsVar int) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSearchEntryGLibType, lib, "gtk_search_entry_get_type")
+	core.PuregoSafeRegister(&xSearchEntryGLibType, libs, "gtk_search_entry_get_type")
 
-	core.PuregoSafeRegister(&xNewSearchEntry, lib, "gtk_search_entry_new")
+	core.PuregoSafeRegister(&xNewSearchEntry, libs, "gtk_search_entry_new")
 
-	core.PuregoSafeRegister(&xSearchEntryGetInputHints, lib, "gtk_search_entry_get_input_hints")
-	core.PuregoSafeRegister(&xSearchEntryGetInputPurpose, lib, "gtk_search_entry_get_input_purpose")
-	core.PuregoSafeRegister(&xSearchEntryGetKeyCaptureWidget, lib, "gtk_search_entry_get_key_capture_widget")
-	core.PuregoSafeRegister(&xSearchEntryGetPlaceholderText, lib, "gtk_search_entry_get_placeholder_text")
-	core.PuregoSafeRegister(&xSearchEntryGetSearchDelay, lib, "gtk_search_entry_get_search_delay")
-	core.PuregoSafeRegister(&xSearchEntrySetInputHints, lib, "gtk_search_entry_set_input_hints")
-	core.PuregoSafeRegister(&xSearchEntrySetInputPurpose, lib, "gtk_search_entry_set_input_purpose")
-	core.PuregoSafeRegister(&xSearchEntrySetKeyCaptureWidget, lib, "gtk_search_entry_set_key_capture_widget")
-	core.PuregoSafeRegister(&xSearchEntrySetPlaceholderText, lib, "gtk_search_entry_set_placeholder_text")
-	core.PuregoSafeRegister(&xSearchEntrySetSearchDelay, lib, "gtk_search_entry_set_search_delay")
+	core.PuregoSafeRegister(&xSearchEntryGetInputHints, libs, "gtk_search_entry_get_input_hints")
+	core.PuregoSafeRegister(&xSearchEntryGetInputPurpose, libs, "gtk_search_entry_get_input_purpose")
+	core.PuregoSafeRegister(&xSearchEntryGetKeyCaptureWidget, libs, "gtk_search_entry_get_key_capture_widget")
+	core.PuregoSafeRegister(&xSearchEntryGetPlaceholderText, libs, "gtk_search_entry_get_placeholder_text")
+	core.PuregoSafeRegister(&xSearchEntryGetSearchDelay, libs, "gtk_search_entry_get_search_delay")
+	core.PuregoSafeRegister(&xSearchEntrySetInputHints, libs, "gtk_search_entry_set_input_hints")
+	core.PuregoSafeRegister(&xSearchEntrySetInputPurpose, libs, "gtk_search_entry_set_input_purpose")
+	core.PuregoSafeRegister(&xSearchEntrySetKeyCaptureWidget, libs, "gtk_search_entry_set_key_capture_widget")
+	core.PuregoSafeRegister(&xSearchEntrySetPlaceholderText, libs, "gtk_search_entry_set_placeholder_text")
+	core.PuregoSafeRegister(&xSearchEntrySetSearchDelay, libs, "gtk_search_entry_set_search_delay")
 
 }

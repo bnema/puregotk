@@ -310,29 +310,33 @@ func RenderNodeDeserialize(BytesVar *glib.Bytes, ErrorFuncVar *ParseErrorFunc, U
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibrary("GSK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GSK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GSK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSerializationErrorQuark, lib, "gsk_serialization_error_quark")
-	core.PuregoSafeRegister(&xValueDupRenderNode, lib, "gsk_value_dup_render_node")
-	core.PuregoSafeRegister(&xValueGetRenderNode, lib, "gsk_value_get_render_node")
-	core.PuregoSafeRegister(&xValueSetRenderNode, lib, "gsk_value_set_render_node")
-	core.PuregoSafeRegister(&xValueTakeRenderNode, lib, "gsk_value_take_render_node")
+	core.PuregoSafeRegister(&xSerializationErrorQuark, libs, "gsk_serialization_error_quark")
+	core.PuregoSafeRegister(&xValueDupRenderNode, libs, "gsk_value_dup_render_node")
+	core.PuregoSafeRegister(&xValueGetRenderNode, libs, "gsk_value_get_render_node")
+	core.PuregoSafeRegister(&xValueSetRenderNode, libs, "gsk_value_set_render_node")
+	core.PuregoSafeRegister(&xValueTakeRenderNode, libs, "gsk_value_take_render_node")
 
-	core.PuregoSafeRegister(&xRenderNodeGLibType, lib, "gsk_render_node_get_type")
+	core.PuregoSafeRegister(&xRenderNodeGLibType, libs, "gsk_render_node_get_type")
 
-	core.PuregoSafeRegister(&xRenderNodeDraw, lib, "gsk_render_node_draw")
-	core.PuregoSafeRegister(&xRenderNodeGetBounds, lib, "gsk_render_node_get_bounds")
-	core.PuregoSafeRegister(&xRenderNodeGetNodeType, lib, "gsk_render_node_get_node_type")
-	core.PuregoSafeRegister(&xRenderNodeGetOpaqueRect, lib, "gsk_render_node_get_opaque_rect")
-	core.PuregoSafeRegister(&xRenderNodeRef, lib, "gsk_render_node_ref")
-	core.PuregoSafeRegister(&xRenderNodeSerialize, lib, "gsk_render_node_serialize")
-	core.PuregoSafeRegister(&xRenderNodeUnref, lib, "gsk_render_node_unref")
-	core.PuregoSafeRegister(&xRenderNodeWriteToFile, lib, "gsk_render_node_write_to_file")
+	core.PuregoSafeRegister(&xRenderNodeDraw, libs, "gsk_render_node_draw")
+	core.PuregoSafeRegister(&xRenderNodeGetBounds, libs, "gsk_render_node_get_bounds")
+	core.PuregoSafeRegister(&xRenderNodeGetNodeType, libs, "gsk_render_node_get_node_type")
+	core.PuregoSafeRegister(&xRenderNodeGetOpaqueRect, libs, "gsk_render_node_get_opaque_rect")
+	core.PuregoSafeRegister(&xRenderNodeRef, libs, "gsk_render_node_ref")
+	core.PuregoSafeRegister(&xRenderNodeSerialize, libs, "gsk_render_node_serialize")
+	core.PuregoSafeRegister(&xRenderNodeUnref, libs, "gsk_render_node_unref")
+	core.PuregoSafeRegister(&xRenderNodeWriteToFile, libs, "gsk_render_node_write_to_file")
 
-	core.PuregoSafeRegister(&xRenderNodeDeserialize, lib, "gsk_render_node_deserialize")
+	core.PuregoSafeRegister(&xRenderNodeDeserialize, libs, "gsk_render_node_deserialize")
 
 }

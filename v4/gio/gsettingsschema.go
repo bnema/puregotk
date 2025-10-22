@@ -514,44 +514,48 @@ func SettingsSchemaSourceGetDefault() *SettingsSchemaSource {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSettingsSchemaSourceGetDefault, lib, "g_settings_schema_source_get_default")
+	core.PuregoSafeRegister(&xSettingsSchemaSourceGetDefault, libs, "g_settings_schema_source_get_default")
 
-	core.PuregoSafeRegister(&xSettingsSchemaGLibType, lib, "g_settings_schema_get_type")
+	core.PuregoSafeRegister(&xSettingsSchemaGLibType, libs, "g_settings_schema_get_type")
 
-	core.PuregoSafeRegister(&xSettingsSchemaGetId, lib, "g_settings_schema_get_id")
-	core.PuregoSafeRegister(&xSettingsSchemaGetKey, lib, "g_settings_schema_get_key")
-	core.PuregoSafeRegister(&xSettingsSchemaGetPath, lib, "g_settings_schema_get_path")
-	core.PuregoSafeRegister(&xSettingsSchemaHasKey, lib, "g_settings_schema_has_key")
-	core.PuregoSafeRegister(&xSettingsSchemaListChildren, lib, "g_settings_schema_list_children")
-	core.PuregoSafeRegister(&xSettingsSchemaListKeys, lib, "g_settings_schema_list_keys")
-	core.PuregoSafeRegister(&xSettingsSchemaRef, lib, "g_settings_schema_ref")
-	core.PuregoSafeRegister(&xSettingsSchemaUnref, lib, "g_settings_schema_unref")
+	core.PuregoSafeRegister(&xSettingsSchemaGetId, libs, "g_settings_schema_get_id")
+	core.PuregoSafeRegister(&xSettingsSchemaGetKey, libs, "g_settings_schema_get_key")
+	core.PuregoSafeRegister(&xSettingsSchemaGetPath, libs, "g_settings_schema_get_path")
+	core.PuregoSafeRegister(&xSettingsSchemaHasKey, libs, "g_settings_schema_has_key")
+	core.PuregoSafeRegister(&xSettingsSchemaListChildren, libs, "g_settings_schema_list_children")
+	core.PuregoSafeRegister(&xSettingsSchemaListKeys, libs, "g_settings_schema_list_keys")
+	core.PuregoSafeRegister(&xSettingsSchemaRef, libs, "g_settings_schema_ref")
+	core.PuregoSafeRegister(&xSettingsSchemaUnref, libs, "g_settings_schema_unref")
 
-	core.PuregoSafeRegister(&xSettingsSchemaKeyGLibType, lib, "g_settings_schema_key_get_type")
+	core.PuregoSafeRegister(&xSettingsSchemaKeyGLibType, libs, "g_settings_schema_key_get_type")
 
-	core.PuregoSafeRegister(&xSettingsSchemaKeyGetDefaultValue, lib, "g_settings_schema_key_get_default_value")
-	core.PuregoSafeRegister(&xSettingsSchemaKeyGetDescription, lib, "g_settings_schema_key_get_description")
-	core.PuregoSafeRegister(&xSettingsSchemaKeyGetName, lib, "g_settings_schema_key_get_name")
-	core.PuregoSafeRegister(&xSettingsSchemaKeyGetRange, lib, "g_settings_schema_key_get_range")
-	core.PuregoSafeRegister(&xSettingsSchemaKeyGetSummary, lib, "g_settings_schema_key_get_summary")
-	core.PuregoSafeRegister(&xSettingsSchemaKeyGetValueType, lib, "g_settings_schema_key_get_value_type")
-	core.PuregoSafeRegister(&xSettingsSchemaKeyRangeCheck, lib, "g_settings_schema_key_range_check")
-	core.PuregoSafeRegister(&xSettingsSchemaKeyRef, lib, "g_settings_schema_key_ref")
-	core.PuregoSafeRegister(&xSettingsSchemaKeyUnref, lib, "g_settings_schema_key_unref")
+	core.PuregoSafeRegister(&xSettingsSchemaKeyGetDefaultValue, libs, "g_settings_schema_key_get_default_value")
+	core.PuregoSafeRegister(&xSettingsSchemaKeyGetDescription, libs, "g_settings_schema_key_get_description")
+	core.PuregoSafeRegister(&xSettingsSchemaKeyGetName, libs, "g_settings_schema_key_get_name")
+	core.PuregoSafeRegister(&xSettingsSchemaKeyGetRange, libs, "g_settings_schema_key_get_range")
+	core.PuregoSafeRegister(&xSettingsSchemaKeyGetSummary, libs, "g_settings_schema_key_get_summary")
+	core.PuregoSafeRegister(&xSettingsSchemaKeyGetValueType, libs, "g_settings_schema_key_get_value_type")
+	core.PuregoSafeRegister(&xSettingsSchemaKeyRangeCheck, libs, "g_settings_schema_key_range_check")
+	core.PuregoSafeRegister(&xSettingsSchemaKeyRef, libs, "g_settings_schema_key_ref")
+	core.PuregoSafeRegister(&xSettingsSchemaKeyUnref, libs, "g_settings_schema_key_unref")
 
-	core.PuregoSafeRegister(&xSettingsSchemaSourceGLibType, lib, "g_settings_schema_source_get_type")
+	core.PuregoSafeRegister(&xSettingsSchemaSourceGLibType, libs, "g_settings_schema_source_get_type")
 
-	core.PuregoSafeRegister(&xNewSettingsSchemaSourceFromDirectory, lib, "g_settings_schema_source_new_from_directory")
+	core.PuregoSafeRegister(&xNewSettingsSchemaSourceFromDirectory, libs, "g_settings_schema_source_new_from_directory")
 
-	core.PuregoSafeRegister(&xSettingsSchemaSourceListSchemas, lib, "g_settings_schema_source_list_schemas")
-	core.PuregoSafeRegister(&xSettingsSchemaSourceLookup, lib, "g_settings_schema_source_lookup")
-	core.PuregoSafeRegister(&xSettingsSchemaSourceRef, lib, "g_settings_schema_source_ref")
-	core.PuregoSafeRegister(&xSettingsSchemaSourceUnref, lib, "g_settings_schema_source_unref")
+	core.PuregoSafeRegister(&xSettingsSchemaSourceListSchemas, libs, "g_settings_schema_source_list_schemas")
+	core.PuregoSafeRegister(&xSettingsSchemaSourceLookup, libs, "g_settings_schema_source_lookup")
+	core.PuregoSafeRegister(&xSettingsSchemaSourceRef, libs, "g_settings_schema_source_ref")
+	core.PuregoSafeRegister(&xSettingsSchemaSourceUnref, libs, "g_settings_schema_source_unref")
 
 }

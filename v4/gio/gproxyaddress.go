@@ -195,22 +195,26 @@ func (x *ProxyAddress) ToString() string {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xProxyAddressGLibType, lib, "g_proxy_address_get_type")
+	core.PuregoSafeRegister(&xProxyAddressGLibType, libs, "g_proxy_address_get_type")
 
-	core.PuregoSafeRegister(&xNewProxyAddress, lib, "g_proxy_address_new")
+	core.PuregoSafeRegister(&xNewProxyAddress, libs, "g_proxy_address_new")
 
-	core.PuregoSafeRegister(&xProxyAddressGetDestinationHostname, lib, "g_proxy_address_get_destination_hostname")
-	core.PuregoSafeRegister(&xProxyAddressGetDestinationPort, lib, "g_proxy_address_get_destination_port")
-	core.PuregoSafeRegister(&xProxyAddressGetDestinationProtocol, lib, "g_proxy_address_get_destination_protocol")
-	core.PuregoSafeRegister(&xProxyAddressGetPassword, lib, "g_proxy_address_get_password")
-	core.PuregoSafeRegister(&xProxyAddressGetProtocol, lib, "g_proxy_address_get_protocol")
-	core.PuregoSafeRegister(&xProxyAddressGetUri, lib, "g_proxy_address_get_uri")
-	core.PuregoSafeRegister(&xProxyAddressGetUsername, lib, "g_proxy_address_get_username")
+	core.PuregoSafeRegister(&xProxyAddressGetDestinationHostname, libs, "g_proxy_address_get_destination_hostname")
+	core.PuregoSafeRegister(&xProxyAddressGetDestinationPort, libs, "g_proxy_address_get_destination_port")
+	core.PuregoSafeRegister(&xProxyAddressGetDestinationProtocol, libs, "g_proxy_address_get_destination_protocol")
+	core.PuregoSafeRegister(&xProxyAddressGetPassword, libs, "g_proxy_address_get_password")
+	core.PuregoSafeRegister(&xProxyAddressGetProtocol, libs, "g_proxy_address_get_protocol")
+	core.PuregoSafeRegister(&xProxyAddressGetUri, libs, "g_proxy_address_get_uri")
+	core.PuregoSafeRegister(&xProxyAddressGetUsername, libs, "g_proxy_address_get_username")
 
 }

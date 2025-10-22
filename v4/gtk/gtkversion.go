@@ -132,17 +132,21 @@ func GetMinorVersion() uint {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCheckVersion, lib, "gtk_check_version")
-	core.PuregoSafeRegister(&xGetBinaryAge, lib, "gtk_get_binary_age")
-	core.PuregoSafeRegister(&xGetInterfaceAge, lib, "gtk_get_interface_age")
-	core.PuregoSafeRegister(&xGetMajorVersion, lib, "gtk_get_major_version")
-	core.PuregoSafeRegister(&xGetMicroVersion, lib, "gtk_get_micro_version")
-	core.PuregoSafeRegister(&xGetMinorVersion, lib, "gtk_get_minor_version")
+	core.PuregoSafeRegister(&xCheckVersion, libs, "gtk_check_version")
+	core.PuregoSafeRegister(&xGetBinaryAge, libs, "gtk_get_binary_age")
+	core.PuregoSafeRegister(&xGetInterfaceAge, libs, "gtk_get_interface_age")
+	core.PuregoSafeRegister(&xGetMajorVersion, libs, "gtk_get_major_version")
+	core.PuregoSafeRegister(&xGetMicroVersion, libs, "gtk_get_micro_version")
+	core.PuregoSafeRegister(&xGetMinorVersion, libs, "gtk_get_minor_version")
 
 }

@@ -530,32 +530,36 @@ func (x *PreferencesPage) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPreferencesPageGLibType, lib, "adw_preferences_page_get_type")
+	core.PuregoSafeRegister(&xPreferencesPageGLibType, libs, "adw_preferences_page_get_type")
 
-	core.PuregoSafeRegister(&xNewPreferencesPage, lib, "adw_preferences_page_new")
+	core.PuregoSafeRegister(&xNewPreferencesPage, libs, "adw_preferences_page_new")
 
-	core.PuregoSafeRegister(&xPreferencesPageAdd, lib, "adw_preferences_page_add")
-	core.PuregoSafeRegister(&xPreferencesPageGetBanner, lib, "adw_preferences_page_get_banner")
-	core.PuregoSafeRegister(&xPreferencesPageGetDescription, lib, "adw_preferences_page_get_description")
-	core.PuregoSafeRegister(&xPreferencesPageGetDescriptionCentered, lib, "adw_preferences_page_get_description_centered")
-	core.PuregoSafeRegister(&xPreferencesPageGetIconName, lib, "adw_preferences_page_get_icon_name")
-	core.PuregoSafeRegister(&xPreferencesPageGetName, lib, "adw_preferences_page_get_name")
-	core.PuregoSafeRegister(&xPreferencesPageGetTitle, lib, "adw_preferences_page_get_title")
-	core.PuregoSafeRegister(&xPreferencesPageGetUseUnderline, lib, "adw_preferences_page_get_use_underline")
-	core.PuregoSafeRegister(&xPreferencesPageRemove, lib, "adw_preferences_page_remove")
-	core.PuregoSafeRegister(&xPreferencesPageScrollToTop, lib, "adw_preferences_page_scroll_to_top")
-	core.PuregoSafeRegister(&xPreferencesPageSetBanner, lib, "adw_preferences_page_set_banner")
-	core.PuregoSafeRegister(&xPreferencesPageSetDescription, lib, "adw_preferences_page_set_description")
-	core.PuregoSafeRegister(&xPreferencesPageSetDescriptionCentered, lib, "adw_preferences_page_set_description_centered")
-	core.PuregoSafeRegister(&xPreferencesPageSetIconName, lib, "adw_preferences_page_set_icon_name")
-	core.PuregoSafeRegister(&xPreferencesPageSetName, lib, "adw_preferences_page_set_name")
-	core.PuregoSafeRegister(&xPreferencesPageSetTitle, lib, "adw_preferences_page_set_title")
-	core.PuregoSafeRegister(&xPreferencesPageSetUseUnderline, lib, "adw_preferences_page_set_use_underline")
+	core.PuregoSafeRegister(&xPreferencesPageAdd, libs, "adw_preferences_page_add")
+	core.PuregoSafeRegister(&xPreferencesPageGetBanner, libs, "adw_preferences_page_get_banner")
+	core.PuregoSafeRegister(&xPreferencesPageGetDescription, libs, "adw_preferences_page_get_description")
+	core.PuregoSafeRegister(&xPreferencesPageGetDescriptionCentered, libs, "adw_preferences_page_get_description_centered")
+	core.PuregoSafeRegister(&xPreferencesPageGetIconName, libs, "adw_preferences_page_get_icon_name")
+	core.PuregoSafeRegister(&xPreferencesPageGetName, libs, "adw_preferences_page_get_name")
+	core.PuregoSafeRegister(&xPreferencesPageGetTitle, libs, "adw_preferences_page_get_title")
+	core.PuregoSafeRegister(&xPreferencesPageGetUseUnderline, libs, "adw_preferences_page_get_use_underline")
+	core.PuregoSafeRegister(&xPreferencesPageRemove, libs, "adw_preferences_page_remove")
+	core.PuregoSafeRegister(&xPreferencesPageScrollToTop, libs, "adw_preferences_page_scroll_to_top")
+	core.PuregoSafeRegister(&xPreferencesPageSetBanner, libs, "adw_preferences_page_set_banner")
+	core.PuregoSafeRegister(&xPreferencesPageSetDescription, libs, "adw_preferences_page_set_description")
+	core.PuregoSafeRegister(&xPreferencesPageSetDescriptionCentered, libs, "adw_preferences_page_set_description_centered")
+	core.PuregoSafeRegister(&xPreferencesPageSetIconName, libs, "adw_preferences_page_set_icon_name")
+	core.PuregoSafeRegister(&xPreferencesPageSetName, libs, "adw_preferences_page_set_name")
+	core.PuregoSafeRegister(&xPreferencesPageSetTitle, libs, "adw_preferences_page_set_title")
+	core.PuregoSafeRegister(&xPreferencesPageSetUseUnderline, libs, "adw_preferences_page_set_use_underline")
 
 }

@@ -461,30 +461,34 @@ func (x *Adjustment) ConnectValueChanged(cb *func(Adjustment)) uint32 {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAdjustmentGLibType, lib, "gtk_adjustment_get_type")
+	core.PuregoSafeRegister(&xAdjustmentGLibType, libs, "gtk_adjustment_get_type")
 
-	core.PuregoSafeRegister(&xNewAdjustment, lib, "gtk_adjustment_new")
+	core.PuregoSafeRegister(&xNewAdjustment, libs, "gtk_adjustment_new")
 
-	core.PuregoSafeRegister(&xAdjustmentClampPage, lib, "gtk_adjustment_clamp_page")
-	core.PuregoSafeRegister(&xAdjustmentConfigure, lib, "gtk_adjustment_configure")
-	core.PuregoSafeRegister(&xAdjustmentGetLower, lib, "gtk_adjustment_get_lower")
-	core.PuregoSafeRegister(&xAdjustmentGetMinimumIncrement, lib, "gtk_adjustment_get_minimum_increment")
-	core.PuregoSafeRegister(&xAdjustmentGetPageIncrement, lib, "gtk_adjustment_get_page_increment")
-	core.PuregoSafeRegister(&xAdjustmentGetPageSize, lib, "gtk_adjustment_get_page_size")
-	core.PuregoSafeRegister(&xAdjustmentGetStepIncrement, lib, "gtk_adjustment_get_step_increment")
-	core.PuregoSafeRegister(&xAdjustmentGetUpper, lib, "gtk_adjustment_get_upper")
-	core.PuregoSafeRegister(&xAdjustmentGetValue, lib, "gtk_adjustment_get_value")
-	core.PuregoSafeRegister(&xAdjustmentSetLower, lib, "gtk_adjustment_set_lower")
-	core.PuregoSafeRegister(&xAdjustmentSetPageIncrement, lib, "gtk_adjustment_set_page_increment")
-	core.PuregoSafeRegister(&xAdjustmentSetPageSize, lib, "gtk_adjustment_set_page_size")
-	core.PuregoSafeRegister(&xAdjustmentSetStepIncrement, lib, "gtk_adjustment_set_step_increment")
-	core.PuregoSafeRegister(&xAdjustmentSetUpper, lib, "gtk_adjustment_set_upper")
-	core.PuregoSafeRegister(&xAdjustmentSetValue, lib, "gtk_adjustment_set_value")
+	core.PuregoSafeRegister(&xAdjustmentClampPage, libs, "gtk_adjustment_clamp_page")
+	core.PuregoSafeRegister(&xAdjustmentConfigure, libs, "gtk_adjustment_configure")
+	core.PuregoSafeRegister(&xAdjustmentGetLower, libs, "gtk_adjustment_get_lower")
+	core.PuregoSafeRegister(&xAdjustmentGetMinimumIncrement, libs, "gtk_adjustment_get_minimum_increment")
+	core.PuregoSafeRegister(&xAdjustmentGetPageIncrement, libs, "gtk_adjustment_get_page_increment")
+	core.PuregoSafeRegister(&xAdjustmentGetPageSize, libs, "gtk_adjustment_get_page_size")
+	core.PuregoSafeRegister(&xAdjustmentGetStepIncrement, libs, "gtk_adjustment_get_step_increment")
+	core.PuregoSafeRegister(&xAdjustmentGetUpper, libs, "gtk_adjustment_get_upper")
+	core.PuregoSafeRegister(&xAdjustmentGetValue, libs, "gtk_adjustment_get_value")
+	core.PuregoSafeRegister(&xAdjustmentSetLower, libs, "gtk_adjustment_set_lower")
+	core.PuregoSafeRegister(&xAdjustmentSetPageIncrement, libs, "gtk_adjustment_set_page_increment")
+	core.PuregoSafeRegister(&xAdjustmentSetPageSize, libs, "gtk_adjustment_set_page_size")
+	core.PuregoSafeRegister(&xAdjustmentSetStepIncrement, libs, "gtk_adjustment_set_step_increment")
+	core.PuregoSafeRegister(&xAdjustmentSetUpper, libs, "gtk_adjustment_set_upper")
+	core.PuregoSafeRegister(&xAdjustmentSetValue, libs, "gtk_adjustment_set_value")
 
 }

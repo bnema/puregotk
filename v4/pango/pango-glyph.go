@@ -385,32 +385,36 @@ func ShapeWithFlags(ItemTextVar string, ItemLengthVar int, ParagraphTextVar stri
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xShapeFlagsGLibType, lib, "pango_shape_flags_get_type")
+	core.PuregoSafeRegister(&xShapeFlagsGLibType, libs, "pango_shape_flags_get_type")
 
-	core.PuregoSafeRegister(&xShape, lib, "pango_shape")
-	core.PuregoSafeRegister(&xShapeFull, lib, "pango_shape_full")
-	core.PuregoSafeRegister(&xShapeItem, lib, "pango_shape_item")
-	core.PuregoSafeRegister(&xShapeWithFlags, lib, "pango_shape_with_flags")
+	core.PuregoSafeRegister(&xShape, libs, "pango_shape")
+	core.PuregoSafeRegister(&xShapeFull, libs, "pango_shape_full")
+	core.PuregoSafeRegister(&xShapeItem, libs, "pango_shape_item")
+	core.PuregoSafeRegister(&xShapeWithFlags, libs, "pango_shape_with_flags")
 
-	core.PuregoSafeRegister(&xGlyphStringGLibType, lib, "pango_glyph_string_get_type")
+	core.PuregoSafeRegister(&xGlyphStringGLibType, libs, "pango_glyph_string_get_type")
 
-	core.PuregoSafeRegister(&xNewGlyphString, lib, "pango_glyph_string_new")
+	core.PuregoSafeRegister(&xNewGlyphString, libs, "pango_glyph_string_new")
 
-	core.PuregoSafeRegister(&xGlyphStringCopy, lib, "pango_glyph_string_copy")
-	core.PuregoSafeRegister(&xGlyphStringExtents, lib, "pango_glyph_string_extents")
-	core.PuregoSafeRegister(&xGlyphStringExtentsRange, lib, "pango_glyph_string_extents_range")
-	core.PuregoSafeRegister(&xGlyphStringFree, lib, "pango_glyph_string_free")
-	core.PuregoSafeRegister(&xGlyphStringGetLogicalWidths, lib, "pango_glyph_string_get_logical_widths")
-	core.PuregoSafeRegister(&xGlyphStringGetWidth, lib, "pango_glyph_string_get_width")
-	core.PuregoSafeRegister(&xGlyphStringIndexToX, lib, "pango_glyph_string_index_to_x")
-	core.PuregoSafeRegister(&xGlyphStringIndexToXFull, lib, "pango_glyph_string_index_to_x_full")
-	core.PuregoSafeRegister(&xGlyphStringSetSize, lib, "pango_glyph_string_set_size")
-	core.PuregoSafeRegister(&xGlyphStringXToIndex, lib, "pango_glyph_string_x_to_index")
+	core.PuregoSafeRegister(&xGlyphStringCopy, libs, "pango_glyph_string_copy")
+	core.PuregoSafeRegister(&xGlyphStringExtents, libs, "pango_glyph_string_extents")
+	core.PuregoSafeRegister(&xGlyphStringExtentsRange, libs, "pango_glyph_string_extents_range")
+	core.PuregoSafeRegister(&xGlyphStringFree, libs, "pango_glyph_string_free")
+	core.PuregoSafeRegister(&xGlyphStringGetLogicalWidths, libs, "pango_glyph_string_get_logical_widths")
+	core.PuregoSafeRegister(&xGlyphStringGetWidth, libs, "pango_glyph_string_get_width")
+	core.PuregoSafeRegister(&xGlyphStringIndexToX, libs, "pango_glyph_string_index_to_x")
+	core.PuregoSafeRegister(&xGlyphStringIndexToXFull, libs, "pango_glyph_string_index_to_x_full")
+	core.PuregoSafeRegister(&xGlyphStringSetSize, libs, "pango_glyph_string_set_size")
+	core.PuregoSafeRegister(&xGlyphStringXToIndex, libs, "pango_glyph_string_x_to_index")
 
 }

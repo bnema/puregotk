@@ -103,20 +103,24 @@ func (x *FileAttributeInfoList) Unref() {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFileAttributeInfoListGLibType, lib, "g_file_attribute_info_list_get_type")
+	core.PuregoSafeRegister(&xFileAttributeInfoListGLibType, libs, "g_file_attribute_info_list_get_type")
 
-	core.PuregoSafeRegister(&xNewFileAttributeInfoList, lib, "g_file_attribute_info_list_new")
+	core.PuregoSafeRegister(&xNewFileAttributeInfoList, libs, "g_file_attribute_info_list_new")
 
-	core.PuregoSafeRegister(&xFileAttributeInfoListAdd, lib, "g_file_attribute_info_list_add")
-	core.PuregoSafeRegister(&xFileAttributeInfoListDup, lib, "g_file_attribute_info_list_dup")
-	core.PuregoSafeRegister(&xFileAttributeInfoListLookup, lib, "g_file_attribute_info_list_lookup")
-	core.PuregoSafeRegister(&xFileAttributeInfoListRef, lib, "g_file_attribute_info_list_ref")
-	core.PuregoSafeRegister(&xFileAttributeInfoListUnref, lib, "g_file_attribute_info_list_unref")
+	core.PuregoSafeRegister(&xFileAttributeInfoListAdd, libs, "g_file_attribute_info_list_add")
+	core.PuregoSafeRegister(&xFileAttributeInfoListDup, libs, "g_file_attribute_info_list_dup")
+	core.PuregoSafeRegister(&xFileAttributeInfoListLookup, libs, "g_file_attribute_info_list_lookup")
+	core.PuregoSafeRegister(&xFileAttributeInfoListRef, libs, "g_file_attribute_info_list_ref")
+	core.PuregoSafeRegister(&xFileAttributeInfoListUnref, libs, "g_file_attribute_info_list_unref")
 
 }

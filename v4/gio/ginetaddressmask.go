@@ -220,22 +220,26 @@ func (x *InetAddressMask) Init(CancellableVar *Cancellable) (bool, error) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInetAddressMaskGLibType, lib, "g_inet_address_mask_get_type")
+	core.PuregoSafeRegister(&xInetAddressMaskGLibType, libs, "g_inet_address_mask_get_type")
 
-	core.PuregoSafeRegister(&xNewInetAddressMask, lib, "g_inet_address_mask_new")
-	core.PuregoSafeRegister(&xNewInetAddressMaskFromString, lib, "g_inet_address_mask_new_from_string")
+	core.PuregoSafeRegister(&xNewInetAddressMask, libs, "g_inet_address_mask_new")
+	core.PuregoSafeRegister(&xNewInetAddressMaskFromString, libs, "g_inet_address_mask_new_from_string")
 
-	core.PuregoSafeRegister(&xInetAddressMaskEqual, lib, "g_inet_address_mask_equal")
-	core.PuregoSafeRegister(&xInetAddressMaskGetAddress, lib, "g_inet_address_mask_get_address")
-	core.PuregoSafeRegister(&xInetAddressMaskGetFamily, lib, "g_inet_address_mask_get_family")
-	core.PuregoSafeRegister(&xInetAddressMaskGetLength, lib, "g_inet_address_mask_get_length")
-	core.PuregoSafeRegister(&xInetAddressMaskMatches, lib, "g_inet_address_mask_matches")
-	core.PuregoSafeRegister(&xInetAddressMaskToString, lib, "g_inet_address_mask_to_string")
+	core.PuregoSafeRegister(&xInetAddressMaskEqual, libs, "g_inet_address_mask_equal")
+	core.PuregoSafeRegister(&xInetAddressMaskGetAddress, libs, "g_inet_address_mask_get_address")
+	core.PuregoSafeRegister(&xInetAddressMaskGetFamily, libs, "g_inet_address_mask_get_family")
+	core.PuregoSafeRegister(&xInetAddressMaskGetLength, libs, "g_inet_address_mask_get_length")
+	core.PuregoSafeRegister(&xInetAddressMaskMatches, libs, "g_inet_address_mask_matches")
+	core.PuregoSafeRegister(&xInetAddressMaskToString, libs, "g_inet_address_mask_to_string")
 
 }

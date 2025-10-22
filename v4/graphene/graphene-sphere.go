@@ -162,27 +162,31 @@ func (x *Sphere) Translate(PointVar *Point3D, ResVar *Sphere) {
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSphereGLibType, lib, "graphene_sphere_get_type")
+	core.PuregoSafeRegister(&xSphereGLibType, libs, "graphene_sphere_get_type")
 
-	core.PuregoSafeRegister(&xSphereAlloc, lib, "graphene_sphere_alloc")
+	core.PuregoSafeRegister(&xSphereAlloc, libs, "graphene_sphere_alloc")
 
-	core.PuregoSafeRegister(&xSphereContainsPoint, lib, "graphene_sphere_contains_point")
-	core.PuregoSafeRegister(&xSphereDistance, lib, "graphene_sphere_distance")
-	core.PuregoSafeRegister(&xSphereEqual, lib, "graphene_sphere_equal")
-	core.PuregoSafeRegister(&xSphereFree, lib, "graphene_sphere_free")
-	core.PuregoSafeRegister(&xSphereGetBoundingBox, lib, "graphene_sphere_get_bounding_box")
-	core.PuregoSafeRegister(&xSphereGetCenter, lib, "graphene_sphere_get_center")
-	core.PuregoSafeRegister(&xSphereGetRadius, lib, "graphene_sphere_get_radius")
-	core.PuregoSafeRegister(&xSphereInit, lib, "graphene_sphere_init")
-	core.PuregoSafeRegister(&xSphereInitFromPoints, lib, "graphene_sphere_init_from_points")
-	core.PuregoSafeRegister(&xSphereInitFromVectors, lib, "graphene_sphere_init_from_vectors")
-	core.PuregoSafeRegister(&xSphereIsEmpty, lib, "graphene_sphere_is_empty")
-	core.PuregoSafeRegister(&xSphereTranslate, lib, "graphene_sphere_translate")
+	core.PuregoSafeRegister(&xSphereContainsPoint, libs, "graphene_sphere_contains_point")
+	core.PuregoSafeRegister(&xSphereDistance, libs, "graphene_sphere_distance")
+	core.PuregoSafeRegister(&xSphereEqual, libs, "graphene_sphere_equal")
+	core.PuregoSafeRegister(&xSphereFree, libs, "graphene_sphere_free")
+	core.PuregoSafeRegister(&xSphereGetBoundingBox, libs, "graphene_sphere_get_bounding_box")
+	core.PuregoSafeRegister(&xSphereGetCenter, libs, "graphene_sphere_get_center")
+	core.PuregoSafeRegister(&xSphereGetRadius, libs, "graphene_sphere_get_radius")
+	core.PuregoSafeRegister(&xSphereInit, libs, "graphene_sphere_init")
+	core.PuregoSafeRegister(&xSphereInitFromPoints, libs, "graphene_sphere_init_from_points")
+	core.PuregoSafeRegister(&xSphereInitFromVectors, libs, "graphene_sphere_init_from_vectors")
+	core.PuregoSafeRegister(&xSphereIsEmpty, libs, "graphene_sphere_is_empty")
+	core.PuregoSafeRegister(&xSphereTranslate, libs, "graphene_sphere_translate")
 
 }

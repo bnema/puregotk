@@ -454,22 +454,26 @@ func (x *ActionBar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xActionBarGLibType, lib, "gtk_action_bar_get_type")
+	core.PuregoSafeRegister(&xActionBarGLibType, libs, "gtk_action_bar_get_type")
 
-	core.PuregoSafeRegister(&xNewActionBar, lib, "gtk_action_bar_new")
+	core.PuregoSafeRegister(&xNewActionBar, libs, "gtk_action_bar_new")
 
-	core.PuregoSafeRegister(&xActionBarGetCenterWidget, lib, "gtk_action_bar_get_center_widget")
-	core.PuregoSafeRegister(&xActionBarGetRevealed, lib, "gtk_action_bar_get_revealed")
-	core.PuregoSafeRegister(&xActionBarPackEnd, lib, "gtk_action_bar_pack_end")
-	core.PuregoSafeRegister(&xActionBarPackStart, lib, "gtk_action_bar_pack_start")
-	core.PuregoSafeRegister(&xActionBarRemove, lib, "gtk_action_bar_remove")
-	core.PuregoSafeRegister(&xActionBarSetCenterWidget, lib, "gtk_action_bar_set_center_widget")
-	core.PuregoSafeRegister(&xActionBarSetRevealed, lib, "gtk_action_bar_set_revealed")
+	core.PuregoSafeRegister(&xActionBarGetCenterWidget, libs, "gtk_action_bar_get_center_widget")
+	core.PuregoSafeRegister(&xActionBarGetRevealed, libs, "gtk_action_bar_get_revealed")
+	core.PuregoSafeRegister(&xActionBarPackEnd, libs, "gtk_action_bar_pack_end")
+	core.PuregoSafeRegister(&xActionBarPackStart, libs, "gtk_action_bar_pack_start")
+	core.PuregoSafeRegister(&xActionBarRemove, libs, "gtk_action_bar_remove")
+	core.PuregoSafeRegister(&xActionBarSetCenterWidget, libs, "gtk_action_bar_set_center_widget")
+	core.PuregoSafeRegister(&xActionBarSetRevealed, libs, "gtk_action_bar_set_revealed")
 
 }

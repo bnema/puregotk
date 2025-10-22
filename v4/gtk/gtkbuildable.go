@@ -679,20 +679,24 @@ var XGtkBuildableGetBuildableId func(uintptr) string
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBuildableParseContextGetElement, lib, "gtk_buildable_parse_context_get_element")
-	core.PuregoSafeRegister(&xBuildableParseContextGetElementStack, lib, "gtk_buildable_parse_context_get_element_stack")
-	core.PuregoSafeRegister(&xBuildableParseContextGetPosition, lib, "gtk_buildable_parse_context_get_position")
-	core.PuregoSafeRegister(&xBuildableParseContextPop, lib, "gtk_buildable_parse_context_pop")
-	core.PuregoSafeRegister(&xBuildableParseContextPush, lib, "gtk_buildable_parse_context_push")
+	core.PuregoSafeRegister(&xBuildableParseContextGetElement, libs, "gtk_buildable_parse_context_get_element")
+	core.PuregoSafeRegister(&xBuildableParseContextGetElementStack, libs, "gtk_buildable_parse_context_get_element_stack")
+	core.PuregoSafeRegister(&xBuildableParseContextGetPosition, libs, "gtk_buildable_parse_context_get_position")
+	core.PuregoSafeRegister(&xBuildableParseContextPop, libs, "gtk_buildable_parse_context_pop")
+	core.PuregoSafeRegister(&xBuildableParseContextPush, libs, "gtk_buildable_parse_context_push")
 
-	core.PuregoSafeRegister(&xBuildableGLibType, lib, "gtk_buildable_get_type")
+	core.PuregoSafeRegister(&xBuildableGLibType, libs, "gtk_buildable_get_type")
 
-	core.PuregoSafeRegister(&XGtkBuildableGetBuildableId, lib, "gtk_buildable_get_buildable_id")
+	core.PuregoSafeRegister(&XGtkBuildableGetBuildableId, libs, "gtk_buildable_get_buildable_id")
 
 }

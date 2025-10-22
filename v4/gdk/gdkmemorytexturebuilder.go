@@ -281,32 +281,36 @@ func (c *MemoryTextureBuilder) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMemoryTextureBuilderGLibType, lib, "gdk_memory_texture_builder_get_type")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGLibType, libs, "gdk_memory_texture_builder_get_type")
 
-	core.PuregoSafeRegister(&xNewMemoryTextureBuilder, lib, "gdk_memory_texture_builder_new")
+	core.PuregoSafeRegister(&xNewMemoryTextureBuilder, libs, "gdk_memory_texture_builder_new")
 
-	core.PuregoSafeRegister(&xMemoryTextureBuilderBuild, lib, "gdk_memory_texture_builder_build")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderGetBytes, lib, "gdk_memory_texture_builder_get_bytes")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderGetColorState, lib, "gdk_memory_texture_builder_get_color_state")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderGetFormat, lib, "gdk_memory_texture_builder_get_format")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderGetHeight, lib, "gdk_memory_texture_builder_get_height")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderGetStride, lib, "gdk_memory_texture_builder_get_stride")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderGetUpdateRegion, lib, "gdk_memory_texture_builder_get_update_region")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderGetUpdateTexture, lib, "gdk_memory_texture_builder_get_update_texture")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderGetWidth, lib, "gdk_memory_texture_builder_get_width")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderSetBytes, lib, "gdk_memory_texture_builder_set_bytes")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderSetColorState, lib, "gdk_memory_texture_builder_set_color_state")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderSetFormat, lib, "gdk_memory_texture_builder_set_format")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderSetHeight, lib, "gdk_memory_texture_builder_set_height")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderSetStride, lib, "gdk_memory_texture_builder_set_stride")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderSetUpdateRegion, lib, "gdk_memory_texture_builder_set_update_region")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderSetUpdateTexture, lib, "gdk_memory_texture_builder_set_update_texture")
-	core.PuregoSafeRegister(&xMemoryTextureBuilderSetWidth, lib, "gdk_memory_texture_builder_set_width")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderBuild, libs, "gdk_memory_texture_builder_build")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGetBytes, libs, "gdk_memory_texture_builder_get_bytes")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGetColorState, libs, "gdk_memory_texture_builder_get_color_state")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGetFormat, libs, "gdk_memory_texture_builder_get_format")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGetHeight, libs, "gdk_memory_texture_builder_get_height")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGetStride, libs, "gdk_memory_texture_builder_get_stride")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGetUpdateRegion, libs, "gdk_memory_texture_builder_get_update_region")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGetUpdateTexture, libs, "gdk_memory_texture_builder_get_update_texture")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGetWidth, libs, "gdk_memory_texture_builder_get_width")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderSetBytes, libs, "gdk_memory_texture_builder_set_bytes")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderSetColorState, libs, "gdk_memory_texture_builder_set_color_state")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderSetFormat, libs, "gdk_memory_texture_builder_set_format")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderSetHeight, libs, "gdk_memory_texture_builder_set_height")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderSetStride, libs, "gdk_memory_texture_builder_set_stride")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderSetUpdateRegion, libs, "gdk_memory_texture_builder_set_update_region")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderSetUpdateTexture, libs, "gdk_memory_texture_builder_set_update_texture")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderSetWidth, libs, "gdk_memory_texture_builder_set_width")
 
 }

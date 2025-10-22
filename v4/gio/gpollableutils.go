@@ -111,16 +111,20 @@ func PollableStreamWriteAll(StreamVar *OutputStream, BufferVar []byte, CountVar 
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPollableSourceNew, lib, "g_pollable_source_new")
-	core.PuregoSafeRegister(&xPollableSourceNewFull, lib, "g_pollable_source_new_full")
-	core.PuregoSafeRegister(&xPollableStreamRead, lib, "g_pollable_stream_read")
-	core.PuregoSafeRegister(&xPollableStreamWrite, lib, "g_pollable_stream_write")
-	core.PuregoSafeRegister(&xPollableStreamWriteAll, lib, "g_pollable_stream_write_all")
+	core.PuregoSafeRegister(&xPollableSourceNew, libs, "g_pollable_source_new")
+	core.PuregoSafeRegister(&xPollableSourceNewFull, libs, "g_pollable_source_new_full")
+	core.PuregoSafeRegister(&xPollableStreamRead, libs, "g_pollable_stream_read")
+	core.PuregoSafeRegister(&xPollableStreamWrite, libs, "g_pollable_stream_write")
+	core.PuregoSafeRegister(&xPollableStreamWriteAll, libs, "g_pollable_stream_write_all")
 
 }

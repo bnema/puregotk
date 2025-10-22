@@ -448,21 +448,25 @@ func (x *Fixed) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFixedGLibType, lib, "gtk_fixed_get_type")
+	core.PuregoSafeRegister(&xFixedGLibType, libs, "gtk_fixed_get_type")
 
-	core.PuregoSafeRegister(&xNewFixed, lib, "gtk_fixed_new")
+	core.PuregoSafeRegister(&xNewFixed, libs, "gtk_fixed_new")
 
-	core.PuregoSafeRegister(&xFixedGetChildPosition, lib, "gtk_fixed_get_child_position")
-	core.PuregoSafeRegister(&xFixedGetChildTransform, lib, "gtk_fixed_get_child_transform")
-	core.PuregoSafeRegister(&xFixedMove, lib, "gtk_fixed_move")
-	core.PuregoSafeRegister(&xFixedPut, lib, "gtk_fixed_put")
-	core.PuregoSafeRegister(&xFixedRemove, lib, "gtk_fixed_remove")
-	core.PuregoSafeRegister(&xFixedSetChildTransform, lib, "gtk_fixed_set_child_transform")
+	core.PuregoSafeRegister(&xFixedGetChildPosition, libs, "gtk_fixed_get_child_position")
+	core.PuregoSafeRegister(&xFixedGetChildTransform, libs, "gtk_fixed_get_child_transform")
+	core.PuregoSafeRegister(&xFixedMove, libs, "gtk_fixed_move")
+	core.PuregoSafeRegister(&xFixedPut, libs, "gtk_fixed_put")
+	core.PuregoSafeRegister(&xFixedRemove, libs, "gtk_fixed_remove")
+	core.PuregoSafeRegister(&xFixedSetChildTransform, libs, "gtk_fixed_set_child_transform")
 
 }

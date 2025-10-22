@@ -235,16 +235,20 @@ var XGDbusObjectGetObjectPath func(uintptr) string
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDBusObjectGLibType, lib, "g_dbus_object_get_type")
+	core.PuregoSafeRegister(&xDBusObjectGLibType, libs, "g_dbus_object_get_type")
 
-	core.PuregoSafeRegister(&XGDbusObjectGetInterface, lib, "g_dbus_object_get_interface")
-	core.PuregoSafeRegister(&XGDbusObjectGetInterfaces, lib, "g_dbus_object_get_interfaces")
-	core.PuregoSafeRegister(&XGDbusObjectGetObjectPath, lib, "g_dbus_object_get_object_path")
+	core.PuregoSafeRegister(&XGDbusObjectGetInterface, libs, "g_dbus_object_get_interface")
+	core.PuregoSafeRegister(&XGDbusObjectGetInterfaces, libs, "g_dbus_object_get_interfaces")
+	core.PuregoSafeRegister(&XGDbusObjectGetObjectPath, libs, "g_dbus_object_get_object_path")
 
 }

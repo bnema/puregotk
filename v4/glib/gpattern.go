@@ -173,24 +173,28 @@ func PatternMatchString(PspecVar *PatternSpec, StringVar string) bool {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPatternMatch, lib, "g_pattern_match")
-	core.PuregoSafeRegister(&xPatternMatchSimple, lib, "g_pattern_match_simple")
-	core.PuregoSafeRegister(&xPatternMatchString, lib, "g_pattern_match_string")
+	core.PuregoSafeRegister(&xPatternMatch, libs, "g_pattern_match")
+	core.PuregoSafeRegister(&xPatternMatchSimple, libs, "g_pattern_match_simple")
+	core.PuregoSafeRegister(&xPatternMatchString, libs, "g_pattern_match_string")
 
-	core.PuregoSafeRegister(&xPatternSpecGLibType, lib, "g_pattern_spec_get_type")
+	core.PuregoSafeRegister(&xPatternSpecGLibType, libs, "g_pattern_spec_get_type")
 
-	core.PuregoSafeRegister(&xNewPatternSpec, lib, "g_pattern_spec_new")
+	core.PuregoSafeRegister(&xNewPatternSpec, libs, "g_pattern_spec_new")
 
-	core.PuregoSafeRegister(&xPatternSpecCopy, lib, "g_pattern_spec_copy")
-	core.PuregoSafeRegister(&xPatternSpecEqual, lib, "g_pattern_spec_equal")
-	core.PuregoSafeRegister(&xPatternSpecFree, lib, "g_pattern_spec_free")
-	core.PuregoSafeRegister(&xPatternSpecMatch, lib, "g_pattern_spec_match")
-	core.PuregoSafeRegister(&xPatternSpecMatchString, lib, "g_pattern_spec_match_string")
+	core.PuregoSafeRegister(&xPatternSpecCopy, libs, "g_pattern_spec_copy")
+	core.PuregoSafeRegister(&xPatternSpecEqual, libs, "g_pattern_spec_equal")
+	core.PuregoSafeRegister(&xPatternSpecFree, libs, "g_pattern_spec_free")
+	core.PuregoSafeRegister(&xPatternSpecMatch, libs, "g_pattern_spec_match")
+	core.PuregoSafeRegister(&xPatternSpecMatchString, libs, "g_pattern_spec_match_string")
 
 }

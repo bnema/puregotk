@@ -906,35 +906,39 @@ func (x *MenuModel) ConnectItemsChanged(cb *func(MenuModel, int, int, int)) uint
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMenuAttributeIterGLibType, lib, "g_menu_attribute_iter_get_type")
+	core.PuregoSafeRegister(&xMenuAttributeIterGLibType, libs, "g_menu_attribute_iter_get_type")
 
-	core.PuregoSafeRegister(&xMenuAttributeIterGetName, lib, "g_menu_attribute_iter_get_name")
-	core.PuregoSafeRegister(&xMenuAttributeIterGetNext, lib, "g_menu_attribute_iter_get_next")
-	core.PuregoSafeRegister(&xMenuAttributeIterGetValue, lib, "g_menu_attribute_iter_get_value")
-	core.PuregoSafeRegister(&xMenuAttributeIterNext, lib, "g_menu_attribute_iter_next")
+	core.PuregoSafeRegister(&xMenuAttributeIterGetName, libs, "g_menu_attribute_iter_get_name")
+	core.PuregoSafeRegister(&xMenuAttributeIterGetNext, libs, "g_menu_attribute_iter_get_next")
+	core.PuregoSafeRegister(&xMenuAttributeIterGetValue, libs, "g_menu_attribute_iter_get_value")
+	core.PuregoSafeRegister(&xMenuAttributeIterNext, libs, "g_menu_attribute_iter_next")
 
-	core.PuregoSafeRegister(&xMenuLinkIterGLibType, lib, "g_menu_link_iter_get_type")
+	core.PuregoSafeRegister(&xMenuLinkIterGLibType, libs, "g_menu_link_iter_get_type")
 
-	core.PuregoSafeRegister(&xMenuLinkIterGetName, lib, "g_menu_link_iter_get_name")
-	core.PuregoSafeRegister(&xMenuLinkIterGetNext, lib, "g_menu_link_iter_get_next")
-	core.PuregoSafeRegister(&xMenuLinkIterGetValue, lib, "g_menu_link_iter_get_value")
-	core.PuregoSafeRegister(&xMenuLinkIterNext, lib, "g_menu_link_iter_next")
+	core.PuregoSafeRegister(&xMenuLinkIterGetName, libs, "g_menu_link_iter_get_name")
+	core.PuregoSafeRegister(&xMenuLinkIterGetNext, libs, "g_menu_link_iter_get_next")
+	core.PuregoSafeRegister(&xMenuLinkIterGetValue, libs, "g_menu_link_iter_get_value")
+	core.PuregoSafeRegister(&xMenuLinkIterNext, libs, "g_menu_link_iter_next")
 
-	core.PuregoSafeRegister(&xMenuModelGLibType, lib, "g_menu_model_get_type")
+	core.PuregoSafeRegister(&xMenuModelGLibType, libs, "g_menu_model_get_type")
 
-	core.PuregoSafeRegister(&xMenuModelGetItemAttribute, lib, "g_menu_model_get_item_attribute")
-	core.PuregoSafeRegister(&xMenuModelGetItemAttributeValue, lib, "g_menu_model_get_item_attribute_value")
-	core.PuregoSafeRegister(&xMenuModelGetItemLink, lib, "g_menu_model_get_item_link")
-	core.PuregoSafeRegister(&xMenuModelGetNItems, lib, "g_menu_model_get_n_items")
-	core.PuregoSafeRegister(&xMenuModelIsMutable, lib, "g_menu_model_is_mutable")
-	core.PuregoSafeRegister(&xMenuModelItemsChanged, lib, "g_menu_model_items_changed")
-	core.PuregoSafeRegister(&xMenuModelIterateItemAttributes, lib, "g_menu_model_iterate_item_attributes")
-	core.PuregoSafeRegister(&xMenuModelIterateItemLinks, lib, "g_menu_model_iterate_item_links")
+	core.PuregoSafeRegister(&xMenuModelGetItemAttribute, libs, "g_menu_model_get_item_attribute")
+	core.PuregoSafeRegister(&xMenuModelGetItemAttributeValue, libs, "g_menu_model_get_item_attribute_value")
+	core.PuregoSafeRegister(&xMenuModelGetItemLink, libs, "g_menu_model_get_item_link")
+	core.PuregoSafeRegister(&xMenuModelGetNItems, libs, "g_menu_model_get_n_items")
+	core.PuregoSafeRegister(&xMenuModelIsMutable, libs, "g_menu_model_is_mutable")
+	core.PuregoSafeRegister(&xMenuModelItemsChanged, libs, "g_menu_model_items_changed")
+	core.PuregoSafeRegister(&xMenuModelIterateItemAttributes, libs, "g_menu_model_iterate_item_attributes")
+	core.PuregoSafeRegister(&xMenuModelIterateItemLinks, libs, "g_menu_model_iterate_item_links")
 
 }

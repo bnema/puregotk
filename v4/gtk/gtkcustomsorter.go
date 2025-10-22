@@ -87,16 +87,20 @@ func (c *CustomSorter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCustomSorterGLibType, lib, "gtk_custom_sorter_get_type")
+	core.PuregoSafeRegister(&xCustomSorterGLibType, libs, "gtk_custom_sorter_get_type")
 
-	core.PuregoSafeRegister(&xNewCustomSorter, lib, "gtk_custom_sorter_new")
+	core.PuregoSafeRegister(&xNewCustomSorter, libs, "gtk_custom_sorter_new")
 
-	core.PuregoSafeRegister(&xCustomSorterSetSortFunc, lib, "gtk_custom_sorter_set_sort_func")
+	core.PuregoSafeRegister(&xCustomSorterSetSortFunc, libs, "gtk_custom_sorter_set_sort_func")
 
 }

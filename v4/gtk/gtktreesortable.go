@@ -341,19 +341,23 @@ const (
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTreeSortableGLibType, lib, "gtk_tree_sortable_get_type")
+	core.PuregoSafeRegister(&xTreeSortableGLibType, libs, "gtk_tree_sortable_get_type")
 
-	core.PuregoSafeRegister(&XGtkTreeSortableGetSortColumnId, lib, "gtk_tree_sortable_get_sort_column_id")
-	core.PuregoSafeRegister(&XGtkTreeSortableHasDefaultSortFunc, lib, "gtk_tree_sortable_has_default_sort_func")
-	core.PuregoSafeRegister(&XGtkTreeSortableSetDefaultSortFunc, lib, "gtk_tree_sortable_set_default_sort_func")
-	core.PuregoSafeRegister(&XGtkTreeSortableSetSortColumnId, lib, "gtk_tree_sortable_set_sort_column_id")
-	core.PuregoSafeRegister(&XGtkTreeSortableSetSortFunc, lib, "gtk_tree_sortable_set_sort_func")
-	core.PuregoSafeRegister(&XGtkTreeSortableSortColumnChanged, lib, "gtk_tree_sortable_sort_column_changed")
+	core.PuregoSafeRegister(&XGtkTreeSortableGetSortColumnId, libs, "gtk_tree_sortable_get_sort_column_id")
+	core.PuregoSafeRegister(&XGtkTreeSortableHasDefaultSortFunc, libs, "gtk_tree_sortable_has_default_sort_func")
+	core.PuregoSafeRegister(&XGtkTreeSortableSetDefaultSortFunc, libs, "gtk_tree_sortable_set_default_sort_func")
+	core.PuregoSafeRegister(&XGtkTreeSortableSetSortColumnId, libs, "gtk_tree_sortable_set_sort_column_id")
+	core.PuregoSafeRegister(&XGtkTreeSortableSetSortFunc, libs, "gtk_tree_sortable_set_sort_func")
+	core.PuregoSafeRegister(&XGtkTreeSortableSortColumnChanged, libs, "gtk_tree_sortable_sort_column_changed")
 
 }

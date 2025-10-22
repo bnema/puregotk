@@ -349,17 +349,21 @@ func (x *NoSelection) UnselectRange(PositionVar uint, NItemsVar uint) bool {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xNoSelectionGLibType, lib, "gtk_no_selection_get_type")
+	core.PuregoSafeRegister(&xNoSelectionGLibType, libs, "gtk_no_selection_get_type")
 
-	core.PuregoSafeRegister(&xNewNoSelection, lib, "gtk_no_selection_new")
+	core.PuregoSafeRegister(&xNewNoSelection, libs, "gtk_no_selection_new")
 
-	core.PuregoSafeRegister(&xNoSelectionGetModel, lib, "gtk_no_selection_get_model")
-	core.PuregoSafeRegister(&xNoSelectionSetModel, lib, "gtk_no_selection_set_model")
+	core.PuregoSafeRegister(&xNoSelectionGetModel, libs, "gtk_no_selection_get_model")
+	core.PuregoSafeRegister(&xNoSelectionSetModel, libs, "gtk_no_selection_set_model")
 
 }

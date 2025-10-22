@@ -186,19 +186,23 @@ func UnixCredentialsMessageIsSupported() bool {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xUnixCredentialsMessageGLibType, lib, "g_unix_credentials_message_get_type")
+	core.PuregoSafeRegister(&xUnixCredentialsMessageGLibType, libs, "g_unix_credentials_message_get_type")
 
-	core.PuregoSafeRegister(&xNewUnixCredentialsMessage, lib, "g_unix_credentials_message_new")
-	core.PuregoSafeRegister(&xNewUnixCredentialsMessageWithCredentials, lib, "g_unix_credentials_message_new_with_credentials")
+	core.PuregoSafeRegister(&xNewUnixCredentialsMessage, libs, "g_unix_credentials_message_new")
+	core.PuregoSafeRegister(&xNewUnixCredentialsMessageWithCredentials, libs, "g_unix_credentials_message_new_with_credentials")
 
-	core.PuregoSafeRegister(&xUnixCredentialsMessageGetCredentials, lib, "g_unix_credentials_message_get_credentials")
+	core.PuregoSafeRegister(&xUnixCredentialsMessageGetCredentials, libs, "g_unix_credentials_message_get_credentials")
 
-	core.PuregoSafeRegister(&xUnixCredentialsMessageIsSupported, lib, "g_unix_credentials_message_is_supported")
+	core.PuregoSafeRegister(&xUnixCredentialsMessageIsSupported, libs, "g_unix_credentials_message_is_supported")
 
 }

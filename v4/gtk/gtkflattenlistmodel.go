@@ -237,18 +237,22 @@ func (x *FlattenListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFlattenListModelGLibType, lib, "gtk_flatten_list_model_get_type")
+	core.PuregoSafeRegister(&xFlattenListModelGLibType, libs, "gtk_flatten_list_model_get_type")
 
-	core.PuregoSafeRegister(&xNewFlattenListModel, lib, "gtk_flatten_list_model_new")
+	core.PuregoSafeRegister(&xNewFlattenListModel, libs, "gtk_flatten_list_model_new")
 
-	core.PuregoSafeRegister(&xFlattenListModelGetModel, lib, "gtk_flatten_list_model_get_model")
-	core.PuregoSafeRegister(&xFlattenListModelGetModelForItem, lib, "gtk_flatten_list_model_get_model_for_item")
-	core.PuregoSafeRegister(&xFlattenListModelSetModel, lib, "gtk_flatten_list_model_set_model")
+	core.PuregoSafeRegister(&xFlattenListModelGetModel, libs, "gtk_flatten_list_model_get_model")
+	core.PuregoSafeRegister(&xFlattenListModelGetModelForItem, libs, "gtk_flatten_list_model_get_model_for_item")
+	core.PuregoSafeRegister(&xFlattenListModelSetModel, libs, "gtk_flatten_list_model_set_model")
 
 }

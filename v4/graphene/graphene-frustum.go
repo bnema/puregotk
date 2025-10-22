@@ -129,24 +129,28 @@ func (x *Frustum) IntersectsSphere(SphereVar *Sphere) bool {
 
 func init() {
 	core.SetPackageName("GRAPHENE", "graphene-gobject-1.0")
-	core.SetSharedLibrary("GRAPHENE", "libgraphene-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GRAPHENE"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GRAPHENE", []string{"libgraphene-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GRAPHENE") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFrustumGLibType, lib, "graphene_frustum_get_type")
+	core.PuregoSafeRegister(&xFrustumGLibType, libs, "graphene_frustum_get_type")
 
-	core.PuregoSafeRegister(&xFrustumAlloc, lib, "graphene_frustum_alloc")
+	core.PuregoSafeRegister(&xFrustumAlloc, libs, "graphene_frustum_alloc")
 
-	core.PuregoSafeRegister(&xFrustumContainsPoint, lib, "graphene_frustum_contains_point")
-	core.PuregoSafeRegister(&xFrustumEqual, lib, "graphene_frustum_equal")
-	core.PuregoSafeRegister(&xFrustumFree, lib, "graphene_frustum_free")
-	core.PuregoSafeRegister(&xFrustumGetPlanes, lib, "graphene_frustum_get_planes")
-	core.PuregoSafeRegister(&xFrustumInit, lib, "graphene_frustum_init")
-	core.PuregoSafeRegister(&xFrustumInitFromFrustum, lib, "graphene_frustum_init_from_frustum")
-	core.PuregoSafeRegister(&xFrustumInitFromMatrix, lib, "graphene_frustum_init_from_matrix")
-	core.PuregoSafeRegister(&xFrustumIntersectsBox, lib, "graphene_frustum_intersects_box")
-	core.PuregoSafeRegister(&xFrustumIntersectsSphere, lib, "graphene_frustum_intersects_sphere")
+	core.PuregoSafeRegister(&xFrustumContainsPoint, libs, "graphene_frustum_contains_point")
+	core.PuregoSafeRegister(&xFrustumEqual, libs, "graphene_frustum_equal")
+	core.PuregoSafeRegister(&xFrustumFree, libs, "graphene_frustum_free")
+	core.PuregoSafeRegister(&xFrustumGetPlanes, libs, "graphene_frustum_get_planes")
+	core.PuregoSafeRegister(&xFrustumInit, libs, "graphene_frustum_init")
+	core.PuregoSafeRegister(&xFrustumInitFromFrustum, libs, "graphene_frustum_init_from_frustum")
+	core.PuregoSafeRegister(&xFrustumInitFromMatrix, libs, "graphene_frustum_init_from_matrix")
+	core.PuregoSafeRegister(&xFrustumIntersectsBox, libs, "graphene_frustum_intersects_box")
+	core.PuregoSafeRegister(&xFrustumIntersectsSphere, libs, "graphene_frustum_intersects_sphere")
 
 }

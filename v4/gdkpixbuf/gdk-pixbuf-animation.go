@@ -714,34 +714,38 @@ func (c *PixbufAnimationIter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDKPIXBUF", "gdk-pixbuf-2.0")
-	core.SetSharedLibrary("GDKPIXBUF", "libgdk_pixbuf-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GDKPIXBUF"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDKPIXBUF") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPixbufAnimationGLibType, lib, "gdk_pixbuf_animation_get_type")
+	core.PuregoSafeRegister(&xPixbufAnimationGLibType, libs, "gdk_pixbuf_animation_get_type")
 
-	core.PuregoSafeRegister(&xNewPixbufAnimationFromFile, lib, "gdk_pixbuf_animation_new_from_file")
-	core.PuregoSafeRegister(&xNewPixbufAnimationFromResource, lib, "gdk_pixbuf_animation_new_from_resource")
-	core.PuregoSafeRegister(&xNewPixbufAnimationFromStream, lib, "gdk_pixbuf_animation_new_from_stream")
-	core.PuregoSafeRegister(&xNewPixbufAnimationFromStreamFinish, lib, "gdk_pixbuf_animation_new_from_stream_finish")
+	core.PuregoSafeRegister(&xNewPixbufAnimationFromFile, libs, "gdk_pixbuf_animation_new_from_file")
+	core.PuregoSafeRegister(&xNewPixbufAnimationFromResource, libs, "gdk_pixbuf_animation_new_from_resource")
+	core.PuregoSafeRegister(&xNewPixbufAnimationFromStream, libs, "gdk_pixbuf_animation_new_from_stream")
+	core.PuregoSafeRegister(&xNewPixbufAnimationFromStreamFinish, libs, "gdk_pixbuf_animation_new_from_stream_finish")
 
-	core.PuregoSafeRegister(&xPixbufAnimationGetHeight, lib, "gdk_pixbuf_animation_get_height")
-	core.PuregoSafeRegister(&xPixbufAnimationGetIter, lib, "gdk_pixbuf_animation_get_iter")
-	core.PuregoSafeRegister(&xPixbufAnimationGetStaticImage, lib, "gdk_pixbuf_animation_get_static_image")
-	core.PuregoSafeRegister(&xPixbufAnimationGetWidth, lib, "gdk_pixbuf_animation_get_width")
-	core.PuregoSafeRegister(&xPixbufAnimationIsStaticImage, lib, "gdk_pixbuf_animation_is_static_image")
-	core.PuregoSafeRegister(&xPixbufAnimationRef, lib, "gdk_pixbuf_animation_ref")
-	core.PuregoSafeRegister(&xPixbufAnimationUnref, lib, "gdk_pixbuf_animation_unref")
+	core.PuregoSafeRegister(&xPixbufAnimationGetHeight, libs, "gdk_pixbuf_animation_get_height")
+	core.PuregoSafeRegister(&xPixbufAnimationGetIter, libs, "gdk_pixbuf_animation_get_iter")
+	core.PuregoSafeRegister(&xPixbufAnimationGetStaticImage, libs, "gdk_pixbuf_animation_get_static_image")
+	core.PuregoSafeRegister(&xPixbufAnimationGetWidth, libs, "gdk_pixbuf_animation_get_width")
+	core.PuregoSafeRegister(&xPixbufAnimationIsStaticImage, libs, "gdk_pixbuf_animation_is_static_image")
+	core.PuregoSafeRegister(&xPixbufAnimationRef, libs, "gdk_pixbuf_animation_ref")
+	core.PuregoSafeRegister(&xPixbufAnimationUnref, libs, "gdk_pixbuf_animation_unref")
 
-	core.PuregoSafeRegister(&xPixbufAnimationNewFromStreamAsync, lib, "gdk_pixbuf_animation_new_from_stream_async")
+	core.PuregoSafeRegister(&xPixbufAnimationNewFromStreamAsync, libs, "gdk_pixbuf_animation_new_from_stream_async")
 
-	core.PuregoSafeRegister(&xPixbufAnimationIterGLibType, lib, "gdk_pixbuf_animation_iter_get_type")
+	core.PuregoSafeRegister(&xPixbufAnimationIterGLibType, libs, "gdk_pixbuf_animation_iter_get_type")
 
-	core.PuregoSafeRegister(&xPixbufAnimationIterAdvance, lib, "gdk_pixbuf_animation_iter_advance")
-	core.PuregoSafeRegister(&xPixbufAnimationIterGetDelayTime, lib, "gdk_pixbuf_animation_iter_get_delay_time")
-	core.PuregoSafeRegister(&xPixbufAnimationIterGetPixbuf, lib, "gdk_pixbuf_animation_iter_get_pixbuf")
-	core.PuregoSafeRegister(&xPixbufAnimationIterOnCurrentlyLoadingFrame, lib, "gdk_pixbuf_animation_iter_on_currently_loading_frame")
+	core.PuregoSafeRegister(&xPixbufAnimationIterAdvance, libs, "gdk_pixbuf_animation_iter_advance")
+	core.PuregoSafeRegister(&xPixbufAnimationIterGetDelayTime, libs, "gdk_pixbuf_animation_iter_get_delay_time")
+	core.PuregoSafeRegister(&xPixbufAnimationIterGetPixbuf, libs, "gdk_pixbuf_animation_iter_get_pixbuf")
+	core.PuregoSafeRegister(&xPixbufAnimationIterOnCurrentlyLoadingFrame, libs, "gdk_pixbuf_animation_iter_on_currently_loading_frame")
 
 }

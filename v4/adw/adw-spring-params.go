@@ -147,22 +147,26 @@ func (x *SpringParams) Unref() {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSpringParamsGLibType, lib, "adw_spring_params_get_type")
+	core.PuregoSafeRegister(&xSpringParamsGLibType, libs, "adw_spring_params_get_type")
 
-	core.PuregoSafeRegister(&xNewSpringParams, lib, "adw_spring_params_new")
-	core.PuregoSafeRegister(&xNewSpringParamsFull, lib, "adw_spring_params_new_full")
+	core.PuregoSafeRegister(&xNewSpringParams, libs, "adw_spring_params_new")
+	core.PuregoSafeRegister(&xNewSpringParamsFull, libs, "adw_spring_params_new_full")
 
-	core.PuregoSafeRegister(&xSpringParamsGetDamping, lib, "adw_spring_params_get_damping")
-	core.PuregoSafeRegister(&xSpringParamsGetDampingRatio, lib, "adw_spring_params_get_damping_ratio")
-	core.PuregoSafeRegister(&xSpringParamsGetMass, lib, "adw_spring_params_get_mass")
-	core.PuregoSafeRegister(&xSpringParamsGetStiffness, lib, "adw_spring_params_get_stiffness")
-	core.PuregoSafeRegister(&xSpringParamsRef, lib, "adw_spring_params_ref")
-	core.PuregoSafeRegister(&xSpringParamsUnref, lib, "adw_spring_params_unref")
+	core.PuregoSafeRegister(&xSpringParamsGetDamping, libs, "adw_spring_params_get_damping")
+	core.PuregoSafeRegister(&xSpringParamsGetDampingRatio, libs, "adw_spring_params_get_damping_ratio")
+	core.PuregoSafeRegister(&xSpringParamsGetMass, libs, "adw_spring_params_get_mass")
+	core.PuregoSafeRegister(&xSpringParamsGetStiffness, libs, "adw_spring_params_get_stiffness")
+	core.PuregoSafeRegister(&xSpringParamsRef, libs, "adw_spring_params_ref")
+	core.PuregoSafeRegister(&xSpringParamsUnref, libs, "adw_spring_params_unref")
 
 }

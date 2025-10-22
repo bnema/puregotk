@@ -417,19 +417,23 @@ func (x *PopoverMenuBar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPopoverMenuBarGLibType, lib, "gtk_popover_menu_bar_get_type")
+	core.PuregoSafeRegister(&xPopoverMenuBarGLibType, libs, "gtk_popover_menu_bar_get_type")
 
-	core.PuregoSafeRegister(&xNewPopoverMenuBarFromModel, lib, "gtk_popover_menu_bar_new_from_model")
+	core.PuregoSafeRegister(&xNewPopoverMenuBarFromModel, libs, "gtk_popover_menu_bar_new_from_model")
 
-	core.PuregoSafeRegister(&xPopoverMenuBarAddChild, lib, "gtk_popover_menu_bar_add_child")
-	core.PuregoSafeRegister(&xPopoverMenuBarGetMenuModel, lib, "gtk_popover_menu_bar_get_menu_model")
-	core.PuregoSafeRegister(&xPopoverMenuBarRemoveChild, lib, "gtk_popover_menu_bar_remove_child")
-	core.PuregoSafeRegister(&xPopoverMenuBarSetMenuModel, lib, "gtk_popover_menu_bar_set_menu_model")
+	core.PuregoSafeRegister(&xPopoverMenuBarAddChild, libs, "gtk_popover_menu_bar_add_child")
+	core.PuregoSafeRegister(&xPopoverMenuBarGetMenuModel, libs, "gtk_popover_menu_bar_get_menu_model")
+	core.PuregoSafeRegister(&xPopoverMenuBarRemoveChild, libs, "gtk_popover_menu_bar_remove_child")
+	core.PuregoSafeRegister(&xPopoverMenuBarSetMenuModel, libs, "gtk_popover_menu_bar_set_menu_model")
 
 }

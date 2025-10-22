@@ -322,29 +322,33 @@ func DragBegin(SurfaceVar *Surface, DeviceVar *Device, ContentVar *ContentProvid
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDragCancelReasonGLibType, lib, "gdk_drag_cancel_reason_get_type")
+	core.PuregoSafeRegister(&xDragCancelReasonGLibType, libs, "gdk_drag_cancel_reason_get_type")
 
-	core.PuregoSafeRegister(&xDragActionIsUnique, lib, "gdk_drag_action_is_unique")
+	core.PuregoSafeRegister(&xDragActionIsUnique, libs, "gdk_drag_action_is_unique")
 
-	core.PuregoSafeRegister(&xDragGLibType, lib, "gdk_drag_get_type")
+	core.PuregoSafeRegister(&xDragGLibType, libs, "gdk_drag_get_type")
 
-	core.PuregoSafeRegister(&xDragDropDone, lib, "gdk_drag_drop_done")
-	core.PuregoSafeRegister(&xDragGetActions, lib, "gdk_drag_get_actions")
-	core.PuregoSafeRegister(&xDragGetContent, lib, "gdk_drag_get_content")
-	core.PuregoSafeRegister(&xDragGetDevice, lib, "gdk_drag_get_device")
-	core.PuregoSafeRegister(&xDragGetDisplay, lib, "gdk_drag_get_display")
-	core.PuregoSafeRegister(&xDragGetDragSurface, lib, "gdk_drag_get_drag_surface")
-	core.PuregoSafeRegister(&xDragGetFormats, lib, "gdk_drag_get_formats")
-	core.PuregoSafeRegister(&xDragGetSelectedAction, lib, "gdk_drag_get_selected_action")
-	core.PuregoSafeRegister(&xDragGetSurface, lib, "gdk_drag_get_surface")
-	core.PuregoSafeRegister(&xDragSetHotspot, lib, "gdk_drag_set_hotspot")
+	core.PuregoSafeRegister(&xDragDropDone, libs, "gdk_drag_drop_done")
+	core.PuregoSafeRegister(&xDragGetActions, libs, "gdk_drag_get_actions")
+	core.PuregoSafeRegister(&xDragGetContent, libs, "gdk_drag_get_content")
+	core.PuregoSafeRegister(&xDragGetDevice, libs, "gdk_drag_get_device")
+	core.PuregoSafeRegister(&xDragGetDisplay, libs, "gdk_drag_get_display")
+	core.PuregoSafeRegister(&xDragGetDragSurface, libs, "gdk_drag_get_drag_surface")
+	core.PuregoSafeRegister(&xDragGetFormats, libs, "gdk_drag_get_formats")
+	core.PuregoSafeRegister(&xDragGetSelectedAction, libs, "gdk_drag_get_selected_action")
+	core.PuregoSafeRegister(&xDragGetSurface, libs, "gdk_drag_get_surface")
+	core.PuregoSafeRegister(&xDragSetHotspot, libs, "gdk_drag_set_hotspot")
 
-	core.PuregoSafeRegister(&xDragBegin, lib, "gdk_drag_begin")
+	core.PuregoSafeRegister(&xDragBegin, libs, "gdk_drag_begin")
 
 }

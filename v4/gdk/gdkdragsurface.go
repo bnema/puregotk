@@ -58,14 +58,18 @@ var XGdkDragSurfacePresent func(uintptr, int, int) bool
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDragSurfaceGLibType, lib, "gdk_drag_surface_get_type")
+	core.PuregoSafeRegister(&xDragSurfaceGLibType, libs, "gdk_drag_surface_get_type")
 
-	core.PuregoSafeRegister(&XGdkDragSurfacePresent, lib, "gdk_drag_surface_present")
+	core.PuregoSafeRegister(&XGdkDragSurfacePresent, libs, "gdk_drag_surface_present")
 
 }

@@ -393,19 +393,23 @@ func (x *MemoryInputStream) Truncate(OffsetVar int64, CancellableVar *Cancellabl
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMemoryInputStreamGLibType, lib, "g_memory_input_stream_get_type")
+	core.PuregoSafeRegister(&xMemoryInputStreamGLibType, libs, "g_memory_input_stream_get_type")
 
-	core.PuregoSafeRegister(&xNewMemoryInputStream, lib, "g_memory_input_stream_new")
-	core.PuregoSafeRegister(&xNewMemoryInputStreamFromBytes, lib, "g_memory_input_stream_new_from_bytes")
-	core.PuregoSafeRegister(&xNewMemoryInputStreamFromData, lib, "g_memory_input_stream_new_from_data")
+	core.PuregoSafeRegister(&xNewMemoryInputStream, libs, "g_memory_input_stream_new")
+	core.PuregoSafeRegister(&xNewMemoryInputStreamFromBytes, libs, "g_memory_input_stream_new_from_bytes")
+	core.PuregoSafeRegister(&xNewMemoryInputStreamFromData, libs, "g_memory_input_stream_new_from_data")
 
-	core.PuregoSafeRegister(&xMemoryInputStreamAddBytes, lib, "g_memory_input_stream_add_bytes")
-	core.PuregoSafeRegister(&xMemoryInputStreamAddData, lib, "g_memory_input_stream_add_data")
+	core.PuregoSafeRegister(&xMemoryInputStreamAddBytes, libs, "g_memory_input_stream_add_bytes")
+	core.PuregoSafeRegister(&xMemoryInputStreamAddData, libs, "g_memory_input_stream_add_data")
 
 }

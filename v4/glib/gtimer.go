@@ -145,21 +145,25 @@ func Usleep(MicrosecondsVar uint32) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTimeValFromIso8601, lib, "g_time_val_from_iso8601")
-	core.PuregoSafeRegister(&xUsleep, lib, "g_usleep")
+	core.PuregoSafeRegister(&xTimeValFromIso8601, libs, "g_time_val_from_iso8601")
+	core.PuregoSafeRegister(&xUsleep, libs, "g_usleep")
 
-	core.PuregoSafeRegister(&xTimerContinue, lib, "g_timer_continue")
-	core.PuregoSafeRegister(&xTimerDestroy, lib, "g_timer_destroy")
-	core.PuregoSafeRegister(&xTimerElapsed, lib, "g_timer_elapsed")
-	core.PuregoSafeRegister(&xTimerIsActive, lib, "g_timer_is_active")
-	core.PuregoSafeRegister(&xTimerReset, lib, "g_timer_reset")
-	core.PuregoSafeRegister(&xTimerStart, lib, "g_timer_start")
-	core.PuregoSafeRegister(&xTimerStop, lib, "g_timer_stop")
+	core.PuregoSafeRegister(&xTimerContinue, libs, "g_timer_continue")
+	core.PuregoSafeRegister(&xTimerDestroy, libs, "g_timer_destroy")
+	core.PuregoSafeRegister(&xTimerElapsed, libs, "g_timer_elapsed")
+	core.PuregoSafeRegister(&xTimerIsActive, libs, "g_timer_is_active")
+	core.PuregoSafeRegister(&xTimerReset, libs, "g_timer_reset")
+	core.PuregoSafeRegister(&xTimerStart, libs, "g_timer_start")
+	core.PuregoSafeRegister(&xTimerStop, libs, "g_timer_stop")
 
 }

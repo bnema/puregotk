@@ -865,45 +865,49 @@ func ParamSpecIsValidName(NameVar string) bool {
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xParamTypeRegisterStatic, lib, "g_param_type_register_static")
-	core.PuregoSafeRegister(&xParamValueConvert, lib, "g_param_value_convert")
-	core.PuregoSafeRegister(&xParamValueDefaults, lib, "g_param_value_defaults")
-	core.PuregoSafeRegister(&xParamValueIsValid, lib, "g_param_value_is_valid")
-	core.PuregoSafeRegister(&xParamValueSetDefault, lib, "g_param_value_set_default")
-	core.PuregoSafeRegister(&xParamValueValidate, lib, "g_param_value_validate")
-	core.PuregoSafeRegister(&xParamValuesCmp, lib, "g_param_values_cmp")
+	core.PuregoSafeRegister(&xParamTypeRegisterStatic, libs, "g_param_type_register_static")
+	core.PuregoSafeRegister(&xParamValueConvert, libs, "g_param_value_convert")
+	core.PuregoSafeRegister(&xParamValueDefaults, libs, "g_param_value_defaults")
+	core.PuregoSafeRegister(&xParamValueIsValid, libs, "g_param_value_is_valid")
+	core.PuregoSafeRegister(&xParamValueSetDefault, libs, "g_param_value_set_default")
+	core.PuregoSafeRegister(&xParamValueValidate, libs, "g_param_value_validate")
+	core.PuregoSafeRegister(&xParamValuesCmp, libs, "g_param_values_cmp")
 
-	core.PuregoSafeRegister(&xParamSpecPoolFree, lib, "g_param_spec_pool_free")
-	core.PuregoSafeRegister(&xParamSpecPoolInsert, lib, "g_param_spec_pool_insert")
-	core.PuregoSafeRegister(&xParamSpecPoolList, lib, "g_param_spec_pool_list")
-	core.PuregoSafeRegister(&xParamSpecPoolListOwned, lib, "g_param_spec_pool_list_owned")
-	core.PuregoSafeRegister(&xParamSpecPoolLookup, lib, "g_param_spec_pool_lookup")
-	core.PuregoSafeRegister(&xParamSpecPoolRemove, lib, "g_param_spec_pool_remove")
+	core.PuregoSafeRegister(&xParamSpecPoolFree, libs, "g_param_spec_pool_free")
+	core.PuregoSafeRegister(&xParamSpecPoolInsert, libs, "g_param_spec_pool_insert")
+	core.PuregoSafeRegister(&xParamSpecPoolList, libs, "g_param_spec_pool_list")
+	core.PuregoSafeRegister(&xParamSpecPoolListOwned, libs, "g_param_spec_pool_list_owned")
+	core.PuregoSafeRegister(&xParamSpecPoolLookup, libs, "g_param_spec_pool_lookup")
+	core.PuregoSafeRegister(&xParamSpecPoolRemove, libs, "g_param_spec_pool_remove")
 
-	core.PuregoSafeRegister(&xParamSpecGLibType, lib, "intern")
+	core.PuregoSafeRegister(&xParamSpecGLibType, libs, "intern")
 
-	core.PuregoSafeRegister(&xParamSpecGetBlurb, lib, "g_param_spec_get_blurb")
-	core.PuregoSafeRegister(&xParamSpecGetDefaultValue, lib, "g_param_spec_get_default_value")
-	core.PuregoSafeRegister(&xParamSpecGetName, lib, "g_param_spec_get_name")
-	core.PuregoSafeRegister(&xParamSpecGetNameQuark, lib, "g_param_spec_get_name_quark")
-	core.PuregoSafeRegister(&xParamSpecGetNick, lib, "g_param_spec_get_nick")
-	core.PuregoSafeRegister(&xParamSpecGetQdata, lib, "g_param_spec_get_qdata")
-	core.PuregoSafeRegister(&xParamSpecGetRedirectTarget, lib, "g_param_spec_get_redirect_target")
-	core.PuregoSafeRegister(&xParamSpecRef, lib, "g_param_spec_ref")
-	core.PuregoSafeRegister(&xParamSpecRefSink, lib, "g_param_spec_ref_sink")
-	core.PuregoSafeRegister(&xParamSpecSetQdata, lib, "g_param_spec_set_qdata")
-	core.PuregoSafeRegister(&xParamSpecSetQdataFull, lib, "g_param_spec_set_qdata_full")
-	core.PuregoSafeRegister(&xParamSpecSink, lib, "g_param_spec_sink")
-	core.PuregoSafeRegister(&xParamSpecStealQdata, lib, "g_param_spec_steal_qdata")
-	core.PuregoSafeRegister(&xParamSpecUnref, lib, "g_param_spec_unref")
+	core.PuregoSafeRegister(&xParamSpecGetBlurb, libs, "g_param_spec_get_blurb")
+	core.PuregoSafeRegister(&xParamSpecGetDefaultValue, libs, "g_param_spec_get_default_value")
+	core.PuregoSafeRegister(&xParamSpecGetName, libs, "g_param_spec_get_name")
+	core.PuregoSafeRegister(&xParamSpecGetNameQuark, libs, "g_param_spec_get_name_quark")
+	core.PuregoSafeRegister(&xParamSpecGetNick, libs, "g_param_spec_get_nick")
+	core.PuregoSafeRegister(&xParamSpecGetQdata, libs, "g_param_spec_get_qdata")
+	core.PuregoSafeRegister(&xParamSpecGetRedirectTarget, libs, "g_param_spec_get_redirect_target")
+	core.PuregoSafeRegister(&xParamSpecRef, libs, "g_param_spec_ref")
+	core.PuregoSafeRegister(&xParamSpecRefSink, libs, "g_param_spec_ref_sink")
+	core.PuregoSafeRegister(&xParamSpecSetQdata, libs, "g_param_spec_set_qdata")
+	core.PuregoSafeRegister(&xParamSpecSetQdataFull, libs, "g_param_spec_set_qdata_full")
+	core.PuregoSafeRegister(&xParamSpecSink, libs, "g_param_spec_sink")
+	core.PuregoSafeRegister(&xParamSpecStealQdata, libs, "g_param_spec_steal_qdata")
+	core.PuregoSafeRegister(&xParamSpecUnref, libs, "g_param_spec_unref")
 
-	core.PuregoSafeRegister(&xParamSpecInternal, lib, "g_param_spec_internal")
-	core.PuregoSafeRegister(&xParamSpecIsValidName, lib, "g_param_spec_is_valid_name")
+	core.PuregoSafeRegister(&xParamSpecInternal, libs, "g_param_spec_internal")
+	core.PuregoSafeRegister(&xParamSpecIsValidName, libs, "g_param_spec_is_valid_name")
 
 }

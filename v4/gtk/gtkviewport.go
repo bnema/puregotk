@@ -501,20 +501,24 @@ func (x *Viewport) SetVscrollPolicy(PolicyVar ScrollablePolicy) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xViewportGLibType, lib, "gtk_viewport_get_type")
+	core.PuregoSafeRegister(&xViewportGLibType, libs, "gtk_viewport_get_type")
 
-	core.PuregoSafeRegister(&xNewViewport, lib, "gtk_viewport_new")
+	core.PuregoSafeRegister(&xNewViewport, libs, "gtk_viewport_new")
 
-	core.PuregoSafeRegister(&xViewportGetChild, lib, "gtk_viewport_get_child")
-	core.PuregoSafeRegister(&xViewportGetScrollToFocus, lib, "gtk_viewport_get_scroll_to_focus")
-	core.PuregoSafeRegister(&xViewportScrollTo, lib, "gtk_viewport_scroll_to")
-	core.PuregoSafeRegister(&xViewportSetChild, lib, "gtk_viewport_set_child")
-	core.PuregoSafeRegister(&xViewportSetScrollToFocus, lib, "gtk_viewport_set_scroll_to_focus")
+	core.PuregoSafeRegister(&xViewportGetChild, libs, "gtk_viewport_get_child")
+	core.PuregoSafeRegister(&xViewportGetScrollToFocus, libs, "gtk_viewport_get_scroll_to_focus")
+	core.PuregoSafeRegister(&xViewportScrollTo, libs, "gtk_viewport_scroll_to")
+	core.PuregoSafeRegister(&xViewportSetChild, libs, "gtk_viewport_set_child")
+	core.PuregoSafeRegister(&xViewportSetScrollToFocus, libs, "gtk_viewport_set_scroll_to_focus")
 
 }

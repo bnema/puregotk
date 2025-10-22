@@ -271,21 +271,25 @@ func (x *SliceListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSliceListModelGLibType, lib, "gtk_slice_list_model_get_type")
+	core.PuregoSafeRegister(&xSliceListModelGLibType, libs, "gtk_slice_list_model_get_type")
 
-	core.PuregoSafeRegister(&xNewSliceListModel, lib, "gtk_slice_list_model_new")
+	core.PuregoSafeRegister(&xNewSliceListModel, libs, "gtk_slice_list_model_new")
 
-	core.PuregoSafeRegister(&xSliceListModelGetModel, lib, "gtk_slice_list_model_get_model")
-	core.PuregoSafeRegister(&xSliceListModelGetOffset, lib, "gtk_slice_list_model_get_offset")
-	core.PuregoSafeRegister(&xSliceListModelGetSize, lib, "gtk_slice_list_model_get_size")
-	core.PuregoSafeRegister(&xSliceListModelSetModel, lib, "gtk_slice_list_model_set_model")
-	core.PuregoSafeRegister(&xSliceListModelSetOffset, lib, "gtk_slice_list_model_set_offset")
-	core.PuregoSafeRegister(&xSliceListModelSetSize, lib, "gtk_slice_list_model_set_size")
+	core.PuregoSafeRegister(&xSliceListModelGetModel, libs, "gtk_slice_list_model_get_model")
+	core.PuregoSafeRegister(&xSliceListModelGetOffset, libs, "gtk_slice_list_model_get_offset")
+	core.PuregoSafeRegister(&xSliceListModelGetSize, libs, "gtk_slice_list_model_get_size")
+	core.PuregoSafeRegister(&xSliceListModelSetModel, libs, "gtk_slice_list_model_set_model")
+	core.PuregoSafeRegister(&xSliceListModelSetOffset, libs, "gtk_slice_list_model_set_offset")
+	core.PuregoSafeRegister(&xSliceListModelSetSize, libs, "gtk_slice_list_model_set_size")
 
 }

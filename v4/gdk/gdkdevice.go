@@ -412,34 +412,38 @@ func (x *Device) ConnectToolChanged(cb *func(Device, uintptr)) uint32 {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInputSourceGLibType, lib, "gdk_input_source_get_type")
+	core.PuregoSafeRegister(&xInputSourceGLibType, libs, "gdk_input_source_get_type")
 
-	core.PuregoSafeRegister(&xDeviceGLibType, lib, "gdk_device_get_type")
+	core.PuregoSafeRegister(&xDeviceGLibType, libs, "gdk_device_get_type")
 
-	core.PuregoSafeRegister(&xDeviceGetActiveLayoutIndex, lib, "gdk_device_get_active_layout_index")
-	core.PuregoSafeRegister(&xDeviceGetCapsLockState, lib, "gdk_device_get_caps_lock_state")
-	core.PuregoSafeRegister(&xDeviceGetDeviceTool, lib, "gdk_device_get_device_tool")
-	core.PuregoSafeRegister(&xDeviceGetDirection, lib, "gdk_device_get_direction")
-	core.PuregoSafeRegister(&xDeviceGetDisplay, lib, "gdk_device_get_display")
-	core.PuregoSafeRegister(&xDeviceGetHasCursor, lib, "gdk_device_get_has_cursor")
-	core.PuregoSafeRegister(&xDeviceGetLayoutNames, lib, "gdk_device_get_layout_names")
-	core.PuregoSafeRegister(&xDeviceGetModifierState, lib, "gdk_device_get_modifier_state")
-	core.PuregoSafeRegister(&xDeviceGetName, lib, "gdk_device_get_name")
-	core.PuregoSafeRegister(&xDeviceGetNumLockState, lib, "gdk_device_get_num_lock_state")
-	core.PuregoSafeRegister(&xDeviceGetNumTouches, lib, "gdk_device_get_num_touches")
-	core.PuregoSafeRegister(&xDeviceGetProductId, lib, "gdk_device_get_product_id")
-	core.PuregoSafeRegister(&xDeviceGetScrollLockState, lib, "gdk_device_get_scroll_lock_state")
-	core.PuregoSafeRegister(&xDeviceGetSeat, lib, "gdk_device_get_seat")
-	core.PuregoSafeRegister(&xDeviceGetSource, lib, "gdk_device_get_source")
-	core.PuregoSafeRegister(&xDeviceGetSurfaceAtPosition, lib, "gdk_device_get_surface_at_position")
-	core.PuregoSafeRegister(&xDeviceGetTimestamp, lib, "gdk_device_get_timestamp")
-	core.PuregoSafeRegister(&xDeviceGetVendorId, lib, "gdk_device_get_vendor_id")
-	core.PuregoSafeRegister(&xDeviceHasBidiLayouts, lib, "gdk_device_has_bidi_layouts")
+	core.PuregoSafeRegister(&xDeviceGetActiveLayoutIndex, libs, "gdk_device_get_active_layout_index")
+	core.PuregoSafeRegister(&xDeviceGetCapsLockState, libs, "gdk_device_get_caps_lock_state")
+	core.PuregoSafeRegister(&xDeviceGetDeviceTool, libs, "gdk_device_get_device_tool")
+	core.PuregoSafeRegister(&xDeviceGetDirection, libs, "gdk_device_get_direction")
+	core.PuregoSafeRegister(&xDeviceGetDisplay, libs, "gdk_device_get_display")
+	core.PuregoSafeRegister(&xDeviceGetHasCursor, libs, "gdk_device_get_has_cursor")
+	core.PuregoSafeRegister(&xDeviceGetLayoutNames, libs, "gdk_device_get_layout_names")
+	core.PuregoSafeRegister(&xDeviceGetModifierState, libs, "gdk_device_get_modifier_state")
+	core.PuregoSafeRegister(&xDeviceGetName, libs, "gdk_device_get_name")
+	core.PuregoSafeRegister(&xDeviceGetNumLockState, libs, "gdk_device_get_num_lock_state")
+	core.PuregoSafeRegister(&xDeviceGetNumTouches, libs, "gdk_device_get_num_touches")
+	core.PuregoSafeRegister(&xDeviceGetProductId, libs, "gdk_device_get_product_id")
+	core.PuregoSafeRegister(&xDeviceGetScrollLockState, libs, "gdk_device_get_scroll_lock_state")
+	core.PuregoSafeRegister(&xDeviceGetSeat, libs, "gdk_device_get_seat")
+	core.PuregoSafeRegister(&xDeviceGetSource, libs, "gdk_device_get_source")
+	core.PuregoSafeRegister(&xDeviceGetSurfaceAtPosition, libs, "gdk_device_get_surface_at_position")
+	core.PuregoSafeRegister(&xDeviceGetTimestamp, libs, "gdk_device_get_timestamp")
+	core.PuregoSafeRegister(&xDeviceGetVendorId, libs, "gdk_device_get_vendor_id")
+	core.PuregoSafeRegister(&xDeviceHasBidiLayouts, libs, "gdk_device_has_bidi_layouts")
 
 }

@@ -165,16 +165,20 @@ func (c *FilterInputStream) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFilterInputStreamGLibType, lib, "g_filter_input_stream_get_type")
+	core.PuregoSafeRegister(&xFilterInputStreamGLibType, libs, "g_filter_input_stream_get_type")
 
-	core.PuregoSafeRegister(&xFilterInputStreamGetBaseStream, lib, "g_filter_input_stream_get_base_stream")
-	core.PuregoSafeRegister(&xFilterInputStreamGetCloseBaseStream, lib, "g_filter_input_stream_get_close_base_stream")
-	core.PuregoSafeRegister(&xFilterInputStreamSetCloseBaseStream, lib, "g_filter_input_stream_set_close_base_stream")
+	core.PuregoSafeRegister(&xFilterInputStreamGetBaseStream, libs, "g_filter_input_stream_get_base_stream")
+	core.PuregoSafeRegister(&xFilterInputStreamGetCloseBaseStream, libs, "g_filter_input_stream_get_close_base_stream")
+	core.PuregoSafeRegister(&xFilterInputStreamSetCloseBaseStream, libs, "g_filter_input_stream_set_close_base_stream")
 
 }

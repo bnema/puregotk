@@ -388,23 +388,27 @@ func (c *Permission) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPermissionGLibType, lib, "g_permission_get_type")
+	core.PuregoSafeRegister(&xPermissionGLibType, libs, "g_permission_get_type")
 
-	core.PuregoSafeRegister(&xPermissionAcquire, lib, "g_permission_acquire")
-	core.PuregoSafeRegister(&xPermissionAcquireAsync, lib, "g_permission_acquire_async")
-	core.PuregoSafeRegister(&xPermissionAcquireFinish, lib, "g_permission_acquire_finish")
-	core.PuregoSafeRegister(&xPermissionGetAllowed, lib, "g_permission_get_allowed")
-	core.PuregoSafeRegister(&xPermissionGetCanAcquire, lib, "g_permission_get_can_acquire")
-	core.PuregoSafeRegister(&xPermissionGetCanRelease, lib, "g_permission_get_can_release")
-	core.PuregoSafeRegister(&xPermissionImplUpdate, lib, "g_permission_impl_update")
-	core.PuregoSafeRegister(&xPermissionRelease, lib, "g_permission_release")
-	core.PuregoSafeRegister(&xPermissionReleaseAsync, lib, "g_permission_release_async")
-	core.PuregoSafeRegister(&xPermissionReleaseFinish, lib, "g_permission_release_finish")
+	core.PuregoSafeRegister(&xPermissionAcquire, libs, "g_permission_acquire")
+	core.PuregoSafeRegister(&xPermissionAcquireAsync, libs, "g_permission_acquire_async")
+	core.PuregoSafeRegister(&xPermissionAcquireFinish, libs, "g_permission_acquire_finish")
+	core.PuregoSafeRegister(&xPermissionGetAllowed, libs, "g_permission_get_allowed")
+	core.PuregoSafeRegister(&xPermissionGetCanAcquire, libs, "g_permission_get_can_acquire")
+	core.PuregoSafeRegister(&xPermissionGetCanRelease, libs, "g_permission_get_can_release")
+	core.PuregoSafeRegister(&xPermissionImplUpdate, libs, "g_permission_impl_update")
+	core.PuregoSafeRegister(&xPermissionRelease, libs, "g_permission_release")
+	core.PuregoSafeRegister(&xPermissionReleaseAsync, libs, "g_permission_release_async")
+	core.PuregoSafeRegister(&xPermissionReleaseFinish, libs, "g_permission_release_finish")
 
 }

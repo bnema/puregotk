@@ -155,17 +155,21 @@ func (c *ColumnViewSorter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColumnViewSorterGLibType, lib, "gtk_column_view_sorter_get_type")
+	core.PuregoSafeRegister(&xColumnViewSorterGLibType, libs, "gtk_column_view_sorter_get_type")
 
-	core.PuregoSafeRegister(&xColumnViewSorterGetNSortColumns, lib, "gtk_column_view_sorter_get_n_sort_columns")
-	core.PuregoSafeRegister(&xColumnViewSorterGetNthSortColumn, lib, "gtk_column_view_sorter_get_nth_sort_column")
-	core.PuregoSafeRegister(&xColumnViewSorterGetPrimarySortColumn, lib, "gtk_column_view_sorter_get_primary_sort_column")
-	core.PuregoSafeRegister(&xColumnViewSorterGetPrimarySortOrder, lib, "gtk_column_view_sorter_get_primary_sort_order")
+	core.PuregoSafeRegister(&xColumnViewSorterGetNSortColumns, libs, "gtk_column_view_sorter_get_n_sort_columns")
+	core.PuregoSafeRegister(&xColumnViewSorterGetNthSortColumn, libs, "gtk_column_view_sorter_get_nth_sort_column")
+	core.PuregoSafeRegister(&xColumnViewSorterGetPrimarySortColumn, libs, "gtk_column_view_sorter_get_primary_sort_column")
+	core.PuregoSafeRegister(&xColumnViewSorterGetPrimarySortOrder, libs, "gtk_column_view_sorter_get_primary_sort_order")
 
 }

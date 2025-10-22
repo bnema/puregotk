@@ -55,15 +55,19 @@ func LengthUnitToPx(UnitVar LengthUnit, ValueVar float64, SettingsVar *gtk.Setti
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xLengthUnitGLibType, lib, "adw_length_unit_get_type")
+	core.PuregoSafeRegister(&xLengthUnitGLibType, libs, "adw_length_unit_get_type")
 
-	core.PuregoSafeRegister(&xLengthUnitFromPx, lib, "adw_length_unit_from_px")
-	core.PuregoSafeRegister(&xLengthUnitToPx, lib, "adw_length_unit_to_px")
+	core.PuregoSafeRegister(&xLengthUnitFromPx, libs, "adw_length_unit_from_px")
+	core.PuregoSafeRegister(&xLengthUnitToPx, libs, "adw_length_unit_to_px")
 
 }

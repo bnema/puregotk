@@ -731,23 +731,27 @@ func (x *TreeModelFilter) UnrefNode(IterVar *TreeIter) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTreeModelFilterGLibType, lib, "gtk_tree_model_filter_get_type")
+	core.PuregoSafeRegister(&xTreeModelFilterGLibType, libs, "gtk_tree_model_filter_get_type")
 
-	core.PuregoSafeRegister(&xTreeModelFilterClearCache, lib, "gtk_tree_model_filter_clear_cache")
-	core.PuregoSafeRegister(&xTreeModelFilterConvertChildIterToIter, lib, "gtk_tree_model_filter_convert_child_iter_to_iter")
-	core.PuregoSafeRegister(&xTreeModelFilterConvertChildPathToPath, lib, "gtk_tree_model_filter_convert_child_path_to_path")
-	core.PuregoSafeRegister(&xTreeModelFilterConvertIterToChildIter, lib, "gtk_tree_model_filter_convert_iter_to_child_iter")
-	core.PuregoSafeRegister(&xTreeModelFilterConvertPathToChildPath, lib, "gtk_tree_model_filter_convert_path_to_child_path")
-	core.PuregoSafeRegister(&xTreeModelFilterGetModel, lib, "gtk_tree_model_filter_get_model")
-	core.PuregoSafeRegister(&xTreeModelFilterRefilter, lib, "gtk_tree_model_filter_refilter")
-	core.PuregoSafeRegister(&xTreeModelFilterSetModifyFunc, lib, "gtk_tree_model_filter_set_modify_func")
-	core.PuregoSafeRegister(&xTreeModelFilterSetVisibleColumn, lib, "gtk_tree_model_filter_set_visible_column")
-	core.PuregoSafeRegister(&xTreeModelFilterSetVisibleFunc, lib, "gtk_tree_model_filter_set_visible_func")
+	core.PuregoSafeRegister(&xTreeModelFilterClearCache, libs, "gtk_tree_model_filter_clear_cache")
+	core.PuregoSafeRegister(&xTreeModelFilterConvertChildIterToIter, libs, "gtk_tree_model_filter_convert_child_iter_to_iter")
+	core.PuregoSafeRegister(&xTreeModelFilterConvertChildPathToPath, libs, "gtk_tree_model_filter_convert_child_path_to_path")
+	core.PuregoSafeRegister(&xTreeModelFilterConvertIterToChildIter, libs, "gtk_tree_model_filter_convert_iter_to_child_iter")
+	core.PuregoSafeRegister(&xTreeModelFilterConvertPathToChildPath, libs, "gtk_tree_model_filter_convert_path_to_child_path")
+	core.PuregoSafeRegister(&xTreeModelFilterGetModel, libs, "gtk_tree_model_filter_get_model")
+	core.PuregoSafeRegister(&xTreeModelFilterRefilter, libs, "gtk_tree_model_filter_refilter")
+	core.PuregoSafeRegister(&xTreeModelFilterSetModifyFunc, libs, "gtk_tree_model_filter_set_modify_func")
+	core.PuregoSafeRegister(&xTreeModelFilterSetVisibleColumn, libs, "gtk_tree_model_filter_set_visible_column")
+	core.PuregoSafeRegister(&xTreeModelFilterSetVisibleFunc, libs, "gtk_tree_model_filter_set_visible_func")
 
 }

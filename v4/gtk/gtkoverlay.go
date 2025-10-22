@@ -496,23 +496,27 @@ func (x *Overlay) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xOverlayGLibType, lib, "gtk_overlay_get_type")
+	core.PuregoSafeRegister(&xOverlayGLibType, libs, "gtk_overlay_get_type")
 
-	core.PuregoSafeRegister(&xNewOverlay, lib, "gtk_overlay_new")
+	core.PuregoSafeRegister(&xNewOverlay, libs, "gtk_overlay_new")
 
-	core.PuregoSafeRegister(&xOverlayAddOverlay, lib, "gtk_overlay_add_overlay")
-	core.PuregoSafeRegister(&xOverlayGetChild, lib, "gtk_overlay_get_child")
-	core.PuregoSafeRegister(&xOverlayGetClipOverlay, lib, "gtk_overlay_get_clip_overlay")
-	core.PuregoSafeRegister(&xOverlayGetMeasureOverlay, lib, "gtk_overlay_get_measure_overlay")
-	core.PuregoSafeRegister(&xOverlayRemoveOverlay, lib, "gtk_overlay_remove_overlay")
-	core.PuregoSafeRegister(&xOverlaySetChild, lib, "gtk_overlay_set_child")
-	core.PuregoSafeRegister(&xOverlaySetClipOverlay, lib, "gtk_overlay_set_clip_overlay")
-	core.PuregoSafeRegister(&xOverlaySetMeasureOverlay, lib, "gtk_overlay_set_measure_overlay")
+	core.PuregoSafeRegister(&xOverlayAddOverlay, libs, "gtk_overlay_add_overlay")
+	core.PuregoSafeRegister(&xOverlayGetChild, libs, "gtk_overlay_get_child")
+	core.PuregoSafeRegister(&xOverlayGetClipOverlay, libs, "gtk_overlay_get_clip_overlay")
+	core.PuregoSafeRegister(&xOverlayGetMeasureOverlay, libs, "gtk_overlay_get_measure_overlay")
+	core.PuregoSafeRegister(&xOverlayRemoveOverlay, libs, "gtk_overlay_remove_overlay")
+	core.PuregoSafeRegister(&xOverlaySetChild, libs, "gtk_overlay_set_child")
+	core.PuregoSafeRegister(&xOverlaySetClipOverlay, libs, "gtk_overlay_set_clip_overlay")
+	core.PuregoSafeRegister(&xOverlaySetMeasureOverlay, libs, "gtk_overlay_set_measure_overlay")
 
 }

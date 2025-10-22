@@ -985,34 +985,38 @@ func (x *EntryRow) SetWidthChars(NCharsVar int) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEntryRowGLibType, lib, "adw_entry_row_get_type")
+	core.PuregoSafeRegister(&xEntryRowGLibType, libs, "adw_entry_row_get_type")
 
-	core.PuregoSafeRegister(&xNewEntryRow, lib, "adw_entry_row_new")
+	core.PuregoSafeRegister(&xNewEntryRow, libs, "adw_entry_row_new")
 
-	core.PuregoSafeRegister(&xEntryRowAddPrefix, lib, "adw_entry_row_add_prefix")
-	core.PuregoSafeRegister(&xEntryRowAddSuffix, lib, "adw_entry_row_add_suffix")
-	core.PuregoSafeRegister(&xEntryRowGetActivatesDefault, lib, "adw_entry_row_get_activates_default")
-	core.PuregoSafeRegister(&xEntryRowGetAttributes, lib, "adw_entry_row_get_attributes")
-	core.PuregoSafeRegister(&xEntryRowGetEnableEmojiCompletion, lib, "adw_entry_row_get_enable_emoji_completion")
-	core.PuregoSafeRegister(&xEntryRowGetInputHints, lib, "adw_entry_row_get_input_hints")
-	core.PuregoSafeRegister(&xEntryRowGetInputPurpose, lib, "adw_entry_row_get_input_purpose")
-	core.PuregoSafeRegister(&xEntryRowGetMaxLength, lib, "adw_entry_row_get_max_length")
-	core.PuregoSafeRegister(&xEntryRowGetShowApplyButton, lib, "adw_entry_row_get_show_apply_button")
-	core.PuregoSafeRegister(&xEntryRowGetTextLength, lib, "adw_entry_row_get_text_length")
-	core.PuregoSafeRegister(&xEntryRowGrabFocusWithoutSelecting, lib, "adw_entry_row_grab_focus_without_selecting")
-	core.PuregoSafeRegister(&xEntryRowRemove, lib, "adw_entry_row_remove")
-	core.PuregoSafeRegister(&xEntryRowSetActivatesDefault, lib, "adw_entry_row_set_activates_default")
-	core.PuregoSafeRegister(&xEntryRowSetAttributes, lib, "adw_entry_row_set_attributes")
-	core.PuregoSafeRegister(&xEntryRowSetEnableEmojiCompletion, lib, "adw_entry_row_set_enable_emoji_completion")
-	core.PuregoSafeRegister(&xEntryRowSetInputHints, lib, "adw_entry_row_set_input_hints")
-	core.PuregoSafeRegister(&xEntryRowSetInputPurpose, lib, "adw_entry_row_set_input_purpose")
-	core.PuregoSafeRegister(&xEntryRowSetMaxLength, lib, "adw_entry_row_set_max_length")
-	core.PuregoSafeRegister(&xEntryRowSetShowApplyButton, lib, "adw_entry_row_set_show_apply_button")
+	core.PuregoSafeRegister(&xEntryRowAddPrefix, libs, "adw_entry_row_add_prefix")
+	core.PuregoSafeRegister(&xEntryRowAddSuffix, libs, "adw_entry_row_add_suffix")
+	core.PuregoSafeRegister(&xEntryRowGetActivatesDefault, libs, "adw_entry_row_get_activates_default")
+	core.PuregoSafeRegister(&xEntryRowGetAttributes, libs, "adw_entry_row_get_attributes")
+	core.PuregoSafeRegister(&xEntryRowGetEnableEmojiCompletion, libs, "adw_entry_row_get_enable_emoji_completion")
+	core.PuregoSafeRegister(&xEntryRowGetInputHints, libs, "adw_entry_row_get_input_hints")
+	core.PuregoSafeRegister(&xEntryRowGetInputPurpose, libs, "adw_entry_row_get_input_purpose")
+	core.PuregoSafeRegister(&xEntryRowGetMaxLength, libs, "adw_entry_row_get_max_length")
+	core.PuregoSafeRegister(&xEntryRowGetShowApplyButton, libs, "adw_entry_row_get_show_apply_button")
+	core.PuregoSafeRegister(&xEntryRowGetTextLength, libs, "adw_entry_row_get_text_length")
+	core.PuregoSafeRegister(&xEntryRowGrabFocusWithoutSelecting, libs, "adw_entry_row_grab_focus_without_selecting")
+	core.PuregoSafeRegister(&xEntryRowRemove, libs, "adw_entry_row_remove")
+	core.PuregoSafeRegister(&xEntryRowSetActivatesDefault, libs, "adw_entry_row_set_activates_default")
+	core.PuregoSafeRegister(&xEntryRowSetAttributes, libs, "adw_entry_row_set_attributes")
+	core.PuregoSafeRegister(&xEntryRowSetEnableEmojiCompletion, libs, "adw_entry_row_set_enable_emoji_completion")
+	core.PuregoSafeRegister(&xEntryRowSetInputHints, libs, "adw_entry_row_set_input_hints")
+	core.PuregoSafeRegister(&xEntryRowSetInputPurpose, libs, "adw_entry_row_set_input_purpose")
+	core.PuregoSafeRegister(&xEntryRowSetMaxLength, libs, "adw_entry_row_set_max_length")
+	core.PuregoSafeRegister(&xEntryRowSetShowApplyButton, libs, "adw_entry_row_set_show_apply_button")
 
 }

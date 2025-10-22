@@ -216,22 +216,26 @@ func (c *Credentials) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCredentialsGLibType, lib, "g_credentials_get_type")
+	core.PuregoSafeRegister(&xCredentialsGLibType, libs, "g_credentials_get_type")
 
-	core.PuregoSafeRegister(&xNewCredentials, lib, "g_credentials_new")
+	core.PuregoSafeRegister(&xNewCredentials, libs, "g_credentials_new")
 
-	core.PuregoSafeRegister(&xCredentialsGetNative, lib, "g_credentials_get_native")
-	core.PuregoSafeRegister(&xCredentialsGetUnixPid, lib, "g_credentials_get_unix_pid")
-	core.PuregoSafeRegister(&xCredentialsGetUnixUser, lib, "g_credentials_get_unix_user")
-	core.PuregoSafeRegister(&xCredentialsIsSameUser, lib, "g_credentials_is_same_user")
-	core.PuregoSafeRegister(&xCredentialsSetNative, lib, "g_credentials_set_native")
-	core.PuregoSafeRegister(&xCredentialsSetUnixUser, lib, "g_credentials_set_unix_user")
-	core.PuregoSafeRegister(&xCredentialsToString, lib, "g_credentials_to_string")
+	core.PuregoSafeRegister(&xCredentialsGetNative, libs, "g_credentials_get_native")
+	core.PuregoSafeRegister(&xCredentialsGetUnixPid, libs, "g_credentials_get_unix_pid")
+	core.PuregoSafeRegister(&xCredentialsGetUnixUser, libs, "g_credentials_get_unix_user")
+	core.PuregoSafeRegister(&xCredentialsIsSameUser, libs, "g_credentials_is_same_user")
+	core.PuregoSafeRegister(&xCredentialsSetNative, libs, "g_credentials_set_native")
+	core.PuregoSafeRegister(&xCredentialsSetUnixUser, libs, "g_credentials_set_unix_user")
+	core.PuregoSafeRegister(&xCredentialsToString, libs, "g_credentials_to_string")
 
 }

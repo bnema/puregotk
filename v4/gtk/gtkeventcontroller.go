@@ -220,26 +220,30 @@ func (c *EventController) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEventControllerGLibType, lib, "gtk_event_controller_get_type")
+	core.PuregoSafeRegister(&xEventControllerGLibType, libs, "gtk_event_controller_get_type")
 
-	core.PuregoSafeRegister(&xEventControllerGetCurrentEvent, lib, "gtk_event_controller_get_current_event")
-	core.PuregoSafeRegister(&xEventControllerGetCurrentEventDevice, lib, "gtk_event_controller_get_current_event_device")
-	core.PuregoSafeRegister(&xEventControllerGetCurrentEventState, lib, "gtk_event_controller_get_current_event_state")
-	core.PuregoSafeRegister(&xEventControllerGetCurrentEventTime, lib, "gtk_event_controller_get_current_event_time")
-	core.PuregoSafeRegister(&xEventControllerGetName, lib, "gtk_event_controller_get_name")
-	core.PuregoSafeRegister(&xEventControllerGetPropagationLimit, lib, "gtk_event_controller_get_propagation_limit")
-	core.PuregoSafeRegister(&xEventControllerGetPropagationPhase, lib, "gtk_event_controller_get_propagation_phase")
-	core.PuregoSafeRegister(&xEventControllerGetWidget, lib, "gtk_event_controller_get_widget")
-	core.PuregoSafeRegister(&xEventControllerReset, lib, "gtk_event_controller_reset")
-	core.PuregoSafeRegister(&xEventControllerSetName, lib, "gtk_event_controller_set_name")
-	core.PuregoSafeRegister(&xEventControllerSetPropagationLimit, lib, "gtk_event_controller_set_propagation_limit")
-	core.PuregoSafeRegister(&xEventControllerSetPropagationPhase, lib, "gtk_event_controller_set_propagation_phase")
-	core.PuregoSafeRegister(&xEventControllerSetStaticName, lib, "gtk_event_controller_set_static_name")
+	core.PuregoSafeRegister(&xEventControllerGetCurrentEvent, libs, "gtk_event_controller_get_current_event")
+	core.PuregoSafeRegister(&xEventControllerGetCurrentEventDevice, libs, "gtk_event_controller_get_current_event_device")
+	core.PuregoSafeRegister(&xEventControllerGetCurrentEventState, libs, "gtk_event_controller_get_current_event_state")
+	core.PuregoSafeRegister(&xEventControllerGetCurrentEventTime, libs, "gtk_event_controller_get_current_event_time")
+	core.PuregoSafeRegister(&xEventControllerGetName, libs, "gtk_event_controller_get_name")
+	core.PuregoSafeRegister(&xEventControllerGetPropagationLimit, libs, "gtk_event_controller_get_propagation_limit")
+	core.PuregoSafeRegister(&xEventControllerGetPropagationPhase, libs, "gtk_event_controller_get_propagation_phase")
+	core.PuregoSafeRegister(&xEventControllerGetWidget, libs, "gtk_event_controller_get_widget")
+	core.PuregoSafeRegister(&xEventControllerReset, libs, "gtk_event_controller_reset")
+	core.PuregoSafeRegister(&xEventControllerSetName, libs, "gtk_event_controller_set_name")
+	core.PuregoSafeRegister(&xEventControllerSetPropagationLimit, libs, "gtk_event_controller_set_propagation_limit")
+	core.PuregoSafeRegister(&xEventControllerSetPropagationPhase, libs, "gtk_event_controller_set_propagation_phase")
+	core.PuregoSafeRegister(&xEventControllerSetStaticName, libs, "gtk_event_controller_set_static_name")
 
 }

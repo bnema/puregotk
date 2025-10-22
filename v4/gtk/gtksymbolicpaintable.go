@@ -110,14 +110,18 @@ var XGtkSymbolicPaintableSnapshotSymbolic func(uintptr, uintptr, float64, float6
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSymbolicPaintableGLibType, lib, "gtk_symbolic_paintable_get_type")
+	core.PuregoSafeRegister(&xSymbolicPaintableGLibType, libs, "gtk_symbolic_paintable_get_type")
 
-	core.PuregoSafeRegister(&XGtkSymbolicPaintableSnapshotSymbolic, lib, "gtk_symbolic_paintable_snapshot_symbolic")
+	core.PuregoSafeRegister(&XGtkSymbolicPaintableSnapshotSymbolic, libs, "gtk_symbolic_paintable_snapshot_symbolic")
 
 }

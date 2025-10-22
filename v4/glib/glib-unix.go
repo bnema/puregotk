@@ -259,22 +259,26 @@ func UnixSignalSourceNew(SignumVar int) *Source {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xClosefrom, lib, "g_closefrom")
-	core.PuregoSafeRegister(&xFdwalkSetCloexec, lib, "g_fdwalk_set_cloexec")
-	core.PuregoSafeRegister(&xUnixFdAdd, lib, "g_unix_fd_add")
-	core.PuregoSafeRegister(&xUnixFdAddFull, lib, "g_unix_fd_add_full")
-	core.PuregoSafeRegister(&xUnixFdSourceNew, lib, "g_unix_fd_source_new")
-	core.PuregoSafeRegister(&xUnixGetPasswdEntry, lib, "g_unix_get_passwd_entry")
-	core.PuregoSafeRegister(&xUnixOpenPipe, lib, "g_unix_open_pipe")
-	core.PuregoSafeRegister(&xUnixSetFdNonblocking, lib, "g_unix_set_fd_nonblocking")
-	core.PuregoSafeRegister(&xUnixSignalAdd, lib, "g_unix_signal_add")
-	core.PuregoSafeRegister(&xUnixSignalAddFull, lib, "g_unix_signal_add_full")
-	core.PuregoSafeRegister(&xUnixSignalSourceNew, lib, "g_unix_signal_source_new")
+	core.PuregoSafeRegister(&xClosefrom, libs, "g_closefrom")
+	core.PuregoSafeRegister(&xFdwalkSetCloexec, libs, "g_fdwalk_set_cloexec")
+	core.PuregoSafeRegister(&xUnixFdAdd, libs, "g_unix_fd_add")
+	core.PuregoSafeRegister(&xUnixFdAddFull, libs, "g_unix_fd_add_full")
+	core.PuregoSafeRegister(&xUnixFdSourceNew, libs, "g_unix_fd_source_new")
+	core.PuregoSafeRegister(&xUnixGetPasswdEntry, libs, "g_unix_get_passwd_entry")
+	core.PuregoSafeRegister(&xUnixOpenPipe, libs, "g_unix_open_pipe")
+	core.PuregoSafeRegister(&xUnixSetFdNonblocking, libs, "g_unix_set_fd_nonblocking")
+	core.PuregoSafeRegister(&xUnixSignalAdd, libs, "g_unix_signal_add")
+	core.PuregoSafeRegister(&xUnixSignalAddFull, libs, "g_unix_signal_add_full")
+	core.PuregoSafeRegister(&xUnixSignalSourceNew, libs, "g_unix_signal_source_new")
 
 }

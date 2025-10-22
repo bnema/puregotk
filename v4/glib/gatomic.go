@@ -385,32 +385,36 @@ func AtomicPointerXor(AtomicVar uintptr, ValVar uint) uintptr {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAtomicIntAdd, lib, "g_atomic_int_add")
-	core.PuregoSafeRegister(&xAtomicIntAnd, lib, "g_atomic_int_and")
-	core.PuregoSafeRegister(&xAtomicIntCompareAndExchange, lib, "g_atomic_int_compare_and_exchange")
-	core.PuregoSafeRegister(&xAtomicIntCompareAndExchangeFull, lib, "g_atomic_int_compare_and_exchange_full")
-	core.PuregoSafeRegister(&xAtomicIntDecAndTest, lib, "g_atomic_int_dec_and_test")
-	core.PuregoSafeRegister(&xAtomicIntExchange, lib, "g_atomic_int_exchange")
-	core.PuregoSafeRegister(&xAtomicIntExchangeAndAdd, lib, "g_atomic_int_exchange_and_add")
-	core.PuregoSafeRegister(&xAtomicIntGet, lib, "g_atomic_int_get")
-	core.PuregoSafeRegister(&xAtomicIntInc, lib, "g_atomic_int_inc")
-	core.PuregoSafeRegister(&xAtomicIntOr, lib, "g_atomic_int_or")
-	core.PuregoSafeRegister(&xAtomicIntSet, lib, "g_atomic_int_set")
-	core.PuregoSafeRegister(&xAtomicIntXor, lib, "g_atomic_int_xor")
-	core.PuregoSafeRegister(&xAtomicPointerAdd, lib, "g_atomic_pointer_add")
-	core.PuregoSafeRegister(&xAtomicPointerAnd, lib, "g_atomic_pointer_and")
-	core.PuregoSafeRegister(&xAtomicPointerCompareAndExchange, lib, "g_atomic_pointer_compare_and_exchange")
-	core.PuregoSafeRegister(&xAtomicPointerCompareAndExchangeFull, lib, "g_atomic_pointer_compare_and_exchange_full")
-	core.PuregoSafeRegister(&xAtomicPointerExchange, lib, "g_atomic_pointer_exchange")
-	core.PuregoSafeRegister(&xAtomicPointerGet, lib, "g_atomic_pointer_get")
-	core.PuregoSafeRegister(&xAtomicPointerOr, lib, "g_atomic_pointer_or")
-	core.PuregoSafeRegister(&xAtomicPointerSet, lib, "g_atomic_pointer_set")
-	core.PuregoSafeRegister(&xAtomicPointerXor, lib, "g_atomic_pointer_xor")
+	core.PuregoSafeRegister(&xAtomicIntAdd, libs, "g_atomic_int_add")
+	core.PuregoSafeRegister(&xAtomicIntAnd, libs, "g_atomic_int_and")
+	core.PuregoSafeRegister(&xAtomicIntCompareAndExchange, libs, "g_atomic_int_compare_and_exchange")
+	core.PuregoSafeRegister(&xAtomicIntCompareAndExchangeFull, libs, "g_atomic_int_compare_and_exchange_full")
+	core.PuregoSafeRegister(&xAtomicIntDecAndTest, libs, "g_atomic_int_dec_and_test")
+	core.PuregoSafeRegister(&xAtomicIntExchange, libs, "g_atomic_int_exchange")
+	core.PuregoSafeRegister(&xAtomicIntExchangeAndAdd, libs, "g_atomic_int_exchange_and_add")
+	core.PuregoSafeRegister(&xAtomicIntGet, libs, "g_atomic_int_get")
+	core.PuregoSafeRegister(&xAtomicIntInc, libs, "g_atomic_int_inc")
+	core.PuregoSafeRegister(&xAtomicIntOr, libs, "g_atomic_int_or")
+	core.PuregoSafeRegister(&xAtomicIntSet, libs, "g_atomic_int_set")
+	core.PuregoSafeRegister(&xAtomicIntXor, libs, "g_atomic_int_xor")
+	core.PuregoSafeRegister(&xAtomicPointerAdd, libs, "g_atomic_pointer_add")
+	core.PuregoSafeRegister(&xAtomicPointerAnd, libs, "g_atomic_pointer_and")
+	core.PuregoSafeRegister(&xAtomicPointerCompareAndExchange, libs, "g_atomic_pointer_compare_and_exchange")
+	core.PuregoSafeRegister(&xAtomicPointerCompareAndExchangeFull, libs, "g_atomic_pointer_compare_and_exchange_full")
+	core.PuregoSafeRegister(&xAtomicPointerExchange, libs, "g_atomic_pointer_exchange")
+	core.PuregoSafeRegister(&xAtomicPointerGet, libs, "g_atomic_pointer_get")
+	core.PuregoSafeRegister(&xAtomicPointerOr, libs, "g_atomic_pointer_or")
+	core.PuregoSafeRegister(&xAtomicPointerSet, libs, "g_atomic_pointer_set")
+	core.PuregoSafeRegister(&xAtomicPointerXor, libs, "g_atomic_pointer_xor")
 
 }

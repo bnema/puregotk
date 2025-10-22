@@ -642,29 +642,33 @@ func (c *ApplicationCommandLine) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xApplicationCommandLineGLibType, lib, "g_application_command_line_get_type")
+	core.PuregoSafeRegister(&xApplicationCommandLineGLibType, libs, "g_application_command_line_get_type")
 
-	core.PuregoSafeRegister(&xApplicationCommandLineCreateFileForArg, lib, "g_application_command_line_create_file_for_arg")
-	core.PuregoSafeRegister(&xApplicationCommandLineDone, lib, "g_application_command_line_done")
-	core.PuregoSafeRegister(&xApplicationCommandLineGetArguments, lib, "g_application_command_line_get_arguments")
-	core.PuregoSafeRegister(&xApplicationCommandLineGetCwd, lib, "g_application_command_line_get_cwd")
-	core.PuregoSafeRegister(&xApplicationCommandLineGetEnviron, lib, "g_application_command_line_get_environ")
-	core.PuregoSafeRegister(&xApplicationCommandLineGetExitStatus, lib, "g_application_command_line_get_exit_status")
-	core.PuregoSafeRegister(&xApplicationCommandLineGetIsRemote, lib, "g_application_command_line_get_is_remote")
-	core.PuregoSafeRegister(&xApplicationCommandLineGetOptionsDict, lib, "g_application_command_line_get_options_dict")
-	core.PuregoSafeRegister(&xApplicationCommandLineGetPlatformData, lib, "g_application_command_line_get_platform_data")
-	core.PuregoSafeRegister(&xApplicationCommandLineGetStdin, lib, "g_application_command_line_get_stdin")
-	core.PuregoSafeRegister(&xApplicationCommandLineGetenv, lib, "g_application_command_line_getenv")
-	core.PuregoSafeRegister(&xApplicationCommandLinePrint, lib, "g_application_command_line_print")
-	core.PuregoSafeRegister(&xApplicationCommandLinePrintLiteral, lib, "g_application_command_line_print_literal")
-	core.PuregoSafeRegister(&xApplicationCommandLinePrinterr, lib, "g_application_command_line_printerr")
-	core.PuregoSafeRegister(&xApplicationCommandLinePrinterrLiteral, lib, "g_application_command_line_printerr_literal")
-	core.PuregoSafeRegister(&xApplicationCommandLineSetExitStatus, lib, "g_application_command_line_set_exit_status")
+	core.PuregoSafeRegister(&xApplicationCommandLineCreateFileForArg, libs, "g_application_command_line_create_file_for_arg")
+	core.PuregoSafeRegister(&xApplicationCommandLineDone, libs, "g_application_command_line_done")
+	core.PuregoSafeRegister(&xApplicationCommandLineGetArguments, libs, "g_application_command_line_get_arguments")
+	core.PuregoSafeRegister(&xApplicationCommandLineGetCwd, libs, "g_application_command_line_get_cwd")
+	core.PuregoSafeRegister(&xApplicationCommandLineGetEnviron, libs, "g_application_command_line_get_environ")
+	core.PuregoSafeRegister(&xApplicationCommandLineGetExitStatus, libs, "g_application_command_line_get_exit_status")
+	core.PuregoSafeRegister(&xApplicationCommandLineGetIsRemote, libs, "g_application_command_line_get_is_remote")
+	core.PuregoSafeRegister(&xApplicationCommandLineGetOptionsDict, libs, "g_application_command_line_get_options_dict")
+	core.PuregoSafeRegister(&xApplicationCommandLineGetPlatformData, libs, "g_application_command_line_get_platform_data")
+	core.PuregoSafeRegister(&xApplicationCommandLineGetStdin, libs, "g_application_command_line_get_stdin")
+	core.PuregoSafeRegister(&xApplicationCommandLineGetenv, libs, "g_application_command_line_getenv")
+	core.PuregoSafeRegister(&xApplicationCommandLinePrint, libs, "g_application_command_line_print")
+	core.PuregoSafeRegister(&xApplicationCommandLinePrintLiteral, libs, "g_application_command_line_print_literal")
+	core.PuregoSafeRegister(&xApplicationCommandLinePrinterr, libs, "g_application_command_line_printerr")
+	core.PuregoSafeRegister(&xApplicationCommandLinePrinterrLiteral, libs, "g_application_command_line_printerr_literal")
+	core.PuregoSafeRegister(&xApplicationCommandLineSetExitStatus, libs, "g_application_command_line_set_exit_status")
 
 }

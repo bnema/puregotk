@@ -632,26 +632,30 @@ func SettingsBackendGetDefault() *SettingsBackend {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xKeyfileSettingsBackendNew, lib, "g_keyfile_settings_backend_new")
-	core.PuregoSafeRegister(&xMemorySettingsBackendNew, lib, "g_memory_settings_backend_new")
-	core.PuregoSafeRegister(&xNullSettingsBackendNew, lib, "g_null_settings_backend_new")
+	core.PuregoSafeRegister(&xKeyfileSettingsBackendNew, libs, "g_keyfile_settings_backend_new")
+	core.PuregoSafeRegister(&xMemorySettingsBackendNew, libs, "g_memory_settings_backend_new")
+	core.PuregoSafeRegister(&xNullSettingsBackendNew, libs, "g_null_settings_backend_new")
 
-	core.PuregoSafeRegister(&xSettingsBackendGLibType, lib, "g_settings_backend_get_type")
+	core.PuregoSafeRegister(&xSettingsBackendGLibType, libs, "g_settings_backend_get_type")
 
-	core.PuregoSafeRegister(&xSettingsBackendChanged, lib, "g_settings_backend_changed")
-	core.PuregoSafeRegister(&xSettingsBackendChangedTree, lib, "g_settings_backend_changed_tree")
-	core.PuregoSafeRegister(&xSettingsBackendKeysChanged, lib, "g_settings_backend_keys_changed")
-	core.PuregoSafeRegister(&xSettingsBackendPathChanged, lib, "g_settings_backend_path_changed")
-	core.PuregoSafeRegister(&xSettingsBackendPathWritableChanged, lib, "g_settings_backend_path_writable_changed")
-	core.PuregoSafeRegister(&xSettingsBackendWritableChanged, lib, "g_settings_backend_writable_changed")
+	core.PuregoSafeRegister(&xSettingsBackendChanged, libs, "g_settings_backend_changed")
+	core.PuregoSafeRegister(&xSettingsBackendChangedTree, libs, "g_settings_backend_changed_tree")
+	core.PuregoSafeRegister(&xSettingsBackendKeysChanged, libs, "g_settings_backend_keys_changed")
+	core.PuregoSafeRegister(&xSettingsBackendPathChanged, libs, "g_settings_backend_path_changed")
+	core.PuregoSafeRegister(&xSettingsBackendPathWritableChanged, libs, "g_settings_backend_path_writable_changed")
+	core.PuregoSafeRegister(&xSettingsBackendWritableChanged, libs, "g_settings_backend_writable_changed")
 
-	core.PuregoSafeRegister(&xSettingsBackendFlattenTree, lib, "g_settings_backend_flatten_tree")
-	core.PuregoSafeRegister(&xSettingsBackendGetDefault, lib, "g_settings_backend_get_default")
+	core.PuregoSafeRegister(&xSettingsBackendFlattenTree, libs, "g_settings_backend_flatten_tree")
+	core.PuregoSafeRegister(&xSettingsBackendGetDefault, libs, "g_settings_backend_get_default")
 
 }

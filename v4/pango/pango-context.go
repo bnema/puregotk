@@ -392,38 +392,42 @@ func (c *Context) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xContextGLibType, lib, "pango_context_get_type")
+	core.PuregoSafeRegister(&xContextGLibType, libs, "pango_context_get_type")
 
-	core.PuregoSafeRegister(&xNewContext, lib, "pango_context_new")
+	core.PuregoSafeRegister(&xNewContext, libs, "pango_context_new")
 
-	core.PuregoSafeRegister(&xContextChanged, lib, "pango_context_changed")
-	core.PuregoSafeRegister(&xContextGetBaseDir, lib, "pango_context_get_base_dir")
-	core.PuregoSafeRegister(&xContextGetBaseGravity, lib, "pango_context_get_base_gravity")
-	core.PuregoSafeRegister(&xContextGetFontDescription, lib, "pango_context_get_font_description")
-	core.PuregoSafeRegister(&xContextGetFontMap, lib, "pango_context_get_font_map")
-	core.PuregoSafeRegister(&xContextGetGravity, lib, "pango_context_get_gravity")
-	core.PuregoSafeRegister(&xContextGetGravityHint, lib, "pango_context_get_gravity_hint")
-	core.PuregoSafeRegister(&xContextGetLanguage, lib, "pango_context_get_language")
-	core.PuregoSafeRegister(&xContextGetMatrix, lib, "pango_context_get_matrix")
-	core.PuregoSafeRegister(&xContextGetMetrics, lib, "pango_context_get_metrics")
-	core.PuregoSafeRegister(&xContextGetRoundGlyphPositions, lib, "pango_context_get_round_glyph_positions")
-	core.PuregoSafeRegister(&xContextGetSerial, lib, "pango_context_get_serial")
-	core.PuregoSafeRegister(&xContextListFamilies, lib, "pango_context_list_families")
-	core.PuregoSafeRegister(&xContextLoadFont, lib, "pango_context_load_font")
-	core.PuregoSafeRegister(&xContextLoadFontset, lib, "pango_context_load_fontset")
-	core.PuregoSafeRegister(&xContextSetBaseDir, lib, "pango_context_set_base_dir")
-	core.PuregoSafeRegister(&xContextSetBaseGravity, lib, "pango_context_set_base_gravity")
-	core.PuregoSafeRegister(&xContextSetFontDescription, lib, "pango_context_set_font_description")
-	core.PuregoSafeRegister(&xContextSetFontMap, lib, "pango_context_set_font_map")
-	core.PuregoSafeRegister(&xContextSetGravityHint, lib, "pango_context_set_gravity_hint")
-	core.PuregoSafeRegister(&xContextSetLanguage, lib, "pango_context_set_language")
-	core.PuregoSafeRegister(&xContextSetMatrix, lib, "pango_context_set_matrix")
-	core.PuregoSafeRegister(&xContextSetRoundGlyphPositions, lib, "pango_context_set_round_glyph_positions")
+	core.PuregoSafeRegister(&xContextChanged, libs, "pango_context_changed")
+	core.PuregoSafeRegister(&xContextGetBaseDir, libs, "pango_context_get_base_dir")
+	core.PuregoSafeRegister(&xContextGetBaseGravity, libs, "pango_context_get_base_gravity")
+	core.PuregoSafeRegister(&xContextGetFontDescription, libs, "pango_context_get_font_description")
+	core.PuregoSafeRegister(&xContextGetFontMap, libs, "pango_context_get_font_map")
+	core.PuregoSafeRegister(&xContextGetGravity, libs, "pango_context_get_gravity")
+	core.PuregoSafeRegister(&xContextGetGravityHint, libs, "pango_context_get_gravity_hint")
+	core.PuregoSafeRegister(&xContextGetLanguage, libs, "pango_context_get_language")
+	core.PuregoSafeRegister(&xContextGetMatrix, libs, "pango_context_get_matrix")
+	core.PuregoSafeRegister(&xContextGetMetrics, libs, "pango_context_get_metrics")
+	core.PuregoSafeRegister(&xContextGetRoundGlyphPositions, libs, "pango_context_get_round_glyph_positions")
+	core.PuregoSafeRegister(&xContextGetSerial, libs, "pango_context_get_serial")
+	core.PuregoSafeRegister(&xContextListFamilies, libs, "pango_context_list_families")
+	core.PuregoSafeRegister(&xContextLoadFont, libs, "pango_context_load_font")
+	core.PuregoSafeRegister(&xContextLoadFontset, libs, "pango_context_load_fontset")
+	core.PuregoSafeRegister(&xContextSetBaseDir, libs, "pango_context_set_base_dir")
+	core.PuregoSafeRegister(&xContextSetBaseGravity, libs, "pango_context_set_base_gravity")
+	core.PuregoSafeRegister(&xContextSetFontDescription, libs, "pango_context_set_font_description")
+	core.PuregoSafeRegister(&xContextSetFontMap, libs, "pango_context_set_font_map")
+	core.PuregoSafeRegister(&xContextSetGravityHint, libs, "pango_context_set_gravity_hint")
+	core.PuregoSafeRegister(&xContextSetLanguage, libs, "pango_context_set_language")
+	core.PuregoSafeRegister(&xContextSetMatrix, libs, "pango_context_set_matrix")
+	core.PuregoSafeRegister(&xContextSetRoundGlyphPositions, libs, "pango_context_set_round_glyph_positions")
 
 }

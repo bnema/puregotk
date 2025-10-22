@@ -266,28 +266,32 @@ func (x *GlyphItemIter) PrevCluster() bool {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGlyphItemGLibType, lib, "pango_glyph_item_get_type")
+	core.PuregoSafeRegister(&xGlyphItemGLibType, libs, "pango_glyph_item_get_type")
 
-	core.PuregoSafeRegister(&xGlyphItemApplyAttrs, lib, "pango_glyph_item_apply_attrs")
-	core.PuregoSafeRegister(&xGlyphItemCopy, lib, "pango_glyph_item_copy")
-	core.PuregoSafeRegister(&xGlyphItemFree, lib, "pango_glyph_item_free")
-	core.PuregoSafeRegister(&xGlyphItemGetLogicalWidths, lib, "pango_glyph_item_get_logical_widths")
-	core.PuregoSafeRegister(&xGlyphItemLetterSpace, lib, "pango_glyph_item_letter_space")
-	core.PuregoSafeRegister(&xGlyphItemSplit, lib, "pango_glyph_item_split")
+	core.PuregoSafeRegister(&xGlyphItemApplyAttrs, libs, "pango_glyph_item_apply_attrs")
+	core.PuregoSafeRegister(&xGlyphItemCopy, libs, "pango_glyph_item_copy")
+	core.PuregoSafeRegister(&xGlyphItemFree, libs, "pango_glyph_item_free")
+	core.PuregoSafeRegister(&xGlyphItemGetLogicalWidths, libs, "pango_glyph_item_get_logical_widths")
+	core.PuregoSafeRegister(&xGlyphItemLetterSpace, libs, "pango_glyph_item_letter_space")
+	core.PuregoSafeRegister(&xGlyphItemSplit, libs, "pango_glyph_item_split")
 
-	core.PuregoSafeRegister(&xGlyphItemIterGLibType, lib, "pango_glyph_item_iter_get_type")
+	core.PuregoSafeRegister(&xGlyphItemIterGLibType, libs, "pango_glyph_item_iter_get_type")
 
-	core.PuregoSafeRegister(&xGlyphItemIterCopy, lib, "pango_glyph_item_iter_copy")
-	core.PuregoSafeRegister(&xGlyphItemIterFree, lib, "pango_glyph_item_iter_free")
-	core.PuregoSafeRegister(&xGlyphItemIterInitEnd, lib, "pango_glyph_item_iter_init_end")
-	core.PuregoSafeRegister(&xGlyphItemIterInitStart, lib, "pango_glyph_item_iter_init_start")
-	core.PuregoSafeRegister(&xGlyphItemIterNextCluster, lib, "pango_glyph_item_iter_next_cluster")
-	core.PuregoSafeRegister(&xGlyphItemIterPrevCluster, lib, "pango_glyph_item_iter_prev_cluster")
+	core.PuregoSafeRegister(&xGlyphItemIterCopy, libs, "pango_glyph_item_iter_copy")
+	core.PuregoSafeRegister(&xGlyphItemIterFree, libs, "pango_glyph_item_iter_free")
+	core.PuregoSafeRegister(&xGlyphItemIterInitEnd, libs, "pango_glyph_item_iter_init_end")
+	core.PuregoSafeRegister(&xGlyphItemIterInitStart, libs, "pango_glyph_item_iter_init_start")
+	core.PuregoSafeRegister(&xGlyphItemIterNextCluster, libs, "pango_glyph_item_iter_next_cluster")
+	core.PuregoSafeRegister(&xGlyphItemIterPrevCluster, libs, "pango_glyph_item_iter_prev_cluster")
 
 }

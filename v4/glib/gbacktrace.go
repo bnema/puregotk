@@ -87,13 +87,17 @@ func OnErrorStackTrace(PrgNameVar string) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xOnErrorQuery, lib, "g_on_error_query")
-	core.PuregoSafeRegister(&xOnErrorStackTrace, lib, "g_on_error_stack_trace")
+	core.PuregoSafeRegister(&xOnErrorQuery, libs, "g_on_error_query")
+	core.PuregoSafeRegister(&xOnErrorStackTrace, libs, "g_on_error_stack_trace")
 
 }

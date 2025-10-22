@@ -526,20 +526,24 @@ func (x *BreakpointBin) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBreakpointBinGLibType, lib, "adw_breakpoint_bin_get_type")
+	core.PuregoSafeRegister(&xBreakpointBinGLibType, libs, "adw_breakpoint_bin_get_type")
 
-	core.PuregoSafeRegister(&xNewBreakpointBin, lib, "adw_breakpoint_bin_new")
+	core.PuregoSafeRegister(&xNewBreakpointBin, libs, "adw_breakpoint_bin_new")
 
-	core.PuregoSafeRegister(&xBreakpointBinAddBreakpoint, lib, "adw_breakpoint_bin_add_breakpoint")
-	core.PuregoSafeRegister(&xBreakpointBinGetChild, lib, "adw_breakpoint_bin_get_child")
-	core.PuregoSafeRegister(&xBreakpointBinGetCurrentBreakpoint, lib, "adw_breakpoint_bin_get_current_breakpoint")
-	core.PuregoSafeRegister(&xBreakpointBinRemoveBreakpoint, lib, "adw_breakpoint_bin_remove_breakpoint")
-	core.PuregoSafeRegister(&xBreakpointBinSetChild, lib, "adw_breakpoint_bin_set_child")
+	core.PuregoSafeRegister(&xBreakpointBinAddBreakpoint, libs, "adw_breakpoint_bin_add_breakpoint")
+	core.PuregoSafeRegister(&xBreakpointBinGetChild, libs, "adw_breakpoint_bin_get_child")
+	core.PuregoSafeRegister(&xBreakpointBinGetCurrentBreakpoint, libs, "adw_breakpoint_bin_get_current_breakpoint")
+	core.PuregoSafeRegister(&xBreakpointBinRemoveBreakpoint, libs, "adw_breakpoint_bin_remove_breakpoint")
+	core.PuregoSafeRegister(&xBreakpointBinSetChild, libs, "adw_breakpoint_bin_set_child")
 
 }

@@ -233,18 +233,22 @@ func (x *SocketAddress) ToString() string {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSocketAddressGLibType, lib, "g_socket_address_get_type")
+	core.PuregoSafeRegister(&xSocketAddressGLibType, libs, "g_socket_address_get_type")
 
-	core.PuregoSafeRegister(&xNewSocketAddressFromNative, lib, "g_socket_address_new_from_native")
+	core.PuregoSafeRegister(&xNewSocketAddressFromNative, libs, "g_socket_address_new_from_native")
 
-	core.PuregoSafeRegister(&xSocketAddressGetFamily, lib, "g_socket_address_get_family")
-	core.PuregoSafeRegister(&xSocketAddressGetNativeSize, lib, "g_socket_address_get_native_size")
-	core.PuregoSafeRegister(&xSocketAddressToNative, lib, "g_socket_address_to_native")
+	core.PuregoSafeRegister(&xSocketAddressGetFamily, libs, "g_socket_address_get_family")
+	core.PuregoSafeRegister(&xSocketAddressGetNativeSize, libs, "g_socket_address_get_native_size")
+	core.PuregoSafeRegister(&xSocketAddressToNative, libs, "g_socket_address_to_native")
 
 }

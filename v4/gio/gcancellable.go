@@ -583,29 +583,33 @@ func CancellableGetCurrent() *Cancellable {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCancellableGLibType, lib, "g_cancellable_get_type")
+	core.PuregoSafeRegister(&xCancellableGLibType, libs, "g_cancellable_get_type")
 
-	core.PuregoSafeRegister(&xNewCancellable, lib, "g_cancellable_new")
+	core.PuregoSafeRegister(&xNewCancellable, libs, "g_cancellable_new")
 
-	core.PuregoSafeRegister(&xCancellableCancel, lib, "g_cancellable_cancel")
-	core.PuregoSafeRegister(&xCancellableConnect, lib, "g_cancellable_connect")
-	core.PuregoSafeRegister(&xCancellableDisconnect, lib, "g_cancellable_disconnect")
-	core.PuregoSafeRegister(&xCancellableGetFd, lib, "g_cancellable_get_fd")
-	core.PuregoSafeRegister(&xCancellableIsCancelled, lib, "g_cancellable_is_cancelled")
-	core.PuregoSafeRegister(&xCancellableMakePollfd, lib, "g_cancellable_make_pollfd")
-	core.PuregoSafeRegister(&xCancellablePopCurrent, lib, "g_cancellable_pop_current")
-	core.PuregoSafeRegister(&xCancellablePushCurrent, lib, "g_cancellable_push_current")
-	core.PuregoSafeRegister(&xCancellableReleaseFd, lib, "g_cancellable_release_fd")
-	core.PuregoSafeRegister(&xCancellableReset, lib, "g_cancellable_reset")
-	core.PuregoSafeRegister(&xCancellableSetErrorIfCancelled, lib, "g_cancellable_set_error_if_cancelled")
-	core.PuregoSafeRegister(&xCancellableSourceNew, lib, "g_cancellable_source_new")
+	core.PuregoSafeRegister(&xCancellableCancel, libs, "g_cancellable_cancel")
+	core.PuregoSafeRegister(&xCancellableConnect, libs, "g_cancellable_connect")
+	core.PuregoSafeRegister(&xCancellableDisconnect, libs, "g_cancellable_disconnect")
+	core.PuregoSafeRegister(&xCancellableGetFd, libs, "g_cancellable_get_fd")
+	core.PuregoSafeRegister(&xCancellableIsCancelled, libs, "g_cancellable_is_cancelled")
+	core.PuregoSafeRegister(&xCancellableMakePollfd, libs, "g_cancellable_make_pollfd")
+	core.PuregoSafeRegister(&xCancellablePopCurrent, libs, "g_cancellable_pop_current")
+	core.PuregoSafeRegister(&xCancellablePushCurrent, libs, "g_cancellable_push_current")
+	core.PuregoSafeRegister(&xCancellableReleaseFd, libs, "g_cancellable_release_fd")
+	core.PuregoSafeRegister(&xCancellableReset, libs, "g_cancellable_reset")
+	core.PuregoSafeRegister(&xCancellableSetErrorIfCancelled, libs, "g_cancellable_set_error_if_cancelled")
+	core.PuregoSafeRegister(&xCancellableSourceNew, libs, "g_cancellable_source_new")
 
-	core.PuregoSafeRegister(&xCancellableGetCurrent, lib, "g_cancellable_get_current")
+	core.PuregoSafeRegister(&xCancellableGetCurrent, libs, "g_cancellable_get_current")
 
 }

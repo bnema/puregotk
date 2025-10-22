@@ -750,34 +750,38 @@ func (c *Renderer) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRenderPartGLibType, lib, "pango_render_part_get_type")
+	core.PuregoSafeRegister(&xRenderPartGLibType, libs, "pango_render_part_get_type")
 
-	core.PuregoSafeRegister(&xRendererGLibType, lib, "pango_renderer_get_type")
+	core.PuregoSafeRegister(&xRendererGLibType, libs, "pango_renderer_get_type")
 
-	core.PuregoSafeRegister(&xRendererActivate, lib, "pango_renderer_activate")
-	core.PuregoSafeRegister(&xRendererDeactivate, lib, "pango_renderer_deactivate")
-	core.PuregoSafeRegister(&xRendererDrawErrorUnderline, lib, "pango_renderer_draw_error_underline")
-	core.PuregoSafeRegister(&xRendererDrawGlyph, lib, "pango_renderer_draw_glyph")
-	core.PuregoSafeRegister(&xRendererDrawGlyphItem, lib, "pango_renderer_draw_glyph_item")
-	core.PuregoSafeRegister(&xRendererDrawGlyphs, lib, "pango_renderer_draw_glyphs")
-	core.PuregoSafeRegister(&xRendererDrawLayout, lib, "pango_renderer_draw_layout")
-	core.PuregoSafeRegister(&xRendererDrawLayoutLine, lib, "pango_renderer_draw_layout_line")
-	core.PuregoSafeRegister(&xRendererDrawRectangle, lib, "pango_renderer_draw_rectangle")
-	core.PuregoSafeRegister(&xRendererDrawTrapezoid, lib, "pango_renderer_draw_trapezoid")
-	core.PuregoSafeRegister(&xRendererGetAlpha, lib, "pango_renderer_get_alpha")
-	core.PuregoSafeRegister(&xRendererGetColor, lib, "pango_renderer_get_color")
-	core.PuregoSafeRegister(&xRendererGetLayout, lib, "pango_renderer_get_layout")
-	core.PuregoSafeRegister(&xRendererGetLayoutLine, lib, "pango_renderer_get_layout_line")
-	core.PuregoSafeRegister(&xRendererGetMatrix, lib, "pango_renderer_get_matrix")
-	core.PuregoSafeRegister(&xRendererPartChanged, lib, "pango_renderer_part_changed")
-	core.PuregoSafeRegister(&xRendererSetAlpha, lib, "pango_renderer_set_alpha")
-	core.PuregoSafeRegister(&xRendererSetColor, lib, "pango_renderer_set_color")
-	core.PuregoSafeRegister(&xRendererSetMatrix, lib, "pango_renderer_set_matrix")
+	core.PuregoSafeRegister(&xRendererActivate, libs, "pango_renderer_activate")
+	core.PuregoSafeRegister(&xRendererDeactivate, libs, "pango_renderer_deactivate")
+	core.PuregoSafeRegister(&xRendererDrawErrorUnderline, libs, "pango_renderer_draw_error_underline")
+	core.PuregoSafeRegister(&xRendererDrawGlyph, libs, "pango_renderer_draw_glyph")
+	core.PuregoSafeRegister(&xRendererDrawGlyphItem, libs, "pango_renderer_draw_glyph_item")
+	core.PuregoSafeRegister(&xRendererDrawGlyphs, libs, "pango_renderer_draw_glyphs")
+	core.PuregoSafeRegister(&xRendererDrawLayout, libs, "pango_renderer_draw_layout")
+	core.PuregoSafeRegister(&xRendererDrawLayoutLine, libs, "pango_renderer_draw_layout_line")
+	core.PuregoSafeRegister(&xRendererDrawRectangle, libs, "pango_renderer_draw_rectangle")
+	core.PuregoSafeRegister(&xRendererDrawTrapezoid, libs, "pango_renderer_draw_trapezoid")
+	core.PuregoSafeRegister(&xRendererGetAlpha, libs, "pango_renderer_get_alpha")
+	core.PuregoSafeRegister(&xRendererGetColor, libs, "pango_renderer_get_color")
+	core.PuregoSafeRegister(&xRendererGetLayout, libs, "pango_renderer_get_layout")
+	core.PuregoSafeRegister(&xRendererGetLayoutLine, libs, "pango_renderer_get_layout_line")
+	core.PuregoSafeRegister(&xRendererGetMatrix, libs, "pango_renderer_get_matrix")
+	core.PuregoSafeRegister(&xRendererPartChanged, libs, "pango_renderer_part_changed")
+	core.PuregoSafeRegister(&xRendererSetAlpha, libs, "pango_renderer_set_alpha")
+	core.PuregoSafeRegister(&xRendererSetColor, libs, "pango_renderer_set_color")
+	core.PuregoSafeRegister(&xRendererSetMatrix, libs, "pango_renderer_set_matrix")
 
 }

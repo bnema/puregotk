@@ -563,20 +563,24 @@ func (x *DrawingArea) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDrawingAreaGLibType, lib, "gtk_drawing_area_get_type")
+	core.PuregoSafeRegister(&xDrawingAreaGLibType, libs, "gtk_drawing_area_get_type")
 
-	core.PuregoSafeRegister(&xNewDrawingArea, lib, "gtk_drawing_area_new")
+	core.PuregoSafeRegister(&xNewDrawingArea, libs, "gtk_drawing_area_new")
 
-	core.PuregoSafeRegister(&xDrawingAreaGetContentHeight, lib, "gtk_drawing_area_get_content_height")
-	core.PuregoSafeRegister(&xDrawingAreaGetContentWidth, lib, "gtk_drawing_area_get_content_width")
-	core.PuregoSafeRegister(&xDrawingAreaSetContentHeight, lib, "gtk_drawing_area_set_content_height")
-	core.PuregoSafeRegister(&xDrawingAreaSetContentWidth, lib, "gtk_drawing_area_set_content_width")
-	core.PuregoSafeRegister(&xDrawingAreaSetDrawFunc, lib, "gtk_drawing_area_set_draw_func")
+	core.PuregoSafeRegister(&xDrawingAreaGetContentHeight, libs, "gtk_drawing_area_get_content_height")
+	core.PuregoSafeRegister(&xDrawingAreaGetContentWidth, libs, "gtk_drawing_area_get_content_width")
+	core.PuregoSafeRegister(&xDrawingAreaSetContentHeight, libs, "gtk_drawing_area_set_content_height")
+	core.PuregoSafeRegister(&xDrawingAreaSetContentWidth, libs, "gtk_drawing_area_set_content_width")
+	core.PuregoSafeRegister(&xDrawingAreaSetDrawFunc, libs, "gtk_drawing_area_set_draw_func")
 
 }

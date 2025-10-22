@@ -317,22 +317,26 @@ func (x *FilterListModel) SectionsChanged(PositionVar uint, NItemsVar uint) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFilterListModelGLibType, lib, "gtk_filter_list_model_get_type")
+	core.PuregoSafeRegister(&xFilterListModelGLibType, libs, "gtk_filter_list_model_get_type")
 
-	core.PuregoSafeRegister(&xNewFilterListModel, lib, "gtk_filter_list_model_new")
+	core.PuregoSafeRegister(&xNewFilterListModel, libs, "gtk_filter_list_model_new")
 
-	core.PuregoSafeRegister(&xFilterListModelGetFilter, lib, "gtk_filter_list_model_get_filter")
-	core.PuregoSafeRegister(&xFilterListModelGetIncremental, lib, "gtk_filter_list_model_get_incremental")
-	core.PuregoSafeRegister(&xFilterListModelGetModel, lib, "gtk_filter_list_model_get_model")
-	core.PuregoSafeRegister(&xFilterListModelGetPending, lib, "gtk_filter_list_model_get_pending")
-	core.PuregoSafeRegister(&xFilterListModelSetFilter, lib, "gtk_filter_list_model_set_filter")
-	core.PuregoSafeRegister(&xFilterListModelSetIncremental, lib, "gtk_filter_list_model_set_incremental")
-	core.PuregoSafeRegister(&xFilterListModelSetModel, lib, "gtk_filter_list_model_set_model")
+	core.PuregoSafeRegister(&xFilterListModelGetFilter, libs, "gtk_filter_list_model_get_filter")
+	core.PuregoSafeRegister(&xFilterListModelGetIncremental, libs, "gtk_filter_list_model_get_incremental")
+	core.PuregoSafeRegister(&xFilterListModelGetModel, libs, "gtk_filter_list_model_get_model")
+	core.PuregoSafeRegister(&xFilterListModelGetPending, libs, "gtk_filter_list_model_get_pending")
+	core.PuregoSafeRegister(&xFilterListModelSetFilter, libs, "gtk_filter_list_model_set_filter")
+	core.PuregoSafeRegister(&xFilterListModelSetIncremental, libs, "gtk_filter_list_model_set_incremental")
+	core.PuregoSafeRegister(&xFilterListModelSetModel, libs, "gtk_filter_list_model_set_model")
 
 }

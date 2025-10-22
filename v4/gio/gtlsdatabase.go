@@ -834,26 +834,30 @@ func (c *TlsDatabase) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTlsDatabaseGLibType, lib, "g_tls_database_get_type")
+	core.PuregoSafeRegister(&xTlsDatabaseGLibType, libs, "g_tls_database_get_type")
 
-	core.PuregoSafeRegister(&xTlsDatabaseCreateCertificateHandle, lib, "g_tls_database_create_certificate_handle")
-	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateForHandle, lib, "g_tls_database_lookup_certificate_for_handle")
-	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateForHandleAsync, lib, "g_tls_database_lookup_certificate_for_handle_async")
-	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateForHandleFinish, lib, "g_tls_database_lookup_certificate_for_handle_finish")
-	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateIssuer, lib, "g_tls_database_lookup_certificate_issuer")
-	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateIssuerAsync, lib, "g_tls_database_lookup_certificate_issuer_async")
-	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateIssuerFinish, lib, "g_tls_database_lookup_certificate_issuer_finish")
-	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificatesIssuedBy, lib, "g_tls_database_lookup_certificates_issued_by")
-	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificatesIssuedByAsync, lib, "g_tls_database_lookup_certificates_issued_by_async")
-	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificatesIssuedByFinish, lib, "g_tls_database_lookup_certificates_issued_by_finish")
-	core.PuregoSafeRegister(&xTlsDatabaseVerifyChain, lib, "g_tls_database_verify_chain")
-	core.PuregoSafeRegister(&xTlsDatabaseVerifyChainAsync, lib, "g_tls_database_verify_chain_async")
-	core.PuregoSafeRegister(&xTlsDatabaseVerifyChainFinish, lib, "g_tls_database_verify_chain_finish")
+	core.PuregoSafeRegister(&xTlsDatabaseCreateCertificateHandle, libs, "g_tls_database_create_certificate_handle")
+	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateForHandle, libs, "g_tls_database_lookup_certificate_for_handle")
+	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateForHandleAsync, libs, "g_tls_database_lookup_certificate_for_handle_async")
+	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateForHandleFinish, libs, "g_tls_database_lookup_certificate_for_handle_finish")
+	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateIssuer, libs, "g_tls_database_lookup_certificate_issuer")
+	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateIssuerAsync, libs, "g_tls_database_lookup_certificate_issuer_async")
+	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificateIssuerFinish, libs, "g_tls_database_lookup_certificate_issuer_finish")
+	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificatesIssuedBy, libs, "g_tls_database_lookup_certificates_issued_by")
+	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificatesIssuedByAsync, libs, "g_tls_database_lookup_certificates_issued_by_async")
+	core.PuregoSafeRegister(&xTlsDatabaseLookupCertificatesIssuedByFinish, libs, "g_tls_database_lookup_certificates_issued_by_finish")
+	core.PuregoSafeRegister(&xTlsDatabaseVerifyChain, libs, "g_tls_database_verify_chain")
+	core.PuregoSafeRegister(&xTlsDatabaseVerifyChainAsync, libs, "g_tls_database_verify_chain_async")
+	core.PuregoSafeRegister(&xTlsDatabaseVerifyChainFinish, libs, "g_tls_database_verify_chain_finish")
 
 }

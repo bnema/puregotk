@@ -507,25 +507,29 @@ const (
 
 func init() {
 	core.SetPackageName("GDKPIXBUF", "gdk-pixbuf-2.0")
-	core.SetSharedLibrary("GDKPIXBUF", "libgdk_pixbuf-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GDKPIXBUF"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDKPIXBUF", []string{"libgdk_pixbuf-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDKPIXBUF") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPixbufFormatGLibType, lib, "gdk_pixbuf_format_get_type")
+	core.PuregoSafeRegister(&xPixbufFormatGLibType, libs, "gdk_pixbuf_format_get_type")
 
-	core.PuregoSafeRegister(&xPixbufFormatCopy, lib, "gdk_pixbuf_format_copy")
-	core.PuregoSafeRegister(&xPixbufFormatFree, lib, "gdk_pixbuf_format_free")
-	core.PuregoSafeRegister(&xPixbufFormatGetDescription, lib, "gdk_pixbuf_format_get_description")
-	core.PuregoSafeRegister(&xPixbufFormatGetExtensions, lib, "gdk_pixbuf_format_get_extensions")
-	core.PuregoSafeRegister(&xPixbufFormatGetLicense, lib, "gdk_pixbuf_format_get_license")
-	core.PuregoSafeRegister(&xPixbufFormatGetMimeTypes, lib, "gdk_pixbuf_format_get_mime_types")
-	core.PuregoSafeRegister(&xPixbufFormatGetName, lib, "gdk_pixbuf_format_get_name")
-	core.PuregoSafeRegister(&xPixbufFormatIsDisabled, lib, "gdk_pixbuf_format_is_disabled")
-	core.PuregoSafeRegister(&xPixbufFormatIsSaveOptionSupported, lib, "gdk_pixbuf_format_is_save_option_supported")
-	core.PuregoSafeRegister(&xPixbufFormatIsScalable, lib, "gdk_pixbuf_format_is_scalable")
-	core.PuregoSafeRegister(&xPixbufFormatIsWritable, lib, "gdk_pixbuf_format_is_writable")
-	core.PuregoSafeRegister(&xPixbufFormatSetDisabled, lib, "gdk_pixbuf_format_set_disabled")
+	core.PuregoSafeRegister(&xPixbufFormatCopy, libs, "gdk_pixbuf_format_copy")
+	core.PuregoSafeRegister(&xPixbufFormatFree, libs, "gdk_pixbuf_format_free")
+	core.PuregoSafeRegister(&xPixbufFormatGetDescription, libs, "gdk_pixbuf_format_get_description")
+	core.PuregoSafeRegister(&xPixbufFormatGetExtensions, libs, "gdk_pixbuf_format_get_extensions")
+	core.PuregoSafeRegister(&xPixbufFormatGetLicense, libs, "gdk_pixbuf_format_get_license")
+	core.PuregoSafeRegister(&xPixbufFormatGetMimeTypes, libs, "gdk_pixbuf_format_get_mime_types")
+	core.PuregoSafeRegister(&xPixbufFormatGetName, libs, "gdk_pixbuf_format_get_name")
+	core.PuregoSafeRegister(&xPixbufFormatIsDisabled, libs, "gdk_pixbuf_format_is_disabled")
+	core.PuregoSafeRegister(&xPixbufFormatIsSaveOptionSupported, libs, "gdk_pixbuf_format_is_save_option_supported")
+	core.PuregoSafeRegister(&xPixbufFormatIsScalable, libs, "gdk_pixbuf_format_is_scalable")
+	core.PuregoSafeRegister(&xPixbufFormatIsWritable, libs, "gdk_pixbuf_format_is_writable")
+	core.PuregoSafeRegister(&xPixbufFormatSetDisabled, libs, "gdk_pixbuf_format_set_disabled")
 
 }

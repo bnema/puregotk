@@ -164,24 +164,28 @@ func (x *ValueArray) SortWithData(CompareFuncVar *glib.CompareDataFunc, UserData
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xValueArrayGLibType, lib, "g_value_array_get_type")
+	core.PuregoSafeRegister(&xValueArrayGLibType, libs, "g_value_array_get_type")
 
-	core.PuregoSafeRegister(&xNewValueArray, lib, "g_value_array_new")
+	core.PuregoSafeRegister(&xNewValueArray, libs, "g_value_array_new")
 
-	core.PuregoSafeRegister(&xValueArrayAppend, lib, "g_value_array_append")
-	core.PuregoSafeRegister(&xValueArrayCopy, lib, "g_value_array_copy")
-	core.PuregoSafeRegister(&xValueArrayFree, lib, "g_value_array_free")
-	core.PuregoSafeRegister(&xValueArrayGetNth, lib, "g_value_array_get_nth")
-	core.PuregoSafeRegister(&xValueArrayInsert, lib, "g_value_array_insert")
-	core.PuregoSafeRegister(&xValueArrayPrepend, lib, "g_value_array_prepend")
-	core.PuregoSafeRegister(&xValueArrayRemove, lib, "g_value_array_remove")
-	core.PuregoSafeRegister(&xValueArraySort, lib, "g_value_array_sort")
-	core.PuregoSafeRegister(&xValueArraySortWithData, lib, "g_value_array_sort_with_data")
+	core.PuregoSafeRegister(&xValueArrayAppend, libs, "g_value_array_append")
+	core.PuregoSafeRegister(&xValueArrayCopy, libs, "g_value_array_copy")
+	core.PuregoSafeRegister(&xValueArrayFree, libs, "g_value_array_free")
+	core.PuregoSafeRegister(&xValueArrayGetNth, libs, "g_value_array_get_nth")
+	core.PuregoSafeRegister(&xValueArrayInsert, libs, "g_value_array_insert")
+	core.PuregoSafeRegister(&xValueArrayPrepend, libs, "g_value_array_prepend")
+	core.PuregoSafeRegister(&xValueArrayRemove, libs, "g_value_array_remove")
+	core.PuregoSafeRegister(&xValueArraySort, libs, "g_value_array_sort")
+	core.PuregoSafeRegister(&xValueArraySortWithData, libs, "g_value_array_sort_with_data")
 
 }

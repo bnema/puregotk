@@ -164,17 +164,21 @@ var XGTypePluginUse func(uintptr)
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTypePluginGLibType, lib, "g_type_plugin_get_type")
+	core.PuregoSafeRegister(&xTypePluginGLibType, libs, "g_type_plugin_get_type")
 
-	core.PuregoSafeRegister(&XGTypePluginCompleteInterfaceInfo, lib, "g_type_plugin_complete_interface_info")
-	core.PuregoSafeRegister(&XGTypePluginCompleteTypeInfo, lib, "g_type_plugin_complete_type_info")
-	core.PuregoSafeRegister(&XGTypePluginUnuse, lib, "g_type_plugin_unuse")
-	core.PuregoSafeRegister(&XGTypePluginUse, lib, "g_type_plugin_use")
+	core.PuregoSafeRegister(&XGTypePluginCompleteInterfaceInfo, libs, "g_type_plugin_complete_interface_info")
+	core.PuregoSafeRegister(&XGTypePluginCompleteTypeInfo, libs, "g_type_plugin_complete_type_info")
+	core.PuregoSafeRegister(&XGTypePluginUnuse, libs, "g_type_plugin_unuse")
+	core.PuregoSafeRegister(&XGTypePluginUse, libs, "g_type_plugin_use")
 
 }

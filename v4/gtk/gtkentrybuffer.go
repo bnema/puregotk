@@ -594,25 +594,29 @@ func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint, string, ui
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEntryBufferGLibType, lib, "gtk_entry_buffer_get_type")
+	core.PuregoSafeRegister(&xEntryBufferGLibType, libs, "gtk_entry_buffer_get_type")
 
-	core.PuregoSafeRegister(&xNewEntryBuffer, lib, "gtk_entry_buffer_new")
+	core.PuregoSafeRegister(&xNewEntryBuffer, libs, "gtk_entry_buffer_new")
 
-	core.PuregoSafeRegister(&xEntryBufferDeleteText, lib, "gtk_entry_buffer_delete_text")
-	core.PuregoSafeRegister(&xEntryBufferEmitDeletedText, lib, "gtk_entry_buffer_emit_deleted_text")
-	core.PuregoSafeRegister(&xEntryBufferEmitInsertedText, lib, "gtk_entry_buffer_emit_inserted_text")
-	core.PuregoSafeRegister(&xEntryBufferGetBytes, lib, "gtk_entry_buffer_get_bytes")
-	core.PuregoSafeRegister(&xEntryBufferGetLength, lib, "gtk_entry_buffer_get_length")
-	core.PuregoSafeRegister(&xEntryBufferGetMaxLength, lib, "gtk_entry_buffer_get_max_length")
-	core.PuregoSafeRegister(&xEntryBufferGetText, lib, "gtk_entry_buffer_get_text")
-	core.PuregoSafeRegister(&xEntryBufferInsertText, lib, "gtk_entry_buffer_insert_text")
-	core.PuregoSafeRegister(&xEntryBufferSetMaxLength, lib, "gtk_entry_buffer_set_max_length")
-	core.PuregoSafeRegister(&xEntryBufferSetText, lib, "gtk_entry_buffer_set_text")
+	core.PuregoSafeRegister(&xEntryBufferDeleteText, libs, "gtk_entry_buffer_delete_text")
+	core.PuregoSafeRegister(&xEntryBufferEmitDeletedText, libs, "gtk_entry_buffer_emit_deleted_text")
+	core.PuregoSafeRegister(&xEntryBufferEmitInsertedText, libs, "gtk_entry_buffer_emit_inserted_text")
+	core.PuregoSafeRegister(&xEntryBufferGetBytes, libs, "gtk_entry_buffer_get_bytes")
+	core.PuregoSafeRegister(&xEntryBufferGetLength, libs, "gtk_entry_buffer_get_length")
+	core.PuregoSafeRegister(&xEntryBufferGetMaxLength, libs, "gtk_entry_buffer_get_max_length")
+	core.PuregoSafeRegister(&xEntryBufferGetText, libs, "gtk_entry_buffer_get_text")
+	core.PuregoSafeRegister(&xEntryBufferInsertText, libs, "gtk_entry_buffer_insert_text")
+	core.PuregoSafeRegister(&xEntryBufferSetMaxLength, libs, "gtk_entry_buffer_set_max_length")
+	core.PuregoSafeRegister(&xEntryBufferSetText, libs, "gtk_entry_buffer_set_text")
 
 }

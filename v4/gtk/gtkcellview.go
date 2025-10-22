@@ -656,27 +656,31 @@ func (x *CellView) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCellViewGLibType, lib, "gtk_cell_view_get_type")
+	core.PuregoSafeRegister(&xCellViewGLibType, libs, "gtk_cell_view_get_type")
 
-	core.PuregoSafeRegister(&xNewCellView, lib, "gtk_cell_view_new")
-	core.PuregoSafeRegister(&xNewCellViewWithContext, lib, "gtk_cell_view_new_with_context")
-	core.PuregoSafeRegister(&xNewCellViewWithMarkup, lib, "gtk_cell_view_new_with_markup")
-	core.PuregoSafeRegister(&xNewCellViewWithText, lib, "gtk_cell_view_new_with_text")
-	core.PuregoSafeRegister(&xNewCellViewWithTexture, lib, "gtk_cell_view_new_with_texture")
+	core.PuregoSafeRegister(&xNewCellView, libs, "gtk_cell_view_new")
+	core.PuregoSafeRegister(&xNewCellViewWithContext, libs, "gtk_cell_view_new_with_context")
+	core.PuregoSafeRegister(&xNewCellViewWithMarkup, libs, "gtk_cell_view_new_with_markup")
+	core.PuregoSafeRegister(&xNewCellViewWithText, libs, "gtk_cell_view_new_with_text")
+	core.PuregoSafeRegister(&xNewCellViewWithTexture, libs, "gtk_cell_view_new_with_texture")
 
-	core.PuregoSafeRegister(&xCellViewGetDisplayedRow, lib, "gtk_cell_view_get_displayed_row")
-	core.PuregoSafeRegister(&xCellViewGetDrawSensitive, lib, "gtk_cell_view_get_draw_sensitive")
-	core.PuregoSafeRegister(&xCellViewGetFitModel, lib, "gtk_cell_view_get_fit_model")
-	core.PuregoSafeRegister(&xCellViewGetModel, lib, "gtk_cell_view_get_model")
-	core.PuregoSafeRegister(&xCellViewSetDisplayedRow, lib, "gtk_cell_view_set_displayed_row")
-	core.PuregoSafeRegister(&xCellViewSetDrawSensitive, lib, "gtk_cell_view_set_draw_sensitive")
-	core.PuregoSafeRegister(&xCellViewSetFitModel, lib, "gtk_cell_view_set_fit_model")
-	core.PuregoSafeRegister(&xCellViewSetModel, lib, "gtk_cell_view_set_model")
+	core.PuregoSafeRegister(&xCellViewGetDisplayedRow, libs, "gtk_cell_view_get_displayed_row")
+	core.PuregoSafeRegister(&xCellViewGetDrawSensitive, libs, "gtk_cell_view_get_draw_sensitive")
+	core.PuregoSafeRegister(&xCellViewGetFitModel, libs, "gtk_cell_view_get_fit_model")
+	core.PuregoSafeRegister(&xCellViewGetModel, libs, "gtk_cell_view_get_model")
+	core.PuregoSafeRegister(&xCellViewSetDisplayedRow, libs, "gtk_cell_view_set_displayed_row")
+	core.PuregoSafeRegister(&xCellViewSetDrawSensitive, libs, "gtk_cell_view_set_draw_sensitive")
+	core.PuregoSafeRegister(&xCellViewSetFitModel, libs, "gtk_cell_view_set_fit_model")
+	core.PuregoSafeRegister(&xCellViewSetModel, libs, "gtk_cell_view_set_model")
 
 }

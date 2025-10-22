@@ -197,25 +197,29 @@ func (c *FileLauncher) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFileLauncherGLibType, lib, "gtk_file_launcher_get_type")
+	core.PuregoSafeRegister(&xFileLauncherGLibType, libs, "gtk_file_launcher_get_type")
 
-	core.PuregoSafeRegister(&xNewFileLauncher, lib, "gtk_file_launcher_new")
+	core.PuregoSafeRegister(&xNewFileLauncher, libs, "gtk_file_launcher_new")
 
-	core.PuregoSafeRegister(&xFileLauncherGetAlwaysAsk, lib, "gtk_file_launcher_get_always_ask")
-	core.PuregoSafeRegister(&xFileLauncherGetFile, lib, "gtk_file_launcher_get_file")
-	core.PuregoSafeRegister(&xFileLauncherGetWritable, lib, "gtk_file_launcher_get_writable")
-	core.PuregoSafeRegister(&xFileLauncherLaunch, lib, "gtk_file_launcher_launch")
-	core.PuregoSafeRegister(&xFileLauncherLaunchFinish, lib, "gtk_file_launcher_launch_finish")
-	core.PuregoSafeRegister(&xFileLauncherOpenContainingFolder, lib, "gtk_file_launcher_open_containing_folder")
-	core.PuregoSafeRegister(&xFileLauncherOpenContainingFolderFinish, lib, "gtk_file_launcher_open_containing_folder_finish")
-	core.PuregoSafeRegister(&xFileLauncherSetAlwaysAsk, lib, "gtk_file_launcher_set_always_ask")
-	core.PuregoSafeRegister(&xFileLauncherSetFile, lib, "gtk_file_launcher_set_file")
-	core.PuregoSafeRegister(&xFileLauncherSetWritable, lib, "gtk_file_launcher_set_writable")
+	core.PuregoSafeRegister(&xFileLauncherGetAlwaysAsk, libs, "gtk_file_launcher_get_always_ask")
+	core.PuregoSafeRegister(&xFileLauncherGetFile, libs, "gtk_file_launcher_get_file")
+	core.PuregoSafeRegister(&xFileLauncherGetWritable, libs, "gtk_file_launcher_get_writable")
+	core.PuregoSafeRegister(&xFileLauncherLaunch, libs, "gtk_file_launcher_launch")
+	core.PuregoSafeRegister(&xFileLauncherLaunchFinish, libs, "gtk_file_launcher_launch_finish")
+	core.PuregoSafeRegister(&xFileLauncherOpenContainingFolder, libs, "gtk_file_launcher_open_containing_folder")
+	core.PuregoSafeRegister(&xFileLauncherOpenContainingFolderFinish, libs, "gtk_file_launcher_open_containing_folder_finish")
+	core.PuregoSafeRegister(&xFileLauncherSetAlwaysAsk, libs, "gtk_file_launcher_set_always_ask")
+	core.PuregoSafeRegister(&xFileLauncherSetFile, libs, "gtk_file_launcher_set_file")
+	core.PuregoSafeRegister(&xFileLauncherSetWritable, libs, "gtk_file_launcher_set_writable")
 
 }

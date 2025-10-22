@@ -201,17 +201,21 @@ func (x *MultiSorter) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xMultiSorterGLibType, lib, "gtk_multi_sorter_get_type")
+	core.PuregoSafeRegister(&xMultiSorterGLibType, libs, "gtk_multi_sorter_get_type")
 
-	core.PuregoSafeRegister(&xNewMultiSorter, lib, "gtk_multi_sorter_new")
+	core.PuregoSafeRegister(&xNewMultiSorter, libs, "gtk_multi_sorter_new")
 
-	core.PuregoSafeRegister(&xMultiSorterAppend, lib, "gtk_multi_sorter_append")
-	core.PuregoSafeRegister(&xMultiSorterRemove, lib, "gtk_multi_sorter_remove")
+	core.PuregoSafeRegister(&xMultiSorterAppend, libs, "gtk_multi_sorter_append")
+	core.PuregoSafeRegister(&xMultiSorterRemove, libs, "gtk_multi_sorter_remove")
 
 }

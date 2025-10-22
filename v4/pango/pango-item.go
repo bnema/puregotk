@@ -208,24 +208,28 @@ func ReorderItems(ItemsVar *glib.List) *glib.List {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xItemize, lib, "pango_itemize")
-	core.PuregoSafeRegister(&xItemizeWithBaseDir, lib, "pango_itemize_with_base_dir")
-	core.PuregoSafeRegister(&xReorderItems, lib, "pango_reorder_items")
+	core.PuregoSafeRegister(&xItemize, libs, "pango_itemize")
+	core.PuregoSafeRegister(&xItemizeWithBaseDir, libs, "pango_itemize_with_base_dir")
+	core.PuregoSafeRegister(&xReorderItems, libs, "pango_reorder_items")
 
-	core.PuregoSafeRegister(&xItemGLibType, lib, "pango_item_get_type")
+	core.PuregoSafeRegister(&xItemGLibType, libs, "pango_item_get_type")
 
-	core.PuregoSafeRegister(&xNewItem, lib, "pango_item_new")
+	core.PuregoSafeRegister(&xNewItem, libs, "pango_item_new")
 
-	core.PuregoSafeRegister(&xItemApplyAttrs, lib, "pango_item_apply_attrs")
-	core.PuregoSafeRegister(&xItemCopy, lib, "pango_item_copy")
-	core.PuregoSafeRegister(&xItemFree, lib, "pango_item_free")
-	core.PuregoSafeRegister(&xItemGetCharOffset, lib, "pango_item_get_char_offset")
-	core.PuregoSafeRegister(&xItemSplit, lib, "pango_item_split")
+	core.PuregoSafeRegister(&xItemApplyAttrs, libs, "pango_item_apply_attrs")
+	core.PuregoSafeRegister(&xItemCopy, libs, "pango_item_copy")
+	core.PuregoSafeRegister(&xItemFree, libs, "pango_item_free")
+	core.PuregoSafeRegister(&xItemGetCharOffset, libs, "pango_item_get_char_offset")
+	core.PuregoSafeRegister(&xItemSplit, libs, "pango_item_split")
 
 }

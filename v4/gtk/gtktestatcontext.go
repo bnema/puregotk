@@ -84,19 +84,23 @@ func TestAccessibleHasState(AccessibleVar Accessible, StateVar AccessibleState) 
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTestAccessibleAssertionMessageRole, lib, "gtk_test_accessible_assertion_message_role")
-	core.PuregoSafeRegister(&xTestAccessibleCheckProperty, lib, "gtk_test_accessible_check_property")
-	core.PuregoSafeRegister(&xTestAccessibleCheckRelation, lib, "gtk_test_accessible_check_relation")
-	core.PuregoSafeRegister(&xTestAccessibleCheckState, lib, "gtk_test_accessible_check_state")
-	core.PuregoSafeRegister(&xTestAccessibleHasProperty, lib, "gtk_test_accessible_has_property")
-	core.PuregoSafeRegister(&xTestAccessibleHasRelation, lib, "gtk_test_accessible_has_relation")
-	core.PuregoSafeRegister(&xTestAccessibleHasRole, lib, "gtk_test_accessible_has_role")
-	core.PuregoSafeRegister(&xTestAccessibleHasState, lib, "gtk_test_accessible_has_state")
+	core.PuregoSafeRegister(&xTestAccessibleAssertionMessageRole, libs, "gtk_test_accessible_assertion_message_role")
+	core.PuregoSafeRegister(&xTestAccessibleCheckProperty, libs, "gtk_test_accessible_check_property")
+	core.PuregoSafeRegister(&xTestAccessibleCheckRelation, libs, "gtk_test_accessible_check_relation")
+	core.PuregoSafeRegister(&xTestAccessibleCheckState, libs, "gtk_test_accessible_check_state")
+	core.PuregoSafeRegister(&xTestAccessibleHasProperty, libs, "gtk_test_accessible_has_property")
+	core.PuregoSafeRegister(&xTestAccessibleHasRelation, libs, "gtk_test_accessible_has_relation")
+	core.PuregoSafeRegister(&xTestAccessibleHasRole, libs, "gtk_test_accessible_has_role")
+	core.PuregoSafeRegister(&xTestAccessibleHasState, libs, "gtk_test_accessible_has_state")
 
 }

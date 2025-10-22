@@ -124,16 +124,20 @@ func BusUnownName(OwnerIdVar uint) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBusOwnName, lib, "g_bus_own_name")
-	core.PuregoSafeRegister(&xBusOwnNameOnConnection, lib, "g_bus_own_name_on_connection")
-	core.PuregoSafeRegister(&xBusOwnNameOnConnectionWithClosures, lib, "g_bus_own_name_on_connection_with_closures")
-	core.PuregoSafeRegister(&xBusOwnNameWithClosures, lib, "g_bus_own_name_with_closures")
-	core.PuregoSafeRegister(&xBusUnownName, lib, "g_bus_unown_name")
+	core.PuregoSafeRegister(&xBusOwnName, libs, "g_bus_own_name")
+	core.PuregoSafeRegister(&xBusOwnNameOnConnection, libs, "g_bus_own_name_on_connection")
+	core.PuregoSafeRegister(&xBusOwnNameOnConnectionWithClosures, libs, "g_bus_own_name_on_connection_with_closures")
+	core.PuregoSafeRegister(&xBusOwnNameWithClosures, libs, "g_bus_own_name_with_closures")
+	core.PuregoSafeRegister(&xBusUnownName, libs, "g_bus_unown_name")
 
 }

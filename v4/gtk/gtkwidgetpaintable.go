@@ -256,17 +256,21 @@ func (x *WidgetPaintable) Snapshot(SnapshotVar *gdk.Snapshot, WidthVar float64, 
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xWidgetPaintableGLibType, lib, "gtk_widget_paintable_get_type")
+	core.PuregoSafeRegister(&xWidgetPaintableGLibType, libs, "gtk_widget_paintable_get_type")
 
-	core.PuregoSafeRegister(&xNewWidgetPaintable, lib, "gtk_widget_paintable_new")
+	core.PuregoSafeRegister(&xNewWidgetPaintable, libs, "gtk_widget_paintable_new")
 
-	core.PuregoSafeRegister(&xWidgetPaintableGetWidget, lib, "gtk_widget_paintable_get_widget")
-	core.PuregoSafeRegister(&xWidgetPaintableSetWidget, lib, "gtk_widget_paintable_set_widget")
+	core.PuregoSafeRegister(&xWidgetPaintableGetWidget, libs, "gtk_widget_paintable_get_widget")
+	core.PuregoSafeRegister(&xWidgetPaintableSetWidget, libs, "gtk_widget_paintable_set_widget")
 
 }

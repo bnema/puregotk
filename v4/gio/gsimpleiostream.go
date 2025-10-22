@@ -63,14 +63,18 @@ func (c *SimpleIOStream) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSimpleIOStreamGLibType, lib, "g_simple_io_stream_get_type")
+	core.PuregoSafeRegister(&xSimpleIOStreamGLibType, libs, "g_simple_io_stream_get_type")
 
-	core.PuregoSafeRegister(&xNewSimpleIOStream, lib, "g_simple_io_stream_new")
+	core.PuregoSafeRegister(&xNewSimpleIOStream, libs, "g_simple_io_stream_new")
 
 }

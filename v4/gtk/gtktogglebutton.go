@@ -652,21 +652,25 @@ func (x *ToggleButton) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xToggleButtonGLibType, lib, "gtk_toggle_button_get_type")
+	core.PuregoSafeRegister(&xToggleButtonGLibType, libs, "gtk_toggle_button_get_type")
 
-	core.PuregoSafeRegister(&xNewToggleButton, lib, "gtk_toggle_button_new")
-	core.PuregoSafeRegister(&xNewToggleButtonWithLabel, lib, "gtk_toggle_button_new_with_label")
-	core.PuregoSafeRegister(&xNewToggleButtonWithMnemonic, lib, "gtk_toggle_button_new_with_mnemonic")
+	core.PuregoSafeRegister(&xNewToggleButton, libs, "gtk_toggle_button_new")
+	core.PuregoSafeRegister(&xNewToggleButtonWithLabel, libs, "gtk_toggle_button_new_with_label")
+	core.PuregoSafeRegister(&xNewToggleButtonWithMnemonic, libs, "gtk_toggle_button_new_with_mnemonic")
 
-	core.PuregoSafeRegister(&xToggleButtonGetActive, lib, "gtk_toggle_button_get_active")
-	core.PuregoSafeRegister(&xToggleButtonSetActive, lib, "gtk_toggle_button_set_active")
-	core.PuregoSafeRegister(&xToggleButtonSetGroup, lib, "gtk_toggle_button_set_group")
-	core.PuregoSafeRegister(&xToggleButtonToggled, lib, "gtk_toggle_button_toggled")
+	core.PuregoSafeRegister(&xToggleButtonGetActive, libs, "gtk_toggle_button_get_active")
+	core.PuregoSafeRegister(&xToggleButtonSetActive, libs, "gtk_toggle_button_set_active")
+	core.PuregoSafeRegister(&xToggleButtonSetGroup, libs, "gtk_toggle_button_set_group")
+	core.PuregoSafeRegister(&xToggleButtonToggled, libs, "gtk_toggle_button_toggled")
 
 }

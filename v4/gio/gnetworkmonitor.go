@@ -312,21 +312,25 @@ func NetworkMonitorGetDefault() *NetworkMonitorBase {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xNetworkMonitorGetDefault, lib, "g_network_monitor_get_default")
+	core.PuregoSafeRegister(&xNetworkMonitorGetDefault, libs, "g_network_monitor_get_default")
 
-	core.PuregoSafeRegister(&xNetworkMonitorGLibType, lib, "g_network_monitor_get_type")
+	core.PuregoSafeRegister(&xNetworkMonitorGLibType, libs, "g_network_monitor_get_type")
 
-	core.PuregoSafeRegister(&XGNetworkMonitorCanReach, lib, "g_network_monitor_can_reach")
-	core.PuregoSafeRegister(&XGNetworkMonitorCanReachAsync, lib, "g_network_monitor_can_reach_async")
-	core.PuregoSafeRegister(&XGNetworkMonitorCanReachFinish, lib, "g_network_monitor_can_reach_finish")
-	core.PuregoSafeRegister(&XGNetworkMonitorGetConnectivity, lib, "g_network_monitor_get_connectivity")
-	core.PuregoSafeRegister(&XGNetworkMonitorGetNetworkAvailable, lib, "g_network_monitor_get_network_available")
-	core.PuregoSafeRegister(&XGNetworkMonitorGetNetworkMetered, lib, "g_network_monitor_get_network_metered")
+	core.PuregoSafeRegister(&XGNetworkMonitorCanReach, libs, "g_network_monitor_can_reach")
+	core.PuregoSafeRegister(&XGNetworkMonitorCanReachAsync, libs, "g_network_monitor_can_reach_async")
+	core.PuregoSafeRegister(&XGNetworkMonitorCanReachFinish, libs, "g_network_monitor_can_reach_finish")
+	core.PuregoSafeRegister(&XGNetworkMonitorGetConnectivity, libs, "g_network_monitor_get_connectivity")
+	core.PuregoSafeRegister(&XGNetworkMonitorGetNetworkAvailable, libs, "g_network_monitor_get_network_available")
+	core.PuregoSafeRegister(&XGNetworkMonitorGetNetworkMetered, libs, "g_network_monitor_get_network_metered")
 
 }

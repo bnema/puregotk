@@ -560,26 +560,30 @@ func (x *HeaderBar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xHeaderBarGLibType, lib, "gtk_header_bar_get_type")
+	core.PuregoSafeRegister(&xHeaderBarGLibType, libs, "gtk_header_bar_get_type")
 
-	core.PuregoSafeRegister(&xNewHeaderBar, lib, "gtk_header_bar_new")
+	core.PuregoSafeRegister(&xNewHeaderBar, libs, "gtk_header_bar_new")
 
-	core.PuregoSafeRegister(&xHeaderBarGetDecorationLayout, lib, "gtk_header_bar_get_decoration_layout")
-	core.PuregoSafeRegister(&xHeaderBarGetShowTitleButtons, lib, "gtk_header_bar_get_show_title_buttons")
-	core.PuregoSafeRegister(&xHeaderBarGetTitleWidget, lib, "gtk_header_bar_get_title_widget")
-	core.PuregoSafeRegister(&xHeaderBarGetUseNativeControls, lib, "gtk_header_bar_get_use_native_controls")
-	core.PuregoSafeRegister(&xHeaderBarPackEnd, lib, "gtk_header_bar_pack_end")
-	core.PuregoSafeRegister(&xHeaderBarPackStart, lib, "gtk_header_bar_pack_start")
-	core.PuregoSafeRegister(&xHeaderBarRemove, lib, "gtk_header_bar_remove")
-	core.PuregoSafeRegister(&xHeaderBarSetDecorationLayout, lib, "gtk_header_bar_set_decoration_layout")
-	core.PuregoSafeRegister(&xHeaderBarSetShowTitleButtons, lib, "gtk_header_bar_set_show_title_buttons")
-	core.PuregoSafeRegister(&xHeaderBarSetTitleWidget, lib, "gtk_header_bar_set_title_widget")
-	core.PuregoSafeRegister(&xHeaderBarSetUseNativeControls, lib, "gtk_header_bar_set_use_native_controls")
+	core.PuregoSafeRegister(&xHeaderBarGetDecorationLayout, libs, "gtk_header_bar_get_decoration_layout")
+	core.PuregoSafeRegister(&xHeaderBarGetShowTitleButtons, libs, "gtk_header_bar_get_show_title_buttons")
+	core.PuregoSafeRegister(&xHeaderBarGetTitleWidget, libs, "gtk_header_bar_get_title_widget")
+	core.PuregoSafeRegister(&xHeaderBarGetUseNativeControls, libs, "gtk_header_bar_get_use_native_controls")
+	core.PuregoSafeRegister(&xHeaderBarPackEnd, libs, "gtk_header_bar_pack_end")
+	core.PuregoSafeRegister(&xHeaderBarPackStart, libs, "gtk_header_bar_pack_start")
+	core.PuregoSafeRegister(&xHeaderBarRemove, libs, "gtk_header_bar_remove")
+	core.PuregoSafeRegister(&xHeaderBarSetDecorationLayout, libs, "gtk_header_bar_set_decoration_layout")
+	core.PuregoSafeRegister(&xHeaderBarSetShowTitleButtons, libs, "gtk_header_bar_set_show_title_buttons")
+	core.PuregoSafeRegister(&xHeaderBarSetTitleWidget, libs, "gtk_header_bar_set_title_widget")
+	core.PuregoSafeRegister(&xHeaderBarSetUseNativeControls, libs, "gtk_header_bar_set_use_native_controls")
 
 }

@@ -479,21 +479,25 @@ func (x *ViewSwitcher) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xViewSwitcherPolicyGLibType, lib, "adw_view_switcher_policy_get_type")
+	core.PuregoSafeRegister(&xViewSwitcherPolicyGLibType, libs, "adw_view_switcher_policy_get_type")
 
-	core.PuregoSafeRegister(&xViewSwitcherGLibType, lib, "adw_view_switcher_get_type")
+	core.PuregoSafeRegister(&xViewSwitcherGLibType, libs, "adw_view_switcher_get_type")
 
-	core.PuregoSafeRegister(&xNewViewSwitcher, lib, "adw_view_switcher_new")
+	core.PuregoSafeRegister(&xNewViewSwitcher, libs, "adw_view_switcher_new")
 
-	core.PuregoSafeRegister(&xViewSwitcherGetPolicy, lib, "adw_view_switcher_get_policy")
-	core.PuregoSafeRegister(&xViewSwitcherGetStack, lib, "adw_view_switcher_get_stack")
-	core.PuregoSafeRegister(&xViewSwitcherSetPolicy, lib, "adw_view_switcher_set_policy")
-	core.PuregoSafeRegister(&xViewSwitcherSetStack, lib, "adw_view_switcher_set_stack")
+	core.PuregoSafeRegister(&xViewSwitcherGetPolicy, libs, "adw_view_switcher_get_policy")
+	core.PuregoSafeRegister(&xViewSwitcherGetStack, libs, "adw_view_switcher_get_stack")
+	core.PuregoSafeRegister(&xViewSwitcherSetPolicy, libs, "adw_view_switcher_set_policy")
+	core.PuregoSafeRegister(&xViewSwitcherSetStack, libs, "adw_view_switcher_set_stack")
 
 }

@@ -281,31 +281,35 @@ func (c *SpringAnimation) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSpringAnimationGLibType, lib, "adw_spring_animation_get_type")
+	core.PuregoSafeRegister(&xSpringAnimationGLibType, libs, "adw_spring_animation_get_type")
 
-	core.PuregoSafeRegister(&xNewSpringAnimation, lib, "adw_spring_animation_new")
+	core.PuregoSafeRegister(&xNewSpringAnimation, libs, "adw_spring_animation_new")
 
-	core.PuregoSafeRegister(&xSpringAnimationCalculateValue, lib, "adw_spring_animation_calculate_value")
-	core.PuregoSafeRegister(&xSpringAnimationCalculateVelocity, lib, "adw_spring_animation_calculate_velocity")
-	core.PuregoSafeRegister(&xSpringAnimationGetClamp, lib, "adw_spring_animation_get_clamp")
-	core.PuregoSafeRegister(&xSpringAnimationGetEpsilon, lib, "adw_spring_animation_get_epsilon")
-	core.PuregoSafeRegister(&xSpringAnimationGetEstimatedDuration, lib, "adw_spring_animation_get_estimated_duration")
-	core.PuregoSafeRegister(&xSpringAnimationGetInitialVelocity, lib, "adw_spring_animation_get_initial_velocity")
-	core.PuregoSafeRegister(&xSpringAnimationGetSpringParams, lib, "adw_spring_animation_get_spring_params")
-	core.PuregoSafeRegister(&xSpringAnimationGetValueFrom, lib, "adw_spring_animation_get_value_from")
-	core.PuregoSafeRegister(&xSpringAnimationGetValueTo, lib, "adw_spring_animation_get_value_to")
-	core.PuregoSafeRegister(&xSpringAnimationGetVelocity, lib, "adw_spring_animation_get_velocity")
-	core.PuregoSafeRegister(&xSpringAnimationSetClamp, lib, "adw_spring_animation_set_clamp")
-	core.PuregoSafeRegister(&xSpringAnimationSetEpsilon, lib, "adw_spring_animation_set_epsilon")
-	core.PuregoSafeRegister(&xSpringAnimationSetInitialVelocity, lib, "adw_spring_animation_set_initial_velocity")
-	core.PuregoSafeRegister(&xSpringAnimationSetSpringParams, lib, "adw_spring_animation_set_spring_params")
-	core.PuregoSafeRegister(&xSpringAnimationSetValueFrom, lib, "adw_spring_animation_set_value_from")
-	core.PuregoSafeRegister(&xSpringAnimationSetValueTo, lib, "adw_spring_animation_set_value_to")
+	core.PuregoSafeRegister(&xSpringAnimationCalculateValue, libs, "adw_spring_animation_calculate_value")
+	core.PuregoSafeRegister(&xSpringAnimationCalculateVelocity, libs, "adw_spring_animation_calculate_velocity")
+	core.PuregoSafeRegister(&xSpringAnimationGetClamp, libs, "adw_spring_animation_get_clamp")
+	core.PuregoSafeRegister(&xSpringAnimationGetEpsilon, libs, "adw_spring_animation_get_epsilon")
+	core.PuregoSafeRegister(&xSpringAnimationGetEstimatedDuration, libs, "adw_spring_animation_get_estimated_duration")
+	core.PuregoSafeRegister(&xSpringAnimationGetInitialVelocity, libs, "adw_spring_animation_get_initial_velocity")
+	core.PuregoSafeRegister(&xSpringAnimationGetSpringParams, libs, "adw_spring_animation_get_spring_params")
+	core.PuregoSafeRegister(&xSpringAnimationGetValueFrom, libs, "adw_spring_animation_get_value_from")
+	core.PuregoSafeRegister(&xSpringAnimationGetValueTo, libs, "adw_spring_animation_get_value_to")
+	core.PuregoSafeRegister(&xSpringAnimationGetVelocity, libs, "adw_spring_animation_get_velocity")
+	core.PuregoSafeRegister(&xSpringAnimationSetClamp, libs, "adw_spring_animation_set_clamp")
+	core.PuregoSafeRegister(&xSpringAnimationSetEpsilon, libs, "adw_spring_animation_set_epsilon")
+	core.PuregoSafeRegister(&xSpringAnimationSetInitialVelocity, libs, "adw_spring_animation_set_initial_velocity")
+	core.PuregoSafeRegister(&xSpringAnimationSetSpringParams, libs, "adw_spring_animation_set_spring_params")
+	core.PuregoSafeRegister(&xSpringAnimationSetValueFrom, libs, "adw_spring_animation_set_value_from")
+	core.PuregoSafeRegister(&xSpringAnimationSetValueTo, libs, "adw_spring_animation_set_value_to")
 
 }

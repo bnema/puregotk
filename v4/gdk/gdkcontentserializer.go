@@ -260,28 +260,32 @@ func (x *ContentSerializer) LegacyPropagateError() (bool, error) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xContentRegisterSerializer, lib, "gdk_content_register_serializer")
-	core.PuregoSafeRegister(&xContentSerializeAsync, lib, "gdk_content_serialize_async")
-	core.PuregoSafeRegister(&xContentSerializeFinish, lib, "gdk_content_serialize_finish")
+	core.PuregoSafeRegister(&xContentRegisterSerializer, libs, "gdk_content_register_serializer")
+	core.PuregoSafeRegister(&xContentSerializeAsync, libs, "gdk_content_serialize_async")
+	core.PuregoSafeRegister(&xContentSerializeFinish, libs, "gdk_content_serialize_finish")
 
-	core.PuregoSafeRegister(&xContentSerializerGLibType, lib, "gdk_content_serializer_get_type")
+	core.PuregoSafeRegister(&xContentSerializerGLibType, libs, "gdk_content_serializer_get_type")
 
-	core.PuregoSafeRegister(&xContentSerializerGetCancellable, lib, "gdk_content_serializer_get_cancellable")
-	core.PuregoSafeRegister(&xContentSerializerGetGtype, lib, "gdk_content_serializer_get_gtype")
-	core.PuregoSafeRegister(&xContentSerializerGetMimeType, lib, "gdk_content_serializer_get_mime_type")
-	core.PuregoSafeRegister(&xContentSerializerGetOutputStream, lib, "gdk_content_serializer_get_output_stream")
-	core.PuregoSafeRegister(&xContentSerializerGetPriority, lib, "gdk_content_serializer_get_priority")
-	core.PuregoSafeRegister(&xContentSerializerGetTaskData, lib, "gdk_content_serializer_get_task_data")
-	core.PuregoSafeRegister(&xContentSerializerGetUserData, lib, "gdk_content_serializer_get_user_data")
-	core.PuregoSafeRegister(&xContentSerializerGetValue, lib, "gdk_content_serializer_get_value")
-	core.PuregoSafeRegister(&xContentSerializerReturnError, lib, "gdk_content_serializer_return_error")
-	core.PuregoSafeRegister(&xContentSerializerReturnSuccess, lib, "gdk_content_serializer_return_success")
-	core.PuregoSafeRegister(&xContentSerializerSetTaskData, lib, "gdk_content_serializer_set_task_data")
+	core.PuregoSafeRegister(&xContentSerializerGetCancellable, libs, "gdk_content_serializer_get_cancellable")
+	core.PuregoSafeRegister(&xContentSerializerGetGtype, libs, "gdk_content_serializer_get_gtype")
+	core.PuregoSafeRegister(&xContentSerializerGetMimeType, libs, "gdk_content_serializer_get_mime_type")
+	core.PuregoSafeRegister(&xContentSerializerGetOutputStream, libs, "gdk_content_serializer_get_output_stream")
+	core.PuregoSafeRegister(&xContentSerializerGetPriority, libs, "gdk_content_serializer_get_priority")
+	core.PuregoSafeRegister(&xContentSerializerGetTaskData, libs, "gdk_content_serializer_get_task_data")
+	core.PuregoSafeRegister(&xContentSerializerGetUserData, libs, "gdk_content_serializer_get_user_data")
+	core.PuregoSafeRegister(&xContentSerializerGetValue, libs, "gdk_content_serializer_get_value")
+	core.PuregoSafeRegister(&xContentSerializerReturnError, libs, "gdk_content_serializer_return_error")
+	core.PuregoSafeRegister(&xContentSerializerReturnSuccess, libs, "gdk_content_serializer_return_success")
+	core.PuregoSafeRegister(&xContentSerializerSetTaskData, libs, "gdk_content_serializer_set_task_data")
 
 }

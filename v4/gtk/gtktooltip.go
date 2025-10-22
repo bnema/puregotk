@@ -152,20 +152,24 @@ func (c *Tooltip) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTooltipGLibType, lib, "gtk_tooltip_get_type")
+	core.PuregoSafeRegister(&xTooltipGLibType, libs, "gtk_tooltip_get_type")
 
-	core.PuregoSafeRegister(&xTooltipSetCustom, lib, "gtk_tooltip_set_custom")
-	core.PuregoSafeRegister(&xTooltipSetIcon, lib, "gtk_tooltip_set_icon")
-	core.PuregoSafeRegister(&xTooltipSetIconFromGicon, lib, "gtk_tooltip_set_icon_from_gicon")
-	core.PuregoSafeRegister(&xTooltipSetIconFromIconName, lib, "gtk_tooltip_set_icon_from_icon_name")
-	core.PuregoSafeRegister(&xTooltipSetMarkup, lib, "gtk_tooltip_set_markup")
-	core.PuregoSafeRegister(&xTooltipSetText, lib, "gtk_tooltip_set_text")
-	core.PuregoSafeRegister(&xTooltipSetTipArea, lib, "gtk_tooltip_set_tip_area")
+	core.PuregoSafeRegister(&xTooltipSetCustom, libs, "gtk_tooltip_set_custom")
+	core.PuregoSafeRegister(&xTooltipSetIcon, libs, "gtk_tooltip_set_icon")
+	core.PuregoSafeRegister(&xTooltipSetIconFromGicon, libs, "gtk_tooltip_set_icon_from_gicon")
+	core.PuregoSafeRegister(&xTooltipSetIconFromIconName, libs, "gtk_tooltip_set_icon_from_icon_name")
+	core.PuregoSafeRegister(&xTooltipSetMarkup, libs, "gtk_tooltip_set_markup")
+	core.PuregoSafeRegister(&xTooltipSetText, libs, "gtk_tooltip_set_text")
+	core.PuregoSafeRegister(&xTooltipSetTipArea, libs, "gtk_tooltip_set_tip_area")
 
 }

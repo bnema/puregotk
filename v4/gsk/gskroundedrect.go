@@ -152,21 +152,25 @@ func (x *RoundedRect) Shrink(TopVar float32, RightVar float32, BottomVar float32
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibrary("GSK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GSK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GSK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRoundedRectContainsPoint, lib, "gsk_rounded_rect_contains_point")
-	core.PuregoSafeRegister(&xRoundedRectContainsRect, lib, "gsk_rounded_rect_contains_rect")
-	core.PuregoSafeRegister(&xRoundedRectInit, lib, "gsk_rounded_rect_init")
-	core.PuregoSafeRegister(&xRoundedRectInitCopy, lib, "gsk_rounded_rect_init_copy")
-	core.PuregoSafeRegister(&xRoundedRectInitFromRect, lib, "gsk_rounded_rect_init_from_rect")
-	core.PuregoSafeRegister(&xRoundedRectIntersectsRect, lib, "gsk_rounded_rect_intersects_rect")
-	core.PuregoSafeRegister(&xRoundedRectIsRectilinear, lib, "gsk_rounded_rect_is_rectilinear")
-	core.PuregoSafeRegister(&xRoundedRectNormalize, lib, "gsk_rounded_rect_normalize")
-	core.PuregoSafeRegister(&xRoundedRectOffset, lib, "gsk_rounded_rect_offset")
-	core.PuregoSafeRegister(&xRoundedRectShrink, lib, "gsk_rounded_rect_shrink")
+	core.PuregoSafeRegister(&xRoundedRectContainsPoint, libs, "gsk_rounded_rect_contains_point")
+	core.PuregoSafeRegister(&xRoundedRectContainsRect, libs, "gsk_rounded_rect_contains_rect")
+	core.PuregoSafeRegister(&xRoundedRectInit, libs, "gsk_rounded_rect_init")
+	core.PuregoSafeRegister(&xRoundedRectInitCopy, libs, "gsk_rounded_rect_init_copy")
+	core.PuregoSafeRegister(&xRoundedRectInitFromRect, libs, "gsk_rounded_rect_init_from_rect")
+	core.PuregoSafeRegister(&xRoundedRectIntersectsRect, libs, "gsk_rounded_rect_intersects_rect")
+	core.PuregoSafeRegister(&xRoundedRectIsRectilinear, libs, "gsk_rounded_rect_is_rectilinear")
+	core.PuregoSafeRegister(&xRoundedRectNormalize, libs, "gsk_rounded_rect_normalize")
+	core.PuregoSafeRegister(&xRoundedRectOffset, libs, "gsk_rounded_rect_offset")
+	core.PuregoSafeRegister(&xRoundedRectShrink, libs, "gsk_rounded_rect_shrink")
 
 }

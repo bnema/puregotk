@@ -227,29 +227,33 @@ func (c *TimedAnimation) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTimedAnimationGLibType, lib, "adw_timed_animation_get_type")
+	core.PuregoSafeRegister(&xTimedAnimationGLibType, libs, "adw_timed_animation_get_type")
 
-	core.PuregoSafeRegister(&xNewTimedAnimation, lib, "adw_timed_animation_new")
+	core.PuregoSafeRegister(&xNewTimedAnimation, libs, "adw_timed_animation_new")
 
-	core.PuregoSafeRegister(&xTimedAnimationGetAlternate, lib, "adw_timed_animation_get_alternate")
-	core.PuregoSafeRegister(&xTimedAnimationGetDuration, lib, "adw_timed_animation_get_duration")
-	core.PuregoSafeRegister(&xTimedAnimationGetEasing, lib, "adw_timed_animation_get_easing")
-	core.PuregoSafeRegister(&xTimedAnimationGetRepeatCount, lib, "adw_timed_animation_get_repeat_count")
-	core.PuregoSafeRegister(&xTimedAnimationGetReverse, lib, "adw_timed_animation_get_reverse")
-	core.PuregoSafeRegister(&xTimedAnimationGetValueFrom, lib, "adw_timed_animation_get_value_from")
-	core.PuregoSafeRegister(&xTimedAnimationGetValueTo, lib, "adw_timed_animation_get_value_to")
-	core.PuregoSafeRegister(&xTimedAnimationSetAlternate, lib, "adw_timed_animation_set_alternate")
-	core.PuregoSafeRegister(&xTimedAnimationSetDuration, lib, "adw_timed_animation_set_duration")
-	core.PuregoSafeRegister(&xTimedAnimationSetEasing, lib, "adw_timed_animation_set_easing")
-	core.PuregoSafeRegister(&xTimedAnimationSetRepeatCount, lib, "adw_timed_animation_set_repeat_count")
-	core.PuregoSafeRegister(&xTimedAnimationSetReverse, lib, "adw_timed_animation_set_reverse")
-	core.PuregoSafeRegister(&xTimedAnimationSetValueFrom, lib, "adw_timed_animation_set_value_from")
-	core.PuregoSafeRegister(&xTimedAnimationSetValueTo, lib, "adw_timed_animation_set_value_to")
+	core.PuregoSafeRegister(&xTimedAnimationGetAlternate, libs, "adw_timed_animation_get_alternate")
+	core.PuregoSafeRegister(&xTimedAnimationGetDuration, libs, "adw_timed_animation_get_duration")
+	core.PuregoSafeRegister(&xTimedAnimationGetEasing, libs, "adw_timed_animation_get_easing")
+	core.PuregoSafeRegister(&xTimedAnimationGetRepeatCount, libs, "adw_timed_animation_get_repeat_count")
+	core.PuregoSafeRegister(&xTimedAnimationGetReverse, libs, "adw_timed_animation_get_reverse")
+	core.PuregoSafeRegister(&xTimedAnimationGetValueFrom, libs, "adw_timed_animation_get_value_from")
+	core.PuregoSafeRegister(&xTimedAnimationGetValueTo, libs, "adw_timed_animation_get_value_to")
+	core.PuregoSafeRegister(&xTimedAnimationSetAlternate, libs, "adw_timed_animation_set_alternate")
+	core.PuregoSafeRegister(&xTimedAnimationSetDuration, libs, "adw_timed_animation_set_duration")
+	core.PuregoSafeRegister(&xTimedAnimationSetEasing, libs, "adw_timed_animation_set_easing")
+	core.PuregoSafeRegister(&xTimedAnimationSetRepeatCount, libs, "adw_timed_animation_set_repeat_count")
+	core.PuregoSafeRegister(&xTimedAnimationSetReverse, libs, "adw_timed_animation_set_reverse")
+	core.PuregoSafeRegister(&xTimedAnimationSetValueFrom, libs, "adw_timed_animation_set_value_from")
+	core.PuregoSafeRegister(&xTimedAnimationSetValueTo, libs, "adw_timed_animation_set_value_to")
 
 }

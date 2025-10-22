@@ -281,17 +281,21 @@ func (x *SpinnerPaintable) SnapshotSymbolic(SnapshotVar *gdk.Snapshot, WidthVar 
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSpinnerPaintableGLibType, lib, "adw_spinner_paintable_get_type")
+	core.PuregoSafeRegister(&xSpinnerPaintableGLibType, libs, "adw_spinner_paintable_get_type")
 
-	core.PuregoSafeRegister(&xNewSpinnerPaintable, lib, "adw_spinner_paintable_new")
+	core.PuregoSafeRegister(&xNewSpinnerPaintable, libs, "adw_spinner_paintable_new")
 
-	core.PuregoSafeRegister(&xSpinnerPaintableGetWidget, lib, "adw_spinner_paintable_get_widget")
-	core.PuregoSafeRegister(&xSpinnerPaintableSetWidget, lib, "adw_spinner_paintable_set_widget")
+	core.PuregoSafeRegister(&xSpinnerPaintableGetWidget, libs, "adw_spinner_paintable_get_widget")
+	core.PuregoSafeRegister(&xSpinnerPaintableSetWidget, libs, "adw_spinner_paintable_set_widget")
 
 }

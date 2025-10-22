@@ -312,22 +312,26 @@ func (x *ShortcutController) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xShortcutControllerGLibType, lib, "gtk_shortcut_controller_get_type")
+	core.PuregoSafeRegister(&xShortcutControllerGLibType, libs, "gtk_shortcut_controller_get_type")
 
-	core.PuregoSafeRegister(&xNewShortcutController, lib, "gtk_shortcut_controller_new")
-	core.PuregoSafeRegister(&xNewShortcutControllerForModel, lib, "gtk_shortcut_controller_new_for_model")
+	core.PuregoSafeRegister(&xNewShortcutController, libs, "gtk_shortcut_controller_new")
+	core.PuregoSafeRegister(&xNewShortcutControllerForModel, libs, "gtk_shortcut_controller_new_for_model")
 
-	core.PuregoSafeRegister(&xShortcutControllerAddShortcut, lib, "gtk_shortcut_controller_add_shortcut")
-	core.PuregoSafeRegister(&xShortcutControllerGetMnemonicsModifiers, lib, "gtk_shortcut_controller_get_mnemonics_modifiers")
-	core.PuregoSafeRegister(&xShortcutControllerGetScope, lib, "gtk_shortcut_controller_get_scope")
-	core.PuregoSafeRegister(&xShortcutControllerRemoveShortcut, lib, "gtk_shortcut_controller_remove_shortcut")
-	core.PuregoSafeRegister(&xShortcutControllerSetMnemonicsModifiers, lib, "gtk_shortcut_controller_set_mnemonics_modifiers")
-	core.PuregoSafeRegister(&xShortcutControllerSetScope, lib, "gtk_shortcut_controller_set_scope")
+	core.PuregoSafeRegister(&xShortcutControllerAddShortcut, libs, "gtk_shortcut_controller_add_shortcut")
+	core.PuregoSafeRegister(&xShortcutControllerGetMnemonicsModifiers, libs, "gtk_shortcut_controller_get_mnemonics_modifiers")
+	core.PuregoSafeRegister(&xShortcutControllerGetScope, libs, "gtk_shortcut_controller_get_scope")
+	core.PuregoSafeRegister(&xShortcutControllerRemoveShortcut, libs, "gtk_shortcut_controller_remove_shortcut")
+	core.PuregoSafeRegister(&xShortcutControllerSetMnemonicsModifiers, libs, "gtk_shortcut_controller_set_mnemonics_modifiers")
+	core.PuregoSafeRegister(&xShortcutControllerSetScope, libs, "gtk_shortcut_controller_set_scope")
 
 }

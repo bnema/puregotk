@@ -388,19 +388,23 @@ func (x *Spinner) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSpinnerGLibType, lib, "gtk_spinner_get_type")
+	core.PuregoSafeRegister(&xSpinnerGLibType, libs, "gtk_spinner_get_type")
 
-	core.PuregoSafeRegister(&xNewSpinner, lib, "gtk_spinner_new")
+	core.PuregoSafeRegister(&xNewSpinner, libs, "gtk_spinner_new")
 
-	core.PuregoSafeRegister(&xSpinnerGetSpinning, lib, "gtk_spinner_get_spinning")
-	core.PuregoSafeRegister(&xSpinnerSetSpinning, lib, "gtk_spinner_set_spinning")
-	core.PuregoSafeRegister(&xSpinnerStart, lib, "gtk_spinner_start")
-	core.PuregoSafeRegister(&xSpinnerStop, lib, "gtk_spinner_stop")
+	core.PuregoSafeRegister(&xSpinnerGetSpinning, libs, "gtk_spinner_get_spinning")
+	core.PuregoSafeRegister(&xSpinnerSetSpinning, libs, "gtk_spinner_set_spinning")
+	core.PuregoSafeRegister(&xSpinnerStart, libs, "gtk_spinner_start")
+	core.PuregoSafeRegister(&xSpinnerStop, libs, "gtk_spinner_stop")
 
 }

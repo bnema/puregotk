@@ -640,38 +640,42 @@ func (x *Inscription) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInscriptionOverflowGLibType, lib, "gtk_inscription_overflow_get_type")
+	core.PuregoSafeRegister(&xInscriptionOverflowGLibType, libs, "gtk_inscription_overflow_get_type")
 
-	core.PuregoSafeRegister(&xInscriptionGLibType, lib, "gtk_inscription_get_type")
+	core.PuregoSafeRegister(&xInscriptionGLibType, libs, "gtk_inscription_get_type")
 
-	core.PuregoSafeRegister(&xNewInscription, lib, "gtk_inscription_new")
+	core.PuregoSafeRegister(&xNewInscription, libs, "gtk_inscription_new")
 
-	core.PuregoSafeRegister(&xInscriptionGetAttributes, lib, "gtk_inscription_get_attributes")
-	core.PuregoSafeRegister(&xInscriptionGetMinChars, lib, "gtk_inscription_get_min_chars")
-	core.PuregoSafeRegister(&xInscriptionGetMinLines, lib, "gtk_inscription_get_min_lines")
-	core.PuregoSafeRegister(&xInscriptionGetNatChars, lib, "gtk_inscription_get_nat_chars")
-	core.PuregoSafeRegister(&xInscriptionGetNatLines, lib, "gtk_inscription_get_nat_lines")
-	core.PuregoSafeRegister(&xInscriptionGetText, lib, "gtk_inscription_get_text")
-	core.PuregoSafeRegister(&xInscriptionGetTextOverflow, lib, "gtk_inscription_get_text_overflow")
-	core.PuregoSafeRegister(&xInscriptionGetWrapMode, lib, "gtk_inscription_get_wrap_mode")
-	core.PuregoSafeRegister(&xInscriptionGetXalign, lib, "gtk_inscription_get_xalign")
-	core.PuregoSafeRegister(&xInscriptionGetYalign, lib, "gtk_inscription_get_yalign")
-	core.PuregoSafeRegister(&xInscriptionSetAttributes, lib, "gtk_inscription_set_attributes")
-	core.PuregoSafeRegister(&xInscriptionSetMarkup, lib, "gtk_inscription_set_markup")
-	core.PuregoSafeRegister(&xInscriptionSetMinChars, lib, "gtk_inscription_set_min_chars")
-	core.PuregoSafeRegister(&xInscriptionSetMinLines, lib, "gtk_inscription_set_min_lines")
-	core.PuregoSafeRegister(&xInscriptionSetNatChars, lib, "gtk_inscription_set_nat_chars")
-	core.PuregoSafeRegister(&xInscriptionSetNatLines, lib, "gtk_inscription_set_nat_lines")
-	core.PuregoSafeRegister(&xInscriptionSetText, lib, "gtk_inscription_set_text")
-	core.PuregoSafeRegister(&xInscriptionSetTextOverflow, lib, "gtk_inscription_set_text_overflow")
-	core.PuregoSafeRegister(&xInscriptionSetWrapMode, lib, "gtk_inscription_set_wrap_mode")
-	core.PuregoSafeRegister(&xInscriptionSetXalign, lib, "gtk_inscription_set_xalign")
-	core.PuregoSafeRegister(&xInscriptionSetYalign, lib, "gtk_inscription_set_yalign")
+	core.PuregoSafeRegister(&xInscriptionGetAttributes, libs, "gtk_inscription_get_attributes")
+	core.PuregoSafeRegister(&xInscriptionGetMinChars, libs, "gtk_inscription_get_min_chars")
+	core.PuregoSafeRegister(&xInscriptionGetMinLines, libs, "gtk_inscription_get_min_lines")
+	core.PuregoSafeRegister(&xInscriptionGetNatChars, libs, "gtk_inscription_get_nat_chars")
+	core.PuregoSafeRegister(&xInscriptionGetNatLines, libs, "gtk_inscription_get_nat_lines")
+	core.PuregoSafeRegister(&xInscriptionGetText, libs, "gtk_inscription_get_text")
+	core.PuregoSafeRegister(&xInscriptionGetTextOverflow, libs, "gtk_inscription_get_text_overflow")
+	core.PuregoSafeRegister(&xInscriptionGetWrapMode, libs, "gtk_inscription_get_wrap_mode")
+	core.PuregoSafeRegister(&xInscriptionGetXalign, libs, "gtk_inscription_get_xalign")
+	core.PuregoSafeRegister(&xInscriptionGetYalign, libs, "gtk_inscription_get_yalign")
+	core.PuregoSafeRegister(&xInscriptionSetAttributes, libs, "gtk_inscription_set_attributes")
+	core.PuregoSafeRegister(&xInscriptionSetMarkup, libs, "gtk_inscription_set_markup")
+	core.PuregoSafeRegister(&xInscriptionSetMinChars, libs, "gtk_inscription_set_min_chars")
+	core.PuregoSafeRegister(&xInscriptionSetMinLines, libs, "gtk_inscription_set_min_lines")
+	core.PuregoSafeRegister(&xInscriptionSetNatChars, libs, "gtk_inscription_set_nat_chars")
+	core.PuregoSafeRegister(&xInscriptionSetNatLines, libs, "gtk_inscription_set_nat_lines")
+	core.PuregoSafeRegister(&xInscriptionSetText, libs, "gtk_inscription_set_text")
+	core.PuregoSafeRegister(&xInscriptionSetTextOverflow, libs, "gtk_inscription_set_text_overflow")
+	core.PuregoSafeRegister(&xInscriptionSetWrapMode, libs, "gtk_inscription_set_wrap_mode")
+	core.PuregoSafeRegister(&xInscriptionSetXalign, libs, "gtk_inscription_set_xalign")
+	core.PuregoSafeRegister(&xInscriptionSetYalign, libs, "gtk_inscription_set_yalign")
 
 }

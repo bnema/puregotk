@@ -324,34 +324,38 @@ func (c *ColumnViewColumn) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColumnViewColumnGLibType, lib, "gtk_column_view_column_get_type")
+	core.PuregoSafeRegister(&xColumnViewColumnGLibType, libs, "gtk_column_view_column_get_type")
 
-	core.PuregoSafeRegister(&xNewColumnViewColumn, lib, "gtk_column_view_column_new")
+	core.PuregoSafeRegister(&xNewColumnViewColumn, libs, "gtk_column_view_column_new")
 
-	core.PuregoSafeRegister(&xColumnViewColumnGetColumnView, lib, "gtk_column_view_column_get_column_view")
-	core.PuregoSafeRegister(&xColumnViewColumnGetExpand, lib, "gtk_column_view_column_get_expand")
-	core.PuregoSafeRegister(&xColumnViewColumnGetFactory, lib, "gtk_column_view_column_get_factory")
-	core.PuregoSafeRegister(&xColumnViewColumnGetFixedWidth, lib, "gtk_column_view_column_get_fixed_width")
-	core.PuregoSafeRegister(&xColumnViewColumnGetHeaderMenu, lib, "gtk_column_view_column_get_header_menu")
-	core.PuregoSafeRegister(&xColumnViewColumnGetId, lib, "gtk_column_view_column_get_id")
-	core.PuregoSafeRegister(&xColumnViewColumnGetResizable, lib, "gtk_column_view_column_get_resizable")
-	core.PuregoSafeRegister(&xColumnViewColumnGetSorter, lib, "gtk_column_view_column_get_sorter")
-	core.PuregoSafeRegister(&xColumnViewColumnGetTitle, lib, "gtk_column_view_column_get_title")
-	core.PuregoSafeRegister(&xColumnViewColumnGetVisible, lib, "gtk_column_view_column_get_visible")
-	core.PuregoSafeRegister(&xColumnViewColumnSetExpand, lib, "gtk_column_view_column_set_expand")
-	core.PuregoSafeRegister(&xColumnViewColumnSetFactory, lib, "gtk_column_view_column_set_factory")
-	core.PuregoSafeRegister(&xColumnViewColumnSetFixedWidth, lib, "gtk_column_view_column_set_fixed_width")
-	core.PuregoSafeRegister(&xColumnViewColumnSetHeaderMenu, lib, "gtk_column_view_column_set_header_menu")
-	core.PuregoSafeRegister(&xColumnViewColumnSetId, lib, "gtk_column_view_column_set_id")
-	core.PuregoSafeRegister(&xColumnViewColumnSetResizable, lib, "gtk_column_view_column_set_resizable")
-	core.PuregoSafeRegister(&xColumnViewColumnSetSorter, lib, "gtk_column_view_column_set_sorter")
-	core.PuregoSafeRegister(&xColumnViewColumnSetTitle, lib, "gtk_column_view_column_set_title")
-	core.PuregoSafeRegister(&xColumnViewColumnSetVisible, lib, "gtk_column_view_column_set_visible")
+	core.PuregoSafeRegister(&xColumnViewColumnGetColumnView, libs, "gtk_column_view_column_get_column_view")
+	core.PuregoSafeRegister(&xColumnViewColumnGetExpand, libs, "gtk_column_view_column_get_expand")
+	core.PuregoSafeRegister(&xColumnViewColumnGetFactory, libs, "gtk_column_view_column_get_factory")
+	core.PuregoSafeRegister(&xColumnViewColumnGetFixedWidth, libs, "gtk_column_view_column_get_fixed_width")
+	core.PuregoSafeRegister(&xColumnViewColumnGetHeaderMenu, libs, "gtk_column_view_column_get_header_menu")
+	core.PuregoSafeRegister(&xColumnViewColumnGetId, libs, "gtk_column_view_column_get_id")
+	core.PuregoSafeRegister(&xColumnViewColumnGetResizable, libs, "gtk_column_view_column_get_resizable")
+	core.PuregoSafeRegister(&xColumnViewColumnGetSorter, libs, "gtk_column_view_column_get_sorter")
+	core.PuregoSafeRegister(&xColumnViewColumnGetTitle, libs, "gtk_column_view_column_get_title")
+	core.PuregoSafeRegister(&xColumnViewColumnGetVisible, libs, "gtk_column_view_column_get_visible")
+	core.PuregoSafeRegister(&xColumnViewColumnSetExpand, libs, "gtk_column_view_column_set_expand")
+	core.PuregoSafeRegister(&xColumnViewColumnSetFactory, libs, "gtk_column_view_column_set_factory")
+	core.PuregoSafeRegister(&xColumnViewColumnSetFixedWidth, libs, "gtk_column_view_column_set_fixed_width")
+	core.PuregoSafeRegister(&xColumnViewColumnSetHeaderMenu, libs, "gtk_column_view_column_set_header_menu")
+	core.PuregoSafeRegister(&xColumnViewColumnSetId, libs, "gtk_column_view_column_set_id")
+	core.PuregoSafeRegister(&xColumnViewColumnSetResizable, libs, "gtk_column_view_column_set_resizable")
+	core.PuregoSafeRegister(&xColumnViewColumnSetSorter, libs, "gtk_column_view_column_set_sorter")
+	core.PuregoSafeRegister(&xColumnViewColumnSetTitle, libs, "gtk_column_view_column_set_title")
+	core.PuregoSafeRegister(&xColumnViewColumnSetVisible, libs, "gtk_column_view_column_set_visible")
 
 }

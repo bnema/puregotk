@@ -263,28 +263,32 @@ func (x *Monitor) ConnectInvalidate(cb *func(Monitor)) uint32 {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSubpixelLayoutGLibType, lib, "gdk_subpixel_layout_get_type")
+	core.PuregoSafeRegister(&xSubpixelLayoutGLibType, libs, "gdk_subpixel_layout_get_type")
 
-	core.PuregoSafeRegister(&xMonitorGLibType, lib, "gdk_monitor_get_type")
+	core.PuregoSafeRegister(&xMonitorGLibType, libs, "gdk_monitor_get_type")
 
-	core.PuregoSafeRegister(&xMonitorGetConnector, lib, "gdk_monitor_get_connector")
-	core.PuregoSafeRegister(&xMonitorGetDescription, lib, "gdk_monitor_get_description")
-	core.PuregoSafeRegister(&xMonitorGetDisplay, lib, "gdk_monitor_get_display")
-	core.PuregoSafeRegister(&xMonitorGetGeometry, lib, "gdk_monitor_get_geometry")
-	core.PuregoSafeRegister(&xMonitorGetHeightMm, lib, "gdk_monitor_get_height_mm")
-	core.PuregoSafeRegister(&xMonitorGetManufacturer, lib, "gdk_monitor_get_manufacturer")
-	core.PuregoSafeRegister(&xMonitorGetModel, lib, "gdk_monitor_get_model")
-	core.PuregoSafeRegister(&xMonitorGetRefreshRate, lib, "gdk_monitor_get_refresh_rate")
-	core.PuregoSafeRegister(&xMonitorGetScale, lib, "gdk_monitor_get_scale")
-	core.PuregoSafeRegister(&xMonitorGetScaleFactor, lib, "gdk_monitor_get_scale_factor")
-	core.PuregoSafeRegister(&xMonitorGetSubpixelLayout, lib, "gdk_monitor_get_subpixel_layout")
-	core.PuregoSafeRegister(&xMonitorGetWidthMm, lib, "gdk_monitor_get_width_mm")
-	core.PuregoSafeRegister(&xMonitorIsValid, lib, "gdk_monitor_is_valid")
+	core.PuregoSafeRegister(&xMonitorGetConnector, libs, "gdk_monitor_get_connector")
+	core.PuregoSafeRegister(&xMonitorGetDescription, libs, "gdk_monitor_get_description")
+	core.PuregoSafeRegister(&xMonitorGetDisplay, libs, "gdk_monitor_get_display")
+	core.PuregoSafeRegister(&xMonitorGetGeometry, libs, "gdk_monitor_get_geometry")
+	core.PuregoSafeRegister(&xMonitorGetHeightMm, libs, "gdk_monitor_get_height_mm")
+	core.PuregoSafeRegister(&xMonitorGetManufacturer, libs, "gdk_monitor_get_manufacturer")
+	core.PuregoSafeRegister(&xMonitorGetModel, libs, "gdk_monitor_get_model")
+	core.PuregoSafeRegister(&xMonitorGetRefreshRate, libs, "gdk_monitor_get_refresh_rate")
+	core.PuregoSafeRegister(&xMonitorGetScale, libs, "gdk_monitor_get_scale")
+	core.PuregoSafeRegister(&xMonitorGetScaleFactor, libs, "gdk_monitor_get_scale_factor")
+	core.PuregoSafeRegister(&xMonitorGetSubpixelLayout, libs, "gdk_monitor_get_subpixel_layout")
+	core.PuregoSafeRegister(&xMonitorGetWidthMm, libs, "gdk_monitor_get_width_mm")
+	core.PuregoSafeRegister(&xMonitorIsValid, libs, "gdk_monitor_is_valid")
 
 }

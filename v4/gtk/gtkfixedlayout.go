@@ -152,19 +152,23 @@ func (c *FixedLayoutChild) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFixedLayoutGLibType, lib, "gtk_fixed_layout_get_type")
+	core.PuregoSafeRegister(&xFixedLayoutGLibType, libs, "gtk_fixed_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewFixedLayout, lib, "gtk_fixed_layout_new")
+	core.PuregoSafeRegister(&xNewFixedLayout, libs, "gtk_fixed_layout_new")
 
-	core.PuregoSafeRegister(&xFixedLayoutChildGLibType, lib, "gtk_fixed_layout_child_get_type")
+	core.PuregoSafeRegister(&xFixedLayoutChildGLibType, libs, "gtk_fixed_layout_child_get_type")
 
-	core.PuregoSafeRegister(&xFixedLayoutChildGetTransform, lib, "gtk_fixed_layout_child_get_transform")
-	core.PuregoSafeRegister(&xFixedLayoutChildSetTransform, lib, "gtk_fixed_layout_child_set_transform")
+	core.PuregoSafeRegister(&xFixedLayoutChildGetTransform, libs, "gtk_fixed_layout_child_get_transform")
+	core.PuregoSafeRegister(&xFixedLayoutChildSetTransform, libs, "gtk_fixed_layout_child_set_transform")
 
 }

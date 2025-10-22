@@ -592,25 +592,29 @@ func DBusObjectManagerClientNewForBus(BusTypeVar BusType, FlagsVar DBusObjectMan
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDBusObjectManagerClientGLibType, lib, "g_dbus_object_manager_client_get_type")
+	core.PuregoSafeRegister(&xDBusObjectManagerClientGLibType, libs, "g_dbus_object_manager_client_get_type")
 
-	core.PuregoSafeRegister(&xNewDBusObjectManagerClientFinish, lib, "g_dbus_object_manager_client_new_finish")
-	core.PuregoSafeRegister(&xNewDBusObjectManagerClientForBusFinish, lib, "g_dbus_object_manager_client_new_for_bus_finish")
-	core.PuregoSafeRegister(&xNewDBusObjectManagerClientForBusSync, lib, "g_dbus_object_manager_client_new_for_bus_sync")
-	core.PuregoSafeRegister(&xNewDBusObjectManagerClientSync, lib, "g_dbus_object_manager_client_new_sync")
+	core.PuregoSafeRegister(&xNewDBusObjectManagerClientFinish, libs, "g_dbus_object_manager_client_new_finish")
+	core.PuregoSafeRegister(&xNewDBusObjectManagerClientForBusFinish, libs, "g_dbus_object_manager_client_new_for_bus_finish")
+	core.PuregoSafeRegister(&xNewDBusObjectManagerClientForBusSync, libs, "g_dbus_object_manager_client_new_for_bus_sync")
+	core.PuregoSafeRegister(&xNewDBusObjectManagerClientSync, libs, "g_dbus_object_manager_client_new_sync")
 
-	core.PuregoSafeRegister(&xDBusObjectManagerClientGetConnection, lib, "g_dbus_object_manager_client_get_connection")
-	core.PuregoSafeRegister(&xDBusObjectManagerClientGetFlags, lib, "g_dbus_object_manager_client_get_flags")
-	core.PuregoSafeRegister(&xDBusObjectManagerClientGetName, lib, "g_dbus_object_manager_client_get_name")
-	core.PuregoSafeRegister(&xDBusObjectManagerClientGetNameOwner, lib, "g_dbus_object_manager_client_get_name_owner")
+	core.PuregoSafeRegister(&xDBusObjectManagerClientGetConnection, libs, "g_dbus_object_manager_client_get_connection")
+	core.PuregoSafeRegister(&xDBusObjectManagerClientGetFlags, libs, "g_dbus_object_manager_client_get_flags")
+	core.PuregoSafeRegister(&xDBusObjectManagerClientGetName, libs, "g_dbus_object_manager_client_get_name")
+	core.PuregoSafeRegister(&xDBusObjectManagerClientGetNameOwner, libs, "g_dbus_object_manager_client_get_name_owner")
 
-	core.PuregoSafeRegister(&xDBusObjectManagerClientNew, lib, "g_dbus_object_manager_client_new")
-	core.PuregoSafeRegister(&xDBusObjectManagerClientNewForBus, lib, "g_dbus_object_manager_client_new_for_bus")
+	core.PuregoSafeRegister(&xDBusObjectManagerClientNew, libs, "g_dbus_object_manager_client_new")
+	core.PuregoSafeRegister(&xDBusObjectManagerClientNewForBus, libs, "g_dbus_object_manager_client_new_for_bus")
 
 }

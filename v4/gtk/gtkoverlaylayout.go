@@ -146,21 +146,25 @@ func (c *OverlayLayoutChild) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xOverlayLayoutGLibType, lib, "gtk_overlay_layout_get_type")
+	core.PuregoSafeRegister(&xOverlayLayoutGLibType, libs, "gtk_overlay_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewOverlayLayout, lib, "gtk_overlay_layout_new")
+	core.PuregoSafeRegister(&xNewOverlayLayout, libs, "gtk_overlay_layout_new")
 
-	core.PuregoSafeRegister(&xOverlayLayoutChildGLibType, lib, "gtk_overlay_layout_child_get_type")
+	core.PuregoSafeRegister(&xOverlayLayoutChildGLibType, libs, "gtk_overlay_layout_child_get_type")
 
-	core.PuregoSafeRegister(&xOverlayLayoutChildGetClipOverlay, lib, "gtk_overlay_layout_child_get_clip_overlay")
-	core.PuregoSafeRegister(&xOverlayLayoutChildGetMeasure, lib, "gtk_overlay_layout_child_get_measure")
-	core.PuregoSafeRegister(&xOverlayLayoutChildSetClipOverlay, lib, "gtk_overlay_layout_child_set_clip_overlay")
-	core.PuregoSafeRegister(&xOverlayLayoutChildSetMeasure, lib, "gtk_overlay_layout_child_set_measure")
+	core.PuregoSafeRegister(&xOverlayLayoutChildGetClipOverlay, libs, "gtk_overlay_layout_child_get_clip_overlay")
+	core.PuregoSafeRegister(&xOverlayLayoutChildGetMeasure, libs, "gtk_overlay_layout_child_get_measure")
+	core.PuregoSafeRegister(&xOverlayLayoutChildSetClipOverlay, libs, "gtk_overlay_layout_child_set_clip_overlay")
+	core.PuregoSafeRegister(&xOverlayLayoutChildSetMeasure, libs, "gtk_overlay_layout_child_set_measure")
 
 }

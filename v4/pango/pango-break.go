@@ -128,16 +128,20 @@ func TailorBreak(TextVar string, LengthVar int, AnalysisVar *Analysis, OffsetVar
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAttrBreak, lib, "pango_attr_break")
-	core.PuregoSafeRegister(&xBreak, lib, "pango_break")
-	core.PuregoSafeRegister(&xDefaultBreak, lib, "pango_default_break")
-	core.PuregoSafeRegister(&xGetLogAttrs, lib, "pango_get_log_attrs")
-	core.PuregoSafeRegister(&xTailorBreak, lib, "pango_tailor_break")
+	core.PuregoSafeRegister(&xAttrBreak, libs, "pango_attr_break")
+	core.PuregoSafeRegister(&xBreak, libs, "pango_break")
+	core.PuregoSafeRegister(&xDefaultBreak, libs, "pango_default_break")
+	core.PuregoSafeRegister(&xGetLogAttrs, libs, "pango_get_log_attrs")
+	core.PuregoSafeRegister(&xTailorBreak, libs, "pango_tailor_break")
 
 }

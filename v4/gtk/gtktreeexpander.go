@@ -549,26 +549,30 @@ func (x *TreeExpander) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTreeExpanderGLibType, lib, "gtk_tree_expander_get_type")
+	core.PuregoSafeRegister(&xTreeExpanderGLibType, libs, "gtk_tree_expander_get_type")
 
-	core.PuregoSafeRegister(&xNewTreeExpander, lib, "gtk_tree_expander_new")
+	core.PuregoSafeRegister(&xNewTreeExpander, libs, "gtk_tree_expander_new")
 
-	core.PuregoSafeRegister(&xTreeExpanderGetChild, lib, "gtk_tree_expander_get_child")
-	core.PuregoSafeRegister(&xTreeExpanderGetHideExpander, lib, "gtk_tree_expander_get_hide_expander")
-	core.PuregoSafeRegister(&xTreeExpanderGetIndentForDepth, lib, "gtk_tree_expander_get_indent_for_depth")
-	core.PuregoSafeRegister(&xTreeExpanderGetIndentForIcon, lib, "gtk_tree_expander_get_indent_for_icon")
-	core.PuregoSafeRegister(&xTreeExpanderGetItem, lib, "gtk_tree_expander_get_item")
-	core.PuregoSafeRegister(&xTreeExpanderGetListRow, lib, "gtk_tree_expander_get_list_row")
-	core.PuregoSafeRegister(&xTreeExpanderSetChild, lib, "gtk_tree_expander_set_child")
-	core.PuregoSafeRegister(&xTreeExpanderSetHideExpander, lib, "gtk_tree_expander_set_hide_expander")
-	core.PuregoSafeRegister(&xTreeExpanderSetIndentForDepth, lib, "gtk_tree_expander_set_indent_for_depth")
-	core.PuregoSafeRegister(&xTreeExpanderSetIndentForIcon, lib, "gtk_tree_expander_set_indent_for_icon")
-	core.PuregoSafeRegister(&xTreeExpanderSetListRow, lib, "gtk_tree_expander_set_list_row")
+	core.PuregoSafeRegister(&xTreeExpanderGetChild, libs, "gtk_tree_expander_get_child")
+	core.PuregoSafeRegister(&xTreeExpanderGetHideExpander, libs, "gtk_tree_expander_get_hide_expander")
+	core.PuregoSafeRegister(&xTreeExpanderGetIndentForDepth, libs, "gtk_tree_expander_get_indent_for_depth")
+	core.PuregoSafeRegister(&xTreeExpanderGetIndentForIcon, libs, "gtk_tree_expander_get_indent_for_icon")
+	core.PuregoSafeRegister(&xTreeExpanderGetItem, libs, "gtk_tree_expander_get_item")
+	core.PuregoSafeRegister(&xTreeExpanderGetListRow, libs, "gtk_tree_expander_get_list_row")
+	core.PuregoSafeRegister(&xTreeExpanderSetChild, libs, "gtk_tree_expander_set_child")
+	core.PuregoSafeRegister(&xTreeExpanderSetHideExpander, libs, "gtk_tree_expander_set_hide_expander")
+	core.PuregoSafeRegister(&xTreeExpanderSetIndentForDepth, libs, "gtk_tree_expander_set_indent_for_depth")
+	core.PuregoSafeRegister(&xTreeExpanderSetIndentForIcon, libs, "gtk_tree_expander_set_indent_for_icon")
+	core.PuregoSafeRegister(&xTreeExpanderSetListRow, libs, "gtk_tree_expander_set_list_row")
 
 }

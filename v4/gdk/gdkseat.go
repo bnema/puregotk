@@ -234,21 +234,25 @@ func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint32 {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSeatCapabilitiesGLibType, lib, "gdk_seat_capabilities_get_type")
+	core.PuregoSafeRegister(&xSeatCapabilitiesGLibType, libs, "gdk_seat_capabilities_get_type")
 
-	core.PuregoSafeRegister(&xSeatGLibType, lib, "gdk_seat_get_type")
+	core.PuregoSafeRegister(&xSeatGLibType, libs, "gdk_seat_get_type")
 
-	core.PuregoSafeRegister(&xSeatGetCapabilities, lib, "gdk_seat_get_capabilities")
-	core.PuregoSafeRegister(&xSeatGetDevices, lib, "gdk_seat_get_devices")
-	core.PuregoSafeRegister(&xSeatGetDisplay, lib, "gdk_seat_get_display")
-	core.PuregoSafeRegister(&xSeatGetKeyboard, lib, "gdk_seat_get_keyboard")
-	core.PuregoSafeRegister(&xSeatGetPointer, lib, "gdk_seat_get_pointer")
-	core.PuregoSafeRegister(&xSeatGetTools, lib, "gdk_seat_get_tools")
+	core.PuregoSafeRegister(&xSeatGetCapabilities, libs, "gdk_seat_get_capabilities")
+	core.PuregoSafeRegister(&xSeatGetDevices, libs, "gdk_seat_get_devices")
+	core.PuregoSafeRegister(&xSeatGetDisplay, libs, "gdk_seat_get_display")
+	core.PuregoSafeRegister(&xSeatGetKeyboard, libs, "gdk_seat_get_keyboard")
+	core.PuregoSafeRegister(&xSeatGetPointer, libs, "gdk_seat_get_pointer")
+	core.PuregoSafeRegister(&xSeatGetTools, libs, "gdk_seat_get_tools")
 
 }

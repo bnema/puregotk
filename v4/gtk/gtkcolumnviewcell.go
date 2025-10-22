@@ -163,20 +163,24 @@ func (c *ColumnViewCell) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColumnViewCellGLibType, lib, "gtk_column_view_cell_get_type")
+	core.PuregoSafeRegister(&xColumnViewCellGLibType, libs, "gtk_column_view_cell_get_type")
 
-	core.PuregoSafeRegister(&xColumnViewCellGetChild, lib, "gtk_column_view_cell_get_child")
-	core.PuregoSafeRegister(&xColumnViewCellGetFocusable, lib, "gtk_column_view_cell_get_focusable")
-	core.PuregoSafeRegister(&xColumnViewCellGetItem, lib, "gtk_column_view_cell_get_item")
-	core.PuregoSafeRegister(&xColumnViewCellGetPosition, lib, "gtk_column_view_cell_get_position")
-	core.PuregoSafeRegister(&xColumnViewCellGetSelected, lib, "gtk_column_view_cell_get_selected")
-	core.PuregoSafeRegister(&xColumnViewCellSetChild, lib, "gtk_column_view_cell_set_child")
-	core.PuregoSafeRegister(&xColumnViewCellSetFocusable, lib, "gtk_column_view_cell_set_focusable")
+	core.PuregoSafeRegister(&xColumnViewCellGetChild, libs, "gtk_column_view_cell_get_child")
+	core.PuregoSafeRegister(&xColumnViewCellGetFocusable, libs, "gtk_column_view_cell_get_focusable")
+	core.PuregoSafeRegister(&xColumnViewCellGetItem, libs, "gtk_column_view_cell_get_item")
+	core.PuregoSafeRegister(&xColumnViewCellGetPosition, libs, "gtk_column_view_cell_get_position")
+	core.PuregoSafeRegister(&xColumnViewCellGetSelected, libs, "gtk_column_view_cell_get_selected")
+	core.PuregoSafeRegister(&xColumnViewCellSetChild, libs, "gtk_column_view_cell_set_child")
+	core.PuregoSafeRegister(&xColumnViewCellSetFocusable, libs, "gtk_column_view_cell_set_focusable")
 
 }

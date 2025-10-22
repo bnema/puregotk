@@ -165,23 +165,27 @@ func (c *StringSorter) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCollationGLibType, lib, "gtk_collation_get_type")
+	core.PuregoSafeRegister(&xCollationGLibType, libs, "gtk_collation_get_type")
 
-	core.PuregoSafeRegister(&xStringSorterGLibType, lib, "gtk_string_sorter_get_type")
+	core.PuregoSafeRegister(&xStringSorterGLibType, libs, "gtk_string_sorter_get_type")
 
-	core.PuregoSafeRegister(&xNewStringSorter, lib, "gtk_string_sorter_new")
+	core.PuregoSafeRegister(&xNewStringSorter, libs, "gtk_string_sorter_new")
 
-	core.PuregoSafeRegister(&xStringSorterGetCollation, lib, "gtk_string_sorter_get_collation")
-	core.PuregoSafeRegister(&xStringSorterGetExpression, lib, "gtk_string_sorter_get_expression")
-	core.PuregoSafeRegister(&xStringSorterGetIgnoreCase, lib, "gtk_string_sorter_get_ignore_case")
-	core.PuregoSafeRegister(&xStringSorterSetCollation, lib, "gtk_string_sorter_set_collation")
-	core.PuregoSafeRegister(&xStringSorterSetExpression, lib, "gtk_string_sorter_set_expression")
-	core.PuregoSafeRegister(&xStringSorterSetIgnoreCase, lib, "gtk_string_sorter_set_ignore_case")
+	core.PuregoSafeRegister(&xStringSorterGetCollation, libs, "gtk_string_sorter_get_collation")
+	core.PuregoSafeRegister(&xStringSorterGetExpression, libs, "gtk_string_sorter_get_expression")
+	core.PuregoSafeRegister(&xStringSorterGetIgnoreCase, libs, "gtk_string_sorter_get_ignore_case")
+	core.PuregoSafeRegister(&xStringSorterSetCollation, libs, "gtk_string_sorter_set_collation")
+	core.PuregoSafeRegister(&xStringSorterSetExpression, libs, "gtk_string_sorter_set_expression")
+	core.PuregoSafeRegister(&xStringSorterSetIgnoreCase, libs, "gtk_string_sorter_set_ignore_case")
 
 }

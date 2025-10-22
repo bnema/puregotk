@@ -170,22 +170,26 @@ func (c *Shortcut) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xShortcutGLibType, lib, "gtk_shortcut_get_type")
+	core.PuregoSafeRegister(&xShortcutGLibType, libs, "gtk_shortcut_get_type")
 
-	core.PuregoSafeRegister(&xNewShortcut, lib, "gtk_shortcut_new")
-	core.PuregoSafeRegister(&xNewShortcutWithArguments, lib, "gtk_shortcut_new_with_arguments")
+	core.PuregoSafeRegister(&xNewShortcut, libs, "gtk_shortcut_new")
+	core.PuregoSafeRegister(&xNewShortcutWithArguments, libs, "gtk_shortcut_new_with_arguments")
 
-	core.PuregoSafeRegister(&xShortcutGetAction, lib, "gtk_shortcut_get_action")
-	core.PuregoSafeRegister(&xShortcutGetArguments, lib, "gtk_shortcut_get_arguments")
-	core.PuregoSafeRegister(&xShortcutGetTrigger, lib, "gtk_shortcut_get_trigger")
-	core.PuregoSafeRegister(&xShortcutSetAction, lib, "gtk_shortcut_set_action")
-	core.PuregoSafeRegister(&xShortcutSetArguments, lib, "gtk_shortcut_set_arguments")
-	core.PuregoSafeRegister(&xShortcutSetTrigger, lib, "gtk_shortcut_set_trigger")
+	core.PuregoSafeRegister(&xShortcutGetAction, libs, "gtk_shortcut_get_action")
+	core.PuregoSafeRegister(&xShortcutGetArguments, libs, "gtk_shortcut_get_arguments")
+	core.PuregoSafeRegister(&xShortcutGetTrigger, libs, "gtk_shortcut_get_trigger")
+	core.PuregoSafeRegister(&xShortcutSetAction, libs, "gtk_shortcut_set_action")
+	core.PuregoSafeRegister(&xShortcutSetArguments, libs, "gtk_shortcut_set_arguments")
+	core.PuregoSafeRegister(&xShortcutSetTrigger, libs, "gtk_shortcut_set_trigger")
 
 }

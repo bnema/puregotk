@@ -216,24 +216,28 @@ func (c *PropertyAnimationTarget) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAnimationTargetGLibType, lib, "adw_animation_target_get_type")
+	core.PuregoSafeRegister(&xAnimationTargetGLibType, libs, "adw_animation_target_get_type")
 
-	core.PuregoSafeRegister(&xCallbackAnimationTargetGLibType, lib, "adw_callback_animation_target_get_type")
+	core.PuregoSafeRegister(&xCallbackAnimationTargetGLibType, libs, "adw_callback_animation_target_get_type")
 
-	core.PuregoSafeRegister(&xNewCallbackAnimationTarget, lib, "adw_callback_animation_target_new")
+	core.PuregoSafeRegister(&xNewCallbackAnimationTarget, libs, "adw_callback_animation_target_new")
 
-	core.PuregoSafeRegister(&xPropertyAnimationTargetGLibType, lib, "adw_property_animation_target_get_type")
+	core.PuregoSafeRegister(&xPropertyAnimationTargetGLibType, libs, "adw_property_animation_target_get_type")
 
-	core.PuregoSafeRegister(&xNewPropertyAnimationTarget, lib, "adw_property_animation_target_new")
-	core.PuregoSafeRegister(&xNewPropertyAnimationTargetForPspec, lib, "adw_property_animation_target_new_for_pspec")
+	core.PuregoSafeRegister(&xNewPropertyAnimationTarget, libs, "adw_property_animation_target_new")
+	core.PuregoSafeRegister(&xNewPropertyAnimationTargetForPspec, libs, "adw_property_animation_target_new_for_pspec")
 
-	core.PuregoSafeRegister(&xPropertyAnimationTargetGetObject, lib, "adw_property_animation_target_get_object")
-	core.PuregoSafeRegister(&xPropertyAnimationTargetGetPspec, lib, "adw_property_animation_target_get_pspec")
+	core.PuregoSafeRegister(&xPropertyAnimationTargetGetObject, libs, "adw_property_animation_target_get_object")
+	core.PuregoSafeRegister(&xPropertyAnimationTargetGetPspec, libs, "adw_property_animation_target_get_pspec")
 
 }

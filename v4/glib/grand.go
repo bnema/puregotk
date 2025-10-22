@@ -190,31 +190,35 @@ func RandomSetSeed(SeedVar uint32) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRandomDouble, lib, "g_random_double")
-	core.PuregoSafeRegister(&xRandomDoubleRange, lib, "g_random_double_range")
-	core.PuregoSafeRegister(&xRandomInt, lib, "g_random_int")
-	core.PuregoSafeRegister(&xRandomIntRange, lib, "g_random_int_range")
-	core.PuregoSafeRegister(&xRandomSetSeed, lib, "g_random_set_seed")
+	core.PuregoSafeRegister(&xRandomDouble, libs, "g_random_double")
+	core.PuregoSafeRegister(&xRandomDoubleRange, libs, "g_random_double_range")
+	core.PuregoSafeRegister(&xRandomInt, libs, "g_random_int")
+	core.PuregoSafeRegister(&xRandomIntRange, libs, "g_random_int_range")
+	core.PuregoSafeRegister(&xRandomSetSeed, libs, "g_random_set_seed")
 
-	core.PuregoSafeRegister(&xRandGLibType, lib, "g_rand_get_type")
+	core.PuregoSafeRegister(&xRandGLibType, libs, "g_rand_get_type")
 
-	core.PuregoSafeRegister(&xNewRand, lib, "g_rand_new")
-	core.PuregoSafeRegister(&xNewRandWithSeed, lib, "g_rand_new_with_seed")
-	core.PuregoSafeRegister(&xNewRandWithSeedArray, lib, "g_rand_new_with_seed_array")
+	core.PuregoSafeRegister(&xNewRand, libs, "g_rand_new")
+	core.PuregoSafeRegister(&xNewRandWithSeed, libs, "g_rand_new_with_seed")
+	core.PuregoSafeRegister(&xNewRandWithSeedArray, libs, "g_rand_new_with_seed_array")
 
-	core.PuregoSafeRegister(&xRandCopy, lib, "g_rand_copy")
-	core.PuregoSafeRegister(&xRandDouble, lib, "g_rand_double")
-	core.PuregoSafeRegister(&xRandDoubleRange, lib, "g_rand_double_range")
-	core.PuregoSafeRegister(&xRandFree, lib, "g_rand_free")
-	core.PuregoSafeRegister(&xRandInt, lib, "g_rand_int")
-	core.PuregoSafeRegister(&xRandIntRange, lib, "g_rand_int_range")
-	core.PuregoSafeRegister(&xRandSetSeed, lib, "g_rand_set_seed")
-	core.PuregoSafeRegister(&xRandSetSeedArray, lib, "g_rand_set_seed_array")
+	core.PuregoSafeRegister(&xRandCopy, libs, "g_rand_copy")
+	core.PuregoSafeRegister(&xRandDouble, libs, "g_rand_double")
+	core.PuregoSafeRegister(&xRandDoubleRange, libs, "g_rand_double_range")
+	core.PuregoSafeRegister(&xRandFree, libs, "g_rand_free")
+	core.PuregoSafeRegister(&xRandInt, libs, "g_rand_int")
+	core.PuregoSafeRegister(&xRandIntRange, libs, "g_rand_int_range")
+	core.PuregoSafeRegister(&xRandSetSeed, libs, "g_rand_set_seed")
+	core.PuregoSafeRegister(&xRandSetSeedArray, libs, "g_rand_set_seed_array")
 
 }

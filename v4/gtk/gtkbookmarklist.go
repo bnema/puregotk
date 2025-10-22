@@ -230,21 +230,25 @@ func (x *BookmarkList) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar 
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBookmarkListGLibType, lib, "gtk_bookmark_list_get_type")
+	core.PuregoSafeRegister(&xBookmarkListGLibType, libs, "gtk_bookmark_list_get_type")
 
-	core.PuregoSafeRegister(&xNewBookmarkList, lib, "gtk_bookmark_list_new")
+	core.PuregoSafeRegister(&xNewBookmarkList, libs, "gtk_bookmark_list_new")
 
-	core.PuregoSafeRegister(&xBookmarkListGetAttributes, lib, "gtk_bookmark_list_get_attributes")
-	core.PuregoSafeRegister(&xBookmarkListGetFilename, lib, "gtk_bookmark_list_get_filename")
-	core.PuregoSafeRegister(&xBookmarkListGetIoPriority, lib, "gtk_bookmark_list_get_io_priority")
-	core.PuregoSafeRegister(&xBookmarkListIsLoading, lib, "gtk_bookmark_list_is_loading")
-	core.PuregoSafeRegister(&xBookmarkListSetAttributes, lib, "gtk_bookmark_list_set_attributes")
-	core.PuregoSafeRegister(&xBookmarkListSetIoPriority, lib, "gtk_bookmark_list_set_io_priority")
+	core.PuregoSafeRegister(&xBookmarkListGetAttributes, libs, "gtk_bookmark_list_get_attributes")
+	core.PuregoSafeRegister(&xBookmarkListGetFilename, libs, "gtk_bookmark_list_get_filename")
+	core.PuregoSafeRegister(&xBookmarkListGetIoPriority, libs, "gtk_bookmark_list_get_io_priority")
+	core.PuregoSafeRegister(&xBookmarkListIsLoading, libs, "gtk_bookmark_list_is_loading")
+	core.PuregoSafeRegister(&xBookmarkListSetAttributes, libs, "gtk_bookmark_list_set_attributes")
+	core.PuregoSafeRegister(&xBookmarkListSetIoPriority, libs, "gtk_bookmark_list_set_io_priority")
 
 }

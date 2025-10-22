@@ -146,20 +146,24 @@ var XGdkPopupPresent func(uintptr, int, int, *PopupLayout) bool
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPopupGLibType, lib, "gdk_popup_get_type")
+	core.PuregoSafeRegister(&xPopupGLibType, libs, "gdk_popup_get_type")
 
-	core.PuregoSafeRegister(&XGdkPopupGetAutohide, lib, "gdk_popup_get_autohide")
-	core.PuregoSafeRegister(&XGdkPopupGetParent, lib, "gdk_popup_get_parent")
-	core.PuregoSafeRegister(&XGdkPopupGetPositionX, lib, "gdk_popup_get_position_x")
-	core.PuregoSafeRegister(&XGdkPopupGetPositionY, lib, "gdk_popup_get_position_y")
-	core.PuregoSafeRegister(&XGdkPopupGetRectAnchor, lib, "gdk_popup_get_rect_anchor")
-	core.PuregoSafeRegister(&XGdkPopupGetSurfaceAnchor, lib, "gdk_popup_get_surface_anchor")
-	core.PuregoSafeRegister(&XGdkPopupPresent, lib, "gdk_popup_present")
+	core.PuregoSafeRegister(&XGdkPopupGetAutohide, libs, "gdk_popup_get_autohide")
+	core.PuregoSafeRegister(&XGdkPopupGetParent, libs, "gdk_popup_get_parent")
+	core.PuregoSafeRegister(&XGdkPopupGetPositionX, libs, "gdk_popup_get_position_x")
+	core.PuregoSafeRegister(&XGdkPopupGetPositionY, libs, "gdk_popup_get_position_y")
+	core.PuregoSafeRegister(&XGdkPopupGetRectAnchor, libs, "gdk_popup_get_rect_anchor")
+	core.PuregoSafeRegister(&XGdkPopupGetSurfaceAnchor, libs, "gdk_popup_get_surface_anchor")
+	core.PuregoSafeRegister(&XGdkPopupPresent, libs, "gdk_popup_present")
 
 }

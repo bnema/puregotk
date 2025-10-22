@@ -253,24 +253,28 @@ func (c *PrintContext) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xPrintContextGLibType, lib, "gtk_print_context_get_type")
+	core.PuregoSafeRegister(&xPrintContextGLibType, libs, "gtk_print_context_get_type")
 
-	core.PuregoSafeRegister(&xPrintContextCreatePangoContext, lib, "gtk_print_context_create_pango_context")
-	core.PuregoSafeRegister(&xPrintContextCreatePangoLayout, lib, "gtk_print_context_create_pango_layout")
-	core.PuregoSafeRegister(&xPrintContextGetCairoContext, lib, "gtk_print_context_get_cairo_context")
-	core.PuregoSafeRegister(&xPrintContextGetDpiX, lib, "gtk_print_context_get_dpi_x")
-	core.PuregoSafeRegister(&xPrintContextGetDpiY, lib, "gtk_print_context_get_dpi_y")
-	core.PuregoSafeRegister(&xPrintContextGetHardMargins, lib, "gtk_print_context_get_hard_margins")
-	core.PuregoSafeRegister(&xPrintContextGetHeight, lib, "gtk_print_context_get_height")
-	core.PuregoSafeRegister(&xPrintContextGetPageSetup, lib, "gtk_print_context_get_page_setup")
-	core.PuregoSafeRegister(&xPrintContextGetPangoFontmap, lib, "gtk_print_context_get_pango_fontmap")
-	core.PuregoSafeRegister(&xPrintContextGetWidth, lib, "gtk_print_context_get_width")
-	core.PuregoSafeRegister(&xPrintContextSetCairoContext, lib, "gtk_print_context_set_cairo_context")
+	core.PuregoSafeRegister(&xPrintContextCreatePangoContext, libs, "gtk_print_context_create_pango_context")
+	core.PuregoSafeRegister(&xPrintContextCreatePangoLayout, libs, "gtk_print_context_create_pango_layout")
+	core.PuregoSafeRegister(&xPrintContextGetCairoContext, libs, "gtk_print_context_get_cairo_context")
+	core.PuregoSafeRegister(&xPrintContextGetDpiX, libs, "gtk_print_context_get_dpi_x")
+	core.PuregoSafeRegister(&xPrintContextGetDpiY, libs, "gtk_print_context_get_dpi_y")
+	core.PuregoSafeRegister(&xPrintContextGetHardMargins, libs, "gtk_print_context_get_hard_margins")
+	core.PuregoSafeRegister(&xPrintContextGetHeight, libs, "gtk_print_context_get_height")
+	core.PuregoSafeRegister(&xPrintContextGetPageSetup, libs, "gtk_print_context_get_page_setup")
+	core.PuregoSafeRegister(&xPrintContextGetPangoFontmap, libs, "gtk_print_context_get_pango_fontmap")
+	core.PuregoSafeRegister(&xPrintContextGetWidth, libs, "gtk_print_context_get_width")
+	core.PuregoSafeRegister(&xPrintContextSetCairoContext, libs, "gtk_print_context_set_cairo_context")
 
 }

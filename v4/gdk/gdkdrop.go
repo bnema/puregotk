@@ -257,25 +257,29 @@ func (c *Drop) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDropGLibType, lib, "gdk_drop_get_type")
+	core.PuregoSafeRegister(&xDropGLibType, libs, "gdk_drop_get_type")
 
-	core.PuregoSafeRegister(&xDropFinish, lib, "gdk_drop_finish")
-	core.PuregoSafeRegister(&xDropGetActions, lib, "gdk_drop_get_actions")
-	core.PuregoSafeRegister(&xDropGetDevice, lib, "gdk_drop_get_device")
-	core.PuregoSafeRegister(&xDropGetDisplay, lib, "gdk_drop_get_display")
-	core.PuregoSafeRegister(&xDropGetDrag, lib, "gdk_drop_get_drag")
-	core.PuregoSafeRegister(&xDropGetFormats, lib, "gdk_drop_get_formats")
-	core.PuregoSafeRegister(&xDropGetSurface, lib, "gdk_drop_get_surface")
-	core.PuregoSafeRegister(&xDropReadAsync, lib, "gdk_drop_read_async")
-	core.PuregoSafeRegister(&xDropReadFinish, lib, "gdk_drop_read_finish")
-	core.PuregoSafeRegister(&xDropReadValueAsync, lib, "gdk_drop_read_value_async")
-	core.PuregoSafeRegister(&xDropReadValueFinish, lib, "gdk_drop_read_value_finish")
-	core.PuregoSafeRegister(&xDropStatus, lib, "gdk_drop_status")
+	core.PuregoSafeRegister(&xDropFinish, libs, "gdk_drop_finish")
+	core.PuregoSafeRegister(&xDropGetActions, libs, "gdk_drop_get_actions")
+	core.PuregoSafeRegister(&xDropGetDevice, libs, "gdk_drop_get_device")
+	core.PuregoSafeRegister(&xDropGetDisplay, libs, "gdk_drop_get_display")
+	core.PuregoSafeRegister(&xDropGetDrag, libs, "gdk_drop_get_drag")
+	core.PuregoSafeRegister(&xDropGetFormats, libs, "gdk_drop_get_formats")
+	core.PuregoSafeRegister(&xDropGetSurface, libs, "gdk_drop_get_surface")
+	core.PuregoSafeRegister(&xDropReadAsync, libs, "gdk_drop_read_async")
+	core.PuregoSafeRegister(&xDropReadFinish, libs, "gdk_drop_read_finish")
+	core.PuregoSafeRegister(&xDropReadValueAsync, libs, "gdk_drop_read_value_async")
+	core.PuregoSafeRegister(&xDropReadValueFinish, libs, "gdk_drop_read_value_finish")
+	core.PuregoSafeRegister(&xDropStatus, libs, "gdk_drop_status")
 
 }

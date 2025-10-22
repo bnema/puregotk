@@ -380,33 +380,37 @@ func (x *Clipboard) ConnectChanged(cb *func(Clipboard)) uint32 {
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xClipboardGLibType, lib, "gdk_clipboard_get_type")
+	core.PuregoSafeRegister(&xClipboardGLibType, libs, "gdk_clipboard_get_type")
 
-	core.PuregoSafeRegister(&xClipboardGetContent, lib, "gdk_clipboard_get_content")
-	core.PuregoSafeRegister(&xClipboardGetDisplay, lib, "gdk_clipboard_get_display")
-	core.PuregoSafeRegister(&xClipboardGetFormats, lib, "gdk_clipboard_get_formats")
-	core.PuregoSafeRegister(&xClipboardIsLocal, lib, "gdk_clipboard_is_local")
-	core.PuregoSafeRegister(&xClipboardReadAsync, lib, "gdk_clipboard_read_async")
-	core.PuregoSafeRegister(&xClipboardReadFinish, lib, "gdk_clipboard_read_finish")
-	core.PuregoSafeRegister(&xClipboardReadTextAsync, lib, "gdk_clipboard_read_text_async")
-	core.PuregoSafeRegister(&xClipboardReadTextFinish, lib, "gdk_clipboard_read_text_finish")
-	core.PuregoSafeRegister(&xClipboardReadTextureAsync, lib, "gdk_clipboard_read_texture_async")
-	core.PuregoSafeRegister(&xClipboardReadTextureFinish, lib, "gdk_clipboard_read_texture_finish")
-	core.PuregoSafeRegister(&xClipboardReadValueAsync, lib, "gdk_clipboard_read_value_async")
-	core.PuregoSafeRegister(&xClipboardReadValueFinish, lib, "gdk_clipboard_read_value_finish")
-	core.PuregoSafeRegister(&xClipboardSet, lib, "gdk_clipboard_set")
-	core.PuregoSafeRegister(&xClipboardSetContent, lib, "gdk_clipboard_set_content")
-	core.PuregoSafeRegister(&xClipboardSetText, lib, "gdk_clipboard_set_text")
-	core.PuregoSafeRegister(&xClipboardSetTexture, lib, "gdk_clipboard_set_texture")
-	core.PuregoSafeRegister(&xClipboardSetValist, lib, "gdk_clipboard_set_valist")
-	core.PuregoSafeRegister(&xClipboardSetValue, lib, "gdk_clipboard_set_value")
-	core.PuregoSafeRegister(&xClipboardStoreAsync, lib, "gdk_clipboard_store_async")
-	core.PuregoSafeRegister(&xClipboardStoreFinish, lib, "gdk_clipboard_store_finish")
+	core.PuregoSafeRegister(&xClipboardGetContent, libs, "gdk_clipboard_get_content")
+	core.PuregoSafeRegister(&xClipboardGetDisplay, libs, "gdk_clipboard_get_display")
+	core.PuregoSafeRegister(&xClipboardGetFormats, libs, "gdk_clipboard_get_formats")
+	core.PuregoSafeRegister(&xClipboardIsLocal, libs, "gdk_clipboard_is_local")
+	core.PuregoSafeRegister(&xClipboardReadAsync, libs, "gdk_clipboard_read_async")
+	core.PuregoSafeRegister(&xClipboardReadFinish, libs, "gdk_clipboard_read_finish")
+	core.PuregoSafeRegister(&xClipboardReadTextAsync, libs, "gdk_clipboard_read_text_async")
+	core.PuregoSafeRegister(&xClipboardReadTextFinish, libs, "gdk_clipboard_read_text_finish")
+	core.PuregoSafeRegister(&xClipboardReadTextureAsync, libs, "gdk_clipboard_read_texture_async")
+	core.PuregoSafeRegister(&xClipboardReadTextureFinish, libs, "gdk_clipboard_read_texture_finish")
+	core.PuregoSafeRegister(&xClipboardReadValueAsync, libs, "gdk_clipboard_read_value_async")
+	core.PuregoSafeRegister(&xClipboardReadValueFinish, libs, "gdk_clipboard_read_value_finish")
+	core.PuregoSafeRegister(&xClipboardSet, libs, "gdk_clipboard_set")
+	core.PuregoSafeRegister(&xClipboardSetContent, libs, "gdk_clipboard_set_content")
+	core.PuregoSafeRegister(&xClipboardSetText, libs, "gdk_clipboard_set_text")
+	core.PuregoSafeRegister(&xClipboardSetTexture, libs, "gdk_clipboard_set_texture")
+	core.PuregoSafeRegister(&xClipboardSetValist, libs, "gdk_clipboard_set_valist")
+	core.PuregoSafeRegister(&xClipboardSetValue, libs, "gdk_clipboard_set_value")
+	core.PuregoSafeRegister(&xClipboardStoreAsync, libs, "gdk_clipboard_store_async")
+	core.PuregoSafeRegister(&xClipboardStoreFinish, libs, "gdk_clipboard_store_finish")
 
 }

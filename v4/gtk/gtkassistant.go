@@ -975,44 +975,48 @@ func (c *AssistantPage) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAssistantPageTypeGLibType, lib, "gtk_assistant_page_type_get_type")
+	core.PuregoSafeRegister(&xAssistantPageTypeGLibType, libs, "gtk_assistant_page_type_get_type")
 
-	core.PuregoSafeRegister(&xAssistantGLibType, lib, "gtk_assistant_get_type")
+	core.PuregoSafeRegister(&xAssistantGLibType, libs, "gtk_assistant_get_type")
 
-	core.PuregoSafeRegister(&xNewAssistant, lib, "gtk_assistant_new")
+	core.PuregoSafeRegister(&xNewAssistant, libs, "gtk_assistant_new")
 
-	core.PuregoSafeRegister(&xAssistantAddActionWidget, lib, "gtk_assistant_add_action_widget")
-	core.PuregoSafeRegister(&xAssistantAppendPage, lib, "gtk_assistant_append_page")
-	core.PuregoSafeRegister(&xAssistantCommit, lib, "gtk_assistant_commit")
-	core.PuregoSafeRegister(&xAssistantGetCurrentPage, lib, "gtk_assistant_get_current_page")
-	core.PuregoSafeRegister(&xAssistantGetNPages, lib, "gtk_assistant_get_n_pages")
-	core.PuregoSafeRegister(&xAssistantGetNthPage, lib, "gtk_assistant_get_nth_page")
-	core.PuregoSafeRegister(&xAssistantGetPage, lib, "gtk_assistant_get_page")
-	core.PuregoSafeRegister(&xAssistantGetPageComplete, lib, "gtk_assistant_get_page_complete")
-	core.PuregoSafeRegister(&xAssistantGetPageTitle, lib, "gtk_assistant_get_page_title")
-	core.PuregoSafeRegister(&xAssistantGetPageType, lib, "gtk_assistant_get_page_type")
-	core.PuregoSafeRegister(&xAssistantGetPages, lib, "gtk_assistant_get_pages")
-	core.PuregoSafeRegister(&xAssistantInsertPage, lib, "gtk_assistant_insert_page")
-	core.PuregoSafeRegister(&xAssistantNextPage, lib, "gtk_assistant_next_page")
-	core.PuregoSafeRegister(&xAssistantPrependPage, lib, "gtk_assistant_prepend_page")
-	core.PuregoSafeRegister(&xAssistantPreviousPage, lib, "gtk_assistant_previous_page")
-	core.PuregoSafeRegister(&xAssistantRemoveActionWidget, lib, "gtk_assistant_remove_action_widget")
-	core.PuregoSafeRegister(&xAssistantRemovePage, lib, "gtk_assistant_remove_page")
-	core.PuregoSafeRegister(&xAssistantSetCurrentPage, lib, "gtk_assistant_set_current_page")
-	core.PuregoSafeRegister(&xAssistantSetForwardPageFunc, lib, "gtk_assistant_set_forward_page_func")
-	core.PuregoSafeRegister(&xAssistantSetPageComplete, lib, "gtk_assistant_set_page_complete")
-	core.PuregoSafeRegister(&xAssistantSetPageTitle, lib, "gtk_assistant_set_page_title")
-	core.PuregoSafeRegister(&xAssistantSetPageType, lib, "gtk_assistant_set_page_type")
-	core.PuregoSafeRegister(&xAssistantUpdateButtonsState, lib, "gtk_assistant_update_buttons_state")
+	core.PuregoSafeRegister(&xAssistantAddActionWidget, libs, "gtk_assistant_add_action_widget")
+	core.PuregoSafeRegister(&xAssistantAppendPage, libs, "gtk_assistant_append_page")
+	core.PuregoSafeRegister(&xAssistantCommit, libs, "gtk_assistant_commit")
+	core.PuregoSafeRegister(&xAssistantGetCurrentPage, libs, "gtk_assistant_get_current_page")
+	core.PuregoSafeRegister(&xAssistantGetNPages, libs, "gtk_assistant_get_n_pages")
+	core.PuregoSafeRegister(&xAssistantGetNthPage, libs, "gtk_assistant_get_nth_page")
+	core.PuregoSafeRegister(&xAssistantGetPage, libs, "gtk_assistant_get_page")
+	core.PuregoSafeRegister(&xAssistantGetPageComplete, libs, "gtk_assistant_get_page_complete")
+	core.PuregoSafeRegister(&xAssistantGetPageTitle, libs, "gtk_assistant_get_page_title")
+	core.PuregoSafeRegister(&xAssistantGetPageType, libs, "gtk_assistant_get_page_type")
+	core.PuregoSafeRegister(&xAssistantGetPages, libs, "gtk_assistant_get_pages")
+	core.PuregoSafeRegister(&xAssistantInsertPage, libs, "gtk_assistant_insert_page")
+	core.PuregoSafeRegister(&xAssistantNextPage, libs, "gtk_assistant_next_page")
+	core.PuregoSafeRegister(&xAssistantPrependPage, libs, "gtk_assistant_prepend_page")
+	core.PuregoSafeRegister(&xAssistantPreviousPage, libs, "gtk_assistant_previous_page")
+	core.PuregoSafeRegister(&xAssistantRemoveActionWidget, libs, "gtk_assistant_remove_action_widget")
+	core.PuregoSafeRegister(&xAssistantRemovePage, libs, "gtk_assistant_remove_page")
+	core.PuregoSafeRegister(&xAssistantSetCurrentPage, libs, "gtk_assistant_set_current_page")
+	core.PuregoSafeRegister(&xAssistantSetForwardPageFunc, libs, "gtk_assistant_set_forward_page_func")
+	core.PuregoSafeRegister(&xAssistantSetPageComplete, libs, "gtk_assistant_set_page_complete")
+	core.PuregoSafeRegister(&xAssistantSetPageTitle, libs, "gtk_assistant_set_page_title")
+	core.PuregoSafeRegister(&xAssistantSetPageType, libs, "gtk_assistant_set_page_type")
+	core.PuregoSafeRegister(&xAssistantUpdateButtonsState, libs, "gtk_assistant_update_buttons_state")
 
-	core.PuregoSafeRegister(&xAssistantPageGLibType, lib, "gtk_assistant_page_get_type")
+	core.PuregoSafeRegister(&xAssistantPageGLibType, libs, "gtk_assistant_page_get_type")
 
-	core.PuregoSafeRegister(&xAssistantPageGetChild, lib, "gtk_assistant_page_get_child")
+	core.PuregoSafeRegister(&xAssistantPageGetChild, libs, "gtk_assistant_page_get_child")
 
 }

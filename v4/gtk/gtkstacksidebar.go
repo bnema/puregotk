@@ -383,17 +383,21 @@ func (x *StackSidebar) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xStackSidebarGLibType, lib, "gtk_stack_sidebar_get_type")
+	core.PuregoSafeRegister(&xStackSidebarGLibType, libs, "gtk_stack_sidebar_get_type")
 
-	core.PuregoSafeRegister(&xNewStackSidebar, lib, "gtk_stack_sidebar_new")
+	core.PuregoSafeRegister(&xNewStackSidebar, libs, "gtk_stack_sidebar_new")
 
-	core.PuregoSafeRegister(&xStackSidebarGetStack, lib, "gtk_stack_sidebar_get_stack")
-	core.PuregoSafeRegister(&xStackSidebarSetStack, lib, "gtk_stack_sidebar_set_stack")
+	core.PuregoSafeRegister(&xStackSidebarGetStack, libs, "gtk_stack_sidebar_get_stack")
+	core.PuregoSafeRegister(&xStackSidebarSetStack, libs, "gtk_stack_sidebar_set_stack")
 
 }

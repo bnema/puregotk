@@ -230,19 +230,23 @@ func (x *CellAreaBox) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCellAreaBoxGLibType, lib, "gtk_cell_area_box_get_type")
+	core.PuregoSafeRegister(&xCellAreaBoxGLibType, libs, "gtk_cell_area_box_get_type")
 
-	core.PuregoSafeRegister(&xNewCellAreaBox, lib, "gtk_cell_area_box_new")
+	core.PuregoSafeRegister(&xNewCellAreaBox, libs, "gtk_cell_area_box_new")
 
-	core.PuregoSafeRegister(&xCellAreaBoxGetSpacing, lib, "gtk_cell_area_box_get_spacing")
-	core.PuregoSafeRegister(&xCellAreaBoxPackEnd, lib, "gtk_cell_area_box_pack_end")
-	core.PuregoSafeRegister(&xCellAreaBoxPackStart, lib, "gtk_cell_area_box_pack_start")
-	core.PuregoSafeRegister(&xCellAreaBoxSetSpacing, lib, "gtk_cell_area_box_set_spacing")
+	core.PuregoSafeRegister(&xCellAreaBoxGetSpacing, libs, "gtk_cell_area_box_get_spacing")
+	core.PuregoSafeRegister(&xCellAreaBoxPackEnd, libs, "gtk_cell_area_box_pack_end")
+	core.PuregoSafeRegister(&xCellAreaBoxPackStart, libs, "gtk_cell_area_box_pack_start")
+	core.PuregoSafeRegister(&xCellAreaBoxSetSpacing, libs, "gtk_cell_area_box_set_spacing")
 
 }

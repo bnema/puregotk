@@ -666,46 +666,50 @@ func IconThemeGetForDisplay(DisplayVar *gdk.Display) *IconTheme {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xIconLookupFlagsGLibType, lib, "gtk_icon_lookup_flags_get_type")
+	core.PuregoSafeRegister(&xIconLookupFlagsGLibType, libs, "gtk_icon_lookup_flags_get_type")
 
-	core.PuregoSafeRegister(&xIconThemeErrorGLibType, lib, "gtk_icon_theme_error_get_type")
+	core.PuregoSafeRegister(&xIconThemeErrorGLibType, libs, "gtk_icon_theme_error_get_type")
 
-	core.PuregoSafeRegister(&xIconThemeErrorQuark, lib, "gtk_icon_theme_error_quark")
+	core.PuregoSafeRegister(&xIconThemeErrorQuark, libs, "gtk_icon_theme_error_quark")
 
-	core.PuregoSafeRegister(&xIconPaintableGLibType, lib, "gtk_icon_paintable_get_type")
+	core.PuregoSafeRegister(&xIconPaintableGLibType, libs, "gtk_icon_paintable_get_type")
 
-	core.PuregoSafeRegister(&xNewIconPaintableForFile, lib, "gtk_icon_paintable_new_for_file")
+	core.PuregoSafeRegister(&xNewIconPaintableForFile, libs, "gtk_icon_paintable_new_for_file")
 
-	core.PuregoSafeRegister(&xIconPaintableGetFile, lib, "gtk_icon_paintable_get_file")
-	core.PuregoSafeRegister(&xIconPaintableGetIconName, lib, "gtk_icon_paintable_get_icon_name")
-	core.PuregoSafeRegister(&xIconPaintableIsSymbolic, lib, "gtk_icon_paintable_is_symbolic")
+	core.PuregoSafeRegister(&xIconPaintableGetFile, libs, "gtk_icon_paintable_get_file")
+	core.PuregoSafeRegister(&xIconPaintableGetIconName, libs, "gtk_icon_paintable_get_icon_name")
+	core.PuregoSafeRegister(&xIconPaintableIsSymbolic, libs, "gtk_icon_paintable_is_symbolic")
 
-	core.PuregoSafeRegister(&xIconThemeGLibType, lib, "gtk_icon_theme_get_type")
+	core.PuregoSafeRegister(&xIconThemeGLibType, libs, "gtk_icon_theme_get_type")
 
-	core.PuregoSafeRegister(&xNewIconTheme, lib, "gtk_icon_theme_new")
+	core.PuregoSafeRegister(&xNewIconTheme, libs, "gtk_icon_theme_new")
 
-	core.PuregoSafeRegister(&xIconThemeAddResourcePath, lib, "gtk_icon_theme_add_resource_path")
-	core.PuregoSafeRegister(&xIconThemeAddSearchPath, lib, "gtk_icon_theme_add_search_path")
-	core.PuregoSafeRegister(&xIconThemeGetDisplay, lib, "gtk_icon_theme_get_display")
-	core.PuregoSafeRegister(&xIconThemeGetIconNames, lib, "gtk_icon_theme_get_icon_names")
-	core.PuregoSafeRegister(&xIconThemeGetIconSizes, lib, "gtk_icon_theme_get_icon_sizes")
-	core.PuregoSafeRegister(&xIconThemeGetResourcePath, lib, "gtk_icon_theme_get_resource_path")
-	core.PuregoSafeRegister(&xIconThemeGetSearchPath, lib, "gtk_icon_theme_get_search_path")
-	core.PuregoSafeRegister(&xIconThemeGetThemeName, lib, "gtk_icon_theme_get_theme_name")
-	core.PuregoSafeRegister(&xIconThemeHasGicon, lib, "gtk_icon_theme_has_gicon")
-	core.PuregoSafeRegister(&xIconThemeHasIcon, lib, "gtk_icon_theme_has_icon")
-	core.PuregoSafeRegister(&xIconThemeLookupByGicon, lib, "gtk_icon_theme_lookup_by_gicon")
-	core.PuregoSafeRegister(&xIconThemeLookupIcon, lib, "gtk_icon_theme_lookup_icon")
-	core.PuregoSafeRegister(&xIconThemeSetResourcePath, lib, "gtk_icon_theme_set_resource_path")
-	core.PuregoSafeRegister(&xIconThemeSetSearchPath, lib, "gtk_icon_theme_set_search_path")
-	core.PuregoSafeRegister(&xIconThemeSetThemeName, lib, "gtk_icon_theme_set_theme_name")
+	core.PuregoSafeRegister(&xIconThemeAddResourcePath, libs, "gtk_icon_theme_add_resource_path")
+	core.PuregoSafeRegister(&xIconThemeAddSearchPath, libs, "gtk_icon_theme_add_search_path")
+	core.PuregoSafeRegister(&xIconThemeGetDisplay, libs, "gtk_icon_theme_get_display")
+	core.PuregoSafeRegister(&xIconThemeGetIconNames, libs, "gtk_icon_theme_get_icon_names")
+	core.PuregoSafeRegister(&xIconThemeGetIconSizes, libs, "gtk_icon_theme_get_icon_sizes")
+	core.PuregoSafeRegister(&xIconThemeGetResourcePath, libs, "gtk_icon_theme_get_resource_path")
+	core.PuregoSafeRegister(&xIconThemeGetSearchPath, libs, "gtk_icon_theme_get_search_path")
+	core.PuregoSafeRegister(&xIconThemeGetThemeName, libs, "gtk_icon_theme_get_theme_name")
+	core.PuregoSafeRegister(&xIconThemeHasGicon, libs, "gtk_icon_theme_has_gicon")
+	core.PuregoSafeRegister(&xIconThemeHasIcon, libs, "gtk_icon_theme_has_icon")
+	core.PuregoSafeRegister(&xIconThemeLookupByGicon, libs, "gtk_icon_theme_lookup_by_gicon")
+	core.PuregoSafeRegister(&xIconThemeLookupIcon, libs, "gtk_icon_theme_lookup_icon")
+	core.PuregoSafeRegister(&xIconThemeSetResourcePath, libs, "gtk_icon_theme_set_resource_path")
+	core.PuregoSafeRegister(&xIconThemeSetSearchPath, libs, "gtk_icon_theme_set_search_path")
+	core.PuregoSafeRegister(&xIconThemeSetThemeName, libs, "gtk_icon_theme_set_theme_name")
 
-	core.PuregoSafeRegister(&xIconThemeGetForDisplay, lib, "gtk_icon_theme_get_for_display")
+	core.PuregoSafeRegister(&xIconThemeGetForDisplay, libs, "gtk_icon_theme_get_for_display")
 
 }

@@ -160,15 +160,19 @@ var XGRemoteActionGroupChangeActionStateFull func(uintptr, string, *glib.Variant
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xRemoteActionGroupGLibType, lib, "g_remote_action_group_get_type")
+	core.PuregoSafeRegister(&xRemoteActionGroupGLibType, libs, "g_remote_action_group_get_type")
 
-	core.PuregoSafeRegister(&XGRemoteActionGroupActivateActionFull, lib, "g_remote_action_group_activate_action_full")
-	core.PuregoSafeRegister(&XGRemoteActionGroupChangeActionStateFull, lib, "g_remote_action_group_change_action_state_full")
+	core.PuregoSafeRegister(&XGRemoteActionGroupActivateActionFull, libs, "g_remote_action_group_activate_action_full")
+	core.PuregoSafeRegister(&XGRemoteActionGroupChangeActionStateFull, libs, "g_remote_action_group_change_action_state_full")
 
 }

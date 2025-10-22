@@ -159,25 +159,29 @@ func (x *CssSection) Unref() {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCssSectionGLibType, lib, "gtk_css_section_get_type")
+	core.PuregoSafeRegister(&xCssSectionGLibType, libs, "gtk_css_section_get_type")
 
-	core.PuregoSafeRegister(&xNewCssSection, lib, "gtk_css_section_new")
-	core.PuregoSafeRegister(&xNewCssSectionWithBytes, lib, "gtk_css_section_new_with_bytes")
+	core.PuregoSafeRegister(&xNewCssSection, libs, "gtk_css_section_new")
+	core.PuregoSafeRegister(&xNewCssSectionWithBytes, libs, "gtk_css_section_new_with_bytes")
 
-	core.PuregoSafeRegister(&xCssSectionGetBytes, lib, "gtk_css_section_get_bytes")
-	core.PuregoSafeRegister(&xCssSectionGetEndLocation, lib, "gtk_css_section_get_end_location")
-	core.PuregoSafeRegister(&xCssSectionGetFile, lib, "gtk_css_section_get_file")
-	core.PuregoSafeRegister(&xCssSectionGetParent, lib, "gtk_css_section_get_parent")
-	core.PuregoSafeRegister(&xCssSectionGetStartLocation, lib, "gtk_css_section_get_start_location")
-	core.PuregoSafeRegister(&xCssSectionPrint, lib, "gtk_css_section_print")
-	core.PuregoSafeRegister(&xCssSectionRef, lib, "gtk_css_section_ref")
-	core.PuregoSafeRegister(&xCssSectionToString, lib, "gtk_css_section_to_string")
-	core.PuregoSafeRegister(&xCssSectionUnref, lib, "gtk_css_section_unref")
+	core.PuregoSafeRegister(&xCssSectionGetBytes, libs, "gtk_css_section_get_bytes")
+	core.PuregoSafeRegister(&xCssSectionGetEndLocation, libs, "gtk_css_section_get_end_location")
+	core.PuregoSafeRegister(&xCssSectionGetFile, libs, "gtk_css_section_get_file")
+	core.PuregoSafeRegister(&xCssSectionGetParent, libs, "gtk_css_section_get_parent")
+	core.PuregoSafeRegister(&xCssSectionGetStartLocation, libs, "gtk_css_section_get_start_location")
+	core.PuregoSafeRegister(&xCssSectionPrint, libs, "gtk_css_section_print")
+	core.PuregoSafeRegister(&xCssSectionRef, libs, "gtk_css_section_ref")
+	core.PuregoSafeRegister(&xCssSectionToString, libs, "gtk_css_section_to_string")
+	core.PuregoSafeRegister(&xCssSectionUnref, libs, "gtk_css_section_unref")
 
 }

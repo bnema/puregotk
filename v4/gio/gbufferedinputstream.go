@@ -514,25 +514,29 @@ func (x *BufferedInputStream) Truncate(OffsetVar int64, CancellableVar *Cancella
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xBufferedInputStreamGLibType, lib, "g_buffered_input_stream_get_type")
+	core.PuregoSafeRegister(&xBufferedInputStreamGLibType, libs, "g_buffered_input_stream_get_type")
 
-	core.PuregoSafeRegister(&xNewBufferedInputStream, lib, "g_buffered_input_stream_new")
-	core.PuregoSafeRegister(&xNewBufferedInputStreamSized, lib, "g_buffered_input_stream_new_sized")
+	core.PuregoSafeRegister(&xNewBufferedInputStream, libs, "g_buffered_input_stream_new")
+	core.PuregoSafeRegister(&xNewBufferedInputStreamSized, libs, "g_buffered_input_stream_new_sized")
 
-	core.PuregoSafeRegister(&xBufferedInputStreamFill, lib, "g_buffered_input_stream_fill")
-	core.PuregoSafeRegister(&xBufferedInputStreamFillAsync, lib, "g_buffered_input_stream_fill_async")
-	core.PuregoSafeRegister(&xBufferedInputStreamFillFinish, lib, "g_buffered_input_stream_fill_finish")
-	core.PuregoSafeRegister(&xBufferedInputStreamGetAvailable, lib, "g_buffered_input_stream_get_available")
-	core.PuregoSafeRegister(&xBufferedInputStreamGetBufferSize, lib, "g_buffered_input_stream_get_buffer_size")
-	core.PuregoSafeRegister(&xBufferedInputStreamPeek, lib, "g_buffered_input_stream_peek")
-	core.PuregoSafeRegister(&xBufferedInputStreamPeekBuffer, lib, "g_buffered_input_stream_peek_buffer")
-	core.PuregoSafeRegister(&xBufferedInputStreamReadByte, lib, "g_buffered_input_stream_read_byte")
-	core.PuregoSafeRegister(&xBufferedInputStreamSetBufferSize, lib, "g_buffered_input_stream_set_buffer_size")
+	core.PuregoSafeRegister(&xBufferedInputStreamFill, libs, "g_buffered_input_stream_fill")
+	core.PuregoSafeRegister(&xBufferedInputStreamFillAsync, libs, "g_buffered_input_stream_fill_async")
+	core.PuregoSafeRegister(&xBufferedInputStreamFillFinish, libs, "g_buffered_input_stream_fill_finish")
+	core.PuregoSafeRegister(&xBufferedInputStreamGetAvailable, libs, "g_buffered_input_stream_get_available")
+	core.PuregoSafeRegister(&xBufferedInputStreamGetBufferSize, libs, "g_buffered_input_stream_get_buffer_size")
+	core.PuregoSafeRegister(&xBufferedInputStreamPeek, libs, "g_buffered_input_stream_peek")
+	core.PuregoSafeRegister(&xBufferedInputStreamPeekBuffer, libs, "g_buffered_input_stream_peek_buffer")
+	core.PuregoSafeRegister(&xBufferedInputStreamReadByte, libs, "g_buffered_input_stream_read_byte")
+	core.PuregoSafeRegister(&xBufferedInputStreamSetBufferSize, libs, "g_buffered_input_stream_set_buffer_size")
 
 }

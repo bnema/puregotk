@@ -367,20 +367,24 @@ func (x *TypeModule) CompleteTypeInfo(GTypeVar types.GType, InfoVar *TypeInfo, V
 
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
-	core.SetSharedLibrary("GOBJECT", "libgobject-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GOBJECT"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GOBJECT") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xTypeModuleGLibType, lib, "g_type_module_get_type")
+	core.PuregoSafeRegister(&xTypeModuleGLibType, libs, "g_type_module_get_type")
 
-	core.PuregoSafeRegister(&xTypeModuleAddInterface, lib, "g_type_module_add_interface")
-	core.PuregoSafeRegister(&xTypeModuleRegisterEnum, lib, "g_type_module_register_enum")
-	core.PuregoSafeRegister(&xTypeModuleRegisterFlags, lib, "g_type_module_register_flags")
-	core.PuregoSafeRegister(&xTypeModuleRegisterType, lib, "g_type_module_register_type")
-	core.PuregoSafeRegister(&xTypeModuleSetName, lib, "g_type_module_set_name")
-	core.PuregoSafeRegister(&xTypeModuleUnuse, lib, "g_type_module_unuse")
-	core.PuregoSafeRegister(&xTypeModuleUse, lib, "g_type_module_use")
+	core.PuregoSafeRegister(&xTypeModuleAddInterface, libs, "g_type_module_add_interface")
+	core.PuregoSafeRegister(&xTypeModuleRegisterEnum, libs, "g_type_module_register_enum")
+	core.PuregoSafeRegister(&xTypeModuleRegisterFlags, libs, "g_type_module_register_flags")
+	core.PuregoSafeRegister(&xTypeModuleRegisterType, libs, "g_type_module_register_type")
+	core.PuregoSafeRegister(&xTypeModuleSetName, libs, "g_type_module_set_name")
+	core.PuregoSafeRegister(&xTypeModuleUnuse, libs, "g_type_module_unuse")
+	core.PuregoSafeRegister(&xTypeModuleUse, libs, "g_type_module_use")
 
 }

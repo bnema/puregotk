@@ -191,17 +191,21 @@ func (x *SelectionFilterModel) ItemsChanged(PositionVar uint, RemovedVar uint, A
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSelectionFilterModelGLibType, lib, "gtk_selection_filter_model_get_type")
+	core.PuregoSafeRegister(&xSelectionFilterModelGLibType, libs, "gtk_selection_filter_model_get_type")
 
-	core.PuregoSafeRegister(&xNewSelectionFilterModel, lib, "gtk_selection_filter_model_new")
+	core.PuregoSafeRegister(&xNewSelectionFilterModel, libs, "gtk_selection_filter_model_new")
 
-	core.PuregoSafeRegister(&xSelectionFilterModelGetModel, lib, "gtk_selection_filter_model_get_model")
-	core.PuregoSafeRegister(&xSelectionFilterModelSetModel, lib, "gtk_selection_filter_model_set_model")
+	core.PuregoSafeRegister(&xSelectionFilterModelGetModel, libs, "gtk_selection_filter_model_get_model")
+	core.PuregoSafeRegister(&xSelectionFilterModelSetModel, libs, "gtk_selection_filter_model_set_model")
 
 }

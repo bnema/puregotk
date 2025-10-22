@@ -178,16 +178,20 @@ func InitableNewv(ObjectTypeVar types.GType, NParametersVar uint, ParametersVar 
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInitableNewv, lib, "g_initable_newv")
+	core.PuregoSafeRegister(&xInitableNewv, libs, "g_initable_newv")
 
-	core.PuregoSafeRegister(&xInitableGLibType, lib, "g_initable_get_type")
+	core.PuregoSafeRegister(&xInitableGLibType, libs, "g_initable_get_type")
 
-	core.PuregoSafeRegister(&XGInitableInit, lib, "g_initable_init")
+	core.PuregoSafeRegister(&XGInitableInit, libs, "g_initable_init")
 
 }

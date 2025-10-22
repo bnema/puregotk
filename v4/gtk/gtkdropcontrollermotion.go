@@ -172,18 +172,22 @@ func (x *DropControllerMotion) ConnectMotion(cb *func(DropControllerMotion, floa
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDropControllerMotionGLibType, lib, "gtk_drop_controller_motion_get_type")
+	core.PuregoSafeRegister(&xDropControllerMotionGLibType, libs, "gtk_drop_controller_motion_get_type")
 
-	core.PuregoSafeRegister(&xNewDropControllerMotion, lib, "gtk_drop_controller_motion_new")
+	core.PuregoSafeRegister(&xNewDropControllerMotion, libs, "gtk_drop_controller_motion_new")
 
-	core.PuregoSafeRegister(&xDropControllerMotionContainsPointer, lib, "gtk_drop_controller_motion_contains_pointer")
-	core.PuregoSafeRegister(&xDropControllerMotionGetDrop, lib, "gtk_drop_controller_motion_get_drop")
-	core.PuregoSafeRegister(&xDropControllerMotionIsPointer, lib, "gtk_drop_controller_motion_is_pointer")
+	core.PuregoSafeRegister(&xDropControllerMotionContainsPointer, libs, "gtk_drop_controller_motion_contains_pointer")
+	core.PuregoSafeRegister(&xDropControllerMotionGetDrop, libs, "gtk_drop_controller_motion_get_drop")
+	core.PuregoSafeRegister(&xDropControllerMotionIsPointer, libs, "gtk_drop_controller_motion_is_pointer")
 
 }

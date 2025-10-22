@@ -523,23 +523,27 @@ func (x *Frame) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xFrameGLibType, lib, "gtk_frame_get_type")
+	core.PuregoSafeRegister(&xFrameGLibType, libs, "gtk_frame_get_type")
 
-	core.PuregoSafeRegister(&xNewFrame, lib, "gtk_frame_new")
+	core.PuregoSafeRegister(&xNewFrame, libs, "gtk_frame_new")
 
-	core.PuregoSafeRegister(&xFrameGetChild, lib, "gtk_frame_get_child")
-	core.PuregoSafeRegister(&xFrameGetLabel, lib, "gtk_frame_get_label")
-	core.PuregoSafeRegister(&xFrameGetLabelAlign, lib, "gtk_frame_get_label_align")
-	core.PuregoSafeRegister(&xFrameGetLabelWidget, lib, "gtk_frame_get_label_widget")
-	core.PuregoSafeRegister(&xFrameSetChild, lib, "gtk_frame_set_child")
-	core.PuregoSafeRegister(&xFrameSetLabel, lib, "gtk_frame_set_label")
-	core.PuregoSafeRegister(&xFrameSetLabelAlign, lib, "gtk_frame_set_label_align")
-	core.PuregoSafeRegister(&xFrameSetLabelWidget, lib, "gtk_frame_set_label_widget")
+	core.PuregoSafeRegister(&xFrameGetChild, libs, "gtk_frame_get_child")
+	core.PuregoSafeRegister(&xFrameGetLabel, libs, "gtk_frame_get_label")
+	core.PuregoSafeRegister(&xFrameGetLabelAlign, libs, "gtk_frame_get_label_align")
+	core.PuregoSafeRegister(&xFrameGetLabelWidget, libs, "gtk_frame_get_label_widget")
+	core.PuregoSafeRegister(&xFrameSetChild, libs, "gtk_frame_set_child")
+	core.PuregoSafeRegister(&xFrameSetLabel, libs, "gtk_frame_set_label")
+	core.PuregoSafeRegister(&xFrameSetLabelAlign, libs, "gtk_frame_set_label_align")
+	core.PuregoSafeRegister(&xFrameSetLabelWidget, libs, "gtk_frame_set_label_widget")
 
 }

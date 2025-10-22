@@ -683,29 +683,33 @@ func (x *Scale) SetOrientation(OrientationVar Orientation) {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xScaleGLibType, lib, "gtk_scale_get_type")
+	core.PuregoSafeRegister(&xScaleGLibType, libs, "gtk_scale_get_type")
 
-	core.PuregoSafeRegister(&xNewScale, lib, "gtk_scale_new")
-	core.PuregoSafeRegister(&xNewScaleWithRange, lib, "gtk_scale_new_with_range")
+	core.PuregoSafeRegister(&xNewScale, libs, "gtk_scale_new")
+	core.PuregoSafeRegister(&xNewScaleWithRange, libs, "gtk_scale_new_with_range")
 
-	core.PuregoSafeRegister(&xScaleAddMark, lib, "gtk_scale_add_mark")
-	core.PuregoSafeRegister(&xScaleClearMarks, lib, "gtk_scale_clear_marks")
-	core.PuregoSafeRegister(&xScaleGetDigits, lib, "gtk_scale_get_digits")
-	core.PuregoSafeRegister(&xScaleGetDrawValue, lib, "gtk_scale_get_draw_value")
-	core.PuregoSafeRegister(&xScaleGetHasOrigin, lib, "gtk_scale_get_has_origin")
-	core.PuregoSafeRegister(&xScaleGetLayout, lib, "gtk_scale_get_layout")
-	core.PuregoSafeRegister(&xScaleGetLayoutOffsets, lib, "gtk_scale_get_layout_offsets")
-	core.PuregoSafeRegister(&xScaleGetValuePos, lib, "gtk_scale_get_value_pos")
-	core.PuregoSafeRegister(&xScaleSetDigits, lib, "gtk_scale_set_digits")
-	core.PuregoSafeRegister(&xScaleSetDrawValue, lib, "gtk_scale_set_draw_value")
-	core.PuregoSafeRegister(&xScaleSetFormatValueFunc, lib, "gtk_scale_set_format_value_func")
-	core.PuregoSafeRegister(&xScaleSetHasOrigin, lib, "gtk_scale_set_has_origin")
-	core.PuregoSafeRegister(&xScaleSetValuePos, lib, "gtk_scale_set_value_pos")
+	core.PuregoSafeRegister(&xScaleAddMark, libs, "gtk_scale_add_mark")
+	core.PuregoSafeRegister(&xScaleClearMarks, libs, "gtk_scale_clear_marks")
+	core.PuregoSafeRegister(&xScaleGetDigits, libs, "gtk_scale_get_digits")
+	core.PuregoSafeRegister(&xScaleGetDrawValue, libs, "gtk_scale_get_draw_value")
+	core.PuregoSafeRegister(&xScaleGetHasOrigin, libs, "gtk_scale_get_has_origin")
+	core.PuregoSafeRegister(&xScaleGetLayout, libs, "gtk_scale_get_layout")
+	core.PuregoSafeRegister(&xScaleGetLayoutOffsets, libs, "gtk_scale_get_layout_offsets")
+	core.PuregoSafeRegister(&xScaleGetValuePos, libs, "gtk_scale_get_value_pos")
+	core.PuregoSafeRegister(&xScaleSetDigits, libs, "gtk_scale_set_digits")
+	core.PuregoSafeRegister(&xScaleSetDrawValue, libs, "gtk_scale_set_draw_value")
+	core.PuregoSafeRegister(&xScaleSetFormatValueFunc, libs, "gtk_scale_set_format_value_func")
+	core.PuregoSafeRegister(&xScaleSetHasOrigin, libs, "gtk_scale_set_has_origin")
+	core.PuregoSafeRegister(&xScaleSetValuePos, libs, "gtk_scale_set_value_pos")
 
 }

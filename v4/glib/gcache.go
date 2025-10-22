@@ -106,16 +106,20 @@ func (x *Cache) ValueForeach(FuncVar *HFunc, UserDataVar uintptr) {
 
 func init() {
 	core.SetPackageName("GLIB", "glib-2.0")
-	core.SetSharedLibrary("GLIB", "libgobject-2.0.so.0,libglib-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GLIB"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GLIB", []string{"libgobject-2.0.so.0", "libglib-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GLIB") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCacheDestroy, lib, "g_cache_destroy")
-	core.PuregoSafeRegister(&xCacheInsert, lib, "g_cache_insert")
-	core.PuregoSafeRegister(&xCacheKeyForeach, lib, "g_cache_key_foreach")
-	core.PuregoSafeRegister(&xCacheRemove, lib, "g_cache_remove")
-	core.PuregoSafeRegister(&xCacheValueForeach, lib, "g_cache_value_foreach")
+	core.PuregoSafeRegister(&xCacheDestroy, libs, "g_cache_destroy")
+	core.PuregoSafeRegister(&xCacheInsert, libs, "g_cache_insert")
+	core.PuregoSafeRegister(&xCacheKeyForeach, libs, "g_cache_key_foreach")
+	core.PuregoSafeRegister(&xCacheRemove, libs, "g_cache_remove")
+	core.PuregoSafeRegister(&xCacheValueForeach, libs, "g_cache_value_foreach")
 
 }

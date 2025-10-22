@@ -396,23 +396,27 @@ func ScriptGetSampleLanguage(ScriptVar Script) *Language {
 
 func init() {
 	core.SetPackageName("PANGO", "pango")
-	core.SetSharedLibrary("PANGO", "libpango-1.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("PANGO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("PANGO", []string{"libpango-1.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("PANGO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xScriptGLibType, lib, "pango_script_get_type")
+	core.PuregoSafeRegister(&xScriptGLibType, libs, "pango_script_get_type")
 
-	core.PuregoSafeRegister(&xScriptForUnichar, lib, "pango_script_for_unichar")
-	core.PuregoSafeRegister(&xScriptGetSampleLanguage, lib, "pango_script_get_sample_language")
+	core.PuregoSafeRegister(&xScriptForUnichar, libs, "pango_script_for_unichar")
+	core.PuregoSafeRegister(&xScriptGetSampleLanguage, libs, "pango_script_get_sample_language")
 
-	core.PuregoSafeRegister(&xScriptIterGLibType, lib, "pango_script_iter_get_type")
+	core.PuregoSafeRegister(&xScriptIterGLibType, libs, "pango_script_iter_get_type")
 
-	core.PuregoSafeRegister(&xNewScriptIter, lib, "pango_script_iter_new")
+	core.PuregoSafeRegister(&xNewScriptIter, libs, "pango_script_iter_new")
 
-	core.PuregoSafeRegister(&xScriptIterFree, lib, "pango_script_iter_free")
-	core.PuregoSafeRegister(&xScriptIterGetRange, lib, "pango_script_iter_get_range")
-	core.PuregoSafeRegister(&xScriptIterNext, lib, "pango_script_iter_next")
+	core.PuregoSafeRegister(&xScriptIterFree, libs, "pango_script_iter_free")
+	core.PuregoSafeRegister(&xScriptIterGetRange, libs, "pango_script_iter_get_range")
+	core.PuregoSafeRegister(&xScriptIterNext, libs, "pango_script_iter_next")
 
 }

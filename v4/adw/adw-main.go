@@ -37,13 +37,17 @@ func IsInitialized() bool {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xInit, lib, "adw_init")
-	core.PuregoSafeRegister(&xIsInitialized, lib, "adw_is_initialized")
+	core.PuregoSafeRegister(&xInit, libs, "adw_init")
+	core.PuregoSafeRegister(&xIsInitialized, libs, "adw_is_initialized")
 
 }

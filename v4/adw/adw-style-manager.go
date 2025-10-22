@@ -304,29 +304,33 @@ func StyleManagerGetForDisplay(DisplayVar *gdk.Display) *StyleManager {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColorSchemeGLibType, lib, "adw_color_scheme_get_type")
+	core.PuregoSafeRegister(&xColorSchemeGLibType, libs, "adw_color_scheme_get_type")
 
-	core.PuregoSafeRegister(&xStyleManagerGLibType, lib, "adw_style_manager_get_type")
+	core.PuregoSafeRegister(&xStyleManagerGLibType, libs, "adw_style_manager_get_type")
 
-	core.PuregoSafeRegister(&xStyleManagerGetAccentColor, lib, "adw_style_manager_get_accent_color")
-	core.PuregoSafeRegister(&xStyleManagerGetAccentColorRgba, lib, "adw_style_manager_get_accent_color_rgba")
-	core.PuregoSafeRegister(&xStyleManagerGetColorScheme, lib, "adw_style_manager_get_color_scheme")
-	core.PuregoSafeRegister(&xStyleManagerGetDark, lib, "adw_style_manager_get_dark")
-	core.PuregoSafeRegister(&xStyleManagerGetDisplay, lib, "adw_style_manager_get_display")
-	core.PuregoSafeRegister(&xStyleManagerGetDocumentFontName, lib, "adw_style_manager_get_document_font_name")
-	core.PuregoSafeRegister(&xStyleManagerGetHighContrast, lib, "adw_style_manager_get_high_contrast")
-	core.PuregoSafeRegister(&xStyleManagerGetMonospaceFontName, lib, "adw_style_manager_get_monospace_font_name")
-	core.PuregoSafeRegister(&xStyleManagerGetSystemSupportsAccentColors, lib, "adw_style_manager_get_system_supports_accent_colors")
-	core.PuregoSafeRegister(&xStyleManagerGetSystemSupportsColorSchemes, lib, "adw_style_manager_get_system_supports_color_schemes")
-	core.PuregoSafeRegister(&xStyleManagerSetColorScheme, lib, "adw_style_manager_set_color_scheme")
+	core.PuregoSafeRegister(&xStyleManagerGetAccentColor, libs, "adw_style_manager_get_accent_color")
+	core.PuregoSafeRegister(&xStyleManagerGetAccentColorRgba, libs, "adw_style_manager_get_accent_color_rgba")
+	core.PuregoSafeRegister(&xStyleManagerGetColorScheme, libs, "adw_style_manager_get_color_scheme")
+	core.PuregoSafeRegister(&xStyleManagerGetDark, libs, "adw_style_manager_get_dark")
+	core.PuregoSafeRegister(&xStyleManagerGetDisplay, libs, "adw_style_manager_get_display")
+	core.PuregoSafeRegister(&xStyleManagerGetDocumentFontName, libs, "adw_style_manager_get_document_font_name")
+	core.PuregoSafeRegister(&xStyleManagerGetHighContrast, libs, "adw_style_manager_get_high_contrast")
+	core.PuregoSafeRegister(&xStyleManagerGetMonospaceFontName, libs, "adw_style_manager_get_monospace_font_name")
+	core.PuregoSafeRegister(&xStyleManagerGetSystemSupportsAccentColors, libs, "adw_style_manager_get_system_supports_accent_colors")
+	core.PuregoSafeRegister(&xStyleManagerGetSystemSupportsColorSchemes, libs, "adw_style_manager_get_system_supports_color_schemes")
+	core.PuregoSafeRegister(&xStyleManagerSetColorScheme, libs, "adw_style_manager_set_color_scheme")
 
-	core.PuregoSafeRegister(&xStyleManagerGetDefault, lib, "adw_style_manager_get_default")
-	core.PuregoSafeRegister(&xStyleManagerGetForDisplay, lib, "adw_style_manager_get_for_display")
+	core.PuregoSafeRegister(&xStyleManagerGetDefault, libs, "adw_style_manager_get_default")
+	core.PuregoSafeRegister(&xStyleManagerGetForDisplay, libs, "adw_style_manager_get_for_display")
 
 }

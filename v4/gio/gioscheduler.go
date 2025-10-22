@@ -37,13 +37,17 @@ func IoSchedulerPushJob(JobFuncVar *IOSchedulerJobFunc, UserDataVar uintptr, Not
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xIoSchedulerCancelAllJobs, lib, "g_io_scheduler_cancel_all_jobs")
-	core.PuregoSafeRegister(&xIoSchedulerPushJob, lib, "g_io_scheduler_push_job")
+	core.PuregoSafeRegister(&xIoSchedulerCancelAllJobs, libs, "g_io_scheduler_cancel_all_jobs")
+	core.PuregoSafeRegister(&xIoSchedulerPushJob, libs, "g_io_scheduler_push_job")
 
 }

@@ -447,26 +447,30 @@ func (x *DBusInterfaceSkeleton) SetObject(ObjectVar DBusObject) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGLibType, lib, "g_dbus_interface_skeleton_get_type")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGLibType, libs, "g_dbus_interface_skeleton_get_type")
 
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonExport, lib, "g_dbus_interface_skeleton_export")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonFlush, lib, "g_dbus_interface_skeleton_flush")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetConnection, lib, "g_dbus_interface_skeleton_get_connection")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetConnections, lib, "g_dbus_interface_skeleton_get_connections")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetFlags, lib, "g_dbus_interface_skeleton_get_flags")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetInfo, lib, "g_dbus_interface_skeleton_get_info")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetObjectPath, lib, "g_dbus_interface_skeleton_get_object_path")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetProperties, lib, "g_dbus_interface_skeleton_get_properties")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetVtable, lib, "g_dbus_interface_skeleton_get_vtable")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonHasConnection, lib, "g_dbus_interface_skeleton_has_connection")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonSetFlags, lib, "g_dbus_interface_skeleton_set_flags")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonUnexport, lib, "g_dbus_interface_skeleton_unexport")
-	core.PuregoSafeRegister(&xDBusInterfaceSkeletonUnexportFromConnection, lib, "g_dbus_interface_skeleton_unexport_from_connection")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonExport, libs, "g_dbus_interface_skeleton_export")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonFlush, libs, "g_dbus_interface_skeleton_flush")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetConnection, libs, "g_dbus_interface_skeleton_get_connection")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetConnections, libs, "g_dbus_interface_skeleton_get_connections")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetFlags, libs, "g_dbus_interface_skeleton_get_flags")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetInfo, libs, "g_dbus_interface_skeleton_get_info")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetObjectPath, libs, "g_dbus_interface_skeleton_get_object_path")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetProperties, libs, "g_dbus_interface_skeleton_get_properties")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonGetVtable, libs, "g_dbus_interface_skeleton_get_vtable")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonHasConnection, libs, "g_dbus_interface_skeleton_has_connection")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonSetFlags, libs, "g_dbus_interface_skeleton_set_flags")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonUnexport, libs, "g_dbus_interface_skeleton_unexport")
+	core.PuregoSafeRegister(&xDBusInterfaceSkeletonUnexportFromConnection, libs, "g_dbus_interface_skeleton_unexport_from_connection")
 
 }

@@ -221,18 +221,22 @@ var XGtkColorChooserSetUseAlpha func(uintptr, bool)
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xColorChooserGLibType, lib, "gtk_color_chooser_get_type")
+	core.PuregoSafeRegister(&xColorChooserGLibType, libs, "gtk_color_chooser_get_type")
 
-	core.PuregoSafeRegister(&XGtkColorChooserAddPalette, lib, "gtk_color_chooser_add_palette")
-	core.PuregoSafeRegister(&XGtkColorChooserGetRgba, lib, "gtk_color_chooser_get_rgba")
-	core.PuregoSafeRegister(&XGtkColorChooserGetUseAlpha, lib, "gtk_color_chooser_get_use_alpha")
-	core.PuregoSafeRegister(&XGtkColorChooserSetRgba, lib, "gtk_color_chooser_set_rgba")
-	core.PuregoSafeRegister(&XGtkColorChooserSetUseAlpha, lib, "gtk_color_chooser_set_use_alpha")
+	core.PuregoSafeRegister(&XGtkColorChooserAddPalette, libs, "gtk_color_chooser_add_palette")
+	core.PuregoSafeRegister(&XGtkColorChooserGetRgba, libs, "gtk_color_chooser_get_rgba")
+	core.PuregoSafeRegister(&XGtkColorChooserGetUseAlpha, libs, "gtk_color_chooser_get_use_alpha")
+	core.PuregoSafeRegister(&XGtkColorChooserSetRgba, libs, "gtk_color_chooser_set_rgba")
+	core.PuregoSafeRegister(&XGtkColorChooserSetUseAlpha, libs, "gtk_color_chooser_set_use_alpha")
 
 }

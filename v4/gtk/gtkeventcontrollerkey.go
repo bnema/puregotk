@@ -202,19 +202,23 @@ func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.M
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEventControllerKeyGLibType, lib, "gtk_event_controller_key_get_type")
+	core.PuregoSafeRegister(&xEventControllerKeyGLibType, libs, "gtk_event_controller_key_get_type")
 
-	core.PuregoSafeRegister(&xNewEventControllerKey, lib, "gtk_event_controller_key_new")
+	core.PuregoSafeRegister(&xNewEventControllerKey, libs, "gtk_event_controller_key_new")
 
-	core.PuregoSafeRegister(&xEventControllerKeyForward, lib, "gtk_event_controller_key_forward")
-	core.PuregoSafeRegister(&xEventControllerKeyGetGroup, lib, "gtk_event_controller_key_get_group")
-	core.PuregoSafeRegister(&xEventControllerKeyGetImContext, lib, "gtk_event_controller_key_get_im_context")
-	core.PuregoSafeRegister(&xEventControllerKeySetImContext, lib, "gtk_event_controller_key_set_im_context")
+	core.PuregoSafeRegister(&xEventControllerKeyForward, libs, "gtk_event_controller_key_forward")
+	core.PuregoSafeRegister(&xEventControllerKeyGetGroup, libs, "gtk_event_controller_key_get_group")
+	core.PuregoSafeRegister(&xEventControllerKeyGetImContext, libs, "gtk_event_controller_key_get_im_context")
+	core.PuregoSafeRegister(&xEventControllerKeySetImContext, libs, "gtk_event_controller_key_set_im_context")
 
 }

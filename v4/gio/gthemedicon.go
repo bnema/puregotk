@@ -201,20 +201,24 @@ func (x *ThemedIcon) ToString() string {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xThemedIconGLibType, lib, "g_themed_icon_get_type")
+	core.PuregoSafeRegister(&xThemedIconGLibType, libs, "g_themed_icon_get_type")
 
-	core.PuregoSafeRegister(&xNewThemedIcon, lib, "g_themed_icon_new")
-	core.PuregoSafeRegister(&xNewThemedIconFromNames, lib, "g_themed_icon_new_from_names")
-	core.PuregoSafeRegister(&xNewThemedIconWithDefaultFallbacks, lib, "g_themed_icon_new_with_default_fallbacks")
+	core.PuregoSafeRegister(&xNewThemedIcon, libs, "g_themed_icon_new")
+	core.PuregoSafeRegister(&xNewThemedIconFromNames, libs, "g_themed_icon_new_from_names")
+	core.PuregoSafeRegister(&xNewThemedIconWithDefaultFallbacks, libs, "g_themed_icon_new_with_default_fallbacks")
 
-	core.PuregoSafeRegister(&xThemedIconAppendName, lib, "g_themed_icon_append_name")
-	core.PuregoSafeRegister(&xThemedIconGetNames, lib, "g_themed_icon_get_names")
-	core.PuregoSafeRegister(&xThemedIconPrependName, lib, "g_themed_icon_prepend_name")
+	core.PuregoSafeRegister(&xThemedIconAppendName, libs, "g_themed_icon_append_name")
+	core.PuregoSafeRegister(&xThemedIconGetNames, libs, "g_themed_icon_get_names")
+	core.PuregoSafeRegister(&xThemedIconPrependName, libs, "g_themed_icon_prepend_name")
 
 }

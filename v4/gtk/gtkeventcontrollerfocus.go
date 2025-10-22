@@ -148,17 +148,21 @@ func (x *EventControllerFocus) ConnectLeave(cb *func(EventControllerFocus)) uint
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xEventControllerFocusGLibType, lib, "gtk_event_controller_focus_get_type")
+	core.PuregoSafeRegister(&xEventControllerFocusGLibType, libs, "gtk_event_controller_focus_get_type")
 
-	core.PuregoSafeRegister(&xNewEventControllerFocus, lib, "gtk_event_controller_focus_new")
+	core.PuregoSafeRegister(&xNewEventControllerFocus, libs, "gtk_event_controller_focus_new")
 
-	core.PuregoSafeRegister(&xEventControllerFocusContainsFocus, lib, "gtk_event_controller_focus_contains_focus")
-	core.PuregoSafeRegister(&xEventControllerFocusIsFocus, lib, "gtk_event_controller_focus_is_focus")
+	core.PuregoSafeRegister(&xEventControllerFocusContainsFocus, libs, "gtk_event_controller_focus_contains_focus")
+	core.PuregoSafeRegister(&xEventControllerFocusIsFocus, libs, "gtk_event_controller_focus_is_focus")
 
 }

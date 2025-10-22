@@ -264,19 +264,23 @@ func ProxyResolverGetDefault() *ProxyResolverBase {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xProxyResolverGetDefault, lib, "g_proxy_resolver_get_default")
+	core.PuregoSafeRegister(&xProxyResolverGetDefault, libs, "g_proxy_resolver_get_default")
 
-	core.PuregoSafeRegister(&xProxyResolverGLibType, lib, "g_proxy_resolver_get_type")
+	core.PuregoSafeRegister(&xProxyResolverGLibType, libs, "g_proxy_resolver_get_type")
 
-	core.PuregoSafeRegister(&XGProxyResolverIsSupported, lib, "g_proxy_resolver_is_supported")
-	core.PuregoSafeRegister(&XGProxyResolverLookup, lib, "g_proxy_resolver_lookup")
-	core.PuregoSafeRegister(&XGProxyResolverLookupAsync, lib, "g_proxy_resolver_lookup_async")
-	core.PuregoSafeRegister(&XGProxyResolverLookupFinish, lib, "g_proxy_resolver_lookup_finish")
+	core.PuregoSafeRegister(&XGProxyResolverIsSupported, libs, "g_proxy_resolver_is_supported")
+	core.PuregoSafeRegister(&XGProxyResolverLookup, libs, "g_proxy_resolver_lookup")
+	core.PuregoSafeRegister(&XGProxyResolverLookupAsync, libs, "g_proxy_resolver_lookup_async")
+	core.PuregoSafeRegister(&XGProxyResolverLookupFinish, libs, "g_proxy_resolver_lookup_finish")
 
 }

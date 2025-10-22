@@ -580,30 +580,34 @@ func (x *Gesture) ConnectUpdate(cb *func(Gesture, uintptr)) uint32 {
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGestureGLibType, lib, "gtk_gesture_get_type")
+	core.PuregoSafeRegister(&xGestureGLibType, libs, "gtk_gesture_get_type")
 
-	core.PuregoSafeRegister(&xGestureGetBoundingBox, lib, "gtk_gesture_get_bounding_box")
-	core.PuregoSafeRegister(&xGestureGetBoundingBoxCenter, lib, "gtk_gesture_get_bounding_box_center")
-	core.PuregoSafeRegister(&xGestureGetDevice, lib, "gtk_gesture_get_device")
-	core.PuregoSafeRegister(&xGestureGetGroup, lib, "gtk_gesture_get_group")
-	core.PuregoSafeRegister(&xGestureGetLastEvent, lib, "gtk_gesture_get_last_event")
-	core.PuregoSafeRegister(&xGestureGetLastUpdatedSequence, lib, "gtk_gesture_get_last_updated_sequence")
-	core.PuregoSafeRegister(&xGestureGetPoint, lib, "gtk_gesture_get_point")
-	core.PuregoSafeRegister(&xGestureGetSequenceState, lib, "gtk_gesture_get_sequence_state")
-	core.PuregoSafeRegister(&xGestureGetSequences, lib, "gtk_gesture_get_sequences")
-	core.PuregoSafeRegister(&xGestureGroup, lib, "gtk_gesture_group")
-	core.PuregoSafeRegister(&xGestureHandlesSequence, lib, "gtk_gesture_handles_sequence")
-	core.PuregoSafeRegister(&xGestureIsActive, lib, "gtk_gesture_is_active")
-	core.PuregoSafeRegister(&xGestureIsGroupedWith, lib, "gtk_gesture_is_grouped_with")
-	core.PuregoSafeRegister(&xGestureIsRecognized, lib, "gtk_gesture_is_recognized")
-	core.PuregoSafeRegister(&xGestureSetSequenceState, lib, "gtk_gesture_set_sequence_state")
-	core.PuregoSafeRegister(&xGestureSetState, lib, "gtk_gesture_set_state")
-	core.PuregoSafeRegister(&xGestureUngroup, lib, "gtk_gesture_ungroup")
+	core.PuregoSafeRegister(&xGestureGetBoundingBox, libs, "gtk_gesture_get_bounding_box")
+	core.PuregoSafeRegister(&xGestureGetBoundingBoxCenter, libs, "gtk_gesture_get_bounding_box_center")
+	core.PuregoSafeRegister(&xGestureGetDevice, libs, "gtk_gesture_get_device")
+	core.PuregoSafeRegister(&xGestureGetGroup, libs, "gtk_gesture_get_group")
+	core.PuregoSafeRegister(&xGestureGetLastEvent, libs, "gtk_gesture_get_last_event")
+	core.PuregoSafeRegister(&xGestureGetLastUpdatedSequence, libs, "gtk_gesture_get_last_updated_sequence")
+	core.PuregoSafeRegister(&xGestureGetPoint, libs, "gtk_gesture_get_point")
+	core.PuregoSafeRegister(&xGestureGetSequenceState, libs, "gtk_gesture_get_sequence_state")
+	core.PuregoSafeRegister(&xGestureGetSequences, libs, "gtk_gesture_get_sequences")
+	core.PuregoSafeRegister(&xGestureGroup, libs, "gtk_gesture_group")
+	core.PuregoSafeRegister(&xGestureHandlesSequence, libs, "gtk_gesture_handles_sequence")
+	core.PuregoSafeRegister(&xGestureIsActive, libs, "gtk_gesture_is_active")
+	core.PuregoSafeRegister(&xGestureIsGroupedWith, libs, "gtk_gesture_is_grouped_with")
+	core.PuregoSafeRegister(&xGestureIsRecognized, libs, "gtk_gesture_is_recognized")
+	core.PuregoSafeRegister(&xGestureSetSequenceState, libs, "gtk_gesture_set_sequence_state")
+	core.PuregoSafeRegister(&xGestureSetState, libs, "gtk_gesture_set_state")
+	core.PuregoSafeRegister(&xGestureUngroup, libs, "gtk_gesture_ungroup")
 
 }

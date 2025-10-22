@@ -488,23 +488,27 @@ func (x *Clamp) SetOrientation(OrientationVar gtk.Orientation) {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xClampGLibType, lib, "adw_clamp_get_type")
+	core.PuregoSafeRegister(&xClampGLibType, libs, "adw_clamp_get_type")
 
-	core.PuregoSafeRegister(&xNewClamp, lib, "adw_clamp_new")
+	core.PuregoSafeRegister(&xNewClamp, libs, "adw_clamp_new")
 
-	core.PuregoSafeRegister(&xClampGetChild, lib, "adw_clamp_get_child")
-	core.PuregoSafeRegister(&xClampGetMaximumSize, lib, "adw_clamp_get_maximum_size")
-	core.PuregoSafeRegister(&xClampGetTighteningThreshold, lib, "adw_clamp_get_tightening_threshold")
-	core.PuregoSafeRegister(&xClampGetUnit, lib, "adw_clamp_get_unit")
-	core.PuregoSafeRegister(&xClampSetChild, lib, "adw_clamp_set_child")
-	core.PuregoSafeRegister(&xClampSetMaximumSize, lib, "adw_clamp_set_maximum_size")
-	core.PuregoSafeRegister(&xClampSetTighteningThreshold, lib, "adw_clamp_set_tightening_threshold")
-	core.PuregoSafeRegister(&xClampSetUnit, lib, "adw_clamp_set_unit")
+	core.PuregoSafeRegister(&xClampGetChild, libs, "adw_clamp_get_child")
+	core.PuregoSafeRegister(&xClampGetMaximumSize, libs, "adw_clamp_get_maximum_size")
+	core.PuregoSafeRegister(&xClampGetTighteningThreshold, libs, "adw_clamp_get_tightening_threshold")
+	core.PuregoSafeRegister(&xClampGetUnit, libs, "adw_clamp_get_unit")
+	core.PuregoSafeRegister(&xClampSetChild, libs, "adw_clamp_set_child")
+	core.PuregoSafeRegister(&xClampSetMaximumSize, libs, "adw_clamp_set_maximum_size")
+	core.PuregoSafeRegister(&xClampSetTighteningThreshold, libs, "adw_clamp_set_tightening_threshold")
+	core.PuregoSafeRegister(&xClampSetUnit, libs, "adw_clamp_set_unit")
 
 }

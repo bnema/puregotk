@@ -278,33 +278,37 @@ const (
 
 func init() {
 	core.SetPackageName("GDK", "gtk4")
-	core.SetSharedLibrary("GDK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GDK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GDK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xAnchorHintsGLibType, lib, "gdk_anchor_hints_get_type")
+	core.PuregoSafeRegister(&xAnchorHintsGLibType, libs, "gdk_anchor_hints_get_type")
 
-	core.PuregoSafeRegister(&xPopupLayoutGLibType, lib, "gdk_popup_layout_get_type")
+	core.PuregoSafeRegister(&xPopupLayoutGLibType, libs, "gdk_popup_layout_get_type")
 
-	core.PuregoSafeRegister(&xNewPopupLayout, lib, "gdk_popup_layout_new")
+	core.PuregoSafeRegister(&xNewPopupLayout, libs, "gdk_popup_layout_new")
 
-	core.PuregoSafeRegister(&xPopupLayoutCopy, lib, "gdk_popup_layout_copy")
-	core.PuregoSafeRegister(&xPopupLayoutEqual, lib, "gdk_popup_layout_equal")
-	core.PuregoSafeRegister(&xPopupLayoutGetAnchorHints, lib, "gdk_popup_layout_get_anchor_hints")
-	core.PuregoSafeRegister(&xPopupLayoutGetAnchorRect, lib, "gdk_popup_layout_get_anchor_rect")
-	core.PuregoSafeRegister(&xPopupLayoutGetOffset, lib, "gdk_popup_layout_get_offset")
-	core.PuregoSafeRegister(&xPopupLayoutGetRectAnchor, lib, "gdk_popup_layout_get_rect_anchor")
-	core.PuregoSafeRegister(&xPopupLayoutGetShadowWidth, lib, "gdk_popup_layout_get_shadow_width")
-	core.PuregoSafeRegister(&xPopupLayoutGetSurfaceAnchor, lib, "gdk_popup_layout_get_surface_anchor")
-	core.PuregoSafeRegister(&xPopupLayoutRef, lib, "gdk_popup_layout_ref")
-	core.PuregoSafeRegister(&xPopupLayoutSetAnchorHints, lib, "gdk_popup_layout_set_anchor_hints")
-	core.PuregoSafeRegister(&xPopupLayoutSetAnchorRect, lib, "gdk_popup_layout_set_anchor_rect")
-	core.PuregoSafeRegister(&xPopupLayoutSetOffset, lib, "gdk_popup_layout_set_offset")
-	core.PuregoSafeRegister(&xPopupLayoutSetRectAnchor, lib, "gdk_popup_layout_set_rect_anchor")
-	core.PuregoSafeRegister(&xPopupLayoutSetShadowWidth, lib, "gdk_popup_layout_set_shadow_width")
-	core.PuregoSafeRegister(&xPopupLayoutSetSurfaceAnchor, lib, "gdk_popup_layout_set_surface_anchor")
-	core.PuregoSafeRegister(&xPopupLayoutUnref, lib, "gdk_popup_layout_unref")
+	core.PuregoSafeRegister(&xPopupLayoutCopy, libs, "gdk_popup_layout_copy")
+	core.PuregoSafeRegister(&xPopupLayoutEqual, libs, "gdk_popup_layout_equal")
+	core.PuregoSafeRegister(&xPopupLayoutGetAnchorHints, libs, "gdk_popup_layout_get_anchor_hints")
+	core.PuregoSafeRegister(&xPopupLayoutGetAnchorRect, libs, "gdk_popup_layout_get_anchor_rect")
+	core.PuregoSafeRegister(&xPopupLayoutGetOffset, libs, "gdk_popup_layout_get_offset")
+	core.PuregoSafeRegister(&xPopupLayoutGetRectAnchor, libs, "gdk_popup_layout_get_rect_anchor")
+	core.PuregoSafeRegister(&xPopupLayoutGetShadowWidth, libs, "gdk_popup_layout_get_shadow_width")
+	core.PuregoSafeRegister(&xPopupLayoutGetSurfaceAnchor, libs, "gdk_popup_layout_get_surface_anchor")
+	core.PuregoSafeRegister(&xPopupLayoutRef, libs, "gdk_popup_layout_ref")
+	core.PuregoSafeRegister(&xPopupLayoutSetAnchorHints, libs, "gdk_popup_layout_set_anchor_hints")
+	core.PuregoSafeRegister(&xPopupLayoutSetAnchorRect, libs, "gdk_popup_layout_set_anchor_rect")
+	core.PuregoSafeRegister(&xPopupLayoutSetOffset, libs, "gdk_popup_layout_set_offset")
+	core.PuregoSafeRegister(&xPopupLayoutSetRectAnchor, libs, "gdk_popup_layout_set_rect_anchor")
+	core.PuregoSafeRegister(&xPopupLayoutSetShadowWidth, libs, "gdk_popup_layout_set_shadow_width")
+	core.PuregoSafeRegister(&xPopupLayoutSetSurfaceAnchor, libs, "gdk_popup_layout_set_surface_anchor")
+	core.PuregoSafeRegister(&xPopupLayoutUnref, libs, "gdk_popup_layout_unref")
 
 }

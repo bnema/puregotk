@@ -396,32 +396,36 @@ func (c *SubprocessLauncher) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSubprocessLauncherGLibType, lib, "g_subprocess_launcher_get_type")
+	core.PuregoSafeRegister(&xSubprocessLauncherGLibType, libs, "g_subprocess_launcher_get_type")
 
-	core.PuregoSafeRegister(&xNewSubprocessLauncher, lib, "g_subprocess_launcher_new")
+	core.PuregoSafeRegister(&xNewSubprocessLauncher, libs, "g_subprocess_launcher_new")
 
-	core.PuregoSafeRegister(&xSubprocessLauncherClose, lib, "g_subprocess_launcher_close")
-	core.PuregoSafeRegister(&xSubprocessLauncherGetenv, lib, "g_subprocess_launcher_getenv")
-	core.PuregoSafeRegister(&xSubprocessLauncherSetChildSetup, lib, "g_subprocess_launcher_set_child_setup")
-	core.PuregoSafeRegister(&xSubprocessLauncherSetCwd, lib, "g_subprocess_launcher_set_cwd")
-	core.PuregoSafeRegister(&xSubprocessLauncherSetEnviron, lib, "g_subprocess_launcher_set_environ")
-	core.PuregoSafeRegister(&xSubprocessLauncherSetFlags, lib, "g_subprocess_launcher_set_flags")
-	core.PuregoSafeRegister(&xSubprocessLauncherSetStderrFilePath, lib, "g_subprocess_launcher_set_stderr_file_path")
-	core.PuregoSafeRegister(&xSubprocessLauncherSetStdinFilePath, lib, "g_subprocess_launcher_set_stdin_file_path")
-	core.PuregoSafeRegister(&xSubprocessLauncherSetStdoutFilePath, lib, "g_subprocess_launcher_set_stdout_file_path")
-	core.PuregoSafeRegister(&xSubprocessLauncherSetenv, lib, "g_subprocess_launcher_setenv")
-	core.PuregoSafeRegister(&xSubprocessLauncherSpawn, lib, "g_subprocess_launcher_spawn")
-	core.PuregoSafeRegister(&xSubprocessLauncherSpawnv, lib, "g_subprocess_launcher_spawnv")
-	core.PuregoSafeRegister(&xSubprocessLauncherTakeFd, lib, "g_subprocess_launcher_take_fd")
-	core.PuregoSafeRegister(&xSubprocessLauncherTakeStderrFd, lib, "g_subprocess_launcher_take_stderr_fd")
-	core.PuregoSafeRegister(&xSubprocessLauncherTakeStdinFd, lib, "g_subprocess_launcher_take_stdin_fd")
-	core.PuregoSafeRegister(&xSubprocessLauncherTakeStdoutFd, lib, "g_subprocess_launcher_take_stdout_fd")
-	core.PuregoSafeRegister(&xSubprocessLauncherUnsetenv, lib, "g_subprocess_launcher_unsetenv")
+	core.PuregoSafeRegister(&xSubprocessLauncherClose, libs, "g_subprocess_launcher_close")
+	core.PuregoSafeRegister(&xSubprocessLauncherGetenv, libs, "g_subprocess_launcher_getenv")
+	core.PuregoSafeRegister(&xSubprocessLauncherSetChildSetup, libs, "g_subprocess_launcher_set_child_setup")
+	core.PuregoSafeRegister(&xSubprocessLauncherSetCwd, libs, "g_subprocess_launcher_set_cwd")
+	core.PuregoSafeRegister(&xSubprocessLauncherSetEnviron, libs, "g_subprocess_launcher_set_environ")
+	core.PuregoSafeRegister(&xSubprocessLauncherSetFlags, libs, "g_subprocess_launcher_set_flags")
+	core.PuregoSafeRegister(&xSubprocessLauncherSetStderrFilePath, libs, "g_subprocess_launcher_set_stderr_file_path")
+	core.PuregoSafeRegister(&xSubprocessLauncherSetStdinFilePath, libs, "g_subprocess_launcher_set_stdin_file_path")
+	core.PuregoSafeRegister(&xSubprocessLauncherSetStdoutFilePath, libs, "g_subprocess_launcher_set_stdout_file_path")
+	core.PuregoSafeRegister(&xSubprocessLauncherSetenv, libs, "g_subprocess_launcher_setenv")
+	core.PuregoSafeRegister(&xSubprocessLauncherSpawn, libs, "g_subprocess_launcher_spawn")
+	core.PuregoSafeRegister(&xSubprocessLauncherSpawnv, libs, "g_subprocess_launcher_spawnv")
+	core.PuregoSafeRegister(&xSubprocessLauncherTakeFd, libs, "g_subprocess_launcher_take_fd")
+	core.PuregoSafeRegister(&xSubprocessLauncherTakeStderrFd, libs, "g_subprocess_launcher_take_stderr_fd")
+	core.PuregoSafeRegister(&xSubprocessLauncherTakeStdinFd, libs, "g_subprocess_launcher_take_stdin_fd")
+	core.PuregoSafeRegister(&xSubprocessLauncherTakeStdoutFd, libs, "g_subprocess_launcher_take_stdout_fd")
+	core.PuregoSafeRegister(&xSubprocessLauncherUnsetenv, libs, "g_subprocess_launcher_unsetenv")
 
 }

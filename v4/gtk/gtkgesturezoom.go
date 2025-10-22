@@ -105,16 +105,20 @@ func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint32
 
 func init() {
 	core.SetPackageName("GTK", "gtk4")
-	core.SetSharedLibrary("GTK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GTK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GTK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xGestureZoomGLibType, lib, "gtk_gesture_zoom_get_type")
+	core.PuregoSafeRegister(&xGestureZoomGLibType, libs, "gtk_gesture_zoom_get_type")
 
-	core.PuregoSafeRegister(&xNewGestureZoom, lib, "gtk_gesture_zoom_new")
+	core.PuregoSafeRegister(&xNewGestureZoom, libs, "gtk_gesture_zoom_new")
 
-	core.PuregoSafeRegister(&xGestureZoomGetScaleDelta, lib, "gtk_gesture_zoom_get_scale_delta")
+	core.PuregoSafeRegister(&xGestureZoomGetScaleDelta, libs, "gtk_gesture_zoom_get_scale_delta")
 
 }

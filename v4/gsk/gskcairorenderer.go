@@ -74,14 +74,18 @@ func (c *CairoRenderer) SetGoPointer(ptr uintptr) {
 
 func init() {
 	core.SetPackageName("GSK", "gtk4")
-	core.SetSharedLibrary("GSK", "libgtk-4.so.1")
-	lib, err := purego.Dlopen(core.GetPath("GSK"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GSK") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xCairoRendererGLibType, lib, "gsk_cairo_renderer_get_type")
+	core.PuregoSafeRegister(&xCairoRendererGLibType, libs, "gsk_cairo_renderer_get_type")
 
-	core.PuregoSafeRegister(&xNewCairoRenderer, lib, "gsk_cairo_renderer_new")
+	core.PuregoSafeRegister(&xNewCairoRenderer, libs, "gsk_cairo_renderer_new")
 
 }

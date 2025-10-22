@@ -768,35 +768,39 @@ func (x *SplitButton) GetBuildableId() string {
 
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
-	core.SetSharedLibrary("ADW", "libadwaita-1.so.0")
-	lib, err := purego.Dlopen(core.GetPath("ADW"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("ADW") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xSplitButtonGLibType, lib, "adw_split_button_get_type")
+	core.PuregoSafeRegister(&xSplitButtonGLibType, libs, "adw_split_button_get_type")
 
-	core.PuregoSafeRegister(&xNewSplitButton, lib, "adw_split_button_new")
+	core.PuregoSafeRegister(&xNewSplitButton, libs, "adw_split_button_new")
 
-	core.PuregoSafeRegister(&xSplitButtonGetCanShrink, lib, "adw_split_button_get_can_shrink")
-	core.PuregoSafeRegister(&xSplitButtonGetChild, lib, "adw_split_button_get_child")
-	core.PuregoSafeRegister(&xSplitButtonGetDirection, lib, "adw_split_button_get_direction")
-	core.PuregoSafeRegister(&xSplitButtonGetDropdownTooltip, lib, "adw_split_button_get_dropdown_tooltip")
-	core.PuregoSafeRegister(&xSplitButtonGetIconName, lib, "adw_split_button_get_icon_name")
-	core.PuregoSafeRegister(&xSplitButtonGetLabel, lib, "adw_split_button_get_label")
-	core.PuregoSafeRegister(&xSplitButtonGetMenuModel, lib, "adw_split_button_get_menu_model")
-	core.PuregoSafeRegister(&xSplitButtonGetPopover, lib, "adw_split_button_get_popover")
-	core.PuregoSafeRegister(&xSplitButtonGetUseUnderline, lib, "adw_split_button_get_use_underline")
-	core.PuregoSafeRegister(&xSplitButtonPopdown, lib, "adw_split_button_popdown")
-	core.PuregoSafeRegister(&xSplitButtonPopup, lib, "adw_split_button_popup")
-	core.PuregoSafeRegister(&xSplitButtonSetCanShrink, lib, "adw_split_button_set_can_shrink")
-	core.PuregoSafeRegister(&xSplitButtonSetChild, lib, "adw_split_button_set_child")
-	core.PuregoSafeRegister(&xSplitButtonSetDirection, lib, "adw_split_button_set_direction")
-	core.PuregoSafeRegister(&xSplitButtonSetDropdownTooltip, lib, "adw_split_button_set_dropdown_tooltip")
-	core.PuregoSafeRegister(&xSplitButtonSetIconName, lib, "adw_split_button_set_icon_name")
-	core.PuregoSafeRegister(&xSplitButtonSetLabel, lib, "adw_split_button_set_label")
-	core.PuregoSafeRegister(&xSplitButtonSetMenuModel, lib, "adw_split_button_set_menu_model")
-	core.PuregoSafeRegister(&xSplitButtonSetPopover, lib, "adw_split_button_set_popover")
-	core.PuregoSafeRegister(&xSplitButtonSetUseUnderline, lib, "adw_split_button_set_use_underline")
+	core.PuregoSafeRegister(&xSplitButtonGetCanShrink, libs, "adw_split_button_get_can_shrink")
+	core.PuregoSafeRegister(&xSplitButtonGetChild, libs, "adw_split_button_get_child")
+	core.PuregoSafeRegister(&xSplitButtonGetDirection, libs, "adw_split_button_get_direction")
+	core.PuregoSafeRegister(&xSplitButtonGetDropdownTooltip, libs, "adw_split_button_get_dropdown_tooltip")
+	core.PuregoSafeRegister(&xSplitButtonGetIconName, libs, "adw_split_button_get_icon_name")
+	core.PuregoSafeRegister(&xSplitButtonGetLabel, libs, "adw_split_button_get_label")
+	core.PuregoSafeRegister(&xSplitButtonGetMenuModel, libs, "adw_split_button_get_menu_model")
+	core.PuregoSafeRegister(&xSplitButtonGetPopover, libs, "adw_split_button_get_popover")
+	core.PuregoSafeRegister(&xSplitButtonGetUseUnderline, libs, "adw_split_button_get_use_underline")
+	core.PuregoSafeRegister(&xSplitButtonPopdown, libs, "adw_split_button_popdown")
+	core.PuregoSafeRegister(&xSplitButtonPopup, libs, "adw_split_button_popup")
+	core.PuregoSafeRegister(&xSplitButtonSetCanShrink, libs, "adw_split_button_set_can_shrink")
+	core.PuregoSafeRegister(&xSplitButtonSetChild, libs, "adw_split_button_set_child")
+	core.PuregoSafeRegister(&xSplitButtonSetDirection, libs, "adw_split_button_set_direction")
+	core.PuregoSafeRegister(&xSplitButtonSetDropdownTooltip, libs, "adw_split_button_set_dropdown_tooltip")
+	core.PuregoSafeRegister(&xSplitButtonSetIconName, libs, "adw_split_button_set_icon_name")
+	core.PuregoSafeRegister(&xSplitButtonSetLabel, libs, "adw_split_button_set_label")
+	core.PuregoSafeRegister(&xSplitButtonSetMenuModel, libs, "adw_split_button_set_menu_model")
+	core.PuregoSafeRegister(&xSplitButtonSetPopover, libs, "adw_split_button_set_popover")
+	core.PuregoSafeRegister(&xSplitButtonSetUseUnderline, libs, "adw_split_button_set_use_underline")
 
 }

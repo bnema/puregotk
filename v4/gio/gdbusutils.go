@@ -194,23 +194,27 @@ func DbusUnescapeObjectPath(SVar string) uintptr {
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")
-	core.SetSharedLibrary("GIO", "libgio-2.0.so.0")
-	lib, err := purego.Dlopen(core.GetPath("GIO"), purego.RTLD_NOW|purego.RTLD_GLOBAL)
-	if err != nil {
-		panic(err)
+	core.SetSharedLibraries("GIO", []string{"libgio-2.0.so.0"})
+	var libs []uintptr
+	for _, libPath := range core.GetPaths("GIO") {
+		lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+		if err != nil {
+			panic(err)
+		}
+		libs = append(libs, lib)
 	}
 
-	core.PuregoSafeRegister(&xDbusEscapeObjectPath, lib, "g_dbus_escape_object_path")
-	core.PuregoSafeRegister(&xDbusEscapeObjectPathBytestring, lib, "g_dbus_escape_object_path_bytestring")
-	core.PuregoSafeRegister(&xDbusGenerateGuid, lib, "g_dbus_generate_guid")
-	core.PuregoSafeRegister(&xDbusGvalueToGvariant, lib, "g_dbus_gvalue_to_gvariant")
-	core.PuregoSafeRegister(&xDbusGvariantToGvalue, lib, "g_dbus_gvariant_to_gvalue")
-	core.PuregoSafeRegister(&xDbusIsErrorName, lib, "g_dbus_is_error_name")
-	core.PuregoSafeRegister(&xDbusIsGuid, lib, "g_dbus_is_guid")
-	core.PuregoSafeRegister(&xDbusIsInterfaceName, lib, "g_dbus_is_interface_name")
-	core.PuregoSafeRegister(&xDbusIsMemberName, lib, "g_dbus_is_member_name")
-	core.PuregoSafeRegister(&xDbusIsName, lib, "g_dbus_is_name")
-	core.PuregoSafeRegister(&xDbusIsUniqueName, lib, "g_dbus_is_unique_name")
-	core.PuregoSafeRegister(&xDbusUnescapeObjectPath, lib, "g_dbus_unescape_object_path")
+	core.PuregoSafeRegister(&xDbusEscapeObjectPath, libs, "g_dbus_escape_object_path")
+	core.PuregoSafeRegister(&xDbusEscapeObjectPathBytestring, libs, "g_dbus_escape_object_path_bytestring")
+	core.PuregoSafeRegister(&xDbusGenerateGuid, libs, "g_dbus_generate_guid")
+	core.PuregoSafeRegister(&xDbusGvalueToGvariant, libs, "g_dbus_gvalue_to_gvariant")
+	core.PuregoSafeRegister(&xDbusGvariantToGvalue, libs, "g_dbus_gvariant_to_gvalue")
+	core.PuregoSafeRegister(&xDbusIsErrorName, libs, "g_dbus_is_error_name")
+	core.PuregoSafeRegister(&xDbusIsGuid, libs, "g_dbus_is_guid")
+	core.PuregoSafeRegister(&xDbusIsInterfaceName, libs, "g_dbus_is_interface_name")
+	core.PuregoSafeRegister(&xDbusIsMemberName, libs, "g_dbus_is_member_name")
+	core.PuregoSafeRegister(&xDbusIsName, libs, "g_dbus_is_name")
+	core.PuregoSafeRegister(&xDbusIsUniqueName, libs, "g_dbus_is_unique_name")
+	core.PuregoSafeRegister(&xDbusUnescapeObjectPath, libs, "g_dbus_unescape_object_path")
 
 }
