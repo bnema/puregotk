@@ -28,6 +28,10 @@ import (
 // `GtkSpinner` has a single CSS node with the name spinner.
 // When the animation is active, the :checked pseudoclass is
 // added to this node.
+//
+// # Accessibility
+//
+// `GtkSpinner` uses the [enum@Gtk.AccessibleRole.progress_bar] role.
 type Spinner struct {
 	Widget
 }

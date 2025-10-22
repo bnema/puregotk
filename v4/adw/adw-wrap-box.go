@@ -275,6 +275,15 @@ func (x *WrapBox) Remove(ChildVar *gtk.Widget) {
 
 }
 
+var xWrapBoxRemoveAll func(uintptr)
+
+// Removes all children from @self.
+func (x *WrapBox) RemoveAll() {
+
+	xWrapBoxRemoveAll(x.GoPointer())
+
+}
+
 var xWrapBoxReorderChildAfter func(uintptr, uintptr, uintptr)
 
 // Moves @child to the position after @sibling in the list of @self children.
@@ -796,6 +805,7 @@ func init() {
 	core.PuregoSafeRegister(&xWrapBoxInsertChildAfter, libs, "adw_wrap_box_insert_child_after")
 	core.PuregoSafeRegister(&xWrapBoxPrepend, libs, "adw_wrap_box_prepend")
 	core.PuregoSafeRegister(&xWrapBoxRemove, libs, "adw_wrap_box_remove")
+	core.PuregoSafeRegister(&xWrapBoxRemoveAll, libs, "adw_wrap_box_remove_all")
 	core.PuregoSafeRegister(&xWrapBoxReorderChildAfter, libs, "adw_wrap_box_reorder_child_after")
 	core.PuregoSafeRegister(&xWrapBoxSetAlign, libs, "adw_wrap_box_set_align")
 	core.PuregoSafeRegister(&xWrapBoxSetChildSpacing, libs, "adw_wrap_box_set_child_spacing")

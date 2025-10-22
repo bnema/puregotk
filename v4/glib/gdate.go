@@ -287,6 +287,22 @@ func (x *Date) GetSundayWeekOfYear() uint {
 	return cret
 }
 
+var xDateGetWeekOfYear func(uintptr, DateWeekday) uint
+
+// Calculates the week of the year during which this date falls.
+//
+// The result depends on which day is considered the first day of the week,
+// which varies by locale. Both `date` and `first_day_of_week` must be valid.
+//
+// If @date is before the start of the first week of the year (for example,
+// before the first Monday in January if @first_day_of_week is
+// [enum@GLib.DateWeekday.MONDAY]) then zero will be returned.
+func (x *Date) GetWeekOfYear(FirstDayOfWeekVar DateWeekday) uint {
+
+	cret := xDateGetWeekOfYear(x.GoPointer(), FirstDayOfWeekVar)
+	return cret
+}
+
 var xDateGetWeekday func(uintptr) DateWeekday
 
 // Returns the day of the week for a #GDate. The date must be valid.
@@ -664,6 +680,23 @@ func DateGetSundayWeeksInYear(YearVar DateYear) byte {
 	return cret
 }
 
+var xDateGetWeeksInYear func(DateYear, DateWeekday) byte
+
+// Calculates the number of weeks in the year.
+//
+// The result depends on which day is considered the first day of the week,
+// which varies by locale. `first_day_of_week` must be valid.
+//
+// The result will be either 52 or 53. Years always have 52 seven-day periods,
+// plus one or two extra days depending on whether it’s a leap year. This
+// function effectively calculates how many @first_day_of_week days there are in
+// the year.
+func DateGetWeeksInYear(YearVar DateYear, FirstDayOfWeekVar DateWeekday) byte {
+
+	cret := xDateGetWeeksInYear(YearVar, FirstDayOfWeekVar)
+	return cret
+}
+
 var xDateIsLeapYear func(DateYear) bool
 
 // Returns %TRUE if the year is a leap year.
@@ -775,6 +808,7 @@ func init() {
 	core.PuregoSafeRegister(&xDateGetDaysInMonth, libs, "g_date_get_days_in_month")
 	core.PuregoSafeRegister(&xDateGetMondayWeeksInYear, libs, "g_date_get_monday_weeks_in_year")
 	core.PuregoSafeRegister(&xDateGetSundayWeeksInYear, libs, "g_date_get_sunday_weeks_in_year")
+	core.PuregoSafeRegister(&xDateGetWeeksInYear, libs, "g_date_get_weeks_in_year")
 	core.PuregoSafeRegister(&xDateIsLeapYear, libs, "g_date_is_leap_year")
 	core.PuregoSafeRegister(&xDateStrftime, libs, "g_date_strftime")
 	core.PuregoSafeRegister(&xDateValidDay, libs, "g_date_valid_day")
@@ -806,6 +840,7 @@ func init() {
 	core.PuregoSafeRegister(&xDateGetMondayWeekOfYear, libs, "g_date_get_monday_week_of_year")
 	core.PuregoSafeRegister(&xDateGetMonth, libs, "g_date_get_month")
 	core.PuregoSafeRegister(&xDateGetSundayWeekOfYear, libs, "g_date_get_sunday_week_of_year")
+	core.PuregoSafeRegister(&xDateGetWeekOfYear, libs, "g_date_get_week_of_year")
 	core.PuregoSafeRegister(&xDateGetWeekday, libs, "g_date_get_weekday")
 	core.PuregoSafeRegister(&xDateGetYear, libs, "g_date_get_year")
 	core.PuregoSafeRegister(&xDateIsFirstOfMonth, libs, "g_date_is_first_of_month")

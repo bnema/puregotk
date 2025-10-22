@@ -1584,7 +1584,7 @@ func Utf8TruncateMiddle(StringVar string, TruncateLengthVar uint) string {
 	return cret
 }
 
-var xUtf8Validate func([]byte, int, string) bool
+var xUtf8Validate func([]byte, int, []byte) bool
 
 // Validates UTF-8 encoded text.
 //
@@ -1603,19 +1603,19 @@ var xUtf8Validate func([]byte, int, string) bool
 // routines require valid UTF-8 as input; so data read from a file
 // or the network should be checked with `g_utf8_validate()` before
 // doing anything else with it.
-func Utf8Validate(StrVar []byte, MaxLenVar int, EndVar string) bool {
+func Utf8Validate(StrVar []byte, MaxLenVar int, EndVar []byte) bool {
 
 	cret := xUtf8Validate(StrVar, MaxLenVar, EndVar)
 	return cret
 }
 
-var xUtf8ValidateLen func([]byte, uint, string) bool
+var xUtf8ValidateLen func([]byte, uint, []byte) bool
 
 // Validates UTF-8 encoded text.
 //
 // As with [func@GLib.utf8_validate], but @max_len must be set, and hence this
 // function will always return `FALSE` if any of the bytes of @str are nul.
-func Utf8ValidateLen(StrVar []byte, MaxLenVar uint, EndVar string) bool {
+func Utf8ValidateLen(StrVar []byte, MaxLenVar uint, EndVar []byte) bool {
 
 	cret := xUtf8ValidateLen(StrVar, MaxLenVar, EndVar)
 	return cret

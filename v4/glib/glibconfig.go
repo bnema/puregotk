@@ -70,13 +70,13 @@ const (
 	// Like #gtk_micro_version, but from the headers used at
 	// application compile time, rather than from the library
 	// linked against at application run time.
-	MICRO_VERSION int = 4
+	MICRO_VERSION int = 0
 	// The minor version number of the GLib library.
 	//
 	// Like #gtk_minor_version, but from the headers used at
 	// application compile time, rather than from the library
 	// linked against at application run time.
-	MINOR_VERSION int = 84
+	MINOR_VERSION int = 86
 
 	MODULE_SUFFIX string = "so"
 	// A format specifier that can be used in printf()-style format strings

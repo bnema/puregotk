@@ -176,6 +176,56 @@ func (x *WindowGroupPrivate) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+// Determines which point or edge of a window is meant to remain fixed
+// when a window changes size.
+type WindowGravity int
+
+var xWindowGravityGLibType func() types.GType
+
+func WindowGravityGLibType() types.GType {
+	return xWindowGravityGLibType()
+}
+
+const (
+
+	// The top left corner
+	WindowGravityTopLeftValue WindowGravity = 0
+	// The top edge
+	WindowGravityTopValue WindowGravity = 1
+	// The top right corner
+	WindowGravityTopRightValue WindowGravity = 2
+	// The left edge
+	WindowGravityLeftValue WindowGravity = 3
+	// The center pointer
+	WindowGravityCenterValue WindowGravity = 4
+	// The right edge
+	WindowGravityRightValue WindowGravity = 5
+	// The bottom left corner
+	WindowGravityBottomLeftValue WindowGravity = 6
+	// the bottom edge
+	WindowGravityBottomValue WindowGravity = 7
+	// The bottom right corner
+	WindowGravityBottomRightValue WindowGravity = 8
+	// The top left or top right corner,
+	//   depending on the text direction
+	WindowGravityTopStartValue WindowGravity = 9
+	// The top right or top left corner,
+	//   depending on the text direction
+	WindowGravityTopEndValue WindowGravity = 10
+	// The left or right edge,
+	//   depending on the text direction
+	WindowGravityStartValue WindowGravity = 11
+	// The right or left edge,
+	//   depending on the text direction
+	WindowGravityEndValue WindowGravity = 12
+	// The bottom left or top right corner,
+	//   depending on the text direction
+	WindowGravityBottomStartValue WindowGravity = 13
+	// The bottom right or top left corner,
+	//   depending on the text direction
+	WindowGravityBottomEndValue WindowGravity = 14
+)
+
 // A toplevel window which can contain other widgets.
 //
 // &lt;picture&gt;
@@ -480,6 +530,15 @@ var xWindowGetFocusVisible func(uintptr) bool
 func (x *Window) GetFocusVisible() bool {
 
 	cret := xWindowGetFocusVisible(x.GoPointer())
+	return cret
+}
+
+var xWindowGetGravity func(uintptr) WindowGravity
+
+// Returns the gravity that is used when changing the window size programmatically.
+func (x *Window) GetGravity() WindowGravity {
+
+	cret := xWindowGetGravity(x.GoPointer())
 	return cret
 }
 
@@ -929,6 +988,15 @@ func (x *Window) SetFocusVisible(SettingVar bool) {
 
 }
 
+var xWindowSetGravity func(uintptr, WindowGravity)
+
+// Sets the gravity that is used when changing the window size programmatically.
+func (x *Window) SetGravity(GravityVar WindowGravity) {
+
+	xWindowSetGravity(x.GoPointer(), GravityVar)
+
+}
+
 var xWindowSetHandleMenubarAccel func(uintptr, bool)
 
 // Sets whether this window should react to &lt;kbd&gt;F10&lt;/kbd&gt;
@@ -1017,7 +1085,8 @@ var xWindowSetStartupId func(uintptr, string)
 // [method@Gtk.Window.present] or any equivalent function generating
 // a window map event.
 //
-// This function is only useful on X11, not with other GTK targets.
+// This function is only useful on Wayland or X11, not with other GDK
+// backends.
 func (x *Window) SetStartupId(StartupIdVar string) {
 
 	xWindowSetStartupId(x.GoPointer(), StartupIdVar)
@@ -1743,6 +1812,8 @@ func init() {
 		libs = append(libs, lib)
 	}
 
+	core.PuregoSafeRegister(&xWindowGravityGLibType, libs, "gtk_window_gravity_get_type")
+
 	core.PuregoSafeRegister(&xWindowGLibType, libs, "gtk_window_get_type")
 
 	core.PuregoSafeRegister(&xNewWindow, libs, "gtk_window_new")
@@ -1760,6 +1831,7 @@ func init() {
 	core.PuregoSafeRegister(&xWindowGetDestroyWithParent, libs, "gtk_window_get_destroy_with_parent")
 	core.PuregoSafeRegister(&xWindowGetFocus, libs, "gtk_window_get_focus")
 	core.PuregoSafeRegister(&xWindowGetFocusVisible, libs, "gtk_window_get_focus_visible")
+	core.PuregoSafeRegister(&xWindowGetGravity, libs, "gtk_window_get_gravity")
 	core.PuregoSafeRegister(&xWindowGetGroup, libs, "gtk_window_get_group")
 	core.PuregoSafeRegister(&xWindowGetHandleMenubarAccel, libs, "gtk_window_get_handle_menubar_accel")
 	core.PuregoSafeRegister(&xWindowGetHideOnClose, libs, "gtk_window_get_hide_on_close")
@@ -1789,6 +1861,7 @@ func init() {
 	core.PuregoSafeRegister(&xWindowSetDisplay, libs, "gtk_window_set_display")
 	core.PuregoSafeRegister(&xWindowSetFocus, libs, "gtk_window_set_focus")
 	core.PuregoSafeRegister(&xWindowSetFocusVisible, libs, "gtk_window_set_focus_visible")
+	core.PuregoSafeRegister(&xWindowSetGravity, libs, "gtk_window_set_gravity")
 	core.PuregoSafeRegister(&xWindowSetHandleMenubarAccel, libs, "gtk_window_set_handle_menubar_accel")
 	core.PuregoSafeRegister(&xWindowSetHideOnClose, libs, "gtk_window_set_hide_on_close")
 	core.PuregoSafeRegister(&xWindowSetIconName, libs, "gtk_window_set_icon_name")

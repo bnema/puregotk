@@ -338,6 +338,18 @@ func (x *FontDescription) Free() {
 
 }
 
+var xFontDescriptionGetColor func(uintptr) FontColor
+
+// Returns the color field of the font description.
+//
+// This field determines whether the font description should
+// match fonts that have color glyphs, or fonts that don't.
+func (x *FontDescription) GetColor() FontColor {
+
+	cret := xFontDescriptionGetColor(x.GoPointer())
+	return cret
+}
+
 var xFontDescriptionGetFamily func(uintptr) string
 
 // Gets the family name field of a font description.
@@ -511,6 +523,18 @@ var xFontDescriptionSetAbsoluteSize func(uintptr, float64)
 func (x *FontDescription) SetAbsoluteSize(SizeVar float64) {
 
 	xFontDescriptionSetAbsoluteSize(x.GoPointer(), SizeVar)
+
+}
+
+var xFontDescriptionSetColor func(uintptr, FontColor)
+
+// Sets the color field of a font description.
+//
+// This field determines whether the font description should
+// match fonts that have color glyphs, or fonts that don't.
+func (x *FontDescription) SetColor(ColorVar FontColor) {
+
+	xFontDescriptionSetColor(x.GoPointer(), ColorVar)
 
 }
 
@@ -1355,6 +1379,27 @@ const (
 	FontMaskVariationsValue FontMask = 128
 	// OpenType font features are specified.
 	FontMaskFeaturesValue FontMask = 256
+	// Font color is specified.
+	FontMaskColorValue FontMask = 512
+)
+
+// Specifies whether a font should or should not have color glyphs.
+type FontColor int
+
+var xFontColorGLibType func() types.GType
+
+func FontColorGLibType() types.GType {
+	return xFontColorGLibType()
+}
+
+const (
+
+	// The font should not have color glyphs
+	FontColorForbiddenValue FontColor = 0
+	// The font should have color glyphs
+	FontColorRequiredValue FontColor = 1
+	// The font may or may not use color
+	FontColorDontCareValue FontColor = 2
 )
 
 // An enumeration specifying the width of the font relative to other designs
@@ -1518,6 +1563,9 @@ var xFontDescriptionFromString func(string) *FontDescription
 // "Not-Rotated", "South", "Upside-Down", "North", "Rotated-Left",
 // "East", "Rotated-Right", "West".
 //
+// The following words are understood as color values:
+// "With-Color", "Without-Color".
+//
 // VARIATIONS is a comma-separated list of font variations
 // of the form @‍axis1=value,axis2=value,...
 //
@@ -1601,6 +1649,9 @@ func (x *Font) GetCoverage(LanguageVar *Language) *Coverage {
 var xFontGetFace func(uintptr) uintptr
 
 // Gets the `PangoFontFace` to which @font belongs.
+//
+// Note that this function can return `NULL` in cases
+// where the font outlives its font map.
 func (x *Font) GetFace() *FontFace {
 	var cls *FontFace
 
@@ -2113,6 +2164,8 @@ func init() {
 
 	core.PuregoSafeRegister(&xFontMaskGLibType, libs, "pango_font_mask_get_type")
 
+	core.PuregoSafeRegister(&xFontColorGLibType, libs, "pango_font_color_get_type")
+
 	core.PuregoSafeRegister(&xStretchGLibType, libs, "pango_stretch_get_type")
 
 	core.PuregoSafeRegister(&xStyleGLibType, libs, "pango_style_get_type")
@@ -2132,6 +2185,7 @@ func init() {
 	core.PuregoSafeRegister(&xFontDescriptionCopyStatic, libs, "pango_font_description_copy_static")
 	core.PuregoSafeRegister(&xFontDescriptionEqual, libs, "pango_font_description_equal")
 	core.PuregoSafeRegister(&xFontDescriptionFree, libs, "pango_font_description_free")
+	core.PuregoSafeRegister(&xFontDescriptionGetColor, libs, "pango_font_description_get_color")
 	core.PuregoSafeRegister(&xFontDescriptionGetFamily, libs, "pango_font_description_get_family")
 	core.PuregoSafeRegister(&xFontDescriptionGetFeatures, libs, "pango_font_description_get_features")
 	core.PuregoSafeRegister(&xFontDescriptionGetGravity, libs, "pango_font_description_get_gravity")
@@ -2147,6 +2201,7 @@ func init() {
 	core.PuregoSafeRegister(&xFontDescriptionMerge, libs, "pango_font_description_merge")
 	core.PuregoSafeRegister(&xFontDescriptionMergeStatic, libs, "pango_font_description_merge_static")
 	core.PuregoSafeRegister(&xFontDescriptionSetAbsoluteSize, libs, "pango_font_description_set_absolute_size")
+	core.PuregoSafeRegister(&xFontDescriptionSetColor, libs, "pango_font_description_set_color")
 	core.PuregoSafeRegister(&xFontDescriptionSetFamily, libs, "pango_font_description_set_family")
 	core.PuregoSafeRegister(&xFontDescriptionSetFamilyStatic, libs, "pango_font_description_set_family_static")
 	core.PuregoSafeRegister(&xFontDescriptionSetFeatures, libs, "pango_font_description_set_features")

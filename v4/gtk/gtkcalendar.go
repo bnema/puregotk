@@ -22,16 +22,14 @@ import (
 //
 // A `GtkCalendar` can be created with [ctor@Gtk.Calendar.new].
 //
-// The date that is currently displayed can be altered with
-// [method@Gtk.Calendar.select_day].
+// The selected date can be retrieved from a `GtkCalendar` using
+// [method@Gtk.Calendar.get_date].
+// It can be altered with [method@Gtk.Calendar.set_date].
 //
 // To place a visual marker on a particular day, use
 // [method@Gtk.Calendar.mark_day] and to remove the marker,
 // [method@Gtk.Calendar.unmark_day]. Alternative, all
 // marks can be cleared with [method@Gtk.Calendar.clear_marks].
-//
-// The selected date can be retrieved from a `GtkCalendar` using
-// [method@Gtk.Calendar.get_date].
 //
 // Users should be aware that, although the Gregorian calendar is the
 // legal calendar in most countries, it was adopted progressively
@@ -219,12 +217,21 @@ func (x *Calendar) SelectDay(DateVar *glib.DateTime) {
 
 }
 
+var xCalendarSetDate func(uintptr, *glib.DateTime)
+
+// Switches to @date's year and month and selects its day.
+func (x *Calendar) SetDate(DateVar *glib.DateTime) {
+
+	xCalendarSetDate(x.GoPointer(), DateVar)
+
+}
+
 var xCalendarSetDay func(uintptr, int)
 
 // Sets the day for the selected date.
 //
-// The new date must be valid. For example, setting 31 for the day when the
-// month is February, fails.
+// The new date must be valid. For example, setting the day to 31 when the
+// month is February will fail.
 func (x *Calendar) SetDay(DayVar int) {
 
 	xCalendarSetDay(x.GoPointer(), DayVar)
@@ -235,8 +242,8 @@ var xCalendarSetMonth func(uintptr, int)
 
 // Sets the month for the selected date.
 //
-// The new date must be valid. For example, setting 1 (February) for the month
-// when the day is 31, fails.
+// The new date must be valid. For example, setting the month to 1 (February)
+// when the day is 31 will fail.
 func (x *Calendar) SetMonth(MonthVar int) {
 
 	xCalendarSetMonth(x.GoPointer(), MonthVar)
@@ -277,8 +284,8 @@ var xCalendarSetYear func(uintptr, int)
 
 // Sets the year for the selected date.
 //
-// The new date must be valid. For example, setting 2023 for the year when then
-// the date is 2024-02-29, fails.
+// The new date must be valid. For example, setting the year to 2023 when the
+// date is February 29 will fail.
 func (x *Calendar) SetYear(YearVar int) {
 
 	xCalendarSetYear(x.GoPointer(), YearVar)
@@ -325,7 +332,7 @@ func (x *Calendar) ConnectDaySelected(cb *func(Calendar)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "day-selected", cbRefPtr)
 }
 
-// Emitted when the user switched to the next month.
+// Emitted when the user switches to the next month.
 func (x *Calendar) ConnectNextMonth(cb *func(Calendar)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -345,7 +352,7 @@ func (x *Calendar) ConnectNextMonth(cb *func(Calendar)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "next-month", cbRefPtr)
 }
 
-// Emitted when user switched to the next year.
+// Emitted when user switches to the next year.
 func (x *Calendar) ConnectNextYear(cb *func(Calendar)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -365,7 +372,7 @@ func (x *Calendar) ConnectNextYear(cb *func(Calendar)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "next-year", cbRefPtr)
 }
 
-// Emitted when the user switched to the previous month.
+// Emitted when the user switches to the previous month.
 func (x *Calendar) ConnectPrevMonth(cb *func(Calendar)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -385,7 +392,7 @@ func (x *Calendar) ConnectPrevMonth(cb *func(Calendar)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "prev-month", cbRefPtr)
 }
 
-// Emitted when user switched to the previous year.
+// Emitted when user switches to the previous year.
 func (x *Calendar) ConnectPrevYear(cb *func(Calendar)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
@@ -710,6 +717,7 @@ func init() {
 	core.PuregoSafeRegister(&xCalendarGetYear, libs, "gtk_calendar_get_year")
 	core.PuregoSafeRegister(&xCalendarMarkDay, libs, "gtk_calendar_mark_day")
 	core.PuregoSafeRegister(&xCalendarSelectDay, libs, "gtk_calendar_select_day")
+	core.PuregoSafeRegister(&xCalendarSetDate, libs, "gtk_calendar_set_date")
 	core.PuregoSafeRegister(&xCalendarSetDay, libs, "gtk_calendar_set_day")
 	core.PuregoSafeRegister(&xCalendarSetMonth, libs, "gtk_calendar_set_month")
 	core.PuregoSafeRegister(&xCalendarSetShowDayNames, libs, "gtk_calendar_set_show_day_names")

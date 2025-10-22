@@ -42,7 +42,7 @@ func ZlibDecompressorNewFromInternalPtr(ptr uintptr) *ZlibDecompressor {
 
 var xNewZlibDecompressor func(ZlibCompressorFormat) uintptr
 
-// Creates a new #GZlibDecompressor.
+// Creates a new decompressor.
 func NewZlibDecompressor(FormatVar ZlibCompressorFormat) *ZlibDecompressor {
 	var cls *ZlibDecompressor
 
@@ -58,11 +58,7 @@ func NewZlibDecompressor(FormatVar ZlibCompressorFormat) *ZlibDecompressor {
 
 var xZlibDecompressorGetFileInfo func(uintptr) uintptr
 
-// Retrieves the #GFileInfo constructed from the GZIP header data
-// of compressed data processed by @compressor, or %NULL if @decompressor's
-// #GZlibDecompressor:format property is not %G_ZLIB_COMPRESSOR_FORMAT_GZIP,
-// or the header data was not fully processed yet, or it not present in the
-// data stream at all.
+// Gets the [property@Gio.ZlibDecompressor:file-info] property.
 func (x *ZlibDecompressor) GetFileInfo() *FileInfo {
 	var cls *FileInfo
 

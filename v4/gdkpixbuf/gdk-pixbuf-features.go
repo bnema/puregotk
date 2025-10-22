@@ -7,13 +7,13 @@ const (
 	PIXBUF_MAJOR int = 2
 	// Micro version of gdk-pixbuf library, that is the "2" in
 	// "0.8.2" for example.
-	PIXBUF_MICRO int = 12
+	PIXBUF_MICRO int = 3
 	// Minor version of gdk-pixbuf library, that is the "8" in
 	// "0.8.2" for example.
-	PIXBUF_MINOR int = 42
+	PIXBUF_MINOR int = 44
 	// Contains the full version of GdkPixbuf as a string.
 	//
 	// This is the version being compiled against; contrast with
 	// `gdk_pixbuf_version`.
-	PIXBUF_VERSION string = "2.42.12"
+	PIXBUF_VERSION string = "2.44.3"
 )

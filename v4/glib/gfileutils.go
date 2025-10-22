@@ -507,8 +507,8 @@ var xFileSetContentsFull func(string, []byte, int, FileSetContentsFlags, int, **
 // to 7 characters to @filename.
 //
 // If the file didn’t exist before and is created, it will be given the
-// permissions from @mode. Otherwise, the permissions of the existing file may
-// be changed to @mode depending on @flags, or they may remain unchanged.
+// permissions from @mode. Otherwise, the permissions of the existing file will
+// remain unchanged.
 func FileSetContentsFull(FilenameVar string, ContentsVar []byte, LengthVar int, FlagsVar FileSetContentsFlags, ModeVar int) (bool, error) {
 	var cerr *Error
 

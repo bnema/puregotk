@@ -146,6 +146,13 @@ var xFopen func(string, string) uintptr
 // currently impossible to close a file if the application C library and the C library
 // used by GLib are different. Convenience functions like g_file_set_contents_full()
 // avoid this problem.
+//
+// Since GLib 2.86, the `e` option is supported in @mode on all platforms. On
+// Unix platforms it will set `O_CLOEXEC` on the opened file descriptor. On
+// Windows platforms it will be converted to the
+// [`N` modifier](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/fopen-wfopen?view=msvc-170).
+// It is recommended to set `e` unconditionally, unless you know the returned
+// file should be shared between this process and a new fork.
 func Fopen(FilenameVar string, ModeVar string) uintptr {
 
 	cret := xFopen(FilenameVar, ModeVar)
@@ -158,6 +165,9 @@ var xFreopen func(string, string, uintptr) uintptr
 // opens a file and associates it with an existing stream.
 //
 // See your C library manual for more details about freopen().
+//
+// Since GLib 2.86, the `e` option is supported in @mode on all platforms. See
+// the documentation for [func@GLib.fopen] for more details.
 func Freopen(FilenameVar string, ModeVar string, StreamVar uintptr) uintptr {
 
 	cret := xFreopen(FilenameVar, ModeVar, StreamVar)

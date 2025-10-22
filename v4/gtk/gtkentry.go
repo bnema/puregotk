@@ -499,6 +499,20 @@ func (x *Entry) GetMaxLength() int {
 	return cret
 }
 
+var xEntryGetMenuEntryIconText func(uintptr, EntryIconPosition) string
+
+// Gets the text that will be used in the context menu of the `GtkEntry`
+// when the specified icon is activatable. Selecting this item in the menu
+// results, from all aspects, the same than clicking on the specified icon.
+// This greatly simplifies making accessible applications, because the icons
+// aren't focusable when using keyboard navigation. This is why Gtk recommends
+// to add the same action to the context menu.
+func (x *Entry) GetMenuEntryIconText(IconPosVar EntryIconPosition) string {
+
+	cret := xEntryGetMenuEntryIconText(x.GoPointer(), IconPosVar)
+	return cret
+}
+
 var xEntryGetOverwriteMode func(uintptr) bool
 
 // Gets whether the `GtkEntry` is in overwrite mode.
@@ -865,6 +879,20 @@ var xEntrySetMaxLength func(uintptr, int)
 func (x *Entry) SetMaxLength(MaxVar int) {
 
 	xEntrySetMaxLength(x.GoPointer(), MaxVar)
+
+}
+
+var xEntrySetMenuEntryIconText func(uintptr, EntryIconPosition, string)
+
+// Sets the text that will be used in the context menu of the `GtkEntry`
+// when the specified icon is activatable. Selecting this item in the menu
+// results, from all aspects, the same than clicking on the specified icon.
+// This greatly simplifies making accessible applications, because the icons
+// aren't focusable when using keyboard navigation. This is why Gtk recommends
+// to add the same action to the context menu.
+func (x *Entry) SetMenuEntryIconText(IconPosVar EntryIconPosition, TextVar string) {
+
+	xEntrySetMenuEntryIconText(x.GoPointer(), IconPosVar, TextVar)
 
 }
 
@@ -1647,6 +1675,7 @@ func init() {
 	core.PuregoSafeRegister(&xEntryGetInputPurpose, libs, "gtk_entry_get_input_purpose")
 	core.PuregoSafeRegister(&xEntryGetInvisibleChar, libs, "gtk_entry_get_invisible_char")
 	core.PuregoSafeRegister(&xEntryGetMaxLength, libs, "gtk_entry_get_max_length")
+	core.PuregoSafeRegister(&xEntryGetMenuEntryIconText, libs, "gtk_entry_get_menu_entry_icon_text")
 	core.PuregoSafeRegister(&xEntryGetOverwriteMode, libs, "gtk_entry_get_overwrite_mode")
 	core.PuregoSafeRegister(&xEntryGetPlaceholderText, libs, "gtk_entry_get_placeholder_text")
 	core.PuregoSafeRegister(&xEntryGetProgressFraction, libs, "gtk_entry_get_progress_fraction")
@@ -1676,6 +1705,7 @@ func init() {
 	core.PuregoSafeRegister(&xEntrySetInputPurpose, libs, "gtk_entry_set_input_purpose")
 	core.PuregoSafeRegister(&xEntrySetInvisibleChar, libs, "gtk_entry_set_invisible_char")
 	core.PuregoSafeRegister(&xEntrySetMaxLength, libs, "gtk_entry_set_max_length")
+	core.PuregoSafeRegister(&xEntrySetMenuEntryIconText, libs, "gtk_entry_set_menu_entry_icon_text")
 	core.PuregoSafeRegister(&xEntrySetOverwriteMode, libs, "gtk_entry_set_overwrite_mode")
 	core.PuregoSafeRegister(&xEntrySetPlaceholderText, libs, "gtk_entry_set_placeholder_text")
 	core.PuregoSafeRegister(&xEntrySetProgressFraction, libs, "gtk_entry_set_progress_fraction")

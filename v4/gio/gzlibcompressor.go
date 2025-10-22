@@ -42,7 +42,7 @@ func ZlibCompressorNewFromInternalPtr(ptr uintptr) *ZlibCompressor {
 
 var xNewZlibCompressor func(ZlibCompressorFormat, int) uintptr
 
-// Creates a new #GZlibCompressor.
+// Creates a compressor.
 func NewZlibCompressor(FormatVar ZlibCompressorFormat, LevelVar int) *ZlibCompressor {
 	var cls *ZlibCompressor
 
@@ -58,7 +58,7 @@ func NewZlibCompressor(FormatVar ZlibCompressorFormat, LevelVar int) *ZlibCompre
 
 var xZlibCompressorGetFileInfo func(uintptr) uintptr
 
-// Returns the #GZlibCompressor:file-info property.
+// Gets the [property@Gio.ZlibCompressor:file-info] property.
 func (x *ZlibCompressor) GetFileInfo() *FileInfo {
 	var cls *FileInfo
 
@@ -73,19 +73,38 @@ func (x *ZlibCompressor) GetFileInfo() *FileInfo {
 	return cls
 }
 
+var xZlibCompressorGetOs func(uintptr) int
+
+// Gets the [property@Gio.ZlibCompressor:os] property.
+func (x *ZlibCompressor) GetOs() int {
+
+	cret := xZlibCompressorGetOs(x.GoPointer())
+	return cret
+}
+
 var xZlibCompressorSetFileInfo func(uintptr, uintptr)
 
-// Sets @file_info in @compressor. If non-%NULL, and @compressor's
-// #GZlibCompressor:format property is %G_ZLIB_COMPRESSOR_FORMAT_GZIP,
-// it will be used to set the file name and modification time in
-// the GZIP header of the compressed data.
+// Sets the [property@Gio.ZlibCompressor:file-info] property.
 //
 // Note: it is an error to call this function while a compression is in
 // progress; it may only be called immediately after creation of @compressor,
-// or after resetting it with g_converter_reset().
+// or after resetting it with [method@Gio.Converter.reset].
 func (x *ZlibCompressor) SetFileInfo(FileInfoVar *FileInfo) {
 
 	xZlibCompressorSetFileInfo(x.GoPointer(), FileInfoVar.GoPointer())
+
+}
+
+var xZlibCompressorSetOs func(uintptr, int)
+
+// Sets the [property@Gio.ZlibCompressor:os] property.
+//
+// Note: it is an error to call this function while a compression is in
+// progress; it may only be called immediately after creation of @compressor,
+// or after resetting it with [method@Gio.Converter.reset].
+func (x *ZlibCompressor) SetOs(OsVar int) {
+
+	xZlibCompressorSetOs(x.GoPointer(), OsVar)
 
 }
 
@@ -231,6 +250,8 @@ func init() {
 	core.PuregoSafeRegister(&xNewZlibCompressor, libs, "g_zlib_compressor_new")
 
 	core.PuregoSafeRegister(&xZlibCompressorGetFileInfo, libs, "g_zlib_compressor_get_file_info")
+	core.PuregoSafeRegister(&xZlibCompressorGetOs, libs, "g_zlib_compressor_get_os")
 	core.PuregoSafeRegister(&xZlibCompressorSetFileInfo, libs, "g_zlib_compressor_set_file_info")
+	core.PuregoSafeRegister(&xZlibCompressorSetOs, libs, "g_zlib_compressor_set_os")
 
 }

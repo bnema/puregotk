@@ -10,11 +10,11 @@ const (
 	// Like [func@get_binary_age], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	BINARY_AGE int = 1806
+	BINARY_AGE int = 2002
 	// Like [func@get_interface_age], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	INTERFACE_AGE int = 6
+	INTERFACE_AGE int = 2
 	// Like [func@get_major_version], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
@@ -22,11 +22,11 @@ const (
 	// Like [func@get_micro_version], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MICRO_VERSION int = 6
+	MICRO_VERSION int = 2
 	// Like [func@get_minor_version], but from the headers used at
 	// application compile time, rather than from the library linked
 	// against at application run time.
-	MINOR_VERSION int = 18
+	MINOR_VERSION int = 20
 )
 
 var xCheckVersion func(uint, uint, uint) string

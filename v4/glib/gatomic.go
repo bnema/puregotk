@@ -6,7 +6,7 @@ import (
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
-var xAtomicIntAdd func(int, int) int
+var xAtomicIntAdd func(uintptr, int) int
 
 // Atomically adds @val to the value of @atomic.
 //
@@ -20,13 +20,13 @@ var xAtomicIntAdd func(int, int) int
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicIntAdd(AtomicVar int, ValVar int) int {
+func AtomicIntAdd(AtomicVar uintptr, ValVar int) int {
 
 	cret := xAtomicIntAdd(AtomicVar, ValVar)
 	return cret
 }
 
-var xAtomicIntAnd func(uint, uint) uint
+var xAtomicIntAnd func(uintptr, uint) uint
 
 // Performs an atomic bitwise 'and' of the value of @atomic and @val,
 // storing the result back in @atomic.
@@ -38,13 +38,13 @@ var xAtomicIntAnd func(uint, uint) uint
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicIntAnd(AtomicVar uint, ValVar uint) uint {
+func AtomicIntAnd(AtomicVar uintptr, ValVar uint) uint {
 
 	cret := xAtomicIntAnd(AtomicVar, ValVar)
 	return cret
 }
 
-var xAtomicIntCompareAndExchange func(int, int, int) bool
+var xAtomicIntCompareAndExchange func(uintptr, int, int) bool
 
 // Compares @atomic to @oldval and, if equal, sets it to @newval.
 // If @atomic was not equal to @oldval then no change occurs.
@@ -58,13 +58,13 @@ var xAtomicIntCompareAndExchange func(int, int, int) bool
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicIntCompareAndExchange(AtomicVar int, OldvalVar int, NewvalVar int) bool {
+func AtomicIntCompareAndExchange(AtomicVar uintptr, OldvalVar int, NewvalVar int) bool {
 
 	cret := xAtomicIntCompareAndExchange(AtomicVar, OldvalVar, NewvalVar)
 	return cret
 }
 
-var xAtomicIntCompareAndExchangeFull func(int, int, int, int) bool
+var xAtomicIntCompareAndExchangeFull func(uintptr, int, int, int) bool
 
 // Compares @atomic to @oldval and, if equal, sets it to @newval.
 // If @atomic was not equal to @oldval then no change occurs.
@@ -78,13 +78,13 @@ var xAtomicIntCompareAndExchangeFull func(int, int, int, int) bool
 // This call acts as a full compiler and hardware memory barrier.
 //
 // See also g_atomic_int_compare_and_exchange()
-func AtomicIntCompareAndExchangeFull(AtomicVar int, OldvalVar int, NewvalVar int, PrevalVar int) bool {
+func AtomicIntCompareAndExchangeFull(AtomicVar uintptr, OldvalVar int, NewvalVar int, PrevalVar int) bool {
 
 	cret := xAtomicIntCompareAndExchangeFull(AtomicVar, OldvalVar, NewvalVar, PrevalVar)
 	return cret
 }
 
-var xAtomicIntDecAndTest func(int) bool
+var xAtomicIntDecAndTest func(uintptr) bool
 
 // Decrements the value of @atomic by 1.
 //
@@ -95,13 +95,13 @@ var xAtomicIntDecAndTest func(int) bool
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicIntDecAndTest(AtomicVar int) bool {
+func AtomicIntDecAndTest(AtomicVar uintptr) bool {
 
 	cret := xAtomicIntDecAndTest(AtomicVar)
 	return cret
 }
 
-var xAtomicIntExchange func(int, int) int
+var xAtomicIntExchange func(uintptr, int) int
 
 // Sets the @atomic to @newval and returns the old value from @atomic.
 //
@@ -111,24 +111,24 @@ var xAtomicIntExchange func(int, int) int
 // `{ tmp = *atomic; *atomic = val; return tmp; }`.
 //
 // This call acts as a full compiler and hardware memory barrier.
-func AtomicIntExchange(AtomicVar int, NewvalVar int) int {
+func AtomicIntExchange(AtomicVar uintptr, NewvalVar int) int {
 
 	cret := xAtomicIntExchange(AtomicVar, NewvalVar)
 	return cret
 }
 
-var xAtomicIntExchangeAndAdd func(int, int) int
+var xAtomicIntExchangeAndAdd func(uintptr, int) int
 
 // This function existed before g_atomic_int_add() returned the prior
 // value of the integer (which it now does).  It is retained only for
 // compatibility reasons.  Don't use this function in new code.
-func AtomicIntExchangeAndAdd(AtomicVar int, ValVar int) int {
+func AtomicIntExchangeAndAdd(AtomicVar uintptr, ValVar int) int {
 
 	cret := xAtomicIntExchangeAndAdd(AtomicVar, ValVar)
 	return cret
 }
 
-var xAtomicIntGet func(int) int
+var xAtomicIntGet func(uintptr) int
 
 // Gets the current value of @atomic.
 //
@@ -137,13 +137,13 @@ var xAtomicIntGet func(int) int
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicIntGet(AtomicVar int) int {
+func AtomicIntGet(AtomicVar uintptr) int {
 
 	cret := xAtomicIntGet(AtomicVar)
 	return cret
 }
 
-var xAtomicIntInc func(int)
+var xAtomicIntInc func(uintptr)
 
 // Increments the value of @atomic by 1.
 //
@@ -153,13 +153,13 @@ var xAtomicIntInc func(int)
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicIntInc(AtomicVar int) {
+func AtomicIntInc(AtomicVar uintptr) {
 
 	xAtomicIntInc(AtomicVar)
 
 }
 
-var xAtomicIntOr func(uint, uint) uint
+var xAtomicIntOr func(uintptr, uint) uint
 
 // Performs an atomic bitwise 'or' of the value of @atomic and @val,
 // storing the result back in @atomic.
@@ -171,13 +171,13 @@ var xAtomicIntOr func(uint, uint) uint
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicIntOr(AtomicVar uint, ValVar uint) uint {
+func AtomicIntOr(AtomicVar uintptr, ValVar uint) uint {
 
 	cret := xAtomicIntOr(AtomicVar, ValVar)
 	return cret
 }
 
-var xAtomicIntSet func(int, int)
+var xAtomicIntSet func(uintptr, int)
 
 // Sets the value of @atomic to @newval.
 //
@@ -186,13 +186,13 @@ var xAtomicIntSet func(int, int)
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicIntSet(AtomicVar int, NewvalVar int) {
+func AtomicIntSet(AtomicVar uintptr, NewvalVar int) {
 
 	xAtomicIntSet(AtomicVar, NewvalVar)
 
 }
 
-var xAtomicIntXor func(uint, uint) uint
+var xAtomicIntXor func(uintptr, uint) uint
 
 // Performs an atomic bitwise 'xor' of the value of @atomic and @val,
 // storing the result back in @atomic.
@@ -204,7 +204,7 @@ var xAtomicIntXor func(uint, uint) uint
 //
 // While @atomic has a `volatile` qualifier, this is a historical artifact and
 // the pointer passed to it should not be `volatile`.
-func AtomicIntXor(AtomicVar uint, ValVar uint) uint {
+func AtomicIntXor(AtomicVar uintptr, ValVar uint) uint {
 
 	cret := xAtomicIntXor(AtomicVar, ValVar)
 	return cret

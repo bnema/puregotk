@@ -12,21 +12,30 @@ import (
 )
 
 // The type of value transformation functions which can be registered with
-// g_value_register_transform_func().
+// [func@GObject.Value.register_transform_func].
 //
 // @dest_value will be initialized to the correct destination type.
 type ValueTransform func(*Value, *Value)
 
 // An opaque structure used to hold different types of values.
 //
-// The data within the structure has protected scope: it is accessible only
-// to functions within a #GTypeValueTable structure, or implementations of
-// the g_value_*() API. That is, code portions which implement new fundamental
-// types.
+// Before it can be used, a `GValue` has to be initialized to a specific type by
+// calling [method@GObject.Value.init] on it.
 //
-// #GValue users cannot make any assumptions about how data is stored
+// Many types which are stored within a `GValue` need to allocate data on the
+// heap, so [method@GObject.Value.unset] must always be called on a `GValue` to
+// free any such data once you’re finished with the `GValue`, even if the
+// `GValue` itself is stored on the stack.
+//
+// The data within the structure has protected scope: it is accessible only
+// to functions within a [struct@GObject.TypeValueTable] structure, or
+// implementations of the `g_value_*()` API. That is, code which implements new
+// fundamental types.
+//
+// `GValue` users cannot make any assumptions about how data is stored
 // within the 2 element @data union, and the @g_type member should
-// only be accessed through the G_VALUE_TYPE() macro.
+// only be accessed through the [func@GObject.VALUE_TYPE] macro and related
+// macros.
 type Value struct {
 	_ structs.HostLayout
 
@@ -123,6 +132,7 @@ func (x *Value) DupVariant() *glib.Variant {
 var xValueFitsPointer func(uintptr) bool
 
 // Determines if @value will fit inside the size of a pointer value.
+//
 // This is an internal function introduced mainly for C marshallers.
 func (x *Value) FitsPointer() bool {
 
@@ -340,7 +350,21 @@ func (x *Value) GetVariant() *glib.Variant {
 
 var xValueInit func(uintptr, types.GType) *Value
 
-// Initializes @value with the default value of @type.
+// Initializes @value to store values of the given @type, and sets its value
+// to the default for @type.
+//
+// This must be called before any other methods on a [struct@GObject.Value], so
+// the value knows what type it’s meant to store.
+//
+// ```c
+//
+//	GValue value = G_VALUE_INIT;
+//
+//	g_value_init (&amp;value, SOME_G_TYPE);
+//	…
+//	g_value_unset (&amp;value);
+//
+// ```
 func (x *Value) Init(GTypeVar types.GType) *Value {
 
 	cret := xValueInit(x.GoPointer(), GTypeVar)
@@ -349,13 +373,15 @@ func (x *Value) Init(GTypeVar types.GType) *Value {
 
 var xValueInitFromInstance func(uintptr, *TypeInstance)
 
-// Initializes and sets @value from an instantiatable type via the
-// value_table's collect_value() function.
+// Initializes and sets @value from an instantiatable type.
+//
+// This calls the [callback@GObject.TypeValueCollectFunc] function for the type
+// the [struct@GObject.Value] contains.
 //
 // Note: The @value will be initialised with the exact type of
-// @instance.  If you wish to set the @value's type to a different GType
-// (such as a parent class GType), you need to manually call
-// g_value_init() and g_value_set_instance().
+// @instance.  If you wish to set the @value’s type to a different
+// [type@GObject.Type] (such as a parent class type), you need to manually call
+// [method@GObject.Value.init] and [method@GObject.Value.set_instance].
 func (x *Value) InitFromInstance(InstanceVar *TypeInstance) {
 
 	xValueInitFromInstance(x.GoPointer(), InstanceVar)
@@ -364,8 +390,11 @@ func (x *Value) InitFromInstance(InstanceVar *TypeInstance) {
 
 var xValuePeekPointer func(uintptr) uintptr
 
-// Returns the value contents as pointer. This function asserts that
-// g_value_fits_pointer() returned %TRUE for the passed in value.
+// Returns the value contents as a pointer.
+//
+// This function asserts that [method@GObject.Value.fits_pointer] returned true
+// for the passed in value.
+//
 // This is an internal function introduced mainly for C marshallers.
 func (x *Value) PeekPointer() uintptr {
 
@@ -376,7 +405,8 @@ func (x *Value) PeekPointer() uintptr {
 var xValueReset func(uintptr) *Value
 
 // Clears the current value in @value and resets it to the default value
-// (as if the value had just been initialized).
+// (as if the value had just been initialized using
+// [method@GObject.Value.init]).
 func (x *Value) Reset() *Value {
 
 	cret := xValueReset(x.GoPointer())
@@ -466,8 +496,10 @@ func (x *Value) SetGtype(VGtypeVar types.GType) {
 
 var xValueSetInstance func(uintptr, uintptr)
 
-// Sets @value from an instantiatable type via the
-// value_table's collect_value() function.
+// Sets @value from an instantiatable type.
+//
+// This calls the [callback@GObject.TypeValueCollectFunc] function for the type
+// the [struct@GObject.Value] contains.
 func (x *Value) SetInstance(InstanceVar uintptr) {
 
 	xValueSetInstance(x.GoPointer(), InstanceVar)
@@ -752,12 +784,17 @@ func (x *Value) TakeVariant(VariantVar *glib.Variant) {
 var xValueTransform func(uintptr, *Value) bool
 
 // Tries to cast the contents of @src_value into a type appropriate
-// to store in @dest_value, e.g. to transform a %G_TYPE_INT value
-// into a %G_TYPE_FLOAT value. Performing transformations between
-// value types might incur precision lossage. Especially
-// transformations into strings might reveal seemingly arbitrary
-// results and shouldn't be relied upon for production code (such
-// as rcfile value or object property serialization).
+// to store in @dest_value.
+//
+// If a transformation is not possible, @dest_value is not modified.
+//
+// For example, this could transform a `G_TYPE_INT` value into a `G_TYPE_FLOAT`
+// value.
+//
+// Performing transformations between value types might incur precision loss.
+// Especially transformations into strings might reveal seemingly arbitrary
+// results and the format of particular transformations to strings is not
+// guaranteed over time.
 func (x *Value) Transform(DestValueVar *Value) bool {
 
 	cret := xValueTransform(x.GoPointer(), DestValueVar)
@@ -766,10 +803,11 @@ func (x *Value) Transform(DestValueVar *Value) bool {
 
 var xValueUnset func(uintptr)
 
-// Clears the current value in @value (if any) and "unsets" the type,
-// this releases all resources associated with this GValue. An unset
-// value is the same as an uninitialized (zero-filled) #GValue
-// structure.
+// Clears the current value in @value (if any) and ‘unsets’ the type.
+//
+// This releases all resources associated with this [struct@GObject.Value]. An
+// unset value is the same as a cleared (zero-filled)
+// [struct@GObject.Value] structure set to `G_VALUE_INIT`.
 func (x *Value) Unset() {
 
 	xValueUnset(x.GoPointer())
@@ -777,21 +815,37 @@ func (x *Value) Unset() {
 }
 
 const (
-	// For string values, indicates that the string contained is canonical and will
-	// exist for the duration of the process. See g_value_set_interned_string().
+	// Flag to indicate that a string in a [struct@GObject.Value] is canonical and
+	// will exist for the duration of the process.
+	//
+	// See [method@GObject.Value.set_interned_string].
+	//
+	// This flag should be checked by implementations of
+	// [callback@GObject.TypeValueFreeFunc], [callback@GObject.TypeValueCollectFunc]
+	// and [callback@GObject.TypeValueLCopyFunc].
 	VALUE_INTERNED_STRING int = 268435456
-	// If passed to G_VALUE_COLLECT(), allocated data won't be copied
-	// but used verbatim. This does not affect ref-counted types like
-	// objects. This does not affect usage of g_value_copy(), the data will
+	// Flag to indicate that allocated data in a [struct@GObject.Value] shouldn’t be
+	// copied.
+	//
+	// If passed to [func@GObject.VALUE_COLLECT], allocated data won’t be copied
+	// but used verbatim. This does not affect ref-counted types like objects.
+	//
+	// This does not affect usage of [method@GObject.Value.copy]: the data will
 	// be copied if it is not ref-counted.
+	//
+	// This flag should be checked by implementations of
+	// [callback@GObject.TypeValueFreeFunc], [callback@GObject.TypeValueCollectFunc]
+	// and [callback@GObject.TypeValueLCopyFunc].
 	VALUE_NOCOPY_CONTENTS int = 134217728
 )
 
 var xValueRegisterTransformFunc func(types.GType, types.GType, uintptr)
 
-// Registers a value transformation function for use in g_value_transform().
-// A previously registered transformation function for @src_type and @dest_type
-// will be replaced.
+// Registers a value transformation function for use in
+// [method@GObject.Value.transform].
+//
+// Any previously registered transformation function for @src_type and
+// @dest_type will be replaced.
 func ValueRegisterTransformFunc(SrcTypeVar types.GType, DestTypeVar types.GType, TransformFuncVar *ValueTransform) {
 
 	xValueRegisterTransformFunc(SrcTypeVar, DestTypeVar, glib.NewCallback(TransformFuncVar))
@@ -800,8 +854,8 @@ func ValueRegisterTransformFunc(SrcTypeVar types.GType, DestTypeVar types.GType,
 
 var xValueTypeCompatible func(types.GType, types.GType) bool
 
-// Returns whether a #GValue of type @src_type can be copied into
-// a #GValue of type @dest_type.
+// Checks whether a [method@GObject.Value.copy] is able to copy values of type
+// @src_type into values of type @dest_type.
 func ValueTypeCompatible(SrcTypeVar types.GType, DestTypeVar types.GType) bool {
 
 	cret := xValueTypeCompatible(SrcTypeVar, DestTypeVar)
@@ -810,10 +864,12 @@ func ValueTypeCompatible(SrcTypeVar types.GType, DestTypeVar types.GType) bool {
 
 var xValueTypeTransformable func(types.GType, types.GType) bool
 
-// Check whether g_value_transform() is able to transform values
-// of type @src_type into values of type @dest_type. Note that for
-// the types to be transformable, they must be compatible or a
-// transformation function must be registered.
+// Checks whether [method@GObject.Value.transform] is able to transform values
+// of type @src_type into values of type @dest_type.
+//
+// Note that for the types to be transformable, they must be compatible or a
+// transformation function must be registered using
+// [func@GObject.Value.register_transform_func].
 func ValueTypeTransformable(SrcTypeVar types.GType, DestTypeVar types.GType) bool {
 
 	cret := xValueTypeTransformable(SrcTypeVar, DestTypeVar)

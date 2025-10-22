@@ -46,6 +46,10 @@ func ContentDeserializeFinish(ResultVar gio.AsyncResult, ValueVar *gobject.Value
 var xContentRegisterDeserializer func(string, types.GType, uintptr, uintptr, uintptr)
 
 // Registers a function to deserialize object of a given type.
+//
+// Since 4.20, when looking up a deserializer to use, GTK will
+// use the last registered deserializer for a given mime type,
+// so applications can override the built-in deserializers.
 func ContentRegisterDeserializer(MimeTypeVar string, TypeVar types.GType, DeserializeVar *ContentDeserializeFunc, DataVar uintptr, NotifyVar *glib.DestroyNotify) {
 
 	xContentRegisterDeserializer(MimeTypeVar, TypeVar, glib.NewCallback(DeserializeVar), DataVar, glib.NewCallback(NotifyVar))

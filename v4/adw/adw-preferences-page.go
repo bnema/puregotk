@@ -120,6 +120,25 @@ func (x *PreferencesPage) GetDescriptionCentered() bool {
 	return cret
 }
 
+var xPreferencesPageGetGroup func(uintptr, uint) uintptr
+
+// Gets the group at @index.
+//
+// Can return `NULL` if @index is larger than the number of groups in the page.
+func (x *PreferencesPage) GetGroup(IndexVar uint) *PreferencesGroup {
+	var cls *PreferencesGroup
+
+	cret := xPreferencesPageGetGroup(x.GoPointer(), IndexVar)
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &PreferencesGroup{}
+	cls.Ptr = cret
+	return cls
+}
+
 var xPreferencesPageGetIconName func(uintptr) string
 
 // Gets the icon name for @self.
@@ -154,6 +173,18 @@ func (x *PreferencesPage) GetUseUnderline() bool {
 
 	cret := xPreferencesPageGetUseUnderline(x.GoPointer())
 	return cret
+}
+
+var xPreferencesPageInsert func(uintptr, uintptr, int)
+
+// Inserts a preferences group to @self at @index.
+//
+// If @index is negative or larger than the number of groups, appends the group,
+// same as [method@PreferencesPage.add].
+func (x *PreferencesPage) Insert(GroupVar *PreferencesGroup, IndexVar int) {
+
+	xPreferencesPageInsert(x.GoPointer(), GroupVar.GoPointer(), IndexVar)
+
 }
 
 var xPreferencesPageRemove func(uintptr, uintptr)
@@ -548,10 +579,12 @@ func init() {
 	core.PuregoSafeRegister(&xPreferencesPageGetBanner, libs, "adw_preferences_page_get_banner")
 	core.PuregoSafeRegister(&xPreferencesPageGetDescription, libs, "adw_preferences_page_get_description")
 	core.PuregoSafeRegister(&xPreferencesPageGetDescriptionCentered, libs, "adw_preferences_page_get_description_centered")
+	core.PuregoSafeRegister(&xPreferencesPageGetGroup, libs, "adw_preferences_page_get_group")
 	core.PuregoSafeRegister(&xPreferencesPageGetIconName, libs, "adw_preferences_page_get_icon_name")
 	core.PuregoSafeRegister(&xPreferencesPageGetName, libs, "adw_preferences_page_get_name")
 	core.PuregoSafeRegister(&xPreferencesPageGetTitle, libs, "adw_preferences_page_get_title")
 	core.PuregoSafeRegister(&xPreferencesPageGetUseUnderline, libs, "adw_preferences_page_get_use_underline")
+	core.PuregoSafeRegister(&xPreferencesPageInsert, libs, "adw_preferences_page_insert")
 	core.PuregoSafeRegister(&xPreferencesPageRemove, libs, "adw_preferences_page_remove")
 	core.PuregoSafeRegister(&xPreferencesPageScrollToTop, libs, "adw_preferences_page_scroll_to_top")
 	core.PuregoSafeRegister(&xPreferencesPageSetBanner, libs, "adw_preferences_page_set_banner")

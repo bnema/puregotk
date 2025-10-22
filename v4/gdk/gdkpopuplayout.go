@@ -97,7 +97,7 @@ func (x *PopupLayout) Equal(OtherVar *PopupLayout) bool {
 
 var xPopupLayoutGetAnchorHints func(uintptr) AnchorHints
 
-// Get the `GdkAnchorHints`.
+// Get the anchor hints.
 func (x *PopupLayout) GetAnchorHints() AnchorHints {
 
 	cret := xPopupLayoutGetAnchorHints(x.GoPointer())
@@ -164,8 +164,8 @@ var xPopupLayoutSetAnchorHints func(uintptr, AnchorHints)
 //
 // The set @anchor_hints determines how @surface will be moved
 // if the anchor points cause it to move off-screen. For example,
-// %GDK_ANCHOR_FLIP_X will replace %GDK_GRAVITY_NORTH_WEST with
-// %GDK_GRAVITY_NORTH_EAST and vice versa if @surface extends
+// `GDK_ANCHOR_FLIP_X` will replace `GDK_GRAVITY_NORTH_WEST` with
+// `GDK_GRAVITY_NORTH_EAST` and vice versa if @surface extends
 // beyond the left or right edges of the monitor.
 func (x *PopupLayout) SetAnchorHints(AnchorHintsVar AnchorHints) {
 

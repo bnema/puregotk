@@ -66,6 +66,19 @@ func NewUriLauncher(UriVar string) *UriLauncher {
 	return cls
 }
 
+var xUriLauncherCanLaunch func(uintptr, uintptr) bool
+
+// Returns whether the launcher is likely to succeed
+// in launching an application for its uri.
+//
+// This can be used to disable controls that trigger
+// the launcher when they are known not to work.
+func (x *UriLauncher) CanLaunch(ParentVar *Window) bool {
+
+	cret := xUriLauncherCanLaunch(x.GoPointer(), ParentVar.GoPointer())
+	return cret
+}
+
 var xUriLauncherGetUri func(uintptr) string
 
 // Gets the uri that will be opened.
@@ -137,6 +150,7 @@ func init() {
 
 	core.PuregoSafeRegister(&xNewUriLauncher, libs, "gtk_uri_launcher_new")
 
+	core.PuregoSafeRegister(&xUriLauncherCanLaunch, libs, "gtk_uri_launcher_can_launch")
 	core.PuregoSafeRegister(&xUriLauncherGetUri, libs, "gtk_uri_launcher_get_uri")
 	core.PuregoSafeRegister(&xUriLauncherLaunch, libs, "gtk_uri_launcher_launch")
 	core.PuregoSafeRegister(&xUriLauncherLaunchFinish, libs, "gtk_uri_launcher_launch_finish")

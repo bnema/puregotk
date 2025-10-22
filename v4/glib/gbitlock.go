@@ -6,7 +6,7 @@ import (
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
-var xBitLock func(int, int)
+var xBitLock func(uintptr, int)
 
 // Sets the indicated @lock_bit in @address.  If the bit is already
 // set, this call will block until g_bit_unlock() unsets the
@@ -22,13 +22,26 @@ var xBitLock func(int, int)
 // @address must be atomic in order for this function to work
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
-func BitLock(AddressVar int, LockBitVar int) {
+func BitLock(AddressVar uintptr, LockBitVar int) {
 
 	xBitLock(AddressVar, LockBitVar)
 
 }
 
-var xBitTrylock func(int, int) bool
+var xBitLockAndGet func(uintptr, uint, int)
+
+// Sets the indicated @lock_bit in @address and atomically returns the new value.
+//
+// This is like [func@GLib.bit_lock], except it can atomically return the new value at
+// @address (right after obtaining the lock). Thus the value returned in @out_val
+// always has the @lock_bit set.
+func BitLockAndGet(AddressVar uintptr, LockBitVar uint, OutValVar int) {
+
+	xBitLockAndGet(AddressVar, LockBitVar, OutValVar)
+
+}
+
+var xBitTrylock func(uintptr, int) bool
 
 // Sets the indicated @lock_bit in @address, returning %TRUE if
 // successful.  If the bit is already set, returns %FALSE immediately.
@@ -43,13 +56,13 @@ var xBitTrylock func(int, int) bool
 // @address must be atomic in order for this function to work
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
-func BitTrylock(AddressVar int, LockBitVar int) bool {
+func BitTrylock(AddressVar uintptr, LockBitVar int) bool {
 
 	cret := xBitTrylock(AddressVar, LockBitVar)
 	return cret
 }
 
-var xBitUnlock func(int, int)
+var xBitUnlock func(uintptr, int)
 
 // Clears the indicated @lock_bit in @address.  If another thread is
 // currently blocked in g_bit_lock() on this same bit then it will be
@@ -59,9 +72,25 @@ var xBitUnlock func(int, int)
 // @address must be atomic in order for this function to work
 // reliably. While @address has a `volatile` qualifier, this is a historical
 // artifact and the argument passed to it should not be `volatile`.
-func BitUnlock(AddressVar int, LockBitVar int) {
+func BitUnlock(AddressVar uintptr, LockBitVar int) {
 
 	xBitUnlock(AddressVar, LockBitVar)
+
+}
+
+var xBitUnlockAndSet func(uintptr, uint, int, int)
+
+// This is like [func@GLib.bit_unlock] but also atomically sets @address to
+// @val.
+//
+// If @preserve_mask is not zero, then the @preserve_mask bits will be
+// preserved in @address and are not set to @val.
+//
+// Note that the @lock_bit bit will always be unset regardless of
+// @val, @preserve_mask and the currently set value in @address.
+func BitUnlockAndSet(AddressVar uintptr, LockBitVar uint, NewValVar int, PreserveMaskVar int) {
+
+	xBitUnlockAndSet(AddressVar, LockBitVar, NewValVar, PreserveMaskVar)
 
 }
 
@@ -164,8 +193,10 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xBitLock, libs, "g_bit_lock")
+	core.PuregoSafeRegister(&xBitLockAndGet, libs, "g_bit_lock_and_get")
 	core.PuregoSafeRegister(&xBitTrylock, libs, "g_bit_trylock")
 	core.PuregoSafeRegister(&xBitUnlock, libs, "g_bit_unlock")
+	core.PuregoSafeRegister(&xBitUnlockAndSet, libs, "g_bit_unlock_and_set")
 	core.PuregoSafeRegister(&xPointerBitLock, libs, "g_pointer_bit_lock")
 	core.PuregoSafeRegister(&xPointerBitLockAndGet, libs, "g_pointer_bit_lock_and_get")
 	core.PuregoSafeRegister(&xPointerBitLockMaskPtr, libs, "g_pointer_bit_lock_mask_ptr")

@@ -428,7 +428,7 @@ var xTestAddDataFuncFull func(string, uintptr, uintptr, uintptr)
 
 // Creates a new test case.
 //
-// In constract to [func@GLib.test_add_data_func], this function
+// In contrast to [func@GLib.test_add_data_func], this function
 // is freeing @test_data after the test run is complete.
 func TestAddDataFuncFull(TestpathVar string, TestDataVar uintptr, TestFuncVar *TestDataFunc, DataFreeFuncVar *DestroyNotify) {
 
@@ -1345,7 +1345,7 @@ var xTestTrapSubprocessWithEnvp func(string, []string, uint64, TestSubprocessFla
 //	    }
 //
 //	  // Reruns this same test in a subprocess
-//	  g_autoptr(GStrv) envp = g_get_environ ();
+//	  g_auto(GStrv) envp = g_get_environ ();
 //	  envp = g_environ_setenv (g_steal_pointer (&amp;envp), "USER", "charlie", TRUE);
 //	  g_test_trap_subprocess_with_envp (NULL, envp, 0, G_TEST_SUBPROCESS_DEFAULT);
 //	  g_test_trap_assert_passed ();

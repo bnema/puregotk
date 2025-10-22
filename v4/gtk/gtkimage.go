@@ -41,7 +41,7 @@ const (
 
 // Displays an image.
 //
-// picture&gt;
+// &lt;picture&gt;
 //
 //	&lt;source srcset="image-dark.png" media="(prefers-color-scheme: dark)"&gt;
 //	&lt;img alt="An example GtkImage" src="image.png"&gt;
@@ -59,9 +59,9 @@ const (
 // If the file isn’t loaded successfully, the image will contain a
 // “broken image” icon similar to that used in many web browsers.
 //
-// If you want to handle errors in loading the file yourself,
-// for example by displaying an error message, then load the image with
-// [ctor@Gdk.Texture.new_from_file], then create the `GtkImage` with
+// If you want to handle errors in loading the file yourself, for example
+// by displaying an error message, then load the image with an image
+// loading framework such as libglycin, then create the `GtkImage` with
 // [ctor@Gtk.Image.new_from_paintable].
 //
 // Sometimes an application will want to avoid depending on external data
@@ -124,9 +124,9 @@ var xNewImageFromFile func(string) uintptr
 // will display a “broken image” icon. This function never returns %NULL,
 // it always returns a valid `GtkImage` widget.
 //
-// If you need to detect failures to load the file, use
-// [ctor@Gdk.Texture.new_from_file] to load the file yourself,
-// then create the `GtkImage` from the texture.
+// If you need to detect failures to load the file, use an
+// image loading framework such as libglycin to load the file
+// yourself, then create the `GtkImage` from the texture.
 //
 // The storage type (see [method@Gtk.Image.get_storage_type])
 // of the returned image is not defined, it will be whatever
@@ -197,6 +197,13 @@ var xNewImageFromPaintable func(uintptr) uintptr
 //
 // The `GtkImage` will track changes to the @paintable and update
 // its size and contents in response to it.
+//
+// Note that paintables are still subject to the icon size that is
+// set on the image. If you want to display a paintable at its intrinsic
+// size, use [class@Gtk.Picture] instead.
+//
+// If @paintable is a [iface@Gtk.SymbolicPaintable], then it will be
+// recolored with the symbolic palette from the theme.
 func NewImageFromPaintable(PaintableVar gdk.Paintable) *Image {
 	var cls *Image
 
@@ -247,9 +254,9 @@ var xNewImageFromResource func(string) uintptr
 // display a “broken image” icon. This function never returns %NULL,
 // it always returns a valid `GtkImage` widget.
 //
-// If you need to detect failures to load the file, use
-// [ctor@GdkPixbuf.Pixbuf.new_from_file] to load the file yourself,
-// then create the `GtkImage` from the pixbuf.
+// If you need to detect failures to load the file, use an
+// image loading framework such as libglycin to load the file
+// yourself, then create the `GtkImage` from the texture.
 //
 // The storage type (see [method@Gtk.Image.get_storage_type]) of
 // the returned image is not defined, it will be whatever is
@@ -371,6 +378,13 @@ var xImageSetFromFile func(uintptr, string)
 // Sets a `GtkImage` to show a file.
 //
 // See [ctor@Gtk.Image.new_from_file] for details.
+//
+// ::: warning
+//
+//	Note that this function should not be used with untrusted data.
+//	Use a proper image loading framework such as libglycin, which can
+//	load many image formats into a `GdkTexture`, and then use
+//	[method@Gtk.Image.set_from_paintable].
 func (x *Image) SetFromFile(FilenameVar string) {
 
 	xImageSetFromFile(x.GoPointer(), FilenameVar)
@@ -450,7 +464,7 @@ var xImageSetPixelSize func(uintptr, int)
 // Sets the pixel size to use for named icons.
 //
 // If the pixel size is set to a value != -1, it is used instead
-// of the icon size set by [method@Gtk.Image.set_from_icon_name].
+// of the icon size set by [method@Gtk.Image.set_icon_size].
 func (x *Image) SetPixelSize(PixelSizeVar int) {
 
 	xImageSetPixelSize(x.GoPointer(), PixelSizeVar)

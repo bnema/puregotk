@@ -30,6 +30,8 @@ type Toplevel interface {
 	BeginMove(DeviceVar *Device, ButtonVar int, XVar float64, YVar float64, TimestampVar uint32)
 	BeginResize(EdgeVar SurfaceEdge, DeviceVar *Device, ButtonVar int, XVar float64, YVar float64, TimestampVar uint32)
 	Focus(TimestampVar uint32)
+	GetCapabilities() ToplevelCapabilities
+	GetGravity() Gravity
 	GetState() ToplevelState
 	InhibitSystemShortcuts(EventVar *Event)
 	Lower() bool
@@ -38,6 +40,7 @@ type Toplevel interface {
 	RestoreSystemShortcuts()
 	SetDecorated(DecoratedVar bool)
 	SetDeletable(DeletableVar bool)
+	SetGravity(GravityVar Gravity)
 	SetIconList(SurfacesVar *glib.List)
 	SetModal(ModalVar bool)
 	SetStartupId(StartupIdVar string)
@@ -96,6 +99,21 @@ func (x *ToplevelBase) Focus(TimestampVar uint32) {
 
 	XGdkToplevelFocus(x.GoPointer(), TimestampVar)
 
+}
+
+// The capabilities that are available for this toplevel.
+func (x *ToplevelBase) GetCapabilities() ToplevelCapabilities {
+
+	cret := XGdkToplevelGetCapabilities(x.GoPointer())
+	return cret
+}
+
+// Returns the gravity that is used when changing the toplevel
+// size programmatically.
+func (x *ToplevelBase) GetGravity() Gravity {
+
+	cret := XGdkToplevelGetGravity(x.GoPointer())
+	return cret
 }
 
 // Gets the bitwise or of the currently active surface state flags,
@@ -199,6 +217,14 @@ func (x *ToplevelBase) SetDeletable(DeletableVar bool) {
 
 }
 
+// Sets the gravity that is used when changing the toplevel
+// size programmatically.
+func (x *ToplevelBase) SetGravity(GravityVar Gravity) {
+
+	XGdkToplevelSetGravity(x.GoPointer(), GravityVar)
+
+}
+
 // Sets a list of icons for the surface.
 //
 // One of these will be used to represent the surface in iconic form.
@@ -295,6 +321,8 @@ func (x *ToplevelBase) TitlebarGesture(GestureVar TitlebarGesture) bool {
 var XGdkToplevelBeginMove func(uintptr, uintptr, int, float64, float64, uint32)
 var XGdkToplevelBeginResize func(uintptr, SurfaceEdge, uintptr, int, float64, float64, uint32)
 var XGdkToplevelFocus func(uintptr, uint32)
+var XGdkToplevelGetCapabilities func(uintptr) ToplevelCapabilities
+var XGdkToplevelGetGravity func(uintptr) Gravity
 var XGdkToplevelGetState func(uintptr) ToplevelState
 var XGdkToplevelInhibitSystemShortcuts func(uintptr, uintptr)
 var XGdkToplevelLower func(uintptr) bool
@@ -303,6 +331,7 @@ var XGdkToplevelPresent func(uintptr, *ToplevelLayout)
 var XGdkToplevelRestoreSystemShortcuts func(uintptr)
 var XGdkToplevelSetDecorated func(uintptr, bool)
 var XGdkToplevelSetDeletable func(uintptr, bool)
+var XGdkToplevelSetGravity func(uintptr, Gravity)
 var XGdkToplevelSetIconList func(uintptr, *glib.List)
 var XGdkToplevelSetModal func(uintptr, bool)
 var XGdkToplevelSetStartupId func(uintptr, string)
@@ -311,6 +340,40 @@ var XGdkToplevelSetTransientFor func(uintptr, uintptr)
 var XGdkToplevelShowWindowMenu func(uintptr, uintptr) bool
 var XGdkToplevelSupportsEdgeConstraints func(uintptr) bool
 var XGdkToplevelTitlebarGesture func(uintptr, TitlebarGesture) bool
+
+// Reflects what features a `GdkToplevel` supports.
+type ToplevelCapabilities int
+
+var xToplevelCapabilitiesGLibType func() types.GType
+
+func ToplevelCapabilitiesGLibType() types.GType {
+	return xToplevelCapabilitiesGLibType()
+}
+
+const (
+
+	// Whether tiled window states are supported.
+	ToplevelCapabilitiesEdgeConstraintsValue ToplevelCapabilities = 1
+	// Whether inhibiting system shortcuts is supported.
+	// See [method@Gdk.Toplevel.inhibit_system_shortcuts].
+	ToplevelCapabilitiesInhibitShortcutsValue ToplevelCapabilities = 2
+	// Whether titlebar gestures are supported.
+	// See [method@Gdk.Toplevel.titlebar_gesture].
+	ToplevelCapabilitiesTitlebarGesturesValue ToplevelCapabilities = 4
+	// Whether showing the window menu is supported.
+	// See [method@Gdk.Toplevel.show_window_menu].
+	ToplevelCapabilitiesWindowMenuValue ToplevelCapabilities = 8
+	// Whether the toplevel can be maximized.
+	ToplevelCapabilitiesMaximizeValue ToplevelCapabilities = 16
+	// Whether the toplevel can be made fullscreen.
+	ToplevelCapabilitiesFullscreenValue ToplevelCapabilities = 32
+	// Whether the toplevel can be minimized.
+	// See [method@Gdk.Toplevel.minimize].
+	ToplevelCapabilitiesMinimizeValue ToplevelCapabilities = 64
+	// Whether the toplevel can be lowered.
+	// See [method@Gdk.Toplevel.lower].
+	ToplevelCapabilitiesLowerValue ToplevelCapabilities = 128
+)
 
 // Specifies the state of a toplevel surface.
 //
@@ -443,6 +506,8 @@ func init() {
 		libs = append(libs, lib)
 	}
 
+	core.PuregoSafeRegister(&xToplevelCapabilitiesGLibType, libs, "gdk_toplevel_capabilities_get_type")
+
 	core.PuregoSafeRegister(&xToplevelStateGLibType, libs, "gdk_toplevel_state_get_type")
 
 	core.PuregoSafeRegister(&xFullscreenModeGLibType, libs, "gdk_fullscreen_mode_get_type")
@@ -456,6 +521,8 @@ func init() {
 	core.PuregoSafeRegister(&XGdkToplevelBeginMove, libs, "gdk_toplevel_begin_move")
 	core.PuregoSafeRegister(&XGdkToplevelBeginResize, libs, "gdk_toplevel_begin_resize")
 	core.PuregoSafeRegister(&XGdkToplevelFocus, libs, "gdk_toplevel_focus")
+	core.PuregoSafeRegister(&XGdkToplevelGetCapabilities, libs, "gdk_toplevel_get_capabilities")
+	core.PuregoSafeRegister(&XGdkToplevelGetGravity, libs, "gdk_toplevel_get_gravity")
 	core.PuregoSafeRegister(&XGdkToplevelGetState, libs, "gdk_toplevel_get_state")
 	core.PuregoSafeRegister(&XGdkToplevelInhibitSystemShortcuts, libs, "gdk_toplevel_inhibit_system_shortcuts")
 	core.PuregoSafeRegister(&XGdkToplevelLower, libs, "gdk_toplevel_lower")
@@ -464,6 +531,7 @@ func init() {
 	core.PuregoSafeRegister(&XGdkToplevelRestoreSystemShortcuts, libs, "gdk_toplevel_restore_system_shortcuts")
 	core.PuregoSafeRegister(&XGdkToplevelSetDecorated, libs, "gdk_toplevel_set_decorated")
 	core.PuregoSafeRegister(&XGdkToplevelSetDeletable, libs, "gdk_toplevel_set_deletable")
+	core.PuregoSafeRegister(&XGdkToplevelSetGravity, libs, "gdk_toplevel_set_gravity")
 	core.PuregoSafeRegister(&XGdkToplevelSetIconList, libs, "gdk_toplevel_set_icon_list")
 	core.PuregoSafeRegister(&XGdkToplevelSetModal, libs, "gdk_toplevel_set_modal")
 	core.PuregoSafeRegister(&XGdkToplevelSetStartupId, libs, "gdk_toplevel_set_startup_id")

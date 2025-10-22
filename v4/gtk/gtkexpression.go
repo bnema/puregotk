@@ -455,6 +455,28 @@ func (c *ConstantExpression) SetGoPointer(ptr uintptr) {
 //
 // ```
 //
+// String (`type='gchararray'`) constants can be marked for translation with the
+// `translatable=` attribute, and will then be looked up in the
+// [property@Gtk.Builder:translation-domain] when the expression is constructed.
+//
+// ```xml
+//
+//	&lt;constant type='gchararray' translatable='yes'&gt;I'm translatable!&lt;/constant&gt;
+//
+// ```
+//
+// As with other translatable strings in [type@Gtk.Builder], constants can
+// also have a context and/or translation comment:
+//
+// ```xml
+//
+//	&lt;constant type='gchararray'
+//	          translatable='yes'
+//	          context='example'
+//	          comments='A sample string'&gt;I'm translatable!&lt;/constant&gt;
+//
+// ```
+//
 // To create a closure expression, use the `&lt;closure&gt;` element. The `function`
 // attribute specifies what function to use for the closure, and the `type`
 // attribute specifies its return type. The content of the element contains the

@@ -360,7 +360,7 @@ const (
 	//    Value type: double
 	AccessiblePropertyValueNowValue AccessibleProperty = 17
 	// Defines the human readable text alternative
-	//    of aria-valuenow for a range widget. Value type: string
+	//    of [enum@Gtk.AccessibleProperty.VALUE_NOW] for a range widget. Value type: string
 	AccessiblePropertyValueTextValue AccessibleProperty = 18
 	// Defines a string value that provides a description of non-standard keyboard
 	// interactions of the current element. Value type: string
@@ -434,7 +434,7 @@ const (
 	//    Value type: integer
 	AccessibleRelationRowIndexValue AccessibleRelation = 14
 	// Defines a human readable text
-	//    alternative of aria-rowindex. Value type: string
+	//    alternative of [enum@Gtk.AccessibleRelation.ROW_INDEX]. Value type: string
 	AccessibleRelationRowIndexTextValue AccessibleRelation = 15
 	// Defines the number of rows spanned by a
 	//    cell or gridcell within a table, grid, or treegrid. Value type: integer
@@ -1229,6 +1229,62 @@ const (
 	InputPurposePinValue InputPurpose = 9
 	// Allow any character, in addition to control codes
 	InputPurposeTerminalValue InputPurpose = 10
+)
+
+// Values for the [property@Gtk.Settings:gtk-interface-color-scheme]
+// and [property@Gtk.CssProvider:prefers-color-scheme] properties
+// that indicates what color scheme is used.
+//
+// This information can be used inside CSS via media queries.
+//
+// More values may be added to this enumeration. Unknown values
+// should be treated the same as `GTK_INTERFACE_COLOR_SCHEME_DEFAULT`.
+type InterfaceColorScheme int
+
+var xInterfaceColorSchemeGLibType func() types.GType
+
+func InterfaceColorSchemeGLibType() types.GType {
+	return xInterfaceColorSchemeGLibType()
+}
+
+const (
+
+	// The system doesn't support color schemes
+	InterfaceColorSchemeUnsupportedValue InterfaceColorScheme = 0
+	// The default color scheme is used
+	InterfaceColorSchemeDefaultValue InterfaceColorScheme = 1
+	// A dark color scheme is used
+	InterfaceColorSchemeDarkValue InterfaceColorScheme = 2
+	// A light color scheme is used
+	InterfaceColorSchemeLightValue InterfaceColorScheme = 3
+)
+
+// Values for the [property@Gtk.Settings:gtk-interface-contrast]
+// and [property@Gtk.CssProvider:prefers-contrast] properties
+// that indicates the preferred level of contrast.
+//
+// This information can be used inside CSS via media queries.
+//
+// More values may be added to this enumeration. Unknown values
+// should be treated the same as `GTK_INTERFACE_CONTRAST_NO_PREFERENCE`.
+type InterfaceContrast int
+
+var xInterfaceContrastGLibType func() types.GType
+
+func InterfaceContrastGLibType() types.GType {
+	return xInterfaceContrastGLibType()
+}
+
+const (
+
+	// The system doesn't support contrast levels
+	InterfaceContrastUnsupportedValue InterfaceContrast = 0
+	// No particular preference for contrast
+	InterfaceContrastNoPreferenceValue InterfaceContrast = 1
+	// More contrast is preferred
+	InterfaceContrastMoreValue InterfaceContrast = 2
+	// Less contrast is preferred
+	InterfaceContrastLessValue InterfaceContrast = 3
 )
 
 // Used for justifying the text inside a [class@Label] widget.
@@ -2142,6 +2198,10 @@ func init() {
 	core.PuregoSafeRegister(&xIconSizeGLibType, libs, "gtk_icon_size_get_type")
 
 	core.PuregoSafeRegister(&xInputPurposeGLibType, libs, "gtk_input_purpose_get_type")
+
+	core.PuregoSafeRegister(&xInterfaceColorSchemeGLibType, libs, "gtk_interface_color_scheme_get_type")
+
+	core.PuregoSafeRegister(&xInterfaceContrastGLibType, libs, "gtk_interface_contrast_get_type")
 
 	core.PuregoSafeRegister(&xJustificationGLibType, libs, "gtk_justification_get_type")
 

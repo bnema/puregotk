@@ -60,6 +60,8 @@ func DragActionGLibType() types.GType {
 
 const (
 
+	// No action.
+	ActionNoneValue DragAction = 0
 	// Copy the data.
 	ActionCopyValue DragAction = 1
 	// Move the data, i.e. first copy it, then delete
@@ -357,9 +359,477 @@ const (
 	MemoryR8g8b8x8Value MemoryFormat = 31
 	// 4 bytes; for unused, blue, green, red.
 	MemoryX8b8g8r8Value MemoryFormat = 32
+	// Multiplane format with 2 planes.
+	//
+	// The first plane contains the first channel, usually containing
+	// luma values.
+	// The second plane with interleaved chroma values, Cb followed by Cr.
+	// Subsampled in both the X and Y direction.
+	//
+	// Commonly known by the fourcc "NV12".
+	MemoryG8B8r8420Value MemoryFormat = 33
+	// Multiplane format with 2 planes.
+	//
+	// The first plane contains the first channel, usually containing
+	// luma values.
+	// The second plane with interleaved chroma values, Cr followed by Cb.
+	// Subsampled in both the X and Y direction.
+	//
+	// Commonly known by the fourcc "NV21".
+	MemoryG8R8b8420Value MemoryFormat = 34
+	// Multiplane format with 2 planes.
+	//
+	// The first plane contains the first channel, usually containing
+	// luma values.
+	// The second plane with interleaved chroma values, Cb followed by Cr.
+	// Subsampled in the X direction.
+	//
+	// Commonly known by the fourcc "NV16".
+	MemoryG8B8r8422Value MemoryFormat = 35
+	// Multiplane format with 2 planes.
+	//
+	// The first plane contains the first channel, usually containing
+	// luma values.
+	// The second plane with interleaved chroma values, Cr followed by Cb.
+	// Subsampled in the X direction.
+	//
+	// Commonly known by the fourcc "NV61".
+	MemoryG8R8b8422Value MemoryFormat = 36
+	// Multiplane format with 2 planes.
+	//
+	// The first plane contains the first channel, usually containing
+	// luma values.
+	// The second plane with interleaved chroma values, Cb followed by Cr.
+	// This format is not subsampled.
+	//
+	// Commonly known by the fourcc "NV24".
+	MemoryG8B8r8444Value MemoryFormat = 37
+	// Multiplane format with 2 planes.
+	//
+	// The first plane contains the first channel, usually containing
+	// luma values.
+	// The second plane with interleaved chroma values, Cr followed by Cb.
+	// This format is not subsampled.
+	//
+	// Commonly known by the fourcc "NV42".
+	MemoryG8R8b8444Value MemoryFormat = 38
+	// Multiplane format with 2 planes.
+	//
+	// Each channel is a 16 bit integer, but only the highest 10 bits are used.
+	//
+	// The first plane contains the first channel, usually containing
+	// luma values.
+	// The second plane with interleaved chroma values, Cr followed by Cb.
+	// This format is not subsampled.
+	//
+	// Commonly known by the fourcc "P010".
+	MemoryG10x6B10x6r10x6420Value MemoryFormat = 39
+	// Multiplane format with 2 planes.
+	//
+	// Each channel is a 16 bit integer, but only the highest 10 bits are used.
+	//
+	// The first plane contains the first channel, usually containing
+	// luma values.
+	// The second plane with interleaved chroma values, Cr followed by Cb.
+	// This format is not subsampled.
+	//
+	// Commonly known by the fourcc "P012".
+	MemoryG12x4B12x4r12x4420Value MemoryFormat = 40
+	// Multiplane format with 2 planes.
+	//
+	// Each channel is a 16 bit integer.
+	//
+	// The first plane contains the first channel, usually containing
+	// luma values.
+	// The second plane with interleaved chroma values, Cr followed by Cb.
+	// This format is not subsampled.
+	//
+	// Commonly known by the fourcc "P016".
+	MemoryG16B16r16420Value MemoryFormat = 41
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 8 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel.
+	// Subsampled in both the X and Y direction with 4:1 ratio. It is
+	// mapped into the 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel.
+	// Subsampled in both the X and Y direction with 4:1 ratio. It is
+	// mapped into the 1st channel.
+	//
+	// Commonly known by the fourcc "YUV410".
+	MemoryG8B8R8410Value MemoryFormat = 42
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 8 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the second chroma chanel.
+	// Subsampled in both the X and Y direction with 4:1 ratio. It is
+	// mapped into the 1st channel.
+	//
+	// The third plane usually contains the first chroma channel.
+	// Subsampled in both the X and Y direction with 4:1 ratio. It is
+	// mapped into the 3rd channel.
+	//
+	// Commonly known by the fourcc "YVU410".
+	MemoryG8R8B8410Value MemoryFormat = 43
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 8 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel.
+	// Subsampled in the X direction with 4:1 ratio. It is
+	// mapped into the 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel.
+	// Subsampled in the X direction with 4:1 ratio. It is
+	// mapped into the 1st channel.
+	//
+	// Commonly known by the fourcc "YUV411".
+	MemoryG8B8R8411Value MemoryFormat = 44
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 8 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the second chroma chanel.
+	// Subsampled in the X direction with 4:1 ratio. It is
+	// mapped into the 1st channel.
+	//
+	// The third plane usually contains the first chroma channel.
+	// Subsampled in the X direction with 4:1 ratio. It is
+	// mapped into the 3rd channel.
+	//
+	// Commonly known by the fourcc "YVU411".
+	MemoryG8R8B8411Value MemoryFormat = 45
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 8 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel.
+	// Subsampled in both the X and Y direction. It is mapped into the
+	// 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel.
+	// Subsampled in both the X and Y direction. It is mapped into the
+	// 1st channel.
+	//
+	// Commonly known by the fourcc "YUV420".
+	MemoryG8B8R8420Value MemoryFormat = 46
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 8 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the second chroma chanel.
+	// Subsampled in both the X and Y direction. It is mapped into the
+	// 1st channel.
+	//
+	// The third plane usually contains the first chroma channel.
+	// Subsampled in both the X and Y direction. It is mapped into the
+	// 3rd channel.
+	//
+	// Commonly known by the fourcc "YVU420".
+	MemoryG8R8B8420Value MemoryFormat = 47
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 8 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel.
+	// Subsampled in the X direction. It is mapped into the 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel.
+	// Subsampled in the X direction. It is mapped into the 1st channel.
+	//
+	// Commonly known by the fourcc "YUV422".
+	MemoryG8B8R8422Value MemoryFormat = 48
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 8 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the second chroma chanel.
+	// Subsampled in the X direction. It is mapped into the 1st channel.
+	//
+	// The third plane usually contains the first chroma channel.
+	// Subsampled in the X direction. It is mapped into the 3rd channel.
+	//
+	// Commonly known by the fourcc "YVU422".
+	MemoryG8R8B8422Value MemoryFormat = 49
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 8 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel. It is
+	// mapped into the 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel. It is
+	// mapped into the 1st channel.
+	//
+	// Commonly known by the fourcc "YUV444".
+	MemoryG8B8R8444Value MemoryFormat = 50
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 8 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the second chroma chanel.
+	// Subsampled in the X direction. It is mapped into the 1st channel.
+	//
+	// The third plane usually contains the first chroma channel.
+	// Subsampled in the X direction. It is mapped into the 3rd channel.
+	//
+	// Commonly known by the fourcc "YVU444".
+	MemoryG8R8B8444Value MemoryFormat = 51
+	// Packed format with subsampled channels.
+	//
+	// Each channel is a 8 bit integer. The red and blue/chroma channels
+	// are subsampled and interleaved with the green/luma channel.
+	//
+	// Each block contains 2 pixels, so the width must be a multiple of
+	// 2.
+	//
+	// Commonly known by the fourcc "YUYV".
+	MemoryG8b8g8r8422Value MemoryFormat = 52
+	// Packed format with subsampled channels.
+	//
+	// Each channel is a 8 bit integer. The red and blue/chroma channels
+	// are subsampled and interleaved with the green/luma channel.
+	//
+	// Each block contains 2 pixels, so the width must be a multiple of
+	// 2.
+	//
+	// Commonly known by the fourcc "YVYU".
+	MemoryG8r8g8b8422Value MemoryFormat = 53
+	// Packed format with subsampled channels.
+	//
+	// Each channel is a 8 bit integer. The red and blue/chroma channels
+	// are subsampled and interleaved with the green/luma channel.
+	//
+	// Each block contains 2 pixels, so the width must be a multiple of
+	// 2.
+	//
+	// Commonly known by the fourcc "VYUY".
+	MemoryR8g8b8g8422Value MemoryFormat = 54
+	// Packed format with subsampled channels.
+	//
+	// Each channel is a 8 bit integer. The red and blue/chroma channels
+	// are subsampled and interleaved with the green/luma channel.
+	//
+	// Each block contains 2 pixels, so the width must be a multiple of
+	// 2.
+	//
+	// Commonly known by the fourcc "UYVY".
+	MemoryB8g8r8g8422Value MemoryFormat = 55
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 16 bit integer.
+	//
+	// Only the 10 lower bits are used. The remaining ones must be set to 0 by the
+	// producer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel.
+	// Subsampled in both the X and Y direction. It is mapped into the
+	// 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel.
+	// Subsampled in both the X and Y direction. It is mapped into the
+	// 1st channel.
+	//
+	// Commonly known by the fourcc "S010".
+	MemoryX6g10X6b10X6r10420Value MemoryFormat = 56
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 16 bit integer.
+	//
+	// Only the 10 lower bits are used. The remaining ones must be set to 0 by the
+	// producer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel.
+	// Subsampled in the X direction. It is mapped into the 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel.
+	// Subsampled in the X direction. It is mapped into the 1st channel.
+	//
+	// Commonly known by the fourcc "S210".
+	MemoryX6g10X6b10X6r10422Value MemoryFormat = 57
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 16 bit integer.
+	//
+	// Only the 10 lower bits are used. The remaining ones must be set to 0 by the
+	// producer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel. It is
+	// mapped into the 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel. It is
+	// mapped into the 1st channel.
+	//
+	// Commonly known by the fourcc "S410".
+	MemoryX6g10X6b10X6r10444Value MemoryFormat = 58
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 16 bit integer.
+	//
+	// Only the 12 lower bits are used. The remaining ones must be set to 0 by the
+	// producer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel.
+	// Subsampled in both the X and Y direction. It is mapped into the
+	// 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel.
+	// Subsampled in both the X and Y direction. It is mapped into the
+	// 1st channel.
+	//
+	// Commonly known by the fourcc "S012".
+	MemoryX4g12X4b12X4r12420Value MemoryFormat = 59
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 16 bit integer.
+	//
+	// Only the 12 lower bits are used. The remaining ones must be set to 0 by the
+	// producer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel.
+	// Subsampled in the X direction. It is mapped into the 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel.
+	// Subsampled in the X direction. It is mapped into the 1st channel.
+	//
+	// Commonly known by the fourcc "S212".
+	MemoryX4g12X4b12X4r12422Value MemoryFormat = 60
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 16 bit integer.
+	//
+	// Only the 12 lower bits are used. The remaining ones must be set to 0 by the
+	// producer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel. It is
+	// mapped into the 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel. It is
+	// mapped into the 1st channel.
+	//
+	// Commonly known by the fourcc "S412".
+	MemoryX4g12X4b12X4r12444Value MemoryFormat = 61
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 16 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel.
+	// Subsampled in both the X and Y direction. It is mapped into the
+	// 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel.
+	// Subsampled in both the X and Y direction. It is mapped into the
+	// 1st channel.
+	//
+	// Commonly known by the fourcc "S016".
+	MemoryG16B16R16420Value MemoryFormat = 62
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 16 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel.
+	// Subsampled in the X direction. It is mapped into the 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel.
+	// Subsampled in the X direction. It is mapped into the 1st channel.
+	//
+	// Commonly known by the fourcc "S216".
+	MemoryG16B16R16422Value MemoryFormat = 63
+	// Multiplane format with 3 planes.
+	//
+	// Each channel is a 16 bit integer.
+	//
+	// The first plane usually contains the luma channel. It is mapped
+	// into the 2nd channel.
+	//
+	// The second plane usually contains the first chroma chanel. It is
+	// mapped into the 3rd channel.
+	//
+	// The third plane usually contains the second chroma channel. It is
+	// mapped into the 1st channel.
+	//
+	// Commonly known by the fourcc "S416".
+	MemoryG16B16R16444Value MemoryFormat = 64
 	// The number of formats. This value will change as
 	//   more formats get added, so do not rely on its concrete integer.
-	MemoryNFormatsValue MemoryFormat = 33
+	MemoryNFormatsValue MemoryFormat = 65
+)
+
+// Used in scroll events, to announce the direction relative
+// to physical motion.
+type ScrollRelativeDirection int
+
+var xScrollRelativeDirectionGLibType func() types.GType
+
+func ScrollRelativeDirectionGLibType() types.GType {
+	return xScrollRelativeDirectionGLibType()
+}
+
+const (
+
+	// Physical motion and event motion are the same
+	ScrollRelativeDirectionIdenticalValue ScrollRelativeDirection = 0
+	// Physical motion is inverted relative to event motion
+	ScrollRelativeDirectionInvertedValue ScrollRelativeDirection = 1
+	// Relative motion is unknown on this device or backend
+	ScrollRelativeDirectionUnknownValue ScrollRelativeDirection = 2
 )
 
 // Error enumeration for `GdkVulkanContext`.

@@ -218,6 +218,45 @@ func LogDefaultHandler(LogDomainVar string, LogLevelVar LogLevelFlags, MessageVa
 
 }
 
+var xLogGetAlwaysFatal func() LogLevelFlags
+
+// Gets the current fatal mask.
+//
+// This is mostly used by custom log writers to make fatal messages
+// (`fatal-warnings`, `fatal-criticals`) work as expected, when using the
+// `G_DEBUG` environment variable (see [Running GLib Applications](running.html)).
+//
+// An example usage is shown below:
+//
+// ```c
+// static GLogWriterOutput
+// my_custom_log_writer_fn (GLogLevelFlags log_level,
+//
+//	const GLogField *fields,
+//	gsize n_fields,
+//	gpointer user_data)
+//
+// {
+//
+//	   // abort if the message was fatal
+//	   if (log_level &amp; g_log_get_always_fatal ())
+//	     g_abort ();
+//
+//	   // custom log handling code
+//	   ...
+//	   ...
+//
+//	   // success
+//	   return G_LOG_WRITER_HANDLED;
+//	}
+//
+// ```
+func LogGetAlwaysFatal() LogLevelFlags {
+
+	cret := xLogGetAlwaysFatal()
+	return cret
+}
+
 var xLogGetDebugEnabled func() bool
 
 // Return whether debug output from the GLib logging system is enabled.
@@ -257,7 +296,7 @@ var xLogSetAlwaysFatal func(LogLevelFlags) LogLevelFlags
 //
 // You can also make some message levels fatal at runtime by setting
 // the `G_DEBUG` environment variable (see
-// [Running GLib Applications](glib-running.html)).
+// [Running GLib Applications](running.html)).
 //
 // Libraries should not call this function, as it affects all messages logged
 // by a process, including those from other libraries.
@@ -936,6 +975,7 @@ func init() {
 	core.PuregoSafeRegister(&xAssertWarning, libs, "g_assert_warning")
 	core.PuregoSafeRegister(&xLog, libs, "g_log")
 	core.PuregoSafeRegister(&xLogDefaultHandler, libs, "g_log_default_handler")
+	core.PuregoSafeRegister(&xLogGetAlwaysFatal, libs, "g_log_get_always_fatal")
 	core.PuregoSafeRegister(&xLogGetDebugEnabled, libs, "g_log_get_debug_enabled")
 	core.PuregoSafeRegister(&xLogRemoveHandler, libs, "g_log_remove_handler")
 	core.PuregoSafeRegister(&xLogSetAlwaysFatal, libs, "g_log_set_always_fatal")

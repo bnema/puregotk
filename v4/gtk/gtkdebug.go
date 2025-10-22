@@ -36,7 +36,7 @@ const (
 	DebugIconthemeValue DebugFlags = 32
 	// Information about printing
 	DebugPrintingValue DebugFlags = 64
-
+	// Trace GtkBuilder operation
 	DebugBuilderTraceValue DebugFlags = 128
 	// Information about size requests
 	DebugSizeRequestValue DebugFlags = 256
@@ -44,6 +44,8 @@ const (
 	DebugNoCssCacheValue DebugFlags = 512
 	// Open the GTK inspector
 	DebugInteractiveValue DebugFlags = 1024
+	// Show touch UI elements for pointer events.
+	DebugTouchscreenValue DebugFlags = 2048
 	// Information about actions and menu models
 	DebugActionsValue DebugFlags = 4096
 	// Information from layout managers
@@ -62,7 +64,7 @@ const (
 	DebugInvertTextDirValue DebugFlags = 524288
 	// Information about deprecated CSS features.
 	DebugCssValue DebugFlags = 1048576
-	// Trace GtkBuilder operation
+	// Information about deprecated GtkBuilder features.
 	DebugBuilderValue DebugFlags = 2097152
 )
 

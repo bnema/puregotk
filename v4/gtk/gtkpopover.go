@@ -270,7 +270,7 @@ func (x *Popover) GetMnemonicsVisible() bool {
 
 var xPopoverGetOffset func(uintptr, int, int)
 
-// Gets the offset previous set with [method@Gtk.Popover.set_offset()].
+// Gets the offset previous set with [method@Gtk.Popover.set_offset].
 func (x *Popover) GetOffset(XOffsetVar int, YOffsetVar int) {
 
 	xPopoverGetOffset(x.GoPointer(), XOffsetVar, YOffsetVar)

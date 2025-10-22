@@ -14,7 +14,7 @@ import (
 // A `GtkStatusbar` widget is usually placed along the bottom of an application's
 // main [class@Gtk.Window].
 //
-// picture&gt;
+// &lt;picture&gt;
 //
 //	&lt;source srcset="statusbar-dark.png" media="(prefers-color-scheme: dark)"&gt;
 //	&lt;img alt="An example GtkStatusbar" src="statusbar.png"&gt;

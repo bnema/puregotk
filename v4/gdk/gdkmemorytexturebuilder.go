@@ -124,12 +124,30 @@ func (x *MemoryTextureBuilder) GetHeight() int {
 	return cret
 }
 
+var xMemoryTextureBuilderGetOffset func(uintptr, uint) uint
+
+// Gets the offset previously set via gdk_memory_texture_builder_set_offset().
+func (x *MemoryTextureBuilder) GetOffset(PlaneVar uint) uint {
+
+	cret := xMemoryTextureBuilderGetOffset(x.GoPointer(), PlaneVar)
+	return cret
+}
+
 var xMemoryTextureBuilderGetStride func(uintptr) uint
 
 // Gets the stride previously set via gdk_memory_texture_builder_set_stride().
 func (x *MemoryTextureBuilder) GetStride() uint {
 
 	cret := xMemoryTextureBuilderGetStride(x.GoPointer())
+	return cret
+}
+
+var xMemoryTextureBuilderGetStrideForPlane func(uintptr, uint) uint
+
+// Gets the stride previously set via gdk_memory_texture_builder_set_stride_for_plane().
+func (x *MemoryTextureBuilder) GetStrideForPlane(PlaneVar uint) uint {
+
+	cret := xMemoryTextureBuilderGetStrideForPlane(x.GoPointer(), PlaneVar)
 	return cret
 }
 
@@ -209,10 +227,20 @@ var xMemoryTextureBuilderSetHeight func(uintptr, int)
 
 // Sets the height of the texture.
 //
-// The height must be set before calling [method@Gdk.MemoryTextureBuilder.build].
+// The height must be set before calling [method@Gdk.MemoryTextureBuilder.build]
+// and conform to size requirements of the provided format.
 func (x *MemoryTextureBuilder) SetHeight(HeightVar int) {
 
 	xMemoryTextureBuilderSetHeight(x.GoPointer(), HeightVar)
+
+}
+
+var xMemoryTextureBuilderSetOffset func(uintptr, uint, uint)
+
+// Sets the offset of the texture for @plane.
+func (x *MemoryTextureBuilder) SetOffset(PlaneVar uint, OffsetVar uint) {
+
+	xMemoryTextureBuilderSetOffset(x.GoPointer(), PlaneVar, OffsetVar)
 
 }
 
@@ -224,6 +252,15 @@ var xMemoryTextureBuilderSetStride func(uintptr, uint)
 func (x *MemoryTextureBuilder) SetStride(StrideVar uint) {
 
 	xMemoryTextureBuilderSetStride(x.GoPointer(), StrideVar)
+
+}
+
+var xMemoryTextureBuilderSetStrideForPlane func(uintptr, uint, uint)
+
+// Sets the stride of the texture for @plane.
+func (x *MemoryTextureBuilder) SetStrideForPlane(PlaneVar uint, StrideVar uint) {
+
+	xMemoryTextureBuilderSetStrideForPlane(x.GoPointer(), PlaneVar, StrideVar)
 
 }
 
@@ -261,7 +298,8 @@ var xMemoryTextureBuilderSetWidth func(uintptr, int)
 
 // Sets the width of the texture.
 //
-// The width must be set before calling [method@Gdk.MemoryTextureBuilder.build].
+// The width must be set before calling [method@Gdk.MemoryTextureBuilder.build]
+// and conform to size requirements of the provided format.
 func (x *MemoryTextureBuilder) SetWidth(WidthVar int) {
 
 	xMemoryTextureBuilderSetWidth(x.GoPointer(), WidthVar)
@@ -300,7 +338,9 @@ func init() {
 	core.PuregoSafeRegister(&xMemoryTextureBuilderGetColorState, libs, "gdk_memory_texture_builder_get_color_state")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderGetFormat, libs, "gdk_memory_texture_builder_get_format")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderGetHeight, libs, "gdk_memory_texture_builder_get_height")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGetOffset, libs, "gdk_memory_texture_builder_get_offset")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderGetStride, libs, "gdk_memory_texture_builder_get_stride")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderGetStrideForPlane, libs, "gdk_memory_texture_builder_get_stride_for_plane")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderGetUpdateRegion, libs, "gdk_memory_texture_builder_get_update_region")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderGetUpdateTexture, libs, "gdk_memory_texture_builder_get_update_texture")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderGetWidth, libs, "gdk_memory_texture_builder_get_width")
@@ -308,7 +348,9 @@ func init() {
 	core.PuregoSafeRegister(&xMemoryTextureBuilderSetColorState, libs, "gdk_memory_texture_builder_set_color_state")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderSetFormat, libs, "gdk_memory_texture_builder_set_format")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderSetHeight, libs, "gdk_memory_texture_builder_set_height")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderSetOffset, libs, "gdk_memory_texture_builder_set_offset")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderSetStride, libs, "gdk_memory_texture_builder_set_stride")
+	core.PuregoSafeRegister(&xMemoryTextureBuilderSetStrideForPlane, libs, "gdk_memory_texture_builder_set_stride_for_plane")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderSetUpdateRegion, libs, "gdk_memory_texture_builder_set_update_region")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderSetUpdateTexture, libs, "gdk_memory_texture_builder_set_update_texture")
 	core.PuregoSafeRegister(&xMemoryTextureBuilderSetWidth, libs, "gdk_memory_texture_builder_set_width")

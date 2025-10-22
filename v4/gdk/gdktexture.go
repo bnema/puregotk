@@ -100,8 +100,8 @@ var xNewTextureForPixbuf func(uintptr) uintptr
 // Creates a new texture object representing the `GdkPixbuf`.
 //
 // This function is threadsafe, so that you can e.g. use GTask
-// and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
-// while loading a big image.
+// and [method@Gio.Task.run_in_thread] to avoid blocking the main
+// thread while loading a big image.
 func NewTextureForPixbuf(PixbufVar *gdkpixbuf.Pixbuf) *Texture {
 	var cls *Texture
 
@@ -122,11 +122,17 @@ var xNewTextureFromBytes func(*glib.Bytes, **glib.Error) uintptr
 // The file format is detected automatically. The supported formats
 // are PNG, JPEG and TIFF, though more formats might be available.
 //
-// If %NULL is returned, then @error will be set.
+// If `NULL` is returned, then @error will be set.
 //
 // This function is threadsafe, so that you can e.g. use GTask
 // and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
 // while loading a big image.
+//
+// ::: warning
+//
+//	Note that this function should not be used with untrusted data.
+//	Use a proper image loading framework such as libglycin, which can
+//	load many image formats into a `GdkTexture`.
 func NewTextureFromBytes(BytesVar *glib.Bytes) (*Texture, error) {
 	var cls *Texture
 	var cerr *glib.Error
@@ -152,11 +158,17 @@ var xNewTextureFromFile func(uintptr, **glib.Error) uintptr
 // The file format is detected automatically. The supported formats
 // are PNG, JPEG and TIFF, though more formats might be available.
 //
-// If %NULL is returned, then @error will be set.
+// If `NULL` is returned, then @error will be set.
 //
 // This function is threadsafe, so that you can e.g. use GTask
 // and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
 // while loading a big image.
+//
+// ::: warning
+//
+//	Note that this function should not be used with untrusted data.
+//	Use a proper image loading framework such as libglycin, which can
+//	load many image formats into a `GdkTexture`.
 func NewTextureFromFile(FileVar gio.File) (*Texture, error) {
 	var cls *Texture
 	var cerr *glib.Error
@@ -182,11 +194,17 @@ var xNewTextureFromFilename func(string, **glib.Error) uintptr
 // The file format is detected automatically. The supported formats
 // are PNG, JPEG and TIFF, though more formats might be available.
 //
-// If %NULL is returned, then @error will be set.
+// If `NULL` is returned, then @error will be set.
 //
 // This function is threadsafe, so that you can e.g. use GTask
 // and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
 // while loading a big image.
+//
+// ::: warning
+//
+//	Note that this function should not be used with untrusted data.
+//	Use a proper image loading framework such as libglycin, which can
+//	load many image formats into a `GdkTexture`.
 func NewTextureFromFilename(PathVar string) (*Texture, error) {
 	var cls *Texture
 	var cerr *glib.Error
@@ -210,7 +228,7 @@ var xNewTextureFromResource func(string) uintptr
 // Creates a new texture by loading an image from a resource.
 //
 // The file format is detected automatically. The supported formats
-// are PNG and JPEG, though more formats might be available.
+// are PNG, JPEG and TIFF, though more formats might be available.
 //
 // It is a fatal error if @resource_path does not specify a valid
 // image resource and the program will abort if that happens.
@@ -317,9 +335,9 @@ var xTextureSaveToPng func(uintptr, string) bool
 //
 // This is a utility function intended for debugging and testing.
 // If you want more control over formats, proper error handling or
-// want to store to a [iface@Gio.File] or other location, you might want to
-// use [method@Gdk.Texture.save_to_png_bytes] or look into the
-// gdk-pixbuf library.
+// want to store to a [iface@Gio.File] or other location, you might
+// want to use [method@Gdk.Texture.save_to_png_bytes] or look into
+// the libglycin library.
 func (x *Texture) SaveToPng(FilenameVar string) bool {
 
 	cret := xTextureSaveToPng(x.GoPointer(), FilenameVar)
@@ -337,7 +355,7 @@ var xTextureSaveToPngBytes func(uintptr) *glib.Bytes
 //
 // If you need more control over the generated image, such as
 // attaching metadata, you should look into an image handling
-// library such as the gdk-pixbuf library.
+// library such as the libglycin library.
 //
 // If you are dealing with high dynamic range float data, you
 // might also want to consider [method@Gdk.Texture.save_to_tiff_bytes]

@@ -379,6 +379,20 @@ func (x *Snapshot) PushColorMatrix(ColorMatrixVar *graphene.Matrix, ColorOffsetV
 
 }
 
+var xSnapshotPushComponentTransfer func(uintptr, *gsk.ComponentTransfer, *gsk.ComponentTransfer, *gsk.ComponentTransfer, *gsk.ComponentTransfer)
+
+// Modifies the colors of an image by applying a transfer
+// function for each component.
+//
+// The transfer functions operate on unpremultiplied colors.
+//
+// The image is recorded until the next call to [method@Gtk.Snapshot.pop].
+func (x *Snapshot) PushComponentTransfer(RedVar *gsk.ComponentTransfer, GreenVar *gsk.ComponentTransfer, BlueVar *gsk.ComponentTransfer, AlphaVar *gsk.ComponentTransfer) {
+
+	xSnapshotPushComponentTransfer(x.GoPointer(), RedVar, GreenVar, BlueVar, AlphaVar)
+
+}
+
 var xSnapshotPushCrossFade func(uintptr, float64)
 
 // Snapshots a cross-fade operation between two images with the
@@ -417,6 +431,7 @@ var xSnapshotPushFill func(uintptr, *gsk.Path, gsk.FillRule)
 // The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 //
 // If you want to fill the path with a color, [method@Gtk.Snapshot.append_fill]
+// than rendering new ones, use [method@Gtk.Snapshot.append_fill]
 // may be more convenient.
 func (x *Snapshot) PushFill(PathVar *gsk.Path, FillRuleVar gsk.FillRule) {
 
@@ -807,6 +822,7 @@ func init() {
 	core.PuregoSafeRegister(&xSnapshotPushBlur, libs, "gtk_snapshot_push_blur")
 	core.PuregoSafeRegister(&xSnapshotPushClip, libs, "gtk_snapshot_push_clip")
 	core.PuregoSafeRegister(&xSnapshotPushColorMatrix, libs, "gtk_snapshot_push_color_matrix")
+	core.PuregoSafeRegister(&xSnapshotPushComponentTransfer, libs, "gtk_snapshot_push_component_transfer")
 	core.PuregoSafeRegister(&xSnapshotPushCrossFade, libs, "gtk_snapshot_push_cross_fade")
 	core.PuregoSafeRegister(&xSnapshotPushDebug, libs, "gtk_snapshot_push_debug")
 	core.PuregoSafeRegister(&xSnapshotPushFill, libs, "gtk_snapshot_push_fill")

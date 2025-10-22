@@ -10,7 +10,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-// Contains the public fields of a GArray.
+// Contains the public fields of a `GArray`.
 type Array struct {
 	_ structs.HostLayout
 
@@ -29,7 +29,7 @@ func (x *Array) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// Contains the public fields of a GByteArray.
+// Contains the public fields of a `GByteArray`.
 type ByteArray struct {
 	_ structs.HostLayout
 
@@ -331,7 +331,7 @@ func (x *Bytes) UnrefToData(SizeVar uint) uintptr {
 	return cret
 }
 
-// Contains the public fields of a pointer array.
+// Contains the public fields of a `GPtrArray`.
 type PtrArray struct {
 	_ structs.HostLayout
 
@@ -352,22 +352,23 @@ func (x *PtrArray) GoPointer() uintptr {
 
 var xArrayNewTake func(uintptr, uint, bool, uint) uintptr
 
-// Creates a new #GArray with @data as array data, @len as length and a
+// Creates a new `GArray` with @data as array data, @len as length and a
 // reference count of 1.
 //
 // This avoids having to copy the data manually, when it can just be
 // inherited.
-// After this call, @data belongs to the #GArray and may no longer be
+// After this call, @data belongs to the `GArray` and may no longer be
 // modified by the caller. The memory of @data has to be dynamically
-// allocated and will eventually be freed with g_free().
+// allocated and will eventually be freed with [func@GLib.free].
 //
 // In case the elements need to be cleared when the array is freed, use
-// g_array_set_clear_func() to set a #GDestroyNotify function to perform
-// such task.
+// [func@GLib.Array.set_clear_func] to set a [callback@GLib.DestroyNotify]
+// function to perform such task.
 //
-// Do not use it if @len or @element_size are greater than %G_MAXUINT.
-// #GArray stores the length of its data in #guint, which may be shorter
-// than #gsize.
+// Do not use it if @len or @element_size are greater than
+//
+//	[`G_MAXUINT`](types.html#guint). `GArray` stores the length of its data in
+//	`guint`, which may be shorter than `gsize`.
 func ArrayNewTake(DataVar uintptr, LenVar uint, ClearVar bool, ElementSizeVar uint) uintptr {
 
 	cret := xArrayNewTake(DataVar, LenVar, ClearVar, ElementSizeVar)
@@ -376,48 +377,48 @@ func ArrayNewTake(DataVar uintptr, LenVar uint, ClearVar bool, ElementSizeVar ui
 
 var xArrayNewTakeZeroTerminated func(uintptr, bool, uint) uintptr
 
-// Creates a new #GArray with @data as array data, computing the length of it
+// Creates a new `GArray` with @data as array data, computing the length of it
 // and setting the reference count to 1.
 //
 // This avoids having to copy the data manually, when it can just be
 // inherited.
-// After this call, @data belongs to the #GArray and may no longer be
+// After this call, @data belongs to the `GArray` and may no longer be
 // modified by the caller. The memory of @data has to be dynamically
-// allocated and will eventually be freed with g_free().
+// allocated and will eventually be freed with [func@GLib.free].
 //
-// The length is calculated by iterating through @data until the first %NULL
+// The length is calculated by iterating through @data until the first `NULL`
 // element is found.
 //
 // In case the elements need to be cleared when the array is freed, use
-// g_array_set_clear_func() to set a #GDestroyNotify function to perform
-// such task.
+// [func@GLib.Array.set_clear_func] to set a [callback@GLib.DestroyNotify]
+// function to perform such task.
 //
-// Do not use it if @data length or @element_size are greater than %G_MAXUINT.
-// #GArray stores the length of its data in #guint, which may be shorter
-// than #gsize.
+// Do not use it if @data length or @element_size are greater than
+// [`G_MAXUINT`](types.html#guint). `GArray` stores the length of its data in
+// `guint`, which may be shorter than `gsize`.
 func ArrayNewTakeZeroTerminated(DataVar uintptr, ClearVar bool, ElementSizeVar uint) uintptr {
 
 	cret := xArrayNewTakeZeroTerminated(DataVar, ClearVar, ElementSizeVar)
 	return cret
 }
 
-var xByteArrayAppend func([]byte, byte, uint) uintptr
+var xByteArrayAppend func([]byte, []byte, uint) uintptr
 
-// Adds the given bytes to the end of the #GByteArray.
+// Adds the given bytes to the end of the `GByteArray`.
 // The array will grow in size automatically if necessary.
-func ByteArrayAppend(ArrayVar []byte, DataVar byte, LenVar uint) uintptr {
+func ByteArrayAppend(ArrayVar []byte, DataVar []byte, LenVar uint) uintptr {
 
 	cret := xByteArrayAppend(ArrayVar, DataVar, LenVar)
 	return cret
 }
 
-var xByteArrayFree func([]byte, bool) byte
+var xByteArrayFree func([]byte, bool) uintptr
 
-// Frees the memory allocated by the #GByteArray. If @free_segment is
-// %TRUE it frees the actual byte data. If the reference count of
-// @array is greater than one, the #GByteArray wrapper is preserved but
+// Frees the memory allocated by the `GByteArray`. If @free_segment is
+// true it frees the actual byte data. If the reference count of
+// @array is greater than one, the `GByteArray` wrapper is preserved but
 // the size of @array will be set to zero.
-func ByteArrayFree(ArrayVar []byte, FreeSegmentVar bool) byte {
+func ByteArrayFree(ArrayVar []byte, FreeSegmentVar bool) uintptr {
 
 	cret := xByteArrayFree(ArrayVar, FreeSegmentVar)
 	return cret
@@ -425,14 +426,15 @@ func ByteArrayFree(ArrayVar []byte, FreeSegmentVar bool) byte {
 
 var xByteArrayFreeToBytes func([]byte) *Bytes
 
-// Transfers the data from the #GByteArray into a new immutable #GBytes.
+// Transfers the data from the `GByteArray` into a new immutable
+// [struct@GLib.Bytes].
 //
-// The #GByteArray is freed unless the reference count of @array is greater
-// than one, the #GByteArray wrapper is preserved but the size of @array
-// will be set to zero.
+// The `GByteArray` is freed unless the reference count of @array is greater
+// than one, in which the `GByteArray` wrapper is preserved but the size of
+// @array will be set to zero.
 //
-// This is identical to using g_bytes_new_take() and g_byte_array_free()
-// together.
+// This is identical to using [ctor@GLib.Bytes.new_take] and
+// [func@GLib.ByteArray.free] together.
 func ByteArrayFreeToBytes(ArrayVar []byte) *Bytes {
 
 	cret := xByteArrayFreeToBytes(ArrayVar)
@@ -441,7 +443,7 @@ func ByteArrayFreeToBytes(ArrayVar []byte) *Bytes {
 
 var xByteArrayNew func() uintptr
 
-// Creates a new #GByteArray with a reference count of 1.
+// Creates a new `GByteArray` with a reference count of 1.
 func ByteArrayNew() uintptr {
 
 	cret := xByteArrayNew()
@@ -451,24 +453,24 @@ func ByteArrayNew() uintptr {
 var xByteArrayNewTake func([]byte, uint) uintptr
 
 // Creates a byte array containing the @data.
-// After this call, @data belongs to the #GByteArray and may no longer be
+// After this call, @data belongs to the `GByteArray` and may no longer be
 // modified by the caller. The memory of @data has to be dynamically
-// allocated and will eventually be freed with g_free().
+// allocated and will eventually be freed with [func@GLib.free].
 //
-// Do not use it if @len is greater than %G_MAXUINT. #GByteArray
-// stores the length of its data in #guint, which may be shorter than
-// #gsize.
+// Do not use it if @len is greater than [`G_MAXUINT`](types.html#guint).
+// `GByteArray` stores the length of its data in `guint`, which may be shorter
+// than `gsize`.
 func ByteArrayNewTake(DataVar []byte, LenVar uint) uintptr {
 
 	cret := xByteArrayNewTake(DataVar, LenVar)
 	return cret
 }
 
-var xByteArrayPrepend func([]byte, byte, uint) uintptr
+var xByteArrayPrepend func([]byte, []byte, uint) uintptr
 
-// Adds the given data to the start of the #GByteArray.
+// Adds the given data to the start of the `GByteArray`.
 // The array will grow in size automatically if necessary.
-func ByteArrayPrepend(ArrayVar []byte, DataVar byte, LenVar uint) uintptr {
+func ByteArrayPrepend(ArrayVar []byte, DataVar []byte, LenVar uint) uintptr {
 
 	cret := xByteArrayPrepend(ArrayVar, DataVar, LenVar)
 	return cret
@@ -486,7 +488,7 @@ func ByteArrayRef(ArrayVar []byte) uintptr {
 
 var xByteArrayRemoveIndex func([]byte, uint) uintptr
 
-// Removes the byte at the given index from a #GByteArray.
+// Removes the byte at the given index from a `GByteArray`.
 // The following bytes are moved down one place.
 func ByteArrayRemoveIndex(ArrayVar []byte, IndexVar uint) uintptr {
 
@@ -496,10 +498,10 @@ func ByteArrayRemoveIndex(ArrayVar []byte, IndexVar uint) uintptr {
 
 var xByteArrayRemoveIndexFast func([]byte, uint) uintptr
 
-// Removes the byte at the given index from a #GByteArray. The last
+// Removes the byte at the given index from a `GByteArray`. The last
 // element in the array is used to fill in the space, so this function
-// does not preserve the order of the #GByteArray. But it is faster
-// than g_byte_array_remove_index().
+// does not preserve the order of the `GByteArray`. But it is faster
+// than [func@GLib.ByteArray.remove_index].
 func ByteArrayRemoveIndexFast(ArrayVar []byte, IndexVar uint) uintptr {
 
 	cret := xByteArrayRemoveIndexFast(ArrayVar, IndexVar)
@@ -509,7 +511,7 @@ func ByteArrayRemoveIndexFast(ArrayVar []byte, IndexVar uint) uintptr {
 var xByteArrayRemoveRange func([]byte, uint, uint) uintptr
 
 // Removes the given number of bytes starting at the given index from a
-// #GByteArray.  The following elements are moved to close the gap.
+// `GByteArray`. The following elements are moved to close the gap.
 func ByteArrayRemoveRange(ArrayVar []byte, IndexVar uint, LengthVar uint) uintptr {
 
 	cret := xByteArrayRemoveRange(ArrayVar, IndexVar, LengthVar)
@@ -518,7 +520,7 @@ func ByteArrayRemoveRange(ArrayVar []byte, IndexVar uint, LengthVar uint) uintpt
 
 var xByteArraySetSize func([]byte, uint) uintptr
 
-// Sets the size of the #GByteArray, expanding it if necessary.
+// Sets the size of the `GByteArray`, expanding it if necessary.
 func ByteArraySetSize(ArrayVar []byte, LengthVar uint) uintptr {
 
 	cret := xByteArraySetSize(ArrayVar, LengthVar)
@@ -527,7 +529,7 @@ func ByteArraySetSize(ArrayVar []byte, LengthVar uint) uintptr {
 
 var xByteArraySizedNew func(uint) uintptr
 
-// Creates a new #GByteArray with @reserved_size bytes preallocated.
+// Creates a new `GByteArray` with @reserved_size bytes preallocated.
 // This avoids frequent reallocation, if you are going to add many
 // bytes to the array. Note however that the size of the array is still
 // 0.
@@ -540,7 +542,7 @@ func ByteArraySizedNew(ReservedSizeVar uint) uintptr {
 var xByteArraySort func([]byte, uintptr)
 
 // Sorts a byte array, using @compare_func which should be a
-// qsort()-style comparison function (returns less than zero for first
+// `qsort()`-style comparison function (returns less than zero for first
 // arg is less than second arg, zero for equal, greater than zero if
 // first arg is greater than second arg).
 //
@@ -557,7 +559,7 @@ func ByteArraySort(ArrayVar []byte, CompareFuncVar *CompareFunc) {
 
 var xByteArraySortWithData func([]byte, uintptr, uintptr)
 
-// Like g_byte_array_sort(), but the comparison function takes an extra
+// Like [func@GLib.ByteArray.sort], but the comparison function takes an extra
 // user data argument.
 func ByteArraySortWithData(ArrayVar []byte, CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
 
@@ -565,12 +567,12 @@ func ByteArraySortWithData(ArrayVar []byte, CompareFuncVar *CompareDataFunc, Use
 
 }
 
-var xByteArraySteal func([]byte, uint) byte
+var xByteArraySteal func([]byte, uint) uintptr
 
 // Frees the data in the array and resets the size to zero, while
 // the underlying array is preserved for use elsewhere and returned
 // to the caller.
-func ByteArraySteal(ArrayVar []byte, LenVar uint) byte {
+func ByteArraySteal(ArrayVar []byte, LenVar uint) uintptr {
 
 	cret := xByteArraySteal(ArrayVar, LenVar)
 	return cret
@@ -590,13 +592,14 @@ func ByteArrayUnref(ArrayVar []byte) {
 
 var xPtrArrayFind func([]uintptr, uintptr, uint) bool
 
-// Checks whether @needle exists in @haystack. If the element is found, %TRUE is
-// returned and the element’s index is returned in @index_ (if non-%NULL).
-// Otherwise, %FALSE is returned and @index_ is undefined. If @needle exists
+// Checks whether @needle exists in @haystack. If the element is found, true
+// is returned and the element’s index is returned in @index_ (if non-`NULL`).
+// Otherwise, false is returned and @index_ is undefined. If @needle exists
 // multiple times in @haystack, the index of the first instance is returned.
 //
 // This does pointer comparisons only. If you want to use more complex equality
-// checks, such as string comparisons, use g_ptr_array_find_with_equal_func().
+// checks, such as string comparisons, use
+// [func@GLib.PtrArray.find_with_equal_func].
 func PtrArrayFind(HaystackVar []uintptr, NeedleVar uintptr, IndexVar uint) bool {
 
 	cret := xPtrArrayFind(HaystackVar, NeedleVar, IndexVar)
@@ -606,13 +609,13 @@ func PtrArrayFind(HaystackVar []uintptr, NeedleVar uintptr, IndexVar uint) bool 
 var xPtrArrayFindWithEqualFunc func([]uintptr, uintptr, uintptr, uint) bool
 
 // Checks whether @needle exists in @haystack, using the given @equal_func.
-// If the element is found, %TRUE is returned and the element’s index is
-// returned in @index_ (if non-%NULL). Otherwise, %FALSE is returned and @index_
+// If the element is found, true is returned and the element’s index is
+// returned in @index_ (if non-`NULL`). Otherwise, false is returned and @index_
 // is undefined. If @needle exists multiple times in @haystack, the index of
 // the first instance is returned.
 //
 // @equal_func is called with the element from the array as its first parameter,
-// and @needle as its second parameter. If @equal_func is %NULL, pointer
+// and @needle as its second parameter. If @equal_func is `NULL`, pointer
 // equality is used.
 func PtrArrayFindWithEqualFunc(HaystackVar []uintptr, NeedleVar uintptr, EqualFuncVar *EqualFunc, IndexVar uint) bool {
 
@@ -622,22 +625,23 @@ func PtrArrayFindWithEqualFunc(HaystackVar []uintptr, NeedleVar uintptr, EqualFu
 
 var xPtrArrayNewFromArray func([]uintptr, uint, uintptr, uintptr, uintptr) uintptr
 
-// Creates a new #GPtrArray, copying @len pointers from @data, and setting
+// Creates a new `GPtrArray`, copying @len pointers from @data, and setting
 // the array’s reference count to 1.
 //
 // This avoids having to manually add each element one by one.
 //
 // If @copy_func is provided, then it is used to copy each element before
-// adding them to the new array. If it is %NULL then the pointers are copied
+// adding them to the new array. If it is `NULL` then the pointers are copied
 // directly.
 //
 // It also sets @element_free_func for freeing each element when the array is
-// destroyed either via g_ptr_array_unref(), when g_ptr_array_free() is called
-// with @free_segment set to %TRUE or when removing elements.
+// destroyed either via [func@GLib.PtrArray.unref], when
+// [func@GLib.PtrArray.free] is called with @free_segment set to true or when
+// removing elements.
 //
-// Do not use it if @len is greater than %G_MAXUINT. #GPtrArray
-// stores the length of its data in #guint, which may be shorter than
-// #gsize.
+// Do not use it if @len is greater than [`G_MAXUINT`](types.html#guint).
+// `GPtrArray` stores the length of its data in `guint`, which may be shorter
+// than `gsize`.
 func PtrArrayNewFromArray(DataVar []uintptr, LenVar uint, CopyFuncVar *CopyFunc, CopyFuncUserDataVar uintptr, ElementFreeFuncVar *DestroyNotify) uintptr {
 
 	cret := xPtrArrayNewFromArray(DataVar, LenVar, NewCallbackNullable(CopyFuncVar), CopyFuncUserDataVar, NewCallbackNullable(ElementFreeFuncVar))
@@ -646,18 +650,19 @@ func PtrArrayNewFromArray(DataVar []uintptr, LenVar uint, CopyFuncVar *CopyFunc,
 
 var xPtrArrayNewFromNullTerminatedArray func([]uintptr, uintptr, uintptr, uintptr) uintptr
 
-// Creates a new #GPtrArray copying the pointers from @data after having
+// Creates a new `GPtrArray` copying the pointers from @data after having
 // computed the length of it and with a reference count of 1.
 // This avoids having to manually add each element one by one.
 // If @copy_func is provided, then it is used to copy the data in the new
 // array.
-// It also set @element_free_func for freeing each element when the array is
-// destroyed either via g_ptr_array_unref(), when g_ptr_array_free() is called
-// with @free_segment set to %TRUE or when removing elements.
+// It also sets @element_free_func for freeing each element when the array is
+// destroyed either via [func@GLib.PtrArray.unref], when
+// [func@GLib.PtrArray.free] is called with @free_segment set to true or when
+// removing elements.
 //
-// Do not use it if the @data has more than %G_MAXUINT elements. #GPtrArray
-// stores the length of its data in #guint, which may be shorter than
-// #gsize.
+// Do not use it if the @data has more than [`G_MAXUINT`](types.html#guint)
+// elements. `GPtrArray` stores the length of its data in `guint`, which may be
+// shorter than `gsize`.
 func PtrArrayNewFromNullTerminatedArray(DataVar []uintptr, CopyFuncVar *CopyFunc, CopyFuncUserDataVar uintptr, ElementFreeFuncVar *DestroyNotify) uintptr {
 
 	cret := xPtrArrayNewFromNullTerminatedArray(DataVar, NewCallbackNullable(CopyFuncVar), CopyFuncUserDataVar, NewCallbackNullable(ElementFreeFuncVar))
@@ -666,21 +671,22 @@ func PtrArrayNewFromNullTerminatedArray(DataVar []uintptr, CopyFuncVar *CopyFunc
 
 var xPtrArrayNewTake func([]uintptr, uint, uintptr) uintptr
 
-// Creates a new #GPtrArray with @data as pointers, @len as length and a
+// Creates a new `GPtrArray` with @data as pointers, @len as length and a
 // reference count of 1.
 //
 // This avoids having to copy such data manually.
-// After this call, @data belongs to the #GPtrArray and may no longer be
+// After this call, @data belongs to the `GPtrArray` and may no longer be
 // modified by the caller. The memory of @data has to be dynamically
-// allocated and will eventually be freed with g_free().
+// allocated and will eventually be freed with [func@GLib.free].
 //
 // It also sets @element_free_func for freeing each element when the array is
-// destroyed either via g_ptr_array_unref(), when g_ptr_array_free() is called
-// with @free_segment set to %TRUE or when removing elements.
+// destroyed either via [func@GLib.PtrArray.unref], when
+// [func@GLib.PtrArray.free] is called with @free_segment set to true or when
+// removing elements.
 //
-// Do not use it if @len is greater than %G_MAXUINT. #GPtrArray
-// stores the length of its data in #guint, which may be shorter than
-// #gsize.
+// Do not use it if @len is greater than [`G_MAXUINT`](types.html#guint).
+// `GPtrArray` stores the length of its data in `guint`, which may be shorter
+// than `gsize`.
 func PtrArrayNewTake(DataVar []uintptr, LenVar uint, ElementFreeFuncVar *DestroyNotify) uintptr {
 
 	cret := xPtrArrayNewTake(DataVar, LenVar, NewCallbackNullable(ElementFreeFuncVar))
@@ -689,24 +695,25 @@ func PtrArrayNewTake(DataVar []uintptr, LenVar uint, ElementFreeFuncVar *Destroy
 
 var xPtrArrayNewTakeNullTerminated func([]uintptr, uintptr) uintptr
 
-// Creates a new #GPtrArray with @data as pointers, computing the length of it
+// Creates a new `GPtrArray` with @data as pointers, computing the length of it
 // and setting the reference count to 1.
 //
 // This avoids having to copy such data manually.
-// After this call, @data belongs to the #GPtrArray and may no longer be
+// After this call, @data belongs to the `GPtrArray` and may no longer be
 // modified by the caller. The memory of @data has to be dynamically
-// allocated and will eventually be freed with g_free().
+// allocated and will eventually be freed with [func@GLib.free].
 //
-// The length is calculated by iterating through @data until the first %NULL
+// The length is calculated by iterating through @data until the first `NULL`
 // element is found.
 //
 // It also sets @element_free_func for freeing each element when the array is
-// destroyed either via g_ptr_array_unref(), when g_ptr_array_free() is called
-// with @free_segment set to %TRUE or when removing elements.
+// destroyed either via [func@GLib.PtrArray.unref], when
+// [func@GLib.PtrArray.free] is called with @free_segment set to true or when
+// removing elements.
 //
-// Do not use it if the @data length is greater than %G_MAXUINT. #GPtrArray
-// stores the length of its data in #guint, which may be shorter than
-// #gsize.
+// Do not use it if the @data length is greater than
+// [`G_MAXUINT`](types.html#guint). `GPtrArray` stores the length of its data
+// in `guint`, which may be shorter than `gsize`.
 func PtrArrayNewTakeNullTerminated(DataVar []uintptr, ElementFreeFuncVar *DestroyNotify) uintptr {
 
 	cret := xPtrArrayNewTakeNullTerminated(DataVar, NewCallbackNullable(ElementFreeFuncVar))

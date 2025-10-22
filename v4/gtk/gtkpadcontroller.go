@@ -56,6 +56,8 @@ const (
 	PadActionRingValue PadActionType = 1
 	// Action is triggered by a pad strip
 	PadActionStripValue PadActionType = 2
+	// Action is triggered by a pad dial
+	PadActionDialValue PadActionType = 3
 )
 
 // Handles input from the pads found in drawing tablets.
@@ -102,9 +104,16 @@ const (
 // pad_controller = gtk_pad_controller_new (action_group, NULL);
 // ```
 //
-// The actions belonging to rings/strips will be activated with a parameter
+// The actions belonging to rings/strips/dials will be activated with a parameter
 // of type %G_VARIANT_TYPE_DOUBLE bearing the value of the given axis, it
 // is required that those are made stateful and accepting this `GVariantType`.
+// For rings the value is the angle of the ring position in degrees with 0
+// facing up. For strips the value is the absolute position on the strip, normalized
+// to the [0.0, 1.0] range.
+// For dials the value is the relative movement of the dial, normalized so that the
+// value 120 represents one logical scroll wheel detent in the positive direction.
+// Devices that support high-resolution scrolling may send events with fractions of
+// 120 to signify a smaller motion.
 type PadController struct {
 	EventController
 }

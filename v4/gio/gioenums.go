@@ -131,8 +131,9 @@ const (
 	// If another message bus connection owns the name and have
 	// specified %G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
 	GBusNameOwnerFlagsReplaceValue BusNameOwnerFlags = 2
-	// If another message bus connection owns the name, immediately
-	// return an error from g_bus_own_name() rather than entering the waiting queue for that name. (Since 2.54)
+	// If another message bus connection owns the name, immediately return an error
+	// from [func@Gio.bus_own_name] rather than entering the waiting queue for that
+	// name.
 	GBusNameOwnerFlagsDoNotQueueValue BusNameOwnerFlags = 4
 )
 

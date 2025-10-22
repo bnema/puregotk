@@ -60,7 +60,9 @@ import (
 //
 // # Accessibility
 //
-// `GtkProgressBar` uses the [enum@Gtk.AccessibleRole.progress_bar] role.
+// `GtkProgressBar` uses the [enum@Gtk.AccessibleRole.progress_bar] role
+// and sets the [enum@Gtk.AccessibleProperty.value_min], [enum@Gtk.AccessibleProperty.value_max] and [enum@Gtk.AccessibleProperty.value_now] properties to reflect
+// the progress.
 type ProgressBar struct {
 	Widget
 }

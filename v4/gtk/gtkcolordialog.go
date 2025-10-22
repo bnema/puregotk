@@ -79,6 +79,9 @@ func (x *ColorDialog) ChooseRgba(ParentVar *Window, InitialColorVar *gdk.RGBA, C
 var xColorDialogChooseRgbaFinish func(uintptr, uintptr, **glib.Error) *gdk.RGBA
 
 // Finishes the [method@Gtk.ColorDialog.choose_rgba] call
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *ColorDialog) ChooseRgbaFinish(ResultVar gio.AsyncResult) (*gdk.RGBA, error) {
 	var cerr *glib.Error
 

@@ -7,6 +7,8 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gio"
+	"github.com/jwijenbergh/puregotk/v4/glib"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 	"github.com/jwijenbergh/puregotk/v4/gtk"
@@ -104,6 +106,17 @@ func (x *PreferencesGroup) Add(ChildVar *gtk.Widget) {
 
 }
 
+var xPreferencesGroupBindModel func(uintptr, uintptr, uintptr, uintptr, uintptr)
+
+// Binds @model to @self.
+//
+// See [method@Gtk.ListBox.bind_model].
+func (x *PreferencesGroup) BindModel(ModelVar gio.ListModel, CreateRowFuncVar *gtk.ListBoxCreateWidgetFunc, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) {
+
+	xPreferencesGroupBindModel(x.GoPointer(), ModelVar.GoPointer(), glib.NewCallbackNullable(CreateRowFuncVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+
+}
+
 var xPreferencesGroupGetDescription func(uintptr) string
 
 // Gets the description of @self.
@@ -120,6 +133,25 @@ func (x *PreferencesGroup) GetHeaderSuffix() *gtk.Widget {
 	var cls *gtk.Widget
 
 	cret := xPreferencesGroupGetHeaderSuffix(x.GoPointer())
+
+	if cret == 0 {
+		return nil
+	}
+	gobject.IncreaseRef(cret)
+	cls = &gtk.Widget{}
+	cls.Ptr = cret
+	return cls
+}
+
+var xPreferencesGroupGetRow func(uintptr, uint) uintptr
+
+// Gets the row at @index.
+//
+// Can return `NULL` if @index is larger than the number of rows in the group.
+func (x *PreferencesGroup) GetRow(IndexVar uint) *gtk.Widget {
+	var cls *gtk.Widget
+
+	cret := xPreferencesGroupGetRow(x.GoPointer(), IndexVar)
 
 	if cret == 0 {
 		return nil
@@ -507,8 +539,10 @@ func init() {
 	core.PuregoSafeRegister(&xNewPreferencesGroup, libs, "adw_preferences_group_new")
 
 	core.PuregoSafeRegister(&xPreferencesGroupAdd, libs, "adw_preferences_group_add")
+	core.PuregoSafeRegister(&xPreferencesGroupBindModel, libs, "adw_preferences_group_bind_model")
 	core.PuregoSafeRegister(&xPreferencesGroupGetDescription, libs, "adw_preferences_group_get_description")
 	core.PuregoSafeRegister(&xPreferencesGroupGetHeaderSuffix, libs, "adw_preferences_group_get_header_suffix")
+	core.PuregoSafeRegister(&xPreferencesGroupGetRow, libs, "adw_preferences_group_get_row")
 	core.PuregoSafeRegister(&xPreferencesGroupGetSeparateRows, libs, "adw_preferences_group_get_separate_rows")
 	core.PuregoSafeRegister(&xPreferencesGroupGetTitle, libs, "adw_preferences_group_get_title")
 	core.PuregoSafeRegister(&xPreferencesGroupRemove, libs, "adw_preferences_group_remove")

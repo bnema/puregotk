@@ -159,8 +159,10 @@ const (
 	// A touchpad hold gesture event, the current state is determined by its phase
 	// field.
 	TouchpadHoldValue EventType = 28
+	// A tablet pad axis event from a "dial".
+	PadDialValue EventType = 29
 	// marks the end of the GdkEventType enumeration.
-	EventLastValue EventType = 29
+	EventLastValue EventType = 30
 )
 
 // Describes how well an event matches a given keyval and modifiers.
@@ -1237,6 +1239,14 @@ func (c *ScrollEvent) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+var xScrollEventGetRelativeDirection func(uintptr) ScrollRelativeDirection
+
+func ScrollEventGetRelativeDirection(EventVar *Event) ScrollRelativeDirection {
+
+	cret := xScrollEventGetRelativeDirection(EventVar.GoPointer())
+	return cret
+}
+
 // An event related to a touch-based device.
 type TouchEvent struct {
 	Event
@@ -1459,6 +1469,8 @@ func init() {
 	core.PuregoSafeRegister(&xScrollEventGetDirection, libs, "gdk_scroll_event_get_direction")
 	core.PuregoSafeRegister(&xScrollEventGetUnit, libs, "gdk_scroll_event_get_unit")
 	core.PuregoSafeRegister(&xScrollEventIsStop, libs, "gdk_scroll_event_is_stop")
+
+	core.PuregoSafeRegister(&xScrollEventGetRelativeDirection, libs, "gdk_scroll_event_get_relative_direction")
 
 	core.PuregoSafeRegister(&xTouchEventGLibType, libs, "gdk_touch_event_get_type")
 

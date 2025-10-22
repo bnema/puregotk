@@ -74,22 +74,17 @@ import (
 //
 // # GtkExpander as GtkBuildable
 //
-// The `GtkExpander` implementation of the `GtkBuildable` interface supports
-// placing a child in the label position by specifying “label” as the
-// “type” attribute of a `&lt;child&gt;` element. A normal content child can be
-// specified without specifying a `&lt;child&gt;` type attribute.
-//
 // An example of a UI definition fragment with GtkExpander:
 //
 // ```xml
 // &lt;object class="GtkExpander"&gt;
 //
-//	&lt;child type="label"&gt;
+//	&lt;property name="label-widget"&gt;
 //	  &lt;object class="GtkLabel" id="expander-label"/&gt;
-//	&lt;/child&gt;
-//	&lt;child&gt;
+//	&lt;/property&gt;
+//	&lt;property name="child"&gt;
 //	  &lt;object class="GtkEntry" id="expander-content"/&gt;
-//	&lt;/child&gt;
+//	&lt;/property&gt;
 //
 // &lt;/object&gt;
 // ```

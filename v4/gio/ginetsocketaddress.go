@@ -71,7 +71,8 @@ var xNewInetSocketAddressFromString func(string, uint) uintptr
 // Creates a new #GInetSocketAddress for @address and @port.
 //
 // If @address is an IPv6 address, it can also contain a scope ID
-// (separated from the address by a `%`).
+// (separated from the address by a `%`). Note that currently this
+// behavior is platform specific. This may change in a future release.
 func NewInetSocketAddressFromString(AddressVar string, PortVar uint) *InetSocketAddress {
 	var cls *InetSocketAddress
 
@@ -106,6 +107,8 @@ var xInetSocketAddressGetFlowinfo func(uintptr) uint32
 
 // Gets the `sin6_flowinfo` field from @address,
 // which must be an IPv6 address.
+//
+// If not overridden this value will be inherited from [property@Gio.InetSocketAddress:address].
 func (x *InetSocketAddress) GetFlowinfo() uint32 {
 
 	cret := xInetSocketAddressGetFlowinfo(x.GoPointer())
@@ -125,6 +128,8 @@ var xInetSocketAddressGetScopeId func(uintptr) uint32
 
 // Gets the `sin6_scope_id` field from @address,
 // which must be an IPv6 address.
+//
+// If not overridden this value will be inherited from [property@Gio.InetSocketAddress:address].
 func (x *InetSocketAddress) GetScopeId() uint32 {
 
 	cret := xInetSocketAddressGetScopeId(x.GoPointer())

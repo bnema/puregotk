@@ -538,6 +538,7 @@ const (
 //   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Z&lt;/kbd&gt; undoes the last modification.
 //   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Y&lt;/kbd&gt; or &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Z&lt;/kbd&gt;
 //     redoes the last undone modification.
+//   - &lt;kbd&gt;Clear&lt;/kbd&gt; clears the content.
 //
 // Additionally, the following signals have default keybindings:
 //
@@ -566,6 +567,7 @@ const (
 //   - `selection.select-all` selects all of the widgets content.
 //   - `text.redo` redoes the last change to the contents.
 //   - `text.undo` undoes the last change to the contents.
+//   - `text.clear` clears the content.
 //
 // ## CSS nodes
 //
@@ -1141,7 +1143,7 @@ var xTextViewGetVisibleOffset func(uintptr, float64, float64)
 // the textview's text contents.
 //
 // This allows for more-precise positioning than what is provided by
-// [method@Gtk.TextView.get_visible_rect()] as you can discover what
+// [method@Gtk.TextView.get_visible_rect] as you can discover what
 // device pixel is being quantized for text positioning.
 //
 // You might want this when making ulterior widgets align with quantized

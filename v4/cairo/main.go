@@ -182,6 +182,44 @@ func (x *RectangleInt) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
+type Glyph struct {
+	_ structs.HostLayout
+
+	Index uint32
+
+	X float64
+
+	Y float64
+}
+
+var xGlyphGLibType func() types.GType
+
+func GlyphGLibType() types.GType {
+	return xGlyphGLibType()
+}
+
+func (x *Glyph) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+type TextCluster struct {
+	_ structs.HostLayout
+
+	NumBytes int
+
+	NumGlyphs int
+}
+
+var xTextClusterGLibType func() types.GType
+
+func TextClusterGLibType() types.GType {
+	return xTextClusterGLibType()
+}
+
+func (x *TextCluster) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
 type Status int
 
 var xStatusGLibType func() types.GType
@@ -835,5 +873,9 @@ func init() {
 	core.PuregoSafeRegister(&xRectangleGLibType, libs, "cairo_gobject_rectangle_get_type")
 
 	core.PuregoSafeRegister(&xRectangleIntGLibType, libs, "cairo_gobject_rectangle_int_get_type")
+
+	core.PuregoSafeRegister(&xGlyphGLibType, libs, "cairo_gobject_glyph_get_type")
+
+	core.PuregoSafeRegister(&xTextClusterGLibType, libs, "cairo_gobject_text_cluster_get_type")
 
 }

@@ -69,7 +69,7 @@ var xNewStringTake func(string) *String
 // Creates a new #GString, initialized with the given string.
 //
 // After this call, @init belongs to the #GString and may no longer be
-// modified by the caller. The memory of @data has to be dynamically
+// modified by the caller. The memory of @init has to be dynamically
 // allocated and will eventually be freed with g_free().
 func NewStringTake(InitVar string) *String {
 
@@ -196,6 +196,18 @@ var xStringAssign func(uintptr, string) *String
 func (x *String) Assign(RvalVar string) *String {
 
 	cret := xStringAssign(x.GoPointer(), RvalVar)
+	return cret
+}
+
+var xStringCopy func(uintptr) *String
+
+// Copies the [struct@GLib.String] instance and its contents.
+//
+// This will preserve the allocation length of the [struct@GLib.String] in the
+// copy.
+func (x *String) Copy() *String {
+
+	cret := xStringCopy(x.GoPointer())
 	return cret
 }
 
@@ -494,6 +506,7 @@ func init() {
 	core.PuregoSafeRegister(&xStringAsciiDown, libs, "g_string_ascii_down")
 	core.PuregoSafeRegister(&xStringAsciiUp, libs, "g_string_ascii_up")
 	core.PuregoSafeRegister(&xStringAssign, libs, "g_string_assign")
+	core.PuregoSafeRegister(&xStringCopy, libs, "g_string_copy")
 	core.PuregoSafeRegister(&xStringDown, libs, "g_string_down")
 	core.PuregoSafeRegister(&xStringEqual, libs, "g_string_equal")
 	core.PuregoSafeRegister(&xStringErase, libs, "g_string_erase")

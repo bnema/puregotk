@@ -278,6 +278,8 @@ func (x *FilterClass) GetGtkReserved8() func() {
 // If you are writing an implementation and are not sure which
 // value to pass, `GTK_FILTER_CHANGE_DIFFERENT` is always a correct
 // choice.
+//
+// New values may be added in the future.
 type FilterChange int
 
 var xFilterChangeGLibType func() types.GType
@@ -299,6 +301,21 @@ const (
 	//   it was before: All items that it used to return false
 	//   still return false, others now may, too.
 	FilterChangeMoreStrictValue FilterChange = 2
+	// Similar to [enum@Gtk.FilterChange.DIFFERENT],
+	// but signs that item watches should be recreated. This is used by
+	// [class@Gtk.FilterListModel] to keep the list up-to-date when items
+	// change.
+	FilterChangeDifferentRewatchValue FilterChange = 3
+	// Similar to [enum@Gtk.FilterChange.LESS_STRICT],
+	// but signs that item watches should be recreated. This is used by
+	// [class@Gtk.FilterListModel] to keep the list up-to-date when items
+	// change.
+	FilterChangeLessStrictRewatchValue FilterChange = 4
+	// Similar to [enum@Gtk.FilterChange.MORE_STRICT],
+	// but signs that item watches should be recreated. This is used by
+	// [class@Gtk.FilterListModel] to keep the list up-to-date when items
+	// change.
+	FilterChangeMoreStrictRewatchValue FilterChange = 5
 )
 
 // Describes the known strictness of a filter.

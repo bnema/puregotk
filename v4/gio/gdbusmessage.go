@@ -228,7 +228,7 @@ func (x *DBusMessage) GetInterface() string {
 var xDBusMessageGetLocked func(uintptr) bool
 
 // Checks whether @message is locked. To monitor changes to this
-// value, conncet to the #GObject::notify signal to listen for changes
+// value, connect to the #GObject::notify signal to listen for changes
 // on the #GDBusMessage:locked property.
 func (x *DBusMessage) GetLocked() bool {
 

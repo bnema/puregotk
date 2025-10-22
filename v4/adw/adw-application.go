@@ -36,6 +36,15 @@ func (x *ApplicationClass) GoPointer() uintptr {
 //
 // ## Automatic Resources
 //
+// ### Shortcuts Dialog
+//
+// If there's a resource located at `shortcuts-dialog.ui` which defines an
+// [class@ShortcutsDialog] with the ID `shortcuts_dialog`, `AdwApplication`
+// will set up an `app.shortcuts` action that creates and presents this dialog,
+// as well as a &lt;kbd&gt;Ctrl&lt;/kbd&gt;&lt;kbd&gt;?&lt;/kbd&gt; accelerator for it.
+//
+// ### Stylesheet
+//
 // `AdwApplication` will automatically load stylesheets located in the
 // application's resource base path (see
 // [method@Gio.Application.set_resource_base_path], if they're present.
@@ -52,6 +61,15 @@ func (x *ApplicationClass) GoPointer() uintptr {
 //
 //   - `style-hc-dark.css` contains styles used when the system high contrast
 //     preference is enabled and [property@StyleManager:dark] is `TRUE`.
+//
+// :::note
+//
+//	`style.css` can contain styles for dark and high contrast appearance as
+//	well, using media queries:
+//
+//	- `prefers-color-scheme: dark` for styles used only for dark appearance.
+//	- `prefers-contrast: more` for styles used only when the system high
+//	  contrast preference is enabled.
 type Application struct {
 	gtk.Application
 }

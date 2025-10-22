@@ -14,6 +14,188 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/pango"
 )
 
+// Specifies a transfer function for a color component to be applied
+// while rendering.
+//
+// The available functions include linear, piecewise-linear,
+// gamma and step functions.
+//
+// Note that the transfer function is applied to un-premultiplied
+// values, and all results are clamped to the [0, 1] range.
+type ComponentTransfer struct {
+	_ structs.HostLayout
+}
+
+var xComponentTransferGLibType func() types.GType
+
+func ComponentTransferGLibType() types.GType {
+	return xComponentTransferGLibType()
+}
+
+func (x *ComponentTransfer) GoPointer() uintptr {
+	return uintptr(unsafe.Pointer(x))
+}
+
+var xNewComponentTransferDiscrete func(uint, []float32) *ComponentTransfer
+
+// Creates a new component transfer that applies
+// a step function.
+//
+// The new value is computed as
+//
+//	C' = values[k]
+//
+// where k is the smallest value such that
+//
+//	k / n &lt;= C &lt; (k + 1) / n
+//
+// &lt;figure&gt;
+//
+//	&lt;picture&gt;
+//	  &lt;source srcset="discrete-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	    &lt;img alt="Component transfer: discrete" src="discrete-light.png"&gt;
+//	&lt;/picture&gt;
+//
+// &lt;/figure&gt;
+func NewComponentTransferDiscrete(NVar uint, ValuesVar []float32) *ComponentTransfer {
+
+	cret := xNewComponentTransferDiscrete(NVar, ValuesVar)
+	return cret
+}
+
+var xNewComponentTransferGamma func(float32, float32, float32) *ComponentTransfer
+
+// Creates a new component transfer that applies
+// a gamma transform.
+//
+// The new value is computed as
+//
+//	C' = amp * pow (C, exp) + ofs
+//
+// &lt;figure&gt;
+//
+//	&lt;picture&gt;
+//	  &lt;source srcset="gamma-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	    &lt;img alt="Component transfer: gamma" src="gamma-light.png"&gt;
+//	&lt;/picture&gt;
+//
+// &lt;/figure&gt;
+func NewComponentTransferGamma(AmpVar float32, ExpVar float32, OfsVar float32) *ComponentTransfer {
+
+	cret := xNewComponentTransferGamma(AmpVar, ExpVar, OfsVar)
+	return cret
+}
+
+var xNewComponentTransferIdentity func() *ComponentTransfer
+
+// Creates a new component transfer that doesn't
+// change the component value.
+//
+// &lt;figure&gt;
+//
+//	&lt;picture&gt;
+//	  &lt;source srcset="identity-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	    &lt;img alt="Component transfer: identity" src="identity-light.png"&gt;
+//	&lt;/picture&gt;
+//
+// &lt;/figure&gt;
+func NewComponentTransferIdentity() *ComponentTransfer {
+
+	cret := xNewComponentTransferIdentity()
+	return cret
+}
+
+var xNewComponentTransferLevels func(float32) *ComponentTransfer
+
+// Creates a new component transfer that limits
+// the values of the component to `n` levels.
+//
+// The new value is computed as
+//
+//	C' = (floor (C * n) + 0.5) / n
+//
+// &lt;figure&gt;
+//
+//	&lt;picture&gt;
+//	  &lt;source srcset="levels-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	    &lt;img alt="Component transfer: levels" src="levels-light.png"&gt;
+//	&lt;/picture&gt;
+//
+// &lt;/figure&gt;
+func NewComponentTransferLevels(NVar float32) *ComponentTransfer {
+
+	cret := xNewComponentTransferLevels(NVar)
+	return cret
+}
+
+var xNewComponentTransferLinear func(float32, float32) *ComponentTransfer
+
+// Creates a new component transfer that applies
+// a linear transform.
+//
+// The new value is computed as
+//
+//	C' = C * m + b
+//
+// &lt;figure&gt;
+//
+//	&lt;picture&gt;
+//	  &lt;source srcset="linear-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	    &lt;img alt="Component transfer: linear" src="linear-light.png"&gt;
+//	&lt;/picture&gt;
+//
+// &lt;/figure&gt;
+func NewComponentTransferLinear(MVar float32, BVar float32) *ComponentTransfer {
+
+	cret := xNewComponentTransferLinear(MVar, BVar)
+	return cret
+}
+
+var xNewComponentTransferTable func(uint, []float32) *ComponentTransfer
+
+// Creates a new component transfer that applies
+// a piecewise linear function.
+//
+// The new value is computed as
+//
+//	C' = values[k] + (C - k / (n - 1)) * n * (values[k + 1] - values[k])
+//
+// where k is the smallest value such that
+//
+//	k / (n - 1) &lt;= C &lt; (k + 1) / (n - 1)
+//
+// &lt;figure&gt;
+//
+//	&lt;picture&gt;
+//	  &lt;source srcset="table-dark.png" media="(prefers-color-scheme: dark)"&gt;
+//	    &lt;img alt="Component transfer: table" src="table-light.png"&gt;
+//	&lt;/picture&gt;
+//
+// &lt;/figure&gt;
+func NewComponentTransferTable(NVar uint, ValuesVar []float32) *ComponentTransfer {
+
+	cret := xNewComponentTransferTable(NVar, ValuesVar)
+	return cret
+}
+
+var xComponentTransferCopy func(uintptr) *ComponentTransfer
+
+// Creates a copy of @other.
+func (x *ComponentTransfer) Copy() *ComponentTransfer {
+
+	cret := xComponentTransferCopy(x.GoPointer())
+	return cret
+}
+
+var xComponentTransferFree func(uintptr)
+
+// Frees a component transfer.
+func (x *ComponentTransfer) Free() {
+
+	xComponentTransferFree(x.GoPointer())
+
+}
+
 // Describes lines and curves that are more complex than simple rectangles.
 //
 // Paths can used for rendering (filling or stroking) and for animations
@@ -66,6 +248,29 @@ var xPathForeach func(uintptr, PathForeachFlags, uintptr, uintptr) bool
 func (x *Path) Foreach(FlagsVar PathForeachFlags, FuncVar *PathForeachFunc, UserDataVar uintptr) bool {
 
 	cret := xPathForeach(x.GoPointer(), FlagsVar, glib.NewCallback(FuncVar), UserDataVar)
+	return cret
+}
+
+var xPathForeachIntersection func(uintptr, *Path, uintptr, uintptr) bool
+
+// Finds intersections between two paths.
+//
+// This function finds intersections between @path1 and @path2,
+// and calls @func for each of them, in increasing order for @path1.
+//
+// If @path2 is not provided or equal to @path1, the function finds
+// non-trivial self-intersections of @path1.
+//
+// When segments of the paths coincide, the callback is called once
+// for the start of the segment, with @GSK_PATH_INTERSECTION_START, and
+// once for the end of the segment, with @GSK_PATH_INTERSECTION_END.
+// Note that other intersections may occur between the start and end
+// of such a segment.
+//
+// If @func returns `FALSE`, the iteration is stopped.
+func (x *Path) ForeachIntersection(Path2Var *Path, FuncVar *PathIntersectionFunc, UserDataVar uintptr) bool {
+
+	cret := xPathForeachIntersection(x.GoPointer(), Path2Var, glib.NewCallback(FuncVar), UserDataVar)
 	return cret
 }
 
@@ -1005,7 +1210,7 @@ var xStrokeSetLineWidth func(uintptr, float32)
 
 // Sets the line width to be used when stroking.
 //
-// The line width must be &gt; 0.
+// The line width must be &gt;= 0.
 func (x *Stroke) SetLineWidth(LineWidthVar float32) {
 
 	xStrokeSetLineWidth(x.GoPointer(), LineWidthVar)
@@ -1119,6 +1324,22 @@ var xTransformMatrix func(uintptr, *graphene.Matrix) *Transform
 func (x *Transform) Matrix(MatrixVar *graphene.Matrix) *Transform {
 
 	cret := xTransformMatrix(x.GoPointer(), MatrixVar)
+	return cret
+}
+
+var xTransformMatrix2d func(uintptr, float32, float32, float32, float32, float32, float32) *Transform
+
+// Multiplies @next with the matrix [ xx yx x0; xy yy y0; 0 0 1 ].
+//
+// The result of calling [method@Gsk.Transform.to_2d] on the returned
+// [struct@Gsk.Transform] should match the input passed to this
+// function.
+//
+// This function consumes @next. Use [method@Gsk.Transform.ref] first
+// if you want to keep it around.
+func (x *Transform) Matrix2d(XxVar float32, YxVar float32, XyVar float32, YyVar float32, DxVar float32, DyVar float32) *Transform {
+
+	cret := xTransformMatrix2d(x.GoPointer(), XxVar, YxVar, XyVar, YyVar, DxVar, DyVar)
 	return cret
 }
 
@@ -1429,9 +1650,22 @@ func init() {
 		libs = append(libs, lib)
 	}
 
+	core.PuregoSafeRegister(&xComponentTransferGLibType, libs, "gsk_component_transfer_get_type")
+
+	core.PuregoSafeRegister(&xNewComponentTransferDiscrete, libs, "gsk_component_transfer_new_discrete")
+	core.PuregoSafeRegister(&xNewComponentTransferGamma, libs, "gsk_component_transfer_new_gamma")
+	core.PuregoSafeRegister(&xNewComponentTransferIdentity, libs, "gsk_component_transfer_new_identity")
+	core.PuregoSafeRegister(&xNewComponentTransferLevels, libs, "gsk_component_transfer_new_levels")
+	core.PuregoSafeRegister(&xNewComponentTransferLinear, libs, "gsk_component_transfer_new_linear")
+	core.PuregoSafeRegister(&xNewComponentTransferTable, libs, "gsk_component_transfer_new_table")
+
+	core.PuregoSafeRegister(&xComponentTransferCopy, libs, "gsk_component_transfer_copy")
+	core.PuregoSafeRegister(&xComponentTransferFree, libs, "gsk_component_transfer_free")
+
 	core.PuregoSafeRegister(&xPathGLibType, libs, "gsk_path_get_type")
 
 	core.PuregoSafeRegister(&xPathForeach, libs, "gsk_path_foreach")
+	core.PuregoSafeRegister(&xPathForeachIntersection, libs, "gsk_path_foreach_intersection")
 	core.PuregoSafeRegister(&xPathGetBounds, libs, "gsk_path_get_bounds")
 	core.PuregoSafeRegister(&xPathGetClosestPoint, libs, "gsk_path_get_closest_point")
 	core.PuregoSafeRegister(&xPathGetEndPoint, libs, "gsk_path_get_end_point")
@@ -1521,6 +1755,7 @@ func init() {
 	core.PuregoSafeRegister(&xTransformGetCategory, libs, "gsk_transform_get_category")
 	core.PuregoSafeRegister(&xTransformInvert, libs, "gsk_transform_invert")
 	core.PuregoSafeRegister(&xTransformMatrix, libs, "gsk_transform_matrix")
+	core.PuregoSafeRegister(&xTransformMatrix2d, libs, "gsk_transform_matrix_2d")
 	core.PuregoSafeRegister(&xTransformPerspective, libs, "gsk_transform_perspective")
 	core.PuregoSafeRegister(&xTransformPrint, libs, "gsk_transform_print")
 	core.PuregoSafeRegister(&xTransformRef, libs, "gsk_transform_ref")

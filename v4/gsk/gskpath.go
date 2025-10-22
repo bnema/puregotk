@@ -17,7 +17,11 @@ import (
 //
 // Each contour of the path starts with a @GSK_PATH_MOVE operation.
 // Closed contours end with a @GSK_PATH_CLOSE operation.
-type PathForeachFunc func(PathOperation, *graphene.Point, uint, float32, uintptr) bool
+type PathForeachFunc func(PathOperation, []graphene.Point, uint, float32, uintptr) bool
+
+// Prototype of the callback to iterate through the
+// intersections of two paths.
+type PathIntersectionFunc func(*Path, *PathPoint, *Path, *PathPoint, PathIntersection, uintptr) bool
 
 // Flags that can be passed to gsk_path_foreach() to influence what
 // kinds of operations the path is decomposed into.
@@ -44,6 +48,29 @@ const (
 	PathForeachAllowCubicValue PathForeachFlags = 2
 	// Allow emission of `GSK_PATH_CONIC` operations.
 	PathForeachAllowConicValue PathForeachFlags = 4
+)
+
+// The values of this enumeration classify intersections
+// between paths.
+type PathIntersection int
+
+var xPathIntersectionGLibType func() types.GType
+
+func PathIntersectionGLibType() types.GType {
+	return xPathIntersectionGLibType()
+}
+
+const (
+
+	// No intersection
+	PathIntersectionNoneValue PathIntersection = 0
+	// A normal intersection, where the two paths
+	//   cross each other
+	PathIntersectionNormalValue PathIntersection = 1
+	// The start of a segment where the two paths coincide
+	PathIntersectionStartValue PathIntersection = 2
+	// The end of a segment where the two paths coincide
+	PathIntersectionEndValue PathIntersection = 3
 )
 
 var xPathParse func(string) *Path
@@ -91,6 +118,8 @@ func init() {
 	}
 
 	core.PuregoSafeRegister(&xPathForeachFlagsGLibType, libs, "gsk_path_foreach_flags_get_type")
+
+	core.PuregoSafeRegister(&xPathIntersectionGLibType, libs, "gsk_path_intersection_get_type")
 
 	core.PuregoSafeRegister(&xPathParse, libs, "gsk_path_parse")
 

@@ -83,6 +83,9 @@ func (x *FontDialog) ChooseFace(ParentVar *Window, InitialValueVar *pango.FontFa
 var xFontDialogChooseFaceFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FontDialog.choose_face] call.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FontDialog) ChooseFaceFinish(ResultVar gio.AsyncResult) (*pango.FontFace, error) {
 	var cls *pango.FontFace
 	var cerr *glib.Error
@@ -116,9 +119,8 @@ var xFontDialogChooseFamilyFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FontDialog.choose_family] call.
 //
-// This function never returns an error. If the operation is
-// not finished successfully, the value passed as @initial_value
-// to [method@Gtk.FontDialog.choose_family] is returned.
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FontDialog) ChooseFamilyFinish(ResultVar gio.AsyncResult) (*pango.FontFamily, error) {
 	var cls *pango.FontFamily
 	var cerr *glib.Error
@@ -172,6 +174,9 @@ var xFontDialogChooseFontAndFeaturesFinish func(uintptr, uintptr, **pango.FontDe
 //
 // The selected font and features are returned in @font_desc and
 // @font_features.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FontDialog) ChooseFontAndFeaturesFinish(ResultVar gio.AsyncResult, FontDescVar **pango.FontDescription, FontFeaturesVar string, LanguageVar **pango.Language) (bool, error) {
 	var cerr *glib.Error
 
@@ -186,6 +191,9 @@ func (x *FontDialog) ChooseFontAndFeaturesFinish(ResultVar gio.AsyncResult, Font
 var xFontDialogChooseFontFinish func(uintptr, uintptr, **glib.Error) *pango.FontDescription
 
 // Finishes the [method@Gtk.FontDialog.choose_font] call.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FontDialog) ChooseFontFinish(ResultVar gio.AsyncResult) (*pango.FontDescription, error) {
 	var cerr *glib.Error
 

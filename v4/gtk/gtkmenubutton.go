@@ -435,7 +435,7 @@ var xMenuButtonSetPopover func(uintptr, uintptr)
 //
 // If [property@Gtk.MenuButton:menu-model] is set, the menu model is dissociated
 // from the @menu_button, and the property is set to %NULL.
-func (x *MenuButton) SetPopover(PopoverVar *Widget) {
+func (x *MenuButton) SetPopover(PopoverVar *Popover) {
 
 	xMenuButtonSetPopover(x.GoPointer(), PopoverVar.GoPointer())
 

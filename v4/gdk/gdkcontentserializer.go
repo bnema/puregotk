@@ -20,6 +20,10 @@ type ContentSerializeFunc func(uintptr)
 var xContentRegisterSerializer func(types.GType, string, uintptr, uintptr, uintptr)
 
 // Registers a function to serialize objects of a given type.
+//
+// Since 4.20, when looking up a serializer to use, GTK will
+// use the last registered serializer for a given mime type,
+// so applications can override the built-in serializers.
 func ContentRegisterSerializer(TypeVar types.GType, MimeTypeVar string, SerializeVar *ContentSerializeFunc, DataVar uintptr, NotifyVar *glib.DestroyNotify) {
 
 	xContentRegisterSerializer(TypeVar, MimeTypeVar, glib.NewCallback(SerializeVar), DataVar, glib.NewCallback(NotifyVar))

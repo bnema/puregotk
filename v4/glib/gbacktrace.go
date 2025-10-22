@@ -56,7 +56,7 @@ var xOnErrorQuery func(string)
 // This function may cause different actions on non-UNIX platforms.
 //
 // On Windows consider using the `G_DEBUGGER` environment
-// variable (see [Running GLib Applications](glib-running.html)) and
+// variable (see [Running GLib Applications](running.html)) and
 // calling g_on_error_stack_trace() instead.
 func OnErrorQuery(PrgNameVar string) {
 
@@ -78,7 +78,7 @@ var xOnErrorStackTrace func(string)
 // g_on_error_query(). If called directly, it will raise an
 // exception, which will crash the program. If the `G_DEBUGGER` environment
 // variable is set, a debugger will be invoked to attach and
-// handle that exception (see [Running GLib Applications](glib-running.html)).
+// handle that exception (see [Running GLib Applications](running.html)).
 func OnErrorStackTrace(PrgNameVar string) {
 
 	xOnErrorStackTrace(PrgNameVar)

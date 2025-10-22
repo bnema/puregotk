@@ -13,8 +13,8 @@ import (
 // Represents the target of an ongoing DND operation.
 //
 // Possible drop sites get informed about the status of the ongoing drag
-// operation with events of type %GDK_DRAG_ENTER, %GDK_DRAG_LEAVE,
-// %GDK_DRAG_MOTION and %GDK_DROP_START. The `GdkDrop` object can be obtained
+// operation with events of type `GDK_DRAG_ENTER`, `GDK_DRAG_LEAVE`,
+// `GDK_DRAG_MOTION` and `GDK_DROP_START`. The `GdkDrop` object can be obtained
 // from these [class@Gdk.Event] types using [method@Gdk.DNDEvent.get_drop].
 //
 // The actual data transfer is initiated from the target side via an async
@@ -57,11 +57,11 @@ var xDropGetActions func(uintptr) DragAction
 // Returns the possible actions for this `GdkDrop`.
 //
 // If this value contains multiple actions - i.e.
-// [func@Gdk.DragAction.is_unique] returns %FALSE for the result -
+// [func@Gdk.DragAction.is_unique] returns false for the result -
 // [method@Gdk.Drop.finish] must choose the action to use when
 // accepting the drop. This will only happen if you passed
-// %GDK_ACTION_ASK as one of the possible actions in
-// [method@Gdk.Drop.status]. %GDK_ACTION_ASK itself will not
+// `GDK_ACTION_ASK` as one of the possible actions in
+// [method@Gdk.Drop.status]. `GDK_ACTION_ASK` itself will not
 // be included in the actions returned by this function.
 //
 // This value may change over the lifetime of the [class@Gdk.Drop]
@@ -113,7 +113,7 @@ var xDropGetDrag func(uintptr) uintptr
 // If this is an in-app drag-and-drop operation, returns the `GdkDrag`
 // that corresponds to this drop.
 //
-// If it is not, %NULL is returned.
+// If it is not, `NULL` is returned.
 func (x *Drop) GetDrag() *Drag {
 	var cls *Drag
 
@@ -235,7 +235,7 @@ var xDropStatus func(uintptr, DragAction, DragAction)
 // action to use when multiple actions are possible.
 //
 // This function should be called by drag destinations in response to
-// %GDK_DRAG_ENTER or %GDK_DRAG_MOTION events. If the destination does
+// `GDK_DRAG_ENTER` or `GDK_DRAG_MOTION` events. If the destination does
 // not yet know the exact actions it supports, it should set any possible
 // actions first and then later call this function again.
 func (x *Drop) Status(ActionsVar DragAction, PreferredVar DragAction) {

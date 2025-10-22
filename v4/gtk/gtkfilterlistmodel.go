@@ -134,6 +134,17 @@ func (x *FilterListModel) GetPending() uint {
 	return cret
 }
 
+var xFilterListModelGetWatchItems func(uintptr) bool
+
+// Returns whether watching items is enabled.
+//
+// See [method@Gtk.FilterListModel.set_watch_items].
+func (x *FilterListModel) GetWatchItems() bool {
+
+	cret := xFilterListModelGetWatchItems(x.GoPointer())
+	return cret
+}
+
 var xFilterListModelSetFilter func(uintptr, uintptr)
 
 // Sets the filter used to filter items.
@@ -178,6 +189,21 @@ var xFilterListModelSetModel func(uintptr, uintptr)
 func (x *FilterListModel) SetModel(ModelVar gio.ListModel) {
 
 	xFilterListModelSetModel(x.GoPointer(), ModelVar.GoPointer())
+
+}
+
+var xFilterListModelSetWatchItems func(uintptr, bool)
+
+// Sets the filter model to monitor properties of its items.
+//
+// This allows implementations of [class@Gtk.Filter] that support expression
+// watching to react to property changes. This property has no effect if the
+// current filter doesn't support watching items.
+//
+// By default, watching items is disabled.
+func (x *FilterListModel) SetWatchItems(WatchItemsVar bool) {
+
+	xFilterListModelSetWatchItems(x.GoPointer(), WatchItemsVar)
 
 }
 
@@ -335,8 +361,10 @@ func init() {
 	core.PuregoSafeRegister(&xFilterListModelGetIncremental, libs, "gtk_filter_list_model_get_incremental")
 	core.PuregoSafeRegister(&xFilterListModelGetModel, libs, "gtk_filter_list_model_get_model")
 	core.PuregoSafeRegister(&xFilterListModelGetPending, libs, "gtk_filter_list_model_get_pending")
+	core.PuregoSafeRegister(&xFilterListModelGetWatchItems, libs, "gtk_filter_list_model_get_watch_items")
 	core.PuregoSafeRegister(&xFilterListModelSetFilter, libs, "gtk_filter_list_model_set_filter")
 	core.PuregoSafeRegister(&xFilterListModelSetIncremental, libs, "gtk_filter_list_model_set_incremental")
 	core.PuregoSafeRegister(&xFilterListModelSetModel, libs, "gtk_filter_list_model_set_model")
+	core.PuregoSafeRegister(&xFilterListModelSetWatchItems, libs, "gtk_filter_list_model_set_watch_items")
 
 }

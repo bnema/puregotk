@@ -786,6 +786,11 @@ var xKeyFileSetComment func(uintptr, string, string, string, **Error) bool
 // If both @key and @group_name are `NULL`, then @comment will be
 // written above the first group in the file.
 //
+// Passing a non-existent @group_name or @key to this function returns
+// false and populates @error. (In contrast, passing a non-existent
+// `group_name` or `key` to [method@GLib.KeyFile.set_string]
+// creates the associated group name and key.)
+//
 // Note that this function prepends a `#` comment marker to
 // each line of @comment.
 func (x *KeyFile) SetComment(GroupNameVar string, KeyVar string, CommentVar string) (bool, error) {

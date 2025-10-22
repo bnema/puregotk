@@ -1660,7 +1660,6 @@ func (x *Object) Ref() *Object {
 	if cret == 0 {
 		return nil
 	}
-	IncreaseRef(cret)
 	cls = &Object{}
 	cls.Ptr = cret
 	return cls

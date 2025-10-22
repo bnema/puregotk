@@ -159,7 +159,10 @@ func NewFilenameCompleter() *FilenameCompleter {
 
 var xFilenameCompleterGetCompletionSuffix func(uintptr, string) string
 
-// Obtains a completion for @initial_text from @completer.
+// Obtains a suffix completion for @initial_text from @completer.
+//
+// Suffix will be an empty string if there's no shared suffix among matching
+// completions. If there's no matching completions anyway, `NULL` is returned.
 func (x *FilenameCompleter) GetCompletionSuffix(InitialTextVar string) string {
 
 	cret := xFilenameCompleterGetCompletionSuffix(x.GoPointer(), InitialTextVar)
@@ -179,6 +182,9 @@ var xFilenameCompleterSetDirsOnly func(uintptr, bool)
 
 // If @dirs_only is %TRUE, @completer will only
 // complete directory names, and not file names.
+//
+// This function needs to be called before waiting for results from the
+// completer to be populated.
 func (x *FilenameCompleter) SetDirsOnly(DirsOnlyVar bool) {
 
 	xFilenameCompleterSetDirsOnly(x.GoPointer(), DirsOnlyVar)

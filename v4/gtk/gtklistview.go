@@ -124,7 +124,7 @@ func (x *ListViewClass) GoPointer() uintptr {
 // rubberband selection, a node with name `rubberband` is used.
 //
 // The main listview node may also carry style classes to select
-// the style of [list presentation](ListContainers.html#list-styles):
+// the style of [list presentation](section-list-widget.html#list-styles):
 // .rich-list, .navigation-sidebar or .data-table.
 //
 // # Accessibility

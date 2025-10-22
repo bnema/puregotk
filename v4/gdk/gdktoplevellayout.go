@@ -38,11 +38,11 @@ var xNewToplevelLayout func() *ToplevelLayout
 
 // Create a toplevel layout description.
 //
-// Used together with gdk_toplevel_present() to describe
+// Used together with [method@Gdk.Toplevel.present] to describe
 // how a toplevel surface should be placed and behave on-screen.
 //
 // The size is in ”application pixels”, not
-// ”device pixels” (see gdk_surface_get_scale_factor()).
+// ”device pixels” (see [method@Gdk.Surface.get_scale]).
 func NewToplevelLayout() *ToplevelLayout {
 
 	cret := xNewToplevelLayout()
@@ -70,8 +70,8 @@ func (x *ToplevelLayout) Equal(OtherVar *ToplevelLayout) bool {
 var xToplevelLayoutGetFullscreen func(uintptr, bool) bool
 
 // If the layout specifies whether to the toplevel should go fullscreen,
-// the value pointed to by @fullscreen is set to %TRUE if it should go
-// fullscreen, or %FALSE, if it should go unfullscreen.
+// the value pointed to by @fullscreen is set to true if it should go
+// fullscreen, or false, if it should go unfullscreen.
 func (x *ToplevelLayout) GetFullscreen(FullscreenVar bool) bool {
 
 	cret := xToplevelLayoutGetFullscreen(x.GoPointer(), FullscreenVar)
@@ -99,8 +99,8 @@ func (x *ToplevelLayout) GetFullscreenMonitor() *Monitor {
 var xToplevelLayoutGetMaximized func(uintptr, bool) bool
 
 // If the layout specifies whether to the toplevel should go maximized,
-// the value pointed to by @maximized is set to %TRUE if it should go
-// fullscreen, or %FALSE, if it should go unmaximized.
+// the value pointed to by @maximized is set to true if it should go
+// maximized, or false, if it should go unmaximized.
 func (x *ToplevelLayout) GetMaximized(MaximizedVar bool) bool {
 
 	cret := xToplevelLayoutGetMaximized(x.GoPointer(), MaximizedVar)

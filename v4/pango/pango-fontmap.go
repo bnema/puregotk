@@ -300,13 +300,13 @@ func (x *FontMap) AddFontFile(FilenameVar string) (bool, error) {
 
 var xFontMapChanged func(uintptr)
 
-// Forces a change in the context, which will cause any `PangoContext`
+// Forces a change in the fontmap, which will cause any `PangoContext`
 // using this fontmap to change.
 //
 // This function is only useful when implementing a new backend
 // for Pango, something applications won't do. Backends should
 // call this function if they have attached extra data to the
-// context and such data is changed.
+// fontmap and such data is changed.
 func (x *FontMap) Changed() {
 
 	xFontMapChanged(x.GoPointer())

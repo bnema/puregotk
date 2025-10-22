@@ -99,8 +99,10 @@ import (
 //
 // The following attributes are used when constructing submenus:
 //
-// - "label": a user-visible string to display
-// - "icon": icon name to display
+//   - "label": a user-visible string to display
+//   - "icon": icon name to display
+//   - "gtk-macos-special": (macOS only, ignored by others) Add special meaning to a menu
+//     in the macOS menu bar. See [Using GTK on Apple macOS](osx.html).
 //
 // Menu items will also show accelerators, which are usually associated
 // with actions via [method@Gtk.Application.set_accels_for_action],
@@ -241,7 +243,7 @@ func (x *PopoverMenu) GetMenuModel() *gio.MenuModel {
 var xPopoverMenuRemoveChild func(uintptr, uintptr) bool
 
 // Removes a widget that has previously been added with
-// [method@Gtk.PopoverMenu.add_child()]
+// [method@Gtk.PopoverMenu.add_child]
 func (x *PopoverMenu) RemoveChild(ChildVar *Widget) bool {
 
 	cret := xPopoverMenuRemoveChild(x.GoPointer(), ChildVar.GoPointer())

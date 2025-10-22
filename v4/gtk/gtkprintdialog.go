@@ -246,6 +246,9 @@ var xPrintDialogPrintFileFinish func(uintptr, uintptr, **glib.Error) bool
 
 // Finishes the [method@Gtk.PrintDialog.print_file] call and
 // returns the results.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *PrintDialog) PrintFileFinish(ResultVar gio.AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
@@ -271,6 +274,9 @@ var xPrintDialogPrintFinish func(uintptr, uintptr, **glib.Error) uintptr
 // closed automatically if you just unref it). Be aware that the close
 // call may not be instant as it operation will for the printer to finish
 // printing.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *PrintDialog) PrintFinish(ResultVar gio.AsyncResult) (*gio.OutputStream, error) {
 	var cls *gio.OutputStream
 	var cerr *glib.Error
@@ -364,6 +370,9 @@ var xPrintDialogSetupFinish func(uintptr, uintptr, **glib.Error) *PrintSetup
 // If the call was successful, it returns a [struct@Gtk.PrintSetup]
 // which contains the print settings and page setup information that
 // will be used to print.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *PrintDialog) SetupFinish(ResultVar gio.AsyncResult) (*PrintSetup, error) {
 	var cerr *glib.Error
 

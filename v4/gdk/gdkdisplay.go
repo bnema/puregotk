@@ -183,6 +183,8 @@ var xDisplayGetDmabufFormats func(uintptr) *DmabufFormats
 // buffer formats with producers such as v4l, pipewire or GStreamer.
 //
 // To learn more about dma-bufs, see [class@Gdk.DmabufTextureBuilder].
+//
+// This function is threadsafe. It can be called from any thread.
 func (x *Display) GetDmabufFormats() *DmabufFormats {
 
 	cret := xDisplayGetDmabufFormats(x.GoPointer())

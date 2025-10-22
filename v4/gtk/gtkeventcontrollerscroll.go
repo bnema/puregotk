@@ -42,6 +42,9 @@ const (
 	EventControllerScrollDiscreteValue EventControllerScrollFlags = 4
 	// Emit ::decelerate after continuous scroll finishes.
 	EventControllerScrollKineticValue EventControllerScrollFlags = 8
+	// A #GtkEventControllerScrollFlags value to prefer physical direction over
+	// logical direction (i.e. oblivious to natural scroll).
+	EventControllerScrollPhysicalDirectionValue EventControllerScrollFlags = 16
 	// Emit scroll on both axes.
 	EventControllerScrollBothAxesValue EventControllerScrollFlags = 3
 )

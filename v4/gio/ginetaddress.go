@@ -140,9 +140,33 @@ func NewInetAddressFromBytes(BytesVar []byte, FamilyVar SocketFamily) *InetAddre
 	return cls
 }
 
+var xNewInetAddressFromBytesWithIpv6Info func([]byte, SocketFamily, uint32, uint32) uintptr
+
+// Creates a new [class@Gio.InetAddress] from the given @family, @bytes
+// and @scope_id.
+//
+// @bytes must be 4 bytes for [enum@Gio.SocketFamily.IPV4] and 16 bytes for
+// [enum@Gio.SocketFamily.IPV6].
+func NewInetAddressFromBytesWithIpv6Info(BytesVar []byte, FamilyVar SocketFamily, FlowinfoVar uint32, ScopeIdVar uint32) *InetAddress {
+	var cls *InetAddress
+
+	cret := xNewInetAddressFromBytesWithIpv6Info(BytesVar, FamilyVar, FlowinfoVar, ScopeIdVar)
+
+	if cret == 0 {
+		return nil
+	}
+	cls = &InetAddress{}
+	cls.Ptr = cret
+	return cls
+}
+
 var xNewInetAddressFromString func(string) uintptr
 
 // Parses @string as an IP address and creates a new #GInetAddress.
+//
+// If @address is an IPv6 address, it can also contain a scope ID
+// (separated from the address by a `%`). Note that currently this
+// behavior is platform specific. This may change in a future release.
 func NewInetAddressFromString(StringVar string) *InetAddress {
 	var cls *InetAddress
 
@@ -187,6 +211,15 @@ var xInetAddressGetFamily func(uintptr) SocketFamily
 func (x *InetAddress) GetFamily() SocketFamily {
 
 	cret := xInetAddressGetFamily(x.GoPointer())
+	return cret
+}
+
+var xInetAddressGetFlowinfo func(uintptr) uint32
+
+// Gets the value of [property@Gio.InetAddress:flowinfo].
+func (x *InetAddress) GetFlowinfo() uint32 {
+
+	cret := xInetAddressGetFlowinfo(x.GoPointer())
 	return cret
 }
 
@@ -295,6 +328,15 @@ func (x *InetAddress) GetNativeSize() uint {
 	return cret
 }
 
+var xInetAddressGetScopeId func(uintptr) uint32
+
+// Gets the value of [property@Gio.InetAddress:scope-id].
+func (x *InetAddress) GetScopeId() uint32 {
+
+	cret := xInetAddressGetScopeId(x.GoPointer())
+	return cret
+}
+
 var xInetAddressToBytes func(uintptr) byte
 
 // Gets the raw binary address data from @address.
@@ -340,11 +382,13 @@ func init() {
 
 	core.PuregoSafeRegister(&xNewInetAddressAny, libs, "g_inet_address_new_any")
 	core.PuregoSafeRegister(&xNewInetAddressFromBytes, libs, "g_inet_address_new_from_bytes")
+	core.PuregoSafeRegister(&xNewInetAddressFromBytesWithIpv6Info, libs, "g_inet_address_new_from_bytes_with_ipv6_info")
 	core.PuregoSafeRegister(&xNewInetAddressFromString, libs, "g_inet_address_new_from_string")
 	core.PuregoSafeRegister(&xNewInetAddressLoopback, libs, "g_inet_address_new_loopback")
 
 	core.PuregoSafeRegister(&xInetAddressEqual, libs, "g_inet_address_equal")
 	core.PuregoSafeRegister(&xInetAddressGetFamily, libs, "g_inet_address_get_family")
+	core.PuregoSafeRegister(&xInetAddressGetFlowinfo, libs, "g_inet_address_get_flowinfo")
 	core.PuregoSafeRegister(&xInetAddressGetIsAny, libs, "g_inet_address_get_is_any")
 	core.PuregoSafeRegister(&xInetAddressGetIsLinkLocal, libs, "g_inet_address_get_is_link_local")
 	core.PuregoSafeRegister(&xInetAddressGetIsLoopback, libs, "g_inet_address_get_is_loopback")
@@ -356,6 +400,7 @@ func init() {
 	core.PuregoSafeRegister(&xInetAddressGetIsMulticast, libs, "g_inet_address_get_is_multicast")
 	core.PuregoSafeRegister(&xInetAddressGetIsSiteLocal, libs, "g_inet_address_get_is_site_local")
 	core.PuregoSafeRegister(&xInetAddressGetNativeSize, libs, "g_inet_address_get_native_size")
+	core.PuregoSafeRegister(&xInetAddressGetScopeId, libs, "g_inet_address_get_scope_id")
 	core.PuregoSafeRegister(&xInetAddressToBytes, libs, "g_inet_address_to_bytes")
 	core.PuregoSafeRegister(&xInetAddressToString, libs, "g_inet_address_to_string")
 

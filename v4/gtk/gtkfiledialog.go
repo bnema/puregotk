@@ -178,7 +178,7 @@ var xFileDialogOpen func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // The file chooser dialog will be set up to select a single file.
 //
-// The @callback will be called when the dialog is dismissed.
+// The @callback will be called when the dialog is closed.
 func (x *FileDialog) Open(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xFileDialogOpen(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -188,6 +188,9 @@ func (x *FileDialog) Open(ParentVar *Window, CancellableVar *gio.Cancellable, Ca
 var xFileDialogOpenFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FileDialog.open] call.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FileDialog) OpenFinish(ResultVar gio.AsyncResult) (*gio.FileBase, error) {
 	var cls *gio.FileBase
 	var cerr *glib.Error
@@ -215,7 +218,7 @@ var xFileDialogOpenMultiple func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // The file chooser dialog will initially be opened in the directory
 // [property@Gtk.FileDialog:initial-folder].
 //
-// The @callback will be called when the dialog is dismissed.
+// The @callback will be called when the dialog is closed.
 func (x *FileDialog) OpenMultiple(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xFileDialogOpenMultiple(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -225,6 +228,9 @@ func (x *FileDialog) OpenMultiple(ParentVar *Window, CancellableVar *gio.Cancell
 var xFileDialogOpenMultipleFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FileDialog.open] call.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FileDialog) OpenMultipleFinish(ResultVar gio.AsyncResult) (*gio.ListModelBase, error) {
 	var cls *gio.ListModelBase
 	var cerr *glib.Error
@@ -255,7 +261,7 @@ var xFileDialogOpenMultipleTextFiles func(uintptr, uintptr, uintptr, uintptr, ui
 // In contrast to [method@Gtk.FileDialog.open], this function
 // lets the user select the text encoding for the files, if possible.
 //
-// The @callback will be called when the dialog is dismissed.
+// The @callback will be called when the dialog is closed.
 func (x *FileDialog) OpenMultipleTextFiles(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xFileDialogOpenMultipleTextFiles(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -265,6 +271,9 @@ func (x *FileDialog) OpenMultipleTextFiles(ParentVar *Window, CancellableVar *gi
 var xFileDialogOpenMultipleTextFilesFinish func(uintptr, uintptr, string, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FileDialog.open] call.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FileDialog) OpenMultipleTextFilesFinish(ResultVar gio.AsyncResult, EncodingVar string) (*gio.ListModelBase, error) {
 	var cls *gio.ListModelBase
 	var cerr *glib.Error
@@ -291,7 +300,7 @@ var xFileDialogOpenTextFile func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // In contrast to [method@Gtk.FileDialog.open], this function
 // lets the user select the text encoding for the file, if possible.
 //
-// The @callback will be called when the dialog is dismissed.
+// The @callback will be called when the dialog is closed.
 func (x *FileDialog) OpenTextFile(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xFileDialogOpenTextFile(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -307,6 +316,9 @@ var xFileDialogOpenTextFileFinish func(uintptr, uintptr, string, **glib.Error) u
 // for the file, then @encoding will be set to a codeset name that
 // is suitable for passing to iconv_open(). Otherwise, it will
 // be `NULL`.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FileDialog) OpenTextFileFinish(ResultVar gio.AsyncResult, EncodingVar string) (*gio.FileBase, error) {
 	var cls *gio.FileBase
 	var cerr *glib.Error
@@ -331,7 +343,7 @@ var xFileDialogSave func(uintptr, uintptr, uintptr, uintptr, uintptr)
 //
 // The file chooser dialog will be save mode.
 //
-// The @callback will be called when the dialog is dismissed.
+// The @callback will be called when the dialog is closed.
 func (x *FileDialog) Save(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xFileDialogSave(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -341,6 +353,9 @@ func (x *FileDialog) Save(ParentVar *Window, CancellableVar *gio.Cancellable, Ca
 var xFileDialogSaveFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FileDialog.save] call.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FileDialog) SaveFinish(ResultVar gio.AsyncResult) (*gio.FileBase, error) {
 	var cls *gio.FileBase
 	var cerr *glib.Error
@@ -368,7 +383,7 @@ var xFileDialogSaveTextFile func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // lets the user select the text encoding and line endings for
 // the text file, if possible.
 //
-// The @callback will be called when the dialog is dismissed.
+// The @callback will be called when the dialog is closed.
 func (x *FileDialog) SaveTextFile(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xFileDialogSaveTextFile(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -387,6 +402,9 @@ var xFileDialogSaveTextFileFinish func(uintptr, uintptr, string, string, **glib.
 //
 // The @line_ending will be set to one of "\n", "\r\n", "\r" or "",
 // where the latter means to preserve existing line endings.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FileDialog) SaveTextFileFinish(ResultVar gio.AsyncResult, EncodingVar string, LineEndingVar string) (*gio.FileBase, error) {
 	var cls *gio.FileBase
 	var cerr *glib.Error
@@ -415,7 +433,7 @@ var xFileDialogSelectFolder func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // be opened in the parent directory of that folder, otherwise, it
 // will be in the directory [property@Gtk.FileDialog:initial-folder].
 //
-// The @callback will be called when the dialog is dismissed.
+// The @callback will be called when the dialog is closed.
 func (x *FileDialog) SelectFolder(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xFileDialogSelectFolder(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -425,6 +443,9 @@ func (x *FileDialog) SelectFolder(ParentVar *Window, CancellableVar *gio.Cancell
 var xFileDialogSelectFolderFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FileDialog.select_folder] call.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FileDialog) SelectFolderFinish(ResultVar gio.AsyncResult) (*gio.FileBase, error) {
 	var cls *gio.FileBase
 	var cerr *glib.Error
@@ -453,7 +474,7 @@ var xFileDialogSelectMultipleFolders func(uintptr, uintptr, uintptr, uintptr, ui
 // The file chooser dialog will initially be opened in the
 // directory [property@Gtk.FileDialog:initial-folder].
 //
-// The @callback will be called when the dialog is dismissed.
+// The @callback will be called when the dialog is closed.
 func (x *FileDialog) SelectMultipleFolders(ParentVar *Window, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
 	xFileDialogSelectMultipleFolders(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
@@ -463,6 +484,9 @@ func (x *FileDialog) SelectMultipleFolders(ParentVar *Window, CancellableVar *gi
 var xFileDialogSelectMultipleFoldersFinish func(uintptr, uintptr, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FileDialog.select_multiple_folders] call.
+//
+// Note that this function returns a [error@Gtk.DialogError.DISMISSED]
+// error if the user cancels the dialog.
 func (x *FileDialog) SelectMultipleFoldersFinish(ResultVar gio.AsyncResult) (*gio.ListModelBase, error) {
 	var cls *gio.ListModelBase
 	var cerr *glib.Error

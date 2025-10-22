@@ -384,6 +384,8 @@ const (
 	StrokeNodeValue RenderNodeType = 29
 	// A node that possibly redirects part of the scene graph to a subsurface.
 	SubsurfaceNodeValue RenderNodeType = 30
+	// A node that applies some function to each color component.
+	ComponentTransferNodeValue RenderNodeType = 31
 )
 
 // The filters used when scaling texture data.

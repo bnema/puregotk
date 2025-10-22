@@ -168,10 +168,8 @@ const (
 // [A simple example](https://gitlab.gnome.org/GNOME/gtk/tree/main/examples/bp/bloatpad.c)
 // is available in the GTK source code repository
 //
-// `GtkApplication` optionally registers with a session manager of the
-// users session (if you set the [property@Gtk.Application:register-session]
-// property) and offers various functionality related to the session
-// life-cycle.
+// `GtkApplication` registers with a session manager if possible and
+// offers various functionality related to the session life-cycle.
 //
 // An application can block various ways to end the session with
 // the [method@Gtk.Application.inhibit] function. Typical use cases for
@@ -520,8 +518,7 @@ func (c *Application) SetGoPointer(ptr uintptr) {
 
 // Emitted when the session manager is about to end the session.
 //
-// This signal is only emitted if [property@Gtk.Application:register-session]
-// is true. Applications can connect to this signal and call
+// Applications can connect to this signal and call
 // [method@Gtk.Application.inhibit] with [flags@Gtk.ApplicationInhibitFlags.logout]
 // to delay the end of the session until state has been saved.
 func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {

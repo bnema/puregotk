@@ -146,7 +146,7 @@ var xStyleManagerGetDocumentFontName func(uintptr) string
 // Gets the system document font.
 //
 // The font is in the same format as [property@Gtk.Settings:gtk-font-name],
-// e.g. "Adwaita Sans 11".
+// e.g. "Adwaita Sans 12".
 //
 // Use [func@Pango.FontDescription.from_string] to parse it.
 func (x *StyleManager) GetDocumentFontName() string {

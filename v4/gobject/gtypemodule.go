@@ -244,7 +244,7 @@ func (x *TypeModule) AddInterface(InstanceTypeVar types.GType, InterfaceTypeVar 
 
 }
 
-var xTypeModuleRegisterEnum func(uintptr, string, *EnumValue) types.GType
+var xTypeModuleRegisterEnum func(uintptr, string, []EnumValue) types.GType
 
 // Looks up or registers an enumeration that is implemented with a particular
 // type plugin. If a type with name @type_name was previously registered,
@@ -256,13 +256,13 @@ var xTypeModuleRegisterEnum func(uintptr, string, *EnumValue) types.GType
 //
 // Since 2.56 if @module is %NULL this will call g_type_register_static()
 // instead. This can be used when making a static build of the module.
-func (x *TypeModule) RegisterEnum(NameVar string, ConstStaticValuesVar *EnumValue) types.GType {
+func (x *TypeModule) RegisterEnum(NameVar string, ConstStaticValuesVar []EnumValue) types.GType {
 
 	cret := xTypeModuleRegisterEnum(x.GoPointer(), NameVar, ConstStaticValuesVar)
 	return cret
 }
 
-var xTypeModuleRegisterFlags func(uintptr, string, *FlagsValue) types.GType
+var xTypeModuleRegisterFlags func(uintptr, string, []FlagsValue) types.GType
 
 // Looks up or registers a flags type that is implemented with a particular
 // type plugin. If a type with name @type_name was previously registered,
@@ -274,7 +274,7 @@ var xTypeModuleRegisterFlags func(uintptr, string, *FlagsValue) types.GType
 //
 // Since 2.56 if @module is %NULL this will call g_type_register_static()
 // instead. This can be used when making a static build of the module.
-func (x *TypeModule) RegisterFlags(NameVar string, ConstStaticValuesVar *FlagsValue) types.GType {
+func (x *TypeModule) RegisterFlags(NameVar string, ConstStaticValuesVar []FlagsValue) types.GType {
 
 	cret := xTypeModuleRegisterFlags(x.GoPointer(), NameVar, ConstStaticValuesVar)
 	return cret

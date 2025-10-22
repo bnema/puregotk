@@ -198,7 +198,7 @@ func (x *ApplicationClass) GetLocalCommandLine() func(*Application, []string, in
 // invoked on the primary instance before 'activate', 'open',
 //
 //	'command-line' or any action invocation, gets the 'platform data' from
-//	the calling instance
+//	the calling instance. Must chain up
 func (x *ApplicationClass) OverrideBeforeEmit(cb func(*Application, *glib.Variant)) {
 	if cb == nil {
 		x.xBeforeEmit = 0
@@ -213,7 +213,7 @@ func (x *ApplicationClass) OverrideBeforeEmit(cb func(*Application, *glib.Varian
 // invoked on the primary instance before 'activate', 'open',
 //
 //	'command-line' or any action invocation, gets the 'platform data' from
-//	the calling instance
+//	the calling instance. Must chain up
 func (x *ApplicationClass) GetBeforeEmit() func(*Application, *glib.Variant) {
 	if x.xBeforeEmit == 0 {
 		return nil
@@ -229,7 +229,7 @@ func (x *ApplicationClass) GetBeforeEmit() func(*Application, *glib.Variant) {
 // invoked on the primary instance after 'activate', 'open',
 //
 //	'command-line' or any action invocation, gets the 'platform data' from
-//	the calling instance
+//	the calling instance. Must chain up
 func (x *ApplicationClass) OverrideAfterEmit(cb func(*Application, *glib.Variant)) {
 	if cb == nil {
 		x.xAfterEmit = 0
@@ -244,7 +244,7 @@ func (x *ApplicationClass) OverrideAfterEmit(cb func(*Application, *glib.Variant
 // invoked on the primary instance after 'activate', 'open',
 //
 //	'command-line' or any action invocation, gets the 'platform data' from
-//	the calling instance
+//	the calling instance. Must chain up
 func (x *ApplicationClass) GetAfterEmit() func(*Application, *glib.Variant) {
 	if x.xAfterEmit == 0 {
 		return nil
@@ -259,7 +259,7 @@ func (x *ApplicationClass) GetAfterEmit() func(*Application, *glib.Variant) {
 // OverrideAddPlatformData sets the callback function.
 // invoked (locally) to add 'platform data' to be sent to
 //
-//	the primary instance when activating, opening or invoking actions
+//	the primary instance when activating, opening or invoking actions. Must chain up
 func (x *ApplicationClass) OverrideAddPlatformData(cb func(*Application, *glib.VariantBuilder)) {
 	if cb == nil {
 		x.xAddPlatformData = 0
@@ -273,7 +273,7 @@ func (x *ApplicationClass) OverrideAddPlatformData(cb func(*Application, *glib.V
 // GetAddPlatformData gets the callback function.
 // invoked (locally) to add 'platform data' to be sent to
 //
-//	the primary instance when activating, opening or invoking actions
+//	the primary instance when activating, opening or invoking actions. Must chain up
 func (x *ApplicationClass) GetAddPlatformData() func(*Application, *glib.VariantBuilder) {
 	if x.xAddPlatformData == 0 {
 		return nil

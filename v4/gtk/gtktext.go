@@ -51,6 +51,7 @@ import (
 //   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Y&lt;/kbd&gt; or &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Z&lt;/kbd&gt;
 //     redoes the last undone modification.
 //   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;T&lt;/kbd&gt; toggles the text direction.
+//   - &lt;kbd&gt;Clear&lt;/kbd&gt; clears the content.
 //
 // Additionally, the following signals have default keybindings:
 //
@@ -80,6 +81,7 @@ import (
 //   - `selection.select-all` selects all of the widgets content.
 //   - `text.redo` redoes the last change to the contents.
 //   - `text.undo` undoes the last change to the contents.
+//   - `text.clear` removes all content.
 //
 // # CSS nodes
 //

@@ -68,6 +68,18 @@ func (x *ColorState) Equal(OtherVar *ColorState) bool {
 	return cret
 }
 
+var xColorStateEquivalent func(uintptr, *ColorState) bool
+
+// Compares two `GdkColorStates` for equivalence.
+//
+// Two objects that represent the same color state should be equivalent,
+// even though they may not be equal in the sense of [method@Gdk.ColorState.equal].
+func (x *ColorState) Equivalent(OtherVar *ColorState) bool {
+
+	cret := xColorStateEquivalent(x.GoPointer(), OtherVar)
+	return cret
+}
+
 var xColorStateRef func(uintptr) *ColorState
 
 // Increase the reference count of @self.
@@ -589,15 +601,33 @@ var xTextureDownloaderDownloadBytes func(uintptr, uint) *glib.Bytes
 // fails to allocate memory. If you think that may happen, you should handle
 // memory allocation yourself and use [method@Gdk.TextureDownloader.download_into]
 // once allocation succeeded.
+//
+// This function cannot be used with a multiplanar format. Use
+// [method@Gdk.TextureDownloader.download_bytes_with_planes] for that purpose.
 func (x *TextureDownloader) DownloadBytes(OutStrideVar uint) *glib.Bytes {
 
 	cret := xTextureDownloaderDownloadBytes(x.GoPointer(), OutStrideVar)
 	return cret
 }
 
+var xTextureDownloaderDownloadBytesWithPlanes func(uintptr, [4]uint, [4]uint) *glib.Bytes
+
+// Downloads the given texture pixels into a `GBytes`. The offsets and
+// strides of the resulting buffer will be stored in the respective values.
+//
+// If the format does have less than 4 planes, the remaining offsets and strides will be
+// set to `0`.
+func (x *TextureDownloader) DownloadBytesWithPlanes(OutOffsetsVar [4]uint, OutStridesVar [4]uint) *glib.Bytes {
+
+	cret := xTextureDownloaderDownloadBytesWithPlanes(x.GoPointer(), OutOffsetsVar, OutStridesVar)
+	return cret
+}
+
 var xTextureDownloaderDownloadInto func(uintptr, []byte, uint)
 
 // Downloads the @texture into local memory.
+//
+// This function cannot be used with a multiplanar format.
 func (x *TextureDownloader) DownloadInto(DataVar []byte, StrideVar uint) {
 
 	xTextureDownloaderDownloadInto(x.GoPointer(), DataVar, StrideVar)
@@ -701,6 +731,7 @@ func init() {
 
 	core.PuregoSafeRegister(&xColorStateCreateCicpParams, libs, "gdk_color_state_create_cicp_params")
 	core.PuregoSafeRegister(&xColorStateEqual, libs, "gdk_color_state_equal")
+	core.PuregoSafeRegister(&xColorStateEquivalent, libs, "gdk_color_state_equivalent")
 	core.PuregoSafeRegister(&xColorStateRef, libs, "gdk_color_state_ref")
 	core.PuregoSafeRegister(&xColorStateUnref, libs, "gdk_color_state_unref")
 
@@ -749,6 +780,7 @@ func init() {
 
 	core.PuregoSafeRegister(&xTextureDownloaderCopy, libs, "gdk_texture_downloader_copy")
 	core.PuregoSafeRegister(&xTextureDownloaderDownloadBytes, libs, "gdk_texture_downloader_download_bytes")
+	core.PuregoSafeRegister(&xTextureDownloaderDownloadBytesWithPlanes, libs, "gdk_texture_downloader_download_bytes_with_planes")
 	core.PuregoSafeRegister(&xTextureDownloaderDownloadInto, libs, "gdk_texture_downloader_download_into")
 	core.PuregoSafeRegister(&xTextureDownloaderFree, libs, "gdk_texture_downloader_free")
 	core.PuregoSafeRegister(&xTextureDownloaderGetColorState, libs, "gdk_texture_downloader_get_color_state")
