@@ -145,6 +145,57 @@ func (c *NetworkAddress) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyHostname sets the "hostname" property.
+// Hostname to resolve.
+func (x *NetworkAddress) SetPropertyHostname(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("hostname", &v)
+}
+
+// GetPropertyHostname gets the "hostname" property.
+// Hostname to resolve.
+func (x *NetworkAddress) GetPropertyHostname() string {
+	var v gobject.Value
+	x.GetProperty("hostname", &v)
+	return v.GetString()
+}
+
+// SetPropertyPort sets the "port" property.
+// Network port.
+func (x *NetworkAddress) SetPropertyPort(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("port", &v)
+}
+
+// GetPropertyPort gets the "port" property.
+// Network port.
+func (x *NetworkAddress) GetPropertyPort() uint {
+	var v gobject.Value
+	x.GetProperty("port", &v)
+	return v.GetUint()
+}
+
+// SetPropertyScheme sets the "scheme" property.
+// URI scheme.
+func (x *NetworkAddress) SetPropertyScheme(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("scheme", &v)
+}
+
+// GetPropertyScheme gets the "scheme" property.
+// URI scheme.
+func (x *NetworkAddress) GetPropertyScheme() string {
+	var v gobject.Value
+	x.GetProperty("scheme", &v)
+	return v.GetString()
+}
+
 // Creates a #GSocketAddressEnumerator for @connectable.
 func (x *NetworkAddress) Enumerate() *SocketAddressEnumerator {
 	var cls *SocketAddressEnumerator

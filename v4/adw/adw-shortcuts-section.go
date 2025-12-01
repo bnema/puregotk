@@ -104,6 +104,23 @@ func (c *ShortcutsSection) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyTitle sets the "title" property.
+// The title of the section, can be `NULL`.
+func (x *ShortcutsSection) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the section, can be `NULL`.
+func (x *ShortcutsSection) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is

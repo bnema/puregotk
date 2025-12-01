@@ -113,6 +113,23 @@ func (c *BoolFilter) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyInvert sets the "invert" property.
+// If the expression result should be inverted.
+func (x *BoolFilter) SetPropertyInvert(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("invert", &v)
+}
+
+// GetPropertyInvert gets the "invert" property.
+// If the expression result should be inverted.
+func (x *BoolFilter) GetPropertyInvert() bool {
+	var v gobject.Value
+	x.GetProperty("invert", &v)
+	return v.GetBoolean()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

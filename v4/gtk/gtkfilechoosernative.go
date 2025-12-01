@@ -268,6 +268,44 @@ func (c *FileChooserNative) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAcceptLabel sets the "accept-label" property.
+// The text used for the label on the accept button in the dialog, or
+// %NULL to use the default text.
+func (x *FileChooserNative) SetPropertyAcceptLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("accept-label", &v)
+}
+
+// GetPropertyAcceptLabel gets the "accept-label" property.
+// The text used for the label on the accept button in the dialog, or
+// %NULL to use the default text.
+func (x *FileChooserNative) GetPropertyAcceptLabel() string {
+	var v gobject.Value
+	x.GetProperty("accept-label", &v)
+	return v.GetString()
+}
+
+// SetPropertyCancelLabel sets the "cancel-label" property.
+// The text used for the label on the cancel button in the dialog, or
+// %NULL to use the default text.
+func (x *FileChooserNative) SetPropertyCancelLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("cancel-label", &v)
+}
+
+// GetPropertyCancelLabel gets the "cancel-label" property.
+// The text used for the label on the cancel button in the dialog, or
+// %NULL to use the default text.
+func (x *FileChooserNative) GetPropertyCancelLabel() string {
+	var v gobject.Value
+	x.GetProperty("cancel-label", &v)
+	return v.GetString()
+}
+
 // Adds a 'choice' to the file chooser.
 //
 // This is typically implemented as a combobox or, for boolean choices,

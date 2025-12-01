@@ -34,7 +34,7 @@ func (x *AdjustmentClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 func (x *AdjustmentClass) OverrideChanged(cb func(*Adjustment)) {
 	if cb == nil {
 		x.xChanged = 0
@@ -45,7 +45,7 @@ func (x *AdjustmentClass) OverrideChanged(cb func(*Adjustment)) {
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 func (x *AdjustmentClass) GetChanged() func(*Adjustment) {
 	if x.xChanged == 0 {
 		return nil
@@ -57,7 +57,7 @@ func (x *AdjustmentClass) GetChanged() func(*Adjustment) {
 	}
 }
 
-// OverrideValueChanged sets the callback function.
+// OverrideValueChanged sets the "value_changed" callback function.
 func (x *AdjustmentClass) OverrideValueChanged(cb func(*Adjustment)) {
 	if cb == nil {
 		x.xValueChanged = 0
@@ -68,7 +68,7 @@ func (x *AdjustmentClass) OverrideValueChanged(cb func(*Adjustment)) {
 	}
 }
 
-// GetValueChanged gets the callback function.
+// GetValueChanged gets the "value_changed" callback function.
 func (x *AdjustmentClass) GetValueChanged() func(*Adjustment) {
 	if x.xValueChanged == 0 {
 		return nil
@@ -80,7 +80,7 @@ func (x *AdjustmentClass) GetValueChanged() func(*Adjustment) {
 	}
 }
 
-// OverrideGtkReserved1 sets the callback function.
+// OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *AdjustmentClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {
 		x.xGtkReserved1 = 0
@@ -91,7 +91,7 @@ func (x *AdjustmentClass) OverrideGtkReserved1(cb func()) {
 	}
 }
 
-// GetGtkReserved1 gets the callback function.
+// GetGtkReserved1 gets the "_gtk_reserved1" callback function.
 func (x *AdjustmentClass) GetGtkReserved1() func() {
 	if x.xGtkReserved1 == 0 {
 		return nil
@@ -103,7 +103,7 @@ func (x *AdjustmentClass) GetGtkReserved1() func() {
 	}
 }
 
-// OverrideGtkReserved2 sets the callback function.
+// OverrideGtkReserved2 sets the "_gtk_reserved2" callback function.
 func (x *AdjustmentClass) OverrideGtkReserved2(cb func()) {
 	if cb == nil {
 		x.xGtkReserved2 = 0
@@ -114,7 +114,7 @@ func (x *AdjustmentClass) OverrideGtkReserved2(cb func()) {
 	}
 }
 
-// GetGtkReserved2 gets the callback function.
+// GetGtkReserved2 gets the "_gtk_reserved2" callback function.
 func (x *AdjustmentClass) GetGtkReserved2() func() {
 	if x.xGtkReserved2 == 0 {
 		return nil
@@ -126,7 +126,7 @@ func (x *AdjustmentClass) GetGtkReserved2() func() {
 	}
 }
 
-// OverrideGtkReserved3 sets the callback function.
+// OverrideGtkReserved3 sets the "_gtk_reserved3" callback function.
 func (x *AdjustmentClass) OverrideGtkReserved3(cb func()) {
 	if cb == nil {
 		x.xGtkReserved3 = 0
@@ -137,7 +137,7 @@ func (x *AdjustmentClass) OverrideGtkReserved3(cb func()) {
 	}
 }
 
-// GetGtkReserved3 gets the callback function.
+// GetGtkReserved3 gets the "_gtk_reserved3" callback function.
 func (x *AdjustmentClass) GetGtkReserved3() func() {
 	if x.xGtkReserved3 == 0 {
 		return nil
@@ -149,7 +149,7 @@ func (x *AdjustmentClass) GetGtkReserved3() func() {
 	}
 }
 
-// OverrideGtkReserved4 sets the callback function.
+// OverrideGtkReserved4 sets the "_gtk_reserved4" callback function.
 func (x *AdjustmentClass) OverrideGtkReserved4(cb func()) {
 	if cb == nil {
 		x.xGtkReserved4 = 0
@@ -160,7 +160,7 @@ func (x *AdjustmentClass) OverrideGtkReserved4(cb func()) {
 	}
 }
 
-// GetGtkReserved4 gets the callback function.
+// GetGtkReserved4 gets the "_gtk_reserved4" callback function.
 func (x *AdjustmentClass) GetGtkReserved4() func() {
 	if x.xGtkReserved4 == 0 {
 		return nil
@@ -413,6 +413,122 @@ func (c *Adjustment) GoPointer() uintptr {
 
 func (c *Adjustment) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyLower sets the "lower" property.
+// The minimum value of the adjustment.
+func (x *Adjustment) SetPropertyLower(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("lower", &v)
+}
+
+// GetPropertyLower gets the "lower" property.
+// The minimum value of the adjustment.
+func (x *Adjustment) GetPropertyLower() float64 {
+	var v gobject.Value
+	x.GetProperty("lower", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyPageIncrement sets the "page-increment" property.
+// The page increment of the adjustment.
+func (x *Adjustment) SetPropertyPageIncrement(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("page-increment", &v)
+}
+
+// GetPropertyPageIncrement gets the "page-increment" property.
+// The page increment of the adjustment.
+func (x *Adjustment) GetPropertyPageIncrement() float64 {
+	var v gobject.Value
+	x.GetProperty("page-increment", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyPageSize sets the "page-size" property.
+// The page size of the adjustment.
+//
+// Note that the page-size is irrelevant and should be set to zero
+// if the adjustment is used for a simple scalar value, e.g. in a
+// `GtkSpinButton`.
+func (x *Adjustment) SetPropertyPageSize(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("page-size", &v)
+}
+
+// GetPropertyPageSize gets the "page-size" property.
+// The page size of the adjustment.
+//
+// Note that the page-size is irrelevant and should be set to zero
+// if the adjustment is used for a simple scalar value, e.g. in a
+// `GtkSpinButton`.
+func (x *Adjustment) GetPropertyPageSize() float64 {
+	var v gobject.Value
+	x.GetProperty("page-size", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyStepIncrement sets the "step-increment" property.
+// The step increment of the adjustment.
+func (x *Adjustment) SetPropertyStepIncrement(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("step-increment", &v)
+}
+
+// GetPropertyStepIncrement gets the "step-increment" property.
+// The step increment of the adjustment.
+func (x *Adjustment) GetPropertyStepIncrement() float64 {
+	var v gobject.Value
+	x.GetProperty("step-increment", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyUpper sets the "upper" property.
+// The maximum value of the adjustment.
+//
+// Note that values will be restricted by `upper - page-size` if the page-size
+// property is nonzero.
+func (x *Adjustment) SetPropertyUpper(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("upper", &v)
+}
+
+// GetPropertyUpper gets the "upper" property.
+// The maximum value of the adjustment.
+//
+// Note that values will be restricted by `upper - page-size` if the page-size
+// property is nonzero.
+func (x *Adjustment) GetPropertyUpper() float64 {
+	var v gobject.Value
+	x.GetProperty("upper", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyValue sets the "value" property.
+// The value of the adjustment.
+func (x *Adjustment) SetPropertyValue(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("value", &v)
+}
+
+// GetPropertyValue gets the "value" property.
+// The value of the adjustment.
+func (x *Adjustment) GetPropertyValue() float64 {
+	var v gobject.Value
+	x.GetProperty("value", &v)
+	return v.GetDouble()
 }
 
 // Emitted when one or more of the `GtkAdjustment` properties have been

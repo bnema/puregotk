@@ -93,12 +93,12 @@ func FindBaseDir(TextVar string, LengthVar int) Direction {
 	return cret
 }
 
-var xGetMirrorChar func(uint32, uint32) bool
+var xGetMirrorChar func(uint32, *uint32) bool
 
 // Returns the mirrored character of a Unicode character.
 //
 // Mirror characters are determined by the Unicode mirrored property.
-func GetMirrorChar(ChVar uint32, MirroredChVar uint32) bool {
+func GetMirrorChar(ChVar uint32, MirroredChVar *uint32) bool {
 
 	cret := xGetMirrorChar(ChVar, MirroredChVar)
 	return cret

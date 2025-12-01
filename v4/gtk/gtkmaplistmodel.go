@@ -165,6 +165,22 @@ func (c *MapListModel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyHasMap gets the "has-map" property.
+// If a map is set for this model
+func (x *MapListModel) GetPropertyHasMap() bool {
+	var v gobject.Value
+	x.GetProperty("has-map", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *MapListModel) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is
@@ -261,7 +277,7 @@ func (x *MapListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar 
 //
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
-func (x *MapListModel) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+func (x *MapListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 

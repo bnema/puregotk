@@ -23,7 +23,7 @@ func (x *ScrollableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetBorder sets the callback function.
+// OverrideGetBorder sets the "get_border" callback function.
 func (x *ScrollableInterface) OverrideGetBorder(cb func(Scrollable, *Border) bool) {
 	if cb == nil {
 		x.xGetBorder = 0
@@ -34,7 +34,7 @@ func (x *ScrollableInterface) OverrideGetBorder(cb func(Scrollable, *Border) boo
 	}
 }
 
-// GetGetBorder gets the callback function.
+// GetGetBorder gets the "get_border" callback function.
 func (x *ScrollableInterface) GetGetBorder() func(Scrollable, *Border) bool {
 	if x.xGetBorder == 0 {
 		return nil

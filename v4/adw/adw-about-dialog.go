@@ -995,6 +995,683 @@ func (c *AboutDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyApplicationIcon sets the "application-icon" property.
+// The name of the application icon.
+//
+// The icon is displayed at the top of the main page.
+func (x *AboutDialog) SetPropertyApplicationIcon(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("application-icon", &v)
+}
+
+// GetPropertyApplicationIcon gets the "application-icon" property.
+// The name of the application icon.
+//
+// The icon is displayed at the top of the main page.
+func (x *AboutDialog) GetPropertyApplicationIcon() string {
+	var v gobject.Value
+	x.GetProperty("application-icon", &v)
+	return v.GetString()
+}
+
+// SetPropertyApplicationName sets the "application-name" property.
+// The name of the application.
+//
+// The name is displayed at the top of the main page.
+func (x *AboutDialog) SetPropertyApplicationName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("application-name", &v)
+}
+
+// GetPropertyApplicationName gets the "application-name" property.
+// The name of the application.
+//
+// The name is displayed at the top of the main page.
+func (x *AboutDialog) GetPropertyApplicationName() string {
+	var v gobject.Value
+	x.GetProperty("application-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyArtists sets the "artists" property.
+// The list of artists of the application.
+//
+// It will be displayed on the Credits page.
+//
+// Each name may contain email addresses and URLs, see the introduction for
+// more details.
+//
+// See also:
+//
+// * [property@AboutDialog:developers]
+// * [property@AboutDialog:designers]
+// * [property@AboutDialog:documenters]
+// * [property@AboutDialog:translator-credits]
+// * [method@AboutDialog.add_credit_section]
+// * [method@AboutDialog.add_acknowledgement_section]
+func (x *AboutDialog) SetPropertyArtists(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("artists", &v)
+}
+
+// GetPropertyArtists gets the "artists" property.
+// The list of artists of the application.
+//
+// It will be displayed on the Credits page.
+//
+// Each name may contain email addresses and URLs, see the introduction for
+// more details.
+//
+// See also:
+//
+// * [property@AboutDialog:developers]
+// * [property@AboutDialog:designers]
+// * [property@AboutDialog:documenters]
+// * [property@AboutDialog:translator-credits]
+// * [method@AboutDialog.add_credit_section]
+// * [method@AboutDialog.add_acknowledgement_section]
+func (x *AboutDialog) GetPropertyArtists() []string {
+	var v gobject.Value
+	x.GetProperty("artists", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyComments sets the "comments" property.
+// The comments about the application.
+//
+// Comments will be shown on the Details page, above links.
+//
+// Unlike [property@Gtk.AboutDialog:comments], this string can be long and
+// detailed. It can also contain links and Pango markup.
+func (x *AboutDialog) SetPropertyComments(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("comments", &v)
+}
+
+// GetPropertyComments gets the "comments" property.
+// The comments about the application.
+//
+// Comments will be shown on the Details page, above links.
+//
+// Unlike [property@Gtk.AboutDialog:comments], this string can be long and
+// detailed. It can also contain links and Pango markup.
+func (x *AboutDialog) GetPropertyComments() string {
+	var v gobject.Value
+	x.GetProperty("comments", &v)
+	return v.GetString()
+}
+
+// SetPropertyCopyright sets the "copyright" property.
+// The copyright information.
+//
+// This should be a short string of one or two lines, for example:
+// `© 2022 Example`.
+//
+// The copyright information will be displayed on the Legal page, above the
+// application license.
+//
+// [method@AboutDialog.add_legal_section] can be used to add copyright
+// information for the application dependencies or other components.
+func (x *AboutDialog) SetPropertyCopyright(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("copyright", &v)
+}
+
+// GetPropertyCopyright gets the "copyright" property.
+// The copyright information.
+//
+// This should be a short string of one or two lines, for example:
+// `© 2022 Example`.
+//
+// The copyright information will be displayed on the Legal page, above the
+// application license.
+//
+// [method@AboutDialog.add_legal_section] can be used to add copyright
+// information for the application dependencies or other components.
+func (x *AboutDialog) GetPropertyCopyright() string {
+	var v gobject.Value
+	x.GetProperty("copyright", &v)
+	return v.GetString()
+}
+
+// SetPropertyDebugInfo sets the "debug-info" property.
+// The debug information.
+//
+// Debug information will be shown on the Troubleshooting page. It's intended
+// to be attached to issue reports when reporting issues against the
+// application.
+//
+// `AdwAboutDialog` provides a quick way to save debug information to a file.
+// When saving, [property@AboutDialog:debug-info-filename] would be used as
+// the suggested filename.
+//
+// Debug information cannot contain markup or links.
+func (x *AboutDialog) SetPropertyDebugInfo(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("debug-info", &v)
+}
+
+// GetPropertyDebugInfo gets the "debug-info" property.
+// The debug information.
+//
+// Debug information will be shown on the Troubleshooting page. It's intended
+// to be attached to issue reports when reporting issues against the
+// application.
+//
+// `AdwAboutDialog` provides a quick way to save debug information to a file.
+// When saving, [property@AboutDialog:debug-info-filename] would be used as
+// the suggested filename.
+//
+// Debug information cannot contain markup or links.
+func (x *AboutDialog) GetPropertyDebugInfo() string {
+	var v gobject.Value
+	x.GetProperty("debug-info", &v)
+	return v.GetString()
+}
+
+// SetPropertyDebugInfoFilename sets the "debug-info-filename" property.
+// The debug information filename.
+//
+// It will be used as the suggested filename when saving debug information to
+// a file.
+//
+// See [property@AboutDialog:debug-info].
+func (x *AboutDialog) SetPropertyDebugInfoFilename(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("debug-info-filename", &v)
+}
+
+// GetPropertyDebugInfoFilename gets the "debug-info-filename" property.
+// The debug information filename.
+//
+// It will be used as the suggested filename when saving debug information to
+// a file.
+//
+// See [property@AboutDialog:debug-info].
+func (x *AboutDialog) GetPropertyDebugInfoFilename() string {
+	var v gobject.Value
+	x.GetProperty("debug-info-filename", &v)
+	return v.GetString()
+}
+
+// SetPropertyDesigners sets the "designers" property.
+// The list of designers of the application.
+//
+// It will be displayed on the Credits page.
+//
+// Each name may contain email addresses and URLs, see the introduction for
+// more details.
+//
+// See also:
+//
+// * [property@AboutDialog:developers]
+// * [property@AboutDialog:artists]
+// * [property@AboutDialog:documenters]
+// * [property@AboutDialog:translator-credits]
+// * [method@AboutDialog.add_credit_section]
+// * [method@AboutDialog.add_acknowledgement_section]
+func (x *AboutDialog) SetPropertyDesigners(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("designers", &v)
+}
+
+// GetPropertyDesigners gets the "designers" property.
+// The list of designers of the application.
+//
+// It will be displayed on the Credits page.
+//
+// Each name may contain email addresses and URLs, see the introduction for
+// more details.
+//
+// See also:
+//
+// * [property@AboutDialog:developers]
+// * [property@AboutDialog:artists]
+// * [property@AboutDialog:documenters]
+// * [property@AboutDialog:translator-credits]
+// * [method@AboutDialog.add_credit_section]
+// * [method@AboutDialog.add_acknowledgement_section]
+func (x *AboutDialog) GetPropertyDesigners() []string {
+	var v gobject.Value
+	x.GetProperty("designers", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyDeveloperName sets the "developer-name" property.
+// The developer name.
+//
+// The developer name is displayed on the main page, under the application
+// name.
+//
+// If the application is developed by multiple people, the developer name can
+// be set to values like "AppName team", "AppName developers" or
+// "The AppName project", and the individual contributors can be listed on the
+// Credits page, with [property@AboutDialog:developers] and related
+// properties.
+func (x *AboutDialog) SetPropertyDeveloperName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("developer-name", &v)
+}
+
+// GetPropertyDeveloperName gets the "developer-name" property.
+// The developer name.
+//
+// The developer name is displayed on the main page, under the application
+// name.
+//
+// If the application is developed by multiple people, the developer name can
+// be set to values like "AppName team", "AppName developers" or
+// "The AppName project", and the individual contributors can be listed on the
+// Credits page, with [property@AboutDialog:developers] and related
+// properties.
+func (x *AboutDialog) GetPropertyDeveloperName() string {
+	var v gobject.Value
+	x.GetProperty("developer-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyDevelopers sets the "developers" property.
+// The list of developers of the application.
+//
+// It will be displayed on the Credits page.
+//
+// Each name may contain email addresses and URLs, see the introduction for
+// more details.
+//
+// See also:
+//
+// * [property@AboutDialog:designers]
+// * [property@AboutDialog:artists]
+// * [property@AboutDialog:documenters]
+// * [property@AboutDialog:translator-credits]
+// * [method@AboutDialog.add_credit_section]
+// * [method@AboutDialog.add_acknowledgement_section]
+func (x *AboutDialog) SetPropertyDevelopers(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("developers", &v)
+}
+
+// GetPropertyDevelopers gets the "developers" property.
+// The list of developers of the application.
+//
+// It will be displayed on the Credits page.
+//
+// Each name may contain email addresses and URLs, see the introduction for
+// more details.
+//
+// See also:
+//
+// * [property@AboutDialog:designers]
+// * [property@AboutDialog:artists]
+// * [property@AboutDialog:documenters]
+// * [property@AboutDialog:translator-credits]
+// * [method@AboutDialog.add_credit_section]
+// * [method@AboutDialog.add_acknowledgement_section]
+func (x *AboutDialog) GetPropertyDevelopers() []string {
+	var v gobject.Value
+	x.GetProperty("developers", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyDocumenters sets the "documenters" property.
+// The list of documenters of the application.
+//
+// It will be displayed on the Credits page.
+//
+// Each name may contain email addresses and URLs, see the introduction for
+// more details.
+//
+// See also:
+//
+// * [property@AboutDialog:developers]
+// * [property@AboutDialog:designers]
+// * [property@AboutDialog:artists]
+// * [property@AboutDialog:translator-credits]
+// * [method@AboutDialog.add_credit_section]
+// * [method@AboutDialog.add_acknowledgement_section]
+func (x *AboutDialog) SetPropertyDocumenters(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("documenters", &v)
+}
+
+// GetPropertyDocumenters gets the "documenters" property.
+// The list of documenters of the application.
+//
+// It will be displayed on the Credits page.
+//
+// Each name may contain email addresses and URLs, see the introduction for
+// more details.
+//
+// See also:
+//
+// * [property@AboutDialog:developers]
+// * [property@AboutDialog:designers]
+// * [property@AboutDialog:artists]
+// * [property@AboutDialog:translator-credits]
+// * [method@AboutDialog.add_credit_section]
+// * [method@AboutDialog.add_acknowledgement_section]
+func (x *AboutDialog) GetPropertyDocumenters() []string {
+	var v gobject.Value
+	x.GetProperty("documenters", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyIssueUrl sets the "issue-url" property.
+// The URL for the application's issue tracker.
+//
+// The issue tracker link is displayed on the main page.
+func (x *AboutDialog) SetPropertyIssueUrl(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("issue-url", &v)
+}
+
+// GetPropertyIssueUrl gets the "issue-url" property.
+// The URL for the application's issue tracker.
+//
+// The issue tracker link is displayed on the main page.
+func (x *AboutDialog) GetPropertyIssueUrl() string {
+	var v gobject.Value
+	x.GetProperty("issue-url", &v)
+	return v.GetString()
+}
+
+// SetPropertyLicense sets the "license" property.
+// The license text.
+//
+// This can be used to set a custom text for the license if it can't be set
+// via [property@AboutDialog:license-type].
+//
+// When set, [property@AboutDialog:license-type] will be set to
+// `GTK_LICENSE_CUSTOM`.
+//
+// The license text will be displayed on the Legal page, below the copyright
+// information.
+//
+// License text can contain Pango markup and links.
+//
+// [method@AboutDialog.add_legal_section] can be used to add license
+// information for the application dependencies or other components.
+func (x *AboutDialog) SetPropertyLicense(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("license", &v)
+}
+
+// GetPropertyLicense gets the "license" property.
+// The license text.
+//
+// This can be used to set a custom text for the license if it can't be set
+// via [property@AboutDialog:license-type].
+//
+// When set, [property@AboutDialog:license-type] will be set to
+// `GTK_LICENSE_CUSTOM`.
+//
+// The license text will be displayed on the Legal page, below the copyright
+// information.
+//
+// License text can contain Pango markup and links.
+//
+// [method@AboutDialog.add_legal_section] can be used to add license
+// information for the application dependencies or other components.
+func (x *AboutDialog) GetPropertyLicense() string {
+	var v gobject.Value
+	x.GetProperty("license", &v)
+	return v.GetString()
+}
+
+// SetPropertyReleaseNotes sets the "release-notes" property.
+// The release notes of the application.
+//
+// Release notes are displayed on the the What's New page.
+//
+// Release notes are formatted the same way as
+// [AppStream descriptions](https://freedesktop.org/software/appstream/docs/chap-Metadata.html#tag-description).
+//
+// The supported formatting options are:
+//
+// * Paragraph (`&lt;p&gt;`)
+// * Ordered list (`&lt;ol&gt;`), with list items (`&lt;li&gt;`)
+// * Unordered list (`&lt;ul&gt;`), with list items (`&lt;li&gt;`)
+//
+// Within paragraphs and list items, emphasis (`&lt;em&gt;`) and inline code
+// (`&lt;code&gt;`) text styles are supported. The emphasis is rendered in italic,
+// while inline code is shown in a monospaced font.
+//
+// Any text outside paragraphs or list items is ignored.
+//
+// Nested lists are not supported.
+//
+// `AdwAboutDialog` displays the version above the release notes. If set, the
+// [property@AboutDialog:release-notes-version] of the property will be used
+// as the version; otherwise, [property@AboutDialog:version] is used.
+func (x *AboutDialog) SetPropertyReleaseNotes(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("release-notes", &v)
+}
+
+// GetPropertyReleaseNotes gets the "release-notes" property.
+// The release notes of the application.
+//
+// Release notes are displayed on the the What's New page.
+//
+// Release notes are formatted the same way as
+// [AppStream descriptions](https://freedesktop.org/software/appstream/docs/chap-Metadata.html#tag-description).
+//
+// The supported formatting options are:
+//
+// * Paragraph (`&lt;p&gt;`)
+// * Ordered list (`&lt;ol&gt;`), with list items (`&lt;li&gt;`)
+// * Unordered list (`&lt;ul&gt;`), with list items (`&lt;li&gt;`)
+//
+// Within paragraphs and list items, emphasis (`&lt;em&gt;`) and inline code
+// (`&lt;code&gt;`) text styles are supported. The emphasis is rendered in italic,
+// while inline code is shown in a monospaced font.
+//
+// Any text outside paragraphs or list items is ignored.
+//
+// Nested lists are not supported.
+//
+// `AdwAboutDialog` displays the version above the release notes. If set, the
+// [property@AboutDialog:release-notes-version] of the property will be used
+// as the version; otherwise, [property@AboutDialog:version] is used.
+func (x *AboutDialog) GetPropertyReleaseNotes() string {
+	var v gobject.Value
+	x.GetProperty("release-notes", &v)
+	return v.GetString()
+}
+
+// SetPropertyReleaseNotesVersion sets the "release-notes-version" property.
+// The version described by the application's release notes.
+//
+// The release notes version is displayed on the What's New page, above the
+// release notes.
+//
+// If not set, [property@AboutDialog:version] will be used instead.
+//
+// For example, an application with the current version 2.0.2 might want to
+// keep the release notes from 2.0.0, and set the release notes version
+// accordingly.
+//
+// See [property@AboutDialog:release-notes].
+func (x *AboutDialog) SetPropertyReleaseNotesVersion(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("release-notes-version", &v)
+}
+
+// GetPropertyReleaseNotesVersion gets the "release-notes-version" property.
+// The version described by the application's release notes.
+//
+// The release notes version is displayed on the What's New page, above the
+// release notes.
+//
+// If not set, [property@AboutDialog:version] will be used instead.
+//
+// For example, an application with the current version 2.0.2 might want to
+// keep the release notes from 2.0.0, and set the release notes version
+// accordingly.
+//
+// See [property@AboutDialog:release-notes].
+func (x *AboutDialog) GetPropertyReleaseNotesVersion() string {
+	var v gobject.Value
+	x.GetProperty("release-notes-version", &v)
+	return v.GetString()
+}
+
+// SetPropertySupportUrl sets the "support-url" property.
+// The URL of the application's support page.
+//
+// The support page link is displayed on the main page.
+func (x *AboutDialog) SetPropertySupportUrl(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("support-url", &v)
+}
+
+// GetPropertySupportUrl gets the "support-url" property.
+// The URL of the application's support page.
+//
+// The support page link is displayed on the main page.
+func (x *AboutDialog) GetPropertySupportUrl() string {
+	var v gobject.Value
+	x.GetProperty("support-url", &v)
+	return v.GetString()
+}
+
+// SetPropertyTranslatorCredits sets the "translator-credits" property.
+// The translator credits string.
+//
+// It will be displayed on the Credits page.
+//
+// This string should be `"translator-credits"` or `"translator_credits"` and
+// should be marked as translatable.
+//
+// The string may contain email addresses and URLs, see the introduction for
+// more details.
+//
+// See also:
+//
+// * [property@AboutDialog:developers]
+// * [property@AboutDialog:designers]
+// * [property@AboutDialog:artists]
+// * [property@AboutDialog:documenters]
+// * [method@AboutDialog.add_credit_section]
+// * [method@AboutDialog.add_acknowledgement_section]
+func (x *AboutDialog) SetPropertyTranslatorCredits(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("translator-credits", &v)
+}
+
+// GetPropertyTranslatorCredits gets the "translator-credits" property.
+// The translator credits string.
+//
+// It will be displayed on the Credits page.
+//
+// This string should be `"translator-credits"` or `"translator_credits"` and
+// should be marked as translatable.
+//
+// The string may contain email addresses and URLs, see the introduction for
+// more details.
+//
+// See also:
+//
+// * [property@AboutDialog:developers]
+// * [property@AboutDialog:designers]
+// * [property@AboutDialog:artists]
+// * [property@AboutDialog:documenters]
+// * [method@AboutDialog.add_credit_section]
+// * [method@AboutDialog.add_acknowledgement_section]
+func (x *AboutDialog) GetPropertyTranslatorCredits() string {
+	var v gobject.Value
+	x.GetProperty("translator-credits", &v)
+	return v.GetString()
+}
+
+// SetPropertyVersion sets the "version" property.
+// The version of the application.
+//
+// The version is displayed on the main page.
+//
+// If [property@AboutDialog:release-notes-version] is not set, the version
+// will also be displayed above the release notes on the What's New page.
+func (x *AboutDialog) SetPropertyVersion(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("version", &v)
+}
+
+// GetPropertyVersion gets the "version" property.
+// The version of the application.
+//
+// The version is displayed on the main page.
+//
+// If [property@AboutDialog:release-notes-version] is not set, the version
+// will also be displayed above the release notes on the What's New page.
+func (x *AboutDialog) GetPropertyVersion() string {
+	var v gobject.Value
+	x.GetProperty("version", &v)
+	return v.GetString()
+}
+
+// SetPropertyWebsite sets the "website" property.
+// The URL of the application's website.
+//
+// Website is displayed on the Details page, below comments, or on the main
+// page if the Details page doesn't have any other content.
+//
+// Applications can add other links below, see [method@AboutDialog.add_link].
+func (x *AboutDialog) SetPropertyWebsite(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("website", &v)
+}
+
+// GetPropertyWebsite gets the "website" property.
+// The URL of the application's website.
+//
+// Website is displayed on the Details page, below comments, or on the main
+// page if the Details page doesn't have any other content.
+//
+// Applications can add other links below, see [method@AboutDialog.add_link].
+func (x *AboutDialog) GetPropertyWebsite() string {
+	var v gobject.Value
+	x.GetProperty("website", &v)
+	return v.GetString()
+}
+
 // Emitted when a URL is activated.
 //
 // Applications may connect to it to override the default behavior, which is
@@ -1075,7 +1752,7 @@ func (x *AboutDialog) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AboutDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *AboutDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

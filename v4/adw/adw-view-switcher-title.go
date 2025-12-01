@@ -233,6 +233,92 @@ func (c *ViewSwitcherTitle) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertySubtitle sets the "subtitle" property.
+// The subtitle to display.
+//
+// The subtitle should give the user additional details.
+func (x *ViewSwitcherTitle) SetPropertySubtitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("subtitle", &v)
+}
+
+// GetPropertySubtitle gets the "subtitle" property.
+// The subtitle to display.
+//
+// The subtitle should give the user additional details.
+func (x *ViewSwitcherTitle) GetPropertySubtitle() string {
+	var v gobject.Value
+	x.GetProperty("subtitle", &v)
+	return v.GetString()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title to display.
+//
+// The title typically identifies the current view or content item, and
+// generally does not use the application name.
+func (x *ViewSwitcherTitle) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title to display.
+//
+// The title typically identifies the current view or content item, and
+// generally does not use the application name.
+func (x *ViewSwitcherTitle) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// GetPropertyTitleVisible gets the "title-visible" property.
+// Whether the title is currently visible.
+//
+// If the title is visible, it means the view switcher is hidden an it may be
+// wanted to show an alternative switcher, e.g. a [class@ViewSwitcherBar].
+func (x *ViewSwitcherTitle) GetPropertyTitleVisible() bool {
+	var v gobject.Value
+	x.GetProperty("title-visible", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyViewSwitcherEnabled sets the "view-switcher-enabled" property.
+// Whether the view switcher is enabled.
+//
+// If it is disabled, the title will be displayed instead. This allows to
+// programmatically hide the view switcher even if it fits in the available
+// space.
+//
+// This can be used e.g. to ensure the view switcher is hidden below a certain
+// window width, or any other constraint you find suitable.
+func (x *ViewSwitcherTitle) SetPropertyViewSwitcherEnabled(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("view-switcher-enabled", &v)
+}
+
+// GetPropertyViewSwitcherEnabled gets the "view-switcher-enabled" property.
+// Whether the view switcher is enabled.
+//
+// If it is disabled, the title will be displayed instead. This allows to
+// programmatically hide the view switcher even if it fits in the available
+// space.
+//
+// This can be used e.g. to ensure the view switcher is hidden below a certain
+// window width, or any other constraint you find suitable.
+func (x *ViewSwitcherTitle) GetPropertyViewSwitcherEnabled() bool {
+	var v gobject.Value
+	x.GetProperty("view-switcher-enabled", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -290,7 +376,7 @@ func (x *ViewSwitcherTitle) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ViewSwitcherTitle) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ViewSwitcherTitle) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

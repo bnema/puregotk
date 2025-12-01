@@ -128,6 +128,58 @@ func (c *ShortcutsWindow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertySectionName sets the "section-name" property.
+// The name of the section to show.
+//
+// This should be the section-name of one of the `GtkShortcutsSection`
+// objects that are in this shortcuts window.
+func (x *ShortcutsWindow) SetPropertySectionName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("section-name", &v)
+}
+
+// GetPropertySectionName gets the "section-name" property.
+// The name of the section to show.
+//
+// This should be the section-name of one of the `GtkShortcutsSection`
+// objects that are in this shortcuts window.
+func (x *ShortcutsWindow) GetPropertySectionName() string {
+	var v gobject.Value
+	x.GetProperty("section-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyViewName sets the "view-name" property.
+// The view name by which to filter the contents.
+//
+// This should correspond to the [property@Gtk.ShortcutsGroup:view]
+// property of some of the [class@Gtk.ShortcutsGroup] objects that
+// are inside this shortcuts window.
+//
+// Set this to %NULL to show all groups.
+func (x *ShortcutsWindow) SetPropertyViewName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("view-name", &v)
+}
+
+// GetPropertyViewName gets the "view-name" property.
+// The view name by which to filter the contents.
+//
+// This should correspond to the [property@Gtk.ShortcutsGroup:view]
+// property of some of the [class@Gtk.ShortcutsGroup] objects that
+// are inside this shortcuts window.
+//
+// Set this to %NULL to show all groups.
+func (x *ShortcutsWindow) GetPropertyViewName() string {
+	var v gobject.Value
+	x.GetProperty("view-name", &v)
+	return v.GetString()
+}
+
 // Emitted when the user uses a keybinding to close the window.
 //
 // This is a [keybinding signal](class.SignalAction.html).
@@ -233,7 +285,7 @@ func (x *ShortcutsWindow) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ShortcutsWindow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ShortcutsWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -488,7 +540,7 @@ func (x *ShortcutsWindow) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *ShortcutsWindow) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *ShortcutsWindow) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

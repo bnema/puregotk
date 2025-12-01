@@ -146,6 +146,48 @@ func (c *SliceListModel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *SliceListModel) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
+// SetPropertyOffset sets the "offset" property.
+// Offset of slice.
+func (x *SliceListModel) SetPropertyOffset(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("offset", &v)
+}
+
+// GetPropertyOffset gets the "offset" property.
+// Offset of slice.
+func (x *SliceListModel) GetPropertyOffset() uint {
+	var v gobject.Value
+	x.GetProperty("offset", &v)
+	return v.GetUint()
+}
+
+// SetPropertySize sets the "size" property.
+// Maximum size of slice.
+func (x *SliceListModel) SetPropertySize(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("size", &v)
+}
+
+// GetPropertySize gets the "size" property.
+// Maximum size of slice.
+func (x *SliceListModel) GetPropertySize() uint {
+	var v gobject.Value
+	x.GetProperty("size", &v)
+	return v.GetUint()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is
@@ -242,7 +284,7 @@ func (x *SliceListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVa
 //
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
-func (x *SliceListModel) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+func (x *SliceListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 

@@ -37,7 +37,7 @@ func (x *SocketListenerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 // virtual method called when the set of socket listened to changes
 func (x *SocketListenerClass) OverrideChanged(cb func(*SocketListener)) {
 	if cb == nil {
@@ -49,7 +49,7 @@ func (x *SocketListenerClass) OverrideChanged(cb func(*SocketListener)) {
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 // virtual method called when the set of socket listened to changes
 func (x *SocketListenerClass) GetChanged() func(*SocketListener) {
 	if x.xChanged == 0 {
@@ -62,7 +62,7 @@ func (x *SocketListenerClass) GetChanged() func(*SocketListener) {
 	}
 }
 
-// OverrideEvent sets the callback function.
+// OverrideEvent sets the "event" callback function.
 func (x *SocketListenerClass) OverrideEvent(cb func(*SocketListener, SocketListenerEvent, *Socket)) {
 	if cb == nil {
 		x.xEvent = 0
@@ -73,7 +73,7 @@ func (x *SocketListenerClass) OverrideEvent(cb func(*SocketListener, SocketListe
 	}
 }
 
-// GetEvent gets the callback function.
+// GetEvent gets the "event" callback function.
 func (x *SocketListenerClass) GetEvent() func(*SocketListener, SocketListenerEvent, *Socket) {
 	if x.xEvent == 0 {
 		return nil
@@ -85,7 +85,7 @@ func (x *SocketListenerClass) GetEvent() func(*SocketListener, SocketListenerEve
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *SocketListenerClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -96,7 +96,7 @@ func (x *SocketListenerClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *SocketListenerClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -108,7 +108,7 @@ func (x *SocketListenerClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *SocketListenerClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -119,7 +119,7 @@ func (x *SocketListenerClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *SocketListenerClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -131,7 +131,7 @@ func (x *SocketListenerClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *SocketListenerClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -142,7 +142,7 @@ func (x *SocketListenerClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *SocketListenerClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -154,7 +154,7 @@ func (x *SocketListenerClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *SocketListenerClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -165,7 +165,7 @@ func (x *SocketListenerClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *SocketListenerClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -177,7 +177,7 @@ func (x *SocketListenerClass) GetGReserved5() func() {
 	}
 }
 
-// OverrideGReserved6 sets the callback function.
+// OverrideGReserved6 sets the "_g_reserved6" callback function.
 func (x *SocketListenerClass) OverrideGReserved6(cb func()) {
 	if cb == nil {
 		x.xGReserved6 = 0
@@ -188,7 +188,7 @@ func (x *SocketListenerClass) OverrideGReserved6(cb func()) {
 	}
 }
 
-// GetGReserved6 gets the callback function.
+// GetGReserved6 gets the "_g_reserved6" callback function.
 func (x *SocketListenerClass) GetGReserved6() func() {
 	if x.xGReserved6 == 0 {
 		return nil
@@ -257,7 +257,7 @@ func NewSocketListener() *SocketListener {
 	return cls
 }
 
-var xSocketListenerAccept func(uintptr, uintptr, uintptr, **glib.Error) uintptr
+var xSocketListenerAccept func(uintptr, **gobject.Object, uintptr, **glib.Error) uintptr
 
 // Blocks waiting for a client to connect to any of the sockets added
 // to the listener. Returns a #GSocketConnection for the socket that was
@@ -274,7 +274,7 @@ func (x *SocketListener) Accept(SourceObjectVar **gobject.Object, CancellableVar
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	cret := xSocketListenerAccept(x.GoPointer(), *gobject.ConvertPtr(SourceObjectVar), CancellableVar.GoPointer(), &cerr)
+	cret := xSocketListenerAccept(x.GoPointer(), SourceObjectVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -301,14 +301,14 @@ func (x *SocketListener) AcceptAsync(CancellableVar *Cancellable, CallbackVar *A
 
 }
 
-var xSocketListenerAcceptFinish func(uintptr, uintptr, uintptr, **glib.Error) uintptr
+var xSocketListenerAcceptFinish func(uintptr, uintptr, **gobject.Object, **glib.Error) uintptr
 
 // Finishes an async accept operation. See g_socket_listener_accept_async()
 func (x *SocketListener) AcceptFinish(ResultVar AsyncResult, SourceObjectVar **gobject.Object) (*SocketConnection, error) {
 	var cls *SocketConnection
 	var cerr *glib.Error
 
-	cret := xSocketListenerAcceptFinish(x.GoPointer(), ResultVar.GoPointer(), *gobject.ConvertPtr(SourceObjectVar), &cerr)
+	cret := xSocketListenerAcceptFinish(x.GoPointer(), ResultVar.GoPointer(), SourceObjectVar, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -322,7 +322,7 @@ func (x *SocketListener) AcceptFinish(ResultVar AsyncResult, SourceObjectVar **g
 
 }
 
-var xSocketListenerAcceptSocket func(uintptr, uintptr, uintptr, **glib.Error) uintptr
+var xSocketListenerAcceptSocket func(uintptr, **gobject.Object, uintptr, **glib.Error) uintptr
 
 // Blocks waiting for a client to connect to any of the sockets added
 // to the listener. Returns the #GSocket that was accepted.
@@ -342,7 +342,7 @@ func (x *SocketListener) AcceptSocket(SourceObjectVar **gobject.Object, Cancella
 	var cls *Socket
 	var cerr *glib.Error
 
-	cret := xSocketListenerAcceptSocket(x.GoPointer(), *gobject.ConvertPtr(SourceObjectVar), CancellableVar.GoPointer(), &cerr)
+	cret := xSocketListenerAcceptSocket(x.GoPointer(), SourceObjectVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -369,14 +369,14 @@ func (x *SocketListener) AcceptSocketAsync(CancellableVar *Cancellable, Callback
 
 }
 
-var xSocketListenerAcceptSocketFinish func(uintptr, uintptr, uintptr, **glib.Error) uintptr
+var xSocketListenerAcceptSocketFinish func(uintptr, uintptr, **gobject.Object, **glib.Error) uintptr
 
 // Finishes an async accept operation. See g_socket_listener_accept_socket_async()
 func (x *SocketListener) AcceptSocketFinish(ResultVar AsyncResult, SourceObjectVar **gobject.Object) (*Socket, error) {
 	var cls *Socket
 	var cerr *glib.Error
 
-	cret := xSocketListenerAcceptSocketFinish(x.GoPointer(), ResultVar.GoPointer(), *gobject.ConvertPtr(SourceObjectVar), &cerr)
+	cret := xSocketListenerAcceptSocketFinish(x.GoPointer(), ResultVar.GoPointer(), SourceObjectVar, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -390,7 +390,7 @@ func (x *SocketListener) AcceptSocketFinish(ResultVar AsyncResult, SourceObjectV
 
 }
 
-var xSocketListenerAddAddress func(uintptr, uintptr, SocketType, SocketProtocol, uintptr, uintptr, **glib.Error) bool
+var xSocketListenerAddAddress func(uintptr, uintptr, SocketType, SocketProtocol, uintptr, **SocketAddress, **glib.Error) bool
 
 // Creates a socket of type @type and protocol @protocol, binds
 // it to @address and adds it to the set of sockets we're accepting
@@ -418,7 +418,7 @@ var xSocketListenerAddAddress func(uintptr, uintptr, SocketType, SocketProtocol,
 func (x *SocketListener) AddAddress(AddressVar *SocketAddress, TypeVar SocketType, ProtocolVar SocketProtocol, SourceObjectVar *gobject.Object, EffectiveAddressVar **SocketAddress) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketListenerAddAddress(x.GoPointer(), AddressVar.GoPointer(), TypeVar, ProtocolVar, SourceObjectVar.GoPointer(), *gobject.ConvertPtr(EffectiveAddressVar), &cerr)
+	cret := xSocketListenerAddAddress(x.GoPointer(), AddressVar.GoPointer(), TypeVar, ProtocolVar, SourceObjectVar.GoPointer(), EffectiveAddressVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -550,6 +550,23 @@ func (c *SocketListener) GoPointer() uintptr {
 
 func (c *SocketListener) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyListenBacklog sets the "listen-backlog" property.
+// The number of outstanding connections in the listen queue.
+func (x *SocketListener) SetPropertyListenBacklog(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("listen-backlog", &v)
+}
+
+// GetPropertyListenBacklog gets the "listen-backlog" property.
+// The number of outstanding connections in the listen queue.
+func (x *SocketListener) GetPropertyListenBacklog() int {
+	var v gobject.Value
+	x.GetProperty("listen-backlog", &v)
+	return v.GetInt()
 }
 
 // Emitted when @listener's activity on @socket changes state.

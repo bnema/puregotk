@@ -44,7 +44,7 @@ func (x *BuildableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideSetId sets the callback function.
+// OverrideSetId sets the "set_id" callback function.
 // Stores the id attribute given in the `GtkBuilder` UI definition.
 //
 //	`GtkWidget` stores the name as object data. Implement this method if your
@@ -60,7 +60,7 @@ func (x *BuildableIface) OverrideSetId(cb func(Buildable, string)) {
 	}
 }
 
-// GetSetId gets the callback function.
+// GetSetId gets the "set_id" callback function.
 // Stores the id attribute given in the `GtkBuilder` UI definition.
 //
 //	`GtkWidget` stores the name as object data. Implement this method if your
@@ -77,7 +77,7 @@ func (x *BuildableIface) GetSetId() func(Buildable, string) {
 	}
 }
 
-// OverrideGetId sets the callback function.
+// OverrideGetId sets the "get_id" callback function.
 // The getter corresponding to @set_id. Implement this
 //
 //	if you implement @set_id.
@@ -91,7 +91,7 @@ func (x *BuildableIface) OverrideGetId(cb func(Buildable) string) {
 	}
 }
 
-// GetGetId gets the callback function.
+// GetGetId gets the "get_id" callback function.
 // The getter corresponding to @set_id. Implement this
 //
 //	if you implement @set_id.
@@ -106,7 +106,7 @@ func (x *BuildableIface) GetGetId() func(Buildable) string {
 	}
 }
 
-// OverrideAddChild sets the callback function.
+// OverrideAddChild sets the "add_child" callback function.
 // Adds a child. The @type parameter can be used to
 //
 //	differentiate the kind of child. `GtkWidget` implements this
@@ -123,7 +123,7 @@ func (x *BuildableIface) OverrideAddChild(cb func(Buildable, *Builder, *gobject.
 	}
 }
 
-// GetAddChild gets the callback function.
+// GetAddChild gets the "add_child" callback function.
 // Adds a child. The @type parameter can be used to
 //
 //	differentiate the kind of child. `GtkWidget` implements this
@@ -141,7 +141,7 @@ func (x *BuildableIface) GetAddChild() func(Buildable, *Builder, *gobject.Object
 	}
 }
 
-// OverrideSetBuildableProperty sets the callback function.
+// OverrideSetBuildableProperty sets the "set_buildable_property" callback function.
 // Sets a property of a buildable object.
 //
 //	It is normally not necessary to implement this, g_object_set_property()
@@ -158,7 +158,7 @@ func (x *BuildableIface) OverrideSetBuildableProperty(cb func(Buildable, *Builde
 	}
 }
 
-// GetSetBuildableProperty gets the callback function.
+// GetSetBuildableProperty gets the "set_buildable_property" callback function.
 // Sets a property of a buildable object.
 //
 //	It is normally not necessary to implement this, g_object_set_property()
@@ -176,7 +176,7 @@ func (x *BuildableIface) GetSetBuildableProperty() func(Buildable, *Builder, str
 	}
 }
 
-// OverrideConstructChild sets the callback function.
+// OverrideConstructChild sets the "construct_child" callback function.
 // Constructs a child of a buildable that has been
 //
 //	specified as “constructor” in the UI definition. This can be used to
@@ -197,7 +197,7 @@ func (x *BuildableIface) OverrideConstructChild(cb func(Buildable, *Builder, str
 	}
 }
 
-// GetConstructChild gets the callback function.
+// GetConstructChild gets the "construct_child" callback function.
 // Constructs a child of a buildable that has been
 //
 //	specified as “constructor” in the UI definition. This can be used to
@@ -221,7 +221,7 @@ func (x *BuildableIface) GetConstructChild() func(Buildable, *Builder, string) *
 	}
 }
 
-// OverrideCustomTagStart sets the callback function.
+// OverrideCustomTagStart sets the "custom_tag_start" callback function.
 // Implement this if the buildable needs to parse
 //
 //	content below `&lt;child&gt;`. To handle an element, the implementation
@@ -229,17 +229,17 @@ func (x *BuildableIface) GetConstructChild() func(Buildable, *Builder, string) *
 //	`GtkWidget` implements this to parse accessible attributes specified
 //	in `&lt;accessibility&gt;` elements.
 //	Note that @user_data must be freed in @custom_tag_end or @custom_finished.
-func (x *BuildableIface) OverrideCustomTagStart(cb func(Buildable, *Builder, *gobject.Object, string, *BuildableParser, uintptr) bool) {
+func (x *BuildableIface) OverrideCustomTagStart(cb func(Buildable, *Builder, *gobject.Object, string, *BuildableParser, *uintptr) bool) {
 	if cb == nil {
 		x.xCustomTagStart = 0
 	} else {
-		x.xCustomTagStart = purego.NewCallback(func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TagnameVarp string, ParserVarp *BuildableParser, DataVarp uintptr) bool {
+		x.xCustomTagStart = purego.NewCallback(func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TagnameVarp string, ParserVarp *BuildableParser, DataVarp *uintptr) bool {
 			return cb(&BuildableBase{Ptr: BuildableVarp}, BuilderNewFromInternalPtr(BuilderVarp), gobject.ObjectNewFromInternalPtr(ChildVarp), TagnameVarp, ParserVarp, DataVarp)
 		})
 	}
 }
 
-// GetCustomTagStart gets the callback function.
+// GetCustomTagStart gets the "custom_tag_start" callback function.
 // Implement this if the buildable needs to parse
 //
 //	content below `&lt;child&gt;`. To handle an element, the implementation
@@ -247,18 +247,18 @@ func (x *BuildableIface) OverrideCustomTagStart(cb func(Buildable, *Builder, *go
 //	`GtkWidget` implements this to parse accessible attributes specified
 //	in `&lt;accessibility&gt;` elements.
 //	Note that @user_data must be freed in @custom_tag_end or @custom_finished.
-func (x *BuildableIface) GetCustomTagStart() func(Buildable, *Builder, *gobject.Object, string, *BuildableParser, uintptr) bool {
+func (x *BuildableIface) GetCustomTagStart() func(Buildable, *Builder, *gobject.Object, string, *BuildableParser, *uintptr) bool {
 	if x.xCustomTagStart == 0 {
 		return nil
 	}
-	var rawCallback func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TagnameVarp string, ParserVarp *BuildableParser, DataVarp uintptr) bool
+	var rawCallback func(BuildableVarp uintptr, BuilderVarp uintptr, ChildVarp uintptr, TagnameVarp string, ParserVarp *BuildableParser, DataVarp *uintptr) bool
 	purego.RegisterFunc(&rawCallback, x.xCustomTagStart)
-	return func(BuildableVar Buildable, BuilderVar *Builder, ChildVar *gobject.Object, TagnameVar string, ParserVar *BuildableParser, DataVar uintptr) bool {
+	return func(BuildableVar Buildable, BuilderVar *Builder, ChildVar *gobject.Object, TagnameVar string, ParserVar *BuildableParser, DataVar *uintptr) bool {
 		return rawCallback(BuildableVar.GoPointer(), BuilderVar.GoPointer(), ChildVar.GoPointer(), TagnameVar, ParserVar, DataVar)
 	}
 }
 
-// OverrideCustomTagEnd sets the callback function.
+// OverrideCustomTagEnd sets the "custom_tag_end" callback function.
 // Called for the end tag of each custom element that is
 //
 //	handled by the buildable (see @custom_tag_start).
@@ -272,7 +272,7 @@ func (x *BuildableIface) OverrideCustomTagEnd(cb func(Buildable, *Builder, *gobj
 	}
 }
 
-// GetCustomTagEnd gets the callback function.
+// GetCustomTagEnd gets the "custom_tag_end" callback function.
 // Called for the end tag of each custom element that is
 //
 //	handled by the buildable (see @custom_tag_start).
@@ -287,7 +287,7 @@ func (x *BuildableIface) GetCustomTagEnd() func(Buildable, *Builder, *gobject.Ob
 	}
 }
 
-// OverrideCustomFinished sets the callback function.
+// OverrideCustomFinished sets the "custom_finished" callback function.
 // Called for each custom tag handled by the buildable
 //
 //	when the builder finishes parsing (see @custom_tag_start)
@@ -301,7 +301,7 @@ func (x *BuildableIface) OverrideCustomFinished(cb func(Buildable, *Builder, *go
 	}
 }
 
-// GetCustomFinished gets the callback function.
+// GetCustomFinished gets the "custom_finished" callback function.
 // Called for each custom tag handled by the buildable
 //
 //	when the builder finishes parsing (see @custom_tag_start)
@@ -316,7 +316,7 @@ func (x *BuildableIface) GetCustomFinished() func(Buildable, *Builder, *gobject.
 	}
 }
 
-// OverrideParserFinished sets the callback function.
+// OverrideParserFinished sets the "parser_finished" callback function.
 // Called when a builder finishes the parsing
 //
 //	of a UI definition. It is normally not necessary to implement this,
@@ -332,7 +332,7 @@ func (x *BuildableIface) OverrideParserFinished(cb func(Buildable, *Builder)) {
 	}
 }
 
-// GetParserFinished gets the callback function.
+// GetParserFinished gets the "parser_finished" callback function.
 // Called when a builder finishes the parsing
 //
 //	of a UI definition. It is normally not necessary to implement this,
@@ -349,7 +349,7 @@ func (x *BuildableIface) GetParserFinished() func(Buildable, *Builder) {
 	}
 }
 
-// OverrideGetInternalChild sets the callback function.
+// OverrideGetInternalChild sets the "get_internal_child" callback function.
 // Returns an internal child of a buildable.
 //
 //	`GtkDialog` implements this to give access to its @vbox, making
@@ -370,7 +370,7 @@ func (x *BuildableIface) OverrideGetInternalChild(cb func(Buildable, *Builder, s
 	}
 }
 
-// GetGetInternalChild gets the callback function.
+// GetGetInternalChild gets the "get_internal_child" callback function.
 // Returns an internal child of a buildable.
 //
 //	`GtkDialog` implements this to give access to its @vbox, making
@@ -437,13 +437,13 @@ func (x *BuildableParseContext) GetElementStack() []string {
 	return cret
 }
 
-var xBuildableParseContextGetPosition func(uintptr, int, int)
+var xBuildableParseContextGetPosition func(uintptr, *int, *int)
 
 // Retrieves the current line number and the number of the character on
 // that line. Intended for use in error messages; there are no strict
 // semantics for what constitutes the "current" line number other than
 // "the best number we could come up with for error messages."
-func (x *BuildableParseContext) GetPosition(LineNumberVar int, CharNumberVar int) {
+func (x *BuildableParseContext) GetPosition(LineNumberVar *int, CharNumberVar *int) {
 
 	xBuildableParseContextGetPosition(x.GoPointer(), LineNumberVar, CharNumberVar)
 
@@ -526,7 +526,7 @@ func (x *BuildableParser) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideStartElement sets the callback function.
+// OverrideStartElement sets the "start_element" callback function.
 // function called for open elements
 func (x *BuildableParser) OverrideStartElement(cb func(*BuildableParseContext, string, string, string, uintptr)) {
 	if cb == nil {
@@ -538,7 +538,7 @@ func (x *BuildableParser) OverrideStartElement(cb func(*BuildableParseContext, s
 	}
 }
 
-// GetStartElement gets the callback function.
+// GetStartElement gets the "start_element" callback function.
 // function called for open elements
 func (x *BuildableParser) GetStartElement() func(*BuildableParseContext, string, string, string, uintptr) {
 	if x.xStartElement == 0 {
@@ -551,7 +551,7 @@ func (x *BuildableParser) GetStartElement() func(*BuildableParseContext, string,
 	}
 }
 
-// OverrideEndElement sets the callback function.
+// OverrideEndElement sets the "end_element" callback function.
 // function called for close elements
 func (x *BuildableParser) OverrideEndElement(cb func(*BuildableParseContext, string, uintptr)) {
 	if cb == nil {
@@ -563,7 +563,7 @@ func (x *BuildableParser) OverrideEndElement(cb func(*BuildableParseContext, str
 	}
 }
 
-// GetEndElement gets the callback function.
+// GetEndElement gets the "end_element" callback function.
 // function called for close elements
 func (x *BuildableParser) GetEndElement() func(*BuildableParseContext, string, uintptr) {
 	if x.xEndElement == 0 {
@@ -576,7 +576,7 @@ func (x *BuildableParser) GetEndElement() func(*BuildableParseContext, string, u
 	}
 }
 
-// OverrideText sets the callback function.
+// OverrideText sets the "text" callback function.
 // function called for character data
 func (x *BuildableParser) OverrideText(cb func(*BuildableParseContext, string, uint, uintptr)) {
 	if cb == nil {
@@ -588,7 +588,7 @@ func (x *BuildableParser) OverrideText(cb func(*BuildableParseContext, string, u
 	}
 }
 
-// GetText gets the callback function.
+// GetText gets the "text" callback function.
 // function called for character data
 func (x *BuildableParser) GetText() func(*BuildableParseContext, string, uint, uintptr) {
 	if x.xText == 0 {
@@ -601,7 +601,7 @@ func (x *BuildableParser) GetText() func(*BuildableParseContext, string, uint, u
 	}
 }
 
-// OverrideError sets the callback function.
+// OverrideError sets the "error" callback function.
 // function called on error
 func (x *BuildableParser) OverrideError(cb func(*BuildableParseContext, *glib.Error, uintptr)) {
 	if cb == nil {
@@ -613,7 +613,7 @@ func (x *BuildableParser) OverrideError(cb func(*BuildableParseContext, *glib.Er
 	}
 }
 
-// GetError gets the callback function.
+// GetError gets the "error" callback function.
 // function called on error
 func (x *BuildableParser) GetError() func(*BuildableParseContext, *glib.Error, uintptr) {
 	if x.xError == 0 {

@@ -173,6 +173,23 @@ func (c *ViewSwitcherBar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyReveal sets the "reveal" property.
+// Whether the bar should be revealed or hidden.
+func (x *ViewSwitcherBar) SetPropertyReveal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reveal", &v)
+}
+
+// GetPropertyReveal gets the "reveal" property.
+// Whether the bar should be revealed or hidden.
+func (x *ViewSwitcherBar) GetPropertyReveal() bool {
+	var v gobject.Value
+	x.GetProperty("reveal", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -230,7 +247,7 @@ func (x *ViewSwitcherBar) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ViewSwitcherBar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ViewSwitcherBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

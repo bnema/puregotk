@@ -519,6 +519,187 @@ func (c *Flap) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFoldDuration sets the "fold-duration" property.
+// The fold transition animation duration, in milliseconds.
+func (x *Flap) SetPropertyFoldDuration(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("fold-duration", &v)
+}
+
+// GetPropertyFoldDuration gets the "fold-duration" property.
+// The fold transition animation duration, in milliseconds.
+func (x *Flap) GetPropertyFoldDuration() uint {
+	var v gobject.Value
+	x.GetProperty("fold-duration", &v)
+	return v.GetUint()
+}
+
+// GetPropertyFolded gets the "folded" property.
+// Whether the flap is currently folded.
+//
+// See [property@Flap:fold-policy].
+func (x *Flap) GetPropertyFolded() bool {
+	var v gobject.Value
+	x.GetProperty("folded", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLocked sets the "locked" property.
+// Whether the flap is locked.
+//
+// If `FALSE`, folding when the flap is revealed automatically closes it, and
+// unfolding it when the flap is not revealed opens it. If `TRUE`,
+// [property@Flap:reveal-flap] value never changes on its own.
+func (x *Flap) SetPropertyLocked(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("locked", &v)
+}
+
+// GetPropertyLocked gets the "locked" property.
+// Whether the flap is locked.
+//
+// If `FALSE`, folding when the flap is revealed automatically closes it, and
+// unfolding it when the flap is not revealed opens it. If `TRUE`,
+// [property@Flap:reveal-flap] value never changes on its own.
+func (x *Flap) GetPropertyLocked() bool {
+	var v gobject.Value
+	x.GetProperty("locked", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyModal sets the "modal" property.
+// Whether the flap is modal.
+//
+// If `TRUE`, clicking the content widget while flap is revealed, as well as
+// pressing the &lt;kbd&gt;Esc&lt;/kbd&gt; key, will close the flap. If `FALSE`, clicks
+// are passed through to the content widget.
+func (x *Flap) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the flap is modal.
+//
+// If `TRUE`, clicking the content widget while flap is revealed, as well as
+// pressing the &lt;kbd&gt;Esc&lt;/kbd&gt; key, will close the flap. If `FALSE`, clicks
+// are passed through to the content widget.
+func (x *Flap) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRevealFlap sets the "reveal-flap" property.
+// Whether the flap widget is revealed.
+func (x *Flap) SetPropertyRevealFlap(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reveal-flap", &v)
+}
+
+// GetPropertyRevealFlap gets the "reveal-flap" property.
+// Whether the flap widget is revealed.
+func (x *Flap) GetPropertyRevealFlap() bool {
+	var v gobject.Value
+	x.GetProperty("reveal-flap", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRevealParams sets the "reveal-params" property.
+// The reveal animation spring parameters.
+//
+// The default value is equivalent to:
+//
+// ```c
+// adw_spring_params_new (1, 0.5, 500)
+// ```
+func (x *Flap) SetPropertyRevealParams(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("reveal-params", &v)
+}
+
+// GetPropertyRevealParams gets the "reveal-params" property.
+// The reveal animation spring parameters.
+//
+// The default value is equivalent to:
+//
+// ```c
+// adw_spring_params_new (1, 0.5, 500)
+// ```
+func (x *Flap) GetPropertyRevealParams() uintptr {
+	var v gobject.Value
+	x.GetProperty("reveal-params", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyRevealProgress gets the "reveal-progress" property.
+// The current reveal transition progress.
+//
+// 0 means fully hidden, 1 means fully revealed.
+//
+// See [property@Flap:reveal-flap].
+func (x *Flap) GetPropertyRevealProgress() float64 {
+	var v gobject.Value
+	x.GetProperty("reveal-progress", &v)
+	return v.GetDouble()
+}
+
+// SetPropertySwipeToClose sets the "swipe-to-close" property.
+// Whether the flap can be closed with a swipe gesture.
+//
+// The area that can be swiped depends on the [property@Flap:transition-type]
+// value.
+func (x *Flap) SetPropertySwipeToClose(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("swipe-to-close", &v)
+}
+
+// GetPropertySwipeToClose gets the "swipe-to-close" property.
+// Whether the flap can be closed with a swipe gesture.
+//
+// The area that can be swiped depends on the [property@Flap:transition-type]
+// value.
+func (x *Flap) GetPropertySwipeToClose() bool {
+	var v gobject.Value
+	x.GetProperty("swipe-to-close", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySwipeToOpen sets the "swipe-to-open" property.
+// Whether the flap can be opened with a swipe gesture.
+//
+// The area that can be swiped depends on the [property@Flap:transition-type]
+// value.
+func (x *Flap) SetPropertySwipeToOpen(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("swipe-to-open", &v)
+}
+
+// GetPropertySwipeToOpen gets the "swipe-to-open" property.
+// Whether the flap can be opened with a swipe gesture.
+//
+// The area that can be swiped depends on the [property@Flap:transition-type]
+// value.
+func (x *Flap) GetPropertySwipeToOpen() bool {
+	var v gobject.Value
+	x.GetProperty("swipe-to-open", &v)
+	return v.GetBoolean()
+}
+
 // Gets the progress @self will snap back to after the gesture is canceled.
 func (x *Flap) GetCancelProgress() float64 {
 
@@ -546,7 +727,7 @@ func (x *Flap) GetProgress() float64 {
 //
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
-func (x *Flap) GetSnapPoints(NSnapPointsVar int) uintptr {
+func (x *Flap) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
@@ -624,7 +805,7 @@ func (x *Flap) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Flap) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Flap) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

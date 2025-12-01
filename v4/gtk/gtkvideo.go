@@ -300,6 +300,40 @@ func (c *Video) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAutoplay sets the "autoplay" property.
+// If the video should automatically begin playing.
+func (x *Video) SetPropertyAutoplay(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("autoplay", &v)
+}
+
+// GetPropertyAutoplay gets the "autoplay" property.
+// If the video should automatically begin playing.
+func (x *Video) GetPropertyAutoplay() bool {
+	var v gobject.Value
+	x.GetProperty("autoplay", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLoop sets the "loop" property.
+// If new media files should be set to loop.
+func (x *Video) SetPropertyLoop(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("loop", &v)
+}
+
+// GetPropertyLoop gets the "loop" property.
+// If new media files should be set to loop.
+func (x *Video) GetPropertyLoop() bool {
+	var v gobject.Value
+	x.GetProperty("loop", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -357,7 +391,7 @@ func (x *Video) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Video) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Video) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

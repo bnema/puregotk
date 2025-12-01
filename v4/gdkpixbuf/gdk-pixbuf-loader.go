@@ -30,7 +30,7 @@ func (x *PixbufLoaderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideSizePrepared sets the callback function.
+// OverrideSizePrepared sets the "size_prepared" callback function.
 func (x *PixbufLoaderClass) OverrideSizePrepared(cb func(*PixbufLoader, int, int)) {
 	if cb == nil {
 		x.xSizePrepared = 0
@@ -41,7 +41,7 @@ func (x *PixbufLoaderClass) OverrideSizePrepared(cb func(*PixbufLoader, int, int
 	}
 }
 
-// GetSizePrepared gets the callback function.
+// GetSizePrepared gets the "size_prepared" callback function.
 func (x *PixbufLoaderClass) GetSizePrepared() func(*PixbufLoader, int, int) {
 	if x.xSizePrepared == 0 {
 		return nil
@@ -53,7 +53,7 @@ func (x *PixbufLoaderClass) GetSizePrepared() func(*PixbufLoader, int, int) {
 	}
 }
 
-// OverrideAreaPrepared sets the callback function.
+// OverrideAreaPrepared sets the "area_prepared" callback function.
 func (x *PixbufLoaderClass) OverrideAreaPrepared(cb func(*PixbufLoader)) {
 	if cb == nil {
 		x.xAreaPrepared = 0
@@ -64,7 +64,7 @@ func (x *PixbufLoaderClass) OverrideAreaPrepared(cb func(*PixbufLoader)) {
 	}
 }
 
-// GetAreaPrepared gets the callback function.
+// GetAreaPrepared gets the "area_prepared" callback function.
 func (x *PixbufLoaderClass) GetAreaPrepared() func(*PixbufLoader) {
 	if x.xAreaPrepared == 0 {
 		return nil
@@ -76,7 +76,7 @@ func (x *PixbufLoaderClass) GetAreaPrepared() func(*PixbufLoader) {
 	}
 }
 
-// OverrideAreaUpdated sets the callback function.
+// OverrideAreaUpdated sets the "area_updated" callback function.
 func (x *PixbufLoaderClass) OverrideAreaUpdated(cb func(*PixbufLoader, int, int, int, int)) {
 	if cb == nil {
 		x.xAreaUpdated = 0
@@ -87,7 +87,7 @@ func (x *PixbufLoaderClass) OverrideAreaUpdated(cb func(*PixbufLoader, int, int,
 	}
 }
 
-// GetAreaUpdated gets the callback function.
+// GetAreaUpdated gets the "area_updated" callback function.
 func (x *PixbufLoaderClass) GetAreaUpdated() func(*PixbufLoader, int, int, int, int) {
 	if x.xAreaUpdated == 0 {
 		return nil
@@ -99,7 +99,7 @@ func (x *PixbufLoaderClass) GetAreaUpdated() func(*PixbufLoader, int, int, int, 
 	}
 }
 
-// OverrideClosed sets the callback function.
+// OverrideClosed sets the "closed" callback function.
 func (x *PixbufLoaderClass) OverrideClosed(cb func(*PixbufLoader)) {
 	if cb == nil {
 		x.xClosed = 0
@@ -110,7 +110,7 @@ func (x *PixbufLoaderClass) OverrideClosed(cb func(*PixbufLoader)) {
 	}
 }
 
-// GetClosed gets the callback function.
+// GetClosed gets the "closed" callback function.
 func (x *PixbufLoaderClass) GetClosed() func(*PixbufLoader) {
 	if x.xClosed == 0 {
 		return nil

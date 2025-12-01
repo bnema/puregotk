@@ -32,7 +32,7 @@ func (x *SocketClientClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideEvent sets the callback function.
+// OverrideEvent sets the "event" callback function.
 func (x *SocketClientClass) OverrideEvent(cb func(*SocketClient, SocketClientEvent, SocketConnectable, *IOStream)) {
 	if cb == nil {
 		x.xEvent = 0
@@ -43,7 +43,7 @@ func (x *SocketClientClass) OverrideEvent(cb func(*SocketClient, SocketClientEve
 	}
 }
 
-// GetEvent gets the callback function.
+// GetEvent gets the "event" callback function.
 func (x *SocketClientClass) GetEvent() func(*SocketClient, SocketClientEvent, SocketConnectable, *IOStream) {
 	if x.xEvent == 0 {
 		return nil
@@ -55,7 +55,7 @@ func (x *SocketClientClass) GetEvent() func(*SocketClient, SocketClientEvent, So
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *SocketClientClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -66,7 +66,7 @@ func (x *SocketClientClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *SocketClientClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -78,7 +78,7 @@ func (x *SocketClientClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *SocketClientClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -89,7 +89,7 @@ func (x *SocketClientClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *SocketClientClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -101,7 +101,7 @@ func (x *SocketClientClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *SocketClientClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -112,7 +112,7 @@ func (x *SocketClientClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *SocketClientClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -124,7 +124,7 @@ func (x *SocketClientClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *SocketClientClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -135,7 +135,7 @@ func (x *SocketClientClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *SocketClientClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -798,6 +798,57 @@ func (c *SocketClient) GoPointer() uintptr {
 
 func (c *SocketClient) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyEnableProxy sets the "enable-proxy" property.
+// Enable proxy support.
+func (x *SocketClient) SetPropertyEnableProxy(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-proxy", &v)
+}
+
+// GetPropertyEnableProxy gets the "enable-proxy" property.
+// Enable proxy support.
+func (x *SocketClient) GetPropertyEnableProxy() bool {
+	var v gobject.Value
+	x.GetProperty("enable-proxy", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTimeout sets the "timeout" property.
+// The I/O timeout for sockets, in seconds, or `0` for none.
+func (x *SocketClient) SetPropertyTimeout(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("timeout", &v)
+}
+
+// GetPropertyTimeout gets the "timeout" property.
+// The I/O timeout for sockets, in seconds, or `0` for none.
+func (x *SocketClient) GetPropertyTimeout() uint {
+	var v gobject.Value
+	x.GetProperty("timeout", &v)
+	return v.GetUint()
+}
+
+// SetPropertyTls sets the "tls" property.
+// Whether to create TLS connections.
+func (x *SocketClient) SetPropertyTls(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("tls", &v)
+}
+
+// GetPropertyTls gets the "tls" property.
+// Whether to create TLS connections.
+func (x *SocketClient) GetPropertyTls() bool {
+	var v gobject.Value
+	x.GetProperty("tls", &v)
+	return v.GetBoolean()
 }
 
 // Emitted when @client's activity on @connectable changes state.

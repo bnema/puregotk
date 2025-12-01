@@ -154,31 +154,31 @@ func (x *Ray) InitFromVec3(OriginVar *Vec3, DirectionVar *Vec3) *Ray {
 	return cret
 }
 
-var xRayIntersectBox func(uintptr, *Box, float32) RayIntersectionKind
+var xRayIntersectBox func(uintptr, *Box, *float32) RayIntersectionKind
 
 // Intersects the given #graphene_ray_t @r with the given
 // #graphene_box_t @b.
-func (x *Ray) IntersectBox(BVar *Box, TOutVar float32) RayIntersectionKind {
+func (x *Ray) IntersectBox(BVar *Box, TOutVar *float32) RayIntersectionKind {
 
 	cret := xRayIntersectBox(x.GoPointer(), BVar, TOutVar)
 	return cret
 }
 
-var xRayIntersectSphere func(uintptr, *Sphere, float32) RayIntersectionKind
+var xRayIntersectSphere func(uintptr, *Sphere, *float32) RayIntersectionKind
 
 // Intersects the given #graphene_ray_t @r with the given
 // #graphene_sphere_t @s.
-func (x *Ray) IntersectSphere(SVar *Sphere, TOutVar float32) RayIntersectionKind {
+func (x *Ray) IntersectSphere(SVar *Sphere, TOutVar *float32) RayIntersectionKind {
 
 	cret := xRayIntersectSphere(x.GoPointer(), SVar, TOutVar)
 	return cret
 }
 
-var xRayIntersectTriangle func(uintptr, *Triangle, float32) RayIntersectionKind
+var xRayIntersectTriangle func(uintptr, *Triangle, *float32) RayIntersectionKind
 
 // Intersects the given #graphene_ray_t @r with the given
 // #graphene_triangle_t @t.
-func (x *Ray) IntersectTriangle(TVar *Triangle, TOutVar float32) RayIntersectionKind {
+func (x *Ray) IntersectTriangle(TVar *Triangle, TOutVar *float32) RayIntersectionKind {
 
 	cret := xRayIntersectTriangle(x.GoPointer(), TVar, TOutVar)
 	return cret

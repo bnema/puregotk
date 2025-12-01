@@ -229,6 +229,23 @@ func (c *Drag) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFormats sets the "formats" property.
+// The possible formats that the drag can provide its data in.
+func (x *Drag) SetPropertyFormats(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("formats", &v)
+}
+
+// GetPropertyFormats gets the "formats" property.
+// The possible formats that the drag can provide its data in.
+func (x *Drag) GetPropertyFormats() uintptr {
+	var v gobject.Value
+	x.GetProperty("formats", &v)
+	return v.GetPointer()
+}
+
 // Emitted when the drag operation is cancelled.
 func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))

@@ -28,7 +28,7 @@ func (x *AsyncInitableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideInitAsync sets the callback function.
+// OverrideInitAsync sets the "init_async" callback function.
 // Starts initialization of the object.
 func (x *AsyncInitableIface) OverrideInitAsync(cb func(AsyncInitable, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -40,7 +40,7 @@ func (x *AsyncInitableIface) OverrideInitAsync(cb func(AsyncInitable, int, *Canc
 	}
 }
 
-// GetInitAsync gets the callback function.
+// GetInitAsync gets the "init_async" callback function.
 // Starts initialization of the object.
 func (x *AsyncInitableIface) GetInitAsync() func(AsyncInitable, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xInitAsync == 0 {
@@ -53,7 +53,7 @@ func (x *AsyncInitableIface) GetInitAsync() func(AsyncInitable, int, *Cancellabl
 	}
 }
 
-// OverrideInitFinish sets the callback function.
+// OverrideInitFinish sets the "init_finish" callback function.
 // Finishes initialization of the object.
 func (x *AsyncInitableIface) OverrideInitFinish(cb func(AsyncInitable, AsyncResult) bool) {
 	if cb == nil {
@@ -65,7 +65,7 @@ func (x *AsyncInitableIface) OverrideInitFinish(cb func(AsyncInitable, AsyncResu
 	}
 }
 
-// GetInitFinish gets the callback function.
+// GetInitFinish gets the "init_finish" callback function.
 // Finishes initialization of the object.
 func (x *AsyncInitableIface) GetInitFinish() func(AsyncInitable, AsyncResult) bool {
 	if x.xInitFinish == 0 {

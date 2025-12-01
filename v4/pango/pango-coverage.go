@@ -142,10 +142,10 @@ func (x *Coverage) Set(IndexVar int, LevelVar CoverageLevel) {
 
 }
 
-var xCoverageToBytes func(uintptr, []byte, int)
+var xCoverageToBytes func(uintptr, *[]byte, *int)
 
 // Convert a `PangoCoverage` structure into a flat binary format.
-func (x *Coverage) ToBytes(BytesVar []byte, NBytesVar int) {
+func (x *Coverage) ToBytes(BytesVar *[]byte, NBytesVar *int) {
 
 	xCoverageToBytes(x.GoPointer(), BytesVar, NBytesVar)
 

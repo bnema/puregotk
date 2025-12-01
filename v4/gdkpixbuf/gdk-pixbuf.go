@@ -859,7 +859,7 @@ func (x *Pixbuf) GetPixels() uintptr {
 	return cret
 }
 
-var xPixbufGetPixelsWithLength func(uintptr, uint) uintptr
+var xPixbufGetPixelsWithLength func(uintptr, *uint) uintptr
 
 // Queries a pointer to the pixel data of a pixbuf.
 //
@@ -868,7 +868,7 @@ var xPixbufGetPixelsWithLength func(uintptr, uint) uintptr
 //
 // Please see the section on [image data](class.Pixbuf.html#image-data) for information
 // about how the pixel data is stored in memory.
-func (x *Pixbuf) GetPixelsWithLength(LengthVar uint) uintptr {
+func (x *Pixbuf) GetPixelsWithLength(LengthVar *uint) uintptr {
 
 	cret := xPixbufGetPixelsWithLength(x.GoPointer(), LengthVar)
 	return cret
@@ -1088,7 +1088,7 @@ func (x *Pixbuf) Save(FilenameVar string, TypeVar string, ErrorVar **glib.Error,
 	return cret
 }
 
-var xPixbufSaveToBuffer func(uintptr, []byte, uint, string, **glib.Error, ...interface{}) bool
+var xPixbufSaveToBuffer func(uintptr, *[]byte, *uint, string, **glib.Error, ...interface{}) bool
 
 // Saves pixbuf to a new buffer in format `type`, which is currently "jpeg",
 // "png", "tiff", "ico" or "bmp".
@@ -1104,13 +1104,13 @@ var xPixbufSaveToBuffer func(uintptr, []byte, uint, string, **glib.Error, ...int
 // domain.
 //
 // See `gdk_pixbuf_save()` for more details.
-func (x *Pixbuf) SaveToBuffer(BufferVar []byte, BufferSizeVar uint, TypeVar string, ErrorVar **glib.Error, varArgs ...interface{}) bool {
+func (x *Pixbuf) SaveToBuffer(BufferVar *[]byte, BufferSizeVar *uint, TypeVar string, ErrorVar **glib.Error, varArgs ...interface{}) bool {
 
 	cret := xPixbufSaveToBuffer(x.GoPointer(), BufferVar, BufferSizeVar, TypeVar, ErrorVar, varArgs...)
 	return cret
 }
 
-var xPixbufSaveToBufferv func(uintptr, []byte, uint, string, []string, []string, **glib.Error) bool
+var xPixbufSaveToBufferv func(uintptr, *[]byte, *uint, string, []string, []string, **glib.Error) bool
 
 // Vector version of `gdk_pixbuf_save_to_buffer()`.
 //
@@ -1118,7 +1118,7 @@ var xPixbufSaveToBufferv func(uintptr, []byte, uint, string, []string, []string,
 // "tiff", "png", "ico" or "bmp".
 //
 // See [method@GdkPixbuf.Pixbuf.save_to_buffer] for more details.
-func (x *Pixbuf) SaveToBufferv(BufferVar []byte, BufferSizeVar uint, TypeVar string, OptionKeysVar []string, OptionValuesVar []string) (bool, error) {
+func (x *Pixbuf) SaveToBufferv(BufferVar *[]byte, BufferSizeVar *uint, TypeVar string, OptionKeysVar []string, OptionValuesVar []string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPixbufSaveToBufferv(x.GoPointer(), BufferVar, BufferSizeVar, TypeVar, OptionKeysVar, OptionValuesVar, &cerr)
@@ -1347,6 +1347,156 @@ func (c *Pixbuf) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyBitsPerSample sets the "bits-per-sample" property.
+// The number of bits per sample.
+//
+// Currently only 8 bit per sample are supported.
+func (x *Pixbuf) SetPropertyBitsPerSample(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("bits-per-sample", &v)
+}
+
+// GetPropertyBitsPerSample gets the "bits-per-sample" property.
+// The number of bits per sample.
+//
+// Currently only 8 bit per sample are supported.
+func (x *Pixbuf) GetPropertyBitsPerSample() int {
+	var v gobject.Value
+	x.GetProperty("bits-per-sample", &v)
+	return v.GetInt()
+}
+
+// SetPropertyHasAlpha sets the "has-alpha" property.
+// Whether the pixbuf has an alpha channel.
+func (x *Pixbuf) SetPropertyHasAlpha(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-alpha", &v)
+}
+
+// GetPropertyHasAlpha gets the "has-alpha" property.
+// Whether the pixbuf has an alpha channel.
+func (x *Pixbuf) GetPropertyHasAlpha() bool {
+	var v gobject.Value
+	x.GetProperty("has-alpha", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHeight sets the "height" property.
+// The number of rows of the pixbuf.
+func (x *Pixbuf) SetPropertyHeight(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("height", &v)
+}
+
+// GetPropertyHeight gets the "height" property.
+// The number of rows of the pixbuf.
+func (x *Pixbuf) GetPropertyHeight() int {
+	var v gobject.Value
+	x.GetProperty("height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyNChannels sets the "n-channels" property.
+// The number of samples per pixel.
+//
+// Currently, only 3 or 4 samples per pixel are supported.
+func (x *Pixbuf) SetPropertyNChannels(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("n-channels", &v)
+}
+
+// GetPropertyNChannels gets the "n-channels" property.
+// The number of samples per pixel.
+//
+// Currently, only 3 or 4 samples per pixel are supported.
+func (x *Pixbuf) GetPropertyNChannels() int {
+	var v gobject.Value
+	x.GetProperty("n-channels", &v)
+	return v.GetInt()
+}
+
+// SetPropertyPixelBytes sets the "pixel-bytes" property.
+func (x *Pixbuf) SetPropertyPixelBytes(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("pixel-bytes", &v)
+}
+
+// GetPropertyPixelBytes gets the "pixel-bytes" property.
+func (x *Pixbuf) GetPropertyPixelBytes() uintptr {
+	var v gobject.Value
+	x.GetProperty("pixel-bytes", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyPixels sets the "pixels" property.
+// A pointer to the pixel data of the pixbuf.
+func (x *Pixbuf) SetPropertyPixels(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("pixels", &v)
+}
+
+// GetPropertyPixels gets the "pixels" property.
+// A pointer to the pixel data of the pixbuf.
+func (x *Pixbuf) GetPropertyPixels() uintptr {
+	var v gobject.Value
+	x.GetProperty("pixels", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyRowstride sets the "rowstride" property.
+// The number of bytes between the start of a row and
+// the start of the next row.
+//
+// This number must (obviously) be at least as large as the
+// width of the pixbuf.
+func (x *Pixbuf) SetPropertyRowstride(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("rowstride", &v)
+}
+
+// GetPropertyRowstride gets the "rowstride" property.
+// The number of bytes between the start of a row and
+// the start of the next row.
+//
+// This number must (obviously) be at least as large as the
+// width of the pixbuf.
+func (x *Pixbuf) GetPropertyRowstride() int {
+	var v gobject.Value
+	x.GetProperty("rowstride", &v)
+	return v.GetInt()
+}
+
+// SetPropertyWidth sets the "width" property.
+// The number of columns of the pixbuf.
+func (x *Pixbuf) SetPropertyWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("width", &v)
+}
+
+// GetPropertyWidth gets the "width" property.
+// The number of columns of the pixbuf.
+func (x *Pixbuf) GetPropertyWidth() int {
+	var v gobject.Value
+	x.GetProperty("width", &v)
+	return v.GetInt()
+}
+
 // Checks if two icons are equal.
 func (x *Pixbuf) Equal(Icon2Var gio.Icon) bool {
 
@@ -1396,7 +1546,7 @@ func (x *Pixbuf) ToString() string {
 
 // Loads a loadable icon. For the asynchronous version of this function,
 // see g_loadable_icon_load_async().
-func (x *Pixbuf) Load(SizeVar int, TypeVar string, CancellableVar *gio.Cancellable) (*gio.InputStream, error) {
+func (x *Pixbuf) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancellable) (*gio.InputStream, error) {
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
@@ -1424,7 +1574,7 @@ func (x *Pixbuf) LoadAsync(SizeVar int, CancellableVar *gio.Cancellable, Callbac
 }
 
 // Finishes an asynchronous icon load started in g_loadable_icon_load_async().
-func (x *Pixbuf) LoadFinish(ResVar gio.AsyncResult, TypeVar string) (*gio.InputStream, error) {
+func (x *Pixbuf) LoadFinish(ResVar gio.AsyncResult, TypeVar *string) (*gio.InputStream, error) {
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
@@ -1455,10 +1605,10 @@ func PixbufCalculateRowstride(ColorspaceVar Colorspace, HasAlphaVar bool, BitsPe
 	return cret
 }
 
-var xPixbufGetFileInfo func(string, int, int) *PixbufFormat
+var xPixbufGetFileInfo func(string, *int, *int) *PixbufFormat
 
 // Parses an image file far enough to determine its format and size.
-func PixbufGetFileInfo(FilenameVar string, WidthVar int, HeightVar int) *PixbufFormat {
+func PixbufGetFileInfo(FilenameVar string, WidthVar *int, HeightVar *int) *PixbufFormat {
 
 	cret := xPixbufGetFileInfo(FilenameVar, WidthVar, HeightVar)
 	return cret
@@ -1481,11 +1631,11 @@ func PixbufGetFileInfoAsync(FilenameVar string, CancellableVar *gio.Cancellable,
 
 }
 
-var xPixbufGetFileInfoFinish func(uintptr, int, int, **glib.Error) *PixbufFormat
+var xPixbufGetFileInfoFinish func(uintptr, *int, *int, **glib.Error) *PixbufFormat
 
 // Finishes an asynchronous pixbuf parsing operation started with
 // gdk_pixbuf_get_file_info_async().
-func PixbufGetFileInfoFinish(AsyncResultVar gio.AsyncResult, WidthVar int, HeightVar int) (*PixbufFormat, error) {
+func PixbufGetFileInfoFinish(AsyncResultVar gio.AsyncResult, WidthVar *int, HeightVar *int) (*PixbufFormat, error) {
 	var cerr *glib.Error
 
 	cret := xPixbufGetFileInfoFinish(AsyncResultVar.GoPointer(), WidthVar, HeightVar, &cerr)

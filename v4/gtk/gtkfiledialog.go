@@ -268,13 +268,13 @@ func (x *FileDialog) OpenMultipleTextFiles(ParentVar *Window, CancellableVar *gi
 
 }
 
-var xFileDialogOpenMultipleTextFilesFinish func(uintptr, uintptr, string, **glib.Error) uintptr
+var xFileDialogOpenMultipleTextFilesFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FileDialog.open] call.
 //
 // Note that this function returns a [error@Gtk.DialogError.DISMISSED]
 // error if the user cancels the dialog.
-func (x *FileDialog) OpenMultipleTextFilesFinish(ResultVar gio.AsyncResult, EncodingVar string) (*gio.ListModelBase, error) {
+func (x *FileDialog) OpenMultipleTextFilesFinish(ResultVar gio.AsyncResult, EncodingVar *string) (*gio.ListModelBase, error) {
 	var cls *gio.ListModelBase
 	var cerr *glib.Error
 
@@ -307,7 +307,7 @@ func (x *FileDialog) OpenTextFile(ParentVar *Window, CancellableVar *gio.Cancell
 
 }
 
-var xFileDialogOpenTextFileFinish func(uintptr, uintptr, string, **glib.Error) uintptr
+var xFileDialogOpenTextFileFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FileDialog.open_text_file] call
 // and returns the resulting file and text encoding.
@@ -319,7 +319,7 @@ var xFileDialogOpenTextFileFinish func(uintptr, uintptr, string, **glib.Error) u
 //
 // Note that this function returns a [error@Gtk.DialogError.DISMISSED]
 // error if the user cancels the dialog.
-func (x *FileDialog) OpenTextFileFinish(ResultVar gio.AsyncResult, EncodingVar string) (*gio.FileBase, error) {
+func (x *FileDialog) OpenTextFileFinish(ResultVar gio.AsyncResult, EncodingVar *string) (*gio.FileBase, error) {
 	var cls *gio.FileBase
 	var cerr *glib.Error
 
@@ -390,7 +390,7 @@ func (x *FileDialog) SaveTextFile(ParentVar *Window, CancellableVar *gio.Cancell
 
 }
 
-var xFileDialogSaveTextFileFinish func(uintptr, uintptr, string, string, **glib.Error) uintptr
+var xFileDialogSaveTextFileFinish func(uintptr, uintptr, *string, *string, **glib.Error) uintptr
 
 // Finishes the [method@Gtk.FileDialog.save_text_file] call
 // and returns the resulting file, text encoding and line endings.
@@ -405,7 +405,7 @@ var xFileDialogSaveTextFileFinish func(uintptr, uintptr, string, string, **glib.
 //
 // Note that this function returns a [error@Gtk.DialogError.DISMISSED]
 // error if the user cancels the dialog.
-func (x *FileDialog) SaveTextFileFinish(ResultVar gio.AsyncResult, EncodingVar string, LineEndingVar string) (*gio.FileBase, error) {
+func (x *FileDialog) SaveTextFileFinish(ResultVar gio.AsyncResult, EncodingVar *string, LineEndingVar *string) (*gio.FileBase, error) {
 	var cls *gio.FileBase
 	var cerr *glib.Error
 
@@ -611,6 +611,78 @@ func (c *FileDialog) GoPointer() uintptr {
 
 func (c *FileDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAcceptLabel sets the "accept-label" property.
+// Label for the file chooser's accept button.
+func (x *FileDialog) SetPropertyAcceptLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("accept-label", &v)
+}
+
+// GetPropertyAcceptLabel gets the "accept-label" property.
+// Label for the file chooser's accept button.
+func (x *FileDialog) GetPropertyAcceptLabel() string {
+	var v gobject.Value
+	x.GetProperty("accept-label", &v)
+	return v.GetString()
+}
+
+// SetPropertyInitialName sets the "initial-name" property.
+// The initial name.
+//
+// This is the name of the file that is initially selected in the file chooser dialog.
+func (x *FileDialog) SetPropertyInitialName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("initial-name", &v)
+}
+
+// GetPropertyInitialName gets the "initial-name" property.
+// The initial name.
+//
+// This is the name of the file that is initially selected in the file chooser dialog.
+func (x *FileDialog) GetPropertyInitialName() string {
+	var v gobject.Value
+	x.GetProperty("initial-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyModal sets the "modal" property.
+// Whether the file chooser dialog is modal.
+func (x *FileDialog) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the file chooser dialog is modal.
+func (x *FileDialog) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// A title that may be shown on the file chooser dialog.
+func (x *FileDialog) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// A title that may be shown on the file chooser dialog.
+func (x *FileDialog) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
 }
 
 func init() {

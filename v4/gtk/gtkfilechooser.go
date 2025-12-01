@@ -454,6 +454,50 @@ func (x *FileChooserBase) SetSelectMultiple(SelectMultipleVar bool) {
 
 }
 
+// SetPropertyCreateFolders sets the "create-folders" property.
+// Whether a file chooser not in %GTK_FILE_CHOOSER_ACTION_OPEN mode
+// will offer the user to create new folders.
+func (x *FileChooserBase) SetPropertyCreateFolders(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("create-folders", &v)
+}
+
+// GetPropertyCreateFolders gets the "create-folders" property.
+// Whether a file chooser not in %GTK_FILE_CHOOSER_ACTION_OPEN mode
+// will offer the user to create new folders.
+func (x *FileChooserBase) GetPropertyCreateFolders() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("create-folders", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySelectMultiple sets the "select-multiple" property.
+// Whether to allow multiple files to be selected.
+func (x *FileChooserBase) SetPropertySelectMultiple(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("select-multiple", &v)
+}
+
+// GetPropertySelectMultiple gets the "select-multiple" property.
+// Whether to allow multiple files to be selected.
+func (x *FileChooserBase) GetPropertySelectMultiple() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("select-multiple", &v)
+	return v.GetBoolean()
+}
+
 var XGtkFileChooserAddChoice func(uintptr, string, string, []string, []string)
 var XGtkFileChooserAddFilter func(uintptr, uintptr)
 var XGtkFileChooserAddShortcutFolder func(uintptr, uintptr, **glib.Error) bool

@@ -30,7 +30,7 @@ func (x *ProxyInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideConnect sets the callback function.
+// OverrideConnect sets the "connect" callback function.
 // Connect to proxy server and wrap (if required) the #connection
 //
 //	to handle payload.
@@ -48,7 +48,7 @@ func (x *ProxyInterface) OverrideConnect(cb func(Proxy, *IOStream, *ProxyAddress
 	}
 }
 
-// GetConnect gets the callback function.
+// GetConnect gets the "connect" callback function.
 // Connect to proxy server and wrap (if required) the #connection
 //
 //	to handle payload.
@@ -69,7 +69,7 @@ func (x *ProxyInterface) GetConnect() func(Proxy, *IOStream, *ProxyAddress, *Can
 	}
 }
 
-// OverrideConnectAsync sets the callback function.
+// OverrideConnectAsync sets the "connect_async" callback function.
 // Same as connect() but asynchronous.
 func (x *ProxyInterface) OverrideConnectAsync(cb func(Proxy, *IOStream, *ProxyAddress, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -81,7 +81,7 @@ func (x *ProxyInterface) OverrideConnectAsync(cb func(Proxy, *IOStream, *ProxyAd
 	}
 }
 
-// GetConnectAsync gets the callback function.
+// GetConnectAsync gets the "connect_async" callback function.
 // Same as connect() but asynchronous.
 func (x *ProxyInterface) GetConnectAsync() func(Proxy, *IOStream, *ProxyAddress, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xConnectAsync == 0 {
@@ -94,7 +94,7 @@ func (x *ProxyInterface) GetConnectAsync() func(Proxy, *IOStream, *ProxyAddress,
 	}
 }
 
-// OverrideConnectFinish sets the callback function.
+// OverrideConnectFinish sets the "connect_finish" callback function.
 // Returns the result of connect_async()
 func (x *ProxyInterface) OverrideConnectFinish(cb func(Proxy, AsyncResult) *IOStream) {
 	if cb == nil {
@@ -110,7 +110,7 @@ func (x *ProxyInterface) OverrideConnectFinish(cb func(Proxy, AsyncResult) *IOSt
 	}
 }
 
-// GetConnectFinish gets the callback function.
+// GetConnectFinish gets the "connect_finish" callback function.
 // Returns the result of connect_async()
 func (x *ProxyInterface) GetConnectFinish() func(Proxy, AsyncResult) *IOStream {
 	if x.xConnectFinish == 0 {
@@ -129,7 +129,7 @@ func (x *ProxyInterface) GetConnectFinish() func(Proxy, AsyncResult) *IOStream {
 	}
 }
 
-// OverrideSupportsHostname sets the callback function.
+// OverrideSupportsHostname sets the "supports_hostname" callback function.
 // Returns whether the proxy supports hostname lookups.
 func (x *ProxyInterface) OverrideSupportsHostname(cb func(Proxy) bool) {
 	if cb == nil {
@@ -141,7 +141,7 @@ func (x *ProxyInterface) OverrideSupportsHostname(cb func(Proxy) bool) {
 	}
 }
 
-// GetSupportsHostname gets the callback function.
+// GetSupportsHostname gets the "supports_hostname" callback function.
 // Returns whether the proxy supports hostname lookups.
 func (x *ProxyInterface) GetSupportsHostname() func(Proxy) bool {
 	if x.xSupportsHostname == 0 {

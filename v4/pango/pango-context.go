@@ -227,10 +227,10 @@ func (x *Context) GetSerial() uint {
 	return cret
 }
 
-var xContextListFamilies func(uintptr, uintptr, int)
+var xContextListFamilies func(uintptr, *uintptr, *int)
 
 // List all families for a context.
-func (x *Context) ListFamilies(FamiliesVar uintptr, NFamiliesVar int) {
+func (x *Context) ListFamilies(FamiliesVar *uintptr, NFamiliesVar *int) {
 
 	xContextListFamilies(x.GoPointer(), FamiliesVar, NFamiliesVar)
 

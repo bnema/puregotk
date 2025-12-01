@@ -147,6 +147,65 @@ func (c *InetSocketAddress) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFlowinfo sets the "flowinfo" property.
+// The `sin6_flowinfo` field, for IPv6 addresses.
+//
+// If unset this property is inherited from [property@Gio.InetSocketAddress:address].
+func (x *InetSocketAddress) SetPropertyFlowinfo(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("flowinfo", &v)
+}
+
+// GetPropertyFlowinfo gets the "flowinfo" property.
+// The `sin6_flowinfo` field, for IPv6 addresses.
+//
+// If unset this property is inherited from [property@Gio.InetSocketAddress:address].
+func (x *InetSocketAddress) GetPropertyFlowinfo() uint {
+	var v gobject.Value
+	x.GetProperty("flowinfo", &v)
+	return v.GetUint()
+}
+
+// SetPropertyPort sets the "port" property.
+// The port.
+func (x *InetSocketAddress) SetPropertyPort(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("port", &v)
+}
+
+// GetPropertyPort gets the "port" property.
+// The port.
+func (x *InetSocketAddress) GetPropertyPort() uint {
+	var v gobject.Value
+	x.GetProperty("port", &v)
+	return v.GetUint()
+}
+
+// SetPropertyScopeId sets the "scope-id" property.
+// The `sin6_scope_id` field, for IPv6 addresses.
+//
+// If unset this property is inherited from [property@Gio.InetSocketAddress:address].
+func (x *InetSocketAddress) SetPropertyScopeId(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("scope-id", &v)
+}
+
+// GetPropertyScopeId gets the "scope-id" property.
+// The `sin6_scope_id` field, for IPv6 addresses.
+//
+// If unset this property is inherited from [property@Gio.InetSocketAddress:address].
+func (x *InetSocketAddress) GetPropertyScopeId() uint {
+	var v gobject.Value
+	x.GetProperty("scope-id", &v)
+	return v.GetUint()
+}
+
 // Creates a #GSocketAddressEnumerator for @connectable.
 func (x *InetSocketAddress) Enumerate() *SocketAddressEnumerator {
 	var cls *SocketAddressEnumerator

@@ -65,6 +65,40 @@ func (c *CellRendererSpin) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyClimbRate sets the "climb-rate" property.
+// The acceleration rate when you hold down a button.
+func (x *CellRendererSpin) SetPropertyClimbRate(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("climb-rate", &v)
+}
+
+// GetPropertyClimbRate gets the "climb-rate" property.
+// The acceleration rate when you hold down a button.
+func (x *CellRendererSpin) GetPropertyClimbRate() float64 {
+	var v gobject.Value
+	x.GetProperty("climb-rate", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyDigits sets the "digits" property.
+// The number of decimal places to display.
+func (x *CellRendererSpin) SetPropertyDigits(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("digits", &v)
+}
+
+// GetPropertyDigits gets the "digits" property.
+// The number of decimal places to display.
+func (x *CellRendererSpin) GetPropertyDigits() uint {
+	var v gobject.Value
+	x.GetProperty("digits", &v)
+	return v.GetUint()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

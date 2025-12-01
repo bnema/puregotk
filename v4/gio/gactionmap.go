@@ -42,7 +42,7 @@ func (x *ActionEntry) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideActivate sets the callback function.
+// OverrideActivate sets the "activate" callback function.
 // the callback to connect to the "activate" signal of the action.
 //
 //	Since GLib 2.40, this can be `NULL` for stateful actions, in which case
@@ -60,7 +60,7 @@ func (x *ActionEntry) OverrideActivate(cb func(*SimpleAction, *glib.Variant, uin
 	}
 }
 
-// GetActivate gets the callback function.
+// GetActivate gets the "activate" callback function.
 // the callback to connect to the "activate" signal of the action.
 //
 //	Since GLib 2.40, this can be `NULL` for stateful actions, in which case
@@ -79,7 +79,7 @@ func (x *ActionEntry) GetActivate() func(*SimpleAction, *glib.Variant, uintptr) 
 	}
 }
 
-// OverrideChangeState sets the callback function.
+// OverrideChangeState sets the "change_state" callback function.
 // the callback to connect to the "change-state" signal of the
 //
 //	action.  All stateful actions should provide a handler here; stateless
@@ -94,7 +94,7 @@ func (x *ActionEntry) OverrideChangeState(cb func(*SimpleAction, *glib.Variant, 
 	}
 }
 
-// GetChangeState gets the callback function.
+// GetChangeState gets the "change_state" callback function.
 // the callback to connect to the "change-state" signal of the
 //
 //	action.  All stateful actions should provide a handler here; stateless
@@ -127,7 +127,7 @@ func (x *ActionMapInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideLookupAction sets the callback function.
+// OverrideLookupAction sets the "lookup_action" callback function.
 // the virtual function pointer for
 //
 //	[method@Gio.ActionMap.lookup_action]
@@ -145,7 +145,7 @@ func (x *ActionMapInterface) OverrideLookupAction(cb func(ActionMap, string) *Ac
 	}
 }
 
-// GetLookupAction gets the callback function.
+// GetLookupAction gets the "lookup_action" callback function.
 // the virtual function pointer for
 //
 //	[method@Gio.ActionMap.lookup_action]
@@ -166,7 +166,7 @@ func (x *ActionMapInterface) GetLookupAction() func(ActionMap, string) *ActionBa
 	}
 }
 
-// OverrideAddAction sets the callback function.
+// OverrideAddAction sets the "add_action" callback function.
 // the virtual function pointer for
 //
 //	[method@Gio.ActionMap.add_action]
@@ -180,7 +180,7 @@ func (x *ActionMapInterface) OverrideAddAction(cb func(ActionMap, Action)) {
 	}
 }
 
-// GetAddAction gets the callback function.
+// GetAddAction gets the "add_action" callback function.
 // the virtual function pointer for
 //
 //	[method@Gio.ActionMap.add_action]
@@ -195,7 +195,7 @@ func (x *ActionMapInterface) GetAddAction() func(ActionMap, Action) {
 	}
 }
 
-// OverrideRemoveAction sets the callback function.
+// OverrideRemoveAction sets the "remove_action" callback function.
 // the virtual function pointer for
 //
 //	[method@Gio.ActionMap.remove_action]
@@ -209,7 +209,7 @@ func (x *ActionMapInterface) OverrideRemoveAction(cb func(ActionMap, string)) {
 	}
 }
 
-// GetRemoveAction gets the callback function.
+// GetRemoveAction gets the "remove_action" callback function.
 // the virtual function pointer for
 //
 //	[method@Gio.ActionMap.remove_action]

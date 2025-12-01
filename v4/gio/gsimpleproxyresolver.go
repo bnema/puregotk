@@ -32,7 +32,7 @@ func (x *SimpleProxyResolverClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *SimpleProxyResolverClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -43,7 +43,7 @@ func (x *SimpleProxyResolverClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *SimpleProxyResolverClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -55,7 +55,7 @@ func (x *SimpleProxyResolverClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *SimpleProxyResolverClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -66,7 +66,7 @@ func (x *SimpleProxyResolverClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *SimpleProxyResolverClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -78,7 +78,7 @@ func (x *SimpleProxyResolverClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *SimpleProxyResolverClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -89,7 +89,7 @@ func (x *SimpleProxyResolverClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *SimpleProxyResolverClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -101,7 +101,7 @@ func (x *SimpleProxyResolverClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *SimpleProxyResolverClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -112,7 +112,7 @@ func (x *SimpleProxyResolverClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *SimpleProxyResolverClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -124,7 +124,7 @@ func (x *SimpleProxyResolverClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *SimpleProxyResolverClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -135,7 +135,7 @@ func (x *SimpleProxyResolverClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *SimpleProxyResolverClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -231,6 +231,118 @@ func (c *SimpleProxyResolver) GoPointer() uintptr {
 
 func (c *SimpleProxyResolver) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyDefaultProxy sets the "default-proxy" property.
+// The default proxy URI that will be used for any URI that doesn't
+// match #GSimpleProxyResolver:ignore-hosts, and doesn't match any
+// of the schemes set with g_simple_proxy_resolver_set_uri_proxy().
+//
+// Note that as a special case, if this URI starts with
+// "socks://", #GSimpleProxyResolver will treat it as referring
+// to all three of the socks5, socks4a, and socks4 proxy types.
+func (x *SimpleProxyResolver) SetPropertyDefaultProxy(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("default-proxy", &v)
+}
+
+// GetPropertyDefaultProxy gets the "default-proxy" property.
+// The default proxy URI that will be used for any URI that doesn't
+// match #GSimpleProxyResolver:ignore-hosts, and doesn't match any
+// of the schemes set with g_simple_proxy_resolver_set_uri_proxy().
+//
+// Note that as a special case, if this URI starts with
+// "socks://", #GSimpleProxyResolver will treat it as referring
+// to all three of the socks5, socks4a, and socks4 proxy types.
+func (x *SimpleProxyResolver) GetPropertyDefaultProxy() string {
+	var v gobject.Value
+	x.GetProperty("default-proxy", &v)
+	return v.GetString()
+}
+
+// SetPropertyIgnoreHosts sets the "ignore-hosts" property.
+// A list of hostnames and IP addresses that the resolver should
+// allow direct connections to.
+//
+// Entries can be in one of 4 formats:
+//
+//   - A hostname, such as "example.com", ".example.com", or
+//     "*.example.com", any of which match "example.com" or
+//     any subdomain of it.
+//
+//   - An IPv4 or IPv6 address, such as "192.168.1.1",
+//     which matches only that address.
+//
+//   - A hostname or IP address followed by a port, such as
+//     "example.com:80", which matches whatever the hostname or IP
+//     address would match, but only for URLs with the (explicitly)
+//     indicated port. In the case of an IPv6 address, the address
+//     part must appear in brackets: "[::1]:443"
+//
+//   - An IP address range, given by a base address and prefix length,
+//     such as "fe80::/10", which matches any address in that range.
+//
+// Note that when dealing with Unicode hostnames, the matching is
+// done against the ASCII form of the name.
+//
+// Also note that hostname exclusions apply only to connections made
+// to hosts identified by name, and IP address exclusions apply only
+// to connections made to hosts identified by address. That is, if
+// example.com has an address of 192.168.1.1, and the :ignore-hosts list
+// contains only "192.168.1.1", then a connection to "example.com"
+// (eg, via a #GNetworkAddress) will use the proxy, and a connection to
+// "192.168.1.1" (eg, via a #GInetSocketAddress) will not.
+//
+// These rules match the "ignore-hosts"/"noproxy" rules most
+// commonly used by other applications.
+func (x *SimpleProxyResolver) SetPropertyIgnoreHosts(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("ignore-hosts", &v)
+}
+
+// GetPropertyIgnoreHosts gets the "ignore-hosts" property.
+// A list of hostnames and IP addresses that the resolver should
+// allow direct connections to.
+//
+// Entries can be in one of 4 formats:
+//
+//   - A hostname, such as "example.com", ".example.com", or
+//     "*.example.com", any of which match "example.com" or
+//     any subdomain of it.
+//
+//   - An IPv4 or IPv6 address, such as "192.168.1.1",
+//     which matches only that address.
+//
+//   - A hostname or IP address followed by a port, such as
+//     "example.com:80", which matches whatever the hostname or IP
+//     address would match, but only for URLs with the (explicitly)
+//     indicated port. In the case of an IPv6 address, the address
+//     part must appear in brackets: "[::1]:443"
+//
+//   - An IP address range, given by a base address and prefix length,
+//     such as "fe80::/10", which matches any address in that range.
+//
+// Note that when dealing with Unicode hostnames, the matching is
+// done against the ASCII form of the name.
+//
+// Also note that hostname exclusions apply only to connections made
+// to hosts identified by name, and IP address exclusions apply only
+// to connections made to hosts identified by address. That is, if
+// example.com has an address of 192.168.1.1, and the :ignore-hosts list
+// contains only "192.168.1.1", then a connection to "example.com"
+// (eg, via a #GNetworkAddress) will use the proxy, and a connection to
+// "192.168.1.1" (eg, via a #GInetSocketAddress) will not.
+//
+// These rules match the "ignore-hosts"/"noproxy" rules most
+// commonly used by other applications.
+func (x *SimpleProxyResolver) GetPropertyIgnoreHosts() []string {
+	var v gobject.Value
+	x.GetProperty("ignore-hosts", &v)
+	return core.GoStringSlice(v.GetBoxed())
 }
 
 // Checks if @resolver can be used on this system. (This is used

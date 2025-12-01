@@ -66,6 +66,23 @@ func (c *BytesIcon) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyBytes sets the "bytes" property.
+// The bytes containing the icon.
+func (x *BytesIcon) SetPropertyBytes(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("bytes", &v)
+}
+
+// GetPropertyBytes gets the "bytes" property.
+// The bytes containing the icon.
+func (x *BytesIcon) GetPropertyBytes() uintptr {
+	var v gobject.Value
+	x.GetProperty("bytes", &v)
+	return v.GetPointer()
+}
+
 // Checks if two icons are equal.
 func (x *BytesIcon) Equal(Icon2Var Icon) bool {
 
@@ -115,7 +132,7 @@ func (x *BytesIcon) ToString() string {
 
 // Loads a loadable icon. For the asynchronous version of this function,
 // see g_loadable_icon_load_async().
-func (x *BytesIcon) Load(SizeVar int, TypeVar string, CancellableVar *Cancellable) (*InputStream, error) {
+func (x *BytesIcon) Load(SizeVar int, TypeVar *string, CancellableVar *Cancellable) (*InputStream, error) {
 	var cls *InputStream
 	var cerr *glib.Error
 
@@ -143,7 +160,7 @@ func (x *BytesIcon) LoadAsync(SizeVar int, CancellableVar *Cancellable, Callback
 }
 
 // Finishes an asynchronous icon load started in g_loadable_icon_load_async().
-func (x *BytesIcon) LoadFinish(ResVar AsyncResult, TypeVar string) (*InputStream, error) {
+func (x *BytesIcon) LoadFinish(ResVar AsyncResult, TypeVar *string) (*InputStream, error) {
 	var cls *InputStream
 	var cerr *glib.Error
 

@@ -8,7 +8,7 @@ import (
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
-var xFindParagraphBoundary func(string, int, int, int)
+var xFindParagraphBoundary func(string, int, *int, *int)
 
 // Locates a paragraph boundary in @text.
 //
@@ -24,7 +24,7 @@ var xFindParagraphBoundary func(string, int, int, int)
 // If no delimiters are found, both @paragraph_delimiter_index
 // and @next_paragraph_start are filled with the length of @text
 // (an index one off the end).
-func FindParagraphBoundary(TextVar string, LengthVar int, ParagraphDelimiterIndexVar int, NextParagraphStartVar int) {
+func FindParagraphBoundary(TextVar string, LengthVar int, ParagraphDelimiterIndexVar *int, NextParagraphStartVar *int) {
 
 	xFindParagraphBoundary(TextVar, LengthVar, ParagraphDelimiterIndexVar, NextParagraphStartVar)
 
@@ -59,7 +59,7 @@ func Log2visGetEmbeddingLevels(TextVar string, LengthVar int, PbaseDirVar *Direc
 	return cret
 }
 
-var xParseEnum func(types.GType, string, int, bool, string) bool
+var xParseEnum func(types.GType, string, *int, bool, *string) bool
 
 // Parses an enum type and stores the result in @value.
 //
@@ -71,7 +71,7 @@ var xParseEnum func(types.GType, string, int, bool, string) bool
 //
 // If failed and @possible_values is not %NULL, returned string should
 // be freed using g_free().
-func ParseEnum(TypeVar types.GType, StrVar string, ValueVar int, WarnVar bool, PossibleValuesVar string) bool {
+func ParseEnum(TypeVar types.GType, StrVar string, ValueVar *int, WarnVar bool, PossibleValuesVar *string) bool {
 
 	cret := xParseEnum(TypeVar, StrVar, ValueVar, WarnVar, PossibleValuesVar)
 	return cret
@@ -163,12 +163,12 @@ func ReadLine(StreamVar uintptr, StrVar *glib.String) int {
 	return cret
 }
 
-var xScanInt func(string, int) bool
+var xScanInt func(string, *int) bool
 
 // Scans an integer.
 //
 // Leading white space is skipped.
-func ScanInt(PosVar string, OutVar int) bool {
+func ScanInt(PosVar string, OutVar *int) bool {
 
 	cret := xScanInt(PosVar, OutVar)
 	return cret

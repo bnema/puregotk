@@ -572,6 +572,231 @@ func (c *Leaflet) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCanNavigateBack sets the "can-navigate-back" property.
+// Whether gestures and shortcuts for navigating backward are enabled.
+//
+// The supported gestures are:
+//
+// - One-finger swipe on touchscreens
+// - Horizontal scrolling on touchpads (usually two-finger swipe)
+// - Back/forward mouse buttons
+//
+// The keyboard back/forward keys are also supported, as well as the
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt; shortcut for horizontal orientation, or
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;↑&lt;/kbd&gt; for vertical orientation.
+//
+// If the orientation is horizontal, for right-to-left locales, gestures and
+// shortcuts are reversed.
+//
+// Only children that have [property@LeafletPage:navigatable] set to `TRUE`
+// can be navigated to.
+func (x *Leaflet) SetPropertyCanNavigateBack(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-navigate-back", &v)
+}
+
+// GetPropertyCanNavigateBack gets the "can-navigate-back" property.
+// Whether gestures and shortcuts for navigating backward are enabled.
+//
+// The supported gestures are:
+//
+// - One-finger swipe on touchscreens
+// - Horizontal scrolling on touchpads (usually two-finger swipe)
+// - Back/forward mouse buttons
+//
+// The keyboard back/forward keys are also supported, as well as the
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt; shortcut for horizontal orientation, or
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;↑&lt;/kbd&gt; for vertical orientation.
+//
+// If the orientation is horizontal, for right-to-left locales, gestures and
+// shortcuts are reversed.
+//
+// Only children that have [property@LeafletPage:navigatable] set to `TRUE`
+// can be navigated to.
+func (x *Leaflet) GetPropertyCanNavigateBack() bool {
+	var v gobject.Value
+	x.GetProperty("can-navigate-back", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCanNavigateForward sets the "can-navigate-forward" property.
+// Whether gestures and shortcuts for navigating forward are enabled.
+//
+// The supported gestures are:
+//
+// - One-finger swipe on touchscreens
+// - Horizontal scrolling on touchpads (usually two-finger swipe)
+// - Back/forward mouse buttons
+//
+// The keyboard back/forward keys are also supported, as well as the
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;→&lt;/kbd&gt; shortcut for horizontal orientation, or
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;↓&lt;/kbd&gt; for vertical orientation.
+//
+// If the orientation is horizontal, for right-to-left locales, gestures and
+// shortcuts are reversed.
+//
+// Only children that have [property@LeafletPage:navigatable] set to `TRUE`
+// can be navigated to.
+func (x *Leaflet) SetPropertyCanNavigateForward(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-navigate-forward", &v)
+}
+
+// GetPropertyCanNavigateForward gets the "can-navigate-forward" property.
+// Whether gestures and shortcuts for navigating forward are enabled.
+//
+// The supported gestures are:
+//
+// - One-finger swipe on touchscreens
+// - Horizontal scrolling on touchpads (usually two-finger swipe)
+// - Back/forward mouse buttons
+//
+// The keyboard back/forward keys are also supported, as well as the
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;→&lt;/kbd&gt; shortcut for horizontal orientation, or
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;↓&lt;/kbd&gt; for vertical orientation.
+//
+// If the orientation is horizontal, for right-to-left locales, gestures and
+// shortcuts are reversed.
+//
+// Only children that have [property@LeafletPage:navigatable] set to `TRUE`
+// can be navigated to.
+func (x *Leaflet) GetPropertyCanNavigateForward() bool {
+	var v gobject.Value
+	x.GetProperty("can-navigate-forward", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCanUnfold sets the "can-unfold" property.
+// Whether or not the leaflet can unfold.
+func (x *Leaflet) SetPropertyCanUnfold(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-unfold", &v)
+}
+
+// GetPropertyCanUnfold gets the "can-unfold" property.
+// Whether or not the leaflet can unfold.
+func (x *Leaflet) GetPropertyCanUnfold() bool {
+	var v gobject.Value
+	x.GetProperty("can-unfold", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyChildTransitionParams sets the "child-transition-params" property.
+// The child transition spring parameters.
+//
+// The default value is equivalent to:
+//
+// ```c
+// adw_spring_params_new (1, 0.5, 500)
+// ```
+func (x *Leaflet) SetPropertyChildTransitionParams(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("child-transition-params", &v)
+}
+
+// GetPropertyChildTransitionParams gets the "child-transition-params" property.
+// The child transition spring parameters.
+//
+// The default value is equivalent to:
+//
+// ```c
+// adw_spring_params_new (1, 0.5, 500)
+// ```
+func (x *Leaflet) GetPropertyChildTransitionParams() uintptr {
+	var v gobject.Value
+	x.GetProperty("child-transition-params", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyChildTransitionRunning gets the "child-transition-running" property.
+// Whether a child transition is currently running.
+func (x *Leaflet) GetPropertyChildTransitionRunning() bool {
+	var v gobject.Value
+	x.GetProperty("child-transition-running", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyFolded gets the "folded" property.
+// Whether the leaflet is folded.
+//
+// The leaflet will be folded if the size allocated to it is smaller than the
+// sum of the minimum or natural sizes of the children (see
+// [property@Leaflet:fold-threshold-policy]), it will be unfolded otherwise.
+func (x *Leaflet) GetPropertyFolded() bool {
+	var v gobject.Value
+	x.GetProperty("folded", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHomogeneous sets the "homogeneous" property.
+// Whether the leaflet allocates the same size for all children when folded.
+//
+// If set to `FALSE`, different children can have different size along the
+// opposite orientation.
+func (x *Leaflet) SetPropertyHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("homogeneous", &v)
+}
+
+// GetPropertyHomogeneous gets the "homogeneous" property.
+// Whether the leaflet allocates the same size for all children when folded.
+//
+// If set to `FALSE`, different children can have different size along the
+// opposite orientation.
+func (x *Leaflet) GetPropertyHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyModeTransitionDuration sets the "mode-transition-duration" property.
+// The mode transition animation duration, in milliseconds.
+func (x *Leaflet) SetPropertyModeTransitionDuration(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("mode-transition-duration", &v)
+}
+
+// GetPropertyModeTransitionDuration gets the "mode-transition-duration" property.
+// The mode transition animation duration, in milliseconds.
+func (x *Leaflet) GetPropertyModeTransitionDuration() uint {
+	var v gobject.Value
+	x.GetProperty("mode-transition-duration", &v)
+	return v.GetUint()
+}
+
+// SetPropertyVisibleChildName sets the "visible-child-name" property.
+// The name of the widget currently visible when the leaflet is folded.
+//
+// See [property@Leaflet:visible-child].
+func (x *Leaflet) SetPropertyVisibleChildName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("visible-child-name", &v)
+}
+
+// GetPropertyVisibleChildName gets the "visible-child-name" property.
+// The name of the widget currently visible when the leaflet is folded.
+//
+// See [property@Leaflet:visible-child].
+func (x *Leaflet) GetPropertyVisibleChildName() string {
+	var v gobject.Value
+	x.GetProperty("visible-child-name", &v)
+	return v.GetString()
+}
+
 // Gets the progress @self will snap back to after the gesture is canceled.
 func (x *Leaflet) GetCancelProgress() float64 {
 
@@ -599,7 +824,7 @@ func (x *Leaflet) GetProgress() float64 {
 //
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
-func (x *Leaflet) GetSnapPoints(NSnapPointsVar int) uintptr {
+func (x *Leaflet) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
@@ -677,7 +902,7 @@ func (x *Leaflet) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Leaflet) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Leaflet) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -996,6 +1221,52 @@ func (c *LeafletPage) GoPointer() uintptr {
 
 func (c *LeafletPage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyName sets the "name" property.
+// The name of the child page.
+func (x *LeafletPage) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The name of the child page.
+func (x *LeafletPage) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// SetPropertyNavigatable sets the "navigatable" property.
+// Whether the child can be navigated to when folded.
+//
+// If `FALSE`, the child will be ignored by
+// [method@Leaflet.get_adjacent_child], [method@Leaflet.navigate], and swipe
+// gestures.
+//
+// This can be used used to prevent switching to widgets like separators.
+func (x *LeafletPage) SetPropertyNavigatable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("navigatable", &v)
+}
+
+// GetPropertyNavigatable gets the "navigatable" property.
+// Whether the child can be navigated to when folded.
+//
+// If `FALSE`, the child will be ignored by
+// [method@Leaflet.get_adjacent_child], [method@Leaflet.navigate], and swipe
+// gestures.
+//
+// This can be used used to prevent switching to widgets like separators.
+func (x *LeafletPage) GetPropertyNavigatable() bool {
+	var v gobject.Value
+	x.GetProperty("navigatable", &v)
+	return v.GetBoolean()
 }
 
 func init() {

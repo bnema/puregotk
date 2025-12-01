@@ -84,7 +84,7 @@ func (x *GlyphItem) Free() {
 
 }
 
-var xGlyphItemGetLogicalWidths func(uintptr, string, []int)
+var xGlyphItemGetLogicalWidths func(uintptr, string, *[]int)
 
 // Given a `PangoGlyphItem` and the corresponding text, determine the
 // width corresponding to each character.
@@ -93,7 +93,7 @@ var xGlyphItemGetLogicalWidths func(uintptr, string, []int)
 // entire cluster is divided equally among the characters.
 //
 // See also [method@Pango.GlyphString.get_logical_widths].
-func (x *GlyphItem) GetLogicalWidths(TextVar string, LogicalWidthsVar []int) {
+func (x *GlyphItem) GetLogicalWidths(TextVar string, LogicalWidthsVar *[]int) {
 
 	xGlyphItemGetLogicalWidths(x.GoPointer(), TextVar, LogicalWidthsVar)
 

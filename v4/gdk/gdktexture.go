@@ -408,6 +408,57 @@ func (c *Texture) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyColorState sets the "color-state" property.
+// The color state of the texture.
+func (x *Texture) SetPropertyColorState(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("color-state", &v)
+}
+
+// GetPropertyColorState gets the "color-state" property.
+// The color state of the texture.
+func (x *Texture) GetPropertyColorState() uintptr {
+	var v gobject.Value
+	x.GetProperty("color-state", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyHeight sets the "height" property.
+// The height of the texture, in pixels.
+func (x *Texture) SetPropertyHeight(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("height", &v)
+}
+
+// GetPropertyHeight gets the "height" property.
+// The height of the texture, in pixels.
+func (x *Texture) GetPropertyHeight() int {
+	var v gobject.Value
+	x.GetProperty("height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyWidth sets the "width" property.
+// The width of the texture, in pixels.
+func (x *Texture) SetPropertyWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("width", &v)
+}
+
+// GetPropertyWidth gets the "width" property.
+// The width of the texture, in pixels.
+func (x *Texture) GetPropertyWidth() int {
+	var v gobject.Value
+	x.GetProperty("width", &v)
+	return v.GetInt()
+}
+
 // Compute a concrete size for the `GdkPaintable`.
 //
 // Applies the sizing algorithm outlined in the
@@ -418,7 +469,7 @@ func (c *Texture) SetGoPointer(ptr uintptr) {
 // and @specified_height are known, but it is useful to call this
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
-func (x *Texture) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar float64, ConcreteHeightVar float64) {
+func (x *Texture) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
 
 	XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
 
@@ -601,7 +652,7 @@ func (x *Texture) ToString() string {
 
 // Loads a loadable icon. For the asynchronous version of this function,
 // see g_loadable_icon_load_async().
-func (x *Texture) Load(SizeVar int, TypeVar string, CancellableVar *gio.Cancellable) (*gio.InputStream, error) {
+func (x *Texture) Load(SizeVar int, TypeVar *string, CancellableVar *gio.Cancellable) (*gio.InputStream, error) {
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
@@ -629,7 +680,7 @@ func (x *Texture) LoadAsync(SizeVar int, CancellableVar *gio.Cancellable, Callba
 }
 
 // Finishes an asynchronous icon load started in g_loadable_icon_load_async().
-func (x *Texture) LoadFinish(ResVar gio.AsyncResult, TypeVar string) (*gio.InputStream, error) {
+func (x *Texture) LoadFinish(ResVar gio.AsyncResult, TypeVar *string) (*gio.InputStream, error) {
 	var cls *gio.InputStream
 	var cerr *glib.Error
 

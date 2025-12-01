@@ -140,6 +140,65 @@ func (c *ColorButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyModal sets the "modal" property.
+// Whether the color chooser dialog should be modal.
+func (x *ColorButton) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the color chooser dialog should be modal.
+func (x *ColorButton) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowEditor sets the "show-editor" property.
+// Whether the color chooser should open in editor mode.
+//
+// This property should be used in cases where the palette
+// in the editor would be redundant, such as when the color
+// button is already part of a palette.
+func (x *ColorButton) SetPropertyShowEditor(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-editor", &v)
+}
+
+// GetPropertyShowEditor gets the "show-editor" property.
+// Whether the color chooser should open in editor mode.
+//
+// This property should be used in cases where the palette
+// in the editor would be redundant, such as when the color
+// button is already part of a palette.
+func (x *ColorButton) GetPropertyShowEditor() bool {
+	var v gobject.Value
+	x.GetProperty("show-editor", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the color chooser dialog
+func (x *ColorButton) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the color chooser dialog
+func (x *ColorButton) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 // Emitted to when the color button is activated.
 //
 // The `::activate` signal on `GtkMenuButton` is an action signal and
@@ -247,7 +306,7 @@ func (x *ColorButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ColorButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ColorButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

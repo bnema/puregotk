@@ -57,7 +57,7 @@ func NewGestureStylus() *GestureStylus {
 	return cls
 }
 
-var xGestureStylusGetAxes func(uintptr, []gdk.AxisUse, []float64) bool
+var xGestureStylusGetAxes func(uintptr, []gdk.AxisUse, *[]float64) bool
 
 // Returns the current values for the requested @axes.
 //
@@ -65,13 +65,13 @@ var xGestureStylusGetAxes func(uintptr, []gdk.AxisUse, []float64) bool
 // [signal@Gtk.GestureStylus::down], [signal@Gtk.GestureStylus::motion],
 // [signal@Gtk.GestureStylus::up] or [signal@Gtk.GestureStylus::proximity]
 // signals.
-func (x *GestureStylus) GetAxes(AxesVar []gdk.AxisUse, ValuesVar []float64) bool {
+func (x *GestureStylus) GetAxes(AxesVar []gdk.AxisUse, ValuesVar *[]float64) bool {
 
 	cret := xGestureStylusGetAxes(x.GoPointer(), AxesVar, ValuesVar)
 	return cret
 }
 
-var xGestureStylusGetAxis func(uintptr, gdk.AxisUse, float64) bool
+var xGestureStylusGetAxis func(uintptr, gdk.AxisUse, *float64) bool
 
 // Returns the current value for the requested @axis.
 //
@@ -79,13 +79,13 @@ var xGestureStylusGetAxis func(uintptr, gdk.AxisUse, float64) bool
 // [signal@Gtk.GestureStylus::down], [signal@Gtk.GestureStylus::motion],
 // [signal@Gtk.GestureStylus::up] or [signal@Gtk.GestureStylus::proximity]
 // signals.
-func (x *GestureStylus) GetAxis(AxisVar gdk.AxisUse, ValueVar float64) bool {
+func (x *GestureStylus) GetAxis(AxisVar gdk.AxisUse, ValueVar *float64) bool {
 
 	cret := xGestureStylusGetAxis(x.GoPointer(), AxisVar, ValueVar)
 	return cret
 }
 
-var xGestureStylusGetBacklog func(uintptr, uintptr, uint) bool
+var xGestureStylusGetBacklog func(uintptr, *uintptr, *uint) bool
 
 // Returns the accumulated backlog of tracking information.
 //
@@ -100,7 +100,7 @@ var xGestureStylusGetBacklog func(uintptr, uintptr, uint) bool
 // state in motion history.
 //
 // The @backlog is provided in chronological order.
-func (x *GestureStylus) GetBacklog(BacklogVar uintptr, NElemsVar uint) bool {
+func (x *GestureStylus) GetBacklog(BacklogVar *uintptr, NElemsVar *uint) bool {
 
 	cret := xGestureStylusGetBacklog(x.GoPointer(), BacklogVar, NElemsVar)
 	return cret
@@ -161,6 +161,23 @@ func (c *GestureStylus) GoPointer() uintptr {
 
 func (c *GestureStylus) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyStylusOnly sets the "stylus-only" property.
+// If this gesture should exclusively react to stylus input devices.
+func (x *GestureStylus) SetPropertyStylusOnly(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("stylus-only", &v)
+}
+
+// GetPropertyStylusOnly gets the "stylus-only" property.
+// If this gesture should exclusively react to stylus input devices.
+func (x *GestureStylus) GetPropertyStylusOnly() bool {
+	var v gobject.Value
+	x.GetProperty("stylus-only", &v)
+	return v.GetBoolean()
 }
 
 // Emitted when the stylus touches the device.

@@ -8,6 +8,7 @@ import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -25,7 +26,7 @@ func (x *BufferedOutputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *BufferedOutputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -36,7 +37,7 @@ func (x *BufferedOutputStreamClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *BufferedOutputStreamClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -48,7 +49,7 @@ func (x *BufferedOutputStreamClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *BufferedOutputStreamClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -59,7 +60,7 @@ func (x *BufferedOutputStreamClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *BufferedOutputStreamClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -188,6 +189,40 @@ func (c *BufferedOutputStream) GoPointer() uintptr {
 
 func (c *BufferedOutputStream) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAutoGrow sets the "auto-grow" property.
+// Whether the buffer should automatically grow.
+func (x *BufferedOutputStream) SetPropertyAutoGrow(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("auto-grow", &v)
+}
+
+// GetPropertyAutoGrow gets the "auto-grow" property.
+// Whether the buffer should automatically grow.
+func (x *BufferedOutputStream) GetPropertyAutoGrow() bool {
+	var v gobject.Value
+	x.GetProperty("auto-grow", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyBufferSize sets the "buffer-size" property.
+// The size of the backend buffer, in bytes.
+func (x *BufferedOutputStream) SetPropertyBufferSize(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("buffer-size", &v)
+}
+
+// GetPropertyBufferSize gets the "buffer-size" property.
+// The size of the backend buffer, in bytes.
+func (x *BufferedOutputStream) GetPropertyBufferSize() uint {
+	var v gobject.Value
+	x.GetProperty("buffer-size", &v)
+	return v.GetUint()
 }
 
 // Tests if the stream supports the #GSeekableIface.

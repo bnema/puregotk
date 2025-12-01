@@ -273,6 +273,39 @@ func (c *Window) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAdaptivePreview sets the "adaptive-preview" property.
+// Whether adaptive preview is currently open.
+//
+// Adaptive preview is a debugging tool used for testing the window
+// contents at specific screen sizes, simulating mobile environment.
+//
+// Adaptive preview can always be accessed from inspector. This function
+// allows applications to open it manually.
+//
+// Most applications should not use this property.
+func (x *Window) SetPropertyAdaptivePreview(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("adaptive-preview", &v)
+}
+
+// GetPropertyAdaptivePreview gets the "adaptive-preview" property.
+// Whether adaptive preview is currently open.
+//
+// Adaptive preview is a debugging tool used for testing the window
+// contents at specific screen sizes, simulating mobile environment.
+//
+// Adaptive preview can always be accessed from inspector. This function
+// allows applications to open it manually.
+//
+// Most applications should not use this property.
+func (x *Window) GetPropertyAdaptivePreview() bool {
+	var v gobject.Value
+	x.GetProperty("adaptive-preview", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -330,7 +363,7 @@ func (x *Window) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Window) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Window) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -585,7 +618,7 @@ func (x *Window) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *Window) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *Window) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	gtk.XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

@@ -431,6 +431,23 @@ func (c *Breakpoint) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCondition sets the "condition" property.
+// The breakpoint's condition.
+func (x *Breakpoint) SetPropertyCondition(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("condition", &v)
+}
+
+// GetPropertyCondition gets the "condition" property.
+// The breakpoint's condition.
+func (x *Breakpoint) GetPropertyCondition() uintptr {
+	var v gobject.Value
+	x.GetProperty("condition", &v)
+	return v.GetPointer()
+}
+
 // Emitted when the breakpoint is applied.
 //
 // This signal is emitted after the setters have been applied.

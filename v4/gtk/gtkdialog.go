@@ -30,7 +30,7 @@ func (x *DialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideResponse sets the callback function.
+// OverrideResponse sets the "response" callback function.
 // Signal emitted when an action widget is activated.
 func (x *DialogClass) OverrideResponse(cb func(*Dialog, int)) {
 	if cb == nil {
@@ -42,7 +42,7 @@ func (x *DialogClass) OverrideResponse(cb func(*Dialog, int)) {
 	}
 }
 
-// GetResponse gets the callback function.
+// GetResponse gets the "response" callback function.
 // Signal emitted when an action widget is activated.
 func (x *DialogClass) GetResponse() func(*Dialog, int) {
 	if x.xResponse == 0 {
@@ -55,7 +55,7 @@ func (x *DialogClass) GetResponse() func(*Dialog, int) {
 	}
 }
 
-// OverrideClose sets the callback function.
+// OverrideClose sets the "close" callback function.
 // Signal emitted when the user uses a keybinding to close the dialog.
 func (x *DialogClass) OverrideClose(cb func(*Dialog)) {
 	if cb == nil {
@@ -67,7 +67,7 @@ func (x *DialogClass) OverrideClose(cb func(*Dialog)) {
 	}
 }
 
-// GetClose gets the callback function.
+// GetClose gets the "close" callback function.
 // Signal emitted when the user uses a keybinding to close the dialog.
 func (x *DialogClass) GetClose() func(*Dialog) {
 	if x.xClose == 0 {
@@ -520,6 +520,57 @@ func (c *Dialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyUseHeaderBar sets the "use-header-bar" property.
+// %TRUE if the dialog uses a headerbar for action buttons
+// instead of the action-area.
+//
+// For technical reasons, this property is declared as an integer
+// property, but you should only set it to %TRUE or %FALSE.
+//
+// ## Creating a dialog with headerbar
+//
+// Builtin `GtkDialog` subclasses such as [class@Gtk.ColorChooserDialog]
+// set this property according to platform conventions (using the
+// [property@Gtk.Settings:gtk-dialogs-use-header] setting).
+//
+// Here is how you can achieve the same:
+//
+// ```c
+// g_object_get (settings, "gtk-dialogs-use-header", &amp;header, NULL);
+// dialog = g_object_new (GTK_TYPE_DIALOG, header, TRUE, NULL);
+// ```
+func (x *Dialog) SetPropertyUseHeaderBar(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("use-header-bar", &v)
+}
+
+// GetPropertyUseHeaderBar gets the "use-header-bar" property.
+// %TRUE if the dialog uses a headerbar for action buttons
+// instead of the action-area.
+//
+// For technical reasons, this property is declared as an integer
+// property, but you should only set it to %TRUE or %FALSE.
+//
+// ## Creating a dialog with headerbar
+//
+// Builtin `GtkDialog` subclasses such as [class@Gtk.ColorChooserDialog]
+// set this property according to platform conventions (using the
+// [property@Gtk.Settings:gtk-dialogs-use-header] setting).
+//
+// Here is how you can achieve the same:
+//
+// ```c
+// g_object_get (settings, "gtk-dialogs-use-header", &amp;header, NULL);
+// dialog = g_object_new (GTK_TYPE_DIALOG, header, TRUE, NULL);
+// ```
+func (x *Dialog) GetPropertyUseHeaderBar() int {
+	var v gobject.Value
+	x.GetProperty("use-header-bar", &v)
+	return v.GetInt()
+}
+
 // Emitted when the user uses a keybinding to close the dialog.
 //
 // This is a [keybinding signal](class.SignalAction.html).
@@ -626,7 +677,7 @@ func (x *Dialog) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Dialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Dialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -881,7 +932,7 @@ func (x *Dialog) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *Dialog) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *Dialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

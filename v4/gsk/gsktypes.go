@@ -296,13 +296,13 @@ func (x *Path) GetBounds(BoundsVar *graphene.Rect) bool {
 	return cret
 }
 
-var xPathGetClosestPoint func(uintptr, *graphene.Point, float32, *PathPoint, float32) bool
+var xPathGetClosestPoint func(uintptr, *graphene.Point, float32, *PathPoint, *float32) bool
 
 // Computes the closest point on the path to the given point.
 //
 // If there is no point closer than the given threshold,
 // false is returned.
-func (x *Path) GetClosestPoint(PointVar *graphene.Point, ThresholdVar float32, ResultVar *PathPoint, DistanceVar float32) bool {
+func (x *Path) GetClosestPoint(PointVar *graphene.Point, ThresholdVar float32, ResultVar *PathPoint, DistanceVar *float32) bool {
 
 	cret := xPathGetClosestPoint(x.GoPointer(), PointVar, ThresholdVar, ResultVar, DistanceVar)
 	return cret
@@ -1081,10 +1081,10 @@ func (x *Stroke) Free() {
 
 }
 
-var xStrokeGetDash func(uintptr, uint) uintptr
+var xStrokeGetDash func(uintptr, *uint) uintptr
 
 // Gets the dash array in use.
-func (x *Stroke) GetDash(NDashVar uint) uintptr {
+func (x *Stroke) GetDash(NDashVar *uint) uintptr {
 
 	cret := xStrokeGetDash(x.GoPointer(), NDashVar)
 	return cret
@@ -1447,7 +1447,7 @@ func (x *Transform) Skew(SkewXVar float32, SkewYVar float32) *Transform {
 	return cret
 }
 
-var xTransformTo2d func(uintptr, float32, float32, float32, float32, float32, float32)
+var xTransformTo2d func(uintptr, *float32, *float32, *float32, *float32, *float32, *float32)
 
 // Converts a transform to a 2D transformation matrix.
 //
@@ -1473,13 +1473,13 @@ var xTransformTo2d func(uintptr, float32, float32, float32, float32, float32, fl
 // This function can be used to convert between a `GskTransform`
 // and a matrix type from other 2D drawing libraries, in particular
 // Cairo.
-func (x *Transform) To2d(OutXxVar float32, OutYxVar float32, OutXyVar float32, OutYyVar float32, OutDxVar float32, OutDyVar float32) {
+func (x *Transform) To2d(OutXxVar *float32, OutYxVar *float32, OutXyVar *float32, OutYyVar *float32, OutDxVar *float32, OutDyVar *float32) {
 
 	xTransformTo2d(x.GoPointer(), OutXxVar, OutYxVar, OutXyVar, OutYyVar, OutDxVar, OutDyVar)
 
 }
 
-var xTransformTo2dComponents func(uintptr, float32, float32, float32, float32, float32, float32, float32)
+var xTransformTo2dComponents func(uintptr, *float32, *float32, *float32, *float32, *float32, *float32, *float32)
 
 // Converts a transform to 2D transformation factors.
 //
@@ -1499,13 +1499,13 @@ var xTransformTo2dComponents func(uintptr, float32, float32, float32, float32, f
 //	gsk_transform_get_category() &gt;= GSK_TRANSFORM_CATEGORY_2D
 //
 // to check.
-func (x *Transform) To2dComponents(OutSkewXVar float32, OutSkewYVar float32, OutScaleXVar float32, OutScaleYVar float32, OutAngleVar float32, OutDxVar float32, OutDyVar float32) {
+func (x *Transform) To2dComponents(OutSkewXVar *float32, OutSkewYVar *float32, OutScaleXVar *float32, OutScaleYVar *float32, OutAngleVar *float32, OutDxVar *float32, OutDyVar *float32) {
 
 	xTransformTo2dComponents(x.GoPointer(), OutSkewXVar, OutSkewYVar, OutScaleXVar, OutScaleYVar, OutAngleVar, OutDxVar, OutDyVar)
 
 }
 
-var xTransformToAffine func(uintptr, float32, float32, float32, float32)
+var xTransformToAffine func(uintptr, *float32, *float32, *float32, *float32)
 
 // Converts a transform to 2D affine transformation factors.
 //
@@ -1524,7 +1524,7 @@ var xTransformToAffine func(uintptr, float32, float32, float32, float32)
 //	gsk_transform_get_category() &gt;= GSK_TRANSFORM_CATEGORY_2D_AFFINE
 //
 // to check.
-func (x *Transform) ToAffine(OutScaleXVar float32, OutScaleYVar float32, OutDxVar float32, OutDyVar float32) {
+func (x *Transform) ToAffine(OutScaleXVar *float32, OutScaleYVar *float32, OutDxVar *float32, OutDyVar *float32) {
 
 	xTransformToAffine(x.GoPointer(), OutScaleXVar, OutScaleYVar, OutDxVar, OutDyVar)
 
@@ -1554,7 +1554,7 @@ func (x *Transform) ToString() string {
 	return cret
 }
 
-var xTransformToTranslate func(uintptr, float32, float32)
+var xTransformToTranslate func(uintptr, *float32, *float32)
 
 // Converts a transform to a translation operation.
 //
@@ -1564,7 +1564,7 @@ var xTransformToTranslate func(uintptr, float32, float32)
 //	gsk_transform_get_category() &gt;= GSK_TRANSFORM_CATEGORY_2D_TRANSLATE
 //
 // to check.
-func (x *Transform) ToTranslate(OutDxVar float32, OutDyVar float32) {
+func (x *Transform) ToTranslate(OutDxVar *float32, OutDyVar *float32) {
 
 	xTransformToTranslate(x.GoPointer(), OutDxVar, OutDyVar)
 

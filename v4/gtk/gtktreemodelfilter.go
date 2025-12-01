@@ -40,7 +40,7 @@ func (x *TreeModelFilterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideVisible sets the callback function.
+// OverrideVisible sets the "visible" callback function.
 // A function which decides whether the row indicated by @iter is visible.
 func (x *TreeModelFilterClass) OverrideVisible(cb func(*TreeModelFilter, TreeModel, *TreeIter) bool) {
 	if cb == nil {
@@ -52,7 +52,7 @@ func (x *TreeModelFilterClass) OverrideVisible(cb func(*TreeModelFilter, TreeMod
 	}
 }
 
-// GetVisible gets the callback function.
+// GetVisible gets the "visible" callback function.
 // A function which decides whether the row indicated by @iter is visible.
 func (x *TreeModelFilterClass) GetVisible() func(*TreeModelFilter, TreeModel, *TreeIter) bool {
 	if x.xVisible == 0 {
@@ -65,7 +65,7 @@ func (x *TreeModelFilterClass) GetVisible() func(*TreeModelFilter, TreeModel, *T
 	}
 }
 
-// OverrideModify sets the callback function.
+// OverrideModify sets the "modify" callback function.
 // A function which calculates display values from raw values in the model.
 // It must fill @value with the display value for the column @column in the
 // row indicated by @iter.
@@ -82,7 +82,7 @@ func (x *TreeModelFilterClass) OverrideModify(cb func(*TreeModelFilter, TreeMode
 	}
 }
 
-// GetModify gets the callback function.
+// GetModify gets the "modify" callback function.
 // A function which calculates display values from raw values in the model.
 // It must fill @value with the display value for the column @column in the
 // row indicated by @iter.
@@ -366,6 +366,23 @@ func (c *TreeModelFilter) GoPointer() uintptr {
 
 func (c *TreeModelFilter) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyVirtualRoot sets the "virtual-root" property.
+// The virtual root of the tree model filter.
+func (x *TreeModelFilter) SetPropertyVirtualRoot(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("virtual-root", &v)
+}
+
+// GetPropertyVirtualRoot gets the "virtual-root" property.
+// The virtual root of the tree model filter.
+func (x *TreeModelFilter) GetPropertyVirtualRoot() uintptr {
+	var v gobject.Value
+	x.GetProperty("virtual-root", &v)
+	return v.GetPointer()
 }
 
 // Asks the `GtkTreeDragSource` to delete the row at @path, because

@@ -301,10 +301,10 @@ func (x *Vec3) Subtract(BVar *Vec3, ResVar *Vec3) {
 
 }
 
-var xVec3ToFloat func(uintptr, [3]float32)
+var xVec3ToFloat func(uintptr, *[3]float32)
 
 // Copies the components of a #graphene_vec3_t into the given array.
-func (x *Vec3) ToFloat(DestVar [3]float32) {
+func (x *Vec3) ToFloat(DestVar *[3]float32) {
 
 	xVec3ToFloat(x.GoPointer(), DestVar)
 

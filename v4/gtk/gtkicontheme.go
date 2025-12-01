@@ -367,6 +367,99 @@ func (c *IconTheme) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyIconNames gets the "icon-names" property.
+// The icon names that are supported by the icon theme.
+func (x *IconTheme) GetPropertyIconNames() []string {
+	var v gobject.Value
+	x.GetProperty("icon-names", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyResourcePath sets the "resource-path" property.
+// Resource paths that will be looked at when looking for icons,
+// similar to search paths.
+//
+// The resources are considered as part of the hicolor icon theme
+// and must be located in subdirectories that are defined in the
+// hicolor icon theme, such as `@path/16x16/actions/run.png`.
+// Icons that are directly placed in the resource path instead
+// of a subdirectory are also considered as ultimate fallback.
+func (x *IconTheme) SetPropertyResourcePath(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("resource-path", &v)
+}
+
+// GetPropertyResourcePath gets the "resource-path" property.
+// Resource paths that will be looked at when looking for icons,
+// similar to search paths.
+//
+// The resources are considered as part of the hicolor icon theme
+// and must be located in subdirectories that are defined in the
+// hicolor icon theme, such as `@path/16x16/actions/run.png`.
+// Icons that are directly placed in the resource path instead
+// of a subdirectory are also considered as ultimate fallback.
+func (x *IconTheme) GetPropertyResourcePath() []string {
+	var v gobject.Value
+	x.GetProperty("resource-path", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertySearchPath sets the "search-path" property.
+// The search path for this icon theme.
+//
+// When looking for icons, GTK will search for a subdirectory of
+// one or more of the directories in the search path with the same
+// name as the icon theme containing an index.theme file. (Themes
+// from multiple of the path elements are combined to allow themes
+// to be extended by adding icons in the user’s home directory.)
+func (x *IconTheme) SetPropertySearchPath(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("search-path", &v)
+}
+
+// GetPropertySearchPath gets the "search-path" property.
+// The search path for this icon theme.
+//
+// When looking for icons, GTK will search for a subdirectory of
+// one or more of the directories in the search path with the same
+// name as the icon theme containing an index.theme file. (Themes
+// from multiple of the path elements are combined to allow themes
+// to be extended by adding icons in the user’s home directory.)
+func (x *IconTheme) GetPropertySearchPath() []string {
+	var v gobject.Value
+	x.GetProperty("search-path", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyThemeName sets the "theme-name" property.
+// The name of the icon theme that is being used.
+//
+// Unless set to a different value, this will be the value of
+// the `GtkSettings:gtk-icon-theme-name` property of the `GtkSettings`
+// object associated to the display of the icontheme object.
+func (x *IconTheme) SetPropertyThemeName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("theme-name", &v)
+}
+
+// GetPropertyThemeName gets the "theme-name" property.
+// The name of the icon theme that is being used.
+//
+// Unless set to a different value, this will be the value of
+// the `GtkSettings:gtk-icon-theme-name` property of the `GtkSettings`
+// object associated to the display of the icontheme object.
+func (x *IconTheme) GetPropertyThemeName() string {
+	var v gobject.Value
+	x.GetProperty("theme-name", &v)
+	return v.GetString()
+}
+
 // Emitted when the icon theme changes.
 //
 // This can happen because current icon theme is switched or

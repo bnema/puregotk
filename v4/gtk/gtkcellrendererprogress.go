@@ -56,6 +56,142 @@ func (c *CellRendererProgress) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyInverted sets the "inverted" property.
+// Whether progess is inverted.
+func (x *CellRendererProgress) SetPropertyInverted(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("inverted", &v)
+}
+
+// GetPropertyInverted gets the "inverted" property.
+// Whether progess is inverted.
+func (x *CellRendererProgress) GetPropertyInverted() bool {
+	var v gobject.Value
+	x.GetProperty("inverted", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPulse sets the "pulse" property.
+// Setting this to a non-negative value causes the cell renderer to
+// enter "activity mode", where a block bounces back and forth to
+// indicate that some progress is made, without specifying exactly how
+// much.
+//
+// Each increment of the property causes the block to move by a little
+// bit.
+//
+// To indicate that the activity has not started yet, set the property
+// to zero. To indicate completion, set the property to %G_MAXINT.
+func (x *CellRendererProgress) SetPropertyPulse(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("pulse", &v)
+}
+
+// GetPropertyPulse gets the "pulse" property.
+// Setting this to a non-negative value causes the cell renderer to
+// enter "activity mode", where a block bounces back and forth to
+// indicate that some progress is made, without specifying exactly how
+// much.
+//
+// Each increment of the property causes the block to move by a little
+// bit.
+//
+// To indicate that the activity has not started yet, set the property
+// to zero. To indicate completion, set the property to %G_MAXINT.
+func (x *CellRendererProgress) GetPropertyPulse() int {
+	var v gobject.Value
+	x.GetProperty("pulse", &v)
+	return v.GetInt()
+}
+
+// SetPropertyText sets the "text" property.
+// The "text" property determines the label which will be drawn
+// over the progress bar. Setting this property to %NULL causes the default
+// label to be displayed. Setting this property to an empty string causes
+// no label to be displayed.
+func (x *CellRendererProgress) SetPropertyText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("text", &v)
+}
+
+// GetPropertyText gets the "text" property.
+// The "text" property determines the label which will be drawn
+// over the progress bar. Setting this property to %NULL causes the default
+// label to be displayed. Setting this property to an empty string causes
+// no label to be displayed.
+func (x *CellRendererProgress) GetPropertyText() string {
+	var v gobject.Value
+	x.GetProperty("text", &v)
+	return v.GetString()
+}
+
+// SetPropertyTextXalign sets the "text-xalign" property.
+// The "text-xalign" property controls the horizontal alignment of the
+// text in the progress bar.  Valid values range from 0 (left) to 1
+// (right).  Reserved for RTL layouts.
+func (x *CellRendererProgress) SetPropertyTextXalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("text-xalign", &v)
+}
+
+// GetPropertyTextXalign gets the "text-xalign" property.
+// The "text-xalign" property controls the horizontal alignment of the
+// text in the progress bar.  Valid values range from 0 (left) to 1
+// (right).  Reserved for RTL layouts.
+func (x *CellRendererProgress) GetPropertyTextXalign() float32 {
+	var v gobject.Value
+	x.GetProperty("text-xalign", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyTextYalign sets the "text-yalign" property.
+// The "text-yalign" property controls the vertical alignment of the
+// text in the progress bar.  Valid values range from 0 (top) to 1
+// (bottom).
+func (x *CellRendererProgress) SetPropertyTextYalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("text-yalign", &v)
+}
+
+// GetPropertyTextYalign gets the "text-yalign" property.
+// The "text-yalign" property controls the vertical alignment of the
+// text in the progress bar.  Valid values range from 0 (top) to 1
+// (bottom).
+func (x *CellRendererProgress) GetPropertyTextYalign() float32 {
+	var v gobject.Value
+	x.GetProperty("text-yalign", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyValue sets the "value" property.
+// The "value" property determines the percentage to which the
+// progress bar will be "filled in".
+func (x *CellRendererProgress) SetPropertyValue(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("value", &v)
+}
+
+// GetPropertyValue gets the "value" property.
+// The "value" property determines the percentage to which the
+// progress bar will be "filled in".
+func (x *CellRendererProgress) GetPropertyValue() int {
+	var v gobject.Value
+	x.GetProperty("value", &v)
+	return v.GetInt()
+}
+
 // Retrieves the orientation of the @orientable.
 func (x *CellRendererProgress) GetOrientation() Orientation {
 

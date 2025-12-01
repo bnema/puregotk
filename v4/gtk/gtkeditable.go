@@ -39,7 +39,7 @@ func (x *EditableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideInsertText sets the callback function.
+// OverrideInsertText sets the "insert_text" callback function.
 func (x *EditableInterface) OverrideInsertText(cb func(Editable, string, int, int)) {
 	if cb == nil {
 		x.xInsertText = 0
@@ -50,7 +50,7 @@ func (x *EditableInterface) OverrideInsertText(cb func(Editable, string, int, in
 	}
 }
 
-// GetInsertText gets the callback function.
+// GetInsertText gets the "insert_text" callback function.
 func (x *EditableInterface) GetInsertText() func(Editable, string, int, int) {
 	if x.xInsertText == 0 {
 		return nil
@@ -62,7 +62,7 @@ func (x *EditableInterface) GetInsertText() func(Editable, string, int, int) {
 	}
 }
 
-// OverrideDeleteText sets the callback function.
+// OverrideDeleteText sets the "delete_text" callback function.
 func (x *EditableInterface) OverrideDeleteText(cb func(Editable, int, int)) {
 	if cb == nil {
 		x.xDeleteText = 0
@@ -73,7 +73,7 @@ func (x *EditableInterface) OverrideDeleteText(cb func(Editable, int, int)) {
 	}
 }
 
-// GetDeleteText gets the callback function.
+// GetDeleteText gets the "delete_text" callback function.
 func (x *EditableInterface) GetDeleteText() func(Editable, int, int) {
 	if x.xDeleteText == 0 {
 		return nil
@@ -85,7 +85,7 @@ func (x *EditableInterface) GetDeleteText() func(Editable, int, int) {
 	}
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 func (x *EditableInterface) OverrideChanged(cb func(Editable)) {
 	if cb == nil {
 		x.xChanged = 0
@@ -96,7 +96,7 @@ func (x *EditableInterface) OverrideChanged(cb func(Editable)) {
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 func (x *EditableInterface) GetChanged() func(Editable) {
 	if x.xChanged == 0 {
 		return nil
@@ -108,7 +108,7 @@ func (x *EditableInterface) GetChanged() func(Editable) {
 	}
 }
 
-// OverrideGetText sets the callback function.
+// OverrideGetText sets the "get_text" callback function.
 func (x *EditableInterface) OverrideGetText(cb func(Editable) string) {
 	if cb == nil {
 		x.xGetText = 0
@@ -119,7 +119,7 @@ func (x *EditableInterface) OverrideGetText(cb func(Editable) string) {
 	}
 }
 
-// GetGetText gets the callback function.
+// GetGetText gets the "get_text" callback function.
 func (x *EditableInterface) GetGetText() func(Editable) string {
 	if x.xGetText == 0 {
 		return nil
@@ -131,7 +131,7 @@ func (x *EditableInterface) GetGetText() func(Editable) string {
 	}
 }
 
-// OverrideDoInsertText sets the callback function.
+// OverrideDoInsertText sets the "do_insert_text" callback function.
 func (x *EditableInterface) OverrideDoInsertText(cb func(Editable, string, int, int)) {
 	if cb == nil {
 		x.xDoInsertText = 0
@@ -142,7 +142,7 @@ func (x *EditableInterface) OverrideDoInsertText(cb func(Editable, string, int, 
 	}
 }
 
-// GetDoInsertText gets the callback function.
+// GetDoInsertText gets the "do_insert_text" callback function.
 func (x *EditableInterface) GetDoInsertText() func(Editable, string, int, int) {
 	if x.xDoInsertText == 0 {
 		return nil
@@ -154,7 +154,7 @@ func (x *EditableInterface) GetDoInsertText() func(Editable, string, int, int) {
 	}
 }
 
-// OverrideDoDeleteText sets the callback function.
+// OverrideDoDeleteText sets the "do_delete_text" callback function.
 func (x *EditableInterface) OverrideDoDeleteText(cb func(Editable, int, int)) {
 	if cb == nil {
 		x.xDoDeleteText = 0
@@ -165,7 +165,7 @@ func (x *EditableInterface) OverrideDoDeleteText(cb func(Editable, int, int)) {
 	}
 }
 
-// GetDoDeleteText gets the callback function.
+// GetDoDeleteText gets the "do_delete_text" callback function.
 func (x *EditableInterface) GetDoDeleteText() func(Editable, int, int) {
 	if x.xDoDeleteText == 0 {
 		return nil
@@ -177,30 +177,30 @@ func (x *EditableInterface) GetDoDeleteText() func(Editable, int, int) {
 	}
 }
 
-// OverrideGetSelectionBounds sets the callback function.
-func (x *EditableInterface) OverrideGetSelectionBounds(cb func(Editable, int, int) bool) {
+// OverrideGetSelectionBounds sets the "get_selection_bounds" callback function.
+func (x *EditableInterface) OverrideGetSelectionBounds(cb func(Editable, *int, *int) bool) {
 	if cb == nil {
 		x.xGetSelectionBounds = 0
 	} else {
-		x.xGetSelectionBounds = purego.NewCallback(func(EditableVarp uintptr, StartPosVarp int, EndPosVarp int) bool {
+		x.xGetSelectionBounds = purego.NewCallback(func(EditableVarp uintptr, StartPosVarp *int, EndPosVarp *int) bool {
 			return cb(&EditableBase{Ptr: EditableVarp}, StartPosVarp, EndPosVarp)
 		})
 	}
 }
 
-// GetGetSelectionBounds gets the callback function.
-func (x *EditableInterface) GetGetSelectionBounds() func(Editable, int, int) bool {
+// GetGetSelectionBounds gets the "get_selection_bounds" callback function.
+func (x *EditableInterface) GetGetSelectionBounds() func(Editable, *int, *int) bool {
 	if x.xGetSelectionBounds == 0 {
 		return nil
 	}
-	var rawCallback func(EditableVarp uintptr, StartPosVarp int, EndPosVarp int) bool
+	var rawCallback func(EditableVarp uintptr, StartPosVarp *int, EndPosVarp *int) bool
 	purego.RegisterFunc(&rawCallback, x.xGetSelectionBounds)
-	return func(EditableVar Editable, StartPosVar int, EndPosVar int) bool {
+	return func(EditableVar Editable, StartPosVar *int, EndPosVar *int) bool {
 		return rawCallback(EditableVar.GoPointer(), StartPosVar, EndPosVar)
 	}
 }
 
-// OverrideSetSelectionBounds sets the callback function.
+// OverrideSetSelectionBounds sets the "set_selection_bounds" callback function.
 func (x *EditableInterface) OverrideSetSelectionBounds(cb func(Editable, int, int)) {
 	if cb == nil {
 		x.xSetSelectionBounds = 0
@@ -211,7 +211,7 @@ func (x *EditableInterface) OverrideSetSelectionBounds(cb func(Editable, int, in
 	}
 }
 
-// GetSetSelectionBounds gets the callback function.
+// GetSetSelectionBounds gets the "set_selection_bounds" callback function.
 func (x *EditableInterface) GetSetSelectionBounds() func(Editable, int, int) {
 	if x.xSetSelectionBounds == 0 {
 		return nil
@@ -223,7 +223,7 @@ func (x *EditableInterface) GetSetSelectionBounds() func(Editable, int, int) {
 	}
 }
 
-// OverrideGetDelegate sets the callback function.
+// OverrideGetDelegate sets the "get_delegate" callback function.
 func (x *EditableInterface) OverrideGetDelegate(cb func(Editable) *EditableBase) {
 	if cb == nil {
 		x.xGetDelegate = 0
@@ -238,7 +238,7 @@ func (x *EditableInterface) OverrideGetDelegate(cb func(Editable) *EditableBase)
 	}
 }
 
-// GetGetDelegate gets the callback function.
+// GetGetDelegate gets the "get_delegate" callback function.
 func (x *EditableInterface) GetGetDelegate() func(Editable) *EditableBase {
 	if x.xGetDelegate == 0 {
 		return nil
@@ -412,7 +412,7 @@ type Editable interface {
 	GetEnableUndo() bool
 	GetMaxWidthChars() int
 	GetPosition() int
-	GetSelectionBounds(StartPosVar int, EndPosVar int) bool
+	GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool
 	GetText() string
 	GetWidthChars() int
 	InitDelegate()
@@ -600,7 +600,7 @@ func (x *EditableBase) GetPosition() int {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *EditableBase) GetSelectionBounds(StartPosVar int, EndPosVar int) bool {
+func (x *EditableBase) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret
@@ -732,6 +732,156 @@ func (x *EditableBase) SetWidthChars(NCharsVar int) {
 
 }
 
+// GetPropertyCursorPosition gets the "cursor-position" property.
+// The current position of the insertion cursor in chars.
+func (x *EditableBase) GetPropertyCursorPosition() int {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("cursor-position", &v)
+	return v.GetInt()
+}
+
+// SetPropertyEditable sets the "editable" property.
+// Whether the entry contents can be edited.
+func (x *EditableBase) SetPropertyEditable(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("editable", &v)
+}
+
+// GetPropertyEditable gets the "editable" property.
+// Whether the entry contents can be edited.
+func (x *EditableBase) GetPropertyEditable() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("editable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyEnableUndo sets the "enable-undo" property.
+// If undo/redo should be enabled for the editable.
+func (x *EditableBase) SetPropertyEnableUndo(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("enable-undo", &v)
+}
+
+// GetPropertyEnableUndo gets the "enable-undo" property.
+// If undo/redo should be enabled for the editable.
+func (x *EditableBase) GetPropertyEnableUndo() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("enable-undo", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaxWidthChars sets the "max-width-chars" property.
+// The desired maximum width of the entry, in characters.
+func (x *EditableBase) SetPropertyMaxWidthChars(value int) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	obj.SetProperty("max-width-chars", &v)
+}
+
+// GetPropertyMaxWidthChars gets the "max-width-chars" property.
+// The desired maximum width of the entry, in characters.
+func (x *EditableBase) GetPropertyMaxWidthChars() int {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("max-width-chars", &v)
+	return v.GetInt()
+}
+
+// GetPropertySelectionBound gets the "selection-bound" property.
+// The position of the opposite end of the selection from the cursor in chars.
+func (x *EditableBase) GetPropertySelectionBound() int {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("selection-bound", &v)
+	return v.GetInt()
+}
+
+// SetPropertyText sets the "text" property.
+// The contents of the entry.
+func (x *EditableBase) SetPropertyText(value string) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	obj.SetProperty("text", &v)
+}
+
+// GetPropertyText gets the "text" property.
+// The contents of the entry.
+func (x *EditableBase) GetPropertyText() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("text", &v)
+	return v.GetString()
+}
+
+// SetPropertyWidthChars sets the "width-chars" property.
+// Number of characters to leave space for in the entry.
+func (x *EditableBase) SetPropertyWidthChars(value int) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	obj.SetProperty("width-chars", &v)
+}
+
+// GetPropertyWidthChars gets the "width-chars" property.
+// Number of characters to leave space for in the entry.
+func (x *EditableBase) GetPropertyWidthChars() int {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("width-chars", &v)
+	return v.GetInt()
+}
+
+// SetPropertyXalign sets the "xalign" property.
+// The horizontal alignment, from 0 (left) to 1 (right).
+//
+// Reversed for RTL layouts.
+func (x *EditableBase) SetPropertyXalign(value float32) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	obj.SetProperty("xalign", &v)
+}
+
+// GetPropertyXalign gets the "xalign" property.
+// The horizontal alignment, from 0 (left) to 1 (right).
+//
+// Reversed for RTL layouts.
+func (x *EditableBase) GetPropertyXalign() float32 {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("xalign", &v)
+	return v.GetFloat()
+}
+
 var XGtkEditableDelegateGetAccessiblePlatformState func(uintptr, AccessiblePlatformState) bool
 var XGtkEditableDeleteSelection func(uintptr)
 var XGtkEditableDeleteText func(uintptr, int, int)
@@ -743,7 +893,7 @@ var XGtkEditableGetEditable func(uintptr) bool
 var XGtkEditableGetEnableUndo func(uintptr) bool
 var XGtkEditableGetMaxWidthChars func(uintptr) int
 var XGtkEditableGetPosition func(uintptr) int
-var XGtkEditableGetSelectionBounds func(uintptr, int, int) bool
+var XGtkEditableGetSelectionBounds func(uintptr, *int, *int) bool
 var XGtkEditableGetText func(uintptr) string
 var XGtkEditableGetWidthChars func(uintptr) int
 var XGtkEditableInitDelegate func(uintptr)

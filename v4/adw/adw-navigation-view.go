@@ -35,7 +35,7 @@ func (x *NavigationPageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideShowing sets the callback function.
+// OverrideShowing sets the "showing" callback function.
 func (x *NavigationPageClass) OverrideShowing(cb func(*NavigationPage)) {
 	if cb == nil {
 		x.xShowing = 0
@@ -46,7 +46,7 @@ func (x *NavigationPageClass) OverrideShowing(cb func(*NavigationPage)) {
 	}
 }
 
-// GetShowing gets the callback function.
+// GetShowing gets the "showing" callback function.
 func (x *NavigationPageClass) GetShowing() func(*NavigationPage) {
 	if x.xShowing == 0 {
 		return nil
@@ -58,7 +58,7 @@ func (x *NavigationPageClass) GetShowing() func(*NavigationPage) {
 	}
 }
 
-// OverrideShown sets the callback function.
+// OverrideShown sets the "shown" callback function.
 func (x *NavigationPageClass) OverrideShown(cb func(*NavigationPage)) {
 	if cb == nil {
 		x.xShown = 0
@@ -69,7 +69,7 @@ func (x *NavigationPageClass) OverrideShown(cb func(*NavigationPage)) {
 	}
 }
 
-// GetShown gets the callback function.
+// GetShown gets the "shown" callback function.
 func (x *NavigationPageClass) GetShown() func(*NavigationPage) {
 	if x.xShown == 0 {
 		return nil
@@ -81,7 +81,7 @@ func (x *NavigationPageClass) GetShown() func(*NavigationPage) {
 	}
 }
 
-// OverrideHiding sets the callback function.
+// OverrideHiding sets the "hiding" callback function.
 func (x *NavigationPageClass) OverrideHiding(cb func(*NavigationPage)) {
 	if cb == nil {
 		x.xHiding = 0
@@ -92,7 +92,7 @@ func (x *NavigationPageClass) OverrideHiding(cb func(*NavigationPage)) {
 	}
 }
 
-// GetHiding gets the callback function.
+// GetHiding gets the "hiding" callback function.
 func (x *NavigationPageClass) GetHiding() func(*NavigationPage) {
 	if x.xHiding == 0 {
 		return nil
@@ -104,7 +104,7 @@ func (x *NavigationPageClass) GetHiding() func(*NavigationPage) {
 	}
 }
 
-// OverrideHidden sets the callback function.
+// OverrideHidden sets the "hidden" callback function.
 func (x *NavigationPageClass) OverrideHidden(cb func(*NavigationPage)) {
 	if cb == nil {
 		x.xHidden = 0
@@ -115,7 +115,7 @@ func (x *NavigationPageClass) OverrideHidden(cb func(*NavigationPage)) {
 	}
 }
 
-// GetHidden gets the callback function.
+// GetHidden gets the "hidden" callback function.
 func (x *NavigationPageClass) GetHidden() func(*NavigationPage) {
 	if x.xHidden == 0 {
 		return nil
@@ -325,6 +325,99 @@ func (c *NavigationPage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCanPop sets the "can-pop" property.
+// Whether the page can be popped from navigation stack.
+//
+// Set it to `FALSE` to disable shortcuts and gestures, as well as remove the
+// back button from [class@HeaderBar].
+//
+// Manually calling [method@NavigationView.pop] or using the `navigation.pop`
+// action will still work.
+//
+// See [property@HeaderBar:show-back-button] for removing only the back
+// button, but not shortcuts.
+func (x *NavigationPage) SetPropertyCanPop(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-pop", &v)
+}
+
+// GetPropertyCanPop gets the "can-pop" property.
+// Whether the page can be popped from navigation stack.
+//
+// Set it to `FALSE` to disable shortcuts and gestures, as well as remove the
+// back button from [class@HeaderBar].
+//
+// Manually calling [method@NavigationView.pop] or using the `navigation.pop`
+// action will still work.
+//
+// See [property@HeaderBar:show-back-button] for removing only the back
+// button, but not shortcuts.
+func (x *NavigationPage) GetPropertyCanPop() bool {
+	var v gobject.Value
+	x.GetProperty("can-pop", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTag sets the "tag" property.
+// The page tag.
+//
+// The tag can be used to retrieve the page with
+// [method@NavigationView.find_page], as well as with
+// [method@NavigationView.push_by_tag], [method@NavigationView.pop_to_tag] or
+// [method@NavigationView.replace_with_tags].
+//
+// Tags must be unique within each [class@NavigationView].
+//
+// The tag also must be set to use the `navigation.push` action.
+func (x *NavigationPage) SetPropertyTag(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("tag", &v)
+}
+
+// GetPropertyTag gets the "tag" property.
+// The page tag.
+//
+// The tag can be used to retrieve the page with
+// [method@NavigationView.find_page], as well as with
+// [method@NavigationView.push_by_tag], [method@NavigationView.pop_to_tag] or
+// [method@NavigationView.replace_with_tags].
+//
+// Tags must be unique within each [class@NavigationView].
+//
+// The tag also must be set to use the `navigation.push` action.
+func (x *NavigationPage) GetPropertyTag() string {
+	var v gobject.Value
+	x.GetProperty("tag", &v)
+	return v.GetString()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The page title.
+//
+// It's displayed in [class@HeaderBar] instead of the window title, and used
+// as the tooltip on the next page's back button, as well as by screen reader.
+func (x *NavigationPage) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The page title.
+//
+// It's displayed in [class@HeaderBar] instead of the window title, and used
+// as the tooltip on the next page's back button, as well as by screen reader.
+func (x *NavigationPage) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 // Emitted when the navigation view transition has been completed and the page
 // is fully hidden.
 //
@@ -478,7 +571,7 @@ func (x *NavigationPage) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *NavigationPage) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *NavigationPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -1246,6 +1339,116 @@ func (c *NavigationView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAnimateTransitions sets the "animate-transitions" property.
+// Whether to animate page transitions.
+//
+// Gesture-based transitions are always animated.
+func (x *NavigationView) SetPropertyAnimateTransitions(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("animate-transitions", &v)
+}
+
+// GetPropertyAnimateTransitions gets the "animate-transitions" property.
+// Whether to animate page transitions.
+//
+// Gesture-based transitions are always animated.
+func (x *NavigationView) GetPropertyAnimateTransitions() bool {
+	var v gobject.Value
+	x.GetProperty("animate-transitions", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHhomogeneous sets the "hhomogeneous" property.
+// Whether the view is horizontally homogeneous.
+//
+// If the view is horizontally homogeneous, it allocates the same width for
+// all pages.
+//
+// If it's not, the page may change width when a different page becomes
+// visible.
+func (x *NavigationView) SetPropertyHhomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("hhomogeneous", &v)
+}
+
+// GetPropertyHhomogeneous gets the "hhomogeneous" property.
+// Whether the view is horizontally homogeneous.
+//
+// If the view is horizontally homogeneous, it allocates the same width for
+// all pages.
+//
+// If it's not, the page may change width when a different page becomes
+// visible.
+func (x *NavigationView) GetPropertyHhomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("hhomogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPopOnEscape sets the "pop-on-escape" property.
+// Whether pressing Escape pops the current page.
+//
+// Applications using `AdwNavigationView` to implement a browser may want to
+// disable it.
+func (x *NavigationView) SetPropertyPopOnEscape(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("pop-on-escape", &v)
+}
+
+// GetPropertyPopOnEscape gets the "pop-on-escape" property.
+// Whether pressing Escape pops the current page.
+//
+// Applications using `AdwNavigationView` to implement a browser may want to
+// disable it.
+func (x *NavigationView) GetPropertyPopOnEscape() bool {
+	var v gobject.Value
+	x.GetProperty("pop-on-escape", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVhomogeneous sets the "vhomogeneous" property.
+// Whether the view is vertically homogeneous.
+//
+// If the view is vertically homogeneous, it allocates the same height for
+// all pages.
+//
+// If it's not, the view may change height when a different page becomes
+// visible.
+func (x *NavigationView) SetPropertyVhomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("vhomogeneous", &v)
+}
+
+// GetPropertyVhomogeneous gets the "vhomogeneous" property.
+// Whether the view is vertically homogeneous.
+//
+// If the view is vertically homogeneous, it allocates the same height for
+// all pages.
+//
+// If it's not, the view may change height when a different page becomes
+// visible.
+func (x *NavigationView) GetPropertyVhomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("vhomogeneous", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyVisiblePageTag gets the "visible-page-tag" property.
+// The tag of the currently visible page.
+func (x *NavigationView) GetPropertyVisiblePageTag() string {
+	var v gobject.Value
+	x.GetProperty("visible-page-tag", &v)
+	return v.GetString()
+}
+
 // Emitted when a push shortcut or a gesture is triggered.
 //
 // To support the push shortcuts and gestures, the application is expected to
@@ -1374,7 +1577,7 @@ func (x *NavigationView) GetProgress() float64 {
 //
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
-func (x *NavigationView) GetSnapPoints(NSnapPointsVar int) uintptr {
+func (x *NavigationView) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
@@ -1452,7 +1655,7 @@ func (x *NavigationView) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *NavigationView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *NavigationView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

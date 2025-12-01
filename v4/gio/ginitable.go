@@ -26,7 +26,7 @@ func (x *InitableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideInit sets the callback function.
+// OverrideInit sets the "init" callback function.
 // Initializes the object.
 func (x *InitableIface) OverrideInit(cb func(Initable, *Cancellable) bool) {
 	if cb == nil {
@@ -38,7 +38,7 @@ func (x *InitableIface) OverrideInit(cb func(Initable, *Cancellable) bool) {
 	}
 }
 
-// GetInit gets the callback function.
+// GetInit gets the "init" callback function.
 // Initializes the object.
 func (x *InitableIface) GetInit() func(Initable, *Cancellable) bool {
 	if x.xInit == 0 {

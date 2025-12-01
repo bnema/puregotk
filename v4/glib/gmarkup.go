@@ -104,13 +104,13 @@ func (x *MarkupParseContext) GetElementStack() *SList {
 	return cret
 }
 
-var xMarkupParseContextGetPosition func(uintptr, int, int)
+var xMarkupParseContextGetPosition func(uintptr, *int, *int)
 
 // Retrieves the current line number and the number of the character on
 // that line. Intended for use in error messages; there are no strict
 // semantics for what constitutes the "current" line number other than
 // "the best number we could come up with for error messages."
-func (x *MarkupParseContext) GetPosition(LineNumberVar int, CharNumberVar int) {
+func (x *MarkupParseContext) GetPosition(LineNumberVar *int, CharNumberVar *int) {
 
 	xMarkupParseContextGetPosition(x.GoPointer(), LineNumberVar, CharNumberVar)
 
@@ -356,7 +356,7 @@ func (x *MarkupParser) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideStartElement sets the callback function.
+// OverrideStartElement sets the "start_element" callback function.
 // Callback to invoke when the opening tag of an element
 //
 //	is seen. The callback's @attribute_names and @attribute_values parameters
@@ -371,7 +371,7 @@ func (x *MarkupParser) OverrideStartElement(cb func(*MarkupParseContext, string,
 	}
 }
 
-// GetStartElement gets the callback function.
+// GetStartElement gets the "start_element" callback function.
 // Callback to invoke when the opening tag of an element
 //
 //	is seen. The callback's @attribute_names and @attribute_values parameters
@@ -387,7 +387,7 @@ func (x *MarkupParser) GetStartElement() func(*MarkupParseContext, string, strin
 	}
 }
 
-// OverrideEndElement sets the callback function.
+// OverrideEndElement sets the "end_element" callback function.
 // Callback to invoke when the closing tag of an element
 //
 //	is seen. Note that this is also called for empty tags like
@@ -402,7 +402,7 @@ func (x *MarkupParser) OverrideEndElement(cb func(*MarkupParseContext, string, u
 	}
 }
 
-// GetEndElement gets the callback function.
+// GetEndElement gets the "end_element" callback function.
 // Callback to invoke when the closing tag of an element
 //
 //	is seen. Note that this is also called for empty tags like
@@ -418,7 +418,7 @@ func (x *MarkupParser) GetEndElement() func(*MarkupParseContext, string, uintptr
 	}
 }
 
-// OverrideText sets the callback function.
+// OverrideText sets the "text" callback function.
 // Callback to invoke when some text is seen (text is always
 //
 //	inside an element). Note that the text of an element may be spread
@@ -435,7 +435,7 @@ func (x *MarkupParser) OverrideText(cb func(*MarkupParseContext, string, uint, u
 	}
 }
 
-// GetText gets the callback function.
+// GetText gets the "text" callback function.
 // Callback to invoke when some text is seen (text is always
 //
 //	inside an element). Note that the text of an element may be spread
@@ -453,7 +453,7 @@ func (x *MarkupParser) GetText() func(*MarkupParseContext, string, uint, uintptr
 	}
 }
 
-// OverridePassthrough sets the callback function.
+// OverridePassthrough sets the "passthrough" callback function.
 // Callback to invoke for comments, processing instructions
 //
 //	and doctype declarations; if you're re-writing the parsed document,
@@ -470,7 +470,7 @@ func (x *MarkupParser) OverridePassthrough(cb func(*MarkupParseContext, string, 
 	}
 }
 
-// GetPassthrough gets the callback function.
+// GetPassthrough gets the "passthrough" callback function.
 // Callback to invoke for comments, processing instructions
 //
 //	and doctype declarations; if you're re-writing the parsed document,
@@ -488,7 +488,7 @@ func (x *MarkupParser) GetPassthrough() func(*MarkupParseContext, string, uint, 
 	}
 }
 
-// OverrideError sets the callback function.
+// OverrideError sets the "error" callback function.
 // Callback to invoke when an error occurs.
 func (x *MarkupParser) OverrideError(cb func(*MarkupParseContext, *Error, uintptr)) {
 	if cb == nil {
@@ -500,7 +500,7 @@ func (x *MarkupParser) OverrideError(cb func(*MarkupParseContext, *Error, uintpt
 	}
 }
 
-// GetError gets the callback function.
+// GetError gets the "error" callback function.
 // Callback to invoke when an error occurs.
 func (x *MarkupParser) GetError() func(*MarkupParseContext, *Error, uintptr) {
 	if x.xError == 0 {

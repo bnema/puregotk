@@ -434,6 +434,237 @@ func (c *BottomSheet) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAlign sets the "align" property.
+// Horizontal alignment of the bottom sheet.
+//
+// 0 means the bottom sheet is flush with the start edge, 1 means it's flush
+// with the end edge. 0.5 means it's centered.
+//
+// Only used when [property@BottomSheet:full-width] is set to `FALSE`.
+func (x *BottomSheet) SetPropertyAlign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("align", &v)
+}
+
+// GetPropertyAlign gets the "align" property.
+// Horizontal alignment of the bottom sheet.
+//
+// 0 means the bottom sheet is flush with the start edge, 1 means it's flush
+// with the end edge. 0.5 means it's centered.
+//
+// Only used when [property@BottomSheet:full-width] is set to `FALSE`.
+func (x *BottomSheet) GetPropertyAlign() float32 {
+	var v gobject.Value
+	x.GetProperty("align", &v)
+	return v.GetFloat()
+}
+
+// GetPropertyBottomBarHeight gets the "bottom-bar-height" property.
+// The current bottom bar height.
+//
+// It can be used to shift the content upwards permanently to accommodate for
+// the bottom bar.
+func (x *BottomSheet) GetPropertyBottomBarHeight() int {
+	var v gobject.Value
+	x.GetProperty("bottom-bar-height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyCanClose sets the "can-close" property.
+// Whether the bottom sheet can be closed by user.
+//
+// It can be closed via the close button, swiping down, pressing
+// &lt;kbd&gt;Escape&lt;/kbd&gt; or clicking the content dimming (when modal).
+//
+// Bottom sheet can still be closed using [property@BottomSheet:open].
+func (x *BottomSheet) SetPropertyCanClose(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-close", &v)
+}
+
+// GetPropertyCanClose gets the "can-close" property.
+// Whether the bottom sheet can be closed by user.
+//
+// It can be closed via the close button, swiping down, pressing
+// &lt;kbd&gt;Escape&lt;/kbd&gt; or clicking the content dimming (when modal).
+//
+// Bottom sheet can still be closed using [property@BottomSheet:open].
+func (x *BottomSheet) GetPropertyCanClose() bool {
+	var v gobject.Value
+	x.GetProperty("can-close", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCanOpen sets the "can-open" property.
+// Whether the bottom sheet can be opened by user.
+//
+// It can be opened via clicking or swiping up from the bottom bar.
+//
+// Does nothing if [property@BottomSheet:bottom-bar] is not set.
+//
+// Bottom sheet can still be opened using [property@BottomSheet:open].
+func (x *BottomSheet) SetPropertyCanOpen(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-open", &v)
+}
+
+// GetPropertyCanOpen gets the "can-open" property.
+// Whether the bottom sheet can be opened by user.
+//
+// It can be opened via clicking or swiping up from the bottom bar.
+//
+// Does nothing if [property@BottomSheet:bottom-bar] is not set.
+//
+// Bottom sheet can still be opened using [property@BottomSheet:open].
+func (x *BottomSheet) GetPropertyCanOpen() bool {
+	var v gobject.Value
+	x.GetProperty("can-open", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyFullWidth sets the "full-width" property.
+// Whether the bottom sheet takes the full width.
+//
+// When full width, [property@BottomSheet:align] is ignored.
+func (x *BottomSheet) SetPropertyFullWidth(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("full-width", &v)
+}
+
+// GetPropertyFullWidth gets the "full-width" property.
+// Whether the bottom sheet takes the full width.
+//
+// When full width, [property@BottomSheet:align] is ignored.
+func (x *BottomSheet) GetPropertyFullWidth() bool {
+	var v gobject.Value
+	x.GetProperty("full-width", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyModal sets the "modal" property.
+// Whether the bottom sheet is modal.
+//
+// When modal, [property@BottomSheet:content] will be dimmed when the bottom
+// sheet is open, and clicking it will close the bottom sheet. It also cannot
+// be focused with keyboard.
+//
+// Otherwise, the content is accessible even when the bottom sheet is open.
+func (x *BottomSheet) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the bottom sheet is modal.
+//
+// When modal, [property@BottomSheet:content] will be dimmed when the bottom
+// sheet is open, and clicking it will close the bottom sheet. It also cannot
+// be focused with keyboard.
+//
+// Otherwise, the content is accessible even when the bottom sheet is open.
+func (x *BottomSheet) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyOpen sets the "open" property.
+// Whether the bottom sheet is open.
+func (x *BottomSheet) SetPropertyOpen(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("open", &v)
+}
+
+// GetPropertyOpen gets the "open" property.
+// Whether the bottom sheet is open.
+func (x *BottomSheet) GetPropertyOpen() bool {
+	var v gobject.Value
+	x.GetProperty("open", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRevealBottomBar sets the "reveal-bottom-bar" property.
+// Whether to reveal the bottom bar.
+//
+// The transition will be animated.
+//
+// See [property@BottomSheet:bottom-bar] and
+// [property@BottomSheet:bottom-bar-height].
+func (x *BottomSheet) SetPropertyRevealBottomBar(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reveal-bottom-bar", &v)
+}
+
+// GetPropertyRevealBottomBar gets the "reveal-bottom-bar" property.
+// Whether to reveal the bottom bar.
+//
+// The transition will be animated.
+//
+// See [property@BottomSheet:bottom-bar] and
+// [property@BottomSheet:bottom-bar-height].
+func (x *BottomSheet) GetPropertyRevealBottomBar() bool {
+	var v gobject.Value
+	x.GetProperty("reveal-bottom-bar", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertySheetHeight gets the "sheet-height" property.
+// The current bottom sheet height.
+//
+// It can be used to shift the content upwards when the bottom sheet is open.
+func (x *BottomSheet) GetPropertySheetHeight() int {
+	var v gobject.Value
+	x.GetProperty("sheet-height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyShowDragHandle sets the "show-drag-handle" property.
+// Whether to overlay a drag handle in the bottom sheet.
+//
+// The handle will be overlaid over [property@BottomSheet:sheet].
+//
+// When the handle is shown, [class@HeaderBar] will hide its default title,
+// and [class@ToolbarView] will reserve space if there are no top bars.
+//
+// Showing drag handle also allows to swipe the bottom sheet down (and to
+// swipe the bottom bar up) with a pointer, instead of just touchscreen.
+func (x *BottomSheet) SetPropertyShowDragHandle(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-drag-handle", &v)
+}
+
+// GetPropertyShowDragHandle gets the "show-drag-handle" property.
+// Whether to overlay a drag handle in the bottom sheet.
+//
+// The handle will be overlaid over [property@BottomSheet:sheet].
+//
+// When the handle is shown, [class@HeaderBar] will hide its default title,
+// and [class@ToolbarView] will reserve space if there are no top bars.
+//
+// Showing drag handle also allows to swipe the bottom sheet down (and to
+// swipe the bottom bar up) with a pointer, instead of just touchscreen.
+func (x *BottomSheet) GetPropertyShowDragHandle() bool {
+	var v gobject.Value
+	x.GetProperty("show-drag-handle", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when the close button or shortcut is used while
 // [property@Dialog:can-close] is set to `FALSE`.
 func (x *BottomSheet) ConnectCloseAttempt(cb *func(BottomSheet)) uint32 {
@@ -482,7 +713,7 @@ func (x *BottomSheet) GetProgress() float64 {
 //
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
-func (x *BottomSheet) GetSnapPoints(NSnapPointsVar int) uintptr {
+func (x *BottomSheet) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
@@ -560,7 +791,7 @@ func (x *BottomSheet) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *BottomSheet) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *BottomSheet) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

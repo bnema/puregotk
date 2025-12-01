@@ -741,6 +741,108 @@ func (c *Notebook) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEnablePopup sets the "enable-popup" property.
+// If %TRUE, pressing the right mouse button on the notebook shows a page switching menu.
+func (x *Notebook) SetPropertyEnablePopup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-popup", &v)
+}
+
+// GetPropertyEnablePopup gets the "enable-popup" property.
+// If %TRUE, pressing the right mouse button on the notebook shows a page switching menu.
+func (x *Notebook) GetPropertyEnablePopup() bool {
+	var v gobject.Value
+	x.GetProperty("enable-popup", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyGroupName sets the "group-name" property.
+// Group name for tab drag and drop.
+func (x *Notebook) SetPropertyGroupName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("group-name", &v)
+}
+
+// GetPropertyGroupName gets the "group-name" property.
+// Group name for tab drag and drop.
+func (x *Notebook) GetPropertyGroupName() string {
+	var v gobject.Value
+	x.GetProperty("group-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyPage sets the "page" property.
+// The index of the current page.
+func (x *Notebook) SetPropertyPage(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("page", &v)
+}
+
+// GetPropertyPage gets the "page" property.
+// The index of the current page.
+func (x *Notebook) GetPropertyPage() int {
+	var v gobject.Value
+	x.GetProperty("page", &v)
+	return v.GetInt()
+}
+
+// SetPropertyScrollable sets the "scrollable" property.
+// If %TRUE, scroll arrows are added if there are too many pages to fit.
+func (x *Notebook) SetPropertyScrollable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("scrollable", &v)
+}
+
+// GetPropertyScrollable gets the "scrollable" property.
+// If %TRUE, scroll arrows are added if there are too many pages to fit.
+func (x *Notebook) GetPropertyScrollable() bool {
+	var v gobject.Value
+	x.GetProperty("scrollable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowBorder sets the "show-border" property.
+// Whether the border should be shown.
+func (x *Notebook) SetPropertyShowBorder(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-border", &v)
+}
+
+// GetPropertyShowBorder gets the "show-border" property.
+// Whether the border should be shown.
+func (x *Notebook) GetPropertyShowBorder() bool {
+	var v gobject.Value
+	x.GetProperty("show-border", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowTabs sets the "show-tabs" property.
+// Whether tabs should be shown.
+func (x *Notebook) SetPropertyShowTabs(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-tabs", &v)
+}
+
+// GetPropertyShowTabs gets the "show-tabs" property.
+// Whether tabs should be shown.
+func (x *Notebook) GetPropertyShowTabs() bool {
+	var v gobject.Value
+	x.GetProperty("show-tabs", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when the current page should be changed.
 //
 // The default bindings for this signal are
@@ -1028,7 +1130,7 @@ func (x *Notebook) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Notebook) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Notebook) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -1292,6 +1394,125 @@ func (c *NotebookPage) GoPointer() uintptr {
 
 func (c *NotebookPage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyDetachable sets the "detachable" property.
+// Whether the tab is detachable.
+func (x *NotebookPage) SetPropertyDetachable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("detachable", &v)
+}
+
+// GetPropertyDetachable gets the "detachable" property.
+// Whether the tab is detachable.
+func (x *NotebookPage) GetPropertyDetachable() bool {
+	var v gobject.Value
+	x.GetProperty("detachable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMenuLabel sets the "menu-label" property.
+// The text of the menu widget.
+func (x *NotebookPage) SetPropertyMenuLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("menu-label", &v)
+}
+
+// GetPropertyMenuLabel gets the "menu-label" property.
+// The text of the menu widget.
+func (x *NotebookPage) GetPropertyMenuLabel() string {
+	var v gobject.Value
+	x.GetProperty("menu-label", &v)
+	return v.GetString()
+}
+
+// SetPropertyPosition sets the "position" property.
+// The index of the child in the parent.
+func (x *NotebookPage) SetPropertyPosition(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("position", &v)
+}
+
+// GetPropertyPosition gets the "position" property.
+// The index of the child in the parent.
+func (x *NotebookPage) GetPropertyPosition() int {
+	var v gobject.Value
+	x.GetProperty("position", &v)
+	return v.GetInt()
+}
+
+// SetPropertyReorderable sets the "reorderable" property.
+// Whether the tab is reorderable by user action.
+func (x *NotebookPage) SetPropertyReorderable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reorderable", &v)
+}
+
+// GetPropertyReorderable gets the "reorderable" property.
+// Whether the tab is reorderable by user action.
+func (x *NotebookPage) GetPropertyReorderable() bool {
+	var v gobject.Value
+	x.GetProperty("reorderable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTabExpand sets the "tab-expand" property.
+// Whether to expand the child's tab.
+func (x *NotebookPage) SetPropertyTabExpand(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("tab-expand", &v)
+}
+
+// GetPropertyTabExpand gets the "tab-expand" property.
+// Whether to expand the child's tab.
+func (x *NotebookPage) GetPropertyTabExpand() bool {
+	var v gobject.Value
+	x.GetProperty("tab-expand", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTabFill sets the "tab-fill" property.
+// Whether the child's tab should fill the allocated area.
+func (x *NotebookPage) SetPropertyTabFill(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("tab-fill", &v)
+}
+
+// GetPropertyTabFill gets the "tab-fill" property.
+// Whether the child's tab should fill the allocated area.
+func (x *NotebookPage) GetPropertyTabFill() bool {
+	var v gobject.Value
+	x.GetProperty("tab-fill", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTabLabel sets the "tab-label" property.
+// The text of the tab widget.
+func (x *NotebookPage) SetPropertyTabLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("tab-label", &v)
+}
+
+// GetPropertyTabLabel gets the "tab-label" property.
+// The text of the tab widget.
+func (x *NotebookPage) GetPropertyTabLabel() string {
+	var v gobject.Value
+	x.GetProperty("tab-label", &v)
+	return v.GetString()
 }
 
 func init() {

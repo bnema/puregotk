@@ -53,7 +53,7 @@ func (x *PrintOperationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideDone sets the callback function.
+// OverrideDone sets the "done" callback function.
 // Signal emitted when the print operation run has finished
 //
 //	doing everything required for printing.
@@ -67,7 +67,7 @@ func (x *PrintOperationClass) OverrideDone(cb func(*PrintOperation, PrintOperati
 	}
 }
 
-// GetDone gets the callback function.
+// GetDone gets the "done" callback function.
 // Signal emitted when the print operation run has finished
 //
 //	doing everything required for printing.
@@ -82,7 +82,7 @@ func (x *PrintOperationClass) GetDone() func(*PrintOperation, PrintOperationResu
 	}
 }
 
-// OverrideBeginPrint sets the callback function.
+// OverrideBeginPrint sets the "begin_print" callback function.
 // Signal emitted after the user has finished changing
 //
 //	print settings in the dialog, before the actual rendering starts.
@@ -96,7 +96,7 @@ func (x *PrintOperationClass) OverrideBeginPrint(cb func(*PrintOperation, *Print
 	}
 }
 
-// GetBeginPrint gets the callback function.
+// GetBeginPrint gets the "begin_print" callback function.
 // Signal emitted after the user has finished changing
 //
 //	print settings in the dialog, before the actual rendering starts.
@@ -111,7 +111,7 @@ func (x *PrintOperationClass) GetBeginPrint() func(*PrintOperation, *PrintContex
 	}
 }
 
-// OverridePaginate sets the callback function.
+// OverridePaginate sets the "paginate" callback function.
 // Signal emitted after the “begin-print” signal, but
 //
 //	before the actual rendering starts.
@@ -125,7 +125,7 @@ func (x *PrintOperationClass) OverridePaginate(cb func(*PrintOperation, *PrintCo
 	}
 }
 
-// GetPaginate gets the callback function.
+// GetPaginate gets the "paginate" callback function.
 // Signal emitted after the “begin-print” signal, but
 //
 //	before the actual rendering starts.
@@ -140,7 +140,7 @@ func (x *PrintOperationClass) GetPaginate() func(*PrintOperation, *PrintContext)
 	}
 }
 
-// OverrideRequestPageSetup sets the callback function.
+// OverrideRequestPageSetup sets the "request_page_setup" callback function.
 // Emitted once for every page that is printed,
 //
 //	to give the application a chance to modify the page setup.
@@ -154,7 +154,7 @@ func (x *PrintOperationClass) OverrideRequestPageSetup(cb func(*PrintOperation, 
 	}
 }
 
-// GetRequestPageSetup gets the callback function.
+// GetRequestPageSetup gets the "request_page_setup" callback function.
 // Emitted once for every page that is printed,
 //
 //	to give the application a chance to modify the page setup.
@@ -169,7 +169,7 @@ func (x *PrintOperationClass) GetRequestPageSetup() func(*PrintOperation, *Print
 	}
 }
 
-// OverrideDrawPage sets the callback function.
+// OverrideDrawPage sets the "draw_page" callback function.
 // Signal emitted for every page that is printed.
 func (x *PrintOperationClass) OverrideDrawPage(cb func(*PrintOperation, *PrintContext, int)) {
 	if cb == nil {
@@ -181,7 +181,7 @@ func (x *PrintOperationClass) OverrideDrawPage(cb func(*PrintOperation, *PrintCo
 	}
 }
 
-// GetDrawPage gets the callback function.
+// GetDrawPage gets the "draw_page" callback function.
 // Signal emitted for every page that is printed.
 func (x *PrintOperationClass) GetDrawPage() func(*PrintOperation, *PrintContext, int) {
 	if x.xDrawPage == 0 {
@@ -194,7 +194,7 @@ func (x *PrintOperationClass) GetDrawPage() func(*PrintOperation, *PrintContext,
 	}
 }
 
-// OverrideEndPrint sets the callback function.
+// OverrideEndPrint sets the "end_print" callback function.
 // Signal emitted after all pages have been rendered.
 func (x *PrintOperationClass) OverrideEndPrint(cb func(*PrintOperation, *PrintContext)) {
 	if cb == nil {
@@ -206,7 +206,7 @@ func (x *PrintOperationClass) OverrideEndPrint(cb func(*PrintOperation, *PrintCo
 	}
 }
 
-// GetEndPrint gets the callback function.
+// GetEndPrint gets the "end_print" callback function.
 // Signal emitted after all pages have been rendered.
 func (x *PrintOperationClass) GetEndPrint() func(*PrintOperation, *PrintContext) {
 	if x.xEndPrint == 0 {
@@ -219,7 +219,7 @@ func (x *PrintOperationClass) GetEndPrint() func(*PrintOperation, *PrintContext)
 	}
 }
 
-// OverrideStatusChanged sets the callback function.
+// OverrideStatusChanged sets the "status_changed" callback function.
 // Emitted at between the various phases of the print
 //
 //	operation.
@@ -233,7 +233,7 @@ func (x *PrintOperationClass) OverrideStatusChanged(cb func(*PrintOperation)) {
 	}
 }
 
-// GetStatusChanged gets the callback function.
+// GetStatusChanged gets the "status_changed" callback function.
 // Emitted at between the various phases of the print
 //
 //	operation.
@@ -248,7 +248,7 @@ func (x *PrintOperationClass) GetStatusChanged() func(*PrintOperation) {
 	}
 }
 
-// OverrideCreateCustomWidget sets the callback function.
+// OverrideCreateCustomWidget sets the "create_custom_widget" callback function.
 // Signal emitted when displaying the print dialog.
 func (x *PrintOperationClass) OverrideCreateCustomWidget(cb func(*PrintOperation) *Widget) {
 	if cb == nil {
@@ -264,7 +264,7 @@ func (x *PrintOperationClass) OverrideCreateCustomWidget(cb func(*PrintOperation
 	}
 }
 
-// GetCreateCustomWidget gets the callback function.
+// GetCreateCustomWidget gets the "create_custom_widget" callback function.
 // Signal emitted when displaying the print dialog.
 func (x *PrintOperationClass) GetCreateCustomWidget() func(*PrintOperation) *Widget {
 	if x.xCreateCustomWidget == 0 {
@@ -283,7 +283,7 @@ func (x *PrintOperationClass) GetCreateCustomWidget() func(*PrintOperation) *Wid
 	}
 }
 
-// OverrideCustomWidgetApply sets the callback function.
+// OverrideCustomWidgetApply sets the "custom_widget_apply" callback function.
 // Signal emitted right before “begin-print” if
 //
 //	you added a custom widget in the “create-custom-widget” handler.
@@ -297,7 +297,7 @@ func (x *PrintOperationClass) OverrideCustomWidgetApply(cb func(*PrintOperation,
 	}
 }
 
-// GetCustomWidgetApply gets the callback function.
+// GetCustomWidgetApply gets the "custom_widget_apply" callback function.
 // Signal emitted right before “begin-print” if
 //
 //	you added a custom widget in the “create-custom-widget” handler.
@@ -312,7 +312,7 @@ func (x *PrintOperationClass) GetCustomWidgetApply() func(*PrintOperation, *Widg
 	}
 }
 
-// OverridePreview sets the callback function.
+// OverridePreview sets the "preview" callback function.
 // Signal emitted when a preview is requested from the
 //
 //	native dialog.
@@ -326,7 +326,7 @@ func (x *PrintOperationClass) OverridePreview(cb func(*PrintOperation, PrintOper
 	}
 }
 
-// GetPreview gets the callback function.
+// GetPreview gets the "preview" callback function.
 // Signal emitted when a preview is requested from the
 //
 //	native dialog.
@@ -341,7 +341,7 @@ func (x *PrintOperationClass) GetPreview() func(*PrintOperation, PrintOperationP
 	}
 }
 
-// OverrideUpdateCustomWidget sets the callback function.
+// OverrideUpdateCustomWidget sets the "update_custom_widget" callback function.
 // Emitted after change of selected printer.
 func (x *PrintOperationClass) OverrideUpdateCustomWidget(cb func(*PrintOperation, *Widget, *PageSetup, *PrintSettings)) {
 	if cb == nil {
@@ -353,7 +353,7 @@ func (x *PrintOperationClass) OverrideUpdateCustomWidget(cb func(*PrintOperation
 	}
 }
 
-// GetUpdateCustomWidget gets the callback function.
+// GetUpdateCustomWidget gets the "update_custom_widget" callback function.
 // Emitted after change of selected printer.
 func (x *PrintOperationClass) GetUpdateCustomWidget() func(*PrintOperation, *Widget, *PageSetup, *PrintSettings) {
 	if x.xUpdateCustomWidget == 0 {
@@ -1105,6 +1105,363 @@ func (c *PrintOperation) GoPointer() uintptr {
 
 func (c *PrintOperation) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAllowAsync sets the "allow-async" property.
+// Determines whether the print operation may run asynchronously or not.
+//
+// Some systems don't support asynchronous printing, but those that do
+// will return %GTK_PRINT_OPERATION_RESULT_IN_PROGRESS as the status, and
+// emit the [signal@Gtk.PrintOperation::done] signal when the operation
+// is actually done.
+//
+// The Windows port does not support asynchronous operation at all (this
+// is unlikely to change). On other platforms, all actions except for
+// %GTK_PRINT_OPERATION_ACTION_EXPORT support asynchronous operation.
+func (x *PrintOperation) SetPropertyAllowAsync(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("allow-async", &v)
+}
+
+// GetPropertyAllowAsync gets the "allow-async" property.
+// Determines whether the print operation may run asynchronously or not.
+//
+// Some systems don't support asynchronous printing, but those that do
+// will return %GTK_PRINT_OPERATION_RESULT_IN_PROGRESS as the status, and
+// emit the [signal@Gtk.PrintOperation::done] signal when the operation
+// is actually done.
+//
+// The Windows port does not support asynchronous operation at all (this
+// is unlikely to change). On other platforms, all actions except for
+// %GTK_PRINT_OPERATION_ACTION_EXPORT support asynchronous operation.
+func (x *PrintOperation) GetPropertyAllowAsync() bool {
+	var v gobject.Value
+	x.GetProperty("allow-async", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCurrentPage sets the "current-page" property.
+// The current page in the document.
+//
+// If this is set before [method@Gtk.PrintOperation.run],
+// the user will be able to select to print only the current page.
+//
+// Note that this only makes sense for pre-paginated documents.
+func (x *PrintOperation) SetPropertyCurrentPage(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("current-page", &v)
+}
+
+// GetPropertyCurrentPage gets the "current-page" property.
+// The current page in the document.
+//
+// If this is set before [method@Gtk.PrintOperation.run],
+// the user will be able to select to print only the current page.
+//
+// Note that this only makes sense for pre-paginated documents.
+func (x *PrintOperation) GetPropertyCurrentPage() int {
+	var v gobject.Value
+	x.GetProperty("current-page", &v)
+	return v.GetInt()
+}
+
+// SetPropertyCustomTabLabel sets the "custom-tab-label" property.
+// Used as the label of the tab containing custom widgets.
+//
+// Note that this property may be ignored on some platforms.
+//
+// If this is %NULL, GTK uses a default label.
+func (x *PrintOperation) SetPropertyCustomTabLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("custom-tab-label", &v)
+}
+
+// GetPropertyCustomTabLabel gets the "custom-tab-label" property.
+// Used as the label of the tab containing custom widgets.
+//
+// Note that this property may be ignored on some platforms.
+//
+// If this is %NULL, GTK uses a default label.
+func (x *PrintOperation) GetPropertyCustomTabLabel() string {
+	var v gobject.Value
+	x.GetProperty("custom-tab-label", &v)
+	return v.GetString()
+}
+
+// SetPropertyEmbedPageSetup sets the "embed-page-setup" property.
+// If %TRUE, page size combo box and orientation combo box
+// are embedded into page setup page.
+func (x *PrintOperation) SetPropertyEmbedPageSetup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("embed-page-setup", &v)
+}
+
+// GetPropertyEmbedPageSetup gets the "embed-page-setup" property.
+// If %TRUE, page size combo box and orientation combo box
+// are embedded into page setup page.
+func (x *PrintOperation) GetPropertyEmbedPageSetup() bool {
+	var v gobject.Value
+	x.GetProperty("embed-page-setup", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyExportFilename sets the "export-filename" property.
+// The name of a file to generate instead of showing the print dialog.
+//
+// Currently, PDF is the only supported format.
+//
+// The intended use of this property is for implementing
+// “Export to PDF” actions.
+//
+// “Print to PDF” support is independent of this and is done
+// by letting the user pick the “Print to PDF” item from the
+// list of printers in the print dialog.
+func (x *PrintOperation) SetPropertyExportFilename(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("export-filename", &v)
+}
+
+// GetPropertyExportFilename gets the "export-filename" property.
+// The name of a file to generate instead of showing the print dialog.
+//
+// Currently, PDF is the only supported format.
+//
+// The intended use of this property is for implementing
+// “Export to PDF” actions.
+//
+// “Print to PDF” support is independent of this and is done
+// by letting the user pick the “Print to PDF” item from the
+// list of printers in the print dialog.
+func (x *PrintOperation) GetPropertyExportFilename() string {
+	var v gobject.Value
+	x.GetProperty("export-filename", &v)
+	return v.GetString()
+}
+
+// SetPropertyHasSelection sets the "has-selection" property.
+// Determines whether there is a selection in your application.
+//
+// This can allow your application to print the selection.
+// This is typically used to make a "Selection" button sensitive.
+func (x *PrintOperation) SetPropertyHasSelection(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-selection", &v)
+}
+
+// GetPropertyHasSelection gets the "has-selection" property.
+// Determines whether there is a selection in your application.
+//
+// This can allow your application to print the selection.
+// This is typically used to make a "Selection" button sensitive.
+func (x *PrintOperation) GetPropertyHasSelection() bool {
+	var v gobject.Value
+	x.GetProperty("has-selection", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyJobName sets the "job-name" property.
+// A string used to identify the job (e.g. in monitoring
+// applications like eggcups).
+//
+// If you don't set a job name, GTK picks a default one
+// by numbering successive print jobs.
+func (x *PrintOperation) SetPropertyJobName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("job-name", &v)
+}
+
+// GetPropertyJobName gets the "job-name" property.
+// A string used to identify the job (e.g. in monitoring
+// applications like eggcups).
+//
+// If you don't set a job name, GTK picks a default one
+// by numbering successive print jobs.
+func (x *PrintOperation) GetPropertyJobName() string {
+	var v gobject.Value
+	x.GetProperty("job-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyNPages sets the "n-pages" property.
+// The number of pages in the document.
+//
+// This must be set to a positive number before the rendering
+// starts. It may be set in a [signal@Gtk.PrintOperation::begin-print]
+// signal handler.
+//
+// Note that the page numbers passed to the
+// [signal@Gtk.PrintOperation::request-page-setup] and
+// [signal@Gtk.PrintOperation::draw-page] signals are 0-based, i.e.
+// if the user chooses to print all pages, the last ::draw-page signal
+// will be for page @n_pages - 1.
+func (x *PrintOperation) SetPropertyNPages(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("n-pages", &v)
+}
+
+// GetPropertyNPages gets the "n-pages" property.
+// The number of pages in the document.
+//
+// This must be set to a positive number before the rendering
+// starts. It may be set in a [signal@Gtk.PrintOperation::begin-print]
+// signal handler.
+//
+// Note that the page numbers passed to the
+// [signal@Gtk.PrintOperation::request-page-setup] and
+// [signal@Gtk.PrintOperation::draw-page] signals are 0-based, i.e.
+// if the user chooses to print all pages, the last ::draw-page signal
+// will be for page @n_pages - 1.
+func (x *PrintOperation) GetPropertyNPages() int {
+	var v gobject.Value
+	x.GetProperty("n-pages", &v)
+	return v.GetInt()
+}
+
+// GetPropertyNPagesToPrint gets the "n-pages-to-print" property.
+// The number of pages that will be printed.
+//
+// Note that this value is set during print preparation phase
+// (%GTK_PRINT_STATUS_PREPARING), so this value should never be
+// get before the data generation phase (%GTK_PRINT_STATUS_GENERATING_DATA).
+// You can connect to the [signal@Gtk.PrintOperation::status-changed] signal
+// and call [method@Gtk.PrintOperation.get_n_pages_to_print] when
+// print status is %GTK_PRINT_STATUS_GENERATING_DATA.
+//
+// This is typically used to track the progress of print operation.
+func (x *PrintOperation) GetPropertyNPagesToPrint() int {
+	var v gobject.Value
+	x.GetProperty("n-pages-to-print", &v)
+	return v.GetInt()
+}
+
+// SetPropertyShowProgress sets the "show-progress" property.
+// Determines whether to show a progress dialog during the
+// print operation.
+func (x *PrintOperation) SetPropertyShowProgress(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-progress", &v)
+}
+
+// GetPropertyShowProgress gets the "show-progress" property.
+// Determines whether to show a progress dialog during the
+// print operation.
+func (x *PrintOperation) GetPropertyShowProgress() bool {
+	var v gobject.Value
+	x.GetProperty("show-progress", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyStatusString gets the "status-string" property.
+// A string representation of the status of the print operation.
+//
+// The string is translated and suitable for displaying the print
+// status e.g. in a `GtkStatusbar`.
+//
+// See the [property@Gtk.PrintOperation:status] property for a status
+// value that is suitable for programmatic use.
+func (x *PrintOperation) GetPropertyStatusString() string {
+	var v gobject.Value
+	x.GetProperty("status-string", &v)
+	return v.GetString()
+}
+
+// SetPropertySupportSelection sets the "support-selection" property.
+// If %TRUE, the print operation will support print of selection.
+//
+// This allows the print dialog to show a "Selection" button.
+func (x *PrintOperation) SetPropertySupportSelection(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("support-selection", &v)
+}
+
+// GetPropertySupportSelection gets the "support-selection" property.
+// If %TRUE, the print operation will support print of selection.
+//
+// This allows the print dialog to show a "Selection" button.
+func (x *PrintOperation) GetPropertySupportSelection() bool {
+	var v gobject.Value
+	x.GetProperty("support-selection", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTrackPrintStatus sets the "track-print-status" property.
+// If %TRUE, the print operation will try to continue report on
+// the status of the print job in the printer queues and printer.
+//
+// This can allow your application to show things like “out of paper”
+// issues, and when the print job actually reaches the printer.
+// However, this is often implemented using polling, and should
+// not be enabled unless needed.
+func (x *PrintOperation) SetPropertyTrackPrintStatus(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("track-print-status", &v)
+}
+
+// GetPropertyTrackPrintStatus gets the "track-print-status" property.
+// If %TRUE, the print operation will try to continue report on
+// the status of the print job in the printer queues and printer.
+//
+// This can allow your application to show things like “out of paper”
+// issues, and when the print job actually reaches the printer.
+// However, this is often implemented using polling, and should
+// not be enabled unless needed.
+func (x *PrintOperation) GetPropertyTrackPrintStatus() bool {
+	var v gobject.Value
+	x.GetProperty("track-print-status", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseFullPage sets the "use-full-page" property.
+// If %TRUE, the transformation for the cairo context obtained
+// from `GtkPrintContext` puts the origin at the top left corner
+// of the page.
+//
+// This may not be the top left corner of the sheet, depending on
+// page orientation and the number of pages per sheet. Otherwise,
+// the origin is at the top left corner of the imageable area (i.e.
+// inside the margins).
+func (x *PrintOperation) SetPropertyUseFullPage(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-full-page", &v)
+}
+
+// GetPropertyUseFullPage gets the "use-full-page" property.
+// If %TRUE, the transformation for the cairo context obtained
+// from `GtkPrintContext` puts the origin at the top left corner
+// of the page.
+//
+// This may not be the top left corner of the sheet, depending on
+// page orientation and the number of pages per sheet. Otherwise,
+// the origin is at the top left corner of the imageable area (i.e.
+// inside the margins).
+func (x *PrintOperation) GetPropertyUseFullPage() bool {
+	var v gobject.Value
+	x.GetProperty("use-full-page", &v)
+	return v.GetBoolean()
 }
 
 // Emitted after the user has finished changing print settings

@@ -41,7 +41,7 @@ func (x *BuilderScopeInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetTypeFromName sets the callback function.
+// OverrideGetTypeFromName sets the "get_type_from_name" callback function.
 // Try to lookup a `GType` via the its name. See
 //
 //	gtk_builder_get_type_from_name() for more details.
@@ -58,7 +58,7 @@ func (x *BuilderScopeInterface) OverrideGetTypeFromName(cb func(BuilderScope, *B
 	}
 }
 
-// GetGetTypeFromName gets the callback function.
+// GetGetTypeFromName gets the "get_type_from_name" callback function.
 // Try to lookup a `GType` via the its name. See
 //
 //	gtk_builder_get_type_from_name() for more details.
@@ -76,7 +76,7 @@ func (x *BuilderScopeInterface) GetGetTypeFromName() func(BuilderScope, *Builder
 	}
 }
 
-// OverrideGetTypeFromFunction sets the callback function.
+// OverrideGetTypeFromFunction sets the "get_type_from_function" callback function.
 // Try to lookup a `GType` via the given function name, specified
 //
 //	explicitly in a GtkBuilder file, like via the "type-func" attribute in the `&lt;object&gt;` tag.
@@ -93,7 +93,7 @@ func (x *BuilderScopeInterface) OverrideGetTypeFromFunction(cb func(BuilderScope
 	}
 }
 
-// GetGetTypeFromFunction gets the callback function.
+// GetGetTypeFromFunction gets the "get_type_from_function" callback function.
 // Try to lookup a `GType` via the given function name, specified
 //
 //	explicitly in a GtkBuilder file, like via the "type-func" attribute in the `&lt;object&gt;` tag.
@@ -111,7 +111,7 @@ func (x *BuilderScopeInterface) GetGetTypeFromFunction() func(BuilderScope, *Bui
 	}
 }
 
-// OverrideCreateClosure sets the callback function.
+// OverrideCreateClosure sets the "create_closure" callback function.
 // Create a closure with the given arguments. See gtk_builder_create_closure()
 //
 //	for more details on those.
@@ -128,7 +128,7 @@ func (x *BuilderScopeInterface) OverrideCreateClosure(cb func(BuilderScope, *Bui
 	}
 }
 
-// GetCreateClosure gets the callback function.
+// GetCreateClosure gets the "create_closure" callback function.
 // Create a closure with the given arguments. See gtk_builder_create_closure()
 //
 //	for more details on those.

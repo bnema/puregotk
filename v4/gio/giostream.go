@@ -52,7 +52,7 @@ func (x *IOStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetInputStream sets the callback function.
+// OverrideGetInputStream sets the "get_input_stream" callback function.
 func (x *IOStreamClass) OverrideGetInputStream(cb func(*IOStream) *InputStream) {
 	if cb == nil {
 		x.xGetInputStream = 0
@@ -67,7 +67,7 @@ func (x *IOStreamClass) OverrideGetInputStream(cb func(*IOStream) *InputStream) 
 	}
 }
 
-// GetGetInputStream gets the callback function.
+// GetGetInputStream gets the "get_input_stream" callback function.
 func (x *IOStreamClass) GetGetInputStream() func(*IOStream) *InputStream {
 	if x.xGetInputStream == 0 {
 		return nil
@@ -85,7 +85,7 @@ func (x *IOStreamClass) GetGetInputStream() func(*IOStream) *InputStream {
 	}
 }
 
-// OverrideGetOutputStream sets the callback function.
+// OverrideGetOutputStream sets the "get_output_stream" callback function.
 func (x *IOStreamClass) OverrideGetOutputStream(cb func(*IOStream) *OutputStream) {
 	if cb == nil {
 		x.xGetOutputStream = 0
@@ -100,7 +100,7 @@ func (x *IOStreamClass) OverrideGetOutputStream(cb func(*IOStream) *OutputStream
 	}
 }
 
-// GetGetOutputStream gets the callback function.
+// GetGetOutputStream gets the "get_output_stream" callback function.
 func (x *IOStreamClass) GetGetOutputStream() func(*IOStream) *OutputStream {
 	if x.xGetOutputStream == 0 {
 		return nil
@@ -118,7 +118,7 @@ func (x *IOStreamClass) GetGetOutputStream() func(*IOStream) *OutputStream {
 	}
 }
 
-// OverrideCloseFn sets the callback function.
+// OverrideCloseFn sets the "close_fn" callback function.
 func (x *IOStreamClass) OverrideCloseFn(cb func(*IOStream, *Cancellable) bool) {
 	if cb == nil {
 		x.xCloseFn = 0
@@ -129,7 +129,7 @@ func (x *IOStreamClass) OverrideCloseFn(cb func(*IOStream, *Cancellable) bool) {
 	}
 }
 
-// GetCloseFn gets the callback function.
+// GetCloseFn gets the "close_fn" callback function.
 func (x *IOStreamClass) GetCloseFn() func(*IOStream, *Cancellable) bool {
 	if x.xCloseFn == 0 {
 		return nil
@@ -141,7 +141,7 @@ func (x *IOStreamClass) GetCloseFn() func(*IOStream, *Cancellable) bool {
 	}
 }
 
-// OverrideCloseAsync sets the callback function.
+// OverrideCloseAsync sets the "close_async" callback function.
 func (x *IOStreamClass) OverrideCloseAsync(cb func(*IOStream, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xCloseAsync = 0
@@ -152,7 +152,7 @@ func (x *IOStreamClass) OverrideCloseAsync(cb func(*IOStream, int, *Cancellable,
 	}
 }
 
-// GetCloseAsync gets the callback function.
+// GetCloseAsync gets the "close_async" callback function.
 func (x *IOStreamClass) GetCloseAsync() func(*IOStream, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xCloseAsync == 0 {
 		return nil
@@ -164,7 +164,7 @@ func (x *IOStreamClass) GetCloseAsync() func(*IOStream, int, *Cancellable, *Asyn
 	}
 }
 
-// OverrideCloseFinish sets the callback function.
+// OverrideCloseFinish sets the "close_finish" callback function.
 func (x *IOStreamClass) OverrideCloseFinish(cb func(*IOStream, AsyncResult) bool) {
 	if cb == nil {
 		x.xCloseFinish = 0
@@ -175,7 +175,7 @@ func (x *IOStreamClass) OverrideCloseFinish(cb func(*IOStream, AsyncResult) bool
 	}
 }
 
-// GetCloseFinish gets the callback function.
+// GetCloseFinish gets the "close_finish" callback function.
 func (x *IOStreamClass) GetCloseFinish() func(*IOStream, AsyncResult) bool {
 	if x.xCloseFinish == 0 {
 		return nil
@@ -187,7 +187,7 @@ func (x *IOStreamClass) GetCloseFinish() func(*IOStream, AsyncResult) bool {
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *IOStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -198,7 +198,7 @@ func (x *IOStreamClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *IOStreamClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -210,7 +210,7 @@ func (x *IOStreamClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *IOStreamClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -221,7 +221,7 @@ func (x *IOStreamClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *IOStreamClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -233,7 +233,7 @@ func (x *IOStreamClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *IOStreamClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -244,7 +244,7 @@ func (x *IOStreamClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *IOStreamClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -256,7 +256,7 @@ func (x *IOStreamClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *IOStreamClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -267,7 +267,7 @@ func (x *IOStreamClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *IOStreamClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -279,7 +279,7 @@ func (x *IOStreamClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *IOStreamClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -290,7 +290,7 @@ func (x *IOStreamClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *IOStreamClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -302,7 +302,7 @@ func (x *IOStreamClass) GetGReserved5() func() {
 	}
 }
 
-// OverrideGReserved6 sets the callback function.
+// OverrideGReserved6 sets the "_g_reserved6" callback function.
 func (x *IOStreamClass) OverrideGReserved6(cb func()) {
 	if cb == nil {
 		x.xGReserved6 = 0
@@ -313,7 +313,7 @@ func (x *IOStreamClass) OverrideGReserved6(cb func()) {
 	}
 }
 
-// GetGReserved6 gets the callback function.
+// GetGReserved6 gets the "_g_reserved6" callback function.
 func (x *IOStreamClass) GetGReserved6() func() {
 	if x.xGReserved6 == 0 {
 		return nil
@@ -325,7 +325,7 @@ func (x *IOStreamClass) GetGReserved6() func() {
 	}
 }
 
-// OverrideGReserved7 sets the callback function.
+// OverrideGReserved7 sets the "_g_reserved7" callback function.
 func (x *IOStreamClass) OverrideGReserved7(cb func()) {
 	if cb == nil {
 		x.xGReserved7 = 0
@@ -336,7 +336,7 @@ func (x *IOStreamClass) OverrideGReserved7(cb func()) {
 	}
 }
 
-// GetGReserved7 gets the callback function.
+// GetGReserved7 gets the "_g_reserved7" callback function.
 func (x *IOStreamClass) GetGReserved7() func() {
 	if x.xGReserved7 == 0 {
 		return nil
@@ -348,7 +348,7 @@ func (x *IOStreamClass) GetGReserved7() func() {
 	}
 }
 
-// OverrideGReserved8 sets the callback function.
+// OverrideGReserved8 sets the "_g_reserved8" callback function.
 func (x *IOStreamClass) OverrideGReserved8(cb func()) {
 	if cb == nil {
 		x.xGReserved8 = 0
@@ -359,7 +359,7 @@ func (x *IOStreamClass) OverrideGReserved8(cb func()) {
 	}
 }
 
-// GetGReserved8 gets the callback function.
+// GetGReserved8 gets the "_g_reserved8" callback function.
 func (x *IOStreamClass) GetGReserved8() func() {
 	if x.xGReserved8 == 0 {
 		return nil
@@ -371,7 +371,7 @@ func (x *IOStreamClass) GetGReserved8() func() {
 	}
 }
 
-// OverrideGReserved9 sets the callback function.
+// OverrideGReserved9 sets the "_g_reserved9" callback function.
 func (x *IOStreamClass) OverrideGReserved9(cb func()) {
 	if cb == nil {
 		x.xGReserved9 = 0
@@ -382,7 +382,7 @@ func (x *IOStreamClass) OverrideGReserved9(cb func()) {
 	}
 }
 
-// GetGReserved9 gets the callback function.
+// GetGReserved9 gets the "_g_reserved9" callback function.
 func (x *IOStreamClass) GetGReserved9() func() {
 	if x.xGReserved9 == 0 {
 		return nil
@@ -394,7 +394,7 @@ func (x *IOStreamClass) GetGReserved9() func() {
 	}
 }
 
-// OverrideGReserved10 sets the callback function.
+// OverrideGReserved10 sets the "_g_reserved10" callback function.
 func (x *IOStreamClass) OverrideGReserved10(cb func()) {
 	if cb == nil {
 		x.xGReserved10 = 0
@@ -405,7 +405,7 @@ func (x *IOStreamClass) OverrideGReserved10(cb func()) {
 	}
 }
 
-// GetGReserved10 gets the callback function.
+// GetGReserved10 gets the "_g_reserved10" callback function.
 func (x *IOStreamClass) GetGReserved10() func() {
 	if x.xGReserved10 == 0 {
 		return nil
@@ -670,6 +670,14 @@ func (c *IOStream) GoPointer() uintptr {
 
 func (c *IOStream) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyClosed gets the "closed" property.
+// Whether the stream is closed.
+func (x *IOStream) GetPropertyClosed() bool {
+	var v gobject.Value
+	x.GetProperty("closed", &v)
+	return v.GetBoolean()
 }
 
 var xIOStreamSpliceFinish func(uintptr, **glib.Error) bool

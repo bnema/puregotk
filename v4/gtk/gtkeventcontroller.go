@@ -218,6 +218,23 @@ func (c *EventController) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyName sets the "name" property.
+// The name for this controller, typically used for debugging purposes.
+func (x *EventController) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The name for this controller, typically used for debugging purposes.
+func (x *EventController) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

@@ -641,7 +641,7 @@ func (x *TreeModelSort) UnrefNode(IterVar *TreeIter) {
 // order. It returns %TRUE unless the @sort_column_id is
 // %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID or
 // %GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID.
-func (x *TreeModelSort) GetSortColumnId(SortColumnIdVar int, OrderVar *SortType) bool {
+func (x *TreeModelSort) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortType) bool {
 
 	cret := XGtkTreeSortableGetSortColumnId(x.GoPointer(), SortColumnIdVar, OrderVar)
 	return cret

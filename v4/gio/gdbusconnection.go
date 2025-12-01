@@ -659,7 +659,7 @@ func (x *DBusConnection) CallWithUnixFdList(BusNameVar string, ObjectPathVar str
 
 }
 
-var xDBusConnectionCallWithUnixFdListFinish func(uintptr, uintptr, uintptr, **glib.Error) *glib.Variant
+var xDBusConnectionCallWithUnixFdListFinish func(uintptr, **UnixFDList, uintptr, **glib.Error) *glib.Variant
 
 // Finishes an operation started with g_dbus_connection_call_with_unix_fd_list().
 //
@@ -676,7 +676,7 @@ var xDBusConnectionCallWithUnixFdListFinish func(uintptr, uintptr, uintptr, **gl
 func (x *DBusConnection) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, ResVar AsyncResult) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionCallWithUnixFdListFinish(x.GoPointer(), *gobject.ConvertPtr(OutFdListVar), ResVar.GoPointer(), &cerr)
+	cret := xDBusConnectionCallWithUnixFdListFinish(x.GoPointer(), OutFdListVar, ResVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -684,7 +684,7 @@ func (x *DBusConnection) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, Res
 
 }
 
-var xDBusConnectionCallWithUnixFdListSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, uintptr, uintptr, **glib.Error) *glib.Variant
+var xDBusConnectionCallWithUnixFdListSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, **UnixFDList, uintptr, **glib.Error) *glib.Variant
 
 // Like g_dbus_connection_call_sync() but also takes and returns #GUnixFDList objects.
 // See g_dbus_connection_call_with_unix_fd_list() and
@@ -694,7 +694,7 @@ var xDBusConnectionCallWithUnixFdListSync func(uintptr, string, string, string, 
 func (x *DBusConnection) CallWithUnixFdListSync(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), *gobject.ConvertPtr(OutFdListVar), CancellableVar.GoPointer(), &cerr)
+	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), OutFdListVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1179,7 +1179,7 @@ func (x *DBusConnection) RemoveFilter(FilterIdVar uint) {
 
 }
 
-var xDBusConnectionSendMessage func(uintptr, uintptr, DBusSendMessageFlags, uint32, **glib.Error) bool
+var xDBusConnectionSendMessage func(uintptr, uintptr, DBusSendMessageFlags, *uint32, **glib.Error) bool
 
 // Asynchronously sends @message to the peer represented by @connection.
 //
@@ -1203,7 +1203,7 @@ var xDBusConnectionSendMessage func(uintptr, uintptr, DBusSendMessageFlags, uint
 //
 // Note that @message must be unlocked, unless @flags contain the
 // %G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL flag.
-func (x *DBusConnection) SendMessage(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, OutSerialVar uint32) (bool, error) {
+func (x *DBusConnection) SendMessage(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, OutSerialVar *uint32) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xDBusConnectionSendMessage(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, OutSerialVar, &cerr)
@@ -1214,7 +1214,7 @@ func (x *DBusConnection) SendMessage(MessageVar *DBusMessage, FlagsVar DBusSendM
 
 }
 
-var xDBusConnectionSendMessageWithReply func(uintptr, uintptr, DBusSendMessageFlags, int, uint32, uintptr, uintptr, uintptr)
+var xDBusConnectionSendMessageWithReply func(uintptr, uintptr, DBusSendMessageFlags, int, *uint32, uintptr, uintptr, uintptr)
 
 // Asynchronously sends @message to the peer represented by @connection.
 //
@@ -1246,7 +1246,7 @@ var xDBusConnectionSendMessageWithReply func(uintptr, uintptr, DBusSendMessageFl
 // and [client][class@Gio.DBusConnection#an-example-for-file-descriptor-passing]
 // for an example of how to use this low-level API to send and receive
 // UNIX file descriptors.
-func (x *DBusConnection) SendMessageWithReply(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, TimeoutMsecVar int, OutSerialVar uint32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *DBusConnection) SendMessageWithReply(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, TimeoutMsecVar int, OutSerialVar *uint32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
 	xDBusConnectionSendMessageWithReply(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
@@ -1283,7 +1283,7 @@ func (x *DBusConnection) SendMessageWithReplyFinish(ResVar AsyncResult) (*DBusMe
 
 }
 
-var xDBusConnectionSendMessageWithReplySync func(uintptr, uintptr, DBusSendMessageFlags, int, uint32, uintptr, **glib.Error) uintptr
+var xDBusConnectionSendMessageWithReplySync func(uintptr, uintptr, DBusSendMessageFlags, int, *uint32, uintptr, **glib.Error) uintptr
 
 // Synchronously sends @message to the peer represented by @connection
 // and blocks the calling thread until a reply is received or the
@@ -1316,7 +1316,7 @@ var xDBusConnectionSendMessageWithReplySync func(uintptr, uintptr, DBusSendMessa
 //
 // Note that @message must be unlocked, unless @flags contain the
 // %G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL flag.
-func (x *DBusConnection) SendMessageWithReplySync(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, TimeoutMsecVar int, OutSerialVar uint32, CancellableVar *Cancellable) (*DBusMessage, error) {
+func (x *DBusConnection) SendMessageWithReplySync(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, TimeoutMsecVar int, OutSerialVar *uint32, CancellableVar *Cancellable) (*DBusMessage, error) {
 	var cls *DBusMessage
 	var cerr *glib.Error
 
@@ -1496,6 +1496,119 @@ func (c *DBusConnection) GoPointer() uintptr {
 
 func (c *DBusConnection) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAddress sets the "address" property.
+// A D-Bus address specifying potential endpoints that can be used
+// when establishing the connection.
+func (x *DBusConnection) SetPropertyAddress(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("address", &v)
+}
+
+// GetPropertyClosed gets the "closed" property.
+// A boolean specifying whether the connection has been closed.
+func (x *DBusConnection) GetPropertyClosed() bool {
+	var v gobject.Value
+	x.GetProperty("closed", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyExitOnClose sets the "exit-on-close" property.
+// A boolean specifying whether the process will be terminated (by
+// calling `raise(SIGTERM)`) if the connection is closed by the
+// remote peer.
+//
+// Note that #GDBusConnection objects returned by g_bus_get_finish()
+// and g_bus_get_sync() will (usually) have this property set to %TRUE.
+func (x *DBusConnection) SetPropertyExitOnClose(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("exit-on-close", &v)
+}
+
+// GetPropertyExitOnClose gets the "exit-on-close" property.
+// A boolean specifying whether the process will be terminated (by
+// calling `raise(SIGTERM)`) if the connection is closed by the
+// remote peer.
+//
+// Note that #GDBusConnection objects returned by g_bus_get_finish()
+// and g_bus_get_sync() will (usually) have this property set to %TRUE.
+func (x *DBusConnection) GetPropertyExitOnClose() bool {
+	var v gobject.Value
+	x.GetProperty("exit-on-close", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyGuid sets the "guid" property.
+// The GUID of the peer performing the role of server when
+// authenticating.
+//
+// If you are constructing a #GDBusConnection and pass
+// %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER in the
+// #GDBusConnection:flags property then you **must** also set this
+// property to a valid guid.
+//
+// If you are constructing a #GDBusConnection and pass
+// %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT in the
+// #GDBusConnection:flags property you will be able to read the GUID
+// of the other peer here after the connection has been successfully
+// initialized.
+//
+// Note that the
+// [D-Bus specification](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses)
+// uses the term ‘UUID’ to refer to this, whereas GLib consistently uses the
+// term ‘GUID’ for historical reasons.
+//
+// Despite its name, the format of #GDBusConnection:guid does not follow
+// [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122) or the Microsoft
+// GUID format.
+func (x *DBusConnection) SetPropertyGuid(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("guid", &v)
+}
+
+// GetPropertyGuid gets the "guid" property.
+// The GUID of the peer performing the role of server when
+// authenticating.
+//
+// If you are constructing a #GDBusConnection and pass
+// %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER in the
+// #GDBusConnection:flags property then you **must** also set this
+// property to a valid guid.
+//
+// If you are constructing a #GDBusConnection and pass
+// %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT in the
+// #GDBusConnection:flags property you will be able to read the GUID
+// of the other peer here after the connection has been successfully
+// initialized.
+//
+// Note that the
+// [D-Bus specification](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses)
+// uses the term ‘UUID’ to refer to this, whereas GLib consistently uses the
+// term ‘GUID’ for historical reasons.
+//
+// Despite its name, the format of #GDBusConnection:guid does not follow
+// [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122) or the Microsoft
+// GUID format.
+func (x *DBusConnection) GetPropertyGuid() string {
+	var v gobject.Value
+	x.GetProperty("guid", &v)
+	return v.GetString()
+}
+
+// GetPropertyUniqueName gets the "unique-name" property.
+// The unique name as assigned by the message bus or %NULL if the
+// connection is not open or not a message bus connection.
+func (x *DBusConnection) GetPropertyUniqueName() string {
+	var v gobject.Value
+	x.GetProperty("unique-name", &v)
+	return v.GetString()
 }
 
 // Emitted when the connection is closed.

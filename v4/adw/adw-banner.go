@@ -229,6 +229,92 @@ func (c *Banner) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyButtonLabel sets the "button-label" property.
+// The label to show on the button.
+//
+// If set to `""` or `NULL`, the button won't be shown.
+//
+// The button can be used with a `GAction`, or with the
+// [signal@Banner::button-clicked] signal.
+func (x *Banner) SetPropertyButtonLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("button-label", &v)
+}
+
+// GetPropertyButtonLabel gets the "button-label" property.
+// The label to show on the button.
+//
+// If set to `""` or `NULL`, the button won't be shown.
+//
+// The button can be used with a `GAction`, or with the
+// [signal@Banner::button-clicked] signal.
+func (x *Banner) GetPropertyButtonLabel() string {
+	var v gobject.Value
+	x.GetProperty("button-label", &v)
+	return v.GetString()
+}
+
+// SetPropertyRevealed sets the "revealed" property.
+// Whether the banner is currently revealed.
+func (x *Banner) SetPropertyRevealed(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("revealed", &v)
+}
+
+// GetPropertyRevealed gets the "revealed" property.
+// Whether the banner is currently revealed.
+func (x *Banner) GetPropertyRevealed() bool {
+	var v gobject.Value
+	x.GetProperty("revealed", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title for this banner.
+//
+// See also: [property@Banner:use-markup].
+func (x *Banner) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title for this banner.
+//
+// See also: [property@Banner:use-markup].
+func (x *Banner) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseMarkup sets the "use-markup" property.
+// Whether to use Pango markup for the banner title.
+//
+// See also [func@Pango.parse_markup].
+func (x *Banner) SetPropertyUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-markup", &v)
+}
+
+// GetPropertyUseMarkup gets the "use-markup" property.
+// Whether to use Pango markup for the banner title.
+//
+// See also [func@Pango.parse_markup].
+func (x *Banner) GetPropertyUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("use-markup", &v)
+	return v.GetBoolean()
+}
+
 // This signal is emitted after the action button has been clicked.
 //
 // It can be used as an alternative to setting an action.
@@ -308,7 +394,7 @@ func (x *Banner) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Banner) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Banner) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

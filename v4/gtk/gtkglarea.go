@@ -32,7 +32,7 @@ func (x *GLAreaClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideRender sets the callback function.
+// OverrideRender sets the "render" callback function.
 // class closure for the `GtkGLArea::render` signal
 func (x *GLAreaClass) OverrideRender(cb func(*GLArea, *gdk.GLContext) bool) {
 	if cb == nil {
@@ -44,7 +44,7 @@ func (x *GLAreaClass) OverrideRender(cb func(*GLArea, *gdk.GLContext) bool) {
 	}
 }
 
-// GetRender gets the callback function.
+// GetRender gets the "render" callback function.
 // class closure for the `GtkGLArea::render` signal
 func (x *GLAreaClass) GetRender() func(*GLArea, *gdk.GLContext) bool {
 	if x.xRender == 0 {
@@ -57,7 +57,7 @@ func (x *GLAreaClass) GetRender() func(*GLArea, *gdk.GLContext) bool {
 	}
 }
 
-// OverrideResize sets the callback function.
+// OverrideResize sets the "resize" callback function.
 // class closeure for the `GtkGLArea::resize` signal
 func (x *GLAreaClass) OverrideResize(cb func(*GLArea, int, int)) {
 	if cb == nil {
@@ -69,7 +69,7 @@ func (x *GLAreaClass) OverrideResize(cb func(*GLArea, int, int)) {
 	}
 }
 
-// GetResize gets the callback function.
+// GetResize gets the "resize" callback function.
 // class closeure for the `GtkGLArea::resize` signal
 func (x *GLAreaClass) GetResize() func(*GLArea, int, int) {
 	if x.xResize == 0 {
@@ -82,7 +82,7 @@ func (x *GLAreaClass) GetResize() func(*GLArea, int, int) {
 	}
 }
 
-// OverrideCreateContext sets the callback function.
+// OverrideCreateContext sets the "create_context" callback function.
 // class closure for the `GtkGLArea::create-context` signal
 func (x *GLAreaClass) OverrideCreateContext(cb func(*GLArea) *gdk.GLContext) {
 	if cb == nil {
@@ -98,7 +98,7 @@ func (x *GLAreaClass) OverrideCreateContext(cb func(*GLArea) *gdk.GLContext) {
 	}
 }
 
-// GetCreateContext gets the callback function.
+// GetCreateContext gets the "create_context" callback function.
 // class closure for the `GtkGLArea::create-context` signal
 func (x *GLAreaClass) GetCreateContext() func(*GLArea) *gdk.GLContext {
 	if x.xCreateContext == 0 {
@@ -365,12 +365,12 @@ func (x *GLArea) GetHasStencilBuffer() bool {
 	return cret
 }
 
-var xGLAreaGetRequiredVersion func(uintptr, int, int)
+var xGLAreaGetRequiredVersion func(uintptr, *int, *int)
 
 // Retrieves the required version of OpenGL.
 //
 // See [method@Gtk.GLArea.set_required_version].
-func (x *GLArea) GetRequiredVersion(MajorVar int, MinorVar int) {
+func (x *GLArea) GetRequiredVersion(MajorVar *int, MinorVar *int) {
 
 	xGLAreaGetRequiredVersion(x.GoPointer(), MajorVar, MinorVar)
 
@@ -525,6 +525,106 @@ func (c *GLArea) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAutoRender sets the "auto-render" property.
+// If set to %TRUE the ::render signal will be emitted every time
+// the widget draws.
+//
+// This is the default and is useful if drawing the widget is faster.
+//
+// If set to %FALSE the data from previous rendering is kept around and will
+// be used for drawing the widget the next time, unless the window is resized.
+// In order to force a rendering [method@Gtk.GLArea.queue_render] must be called.
+// This mode is useful when the scene changes seldom, but takes a long time
+// to redraw.
+func (x *GLArea) SetPropertyAutoRender(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("auto-render", &v)
+}
+
+// GetPropertyAutoRender gets the "auto-render" property.
+// If set to %TRUE the ::render signal will be emitted every time
+// the widget draws.
+//
+// This is the default and is useful if drawing the widget is faster.
+//
+// If set to %FALSE the data from previous rendering is kept around and will
+// be used for drawing the widget the next time, unless the window is resized.
+// In order to force a rendering [method@Gtk.GLArea.queue_render] must be called.
+// This mode is useful when the scene changes seldom, but takes a long time
+// to redraw.
+func (x *GLArea) GetPropertyAutoRender() bool {
+	var v gobject.Value
+	x.GetProperty("auto-render", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasDepthBuffer sets the "has-depth-buffer" property.
+// If set to %TRUE the widget will allocate and enable a depth buffer for the
+// target framebuffer.
+//
+// Setting this property will enable GL's depth testing as a side effect. If
+// you don't need depth testing, you should call `glDisable(GL_DEPTH_TEST)`
+// in your `GtkGLArea::render` handler.
+func (x *GLArea) SetPropertyHasDepthBuffer(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-depth-buffer", &v)
+}
+
+// GetPropertyHasDepthBuffer gets the "has-depth-buffer" property.
+// If set to %TRUE the widget will allocate and enable a depth buffer for the
+// target framebuffer.
+//
+// Setting this property will enable GL's depth testing as a side effect. If
+// you don't need depth testing, you should call `glDisable(GL_DEPTH_TEST)`
+// in your `GtkGLArea::render` handler.
+func (x *GLArea) GetPropertyHasDepthBuffer() bool {
+	var v gobject.Value
+	x.GetProperty("has-depth-buffer", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasStencilBuffer sets the "has-stencil-buffer" property.
+// If set to %TRUE the widget will allocate and enable a stencil buffer for the
+// target framebuffer.
+func (x *GLArea) SetPropertyHasStencilBuffer(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-stencil-buffer", &v)
+}
+
+// GetPropertyHasStencilBuffer gets the "has-stencil-buffer" property.
+// If set to %TRUE the widget will allocate and enable a stencil buffer for the
+// target framebuffer.
+func (x *GLArea) GetPropertyHasStencilBuffer() bool {
+	var v gobject.Value
+	x.GetProperty("has-stencil-buffer", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseEs sets the "use-es" property.
+// If set to %TRUE the widget will try to create a `GdkGLContext` using
+// OpenGL ES instead of OpenGL.
+func (x *GLArea) SetPropertyUseEs(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-es", &v)
+}
+
+// GetPropertyUseEs gets the "use-es" property.
+// If set to %TRUE the widget will try to create a `GdkGLContext` using
+// OpenGL ES instead of OpenGL.
+func (x *GLArea) GetPropertyUseEs() bool {
+	var v gobject.Value
+	x.GetProperty("use-es", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when the widget is being realized.
 //
 // This allows you to override how the GL context is created.
@@ -664,7 +764,7 @@ func (x *GLArea) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *GLArea) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *GLArea) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

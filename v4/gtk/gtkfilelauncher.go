@@ -195,6 +195,42 @@ func (c *FileLauncher) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAlwaysAsk sets the "always-ask" property.
+// Whether to ask the user to choose an app for opening the file. If `FALSE`,
+// the file might be opened with a default app or the previous choice.
+func (x *FileLauncher) SetPropertyAlwaysAsk(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("always-ask", &v)
+}
+
+// GetPropertyAlwaysAsk gets the "always-ask" property.
+// Whether to ask the user to choose an app for opening the file. If `FALSE`,
+// the file might be opened with a default app or the previous choice.
+func (x *FileLauncher) GetPropertyAlwaysAsk() bool {
+	var v gobject.Value
+	x.GetProperty("always-ask", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyWritable sets the "writable" property.
+// Whether to make the file writable for the handler.
+func (x *FileLauncher) SetPropertyWritable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("writable", &v)
+}
+
+// GetPropertyWritable gets the "writable" property.
+// Whether to make the file writable for the handler.
+func (x *FileLauncher) GetPropertyWritable() bool {
+	var v gobject.Value
+	x.GetProperty("writable", &v)
+	return v.GetBoolean()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

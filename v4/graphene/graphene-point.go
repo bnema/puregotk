@@ -59,10 +59,10 @@ func PointAlloc() *Point {
 	return cret
 }
 
-var xPointDistance func(uintptr, *Point, float32, float32) float32
+var xPointDistance func(uintptr, *Point, *float32, *float32) float32
 
 // Computes the distance between @a and @b.
-func (x *Point) Distance(BVar *Point, DXVar float32, DYVar float32) float32 {
+func (x *Point) Distance(BVar *Point, DXVar *float32, DYVar *float32) float32 {
 
 	cret := xPointDistance(x.GoPointer(), BVar, DXVar, DYVar)
 	return cret

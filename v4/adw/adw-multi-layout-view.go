@@ -259,6 +259,27 @@ func (c *MultiLayoutView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyLayoutName sets the "layout-name" property.
+// The name of the currently used layout.
+//
+// See [property@Layout:name].
+func (x *MultiLayoutView) SetPropertyLayoutName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("layout-name", &v)
+}
+
+// GetPropertyLayoutName gets the "layout-name" property.
+// The name of the currently used layout.
+//
+// See [property@Layout:name].
+func (x *MultiLayoutView) GetPropertyLayoutName() string {
+	var v gobject.Value
+	x.GetProperty("layout-name", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -316,7 +337,7 @@ func (x *MultiLayoutView) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *MultiLayoutView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *MultiLayoutView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

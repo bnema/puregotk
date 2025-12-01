@@ -152,6 +152,81 @@ func (c *ThemedIcon) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyName sets the "name" property.
+// The icon name.
+func (x *ThemedIcon) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// SetPropertyNames sets the "names" property.
+// A %NULL-terminated array of icon names.
+func (x *ThemedIcon) SetPropertyNames(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("names", &v)
+}
+
+// GetPropertyNames gets the "names" property.
+// A %NULL-terminated array of icon names.
+func (x *ThemedIcon) GetPropertyNames() []string {
+	var v gobject.Value
+	x.GetProperty("names", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyUseDefaultFallbacks sets the "use-default-fallbacks" property.
+// Whether to use the default fallbacks found by shortening the icon name
+// at '-' characters. If the "names" array has more than one element,
+// ignores any past the first.
+//
+// For example, if the icon name was "gnome-dev-cdrom-audio", the array
+// would become
+// |[&lt;!-- language="C" --&gt;
+//
+//	{
+//	  "gnome-dev-cdrom-audio",
+//	  "gnome-dev-cdrom",
+//	  "gnome-dev",
+//	  "gnome",
+//	  NULL
+//	};
+//
+// ]|
+func (x *ThemedIcon) SetPropertyUseDefaultFallbacks(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-default-fallbacks", &v)
+}
+
+// GetPropertyUseDefaultFallbacks gets the "use-default-fallbacks" property.
+// Whether to use the default fallbacks found by shortening the icon name
+// at '-' characters. If the "names" array has more than one element,
+// ignores any past the first.
+//
+// For example, if the icon name was "gnome-dev-cdrom-audio", the array
+// would become
+// |[&lt;!-- language="C" --&gt;
+//
+//	{
+//	  "gnome-dev-cdrom-audio",
+//	  "gnome-dev-cdrom",
+//	  "gnome-dev",
+//	  "gnome",
+//	  NULL
+//	};
+//
+// ]|
+func (x *ThemedIcon) GetPropertyUseDefaultFallbacks() bool {
+	var v gobject.Value
+	x.GetProperty("use-default-fallbacks", &v)
+	return v.GetBoolean()
+}
+
 // Checks if two icons are equal.
 func (x *ThemedIcon) Equal(Icon2Var Icon) bool {
 

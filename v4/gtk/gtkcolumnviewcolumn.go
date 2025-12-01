@@ -322,6 +322,122 @@ func (c *ColumnViewColumn) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyExpand sets the "expand" property.
+// Column gets share of extra width allocated to the view.
+func (x *ColumnViewColumn) SetPropertyExpand(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("expand", &v)
+}
+
+// GetPropertyExpand gets the "expand" property.
+// Column gets share of extra width allocated to the view.
+func (x *ColumnViewColumn) GetPropertyExpand() bool {
+	var v gobject.Value
+	x.GetProperty("expand", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyFixedWidth sets the "fixed-width" property.
+// If not -1, this is the width that the column is allocated,
+// regardless of the size of its content.
+func (x *ColumnViewColumn) SetPropertyFixedWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("fixed-width", &v)
+}
+
+// GetPropertyFixedWidth gets the "fixed-width" property.
+// If not -1, this is the width that the column is allocated,
+// regardless of the size of its content.
+func (x *ColumnViewColumn) GetPropertyFixedWidth() int {
+	var v gobject.Value
+	x.GetProperty("fixed-width", &v)
+	return v.GetInt()
+}
+
+// SetPropertyId sets the "id" property.
+// An ID for the column.
+//
+// GTK is not currently using the ID for anything, but
+// it can be used by applications when saving column view
+// configurations.
+//
+// It is up to applications to ensure uniqueness of IDs.
+func (x *ColumnViewColumn) SetPropertyId(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("id", &v)
+}
+
+// GetPropertyId gets the "id" property.
+// An ID for the column.
+//
+// GTK is not currently using the ID for anything, but
+// it can be used by applications when saving column view
+// configurations.
+//
+// It is up to applications to ensure uniqueness of IDs.
+func (x *ColumnViewColumn) GetPropertyId() string {
+	var v gobject.Value
+	x.GetProperty("id", &v)
+	return v.GetString()
+}
+
+// SetPropertyResizable sets the "resizable" property.
+// Whether this column is resizable.
+func (x *ColumnViewColumn) SetPropertyResizable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("resizable", &v)
+}
+
+// GetPropertyResizable gets the "resizable" property.
+// Whether this column is resizable.
+func (x *ColumnViewColumn) GetPropertyResizable() bool {
+	var v gobject.Value
+	x.GetProperty("resizable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// Title displayed in the header.
+func (x *ColumnViewColumn) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// Title displayed in the header.
+func (x *ColumnViewColumn) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyVisible sets the "visible" property.
+// Whether this column is visible.
+func (x *ColumnViewColumn) SetPropertyVisible(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("visible", &v)
+}
+
+// GetPropertyVisible gets the "visible" property.
+// Whether this column is visible.
+func (x *ColumnViewColumn) GetPropertyVisible() bool {
+	var v gobject.Value
+	x.GetProperty("visible", &v)
+	return v.GetBoolean()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

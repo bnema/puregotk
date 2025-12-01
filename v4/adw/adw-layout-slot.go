@@ -81,6 +81,27 @@ func (c *LayoutSlot) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyId sets the "id" property.
+// The slot ID.
+//
+// See [method@MultiLayoutView.set_child].
+func (x *LayoutSlot) SetPropertyId(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("id", &v)
+}
+
+// GetPropertyId gets the "id" property.
+// The slot ID.
+//
+// See [method@MultiLayoutView.set_child].
+func (x *LayoutSlot) GetPropertyId() string {
+	var v gobject.Value
+	x.GetProperty("id", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -138,7 +159,7 @@ func (x *LayoutSlot) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *LayoutSlot) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *LayoutSlot) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

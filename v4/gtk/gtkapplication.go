@@ -29,7 +29,7 @@ func (x *ApplicationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideWindowAdded sets the callback function.
+// OverrideWindowAdded sets the "window_added" callback function.
 // Signal emitted when a `GtkWindow` is added to
 //
 //	application through gtk_application_add_window().
@@ -43,7 +43,7 @@ func (x *ApplicationClass) OverrideWindowAdded(cb func(*Application, *Window)) {
 	}
 }
 
-// GetWindowAdded gets the callback function.
+// GetWindowAdded gets the "window_added" callback function.
 // Signal emitted when a `GtkWindow` is added to
 //
 //	application through gtk_application_add_window().
@@ -58,7 +58,7 @@ func (x *ApplicationClass) GetWindowAdded() func(*Application, *Window) {
 	}
 }
 
-// OverrideWindowRemoved sets the callback function.
+// OverrideWindowRemoved sets the "window_removed" callback function.
 // Signal emitted when a `GtkWindow` is removed from
 //
 //	application, either as a side-effect of being destroyed or
@@ -73,7 +73,7 @@ func (x *ApplicationClass) OverrideWindowRemoved(cb func(*Application, *Window))
 	}
 }
 
-// GetWindowRemoved gets the callback function.
+// GetWindowRemoved gets the "window_removed" callback function.
 // Signal emitted when a `GtkWindow` is removed from
 //
 //	application, either as a side-effect of being destroyed or
@@ -516,6 +516,41 @@ func (c *Application) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyRegisterSession sets the "register-session" property.
+// Set this property to true to register with the session manager.
+//
+// This will make GTK track the session state (such as the
+// [property@Gtk.Application:screensaver-active] property).
+func (x *Application) SetPropertyRegisterSession(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("register-session", &v)
+}
+
+// GetPropertyRegisterSession gets the "register-session" property.
+// Set this property to true to register with the session manager.
+//
+// This will make GTK track the session state (such as the
+// [property@Gtk.Application:screensaver-active] property).
+func (x *Application) GetPropertyRegisterSession() bool {
+	var v gobject.Value
+	x.GetProperty("register-session", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyScreensaverActive gets the "screensaver-active" property.
+// This property is true if GTK believes that the screensaver
+// is currently active.
+//
+// Tracking the screensaver state is currently only supported on
+// Linux.
+func (x *Application) GetPropertyScreensaverActive() bool {
+	var v gobject.Value
+	x.GetProperty("screensaver-active", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when the session manager is about to end the session.
 //
 // Applications can connect to this signal and call
@@ -810,7 +845,7 @@ func (x *Application) ListActions() []string {
 // fields (as indicated by having a non-`NULL` reference passed in) are
 // filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
-func (x *Application) QueryAction(ActionNameVar string, EnabledVar bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
+func (x *Application) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := gio.XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
 	return cret

@@ -27,7 +27,7 @@ func (x *FilterInputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *FilterInputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -38,7 +38,7 @@ func (x *FilterInputStreamClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *FilterInputStreamClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -50,7 +50,7 @@ func (x *FilterInputStreamClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *FilterInputStreamClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -61,7 +61,7 @@ func (x *FilterInputStreamClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *FilterInputStreamClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -73,7 +73,7 @@ func (x *FilterInputStreamClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *FilterInputStreamClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -84,7 +84,7 @@ func (x *FilterInputStreamClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *FilterInputStreamClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -161,6 +161,23 @@ func (c *FilterInputStream) GoPointer() uintptr {
 
 func (c *FilterInputStream) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyCloseBaseStream sets the "close-base-stream" property.
+// Whether the base stream should be closed when the filter stream is closed.
+func (x *FilterInputStream) SetPropertyCloseBaseStream(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("close-base-stream", &v)
+}
+
+// GetPropertyCloseBaseStream gets the "close-base-stream" property.
+// Whether the base stream should be closed when the filter stream is closed.
+func (x *FilterInputStream) GetPropertyCloseBaseStream() bool {
+	var v gobject.Value
+	x.GetProperty("close-base-stream", &v)
+	return v.GetBoolean()
 }
 
 func init() {

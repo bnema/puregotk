@@ -203,6 +203,44 @@ func (c *PreferencesDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertySearchEnabled sets the "search-enabled" property.
+// Whether search is enabled.
+func (x *PreferencesDialog) SetPropertySearchEnabled(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("search-enabled", &v)
+}
+
+// GetPropertySearchEnabled gets the "search-enabled" property.
+// Whether search is enabled.
+func (x *PreferencesDialog) GetPropertySearchEnabled() bool {
+	var v gobject.Value
+	x.GetProperty("search-enabled", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVisiblePageName sets the "visible-page-name" property.
+// The name of the currently visible page.
+//
+// See [property@AdwPreferencesDialog:visible-page].
+func (x *PreferencesDialog) SetPropertyVisiblePageName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("visible-page-name", &v)
+}
+
+// GetPropertyVisiblePageName gets the "visible-page-name" property.
+// The name of the currently visible page.
+//
+// See [property@AdwPreferencesDialog:visible-page].
+func (x *PreferencesDialog) GetPropertyVisiblePageName() string {
+	var v gobject.Value
+	x.GetProperty("visible-page-name", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -260,7 +298,7 @@ func (x *PreferencesDialog) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PreferencesDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *PreferencesDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

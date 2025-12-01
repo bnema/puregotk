@@ -338,6 +338,93 @@ func (c *Expander) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyExpanded sets the "expanded" property.
+// Whether the expander has been opened to reveal the child.
+func (x *Expander) SetPropertyExpanded(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("expanded", &v)
+}
+
+// GetPropertyExpanded gets the "expanded" property.
+// Whether the expander has been opened to reveal the child.
+func (x *Expander) GetPropertyExpanded() bool {
+	var v gobject.Value
+	x.GetProperty("expanded", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLabel sets the "label" property.
+// The text of the expanders label.
+func (x *Expander) SetPropertyLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("label", &v)
+}
+
+// GetPropertyLabel gets the "label" property.
+// The text of the expanders label.
+func (x *Expander) GetPropertyLabel() string {
+	var v gobject.Value
+	x.GetProperty("label", &v)
+	return v.GetString()
+}
+
+// SetPropertyResizeToplevel sets the "resize-toplevel" property.
+// When this property is %TRUE, the expander will resize the toplevel
+// widget containing the expander upon expanding and collapsing.
+func (x *Expander) SetPropertyResizeToplevel(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("resize-toplevel", &v)
+}
+
+// GetPropertyResizeToplevel gets the "resize-toplevel" property.
+// When this property is %TRUE, the expander will resize the toplevel
+// widget containing the expander upon expanding and collapsing.
+func (x *Expander) GetPropertyResizeToplevel() bool {
+	var v gobject.Value
+	x.GetProperty("resize-toplevel", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseMarkup sets the "use-markup" property.
+// Whether the text in the label is Pango markup.
+func (x *Expander) SetPropertyUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-markup", &v)
+}
+
+// GetPropertyUseMarkup gets the "use-markup" property.
+// Whether the text in the label is Pango markup.
+func (x *Expander) GetPropertyUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("use-markup", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// Whether an underline in the text indicates a mnemonic.
+func (x *Expander) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// Whether an underline in the text indicates a mnemonic.
+func (x *Expander) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
 // Activates the `GtkExpander`.
 func (x *Expander) ConnectActivate(cb *func(Expander)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -415,7 +502,7 @@ func (x *Expander) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Expander) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Expander) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

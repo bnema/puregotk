@@ -85,6 +85,27 @@ func (c *ColorChooserWidget) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyShowEditor sets the "show-editor" property.
+// %TRUE when the color chooser is showing the single-color editor.
+//
+// It can be set to switch the color chooser into single-color editing mode.
+func (x *ColorChooserWidget) SetPropertyShowEditor(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-editor", &v)
+}
+
+// GetPropertyShowEditor gets the "show-editor" property.
+// %TRUE when the color chooser is showing the single-color editor.
+//
+// It can be set to switch the color chooser into single-color editing mode.
+func (x *ColorChooserWidget) GetPropertyShowEditor() bool {
+	var v gobject.Value
+	x.GetProperty("show-editor", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -142,7 +163,7 @@ func (x *ColorChooserWidget) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ColorChooserWidget) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ColorChooserWidget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

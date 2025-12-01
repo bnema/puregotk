@@ -296,6 +296,125 @@ func (c *EntryRow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActivatesDefault sets the "activates-default" property.
+// Whether activating the embedded entry can activate the default widget.
+func (x *EntryRow) SetPropertyActivatesDefault(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activates-default", &v)
+}
+
+// GetPropertyActivatesDefault gets the "activates-default" property.
+// Whether activating the embedded entry can activate the default widget.
+func (x *EntryRow) GetPropertyActivatesDefault() bool {
+	var v gobject.Value
+	x.GetProperty("activates-default", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAttributes sets the "attributes" property.
+// A list of Pango attributes to apply to the text of the embedded entry.
+//
+// The [struct@Pango.Attribute]'s `start_index` and `end_index` must refer to
+// the [class@Gtk.EntryBuffer] text, i.e. without the preedit string.
+func (x *EntryRow) SetPropertyAttributes(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("attributes", &v)
+}
+
+// GetPropertyAttributes gets the "attributes" property.
+// A list of Pango attributes to apply to the text of the embedded entry.
+//
+// The [struct@Pango.Attribute]'s `start_index` and `end_index` must refer to
+// the [class@Gtk.EntryBuffer] text, i.e. without the preedit string.
+func (x *EntryRow) GetPropertyAttributes() uintptr {
+	var v gobject.Value
+	x.GetProperty("attributes", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyEnableEmojiCompletion sets the "enable-emoji-completion" property.
+// Whether to suggest emoji replacements on the entry row.
+//
+// Emoji replacement is done with :-delimited names, like `:heart:`.
+func (x *EntryRow) SetPropertyEnableEmojiCompletion(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-emoji-completion", &v)
+}
+
+// GetPropertyEnableEmojiCompletion gets the "enable-emoji-completion" property.
+// Whether to suggest emoji replacements on the entry row.
+//
+// Emoji replacement is done with :-delimited names, like `:heart:`.
+func (x *EntryRow) GetPropertyEnableEmojiCompletion() bool {
+	var v gobject.Value
+	x.GetProperty("enable-emoji-completion", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaxLength sets the "max-length" property.
+// Maximum number of characters for the entry.
+func (x *EntryRow) SetPropertyMaxLength(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("max-length", &v)
+}
+
+// GetPropertyMaxLength gets the "max-length" property.
+// Maximum number of characters for the entry.
+func (x *EntryRow) GetPropertyMaxLength() int {
+	var v gobject.Value
+	x.GetProperty("max-length", &v)
+	return v.GetInt()
+}
+
+// SetPropertyShowApplyButton sets the "show-apply-button" property.
+// Whether to show the apply button.
+//
+// When set to `TRUE`, typing text in the entry will reveal an apply button.
+// Clicking it or pressing the &lt;kbd&gt;Enter&lt;/kbd&gt; key will hide the button and
+// emit the [signal@EntryRow::apply] signal.
+//
+// This is useful if changing the entry contents can trigger an expensive
+// operation, e.g. network activity, to avoid triggering it after typing every
+// character.
+func (x *EntryRow) SetPropertyShowApplyButton(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-apply-button", &v)
+}
+
+// GetPropertyShowApplyButton gets the "show-apply-button" property.
+// Whether to show the apply button.
+//
+// When set to `TRUE`, typing text in the entry will reveal an apply button.
+// Clicking it or pressing the &lt;kbd&gt;Enter&lt;/kbd&gt; key will hide the button and
+// emit the [signal@EntryRow::apply] signal.
+//
+// This is useful if changing the entry contents can trigger an expensive
+// operation, e.g. network activity, to avoid triggering it after typing every
+// character.
+func (x *EntryRow) GetPropertyShowApplyButton() bool {
+	var v gobject.Value
+	x.GetProperty("show-apply-button", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyTextLength gets the "text-length" property.
+// The length of the text in the entry row.
+func (x *EntryRow) GetPropertyTextLength() uint {
+	var v gobject.Value
+	x.GetProperty("text-length", &v)
+	return v.GetUint()
+}
+
 // Emitted when the apply button is pressed.
 //
 // See [property@EntryRow:show-apply-button].
@@ -395,7 +514,7 @@ func (x *EntryRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *EntryRow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *EntryRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -851,7 +970,7 @@ func (x *EntryRow) GetPosition() int {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *EntryRow) GetSelectionBounds(StartPosVar int, EndPosVar int) bool {
+func (x *EntryRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := gtk.XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret

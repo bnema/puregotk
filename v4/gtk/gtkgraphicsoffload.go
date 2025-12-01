@@ -195,6 +195,23 @@ func (c *GraphicsOffload) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyBlackBackground sets the "black-background" property.
+// Whether to draw a black background.
+func (x *GraphicsOffload) SetPropertyBlackBackground(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("black-background", &v)
+}
+
+// GetPropertyBlackBackground gets the "black-background" property.
+// Whether to draw a black background.
+func (x *GraphicsOffload) GetPropertyBlackBackground() bool {
+	var v gobject.Value
+	x.GetProperty("black-background", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -252,7 +269,7 @@ func (x *GraphicsOffload) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *GraphicsOffload) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *GraphicsOffload) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

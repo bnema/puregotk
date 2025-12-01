@@ -137,6 +137,91 @@ func (c *LockButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyTextLock sets the "text-lock" property.
+// The text to display when prompting the user to lock.
+func (x *LockButton) SetPropertyTextLock(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("text-lock", &v)
+}
+
+// GetPropertyTextLock gets the "text-lock" property.
+// The text to display when prompting the user to lock.
+func (x *LockButton) GetPropertyTextLock() string {
+	var v gobject.Value
+	x.GetProperty("text-lock", &v)
+	return v.GetString()
+}
+
+// SetPropertyTextUnlock sets the "text-unlock" property.
+// The text to display when prompting the user to unlock.
+func (x *LockButton) SetPropertyTextUnlock(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("text-unlock", &v)
+}
+
+// GetPropertyTextUnlock gets the "text-unlock" property.
+// The text to display when prompting the user to unlock.
+func (x *LockButton) GetPropertyTextUnlock() string {
+	var v gobject.Value
+	x.GetProperty("text-unlock", &v)
+	return v.GetString()
+}
+
+// SetPropertyTooltipLock sets the "tooltip-lock" property.
+// The tooltip to display when prompting the user to lock.
+func (x *LockButton) SetPropertyTooltipLock(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("tooltip-lock", &v)
+}
+
+// GetPropertyTooltipLock gets the "tooltip-lock" property.
+// The tooltip to display when prompting the user to lock.
+func (x *LockButton) GetPropertyTooltipLock() string {
+	var v gobject.Value
+	x.GetProperty("tooltip-lock", &v)
+	return v.GetString()
+}
+
+// SetPropertyTooltipNotAuthorized sets the "tooltip-not-authorized" property.
+// The tooltip to display when the user cannot obtain authorization.
+func (x *LockButton) SetPropertyTooltipNotAuthorized(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("tooltip-not-authorized", &v)
+}
+
+// GetPropertyTooltipNotAuthorized gets the "tooltip-not-authorized" property.
+// The tooltip to display when the user cannot obtain authorization.
+func (x *LockButton) GetPropertyTooltipNotAuthorized() string {
+	var v gobject.Value
+	x.GetProperty("tooltip-not-authorized", &v)
+	return v.GetString()
+}
+
+// SetPropertyTooltipUnlock sets the "tooltip-unlock" property.
+// The tooltip to display when prompting the user to unlock.
+func (x *LockButton) SetPropertyTooltipUnlock(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("tooltip-unlock", &v)
+}
+
+// GetPropertyTooltipUnlock gets the "tooltip-unlock" property.
+// The tooltip to display when prompting the user to unlock.
+func (x *LockButton) GetPropertyTooltipUnlock() string {
+	var v gobject.Value
+	x.GetProperty("tooltip-unlock", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -194,7 +279,7 @@ func (x *LockButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *LockButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *LockButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

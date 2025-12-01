@@ -73,7 +73,7 @@ func (x *AppInfoIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideDup sets the callback function.
+// OverrideDup sets the "dup" callback function.
 // Copies a [iface@Gio.AppInfo].
 func (x *AppInfoIface) OverrideDup(cb func(AppInfo) *AppInfoBase) {
 	if cb == nil {
@@ -89,7 +89,7 @@ func (x *AppInfoIface) OverrideDup(cb func(AppInfo) *AppInfoBase) {
 	}
 }
 
-// GetDup gets the callback function.
+// GetDup gets the "dup" callback function.
 // Copies a [iface@Gio.AppInfo].
 func (x *AppInfoIface) GetDup() func(AppInfo) *AppInfoBase {
 	if x.xDup == 0 {
@@ -108,7 +108,7 @@ func (x *AppInfoIface) GetDup() func(AppInfo) *AppInfoBase {
 	}
 }
 
-// OverrideEqual sets the callback function.
+// OverrideEqual sets the "equal" callback function.
 // Checks two [iface@Gio.AppInfo]s for equality.
 func (x *AppInfoIface) OverrideEqual(cb func(AppInfo, AppInfo) bool) {
 	if cb == nil {
@@ -120,7 +120,7 @@ func (x *AppInfoIface) OverrideEqual(cb func(AppInfo, AppInfo) bool) {
 	}
 }
 
-// GetEqual gets the callback function.
+// GetEqual gets the "equal" callback function.
 // Checks two [iface@Gio.AppInfo]s for equality.
 func (x *AppInfoIface) GetEqual() func(AppInfo, AppInfo) bool {
 	if x.xEqual == 0 {
@@ -133,7 +133,7 @@ func (x *AppInfoIface) GetEqual() func(AppInfo, AppInfo) bool {
 	}
 }
 
-// OverrideGetId sets the callback function.
+// OverrideGetId sets the "get_id" callback function.
 // Gets a string identifier for a [iface@Gio.AppInfo].
 func (x *AppInfoIface) OverrideGetId(cb func(AppInfo) string) {
 	if cb == nil {
@@ -145,7 +145,7 @@ func (x *AppInfoIface) OverrideGetId(cb func(AppInfo) string) {
 	}
 }
 
-// GetGetId gets the callback function.
+// GetGetId gets the "get_id" callback function.
 // Gets a string identifier for a [iface@Gio.AppInfo].
 func (x *AppInfoIface) GetGetId() func(AppInfo) string {
 	if x.xGetId == 0 {
@@ -158,7 +158,7 @@ func (x *AppInfoIface) GetGetId() func(AppInfo) string {
 	}
 }
 
-// OverrideGetName sets the callback function.
+// OverrideGetName sets the "get_name" callback function.
 // Gets the name of the application for a [iface@Gio.AppInfo].
 func (x *AppInfoIface) OverrideGetName(cb func(AppInfo) string) {
 	if cb == nil {
@@ -170,7 +170,7 @@ func (x *AppInfoIface) OverrideGetName(cb func(AppInfo) string) {
 	}
 }
 
-// GetGetName gets the callback function.
+// GetGetName gets the "get_name" callback function.
 // Gets the name of the application for a [iface@Gio.AppInfo].
 func (x *AppInfoIface) GetGetName() func(AppInfo) string {
 	if x.xGetName == 0 {
@@ -183,7 +183,7 @@ func (x *AppInfoIface) GetGetName() func(AppInfo) string {
 	}
 }
 
-// OverrideGetDescription sets the callback function.
+// OverrideGetDescription sets the "get_description" callback function.
 // Gets a short description for the application described by
 //
 //	the [iface@Gio.AppInfo].
@@ -197,7 +197,7 @@ func (x *AppInfoIface) OverrideGetDescription(cb func(AppInfo) string) {
 	}
 }
 
-// GetGetDescription gets the callback function.
+// GetGetDescription gets the "get_description" callback function.
 // Gets a short description for the application described by
 //
 //	the [iface@Gio.AppInfo].
@@ -212,7 +212,7 @@ func (x *AppInfoIface) GetGetDescription() func(AppInfo) string {
 	}
 }
 
-// OverrideGetExecutable sets the callback function.
+// OverrideGetExecutable sets the "get_executable" callback function.
 // Gets the executable name for the [iface@Gio.AppInfo].
 func (x *AppInfoIface) OverrideGetExecutable(cb func(AppInfo) string) {
 	if cb == nil {
@@ -224,7 +224,7 @@ func (x *AppInfoIface) OverrideGetExecutable(cb func(AppInfo) string) {
 	}
 }
 
-// GetGetExecutable gets the callback function.
+// GetGetExecutable gets the "get_executable" callback function.
 // Gets the executable name for the [iface@Gio.AppInfo].
 func (x *AppInfoIface) GetGetExecutable() func(AppInfo) string {
 	if x.xGetExecutable == 0 {
@@ -237,7 +237,7 @@ func (x *AppInfoIface) GetGetExecutable() func(AppInfo) string {
 	}
 }
 
-// OverrideGetIcon sets the callback function.
+// OverrideGetIcon sets the "get_icon" callback function.
 // Gets the [iface@Gio.Icon] for the [iface@Gio.AppInfo].
 func (x *AppInfoIface) OverrideGetIcon(cb func(AppInfo) *IconBase) {
 	if cb == nil {
@@ -253,7 +253,7 @@ func (x *AppInfoIface) OverrideGetIcon(cb func(AppInfo) *IconBase) {
 	}
 }
 
-// GetGetIcon gets the callback function.
+// GetGetIcon gets the "get_icon" callback function.
 // Gets the [iface@Gio.Icon] for the [iface@Gio.AppInfo].
 func (x *AppInfoIface) GetGetIcon() func(AppInfo) *IconBase {
 	if x.xGetIcon == 0 {
@@ -272,7 +272,7 @@ func (x *AppInfoIface) GetGetIcon() func(AppInfo) *IconBase {
 	}
 }
 
-// OverrideLaunch sets the callback function.
+// OverrideLaunch sets the "launch" callback function.
 // Launches an application specified by the [iface@Gio.AppInfo].
 func (x *AppInfoIface) OverrideLaunch(cb func(AppInfo, *glib.List, *AppLaunchContext) bool) {
 	if cb == nil {
@@ -284,7 +284,7 @@ func (x *AppInfoIface) OverrideLaunch(cb func(AppInfo, *glib.List, *AppLaunchCon
 	}
 }
 
-// GetLaunch gets the callback function.
+// GetLaunch gets the "launch" callback function.
 // Launches an application specified by the [iface@Gio.AppInfo].
 func (x *AppInfoIface) GetLaunch() func(AppInfo, *glib.List, *AppLaunchContext) bool {
 	if x.xLaunch == 0 {
@@ -297,7 +297,7 @@ func (x *AppInfoIface) GetLaunch() func(AppInfo, *glib.List, *AppLaunchContext) 
 	}
 }
 
-// OverrideSupportsUris sets the callback function.
+// OverrideSupportsUris sets the "supports_uris" callback function.
 // Indicates whether the application specified supports
 //
 //	launching URIs.
@@ -311,7 +311,7 @@ func (x *AppInfoIface) OverrideSupportsUris(cb func(AppInfo) bool) {
 	}
 }
 
-// GetSupportsUris gets the callback function.
+// GetSupportsUris gets the "supports_uris" callback function.
 // Indicates whether the application specified supports
 //
 //	launching URIs.
@@ -326,7 +326,7 @@ func (x *AppInfoIface) GetSupportsUris() func(AppInfo) bool {
 	}
 }
 
-// OverrideSupportsFiles sets the callback function.
+// OverrideSupportsFiles sets the "supports_files" callback function.
 // Indicates whether the application specified accepts
 //
 //	filename arguments.
@@ -340,7 +340,7 @@ func (x *AppInfoIface) OverrideSupportsFiles(cb func(AppInfo) bool) {
 	}
 }
 
-// GetSupportsFiles gets the callback function.
+// GetSupportsFiles gets the "supports_files" callback function.
 // Indicates whether the application specified accepts
 //
 //	filename arguments.
@@ -355,7 +355,7 @@ func (x *AppInfoIface) GetSupportsFiles() func(AppInfo) bool {
 	}
 }
 
-// OverrideLaunchUris sets the callback function.
+// OverrideLaunchUris sets the "launch_uris" callback function.
 // Launches an application with a list of URIs.
 func (x *AppInfoIface) OverrideLaunchUris(cb func(AppInfo, *glib.List, *AppLaunchContext) bool) {
 	if cb == nil {
@@ -367,7 +367,7 @@ func (x *AppInfoIface) OverrideLaunchUris(cb func(AppInfo, *glib.List, *AppLaunc
 	}
 }
 
-// GetLaunchUris gets the callback function.
+// GetLaunchUris gets the "launch_uris" callback function.
 // Launches an application with a list of URIs.
 func (x *AppInfoIface) GetLaunchUris() func(AppInfo, *glib.List, *AppLaunchContext) bool {
 	if x.xLaunchUris == 0 {
@@ -380,7 +380,7 @@ func (x *AppInfoIface) GetLaunchUris() func(AppInfo, *glib.List, *AppLaunchConte
 	}
 }
 
-// OverrideShouldShow sets the callback function.
+// OverrideShouldShow sets the "should_show" callback function.
 // Returns whether an application should be shown (e.g. when
 //
 //	getting a list of installed applications).
@@ -395,7 +395,7 @@ func (x *AppInfoIface) OverrideShouldShow(cb func(AppInfo) bool) {
 	}
 }
 
-// GetShouldShow gets the callback function.
+// GetShouldShow gets the "should_show" callback function.
 // Returns whether an application should be shown (e.g. when
 //
 //	getting a list of installed applications).
@@ -411,7 +411,7 @@ func (x *AppInfoIface) GetShouldShow() func(AppInfo) bool {
 	}
 }
 
-// OverrideSetAsDefaultForType sets the callback function.
+// OverrideSetAsDefaultForType sets the "set_as_default_for_type" callback function.
 // Sets an application as default for a given content
 //
 //	type.
@@ -425,7 +425,7 @@ func (x *AppInfoIface) OverrideSetAsDefaultForType(cb func(AppInfo, string) bool
 	}
 }
 
-// GetSetAsDefaultForType gets the callback function.
+// GetSetAsDefaultForType gets the "set_as_default_for_type" callback function.
 // Sets an application as default for a given content
 //
 //	type.
@@ -440,7 +440,7 @@ func (x *AppInfoIface) GetSetAsDefaultForType() func(AppInfo, string) bool {
 	}
 }
 
-// OverrideSetAsDefaultForExtension sets the callback function.
+// OverrideSetAsDefaultForExtension sets the "set_as_default_for_extension" callback function.
 // Sets an application as default for a given
 //
 //	file extension.
@@ -454,7 +454,7 @@ func (x *AppInfoIface) OverrideSetAsDefaultForExtension(cb func(AppInfo, string)
 	}
 }
 
-// GetSetAsDefaultForExtension gets the callback function.
+// GetSetAsDefaultForExtension gets the "set_as_default_for_extension" callback function.
 // Sets an application as default for a given
 //
 //	file extension.
@@ -469,7 +469,7 @@ func (x *AppInfoIface) GetSetAsDefaultForExtension() func(AppInfo, string) bool 
 	}
 }
 
-// OverrideAddSupportsType sets the callback function.
+// OverrideAddSupportsType sets the "add_supports_type" callback function.
 // Adds to the [iface@Gio.AppInfo] information about
 //
 //	supported file types.
@@ -483,7 +483,7 @@ func (x *AppInfoIface) OverrideAddSupportsType(cb func(AppInfo, string) bool) {
 	}
 }
 
-// GetAddSupportsType gets the callback function.
+// GetAddSupportsType gets the "add_supports_type" callback function.
 // Adds to the [iface@Gio.AppInfo] information about
 //
 //	supported file types.
@@ -498,7 +498,7 @@ func (x *AppInfoIface) GetAddSupportsType() func(AppInfo, string) bool {
 	}
 }
 
-// OverrideCanRemoveSupportsType sets the callback function.
+// OverrideCanRemoveSupportsType sets the "can_remove_supports_type" callback function.
 // Checks for support for removing supported file
 //
 //	types from a [iface@Gio.AppInfo].
@@ -512,7 +512,7 @@ func (x *AppInfoIface) OverrideCanRemoveSupportsType(cb func(AppInfo) bool) {
 	}
 }
 
-// GetCanRemoveSupportsType gets the callback function.
+// GetCanRemoveSupportsType gets the "can_remove_supports_type" callback function.
 // Checks for support for removing supported file
 //
 //	types from a [iface@Gio.AppInfo].
@@ -527,7 +527,7 @@ func (x *AppInfoIface) GetCanRemoveSupportsType() func(AppInfo) bool {
 	}
 }
 
-// OverrideRemoveSupportsType sets the callback function.
+// OverrideRemoveSupportsType sets the "remove_supports_type" callback function.
 // Removes a supported application type from a
 //
 //	[iface@Gio.AppInfo].
@@ -541,7 +541,7 @@ func (x *AppInfoIface) OverrideRemoveSupportsType(cb func(AppInfo, string) bool)
 	}
 }
 
-// GetRemoveSupportsType gets the callback function.
+// GetRemoveSupportsType gets the "remove_supports_type" callback function.
 // Removes a supported application type from a
 //
 //	[iface@Gio.AppInfo].
@@ -556,7 +556,7 @@ func (x *AppInfoIface) GetRemoveSupportsType() func(AppInfo, string) bool {
 	}
 }
 
-// OverrideCanDelete sets the callback function.
+// OverrideCanDelete sets the "can_delete" callback function.
 // Checks if a [iface@Gio.AppInfo] can be deleted. (Since 2.20)
 func (x *AppInfoIface) OverrideCanDelete(cb func(AppInfo) bool) {
 	if cb == nil {
@@ -568,7 +568,7 @@ func (x *AppInfoIface) OverrideCanDelete(cb func(AppInfo) bool) {
 	}
 }
 
-// GetCanDelete gets the callback function.
+// GetCanDelete gets the "can_delete" callback function.
 // Checks if a [iface@Gio.AppInfo] can be deleted. (Since 2.20)
 func (x *AppInfoIface) GetCanDelete() func(AppInfo) bool {
 	if x.xCanDelete == 0 {
@@ -581,7 +581,7 @@ func (x *AppInfoIface) GetCanDelete() func(AppInfo) bool {
 	}
 }
 
-// OverrideDoDelete sets the callback function.
+// OverrideDoDelete sets the "do_delete" callback function.
 // Deletes a [iface@Gio.AppInfo]. (Since 2.20)
 func (x *AppInfoIface) OverrideDoDelete(cb func(AppInfo) bool) {
 	if cb == nil {
@@ -593,7 +593,7 @@ func (x *AppInfoIface) OverrideDoDelete(cb func(AppInfo) bool) {
 	}
 }
 
-// GetDoDelete gets the callback function.
+// GetDoDelete gets the "do_delete" callback function.
 // Deletes a [iface@Gio.AppInfo]. (Since 2.20)
 func (x *AppInfoIface) GetDoDelete() func(AppInfo) bool {
 	if x.xDoDelete == 0 {
@@ -606,7 +606,7 @@ func (x *AppInfoIface) GetDoDelete() func(AppInfo) bool {
 	}
 }
 
-// OverrideGetCommandline sets the callback function.
+// OverrideGetCommandline sets the "get_commandline" callback function.
 // Gets the commandline for the [iface@Gio.AppInfo].
 //
 //	(Since 2.20)
@@ -620,7 +620,7 @@ func (x *AppInfoIface) OverrideGetCommandline(cb func(AppInfo) string) {
 	}
 }
 
-// GetGetCommandline gets the callback function.
+// GetGetCommandline gets the "get_commandline" callback function.
 // Gets the commandline for the [iface@Gio.AppInfo].
 //
 //	(Since 2.20)
@@ -635,7 +635,7 @@ func (x *AppInfoIface) GetGetCommandline() func(AppInfo) string {
 	}
 }
 
-// OverrideGetDisplayName sets the callback function.
+// OverrideGetDisplayName sets the "get_display_name" callback function.
 // Gets the display name for the [iface@Gio.AppInfo].
 //
 //	(Since 2.24)
@@ -649,7 +649,7 @@ func (x *AppInfoIface) OverrideGetDisplayName(cb func(AppInfo) string) {
 	}
 }
 
-// GetGetDisplayName gets the callback function.
+// GetGetDisplayName gets the "get_display_name" callback function.
 // Gets the display name for the [iface@Gio.AppInfo].
 //
 //	(Since 2.24)
@@ -664,7 +664,7 @@ func (x *AppInfoIface) GetGetDisplayName() func(AppInfo) string {
 	}
 }
 
-// OverrideSetAsLastUsedForType sets the callback function.
+// OverrideSetAsLastUsedForType sets the "set_as_last_used_for_type" callback function.
 // Sets the application as the last used. See
 //
 //	[method@Gio.AppInfo.set_as_last_used_for_type].
@@ -678,7 +678,7 @@ func (x *AppInfoIface) OverrideSetAsLastUsedForType(cb func(AppInfo, string) boo
 	}
 }
 
-// GetSetAsLastUsedForType gets the callback function.
+// GetSetAsLastUsedForType gets the "set_as_last_used_for_type" callback function.
 // Sets the application as the last used. See
 //
 //	[method@Gio.AppInfo.set_as_last_used_for_type].
@@ -693,7 +693,7 @@ func (x *AppInfoIface) GetSetAsLastUsedForType() func(AppInfo, string) bool {
 	}
 }
 
-// OverrideGetSupportedTypes sets the callback function.
+// OverrideGetSupportedTypes sets the "get_supported_types" callback function.
 // Retrieves the list of content types that @app_info
 //
 //	claims to support.
@@ -707,7 +707,7 @@ func (x *AppInfoIface) OverrideGetSupportedTypes(cb func(AppInfo) []string) {
 	}
 }
 
-// GetGetSupportedTypes gets the callback function.
+// GetGetSupportedTypes gets the "get_supported_types" callback function.
 // Retrieves the list of content types that @app_info
 //
 //	claims to support.
@@ -722,7 +722,7 @@ func (x *AppInfoIface) GetGetSupportedTypes() func(AppInfo) []string {
 	}
 }
 
-// OverrideLaunchUrisAsync sets the callback function.
+// OverrideLaunchUrisAsync sets the "launch_uris_async" callback function.
 // Asynchronously launches an application with a list of
 //
 //	URIs. (Since: 2.60)
@@ -736,7 +736,7 @@ func (x *AppInfoIface) OverrideLaunchUrisAsync(cb func(AppInfo, *glib.List, *App
 	}
 }
 
-// GetLaunchUrisAsync gets the callback function.
+// GetLaunchUrisAsync gets the "launch_uris_async" callback function.
 // Asynchronously launches an application with a list of
 //
 //	URIs. (Since: 2.60)
@@ -751,7 +751,7 @@ func (x *AppInfoIface) GetLaunchUrisAsync() func(AppInfo, *glib.List, *AppLaunch
 	}
 }
 
-// OverrideLaunchUrisFinish sets the callback function.
+// OverrideLaunchUrisFinish sets the "launch_uris_finish" callback function.
 // Finishes an operation started with @launch_uris_async.
 //
 //	(Since: 2.60)
@@ -765,7 +765,7 @@ func (x *AppInfoIface) OverrideLaunchUrisFinish(cb func(AppInfo, AsyncResult) bo
 	}
 }
 
-// GetLaunchUrisFinish gets the callback function.
+// GetLaunchUrisFinish gets the "launch_uris_finish" callback function.
 // Finishes an operation started with @launch_uris_async.
 //
 //	(Since: 2.60)
@@ -806,7 +806,7 @@ func (x *AppLaunchContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetDisplay sets the callback function.
+// OverrideGetDisplay sets the "get_display" callback function.
 func (x *AppLaunchContextClass) OverrideGetDisplay(cb func(*AppLaunchContext, AppInfo, *glib.List) string) {
 	if cb == nil {
 		x.xGetDisplay = 0
@@ -817,7 +817,7 @@ func (x *AppLaunchContextClass) OverrideGetDisplay(cb func(*AppLaunchContext, Ap
 	}
 }
 
-// GetGetDisplay gets the callback function.
+// GetGetDisplay gets the "get_display" callback function.
 func (x *AppLaunchContextClass) GetGetDisplay() func(*AppLaunchContext, AppInfo, *glib.List) string {
 	if x.xGetDisplay == 0 {
 		return nil
@@ -829,7 +829,7 @@ func (x *AppLaunchContextClass) GetGetDisplay() func(*AppLaunchContext, AppInfo,
 	}
 }
 
-// OverrideGetStartupNotifyId sets the callback function.
+// OverrideGetStartupNotifyId sets the "get_startup_notify_id" callback function.
 func (x *AppLaunchContextClass) OverrideGetStartupNotifyId(cb func(*AppLaunchContext, AppInfo, *glib.List) string) {
 	if cb == nil {
 		x.xGetStartupNotifyId = 0
@@ -840,7 +840,7 @@ func (x *AppLaunchContextClass) OverrideGetStartupNotifyId(cb func(*AppLaunchCon
 	}
 }
 
-// GetGetStartupNotifyId gets the callback function.
+// GetGetStartupNotifyId gets the "get_startup_notify_id" callback function.
 func (x *AppLaunchContextClass) GetGetStartupNotifyId() func(*AppLaunchContext, AppInfo, *glib.List) string {
 	if x.xGetStartupNotifyId == 0 {
 		return nil
@@ -852,7 +852,7 @@ func (x *AppLaunchContextClass) GetGetStartupNotifyId() func(*AppLaunchContext, 
 	}
 }
 
-// OverrideLaunchFailed sets the callback function.
+// OverrideLaunchFailed sets the "launch_failed" callback function.
 func (x *AppLaunchContextClass) OverrideLaunchFailed(cb func(*AppLaunchContext, string)) {
 	if cb == nil {
 		x.xLaunchFailed = 0
@@ -863,7 +863,7 @@ func (x *AppLaunchContextClass) OverrideLaunchFailed(cb func(*AppLaunchContext, 
 	}
 }
 
-// GetLaunchFailed gets the callback function.
+// GetLaunchFailed gets the "launch_failed" callback function.
 func (x *AppLaunchContextClass) GetLaunchFailed() func(*AppLaunchContext, string) {
 	if x.xLaunchFailed == 0 {
 		return nil
@@ -875,7 +875,7 @@ func (x *AppLaunchContextClass) GetLaunchFailed() func(*AppLaunchContext, string
 	}
 }
 
-// OverrideLaunched sets the callback function.
+// OverrideLaunched sets the "launched" callback function.
 func (x *AppLaunchContextClass) OverrideLaunched(cb func(*AppLaunchContext, AppInfo, *glib.Variant)) {
 	if cb == nil {
 		x.xLaunched = 0
@@ -886,7 +886,7 @@ func (x *AppLaunchContextClass) OverrideLaunched(cb func(*AppLaunchContext, AppI
 	}
 }
 
-// GetLaunched gets the callback function.
+// GetLaunched gets the "launched" callback function.
 func (x *AppLaunchContextClass) GetLaunched() func(*AppLaunchContext, AppInfo, *glib.Variant) {
 	if x.xLaunched == 0 {
 		return nil
@@ -898,7 +898,7 @@ func (x *AppLaunchContextClass) GetLaunched() func(*AppLaunchContext, AppInfo, *
 	}
 }
 
-// OverrideLaunchStarted sets the callback function.
+// OverrideLaunchStarted sets the "launch_started" callback function.
 func (x *AppLaunchContextClass) OverrideLaunchStarted(cb func(*AppLaunchContext, AppInfo, *glib.Variant)) {
 	if cb == nil {
 		x.xLaunchStarted = 0
@@ -909,7 +909,7 @@ func (x *AppLaunchContextClass) OverrideLaunchStarted(cb func(*AppLaunchContext,
 	}
 }
 
-// GetLaunchStarted gets the callback function.
+// GetLaunchStarted gets the "launch_started" callback function.
 func (x *AppLaunchContextClass) GetLaunchStarted() func(*AppLaunchContext, AppInfo, *glib.Variant) {
 	if x.xLaunchStarted == 0 {
 		return nil
@@ -921,7 +921,7 @@ func (x *AppLaunchContextClass) GetLaunchStarted() func(*AppLaunchContext, AppIn
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *AppLaunchContextClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -932,7 +932,7 @@ func (x *AppLaunchContextClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *AppLaunchContextClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -944,7 +944,7 @@ func (x *AppLaunchContextClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *AppLaunchContextClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -955,7 +955,7 @@ func (x *AppLaunchContextClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *AppLaunchContextClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -967,7 +967,7 @@ func (x *AppLaunchContextClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *AppLaunchContextClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -978,7 +978,7 @@ func (x *AppLaunchContextClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *AppLaunchContextClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil

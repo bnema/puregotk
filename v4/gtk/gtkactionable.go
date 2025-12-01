@@ -8,6 +8,7 @@ import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -30,7 +31,7 @@ func (x *ActionableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetActionName sets the callback function.
+// OverrideGetActionName sets the "get_action_name" callback function.
 // virtual function for [method@Actionable.get_action_name]
 func (x *ActionableInterface) OverrideGetActionName(cb func(Actionable) string) {
 	if cb == nil {
@@ -42,7 +43,7 @@ func (x *ActionableInterface) OverrideGetActionName(cb func(Actionable) string) 
 	}
 }
 
-// GetGetActionName gets the callback function.
+// GetGetActionName gets the "get_action_name" callback function.
 // virtual function for [method@Actionable.get_action_name]
 func (x *ActionableInterface) GetGetActionName() func(Actionable) string {
 	if x.xGetActionName == 0 {
@@ -55,7 +56,7 @@ func (x *ActionableInterface) GetGetActionName() func(Actionable) string {
 	}
 }
 
-// OverrideSetActionName sets the callback function.
+// OverrideSetActionName sets the "set_action_name" callback function.
 // virtual function for [method@Actionable.set_action_name]
 func (x *ActionableInterface) OverrideSetActionName(cb func(Actionable, string)) {
 	if cb == nil {
@@ -67,7 +68,7 @@ func (x *ActionableInterface) OverrideSetActionName(cb func(Actionable, string))
 	}
 }
 
-// GetSetActionName gets the callback function.
+// GetSetActionName gets the "set_action_name" callback function.
 // virtual function for [method@Actionable.set_action_name]
 func (x *ActionableInterface) GetSetActionName() func(Actionable, string) {
 	if x.xSetActionName == 0 {
@@ -80,7 +81,7 @@ func (x *ActionableInterface) GetSetActionName() func(Actionable, string) {
 	}
 }
 
-// OverrideGetActionTargetValue sets the callback function.
+// OverrideGetActionTargetValue sets the "get_action_target_value" callback function.
 // virtual function for [method@Actionable.get_action_target_value]
 func (x *ActionableInterface) OverrideGetActionTargetValue(cb func(Actionable) *glib.Variant) {
 	if cb == nil {
@@ -92,7 +93,7 @@ func (x *ActionableInterface) OverrideGetActionTargetValue(cb func(Actionable) *
 	}
 }
 
-// GetGetActionTargetValue gets the callback function.
+// GetGetActionTargetValue gets the "get_action_target_value" callback function.
 // virtual function for [method@Actionable.get_action_target_value]
 func (x *ActionableInterface) GetGetActionTargetValue() func(Actionable) *glib.Variant {
 	if x.xGetActionTargetValue == 0 {
@@ -105,7 +106,7 @@ func (x *ActionableInterface) GetGetActionTargetValue() func(Actionable) *glib.V
 	}
 }
 
-// OverrideSetActionTargetValue sets the callback function.
+// OverrideSetActionTargetValue sets the "set_action_target_value" callback function.
 // virtual function for [method@Actionable.set_action_target_value]
 func (x *ActionableInterface) OverrideSetActionTargetValue(cb func(Actionable, *glib.Variant)) {
 	if cb == nil {
@@ -117,7 +118,7 @@ func (x *ActionableInterface) OverrideSetActionTargetValue(cb func(Actionable, *
 	}
 }
 
-// GetSetActionTargetValue gets the callback function.
+// GetSetActionTargetValue gets the "set_action_target_value" callback function.
 // virtual function for [method@Actionable.set_action_target_value]
 func (x *ActionableInterface) GetSetActionTargetValue() func(Actionable, *glib.Variant) {
 	if x.xSetActionTargetValue == 0 {
@@ -255,6 +256,48 @@ func (x *ActionableBase) SetDetailedActionName(DetailedActionNameVar string) {
 
 	XGtkActionableSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
 
+}
+
+// SetPropertyActionName sets the "action-name" property.
+// The name of the action with which this widget should be associated.
+func (x *ActionableBase) SetPropertyActionName(value string) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	obj.SetProperty("action-name", &v)
+}
+
+// GetPropertyActionName gets the "action-name" property.
+// The name of the action with which this widget should be associated.
+func (x *ActionableBase) GetPropertyActionName() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("action-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyActionTarget sets the "action-target" property.
+// The target value of the actionable widget's action.
+func (x *ActionableBase) SetPropertyActionTarget(value uintptr) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	obj.SetProperty("action-target", &v)
+}
+
+// GetPropertyActionTarget gets the "action-target" property.
+// The target value of the actionable widget's action.
+func (x *ActionableBase) GetPropertyActionTarget() uintptr {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("action-target", &v)
+	return v.GetPointer()
 }
 
 var XGtkActionableGetActionName func(uintptr) string

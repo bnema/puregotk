@@ -80,7 +80,7 @@ func (x *TreeViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideRowActivated sets the callback function.
+// OverrideRowActivated sets the "row_activated" callback function.
 func (x *TreeViewClass) OverrideRowActivated(cb func(*TreeView, *TreePath, *TreeViewColumn)) {
 	if cb == nil {
 		x.xRowActivated = 0
@@ -91,7 +91,7 @@ func (x *TreeViewClass) OverrideRowActivated(cb func(*TreeView, *TreePath, *Tree
 	}
 }
 
-// GetRowActivated gets the callback function.
+// GetRowActivated gets the "row_activated" callback function.
 func (x *TreeViewClass) GetRowActivated() func(*TreeView, *TreePath, *TreeViewColumn) {
 	if x.xRowActivated == 0 {
 		return nil
@@ -103,7 +103,7 @@ func (x *TreeViewClass) GetRowActivated() func(*TreeView, *TreePath, *TreeViewCo
 	}
 }
 
-// OverrideTestExpandRow sets the callback function.
+// OverrideTestExpandRow sets the "test_expand_row" callback function.
 func (x *TreeViewClass) OverrideTestExpandRow(cb func(*TreeView, *TreeIter, *TreePath) bool) {
 	if cb == nil {
 		x.xTestExpandRow = 0
@@ -114,7 +114,7 @@ func (x *TreeViewClass) OverrideTestExpandRow(cb func(*TreeView, *TreeIter, *Tre
 	}
 }
 
-// GetTestExpandRow gets the callback function.
+// GetTestExpandRow gets the "test_expand_row" callback function.
 func (x *TreeViewClass) GetTestExpandRow() func(*TreeView, *TreeIter, *TreePath) bool {
 	if x.xTestExpandRow == 0 {
 		return nil
@@ -126,7 +126,7 @@ func (x *TreeViewClass) GetTestExpandRow() func(*TreeView, *TreeIter, *TreePath)
 	}
 }
 
-// OverrideTestCollapseRow sets the callback function.
+// OverrideTestCollapseRow sets the "test_collapse_row" callback function.
 func (x *TreeViewClass) OverrideTestCollapseRow(cb func(*TreeView, *TreeIter, *TreePath) bool) {
 	if cb == nil {
 		x.xTestCollapseRow = 0
@@ -137,7 +137,7 @@ func (x *TreeViewClass) OverrideTestCollapseRow(cb func(*TreeView, *TreeIter, *T
 	}
 }
 
-// GetTestCollapseRow gets the callback function.
+// GetTestCollapseRow gets the "test_collapse_row" callback function.
 func (x *TreeViewClass) GetTestCollapseRow() func(*TreeView, *TreeIter, *TreePath) bool {
 	if x.xTestCollapseRow == 0 {
 		return nil
@@ -149,7 +149,7 @@ func (x *TreeViewClass) GetTestCollapseRow() func(*TreeView, *TreeIter, *TreePat
 	}
 }
 
-// OverrideRowExpanded sets the callback function.
+// OverrideRowExpanded sets the "row_expanded" callback function.
 func (x *TreeViewClass) OverrideRowExpanded(cb func(*TreeView, *TreeIter, *TreePath)) {
 	if cb == nil {
 		x.xRowExpanded = 0
@@ -160,7 +160,7 @@ func (x *TreeViewClass) OverrideRowExpanded(cb func(*TreeView, *TreeIter, *TreeP
 	}
 }
 
-// GetRowExpanded gets the callback function.
+// GetRowExpanded gets the "row_expanded" callback function.
 func (x *TreeViewClass) GetRowExpanded() func(*TreeView, *TreeIter, *TreePath) {
 	if x.xRowExpanded == 0 {
 		return nil
@@ -172,7 +172,7 @@ func (x *TreeViewClass) GetRowExpanded() func(*TreeView, *TreeIter, *TreePath) {
 	}
 }
 
-// OverrideRowCollapsed sets the callback function.
+// OverrideRowCollapsed sets the "row_collapsed" callback function.
 func (x *TreeViewClass) OverrideRowCollapsed(cb func(*TreeView, *TreeIter, *TreePath)) {
 	if cb == nil {
 		x.xRowCollapsed = 0
@@ -183,7 +183,7 @@ func (x *TreeViewClass) OverrideRowCollapsed(cb func(*TreeView, *TreeIter, *Tree
 	}
 }
 
-// GetRowCollapsed gets the callback function.
+// GetRowCollapsed gets the "row_collapsed" callback function.
 func (x *TreeViewClass) GetRowCollapsed() func(*TreeView, *TreeIter, *TreePath) {
 	if x.xRowCollapsed == 0 {
 		return nil
@@ -195,7 +195,7 @@ func (x *TreeViewClass) GetRowCollapsed() func(*TreeView, *TreeIter, *TreePath) 
 	}
 }
 
-// OverrideColumnsChanged sets the callback function.
+// OverrideColumnsChanged sets the "columns_changed" callback function.
 func (x *TreeViewClass) OverrideColumnsChanged(cb func(*TreeView)) {
 	if cb == nil {
 		x.xColumnsChanged = 0
@@ -206,7 +206,7 @@ func (x *TreeViewClass) OverrideColumnsChanged(cb func(*TreeView)) {
 	}
 }
 
-// GetColumnsChanged gets the callback function.
+// GetColumnsChanged gets the "columns_changed" callback function.
 func (x *TreeViewClass) GetColumnsChanged() func(*TreeView) {
 	if x.xColumnsChanged == 0 {
 		return nil
@@ -218,7 +218,7 @@ func (x *TreeViewClass) GetColumnsChanged() func(*TreeView) {
 	}
 }
 
-// OverrideCursorChanged sets the callback function.
+// OverrideCursorChanged sets the "cursor_changed" callback function.
 func (x *TreeViewClass) OverrideCursorChanged(cb func(*TreeView)) {
 	if cb == nil {
 		x.xCursorChanged = 0
@@ -229,7 +229,7 @@ func (x *TreeViewClass) OverrideCursorChanged(cb func(*TreeView)) {
 	}
 }
 
-// GetCursorChanged gets the callback function.
+// GetCursorChanged gets the "cursor_changed" callback function.
 func (x *TreeViewClass) GetCursorChanged() func(*TreeView) {
 	if x.xCursorChanged == 0 {
 		return nil
@@ -241,7 +241,7 @@ func (x *TreeViewClass) GetCursorChanged() func(*TreeView) {
 	}
 }
 
-// OverrideMoveCursor sets the callback function.
+// OverrideMoveCursor sets the "move_cursor" callback function.
 func (x *TreeViewClass) OverrideMoveCursor(cb func(*TreeView, MovementStep, int, bool, bool) bool) {
 	if cb == nil {
 		x.xMoveCursor = 0
@@ -252,7 +252,7 @@ func (x *TreeViewClass) OverrideMoveCursor(cb func(*TreeView, MovementStep, int,
 	}
 }
 
-// GetMoveCursor gets the callback function.
+// GetMoveCursor gets the "move_cursor" callback function.
 func (x *TreeViewClass) GetMoveCursor() func(*TreeView, MovementStep, int, bool, bool) bool {
 	if x.xMoveCursor == 0 {
 		return nil
@@ -264,7 +264,7 @@ func (x *TreeViewClass) GetMoveCursor() func(*TreeView, MovementStep, int, bool,
 	}
 }
 
-// OverrideSelectAll sets the callback function.
+// OverrideSelectAll sets the "select_all" callback function.
 func (x *TreeViewClass) OverrideSelectAll(cb func(*TreeView) bool) {
 	if cb == nil {
 		x.xSelectAll = 0
@@ -275,7 +275,7 @@ func (x *TreeViewClass) OverrideSelectAll(cb func(*TreeView) bool) {
 	}
 }
 
-// GetSelectAll gets the callback function.
+// GetSelectAll gets the "select_all" callback function.
 func (x *TreeViewClass) GetSelectAll() func(*TreeView) bool {
 	if x.xSelectAll == 0 {
 		return nil
@@ -287,7 +287,7 @@ func (x *TreeViewClass) GetSelectAll() func(*TreeView) bool {
 	}
 }
 
-// OverrideUnselectAll sets the callback function.
+// OverrideUnselectAll sets the "unselect_all" callback function.
 func (x *TreeViewClass) OverrideUnselectAll(cb func(*TreeView) bool) {
 	if cb == nil {
 		x.xUnselectAll = 0
@@ -298,7 +298,7 @@ func (x *TreeViewClass) OverrideUnselectAll(cb func(*TreeView) bool) {
 	}
 }
 
-// GetUnselectAll gets the callback function.
+// GetUnselectAll gets the "unselect_all" callback function.
 func (x *TreeViewClass) GetUnselectAll() func(*TreeView) bool {
 	if x.xUnselectAll == 0 {
 		return nil
@@ -310,7 +310,7 @@ func (x *TreeViewClass) GetUnselectAll() func(*TreeView) bool {
 	}
 }
 
-// OverrideSelectCursorRow sets the callback function.
+// OverrideSelectCursorRow sets the "select_cursor_row" callback function.
 func (x *TreeViewClass) OverrideSelectCursorRow(cb func(*TreeView, bool) bool) {
 	if cb == nil {
 		x.xSelectCursorRow = 0
@@ -321,7 +321,7 @@ func (x *TreeViewClass) OverrideSelectCursorRow(cb func(*TreeView, bool) bool) {
 	}
 }
 
-// GetSelectCursorRow gets the callback function.
+// GetSelectCursorRow gets the "select_cursor_row" callback function.
 func (x *TreeViewClass) GetSelectCursorRow() func(*TreeView, bool) bool {
 	if x.xSelectCursorRow == 0 {
 		return nil
@@ -333,7 +333,7 @@ func (x *TreeViewClass) GetSelectCursorRow() func(*TreeView, bool) bool {
 	}
 }
 
-// OverrideToggleCursorRow sets the callback function.
+// OverrideToggleCursorRow sets the "toggle_cursor_row" callback function.
 func (x *TreeViewClass) OverrideToggleCursorRow(cb func(*TreeView) bool) {
 	if cb == nil {
 		x.xToggleCursorRow = 0
@@ -344,7 +344,7 @@ func (x *TreeViewClass) OverrideToggleCursorRow(cb func(*TreeView) bool) {
 	}
 }
 
-// GetToggleCursorRow gets the callback function.
+// GetToggleCursorRow gets the "toggle_cursor_row" callback function.
 func (x *TreeViewClass) GetToggleCursorRow() func(*TreeView) bool {
 	if x.xToggleCursorRow == 0 {
 		return nil
@@ -356,7 +356,7 @@ func (x *TreeViewClass) GetToggleCursorRow() func(*TreeView) bool {
 	}
 }
 
-// OverrideExpandCollapseCursorRow sets the callback function.
+// OverrideExpandCollapseCursorRow sets the "expand_collapse_cursor_row" callback function.
 func (x *TreeViewClass) OverrideExpandCollapseCursorRow(cb func(*TreeView, bool, bool, bool) bool) {
 	if cb == nil {
 		x.xExpandCollapseCursorRow = 0
@@ -367,7 +367,7 @@ func (x *TreeViewClass) OverrideExpandCollapseCursorRow(cb func(*TreeView, bool,
 	}
 }
 
-// GetExpandCollapseCursorRow gets the callback function.
+// GetExpandCollapseCursorRow gets the "expand_collapse_cursor_row" callback function.
 func (x *TreeViewClass) GetExpandCollapseCursorRow() func(*TreeView, bool, bool, bool) bool {
 	if x.xExpandCollapseCursorRow == 0 {
 		return nil
@@ -379,7 +379,7 @@ func (x *TreeViewClass) GetExpandCollapseCursorRow() func(*TreeView, bool, bool,
 	}
 }
 
-// OverrideSelectCursorParent sets the callback function.
+// OverrideSelectCursorParent sets the "select_cursor_parent" callback function.
 func (x *TreeViewClass) OverrideSelectCursorParent(cb func(*TreeView) bool) {
 	if cb == nil {
 		x.xSelectCursorParent = 0
@@ -390,7 +390,7 @@ func (x *TreeViewClass) OverrideSelectCursorParent(cb func(*TreeView) bool) {
 	}
 }
 
-// GetSelectCursorParent gets the callback function.
+// GetSelectCursorParent gets the "select_cursor_parent" callback function.
 func (x *TreeViewClass) GetSelectCursorParent() func(*TreeView) bool {
 	if x.xSelectCursorParent == 0 {
 		return nil
@@ -402,7 +402,7 @@ func (x *TreeViewClass) GetSelectCursorParent() func(*TreeView) bool {
 	}
 }
 
-// OverrideStartInteractiveSearch sets the callback function.
+// OverrideStartInteractiveSearch sets the "start_interactive_search" callback function.
 func (x *TreeViewClass) OverrideStartInteractiveSearch(cb func(*TreeView) bool) {
 	if cb == nil {
 		x.xStartInteractiveSearch = 0
@@ -413,7 +413,7 @@ func (x *TreeViewClass) OverrideStartInteractiveSearch(cb func(*TreeView) bool) 
 	}
 }
 
-// GetStartInteractiveSearch gets the callback function.
+// GetStartInteractiveSearch gets the "start_interactive_search" callback function.
 func (x *TreeViewClass) GetStartInteractiveSearch() func(*TreeView) bool {
 	if x.xStartInteractiveSearch == 0 {
 		return nil
@@ -630,59 +630,59 @@ func (x *TreeView) ColumnsAutosize() {
 
 }
 
-var xTreeViewConvertBinWindowToTreeCoords func(uintptr, int, int, int, int)
+var xTreeViewConvertBinWindowToTreeCoords func(uintptr, int, int, *int, *int)
 
 // Converts bin_window coordinates to coordinates for the
 // tree (the full scrollable area of the tree).
-func (x *TreeView) ConvertBinWindowToTreeCoords(BxVar int, ByVar int, TxVar int, TyVar int) {
+func (x *TreeView) ConvertBinWindowToTreeCoords(BxVar int, ByVar int, TxVar *int, TyVar *int) {
 
 	xTreeViewConvertBinWindowToTreeCoords(x.GoPointer(), BxVar, ByVar, TxVar, TyVar)
 
 }
 
-var xTreeViewConvertBinWindowToWidgetCoords func(uintptr, int, int, int, int)
+var xTreeViewConvertBinWindowToWidgetCoords func(uintptr, int, int, *int, *int)
 
 // Converts bin_window coordinates to widget relative coordinates.
-func (x *TreeView) ConvertBinWindowToWidgetCoords(BxVar int, ByVar int, WxVar int, WyVar int) {
+func (x *TreeView) ConvertBinWindowToWidgetCoords(BxVar int, ByVar int, WxVar *int, WyVar *int) {
 
 	xTreeViewConvertBinWindowToWidgetCoords(x.GoPointer(), BxVar, ByVar, WxVar, WyVar)
 
 }
 
-var xTreeViewConvertTreeToBinWindowCoords func(uintptr, int, int, int, int)
+var xTreeViewConvertTreeToBinWindowCoords func(uintptr, int, int, *int, *int)
 
 // Converts tree coordinates (coordinates in full scrollable area of the tree)
 // to bin_window coordinates.
-func (x *TreeView) ConvertTreeToBinWindowCoords(TxVar int, TyVar int, BxVar int, ByVar int) {
+func (x *TreeView) ConvertTreeToBinWindowCoords(TxVar int, TyVar int, BxVar *int, ByVar *int) {
 
 	xTreeViewConvertTreeToBinWindowCoords(x.GoPointer(), TxVar, TyVar, BxVar, ByVar)
 
 }
 
-var xTreeViewConvertTreeToWidgetCoords func(uintptr, int, int, int, int)
+var xTreeViewConvertTreeToWidgetCoords func(uintptr, int, int, *int, *int)
 
 // Converts tree coordinates (coordinates in full scrollable area of the tree)
 // to widget coordinates.
-func (x *TreeView) ConvertTreeToWidgetCoords(TxVar int, TyVar int, WxVar int, WyVar int) {
+func (x *TreeView) ConvertTreeToWidgetCoords(TxVar int, TyVar int, WxVar *int, WyVar *int) {
 
 	xTreeViewConvertTreeToWidgetCoords(x.GoPointer(), TxVar, TyVar, WxVar, WyVar)
 
 }
 
-var xTreeViewConvertWidgetToBinWindowCoords func(uintptr, int, int, int, int)
+var xTreeViewConvertWidgetToBinWindowCoords func(uintptr, int, int, *int, *int)
 
 // Converts widget coordinates to coordinates for the bin_window.
-func (x *TreeView) ConvertWidgetToBinWindowCoords(WxVar int, WyVar int, BxVar int, ByVar int) {
+func (x *TreeView) ConvertWidgetToBinWindowCoords(WxVar int, WyVar int, BxVar *int, ByVar *int) {
 
 	xTreeViewConvertWidgetToBinWindowCoords(x.GoPointer(), WxVar, WyVar, BxVar, ByVar)
 
 }
 
-var xTreeViewConvertWidgetToTreeCoords func(uintptr, int, int, int, int)
+var xTreeViewConvertWidgetToTreeCoords func(uintptr, int, int, *int, *int)
 
 // Converts widget coordinates to coordinates for the
 // tree (the full scrollable area of the tree).
-func (x *TreeView) ConvertWidgetToTreeCoords(WxVar int, WyVar int, TxVar int, TyVar int) {
+func (x *TreeView) ConvertWidgetToTreeCoords(WxVar int, WyVar int, TxVar *int, TyVar *int) {
 
 	xTreeViewConvertWidgetToTreeCoords(x.GoPointer(), WxVar, WyVar, TxVar, TyVar)
 
@@ -823,7 +823,7 @@ func (x *TreeView) GetColumns() *glib.List {
 	return cret
 }
 
-var xTreeViewGetCursor func(uintptr, **TreePath, uintptr)
+var xTreeViewGetCursor func(uintptr, **TreePath, **TreeViewColumn)
 
 // Fills in @path and @focus_column with the current path and focus column.  If
 // the cursor isn’t currently set, then *@path will be %NULL.  If no column
@@ -833,7 +833,7 @@ var xTreeViewGetCursor func(uintptr, **TreePath, uintptr)
 // you are done with it.
 func (x *TreeView) GetCursor(PathVar **TreePath, FocusColumnVar **TreeViewColumn) {
 
-	xTreeViewGetCursor(x.GoPointer(), PathVar, *gobject.ConvertPtr(FocusColumnVar))
+	xTreeViewGetCursor(x.GoPointer(), PathVar, FocusColumnVar)
 
 }
 
@@ -987,7 +987,7 @@ func (x *TreeView) GetNColumns() uint {
 	return cret
 }
 
-var xTreeViewGetPathAtPos func(uintptr, int, int, **TreePath, uintptr, int, int) bool
+var xTreeViewGetPathAtPos func(uintptr, int, int, **TreePath, **TreeViewColumn, *int, *int) bool
 
 // Finds the path at the point (@x, @y), relative to bin_window coordinates.
 // That is, @x and @y are relative to an events coordinates. Widget-relative
@@ -1005,9 +1005,9 @@ var xTreeViewGetPathAtPos func(uintptr, int, int, **TreePath, uintptr, int, int)
 // For converting widget coordinates (eg. the ones you get from
 // GtkWidget::query-tooltip), please see
 // gtk_tree_view_convert_widget_to_bin_window_coords().
-func (x *TreeView) GetPathAtPos(XVar int, YVar int, PathVar **TreePath, ColumnVar **TreeViewColumn, CellXVar int, CellYVar int) bool {
+func (x *TreeView) GetPathAtPos(XVar int, YVar int, PathVar **TreePath, ColumnVar **TreeViewColumn, CellXVar *int, CellYVar *int) bool {
 
-	cret := xTreeViewGetPathAtPos(x.GoPointer(), XVar, YVar, PathVar, *gobject.ConvertPtr(ColumnVar), CellXVar, CellYVar)
+	cret := xTreeViewGetPathAtPos(x.GoPointer(), XVar, YVar, PathVar, ColumnVar, CellXVar, CellYVar)
 	return cret
 }
 
@@ -1114,7 +1114,7 @@ func (x *TreeView) GetTooltipColumn() int {
 	return cret
 }
 
-var xTreeViewGetTooltipContext func(uintptr, int, int, bool, *uintptr, **TreePath, *TreeIter) bool
+var xTreeViewGetTooltipContext func(uintptr, int, int, bool, **TreeModel, **TreePath, *TreeIter) bool
 
 // This function is supposed to be used in a ::query-tooltip
 // signal handler for `GtkTreeView`. The @x, @y and @keyboard_tip values
@@ -1127,9 +1127,9 @@ var xTreeViewGetTooltipContext func(uintptr, int, int, bool, *uintptr, **TreePat
 // @model, @path and @iter which have been provided will be set to point to
 // that row and the corresponding model. @x and @y will always be converted
 // to be relative to @tree_view’s bin_window if @keyboard_tooltip is %FALSE.
-func (x *TreeView) GetTooltipContext(XVar int, YVar int, KeyboardTipVar bool, ModelVar *TreeModel, PathVar **TreePath, IterVar *TreeIter) bool {
+func (x *TreeView) GetTooltipContext(XVar int, YVar int, KeyboardTipVar bool, ModelVar **TreeModel, PathVar **TreePath, IterVar *TreeIter) bool {
 
-	cret := xTreeViewGetTooltipContext(x.GoPointer(), XVar, YVar, KeyboardTipVar, gobject.ConvertPtr(ModelVar), PathVar, IterVar)
+	cret := xTreeViewGetTooltipContext(x.GoPointer(), XVar, YVar, KeyboardTipVar, ModelVar, PathVar, IterVar)
 	return cret
 }
 
@@ -1197,7 +1197,7 @@ func (x *TreeView) InsertColumnWithDataFunc(PositionVar int, TitleVar string, Ce
 	return cret
 }
 
-var xTreeViewIsBlankAtPos func(uintptr, int, int, **TreePath, uintptr, int, int) bool
+var xTreeViewIsBlankAtPos func(uintptr, int, int, **TreePath, **TreeViewColumn, *int, *int) bool
 
 // Determine whether the point (@x, @y) in @tree_view is blank, that is no
 // cell content nor an expander arrow is drawn at the location. If so, the
@@ -1216,9 +1216,9 @@ var xTreeViewIsBlankAtPos func(uintptr, int, int, **TreePath, uintptr, int, int)
 // The @path, @column, @cell_x and @cell_y arguments will be filled in
 // likewise as for gtk_tree_view_get_path_at_pos().  Please see
 // gtk_tree_view_get_path_at_pos() for more information.
-func (x *TreeView) IsBlankAtPos(XVar int, YVar int, PathVar **TreePath, ColumnVar **TreeViewColumn, CellXVar int, CellYVar int) bool {
+func (x *TreeView) IsBlankAtPos(XVar int, YVar int, PathVar **TreePath, ColumnVar **TreeViewColumn, CellXVar *int, CellYVar *int) bool {
 
-	cret := xTreeViewIsBlankAtPos(x.GoPointer(), XVar, YVar, PathVar, *gobject.ConvertPtr(ColumnVar), CellXVar, CellYVar)
+	cret := xTreeViewIsBlankAtPos(x.GoPointer(), XVar, YVar, PathVar, ColumnVar, CellXVar, CellYVar)
 	return cret
 }
 
@@ -1700,6 +1700,260 @@ func (c *TreeView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActivateOnSingleClick sets the "activate-on-single-click" property.
+// The activate-on-single-click property specifies whether the "row-activated" signal
+// will be emitted after a single click.
+func (x *TreeView) SetPropertyActivateOnSingleClick(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activate-on-single-click", &v)
+}
+
+// GetPropertyActivateOnSingleClick gets the "activate-on-single-click" property.
+// The activate-on-single-click property specifies whether the "row-activated" signal
+// will be emitted after a single click.
+func (x *TreeView) GetPropertyActivateOnSingleClick() bool {
+	var v gobject.Value
+	x.GetProperty("activate-on-single-click", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyEnableSearch sets the "enable-search" property.
+func (x *TreeView) SetPropertyEnableSearch(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-search", &v)
+}
+
+// GetPropertyEnableSearch gets the "enable-search" property.
+func (x *TreeView) GetPropertyEnableSearch() bool {
+	var v gobject.Value
+	x.GetProperty("enable-search", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyEnableTreeLines sets the "enable-tree-lines" property.
+func (x *TreeView) SetPropertyEnableTreeLines(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-tree-lines", &v)
+}
+
+// GetPropertyEnableTreeLines gets the "enable-tree-lines" property.
+func (x *TreeView) GetPropertyEnableTreeLines() bool {
+	var v gobject.Value
+	x.GetProperty("enable-tree-lines", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyFixedHeightMode sets the "fixed-height-mode" property.
+// Setting the ::fixed-height-mode property to %TRUE speeds up
+// `GtkTreeView` by assuming that all rows have the same height.
+// Only enable this option if all rows are the same height.
+// Please see gtk_tree_view_set_fixed_height_mode() for more
+// information on this option.
+func (x *TreeView) SetPropertyFixedHeightMode(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("fixed-height-mode", &v)
+}
+
+// GetPropertyFixedHeightMode gets the "fixed-height-mode" property.
+// Setting the ::fixed-height-mode property to %TRUE speeds up
+// `GtkTreeView` by assuming that all rows have the same height.
+// Only enable this option if all rows are the same height.
+// Please see gtk_tree_view_set_fixed_height_mode() for more
+// information on this option.
+func (x *TreeView) GetPropertyFixedHeightMode() bool {
+	var v gobject.Value
+	x.GetProperty("fixed-height-mode", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHeadersClickable sets the "headers-clickable" property.
+func (x *TreeView) SetPropertyHeadersClickable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("headers-clickable", &v)
+}
+
+// GetPropertyHeadersClickable gets the "headers-clickable" property.
+func (x *TreeView) GetPropertyHeadersClickable() bool {
+	var v gobject.Value
+	x.GetProperty("headers-clickable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHeadersVisible sets the "headers-visible" property.
+func (x *TreeView) SetPropertyHeadersVisible(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("headers-visible", &v)
+}
+
+// GetPropertyHeadersVisible gets the "headers-visible" property.
+func (x *TreeView) GetPropertyHeadersVisible() bool {
+	var v gobject.Value
+	x.GetProperty("headers-visible", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHoverExpand sets the "hover-expand" property.
+// Enables or disables the hover expansion mode of @tree_view.
+// Hover expansion makes rows expand or collapse if the pointer moves
+// over them.
+//
+// This mode is primarily intended for treeviews in popups, e.g.
+// in `GtkComboBox` or `GtkEntryCompletion`.
+func (x *TreeView) SetPropertyHoverExpand(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("hover-expand", &v)
+}
+
+// GetPropertyHoverExpand gets the "hover-expand" property.
+// Enables or disables the hover expansion mode of @tree_view.
+// Hover expansion makes rows expand or collapse if the pointer moves
+// over them.
+//
+// This mode is primarily intended for treeviews in popups, e.g.
+// in `GtkComboBox` or `GtkEntryCompletion`.
+func (x *TreeView) GetPropertyHoverExpand() bool {
+	var v gobject.Value
+	x.GetProperty("hover-expand", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHoverSelection sets the "hover-selection" property.
+// Enables or disables the hover selection mode of @tree_view.
+// Hover selection makes the selected row follow the pointer.
+// Currently, this works only for the selection modes
+// %GTK_SELECTION_SINGLE and %GTK_SELECTION_BROWSE.
+//
+// This mode is primarily intended for treeviews in popups, e.g.
+// in `GtkComboBox` or `GtkEntryCompletion`.
+func (x *TreeView) SetPropertyHoverSelection(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("hover-selection", &v)
+}
+
+// GetPropertyHoverSelection gets the "hover-selection" property.
+// Enables or disables the hover selection mode of @tree_view.
+// Hover selection makes the selected row follow the pointer.
+// Currently, this works only for the selection modes
+// %GTK_SELECTION_SINGLE and %GTK_SELECTION_BROWSE.
+//
+// This mode is primarily intended for treeviews in popups, e.g.
+// in `GtkComboBox` or `GtkEntryCompletion`.
+func (x *TreeView) GetPropertyHoverSelection() bool {
+	var v gobject.Value
+	x.GetProperty("hover-selection", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLevelIndentation sets the "level-indentation" property.
+// Extra indentation for each level.
+func (x *TreeView) SetPropertyLevelIndentation(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("level-indentation", &v)
+}
+
+// GetPropertyLevelIndentation gets the "level-indentation" property.
+// Extra indentation for each level.
+func (x *TreeView) GetPropertyLevelIndentation() int {
+	var v gobject.Value
+	x.GetProperty("level-indentation", &v)
+	return v.GetInt()
+}
+
+// SetPropertyReorderable sets the "reorderable" property.
+func (x *TreeView) SetPropertyReorderable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reorderable", &v)
+}
+
+// GetPropertyReorderable gets the "reorderable" property.
+func (x *TreeView) GetPropertyReorderable() bool {
+	var v gobject.Value
+	x.GetProperty("reorderable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRubberBanding sets the "rubber-banding" property.
+func (x *TreeView) SetPropertyRubberBanding(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("rubber-banding", &v)
+}
+
+// GetPropertyRubberBanding gets the "rubber-banding" property.
+func (x *TreeView) GetPropertyRubberBanding() bool {
+	var v gobject.Value
+	x.GetProperty("rubber-banding", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySearchColumn sets the "search-column" property.
+func (x *TreeView) SetPropertySearchColumn(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("search-column", &v)
+}
+
+// GetPropertySearchColumn gets the "search-column" property.
+func (x *TreeView) GetPropertySearchColumn() int {
+	var v gobject.Value
+	x.GetProperty("search-column", &v)
+	return v.GetInt()
+}
+
+// SetPropertyShowExpanders sets the "show-expanders" property.
+// %TRUE if the view has expanders.
+func (x *TreeView) SetPropertyShowExpanders(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-expanders", &v)
+}
+
+// GetPropertyShowExpanders gets the "show-expanders" property.
+// %TRUE if the view has expanders.
+func (x *TreeView) GetPropertyShowExpanders() bool {
+	var v gobject.Value
+	x.GetProperty("show-expanders", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTooltipColumn sets the "tooltip-column" property.
+func (x *TreeView) SetPropertyTooltipColumn(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("tooltip-column", &v)
+}
+
+// GetPropertyTooltipColumn gets the "tooltip-column" property.
+func (x *TreeView) GetPropertyTooltipColumn() int {
+	var v gobject.Value
+	x.GetProperty("tooltip-column", &v)
+	return v.GetInt()
+}
+
 // The number of columns of the treeview has changed.
 func (x *TreeView) ConnectColumnsChanged(cb *func(TreeView)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -2073,7 +2327,7 @@ func (x *TreeView) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *TreeView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *TreeView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

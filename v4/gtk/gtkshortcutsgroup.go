@@ -75,6 +75,60 @@ func (c *ShortcutsGroup) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyHeight gets the "height" property.
+// A rough measure for the number of lines in this group.
+//
+// This is used internally by GTK, and is not useful for applications.
+func (x *ShortcutsGroup) GetPropertyHeight() uint {
+	var v gobject.Value
+	x.GetProperty("height", &v)
+	return v.GetUint()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title for this group of shortcuts.
+func (x *ShortcutsGroup) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title for this group of shortcuts.
+func (x *ShortcutsGroup) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyView sets the "view" property.
+// An optional view that the shortcuts in this group are relevant for.
+//
+// The group will be hidden if the [property@Gtk.ShortcutsWindow:view-name]
+// property does not match the view of this group.
+//
+// Set this to %NULL to make the group always visible.
+func (x *ShortcutsGroup) SetPropertyView(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("view", &v)
+}
+
+// GetPropertyView gets the "view" property.
+// An optional view that the shortcuts in this group are relevant for.
+//
+// The group will be hidden if the [property@Gtk.ShortcutsWindow:view-name]
+// property does not match the view of this group.
+//
+// Set this to %NULL to make the group always visible.
+func (x *ShortcutsGroup) GetPropertyView() string {
+	var v gobject.Value
+	x.GetProperty("view", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -132,7 +186,7 @@ func (x *ShortcutsGroup) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ShortcutsGroup) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ShortcutsGroup) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

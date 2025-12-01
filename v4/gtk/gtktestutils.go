@@ -23,11 +23,11 @@ func TestInit(ArgcpVar int, ArgvpVar []string, varArgs ...interface{}) {
 
 }
 
-var xTestListAllTypes func(uint) uintptr
+var xTestListAllTypes func(*uint) uintptr
 
 // Return the type ids that have been registered after
 // calling gtk_test_register_all_types().
-func TestListAllTypes(NTypesVar uint) uintptr {
+func TestListAllTypes(NTypesVar *uint) uintptr {
 
 	cret := xTestListAllTypes(NTypesVar)
 	return cret

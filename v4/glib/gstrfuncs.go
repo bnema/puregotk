@@ -147,7 +147,7 @@ func AsciiStrdown(StrVar string, LenVar int) string {
 	return cret
 }
 
-var xAsciiStringToSigned func(string, uint, int64, int64, int64, **Error) bool
+var xAsciiStringToSigned func(string, uint, int64, int64, *int64, **Error) bool
 
 // A convenience function for converting a string to a signed number.
 //
@@ -170,7 +170,7 @@ var xAsciiStringToSigned func(string, uint, int64, int64, int64, **Error) bool
 // See [func@GLib.ascii_strtoll] if you have more complex needs such as
 // parsing a string which starts with a number, but then has other
 // characters.
-func AsciiStringToSigned(StrVar string, BaseVar uint, MinVar int64, MaxVar int64, OutNumVar int64) (bool, error) {
+func AsciiStringToSigned(StrVar string, BaseVar uint, MinVar int64, MaxVar int64, OutNumVar *int64) (bool, error) {
 	var cerr *Error
 
 	cret := xAsciiStringToSigned(StrVar, BaseVar, MinVar, MaxVar, OutNumVar, &cerr)
@@ -181,7 +181,7 @@ func AsciiStringToSigned(StrVar string, BaseVar uint, MinVar int64, MaxVar int64
 
 }
 
-var xAsciiStringToUnsigned func(string, uint, uint64, uint64, uint64, **Error) bool
+var xAsciiStringToUnsigned func(string, uint, uint64, uint64, *uint64, **Error) bool
 
 // A convenience function for converting a string to an unsigned number.
 //
@@ -205,7 +205,7 @@ var xAsciiStringToUnsigned func(string, uint, uint64, uint64, uint64, **Error) b
 // See [func@GLib.ascii_strtoull] if you have more complex needs such as
 // parsing a string which starts with a number, but then has other
 // characters.
-func AsciiStringToUnsigned(StrVar string, BaseVar uint, MinVar uint64, MaxVar uint64, OutNumVar uint64) (bool, error) {
+func AsciiStringToUnsigned(StrVar string, BaseVar uint, MinVar uint64, MaxVar uint64, OutNumVar *uint64) (bool, error) {
 	var cerr *Error
 
 	cret := xAsciiStringToUnsigned(StrVar, BaseVar, MinVar, MaxVar, OutNumVar, &cerr)
@@ -236,7 +236,7 @@ func AsciiStrncasecmp(S1Var string, S2Var string, NVar uint) int {
 	return cret
 }
 
-var xAsciiStrtod func(string, string) float64
+var xAsciiStrtod func(string, *string) float64
 
 // Converts a string to a floating point value.
 //
@@ -261,13 +261,13 @@ var xAsciiStrtod func(string, string) float64
 //
 // This function resets `errno` before calling `strtod()` so that
 // you can reliably detect overflow and underflow.
-func AsciiStrtod(NptrVar string, EndptrVar string) float64 {
+func AsciiStrtod(NptrVar string, EndptrVar *string) float64 {
 
 	cret := xAsciiStrtod(NptrVar, EndptrVar)
 	return cret
 }
 
-var xAsciiStrtoll func(string, string, uint) int64
+var xAsciiStrtoll func(string, *string, uint) int64
 
 // Converts a string to a `gint64` value.
 //
@@ -287,13 +287,13 @@ var xAsciiStrtoll func(string, string, uint) int64
 // `EINVAL` is stored in `errno`. If the
 // string conversion fails, zero is returned, and @endptr returns @nptr
 // (if @endptr is non-`NULL`).
-func AsciiStrtoll(NptrVar string, EndptrVar string, BaseVar uint) int64 {
+func AsciiStrtoll(NptrVar string, EndptrVar *string, BaseVar uint) int64 {
 
 	cret := xAsciiStrtoll(NptrVar, EndptrVar, BaseVar)
 	return cret
 }
 
-var xAsciiStrtoull func(string, string, uint) uint64
+var xAsciiStrtoull func(string, *string, uint) uint64
 
 // Converts a string to a `guint64` value.
 //
@@ -318,7 +318,7 @@ var xAsciiStrtoull func(string, string, uint) uint64
 // `EINVAL` is stored in `errno`.
 // If the string conversion fails, zero is returned, and @endptr returns
 // @nptr (if @endptr is non-`NULL`).
-func AsciiStrtoull(NptrVar string, EndptrVar string, BaseVar uint) uint64 {
+func AsciiStrtoull(NptrVar string, EndptrVar *string, BaseVar uint) uint64 {
 
 	cret := xAsciiStrtoull(NptrVar, EndptrVar, BaseVar)
 	return cret
@@ -506,7 +506,7 @@ func StrToAscii(StrVar string, FromLocaleVar string) string {
 	return cret
 }
 
-var xStrTokenizeAndFold func(string, string, []string) []string
+var xStrTokenizeAndFold func(string, string, *[]string) []string
 
 // Tokenizes @string and performs folding on each token.
 //
@@ -523,7 +523,7 @@ var xStrTokenizeAndFold func(string, string, []string) []string
 // for doing so is unspecified, but @translit_locale (if specified) may
 // improve the transliteration if the language of the source string is
 // known.
-func StrTokenizeAndFold(StringVar string, TranslitLocaleVar string, AsciiAlternatesVar []string) []string {
+func StrTokenizeAndFold(StringVar string, TranslitLocaleVar string, AsciiAlternatesVar *[]string) []string {
 
 	cret := xStrTokenizeAndFold(StringVar, TranslitLocaleVar, AsciiAlternatesVar)
 	return cret
@@ -1014,7 +1014,7 @@ func StrstrLen(HaystackVar string, HaystackLenVar int, NeedleVar string) string 
 	return cret
 }
 
-var xStrtod func(string, string) float64
+var xStrtod func(string, *string) float64
 
 // Converts a string to a floating point value.
 //
@@ -1028,7 +1028,7 @@ var xStrtod func(string, string) float64
 // should you use this. Make sure that you don't pass strings such as comma
 // separated lists of values, since the commas may be interpreted as a decimal
 // point in some locales, causing unexpected results.
-func Strtod(NptrVar string, EndptrVar string) float64 {
+func Strtod(NptrVar string, EndptrVar *string) float64 {
 
 	cret := xStrtod(NptrVar, EndptrVar)
 	return cret

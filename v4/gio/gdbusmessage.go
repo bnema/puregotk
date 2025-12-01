@@ -619,11 +619,11 @@ func (x *DBusMessage) SetUnixFdList(FdListVar *UnixFDList) {
 
 }
 
-var xDBusMessageToBlob func(uintptr, uint, DBusCapabilityFlags, **glib.Error) uintptr
+var xDBusMessageToBlob func(uintptr, *uint, DBusCapabilityFlags, **glib.Error) uintptr
 
 // Serializes @message to a blob. The byte order returned by
 // g_dbus_message_get_byte_order() will be used.
-func (x *DBusMessage) ToBlob(OutSizeVar uint, CapabilitiesVar DBusCapabilityFlags) (uintptr, error) {
+func (x *DBusMessage) ToBlob(OutSizeVar *uint, CapabilitiesVar DBusCapabilityFlags) (uintptr, error) {
 	var cerr *glib.Error
 
 	cret := xDBusMessageToBlob(x.GoPointer(), OutSizeVar, CapabilitiesVar, &cerr)
@@ -663,6 +663,13 @@ func (c *DBusMessage) GoPointer() uintptr {
 
 func (c *DBusMessage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyLocked gets the "locked" property.
+func (x *DBusMessage) GetPropertyLocked() bool {
+	var v gobject.Value
+	x.GetProperty("locked", &v)
+	return v.GetBoolean()
 }
 
 var xDBusMessageBytesNeeded func([]byte, uint, **glib.Error) int

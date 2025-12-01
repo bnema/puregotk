@@ -8,6 +8,7 @@ import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -37,7 +38,7 @@ func (x *MemoryOutputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *MemoryOutputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -48,7 +49,7 @@ func (x *MemoryOutputStreamClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *MemoryOutputStreamClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -60,7 +61,7 @@ func (x *MemoryOutputStreamClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *MemoryOutputStreamClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -71,7 +72,7 @@ func (x *MemoryOutputStreamClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *MemoryOutputStreamClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -83,7 +84,7 @@ func (x *MemoryOutputStreamClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *MemoryOutputStreamClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -94,7 +95,7 @@ func (x *MemoryOutputStreamClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *MemoryOutputStreamClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -106,7 +107,7 @@ func (x *MemoryOutputStreamClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *MemoryOutputStreamClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -117,7 +118,7 @@ func (x *MemoryOutputStreamClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *MemoryOutputStreamClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -129,7 +130,7 @@ func (x *MemoryOutputStreamClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *MemoryOutputStreamClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -140,7 +141,7 @@ func (x *MemoryOutputStreamClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *MemoryOutputStreamClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -334,6 +335,82 @@ func (c *MemoryOutputStream) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyData sets the "data" property.
+// Pointer to buffer where data will be written.
+func (x *MemoryOutputStream) SetPropertyData(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("data", &v)
+}
+
+// GetPropertyData gets the "data" property.
+// Pointer to buffer where data will be written.
+func (x *MemoryOutputStream) GetPropertyData() uintptr {
+	var v gobject.Value
+	x.GetProperty("data", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyDataSize gets the "data-size" property.
+// Size of data written to the buffer.
+func (x *MemoryOutputStream) GetPropertyDataSize() uint32 {
+	var v gobject.Value
+	x.GetProperty("data-size", &v)
+	return v.GetUlong()
+}
+
+// SetPropertyDestroyFunction sets the "destroy-function" property.
+// Function called with the buffer as argument when the stream is destroyed.
+func (x *MemoryOutputStream) SetPropertyDestroyFunction(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("destroy-function", &v)
+}
+
+// GetPropertyDestroyFunction gets the "destroy-function" property.
+// Function called with the buffer as argument when the stream is destroyed.
+func (x *MemoryOutputStream) GetPropertyDestroyFunction() uintptr {
+	var v gobject.Value
+	x.GetProperty("destroy-function", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyReallocFunction sets the "realloc-function" property.
+// Function with realloc semantics called to enlarge the buffer.
+func (x *MemoryOutputStream) SetPropertyReallocFunction(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("realloc-function", &v)
+}
+
+// GetPropertyReallocFunction gets the "realloc-function" property.
+// Function with realloc semantics called to enlarge the buffer.
+func (x *MemoryOutputStream) GetPropertyReallocFunction() uintptr {
+	var v gobject.Value
+	x.GetProperty("realloc-function", &v)
+	return v.GetPointer()
+}
+
+// SetPropertySize sets the "size" property.
+// Current size of the data buffer.
+func (x *MemoryOutputStream) SetPropertySize(value uint32) {
+	var v gobject.Value
+	v.Init(gobject.TypeUlongVal)
+	v.SetUlong(value)
+	x.SetProperty("size", &v)
+}
+
+// GetPropertySize gets the "size" property.
+// Current size of the data buffer.
+func (x *MemoryOutputStream) GetPropertySize() uint32 {
+	var v gobject.Value
+	x.GetProperty("size", &v)
+	return v.GetUlong()
+}
+
 // Checks if @stream is actually pollable. Some classes may implement
 // #GPollableOutputStream but have only certain instances of that
 // class be pollable. If this method returns %FALSE, then the behavior
@@ -429,7 +506,7 @@ func (x *MemoryOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint, C
 //
 // The behaviour of this method is undefined if
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
-func (x *MemoryOutputStream) WritevNonblocking(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar uint, CancellableVar *Cancellable) (PollableReturn, error) {
+func (x *MemoryOutputStream) WritevNonblocking(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (PollableReturn, error) {
 	var cerr *glib.Error
 
 	cret := XGPollableOutputStreamWritevNonblocking(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)

@@ -194,6 +194,70 @@ func (c *Clamp) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyMaximumSize sets the "maximum-size" property.
+// The maximum size allocated to the child.
+//
+// It is the width if the clamp is horizontal, or the height if it is vertical.
+func (x *Clamp) SetPropertyMaximumSize(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("maximum-size", &v)
+}
+
+// GetPropertyMaximumSize gets the "maximum-size" property.
+// The maximum size allocated to the child.
+//
+// It is the width if the clamp is horizontal, or the height if it is vertical.
+func (x *Clamp) GetPropertyMaximumSize() int {
+	var v gobject.Value
+	x.GetProperty("maximum-size", &v)
+	return v.GetInt()
+}
+
+// SetPropertyTighteningThreshold sets the "tightening-threshold" property.
+// The size above which the child is clamped.
+//
+// Starting from this size, the clamp will tighten its grip on the child,
+// slowly allocating less and less of the available size up to the maximum
+// allocated size. Below that threshold and below the maximum size, the child
+// will be allocated all the available size.
+//
+// If the threshold is greater than the maximum size to allocate to the child,
+// the child will be allocated all the size up to the maximum.
+// If the threshold is lower than the minimum size to allocate to the child,
+// that size will be used as the tightening threshold.
+//
+// Effectively, tightening the grip on the child before it reaches its maximum
+// size makes transitions to and from the maximum size smoother when resizing.
+func (x *Clamp) SetPropertyTighteningThreshold(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("tightening-threshold", &v)
+}
+
+// GetPropertyTighteningThreshold gets the "tightening-threshold" property.
+// The size above which the child is clamped.
+//
+// Starting from this size, the clamp will tighten its grip on the child,
+// slowly allocating less and less of the available size up to the maximum
+// allocated size. Below that threshold and below the maximum size, the child
+// will be allocated all the available size.
+//
+// If the threshold is greater than the maximum size to allocate to the child,
+// the child will be allocated all the size up to the maximum.
+// If the threshold is lower than the minimum size to allocate to the child,
+// that size will be used as the tightening threshold.
+//
+// Effectively, tightening the grip on the child before it reaches its maximum
+// size makes transitions to and from the maximum size smoother when resizing.
+func (x *Clamp) GetPropertyTighteningThreshold() int {
+	var v gobject.Value
+	x.GetProperty("tightening-threshold", &v)
+	return v.GetInt()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -251,7 +315,7 @@ func (x *Clamp) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Clamp) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Clamp) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

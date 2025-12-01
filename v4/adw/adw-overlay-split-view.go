@@ -474,6 +474,202 @@ func (c *OverlaySplitView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCollapsed sets the "collapsed" property.
+// Whether the split view is collapsed.
+//
+// When collapsed, the sidebar widget is presented as an overlay above the
+// content widget, otherwise they are displayed side by side.
+func (x *OverlaySplitView) SetPropertyCollapsed(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("collapsed", &v)
+}
+
+// GetPropertyCollapsed gets the "collapsed" property.
+// Whether the split view is collapsed.
+//
+// When collapsed, the sidebar widget is presented as an overlay above the
+// content widget, otherwise they are displayed side by side.
+func (x *OverlaySplitView) GetPropertyCollapsed() bool {
+	var v gobject.Value
+	x.GetProperty("collapsed", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyEnableHideGesture sets the "enable-hide-gesture" property.
+// Whether the sidebar can be closed with a swipe gesture.
+//
+// Only touchscreen swipes are supported.
+func (x *OverlaySplitView) SetPropertyEnableHideGesture(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-hide-gesture", &v)
+}
+
+// GetPropertyEnableHideGesture gets the "enable-hide-gesture" property.
+// Whether the sidebar can be closed with a swipe gesture.
+//
+// Only touchscreen swipes are supported.
+func (x *OverlaySplitView) GetPropertyEnableHideGesture() bool {
+	var v gobject.Value
+	x.GetProperty("enable-hide-gesture", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyEnableShowGesture sets the "enable-show-gesture" property.
+// Whether the sidebar can be opened with an edge swipe gesture.
+//
+// Only touchscreen swipes are supported.
+func (x *OverlaySplitView) SetPropertyEnableShowGesture(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-show-gesture", &v)
+}
+
+// GetPropertyEnableShowGesture gets the "enable-show-gesture" property.
+// Whether the sidebar can be opened with an edge swipe gesture.
+//
+// Only touchscreen swipes are supported.
+func (x *OverlaySplitView) GetPropertyEnableShowGesture() bool {
+	var v gobject.Value
+	x.GetProperty("enable-show-gesture", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaxSidebarWidth sets the "max-sidebar-width" property.
+// The maximum sidebar width.
+//
+// Maximum width is affected by
+// [property@OverlaySplitView:sidebar-width-unit].
+//
+// The sidebar widget can still be allocated with larger width if its own
+// minimum width exceeds it.
+func (x *OverlaySplitView) SetPropertyMaxSidebarWidth(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("max-sidebar-width", &v)
+}
+
+// GetPropertyMaxSidebarWidth gets the "max-sidebar-width" property.
+// The maximum sidebar width.
+//
+// Maximum width is affected by
+// [property@OverlaySplitView:sidebar-width-unit].
+//
+// The sidebar widget can still be allocated with larger width if its own
+// minimum width exceeds it.
+func (x *OverlaySplitView) GetPropertyMaxSidebarWidth() float64 {
+	var v gobject.Value
+	x.GetProperty("max-sidebar-width", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyMinSidebarWidth sets the "min-sidebar-width" property.
+// The minimum sidebar width.
+//
+// Minimum width is affected by
+// [property@OverlaySplitView:sidebar-width-unit].
+//
+// The sidebar widget can still be allocated with larger width if its own
+// minimum width exceeds it.
+func (x *OverlaySplitView) SetPropertyMinSidebarWidth(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("min-sidebar-width", &v)
+}
+
+// GetPropertyMinSidebarWidth gets the "min-sidebar-width" property.
+// The minimum sidebar width.
+//
+// Minimum width is affected by
+// [property@OverlaySplitView:sidebar-width-unit].
+//
+// The sidebar widget can still be allocated with larger width if its own
+// minimum width exceeds it.
+func (x *OverlaySplitView) GetPropertyMinSidebarWidth() float64 {
+	var v gobject.Value
+	x.GetProperty("min-sidebar-width", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyPinSidebar sets the "pin-sidebar" property.
+// Whether the sidebar widget is pinned.
+//
+// By default, collapsing @self automatically hides the sidebar widget, and
+// uncollapsing it shows the sidebar. If set to `TRUE`, sidebar visibility
+// never changes on its own.
+func (x *OverlaySplitView) SetPropertyPinSidebar(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("pin-sidebar", &v)
+}
+
+// GetPropertyPinSidebar gets the "pin-sidebar" property.
+// Whether the sidebar widget is pinned.
+//
+// By default, collapsing @self automatically hides the sidebar widget, and
+// uncollapsing it shows the sidebar. If set to `TRUE`, sidebar visibility
+// never changes on its own.
+func (x *OverlaySplitView) GetPropertyPinSidebar() bool {
+	var v gobject.Value
+	x.GetProperty("pin-sidebar", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowSidebar sets the "show-sidebar" property.
+// Whether the sidebar widget is shown.
+func (x *OverlaySplitView) SetPropertyShowSidebar(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-sidebar", &v)
+}
+
+// GetPropertyShowSidebar gets the "show-sidebar" property.
+// Whether the sidebar widget is shown.
+func (x *OverlaySplitView) GetPropertyShowSidebar() bool {
+	var v gobject.Value
+	x.GetProperty("show-sidebar", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySidebarWidthFraction sets the "sidebar-width-fraction" property.
+// The preferred sidebar width as a fraction of the total width.
+//
+// The preferred width is additionally limited by
+// [property@OverlaySplitView:min-sidebar-width] and
+// [property@OverlaySplitView:max-sidebar-width].
+//
+// The sidebar widget can be allocated with larger width if its own minimum
+// width exceeds the preferred width.
+func (x *OverlaySplitView) SetPropertySidebarWidthFraction(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("sidebar-width-fraction", &v)
+}
+
+// GetPropertySidebarWidthFraction gets the "sidebar-width-fraction" property.
+// The preferred sidebar width as a fraction of the total width.
+//
+// The preferred width is additionally limited by
+// [property@OverlaySplitView:min-sidebar-width] and
+// [property@OverlaySplitView:max-sidebar-width].
+//
+// The sidebar widget can be allocated with larger width if its own minimum
+// width exceeds the preferred width.
+func (x *OverlaySplitView) GetPropertySidebarWidthFraction() float64 {
+	var v gobject.Value
+	x.GetProperty("sidebar-width-fraction", &v)
+	return v.GetDouble()
+}
+
 // Gets the progress @self will snap back to after the gesture is canceled.
 func (x *OverlaySplitView) GetCancelProgress() float64 {
 
@@ -501,7 +697,7 @@ func (x *OverlaySplitView) GetProgress() float64 {
 //
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
-func (x *OverlaySplitView) GetSnapPoints(NSnapPointsVar int) uintptr {
+func (x *OverlaySplitView) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
@@ -579,7 +775,7 @@ func (x *OverlaySplitView) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *OverlaySplitView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *OverlaySplitView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

@@ -51,7 +51,7 @@ func (x *MediaStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverridePlay sets the callback function.
+// OverridePlay sets the "play" callback function.
 func (x *MediaStreamClass) OverridePlay(cb func(*MediaStream) bool) {
 	if cb == nil {
 		x.xPlay = 0
@@ -62,7 +62,7 @@ func (x *MediaStreamClass) OverridePlay(cb func(*MediaStream) bool) {
 	}
 }
 
-// GetPlay gets the callback function.
+// GetPlay gets the "play" callback function.
 func (x *MediaStreamClass) GetPlay() func(*MediaStream) bool {
 	if x.xPlay == 0 {
 		return nil
@@ -74,7 +74,7 @@ func (x *MediaStreamClass) GetPlay() func(*MediaStream) bool {
 	}
 }
 
-// OverridePause sets the callback function.
+// OverridePause sets the "pause" callback function.
 func (x *MediaStreamClass) OverridePause(cb func(*MediaStream)) {
 	if cb == nil {
 		x.xPause = 0
@@ -85,7 +85,7 @@ func (x *MediaStreamClass) OverridePause(cb func(*MediaStream)) {
 	}
 }
 
-// GetPause gets the callback function.
+// GetPause gets the "pause" callback function.
 func (x *MediaStreamClass) GetPause() func(*MediaStream) {
 	if x.xPause == 0 {
 		return nil
@@ -97,7 +97,7 @@ func (x *MediaStreamClass) GetPause() func(*MediaStream) {
 	}
 }
 
-// OverrideSeek sets the callback function.
+// OverrideSeek sets the "seek" callback function.
 func (x *MediaStreamClass) OverrideSeek(cb func(*MediaStream, int64)) {
 	if cb == nil {
 		x.xSeek = 0
@@ -108,7 +108,7 @@ func (x *MediaStreamClass) OverrideSeek(cb func(*MediaStream, int64)) {
 	}
 }
 
-// GetSeek gets the callback function.
+// GetSeek gets the "seek" callback function.
 func (x *MediaStreamClass) GetSeek() func(*MediaStream, int64) {
 	if x.xSeek == 0 {
 		return nil
@@ -120,7 +120,7 @@ func (x *MediaStreamClass) GetSeek() func(*MediaStream, int64) {
 	}
 }
 
-// OverrideUpdateAudio sets the callback function.
+// OverrideUpdateAudio sets the "update_audio" callback function.
 func (x *MediaStreamClass) OverrideUpdateAudio(cb func(*MediaStream, bool, float64)) {
 	if cb == nil {
 		x.xUpdateAudio = 0
@@ -131,7 +131,7 @@ func (x *MediaStreamClass) OverrideUpdateAudio(cb func(*MediaStream, bool, float
 	}
 }
 
-// GetUpdateAudio gets the callback function.
+// GetUpdateAudio gets the "update_audio" callback function.
 func (x *MediaStreamClass) GetUpdateAudio() func(*MediaStream, bool, float64) {
 	if x.xUpdateAudio == 0 {
 		return nil
@@ -143,7 +143,7 @@ func (x *MediaStreamClass) GetUpdateAudio() func(*MediaStream, bool, float64) {
 	}
 }
 
-// OverrideRealize sets the callback function.
+// OverrideRealize sets the "realize" callback function.
 func (x *MediaStreamClass) OverrideRealize(cb func(*MediaStream, *gdk.Surface)) {
 	if cb == nil {
 		x.xRealize = 0
@@ -154,7 +154,7 @@ func (x *MediaStreamClass) OverrideRealize(cb func(*MediaStream, *gdk.Surface)) 
 	}
 }
 
-// GetRealize gets the callback function.
+// GetRealize gets the "realize" callback function.
 func (x *MediaStreamClass) GetRealize() func(*MediaStream, *gdk.Surface) {
 	if x.xRealize == 0 {
 		return nil
@@ -166,7 +166,7 @@ func (x *MediaStreamClass) GetRealize() func(*MediaStream, *gdk.Surface) {
 	}
 }
 
-// OverrideUnrealize sets the callback function.
+// OverrideUnrealize sets the "unrealize" callback function.
 func (x *MediaStreamClass) OverrideUnrealize(cb func(*MediaStream, *gdk.Surface)) {
 	if cb == nil {
 		x.xUnrealize = 0
@@ -177,7 +177,7 @@ func (x *MediaStreamClass) OverrideUnrealize(cb func(*MediaStream, *gdk.Surface)
 	}
 }
 
-// GetUnrealize gets the callback function.
+// GetUnrealize gets the "unrealize" callback function.
 func (x *MediaStreamClass) GetUnrealize() func(*MediaStream, *gdk.Surface) {
 	if x.xUnrealize == 0 {
 		return nil
@@ -189,7 +189,7 @@ func (x *MediaStreamClass) GetUnrealize() func(*MediaStream, *gdk.Surface) {
 	}
 }
 
-// OverrideGtkReserved1 sets the callback function.
+// OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *MediaStreamClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {
 		x.xGtkReserved1 = 0
@@ -200,7 +200,7 @@ func (x *MediaStreamClass) OverrideGtkReserved1(cb func()) {
 	}
 }
 
-// GetGtkReserved1 gets the callback function.
+// GetGtkReserved1 gets the "_gtk_reserved1" callback function.
 func (x *MediaStreamClass) GetGtkReserved1() func() {
 	if x.xGtkReserved1 == 0 {
 		return nil
@@ -212,7 +212,7 @@ func (x *MediaStreamClass) GetGtkReserved1() func() {
 	}
 }
 
-// OverrideGtkReserved2 sets the callback function.
+// OverrideGtkReserved2 sets the "_gtk_reserved2" callback function.
 func (x *MediaStreamClass) OverrideGtkReserved2(cb func()) {
 	if cb == nil {
 		x.xGtkReserved2 = 0
@@ -223,7 +223,7 @@ func (x *MediaStreamClass) OverrideGtkReserved2(cb func()) {
 	}
 }
 
-// GetGtkReserved2 gets the callback function.
+// GetGtkReserved2 gets the "_gtk_reserved2" callback function.
 func (x *MediaStreamClass) GetGtkReserved2() func() {
 	if x.xGtkReserved2 == 0 {
 		return nil
@@ -235,7 +235,7 @@ func (x *MediaStreamClass) GetGtkReserved2() func() {
 	}
 }
 
-// OverrideGtkReserved3 sets the callback function.
+// OverrideGtkReserved3 sets the "_gtk_reserved3" callback function.
 func (x *MediaStreamClass) OverrideGtkReserved3(cb func()) {
 	if cb == nil {
 		x.xGtkReserved3 = 0
@@ -246,7 +246,7 @@ func (x *MediaStreamClass) OverrideGtkReserved3(cb func()) {
 	}
 }
 
-// GetGtkReserved3 gets the callback function.
+// GetGtkReserved3 gets the "_gtk_reserved3" callback function.
 func (x *MediaStreamClass) GetGtkReserved3() func() {
 	if x.xGtkReserved3 == 0 {
 		return nil
@@ -258,7 +258,7 @@ func (x *MediaStreamClass) GetGtkReserved3() func() {
 	}
 }
 
-// OverrideGtkReserved4 sets the callback function.
+// OverrideGtkReserved4 sets the "_gtk_reserved4" callback function.
 func (x *MediaStreamClass) OverrideGtkReserved4(cb func()) {
 	if cb == nil {
 		x.xGtkReserved4 = 0
@@ -269,7 +269,7 @@ func (x *MediaStreamClass) OverrideGtkReserved4(cb func()) {
 	}
 }
 
-// GetGtkReserved4 gets the callback function.
+// GetGtkReserved4 gets the "_gtk_reserved4" callback function.
 func (x *MediaStreamClass) GetGtkReserved4() func() {
 	if x.xGtkReserved4 == 0 {
 		return nil
@@ -281,7 +281,7 @@ func (x *MediaStreamClass) GetGtkReserved4() func() {
 	}
 }
 
-// OverrideGtkReserved5 sets the callback function.
+// OverrideGtkReserved5 sets the "_gtk_reserved5" callback function.
 func (x *MediaStreamClass) OverrideGtkReserved5(cb func()) {
 	if cb == nil {
 		x.xGtkReserved5 = 0
@@ -292,7 +292,7 @@ func (x *MediaStreamClass) OverrideGtkReserved5(cb func()) {
 	}
 }
 
-// GetGtkReserved5 gets the callback function.
+// GetGtkReserved5 gets the "_gtk_reserved5" callback function.
 func (x *MediaStreamClass) GetGtkReserved5() func() {
 	if x.xGtkReserved5 == 0 {
 		return nil
@@ -304,7 +304,7 @@ func (x *MediaStreamClass) GetGtkReserved5() func() {
 	}
 }
 
-// OverrideGtkReserved6 sets the callback function.
+// OverrideGtkReserved6 sets the "_gtk_reserved6" callback function.
 func (x *MediaStreamClass) OverrideGtkReserved6(cb func()) {
 	if cb == nil {
 		x.xGtkReserved6 = 0
@@ -315,7 +315,7 @@ func (x *MediaStreamClass) OverrideGtkReserved6(cb func()) {
 	}
 }
 
-// GetGtkReserved6 gets the callback function.
+// GetGtkReserved6 gets the "_gtk_reserved6" callback function.
 func (x *MediaStreamClass) GetGtkReserved6() func() {
 	if x.xGtkReserved6 == 0 {
 		return nil
@@ -327,7 +327,7 @@ func (x *MediaStreamClass) GetGtkReserved6() func() {
 	}
 }
 
-// OverrideGtkReserved7 sets the callback function.
+// OverrideGtkReserved7 sets the "_gtk_reserved7" callback function.
 func (x *MediaStreamClass) OverrideGtkReserved7(cb func()) {
 	if cb == nil {
 		x.xGtkReserved7 = 0
@@ -338,7 +338,7 @@ func (x *MediaStreamClass) OverrideGtkReserved7(cb func()) {
 	}
 }
 
-// GetGtkReserved7 gets the callback function.
+// GetGtkReserved7 gets the "_gtk_reserved7" callback function.
 func (x *MediaStreamClass) GetGtkReserved7() func() {
 	if x.xGtkReserved7 == 0 {
 		return nil
@@ -350,7 +350,7 @@ func (x *MediaStreamClass) GetGtkReserved7() func() {
 	}
 }
 
-// OverrideGtkReserved8 sets the callback function.
+// OverrideGtkReserved8 sets the "_gtk_reserved8" callback function.
 func (x *MediaStreamClass) OverrideGtkReserved8(cb func()) {
 	if cb == nil {
 		x.xGtkReserved8 = 0
@@ -361,7 +361,7 @@ func (x *MediaStreamClass) OverrideGtkReserved8(cb func()) {
 	}
 }
 
-// GetGtkReserved8 gets the callback function.
+// GetGtkReserved8 gets the "_gtk_reserved8" callback function.
 func (x *MediaStreamClass) GetGtkReserved8() func() {
 	if x.xGtkReserved8 == 0 {
 		return nil
@@ -868,6 +868,148 @@ func (c *MediaStream) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyDuration gets the "duration" property.
+// The stream's duration in microseconds or 0 if unknown.
+func (x *MediaStream) GetPropertyDuration() int64 {
+	var v gobject.Value
+	x.GetProperty("duration", &v)
+	return v.GetInt64()
+}
+
+// GetPropertyEnded gets the "ended" property.
+// Set when playback has finished.
+func (x *MediaStream) GetPropertyEnded() bool {
+	var v gobject.Value
+	x.GetProperty("ended", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyError gets the "error" property.
+// %NULL for a properly working stream or the `GError`
+// that the stream is in.
+func (x *MediaStream) GetPropertyError() uintptr {
+	var v gobject.Value
+	x.GetProperty("error", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyHasAudio gets the "has-audio" property.
+// Whether the stream contains audio.
+func (x *MediaStream) GetPropertyHasAudio() bool {
+	var v gobject.Value
+	x.GetProperty("has-audio", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyHasVideo gets the "has-video" property.
+// Whether the stream contains video.
+func (x *MediaStream) GetPropertyHasVideo() bool {
+	var v gobject.Value
+	x.GetProperty("has-video", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLoop sets the "loop" property.
+// Try to restart the media from the beginning once it ended.
+func (x *MediaStream) SetPropertyLoop(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("loop", &v)
+}
+
+// GetPropertyLoop gets the "loop" property.
+// Try to restart the media from the beginning once it ended.
+func (x *MediaStream) GetPropertyLoop() bool {
+	var v gobject.Value
+	x.GetProperty("loop", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMuted sets the "muted" property.
+// Whether the audio stream should be muted.
+func (x *MediaStream) SetPropertyMuted(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("muted", &v)
+}
+
+// GetPropertyMuted gets the "muted" property.
+// Whether the audio stream should be muted.
+func (x *MediaStream) GetPropertyMuted() bool {
+	var v gobject.Value
+	x.GetProperty("muted", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPlaying sets the "playing" property.
+// Whether the stream is currently playing.
+func (x *MediaStream) SetPropertyPlaying(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("playing", &v)
+}
+
+// GetPropertyPlaying gets the "playing" property.
+// Whether the stream is currently playing.
+func (x *MediaStream) GetPropertyPlaying() bool {
+	var v gobject.Value
+	x.GetProperty("playing", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyPrepared gets the "prepared" property.
+// Whether the stream has finished initializing and existence of
+// audio and video is known.
+func (x *MediaStream) GetPropertyPrepared() bool {
+	var v gobject.Value
+	x.GetProperty("prepared", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertySeekable gets the "seekable" property.
+// Set unless the stream is known to not support seeking.
+func (x *MediaStream) GetPropertySeekable() bool {
+	var v gobject.Value
+	x.GetProperty("seekable", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertySeeking gets the "seeking" property.
+// Set while a seek is in progress.
+func (x *MediaStream) GetPropertySeeking() bool {
+	var v gobject.Value
+	x.GetProperty("seeking", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyTimestamp gets the "timestamp" property.
+// The current presentation timestamp in microseconds.
+func (x *MediaStream) GetPropertyTimestamp() int64 {
+	var v gobject.Value
+	x.GetProperty("timestamp", &v)
+	return v.GetInt64()
+}
+
+// SetPropertyVolume sets the "volume" property.
+// Volume of the audio stream.
+func (x *MediaStream) SetPropertyVolume(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("volume", &v)
+}
+
+// GetPropertyVolume gets the "volume" property.
+// Volume of the audio stream.
+func (x *MediaStream) GetPropertyVolume() float64 {
+	var v gobject.Value
+	x.GetProperty("volume", &v)
+	return v.GetDouble()
+}
+
 // Compute a concrete size for the `GdkPaintable`.
 //
 // Applies the sizing algorithm outlined in the
@@ -878,7 +1020,7 @@ func (c *MediaStream) SetGoPointer(ptr uintptr) {
 // and @specified_height are known, but it is useful to call this
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
-func (x *MediaStream) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar float64, ConcreteHeightVar float64) {
+func (x *MediaStream) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
 
 	gdk.XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
 

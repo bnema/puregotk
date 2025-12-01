@@ -411,7 +411,7 @@ func (x *Closure) Unref() {
 
 }
 
-// OverrideMarshal sets the callback function.
+// OverrideMarshal sets the "marshal" callback function.
 func (x *Closure) OverrideMarshal(cb func(*Closure, *Value, uint, *Value, uintptr, uintptr)) {
 	if cb == nil {
 		x.xMarshal = 0
@@ -422,7 +422,7 @@ func (x *Closure) OverrideMarshal(cb func(*Closure, *Value, uint, *Value, uintpt
 	}
 }
 
-// GetMarshal gets the callback function.
+// GetMarshal gets the "marshal" callback function.
 func (x *Closure) GetMarshal() func(*Closure, *Value, uint, *Value, uintptr, uintptr) {
 	if x.xMarshal == 0 {
 		return nil

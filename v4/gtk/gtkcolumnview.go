@@ -457,6 +457,91 @@ func (c *ColumnView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEnableRubberband sets the "enable-rubberband" property.
+// Allow rubberband selection.
+func (x *ColumnView) SetPropertyEnableRubberband(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-rubberband", &v)
+}
+
+// GetPropertyEnableRubberband gets the "enable-rubberband" property.
+// Allow rubberband selection.
+func (x *ColumnView) GetPropertyEnableRubberband() bool {
+	var v gobject.Value
+	x.GetProperty("enable-rubberband", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyReorderable sets the "reorderable" property.
+// Whether columns are reorderable.
+func (x *ColumnView) SetPropertyReorderable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reorderable", &v)
+}
+
+// GetPropertyReorderable gets the "reorderable" property.
+// Whether columns are reorderable.
+func (x *ColumnView) GetPropertyReorderable() bool {
+	var v gobject.Value
+	x.GetProperty("reorderable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowColumnSeparators sets the "show-column-separators" property.
+// Show separators between columns.
+func (x *ColumnView) SetPropertyShowColumnSeparators(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-column-separators", &v)
+}
+
+// GetPropertyShowColumnSeparators gets the "show-column-separators" property.
+// Show separators between columns.
+func (x *ColumnView) GetPropertyShowColumnSeparators() bool {
+	var v gobject.Value
+	x.GetProperty("show-column-separators", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowRowSeparators sets the "show-row-separators" property.
+// Show separators between rows.
+func (x *ColumnView) SetPropertyShowRowSeparators(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-row-separators", &v)
+}
+
+// GetPropertyShowRowSeparators gets the "show-row-separators" property.
+// Show separators between rows.
+func (x *ColumnView) GetPropertyShowRowSeparators() bool {
+	var v gobject.Value
+	x.GetProperty("show-row-separators", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySingleClickActivate sets the "single-click-activate" property.
+// Activate rows on single click and select them on hover.
+func (x *ColumnView) SetPropertySingleClickActivate(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("single-click-activate", &v)
+}
+
+// GetPropertySingleClickActivate gets the "single-click-activate" property.
+// Activate rows on single click and select them on hover.
+func (x *ColumnView) GetPropertySingleClickActivate() bool {
+	var v gobject.Value
+	x.GetProperty("single-click-activate", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when a row has been activated by the user, usually via activating
 // the GtkListBase|list.activate-item action.
 //
@@ -539,7 +624,7 @@ func (x *ColumnView) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ColumnView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ColumnView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

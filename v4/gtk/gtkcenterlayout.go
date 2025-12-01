@@ -216,6 +216,37 @@ func (c *CenterLayout) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyShrinkCenterLast sets the "shrink-center-last" property.
+// Whether to shrink the center widget after other children.
+//
+// By default, when there's no space to give all three children their
+// natural widths, the start and end widgets start shrinking and the
+// center child keeps natural width until they reach minimum width.
+//
+// If set to `FALSE`, start and end widgets keep natural width and the
+// center widget starts shrinking instead.
+func (x *CenterLayout) SetPropertyShrinkCenterLast(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("shrink-center-last", &v)
+}
+
+// GetPropertyShrinkCenterLast gets the "shrink-center-last" property.
+// Whether to shrink the center widget after other children.
+//
+// By default, when there's no space to give all three children their
+// natural widths, the start and end widgets start shrinking and the
+// center child keeps natural width until they reach minimum width.
+//
+// If set to `FALSE`, start and end widgets keep natural width and the
+// center widget starts shrinking instead.
+func (x *CenterLayout) GetPropertyShrinkCenterLast() bool {
+	var v gobject.Value
+	x.GetProperty("shrink-center-last", &v)
+	return v.GetBoolean()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

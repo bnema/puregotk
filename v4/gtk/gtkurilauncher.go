@@ -134,6 +134,23 @@ func (c *UriLauncher) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyUri sets the "uri" property.
+// The uri to launch.
+func (x *UriLauncher) SetPropertyUri(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("uri", &v)
+}
+
+// GetPropertyUri gets the "uri" property.
+// The uri to launch.
+func (x *UriLauncher) GetPropertyUri() string {
+	var v gobject.Value
+	x.GetProperty("uri", &v)
+	return v.GetString()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

@@ -30,7 +30,7 @@ func (x *PopoverClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideClosed sets the callback function.
+// OverrideClosed sets the "closed" callback function.
 func (x *PopoverClass) OverrideClosed(cb func(*Popover)) {
 	if cb == nil {
 		x.xClosed = 0
@@ -41,7 +41,7 @@ func (x *PopoverClass) OverrideClosed(cb func(*Popover)) {
 	}
 }
 
-// GetClosed gets the callback function.
+// GetClosed gets the "closed" callback function.
 func (x *PopoverClass) GetClosed() func(*Popover) {
 	if x.xClosed == 0 {
 		return nil
@@ -53,7 +53,7 @@ func (x *PopoverClass) GetClosed() func(*Popover) {
 	}
 }
 
-// OverrideActivateDefault sets the callback function.
+// OverrideActivateDefault sets the "activate_default" callback function.
 func (x *PopoverClass) OverrideActivateDefault(cb func(*Popover)) {
 	if cb == nil {
 		x.xActivateDefault = 0
@@ -64,7 +64,7 @@ func (x *PopoverClass) OverrideActivateDefault(cb func(*Popover)) {
 	}
 }
 
-// GetActivateDefault gets the callback function.
+// GetActivateDefault gets the "activate_default" callback function.
 func (x *PopoverClass) GetActivateDefault() func(*Popover) {
 	if x.xActivateDefault == 0 {
 		return nil
@@ -268,10 +268,10 @@ func (x *Popover) GetMnemonicsVisible() bool {
 	return cret
 }
 
-var xPopoverGetOffset func(uintptr, int, int)
+var xPopoverGetOffset func(uintptr, *int, *int)
 
 // Gets the offset previous set with [method@Gtk.Popover.set_offset].
-func (x *Popover) GetOffset(XOffsetVar int, YOffsetVar int) {
+func (x *Popover) GetOffset(XOffsetVar *int, YOffsetVar *int) {
 
 	xPopoverGetOffset(x.GoPointer(), XOffsetVar, YOffsetVar)
 
@@ -457,6 +457,95 @@ func (c *Popover) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAutohide sets the "autohide" property.
+// Whether to dismiss the popover on outside clicks.
+func (x *Popover) SetPropertyAutohide(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("autohide", &v)
+}
+
+// GetPropertyAutohide gets the "autohide" property.
+// Whether to dismiss the popover on outside clicks.
+func (x *Popover) GetPropertyAutohide() bool {
+	var v gobject.Value
+	x.GetProperty("autohide", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCascadePopdown sets the "cascade-popdown" property.
+// Whether the popover pops down after a child popover.
+//
+// This is used to implement the expected behavior of submenus.
+func (x *Popover) SetPropertyCascadePopdown(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("cascade-popdown", &v)
+}
+
+// GetPropertyCascadePopdown gets the "cascade-popdown" property.
+// Whether the popover pops down after a child popover.
+//
+// This is used to implement the expected behavior of submenus.
+func (x *Popover) GetPropertyCascadePopdown() bool {
+	var v gobject.Value
+	x.GetProperty("cascade-popdown", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasArrow sets the "has-arrow" property.
+// Whether to draw an arrow.
+func (x *Popover) SetPropertyHasArrow(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-arrow", &v)
+}
+
+// GetPropertyHasArrow gets the "has-arrow" property.
+// Whether to draw an arrow.
+func (x *Popover) GetPropertyHasArrow() bool {
+	var v gobject.Value
+	x.GetProperty("has-arrow", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMnemonicsVisible sets the "mnemonics-visible" property.
+// Whether mnemonics are currently visible in this popover.
+func (x *Popover) SetPropertyMnemonicsVisible(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("mnemonics-visible", &v)
+}
+
+// GetPropertyMnemonicsVisible gets the "mnemonics-visible" property.
+// Whether mnemonics are currently visible in this popover.
+func (x *Popover) GetPropertyMnemonicsVisible() bool {
+	var v gobject.Value
+	x.GetProperty("mnemonics-visible", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPointingTo sets the "pointing-to" property.
+// Rectangle in the parent widget that the popover points to.
+func (x *Popover) SetPropertyPointingTo(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("pointing-to", &v)
+}
+
+// GetPropertyPointingTo gets the "pointing-to" property.
+// Rectangle in the parent widget that the popover points to.
+func (x *Popover) GetPropertyPointingTo() uintptr {
+	var v gobject.Value
+	x.GetProperty("pointing-to", &v)
+	return v.GetPointer()
+}
+
 // Emitted whend the user activates the default widget.
 //
 // This is a [keybinding signal](class.SignalAction.html).
@@ -558,7 +647,7 @@ func (x *Popover) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Popover) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Popover) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -813,7 +902,7 @@ func (x *Popover) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *Popover) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *Popover) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

@@ -142,7 +142,7 @@ func DatalistIdRemoveNoNotify(DatalistVar **Data, KeyIdVar Quark) uintptr {
 	return cret
 }
 
-var xDatalistIdReplaceData func(**Data, Quark, uintptr, uintptr, uintptr, uintptr) bool
+var xDatalistIdReplaceData func(**Data, Quark, uintptr, uintptr, uintptr, *DestroyNotify) bool
 
 // Compares the member that is associated with @key_id in
 // @datalist to @oldval, and if they are the same, replace
@@ -159,7 +159,7 @@ var xDatalistIdReplaceData func(**Data, Quark, uintptr, uintptr, uintptr, uintpt
 // should not destroy the object in the normal way.
 func DatalistIdReplaceData(DatalistVar **Data, KeyIdVar Quark, OldvalVar uintptr, NewvalVar uintptr, DestroyVar *DestroyNotify, OldDestroyVar *DestroyNotify) bool {
 
-	cret := xDatalistIdReplaceData(DatalistVar, KeyIdVar, OldvalVar, NewvalVar, NewCallbackNullable(DestroyVar), NewCallback(OldDestroyVar))
+	cret := xDatalistIdReplaceData(DatalistVar, KeyIdVar, OldvalVar, NewvalVar, NewCallbackNullable(DestroyVar), OldDestroyVar)
 	return cret
 }
 

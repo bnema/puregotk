@@ -122,6 +122,50 @@ func (c *WindowTitle) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertySubtitle sets the "subtitle" property.
+// The subtitle to display.
+//
+// The subtitle should give the user additional details.
+func (x *WindowTitle) SetPropertySubtitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("subtitle", &v)
+}
+
+// GetPropertySubtitle gets the "subtitle" property.
+// The subtitle to display.
+//
+// The subtitle should give the user additional details.
+func (x *WindowTitle) GetPropertySubtitle() string {
+	var v gobject.Value
+	x.GetProperty("subtitle", &v)
+	return v.GetString()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title to display.
+//
+// The title typically identifies the current view or content item, and
+// generally does not use the application name.
+func (x *WindowTitle) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title to display.
+//
+// The title typically identifies the current view or content item, and
+// generally does not use the application name.
+func (x *WindowTitle) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -179,7 +223,7 @@ func (x *WindowTitle) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *WindowTitle) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *WindowTitle) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

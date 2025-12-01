@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 	"github.com/jwijenbergh/puregotk/v4/gtk"
 )
@@ -160,6 +161,72 @@ func (c *ClampLayout) GoPointer() uintptr {
 
 func (c *ClampLayout) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyMaximumSize sets the "maximum-size" property.
+// The maximum size to allocate to the children.
+//
+// It is the width if the layout is horizontal, or the height if it is
+// vertical.
+func (x *ClampLayout) SetPropertyMaximumSize(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("maximum-size", &v)
+}
+
+// GetPropertyMaximumSize gets the "maximum-size" property.
+// The maximum size to allocate to the children.
+//
+// It is the width if the layout is horizontal, or the height if it is
+// vertical.
+func (x *ClampLayout) GetPropertyMaximumSize() int {
+	var v gobject.Value
+	x.GetProperty("maximum-size", &v)
+	return v.GetInt()
+}
+
+// SetPropertyTighteningThreshold sets the "tightening-threshold" property.
+// The size above which the children are clamped.
+//
+// Starting from this size, the layout will tighten its grip on the children,
+// slowly allocating less and less of the available size up to the maximum
+// allocated size. Below that threshold and below the maximum size, the
+// children will be allocated all the available size.
+//
+// If the threshold is greater than the maximum size to allocate to the
+// children, they will be allocated the whole size up to the maximum. If the
+// threshold is lower than the minimum size to allocate to the children, that
+// size will be used as the tightening threshold.
+//
+// Effectively, tightening the grip on a child before it reaches its maximum
+// size makes transitions to and from the maximum size smoother when resizing.
+func (x *ClampLayout) SetPropertyTighteningThreshold(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("tightening-threshold", &v)
+}
+
+// GetPropertyTighteningThreshold gets the "tightening-threshold" property.
+// The size above which the children are clamped.
+//
+// Starting from this size, the layout will tighten its grip on the children,
+// slowly allocating less and less of the available size up to the maximum
+// allocated size. Below that threshold and below the maximum size, the
+// children will be allocated all the available size.
+//
+// If the threshold is greater than the maximum size to allocate to the
+// children, they will be allocated the whole size up to the maximum. If the
+// threshold is lower than the minimum size to allocate to the children, that
+// size will be used as the tightening threshold.
+//
+// Effectively, tightening the grip on a child before it reaches its maximum
+// size makes transitions to and from the maximum size smoother when resizing.
+func (x *ClampLayout) GetPropertyTighteningThreshold() int {
+	var v gobject.Value
+	x.GetProperty("tightening-threshold", &v)
+	return v.GetInt()
 }
 
 // Retrieves the orientation of the @orientable.

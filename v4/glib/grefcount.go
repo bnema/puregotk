@@ -78,10 +78,10 @@ func AtomicRefCountInc(ArcVar int) {
 
 }
 
-var xAtomicRefCountInit func(int)
+var xAtomicRefCountInit func(*int)
 
 // Initializes a reference count variable to 1.
-func AtomicRefCountInit(ArcVar int) {
+func AtomicRefCountInit(ArcVar *int) {
 
 	xAtomicRefCountInit(ArcVar)
 
@@ -118,10 +118,10 @@ func RefCountInc(RcVar int) {
 
 }
 
-var xRefCountInit func(int)
+var xRefCountInit func(*int)
 
 // Initializes a reference count variable to 1.
-func RefCountInit(RcVar int) {
+func RefCountInit(RcVar *int) {
 
 	xRefCountInit(RcVar)
 

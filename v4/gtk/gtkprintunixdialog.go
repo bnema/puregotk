@@ -310,6 +310,74 @@ func (c *PrintUnixDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCurrentPage sets the "current-page" property.
+// The current page in the document.
+func (x *PrintUnixDialog) SetPropertyCurrentPage(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("current-page", &v)
+}
+
+// GetPropertyCurrentPage gets the "current-page" property.
+// The current page in the document.
+func (x *PrintUnixDialog) GetPropertyCurrentPage() int {
+	var v gobject.Value
+	x.GetProperty("current-page", &v)
+	return v.GetInt()
+}
+
+// SetPropertyEmbedPageSetup sets the "embed-page-setup" property.
+// %TRUE if the page setup controls are embedded.
+func (x *PrintUnixDialog) SetPropertyEmbedPageSetup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("embed-page-setup", &v)
+}
+
+// GetPropertyEmbedPageSetup gets the "embed-page-setup" property.
+// %TRUE if the page setup controls are embedded.
+func (x *PrintUnixDialog) GetPropertyEmbedPageSetup() bool {
+	var v gobject.Value
+	x.GetProperty("embed-page-setup", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasSelection sets the "has-selection" property.
+// Whether the application has a selection.
+func (x *PrintUnixDialog) SetPropertyHasSelection(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-selection", &v)
+}
+
+// GetPropertyHasSelection gets the "has-selection" property.
+// Whether the application has a selection.
+func (x *PrintUnixDialog) GetPropertyHasSelection() bool {
+	var v gobject.Value
+	x.GetProperty("has-selection", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySupportSelection sets the "support-selection" property.
+// Whether the dialog supports selection.
+func (x *PrintUnixDialog) SetPropertySupportSelection(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("support-selection", &v)
+}
+
+// GetPropertySupportSelection gets the "support-selection" property.
+// Whether the dialog supports selection.
+func (x *PrintUnixDialog) GetPropertySupportSelection() bool {
+	var v gobject.Value
+	x.GetProperty("support-selection", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -367,7 +435,7 @@ func (x *PrintUnixDialog) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PrintUnixDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *PrintUnixDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -622,7 +690,7 @@ func (x *PrintUnixDialog) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *PrintUnixDialog) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *PrintUnixDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

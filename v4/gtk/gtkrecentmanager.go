@@ -108,23 +108,23 @@ func (x *RecentInfo) GetAge() int {
 	return cret
 }
 
-var xRecentInfoGetApplicationInfo func(uintptr, string, string, uint, **glib.DateTime) bool
+var xRecentInfoGetApplicationInfo func(uintptr, string, *string, *uint, **glib.DateTime) bool
 
 // Gets the data regarding the application that has registered the resource
 // pointed by @info.
 //
 // If the command line contains any escape characters defined inside the
 // storage specification, they will be expanded.
-func (x *RecentInfo) GetApplicationInfo(AppNameVar string, AppExecVar string, CountVar uint, StampVar **glib.DateTime) bool {
+func (x *RecentInfo) GetApplicationInfo(AppNameVar string, AppExecVar *string, CountVar *uint, StampVar **glib.DateTime) bool {
 
 	cret := xRecentInfoGetApplicationInfo(x.GoPointer(), AppNameVar, AppExecVar, CountVar, StampVar)
 	return cret
 }
 
-var xRecentInfoGetApplications func(uintptr, uint) []string
+var xRecentInfoGetApplications func(uintptr, *uint) []string
 
 // Retrieves the list of applications that have registered this resource.
-func (x *RecentInfo) GetApplications(LengthVar uint) []string {
+func (x *RecentInfo) GetApplications(LengthVar *uint) []string {
 
 	cret := xRecentInfoGetApplications(x.GoPointer(), LengthVar)
 	return cret
@@ -167,13 +167,13 @@ func (x *RecentInfo) GetGicon() *gio.IconBase {
 	return cls
 }
 
-var xRecentInfoGetGroups func(uintptr, uint) []string
+var xRecentInfoGetGroups func(uintptr, *uint) []string
 
 // Returns all groups registered for the recently used item @info.
 //
 // The array of returned group names will be %NULL terminated, so
 // length might optionally be %NULL.
-func (x *RecentInfo) GetGroups(LengthVar uint) []string {
+func (x *RecentInfo) GetGroups(LengthVar *uint) []string {
 
 	cret := xRecentInfoGetGroups(x.GoPointer(), LengthVar)
 	return cret
@@ -346,7 +346,7 @@ func (x *RecentManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 func (x *RecentManagerClass) OverrideChanged(cb func(*RecentManager)) {
 	if cb == nil {
 		x.xChanged = 0
@@ -357,7 +357,7 @@ func (x *RecentManagerClass) OverrideChanged(cb func(*RecentManager)) {
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 func (x *RecentManagerClass) GetChanged() func(*RecentManager) {
 	if x.xChanged == 0 {
 		return nil
@@ -369,7 +369,7 @@ func (x *RecentManagerClass) GetChanged() func(*RecentManager) {
 	}
 }
 
-// OverrideGtkRecent1 sets the callback function.
+// OverrideGtkRecent1 sets the "_gtk_recent1" callback function.
 func (x *RecentManagerClass) OverrideGtkRecent1(cb func()) {
 	if cb == nil {
 		x.xGtkRecent1 = 0
@@ -380,7 +380,7 @@ func (x *RecentManagerClass) OverrideGtkRecent1(cb func()) {
 	}
 }
 
-// GetGtkRecent1 gets the callback function.
+// GetGtkRecent1 gets the "_gtk_recent1" callback function.
 func (x *RecentManagerClass) GetGtkRecent1() func() {
 	if x.xGtkRecent1 == 0 {
 		return nil
@@ -392,7 +392,7 @@ func (x *RecentManagerClass) GetGtkRecent1() func() {
 	}
 }
 
-// OverrideGtkRecent2 sets the callback function.
+// OverrideGtkRecent2 sets the "_gtk_recent2" callback function.
 func (x *RecentManagerClass) OverrideGtkRecent2(cb func()) {
 	if cb == nil {
 		x.xGtkRecent2 = 0
@@ -403,7 +403,7 @@ func (x *RecentManagerClass) OverrideGtkRecent2(cb func()) {
 	}
 }
 
-// GetGtkRecent2 gets the callback function.
+// GetGtkRecent2 gets the "_gtk_recent2" callback function.
 func (x *RecentManagerClass) GetGtkRecent2() func() {
 	if x.xGtkRecent2 == 0 {
 		return nil
@@ -415,7 +415,7 @@ func (x *RecentManagerClass) GetGtkRecent2() func() {
 	}
 }
 
-// OverrideGtkRecent3 sets the callback function.
+// OverrideGtkRecent3 sets the "_gtk_recent3" callback function.
 func (x *RecentManagerClass) OverrideGtkRecent3(cb func()) {
 	if cb == nil {
 		x.xGtkRecent3 = 0
@@ -426,7 +426,7 @@ func (x *RecentManagerClass) OverrideGtkRecent3(cb func()) {
 	}
 }
 
-// GetGtkRecent3 gets the callback function.
+// GetGtkRecent3 gets the "_gtk_recent3" callback function.
 func (x *RecentManagerClass) GetGtkRecent3() func() {
 	if x.xGtkRecent3 == 0 {
 		return nil
@@ -438,7 +438,7 @@ func (x *RecentManagerClass) GetGtkRecent3() func() {
 	}
 }
 
-// OverrideGtkRecent4 sets the callback function.
+// OverrideGtkRecent4 sets the "_gtk_recent4" callback function.
 func (x *RecentManagerClass) OverrideGtkRecent4(cb func()) {
 	if cb == nil {
 		x.xGtkRecent4 = 0
@@ -449,7 +449,7 @@ func (x *RecentManagerClass) OverrideGtkRecent4(cb func()) {
 	}
 }
 
-// GetGtkRecent4 gets the callback function.
+// GetGtkRecent4 gets the "_gtk_recent4" callback function.
 func (x *RecentManagerClass) GetGtkRecent4() func() {
 	if x.xGtkRecent4 == 0 {
 		return nil
@@ -745,6 +745,33 @@ func (c *RecentManager) GoPointer() uintptr {
 
 func (c *RecentManager) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyFilename sets the "filename" property.
+// The full path to the file to be used to store and read the
+// recently used resources list
+func (x *RecentManager) SetPropertyFilename(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("filename", &v)
+}
+
+// GetPropertyFilename gets the "filename" property.
+// The full path to the file to be used to store and read the
+// recently used resources list
+func (x *RecentManager) GetPropertyFilename() string {
+	var v gobject.Value
+	x.GetProperty("filename", &v)
+	return v.GetString()
+}
+
+// GetPropertySize gets the "size" property.
+// The size of the recently used resources list.
+func (x *RecentManager) GetPropertySize() int {
+	var v gobject.Value
+	x.GetProperty("size", &v)
+	return v.GetInt()
 }
 
 // Emitted when the current recently used resources manager changes

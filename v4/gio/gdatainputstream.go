@@ -31,7 +31,7 @@ func (x *DataInputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *DataInputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -42,7 +42,7 @@ func (x *DataInputStreamClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *DataInputStreamClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -54,7 +54,7 @@ func (x *DataInputStreamClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *DataInputStreamClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -65,7 +65,7 @@ func (x *DataInputStreamClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *DataInputStreamClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -77,7 +77,7 @@ func (x *DataInputStreamClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *DataInputStreamClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -88,7 +88,7 @@ func (x *DataInputStreamClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *DataInputStreamClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -100,7 +100,7 @@ func (x *DataInputStreamClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *DataInputStreamClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -111,7 +111,7 @@ func (x *DataInputStreamClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *DataInputStreamClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -123,7 +123,7 @@ func (x *DataInputStreamClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *DataInputStreamClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -134,7 +134,7 @@ func (x *DataInputStreamClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *DataInputStreamClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -279,7 +279,7 @@ func (x *DataInputStream) ReadInt64(CancellableVar *Cancellable) (int64, error) 
 
 }
 
-var xDataInputStreamReadLine func(uintptr, uint, uintptr, **glib.Error) uintptr
+var xDataInputStreamReadLine func(uintptr, *uint, uintptr, **glib.Error) uintptr
 
 // Reads a line from the data input stream.  Note that no encoding
 // checks or conversion is performed; the input is not guaranteed to
@@ -288,7 +288,7 @@ var xDataInputStreamReadLine func(uintptr, uint, uintptr, **glib.Error) uintptr
 // If @cancellable is not %NULL, then the operation can be cancelled by
 // triggering the cancellable object from another thread. If the operation
 // was cancelled, the error %G_IO_ERROR_CANCELLED will be returned.
-func (x *DataInputStream) ReadLine(LengthVar uint, CancellableVar *Cancellable) (uintptr, error) {
+func (x *DataInputStream) ReadLine(LengthVar *uint, CancellableVar *Cancellable) (uintptr, error) {
 	var cerr *glib.Error
 
 	cret := xDataInputStreamReadLine(x.GoPointer(), LengthVar, CancellableVar.GoPointer(), &cerr)
@@ -313,13 +313,13 @@ func (x *DataInputStream) ReadLineAsync(IoPriorityVar int, CancellableVar *Cance
 
 }
 
-var xDataInputStreamReadLineFinish func(uintptr, uintptr, uint, **glib.Error) uintptr
+var xDataInputStreamReadLineFinish func(uintptr, uintptr, *uint, **glib.Error) uintptr
 
 // Finish an asynchronous call started by
 // g_data_input_stream_read_line_async().  Note the warning about
 // string encoding in g_data_input_stream_read_line() applies here as
 // well.
-func (x *DataInputStream) ReadLineFinish(ResultVar AsyncResult, LengthVar uint) (uintptr, error) {
+func (x *DataInputStream) ReadLineFinish(ResultVar AsyncResult, LengthVar *uint) (uintptr, error) {
 	var cerr *glib.Error
 
 	cret := xDataInputStreamReadLineFinish(x.GoPointer(), ResultVar.GoPointer(), LengthVar, &cerr)
@@ -330,11 +330,11 @@ func (x *DataInputStream) ReadLineFinish(ResultVar AsyncResult, LengthVar uint) 
 
 }
 
-var xDataInputStreamReadLineFinishUtf8 func(uintptr, uintptr, uint, **glib.Error) string
+var xDataInputStreamReadLineFinishUtf8 func(uintptr, uintptr, *uint, **glib.Error) string
 
 // Finish an asynchronous call started by
 // g_data_input_stream_read_line_async().
-func (x *DataInputStream) ReadLineFinishUtf8(ResultVar AsyncResult, LengthVar uint) (string, error) {
+func (x *DataInputStream) ReadLineFinishUtf8(ResultVar AsyncResult, LengthVar *uint) (string, error) {
 	var cerr *glib.Error
 
 	cret := xDataInputStreamReadLineFinishUtf8(x.GoPointer(), ResultVar.GoPointer(), LengthVar, &cerr)
@@ -345,14 +345,14 @@ func (x *DataInputStream) ReadLineFinishUtf8(ResultVar AsyncResult, LengthVar ui
 
 }
 
-var xDataInputStreamReadLineUtf8 func(uintptr, uint, uintptr, **glib.Error) string
+var xDataInputStreamReadLineUtf8 func(uintptr, *uint, uintptr, **glib.Error) string
 
 // Reads a UTF-8 encoded line from the data input stream.
 //
 // If @cancellable is not %NULL, then the operation can be cancelled by
 // triggering the cancellable object from another thread. If the operation
 // was cancelled, the error %G_IO_ERROR_CANCELLED will be returned.
-func (x *DataInputStream) ReadLineUtf8(LengthVar uint, CancellableVar *Cancellable) (string, error) {
+func (x *DataInputStream) ReadLineUtf8(LengthVar *uint, CancellableVar *Cancellable) (string, error) {
 	var cerr *glib.Error
 
 	cret := xDataInputStreamReadLineUtf8(x.GoPointer(), LengthVar, CancellableVar.GoPointer(), &cerr)
@@ -422,7 +422,7 @@ func (x *DataInputStream) ReadUint64(CancellableVar *Cancellable) (uint64, error
 
 }
 
-var xDataInputStreamReadUntil func(uintptr, string, uint, uintptr, **glib.Error) string
+var xDataInputStreamReadUntil func(uintptr, string, *uint, uintptr, **glib.Error) string
 
 // Reads a string from the data input stream, up to the first
 // occurrence of any of the stop characters.
@@ -435,7 +435,7 @@ var xDataInputStreamReadUntil func(uintptr, string, uint, uintptr, **glib.Error)
 // functions will be marked as deprecated in a future release.  Use
 // g_data_input_stream_read_upto() instead, but note that that function
 // does not consume the stop character.
-func (x *DataInputStream) ReadUntil(StopCharsVar string, LengthVar uint, CancellableVar *Cancellable) (string, error) {
+func (x *DataInputStream) ReadUntil(StopCharsVar string, LengthVar *uint, CancellableVar *Cancellable) (string, error) {
 	var cerr *glib.Error
 
 	cret := xDataInputStreamReadUntil(x.GoPointer(), StopCharsVar, LengthVar, CancellableVar.GoPointer(), &cerr)
@@ -469,11 +469,11 @@ func (x *DataInputStream) ReadUntilAsync(StopCharsVar string, IoPriorityVar int,
 
 }
 
-var xDataInputStreamReadUntilFinish func(uintptr, uintptr, uint, **glib.Error) string
+var xDataInputStreamReadUntilFinish func(uintptr, uintptr, *uint, **glib.Error) string
 
 // Finish an asynchronous call started by
 // g_data_input_stream_read_until_async().
-func (x *DataInputStream) ReadUntilFinish(ResultVar AsyncResult, LengthVar uint) (string, error) {
+func (x *DataInputStream) ReadUntilFinish(ResultVar AsyncResult, LengthVar *uint) (string, error) {
 	var cerr *glib.Error
 
 	cret := xDataInputStreamReadUntilFinish(x.GoPointer(), ResultVar.GoPointer(), LengthVar, &cerr)
@@ -484,7 +484,7 @@ func (x *DataInputStream) ReadUntilFinish(ResultVar AsyncResult, LengthVar uint)
 
 }
 
-var xDataInputStreamReadUpto func(uintptr, string, int, uint, uintptr, **glib.Error) string
+var xDataInputStreamReadUpto func(uintptr, string, int, *uint, uintptr, **glib.Error) string
 
 // Reads a string from the data input stream, up to the first
 // occurrence of any of the stop characters.
@@ -498,7 +498,7 @@ var xDataInputStreamReadUpto func(uintptr, string, int, uint, uintptr, **glib.Er
 // specified.
 //
 // The returned string will always be nul-terminated on success.
-func (x *DataInputStream) ReadUpto(StopCharsVar string, StopCharsLenVar int, LengthVar uint, CancellableVar *Cancellable) (string, error) {
+func (x *DataInputStream) ReadUpto(StopCharsVar string, StopCharsLenVar int, LengthVar *uint, CancellableVar *Cancellable) (string, error) {
 	var cerr *glib.Error
 
 	cret := xDataInputStreamReadUpto(x.GoPointer(), StopCharsVar, StopCharsLenVar, LengthVar, CancellableVar.GoPointer(), &cerr)
@@ -531,7 +531,7 @@ func (x *DataInputStream) ReadUptoAsync(StopCharsVar string, StopCharsLenVar int
 
 }
 
-var xDataInputStreamReadUptoFinish func(uintptr, uintptr, uint, **glib.Error) string
+var xDataInputStreamReadUptoFinish func(uintptr, uintptr, *uint, **glib.Error) string
 
 // Finish an asynchronous call started by
 // g_data_input_stream_read_upto_async().
@@ -541,7 +541,7 @@ var xDataInputStreamReadUptoFinish func(uintptr, uintptr, uint, **glib.Error) st
 // g_data_input_stream_read_upto_async() again.
 //
 // The returned string will always be nul-terminated on success.
-func (x *DataInputStream) ReadUptoFinish(ResultVar AsyncResult, LengthVar uint) (string, error) {
+func (x *DataInputStream) ReadUptoFinish(ResultVar AsyncResult, LengthVar *uint) (string, error) {
 	var cerr *glib.Error
 
 	cret := xDataInputStreamReadUptoFinish(x.GoPointer(), ResultVar.GoPointer(), LengthVar, &cerr)

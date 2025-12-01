@@ -129,6 +129,66 @@ func (c *CellRendererToggle) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActivatable sets the "activatable" property.
+func (x *CellRendererToggle) SetPropertyActivatable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activatable", &v)
+}
+
+// GetPropertyActivatable gets the "activatable" property.
+func (x *CellRendererToggle) GetPropertyActivatable() bool {
+	var v gobject.Value
+	x.GetProperty("activatable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyActive sets the "active" property.
+func (x *CellRendererToggle) SetPropertyActive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("active", &v)
+}
+
+// GetPropertyActive gets the "active" property.
+func (x *CellRendererToggle) GetPropertyActive() bool {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyInconsistent sets the "inconsistent" property.
+func (x *CellRendererToggle) SetPropertyInconsistent(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("inconsistent", &v)
+}
+
+// GetPropertyInconsistent gets the "inconsistent" property.
+func (x *CellRendererToggle) GetPropertyInconsistent() bool {
+	var v gobject.Value
+	x.GetProperty("inconsistent", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRadio sets the "radio" property.
+func (x *CellRendererToggle) SetPropertyRadio(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("radio", &v)
+}
+
+// GetPropertyRadio gets the "radio" property.
+func (x *CellRendererToggle) GetPropertyRadio() bool {
+	var v gobject.Value
+	x.GetProperty("radio", &v)
+	return v.GetBoolean()
+}
+
 // The ::toggled signal is emitted when the cell is toggled.
 //
 // It is the responsibility of the application to update the model

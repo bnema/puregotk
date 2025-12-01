@@ -259,6 +259,107 @@ func (c *ListItem) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAccessibleDescription sets the "accessible-description" property.
+// The accessible description to set on the listitem.
+func (x *ListItem) SetPropertyAccessibleDescription(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("accessible-description", &v)
+}
+
+// GetPropertyAccessibleDescription gets the "accessible-description" property.
+// The accessible description to set on the listitem.
+func (x *ListItem) GetPropertyAccessibleDescription() string {
+	var v gobject.Value
+	x.GetProperty("accessible-description", &v)
+	return v.GetString()
+}
+
+// SetPropertyAccessibleLabel sets the "accessible-label" property.
+// The accessible label to set on the listitem.
+func (x *ListItem) SetPropertyAccessibleLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("accessible-label", &v)
+}
+
+// GetPropertyAccessibleLabel gets the "accessible-label" property.
+// The accessible label to set on the listitem.
+func (x *ListItem) GetPropertyAccessibleLabel() string {
+	var v gobject.Value
+	x.GetProperty("accessible-label", &v)
+	return v.GetString()
+}
+
+// SetPropertyActivatable sets the "activatable" property.
+// If the item can be activated by the user.
+func (x *ListItem) SetPropertyActivatable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activatable", &v)
+}
+
+// GetPropertyActivatable gets the "activatable" property.
+// If the item can be activated by the user.
+func (x *ListItem) GetPropertyActivatable() bool {
+	var v gobject.Value
+	x.GetProperty("activatable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyFocusable sets the "focusable" property.
+// If the item can be focused with the keyboard.
+func (x *ListItem) SetPropertyFocusable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("focusable", &v)
+}
+
+// GetPropertyFocusable gets the "focusable" property.
+// If the item can be focused with the keyboard.
+func (x *ListItem) GetPropertyFocusable() bool {
+	var v gobject.Value
+	x.GetProperty("focusable", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyPosition gets the "position" property.
+// Position of the item.
+func (x *ListItem) GetPropertyPosition() uint {
+	var v gobject.Value
+	x.GetProperty("position", &v)
+	return v.GetUint()
+}
+
+// SetPropertySelectable sets the "selectable" property.
+// If the item can be selected by the user.
+func (x *ListItem) SetPropertySelectable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("selectable", &v)
+}
+
+// GetPropertySelectable gets the "selectable" property.
+// If the item can be selected by the user.
+func (x *ListItem) GetPropertySelectable() bool {
+	var v gobject.Value
+	x.GetProperty("selectable", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertySelected gets the "selected" property.
+// If the item is currently selected.
+func (x *ListItem) GetPropertySelected() bool {
+	var v gobject.Value
+	x.GetProperty("selected", &v)
+	return v.GetBoolean()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

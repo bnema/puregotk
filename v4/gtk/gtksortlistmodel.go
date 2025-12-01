@@ -234,6 +234,39 @@ func (c *SortListModel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyIncremental sets the "incremental" property.
+// If the model should sort items incrementally.
+func (x *SortListModel) SetPropertyIncremental(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("incremental", &v)
+}
+
+// GetPropertyIncremental gets the "incremental" property.
+// If the model should sort items incrementally.
+func (x *SortListModel) GetPropertyIncremental() bool {
+	var v gobject.Value
+	x.GetProperty("incremental", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *SortListModel) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
+// GetPropertyPending gets the "pending" property.
+// Estimate of unsorted items remaining.
+func (x *SortListModel) GetPropertyPending() uint {
+	var v gobject.Value
+	x.GetProperty("pending", &v)
+	return v.GetUint()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is
@@ -330,7 +363,7 @@ func (x *SortListModel) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar
 //
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
-func (x *SortListModel) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+func (x *SortListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 

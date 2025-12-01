@@ -137,7 +137,7 @@ func (x *FontChooserDialog) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *FontChooserDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *FontChooserDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -605,7 +605,7 @@ func (x *FontChooserDialog) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *FontChooserDialog) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *FontChooserDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

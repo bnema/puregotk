@@ -535,6 +535,336 @@ func (c *AboutDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyArtists sets the "artists" property.
+// The people who contributed artwork to the program.
+//
+// Each string may contain email addresses and URLs, which will be displayed
+// as links.
+func (x *AboutDialog) SetPropertyArtists(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("artists", &v)
+}
+
+// GetPropertyArtists gets the "artists" property.
+// The people who contributed artwork to the program.
+//
+// Each string may contain email addresses and URLs, which will be displayed
+// as links.
+func (x *AboutDialog) GetPropertyArtists() []string {
+	var v gobject.Value
+	x.GetProperty("artists", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyAuthors sets the "authors" property.
+// The authors of the program.
+//
+// Each string may contain email addresses and URLs, which will be displayed
+// as links, see the introduction for more details.
+func (x *AboutDialog) SetPropertyAuthors(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("authors", &v)
+}
+
+// GetPropertyAuthors gets the "authors" property.
+// The authors of the program.
+//
+// Each string may contain email addresses and URLs, which will be displayed
+// as links, see the introduction for more details.
+func (x *AboutDialog) GetPropertyAuthors() []string {
+	var v gobject.Value
+	x.GetProperty("authors", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyComments sets the "comments" property.
+// Comments about the program.
+//
+// This string is displayed in a label in the main dialog, thus it
+// should be a short explanation of the main purpose of the program,
+// not a detailed list of features.
+func (x *AboutDialog) SetPropertyComments(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("comments", &v)
+}
+
+// GetPropertyComments gets the "comments" property.
+// Comments about the program.
+//
+// This string is displayed in a label in the main dialog, thus it
+// should be a short explanation of the main purpose of the program,
+// not a detailed list of features.
+func (x *AboutDialog) GetPropertyComments() string {
+	var v gobject.Value
+	x.GetProperty("comments", &v)
+	return v.GetString()
+}
+
+// SetPropertyCopyright sets the "copyright" property.
+// Copyright information for the program.
+func (x *AboutDialog) SetPropertyCopyright(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("copyright", &v)
+}
+
+// GetPropertyCopyright gets the "copyright" property.
+// Copyright information for the program.
+func (x *AboutDialog) GetPropertyCopyright() string {
+	var v gobject.Value
+	x.GetProperty("copyright", &v)
+	return v.GetString()
+}
+
+// SetPropertyDocumenters sets the "documenters" property.
+// The people documenting the program.
+//
+// Each string may contain email addresses and URLs, which will be displayed
+// as links, see the introduction for more details.
+func (x *AboutDialog) SetPropertyDocumenters(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("documenters", &v)
+}
+
+// GetPropertyDocumenters gets the "documenters" property.
+// The people documenting the program.
+//
+// Each string may contain email addresses and URLs, which will be displayed
+// as links, see the introduction for more details.
+func (x *AboutDialog) GetPropertyDocumenters() []string {
+	var v gobject.Value
+	x.GetProperty("documenters", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyLicense sets the "license" property.
+// The license of the program, as free-form text.
+//
+// This string is displayed in a text view in a secondary dialog, therefore
+// it is fine to use a long multi-paragraph text. Note that the text is only
+// wrapped in the text view if the "wrap-license" property is set to `TRUE`;
+// otherwise the text itself must contain the intended linebreaks.
+//
+// When setting this property to a non-`NULL` value, the
+// [property@Gtk.AboutDialog:license-type] property is set to
+// [enum@Gtk.License.custom] as a side effect.
+//
+// The text may contain links in this format `&lt;http://www.some.place/&gt;`
+// and email references in the form `&lt;mail-to@some.body&gt;`, and these will
+// be converted into clickable links.
+func (x *AboutDialog) SetPropertyLicense(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("license", &v)
+}
+
+// GetPropertyLicense gets the "license" property.
+// The license of the program, as free-form text.
+//
+// This string is displayed in a text view in a secondary dialog, therefore
+// it is fine to use a long multi-paragraph text. Note that the text is only
+// wrapped in the text view if the "wrap-license" property is set to `TRUE`;
+// otherwise the text itself must contain the intended linebreaks.
+//
+// When setting this property to a non-`NULL` value, the
+// [property@Gtk.AboutDialog:license-type] property is set to
+// [enum@Gtk.License.custom] as a side effect.
+//
+// The text may contain links in this format `&lt;http://www.some.place/&gt;`
+// and email references in the form `&lt;mail-to@some.body&gt;`, and these will
+// be converted into clickable links.
+func (x *AboutDialog) GetPropertyLicense() string {
+	var v gobject.Value
+	x.GetProperty("license", &v)
+	return v.GetString()
+}
+
+// SetPropertyLogoIconName sets the "logo-icon-name" property.
+// A named icon to use as the logo for the about box.
+//
+// This property overrides the [property@Gtk.AboutDialog:logo] property.
+func (x *AboutDialog) SetPropertyLogoIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("logo-icon-name", &v)
+}
+
+// GetPropertyLogoIconName gets the "logo-icon-name" property.
+// A named icon to use as the logo for the about box.
+//
+// This property overrides the [property@Gtk.AboutDialog:logo] property.
+func (x *AboutDialog) GetPropertyLogoIconName() string {
+	var v gobject.Value
+	x.GetProperty("logo-icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyProgramName sets the "program-name" property.
+// The name of the program.
+//
+// If this is not set, it defaults to the value returned by
+// [func@GLib.get_application_name].
+func (x *AboutDialog) SetPropertyProgramName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("program-name", &v)
+}
+
+// GetPropertyProgramName gets the "program-name" property.
+// The name of the program.
+//
+// If this is not set, it defaults to the value returned by
+// [func@GLib.get_application_name].
+func (x *AboutDialog) GetPropertyProgramName() string {
+	var v gobject.Value
+	x.GetProperty("program-name", &v)
+	return v.GetString()
+}
+
+// SetPropertySystemInformation sets the "system-information" property.
+// Information about the system on which the program is running.
+//
+// This information is displayed in a separate page, therefore it is fine
+// to use a long multi-paragraph text. Note that the text should contain
+// the intended linebreaks.
+//
+// The text may contain links in this format `&lt;http://www.some.place/&gt;`
+// and email references in the form `&lt;mail-to@some.body&gt;`, and these will
+// be converted into clickable links.
+func (x *AboutDialog) SetPropertySystemInformation(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("system-information", &v)
+}
+
+// GetPropertySystemInformation gets the "system-information" property.
+// Information about the system on which the program is running.
+//
+// This information is displayed in a separate page, therefore it is fine
+// to use a long multi-paragraph text. Note that the text should contain
+// the intended linebreaks.
+//
+// The text may contain links in this format `&lt;http://www.some.place/&gt;`
+// and email references in the form `&lt;mail-to@some.body&gt;`, and these will
+// be converted into clickable links.
+func (x *AboutDialog) GetPropertySystemInformation() string {
+	var v gobject.Value
+	x.GetProperty("system-information", &v)
+	return v.GetString()
+}
+
+// SetPropertyTranslatorCredits sets the "translator-credits" property.
+// Credits to the translators.
+//
+// This string should be marked as translatable.
+//
+// The string may contain email addresses and URLs, which will be displayed
+// as links, see the introduction for more details.
+func (x *AboutDialog) SetPropertyTranslatorCredits(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("translator-credits", &v)
+}
+
+// GetPropertyTranslatorCredits gets the "translator-credits" property.
+// Credits to the translators.
+//
+// This string should be marked as translatable.
+//
+// The string may contain email addresses and URLs, which will be displayed
+// as links, see the introduction for more details.
+func (x *AboutDialog) GetPropertyTranslatorCredits() string {
+	var v gobject.Value
+	x.GetProperty("translator-credits", &v)
+	return v.GetString()
+}
+
+// SetPropertyVersion sets the "version" property.
+// The version of the program.
+func (x *AboutDialog) SetPropertyVersion(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("version", &v)
+}
+
+// GetPropertyVersion gets the "version" property.
+// The version of the program.
+func (x *AboutDialog) GetPropertyVersion() string {
+	var v gobject.Value
+	x.GetProperty("version", &v)
+	return v.GetString()
+}
+
+// SetPropertyWebsite sets the "website" property.
+// The URL for the link to the website of the program.
+//
+// This should be a string starting with `http://` or `https://`.
+func (x *AboutDialog) SetPropertyWebsite(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("website", &v)
+}
+
+// GetPropertyWebsite gets the "website" property.
+// The URL for the link to the website of the program.
+//
+// This should be a string starting with `http://` or `https://`.
+func (x *AboutDialog) GetPropertyWebsite() string {
+	var v gobject.Value
+	x.GetProperty("website", &v)
+	return v.GetString()
+}
+
+// SetPropertyWebsiteLabel sets the "website-label" property.
+// The label for the link to the website of the program.
+func (x *AboutDialog) SetPropertyWebsiteLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("website-label", &v)
+}
+
+// GetPropertyWebsiteLabel gets the "website-label" property.
+// The label for the link to the website of the program.
+func (x *AboutDialog) GetPropertyWebsiteLabel() string {
+	var v gobject.Value
+	x.GetProperty("website-label", &v)
+	return v.GetString()
+}
+
+// SetPropertyWrapLicense sets the "wrap-license" property.
+// Whether to wrap the text in the license dialog.
+func (x *AboutDialog) SetPropertyWrapLicense(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("wrap-license", &v)
+}
+
+// GetPropertyWrapLicense gets the "wrap-license" property.
+// Whether to wrap the text in the license dialog.
+func (x *AboutDialog) GetPropertyWrapLicense() bool {
+	var v gobject.Value
+	x.GetProperty("wrap-license", &v)
+	return v.GetBoolean()
+}
+
 // Emitted every time a URL is activated.
 //
 // Applications may connect to it to override the default behaviour,
@@ -615,7 +945,7 @@ func (x *AboutDialog) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AboutDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *AboutDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -870,7 +1200,7 @@ func (x *AboutDialog) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *AboutDialog) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *AboutDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

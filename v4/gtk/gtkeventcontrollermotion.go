@@ -89,6 +89,35 @@ func (c *EventControllerMotion) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyContainsPointer gets the "contains-pointer" property.
+// Whether the pointer is in the controllers widget or a descendant.
+//
+// See also [property@Gtk.EventControllerMotion:is-pointer].
+//
+// When handling crossing events, this property is updated
+// before [signal@Gtk.EventControllerMotion::enter], but after
+// [signal@Gtk.EventControllerMotion::leave] is emitted.
+func (x *EventControllerMotion) GetPropertyContainsPointer() bool {
+	var v gobject.Value
+	x.GetProperty("contains-pointer", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsPointer gets the "is-pointer" property.
+// Whether the pointer is in the controllers widget itself,
+// as opposed to in a descendent widget.
+//
+// See also [property@Gtk.EventControllerMotion:contains-pointer].
+//
+// When handling crossing events, this property is updated
+// before [signal@Gtk.EventControllerMotion::enter], but after
+// [signal@Gtk.EventControllerMotion::leave] is emitted.
+func (x *EventControllerMotion) GetPropertyIsPointer() bool {
+	var v gobject.Value
+	x.GetProperty("is-pointer", &v)
+	return v.GetBoolean()
+}
+
 // Signals that the pointer has entered the widget.
 func (x *EventControllerMotion) ConnectEnter(cb *func(EventControllerMotion, float64, float64)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))

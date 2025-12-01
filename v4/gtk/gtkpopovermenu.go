@@ -286,6 +286,23 @@ func (c *PopoverMenu) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyVisibleSubmenu sets the "visible-submenu" property.
+// The name of the visible submenu.
+func (x *PopoverMenu) SetPropertyVisibleSubmenu(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("visible-submenu", &v)
+}
+
+// GetPropertyVisibleSubmenu gets the "visible-submenu" property.
+// The name of the visible submenu.
+func (x *PopoverMenu) GetPropertyVisibleSubmenu() string {
+	var v gobject.Value
+	x.GetProperty("visible-submenu", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -343,7 +360,7 @@ func (x *PopoverMenu) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PopoverMenu) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *PopoverMenu) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -598,7 +615,7 @@ func (x *PopoverMenu) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *PopoverMenu) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *PopoverMenu) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

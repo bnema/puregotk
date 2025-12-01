@@ -40,7 +40,7 @@ func (x *LayoutManagerClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetRequestMode sets the callback function.
+// OverrideGetRequestMode sets the "get_request_mode" callback function.
 // a virtual function, used to return the preferred
 //
 //	request mode for the layout manager; for instance, "width for height"
@@ -55,7 +55,7 @@ func (x *LayoutManagerClass) OverrideGetRequestMode(cb func(*LayoutManager, *Wid
 	}
 }
 
-// GetGetRequestMode gets the callback function.
+// GetGetRequestMode gets the "get_request_mode" callback function.
 // a virtual function, used to return the preferred
 //
 //	request mode for the layout manager; for instance, "width for height"
@@ -71,36 +71,36 @@ func (x *LayoutManagerClass) GetGetRequestMode() func(*LayoutManager, *Widget) S
 	}
 }
 
-// OverrideMeasure sets the callback function.
+// OverrideMeasure sets the "measure" callback function.
 // a virtual function, used to measure the minimum and preferred
 //
 //	sizes of the widget using the layout manager for a given orientation
-func (x *LayoutManagerClass) OverrideMeasure(cb func(*LayoutManager, *Widget, Orientation, int, int, int, int, int)) {
+func (x *LayoutManagerClass) OverrideMeasure(cb func(*LayoutManager, *Widget, Orientation, int, *int, *int, *int, *int)) {
 	if cb == nil {
 		x.xMeasure = 0
 	} else {
-		x.xMeasure = purego.NewCallback(func(ManagerVarp uintptr, WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp int, NaturalVarp int, MinimumBaselineVarp int, NaturalBaselineVarp int) {
+		x.xMeasure = purego.NewCallback(func(ManagerVarp uintptr, WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp *int, NaturalVarp *int, MinimumBaselineVarp *int, NaturalBaselineVarp *int) {
 			cb(LayoutManagerNewFromInternalPtr(ManagerVarp), WidgetNewFromInternalPtr(WidgetVarp), OrientationVarp, ForSizeVarp, MinimumVarp, NaturalVarp, MinimumBaselineVarp, NaturalBaselineVarp)
 		})
 	}
 }
 
-// GetMeasure gets the callback function.
+// GetMeasure gets the "measure" callback function.
 // a virtual function, used to measure the minimum and preferred
 //
 //	sizes of the widget using the layout manager for a given orientation
-func (x *LayoutManagerClass) GetMeasure() func(*LayoutManager, *Widget, Orientation, int, int, int, int, int) {
+func (x *LayoutManagerClass) GetMeasure() func(*LayoutManager, *Widget, Orientation, int, *int, *int, *int, *int) {
 	if x.xMeasure == 0 {
 		return nil
 	}
-	var rawCallback func(ManagerVarp uintptr, WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp int, NaturalVarp int, MinimumBaselineVarp int, NaturalBaselineVarp int)
+	var rawCallback func(ManagerVarp uintptr, WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp *int, NaturalVarp *int, MinimumBaselineVarp *int, NaturalBaselineVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xMeasure)
-	return func(ManagerVar *LayoutManager, WidgetVar *Widget, OrientationVar Orientation, ForSizeVar int, MinimumVar int, NaturalVar int, MinimumBaselineVar int, NaturalBaselineVar int) {
+	return func(ManagerVar *LayoutManager, WidgetVar *Widget, OrientationVar Orientation, ForSizeVar int, MinimumVar *int, NaturalVar *int, MinimumBaselineVar *int, NaturalBaselineVar *int) {
 		rawCallback(ManagerVar.GoPointer(), WidgetVar.GoPointer(), OrientationVar, ForSizeVar, MinimumVar, NaturalVar, MinimumBaselineVar, NaturalBaselineVar)
 	}
 }
 
-// OverrideAllocate sets the callback function.
+// OverrideAllocate sets the "allocate" callback function.
 // a virtual function, used to allocate the size of the widget
 //
 //	using the layout manager
@@ -114,7 +114,7 @@ func (x *LayoutManagerClass) OverrideAllocate(cb func(*LayoutManager, *Widget, i
 	}
 }
 
-// GetAllocate gets the callback function.
+// GetAllocate gets the "allocate" callback function.
 // a virtual function, used to allocate the size of the widget
 //
 //	using the layout manager
@@ -129,7 +129,7 @@ func (x *LayoutManagerClass) GetAllocate() func(*LayoutManager, *Widget, int, in
 	}
 }
 
-// OverrideCreateLayoutChild sets the callback function.
+// OverrideCreateLayoutChild sets the "create_layout_child" callback function.
 // a virtual function, used to create a `GtkLayoutChild`
 //
 //	meta object for the layout properties
@@ -147,7 +147,7 @@ func (x *LayoutManagerClass) OverrideCreateLayoutChild(cb func(*LayoutManager, *
 	}
 }
 
-// GetCreateLayoutChild gets the callback function.
+// GetCreateLayoutChild gets the "create_layout_child" callback function.
 // a virtual function, used to create a `GtkLayoutChild`
 //
 //	meta object for the layout properties
@@ -168,7 +168,7 @@ func (x *LayoutManagerClass) GetCreateLayoutChild() func(*LayoutManager, *Widget
 	}
 }
 
-// OverrideRoot sets the callback function.
+// OverrideRoot sets the "root" callback function.
 // a virtual function, called when the widget using the layout
 //
 //	manager is attached to a `GtkRoot`
@@ -182,7 +182,7 @@ func (x *LayoutManagerClass) OverrideRoot(cb func(*LayoutManager)) {
 	}
 }
 
-// GetRoot gets the callback function.
+// GetRoot gets the "root" callback function.
 // a virtual function, called when the widget using the layout
 //
 //	manager is attached to a `GtkRoot`
@@ -197,7 +197,7 @@ func (x *LayoutManagerClass) GetRoot() func(*LayoutManager) {
 	}
 }
 
-// OverrideUnroot sets the callback function.
+// OverrideUnroot sets the "unroot" callback function.
 // a virtual function, called when the widget using the layout
 //
 //	manager is detached from a `GtkRoot`
@@ -211,7 +211,7 @@ func (x *LayoutManagerClass) OverrideUnroot(cb func(*LayoutManager)) {
 	}
 }
 
-// GetUnroot gets the callback function.
+// GetUnroot gets the "unroot" callback function.
 // a virtual function, called when the widget using the layout
 //
 //	manager is detached from a `GtkRoot`
@@ -365,14 +365,14 @@ func (x *LayoutManager) LayoutChanged() {
 
 }
 
-var xLayoutManagerMeasure func(uintptr, uintptr, Orientation, int, int, int, int, int)
+var xLayoutManagerMeasure func(uintptr, uintptr, Orientation, int, *int, *int, *int, *int)
 
 // Measures the size of the @widget using @manager, for the
 // given @orientation and size.
 //
 // See the [class@Gtk.Widget] documentation on layout management for
 // more details.
-func (x *LayoutManager) Measure(WidgetVar *Widget, OrientationVar Orientation, ForSizeVar int, MinimumVar int, NaturalVar int, MinimumBaselineVar int, NaturalBaselineVar int) {
+func (x *LayoutManager) Measure(WidgetVar *Widget, OrientationVar Orientation, ForSizeVar int, MinimumVar *int, NaturalVar *int, MinimumBaselineVar *int, NaturalBaselineVar *int) {
 
 	xLayoutManagerMeasure(x.GoPointer(), WidgetVar.GoPointer(), OrientationVar, ForSizeVar, MinimumVar, NaturalVar, MinimumBaselineVar, NaturalBaselineVar)
 

@@ -164,6 +164,63 @@ func (c *ColorDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyModal sets the "modal" property.
+// Whether the color chooser dialog is modal.
+func (x *ColorDialog) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the color chooser dialog is modal.
+func (x *ColorDialog) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// A title that may be shown on the color chooser dialog.
+func (x *ColorDialog) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// A title that may be shown on the color chooser dialog.
+func (x *ColorDialog) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyWithAlpha sets the "with-alpha" property.
+// Whether colors may have alpha (translucency).
+//
+// When with-alpha is false, the color that is selected
+// will be forced to have alpha == 1.
+func (x *ColorDialog) SetPropertyWithAlpha(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("with-alpha", &v)
+}
+
+// GetPropertyWithAlpha gets the "with-alpha" property.
+// Whether colors may have alpha (translucency).
+//
+// When with-alpha is false, the color that is selected
+// will be forced to have alpha == 1.
+func (x *ColorDialog) GetPropertyWithAlpha() bool {
+	var v gobject.Value
+	x.GetProperty("with-alpha", &v)
+	return v.GetBoolean()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

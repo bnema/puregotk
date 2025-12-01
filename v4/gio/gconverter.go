@@ -28,32 +28,32 @@ func (x *ConverterIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideConvert sets the callback function.
+// OverrideConvert sets the "convert" callback function.
 // Converts data.
-func (x *ConverterIface) OverrideConvert(cb func(Converter, []byte, uint, []byte, uint, ConverterFlags, uint, uint) ConverterResult) {
+func (x *ConverterIface) OverrideConvert(cb func(Converter, []byte, uint, []byte, uint, ConverterFlags, *uint, *uint) ConverterResult) {
 	if cb == nil {
 		x.xConvert = 0
 	} else {
-		x.xConvert = purego.NewCallback(func(ConverterVarp uintptr, InbufVarp []byte, InbufSizeVarp uint, OutbufVarp []byte, OutbufSizeVarp uint, FlagsVarp ConverterFlags, BytesReadVarp uint, BytesWrittenVarp uint) ConverterResult {
+		x.xConvert = purego.NewCallback(func(ConverterVarp uintptr, InbufVarp []byte, InbufSizeVarp uint, OutbufVarp []byte, OutbufSizeVarp uint, FlagsVarp ConverterFlags, BytesReadVarp *uint, BytesWrittenVarp *uint) ConverterResult {
 			return cb(&ConverterBase{Ptr: ConverterVarp}, InbufVarp, InbufSizeVarp, OutbufVarp, OutbufSizeVarp, FlagsVarp, BytesReadVarp, BytesWrittenVarp)
 		})
 	}
 }
 
-// GetConvert gets the callback function.
+// GetConvert gets the "convert" callback function.
 // Converts data.
-func (x *ConverterIface) GetConvert() func(Converter, []byte, uint, []byte, uint, ConverterFlags, uint, uint) ConverterResult {
+func (x *ConverterIface) GetConvert() func(Converter, []byte, uint, []byte, uint, ConverterFlags, *uint, *uint) ConverterResult {
 	if x.xConvert == 0 {
 		return nil
 	}
-	var rawCallback func(ConverterVarp uintptr, InbufVarp []byte, InbufSizeVarp uint, OutbufVarp []byte, OutbufSizeVarp uint, FlagsVarp ConverterFlags, BytesReadVarp uint, BytesWrittenVarp uint) ConverterResult
+	var rawCallback func(ConverterVarp uintptr, InbufVarp []byte, InbufSizeVarp uint, OutbufVarp []byte, OutbufSizeVarp uint, FlagsVarp ConverterFlags, BytesReadVarp *uint, BytesWrittenVarp *uint) ConverterResult
 	purego.RegisterFunc(&rawCallback, x.xConvert)
-	return func(ConverterVar Converter, InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar uint, BytesWrittenVar uint) ConverterResult {
+	return func(ConverterVar Converter, InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar *uint, BytesWrittenVar *uint) ConverterResult {
 		return rawCallback(ConverterVar.GoPointer(), InbufVar, InbufSizeVar, OutbufVar, OutbufSizeVar, FlagsVar, BytesReadVar, BytesWrittenVar)
 	}
 }
 
-// OverrideReset sets the callback function.
+// OverrideReset sets the "reset" callback function.
 // Reverts the internal state of the converter to its initial state.
 func (x *ConverterIface) OverrideReset(cb func(Converter)) {
 	if cb == nil {
@@ -65,7 +65,7 @@ func (x *ConverterIface) OverrideReset(cb func(Converter)) {
 	}
 }
 
-// GetReset gets the callback function.
+// GetReset gets the "reset" callback function.
 // Reverts the internal state of the converter to its initial state.
 func (x *ConverterIface) GetReset() func(Converter) {
 	if x.xReset == 0 {
@@ -90,7 +90,7 @@ func (x *ConverterIface) GetReset() func(Converter) {
 type Converter interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar uint, BytesWrittenVar uint) (ConverterResult, error)
+	Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar *uint, BytesWrittenVar *uint) (ConverterResult, error)
 	ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error)
 	Reset()
 }
@@ -198,7 +198,7 @@ func (x *ConverterBase) SetGoPointer(ptr uintptr) {
 // at a partial multibyte sequence). Converters are supposed to try
 // to produce as much output as possible and then return an error
 // (typically %G_IO_ERROR_PARTIAL_INPUT).
-func (x *ConverterBase) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar uint, BytesWrittenVar uint) (ConverterResult, error) {
+func (x *ConverterBase) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar *uint, BytesWrittenVar *uint) (ConverterResult, error) {
 	var cerr *glib.Error
 
 	cret := XGConverterConvert(x.GoPointer(), InbufVar, InbufSizeVar, OutbufVar, OutbufSizeVar, FlagsVar, BytesReadVar, BytesWrittenVar, &cerr)
@@ -230,7 +230,7 @@ func (x *ConverterBase) Reset() {
 
 }
 
-var XGConverterConvert func(uintptr, []byte, uint, []byte, uint, ConverterFlags, uint, uint, **glib.Error) ConverterResult
+var XGConverterConvert func(uintptr, []byte, uint, []byte, uint, ConverterFlags, *uint, *uint, **glib.Error) ConverterResult
 var XGConverterConvertBytes func(uintptr, *glib.Bytes, **glib.Error) *glib.Bytes
 var XGConverterReset func(uintptr)
 

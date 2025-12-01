@@ -250,6 +250,58 @@ func (c *CellView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDrawSensitive sets the "draw-sensitive" property.
+// Whether all cells should be draw as sensitive for this view regardless
+// of the actual cell properties (used to make menus with submenus appear
+// sensitive when the items in submenus might be insensitive).
+//
+// since 3.0
+func (x *CellView) SetPropertyDrawSensitive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("draw-sensitive", &v)
+}
+
+// GetPropertyDrawSensitive gets the "draw-sensitive" property.
+// Whether all cells should be draw as sensitive for this view regardless
+// of the actual cell properties (used to make menus with submenus appear
+// sensitive when the items in submenus might be insensitive).
+//
+// since 3.0
+func (x *CellView) GetPropertyDrawSensitive() bool {
+	var v gobject.Value
+	x.GetProperty("draw-sensitive", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyFitModel sets the "fit-model" property.
+// Whether the view should request enough space to always fit
+// the size of every row in the model (used by the combo box to
+// ensure the combo box size doesn't change when different items
+// are selected).
+//
+// since 3.0
+func (x *CellView) SetPropertyFitModel(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("fit-model", &v)
+}
+
+// GetPropertyFitModel gets the "fit-model" property.
+// Whether the view should request enough space to always fit
+// the size of every row in the model (used by the combo box to
+// ensure the combo box size doesn't change when different items
+// are selected).
+//
+// since 3.0
+func (x *CellView) GetPropertyFitModel() bool {
+	var v gobject.Value
+	x.GetProperty("fit-model", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -307,7 +359,7 @@ func (x *CellView) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *CellView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *CellView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

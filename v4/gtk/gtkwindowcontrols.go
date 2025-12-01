@@ -207,6 +207,68 @@ func (c *WindowControls) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDecorationLayout sets the "decoration-layout" property.
+// The decoration layout for window buttons.
+//
+// If this property is not set, the
+// [property@Gtk.Settings:gtk-decoration-layout] setting is used.
+func (x *WindowControls) SetPropertyDecorationLayout(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("decoration-layout", &v)
+}
+
+// GetPropertyDecorationLayout gets the "decoration-layout" property.
+// The decoration layout for window buttons.
+//
+// If this property is not set, the
+// [property@Gtk.Settings:gtk-decoration-layout] setting is used.
+func (x *WindowControls) GetPropertyDecorationLayout() string {
+	var v gobject.Value
+	x.GetProperty("decoration-layout", &v)
+	return v.GetString()
+}
+
+// GetPropertyEmpty gets the "empty" property.
+// Whether the widget has any window buttons.
+func (x *WindowControls) GetPropertyEmpty() bool {
+	var v gobject.Value
+	x.GetProperty("empty", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseNativeControls sets the "use-native-controls" property.
+// Whether to show platform native close/minimize/maximize buttons.
+//
+// For macOS, the [property@Gtk.HeaderBar:decoration-layout] property
+// controls the use of native window controls.
+//
+// On other platforms, this option has no effect.
+//
+// See also [Using GTK on Apple macOS](osx.html?native-window-controls).
+func (x *WindowControls) SetPropertyUseNativeControls(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-native-controls", &v)
+}
+
+// GetPropertyUseNativeControls gets the "use-native-controls" property.
+// Whether to show platform native close/minimize/maximize buttons.
+//
+// For macOS, the [property@Gtk.HeaderBar:decoration-layout] property
+// controls the use of native window controls.
+//
+// On other platforms, this option has no effect.
+//
+// See also [Using GTK on Apple macOS](osx.html?native-window-controls).
+func (x *WindowControls) GetPropertyUseNativeControls() bool {
+	var v gobject.Value
+	x.GetProperty("use-native-controls", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -264,7 +326,7 @@ func (x *WindowControls) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *WindowControls) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *WindowControls) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

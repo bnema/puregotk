@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -142,6 +143,42 @@ func (c *OverlayLayoutChild) GoPointer() uintptr {
 
 func (c *OverlayLayoutChild) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyClipOverlay sets the "clip-overlay" property.
+// Whether the child should be clipped to fit the parent's size.
+func (x *OverlayLayoutChild) SetPropertyClipOverlay(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("clip-overlay", &v)
+}
+
+// GetPropertyClipOverlay gets the "clip-overlay" property.
+// Whether the child should be clipped to fit the parent's size.
+func (x *OverlayLayoutChild) GetPropertyClipOverlay() bool {
+	var v gobject.Value
+	x.GetProperty("clip-overlay", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMeasure sets the "measure" property.
+// Whether the child size should contribute to the `GtkOverlayLayout`'s
+// measurement.
+func (x *OverlayLayoutChild) SetPropertyMeasure(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("measure", &v)
+}
+
+// GetPropertyMeasure gets the "measure" property.
+// Whether the child size should contribute to the `GtkOverlayLayout`'s
+// measurement.
+func (x *OverlayLayoutChild) GetPropertyMeasure() bool {
+	var v gobject.Value
+	x.GetProperty("measure", &v)
+	return v.GetBoolean()
 }
 
 func init() {

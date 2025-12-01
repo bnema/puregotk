@@ -62,7 +62,7 @@ func (x *OutputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideWriteFn sets the callback function.
+// OverrideWriteFn sets the "write_fn" callback function.
 func (x *OutputStreamClass) OverrideWriteFn(cb func(*OutputStream, []byte, uint, *Cancellable) int) {
 	if cb == nil {
 		x.xWriteFn = 0
@@ -73,7 +73,7 @@ func (x *OutputStreamClass) OverrideWriteFn(cb func(*OutputStream, []byte, uint,
 	}
 }
 
-// GetWriteFn gets the callback function.
+// GetWriteFn gets the "write_fn" callback function.
 func (x *OutputStreamClass) GetWriteFn() func(*OutputStream, []byte, uint, *Cancellable) int {
 	if x.xWriteFn == 0 {
 		return nil
@@ -85,7 +85,7 @@ func (x *OutputStreamClass) GetWriteFn() func(*OutputStream, []byte, uint, *Canc
 	}
 }
 
-// OverrideSplice sets the callback function.
+// OverrideSplice sets the "splice" callback function.
 func (x *OutputStreamClass) OverrideSplice(cb func(*OutputStream, *InputStream, OutputStreamSpliceFlags, *Cancellable) int) {
 	if cb == nil {
 		x.xSplice = 0
@@ -96,7 +96,7 @@ func (x *OutputStreamClass) OverrideSplice(cb func(*OutputStream, *InputStream, 
 	}
 }
 
-// GetSplice gets the callback function.
+// GetSplice gets the "splice" callback function.
 func (x *OutputStreamClass) GetSplice() func(*OutputStream, *InputStream, OutputStreamSpliceFlags, *Cancellable) int {
 	if x.xSplice == 0 {
 		return nil
@@ -108,7 +108,7 @@ func (x *OutputStreamClass) GetSplice() func(*OutputStream, *InputStream, Output
 	}
 }
 
-// OverrideFlush sets the callback function.
+// OverrideFlush sets the "flush" callback function.
 func (x *OutputStreamClass) OverrideFlush(cb func(*OutputStream, *Cancellable) bool) {
 	if cb == nil {
 		x.xFlush = 0
@@ -119,7 +119,7 @@ func (x *OutputStreamClass) OverrideFlush(cb func(*OutputStream, *Cancellable) b
 	}
 }
 
-// GetFlush gets the callback function.
+// GetFlush gets the "flush" callback function.
 func (x *OutputStreamClass) GetFlush() func(*OutputStream, *Cancellable) bool {
 	if x.xFlush == 0 {
 		return nil
@@ -131,7 +131,7 @@ func (x *OutputStreamClass) GetFlush() func(*OutputStream, *Cancellable) bool {
 	}
 }
 
-// OverrideCloseFn sets the callback function.
+// OverrideCloseFn sets the "close_fn" callback function.
 func (x *OutputStreamClass) OverrideCloseFn(cb func(*OutputStream, *Cancellable) bool) {
 	if cb == nil {
 		x.xCloseFn = 0
@@ -142,7 +142,7 @@ func (x *OutputStreamClass) OverrideCloseFn(cb func(*OutputStream, *Cancellable)
 	}
 }
 
-// GetCloseFn gets the callback function.
+// GetCloseFn gets the "close_fn" callback function.
 func (x *OutputStreamClass) GetCloseFn() func(*OutputStream, *Cancellable) bool {
 	if x.xCloseFn == 0 {
 		return nil
@@ -154,7 +154,7 @@ func (x *OutputStreamClass) GetCloseFn() func(*OutputStream, *Cancellable) bool 
 	}
 }
 
-// OverrideWriteAsync sets the callback function.
+// OverrideWriteAsync sets the "write_async" callback function.
 func (x *OutputStreamClass) OverrideWriteAsync(cb func(*OutputStream, []byte, uint, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xWriteAsync = 0
@@ -165,7 +165,7 @@ func (x *OutputStreamClass) OverrideWriteAsync(cb func(*OutputStream, []byte, ui
 	}
 }
 
-// GetWriteAsync gets the callback function.
+// GetWriteAsync gets the "write_async" callback function.
 func (x *OutputStreamClass) GetWriteAsync() func(*OutputStream, []byte, uint, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xWriteAsync == 0 {
 		return nil
@@ -177,7 +177,7 @@ func (x *OutputStreamClass) GetWriteAsync() func(*OutputStream, []byte, uint, in
 	}
 }
 
-// OverrideWriteFinish sets the callback function.
+// OverrideWriteFinish sets the "write_finish" callback function.
 func (x *OutputStreamClass) OverrideWriteFinish(cb func(*OutputStream, AsyncResult) int) {
 	if cb == nil {
 		x.xWriteFinish = 0
@@ -188,7 +188,7 @@ func (x *OutputStreamClass) OverrideWriteFinish(cb func(*OutputStream, AsyncResu
 	}
 }
 
-// GetWriteFinish gets the callback function.
+// GetWriteFinish gets the "write_finish" callback function.
 func (x *OutputStreamClass) GetWriteFinish() func(*OutputStream, AsyncResult) int {
 	if x.xWriteFinish == 0 {
 		return nil
@@ -200,7 +200,7 @@ func (x *OutputStreamClass) GetWriteFinish() func(*OutputStream, AsyncResult) in
 	}
 }
 
-// OverrideSpliceAsync sets the callback function.
+// OverrideSpliceAsync sets the "splice_async" callback function.
 func (x *OutputStreamClass) OverrideSpliceAsync(cb func(*OutputStream, *InputStream, OutputStreamSpliceFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xSpliceAsync = 0
@@ -211,7 +211,7 @@ func (x *OutputStreamClass) OverrideSpliceAsync(cb func(*OutputStream, *InputStr
 	}
 }
 
-// GetSpliceAsync gets the callback function.
+// GetSpliceAsync gets the "splice_async" callback function.
 func (x *OutputStreamClass) GetSpliceAsync() func(*OutputStream, *InputStream, OutputStreamSpliceFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xSpliceAsync == 0 {
 		return nil
@@ -223,7 +223,7 @@ func (x *OutputStreamClass) GetSpliceAsync() func(*OutputStream, *InputStream, O
 	}
 }
 
-// OverrideSpliceFinish sets the callback function.
+// OverrideSpliceFinish sets the "splice_finish" callback function.
 func (x *OutputStreamClass) OverrideSpliceFinish(cb func(*OutputStream, AsyncResult) int) {
 	if cb == nil {
 		x.xSpliceFinish = 0
@@ -234,7 +234,7 @@ func (x *OutputStreamClass) OverrideSpliceFinish(cb func(*OutputStream, AsyncRes
 	}
 }
 
-// GetSpliceFinish gets the callback function.
+// GetSpliceFinish gets the "splice_finish" callback function.
 func (x *OutputStreamClass) GetSpliceFinish() func(*OutputStream, AsyncResult) int {
 	if x.xSpliceFinish == 0 {
 		return nil
@@ -246,7 +246,7 @@ func (x *OutputStreamClass) GetSpliceFinish() func(*OutputStream, AsyncResult) i
 	}
 }
 
-// OverrideFlushAsync sets the callback function.
+// OverrideFlushAsync sets the "flush_async" callback function.
 func (x *OutputStreamClass) OverrideFlushAsync(cb func(*OutputStream, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xFlushAsync = 0
@@ -257,7 +257,7 @@ func (x *OutputStreamClass) OverrideFlushAsync(cb func(*OutputStream, int, *Canc
 	}
 }
 
-// GetFlushAsync gets the callback function.
+// GetFlushAsync gets the "flush_async" callback function.
 func (x *OutputStreamClass) GetFlushAsync() func(*OutputStream, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xFlushAsync == 0 {
 		return nil
@@ -269,7 +269,7 @@ func (x *OutputStreamClass) GetFlushAsync() func(*OutputStream, int, *Cancellabl
 	}
 }
 
-// OverrideFlushFinish sets the callback function.
+// OverrideFlushFinish sets the "flush_finish" callback function.
 func (x *OutputStreamClass) OverrideFlushFinish(cb func(*OutputStream, AsyncResult) bool) {
 	if cb == nil {
 		x.xFlushFinish = 0
@@ -280,7 +280,7 @@ func (x *OutputStreamClass) OverrideFlushFinish(cb func(*OutputStream, AsyncResu
 	}
 }
 
-// GetFlushFinish gets the callback function.
+// GetFlushFinish gets the "flush_finish" callback function.
 func (x *OutputStreamClass) GetFlushFinish() func(*OutputStream, AsyncResult) bool {
 	if x.xFlushFinish == 0 {
 		return nil
@@ -292,7 +292,7 @@ func (x *OutputStreamClass) GetFlushFinish() func(*OutputStream, AsyncResult) bo
 	}
 }
 
-// OverrideCloseAsync sets the callback function.
+// OverrideCloseAsync sets the "close_async" callback function.
 func (x *OutputStreamClass) OverrideCloseAsync(cb func(*OutputStream, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xCloseAsync = 0
@@ -303,7 +303,7 @@ func (x *OutputStreamClass) OverrideCloseAsync(cb func(*OutputStream, int, *Canc
 	}
 }
 
-// GetCloseAsync gets the callback function.
+// GetCloseAsync gets the "close_async" callback function.
 func (x *OutputStreamClass) GetCloseAsync() func(*OutputStream, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xCloseAsync == 0 {
 		return nil
@@ -315,7 +315,7 @@ func (x *OutputStreamClass) GetCloseAsync() func(*OutputStream, int, *Cancellabl
 	}
 }
 
-// OverrideCloseFinish sets the callback function.
+// OverrideCloseFinish sets the "close_finish" callback function.
 func (x *OutputStreamClass) OverrideCloseFinish(cb func(*OutputStream, AsyncResult) bool) {
 	if cb == nil {
 		x.xCloseFinish = 0
@@ -326,7 +326,7 @@ func (x *OutputStreamClass) OverrideCloseFinish(cb func(*OutputStream, AsyncResu
 	}
 }
 
-// GetCloseFinish gets the callback function.
+// GetCloseFinish gets the "close_finish" callback function.
 func (x *OutputStreamClass) GetCloseFinish() func(*OutputStream, AsyncResult) bool {
 	if x.xCloseFinish == 0 {
 		return nil
@@ -338,30 +338,30 @@ func (x *OutputStreamClass) GetCloseFinish() func(*OutputStream, AsyncResult) bo
 	}
 }
 
-// OverrideWritevFn sets the callback function.
-func (x *OutputStreamClass) OverrideWritevFn(cb func(*OutputStream, []OutputVector, uint, uint, *Cancellable) bool) {
+// OverrideWritevFn sets the "writev_fn" callback function.
+func (x *OutputStreamClass) OverrideWritevFn(cb func(*OutputStream, []OutputVector, uint, *uint, *Cancellable) bool) {
 	if cb == nil {
 		x.xWritevFn = 0
 	} else {
-		x.xWritevFn = purego.NewCallback(func(StreamVarp uintptr, VectorsVarp []OutputVector, NVectorsVarp uint, BytesWrittenVarp uint, CancellableVarp uintptr) bool {
+		x.xWritevFn = purego.NewCallback(func(StreamVarp uintptr, VectorsVarp []OutputVector, NVectorsVarp uint, BytesWrittenVarp *uint, CancellableVarp uintptr) bool {
 			return cb(OutputStreamNewFromInternalPtr(StreamVarp), VectorsVarp, NVectorsVarp, BytesWrittenVarp, CancellableNewFromInternalPtr(CancellableVarp))
 		})
 	}
 }
 
-// GetWritevFn gets the callback function.
-func (x *OutputStreamClass) GetWritevFn() func(*OutputStream, []OutputVector, uint, uint, *Cancellable) bool {
+// GetWritevFn gets the "writev_fn" callback function.
+func (x *OutputStreamClass) GetWritevFn() func(*OutputStream, []OutputVector, uint, *uint, *Cancellable) bool {
 	if x.xWritevFn == 0 {
 		return nil
 	}
-	var rawCallback func(StreamVarp uintptr, VectorsVarp []OutputVector, NVectorsVarp uint, BytesWrittenVarp uint, CancellableVarp uintptr) bool
+	var rawCallback func(StreamVarp uintptr, VectorsVarp []OutputVector, NVectorsVarp uint, BytesWrittenVarp *uint, CancellableVarp uintptr) bool
 	purego.RegisterFunc(&rawCallback, x.xWritevFn)
-	return func(StreamVar *OutputStream, VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar uint, CancellableVar *Cancellable) bool {
+	return func(StreamVar *OutputStream, VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) bool {
 		return rawCallback(StreamVar.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer())
 	}
 }
 
-// OverrideWritevAsync sets the callback function.
+// OverrideWritevAsync sets the "writev_async" callback function.
 func (x *OutputStreamClass) OverrideWritevAsync(cb func(*OutputStream, []OutputVector, uint, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xWritevAsync = 0
@@ -372,7 +372,7 @@ func (x *OutputStreamClass) OverrideWritevAsync(cb func(*OutputStream, []OutputV
 	}
 }
 
-// GetWritevAsync gets the callback function.
+// GetWritevAsync gets the "writev_async" callback function.
 func (x *OutputStreamClass) GetWritevAsync() func(*OutputStream, []OutputVector, uint, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xWritevAsync == 0 {
 		return nil
@@ -384,30 +384,30 @@ func (x *OutputStreamClass) GetWritevAsync() func(*OutputStream, []OutputVector,
 	}
 }
 
-// OverrideWritevFinish sets the callback function.
-func (x *OutputStreamClass) OverrideWritevFinish(cb func(*OutputStream, AsyncResult, uint) bool) {
+// OverrideWritevFinish sets the "writev_finish" callback function.
+func (x *OutputStreamClass) OverrideWritevFinish(cb func(*OutputStream, AsyncResult, *uint) bool) {
 	if cb == nil {
 		x.xWritevFinish = 0
 	} else {
-		x.xWritevFinish = purego.NewCallback(func(StreamVarp uintptr, ResultVarp uintptr, BytesWrittenVarp uint) bool {
+		x.xWritevFinish = purego.NewCallback(func(StreamVarp uintptr, ResultVarp uintptr, BytesWrittenVarp *uint) bool {
 			return cb(OutputStreamNewFromInternalPtr(StreamVarp), &AsyncResultBase{Ptr: ResultVarp}, BytesWrittenVarp)
 		})
 	}
 }
 
-// GetWritevFinish gets the callback function.
-func (x *OutputStreamClass) GetWritevFinish() func(*OutputStream, AsyncResult, uint) bool {
+// GetWritevFinish gets the "writev_finish" callback function.
+func (x *OutputStreamClass) GetWritevFinish() func(*OutputStream, AsyncResult, *uint) bool {
 	if x.xWritevFinish == 0 {
 		return nil
 	}
-	var rawCallback func(StreamVarp uintptr, ResultVarp uintptr, BytesWrittenVarp uint) bool
+	var rawCallback func(StreamVarp uintptr, ResultVarp uintptr, BytesWrittenVarp *uint) bool
 	purego.RegisterFunc(&rawCallback, x.xWritevFinish)
-	return func(StreamVar *OutputStream, ResultVar AsyncResult, BytesWrittenVar uint) bool {
+	return func(StreamVar *OutputStream, ResultVar AsyncResult, BytesWrittenVar *uint) bool {
 		return rawCallback(StreamVar.GoPointer(), ResultVar.GoPointer(), BytesWrittenVar)
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *OutputStreamClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -418,7 +418,7 @@ func (x *OutputStreamClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *OutputStreamClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -430,7 +430,7 @@ func (x *OutputStreamClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *OutputStreamClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -441,7 +441,7 @@ func (x *OutputStreamClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *OutputStreamClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -453,7 +453,7 @@ func (x *OutputStreamClass) GetGReserved5() func() {
 	}
 }
 
-// OverrideGReserved6 sets the callback function.
+// OverrideGReserved6 sets the "_g_reserved6" callback function.
 func (x *OutputStreamClass) OverrideGReserved6(cb func()) {
 	if cb == nil {
 		x.xGReserved6 = 0
@@ -464,7 +464,7 @@ func (x *OutputStreamClass) OverrideGReserved6(cb func()) {
 	}
 }
 
-// GetGReserved6 gets the callback function.
+// GetGReserved6 gets the "_g_reserved6" callback function.
 func (x *OutputStreamClass) GetGReserved6() func() {
 	if x.xGReserved6 == 0 {
 		return nil
@@ -476,7 +476,7 @@ func (x *OutputStreamClass) GetGReserved6() func() {
 	}
 }
 
-// OverrideGReserved7 sets the callback function.
+// OverrideGReserved7 sets the "_g_reserved7" callback function.
 func (x *OutputStreamClass) OverrideGReserved7(cb func()) {
 	if cb == nil {
 		x.xGReserved7 = 0
@@ -487,7 +487,7 @@ func (x *OutputStreamClass) OverrideGReserved7(cb func()) {
 	}
 }
 
-// GetGReserved7 gets the callback function.
+// GetGReserved7 gets the "_g_reserved7" callback function.
 func (x *OutputStreamClass) GetGReserved7() func() {
 	if x.xGReserved7 == 0 {
 		return nil
@@ -499,7 +499,7 @@ func (x *OutputStreamClass) GetGReserved7() func() {
 	}
 }
 
-// OverrideGReserved8 sets the callback function.
+// OverrideGReserved8 sets the "_g_reserved8" callback function.
 func (x *OutputStreamClass) OverrideGReserved8(cb func()) {
 	if cb == nil {
 		x.xGReserved8 = 0
@@ -510,7 +510,7 @@ func (x *OutputStreamClass) OverrideGReserved8(cb func()) {
 	}
 }
 
-// GetGReserved8 gets the callback function.
+// GetGReserved8 gets the "_g_reserved8" callback function.
 func (x *OutputStreamClass) GetGReserved8() func() {
 	if x.xGReserved8 == 0 {
 		return nil
@@ -727,7 +727,7 @@ func (x *OutputStream) IsClosing() bool {
 	return cret
 }
 
-var xOutputStreamPrintf func(uintptr, uint, uintptr, **glib.Error, string, ...interface{}) bool
+var xOutputStreamPrintf func(uintptr, *uint, uintptr, **glib.Error, string, ...interface{}) bool
 
 // This is a utility function around g_output_stream_write_all(). It
 // uses g_strdup_vprintf() to turn @format and @... into a string that
@@ -741,7 +741,7 @@ var xOutputStreamPrintf func(uintptr, uint, uintptr, **glib.Error, string, ...in
 // need precise control over partial write failures, you need to
 // create you own printf()-like wrapper around g_output_stream_write()
 // or g_output_stream_write_all().
-func (x *OutputStream) Printf(BytesWrittenVar uint, CancellableVar *Cancellable, ErrorVar **glib.Error, FormatVar string, varArgs ...interface{}) bool {
+func (x *OutputStream) Printf(BytesWrittenVar *uint, CancellableVar *Cancellable, ErrorVar **glib.Error, FormatVar string, varArgs ...interface{}) bool {
 
 	cret := xOutputStreamPrintf(x.GoPointer(), BytesWrittenVar, CancellableVar.GoPointer(), ErrorVar, FormatVar, varArgs...)
 	return cret
@@ -806,7 +806,7 @@ func (x *OutputStream) SpliceFinish(ResultVar AsyncResult) (int, error) {
 
 }
 
-var xOutputStreamVprintf func(uintptr, uint, uintptr, **glib.Error, string, []interface{}) bool
+var xOutputStreamVprintf func(uintptr, *uint, uintptr, **glib.Error, string, []interface{}) bool
 
 // This is a utility function around g_output_stream_write_all(). It
 // uses g_strdup_vprintf() to turn @format and @args into a string that
@@ -820,7 +820,7 @@ var xOutputStreamVprintf func(uintptr, uint, uintptr, **glib.Error, string, []in
 // need precise control over partial write failures, you need to
 // create you own printf()-like wrapper around g_output_stream_write()
 // or g_output_stream_write_all().
-func (x *OutputStream) Vprintf(BytesWrittenVar uint, CancellableVar *Cancellable, ErrorVar **glib.Error, FormatVar string, ArgsVar []interface{}) bool {
+func (x *OutputStream) Vprintf(BytesWrittenVar *uint, CancellableVar *Cancellable, ErrorVar **glib.Error, FormatVar string, ArgsVar []interface{}) bool {
 
 	cret := xOutputStreamVprintf(x.GoPointer(), BytesWrittenVar, CancellableVar.GoPointer(), ErrorVar, FormatVar, ArgsVar)
 	return cret
@@ -859,7 +859,7 @@ func (x *OutputStream) Write(BufferVar []byte, CountVar uint, CancellableVar *Ca
 
 }
 
-var xOutputStreamWriteAll func(uintptr, []byte, uint, uint, uintptr, **glib.Error) bool
+var xOutputStreamWriteAll func(uintptr, []byte, uint, *uint, uintptr, **glib.Error) bool
 
 // Tries to write @count bytes from @buffer into the stream. Will block
 // during the operation.
@@ -880,7 +880,7 @@ var xOutputStreamWriteAll func(uintptr, []byte, uint, uint, uintptr, **glib.Erro
 // functionality is only available from C.  If you need it from another
 // language then you must write your own loop around
 // g_output_stream_write().
-func (x *OutputStream) WriteAll(BufferVar []byte, CountVar uint, BytesWrittenVar uint, CancellableVar *Cancellable) (bool, error) {
+func (x *OutputStream) WriteAll(BufferVar []byte, CountVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xOutputStreamWriteAll(x.GoPointer(), BufferVar, CountVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
@@ -914,7 +914,7 @@ func (x *OutputStream) WriteAllAsync(BufferVar []byte, CountVar uint, IoPriority
 
 }
 
-var xOutputStreamWriteAllFinish func(uintptr, uintptr, uint, **glib.Error) bool
+var xOutputStreamWriteAllFinish func(uintptr, uintptr, *uint, **glib.Error) bool
 
 // Finishes an asynchronous stream write operation started with
 // g_output_stream_write_all_async().
@@ -926,7 +926,7 @@ var xOutputStreamWriteAllFinish func(uintptr, uintptr, uint, **glib.Error) bool
 // functionality is only available from C.  If you need it from another
 // language then you must write your own loop around
 // g_output_stream_write_async().
-func (x *OutputStream) WriteAllFinish(ResultVar AsyncResult, BytesWrittenVar uint) (bool, error) {
+func (x *OutputStream) WriteAllFinish(ResultVar AsyncResult, BytesWrittenVar *uint) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xOutputStreamWriteAllFinish(x.GoPointer(), ResultVar.GoPointer(), BytesWrittenVar, &cerr)
@@ -1053,7 +1053,7 @@ func (x *OutputStream) WriteFinish(ResultVar AsyncResult) (int, error) {
 
 }
 
-var xOutputStreamWritev func(uintptr, []OutputVector, uint, uint, uintptr, **glib.Error) bool
+var xOutputStreamWritev func(uintptr, []OutputVector, uint, *uint, uintptr, **glib.Error) bool
 
 // Tries to write the bytes contained in the @n_vectors @vectors into the
 // stream. Will block during the operation.
@@ -1078,7 +1078,7 @@ var xOutputStreamWritev func(uintptr, []OutputVector, uint, uint, uintptr, **gli
 // aggregate buffer size, and will return %G_IO_ERROR_INVALID_ARGUMENT if these
 // are exceeded. For example, when writing to a local file on UNIX platforms,
 // the aggregate buffer size must not exceed %G_MAXSSIZE bytes.
-func (x *OutputStream) Writev(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar uint, CancellableVar *Cancellable) (bool, error) {
+func (x *OutputStream) Writev(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xOutputStreamWritev(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
@@ -1089,7 +1089,7 @@ func (x *OutputStream) Writev(VectorsVar []OutputVector, NVectorsVar uint, Bytes
 
 }
 
-var xOutputStreamWritevAll func(uintptr, []OutputVector, uint, uint, uintptr, **glib.Error) bool
+var xOutputStreamWritevAll func(uintptr, []OutputVector, uint, *uint, uintptr, **glib.Error) bool
 
 // Tries to write the bytes contained in the @n_vectors @vectors into the
 // stream. Will block during the operation.
@@ -1113,7 +1113,7 @@ var xOutputStreamWritevAll func(uintptr, []OutputVector, uint, uint, uintptr, **
 //
 // The content of the individual elements of @vectors might be changed by this
 // function.
-func (x *OutputStream) WritevAll(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar uint, CancellableVar *Cancellable) (bool, error) {
+func (x *OutputStream) WritevAll(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xOutputStreamWritevAll(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
@@ -1148,7 +1148,7 @@ func (x *OutputStream) WritevAllAsync(VectorsVar []OutputVector, NVectorsVar uin
 
 }
 
-var xOutputStreamWritevAllFinish func(uintptr, uintptr, uint, **glib.Error) bool
+var xOutputStreamWritevAllFinish func(uintptr, uintptr, *uint, **glib.Error) bool
 
 // Finishes an asynchronous stream write operation started with
 // g_output_stream_writev_all_async().
@@ -1160,7 +1160,7 @@ var xOutputStreamWritevAllFinish func(uintptr, uintptr, uint, **glib.Error) bool
 // functionality is only available from C.  If you need it from another
 // language then you must write your own loop around
 // g_output_stream_writev_async().
-func (x *OutputStream) WritevAllFinish(ResultVar AsyncResult, BytesWrittenVar uint) (bool, error) {
+func (x *OutputStream) WritevAllFinish(ResultVar AsyncResult, BytesWrittenVar *uint) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xOutputStreamWritevAllFinish(x.GoPointer(), ResultVar.GoPointer(), BytesWrittenVar, &cerr)
@@ -1209,10 +1209,10 @@ func (x *OutputStream) WritevAsync(VectorsVar []OutputVector, NVectorsVar uint, 
 
 }
 
-var xOutputStreamWritevFinish func(uintptr, uintptr, uint, **glib.Error) bool
+var xOutputStreamWritevFinish func(uintptr, uintptr, *uint, **glib.Error) bool
 
 // Finishes a stream writev operation.
-func (x *OutputStream) WritevFinish(ResultVar AsyncResult, BytesWrittenVar uint) (bool, error) {
+func (x *OutputStream) WritevFinish(ResultVar AsyncResult, BytesWrittenVar *uint) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xOutputStreamWritevFinish(x.GoPointer(), ResultVar.GoPointer(), BytesWrittenVar, &cerr)

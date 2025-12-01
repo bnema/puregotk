@@ -482,6 +482,111 @@ func (c *Image) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFile sets the "file" property.
+// A path to the file to display.
+func (x *Image) SetPropertyFile(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("file", &v)
+}
+
+// GetPropertyFile gets the "file" property.
+// A path to the file to display.
+func (x *Image) GetPropertyFile() string {
+	var v gobject.Value
+	x.GetProperty("file", &v)
+	return v.GetString()
+}
+
+// SetPropertyIconName sets the "icon-name" property.
+// The name of the icon in the icon theme.
+//
+// If the icon theme is changed, the image will be updated automatically.
+func (x *Image) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The name of the icon in the icon theme.
+//
+// If the icon theme is changed, the image will be updated automatically.
+func (x *Image) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyPixelSize sets the "pixel-size" property.
+// The size in pixels to display icons at.
+//
+// If set to a value != -1, this property overrides the
+// [property@Gtk.Image:icon-size] property for images of type
+// `GTK_IMAGE_ICON_NAME`.
+func (x *Image) SetPropertyPixelSize(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("pixel-size", &v)
+}
+
+// GetPropertyPixelSize gets the "pixel-size" property.
+// The size in pixels to display icons at.
+//
+// If set to a value != -1, this property overrides the
+// [property@Gtk.Image:icon-size] property for images of type
+// `GTK_IMAGE_ICON_NAME`.
+func (x *Image) GetPropertyPixelSize() int {
+	var v gobject.Value
+	x.GetProperty("pixel-size", &v)
+	return v.GetInt()
+}
+
+// SetPropertyResource sets the "resource" property.
+// A path to a resource file to display.
+func (x *Image) SetPropertyResource(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("resource", &v)
+}
+
+// GetPropertyResource gets the "resource" property.
+// A path to a resource file to display.
+func (x *Image) GetPropertyResource() string {
+	var v gobject.Value
+	x.GetProperty("resource", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseFallback sets the "use-fallback" property.
+// Whether the icon displayed in the `GtkImage` will use
+// standard icon names fallback.
+//
+// The value of this property is only relevant for images of type
+// %GTK_IMAGE_ICON_NAME and %GTK_IMAGE_GICON.
+func (x *Image) SetPropertyUseFallback(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-fallback", &v)
+}
+
+// GetPropertyUseFallback gets the "use-fallback" property.
+// Whether the icon displayed in the `GtkImage` will use
+// standard icon names fallback.
+//
+// The value of this property is only relevant for images of type
+// %GTK_IMAGE_ICON_NAME and %GTK_IMAGE_GICON.
+func (x *Image) GetPropertyUseFallback() bool {
+	var v gobject.Value
+	x.GetProperty("use-fallback", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -539,7 +644,7 @@ func (x *Image) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Image) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Image) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

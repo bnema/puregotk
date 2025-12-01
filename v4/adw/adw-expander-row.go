@@ -292,6 +292,141 @@ func (c *ExpanderRow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEnableExpansion sets the "enable-expansion" property.
+// Whether expansion is enabled.
+func (x *ExpanderRow) SetPropertyEnableExpansion(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-expansion", &v)
+}
+
+// GetPropertyEnableExpansion gets the "enable-expansion" property.
+// Whether expansion is enabled.
+func (x *ExpanderRow) GetPropertyEnableExpansion() bool {
+	var v gobject.Value
+	x.GetProperty("enable-expansion", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyExpanded sets the "expanded" property.
+// Whether the row is expanded.
+func (x *ExpanderRow) SetPropertyExpanded(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("expanded", &v)
+}
+
+// GetPropertyExpanded gets the "expanded" property.
+// Whether the row is expanded.
+func (x *ExpanderRow) GetPropertyExpanded() bool {
+	var v gobject.Value
+	x.GetProperty("expanded", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIconName sets the "icon-name" property.
+// The icon name for this row.
+func (x *ExpanderRow) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The icon name for this row.
+func (x *ExpanderRow) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyShowEnableSwitch sets the "show-enable-switch" property.
+// Whether the switch enabling the expansion is visible.
+func (x *ExpanderRow) SetPropertyShowEnableSwitch(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-enable-switch", &v)
+}
+
+// GetPropertyShowEnableSwitch gets the "show-enable-switch" property.
+// Whether the switch enabling the expansion is visible.
+func (x *ExpanderRow) GetPropertyShowEnableSwitch() bool {
+	var v gobject.Value
+	x.GetProperty("show-enable-switch", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySubtitle sets the "subtitle" property.
+// The subtitle for this row.
+//
+// The subtitle is interpreted as Pango markup unless
+// [property@PreferencesRow:use-markup] is set to `FALSE`.
+func (x *ExpanderRow) SetPropertySubtitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("subtitle", &v)
+}
+
+// GetPropertySubtitle gets the "subtitle" property.
+// The subtitle for this row.
+//
+// The subtitle is interpreted as Pango markup unless
+// [property@PreferencesRow:use-markup] is set to `FALSE`.
+func (x *ExpanderRow) GetPropertySubtitle() string {
+	var v gobject.Value
+	x.GetProperty("subtitle", &v)
+	return v.GetString()
+}
+
+// SetPropertySubtitleLines sets the "subtitle-lines" property.
+// The number of lines at the end of which the subtitle label will be
+// ellipsized.
+//
+// If the value is 0, the number of lines won't be limited.
+func (x *ExpanderRow) SetPropertySubtitleLines(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("subtitle-lines", &v)
+}
+
+// GetPropertySubtitleLines gets the "subtitle-lines" property.
+// The number of lines at the end of which the subtitle label will be
+// ellipsized.
+//
+// If the value is 0, the number of lines won't be limited.
+func (x *ExpanderRow) GetPropertySubtitleLines() int {
+	var v gobject.Value
+	x.GetProperty("subtitle-lines", &v)
+	return v.GetInt()
+}
+
+// SetPropertyTitleLines sets the "title-lines" property.
+// The number of lines at the end of which the title label will be ellipsized.
+//
+// If the value is 0, the number of lines won't be limited.
+func (x *ExpanderRow) SetPropertyTitleLines(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("title-lines", &v)
+}
+
+// GetPropertyTitleLines gets the "title-lines" property.
+// The number of lines at the end of which the title label will be ellipsized.
+//
+// If the value is 0, the number of lines won't be limited.
+func (x *ExpanderRow) GetPropertyTitleLines() int {
+	var v gobject.Value
+	x.GetProperty("title-lines", &v)
+	return v.GetInt()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -349,7 +484,7 @@ func (x *ExpanderRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ExpanderRow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ExpanderRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

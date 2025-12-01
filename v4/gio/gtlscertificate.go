@@ -26,7 +26,7 @@ func (x *TlsCertificateClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideVerify sets the callback function.
+// OverrideVerify sets the "verify" callback function.
 func (x *TlsCertificateClass) OverrideVerify(cb func(*TlsCertificate, SocketConnectable, *TlsCertificate) TlsCertificateFlags) {
 	if cb == nil {
 		x.xVerify = 0
@@ -37,7 +37,7 @@ func (x *TlsCertificateClass) OverrideVerify(cb func(*TlsCertificate, SocketConn
 	}
 }
 
-// GetVerify gets the callback function.
+// GetVerify gets the "verify" callback function.
 func (x *TlsCertificateClass) GetVerify() func(*TlsCertificate, SocketConnectable, *TlsCertificate) TlsCertificateFlags {
 	if x.xVerify == 0 {
 		return nil
@@ -421,6 +421,282 @@ func (c *TlsCertificate) GoPointer() uintptr {
 
 func (c *TlsCertificate) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyCertificate sets the "certificate" property.
+// The DER (binary) encoded representation of the certificate.
+// This property and the #GTlsCertificate:certificate-pem property
+// represent the same data, just in different forms.
+func (x *TlsCertificate) SetPropertyCertificate(value []byte) {
+	var v gobject.Value
+	v.Init(glib.ByteArrayGLibType())
+	v.SetBoxed(uintptr(unsafe.Pointer(&value[0])))
+	x.SetProperty("certificate", &v)
+}
+
+// GetPropertyCertificate gets the "certificate" property.
+// The DER (binary) encoded representation of the certificate.
+// This property and the #GTlsCertificate:certificate-pem property
+// represent the same data, just in different forms.
+func (x *TlsCertificate) GetPropertyCertificate() []byte {
+	var v gobject.Value
+	x.GetProperty("certificate", &v)
+	ptr := v.GetBoxed()
+	if ptr == 0 {
+		return nil
+	}
+	return unsafe.Slice((*byte)(unsafe.Pointer(ptr)), 0)[:0]
+}
+
+// SetPropertyCertificatePem sets the "certificate-pem" property.
+// The PEM (ASCII) encoded representation of the certificate.
+// This property and the #GTlsCertificate:certificate
+// property represent the same data, just in different forms.
+func (x *TlsCertificate) SetPropertyCertificatePem(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("certificate-pem", &v)
+}
+
+// GetPropertyCertificatePem gets the "certificate-pem" property.
+// The PEM (ASCII) encoded representation of the certificate.
+// This property and the #GTlsCertificate:certificate
+// property represent the same data, just in different forms.
+func (x *TlsCertificate) GetPropertyCertificatePem() string {
+	var v gobject.Value
+	x.GetProperty("certificate-pem", &v)
+	return v.GetString()
+}
+
+// GetPropertyDnsNames gets the "dns-names" property.
+// The DNS names from the certificate's Subject Alternative Names (SANs),
+// %NULL if unavailable.
+func (x *TlsCertificate) GetPropertyDnsNames() []uintptr {
+	var v gobject.Value
+	x.GetProperty("dns-names", &v)
+	ptr := v.GetBoxed()
+	if ptr == 0 {
+		return nil
+	}
+	return unsafe.Slice((*uintptr)(unsafe.Pointer(ptr)), 0)[:0]
+}
+
+// GetPropertyIpAddresses gets the "ip-addresses" property.
+// The IP addresses from the certificate's Subject Alternative Names (SANs),
+// %NULL if unavailable.
+func (x *TlsCertificate) GetPropertyIpAddresses() []uintptr {
+	var v gobject.Value
+	x.GetProperty("ip-addresses", &v)
+	ptr := v.GetBoxed()
+	if ptr == 0 {
+		return nil
+	}
+	return unsafe.Slice((*uintptr)(unsafe.Pointer(ptr)), 0)[:0]
+}
+
+// GetPropertyIssuerName gets the "issuer-name" property.
+// The issuer from the certificate,
+// %NULL if unavailable.
+func (x *TlsCertificate) GetPropertyIssuerName() string {
+	var v gobject.Value
+	x.GetProperty("issuer-name", &v)
+	return v.GetString()
+}
+
+// GetPropertyNotValidAfter gets the "not-valid-after" property.
+// The time at which this cert is no longer valid,
+// %NULL if unavailable.
+func (x *TlsCertificate) GetPropertyNotValidAfter() uintptr {
+	var v gobject.Value
+	x.GetProperty("not-valid-after", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyNotValidBefore gets the "not-valid-before" property.
+// The time at which this cert is considered to be valid,
+// %NULL if unavailable.
+func (x *TlsCertificate) GetPropertyNotValidBefore() uintptr {
+	var v gobject.Value
+	x.GetProperty("not-valid-before", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyPassword sets the "password" property.
+// An optional password used when constructed with GTlsCertificate:pkcs12-data.
+func (x *TlsCertificate) SetPropertyPassword(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("password", &v)
+}
+
+// SetPropertyPkcs11Uri sets the "pkcs11-uri" property.
+// A URI referencing the [PKCS \#11](https://docs.oasis-open.org/pkcs11/pkcs11-base/v3.0/os/pkcs11-base-v3.0-os.html)
+// objects containing an X.509 certificate and optionally a private key.
+//
+// If %NULL, the certificate is either not backed by PKCS \#11 or the
+// #GTlsBackend does not support PKCS \#11.
+func (x *TlsCertificate) SetPropertyPkcs11Uri(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("pkcs11-uri", &v)
+}
+
+// GetPropertyPkcs11Uri gets the "pkcs11-uri" property.
+// A URI referencing the [PKCS \#11](https://docs.oasis-open.org/pkcs11/pkcs11-base/v3.0/os/pkcs11-base-v3.0-os.html)
+// objects containing an X.509 certificate and optionally a private key.
+//
+// If %NULL, the certificate is either not backed by PKCS \#11 or the
+// #GTlsBackend does not support PKCS \#11.
+func (x *TlsCertificate) GetPropertyPkcs11Uri() string {
+	var v gobject.Value
+	x.GetProperty("pkcs11-uri", &v)
+	return v.GetString()
+}
+
+// SetPropertyPkcs12Data sets the "pkcs12-data" property.
+// The PKCS #12 formatted data used to construct the object.
+//
+// See also: g_tls_certificate_new_from_pkcs12()
+func (x *TlsCertificate) SetPropertyPkcs12Data(value []byte) {
+	var v gobject.Value
+	v.Init(glib.ByteArrayGLibType())
+	v.SetBoxed(uintptr(unsafe.Pointer(&value[0])))
+	x.SetProperty("pkcs12-data", &v)
+}
+
+// SetPropertyPrivateKey sets the "private-key" property.
+// The DER (binary) encoded representation of the certificate's
+// private key, in either [PKCS \#1 format](https://datatracker.ietf.org/doc/html/rfc8017)
+// or unencrypted [PKCS \#8 format.](https://datatracker.ietf.org/doc/html/rfc5208)
+// PKCS \#8 format is supported since 2.32; earlier releases only
+// support PKCS \#1. You can use the `openssl rsa` tool to convert
+// PKCS \#8 keys to PKCS \#1.
+//
+// This property (or the #GTlsCertificate:private-key-pem property)
+// can be set when constructing a key (for example, from a file).
+// Since GLib 2.70, it is now also readable; however, be aware that if
+// the private key is backed by a PKCS \#11 URI – for example, if it
+// is stored on a smartcard – then this property will be %NULL. If so,
+// the private key must be referenced via its PKCS \#11 URI,
+// #GTlsCertificate:private-key-pkcs11-uri. You must check both
+// properties to see if the certificate really has a private key.
+// When this property is read, the output format will be unencrypted
+// PKCS \#8.
+func (x *TlsCertificate) SetPropertyPrivateKey(value []byte) {
+	var v gobject.Value
+	v.Init(glib.ByteArrayGLibType())
+	v.SetBoxed(uintptr(unsafe.Pointer(&value[0])))
+	x.SetProperty("private-key", &v)
+}
+
+// GetPropertyPrivateKey gets the "private-key" property.
+// The DER (binary) encoded representation of the certificate's
+// private key, in either [PKCS \#1 format](https://datatracker.ietf.org/doc/html/rfc8017)
+// or unencrypted [PKCS \#8 format.](https://datatracker.ietf.org/doc/html/rfc5208)
+// PKCS \#8 format is supported since 2.32; earlier releases only
+// support PKCS \#1. You can use the `openssl rsa` tool to convert
+// PKCS \#8 keys to PKCS \#1.
+//
+// This property (or the #GTlsCertificate:private-key-pem property)
+// can be set when constructing a key (for example, from a file).
+// Since GLib 2.70, it is now also readable; however, be aware that if
+// the private key is backed by a PKCS \#11 URI – for example, if it
+// is stored on a smartcard – then this property will be %NULL. If so,
+// the private key must be referenced via its PKCS \#11 URI,
+// #GTlsCertificate:private-key-pkcs11-uri. You must check both
+// properties to see if the certificate really has a private key.
+// When this property is read, the output format will be unencrypted
+// PKCS \#8.
+func (x *TlsCertificate) GetPropertyPrivateKey() []byte {
+	var v gobject.Value
+	x.GetProperty("private-key", &v)
+	ptr := v.GetBoxed()
+	if ptr == 0 {
+		return nil
+	}
+	return unsafe.Slice((*byte)(unsafe.Pointer(ptr)), 0)[:0]
+}
+
+// SetPropertyPrivateKeyPem sets the "private-key-pem" property.
+// The PEM (ASCII) encoded representation of the certificate's
+// private key in either [PKCS \#1 format](https://datatracker.ietf.org/doc/html/rfc8017)
+// ("`BEGIN RSA PRIVATE KEY`") or unencrypted
+// [PKCS \#8 format](https://datatracker.ietf.org/doc/html/rfc5208)
+// ("`BEGIN PRIVATE KEY`"). PKCS \#8 format is supported since 2.32;
+// earlier releases only support PKCS \#1. You can use the `openssl rsa`
+// tool to convert PKCS \#8 keys to PKCS \#1.
+//
+// This property (or the #GTlsCertificate:private-key property)
+// can be set when constructing a key (for example, from a file).
+// Since GLib 2.70, it is now also readable; however, be aware that if
+// the private key is backed by a PKCS \#11 URI - for example, if it
+// is stored on a smartcard - then this property will be %NULL. If so,
+// the private key must be referenced via its PKCS \#11 URI,
+// #GTlsCertificate:private-key-pkcs11-uri. You must check both
+// properties to see if the certificate really has a private key.
+// When this property is read, the output format will be unencrypted
+// PKCS \#8.
+func (x *TlsCertificate) SetPropertyPrivateKeyPem(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("private-key-pem", &v)
+}
+
+// GetPropertyPrivateKeyPem gets the "private-key-pem" property.
+// The PEM (ASCII) encoded representation of the certificate's
+// private key in either [PKCS \#1 format](https://datatracker.ietf.org/doc/html/rfc8017)
+// ("`BEGIN RSA PRIVATE KEY`") or unencrypted
+// [PKCS \#8 format](https://datatracker.ietf.org/doc/html/rfc5208)
+// ("`BEGIN PRIVATE KEY`"). PKCS \#8 format is supported since 2.32;
+// earlier releases only support PKCS \#1. You can use the `openssl rsa`
+// tool to convert PKCS \#8 keys to PKCS \#1.
+//
+// This property (or the #GTlsCertificate:private-key property)
+// can be set when constructing a key (for example, from a file).
+// Since GLib 2.70, it is now also readable; however, be aware that if
+// the private key is backed by a PKCS \#11 URI - for example, if it
+// is stored on a smartcard - then this property will be %NULL. If so,
+// the private key must be referenced via its PKCS \#11 URI,
+// #GTlsCertificate:private-key-pkcs11-uri. You must check both
+// properties to see if the certificate really has a private key.
+// When this property is read, the output format will be unencrypted
+// PKCS \#8.
+func (x *TlsCertificate) GetPropertyPrivateKeyPem() string {
+	var v gobject.Value
+	x.GetProperty("private-key-pem", &v)
+	return v.GetString()
+}
+
+// SetPropertyPrivateKeyPkcs11Uri sets the "private-key-pkcs11-uri" property.
+// A URI referencing a [PKCS \#11](https://docs.oasis-open.org/pkcs11/pkcs11-base/v3.0/os/pkcs11-base-v3.0-os.html)
+// object containing a private key.
+func (x *TlsCertificate) SetPropertyPrivateKeyPkcs11Uri(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("private-key-pkcs11-uri", &v)
+}
+
+// GetPropertyPrivateKeyPkcs11Uri gets the "private-key-pkcs11-uri" property.
+// A URI referencing a [PKCS \#11](https://docs.oasis-open.org/pkcs11/pkcs11-base/v3.0/os/pkcs11-base-v3.0-os.html)
+// object containing a private key.
+func (x *TlsCertificate) GetPropertyPrivateKeyPkcs11Uri() string {
+	var v gobject.Value
+	x.GetProperty("private-key-pkcs11-uri", &v)
+	return v.GetString()
+}
+
+// GetPropertySubjectName gets the "subject-name" property.
+// The subject from the cert,
+// %NULL if unavailable.
+func (x *TlsCertificate) GetPropertySubjectName() string {
+	var v gobject.Value
+	x.GetProperty("subject-name", &v)
+	return v.GetString()
 }
 
 var xTlsCertificateListNewFromFile func(string, **glib.Error) *glib.List

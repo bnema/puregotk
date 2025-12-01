@@ -168,6 +168,23 @@ func (c *Shortcut) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyArguments sets the "arguments" property.
+// Arguments passed to activation.
+func (x *Shortcut) SetPropertyArguments(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("arguments", &v)
+}
+
+// GetPropertyArguments gets the "arguments" property.
+// Arguments passed to activation.
+func (x *Shortcut) GetPropertyArguments() uintptr {
+	var v gobject.Value
+	x.GetProperty("arguments", &v)
+	return v.GetPointer()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

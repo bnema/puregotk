@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -89,6 +90,23 @@ func (c *PixbufSimpleAnim) GoPointer() uintptr {
 
 func (c *PixbufSimpleAnim) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyLoop sets the "loop" property.
+// Whether the animation should loop when it reaches the end.
+func (x *PixbufSimpleAnim) SetPropertyLoop(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("loop", &v)
+}
+
+// GetPropertyLoop gets the "loop" property.
+// Whether the animation should loop when it reaches the end.
+func (x *PixbufSimpleAnim) GetPropertyLoop() bool {
+	var v gobject.Value
+	x.GetProperty("loop", &v)
+	return v.GetBoolean()
 }
 
 func init() {

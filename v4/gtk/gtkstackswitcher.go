@@ -172,7 +172,7 @@ func (x *StackSwitcher) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *StackSwitcher) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *StackSwitcher) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

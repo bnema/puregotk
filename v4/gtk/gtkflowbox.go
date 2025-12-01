@@ -47,7 +47,7 @@ func (x *FlowBoxChildClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideActivate sets the callback function.
+// OverrideActivate sets the "activate" callback function.
 func (x *FlowBoxChildClass) OverrideActivate(cb func(*FlowBoxChild)) {
 	if cb == nil {
 		x.xActivate = 0
@@ -58,7 +58,7 @@ func (x *FlowBoxChildClass) OverrideActivate(cb func(*FlowBoxChild)) {
 	}
 }
 
-// GetActivate gets the callback function.
+// GetActivate gets the "activate" callback function.
 func (x *FlowBoxChildClass) GetActivate() func(*FlowBoxChild) {
 	if x.xActivate == 0 {
 		return nil
@@ -598,6 +598,141 @@ func (c *FlowBox) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAcceptUnpairedRelease sets the "accept-unpaired-release" property.
+// Whether to accept unpaired release events.
+func (x *FlowBox) SetPropertyAcceptUnpairedRelease(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("accept-unpaired-release", &v)
+}
+
+// GetPropertyAcceptUnpairedRelease gets the "accept-unpaired-release" property.
+// Whether to accept unpaired release events.
+func (x *FlowBox) GetPropertyAcceptUnpairedRelease() bool {
+	var v gobject.Value
+	x.GetProperty("accept-unpaired-release", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyActivateOnSingleClick sets the "activate-on-single-click" property.
+// Determines whether children can be activated with a single
+// click, or require a double-click.
+func (x *FlowBox) SetPropertyActivateOnSingleClick(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activate-on-single-click", &v)
+}
+
+// GetPropertyActivateOnSingleClick gets the "activate-on-single-click" property.
+// Determines whether children can be activated with a single
+// click, or require a double-click.
+func (x *FlowBox) GetPropertyActivateOnSingleClick() bool {
+	var v gobject.Value
+	x.GetProperty("activate-on-single-click", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyColumnSpacing sets the "column-spacing" property.
+// The amount of horizontal space between two children.
+func (x *FlowBox) SetPropertyColumnSpacing(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("column-spacing", &v)
+}
+
+// GetPropertyColumnSpacing gets the "column-spacing" property.
+// The amount of horizontal space between two children.
+func (x *FlowBox) GetPropertyColumnSpacing() uint {
+	var v gobject.Value
+	x.GetProperty("column-spacing", &v)
+	return v.GetUint()
+}
+
+// SetPropertyHomogeneous sets the "homogeneous" property.
+// Determines whether all children should be allocated the
+// same size.
+func (x *FlowBox) SetPropertyHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("homogeneous", &v)
+}
+
+// GetPropertyHomogeneous gets the "homogeneous" property.
+// Determines whether all children should be allocated the
+// same size.
+func (x *FlowBox) GetPropertyHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaxChildrenPerLine sets the "max-children-per-line" property.
+// The maximum amount of children to request space for consecutively
+// in the given orientation.
+func (x *FlowBox) SetPropertyMaxChildrenPerLine(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("max-children-per-line", &v)
+}
+
+// GetPropertyMaxChildrenPerLine gets the "max-children-per-line" property.
+// The maximum amount of children to request space for consecutively
+// in the given orientation.
+func (x *FlowBox) GetPropertyMaxChildrenPerLine() uint {
+	var v gobject.Value
+	x.GetProperty("max-children-per-line", &v)
+	return v.GetUint()
+}
+
+// SetPropertyMinChildrenPerLine sets the "min-children-per-line" property.
+// The minimum number of children to allocate consecutively
+// in the given orientation.
+//
+// Setting the minimum children per line ensures
+// that a reasonably small height will be requested
+// for the overall minimum width of the box.
+func (x *FlowBox) SetPropertyMinChildrenPerLine(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("min-children-per-line", &v)
+}
+
+// GetPropertyMinChildrenPerLine gets the "min-children-per-line" property.
+// The minimum number of children to allocate consecutively
+// in the given orientation.
+//
+// Setting the minimum children per line ensures
+// that a reasonably small height will be requested
+// for the overall minimum width of the box.
+func (x *FlowBox) GetPropertyMinChildrenPerLine() uint {
+	var v gobject.Value
+	x.GetProperty("min-children-per-line", &v)
+	return v.GetUint()
+}
+
+// SetPropertyRowSpacing sets the "row-spacing" property.
+// The amount of vertical space between two children.
+func (x *FlowBox) SetPropertyRowSpacing(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("row-spacing", &v)
+}
+
+// GetPropertyRowSpacing gets the "row-spacing" property.
+// The amount of vertical space between two children.
+func (x *FlowBox) GetPropertyRowSpacing() uint {
+	var v gobject.Value
+	x.GetProperty("row-spacing", &v)
+	return v.GetUint()
+}
+
 // Emitted when the user activates the @box.
 //
 // This is a [keybinding signal](class.SignalAction.html).
@@ -830,7 +965,7 @@ func (x *FlowBox) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *FlowBox) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *FlowBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -1272,7 +1407,7 @@ func (x *FlowBoxChild) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *FlowBoxChild) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *FlowBoxChild) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

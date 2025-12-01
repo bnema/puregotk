@@ -50,7 +50,7 @@ func (x *SelectionModelInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideIsSelected sets the callback function.
+// OverrideIsSelected sets the "is_selected" callback function.
 // Return if the item at the given position is selected.
 func (x *SelectionModelInterface) OverrideIsSelected(cb func(SelectionModel, uint) bool) {
 	if cb == nil {
@@ -62,7 +62,7 @@ func (x *SelectionModelInterface) OverrideIsSelected(cb func(SelectionModel, uin
 	}
 }
 
-// GetIsSelected gets the callback function.
+// GetIsSelected gets the "is_selected" callback function.
 // Return if the item at the given position is selected.
 func (x *SelectionModelInterface) GetIsSelected() func(SelectionModel, uint) bool {
 	if x.xIsSelected == 0 {
@@ -75,7 +75,7 @@ func (x *SelectionModelInterface) GetIsSelected() func(SelectionModel, uint) boo
 	}
 }
 
-// OverrideGetSelectionInRange sets the callback function.
+// OverrideGetSelectionInRange sets the "get_selection_in_range" callback function.
 // Return a bitset with all currently selected
 //
 //	items in the given range. By default, this function will call
@@ -90,7 +90,7 @@ func (x *SelectionModelInterface) OverrideGetSelectionInRange(cb func(SelectionM
 	}
 }
 
-// GetGetSelectionInRange gets the callback function.
+// GetGetSelectionInRange gets the "get_selection_in_range" callback function.
 // Return a bitset with all currently selected
 //
 //	items in the given range. By default, this function will call
@@ -106,7 +106,7 @@ func (x *SelectionModelInterface) GetGetSelectionInRange() func(SelectionModel, 
 	}
 }
 
-// OverrideSelectItem sets the callback function.
+// OverrideSelectItem sets the "select_item" callback function.
 // Select the item in the given position. If the operation
 //
 //	is known to fail, return %FALSE.
@@ -120,7 +120,7 @@ func (x *SelectionModelInterface) OverrideSelectItem(cb func(SelectionModel, uin
 	}
 }
 
-// GetSelectItem gets the callback function.
+// GetSelectItem gets the "select_item" callback function.
 // Select the item in the given position. If the operation
 //
 //	is known to fail, return %FALSE.
@@ -135,7 +135,7 @@ func (x *SelectionModelInterface) GetSelectItem() func(SelectionModel, uint, boo
 	}
 }
 
-// OverrideUnselectItem sets the callback function.
+// OverrideUnselectItem sets the "unselect_item" callback function.
 // Unselect the item in the given position. If the
 //
 //	operation is known to fail, return %FALSE.
@@ -149,7 +149,7 @@ func (x *SelectionModelInterface) OverrideUnselectItem(cb func(SelectionModel, u
 	}
 }
 
-// GetUnselectItem gets the callback function.
+// GetUnselectItem gets the "unselect_item" callback function.
 // Unselect the item in the given position. If the
 //
 //	operation is known to fail, return %FALSE.
@@ -164,7 +164,7 @@ func (x *SelectionModelInterface) GetUnselectItem() func(SelectionModel, uint) b
 	}
 }
 
-// OverrideSelectRange sets the callback function.
+// OverrideSelectRange sets the "select_range" callback function.
 // Select all items in the given range. If the operation
 //
 //	is unsupported or known to fail for all items, return %FALSE.
@@ -178,7 +178,7 @@ func (x *SelectionModelInterface) OverrideSelectRange(cb func(SelectionModel, ui
 	}
 }
 
-// GetSelectRange gets the callback function.
+// GetSelectRange gets the "select_range" callback function.
 // Select all items in the given range. If the operation
 //
 //	is unsupported or known to fail for all items, return %FALSE.
@@ -193,7 +193,7 @@ func (x *SelectionModelInterface) GetSelectRange() func(SelectionModel, uint, ui
 	}
 }
 
-// OverrideUnselectRange sets the callback function.
+// OverrideUnselectRange sets the "unselect_range" callback function.
 // Unselect all items in the given range. If the
 //
 //	operation is unsupported or known to fail for all items, return
@@ -208,7 +208,7 @@ func (x *SelectionModelInterface) OverrideUnselectRange(cb func(SelectionModel, 
 	}
 }
 
-// GetUnselectRange gets the callback function.
+// GetUnselectRange gets the "unselect_range" callback function.
 // Unselect all items in the given range. If the
 //
 //	operation is unsupported or known to fail for all items, return
@@ -224,7 +224,7 @@ func (x *SelectionModelInterface) GetUnselectRange() func(SelectionModel, uint, 
 	}
 }
 
-// OverrideSelectAll sets the callback function.
+// OverrideSelectAll sets the "select_all" callback function.
 // Select all items in the model. If the operation is
 //
 //	unsupported or known to fail for all items, return %FALSE.
@@ -238,7 +238,7 @@ func (x *SelectionModelInterface) OverrideSelectAll(cb func(SelectionModel) bool
 	}
 }
 
-// GetSelectAll gets the callback function.
+// GetSelectAll gets the "select_all" callback function.
 // Select all items in the model. If the operation is
 //
 //	unsupported or known to fail for all items, return %FALSE.
@@ -253,7 +253,7 @@ func (x *SelectionModelInterface) GetSelectAll() func(SelectionModel) bool {
 	}
 }
 
-// OverrideUnselectAll sets the callback function.
+// OverrideUnselectAll sets the "unselect_all" callback function.
 // Unselect all items in the model. If the operation is
 //
 //	unsupported or known to fail for all items, return %FALSE.
@@ -267,7 +267,7 @@ func (x *SelectionModelInterface) OverrideUnselectAll(cb func(SelectionModel) bo
 	}
 }
 
-// GetUnselectAll gets the callback function.
+// GetUnselectAll gets the "unselect_all" callback function.
 // Unselect all items in the model. If the operation is
 //
 //	unsupported or known to fail for all items, return %FALSE.
@@ -282,7 +282,7 @@ func (x *SelectionModelInterface) GetUnselectAll() func(SelectionModel) bool {
 	}
 }
 
-// OverrideSetSelection sets the callback function.
+// OverrideSetSelection sets the "set_selection" callback function.
 // Set selection state of all items in mask to selected.
 //
 //	See gtk_selection_model_set_selection() for a detailed explanation
@@ -297,7 +297,7 @@ func (x *SelectionModelInterface) OverrideSetSelection(cb func(SelectionModel, *
 	}
 }
 
-// GetSetSelection gets the callback function.
+// GetSetSelection gets the "set_selection" callback function.
 // Set selection state of all items in mask to selected.
 //
 //	See gtk_selection_model_set_selection() for a detailed explanation

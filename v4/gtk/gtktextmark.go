@@ -187,6 +187,48 @@ func (c *TextMark) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyLeftGravity sets the "left-gravity" property.
+// Whether the mark has left gravity.
+//
+// When text is inserted at the mark’s current location, if the mark
+// has left gravity it will be moved to the left of the newly-inserted
+// text, otherwise to the right.
+func (x *TextMark) SetPropertyLeftGravity(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("left-gravity", &v)
+}
+
+// GetPropertyLeftGravity gets the "left-gravity" property.
+// Whether the mark has left gravity.
+//
+// When text is inserted at the mark’s current location, if the mark
+// has left gravity it will be moved to the left of the newly-inserted
+// text, otherwise to the right.
+func (x *TextMark) GetPropertyLeftGravity() bool {
+	var v gobject.Value
+	x.GetProperty("left-gravity", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyName sets the "name" property.
+// The name of the mark or %NULL if the mark is anonymous.
+func (x *TextMark) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The name of the mark or %NULL if the mark is anonymous.
+func (x *TextMark) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

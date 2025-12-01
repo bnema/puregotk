@@ -344,6 +344,40 @@ func (c *InfoBar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyRevealed sets the "revealed" property.
+// Whether the info bar shows its contents.
+func (x *InfoBar) SetPropertyRevealed(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("revealed", &v)
+}
+
+// GetPropertyRevealed gets the "revealed" property.
+// Whether the info bar shows its contents.
+func (x *InfoBar) GetPropertyRevealed() bool {
+	var v gobject.Value
+	x.GetProperty("revealed", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowCloseButton sets the "show-close-button" property.
+// Whether to include a standard close button.
+func (x *InfoBar) SetPropertyShowCloseButton(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-close-button", &v)
+}
+
+// GetPropertyShowCloseButton gets the "show-close-button" property.
+// Whether to include a standard close button.
+func (x *InfoBar) GetPropertyShowCloseButton() bool {
+	var v gobject.Value
+	x.GetProperty("show-close-button", &v)
+	return v.GetBoolean()
+}
+
 // Gets emitted when the user uses a keybinding to dismiss the info bar.
 //
 // The ::close signal is a [keybinding signal](class.SignalAction.html).
@@ -449,7 +483,7 @@ func (x *InfoBar) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *InfoBar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *InfoBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

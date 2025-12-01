@@ -238,6 +238,37 @@ func (c *CenterBox) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyShrinkCenterLast sets the "shrink-center-last" property.
+// Whether to shrink the center widget after other children.
+//
+// By default, when there's no space to give all three children their
+// natural widths, the start and end widgets start shrinking and the
+// center child keeps natural width until they reach minimum width.
+//
+// If false, start and end widgets keep natural width and the
+// center widget starts shrinking instead.
+func (x *CenterBox) SetPropertyShrinkCenterLast(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("shrink-center-last", &v)
+}
+
+// GetPropertyShrinkCenterLast gets the "shrink-center-last" property.
+// Whether to shrink the center widget after other children.
+//
+// By default, when there's no space to give all three children their
+// natural widths, the start and end widgets start shrinking and the
+// center child keeps natural width until they reach minimum width.
+//
+// If false, start and end widgets keep natural width and the
+// center widget starts shrinking instead.
+func (x *CenterBox) GetPropertyShrinkCenterLast() bool {
+	var v gobject.Value
+	x.GetProperty("shrink-center-last", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -295,7 +326,7 @@ func (x *CenterBox) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *CenterBox) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *CenterBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

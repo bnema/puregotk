@@ -321,6 +321,108 @@ func (c *SpinRow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyClimbRate sets the "climb-rate" property.
+// The acceleration rate when you hold down a button or key.
+func (x *SpinRow) SetPropertyClimbRate(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("climb-rate", &v)
+}
+
+// GetPropertyClimbRate gets the "climb-rate" property.
+// The acceleration rate when you hold down a button or key.
+func (x *SpinRow) GetPropertyClimbRate() float64 {
+	var v gobject.Value
+	x.GetProperty("climb-rate", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyDigits sets the "digits" property.
+// The number of decimal places to display.
+func (x *SpinRow) SetPropertyDigits(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("digits", &v)
+}
+
+// GetPropertyDigits gets the "digits" property.
+// The number of decimal places to display.
+func (x *SpinRow) GetPropertyDigits() uint {
+	var v gobject.Value
+	x.GetProperty("digits", &v)
+	return v.GetUint()
+}
+
+// SetPropertyNumeric sets the "numeric" property.
+// Whether non-numeric characters should be ignored.
+func (x *SpinRow) SetPropertyNumeric(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("numeric", &v)
+}
+
+// GetPropertyNumeric gets the "numeric" property.
+// Whether non-numeric characters should be ignored.
+func (x *SpinRow) GetPropertyNumeric() bool {
+	var v gobject.Value
+	x.GetProperty("numeric", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySnapToTicks sets the "snap-to-ticks" property.
+// Whether invalid values are snapped to the nearest step increment.
+func (x *SpinRow) SetPropertySnapToTicks(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("snap-to-ticks", &v)
+}
+
+// GetPropertySnapToTicks gets the "snap-to-ticks" property.
+// Whether invalid values are snapped to the nearest step increment.
+func (x *SpinRow) GetPropertySnapToTicks() bool {
+	var v gobject.Value
+	x.GetProperty("snap-to-ticks", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyValue sets the "value" property.
+// The current value.
+func (x *SpinRow) SetPropertyValue(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("value", &v)
+}
+
+// GetPropertyValue gets the "value" property.
+// The current value.
+func (x *SpinRow) GetPropertyValue() float64 {
+	var v gobject.Value
+	x.GetProperty("value", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyWrap sets the "wrap" property.
+// Whether the spin row should wrap upon reaching its limits.
+func (x *SpinRow) SetPropertyWrap(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("wrap", &v)
+}
+
+// GetPropertyWrap gets the "wrap" property.
+// Whether the spin row should wrap upon reaching its limits.
+func (x *SpinRow) GetPropertyWrap() bool {
+	var v gobject.Value
+	x.GetProperty("wrap", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to convert the user's input into a double value.
 //
 // The signal handler is expected to use [method@Gtk.Editable.get_text] to
@@ -329,13 +431,13 @@ func (c *SpinRow) SetGoPointer(ptr uintptr) {
 // The default conversion uses [func@GLib.strtod].
 //
 // See [signal@Gtk.SpinButton::input].
-func (x *SpinRow) ConnectInput(cb *func(SpinRow, float64) int) uint32 {
+func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		return gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
 	}
 
-	fcb := func(clsPtr uintptr, NewValueVarp float64) int {
+	fcb := func(clsPtr uintptr, NewValueVarp *float64) int {
 		fa := SpinRow{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -449,7 +551,7 @@ func (x *SpinRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *SpinRow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *SpinRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -905,7 +1007,7 @@ func (x *SpinRow) GetPosition() int {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *SpinRow) GetSelectionBounds(StartPosVar int, EndPosVar int) bool {
+func (x *SpinRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := gtk.XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret

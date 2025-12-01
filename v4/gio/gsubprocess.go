@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -211,14 +213,14 @@ func (x *Subprocess) CommunicateFinish(ResultVar AsyncResult, StdoutBufVar **gli
 
 }
 
-var xSubprocessCommunicateUtf8 func(uintptr, string, uintptr, string, string, **glib.Error) bool
+var xSubprocessCommunicateUtf8 func(uintptr, string, uintptr, *string, *string, **glib.Error) bool
 
 // Like g_subprocess_communicate(), but validates the output of the
 // process as UTF-8, and returns it as a regular NUL terminated string.
 //
 // On error, @stdout_buf and @stderr_buf will be set to undefined values and
 // should not be used.
-func (x *Subprocess) CommunicateUtf8(StdinBufVar string, CancellableVar *Cancellable, StdoutBufVar string, StderrBufVar string) (bool, error) {
+func (x *Subprocess) CommunicateUtf8(StdinBufVar string, CancellableVar *Cancellable, StdoutBufVar *string, StderrBufVar *string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSubprocessCommunicateUtf8(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
@@ -239,10 +241,10 @@ func (x *Subprocess) CommunicateUtf8Async(StdinBufVar string, CancellableVar *Ca
 
 }
 
-var xSubprocessCommunicateUtf8Finish func(uintptr, uintptr, string, string, **glib.Error) bool
+var xSubprocessCommunicateUtf8Finish func(uintptr, uintptr, *string, *string, **glib.Error) bool
 
 // Complete an invocation of g_subprocess_communicate_utf8_async().
-func (x *Subprocess) CommunicateUtf8Finish(ResultVar AsyncResult, StdoutBufVar string, StderrBufVar string) (bool, error) {
+func (x *Subprocess) CommunicateUtf8Finish(ResultVar AsyncResult, StdoutBufVar *string, StderrBufVar *string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSubprocessCommunicateUtf8Finish(x.GoPointer(), ResultVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
@@ -549,6 +551,15 @@ func (c *Subprocess) GoPointer() uintptr {
 
 func (c *Subprocess) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyArgv sets the "argv" property.
+// Argument vector.
+func (x *Subprocess) SetPropertyArgv(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("argv", &v)
 }
 
 // Initializes the object implementing the interface.

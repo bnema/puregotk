@@ -21,7 +21,7 @@ func (x *AccessibleRangeInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideSetCurrentValue sets the callback function.
+// OverrideSetCurrentValue sets the "set_current_value" callback function.
 func (x *AccessibleRangeInterface) OverrideSetCurrentValue(cb func(AccessibleRange, float64) bool) {
 	if cb == nil {
 		x.xSetCurrentValue = 0
@@ -32,7 +32,7 @@ func (x *AccessibleRangeInterface) OverrideSetCurrentValue(cb func(AccessibleRan
 	}
 }
 
-// GetSetCurrentValue gets the callback function.
+// GetSetCurrentValue gets the "set_current_value" callback function.
 func (x *AccessibleRangeInterface) GetSetCurrentValue() func(AccessibleRange, float64) bool {
 	if x.xSetCurrentValue == 0 {
 		return nil

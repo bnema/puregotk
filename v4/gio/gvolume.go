@@ -64,7 +64,7 @@ func (x *VolumeIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 // Changed signal that is emitted when the volume's state has changed.
 func (x *VolumeIface) OverrideChanged(cb func(Volume)) {
 	if cb == nil {
@@ -76,7 +76,7 @@ func (x *VolumeIface) OverrideChanged(cb func(Volume)) {
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 // Changed signal that is emitted when the volume's state has changed.
 func (x *VolumeIface) GetChanged() func(Volume) {
 	if x.xChanged == 0 {
@@ -89,7 +89,7 @@ func (x *VolumeIface) GetChanged() func(Volume) {
 	}
 }
 
-// OverrideRemoved sets the callback function.
+// OverrideRemoved sets the "removed" callback function.
 // The removed signal that is emitted when the #GVolume have been removed. If the recipient is holding references to the object they should release them so the object can be finalized.
 func (x *VolumeIface) OverrideRemoved(cb func(Volume)) {
 	if cb == nil {
@@ -101,7 +101,7 @@ func (x *VolumeIface) OverrideRemoved(cb func(Volume)) {
 	}
 }
 
-// GetRemoved gets the callback function.
+// GetRemoved gets the "removed" callback function.
 // The removed signal that is emitted when the #GVolume have been removed. If the recipient is holding references to the object they should release them so the object can be finalized.
 func (x *VolumeIface) GetRemoved() func(Volume) {
 	if x.xRemoved == 0 {
@@ -114,7 +114,7 @@ func (x *VolumeIface) GetRemoved() func(Volume) {
 	}
 }
 
-// OverrideGetName sets the callback function.
+// OverrideGetName sets the "get_name" callback function.
 // Gets a string containing the name of the #GVolume.
 func (x *VolumeIface) OverrideGetName(cb func(Volume) string) {
 	if cb == nil {
@@ -126,7 +126,7 @@ func (x *VolumeIface) OverrideGetName(cb func(Volume) string) {
 	}
 }
 
-// GetGetName gets the callback function.
+// GetGetName gets the "get_name" callback function.
 // Gets a string containing the name of the #GVolume.
 func (x *VolumeIface) GetGetName() func(Volume) string {
 	if x.xGetName == 0 {
@@ -139,7 +139,7 @@ func (x *VolumeIface) GetGetName() func(Volume) string {
 	}
 }
 
-// OverrideGetIcon sets the callback function.
+// OverrideGetIcon sets the "get_icon" callback function.
 // Gets a #GIcon for the #GVolume.
 func (x *VolumeIface) OverrideGetIcon(cb func(Volume) *IconBase) {
 	if cb == nil {
@@ -155,7 +155,7 @@ func (x *VolumeIface) OverrideGetIcon(cb func(Volume) *IconBase) {
 	}
 }
 
-// GetGetIcon gets the callback function.
+// GetGetIcon gets the "get_icon" callback function.
 // Gets a #GIcon for the #GVolume.
 func (x *VolumeIface) GetGetIcon() func(Volume) *IconBase {
 	if x.xGetIcon == 0 {
@@ -174,7 +174,7 @@ func (x *VolumeIface) GetGetIcon() func(Volume) *IconBase {
 	}
 }
 
-// OverrideGetUuid sets the callback function.
+// OverrideGetUuid sets the "get_uuid" callback function.
 // Gets the UUID for the #GVolume. The reference is typically based on the file system UUID for the mount in question and should be considered an opaque string. Returns %NULL if there is no UUID available.
 func (x *VolumeIface) OverrideGetUuid(cb func(Volume) string) {
 	if cb == nil {
@@ -186,7 +186,7 @@ func (x *VolumeIface) OverrideGetUuid(cb func(Volume) string) {
 	}
 }
 
-// GetGetUuid gets the callback function.
+// GetGetUuid gets the "get_uuid" callback function.
 // Gets the UUID for the #GVolume. The reference is typically based on the file system UUID for the mount in question and should be considered an opaque string. Returns %NULL if there is no UUID available.
 func (x *VolumeIface) GetGetUuid() func(Volume) string {
 	if x.xGetUuid == 0 {
@@ -199,7 +199,7 @@ func (x *VolumeIface) GetGetUuid() func(Volume) string {
 	}
 }
 
-// OverrideGetDrive sets the callback function.
+// OverrideGetDrive sets the "get_drive" callback function.
 // Gets a #GDrive the volume is located on. Returns %NULL if the #GVolume is not associated with a #GDrive.
 func (x *VolumeIface) OverrideGetDrive(cb func(Volume) *DriveBase) {
 	if cb == nil {
@@ -215,7 +215,7 @@ func (x *VolumeIface) OverrideGetDrive(cb func(Volume) *DriveBase) {
 	}
 }
 
-// GetGetDrive gets the callback function.
+// GetGetDrive gets the "get_drive" callback function.
 // Gets a #GDrive the volume is located on. Returns %NULL if the #GVolume is not associated with a #GDrive.
 func (x *VolumeIface) GetGetDrive() func(Volume) *DriveBase {
 	if x.xGetDrive == 0 {
@@ -234,7 +234,7 @@ func (x *VolumeIface) GetGetDrive() func(Volume) *DriveBase {
 	}
 }
 
-// OverrideGetMount sets the callback function.
+// OverrideGetMount sets the "get_mount" callback function.
 // Gets a #GMount representing the mounted volume. Returns %NULL if the #GVolume is not mounted.
 func (x *VolumeIface) OverrideGetMount(cb func(Volume) *MountBase) {
 	if cb == nil {
@@ -250,7 +250,7 @@ func (x *VolumeIface) OverrideGetMount(cb func(Volume) *MountBase) {
 	}
 }
 
-// GetGetMount gets the callback function.
+// GetGetMount gets the "get_mount" callback function.
 // Gets a #GMount representing the mounted volume. Returns %NULL if the #GVolume is not mounted.
 func (x *VolumeIface) GetGetMount() func(Volume) *MountBase {
 	if x.xGetMount == 0 {
@@ -269,7 +269,7 @@ func (x *VolumeIface) GetGetMount() func(Volume) *MountBase {
 	}
 }
 
-// OverrideCanMount sets the callback function.
+// OverrideCanMount sets the "can_mount" callback function.
 // Returns %TRUE if the #GVolume can be mounted.
 func (x *VolumeIface) OverrideCanMount(cb func(Volume) bool) {
 	if cb == nil {
@@ -281,7 +281,7 @@ func (x *VolumeIface) OverrideCanMount(cb func(Volume) bool) {
 	}
 }
 
-// GetCanMount gets the callback function.
+// GetCanMount gets the "can_mount" callback function.
 // Returns %TRUE if the #GVolume can be mounted.
 func (x *VolumeIface) GetCanMount() func(Volume) bool {
 	if x.xCanMount == 0 {
@@ -294,7 +294,7 @@ func (x *VolumeIface) GetCanMount() func(Volume) bool {
 	}
 }
 
-// OverrideCanEject sets the callback function.
+// OverrideCanEject sets the "can_eject" callback function.
 // Checks if a #GVolume can be ejected.
 func (x *VolumeIface) OverrideCanEject(cb func(Volume) bool) {
 	if cb == nil {
@@ -306,7 +306,7 @@ func (x *VolumeIface) OverrideCanEject(cb func(Volume) bool) {
 	}
 }
 
-// GetCanEject gets the callback function.
+// GetCanEject gets the "can_eject" callback function.
 // Checks if a #GVolume can be ejected.
 func (x *VolumeIface) GetCanEject() func(Volume) bool {
 	if x.xCanEject == 0 {
@@ -319,7 +319,7 @@ func (x *VolumeIface) GetCanEject() func(Volume) bool {
 	}
 }
 
-// OverrideMountFn sets the callback function.
+// OverrideMountFn sets the "mount_fn" callback function.
 // Mounts a given #GVolume.
 //
 //	#GVolume implementations must emit the #GMountOperation::aborted
@@ -335,7 +335,7 @@ func (x *VolumeIface) OverrideMountFn(cb func(Volume, MountMountFlags, *MountOpe
 	}
 }
 
-// GetMountFn gets the callback function.
+// GetMountFn gets the "mount_fn" callback function.
 // Mounts a given #GVolume.
 //
 //	#GVolume implementations must emit the #GMountOperation::aborted
@@ -352,7 +352,7 @@ func (x *VolumeIface) GetMountFn() func(Volume, MountMountFlags, *MountOperation
 	}
 }
 
-// OverrideMountFinish sets the callback function.
+// OverrideMountFinish sets the "mount_finish" callback function.
 // Finishes a mount operation.
 func (x *VolumeIface) OverrideMountFinish(cb func(Volume, AsyncResult) bool) {
 	if cb == nil {
@@ -364,7 +364,7 @@ func (x *VolumeIface) OverrideMountFinish(cb func(Volume, AsyncResult) bool) {
 	}
 }
 
-// GetMountFinish gets the callback function.
+// GetMountFinish gets the "mount_finish" callback function.
 // Finishes a mount operation.
 func (x *VolumeIface) GetMountFinish() func(Volume, AsyncResult) bool {
 	if x.xMountFinish == 0 {
@@ -377,7 +377,7 @@ func (x *VolumeIface) GetMountFinish() func(Volume, AsyncResult) bool {
 	}
 }
 
-// OverrideEject sets the callback function.
+// OverrideEject sets the "eject" callback function.
 // Ejects a given #GVolume.
 func (x *VolumeIface) OverrideEject(cb func(Volume, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -389,7 +389,7 @@ func (x *VolumeIface) OverrideEject(cb func(Volume, MountUnmountFlags, *Cancella
 	}
 }
 
-// GetEject gets the callback function.
+// GetEject gets the "eject" callback function.
 // Ejects a given #GVolume.
 func (x *VolumeIface) GetEject() func(Volume, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xEject == 0 {
@@ -402,7 +402,7 @@ func (x *VolumeIface) GetEject() func(Volume, MountUnmountFlags, *Cancellable, *
 	}
 }
 
-// OverrideEjectFinish sets the callback function.
+// OverrideEjectFinish sets the "eject_finish" callback function.
 // Finishes an eject operation.
 func (x *VolumeIface) OverrideEjectFinish(cb func(Volume, AsyncResult) bool) {
 	if cb == nil {
@@ -414,7 +414,7 @@ func (x *VolumeIface) OverrideEjectFinish(cb func(Volume, AsyncResult) bool) {
 	}
 }
 
-// GetEjectFinish gets the callback function.
+// GetEjectFinish gets the "eject_finish" callback function.
 // Finishes an eject operation.
 func (x *VolumeIface) GetEjectFinish() func(Volume, AsyncResult) bool {
 	if x.xEjectFinish == 0 {
@@ -427,7 +427,7 @@ func (x *VolumeIface) GetEjectFinish() func(Volume, AsyncResult) bool {
 	}
 }
 
-// OverrideGetIdentifier sets the callback function.
+// OverrideGetIdentifier sets the "get_identifier" callback function.
 // Returns the [identifier](#volume-identifiers) of the given kind, or %NULL if
 //
 //	the #GVolume doesn't have one.
@@ -441,7 +441,7 @@ func (x *VolumeIface) OverrideGetIdentifier(cb func(Volume, string) string) {
 	}
 }
 
-// GetGetIdentifier gets the callback function.
+// GetGetIdentifier gets the "get_identifier" callback function.
 // Returns the [identifier](#volume-identifiers) of the given kind, or %NULL if
 //
 //	the #GVolume doesn't have one.
@@ -456,7 +456,7 @@ func (x *VolumeIface) GetGetIdentifier() func(Volume, string) string {
 	}
 }
 
-// OverrideEnumerateIdentifiers sets the callback function.
+// OverrideEnumerateIdentifiers sets the "enumerate_identifiers" callback function.
 // Returns an array strings listing the kinds
 //
 //	of [identifiers](#volume-identifiers) which the #GVolume has.
@@ -470,7 +470,7 @@ func (x *VolumeIface) OverrideEnumerateIdentifiers(cb func(Volume) []string) {
 	}
 }
 
-// GetEnumerateIdentifiers gets the callback function.
+// GetEnumerateIdentifiers gets the "enumerate_identifiers" callback function.
 // Returns an array strings listing the kinds
 //
 //	of [identifiers](#volume-identifiers) which the #GVolume has.
@@ -485,7 +485,7 @@ func (x *VolumeIface) GetEnumerateIdentifiers() func(Volume) []string {
 	}
 }
 
-// OverrideShouldAutomount sets the callback function.
+// OverrideShouldAutomount sets the "should_automount" callback function.
 // Returns %TRUE if the #GVolume should be automatically mounted.
 func (x *VolumeIface) OverrideShouldAutomount(cb func(Volume) bool) {
 	if cb == nil {
@@ -497,7 +497,7 @@ func (x *VolumeIface) OverrideShouldAutomount(cb func(Volume) bool) {
 	}
 }
 
-// GetShouldAutomount gets the callback function.
+// GetShouldAutomount gets the "should_automount" callback function.
 // Returns %TRUE if the #GVolume should be automatically mounted.
 func (x *VolumeIface) GetShouldAutomount() func(Volume) bool {
 	if x.xShouldAutomount == 0 {
@@ -510,7 +510,7 @@ func (x *VolumeIface) GetShouldAutomount() func(Volume) bool {
 	}
 }
 
-// OverrideGetActivationRoot sets the callback function.
+// OverrideGetActivationRoot sets the "get_activation_root" callback function.
 // Returns the activation root for the #GVolume if it is known in advance or %NULL if
 //
 //	it is not known.
@@ -528,7 +528,7 @@ func (x *VolumeIface) OverrideGetActivationRoot(cb func(Volume) *FileBase) {
 	}
 }
 
-// GetGetActivationRoot gets the callback function.
+// GetGetActivationRoot gets the "get_activation_root" callback function.
 // Returns the activation root for the #GVolume if it is known in advance or %NULL if
 //
 //	it is not known.
@@ -549,7 +549,7 @@ func (x *VolumeIface) GetGetActivationRoot() func(Volume) *FileBase {
 	}
 }
 
-// OverrideEjectWithOperation sets the callback function.
+// OverrideEjectWithOperation sets the "eject_with_operation" callback function.
 // Starts ejecting a #GVolume using a #GMountOperation. Since 2.22.
 func (x *VolumeIface) OverrideEjectWithOperation(cb func(Volume, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -561,7 +561,7 @@ func (x *VolumeIface) OverrideEjectWithOperation(cb func(Volume, MountUnmountFla
 	}
 }
 
-// GetEjectWithOperation gets the callback function.
+// GetEjectWithOperation gets the "eject_with_operation" callback function.
 // Starts ejecting a #GVolume using a #GMountOperation. Since 2.22.
 func (x *VolumeIface) GetEjectWithOperation() func(Volume, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xEjectWithOperation == 0 {
@@ -574,7 +574,7 @@ func (x *VolumeIface) GetEjectWithOperation() func(Volume, MountUnmountFlags, *M
 	}
 }
 
-// OverrideEjectWithOperationFinish sets the callback function.
+// OverrideEjectWithOperationFinish sets the "eject_with_operation_finish" callback function.
 // Finishes an eject operation using a #GMountOperation. Since 2.22.
 func (x *VolumeIface) OverrideEjectWithOperationFinish(cb func(Volume, AsyncResult) bool) {
 	if cb == nil {
@@ -586,7 +586,7 @@ func (x *VolumeIface) OverrideEjectWithOperationFinish(cb func(Volume, AsyncResu
 	}
 }
 
-// GetEjectWithOperationFinish gets the callback function.
+// GetEjectWithOperationFinish gets the "eject_with_operation_finish" callback function.
 // Finishes an eject operation using a #GMountOperation. Since 2.22.
 func (x *VolumeIface) GetEjectWithOperationFinish() func(Volume, AsyncResult) bool {
 	if x.xEjectWithOperationFinish == 0 {
@@ -599,7 +599,7 @@ func (x *VolumeIface) GetEjectWithOperationFinish() func(Volume, AsyncResult) bo
 	}
 }
 
-// OverrideGetSortKey sets the callback function.
+// OverrideGetSortKey sets the "get_sort_key" callback function.
 // Gets a key used for sorting #GVolume instance or %NULL if no such key exists. Since 2.32.
 func (x *VolumeIface) OverrideGetSortKey(cb func(Volume) string) {
 	if cb == nil {
@@ -611,7 +611,7 @@ func (x *VolumeIface) OverrideGetSortKey(cb func(Volume) string) {
 	}
 }
 
-// GetGetSortKey gets the callback function.
+// GetGetSortKey gets the "get_sort_key" callback function.
 // Gets a key used for sorting #GVolume instance or %NULL if no such key exists. Since 2.32.
 func (x *VolumeIface) GetGetSortKey() func(Volume) string {
 	if x.xGetSortKey == 0 {
@@ -624,7 +624,7 @@ func (x *VolumeIface) GetGetSortKey() func(Volume) string {
 	}
 }
 
-// OverrideGetSymbolicIcon sets the callback function.
+// OverrideGetSymbolicIcon sets the "get_symbolic_icon" callback function.
 // Gets a symbolic #GIcon for the #GVolume. Since 2.34.
 func (x *VolumeIface) OverrideGetSymbolicIcon(cb func(Volume) *IconBase) {
 	if cb == nil {
@@ -640,7 +640,7 @@ func (x *VolumeIface) OverrideGetSymbolicIcon(cb func(Volume) *IconBase) {
 	}
 }
 
-// GetGetSymbolicIcon gets the callback function.
+// GetGetSymbolicIcon gets the "get_symbolic_icon" callback function.
 // Gets a symbolic #GIcon for the #GVolume. Since 2.34.
 func (x *VolumeIface) GetGetSymbolicIcon() func(Volume) *IconBase {
 	if x.xGetSymbolicIcon == 0 {

@@ -290,10 +290,10 @@ func (x *Grid) InsertRow(PositionVar int) {
 
 }
 
-var xGridQueryChild func(uintptr, uintptr, int, int, int, int)
+var xGridQueryChild func(uintptr, uintptr, *int, *int, *int, *int)
 
 // Queries the attach points and spans of @child inside the given `GtkGrid`.
-func (x *Grid) QueryChild(ChildVar *Widget, ColumnVar int, RowVar int, WidthVar int, HeightVar int) {
+func (x *Grid) QueryChild(ChildVar *Widget, ColumnVar *int, RowVar *int, WidthVar *int, HeightVar *int) {
 
 	xGridQueryChild(x.GoPointer(), ChildVar.GoPointer(), ColumnVar, RowVar, WidthVar, HeightVar)
 
@@ -411,6 +411,91 @@ func (c *Grid) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyBaselineRow sets the "baseline-row" property.
+// The row to align to the baseline when valign is using baseline alignment.
+func (x *Grid) SetPropertyBaselineRow(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("baseline-row", &v)
+}
+
+// GetPropertyBaselineRow gets the "baseline-row" property.
+// The row to align to the baseline when valign is using baseline alignment.
+func (x *Grid) GetPropertyBaselineRow() int {
+	var v gobject.Value
+	x.GetProperty("baseline-row", &v)
+	return v.GetInt()
+}
+
+// SetPropertyColumnHomogeneous sets the "column-homogeneous" property.
+// If %TRUE, the columns are all the same width.
+func (x *Grid) SetPropertyColumnHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("column-homogeneous", &v)
+}
+
+// GetPropertyColumnHomogeneous gets the "column-homogeneous" property.
+// If %TRUE, the columns are all the same width.
+func (x *Grid) GetPropertyColumnHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("column-homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyColumnSpacing sets the "column-spacing" property.
+// The amount of space between two consecutive columns.
+func (x *Grid) SetPropertyColumnSpacing(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("column-spacing", &v)
+}
+
+// GetPropertyColumnSpacing gets the "column-spacing" property.
+// The amount of space between two consecutive columns.
+func (x *Grid) GetPropertyColumnSpacing() int {
+	var v gobject.Value
+	x.GetProperty("column-spacing", &v)
+	return v.GetInt()
+}
+
+// SetPropertyRowHomogeneous sets the "row-homogeneous" property.
+// If %TRUE, the rows are all the same height.
+func (x *Grid) SetPropertyRowHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("row-homogeneous", &v)
+}
+
+// GetPropertyRowHomogeneous gets the "row-homogeneous" property.
+// If %TRUE, the rows are all the same height.
+func (x *Grid) GetPropertyRowHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("row-homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRowSpacing sets the "row-spacing" property.
+// The amount of space between two consecutive rows.
+func (x *Grid) SetPropertyRowSpacing(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("row-spacing", &v)
+}
+
+// GetPropertyRowSpacing gets the "row-spacing" property.
+// The amount of space between two consecutive rows.
+func (x *Grid) GetPropertyRowSpacing() int {
+	var v gobject.Value
+	x.GetProperty("row-spacing", &v)
+	return v.GetInt()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -468,7 +553,7 @@ func (x *Grid) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Grid) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Grid) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

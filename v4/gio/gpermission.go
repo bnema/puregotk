@@ -36,7 +36,7 @@ func (x *PermissionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideAcquire sets the callback function.
+// OverrideAcquire sets the "acquire" callback function.
 func (x *PermissionClass) OverrideAcquire(cb func(*Permission, *Cancellable) bool) {
 	if cb == nil {
 		x.xAcquire = 0
@@ -47,7 +47,7 @@ func (x *PermissionClass) OverrideAcquire(cb func(*Permission, *Cancellable) boo
 	}
 }
 
-// GetAcquire gets the callback function.
+// GetAcquire gets the "acquire" callback function.
 func (x *PermissionClass) GetAcquire() func(*Permission, *Cancellable) bool {
 	if x.xAcquire == 0 {
 		return nil
@@ -59,7 +59,7 @@ func (x *PermissionClass) GetAcquire() func(*Permission, *Cancellable) bool {
 	}
 }
 
-// OverrideAcquireAsync sets the callback function.
+// OverrideAcquireAsync sets the "acquire_async" callback function.
 func (x *PermissionClass) OverrideAcquireAsync(cb func(*Permission, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xAcquireAsync = 0
@@ -70,7 +70,7 @@ func (x *PermissionClass) OverrideAcquireAsync(cb func(*Permission, *Cancellable
 	}
 }
 
-// GetAcquireAsync gets the callback function.
+// GetAcquireAsync gets the "acquire_async" callback function.
 func (x *PermissionClass) GetAcquireAsync() func(*Permission, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xAcquireAsync == 0 {
 		return nil
@@ -82,7 +82,7 @@ func (x *PermissionClass) GetAcquireAsync() func(*Permission, *Cancellable, *Asy
 	}
 }
 
-// OverrideAcquireFinish sets the callback function.
+// OverrideAcquireFinish sets the "acquire_finish" callback function.
 func (x *PermissionClass) OverrideAcquireFinish(cb func(*Permission, AsyncResult) bool) {
 	if cb == nil {
 		x.xAcquireFinish = 0
@@ -93,7 +93,7 @@ func (x *PermissionClass) OverrideAcquireFinish(cb func(*Permission, AsyncResult
 	}
 }
 
-// GetAcquireFinish gets the callback function.
+// GetAcquireFinish gets the "acquire_finish" callback function.
 func (x *PermissionClass) GetAcquireFinish() func(*Permission, AsyncResult) bool {
 	if x.xAcquireFinish == 0 {
 		return nil
@@ -105,7 +105,7 @@ func (x *PermissionClass) GetAcquireFinish() func(*Permission, AsyncResult) bool
 	}
 }
 
-// OverrideRelease sets the callback function.
+// OverrideRelease sets the "release" callback function.
 func (x *PermissionClass) OverrideRelease(cb func(*Permission, *Cancellable) bool) {
 	if cb == nil {
 		x.xRelease = 0
@@ -116,7 +116,7 @@ func (x *PermissionClass) OverrideRelease(cb func(*Permission, *Cancellable) boo
 	}
 }
 
-// GetRelease gets the callback function.
+// GetRelease gets the "release" callback function.
 func (x *PermissionClass) GetRelease() func(*Permission, *Cancellable) bool {
 	if x.xRelease == 0 {
 		return nil
@@ -128,7 +128,7 @@ func (x *PermissionClass) GetRelease() func(*Permission, *Cancellable) bool {
 	}
 }
 
-// OverrideReleaseAsync sets the callback function.
+// OverrideReleaseAsync sets the "release_async" callback function.
 func (x *PermissionClass) OverrideReleaseAsync(cb func(*Permission, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xReleaseAsync = 0
@@ -139,7 +139,7 @@ func (x *PermissionClass) OverrideReleaseAsync(cb func(*Permission, *Cancellable
 	}
 }
 
-// GetReleaseAsync gets the callback function.
+// GetReleaseAsync gets the "release_async" callback function.
 func (x *PermissionClass) GetReleaseAsync() func(*Permission, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xReleaseAsync == 0 {
 		return nil
@@ -151,7 +151,7 @@ func (x *PermissionClass) GetReleaseAsync() func(*Permission, *Cancellable, *Asy
 	}
 }
 
-// OverrideReleaseFinish sets the callback function.
+// OverrideReleaseFinish sets the "release_finish" callback function.
 func (x *PermissionClass) OverrideReleaseFinish(cb func(*Permission, AsyncResult) bool) {
 	if cb == nil {
 		x.xReleaseFinish = 0
@@ -162,7 +162,7 @@ func (x *PermissionClass) OverrideReleaseFinish(cb func(*Permission, AsyncResult
 	}
 }
 
-// GetReleaseFinish gets the callback function.
+// GetReleaseFinish gets the "release_finish" callback function.
 func (x *PermissionClass) GetReleaseFinish() func(*Permission, AsyncResult) bool {
 	if x.xReleaseFinish == 0 {
 		return nil
@@ -384,6 +384,33 @@ func (c *Permission) GoPointer() uintptr {
 
 func (c *Permission) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyAllowed gets the "allowed" property.
+// %TRUE if the caller currently has permission to perform the action that
+// @permission represents the permission to perform.
+func (x *Permission) GetPropertyAllowed() bool {
+	var v gobject.Value
+	x.GetProperty("allowed", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyCanAcquire gets the "can-acquire" property.
+// %TRUE if it is generally possible to acquire the permission by calling
+// g_permission_acquire().
+func (x *Permission) GetPropertyCanAcquire() bool {
+	var v gobject.Value
+	x.GetProperty("can-acquire", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyCanRelease gets the "can-release" property.
+// %TRUE if it is generally possible to release the permission by calling
+// g_permission_release().
+func (x *Permission) GetPropertyCanRelease() bool {
+	var v gobject.Value
+	x.GetProperty("can-release", &v)
+	return v.GetBoolean()
 }
 
 func init() {

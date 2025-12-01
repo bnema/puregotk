@@ -329,6 +329,177 @@ func (c *Carousel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAllowLongSwipes sets the "allow-long-swipes" property.
+// Whether to allow swiping for more than one page at a time.
+//
+// If the value is `FALSE`, each swipe can only move to the adjacent pages.
+func (x *Carousel) SetPropertyAllowLongSwipes(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("allow-long-swipes", &v)
+}
+
+// GetPropertyAllowLongSwipes gets the "allow-long-swipes" property.
+// Whether to allow swiping for more than one page at a time.
+//
+// If the value is `FALSE`, each swipe can only move to the adjacent pages.
+func (x *Carousel) GetPropertyAllowLongSwipes() bool {
+	var v gobject.Value
+	x.GetProperty("allow-long-swipes", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAllowMouseDrag sets the "allow-mouse-drag" property.
+// Sets whether the `AdwCarousel` can be dragged with mouse pointer.
+//
+// If the value is `FALSE`, dragging is only available on touch.
+func (x *Carousel) SetPropertyAllowMouseDrag(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("allow-mouse-drag", &v)
+}
+
+// GetPropertyAllowMouseDrag gets the "allow-mouse-drag" property.
+// Sets whether the `AdwCarousel` can be dragged with mouse pointer.
+//
+// If the value is `FALSE`, dragging is only available on touch.
+func (x *Carousel) GetPropertyAllowMouseDrag() bool {
+	var v gobject.Value
+	x.GetProperty("allow-mouse-drag", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAllowScrollWheel sets the "allow-scroll-wheel" property.
+// Whether the widget will respond to scroll wheel events.
+//
+// If the value is `FALSE`, wheel events will be ignored.
+func (x *Carousel) SetPropertyAllowScrollWheel(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("allow-scroll-wheel", &v)
+}
+
+// GetPropertyAllowScrollWheel gets the "allow-scroll-wheel" property.
+// Whether the widget will respond to scroll wheel events.
+//
+// If the value is `FALSE`, wheel events will be ignored.
+func (x *Carousel) GetPropertyAllowScrollWheel() bool {
+	var v gobject.Value
+	x.GetProperty("allow-scroll-wheel", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyInteractive sets the "interactive" property.
+// Whether the carousel can be navigated.
+//
+// This can be used to temporarily disable the carousel to only allow
+// navigating it in a certain state.
+func (x *Carousel) SetPropertyInteractive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("interactive", &v)
+}
+
+// GetPropertyInteractive gets the "interactive" property.
+// Whether the carousel can be navigated.
+//
+// This can be used to temporarily disable the carousel to only allow
+// navigating it in a certain state.
+func (x *Carousel) GetPropertyInteractive() bool {
+	var v gobject.Value
+	x.GetProperty("interactive", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNPages gets the "n-pages" property.
+// The number of pages in a `AdwCarousel`.
+func (x *Carousel) GetPropertyNPages() uint {
+	var v gobject.Value
+	x.GetProperty("n-pages", &v)
+	return v.GetUint()
+}
+
+// GetPropertyPosition gets the "position" property.
+// Current scrolling position, unitless.
+//
+// 1 matches 1 page. Use [method@Carousel.scroll_to] for changing it.
+func (x *Carousel) GetPropertyPosition() float64 {
+	var v gobject.Value
+	x.GetProperty("position", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyRevealDuration sets the "reveal-duration" property.
+// Page reveal duration, in milliseconds.
+//
+// Reveal duration is used when animating adding or removing pages.
+func (x *Carousel) SetPropertyRevealDuration(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("reveal-duration", &v)
+}
+
+// GetPropertyRevealDuration gets the "reveal-duration" property.
+// Page reveal duration, in milliseconds.
+//
+// Reveal duration is used when animating adding or removing pages.
+func (x *Carousel) GetPropertyRevealDuration() uint {
+	var v gobject.Value
+	x.GetProperty("reveal-duration", &v)
+	return v.GetUint()
+}
+
+// SetPropertyScrollParams sets the "scroll-params" property.
+// Scroll animation spring parameters.
+//
+// The default value is equivalent to:
+//
+// ```c
+// adw_spring_params_new (1, 0.5, 500)
+// ```
+func (x *Carousel) SetPropertyScrollParams(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("scroll-params", &v)
+}
+
+// GetPropertyScrollParams gets the "scroll-params" property.
+// Scroll animation spring parameters.
+//
+// The default value is equivalent to:
+//
+// ```c
+// adw_spring_params_new (1, 0.5, 500)
+// ```
+func (x *Carousel) GetPropertyScrollParams() uintptr {
+	var v gobject.Value
+	x.GetProperty("scroll-params", &v)
+	return v.GetPointer()
+}
+
+// SetPropertySpacing sets the "spacing" property.
+// Spacing between pages in pixels.
+func (x *Carousel) SetPropertySpacing(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("spacing", &v)
+}
+
+// GetPropertySpacing gets the "spacing" property.
+// Spacing between pages in pixels.
+func (x *Carousel) GetPropertySpacing() uint {
+	var v gobject.Value
+	x.GetProperty("spacing", &v)
+	return v.GetUint()
+}
+
 // This signal is emitted after a page has been changed.
 //
 // It can be used to implement "infinite scrolling" by amending the pages
@@ -383,7 +554,7 @@ func (x *Carousel) GetProgress() float64 {
 //
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
-func (x *Carousel) GetSnapPoints(NSnapPointsVar int) uintptr {
+func (x *Carousel) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
@@ -461,7 +632,7 @@ func (x *Carousel) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Carousel) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Carousel) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

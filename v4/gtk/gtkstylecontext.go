@@ -32,7 +32,7 @@ func (x *StyleContextClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 func (x *StyleContextClass) OverrideChanged(cb func(*StyleContext)) {
 	if cb == nil {
 		x.xChanged = 0
@@ -43,7 +43,7 @@ func (x *StyleContextClass) OverrideChanged(cb func(*StyleContext)) {
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 func (x *StyleContextClass) GetChanged() func(*StyleContext) {
 	if x.xChanged == 0 {
 		return nil
@@ -55,7 +55,7 @@ func (x *StyleContextClass) GetChanged() func(*StyleContext) {
 	}
 }
 
-// OverrideGtkReserved1 sets the callback function.
+// OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *StyleContextClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {
 		x.xGtkReserved1 = 0
@@ -66,7 +66,7 @@ func (x *StyleContextClass) OverrideGtkReserved1(cb func()) {
 	}
 }
 
-// GetGtkReserved1 gets the callback function.
+// GetGtkReserved1 gets the "_gtk_reserved1" callback function.
 func (x *StyleContextClass) GetGtkReserved1() func() {
 	if x.xGtkReserved1 == 0 {
 		return nil
@@ -78,7 +78,7 @@ func (x *StyleContextClass) GetGtkReserved1() func() {
 	}
 }
 
-// OverrideGtkReserved2 sets the callback function.
+// OverrideGtkReserved2 sets the "_gtk_reserved2" callback function.
 func (x *StyleContextClass) OverrideGtkReserved2(cb func()) {
 	if cb == nil {
 		x.xGtkReserved2 = 0
@@ -89,7 +89,7 @@ func (x *StyleContextClass) OverrideGtkReserved2(cb func()) {
 	}
 }
 
-// GetGtkReserved2 gets the callback function.
+// GetGtkReserved2 gets the "_gtk_reserved2" callback function.
 func (x *StyleContextClass) GetGtkReserved2() func() {
 	if x.xGtkReserved2 == 0 {
 		return nil
@@ -101,7 +101,7 @@ func (x *StyleContextClass) GetGtkReserved2() func() {
 	}
 }
 
-// OverrideGtkReserved3 sets the callback function.
+// OverrideGtkReserved3 sets the "_gtk_reserved3" callback function.
 func (x *StyleContextClass) OverrideGtkReserved3(cb func()) {
 	if cb == nil {
 		x.xGtkReserved3 = 0
@@ -112,7 +112,7 @@ func (x *StyleContextClass) OverrideGtkReserved3(cb func()) {
 	}
 }
 
-// GetGtkReserved3 gets the callback function.
+// GetGtkReserved3 gets the "_gtk_reserved3" callback function.
 func (x *StyleContextClass) GetGtkReserved3() func() {
 	if x.xGtkReserved3 == 0 {
 		return nil
@@ -124,7 +124,7 @@ func (x *StyleContextClass) GetGtkReserved3() func() {
 	}
 }
 
-// OverrideGtkReserved4 sets the callback function.
+// OverrideGtkReserved4 sets the "_gtk_reserved4" callback function.
 func (x *StyleContextClass) OverrideGtkReserved4(cb func()) {
 	if cb == nil {
 		x.xGtkReserved4 = 0
@@ -135,7 +135,7 @@ func (x *StyleContextClass) OverrideGtkReserved4(cb func()) {
 	}
 }
 
-// GetGtkReserved4 gets the callback function.
+// GetGtkReserved4 gets the "_gtk_reserved4" callback function.
 func (x *StyleContextClass) GetGtkReserved4() func() {
 	if x.xGtkReserved4 == 0 {
 		return nil

@@ -269,6 +269,109 @@ func (c *ProgressBar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFraction sets the "fraction" property.
+// The fraction of total work that has been completed.
+func (x *ProgressBar) SetPropertyFraction(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("fraction", &v)
+}
+
+// GetPropertyFraction gets the "fraction" property.
+// The fraction of total work that has been completed.
+func (x *ProgressBar) GetPropertyFraction() float64 {
+	var v gobject.Value
+	x.GetProperty("fraction", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyInverted sets the "inverted" property.
+// Invert the direction in which the progress bar grows.
+func (x *ProgressBar) SetPropertyInverted(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("inverted", &v)
+}
+
+// GetPropertyInverted gets the "inverted" property.
+// Invert the direction in which the progress bar grows.
+func (x *ProgressBar) GetPropertyInverted() bool {
+	var v gobject.Value
+	x.GetProperty("inverted", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPulseStep sets the "pulse-step" property.
+// The fraction of total progress to move the bounding block when pulsed.
+func (x *ProgressBar) SetPropertyPulseStep(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("pulse-step", &v)
+}
+
+// GetPropertyPulseStep gets the "pulse-step" property.
+// The fraction of total progress to move the bounding block when pulsed.
+func (x *ProgressBar) GetPropertyPulseStep() float64 {
+	var v gobject.Value
+	x.GetProperty("pulse-step", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyShowText sets the "show-text" property.
+// Sets whether the progress bar will show a text in addition
+// to the bar itself.
+//
+// The shown text is either the value of the [property@Gtk.ProgressBar:text]
+// property or, if that is %NULL, the [property@Gtk.ProgressBar:fraction]
+// value, as a percentage.
+//
+// To make a progress bar that is styled and sized suitably for showing text
+// (even if the actual text is blank), set [property@Gtk.ProgressBar:show-text]
+// to %TRUE and [property@Gtk.ProgressBar:text] to the empty string (not %NULL).
+func (x *ProgressBar) SetPropertyShowText(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-text", &v)
+}
+
+// GetPropertyShowText gets the "show-text" property.
+// Sets whether the progress bar will show a text in addition
+// to the bar itself.
+//
+// The shown text is either the value of the [property@Gtk.ProgressBar:text]
+// property or, if that is %NULL, the [property@Gtk.ProgressBar:fraction]
+// value, as a percentage.
+//
+// To make a progress bar that is styled and sized suitably for showing text
+// (even if the actual text is blank), set [property@Gtk.ProgressBar:show-text]
+// to %TRUE and [property@Gtk.ProgressBar:text] to the empty string (not %NULL).
+func (x *ProgressBar) GetPropertyShowText() bool {
+	var v gobject.Value
+	x.GetProperty("show-text", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyText sets the "text" property.
+// Text to be displayed in the progress bar.
+func (x *ProgressBar) SetPropertyText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("text", &v)
+}
+
+// GetPropertyText gets the "text" property.
+// Text to be displayed in the progress bar.
+func (x *ProgressBar) GetPropertyText() string {
+	var v gobject.Value
+	x.GetProperty("text", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -326,7 +429,7 @@ func (x *ProgressBar) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ProgressBar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ProgressBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

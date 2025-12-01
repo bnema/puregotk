@@ -258,6 +258,94 @@ func (c *StyleManager) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyAccentColorRgba gets the "accent-color-rgba" property.
+// The current system accent color as a `GdkRGBA`.
+//
+// Equivalent to calling [func@AccentColor.to_rgba] on the value of
+// [property@StyleManager:accent-color].
+//
+// This is a background color. The matching foreground color is white.
+func (x *StyleManager) GetPropertyAccentColorRgba() uintptr {
+	var v gobject.Value
+	x.GetProperty("accent-color-rgba", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyDark gets the "dark" property.
+// Whether the application is using dark appearance.
+//
+// This property can be used to query the current appearance, as requested via
+// [property@StyleManager:color-scheme].
+func (x *StyleManager) GetPropertyDark() bool {
+	var v gobject.Value
+	x.GetProperty("dark", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyDocumentFontName gets the "document-font-name" property.
+// The system document font.
+//
+// The font is in the same format as [property@Gtk.Settings:gtk-font-name],
+// e.g. "Adwaita Sans 12".
+//
+// Use [func@Pango.FontDescription.from_string] to parse it.
+func (x *StyleManager) GetPropertyDocumentFontName() string {
+	var v gobject.Value
+	x.GetProperty("document-font-name", &v)
+	return v.GetString()
+}
+
+// GetPropertyHighContrast gets the "high-contrast" property.
+// Whether the application is using high contrast appearance.
+//
+// This cannot be overridden by applications.
+func (x *StyleManager) GetPropertyHighContrast() bool {
+	var v gobject.Value
+	x.GetProperty("high-contrast", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyMonospaceFontName gets the "monospace-font-name" property.
+// The system monospace font.
+//
+// The font is in the same format as [property@Gtk.Settings:gtk-font-name],
+// e.g. "Adwaita Mono 11".
+//
+// Use [func@Pango.FontDescription.from_string] to parse it.
+func (x *StyleManager) GetPropertyMonospaceFontName() string {
+	var v gobject.Value
+	x.GetProperty("monospace-font-name", &v)
+	return v.GetString()
+}
+
+// GetPropertySystemSupportsAccentColors gets the "system-supports-accent-colors" property.
+// Whether the system supports accent colors.
+//
+// This property can be used to check if the current environment provides an
+// accent color preference. For example, applications might want to show a
+// preference for choosing accent color if it's set to `FALSE`.
+//
+// See [property@StyleManager:accent-color].
+func (x *StyleManager) GetPropertySystemSupportsAccentColors() bool {
+	var v gobject.Value
+	x.GetProperty("system-supports-accent-colors", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertySystemSupportsColorSchemes gets the "system-supports-color-schemes" property.
+// Whether the system supports color schemes.
+//
+// This property can be used to check if the current environment provides a
+// color scheme preference. For example, applications might want to show a
+// separate appearance switcher if it's set to `FALSE`.
+//
+// See [property@StyleManager:color-scheme].
+func (x *StyleManager) GetPropertySystemSupportsColorSchemes() bool {
+	var v gobject.Value
+	x.GetProperty("system-supports-color-schemes", &v)
+	return v.GetBoolean()
+}
+
 var xStyleManagerGetDefault func() uintptr
 
 // Gets the default `AdwStyleManager` instance.

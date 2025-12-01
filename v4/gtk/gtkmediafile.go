@@ -35,7 +35,7 @@ func (x *MediaFileClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideOpen sets the callback function.
+// OverrideOpen sets the "open" callback function.
 func (x *MediaFileClass) OverrideOpen(cb func(*MediaFile)) {
 	if cb == nil {
 		x.xOpen = 0
@@ -46,7 +46,7 @@ func (x *MediaFileClass) OverrideOpen(cb func(*MediaFile)) {
 	}
 }
 
-// GetOpen gets the callback function.
+// GetOpen gets the "open" callback function.
 func (x *MediaFileClass) GetOpen() func(*MediaFile) {
 	if x.xOpen == 0 {
 		return nil
@@ -58,7 +58,7 @@ func (x *MediaFileClass) GetOpen() func(*MediaFile) {
 	}
 }
 
-// OverrideClose sets the callback function.
+// OverrideClose sets the "close" callback function.
 func (x *MediaFileClass) OverrideClose(cb func(*MediaFile)) {
 	if cb == nil {
 		x.xClose = 0
@@ -69,7 +69,7 @@ func (x *MediaFileClass) OverrideClose(cb func(*MediaFile)) {
 	}
 }
 
-// GetClose gets the callback function.
+// GetClose gets the "close" callback function.
 func (x *MediaFileClass) GetClose() func(*MediaFile) {
 	if x.xClose == 0 {
 		return nil
@@ -81,7 +81,7 @@ func (x *MediaFileClass) GetClose() func(*MediaFile) {
 	}
 }
 
-// OverrideGtkReserved1 sets the callback function.
+// OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *MediaFileClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {
 		x.xGtkReserved1 = 0
@@ -92,7 +92,7 @@ func (x *MediaFileClass) OverrideGtkReserved1(cb func()) {
 	}
 }
 
-// GetGtkReserved1 gets the callback function.
+// GetGtkReserved1 gets the "_gtk_reserved1" callback function.
 func (x *MediaFileClass) GetGtkReserved1() func() {
 	if x.xGtkReserved1 == 0 {
 		return nil
@@ -104,7 +104,7 @@ func (x *MediaFileClass) GetGtkReserved1() func() {
 	}
 }
 
-// OverrideGtkReserved2 sets the callback function.
+// OverrideGtkReserved2 sets the "_gtk_reserved2" callback function.
 func (x *MediaFileClass) OverrideGtkReserved2(cb func()) {
 	if cb == nil {
 		x.xGtkReserved2 = 0
@@ -115,7 +115,7 @@ func (x *MediaFileClass) OverrideGtkReserved2(cb func()) {
 	}
 }
 
-// GetGtkReserved2 gets the callback function.
+// GetGtkReserved2 gets the "_gtk_reserved2" callback function.
 func (x *MediaFileClass) GetGtkReserved2() func() {
 	if x.xGtkReserved2 == 0 {
 		return nil
@@ -127,7 +127,7 @@ func (x *MediaFileClass) GetGtkReserved2() func() {
 	}
 }
 
-// OverrideGtkReserved3 sets the callback function.
+// OverrideGtkReserved3 sets the "_gtk_reserved3" callback function.
 func (x *MediaFileClass) OverrideGtkReserved3(cb func()) {
 	if cb == nil {
 		x.xGtkReserved3 = 0
@@ -138,7 +138,7 @@ func (x *MediaFileClass) OverrideGtkReserved3(cb func()) {
 	}
 }
 
-// GetGtkReserved3 gets the callback function.
+// GetGtkReserved3 gets the "_gtk_reserved3" callback function.
 func (x *MediaFileClass) GetGtkReserved3() func() {
 	if x.xGtkReserved3 == 0 {
 		return nil
@@ -150,7 +150,7 @@ func (x *MediaFileClass) GetGtkReserved3() func() {
 	}
 }
 
-// OverrideGtkReserved4 sets the callback function.
+// OverrideGtkReserved4 sets the "_gtk_reserved4" callback function.
 func (x *MediaFileClass) OverrideGtkReserved4(cb func()) {
 	if cb == nil {
 		x.xGtkReserved4 = 0
@@ -161,7 +161,7 @@ func (x *MediaFileClass) OverrideGtkReserved4(cb func()) {
 	}
 }
 
-// GetGtkReserved4 gets the callback function.
+// GetGtkReserved4 gets the "_gtk_reserved4" callback function.
 func (x *MediaFileClass) GetGtkReserved4() func() {
 	if x.xGtkReserved4 == 0 {
 		return nil
@@ -410,7 +410,7 @@ func (c *MediaFile) SetGoPointer(ptr uintptr) {
 // and @specified_height are known, but it is useful to call this
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
-func (x *MediaFile) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar float64, ConcreteHeightVar float64) {
+func (x *MediaFile) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
 
 	gdk.XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
 

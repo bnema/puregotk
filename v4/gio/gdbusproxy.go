@@ -29,7 +29,7 @@ func (x *DBusProxyClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGPropertiesChanged sets the callback function.
+// OverrideGPropertiesChanged sets the "g_properties_changed" callback function.
 // Signal class handler for the #GDBusProxy::g-properties-changed signal.
 func (x *DBusProxyClass) OverrideGPropertiesChanged(cb func(*DBusProxy, *glib.Variant, string)) {
 	if cb == nil {
@@ -41,7 +41,7 @@ func (x *DBusProxyClass) OverrideGPropertiesChanged(cb func(*DBusProxy, *glib.Va
 	}
 }
 
-// GetGPropertiesChanged gets the callback function.
+// GetGPropertiesChanged gets the "g_properties_changed" callback function.
 // Signal class handler for the #GDBusProxy::g-properties-changed signal.
 func (x *DBusProxyClass) GetGPropertiesChanged() func(*DBusProxy, *glib.Variant, string) {
 	if x.xGPropertiesChanged == 0 {
@@ -54,7 +54,7 @@ func (x *DBusProxyClass) GetGPropertiesChanged() func(*DBusProxy, *glib.Variant,
 	}
 }
 
-// OverrideGSignal sets the callback function.
+// OverrideGSignal sets the "g_signal" callback function.
 // Signal class handler for the #GDBusProxy::g-signal signal.
 func (x *DBusProxyClass) OverrideGSignal(cb func(*DBusProxy, string, string, *glib.Variant)) {
 	if cb == nil {
@@ -66,7 +66,7 @@ func (x *DBusProxyClass) OverrideGSignal(cb func(*DBusProxy, string, string, *gl
 	}
 }
 
-// GetGSignal gets the callback function.
+// GetGSignal gets the "g_signal" callback function.
 // Signal class handler for the #GDBusProxy::g-signal signal.
 func (x *DBusProxyClass) GetGSignal() func(*DBusProxy, string, string, *glib.Variant) {
 	if x.xGSignal == 0 {
@@ -383,13 +383,13 @@ func (x *DBusProxy) CallWithUnixFdList(MethodNameVar string, ParametersVar *glib
 
 }
 
-var xDBusProxyCallWithUnixFdListFinish func(uintptr, uintptr, uintptr, **glib.Error) *glib.Variant
+var xDBusProxyCallWithUnixFdListFinish func(uintptr, **UnixFDList, uintptr, **glib.Error) *glib.Variant
 
 // Finishes an operation started with g_dbus_proxy_call_with_unix_fd_list().
 func (x *DBusProxy) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, ResVar AsyncResult) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusProxyCallWithUnixFdListFinish(x.GoPointer(), *gobject.ConvertPtr(OutFdListVar), ResVar.GoPointer(), &cerr)
+	cret := xDBusProxyCallWithUnixFdListFinish(x.GoPointer(), OutFdListVar, ResVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -397,7 +397,7 @@ func (x *DBusProxy) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, ResVar A
 
 }
 
-var xDBusProxyCallWithUnixFdListSync func(uintptr, string, *glib.Variant, DBusCallFlags, int, uintptr, uintptr, uintptr, **glib.Error) *glib.Variant
+var xDBusProxyCallWithUnixFdListSync func(uintptr, string, *glib.Variant, DBusCallFlags, int, uintptr, **UnixFDList, uintptr, **glib.Error) *glib.Variant
 
 // Like g_dbus_proxy_call_sync() but also takes and returns #GUnixFDList objects.
 //
@@ -405,7 +405,7 @@ var xDBusProxyCallWithUnixFdListSync func(uintptr, string, *glib.Variant, DBusCa
 func (x *DBusProxy) CallWithUnixFdListSync(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusProxyCallWithUnixFdListSync(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), *gobject.ConvertPtr(OutFdListVar), CancellableVar.GoPointer(), &cerr)
+	cret := xDBusProxyCallWithUnixFdListSync(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), OutFdListVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -605,6 +605,163 @@ func (c *DBusProxy) GoPointer() uintptr {
 
 func (c *DBusProxy) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyGDefaultTimeout sets the "g-default-timeout" property.
+// The timeout to use if -1 (specifying default timeout) is passed
+// as @timeout_msec in the g_dbus_proxy_call() and
+// g_dbus_proxy_call_sync() functions.
+//
+// This allows applications to set a proxy-wide timeout for all
+// remote method invocations on the proxy. If this property is -1,
+// the default timeout (typically 25 seconds) is used. If set to
+// %G_MAXINT, then no timeout is used.
+func (x *DBusProxy) SetPropertyGDefaultTimeout(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("g-default-timeout", &v)
+}
+
+// GetPropertyGDefaultTimeout gets the "g-default-timeout" property.
+// The timeout to use if -1 (specifying default timeout) is passed
+// as @timeout_msec in the g_dbus_proxy_call() and
+// g_dbus_proxy_call_sync() functions.
+//
+// This allows applications to set a proxy-wide timeout for all
+// remote method invocations on the proxy. If this property is -1,
+// the default timeout (typically 25 seconds) is used. If set to
+// %G_MAXINT, then no timeout is used.
+func (x *DBusProxy) GetPropertyGDefaultTimeout() int {
+	var v gobject.Value
+	x.GetProperty("g-default-timeout", &v)
+	return v.GetInt()
+}
+
+// SetPropertyGInterfaceInfo sets the "g-interface-info" property.
+// Ensure that interactions with this proxy conform to the given
+// interface. This is mainly to ensure that malformed data received
+// from the other peer is ignored. The given #GDBusInterfaceInfo is
+// said to be the "expected interface".
+//
+// The checks performed are:
+//
+//   - When completing a method call, if the type signature of
+//     the reply message isn't what's expected, the reply is
+//     discarded and the #GError is set to %G_IO_ERROR_INVALID_ARGUMENT.
+//
+//   - Received signals that have a type signature mismatch are dropped and
+//     a warning is logged via g_warning().
+//
+//   - Properties received via the initial `GetAll()` call or via the
+//     `::PropertiesChanged` signal (on the
+//     [org.freedesktop.DBus.Properties](http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-properties)
+//     interface) or set using g_dbus_proxy_set_cached_property()
+//     with a type signature mismatch are ignored and a warning is
+//     logged via g_warning().
+//
+// Note that these checks are never done on methods, signals and
+// properties that are not referenced in the given
+// #GDBusInterfaceInfo, since extending a D-Bus interface on the
+// service-side is not considered an ABI break.
+func (x *DBusProxy) SetPropertyGInterfaceInfo(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("g-interface-info", &v)
+}
+
+// GetPropertyGInterfaceInfo gets the "g-interface-info" property.
+// Ensure that interactions with this proxy conform to the given
+// interface. This is mainly to ensure that malformed data received
+// from the other peer is ignored. The given #GDBusInterfaceInfo is
+// said to be the "expected interface".
+//
+// The checks performed are:
+//
+//   - When completing a method call, if the type signature of
+//     the reply message isn't what's expected, the reply is
+//     discarded and the #GError is set to %G_IO_ERROR_INVALID_ARGUMENT.
+//
+//   - Received signals that have a type signature mismatch are dropped and
+//     a warning is logged via g_warning().
+//
+//   - Properties received via the initial `GetAll()` call or via the
+//     `::PropertiesChanged` signal (on the
+//     [org.freedesktop.DBus.Properties](http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-properties)
+//     interface) or set using g_dbus_proxy_set_cached_property()
+//     with a type signature mismatch are ignored and a warning is
+//     logged via g_warning().
+//
+// Note that these checks are never done on methods, signals and
+// properties that are not referenced in the given
+// #GDBusInterfaceInfo, since extending a D-Bus interface on the
+// service-side is not considered an ABI break.
+func (x *DBusProxy) GetPropertyGInterfaceInfo() uintptr {
+	var v gobject.Value
+	x.GetProperty("g-interface-info", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyGInterfaceName sets the "g-interface-name" property.
+// The D-Bus interface name the proxy is for.
+func (x *DBusProxy) SetPropertyGInterfaceName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("g-interface-name", &v)
+}
+
+// GetPropertyGInterfaceName gets the "g-interface-name" property.
+// The D-Bus interface name the proxy is for.
+func (x *DBusProxy) GetPropertyGInterfaceName() string {
+	var v gobject.Value
+	x.GetProperty("g-interface-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyGName sets the "g-name" property.
+// The well-known or unique name that the proxy is for.
+func (x *DBusProxy) SetPropertyGName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("g-name", &v)
+}
+
+// GetPropertyGName gets the "g-name" property.
+// The well-known or unique name that the proxy is for.
+func (x *DBusProxy) GetPropertyGName() string {
+	var v gobject.Value
+	x.GetProperty("g-name", &v)
+	return v.GetString()
+}
+
+// GetPropertyGNameOwner gets the "g-name-owner" property.
+// The unique name that owns #GDBusProxy:g-name or %NULL if no-one
+// currently owns that name. You may connect to #GObject::notify signal to
+// track changes to this property.
+func (x *DBusProxy) GetPropertyGNameOwner() string {
+	var v gobject.Value
+	x.GetProperty("g-name-owner", &v)
+	return v.GetString()
+}
+
+// SetPropertyGObjectPath sets the "g-object-path" property.
+// The object path the proxy is for.
+func (x *DBusProxy) SetPropertyGObjectPath(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("g-object-path", &v)
+}
+
+// GetPropertyGObjectPath gets the "g-object-path" property.
+// The object path the proxy is for.
+func (x *DBusProxy) GetPropertyGObjectPath() string {
+	var v gobject.Value
+	x.GetProperty("g-object-path", &v)
+	return v.GetString()
 }
 
 // Emitted when one or more D-Bus properties on @proxy changes. The

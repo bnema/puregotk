@@ -32,7 +32,7 @@ type SettingsBindSetMapping func(*gobject.Value, *glib.VariantType, uintptr) *gl
 // If @value is `NULL` then it means that the mapping function is being
 // given a ‘last chance’ to successfully return a valid value.  True
 // must be returned in this case.
-type SettingsGetMapping func(*glib.Variant, uintptr, uintptr) bool
+type SettingsGetMapping func(*glib.Variant, *uintptr, uintptr) bool
 
 type SettingsClass struct {
 	_ structs.HostLayout
@@ -54,7 +54,7 @@ func (x *SettingsClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideWritableChanged sets the callback function.
+// OverrideWritableChanged sets the "writable_changed" callback function.
 func (x *SettingsClass) OverrideWritableChanged(cb func(*Settings, string)) {
 	if cb == nil {
 		x.xWritableChanged = 0
@@ -65,7 +65,7 @@ func (x *SettingsClass) OverrideWritableChanged(cb func(*Settings, string)) {
 	}
 }
 
-// GetWritableChanged gets the callback function.
+// GetWritableChanged gets the "writable_changed" callback function.
 func (x *SettingsClass) GetWritableChanged() func(*Settings, string) {
 	if x.xWritableChanged == 0 {
 		return nil
@@ -77,7 +77,7 @@ func (x *SettingsClass) GetWritableChanged() func(*Settings, string) {
 	}
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 func (x *SettingsClass) OverrideChanged(cb func(*Settings, string)) {
 	if cb == nil {
 		x.xChanged = 0
@@ -88,7 +88,7 @@ func (x *SettingsClass) OverrideChanged(cb func(*Settings, string)) {
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 func (x *SettingsClass) GetChanged() func(*Settings, string) {
 	if x.xChanged == 0 {
 		return nil
@@ -100,7 +100,7 @@ func (x *SettingsClass) GetChanged() func(*Settings, string) {
 	}
 }
 
-// OverrideWritableChangeEvent sets the callback function.
+// OverrideWritableChangeEvent sets the "writable_change_event" callback function.
 func (x *SettingsClass) OverrideWritableChangeEvent(cb func(*Settings, glib.Quark) bool) {
 	if cb == nil {
 		x.xWritableChangeEvent = 0
@@ -111,7 +111,7 @@ func (x *SettingsClass) OverrideWritableChangeEvent(cb func(*Settings, glib.Quar
 	}
 }
 
-// GetWritableChangeEvent gets the callback function.
+// GetWritableChangeEvent gets the "writable_change_event" callback function.
 func (x *SettingsClass) GetWritableChangeEvent() func(*Settings, glib.Quark) bool {
 	if x.xWritableChangeEvent == 0 {
 		return nil
@@ -123,7 +123,7 @@ func (x *SettingsClass) GetWritableChangeEvent() func(*Settings, glib.Quark) boo
 	}
 }
 
-// OverrideChangeEvent sets the callback function.
+// OverrideChangeEvent sets the "change_event" callback function.
 func (x *SettingsClass) OverrideChangeEvent(cb func(*Settings, *glib.Quark, int) bool) {
 	if cb == nil {
 		x.xChangeEvent = 0
@@ -134,7 +134,7 @@ func (x *SettingsClass) OverrideChangeEvent(cb func(*Settings, *glib.Quark, int)
 	}
 }
 
-// GetChangeEvent gets the callback function.
+// GetChangeEvent gets the "change_event" callback function.
 func (x *SettingsClass) GetChangeEvent() func(*Settings, *glib.Quark, int) bool {
 	if x.xChangeEvent == 0 {
 		return nil
@@ -1466,6 +1466,125 @@ func (c *Settings) GoPointer() uintptr {
 
 func (c *Settings) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyDelayApply gets the "delay-apply" property.
+// Whether the [class@Gio.Settings] object is in
+// [‘delay-apply’ mode](class.Settings.html#delay-apply-mode).
+func (x *Settings) GetPropertyDelayApply() bool {
+	var v gobject.Value
+	x.GetProperty("delay-apply", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyHasUnapplied gets the "has-unapplied" property.
+// Whether the [class@Gio.Settings] object has outstanding changes.
+//
+// These changes will be applied when [method@Gio.Settings.apply] is called.
+func (x *Settings) GetPropertyHasUnapplied() bool {
+	var v gobject.Value
+	x.GetProperty("has-unapplied", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPath sets the "path" property.
+// The path within the backend where the settings are stored.
+func (x *Settings) SetPropertyPath(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("path", &v)
+}
+
+// GetPropertyPath gets the "path" property.
+// The path within the backend where the settings are stored.
+func (x *Settings) GetPropertyPath() string {
+	var v gobject.Value
+	x.GetProperty("path", &v)
+	return v.GetString()
+}
+
+// SetPropertySchema sets the "schema" property.
+// The name of the schema that describes the types of keys
+// for this [class@Gio.Settings] object.
+//
+// The type of this property is *not* [struct@Gio.SettingsSchema].
+// [struct@Gio.SettingsSchema] has only existed since version 2.32 and
+// unfortunately this name was used in previous versions to refer to
+// the schema ID rather than the schema itself.  Take care to use the
+// [property@Gio.Settings:settings-schema] property if you wish to pass in a
+// [struct@Gio.SettingsSchema].
+func (x *Settings) SetPropertySchema(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("schema", &v)
+}
+
+// GetPropertySchema gets the "schema" property.
+// The name of the schema that describes the types of keys
+// for this [class@Gio.Settings] object.
+//
+// The type of this property is *not* [struct@Gio.SettingsSchema].
+// [struct@Gio.SettingsSchema] has only existed since version 2.32 and
+// unfortunately this name was used in previous versions to refer to
+// the schema ID rather than the schema itself.  Take care to use the
+// [property@Gio.Settings:settings-schema] property if you wish to pass in a
+// [struct@Gio.SettingsSchema].
+func (x *Settings) GetPropertySchema() string {
+	var v gobject.Value
+	x.GetProperty("schema", &v)
+	return v.GetString()
+}
+
+// SetPropertySchemaId sets the "schema-id" property.
+// The name of the schema that describes the types of keys
+// for this [class@Gio.Settings] object.
+func (x *Settings) SetPropertySchemaId(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("schema-id", &v)
+}
+
+// GetPropertySchemaId gets the "schema-id" property.
+// The name of the schema that describes the types of keys
+// for this [class@Gio.Settings] object.
+func (x *Settings) GetPropertySchemaId() string {
+	var v gobject.Value
+	x.GetProperty("schema-id", &v)
+	return v.GetString()
+}
+
+// SetPropertySettingsSchema sets the "settings-schema" property.
+// The [struct@Gio.SettingsSchema] describing the types of keys for this
+// [class@Gio.Settings] object.
+//
+// Ideally, this property would be called [property@Gio.Settings:schema].
+// [struct@Gio.SettingsSchema]
+// has only existed since version 2.32, however, and before then the
+// [property@Gio.Settings:schema] property was used to refer to the ID of the schema rather
+// than the schema itself.  Take care.
+func (x *Settings) SetPropertySettingsSchema(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("settings-schema", &v)
+}
+
+// GetPropertySettingsSchema gets the "settings-schema" property.
+// The [struct@Gio.SettingsSchema] describing the types of keys for this
+// [class@Gio.Settings] object.
+//
+// Ideally, this property would be called [property@Gio.Settings:schema].
+// [struct@Gio.SettingsSchema]
+// has only existed since version 2.32, however, and before then the
+// [property@Gio.Settings:schema] property was used to refer to the ID of the schema rather
+// than the schema itself.  Take care.
+func (x *Settings) GetPropertySettingsSchema() uintptr {
+	var v gobject.Value
+	x.GetProperty("settings-schema", &v)
+	return v.GetPointer()
 }
 
 // Emitted once per change event that affects this settings object.

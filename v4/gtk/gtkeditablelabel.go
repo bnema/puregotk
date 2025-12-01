@@ -145,6 +145,23 @@ func (c *EditableLabel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEditing sets the "editing" property.
+// This property is %TRUE while the widget is in edit mode.
+func (x *EditableLabel) SetPropertyEditing(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("editing", &v)
+}
+
+// GetPropertyEditing gets the "editing" property.
+// This property is %TRUE while the widget is in edit mode.
+func (x *EditableLabel) GetPropertyEditing() bool {
+	var v gobject.Value
+	x.GetProperty("editing", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -202,7 +219,7 @@ func (x *EditableLabel) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *EditableLabel) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *EditableLabel) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -575,7 +592,7 @@ func (x *EditableLabel) GetPosition() int {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *EditableLabel) GetSelectionBounds(StartPosVar int, EndPosVar int) bool {
+func (x *EditableLabel) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret

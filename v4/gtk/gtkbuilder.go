@@ -955,6 +955,31 @@ func (c *Builder) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyTranslationDomain sets the "translation-domain" property.
+// The translation domain used when translating property values that
+// have been marked as translatable.
+//
+// If the translation domain is %NULL, `GtkBuilder` uses gettext(),
+// otherwise g_dgettext().
+func (x *Builder) SetPropertyTranslationDomain(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("translation-domain", &v)
+}
+
+// GetPropertyTranslationDomain gets the "translation-domain" property.
+// The translation domain used when translating property values that
+// have been marked as translatable.
+//
+// If the translation domain is %NULL, `GtkBuilder` uses gettext(),
+// otherwise g_dgettext().
+func (x *Builder) GetPropertyTranslationDomain() string {
+	var v gobject.Value
+	x.GetProperty("translation-domain", &v)
+	return v.GetString()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

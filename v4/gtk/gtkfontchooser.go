@@ -45,7 +45,7 @@ func (x *FontChooserIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetFontFamily sets the callback function.
+// OverrideGetFontFamily sets the "get_font_family" callback function.
 func (x *FontChooserIface) OverrideGetFontFamily(cb func(FontChooser) *pango.FontFamily) {
 	if cb == nil {
 		x.xGetFontFamily = 0
@@ -60,7 +60,7 @@ func (x *FontChooserIface) OverrideGetFontFamily(cb func(FontChooser) *pango.Fon
 	}
 }
 
-// GetGetFontFamily gets the callback function.
+// GetGetFontFamily gets the "get_font_family" callback function.
 func (x *FontChooserIface) GetGetFontFamily() func(FontChooser) *pango.FontFamily {
 	if x.xGetFontFamily == 0 {
 		return nil
@@ -78,7 +78,7 @@ func (x *FontChooserIface) GetGetFontFamily() func(FontChooser) *pango.FontFamil
 	}
 }
 
-// OverrideGetFontFace sets the callback function.
+// OverrideGetFontFace sets the "get_font_face" callback function.
 func (x *FontChooserIface) OverrideGetFontFace(cb func(FontChooser) *pango.FontFace) {
 	if cb == nil {
 		x.xGetFontFace = 0
@@ -93,7 +93,7 @@ func (x *FontChooserIface) OverrideGetFontFace(cb func(FontChooser) *pango.FontF
 	}
 }
 
-// GetGetFontFace gets the callback function.
+// GetGetFontFace gets the "get_font_face" callback function.
 func (x *FontChooserIface) GetGetFontFace() func(FontChooser) *pango.FontFace {
 	if x.xGetFontFace == 0 {
 		return nil
@@ -111,7 +111,7 @@ func (x *FontChooserIface) GetGetFontFace() func(FontChooser) *pango.FontFace {
 	}
 }
 
-// OverrideGetFontSize sets the callback function.
+// OverrideGetFontSize sets the "get_font_size" callback function.
 func (x *FontChooserIface) OverrideGetFontSize(cb func(FontChooser) int) {
 	if cb == nil {
 		x.xGetFontSize = 0
@@ -122,7 +122,7 @@ func (x *FontChooserIface) OverrideGetFontSize(cb func(FontChooser) int) {
 	}
 }
 
-// GetGetFontSize gets the callback function.
+// GetGetFontSize gets the "get_font_size" callback function.
 func (x *FontChooserIface) GetGetFontSize() func(FontChooser) int {
 	if x.xGetFontSize == 0 {
 		return nil
@@ -134,7 +134,7 @@ func (x *FontChooserIface) GetGetFontSize() func(FontChooser) int {
 	}
 }
 
-// OverrideSetFilterFunc sets the callback function.
+// OverrideSetFilterFunc sets the "set_filter_func" callback function.
 func (x *FontChooserIface) OverrideSetFilterFunc(cb func(FontChooser, *FontFilterFunc, uintptr, *glib.DestroyNotify)) {
 	if cb == nil {
 		x.xSetFilterFunc = 0
@@ -145,7 +145,7 @@ func (x *FontChooserIface) OverrideSetFilterFunc(cb func(FontChooser, *FontFilte
 	}
 }
 
-// GetSetFilterFunc gets the callback function.
+// GetSetFilterFunc gets the "set_filter_func" callback function.
 func (x *FontChooserIface) GetSetFilterFunc() func(FontChooser, *FontFilterFunc, uintptr, *glib.DestroyNotify) {
 	if x.xSetFilterFunc == 0 {
 		return nil
@@ -157,7 +157,7 @@ func (x *FontChooserIface) GetSetFilterFunc() func(FontChooser, *FontFilterFunc,
 	}
 }
 
-// OverrideFontActivated sets the callback function.
+// OverrideFontActivated sets the "font_activated" callback function.
 func (x *FontChooserIface) OverrideFontActivated(cb func(FontChooser, string)) {
 	if cb == nil {
 		x.xFontActivated = 0
@@ -168,7 +168,7 @@ func (x *FontChooserIface) OverrideFontActivated(cb func(FontChooser, string)) {
 	}
 }
 
-// GetFontActivated gets the callback function.
+// GetFontActivated gets the "font_activated" callback function.
 func (x *FontChooserIface) GetFontActivated() func(FontChooser, string) {
 	if x.xFontActivated == 0 {
 		return nil
@@ -180,7 +180,7 @@ func (x *FontChooserIface) GetFontActivated() func(FontChooser, string) {
 	}
 }
 
-// OverrideSetFontMap sets the callback function.
+// OverrideSetFontMap sets the "set_font_map" callback function.
 func (x *FontChooserIface) OverrideSetFontMap(cb func(FontChooser, *pango.FontMap)) {
 	if cb == nil {
 		x.xSetFontMap = 0
@@ -191,7 +191,7 @@ func (x *FontChooserIface) OverrideSetFontMap(cb func(FontChooser, *pango.FontMa
 	}
 }
 
-// GetSetFontMap gets the callback function.
+// GetSetFontMap gets the "set_font_map" callback function.
 func (x *FontChooserIface) GetSetFontMap() func(FontChooser, *pango.FontMap) {
 	if x.xSetFontMap == 0 {
 		return nil
@@ -203,7 +203,7 @@ func (x *FontChooserIface) GetSetFontMap() func(FontChooser, *pango.FontMap) {
 	}
 }
 
-// OverrideGetFontMap sets the callback function.
+// OverrideGetFontMap sets the "get_font_map" callback function.
 func (x *FontChooserIface) OverrideGetFontMap(cb func(FontChooser) *pango.FontMap) {
 	if cb == nil {
 		x.xGetFontMap = 0
@@ -218,7 +218,7 @@ func (x *FontChooserIface) OverrideGetFontMap(cb func(FontChooser) *pango.FontMa
 	}
 }
 
-// GetGetFontMap gets the callback function.
+// GetGetFontMap gets the "get_font_map" callback function.
 func (x *FontChooserIface) GetGetFontMap() func(FontChooser) *pango.FontMap {
 	if x.xGetFontMap == 0 {
 		return nil
@@ -498,6 +498,124 @@ func (x *FontChooserBase) SetShowPreviewEntry(ShowPreviewEntryVar bool) {
 
 	XGtkFontChooserSetShowPreviewEntry(x.GoPointer(), ShowPreviewEntryVar)
 
+}
+
+// SetPropertyFont sets the "font" property.
+// The font description as a string, e.g. "Sans Italic 12".
+func (x *FontChooserBase) SetPropertyFont(value string) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	obj.SetProperty("font", &v)
+}
+
+// GetPropertyFont gets the "font" property.
+// The font description as a string, e.g. "Sans Italic 12".
+func (x *FontChooserBase) GetPropertyFont() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("font", &v)
+	return v.GetString()
+}
+
+// SetPropertyFontDesc sets the "font-desc" property.
+// The font description as a `PangoFontDescription`.
+func (x *FontChooserBase) SetPropertyFontDesc(value uintptr) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	obj.SetProperty("font-desc", &v)
+}
+
+// GetPropertyFontDesc gets the "font-desc" property.
+// The font description as a `PangoFontDescription`.
+func (x *FontChooserBase) GetPropertyFontDesc() uintptr {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("font-desc", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyFontFeatures gets the "font-features" property.
+// The selected font features.
+//
+// The format of the string is compatible with
+// CSS and with Pango attributes.
+func (x *FontChooserBase) GetPropertyFontFeatures() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("font-features", &v)
+	return v.GetString()
+}
+
+// SetPropertyLanguage sets the "language" property.
+// The language for which the font features were selected.
+func (x *FontChooserBase) SetPropertyLanguage(value string) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	obj.SetProperty("language", &v)
+}
+
+// GetPropertyLanguage gets the "language" property.
+// The language for which the font features were selected.
+func (x *FontChooserBase) GetPropertyLanguage() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("language", &v)
+	return v.GetString()
+}
+
+// SetPropertyPreviewText sets the "preview-text" property.
+// The string with which to preview the font.
+func (x *FontChooserBase) SetPropertyPreviewText(value string) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	obj.SetProperty("preview-text", &v)
+}
+
+// GetPropertyPreviewText gets the "preview-text" property.
+// The string with which to preview the font.
+func (x *FontChooserBase) GetPropertyPreviewText() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("preview-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyShowPreviewEntry sets the "show-preview-entry" property.
+// Whether to show an entry to change the preview text.
+func (x *FontChooserBase) SetPropertyShowPreviewEntry(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("show-preview-entry", &v)
+}
+
+// GetPropertyShowPreviewEntry gets the "show-preview-entry" property.
+// Whether to show an entry to change the preview text.
+func (x *FontChooserBase) GetPropertyShowPreviewEntry() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("show-preview-entry", &v)
+	return v.GetBoolean()
 }
 
 var XGtkFontChooserGetFont func(uintptr) string

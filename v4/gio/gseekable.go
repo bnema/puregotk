@@ -32,7 +32,7 @@ func (x *SeekableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideTell sets the callback function.
+// OverrideTell sets the "tell" callback function.
 // Tells the current location within a stream.
 func (x *SeekableIface) OverrideTell(cb func(Seekable) int64) {
 	if cb == nil {
@@ -44,7 +44,7 @@ func (x *SeekableIface) OverrideTell(cb func(Seekable) int64) {
 	}
 }
 
-// GetTell gets the callback function.
+// GetTell gets the "tell" callback function.
 // Tells the current location within a stream.
 func (x *SeekableIface) GetTell() func(Seekable) int64 {
 	if x.xTell == 0 {
@@ -57,7 +57,7 @@ func (x *SeekableIface) GetTell() func(Seekable) int64 {
 	}
 }
 
-// OverrideCanSeek sets the callback function.
+// OverrideCanSeek sets the "can_seek" callback function.
 // Checks if seeking is supported by the stream.
 func (x *SeekableIface) OverrideCanSeek(cb func(Seekable) bool) {
 	if cb == nil {
@@ -69,7 +69,7 @@ func (x *SeekableIface) OverrideCanSeek(cb func(Seekable) bool) {
 	}
 }
 
-// GetCanSeek gets the callback function.
+// GetCanSeek gets the "can_seek" callback function.
 // Checks if seeking is supported by the stream.
 func (x *SeekableIface) GetCanSeek() func(Seekable) bool {
 	if x.xCanSeek == 0 {
@@ -82,7 +82,7 @@ func (x *SeekableIface) GetCanSeek() func(Seekable) bool {
 	}
 }
 
-// OverrideSeek sets the callback function.
+// OverrideSeek sets the "seek" callback function.
 // Seeks to a location within a stream.
 func (x *SeekableIface) OverrideSeek(cb func(Seekable, int64, glib.SeekType, *Cancellable) bool) {
 	if cb == nil {
@@ -94,7 +94,7 @@ func (x *SeekableIface) OverrideSeek(cb func(Seekable, int64, glib.SeekType, *Ca
 	}
 }
 
-// GetSeek gets the callback function.
+// GetSeek gets the "seek" callback function.
 // Seeks to a location within a stream.
 func (x *SeekableIface) GetSeek() func(Seekable, int64, glib.SeekType, *Cancellable) bool {
 	if x.xSeek == 0 {
@@ -107,7 +107,7 @@ func (x *SeekableIface) GetSeek() func(Seekable, int64, glib.SeekType, *Cancella
 	}
 }
 
-// OverrideCanTruncate sets the callback function.
+// OverrideCanTruncate sets the "can_truncate" callback function.
 // Checks if truncation is supported by the stream.
 func (x *SeekableIface) OverrideCanTruncate(cb func(Seekable) bool) {
 	if cb == nil {
@@ -119,7 +119,7 @@ func (x *SeekableIface) OverrideCanTruncate(cb func(Seekable) bool) {
 	}
 }
 
-// GetCanTruncate gets the callback function.
+// GetCanTruncate gets the "can_truncate" callback function.
 // Checks if truncation is supported by the stream.
 func (x *SeekableIface) GetCanTruncate() func(Seekable) bool {
 	if x.xCanTruncate == 0 {
@@ -132,7 +132,7 @@ func (x *SeekableIface) GetCanTruncate() func(Seekable) bool {
 	}
 }
 
-// OverrideTruncateFn sets the callback function.
+// OverrideTruncateFn sets the "truncate_fn" callback function.
 // Truncates a stream.
 func (x *SeekableIface) OverrideTruncateFn(cb func(Seekable, int64, *Cancellable) bool) {
 	if cb == nil {
@@ -144,7 +144,7 @@ func (x *SeekableIface) OverrideTruncateFn(cb func(Seekable, int64, *Cancellable
 	}
 }
 
-// GetTruncateFn gets the callback function.
+// GetTruncateFn gets the "truncate_fn" callback function.
 // Truncates a stream.
 func (x *SeekableIface) GetTruncateFn() func(Seekable, int64, *Cancellable) bool {
 	if x.xTruncateFn == 0 {

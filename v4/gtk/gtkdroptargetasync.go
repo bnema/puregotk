@@ -148,6 +148,23 @@ func (c *DropTargetAsync) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFormats sets the "formats" property.
+// The `GdkContentFormats` that determines the supported data formats.
+func (x *DropTargetAsync) SetPropertyFormats(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("formats", &v)
+}
+
+// GetPropertyFormats gets the "formats" property.
+// The `GdkContentFormats` that determines the supported data formats.
+func (x *DropTargetAsync) GetPropertyFormats() uintptr {
+	var v gobject.Value
+	x.GetProperty("formats", &v)
+	return v.GetPointer()
+}
+
 // Emitted on the drop site when a drop operation is about to begin.
 //
 // If the drop is not accepted, %FALSE will be returned and the drop target

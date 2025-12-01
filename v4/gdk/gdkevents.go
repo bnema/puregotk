@@ -319,7 +319,7 @@ const (
 	TouchpadGesturePhaseCancelValue TouchpadGesturePhase = 3
 )
 
-var xEventsGetAngle func(uintptr, uintptr, float64) bool
+var xEventsGetAngle func(uintptr, uintptr, *float64) bool
 
 // Returns the relative angle from @event1 to @event2.
 //
@@ -329,31 +329,31 @@ var xEventsGetAngle func(uintptr, uintptr, float64) bool
 //
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
-func EventsGetAngle(Event1Var *Event, Event2Var *Event, AngleVar float64) bool {
+func EventsGetAngle(Event1Var *Event, Event2Var *Event, AngleVar *float64) bool {
 
 	cret := xEventsGetAngle(Event1Var.GoPointer(), Event2Var.GoPointer(), AngleVar)
 	return cret
 }
 
-var xEventsGetCenter func(uintptr, uintptr, float64, float64) bool
+var xEventsGetCenter func(uintptr, uintptr, *float64, *float64) bool
 
 // Returns the point halfway between the events' positions.
 //
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
-func EventsGetCenter(Event1Var *Event, Event2Var *Event, XVar float64, YVar float64) bool {
+func EventsGetCenter(Event1Var *Event, Event2Var *Event, XVar *float64, YVar *float64) bool {
 
 	cret := xEventsGetCenter(Event1Var.GoPointer(), Event2Var.GoPointer(), XVar, YVar)
 	return cret
 }
 
-var xEventsGetDistance func(uintptr, uintptr, float64) bool
+var xEventsGetDistance func(uintptr, uintptr, *float64) bool
 
 // Returns the distance between the event locations.
 //
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
-func EventsGetDistance(Event1Var *Event, Event2Var *Event, DistanceVar float64) bool {
+func EventsGetDistance(Event1Var *Event, Event2Var *Event, DistanceVar *float64) bool {
 
 	cret := xEventsGetDistance(Event1Var.GoPointer(), Event2Var.GoPointer(), DistanceVar)
 	return cret
@@ -547,7 +547,7 @@ func EventNewFromInternalPtr(ptr uintptr) *Event {
 	return cls
 }
 
-var xEventGetAngle func(uintptr, uintptr, float64) bool
+var xEventGetAngle func(uintptr, uintptr, *float64) bool
 
 // Returns the relative angle from @event1 to @event2.
 //
@@ -557,56 +557,56 @@ var xEventGetAngle func(uintptr, uintptr, float64) bool
 //
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
-func (x *Event) GetAngle(Event2Var *Event, AngleVar float64) bool {
+func (x *Event) GetAngle(Event2Var *Event, AngleVar *float64) bool {
 
 	cret := xEventGetAngle(x.GoPointer(), Event2Var.GoPointer(), AngleVar)
 	return cret
 }
 
-var xEventGetCenter func(uintptr, uintptr, float64, float64) bool
+var xEventGetCenter func(uintptr, uintptr, *float64, *float64) bool
 
 // Returns the point halfway between the events' positions.
 //
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
-func (x *Event) GetCenter(Event2Var *Event, XVar float64, YVar float64) bool {
+func (x *Event) GetCenter(Event2Var *Event, XVar *float64, YVar *float64) bool {
 
 	cret := xEventGetCenter(x.GoPointer(), Event2Var.GoPointer(), XVar, YVar)
 	return cret
 }
 
-var xEventGetDistance func(uintptr, uintptr, float64) bool
+var xEventGetDistance func(uintptr, uintptr, *float64) bool
 
 // Returns the distance between the event locations.
 //
 // This assumes that both events have X/Y information.
 // If not, this function returns %FALSE.
-func (x *Event) GetDistance(Event2Var *Event, DistanceVar float64) bool {
+func (x *Event) GetDistance(Event2Var *Event, DistanceVar *float64) bool {
 
 	cret := xEventGetDistance(x.GoPointer(), Event2Var.GoPointer(), DistanceVar)
 	return cret
 }
 
-var xEventGetAxes func(uintptr, []float64, uint) bool
+var xEventGetAxes func(uintptr, *[]float64, *uint) bool
 
 // Extracts all axis values from an event.
 //
 // To find out which axes are used, use [method@Gdk.DeviceTool.get_axes]
 // on the device tool returned by [method@Gdk.Event.get_device_tool].
-func (x *Event) GetAxes(AxesVar []float64, NAxesVar uint) bool {
+func (x *Event) GetAxes(AxesVar *[]float64, NAxesVar *uint) bool {
 
 	cret := xEventGetAxes(x.GoPointer(), AxesVar, NAxesVar)
 	return cret
 }
 
-var xEventGetAxis func(uintptr, AxisUse, float64) bool
+var xEventGetAxis func(uintptr, AxisUse, *float64) bool
 
 // Extract the axis value for a particular axis use from
 // an event structure.
 //
 // To find out which axes are used, use [method@Gdk.DeviceTool.get_axes]
 // on the device tool returned by [method@Gdk.Event.get_device_tool].
-func (x *Event) GetAxis(AxisUseVar AxisUse, ValueVar float64) bool {
+func (x *Event) GetAxis(AxisUseVar AxisUse, ValueVar *float64) bool {
 
 	cret := xEventGetAxis(x.GoPointer(), AxisUseVar, ValueVar)
 	return cret
@@ -693,7 +693,7 @@ func (x *Event) GetEventType() EventType {
 	return cret
 }
 
-var xEventGetHistory func(uintptr, uint) uintptr
+var xEventGetHistory func(uintptr, *uint) uintptr
 
 // Retrieves the history of the device that @event is for, as a list of
 // time and coordinates.
@@ -704,7 +704,7 @@ var xEventGetHistory func(uintptr, uint) uintptr
 // Note that only motion and scroll events record history, and motion
 // events do it only if one of the mouse buttons is down, or the device
 // has a tool.
-func (x *Event) GetHistory(OutNCoordsVar uint) uintptr {
+func (x *Event) GetHistory(OutNCoordsVar *uint) uintptr {
 
 	cret := xEventGetHistory(x.GoPointer(), OutNCoordsVar)
 	return cret
@@ -730,12 +730,12 @@ func (x *Event) GetPointerEmulated() bool {
 	return cret
 }
 
-var xEventGetPosition func(uintptr, float64, float64) bool
+var xEventGetPosition func(uintptr, *float64, *float64) bool
 
 // Extract the event surface relative x/y coordinates from an event.
 //
 // This position is in [surface coordinates](coordinates.html).
-func (x *Event) GetPosition(XVar float64, YVar float64) bool {
+func (x *Event) GetPosition(XVar *float64, YVar *float64) bool {
 
 	cret := xEventGetPosition(x.GoPointer(), XVar, YVar)
 	return cret
@@ -998,13 +998,13 @@ func (x *KeyEvent) GetLevel() uint {
 	return cret
 }
 
-var xKeyEventGetMatch func(uintptr, uint, *ModifierType) bool
+var xKeyEventGetMatch func(uintptr, *uint, *ModifierType) bool
 
 // Gets a keyval and modifier combination that will match
 // the event.
 //
 // See [method@Gdk.KeyEvent.matches].
-func (x *KeyEvent) GetMatch(KeyvalVar uint, ModifiersVar *ModifierType) bool {
+func (x *KeyEvent) GetMatch(KeyvalVar *uint, ModifiersVar *ModifierType) bool {
 
 	cret := xKeyEventGetMatch(x.GoPointer(), KeyvalVar, ModifiersVar)
 	return cret
@@ -1091,10 +1091,10 @@ func PadEventNewFromInternalPtr(ptr uintptr) *PadEvent {
 	return cls
 }
 
-var xPadEventGetAxisValue func(uintptr, uint, float64)
+var xPadEventGetAxisValue func(uintptr, *uint, *float64)
 
 // Extracts the information from a pad strip or ring event.
-func (x *PadEvent) GetAxisValue(IndexVar uint, ValueVar float64) {
+func (x *PadEvent) GetAxisValue(IndexVar *uint, ValueVar *float64) {
 
 	xPadEventGetAxisValue(x.GoPointer(), IndexVar, ValueVar)
 
@@ -1110,10 +1110,10 @@ func (x *PadEvent) GetButton() uint {
 	return cret
 }
 
-var xPadEventGetGroupMode func(uintptr, uint, uint)
+var xPadEventGetGroupMode func(uintptr, *uint, *uint)
 
 // Extracts group and mode information from a pad event.
-func (x *PadEvent) GetGroupMode(GroupVar uint, ModeVar uint) {
+func (x *PadEvent) GetGroupMode(GroupVar *uint, ModeVar *uint) {
 
 	xPadEventGetGroupMode(x.GoPointer(), GroupVar, ModeVar)
 
@@ -1175,7 +1175,7 @@ func ScrollEventNewFromInternalPtr(ptr uintptr) *ScrollEvent {
 	return cls
 }
 
-var xScrollEventGetDeltas func(uintptr, float64, float64)
+var xScrollEventGetDeltas func(uintptr, *float64, *float64)
 
 // Extracts the scroll deltas of a scroll event.
 //
@@ -1184,7 +1184,7 @@ var xScrollEventGetDeltas func(uintptr, float64, float64)
 //
 // For the representation unit of these deltas, see
 // [method@Gdk.ScrollEvent.get_unit].
-func (x *ScrollEvent) GetDeltas(DeltaXVar float64, DeltaYVar float64) {
+func (x *ScrollEvent) GetDeltas(DeltaXVar *float64, DeltaYVar *float64) {
 
 	xScrollEventGetDeltas(x.GoPointer(), DeltaXVar, DeltaYVar)
 
@@ -1306,10 +1306,10 @@ func TouchpadEventNewFromInternalPtr(ptr uintptr) *TouchpadEvent {
 	return cls
 }
 
-var xTouchpadEventGetDeltas func(uintptr, float64, float64)
+var xTouchpadEventGetDeltas func(uintptr, *float64, *float64)
 
 // Extracts delta information from a touchpad event.
-func (x *TouchpadEvent) GetDeltas(DxVar float64, DyVar float64) {
+func (x *TouchpadEvent) GetDeltas(DxVar *float64, DyVar *float64) {
 
 	xTouchpadEventGetDeltas(x.GoPointer(), DxVar, DyVar)
 

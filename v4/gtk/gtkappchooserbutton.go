@@ -208,6 +208,84 @@ func (c *AppChooserButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyHeading sets the "heading" property.
+// The text to show at the top of the dialog that can be
+// opened from the button.
+//
+// The string may contain Pango markup.
+func (x *AppChooserButton) SetPropertyHeading(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("heading", &v)
+}
+
+// GetPropertyHeading gets the "heading" property.
+// The text to show at the top of the dialog that can be
+// opened from the button.
+//
+// The string may contain Pango markup.
+func (x *AppChooserButton) GetPropertyHeading() string {
+	var v gobject.Value
+	x.GetProperty("heading", &v)
+	return v.GetString()
+}
+
+// SetPropertyModal sets the "modal" property.
+// Whether the app chooser dialog should be modal.
+func (x *AppChooserButton) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the app chooser dialog should be modal.
+func (x *AppChooserButton) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowDefaultItem sets the "show-default-item" property.
+// Determines whether the dropdown menu shows the default application
+// on top for the provided content type.
+func (x *AppChooserButton) SetPropertyShowDefaultItem(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-default-item", &v)
+}
+
+// GetPropertyShowDefaultItem gets the "show-default-item" property.
+// Determines whether the dropdown menu shows the default application
+// on top for the provided content type.
+func (x *AppChooserButton) GetPropertyShowDefaultItem() bool {
+	var v gobject.Value
+	x.GetProperty("show-default-item", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowDialogItem sets the "show-dialog-item" property.
+// Determines whether the dropdown menu shows an item to open
+// a `GtkAppChooserDialog`.
+func (x *AppChooserButton) SetPropertyShowDialogItem(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-dialog-item", &v)
+}
+
+// GetPropertyShowDialogItem gets the "show-dialog-item" property.
+// Determines whether the dropdown menu shows an item to open
+// a `GtkAppChooserDialog`.
+func (x *AppChooserButton) GetPropertyShowDialogItem() bool {
+	var v gobject.Value
+	x.GetProperty("show-dialog-item", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to when the button is activated.
 //
 // The `::activate` signal on `GtkAppChooserButton` is an action signal and
@@ -331,7 +409,7 @@ func (x *AppChooserButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AppChooserButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *AppChooserButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

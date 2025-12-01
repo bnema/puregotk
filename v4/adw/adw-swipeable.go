@@ -34,7 +34,7 @@ func (x *SwipeableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetDistance sets the callback function.
+// OverrideGetDistance sets the "get_distance" callback function.
 // Gets the swipe distance.
 func (x *SwipeableInterface) OverrideGetDistance(cb func(Swipeable) float64) {
 	if cb == nil {
@@ -46,7 +46,7 @@ func (x *SwipeableInterface) OverrideGetDistance(cb func(Swipeable) float64) {
 	}
 }
 
-// GetGetDistance gets the callback function.
+// GetGetDistance gets the "get_distance" callback function.
 // Gets the swipe distance.
 func (x *SwipeableInterface) GetGetDistance() func(Swipeable) float64 {
 	if x.xGetDistance == 0 {
@@ -59,32 +59,32 @@ func (x *SwipeableInterface) GetGetDistance() func(Swipeable) float64 {
 	}
 }
 
-// OverrideGetSnapPoints sets the callback function.
+// OverrideGetSnapPoints sets the "get_snap_points" callback function.
 // Gets the snap points.
-func (x *SwipeableInterface) OverrideGetSnapPoints(cb func(Swipeable, int) uintptr) {
+func (x *SwipeableInterface) OverrideGetSnapPoints(cb func(Swipeable, *int) uintptr) {
 	if cb == nil {
 		x.xGetSnapPoints = 0
 	} else {
-		x.xGetSnapPoints = purego.NewCallback(func(SelfVarp uintptr, NSnapPointsVarp int) uintptr {
+		x.xGetSnapPoints = purego.NewCallback(func(SelfVarp uintptr, NSnapPointsVarp *int) uintptr {
 			return cb(&SwipeableBase{Ptr: SelfVarp}, NSnapPointsVarp)
 		})
 	}
 }
 
-// GetGetSnapPoints gets the callback function.
+// GetGetSnapPoints gets the "get_snap_points" callback function.
 // Gets the snap points.
-func (x *SwipeableInterface) GetGetSnapPoints() func(Swipeable, int) uintptr {
+func (x *SwipeableInterface) GetGetSnapPoints() func(Swipeable, *int) uintptr {
 	if x.xGetSnapPoints == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, NSnapPointsVarp int) uintptr
+	var rawCallback func(SelfVarp uintptr, NSnapPointsVarp *int) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetSnapPoints)
-	return func(SelfVar Swipeable, NSnapPointsVar int) uintptr {
+	return func(SelfVar Swipeable, NSnapPointsVar *int) uintptr {
 		return rawCallback(SelfVar.GoPointer(), NSnapPointsVar)
 	}
 }
 
-// OverrideGetProgress sets the callback function.
+// OverrideGetProgress sets the "get_progress" callback function.
 // Gets the current progress.
 func (x *SwipeableInterface) OverrideGetProgress(cb func(Swipeable) float64) {
 	if cb == nil {
@@ -96,7 +96,7 @@ func (x *SwipeableInterface) OverrideGetProgress(cb func(Swipeable) float64) {
 	}
 }
 
-// GetGetProgress gets the callback function.
+// GetGetProgress gets the "get_progress" callback function.
 // Gets the current progress.
 func (x *SwipeableInterface) GetGetProgress() func(Swipeable) float64 {
 	if x.xGetProgress == 0 {
@@ -109,7 +109,7 @@ func (x *SwipeableInterface) GetGetProgress() func(Swipeable) float64 {
 	}
 }
 
-// OverrideGetCancelProgress sets the callback function.
+// OverrideGetCancelProgress sets the "get_cancel_progress" callback function.
 // Gets the cancel progress.
 func (x *SwipeableInterface) OverrideGetCancelProgress(cb func(Swipeable) float64) {
 	if cb == nil {
@@ -121,7 +121,7 @@ func (x *SwipeableInterface) OverrideGetCancelProgress(cb func(Swipeable) float6
 	}
 }
 
-// GetGetCancelProgress gets the callback function.
+// GetGetCancelProgress gets the "get_cancel_progress" callback function.
 // Gets the cancel progress.
 func (x *SwipeableInterface) GetGetCancelProgress() func(Swipeable) float64 {
 	if x.xGetCancelProgress == 0 {
@@ -134,7 +134,7 @@ func (x *SwipeableInterface) GetGetCancelProgress() func(Swipeable) float64 {
 	}
 }
 
-// OverrideGetSwipeArea sets the callback function.
+// OverrideGetSwipeArea sets the "get_swipe_area" callback function.
 // Gets the swipeable rectangle.
 func (x *SwipeableInterface) OverrideGetSwipeArea(cb func(Swipeable, NavigationDirection, bool, *gdk.Rectangle)) {
 	if cb == nil {
@@ -146,7 +146,7 @@ func (x *SwipeableInterface) OverrideGetSwipeArea(cb func(Swipeable, NavigationD
 	}
 }
 
-// GetGetSwipeArea gets the callback function.
+// GetGetSwipeArea gets the "get_swipe_area" callback function.
 // Gets the swipeable rectangle.
 func (x *SwipeableInterface) GetGetSwipeArea() func(Swipeable, NavigationDirection, bool, *gdk.Rectangle) {
 	if x.xGetSwipeArea == 0 {
@@ -170,7 +170,7 @@ type Swipeable interface {
 	GetCancelProgress() float64
 	GetDistance() float64
 	GetProgress() float64
-	GetSnapPoints(NSnapPointsVar int) uintptr
+	GetSnapPoints(NSnapPointsVar *int) uintptr
 	GetSwipeArea(NavigationDirectionVar NavigationDirection, IsDragVar bool, RectVar *gdk.Rectangle)
 }
 
@@ -222,7 +222,7 @@ func (x *SwipeableBase) GetProgress() float64 {
 //
 // Each snap point represents a progress value that is considered acceptable to
 // end the swipe on.
-func (x *SwipeableBase) GetSnapPoints(NSnapPointsVar int) uintptr {
+func (x *SwipeableBase) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
 	return cret
@@ -246,7 +246,7 @@ func (x *SwipeableBase) GetSwipeArea(NavigationDirectionVar NavigationDirection,
 var XAdwSwipeableGetCancelProgress func(uintptr) float64
 var XAdwSwipeableGetDistance func(uintptr) float64
 var XAdwSwipeableGetProgress func(uintptr) float64
-var XAdwSwipeableGetSnapPoints func(uintptr, int) uintptr
+var XAdwSwipeableGetSnapPoints func(uintptr, *int) uintptr
 var XAdwSwipeableGetSwipeArea func(uintptr, NavigationDirection, bool, *gdk.Rectangle)
 
 func init() {

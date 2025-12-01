@@ -225,6 +225,146 @@ func (c *TimedAnimation) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAlternate sets the "alternate" property.
+// Whether the animation changes direction on every iteration.
+func (x *TimedAnimation) SetPropertyAlternate(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("alternate", &v)
+}
+
+// GetPropertyAlternate gets the "alternate" property.
+// Whether the animation changes direction on every iteration.
+func (x *TimedAnimation) GetPropertyAlternate() bool {
+	var v gobject.Value
+	x.GetProperty("alternate", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyDuration sets the "duration" property.
+// Duration of the animation, in milliseconds.
+//
+// Describes how much time the animation will take.
+//
+// If the animation repeats more than once, describes the duration of one
+// iteration.
+func (x *TimedAnimation) SetPropertyDuration(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("duration", &v)
+}
+
+// GetPropertyDuration gets the "duration" property.
+// Duration of the animation, in milliseconds.
+//
+// Describes how much time the animation will take.
+//
+// If the animation repeats more than once, describes the duration of one
+// iteration.
+func (x *TimedAnimation) GetPropertyDuration() uint {
+	var v gobject.Value
+	x.GetProperty("duration", &v)
+	return v.GetUint()
+}
+
+// SetPropertyRepeatCount sets the "repeat-count" property.
+// Number of times the animation will play.
+//
+// If set to 0, the animation will repeat endlessly.
+func (x *TimedAnimation) SetPropertyRepeatCount(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("repeat-count", &v)
+}
+
+// GetPropertyRepeatCount gets the "repeat-count" property.
+// Number of times the animation will play.
+//
+// If set to 0, the animation will repeat endlessly.
+func (x *TimedAnimation) GetPropertyRepeatCount() uint {
+	var v gobject.Value
+	x.GetProperty("repeat-count", &v)
+	return v.GetUint()
+}
+
+// SetPropertyReverse sets the "reverse" property.
+// Whether the animation plays backwards.
+func (x *TimedAnimation) SetPropertyReverse(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reverse", &v)
+}
+
+// GetPropertyReverse gets the "reverse" property.
+// Whether the animation plays backwards.
+func (x *TimedAnimation) GetPropertyReverse() bool {
+	var v gobject.Value
+	x.GetProperty("reverse", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyValueFrom sets the "value-from" property.
+// The value to animate from.
+//
+// The animation will start at this value and end at
+// [property@TimedAnimation:value-to].
+//
+// If [property@TimedAnimation:reverse] is `TRUE`, the animation will end at
+// this value instead.
+func (x *TimedAnimation) SetPropertyValueFrom(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("value-from", &v)
+}
+
+// GetPropertyValueFrom gets the "value-from" property.
+// The value to animate from.
+//
+// The animation will start at this value and end at
+// [property@TimedAnimation:value-to].
+//
+// If [property@TimedAnimation:reverse] is `TRUE`, the animation will end at
+// this value instead.
+func (x *TimedAnimation) GetPropertyValueFrom() float64 {
+	var v gobject.Value
+	x.GetProperty("value-from", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyValueTo sets the "value-to" property.
+// The value to animate to.
+//
+// The animation will start at [property@TimedAnimation:value-from] and end at
+// this value.
+//
+// If [property@TimedAnimation:reverse] is `TRUE`, the animation will start
+// at this value instead.
+func (x *TimedAnimation) SetPropertyValueTo(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("value-to", &v)
+}
+
+// GetPropertyValueTo gets the "value-to" property.
+// The value to animate to.
+//
+// The animation will start at [property@TimedAnimation:value-from] and end at
+// this value.
+//
+// If [property@TimedAnimation:reverse] is `TRUE`, the animation will start
+// at this value instead.
+func (x *TimedAnimation) GetPropertyValueTo() float64 {
+	var v gobject.Value
+	x.GetProperty("value-to", &v)
+	return v.GetDouble()
+}
+
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
 	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})

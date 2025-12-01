@@ -8,6 +8,7 @@ import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -51,6 +52,33 @@ func (x *TlsFileDatabaseBase) GoPointer() uintptr {
 
 func (x *TlsFileDatabaseBase) SetGoPointer(ptr uintptr) {
 	x.Ptr = ptr
+}
+
+// SetPropertyAnchors sets the "anchors" property.
+// The path to a file containing PEM encoded certificate authority
+// root anchors. The certificates in this file will be treated as
+// root authorities for the purpose of verifying other certificates
+// via the g_tls_database_verify_chain() operation.
+func (x *TlsFileDatabaseBase) SetPropertyAnchors(value string) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	obj.SetProperty("anchors", &v)
+}
+
+// GetPropertyAnchors gets the "anchors" property.
+// The path to a file containing PEM encoded certificate authority
+// root anchors. The certificates in this file will be treated as
+// root authorities for the purpose of verifying other certificates
+// via the g_tls_database_verify_chain() operation.
+func (x *TlsFileDatabaseBase) GetPropertyAnchors() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("anchors", &v)
+	return v.GetString()
 }
 
 var xTlsFileDatabaseNew func(string, **glib.Error) uintptr

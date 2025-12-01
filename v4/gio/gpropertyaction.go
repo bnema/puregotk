@@ -111,6 +111,93 @@ func (c *PropertyAction) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyEnabled gets the "enabled" property.
+// If @action is currently enabled.
+//
+// If the action is disabled then calls to g_action_activate() and
+// g_action_change_state() have no effect.
+func (x *PropertyAction) GetPropertyEnabled() bool {
+	var v gobject.Value
+	x.GetProperty("enabled", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyInvertBoolean sets the "invert-boolean" property.
+// If %TRUE, the state of the action will be the negation of the
+// property value, provided the property is boolean.
+func (x *PropertyAction) SetPropertyInvertBoolean(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("invert-boolean", &v)
+}
+
+// GetPropertyInvertBoolean gets the "invert-boolean" property.
+// If %TRUE, the state of the action will be the negation of the
+// property value, provided the property is boolean.
+func (x *PropertyAction) GetPropertyInvertBoolean() bool {
+	var v gobject.Value
+	x.GetProperty("invert-boolean", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyName sets the "name" property.
+// The name of the action.  This is mostly meaningful for identifying
+// the action once it has been added to a #GActionMap.
+func (x *PropertyAction) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The name of the action.  This is mostly meaningful for identifying
+// the action once it has been added to a #GActionMap.
+func (x *PropertyAction) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// GetPropertyParameterType gets the "parameter-type" property.
+// The type of the parameter that must be given when activating the
+// action.
+func (x *PropertyAction) GetPropertyParameterType() uintptr {
+	var v gobject.Value
+	x.GetProperty("parameter-type", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyPropertyName sets the "property-name" property.
+// The name of the property to wrap on the object.
+//
+// The property must exist on the passed-in object and it must be
+// readable and writable (and not construct-only).
+func (x *PropertyAction) SetPropertyPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("property-name", &v)
+}
+
+// GetPropertyState gets the "state" property.
+// The state of the action, or %NULL if the action is stateless.
+func (x *PropertyAction) GetPropertyState() uintptr {
+	var v gobject.Value
+	x.GetProperty("state", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyStateType gets the "state-type" property.
+// The #GVariantType of the state that the action has, or %NULL if the
+// action is stateless.
+func (x *PropertyAction) GetPropertyStateType() uintptr {
+	var v gobject.Value
+	x.GetProperty("state-type", &v)
+	return v.GetPointer()
+}
+
 // Activates the action.
 //
 // @parameter must be the correct type of parameter for the action (ie:

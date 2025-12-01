@@ -355,7 +355,7 @@ func (x *WidgetClass) InstallPropertyAction(ActionNameVar string, PropertyNameVa
 
 }
 
-var xWidgetClassQueryAction func(uintptr, uint, types.GType, string, **glib.VariantType, string) bool
+var xWidgetClassQueryAction func(uintptr, uint, *types.GType, *string, **glib.VariantType, *string) bool
 
 // Returns details about an action that has been
 // installed for @widget_class.
@@ -366,7 +366,7 @@ var xWidgetClassQueryAction func(uintptr, uint, types.GType, string, **glib.Vari
 // Note that this function will also return actions defined
 // by parent classes. You can identify those by looking
 // at @owner.
-func (x *WidgetClass) QueryAction(IndexVar uint, OwnerVar types.GType, ActionNameVar string, ParameterTypeVar **glib.VariantType, PropertyNameVar string) bool {
+func (x *WidgetClass) QueryAction(IndexVar uint, OwnerVar *types.GType, ActionNameVar *string, ParameterTypeVar **glib.VariantType, PropertyNameVar *string) bool {
 
 	cret := xWidgetClassQueryAction(x.GoPointer(), IndexVar, OwnerVar, ActionNameVar, ParameterTypeVar, PropertyNameVar)
 	return cret
@@ -486,7 +486,7 @@ func (x *WidgetClass) SetTemplateScope(ScopeVar BuilderScope) {
 
 }
 
-// OverrideShow sets the callback function.
+// OverrideShow sets the "show" callback function.
 // Signal emitted when widget is shown
 func (x *WidgetClass) OverrideShow(cb func(*Widget)) {
 	if cb == nil {
@@ -498,7 +498,7 @@ func (x *WidgetClass) OverrideShow(cb func(*Widget)) {
 	}
 }
 
-// GetShow gets the callback function.
+// GetShow gets the "show" callback function.
 // Signal emitted when widget is shown
 func (x *WidgetClass) GetShow() func(*Widget) {
 	if x.xShow == 0 {
@@ -511,7 +511,7 @@ func (x *WidgetClass) GetShow() func(*Widget) {
 	}
 }
 
-// OverrideHide sets the callback function.
+// OverrideHide sets the "hide" callback function.
 // Signal emitted when widget is hidden.
 func (x *WidgetClass) OverrideHide(cb func(*Widget)) {
 	if cb == nil {
@@ -523,7 +523,7 @@ func (x *WidgetClass) OverrideHide(cb func(*Widget)) {
 	}
 }
 
-// GetHide gets the callback function.
+// GetHide gets the "hide" callback function.
 // Signal emitted when widget is hidden.
 func (x *WidgetClass) GetHide() func(*Widget) {
 	if x.xHide == 0 {
@@ -536,7 +536,7 @@ func (x *WidgetClass) GetHide() func(*Widget) {
 	}
 }
 
-// OverrideMap sets the callback function.
+// OverrideMap sets the "map" callback function.
 // Signal emitted when widget is going to be mapped, that is
 //
 //	when the widget is visible (which is controlled with
@@ -552,7 +552,7 @@ func (x *WidgetClass) OverrideMap(cb func(*Widget)) {
 	}
 }
 
-// GetMap gets the callback function.
+// GetMap gets the "map" callback function.
 // Signal emitted when widget is going to be mapped, that is
 //
 //	when the widget is visible (which is controlled with
@@ -569,7 +569,7 @@ func (x *WidgetClass) GetMap() func(*Widget) {
 	}
 }
 
-// OverrideUnmap sets the callback function.
+// OverrideUnmap sets the "unmap" callback function.
 // Signal emitted when widget is going to be unmapped, which
 //
 //	means that either it or any of its parents up to the toplevel
@@ -584,7 +584,7 @@ func (x *WidgetClass) OverrideUnmap(cb func(*Widget)) {
 	}
 }
 
-// GetUnmap gets the callback function.
+// GetUnmap gets the "unmap" callback function.
 // Signal emitted when widget is going to be unmapped, which
 //
 //	means that either it or any of its parents up to the toplevel
@@ -600,7 +600,7 @@ func (x *WidgetClass) GetUnmap() func(*Widget) {
 	}
 }
 
-// OverrideRealize sets the callback function.
+// OverrideRealize sets the "realize" callback function.
 // Signal emitted when widget is associated with a
 //
 //	`GdkSurface`, which means that gtk_widget_realize() has been called or
@@ -615,7 +615,7 @@ func (x *WidgetClass) OverrideRealize(cb func(*Widget)) {
 	}
 }
 
-// GetRealize gets the callback function.
+// GetRealize gets the "realize" callback function.
 // Signal emitted when widget is associated with a
 //
 //	`GdkSurface`, which means that gtk_widget_realize() has been called or
@@ -631,7 +631,7 @@ func (x *WidgetClass) GetRealize() func(*Widget) {
 	}
 }
 
-// OverrideUnrealize sets the callback function.
+// OverrideUnrealize sets the "unrealize" callback function.
 // Signal emitted when the GdkSurface associated with
 //
 //	widget is destroyed, which means that gtk_widget_unrealize() has
@@ -647,7 +647,7 @@ func (x *WidgetClass) OverrideUnrealize(cb func(*Widget)) {
 	}
 }
 
-// GetUnrealize gets the callback function.
+// GetUnrealize gets the "unrealize" callback function.
 // Signal emitted when the GdkSurface associated with
 //
 //	widget is destroyed, which means that gtk_widget_unrealize() has
@@ -664,7 +664,7 @@ func (x *WidgetClass) GetUnrealize() func(*Widget) {
 	}
 }
 
-// OverrideRoot sets the callback function.
+// OverrideRoot sets the "root" callback function.
 // Called when the widget gets added to a `GtkRoot` widget. Must
 //
 //	chain up
@@ -678,7 +678,7 @@ func (x *WidgetClass) OverrideRoot(cb func(*Widget)) {
 	}
 }
 
-// GetRoot gets the callback function.
+// GetRoot gets the "root" callback function.
 // Called when the widget gets added to a `GtkRoot` widget. Must
 //
 //	chain up
@@ -693,7 +693,7 @@ func (x *WidgetClass) GetRoot() func(*Widget) {
 	}
 }
 
-// OverrideUnroot sets the callback function.
+// OverrideUnroot sets the "unroot" callback function.
 // Called when the widget is about to be removed from its
 //
 //	`GtkRoot` widget. Must chain up
@@ -707,7 +707,7 @@ func (x *WidgetClass) OverrideUnroot(cb func(*Widget)) {
 	}
 }
 
-// GetUnroot gets the callback function.
+// GetUnroot gets the "unroot" callback function.
 // Called when the widget is about to be removed from its
 //
 //	`GtkRoot` widget. Must chain up
@@ -722,7 +722,7 @@ func (x *WidgetClass) GetUnroot() func(*Widget) {
 	}
 }
 
-// OverrideSizeAllocate sets the callback function.
+// OverrideSizeAllocate sets the "size_allocate" callback function.
 // Called to set the allocation, if the widget does
 //
 //	not have a layout manager.
@@ -736,7 +736,7 @@ func (x *WidgetClass) OverrideSizeAllocate(cb func(*Widget, int, int, int)) {
 	}
 }
 
-// GetSizeAllocate gets the callback function.
+// GetSizeAllocate gets the "size_allocate" callback function.
 // Called to set the allocation, if the widget does
 //
 //	not have a layout manager.
@@ -751,7 +751,7 @@ func (x *WidgetClass) GetSizeAllocate() func(*Widget, int, int, int) {
 	}
 }
 
-// OverrideStateFlagsChanged sets the callback function.
+// OverrideStateFlagsChanged sets the "state_flags_changed" callback function.
 // Signal emitted when the widget state changes,
 //
 //	see gtk_widget_get_state_flags().
@@ -765,7 +765,7 @@ func (x *WidgetClass) OverrideStateFlagsChanged(cb func(*Widget, StateFlags)) {
 	}
 }
 
-// GetStateFlagsChanged gets the callback function.
+// GetStateFlagsChanged gets the "state_flags_changed" callback function.
 // Signal emitted when the widget state changes,
 //
 //	see gtk_widget_get_state_flags().
@@ -780,7 +780,7 @@ func (x *WidgetClass) GetStateFlagsChanged() func(*Widget, StateFlags) {
 	}
 }
 
-// OverrideDirectionChanged sets the callback function.
+// OverrideDirectionChanged sets the "direction_changed" callback function.
 // Signal emitted when the text direction of a
 //
 //	widget changes.
@@ -794,7 +794,7 @@ func (x *WidgetClass) OverrideDirectionChanged(cb func(*Widget, TextDirection)) 
 	}
 }
 
-// GetDirectionChanged gets the callback function.
+// GetDirectionChanged gets the "direction_changed" callback function.
 // Signal emitted when the text direction of a
 //
 //	widget changes.
@@ -809,7 +809,7 @@ func (x *WidgetClass) GetDirectionChanged() func(*Widget, TextDirection) {
 	}
 }
 
-// OverrideGetRequestMode sets the callback function.
+// OverrideGetRequestMode sets the "get_request_mode" callback function.
 // Called to get the request mode, if the widget
 //
 //	does not have a layout manager.
@@ -836,7 +836,7 @@ func (x *WidgetClass) OverrideGetRequestMode(cb func(*Widget) SizeRequestMode) {
 	}
 }
 
-// GetGetRequestMode gets the callback function.
+// GetGetRequestMode gets the "get_request_mode" callback function.
 // Called to get the request mode, if the widget
 //
 //	does not have a layout manager.
@@ -864,42 +864,42 @@ func (x *WidgetClass) GetGetRequestMode() func(*Widget) SizeRequestMode {
 	}
 }
 
-// OverrideMeasure sets the callback function.
+// OverrideMeasure sets the "measure" callback function.
 // Called to obtain the minimum and natural size of the widget,
 //
 //	if the widget does not have a layout manager.
 //	Depending on the orientation parameter, the passed for_size can be
 //	interpreted as width or height. A widget will never be allocated less
 //	than its minimum size.
-func (x *WidgetClass) OverrideMeasure(cb func(*Widget, Orientation, int, int, int, int, int)) {
+func (x *WidgetClass) OverrideMeasure(cb func(*Widget, Orientation, int, *int, *int, *int, *int)) {
 	if cb == nil {
 		x.xMeasure = 0
 	} else {
-		x.xMeasure = purego.NewCallback(func(WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp int, NaturalVarp int, MinimumBaselineVarp int, NaturalBaselineVarp int) {
+		x.xMeasure = purego.NewCallback(func(WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp *int, NaturalVarp *int, MinimumBaselineVarp *int, NaturalBaselineVarp *int) {
 			cb(WidgetNewFromInternalPtr(WidgetVarp), OrientationVarp, ForSizeVarp, MinimumVarp, NaturalVarp, MinimumBaselineVarp, NaturalBaselineVarp)
 		})
 	}
 }
 
-// GetMeasure gets the callback function.
+// GetMeasure gets the "measure" callback function.
 // Called to obtain the minimum and natural size of the widget,
 //
 //	if the widget does not have a layout manager.
 //	Depending on the orientation parameter, the passed for_size can be
 //	interpreted as width or height. A widget will never be allocated less
 //	than its minimum size.
-func (x *WidgetClass) GetMeasure() func(*Widget, Orientation, int, int, int, int, int) {
+func (x *WidgetClass) GetMeasure() func(*Widget, Orientation, int, *int, *int, *int, *int) {
 	if x.xMeasure == 0 {
 		return nil
 	}
-	var rawCallback func(WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp int, NaturalVarp int, MinimumBaselineVarp int, NaturalBaselineVarp int)
+	var rawCallback func(WidgetVarp uintptr, OrientationVarp Orientation, ForSizeVarp int, MinimumVarp *int, NaturalVarp *int, MinimumBaselineVarp *int, NaturalBaselineVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xMeasure)
-	return func(WidgetVar *Widget, OrientationVar Orientation, ForSizeVar int, MinimumVar int, NaturalVar int, MinimumBaselineVar int, NaturalBaselineVar int) {
+	return func(WidgetVar *Widget, OrientationVar Orientation, ForSizeVar int, MinimumVar *int, NaturalVar *int, MinimumBaselineVar *int, NaturalBaselineVar *int) {
 		rawCallback(WidgetVar.GoPointer(), OrientationVar, ForSizeVar, MinimumVar, NaturalVar, MinimumBaselineVar, NaturalBaselineVar)
 	}
 }
 
-// OverrideMnemonicActivate sets the callback function.
+// OverrideMnemonicActivate sets the "mnemonic_activate" callback function.
 // Activates the @widget if @group_cycling is
 //
 //	%FALSE, and just grabs the focus if @group_cycling is %TRUE.
@@ -913,7 +913,7 @@ func (x *WidgetClass) OverrideMnemonicActivate(cb func(*Widget, bool) bool) {
 	}
 }
 
-// GetMnemonicActivate gets the callback function.
+// GetMnemonicActivate gets the "mnemonic_activate" callback function.
 // Activates the @widget if @group_cycling is
 //
 //	%FALSE, and just grabs the focus if @group_cycling is %TRUE.
@@ -928,7 +928,7 @@ func (x *WidgetClass) GetMnemonicActivate() func(*Widget, bool) bool {
 	}
 }
 
-// OverrideGrabFocus sets the callback function.
+// OverrideGrabFocus sets the "grab_focus" callback function.
 // Causes @widget to have the keyboard focus for the
 //
 //	`GtkWindow` it’s inside.
@@ -942,7 +942,7 @@ func (x *WidgetClass) OverrideGrabFocus(cb func(*Widget) bool) {
 	}
 }
 
-// GetGrabFocus gets the callback function.
+// GetGrabFocus gets the "grab_focus" callback function.
 // Causes @widget to have the keyboard focus for the
 //
 //	`GtkWindow` it’s inside.
@@ -957,7 +957,7 @@ func (x *WidgetClass) GetGrabFocus() func(*Widget) bool {
 	}
 }
 
-// OverrideFocus sets the callback function.
+// OverrideFocus sets the "focus" callback function.
 // Vfunc for gtk_widget_child_focus()
 func (x *WidgetClass) OverrideFocus(cb func(*Widget, DirectionType) bool) {
 	if cb == nil {
@@ -969,7 +969,7 @@ func (x *WidgetClass) OverrideFocus(cb func(*Widget, DirectionType) bool) {
 	}
 }
 
-// GetFocus gets the callback function.
+// GetFocus gets the "focus" callback function.
 // Vfunc for gtk_widget_child_focus()
 func (x *WidgetClass) GetFocus() func(*Widget, DirectionType) bool {
 	if x.xFocus == 0 {
@@ -982,7 +982,7 @@ func (x *WidgetClass) GetFocus() func(*Widget, DirectionType) bool {
 	}
 }
 
-// OverrideSetFocusChild sets the callback function.
+// OverrideSetFocusChild sets the "set_focus_child" callback function.
 // Sets the focused child of a widget. Must chain up
 func (x *WidgetClass) OverrideSetFocusChild(cb func(*Widget, *Widget)) {
 	if cb == nil {
@@ -994,7 +994,7 @@ func (x *WidgetClass) OverrideSetFocusChild(cb func(*Widget, *Widget)) {
 	}
 }
 
-// GetSetFocusChild gets the callback function.
+// GetSetFocusChild gets the "set_focus_child" callback function.
 // Sets the focused child of a widget. Must chain up
 func (x *WidgetClass) GetSetFocusChild() func(*Widget, *Widget) {
 	if x.xSetFocusChild == 0 {
@@ -1007,7 +1007,7 @@ func (x *WidgetClass) GetSetFocusChild() func(*Widget, *Widget) {
 	}
 }
 
-// OverrideMoveFocus sets the callback function.
+// OverrideMoveFocus sets the "move_focus" callback function.
 // Signal emitted when a change of focus is requested
 func (x *WidgetClass) OverrideMoveFocus(cb func(*Widget, DirectionType)) {
 	if cb == nil {
@@ -1019,7 +1019,7 @@ func (x *WidgetClass) OverrideMoveFocus(cb func(*Widget, DirectionType)) {
 	}
 }
 
-// GetMoveFocus gets the callback function.
+// GetMoveFocus gets the "move_focus" callback function.
 // Signal emitted when a change of focus is requested
 func (x *WidgetClass) GetMoveFocus() func(*Widget, DirectionType) {
 	if x.xMoveFocus == 0 {
@@ -1032,7 +1032,7 @@ func (x *WidgetClass) GetMoveFocus() func(*Widget, DirectionType) {
 	}
 }
 
-// OverrideKeynavFailed sets the callback function.
+// OverrideKeynavFailed sets the "keynav_failed" callback function.
 // Signal emitted if keyboard navigation fails.
 func (x *WidgetClass) OverrideKeynavFailed(cb func(*Widget, DirectionType) bool) {
 	if cb == nil {
@@ -1044,7 +1044,7 @@ func (x *WidgetClass) OverrideKeynavFailed(cb func(*Widget, DirectionType) bool)
 	}
 }
 
-// GetKeynavFailed gets the callback function.
+// GetKeynavFailed gets the "keynav_failed" callback function.
 // Signal emitted if keyboard navigation fails.
 func (x *WidgetClass) GetKeynavFailed() func(*Widget, DirectionType) bool {
 	if x.xKeynavFailed == 0 {
@@ -1057,7 +1057,7 @@ func (x *WidgetClass) GetKeynavFailed() func(*Widget, DirectionType) bool {
 	}
 }
 
-// OverrideQueryTooltip sets the callback function.
+// OverrideQueryTooltip sets the "query_tooltip" callback function.
 // Signal emitted when “has-tooltip” is %TRUE and the
 //
 //	hover timeout has expired with the cursor hovering “above”
@@ -1072,7 +1072,7 @@ func (x *WidgetClass) OverrideQueryTooltip(cb func(*Widget, int, int, bool, *Too
 	}
 }
 
-// GetQueryTooltip gets the callback function.
+// GetQueryTooltip gets the "query_tooltip" callback function.
 // Signal emitted when “has-tooltip” is %TRUE and the
 //
 //	hover timeout has expired with the cursor hovering “above”
@@ -1088,7 +1088,7 @@ func (x *WidgetClass) GetQueryTooltip() func(*Widget, int, int, bool, *Tooltip) 
 	}
 }
 
-// OverrideComputeExpand sets the callback function.
+// OverrideComputeExpand sets the "compute_expand" callback function.
 // Computes whether a container should give this
 //
 //	widget extra space when possible.
@@ -1102,7 +1102,7 @@ func (x *WidgetClass) OverrideComputeExpand(cb func(*Widget, bool, bool)) {
 	}
 }
 
-// GetComputeExpand gets the callback function.
+// GetComputeExpand gets the "compute_expand" callback function.
 // Computes whether a container should give this
 //
 //	widget extra space when possible.
@@ -1117,7 +1117,7 @@ func (x *WidgetClass) GetComputeExpand() func(*Widget, bool, bool) {
 	}
 }
 
-// OverrideCssChanged sets the callback function.
+// OverrideCssChanged sets the "css_changed" callback function.
 // Vfunc called when the CSS used by widget was changed. Widgets
 //
 //	should then discard their caches that depend on CSS and queue resizes or
@@ -1133,7 +1133,7 @@ func (x *WidgetClass) OverrideCssChanged(cb func(*Widget, *CssStyleChange)) {
 	}
 }
 
-// GetCssChanged gets the callback function.
+// GetCssChanged gets the "css_changed" callback function.
 // Vfunc called when the CSS used by widget was changed. Widgets
 //
 //	should then discard their caches that depend on CSS and queue resizes or
@@ -1150,7 +1150,7 @@ func (x *WidgetClass) GetCssChanged() func(*Widget, *CssStyleChange) {
 	}
 }
 
-// OverrideSystemSettingChanged sets the callback function.
+// OverrideSystemSettingChanged sets the "system_setting_changed" callback function.
 // Emitted when a system setting was changed. Must chain up.
 func (x *WidgetClass) OverrideSystemSettingChanged(cb func(*Widget, SystemSetting)) {
 	if cb == nil {
@@ -1162,7 +1162,7 @@ func (x *WidgetClass) OverrideSystemSettingChanged(cb func(*Widget, SystemSettin
 	}
 }
 
-// GetSystemSettingChanged gets the callback function.
+// GetSystemSettingChanged gets the "system_setting_changed" callback function.
 // Emitted when a system setting was changed. Must chain up.
 func (x *WidgetClass) GetSystemSettingChanged() func(*Widget, SystemSetting) {
 	if x.xSystemSettingChanged == 0 {
@@ -1175,7 +1175,7 @@ func (x *WidgetClass) GetSystemSettingChanged() func(*Widget, SystemSetting) {
 	}
 }
 
-// OverrideSnapshot sets the callback function.
+// OverrideSnapshot sets the "snapshot" callback function.
 // Vfunc called when a new snapshot of the widget has to be taken.
 func (x *WidgetClass) OverrideSnapshot(cb func(*Widget, *Snapshot)) {
 	if cb == nil {
@@ -1187,7 +1187,7 @@ func (x *WidgetClass) OverrideSnapshot(cb func(*Widget, *Snapshot)) {
 	}
 }
 
-// GetSnapshot gets the callback function.
+// GetSnapshot gets the "snapshot" callback function.
 // Vfunc called when a new snapshot of the widget has to be taken.
 func (x *WidgetClass) GetSnapshot() func(*Widget, *Snapshot) {
 	if x.xSnapshot == 0 {
@@ -1200,7 +1200,7 @@ func (x *WidgetClass) GetSnapshot() func(*Widget, *Snapshot) {
 	}
 }
 
-// OverrideContains sets the callback function.
+// OverrideContains sets the "contains" callback function.
 // Vfunc for gtk_widget_contains().
 func (x *WidgetClass) OverrideContains(cb func(*Widget, float64, float64) bool) {
 	if cb == nil {
@@ -1212,7 +1212,7 @@ func (x *WidgetClass) OverrideContains(cb func(*Widget, float64, float64) bool) 
 	}
 }
 
-// GetContains gets the callback function.
+// GetContains gets the "contains" callback function.
 // Vfunc for gtk_widget_contains().
 func (x *WidgetClass) GetContains() func(*Widget, float64, float64) bool {
 	if x.xContains == 0 {
@@ -2933,7 +2933,7 @@ func (x *Widget) GetSize(OrientationVar Orientation) int {
 	return cret
 }
 
-var xWidgetGetSizeRequest func(uintptr, int, int)
+var xWidgetGetSizeRequest func(uintptr, *int, *int)
 
 // Gets the size request that was explicitly set for the widget.
 //
@@ -2945,7 +2945,7 @@ var xWidgetGetSizeRequest func(uintptr, int, int)
 //
 // To get the size a widget will actually request, call
 // [method@Gtk.Widget.measure] instead of this function.
-func (x *Widget) GetSizeRequest(WidthVar int, HeightVar int) {
+func (x *Widget) GetSizeRequest(WidthVar *int, HeightVar *int) {
 
 	xWidgetGetSizeRequest(x.GoPointer(), WidthVar, HeightVar)
 
@@ -3426,7 +3426,7 @@ func (x *Widget) Map() {
 
 }
 
-var xWidgetMeasure func(uintptr, Orientation, int, int, int, int, int)
+var xWidgetMeasure func(uintptr, Orientation, int, *int, *int, *int, *int)
 
 // Measures @widget in the orientation @orientation and for the given @for_size.
 //
@@ -3436,7 +3436,7 @@ var xWidgetMeasure func(uintptr, Orientation, int, int, int, int, int)
 //
 // See [GtkWidget’s geometry management section](class.Widget.html#height-for-width-geometry-management) for
 // a more details on implementing `GtkWidgetClass.measure()`.
-func (x *Widget) Measure(OrientationVar Orientation, ForSizeVar int, MinimumVar int, NaturalVar int, MinimumBaselineVar int, NaturalBaselineVar int) {
+func (x *Widget) Measure(OrientationVar Orientation, ForSizeVar int, MinimumVar *int, NaturalVar *int, MinimumBaselineVar *int, NaturalBaselineVar *int) {
 
 	xWidgetMeasure(x.GoPointer(), OrientationVar, ForSizeVar, MinimumVar, NaturalVar, MinimumBaselineVar, NaturalBaselineVar)
 
@@ -4293,7 +4293,7 @@ func (x *Widget) SnapshotChild(ChildVar *Widget, SnapshotVar *Snapshot) {
 
 }
 
-var xWidgetTranslateCoordinates func(uintptr, uintptr, float64, float64, float64, float64) bool
+var xWidgetTranslateCoordinates func(uintptr, uintptr, float64, float64, *float64, *float64) bool
 
 // Translates coordinates relative to @src_widget’s allocation
 // to coordinates relative to @dest_widget’s allocations.
@@ -4301,7 +4301,7 @@ var xWidgetTranslateCoordinates func(uintptr, uintptr, float64, float64, float64
 // In order to perform this operation, both widget must share
 // a common ancestor. If that is not the case, @dest_x and @dest_y
 // are set to 0 and false is returned.
-func (x *Widget) TranslateCoordinates(DestWidgetVar *Widget, SrcXVar float64, SrcYVar float64, DestXVar float64, DestYVar float64) bool {
+func (x *Widget) TranslateCoordinates(DestWidgetVar *Widget, SrcXVar float64, SrcYVar float64, DestXVar *float64, DestYVar *float64) bool {
 
 	cret := xWidgetTranslateCoordinates(x.GoPointer(), DestWidgetVar.GoPointer(), SrcXVar, SrcYVar, DestXVar, DestYVar)
 	return cret
@@ -4374,6 +4374,591 @@ func (c *Widget) GoPointer() uintptr {
 
 func (c *Widget) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyCanFocus sets the "can-focus" property.
+// Whether the widget or any of its descendents can accept
+// the input focus.
+//
+// This property is meant to be set by widget implementations,
+// typically in their instance init function.
+func (x *Widget) SetPropertyCanFocus(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-focus", &v)
+}
+
+// GetPropertyCanFocus gets the "can-focus" property.
+// Whether the widget or any of its descendents can accept
+// the input focus.
+//
+// This property is meant to be set by widget implementations,
+// typically in their instance init function.
+func (x *Widget) GetPropertyCanFocus() bool {
+	var v gobject.Value
+	x.GetProperty("can-focus", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCanTarget sets the "can-target" property.
+// Whether the widget can receive pointer events.
+func (x *Widget) SetPropertyCanTarget(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-target", &v)
+}
+
+// GetPropertyCanTarget gets the "can-target" property.
+// Whether the widget can receive pointer events.
+func (x *Widget) GetPropertyCanTarget() bool {
+	var v gobject.Value
+	x.GetProperty("can-target", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCssClasses sets the "css-classes" property.
+// A list of css classes applied to this widget.
+func (x *Widget) SetPropertyCssClasses(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("css-classes", &v)
+}
+
+// GetPropertyCssClasses gets the "css-classes" property.
+// A list of css classes applied to this widget.
+func (x *Widget) GetPropertyCssClasses() []string {
+	var v gobject.Value
+	x.GetProperty("css-classes", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyCssName sets the "css-name" property.
+// The name of this widget in the CSS tree.
+//
+// This property is meant to be set by widget implementations,
+// typically in their instance init function.
+func (x *Widget) SetPropertyCssName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("css-name", &v)
+}
+
+// GetPropertyCssName gets the "css-name" property.
+// The name of this widget in the CSS tree.
+//
+// This property is meant to be set by widget implementations,
+// typically in their instance init function.
+func (x *Widget) GetPropertyCssName() string {
+	var v gobject.Value
+	x.GetProperty("css-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyFocusOnClick sets the "focus-on-click" property.
+// Whether the widget should grab focus when it is clicked with the mouse.
+//
+// This property is only relevant for widgets that can take focus.
+func (x *Widget) SetPropertyFocusOnClick(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("focus-on-click", &v)
+}
+
+// GetPropertyFocusOnClick gets the "focus-on-click" property.
+// Whether the widget should grab focus when it is clicked with the mouse.
+//
+// This property is only relevant for widgets that can take focus.
+func (x *Widget) GetPropertyFocusOnClick() bool {
+	var v gobject.Value
+	x.GetProperty("focus-on-click", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyFocusable sets the "focusable" property.
+// Whether this widget itself will accept the input focus.
+func (x *Widget) SetPropertyFocusable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("focusable", &v)
+}
+
+// GetPropertyFocusable gets the "focusable" property.
+// Whether this widget itself will accept the input focus.
+func (x *Widget) GetPropertyFocusable() bool {
+	var v gobject.Value
+	x.GetProperty("focusable", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyHasDefault gets the "has-default" property.
+// Whether the widget is the default widget.
+func (x *Widget) GetPropertyHasDefault() bool {
+	var v gobject.Value
+	x.GetProperty("has-default", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyHasFocus gets the "has-focus" property.
+// Whether the widget has the input focus.
+func (x *Widget) GetPropertyHasFocus() bool {
+	var v gobject.Value
+	x.GetProperty("has-focus", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasTooltip sets the "has-tooltip" property.
+// Enables or disables the emission of the [signal@Gtk.Widget::query-tooltip]
+// signal on @widget.
+//
+// A true value indicates that @widget can have a tooltip, in this case
+// the widget will be queried using [signal@Gtk.Widget::query-tooltip] to
+// determine whether it will provide a tooltip or not.
+func (x *Widget) SetPropertyHasTooltip(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-tooltip", &v)
+}
+
+// GetPropertyHasTooltip gets the "has-tooltip" property.
+// Enables or disables the emission of the [signal@Gtk.Widget::query-tooltip]
+// signal on @widget.
+//
+// A true value indicates that @widget can have a tooltip, in this case
+// the widget will be queried using [signal@Gtk.Widget::query-tooltip] to
+// determine whether it will provide a tooltip or not.
+func (x *Widget) GetPropertyHasTooltip() bool {
+	var v gobject.Value
+	x.GetProperty("has-tooltip", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHeightRequest sets the "height-request" property.
+// Overrides for height request of the widget.
+//
+// If this is -1, the natural request will be used.
+func (x *Widget) SetPropertyHeightRequest(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("height-request", &v)
+}
+
+// GetPropertyHeightRequest gets the "height-request" property.
+// Overrides for height request of the widget.
+//
+// If this is -1, the natural request will be used.
+func (x *Widget) GetPropertyHeightRequest() int {
+	var v gobject.Value
+	x.GetProperty("height-request", &v)
+	return v.GetInt()
+}
+
+// SetPropertyHexpand sets the "hexpand" property.
+// Whether to expand horizontally.
+func (x *Widget) SetPropertyHexpand(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("hexpand", &v)
+}
+
+// GetPropertyHexpand gets the "hexpand" property.
+// Whether to expand horizontally.
+func (x *Widget) GetPropertyHexpand() bool {
+	var v gobject.Value
+	x.GetProperty("hexpand", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHexpandSet sets the "hexpand-set" property.
+// Whether to use the `hexpand` property.
+func (x *Widget) SetPropertyHexpandSet(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("hexpand-set", &v)
+}
+
+// GetPropertyHexpandSet gets the "hexpand-set" property.
+// Whether to use the `hexpand` property.
+func (x *Widget) GetPropertyHexpandSet() bool {
+	var v gobject.Value
+	x.GetProperty("hexpand-set", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLimitEvents sets the "limit-events" property.
+// Makes this widget act like a modal dialog, with respect to
+// event delivery.
+//
+// Global event controllers will not handle events with targets
+// inside the widget, unless they are set up to ignore propagation
+// limits. See [method@Gtk.EventController.set_propagation_limit].
+func (x *Widget) SetPropertyLimitEvents(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("limit-events", &v)
+}
+
+// GetPropertyLimitEvents gets the "limit-events" property.
+// Makes this widget act like a modal dialog, with respect to
+// event delivery.
+//
+// Global event controllers will not handle events with targets
+// inside the widget, unless they are set up to ignore propagation
+// limits. See [method@Gtk.EventController.set_propagation_limit].
+func (x *Widget) GetPropertyLimitEvents() bool {
+	var v gobject.Value
+	x.GetProperty("limit-events", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMarginBottom sets the "margin-bottom" property.
+// Margin on bottom side of widget.
+//
+// This property adds margin outside of the widget's normal size
+// request, the margin will be added in addition to the size from
+// [method@Gtk.Widget.set_size_request] for example.
+func (x *Widget) SetPropertyMarginBottom(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("margin-bottom", &v)
+}
+
+// GetPropertyMarginBottom gets the "margin-bottom" property.
+// Margin on bottom side of widget.
+//
+// This property adds margin outside of the widget's normal size
+// request, the margin will be added in addition to the size from
+// [method@Gtk.Widget.set_size_request] for example.
+func (x *Widget) GetPropertyMarginBottom() int {
+	var v gobject.Value
+	x.GetProperty("margin-bottom", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMarginEnd sets the "margin-end" property.
+// Margin on end of widget, horizontally.
+//
+// This property supports left-to-right and right-to-left text
+// directions.
+//
+// This property adds margin outside of the widget's normal size
+// request, the margin will be added in addition to the size from
+// [method@Gtk.Widget.set_size_request] for example.
+func (x *Widget) SetPropertyMarginEnd(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("margin-end", &v)
+}
+
+// GetPropertyMarginEnd gets the "margin-end" property.
+// Margin on end of widget, horizontally.
+//
+// This property supports left-to-right and right-to-left text
+// directions.
+//
+// This property adds margin outside of the widget's normal size
+// request, the margin will be added in addition to the size from
+// [method@Gtk.Widget.set_size_request] for example.
+func (x *Widget) GetPropertyMarginEnd() int {
+	var v gobject.Value
+	x.GetProperty("margin-end", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMarginStart sets the "margin-start" property.
+// Margin on start of widget, horizontally.
+//
+// This property supports left-to-right and right-to-left text
+// directions.
+//
+// This property adds margin outside of the widget's normal size
+// request, the margin will be added in addition to the size from
+// [method@Gtk.Widget.set_size_request] for example.
+func (x *Widget) SetPropertyMarginStart(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("margin-start", &v)
+}
+
+// GetPropertyMarginStart gets the "margin-start" property.
+// Margin on start of widget, horizontally.
+//
+// This property supports left-to-right and right-to-left text
+// directions.
+//
+// This property adds margin outside of the widget's normal size
+// request, the margin will be added in addition to the size from
+// [method@Gtk.Widget.set_size_request] for example.
+func (x *Widget) GetPropertyMarginStart() int {
+	var v gobject.Value
+	x.GetProperty("margin-start", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMarginTop sets the "margin-top" property.
+// Margin on top side of widget.
+//
+// This property adds margin outside of the widget's normal size
+// request, the margin will be added in addition to the size from
+// [method@Gtk.Widget.set_size_request] for example.
+func (x *Widget) SetPropertyMarginTop(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("margin-top", &v)
+}
+
+// GetPropertyMarginTop gets the "margin-top" property.
+// Margin on top side of widget.
+//
+// This property adds margin outside of the widget's normal size
+// request, the margin will be added in addition to the size from
+// [method@Gtk.Widget.set_size_request] for example.
+func (x *Widget) GetPropertyMarginTop() int {
+	var v gobject.Value
+	x.GetProperty("margin-top", &v)
+	return v.GetInt()
+}
+
+// SetPropertyName sets the "name" property.
+// The name of the widget.
+func (x *Widget) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The name of the widget.
+func (x *Widget) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// SetPropertyOpacity sets the "opacity" property.
+// The requested opacity of the widget.
+func (x *Widget) SetPropertyOpacity(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("opacity", &v)
+}
+
+// GetPropertyOpacity gets the "opacity" property.
+// The requested opacity of the widget.
+func (x *Widget) GetPropertyOpacity() float64 {
+	var v gobject.Value
+	x.GetProperty("opacity", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyReceivesDefault sets the "receives-default" property.
+// Whether the widget will receive the default action when it is focused.
+func (x *Widget) SetPropertyReceivesDefault(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("receives-default", &v)
+}
+
+// GetPropertyReceivesDefault gets the "receives-default" property.
+// Whether the widget will receive the default action when it is focused.
+func (x *Widget) GetPropertyReceivesDefault() bool {
+	var v gobject.Value
+	x.GetProperty("receives-default", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyScaleFactor gets the "scale-factor" property.
+// The scale factor of the widget.
+func (x *Widget) GetPropertyScaleFactor() int {
+	var v gobject.Value
+	x.GetProperty("scale-factor", &v)
+	return v.GetInt()
+}
+
+// SetPropertySensitive sets the "sensitive" property.
+// Whether the widget responds to input.
+func (x *Widget) SetPropertySensitive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("sensitive", &v)
+}
+
+// GetPropertySensitive gets the "sensitive" property.
+// Whether the widget responds to input.
+func (x *Widget) GetPropertySensitive() bool {
+	var v gobject.Value
+	x.GetProperty("sensitive", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTooltipMarkup sets the "tooltip-markup" property.
+// Sets the text of tooltip to be the given string, which is marked up
+// with Pango markup.
+//
+// Also see [method@Gtk.Tooltip.set_markup].
+//
+// This is a convenience property which will take care of getting the
+// tooltip shown if the given string is not `NULL`:
+// [property@Gtk.Widget:has-tooltip] will automatically be set to true
+// and there will be taken care of [signal@Gtk.Widget::query-tooltip] in
+// the default signal handler.
+//
+// Note that if both [property@Gtk.Widget:tooltip-text] and
+// [property@Gtk.Widget:tooltip-markup] are set, the last one wins.
+func (x *Widget) SetPropertyTooltipMarkup(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("tooltip-markup", &v)
+}
+
+// GetPropertyTooltipMarkup gets the "tooltip-markup" property.
+// Sets the text of tooltip to be the given string, which is marked up
+// with Pango markup.
+//
+// Also see [method@Gtk.Tooltip.set_markup].
+//
+// This is a convenience property which will take care of getting the
+// tooltip shown if the given string is not `NULL`:
+// [property@Gtk.Widget:has-tooltip] will automatically be set to true
+// and there will be taken care of [signal@Gtk.Widget::query-tooltip] in
+// the default signal handler.
+//
+// Note that if both [property@Gtk.Widget:tooltip-text] and
+// [property@Gtk.Widget:tooltip-markup] are set, the last one wins.
+func (x *Widget) GetPropertyTooltipMarkup() string {
+	var v gobject.Value
+	x.GetProperty("tooltip-markup", &v)
+	return v.GetString()
+}
+
+// SetPropertyTooltipText sets the "tooltip-text" property.
+// Sets the text of tooltip to be the given string.
+//
+// Also see [method@Gtk.Tooltip.set_text].
+//
+// This is a convenience property which will take care of getting the
+// tooltip shown if the given string is not `NULL`:
+// [property@Gtk.Widget:has-tooltip] will automatically be set to true
+// and there will be taken care of [signal@Gtk.Widget::query-tooltip] in
+// the default signal handler.
+//
+// Note that if both [property@Gtk.Widget:tooltip-text] and
+// [property@Gtk.Widget:tooltip-markup] are set, the last one wins.
+func (x *Widget) SetPropertyTooltipText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("tooltip-text", &v)
+}
+
+// GetPropertyTooltipText gets the "tooltip-text" property.
+// Sets the text of tooltip to be the given string.
+//
+// Also see [method@Gtk.Tooltip.set_text].
+//
+// This is a convenience property which will take care of getting the
+// tooltip shown if the given string is not `NULL`:
+// [property@Gtk.Widget:has-tooltip] will automatically be set to true
+// and there will be taken care of [signal@Gtk.Widget::query-tooltip] in
+// the default signal handler.
+//
+// Note that if both [property@Gtk.Widget:tooltip-text] and
+// [property@Gtk.Widget:tooltip-markup] are set, the last one wins.
+func (x *Widget) GetPropertyTooltipText() string {
+	var v gobject.Value
+	x.GetProperty("tooltip-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyVexpand sets the "vexpand" property.
+// Whether to expand vertically.
+func (x *Widget) SetPropertyVexpand(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("vexpand", &v)
+}
+
+// GetPropertyVexpand gets the "vexpand" property.
+// Whether to expand vertically.
+func (x *Widget) GetPropertyVexpand() bool {
+	var v gobject.Value
+	x.GetProperty("vexpand", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVexpandSet sets the "vexpand-set" property.
+// Whether to use the `vexpand` property.
+func (x *Widget) SetPropertyVexpandSet(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("vexpand-set", &v)
+}
+
+// GetPropertyVexpandSet gets the "vexpand-set" property.
+// Whether to use the `vexpand` property.
+func (x *Widget) GetPropertyVexpandSet() bool {
+	var v gobject.Value
+	x.GetProperty("vexpand-set", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVisible sets the "visible" property.
+// Whether the widget is visible.
+func (x *Widget) SetPropertyVisible(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("visible", &v)
+}
+
+// GetPropertyVisible gets the "visible" property.
+// Whether the widget is visible.
+func (x *Widget) GetPropertyVisible() bool {
+	var v gobject.Value
+	x.GetProperty("visible", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyWidthRequest sets the "width-request" property.
+// Overrides for width request of the widget.
+//
+// If this is -1, the natural request will be used.
+func (x *Widget) SetPropertyWidthRequest(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("width-request", &v)
+}
+
+// GetPropertyWidthRequest gets the "width-request" property.
+// Overrides for width request of the widget.
+//
+// If this is -1, the natural request will be used.
+func (x *Widget) GetPropertyWidthRequest() int {
+	var v gobject.Value
+	x.GetProperty("width-request", &v)
+	return v.GetInt()
 }
 
 // Signals that all holders of a reference to the widget should release
@@ -4742,7 +5327,7 @@ func (x *Widget) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Widget) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Widget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

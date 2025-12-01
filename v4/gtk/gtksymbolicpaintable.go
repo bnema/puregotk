@@ -25,7 +25,7 @@ func (x *SymbolicPaintableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideSnapshotSymbolic sets the callback function.
+// OverrideSnapshotSymbolic sets the "snapshot_symbolic" callback function.
 // Snapshot the paintable using the given colors.
 //
 //	See `GtkSymbolicPaintable::snapshot_symbolic()` for details.
@@ -41,7 +41,7 @@ func (x *SymbolicPaintableInterface) OverrideSnapshotSymbolic(cb func(SymbolicPa
 	}
 }
 
-// GetSnapshotSymbolic gets the callback function.
+// GetSnapshotSymbolic gets the "snapshot_symbolic" callback function.
 // Snapshot the paintable using the given colors.
 //
 //	See `GtkSymbolicPaintable::snapshot_symbolic()` for details.

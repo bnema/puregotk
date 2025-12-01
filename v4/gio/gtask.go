@@ -1212,6 +1212,31 @@ func (c *Task) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyCompleted gets the "completed" property.
+// Whether the task has completed, meaning its callback (if set) has been
+// invoked.
+//
+// This can only happen after g_task_return_pointer(),
+// g_task_return_error() or one of the other return functions have been called
+// on the task. However, it is not guaranteed to happen immediately after
+// those functions are called, as the task’s callback may need to be scheduled
+// to run in a different thread.
+//
+// That means it is **not safe** to use this property to track whether a
+// return function has been called on the #GTask. Callers must do that
+// tracking themselves, typically by linking the lifetime of the #GTask to the
+// control flow of their code.
+//
+// This property is guaranteed to change from %FALSE to %TRUE exactly once.
+//
+// The #GObject::notify signal for this change is emitted in the same main
+// context as the task’s callback, immediately after that callback is invoked.
+func (x *Task) GetPropertyCompleted() bool {
+	var v gobject.Value
+	x.GetProperty("completed", &v)
+	return v.GetBoolean()
+}
+
 // Gets the user data from a [iface@Gio.AsyncResult].
 func (x *Task) GetUserData() uintptr {
 

@@ -192,6 +192,78 @@ func (c *ShortcutsItem) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAccelerator sets the "accelerator" property.
+// The shortcut accelerator.
+//
+// Accelerator must be in the format [class@ShortcutLabel] accepts.
+func (x *ShortcutsItem) SetPropertyAccelerator(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("accelerator", &v)
+}
+
+// GetPropertyAccelerator gets the "accelerator" property.
+// The shortcut accelerator.
+//
+// Accelerator must be in the format [class@ShortcutLabel] accepts.
+func (x *ShortcutsItem) GetPropertyAccelerator() string {
+	var v gobject.Value
+	x.GetProperty("accelerator", &v)
+	return v.GetString()
+}
+
+// SetPropertyActionName sets the "action-name" property.
+// Fully qualified action name to get the accelerator from.
+func (x *ShortcutsItem) SetPropertyActionName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("action-name", &v)
+}
+
+// GetPropertyActionName gets the "action-name" property.
+// Fully qualified action name to get the accelerator from.
+func (x *ShortcutsItem) GetPropertyActionName() string {
+	var v gobject.Value
+	x.GetProperty("action-name", &v)
+	return v.GetString()
+}
+
+// SetPropertySubtitle sets the "subtitle" property.
+// The subtitle of the shortcut.
+func (x *ShortcutsItem) SetPropertySubtitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("subtitle", &v)
+}
+
+// GetPropertySubtitle gets the "subtitle" property.
+// The subtitle of the shortcut.
+func (x *ShortcutsItem) GetPropertySubtitle() string {
+	var v gobject.Value
+	x.GetProperty("subtitle", &v)
+	return v.GetString()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the shortcut.
+func (x *ShortcutsItem) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the shortcut.
+func (x *ShortcutsItem) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
 	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})

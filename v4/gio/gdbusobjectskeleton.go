@@ -27,7 +27,7 @@ func (x *DBusObjectSkeletonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideAuthorizeMethod sets the callback function.
+// OverrideAuthorizeMethod sets the "authorize_method" callback function.
 // Signal class handler for the #GDBusObjectSkeleton::authorize-method signal.
 func (x *DBusObjectSkeletonClass) OverrideAuthorizeMethod(cb func(*DBusObjectSkeleton, *DBusInterfaceSkeleton, *DBusMethodInvocation) bool) {
 	if cb == nil {
@@ -39,7 +39,7 @@ func (x *DBusObjectSkeletonClass) OverrideAuthorizeMethod(cb func(*DBusObjectSke
 	}
 }
 
-// GetAuthorizeMethod gets the callback function.
+// GetAuthorizeMethod gets the "authorize_method" callback function.
 // Signal class handler for the #GDBusObjectSkeleton::authorize-method signal.
 func (x *DBusObjectSkeletonClass) GetAuthorizeMethod() func(*DBusObjectSkeleton, *DBusInterfaceSkeleton, *DBusMethodInvocation) bool {
 	if x.xAuthorizeMethod == 0 {
@@ -162,6 +162,23 @@ func (c *DBusObjectSkeleton) GoPointer() uintptr {
 
 func (c *DBusObjectSkeleton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyGObjectPath sets the "g-object-path" property.
+// The object path where the object is exported.
+func (x *DBusObjectSkeleton) SetPropertyGObjectPath(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("g-object-path", &v)
+}
+
+// GetPropertyGObjectPath gets the "g-object-path" property.
+// The object path where the object is exported.
+func (x *DBusObjectSkeleton) GetPropertyGObjectPath() string {
+	var v gobject.Value
+	x.GetProperty("g-object-path", &v)
+	return v.GetString()
 }
 
 // Emitted when a method is invoked by a remote caller and used to

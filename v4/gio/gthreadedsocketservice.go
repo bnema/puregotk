@@ -34,7 +34,7 @@ func (x *ThreadedSocketServiceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideRun sets the callback function.
+// OverrideRun sets the "run" callback function.
 func (x *ThreadedSocketServiceClass) OverrideRun(cb func(*ThreadedSocketService, *SocketConnection, *gobject.Object) bool) {
 	if cb == nil {
 		x.xRun = 0
@@ -45,7 +45,7 @@ func (x *ThreadedSocketServiceClass) OverrideRun(cb func(*ThreadedSocketService,
 	}
 }
 
-// GetRun gets the callback function.
+// GetRun gets the "run" callback function.
 func (x *ThreadedSocketServiceClass) GetRun() func(*ThreadedSocketService, *SocketConnection, *gobject.Object) bool {
 	if x.xRun == 0 {
 		return nil
@@ -57,7 +57,7 @@ func (x *ThreadedSocketServiceClass) GetRun() func(*ThreadedSocketService, *Sock
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *ThreadedSocketServiceClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -68,7 +68,7 @@ func (x *ThreadedSocketServiceClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *ThreadedSocketServiceClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -80,7 +80,7 @@ func (x *ThreadedSocketServiceClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *ThreadedSocketServiceClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -91,7 +91,7 @@ func (x *ThreadedSocketServiceClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *ThreadedSocketServiceClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -103,7 +103,7 @@ func (x *ThreadedSocketServiceClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *ThreadedSocketServiceClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -114,7 +114,7 @@ func (x *ThreadedSocketServiceClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *ThreadedSocketServiceClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -126,7 +126,7 @@ func (x *ThreadedSocketServiceClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *ThreadedSocketServiceClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -137,7 +137,7 @@ func (x *ThreadedSocketServiceClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *ThreadedSocketServiceClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -149,7 +149,7 @@ func (x *ThreadedSocketServiceClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *ThreadedSocketServiceClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -160,7 +160,7 @@ func (x *ThreadedSocketServiceClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *ThreadedSocketServiceClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -238,6 +238,23 @@ func (c *ThreadedSocketService) GoPointer() uintptr {
 
 func (c *ThreadedSocketService) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyMaxThreads sets the "max-threads" property.
+// The maximum number of threads handling clients for this service.
+func (x *ThreadedSocketService) SetPropertyMaxThreads(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("max-threads", &v)
+}
+
+// GetPropertyMaxThreads gets the "max-threads" property.
+// The maximum number of threads handling clients for this service.
+func (x *ThreadedSocketService) GetPropertyMaxThreads() int {
+	var v gobject.Value
+	x.GetProperty("max-threads", &v)
+	return v.GetInt()
 }
 
 // The ::run signal is emitted in a worker thread in response to an

@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -81,6 +82,16 @@ func (x *PowerProfileMonitorBase) GetPowerSaverEnabled() bool {
 
 	cret := XGPowerProfileMonitorGetPowerSaverEnabled(x.GoPointer())
 	return cret
+}
+
+// GetPropertyPowerSaverEnabled gets the "power-saver-enabled" property.
+// Whether “Power Saver” mode is enabled on the system.
+func (x *PowerProfileMonitorBase) GetPropertyPowerSaverEnabled() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("power-saver-enabled", &v)
+	return v.GetBoolean()
 }
 
 var XGPowerProfileMonitorGetPowerSaverEnabled func(uintptr) bool

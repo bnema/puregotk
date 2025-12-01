@@ -445,6 +445,152 @@ func (c *DmabufTextureBuilder) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyColorState sets the "color-state" property.
+// The color state of the texture.
+func (x *DmabufTextureBuilder) SetPropertyColorState(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("color-state", &v)
+}
+
+// GetPropertyColorState gets the "color-state" property.
+// The color state of the texture.
+func (x *DmabufTextureBuilder) GetPropertyColorState() uintptr {
+	var v gobject.Value
+	x.GetProperty("color-state", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyFourcc sets the "fourcc" property.
+// The format of the texture, as a fourcc value.
+func (x *DmabufTextureBuilder) SetPropertyFourcc(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("fourcc", &v)
+}
+
+// GetPropertyFourcc gets the "fourcc" property.
+// The format of the texture, as a fourcc value.
+func (x *DmabufTextureBuilder) GetPropertyFourcc() uint {
+	var v gobject.Value
+	x.GetProperty("fourcc", &v)
+	return v.GetUint()
+}
+
+// SetPropertyHeight sets the "height" property.
+// The height of the texture.
+func (x *DmabufTextureBuilder) SetPropertyHeight(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("height", &v)
+}
+
+// GetPropertyHeight gets the "height" property.
+// The height of the texture.
+func (x *DmabufTextureBuilder) GetPropertyHeight() uint {
+	var v gobject.Value
+	x.GetProperty("height", &v)
+	return v.GetUint()
+}
+
+// SetPropertyModifier sets the "modifier" property.
+// The modifier.
+func (x *DmabufTextureBuilder) SetPropertyModifier(value uint64) {
+	var v gobject.Value
+	v.Init(gobject.TypeUint64Val)
+	v.SetUint64(value)
+	x.SetProperty("modifier", &v)
+}
+
+// GetPropertyModifier gets the "modifier" property.
+// The modifier.
+func (x *DmabufTextureBuilder) GetPropertyModifier() uint64 {
+	var v gobject.Value
+	x.GetProperty("modifier", &v)
+	return v.GetUint64()
+}
+
+// SetPropertyNPlanes sets the "n-planes" property.
+// The number of planes of the texture.
+//
+// Note that you can set properties for other planes,
+// but they will be ignored when constructing the texture.
+func (x *DmabufTextureBuilder) SetPropertyNPlanes(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("n-planes", &v)
+}
+
+// GetPropertyNPlanes gets the "n-planes" property.
+// The number of planes of the texture.
+//
+// Note that you can set properties for other planes,
+// but they will be ignored when constructing the texture.
+func (x *DmabufTextureBuilder) GetPropertyNPlanes() uint {
+	var v gobject.Value
+	x.GetProperty("n-planes", &v)
+	return v.GetUint()
+}
+
+// SetPropertyPremultiplied sets the "premultiplied" property.
+// Whether the alpha channel is premultiplied into the others.
+//
+// Only relevant if the format has alpha.
+func (x *DmabufTextureBuilder) SetPropertyPremultiplied(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("premultiplied", &v)
+}
+
+// GetPropertyPremultiplied gets the "premultiplied" property.
+// Whether the alpha channel is premultiplied into the others.
+//
+// Only relevant if the format has alpha.
+func (x *DmabufTextureBuilder) GetPropertyPremultiplied() bool {
+	var v gobject.Value
+	x.GetProperty("premultiplied", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUpdateRegion sets the "update-region" property.
+// The update region for [property@Gdk.DmabufTextureBuilder:update-texture].
+func (x *DmabufTextureBuilder) SetPropertyUpdateRegion(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("update-region", &v)
+}
+
+// GetPropertyUpdateRegion gets the "update-region" property.
+// The update region for [property@Gdk.DmabufTextureBuilder:update-texture].
+func (x *DmabufTextureBuilder) GetPropertyUpdateRegion() uintptr {
+	var v gobject.Value
+	x.GetProperty("update-region", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyWidth sets the "width" property.
+// The width of the texture.
+func (x *DmabufTextureBuilder) SetPropertyWidth(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("width", &v)
+}
+
+// GetPropertyWidth gets the "width" property.
+// The width of the texture.
+func (x *DmabufTextureBuilder) GetPropertyWidth() uint {
+	var v gobject.Value
+	x.GetProperty("width", &v)
+	return v.GetUint()
+}
+
 func init() {
 	core.SetPackageName("GDK", "gtk4")
 	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})

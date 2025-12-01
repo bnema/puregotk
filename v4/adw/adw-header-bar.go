@@ -388,6 +388,147 @@ func (c *HeaderBar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDecorationLayout sets the "decoration-layout" property.
+// The decoration layout for buttons.
+//
+// If this property is not set, the
+// [property@Gtk.Settings:gtk-decoration-layout] setting is used.
+//
+// The format of the string is button names, separated by commas. A colon
+// separates the buttons that should appear at the start from those at the
+// end. Recognized button names are minimize, maximize, close and icon (the
+// window icon).
+//
+// For example, “icon:minimize,maximize,close” specifies an icon at the start,
+// and minimize, maximize and close buttons at the end.
+func (x *HeaderBar) SetPropertyDecorationLayout(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("decoration-layout", &v)
+}
+
+// GetPropertyDecorationLayout gets the "decoration-layout" property.
+// The decoration layout for buttons.
+//
+// If this property is not set, the
+// [property@Gtk.Settings:gtk-decoration-layout] setting is used.
+//
+// The format of the string is button names, separated by commas. A colon
+// separates the buttons that should appear at the start from those at the
+// end. Recognized button names are minimize, maximize, close and icon (the
+// window icon).
+//
+// For example, “icon:minimize,maximize,close” specifies an icon at the start,
+// and minimize, maximize and close buttons at the end.
+func (x *HeaderBar) GetPropertyDecorationLayout() string {
+	var v gobject.Value
+	x.GetProperty("decoration-layout", &v)
+	return v.GetString()
+}
+
+// SetPropertyShowBackButton sets the "show-back-button" property.
+// Whether the header bar can show the back button.
+//
+// The back button will never be shown unless the header bar is placed inside an
+// [class@NavigationView]. Usually, there is no reason to set this to `FALSE`.
+func (x *HeaderBar) SetPropertyShowBackButton(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-back-button", &v)
+}
+
+// GetPropertyShowBackButton gets the "show-back-button" property.
+// Whether the header bar can show the back button.
+//
+// The back button will never be shown unless the header bar is placed inside an
+// [class@NavigationView]. Usually, there is no reason to set this to `FALSE`.
+func (x *HeaderBar) GetPropertyShowBackButton() bool {
+	var v gobject.Value
+	x.GetProperty("show-back-button", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowEndTitleButtons sets the "show-end-title-buttons" property.
+// Whether to show title buttons at the end of the header bar.
+//
+// See [property@HeaderBar:show-start-title-buttons] for the other side.
+//
+// Which buttons are actually shown and where is determined by the
+// [property@HeaderBar:decoration-layout] property, and by the state of the
+// window (e.g. a close button will not be shown if the window can't be
+// closed).
+func (x *HeaderBar) SetPropertyShowEndTitleButtons(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-end-title-buttons", &v)
+}
+
+// GetPropertyShowEndTitleButtons gets the "show-end-title-buttons" property.
+// Whether to show title buttons at the end of the header bar.
+//
+// See [property@HeaderBar:show-start-title-buttons] for the other side.
+//
+// Which buttons are actually shown and where is determined by the
+// [property@HeaderBar:decoration-layout] property, and by the state of the
+// window (e.g. a close button will not be shown if the window can't be
+// closed).
+func (x *HeaderBar) GetPropertyShowEndTitleButtons() bool {
+	var v gobject.Value
+	x.GetProperty("show-end-title-buttons", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowStartTitleButtons sets the "show-start-title-buttons" property.
+// Whether to show title buttons at the start of the header bar.
+//
+// See [property@HeaderBar:show-end-title-buttons] for the other side.
+//
+// Which buttons are actually shown and where is determined by the
+// [property@HeaderBar:decoration-layout] property, and by the state of the
+// window (e.g. a close button will not be shown if the window can't be
+// closed).
+func (x *HeaderBar) SetPropertyShowStartTitleButtons(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-start-title-buttons", &v)
+}
+
+// GetPropertyShowStartTitleButtons gets the "show-start-title-buttons" property.
+// Whether to show title buttons at the start of the header bar.
+//
+// See [property@HeaderBar:show-end-title-buttons] for the other side.
+//
+// Which buttons are actually shown and where is determined by the
+// [property@HeaderBar:decoration-layout] property, and by the state of the
+// window (e.g. a close button will not be shown if the window can't be
+// closed).
+func (x *HeaderBar) GetPropertyShowStartTitleButtons() bool {
+	var v gobject.Value
+	x.GetProperty("show-start-title-buttons", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowTitle sets the "show-title" property.
+// Whether the title widget should be shown.
+func (x *HeaderBar) SetPropertyShowTitle(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-title", &v)
+}
+
+// GetPropertyShowTitle gets the "show-title" property.
+// Whether the title widget should be shown.
+func (x *HeaderBar) GetPropertyShowTitle() bool {
+	var v gobject.Value
+	x.GetProperty("show-title", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -445,7 +586,7 @@ func (x *HeaderBar) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *HeaderBar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *HeaderBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

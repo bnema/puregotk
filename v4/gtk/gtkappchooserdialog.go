@@ -135,6 +135,27 @@ func (c *AppChooserDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyHeading sets the "heading" property.
+// The text to show at the top of the dialog.
+//
+// The string may contain Pango markup.
+func (x *AppChooserDialog) SetPropertyHeading(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("heading", &v)
+}
+
+// GetPropertyHeading gets the "heading" property.
+// The text to show at the top of the dialog.
+//
+// The string may contain Pango markup.
+func (x *AppChooserDialog) GetPropertyHeading() string {
+	var v gobject.Value
+	x.GetProperty("heading", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -192,7 +213,7 @@ func (x *AppChooserDialog) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AppChooserDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *AppChooserDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -476,7 +497,7 @@ func (x *AppChooserDialog) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *AppChooserDialog) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *AppChooserDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

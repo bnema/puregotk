@@ -577,6 +577,46 @@ func (c *GLShader) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyResource sets the "resource" property.
+// Resource containing the source code for the shader.
+//
+// If the shader source is not coming from a resource, this
+// will be %NULL.
+func (x *GLShader) SetPropertyResource(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("resource", &v)
+}
+
+// GetPropertyResource gets the "resource" property.
+// Resource containing the source code for the shader.
+//
+// If the shader source is not coming from a resource, this
+// will be %NULL.
+func (x *GLShader) GetPropertyResource() string {
+	var v gobject.Value
+	x.GetProperty("resource", &v)
+	return v.GetString()
+}
+
+// SetPropertySource sets the "source" property.
+// The source code for the shader, as a `GBytes`.
+func (x *GLShader) SetPropertySource(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("source", &v)
+}
+
+// GetPropertySource gets the "source" property.
+// The source code for the shader, as a `GBytes`.
+func (x *GLShader) GetPropertySource() uintptr {
+	var v gobject.Value
+	x.GetProperty("source", &v)
+	return v.GetPointer()
+}
+
 func init() {
 	core.SetPackageName("GSK", "gtk4")
 	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})

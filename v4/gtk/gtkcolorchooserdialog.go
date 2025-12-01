@@ -78,6 +78,27 @@ func (c *ColorChooserDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyShowEditor sets the "show-editor" property.
+// Whether the color chooser dialog is showing the single-color editor.
+//
+// It can be set to switch the color chooser into single-color editing mode.
+func (x *ColorChooserDialog) SetPropertyShowEditor(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-editor", &v)
+}
+
+// GetPropertyShowEditor gets the "show-editor" property.
+// Whether the color chooser dialog is showing the single-color editor.
+//
+// It can be set to switch the color chooser into single-color editing mode.
+func (x *ColorChooserDialog) GetPropertyShowEditor() bool {
+	var v gobject.Value
+	x.GetProperty("show-editor", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -135,7 +156,7 @@ func (x *ColorChooserDialog) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ColorChooserDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ColorChooserDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -441,7 +462,7 @@ func (x *ColorChooserDialog) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *ColorChooserDialog) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *ColorChooserDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

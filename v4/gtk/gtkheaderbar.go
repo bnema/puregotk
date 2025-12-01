@@ -280,6 +280,87 @@ func (c *HeaderBar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDecorationLayout sets the "decoration-layout" property.
+// The decoration layout for buttons.
+//
+// If this property is not set, the
+// [property@Gtk.Settings:gtk-decoration-layout] setting is used.
+func (x *HeaderBar) SetPropertyDecorationLayout(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("decoration-layout", &v)
+}
+
+// GetPropertyDecorationLayout gets the "decoration-layout" property.
+// The decoration layout for buttons.
+//
+// If this property is not set, the
+// [property@Gtk.Settings:gtk-decoration-layout] setting is used.
+func (x *HeaderBar) GetPropertyDecorationLayout() string {
+	var v gobject.Value
+	x.GetProperty("decoration-layout", &v)
+	return v.GetString()
+}
+
+// SetPropertyShowTitleButtons sets the "show-title-buttons" property.
+// Whether to show title buttons like close, minimize, maximize.
+//
+// Which buttons are actually shown and where is determined
+// by the [property@Gtk.HeaderBar:decoration-layout] property,
+// and by the state of the window (e.g. a close button will not
+// be shown if the window can't be closed).
+func (x *HeaderBar) SetPropertyShowTitleButtons(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-title-buttons", &v)
+}
+
+// GetPropertyShowTitleButtons gets the "show-title-buttons" property.
+// Whether to show title buttons like close, minimize, maximize.
+//
+// Which buttons are actually shown and where is determined
+// by the [property@Gtk.HeaderBar:decoration-layout] property,
+// and by the state of the window (e.g. a close button will not
+// be shown if the window can't be closed).
+func (x *HeaderBar) GetPropertyShowTitleButtons() bool {
+	var v gobject.Value
+	x.GetProperty("show-title-buttons", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseNativeControls sets the "use-native-controls" property.
+// Whether to show platform native close/minimize/maximize buttons.
+//
+// For macOS, the [property@Gtk.HeaderBar:decoration-layout] property
+// can be used to enable/disable controls.
+//
+// On Linux, this option has no effect.
+//
+// See also [Using GTK on Apple macOS](osx.html?native-window-controls).
+func (x *HeaderBar) SetPropertyUseNativeControls(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-native-controls", &v)
+}
+
+// GetPropertyUseNativeControls gets the "use-native-controls" property.
+// Whether to show platform native close/minimize/maximize buttons.
+//
+// For macOS, the [property@Gtk.HeaderBar:decoration-layout] property
+// can be used to enable/disable controls.
+//
+// On Linux, this option has no effect.
+//
+// See also [Using GTK on Apple macOS](osx.html?native-window-controls).
+func (x *HeaderBar) GetPropertyUseNativeControls() bool {
+	var v gobject.Value
+	x.GetProperty("use-native-controls", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -337,7 +418,7 @@ func (x *HeaderBar) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *HeaderBar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *HeaderBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

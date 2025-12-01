@@ -98,6 +98,23 @@ func (c *DBusObjectProxy) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyGObjectPath sets the "g-object-path" property.
+// The object path of the proxy.
+func (x *DBusObjectProxy) SetPropertyGObjectPath(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("g-object-path", &v)
+}
+
+// GetPropertyGObjectPath gets the "g-object-path" property.
+// The object path of the proxy.
+func (x *DBusObjectProxy) GetPropertyGObjectPath() string {
+	var v gobject.Value
+	x.GetProperty("g-object-path", &v)
+	return v.GetString()
+}
+
 // Gets the D-Bus interface with name @interface_name associated with
 // @object, if any.
 func (x *DBusObjectProxy) GetInterface(InterfaceNameVar string) *DBusInterfaceBase {

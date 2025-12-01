@@ -357,7 +357,7 @@ func (x *SimpleActionGroup) ListActions() []string {
 // fields (as indicated by having a non-`NULL` reference passed in) are
 // filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
-func (x *SimpleActionGroup) QueryAction(ActionNameVar string, EnabledVar bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
+func (x *SimpleActionGroup) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
 	return cret

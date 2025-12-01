@@ -34,7 +34,7 @@ func (x *MemVTable) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideMalloc sets the callback function.
+// OverrideMalloc sets the "malloc" callback function.
 // function to use for allocating memory.
 func (x *MemVTable) OverrideMalloc(cb func(uint) uintptr) {
 	if cb == nil {
@@ -46,7 +46,7 @@ func (x *MemVTable) OverrideMalloc(cb func(uint) uintptr) {
 	}
 }
 
-// GetMalloc gets the callback function.
+// GetMalloc gets the "malloc" callback function.
 // function to use for allocating memory.
 func (x *MemVTable) GetMalloc() func(uint) uintptr {
 	if x.xMalloc == 0 {
@@ -59,7 +59,7 @@ func (x *MemVTable) GetMalloc() func(uint) uintptr {
 	}
 }
 
-// OverrideRealloc sets the callback function.
+// OverrideRealloc sets the "realloc" callback function.
 // function to use for reallocating memory.
 func (x *MemVTable) OverrideRealloc(cb func(uintptr, uint) uintptr) {
 	if cb == nil {
@@ -71,7 +71,7 @@ func (x *MemVTable) OverrideRealloc(cb func(uintptr, uint) uintptr) {
 	}
 }
 
-// GetRealloc gets the callback function.
+// GetRealloc gets the "realloc" callback function.
 // function to use for reallocating memory.
 func (x *MemVTable) GetRealloc() func(uintptr, uint) uintptr {
 	if x.xRealloc == 0 {
@@ -84,7 +84,7 @@ func (x *MemVTable) GetRealloc() func(uintptr, uint) uintptr {
 	}
 }
 
-// OverrideFree sets the callback function.
+// OverrideFree sets the "free" callback function.
 // function to use to free memory.
 func (x *MemVTable) OverrideFree(cb func(uintptr)) {
 	if cb == nil {
@@ -96,7 +96,7 @@ func (x *MemVTable) OverrideFree(cb func(uintptr)) {
 	}
 }
 
-// GetFree gets the callback function.
+// GetFree gets the "free" callback function.
 // function to use to free memory.
 func (x *MemVTable) GetFree() func(uintptr) {
 	if x.xFree == 0 {
@@ -109,7 +109,7 @@ func (x *MemVTable) GetFree() func(uintptr) {
 	}
 }
 
-// OverrideCalloc sets the callback function.
+// OverrideCalloc sets the "calloc" callback function.
 // function to use for allocating zero-filled memory.
 func (x *MemVTable) OverrideCalloc(cb func(uint, uint) uintptr) {
 	if cb == nil {
@@ -121,7 +121,7 @@ func (x *MemVTable) OverrideCalloc(cb func(uint, uint) uintptr) {
 	}
 }
 
-// GetCalloc gets the callback function.
+// GetCalloc gets the "calloc" callback function.
 // function to use for allocating zero-filled memory.
 func (x *MemVTable) GetCalloc() func(uint, uint) uintptr {
 	if x.xCalloc == 0 {
@@ -134,7 +134,7 @@ func (x *MemVTable) GetCalloc() func(uint, uint) uintptr {
 	}
 }
 
-// OverrideTryMalloc sets the callback function.
+// OverrideTryMalloc sets the "try_malloc" callback function.
 // function to use for allocating memory without a default error handler.
 func (x *MemVTable) OverrideTryMalloc(cb func(uint) uintptr) {
 	if cb == nil {
@@ -146,7 +146,7 @@ func (x *MemVTable) OverrideTryMalloc(cb func(uint) uintptr) {
 	}
 }
 
-// GetTryMalloc gets the callback function.
+// GetTryMalloc gets the "try_malloc" callback function.
 // function to use for allocating memory without a default error handler.
 func (x *MemVTable) GetTryMalloc() func(uint) uintptr {
 	if x.xTryMalloc == 0 {
@@ -159,7 +159,7 @@ func (x *MemVTable) GetTryMalloc() func(uint) uintptr {
 	}
 }
 
-// OverrideTryRealloc sets the callback function.
+// OverrideTryRealloc sets the "try_realloc" callback function.
 // function to use for reallocating memory without a default error handler.
 func (x *MemVTable) OverrideTryRealloc(cb func(uintptr, uint) uintptr) {
 	if cb == nil {
@@ -171,7 +171,7 @@ func (x *MemVTable) OverrideTryRealloc(cb func(uintptr, uint) uintptr) {
 	}
 }
 
-// GetTryRealloc gets the callback function.
+// GetTryRealloc gets the "try_realloc" callback function.
 // function to use for reallocating memory without a default error handler.
 func (x *MemVTable) GetTryRealloc() func(uintptr, uint) uintptr {
 	if x.xTryRealloc == 0 {

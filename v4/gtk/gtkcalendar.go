@@ -312,6 +312,137 @@ func (c *Calendar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDate sets the "date" property.
+// The selected date.
+//
+// This property gets initially set to the current date.
+func (x *Calendar) SetPropertyDate(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("date", &v)
+}
+
+// GetPropertyDate gets the "date" property.
+// The selected date.
+//
+// This property gets initially set to the current date.
+func (x *Calendar) GetPropertyDate() uintptr {
+	var v gobject.Value
+	x.GetProperty("date", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyDay sets the "day" property.
+// The selected day (as a number between 1 and 31).
+func (x *Calendar) SetPropertyDay(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("day", &v)
+}
+
+// GetPropertyDay gets the "day" property.
+// The selected day (as a number between 1 and 31).
+func (x *Calendar) GetPropertyDay() int {
+	var v gobject.Value
+	x.GetProperty("day", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMonth sets the "month" property.
+// The selected month (as a number between 0 and 11).
+//
+// This property gets initially set to the current month.
+func (x *Calendar) SetPropertyMonth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("month", &v)
+}
+
+// GetPropertyMonth gets the "month" property.
+// The selected month (as a number between 0 and 11).
+//
+// This property gets initially set to the current month.
+func (x *Calendar) GetPropertyMonth() int {
+	var v gobject.Value
+	x.GetProperty("month", &v)
+	return v.GetInt()
+}
+
+// SetPropertyShowDayNames sets the "show-day-names" property.
+// Determines whether day names are displayed.
+func (x *Calendar) SetPropertyShowDayNames(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-day-names", &v)
+}
+
+// GetPropertyShowDayNames gets the "show-day-names" property.
+// Determines whether day names are displayed.
+func (x *Calendar) GetPropertyShowDayNames() bool {
+	var v gobject.Value
+	x.GetProperty("show-day-names", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowHeading sets the "show-heading" property.
+// Determines whether a heading is displayed.
+func (x *Calendar) SetPropertyShowHeading(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-heading", &v)
+}
+
+// GetPropertyShowHeading gets the "show-heading" property.
+// Determines whether a heading is displayed.
+func (x *Calendar) GetPropertyShowHeading() bool {
+	var v gobject.Value
+	x.GetProperty("show-heading", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowWeekNumbers sets the "show-week-numbers" property.
+// Determines whether week numbers are displayed.
+func (x *Calendar) SetPropertyShowWeekNumbers(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-week-numbers", &v)
+}
+
+// GetPropertyShowWeekNumbers gets the "show-week-numbers" property.
+// Determines whether week numbers are displayed.
+func (x *Calendar) GetPropertyShowWeekNumbers() bool {
+	var v gobject.Value
+	x.GetProperty("show-week-numbers", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyYear sets the "year" property.
+// The selected year.
+//
+// This property gets initially set to the current year.
+func (x *Calendar) SetPropertyYear(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("year", &v)
+}
+
+// GetPropertyYear gets the "year" property.
+// The selected year.
+//
+// This property gets initially set to the current year.
+func (x *Calendar) GetPropertyYear() int {
+	var v gobject.Value
+	x.GetProperty("year", &v)
+	return v.GetInt()
+}
+
 // Emitted when the user selects a day.
 func (x *Calendar) ConnectDaySelected(cb *func(Calendar)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -469,7 +600,7 @@ func (x *Calendar) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Calendar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Calendar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

@@ -302,6 +302,163 @@ func (c *Paned) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyMaxPosition gets the "max-position" property.
+// The largest possible value for the [property@Gtk.Paned:position]
+// property.
+//
+// This property is derived from the size and shrinkability
+// of the widget's children.
+func (x *Paned) GetPropertyMaxPosition() int {
+	var v gobject.Value
+	x.GetProperty("max-position", &v)
+	return v.GetInt()
+}
+
+// GetPropertyMinPosition gets the "min-position" property.
+// The smallest possible value for the [property@Gtk.Paned:position]
+// property.
+//
+// This property is derived from the size and shrinkability
+// of the widget's children.
+func (x *Paned) GetPropertyMinPosition() int {
+	var v gobject.Value
+	x.GetProperty("min-position", &v)
+	return v.GetInt()
+}
+
+// SetPropertyPosition sets the "position" property.
+// Position of the separator in pixels, from the left/top.
+func (x *Paned) SetPropertyPosition(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("position", &v)
+}
+
+// GetPropertyPosition gets the "position" property.
+// Position of the separator in pixels, from the left/top.
+func (x *Paned) GetPropertyPosition() int {
+	var v gobject.Value
+	x.GetProperty("position", &v)
+	return v.GetInt()
+}
+
+// SetPropertyPositionSet sets the "position-set" property.
+// Whether the [property@Gtk.Paned:position] property has been set.
+func (x *Paned) SetPropertyPositionSet(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("position-set", &v)
+}
+
+// GetPropertyPositionSet gets the "position-set" property.
+// Whether the [property@Gtk.Paned:position] property has been set.
+func (x *Paned) GetPropertyPositionSet() bool {
+	var v gobject.Value
+	x.GetProperty("position-set", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyResizeEndChild sets the "resize-end-child" property.
+// Determines whether the second child expands and shrinks
+// along with the paned widget.
+func (x *Paned) SetPropertyResizeEndChild(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("resize-end-child", &v)
+}
+
+// GetPropertyResizeEndChild gets the "resize-end-child" property.
+// Determines whether the second child expands and shrinks
+// along with the paned widget.
+func (x *Paned) GetPropertyResizeEndChild() bool {
+	var v gobject.Value
+	x.GetProperty("resize-end-child", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyResizeStartChild sets the "resize-start-child" property.
+// Determines whether the first child expands and shrinks
+// along with the paned widget.
+func (x *Paned) SetPropertyResizeStartChild(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("resize-start-child", &v)
+}
+
+// GetPropertyResizeStartChild gets the "resize-start-child" property.
+// Determines whether the first child expands and shrinks
+// along with the paned widget.
+func (x *Paned) GetPropertyResizeStartChild() bool {
+	var v gobject.Value
+	x.GetProperty("resize-start-child", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShrinkEndChild sets the "shrink-end-child" property.
+// Determines whether the second child can be made smaller
+// than its requisition.
+func (x *Paned) SetPropertyShrinkEndChild(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("shrink-end-child", &v)
+}
+
+// GetPropertyShrinkEndChild gets the "shrink-end-child" property.
+// Determines whether the second child can be made smaller
+// than its requisition.
+func (x *Paned) GetPropertyShrinkEndChild() bool {
+	var v gobject.Value
+	x.GetProperty("shrink-end-child", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShrinkStartChild sets the "shrink-start-child" property.
+// Determines whether the first child can be made smaller
+// than its requisition.
+func (x *Paned) SetPropertyShrinkStartChild(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("shrink-start-child", &v)
+}
+
+// GetPropertyShrinkStartChild gets the "shrink-start-child" property.
+// Determines whether the first child can be made smaller
+// than its requisition.
+func (x *Paned) GetPropertyShrinkStartChild() bool {
+	var v gobject.Value
+	x.GetProperty("shrink-start-child", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyWideHandle sets the "wide-handle" property.
+// Whether the `GtkPaned` should provide a stronger visual separation.
+//
+// For example, this could be set when a paned contains two
+// [class@Gtk.Notebook]s, whose tab rows would otherwise merge visually.
+func (x *Paned) SetPropertyWideHandle(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("wide-handle", &v)
+}
+
+// GetPropertyWideHandle gets the "wide-handle" property.
+// Whether the `GtkPaned` should provide a stronger visual separation.
+//
+// For example, this could be set when a paned contains two
+// [class@Gtk.Notebook]s, whose tab rows would otherwise merge visually.
+func (x *Paned) GetPropertyWideHandle() bool {
+	var v gobject.Value
+	x.GetProperty("wide-handle", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to accept the current position of the handle when
 // moving it using key bindings.
 //
@@ -516,7 +673,7 @@ func (x *Paned) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Paned) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Paned) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

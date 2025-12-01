@@ -244,6 +244,65 @@ func (c *PreferencesGroup) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDescription sets the "description" property.
+// The description for this group of preferences.
+func (x *PreferencesGroup) SetPropertyDescription(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("description", &v)
+}
+
+// GetPropertyDescription gets the "description" property.
+// The description for this group of preferences.
+func (x *PreferencesGroup) GetPropertyDescription() string {
+	var v gobject.Value
+	x.GetProperty("description", &v)
+	return v.GetString()
+}
+
+// SetPropertySeparateRows sets the "separate-rows" property.
+// Whether to separate rows.
+//
+// Equivalent to using the
+// [`.boxed-list-separate`](style-classes.html#boxed-lists-cards) style class
+// on a [class@Gtk.ListBox] instead of `.boxed-list`.
+func (x *PreferencesGroup) SetPropertySeparateRows(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("separate-rows", &v)
+}
+
+// GetPropertySeparateRows gets the "separate-rows" property.
+// Whether to separate rows.
+//
+// Equivalent to using the
+// [`.boxed-list-separate`](style-classes.html#boxed-lists-cards) style class
+// on a [class@Gtk.ListBox] instead of `.boxed-list`.
+func (x *PreferencesGroup) GetPropertySeparateRows() bool {
+	var v gobject.Value
+	x.GetProperty("separate-rows", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title for this group of preferences.
+func (x *PreferencesGroup) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title for this group of preferences.
+func (x *PreferencesGroup) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -301,7 +360,7 @@ func (x *PreferencesGroup) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PreferencesGroup) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *PreferencesGroup) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

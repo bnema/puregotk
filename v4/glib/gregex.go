@@ -126,7 +126,7 @@ func (x *MatchInfo) FetchNamed(NameVar string) string {
 	return cret
 }
 
-var xMatchInfoFetchNamedPos func(uintptr, string, int, int) bool
+var xMatchInfoFetchNamedPos func(uintptr, string, *int, *int) bool
 
 // Retrieves the position in bytes of the capturing parentheses named @name.
 //
@@ -136,13 +136,13 @@ var xMatchInfoFetchNamedPos func(uintptr, string, int, int) bool
 //
 // As @end_pos is set to the byte after the final byte of the match (on success),
 // the length of the match can be calculated as `end_pos - start_pos`.
-func (x *MatchInfo) FetchNamedPos(NameVar string, StartPosVar int, EndPosVar int) bool {
+func (x *MatchInfo) FetchNamedPos(NameVar string, StartPosVar *int, EndPosVar *int) bool {
 
 	cret := xMatchInfoFetchNamedPos(x.GoPointer(), NameVar, StartPosVar, EndPosVar)
 	return cret
 }
 
-var xMatchInfoFetchPos func(uintptr, int, int, int) bool
+var xMatchInfoFetchPos func(uintptr, int, *int, *int) bool
 
 // Returns the start and end positions (in bytes) of a successfully matching
 // capture parenthesis.
@@ -351,7 +351,7 @@ var xMatchInfoFetchPos func(uintptr, int, int, int) bool
 // 2         &lt;a&gt;                       1            0                  3
 // 3         N/A                       0            2147483647         2147483647
 // ```
-func (x *MatchInfo) FetchPos(MatchNumVar int, StartPosVar int, EndPosVar int) bool {
+func (x *MatchInfo) FetchPos(MatchNumVar int, StartPosVar *int, EndPosVar *int) bool {
 
 	cret := xMatchInfoFetchPos(x.GoPointer(), MatchNumVar, StartPosVar, EndPosVar)
 	return cret
@@ -1474,7 +1474,7 @@ const (
 	GRegexErrorCharacterValueTooLargeValue RegexError = 176
 )
 
-var xRegexCheckReplacement func(string, bool, **Error) bool
+var xRegexCheckReplacement func(string, *bool, **Error) bool
 
 // Checks whether @replacement is a valid replacement string
 // (see g_regex_replace()), i.e. that all escape sequences in
@@ -1485,7 +1485,7 @@ var xRegexCheckReplacement func(string, bool, **Error) bool
 // does not contain references and may be evaluated without information
 // about actual match, but '\0\1' (whole match followed by first
 // subpattern) requires valid #GMatchInfo object.
-func RegexCheckReplacement(ReplacementVar string, HasReferencesVar bool) (bool, error) {
+func RegexCheckReplacement(ReplacementVar string, HasReferencesVar *bool) (bool, error) {
 	var cerr *Error
 
 	cret := xRegexCheckReplacement(ReplacementVar, HasReferencesVar, &cerr)

@@ -39,7 +39,7 @@ func (x *AccessibleTextInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetContents sets the callback function.
+// OverrideGetContents sets the "get_contents" callback function.
 func (x *AccessibleTextInterface) OverrideGetContents(cb func(AccessibleText, uint, uint) *glib.Bytes) {
 	if cb == nil {
 		x.xGetContents = 0
@@ -50,7 +50,7 @@ func (x *AccessibleTextInterface) OverrideGetContents(cb func(AccessibleText, ui
 	}
 }
 
-// GetGetContents gets the callback function.
+// GetGetContents gets the "get_contents" callback function.
 func (x *AccessibleTextInterface) GetGetContents() func(AccessibleText, uint, uint) *glib.Bytes {
 	if x.xGetContents == 0 {
 		return nil
@@ -62,30 +62,30 @@ func (x *AccessibleTextInterface) GetGetContents() func(AccessibleText, uint, ui
 	}
 }
 
-// OverrideGetContentsAt sets the callback function.
-func (x *AccessibleTextInterface) OverrideGetContentsAt(cb func(AccessibleText, uint, AccessibleTextGranularity, uint, uint) *glib.Bytes) {
+// OverrideGetContentsAt sets the "get_contents_at" callback function.
+func (x *AccessibleTextInterface) OverrideGetContentsAt(cb func(AccessibleText, uint, AccessibleTextGranularity, *uint, *uint) *glib.Bytes) {
 	if cb == nil {
 		x.xGetContentsAt = 0
 	} else {
-		x.xGetContentsAt = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint, GranularityVarp AccessibleTextGranularity, StartVarp uint, EndVarp uint) *glib.Bytes {
+		x.xGetContentsAt = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint, GranularityVarp AccessibleTextGranularity, StartVarp *uint, EndVarp *uint) *glib.Bytes {
 			return cb(&AccessibleTextBase{Ptr: SelfVarp}, OffsetVarp, GranularityVarp, StartVarp, EndVarp)
 		})
 	}
 }
 
-// GetGetContentsAt gets the callback function.
-func (x *AccessibleTextInterface) GetGetContentsAt() func(AccessibleText, uint, AccessibleTextGranularity, uint, uint) *glib.Bytes {
+// GetGetContentsAt gets the "get_contents_at" callback function.
+func (x *AccessibleTextInterface) GetGetContentsAt() func(AccessibleText, uint, AccessibleTextGranularity, *uint, *uint) *glib.Bytes {
 	if x.xGetContentsAt == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, OffsetVarp uint, GranularityVarp AccessibleTextGranularity, StartVarp uint, EndVarp uint) *glib.Bytes
+	var rawCallback func(SelfVarp uintptr, OffsetVarp uint, GranularityVarp AccessibleTextGranularity, StartVarp *uint, EndVarp *uint) *glib.Bytes
 	purego.RegisterFunc(&rawCallback, x.xGetContentsAt)
-	return func(SelfVar AccessibleText, OffsetVar uint, GranularityVar AccessibleTextGranularity, StartVar uint, EndVar uint) *glib.Bytes {
+	return func(SelfVar AccessibleText, OffsetVar uint, GranularityVar AccessibleTextGranularity, StartVar *uint, EndVar *uint) *glib.Bytes {
 		return rawCallback(SelfVar.GoPointer(), OffsetVar, GranularityVar, StartVar, EndVar)
 	}
 }
 
-// OverrideGetCaretPosition sets the callback function.
+// OverrideGetCaretPosition sets the "get_caret_position" callback function.
 func (x *AccessibleTextInterface) OverrideGetCaretPosition(cb func(AccessibleText) uint) {
 	if cb == nil {
 		x.xGetCaretPosition = 0
@@ -96,7 +96,7 @@ func (x *AccessibleTextInterface) OverrideGetCaretPosition(cb func(AccessibleTex
 	}
 }
 
-// GetGetCaretPosition gets the callback function.
+// GetGetCaretPosition gets the "get_caret_position" callback function.
 func (x *AccessibleTextInterface) GetGetCaretPosition() func(AccessibleText) uint {
 	if x.xGetCaretPosition == 0 {
 		return nil
@@ -108,76 +108,76 @@ func (x *AccessibleTextInterface) GetGetCaretPosition() func(AccessibleText) uin
 	}
 }
 
-// OverrideGetSelection sets the callback function.
-func (x *AccessibleTextInterface) OverrideGetSelection(cb func(AccessibleText, uint, uintptr) bool) {
+// OverrideGetSelection sets the "get_selection" callback function.
+func (x *AccessibleTextInterface) OverrideGetSelection(cb func(AccessibleText, *uint, *uintptr) bool) {
 	if cb == nil {
 		x.xGetSelection = 0
 	} else {
-		x.xGetSelection = purego.NewCallback(func(SelfVarp uintptr, NRangesVarp uint, RangesVarp uintptr) bool {
+		x.xGetSelection = purego.NewCallback(func(SelfVarp uintptr, NRangesVarp *uint, RangesVarp *uintptr) bool {
 			return cb(&AccessibleTextBase{Ptr: SelfVarp}, NRangesVarp, RangesVarp)
 		})
 	}
 }
 
-// GetGetSelection gets the callback function.
-func (x *AccessibleTextInterface) GetGetSelection() func(AccessibleText, uint, uintptr) bool {
+// GetGetSelection gets the "get_selection" callback function.
+func (x *AccessibleTextInterface) GetGetSelection() func(AccessibleText, *uint, *uintptr) bool {
 	if x.xGetSelection == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, NRangesVarp uint, RangesVarp uintptr) bool
+	var rawCallback func(SelfVarp uintptr, NRangesVarp *uint, RangesVarp *uintptr) bool
 	purego.RegisterFunc(&rawCallback, x.xGetSelection)
-	return func(SelfVar AccessibleText, NRangesVar uint, RangesVar uintptr) bool {
+	return func(SelfVar AccessibleText, NRangesVar *uint, RangesVar *uintptr) bool {
 		return rawCallback(SelfVar.GoPointer(), NRangesVar, RangesVar)
 	}
 }
 
-// OverrideGetAttributes sets the callback function.
-func (x *AccessibleTextInterface) OverrideGetAttributes(cb func(AccessibleText, uint, uint, uintptr, []string, []string) bool) {
+// OverrideGetAttributes sets the "get_attributes" callback function.
+func (x *AccessibleTextInterface) OverrideGetAttributes(cb func(AccessibleText, uint, *uint, *uintptr, *[]string, *[]string) bool) {
 	if cb == nil {
 		x.xGetAttributes = 0
 	} else {
-		x.xGetAttributes = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint, NRangesVarp uint, RangesVarp uintptr, AttributeNamesVarp []string, AttributeValuesVarp []string) bool {
+		x.xGetAttributes = purego.NewCallback(func(SelfVarp uintptr, OffsetVarp uint, NRangesVarp *uint, RangesVarp *uintptr, AttributeNamesVarp *[]string, AttributeValuesVarp *[]string) bool {
 			return cb(&AccessibleTextBase{Ptr: SelfVarp}, OffsetVarp, NRangesVarp, RangesVarp, AttributeNamesVarp, AttributeValuesVarp)
 		})
 	}
 }
 
-// GetGetAttributes gets the callback function.
-func (x *AccessibleTextInterface) GetGetAttributes() func(AccessibleText, uint, uint, uintptr, []string, []string) bool {
+// GetGetAttributes gets the "get_attributes" callback function.
+func (x *AccessibleTextInterface) GetGetAttributes() func(AccessibleText, uint, *uint, *uintptr, *[]string, *[]string) bool {
 	if x.xGetAttributes == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, OffsetVarp uint, NRangesVarp uint, RangesVarp uintptr, AttributeNamesVarp []string, AttributeValuesVarp []string) bool
+	var rawCallback func(SelfVarp uintptr, OffsetVarp uint, NRangesVarp *uint, RangesVarp *uintptr, AttributeNamesVarp *[]string, AttributeValuesVarp *[]string) bool
 	purego.RegisterFunc(&rawCallback, x.xGetAttributes)
-	return func(SelfVar AccessibleText, OffsetVar uint, NRangesVar uint, RangesVar uintptr, AttributeNamesVar []string, AttributeValuesVar []string) bool {
+	return func(SelfVar AccessibleText, OffsetVar uint, NRangesVar *uint, RangesVar *uintptr, AttributeNamesVar *[]string, AttributeValuesVar *[]string) bool {
 		return rawCallback(SelfVar.GoPointer(), OffsetVar, NRangesVar, RangesVar, AttributeNamesVar, AttributeValuesVar)
 	}
 }
 
-// OverrideGetDefaultAttributes sets the callback function.
-func (x *AccessibleTextInterface) OverrideGetDefaultAttributes(cb func(AccessibleText, []string, []string)) {
+// OverrideGetDefaultAttributes sets the "get_default_attributes" callback function.
+func (x *AccessibleTextInterface) OverrideGetDefaultAttributes(cb func(AccessibleText, *[]string, *[]string)) {
 	if cb == nil {
 		x.xGetDefaultAttributes = 0
 	} else {
-		x.xGetDefaultAttributes = purego.NewCallback(func(SelfVarp uintptr, AttributeNamesVarp []string, AttributeValuesVarp []string) {
+		x.xGetDefaultAttributes = purego.NewCallback(func(SelfVarp uintptr, AttributeNamesVarp *[]string, AttributeValuesVarp *[]string) {
 			cb(&AccessibleTextBase{Ptr: SelfVarp}, AttributeNamesVarp, AttributeValuesVarp)
 		})
 	}
 }
 
-// GetGetDefaultAttributes gets the callback function.
-func (x *AccessibleTextInterface) GetGetDefaultAttributes() func(AccessibleText, []string, []string) {
+// GetGetDefaultAttributes gets the "get_default_attributes" callback function.
+func (x *AccessibleTextInterface) GetGetDefaultAttributes() func(AccessibleText, *[]string, *[]string) {
 	if x.xGetDefaultAttributes == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, AttributeNamesVarp []string, AttributeValuesVarp []string)
+	var rawCallback func(SelfVarp uintptr, AttributeNamesVarp *[]string, AttributeValuesVarp *[]string)
 	purego.RegisterFunc(&rawCallback, x.xGetDefaultAttributes)
-	return func(SelfVar AccessibleText, AttributeNamesVar []string, AttributeValuesVar []string) {
+	return func(SelfVar AccessibleText, AttributeNamesVar *[]string, AttributeValuesVar *[]string) {
 		rawCallback(SelfVar.GoPointer(), AttributeNamesVar, AttributeValuesVar)
 	}
 }
 
-// OverrideGetExtents sets the callback function.
+// OverrideGetExtents sets the "get_extents" callback function.
 func (x *AccessibleTextInterface) OverrideGetExtents(cb func(AccessibleText, uint, uint, *graphene.Rect) bool) {
 	if cb == nil {
 		x.xGetExtents = 0
@@ -188,7 +188,7 @@ func (x *AccessibleTextInterface) OverrideGetExtents(cb func(AccessibleText, uin
 	}
 }
 
-// GetGetExtents gets the callback function.
+// GetGetExtents gets the "get_extents" callback function.
 func (x *AccessibleTextInterface) GetGetExtents() func(AccessibleText, uint, uint, *graphene.Rect) bool {
 	if x.xGetExtents == 0 {
 		return nil
@@ -200,25 +200,25 @@ func (x *AccessibleTextInterface) GetGetExtents() func(AccessibleText, uint, uin
 	}
 }
 
-// OverrideGetOffset sets the callback function.
-func (x *AccessibleTextInterface) OverrideGetOffset(cb func(AccessibleText, *graphene.Point, uint) bool) {
+// OverrideGetOffset sets the "get_offset" callback function.
+func (x *AccessibleTextInterface) OverrideGetOffset(cb func(AccessibleText, *graphene.Point, *uint) bool) {
 	if cb == nil {
 		x.xGetOffset = 0
 	} else {
-		x.xGetOffset = purego.NewCallback(func(SelfVarp uintptr, PointVarp *graphene.Point, OffsetVarp uint) bool {
+		x.xGetOffset = purego.NewCallback(func(SelfVarp uintptr, PointVarp *graphene.Point, OffsetVarp *uint) bool {
 			return cb(&AccessibleTextBase{Ptr: SelfVarp}, PointVarp, OffsetVarp)
 		})
 	}
 }
 
-// GetGetOffset gets the callback function.
-func (x *AccessibleTextInterface) GetGetOffset() func(AccessibleText, *graphene.Point, uint) bool {
+// GetGetOffset gets the "get_offset" callback function.
+func (x *AccessibleTextInterface) GetGetOffset() func(AccessibleText, *graphene.Point, *uint) bool {
 	if x.xGetOffset == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, PointVarp *graphene.Point, OffsetVarp uint) bool
+	var rawCallback func(SelfVarp uintptr, PointVarp *graphene.Point, OffsetVarp *uint) bool
 	purego.RegisterFunc(&rawCallback, x.xGetOffset)
-	return func(SelfVar AccessibleText, PointVar *graphene.Point, OffsetVar uint) bool {
+	return func(SelfVar AccessibleText, PointVar *graphene.Point, OffsetVar *uint) bool {
 		return rawCallback(SelfVar.GoPointer(), PointVar, OffsetVar)
 	}
 }

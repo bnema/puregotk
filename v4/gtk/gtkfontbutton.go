@@ -171,6 +171,74 @@ func (c *FontButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyModal sets the "modal" property.
+// Whether the font chooser dialog should be modal.
+func (x *FontButton) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the font chooser dialog should be modal.
+func (x *FontButton) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the font chooser dialog.
+func (x *FontButton) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the font chooser dialog.
+func (x *FontButton) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseFont sets the "use-font" property.
+// Whether the buttons label will be drawn in the selected font.
+func (x *FontButton) SetPropertyUseFont(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-font", &v)
+}
+
+// GetPropertyUseFont gets the "use-font" property.
+// Whether the buttons label will be drawn in the selected font.
+func (x *FontButton) GetPropertyUseFont() bool {
+	var v gobject.Value
+	x.GetProperty("use-font", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseSize sets the "use-size" property.
+// Whether the buttons label will use the selected font size.
+func (x *FontButton) SetPropertyUseSize(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-size", &v)
+}
+
+// GetPropertyUseSize gets the "use-size" property.
+// Whether the buttons label will use the selected font size.
+func (x *FontButton) GetPropertyUseSize() bool {
+	var v gobject.Value
+	x.GetProperty("use-size", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to when the font button is activated.
 //
 // The `::activate` signal on `GtkFontButton` is an action signal and
@@ -278,7 +346,7 @@ func (x *FontButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *FontButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *FontButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

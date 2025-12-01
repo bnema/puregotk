@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -82,6 +83,23 @@ func (c *TcpConnection) GoPointer() uintptr {
 
 func (c *TcpConnection) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyGracefulDisconnect sets the "graceful-disconnect" property.
+// Whether [method@Gio.IOStream.close] does a graceful disconnect.
+func (x *TcpConnection) SetPropertyGracefulDisconnect(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("graceful-disconnect", &v)
+}
+
+// GetPropertyGracefulDisconnect gets the "graceful-disconnect" property.
+// Whether [method@Gio.IOStream.close] does a graceful disconnect.
+func (x *TcpConnection) GetPropertyGracefulDisconnect() bool {
+	var v gobject.Value
+	x.GetProperty("graceful-disconnect", &v)
+	return v.GetBoolean()
 }
 
 func init() {

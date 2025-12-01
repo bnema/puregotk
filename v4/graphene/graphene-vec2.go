@@ -234,10 +234,10 @@ func (x *Vec2) Subtract(BVar *Vec2, ResVar *Vec2) {
 
 }
 
-var xVec2ToFloat func(uintptr, [2]float32)
+var xVec2ToFloat func(uintptr, *[2]float32)
 
 // Stores the components of @v into an array.
-func (x *Vec2) ToFloat(DestVar [2]float32) {
+func (x *Vec2) ToFloat(DestVar *[2]float32) {
 
 	xVec2ToFloat(x.GoPointer(), DestVar)
 

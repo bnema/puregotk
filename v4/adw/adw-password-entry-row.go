@@ -145,7 +145,7 @@ func (x *PasswordEntryRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PasswordEntryRow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *PasswordEntryRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -601,7 +601,7 @@ func (x *PasswordEntryRow) GetPosition() int {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *PasswordEntryRow) GetSelectionBounds(StartPosVar int, EndPosVar int) bool {
+func (x *PasswordEntryRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := gtk.XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret

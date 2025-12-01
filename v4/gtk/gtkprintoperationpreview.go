@@ -46,7 +46,7 @@ func (x *PrintOperationPreviewIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideReady sets the callback function.
+// OverrideReady sets the "ready" callback function.
 func (x *PrintOperationPreviewIface) OverrideReady(cb func(PrintOperationPreview, *PrintContext)) {
 	if cb == nil {
 		x.xReady = 0
@@ -57,7 +57,7 @@ func (x *PrintOperationPreviewIface) OverrideReady(cb func(PrintOperationPreview
 	}
 }
 
-// GetReady gets the callback function.
+// GetReady gets the "ready" callback function.
 func (x *PrintOperationPreviewIface) GetReady() func(PrintOperationPreview, *PrintContext) {
 	if x.xReady == 0 {
 		return nil
@@ -69,7 +69,7 @@ func (x *PrintOperationPreviewIface) GetReady() func(PrintOperationPreview, *Pri
 	}
 }
 
-// OverrideGotPageSize sets the callback function.
+// OverrideGotPageSize sets the "got_page_size" callback function.
 func (x *PrintOperationPreviewIface) OverrideGotPageSize(cb func(PrintOperationPreview, *PrintContext, *PageSetup)) {
 	if cb == nil {
 		x.xGotPageSize = 0
@@ -80,7 +80,7 @@ func (x *PrintOperationPreviewIface) OverrideGotPageSize(cb func(PrintOperationP
 	}
 }
 
-// GetGotPageSize gets the callback function.
+// GetGotPageSize gets the "got_page_size" callback function.
 func (x *PrintOperationPreviewIface) GetGotPageSize() func(PrintOperationPreview, *PrintContext, *PageSetup) {
 	if x.xGotPageSize == 0 {
 		return nil
@@ -92,7 +92,7 @@ func (x *PrintOperationPreviewIface) GetGotPageSize() func(PrintOperationPreview
 	}
 }
 
-// OverrideRenderPage sets the callback function.
+// OverrideRenderPage sets the "render_page" callback function.
 func (x *PrintOperationPreviewIface) OverrideRenderPage(cb func(PrintOperationPreview, int)) {
 	if cb == nil {
 		x.xRenderPage = 0
@@ -103,7 +103,7 @@ func (x *PrintOperationPreviewIface) OverrideRenderPage(cb func(PrintOperationPr
 	}
 }
 
-// GetRenderPage gets the callback function.
+// GetRenderPage gets the "render_page" callback function.
 func (x *PrintOperationPreviewIface) GetRenderPage() func(PrintOperationPreview, int) {
 	if x.xRenderPage == 0 {
 		return nil
@@ -115,7 +115,7 @@ func (x *PrintOperationPreviewIface) GetRenderPage() func(PrintOperationPreview,
 	}
 }
 
-// OverrideIsSelected sets the callback function.
+// OverrideIsSelected sets the "is_selected" callback function.
 func (x *PrintOperationPreviewIface) OverrideIsSelected(cb func(PrintOperationPreview, int) bool) {
 	if cb == nil {
 		x.xIsSelected = 0
@@ -126,7 +126,7 @@ func (x *PrintOperationPreviewIface) OverrideIsSelected(cb func(PrintOperationPr
 	}
 }
 
-// GetIsSelected gets the callback function.
+// GetIsSelected gets the "is_selected" callback function.
 func (x *PrintOperationPreviewIface) GetIsSelected() func(PrintOperationPreview, int) bool {
 	if x.xIsSelected == 0 {
 		return nil
@@ -138,7 +138,7 @@ func (x *PrintOperationPreviewIface) GetIsSelected() func(PrintOperationPreview,
 	}
 }
 
-// OverrideEndPreview sets the callback function.
+// OverrideEndPreview sets the "end_preview" callback function.
 func (x *PrintOperationPreviewIface) OverrideEndPreview(cb func(PrintOperationPreview)) {
 	if cb == nil {
 		x.xEndPreview = 0
@@ -149,7 +149,7 @@ func (x *PrintOperationPreviewIface) OverrideEndPreview(cb func(PrintOperationPr
 	}
 }
 
-// GetEndPreview gets the callback function.
+// GetEndPreview gets the "end_preview" callback function.
 func (x *PrintOperationPreviewIface) GetEndPreview() func(PrintOperationPreview) {
 	if x.xEndPreview == 0 {
 		return nil
@@ -161,7 +161,7 @@ func (x *PrintOperationPreviewIface) GetEndPreview() func(PrintOperationPreview)
 	}
 }
 
-// OverrideGtkReserved1 sets the callback function.
+// OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *PrintOperationPreviewIface) OverrideGtkReserved1(cb func()) {
 	if cb == nil {
 		x.xGtkReserved1 = 0
@@ -172,7 +172,7 @@ func (x *PrintOperationPreviewIface) OverrideGtkReserved1(cb func()) {
 	}
 }
 
-// GetGtkReserved1 gets the callback function.
+// GetGtkReserved1 gets the "_gtk_reserved1" callback function.
 func (x *PrintOperationPreviewIface) GetGtkReserved1() func() {
 	if x.xGtkReserved1 == 0 {
 		return nil
@@ -184,7 +184,7 @@ func (x *PrintOperationPreviewIface) GetGtkReserved1() func() {
 	}
 }
 
-// OverrideGtkReserved2 sets the callback function.
+// OverrideGtkReserved2 sets the "_gtk_reserved2" callback function.
 func (x *PrintOperationPreviewIface) OverrideGtkReserved2(cb func()) {
 	if cb == nil {
 		x.xGtkReserved2 = 0
@@ -195,7 +195,7 @@ func (x *PrintOperationPreviewIface) OverrideGtkReserved2(cb func()) {
 	}
 }
 
-// GetGtkReserved2 gets the callback function.
+// GetGtkReserved2 gets the "_gtk_reserved2" callback function.
 func (x *PrintOperationPreviewIface) GetGtkReserved2() func() {
 	if x.xGtkReserved2 == 0 {
 		return nil
@@ -207,7 +207,7 @@ func (x *PrintOperationPreviewIface) GetGtkReserved2() func() {
 	}
 }
 
-// OverrideGtkReserved3 sets the callback function.
+// OverrideGtkReserved3 sets the "_gtk_reserved3" callback function.
 func (x *PrintOperationPreviewIface) OverrideGtkReserved3(cb func()) {
 	if cb == nil {
 		x.xGtkReserved3 = 0
@@ -218,7 +218,7 @@ func (x *PrintOperationPreviewIface) OverrideGtkReserved3(cb func()) {
 	}
 }
 
-// GetGtkReserved3 gets the callback function.
+// GetGtkReserved3 gets the "_gtk_reserved3" callback function.
 func (x *PrintOperationPreviewIface) GetGtkReserved3() func() {
 	if x.xGtkReserved3 == 0 {
 		return nil
@@ -230,7 +230,7 @@ func (x *PrintOperationPreviewIface) GetGtkReserved3() func() {
 	}
 }
 
-// OverrideGtkReserved4 sets the callback function.
+// OverrideGtkReserved4 sets the "_gtk_reserved4" callback function.
 func (x *PrintOperationPreviewIface) OverrideGtkReserved4(cb func()) {
 	if cb == nil {
 		x.xGtkReserved4 = 0
@@ -241,7 +241,7 @@ func (x *PrintOperationPreviewIface) OverrideGtkReserved4(cb func()) {
 	}
 }
 
-// GetGtkReserved4 gets the callback function.
+// GetGtkReserved4 gets the "_gtk_reserved4" callback function.
 func (x *PrintOperationPreviewIface) GetGtkReserved4() func() {
 	if x.xGtkReserved4 == 0 {
 		return nil
@@ -253,7 +253,7 @@ func (x *PrintOperationPreviewIface) GetGtkReserved4() func() {
 	}
 }
 
-// OverrideGtkReserved5 sets the callback function.
+// OverrideGtkReserved5 sets the "_gtk_reserved5" callback function.
 func (x *PrintOperationPreviewIface) OverrideGtkReserved5(cb func()) {
 	if cb == nil {
 		x.xGtkReserved5 = 0
@@ -264,7 +264,7 @@ func (x *PrintOperationPreviewIface) OverrideGtkReserved5(cb func()) {
 	}
 }
 
-// GetGtkReserved5 gets the callback function.
+// GetGtkReserved5 gets the "_gtk_reserved5" callback function.
 func (x *PrintOperationPreviewIface) GetGtkReserved5() func() {
 	if x.xGtkReserved5 == 0 {
 		return nil
@@ -276,7 +276,7 @@ func (x *PrintOperationPreviewIface) GetGtkReserved5() func() {
 	}
 }
 
-// OverrideGtkReserved6 sets the callback function.
+// OverrideGtkReserved6 sets the "_gtk_reserved6" callback function.
 func (x *PrintOperationPreviewIface) OverrideGtkReserved6(cb func()) {
 	if cb == nil {
 		x.xGtkReserved6 = 0
@@ -287,7 +287,7 @@ func (x *PrintOperationPreviewIface) OverrideGtkReserved6(cb func()) {
 	}
 }
 
-// GetGtkReserved6 gets the callback function.
+// GetGtkReserved6 gets the "_gtk_reserved6" callback function.
 func (x *PrintOperationPreviewIface) GetGtkReserved6() func() {
 	if x.xGtkReserved6 == 0 {
 		return nil
@@ -299,7 +299,7 @@ func (x *PrintOperationPreviewIface) GetGtkReserved6() func() {
 	}
 }
 
-// OverrideGtkReserved7 sets the callback function.
+// OverrideGtkReserved7 sets the "_gtk_reserved7" callback function.
 func (x *PrintOperationPreviewIface) OverrideGtkReserved7(cb func()) {
 	if cb == nil {
 		x.xGtkReserved7 = 0
@@ -310,7 +310,7 @@ func (x *PrintOperationPreviewIface) OverrideGtkReserved7(cb func()) {
 	}
 }
 
-// GetGtkReserved7 gets the callback function.
+// GetGtkReserved7 gets the "_gtk_reserved7" callback function.
 func (x *PrintOperationPreviewIface) GetGtkReserved7() func() {
 	if x.xGtkReserved7 == 0 {
 		return nil
@@ -322,7 +322,7 @@ func (x *PrintOperationPreviewIface) GetGtkReserved7() func() {
 	}
 }
 
-// OverrideGtkReserved8 sets the callback function.
+// OverrideGtkReserved8 sets the "_gtk_reserved8" callback function.
 func (x *PrintOperationPreviewIface) OverrideGtkReserved8(cb func()) {
 	if cb == nil {
 		x.xGtkReserved8 = 0
@@ -333,7 +333,7 @@ func (x *PrintOperationPreviewIface) OverrideGtkReserved8(cb func()) {
 	}
 }
 
-// GetGtkReserved8 gets the callback function.
+// GetGtkReserved8 gets the "_gtk_reserved8" callback function.
 func (x *PrintOperationPreviewIface) GetGtkReserved8() func() {
 	if x.xGtkReserved8 == 0 {
 		return nil

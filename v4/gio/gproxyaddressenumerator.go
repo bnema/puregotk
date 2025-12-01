@@ -6,6 +6,7 @@ import (
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -34,7 +35,7 @@ func (x *ProxyAddressEnumeratorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *ProxyAddressEnumeratorClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -45,7 +46,7 @@ func (x *ProxyAddressEnumeratorClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *ProxyAddressEnumeratorClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -57,7 +58,7 @@ func (x *ProxyAddressEnumeratorClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *ProxyAddressEnumeratorClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -68,7 +69,7 @@ func (x *ProxyAddressEnumeratorClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *ProxyAddressEnumeratorClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -80,7 +81,7 @@ func (x *ProxyAddressEnumeratorClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *ProxyAddressEnumeratorClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -91,7 +92,7 @@ func (x *ProxyAddressEnumeratorClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *ProxyAddressEnumeratorClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -103,7 +104,7 @@ func (x *ProxyAddressEnumeratorClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *ProxyAddressEnumeratorClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -114,7 +115,7 @@ func (x *ProxyAddressEnumeratorClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *ProxyAddressEnumeratorClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -126,7 +127,7 @@ func (x *ProxyAddressEnumeratorClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *ProxyAddressEnumeratorClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -137,7 +138,7 @@ func (x *ProxyAddressEnumeratorClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *ProxyAddressEnumeratorClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -149,7 +150,7 @@ func (x *ProxyAddressEnumeratorClass) GetGReserved5() func() {
 	}
 }
 
-// OverrideGReserved6 sets the callback function.
+// OverrideGReserved6 sets the "_g_reserved6" callback function.
 func (x *ProxyAddressEnumeratorClass) OverrideGReserved6(cb func()) {
 	if cb == nil {
 		x.xGReserved6 = 0
@@ -160,7 +161,7 @@ func (x *ProxyAddressEnumeratorClass) OverrideGReserved6(cb func()) {
 	}
 }
 
-// GetGReserved6 gets the callback function.
+// GetGReserved6 gets the "_g_reserved6" callback function.
 func (x *ProxyAddressEnumeratorClass) GetGReserved6() func() {
 	if x.xGReserved6 == 0 {
 		return nil
@@ -172,7 +173,7 @@ func (x *ProxyAddressEnumeratorClass) GetGReserved6() func() {
 	}
 }
 
-// OverrideGReserved7 sets the callback function.
+// OverrideGReserved7 sets the "_g_reserved7" callback function.
 func (x *ProxyAddressEnumeratorClass) OverrideGReserved7(cb func()) {
 	if cb == nil {
 		x.xGReserved7 = 0
@@ -183,7 +184,7 @@ func (x *ProxyAddressEnumeratorClass) OverrideGReserved7(cb func()) {
 	}
 }
 
-// GetGReserved7 gets the callback function.
+// GetGReserved7 gets the "_g_reserved7" callback function.
 func (x *ProxyAddressEnumeratorClass) GetGReserved7() func() {
 	if x.xGReserved7 == 0 {
 		return nil
@@ -238,4 +239,40 @@ func (c *ProxyAddressEnumerator) GoPointer() uintptr {
 
 func (c *ProxyAddressEnumerator) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyDefaultPort sets the "default-port" property.
+// The default port to use if #GProxyAddressEnumerator:uri does not
+// specify one.
+func (x *ProxyAddressEnumerator) SetPropertyDefaultPort(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("default-port", &v)
+}
+
+// GetPropertyDefaultPort gets the "default-port" property.
+// The default port to use if #GProxyAddressEnumerator:uri does not
+// specify one.
+func (x *ProxyAddressEnumerator) GetPropertyDefaultPort() uint {
+	var v gobject.Value
+	x.GetProperty("default-port", &v)
+	return v.GetUint()
+}
+
+// SetPropertyUri sets the "uri" property.
+// The destination URI. Use `none://` for a generic socket.
+func (x *ProxyAddressEnumerator) SetPropertyUri(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("uri", &v)
+}
+
+// GetPropertyUri gets the "uri" property.
+// The destination URI. Use `none://` for a generic socket.
+func (x *ProxyAddressEnumerator) GetPropertyUri() string {
+	var v gobject.Value
+	x.GetProperty("uri", &v)
+	return v.GetString()
 }

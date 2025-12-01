@@ -89,6 +89,36 @@ func (c *EventControllerFocus) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyContainsFocus gets the "contains-focus" property.
+// %TRUE if focus is contained in the controllers widget.
+//
+// See [property@Gtk.EventControllerFocus:is-focus] for whether
+// the focus is in the widget itself or inside a descendent.
+//
+// When handling focus events, this property is updated
+// before [signal@Gtk.EventControllerFocus::enter] or
+// [signal@Gtk.EventControllerFocus::leave] are emitted.
+func (x *EventControllerFocus) GetPropertyContainsFocus() bool {
+	var v gobject.Value
+	x.GetProperty("contains-focus", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsFocus gets the "is-focus" property.
+// %TRUE if focus is in the controllers widget itself,
+// as opposed to in a descendent widget.
+//
+// See also [property@Gtk.EventControllerFocus:contains-focus].
+//
+// When handling focus events, this property is updated
+// before [signal@Gtk.EventControllerFocus::enter] or
+// [signal@Gtk.EventControllerFocus::leave] are emitted.
+func (x *EventControllerFocus) GetPropertyIsFocus() bool {
+	var v gobject.Value
+	x.GetProperty("is-focus", &v)
+	return v.GetBoolean()
+}
+
 // Emitted whenever the focus enters into the widget or one
 // of its descendents.
 //

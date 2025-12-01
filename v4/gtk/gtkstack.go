@@ -492,6 +492,99 @@ func (c *Stack) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyHhomogeneous sets the "hhomogeneous" property.
+// %TRUE if the stack allocates the same width for all children.
+func (x *Stack) SetPropertyHhomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("hhomogeneous", &v)
+}
+
+// GetPropertyHhomogeneous gets the "hhomogeneous" property.
+// %TRUE if the stack allocates the same width for all children.
+func (x *Stack) GetPropertyHhomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("hhomogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyInterpolateSize sets the "interpolate-size" property.
+// Whether or not the size should smoothly change during the transition.
+func (x *Stack) SetPropertyInterpolateSize(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("interpolate-size", &v)
+}
+
+// GetPropertyInterpolateSize gets the "interpolate-size" property.
+// Whether or not the size should smoothly change during the transition.
+func (x *Stack) GetPropertyInterpolateSize() bool {
+	var v gobject.Value
+	x.GetProperty("interpolate-size", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTransitionDuration sets the "transition-duration" property.
+// The animation duration, in milliseconds.
+func (x *Stack) SetPropertyTransitionDuration(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("transition-duration", &v)
+}
+
+// GetPropertyTransitionDuration gets the "transition-duration" property.
+// The animation duration, in milliseconds.
+func (x *Stack) GetPropertyTransitionDuration() uint {
+	var v gobject.Value
+	x.GetProperty("transition-duration", &v)
+	return v.GetUint()
+}
+
+// GetPropertyTransitionRunning gets the "transition-running" property.
+// Whether or not the transition is currently running.
+func (x *Stack) GetPropertyTransitionRunning() bool {
+	var v gobject.Value
+	x.GetProperty("transition-running", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVhomogeneous sets the "vhomogeneous" property.
+// %TRUE if the stack allocates the same height for all children.
+func (x *Stack) SetPropertyVhomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("vhomogeneous", &v)
+}
+
+// GetPropertyVhomogeneous gets the "vhomogeneous" property.
+// %TRUE if the stack allocates the same height for all children.
+func (x *Stack) GetPropertyVhomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("vhomogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVisibleChildName sets the "visible-child-name" property.
+// The name of the widget currently visible in the stack.
+func (x *Stack) SetPropertyVisibleChildName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("visible-child-name", &v)
+}
+
+// GetPropertyVisibleChildName gets the "visible-child-name" property.
+// The name of the widget currently visible in the stack.
+func (x *Stack) GetPropertyVisibleChildName() string {
+	var v gobject.Value
+	x.GetProperty("visible-child-name", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -549,7 +642,7 @@ func (x *Stack) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Stack) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Stack) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -926,6 +1019,116 @@ func (c *StackPage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyIconName sets the "icon-name" property.
+// The icon name of the child page.
+func (x *StackPage) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The icon name of the child page.
+func (x *StackPage) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyName sets the "name" property.
+// The name of the child page.
+func (x *StackPage) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The name of the child page.
+func (x *StackPage) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// SetPropertyNeedsAttention sets the "needs-attention" property.
+// Whether the page requires the user attention.
+//
+// This is used by the [class@Gtk.StackSwitcher] to change the
+// appearance of the corresponding button when a page needs
+// attention and it is not the current one.
+func (x *StackPage) SetPropertyNeedsAttention(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("needs-attention", &v)
+}
+
+// GetPropertyNeedsAttention gets the "needs-attention" property.
+// Whether the page requires the user attention.
+//
+// This is used by the [class@Gtk.StackSwitcher] to change the
+// appearance of the corresponding button when a page needs
+// attention and it is not the current one.
+func (x *StackPage) GetPropertyNeedsAttention() bool {
+	var v gobject.Value
+	x.GetProperty("needs-attention", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the child page.
+func (x *StackPage) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the child page.
+func (x *StackPage) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// If set, an underline in the title indicates a mnemonic.
+func (x *StackPage) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// If set, an underline in the title indicates a mnemonic.
+func (x *StackPage) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVisible sets the "visible" property.
+// Whether this page is visible.
+func (x *StackPage) SetPropertyVisible(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("visible", &v)
+}
+
+// GetPropertyVisible gets the "visible" property.
+// Whether this page is visible.
+func (x *StackPage) GetPropertyVisible() bool {
+	var v gobject.Value
+	x.GetProperty("visible", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -983,7 +1186,7 @@ func (x *StackPage) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *StackPage) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *StackPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

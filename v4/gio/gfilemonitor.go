@@ -36,7 +36,7 @@ func (x *FileMonitorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 func (x *FileMonitorClass) OverrideChanged(cb func(*FileMonitor, File, File, FileMonitorEvent)) {
 	if cb == nil {
 		x.xChanged = 0
@@ -47,7 +47,7 @@ func (x *FileMonitorClass) OverrideChanged(cb func(*FileMonitor, File, File, Fil
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 func (x *FileMonitorClass) GetChanged() func(*FileMonitor, File, File, FileMonitorEvent) {
 	if x.xChanged == 0 {
 		return nil
@@ -59,7 +59,7 @@ func (x *FileMonitorClass) GetChanged() func(*FileMonitor, File, File, FileMonit
 	}
 }
 
-// OverrideCancel sets the callback function.
+// OverrideCancel sets the "cancel" callback function.
 func (x *FileMonitorClass) OverrideCancel(cb func(*FileMonitor) bool) {
 	if cb == nil {
 		x.xCancel = 0
@@ -70,7 +70,7 @@ func (x *FileMonitorClass) OverrideCancel(cb func(*FileMonitor) bool) {
 	}
 }
 
-// GetCancel gets the callback function.
+// GetCancel gets the "cancel" callback function.
 func (x *FileMonitorClass) GetCancel() func(*FileMonitor) bool {
 	if x.xCancel == 0 {
 		return nil
@@ -82,7 +82,7 @@ func (x *FileMonitorClass) GetCancel() func(*FileMonitor) bool {
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *FileMonitorClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -93,7 +93,7 @@ func (x *FileMonitorClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *FileMonitorClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -105,7 +105,7 @@ func (x *FileMonitorClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *FileMonitorClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -116,7 +116,7 @@ func (x *FileMonitorClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *FileMonitorClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -128,7 +128,7 @@ func (x *FileMonitorClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *FileMonitorClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -139,7 +139,7 @@ func (x *FileMonitorClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *FileMonitorClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -151,7 +151,7 @@ func (x *FileMonitorClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *FileMonitorClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -162,7 +162,7 @@ func (x *FileMonitorClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *FileMonitorClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -174,7 +174,7 @@ func (x *FileMonitorClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *FileMonitorClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -185,7 +185,7 @@ func (x *FileMonitorClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *FileMonitorClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -286,6 +286,31 @@ func (c *FileMonitor) GoPointer() uintptr {
 
 func (c *FileMonitor) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyCancelled gets the "cancelled" property.
+// Whether the monitor has been cancelled.
+func (x *FileMonitor) GetPropertyCancelled() bool {
+	var v gobject.Value
+	x.GetProperty("cancelled", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRateLimit sets the "rate-limit" property.
+// The limit of the monitor to watch for changes, in milliseconds.
+func (x *FileMonitor) SetPropertyRateLimit(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("rate-limit", &v)
+}
+
+// GetPropertyRateLimit gets the "rate-limit" property.
+// The limit of the monitor to watch for changes, in milliseconds.
+func (x *FileMonitor) GetPropertyRateLimit() int {
+	var v gobject.Value
+	x.GetProperty("rate-limit", &v)
+	return v.GetInt()
 }
 
 // Emitted when @file has been changed.

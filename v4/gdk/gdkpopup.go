@@ -136,6 +136,27 @@ func (x *PopupBase) Present(WidthVar int, HeightVar int, LayoutVar *PopupLayout)
 	return cret
 }
 
+// SetPropertyAutohide sets the "autohide" property.
+// Whether to hide on outside clicks.
+func (x *PopupBase) SetPropertyAutohide(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("autohide", &v)
+}
+
+// GetPropertyAutohide gets the "autohide" property.
+// Whether to hide on outside clicks.
+func (x *PopupBase) GetPropertyAutohide() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("autohide", &v)
+	return v.GetBoolean()
+}
+
 var XGdkPopupGetAutohide func(uintptr) bool
 var XGdkPopupGetParent func(uintptr) uintptr
 var XGdkPopupGetPositionX func(uintptr) int

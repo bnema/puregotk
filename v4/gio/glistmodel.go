@@ -28,7 +28,7 @@ func (x *ListModelInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetItemType sets the callback function.
+// OverrideGetItemType sets the "get_item_type" callback function.
 // the virtual function pointer for g_list_model_get_item_type()
 func (x *ListModelInterface) OverrideGetItemType(cb func(ListModel) types.GType) {
 	if cb == nil {
@@ -40,7 +40,7 @@ func (x *ListModelInterface) OverrideGetItemType(cb func(ListModel) types.GType)
 	}
 }
 
-// GetGetItemType gets the callback function.
+// GetGetItemType gets the "get_item_type" callback function.
 // the virtual function pointer for g_list_model_get_item_type()
 func (x *ListModelInterface) GetGetItemType() func(ListModel) types.GType {
 	if x.xGetItemType == 0 {
@@ -53,7 +53,7 @@ func (x *ListModelInterface) GetGetItemType() func(ListModel) types.GType {
 	}
 }
 
-// OverrideGetNItems sets the callback function.
+// OverrideGetNItems sets the "get_n_items" callback function.
 // the virtual function pointer for g_list_model_get_n_items()
 func (x *ListModelInterface) OverrideGetNItems(cb func(ListModel) uint) {
 	if cb == nil {
@@ -65,7 +65,7 @@ func (x *ListModelInterface) OverrideGetNItems(cb func(ListModel) uint) {
 	}
 }
 
-// GetGetNItems gets the callback function.
+// GetGetNItems gets the "get_n_items" callback function.
 // the virtual function pointer for g_list_model_get_n_items()
 func (x *ListModelInterface) GetGetNItems() func(ListModel) uint {
 	if x.xGetNItems == 0 {
@@ -78,7 +78,7 @@ func (x *ListModelInterface) GetGetNItems() func(ListModel) uint {
 	}
 }
 
-// OverrideGetItem sets the callback function.
+// OverrideGetItem sets the "get_item" callback function.
 // the virtual function pointer for g_list_model_get_item()
 func (x *ListModelInterface) OverrideGetItem(cb func(ListModel, uint) *gobject.Object) {
 	if cb == nil {
@@ -94,7 +94,7 @@ func (x *ListModelInterface) OverrideGetItem(cb func(ListModel, uint) *gobject.O
 	}
 }
 
-// GetGetItem gets the callback function.
+// GetGetItem gets the "get_item" callback function.
 // the virtual function pointer for g_list_model_get_item()
 func (x *ListModelInterface) GetGetItem() func(ListModel, uint) *gobject.Object {
 	if x.xGetItem == 0 {

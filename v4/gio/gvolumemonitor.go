@@ -72,7 +72,7 @@ func (x *VolumeMonitorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideVolumeAdded sets the callback function.
+// OverrideVolumeAdded sets the "volume_added" callback function.
 func (x *VolumeMonitorClass) OverrideVolumeAdded(cb func(*VolumeMonitor, Volume)) {
 	if cb == nil {
 		x.xVolumeAdded = 0
@@ -83,7 +83,7 @@ func (x *VolumeMonitorClass) OverrideVolumeAdded(cb func(*VolumeMonitor, Volume)
 	}
 }
 
-// GetVolumeAdded gets the callback function.
+// GetVolumeAdded gets the "volume_added" callback function.
 func (x *VolumeMonitorClass) GetVolumeAdded() func(*VolumeMonitor, Volume) {
 	if x.xVolumeAdded == 0 {
 		return nil
@@ -95,7 +95,7 @@ func (x *VolumeMonitorClass) GetVolumeAdded() func(*VolumeMonitor, Volume) {
 	}
 }
 
-// OverrideVolumeRemoved sets the callback function.
+// OverrideVolumeRemoved sets the "volume_removed" callback function.
 func (x *VolumeMonitorClass) OverrideVolumeRemoved(cb func(*VolumeMonitor, Volume)) {
 	if cb == nil {
 		x.xVolumeRemoved = 0
@@ -106,7 +106,7 @@ func (x *VolumeMonitorClass) OverrideVolumeRemoved(cb func(*VolumeMonitor, Volum
 	}
 }
 
-// GetVolumeRemoved gets the callback function.
+// GetVolumeRemoved gets the "volume_removed" callback function.
 func (x *VolumeMonitorClass) GetVolumeRemoved() func(*VolumeMonitor, Volume) {
 	if x.xVolumeRemoved == 0 {
 		return nil
@@ -118,7 +118,7 @@ func (x *VolumeMonitorClass) GetVolumeRemoved() func(*VolumeMonitor, Volume) {
 	}
 }
 
-// OverrideVolumeChanged sets the callback function.
+// OverrideVolumeChanged sets the "volume_changed" callback function.
 func (x *VolumeMonitorClass) OverrideVolumeChanged(cb func(*VolumeMonitor, Volume)) {
 	if cb == nil {
 		x.xVolumeChanged = 0
@@ -129,7 +129,7 @@ func (x *VolumeMonitorClass) OverrideVolumeChanged(cb func(*VolumeMonitor, Volum
 	}
 }
 
-// GetVolumeChanged gets the callback function.
+// GetVolumeChanged gets the "volume_changed" callback function.
 func (x *VolumeMonitorClass) GetVolumeChanged() func(*VolumeMonitor, Volume) {
 	if x.xVolumeChanged == 0 {
 		return nil
@@ -141,7 +141,7 @@ func (x *VolumeMonitorClass) GetVolumeChanged() func(*VolumeMonitor, Volume) {
 	}
 }
 
-// OverrideMountAdded sets the callback function.
+// OverrideMountAdded sets the "mount_added" callback function.
 func (x *VolumeMonitorClass) OverrideMountAdded(cb func(*VolumeMonitor, Mount)) {
 	if cb == nil {
 		x.xMountAdded = 0
@@ -152,7 +152,7 @@ func (x *VolumeMonitorClass) OverrideMountAdded(cb func(*VolumeMonitor, Mount)) 
 	}
 }
 
-// GetMountAdded gets the callback function.
+// GetMountAdded gets the "mount_added" callback function.
 func (x *VolumeMonitorClass) GetMountAdded() func(*VolumeMonitor, Mount) {
 	if x.xMountAdded == 0 {
 		return nil
@@ -164,7 +164,7 @@ func (x *VolumeMonitorClass) GetMountAdded() func(*VolumeMonitor, Mount) {
 	}
 }
 
-// OverrideMountRemoved sets the callback function.
+// OverrideMountRemoved sets the "mount_removed" callback function.
 func (x *VolumeMonitorClass) OverrideMountRemoved(cb func(*VolumeMonitor, Mount)) {
 	if cb == nil {
 		x.xMountRemoved = 0
@@ -175,7 +175,7 @@ func (x *VolumeMonitorClass) OverrideMountRemoved(cb func(*VolumeMonitor, Mount)
 	}
 }
 
-// GetMountRemoved gets the callback function.
+// GetMountRemoved gets the "mount_removed" callback function.
 func (x *VolumeMonitorClass) GetMountRemoved() func(*VolumeMonitor, Mount) {
 	if x.xMountRemoved == 0 {
 		return nil
@@ -187,7 +187,7 @@ func (x *VolumeMonitorClass) GetMountRemoved() func(*VolumeMonitor, Mount) {
 	}
 }
 
-// OverrideMountPreUnmount sets the callback function.
+// OverrideMountPreUnmount sets the "mount_pre_unmount" callback function.
 func (x *VolumeMonitorClass) OverrideMountPreUnmount(cb func(*VolumeMonitor, Mount)) {
 	if cb == nil {
 		x.xMountPreUnmount = 0
@@ -198,7 +198,7 @@ func (x *VolumeMonitorClass) OverrideMountPreUnmount(cb func(*VolumeMonitor, Mou
 	}
 }
 
-// GetMountPreUnmount gets the callback function.
+// GetMountPreUnmount gets the "mount_pre_unmount" callback function.
 func (x *VolumeMonitorClass) GetMountPreUnmount() func(*VolumeMonitor, Mount) {
 	if x.xMountPreUnmount == 0 {
 		return nil
@@ -210,7 +210,7 @@ func (x *VolumeMonitorClass) GetMountPreUnmount() func(*VolumeMonitor, Mount) {
 	}
 }
 
-// OverrideMountChanged sets the callback function.
+// OverrideMountChanged sets the "mount_changed" callback function.
 func (x *VolumeMonitorClass) OverrideMountChanged(cb func(*VolumeMonitor, Mount)) {
 	if cb == nil {
 		x.xMountChanged = 0
@@ -221,7 +221,7 @@ func (x *VolumeMonitorClass) OverrideMountChanged(cb func(*VolumeMonitor, Mount)
 	}
 }
 
-// GetMountChanged gets the callback function.
+// GetMountChanged gets the "mount_changed" callback function.
 func (x *VolumeMonitorClass) GetMountChanged() func(*VolumeMonitor, Mount) {
 	if x.xMountChanged == 0 {
 		return nil
@@ -233,7 +233,7 @@ func (x *VolumeMonitorClass) GetMountChanged() func(*VolumeMonitor, Mount) {
 	}
 }
 
-// OverrideDriveConnected sets the callback function.
+// OverrideDriveConnected sets the "drive_connected" callback function.
 func (x *VolumeMonitorClass) OverrideDriveConnected(cb func(*VolumeMonitor, Drive)) {
 	if cb == nil {
 		x.xDriveConnected = 0
@@ -244,7 +244,7 @@ func (x *VolumeMonitorClass) OverrideDriveConnected(cb func(*VolumeMonitor, Driv
 	}
 }
 
-// GetDriveConnected gets the callback function.
+// GetDriveConnected gets the "drive_connected" callback function.
 func (x *VolumeMonitorClass) GetDriveConnected() func(*VolumeMonitor, Drive) {
 	if x.xDriveConnected == 0 {
 		return nil
@@ -256,7 +256,7 @@ func (x *VolumeMonitorClass) GetDriveConnected() func(*VolumeMonitor, Drive) {
 	}
 }
 
-// OverrideDriveDisconnected sets the callback function.
+// OverrideDriveDisconnected sets the "drive_disconnected" callback function.
 func (x *VolumeMonitorClass) OverrideDriveDisconnected(cb func(*VolumeMonitor, Drive)) {
 	if cb == nil {
 		x.xDriveDisconnected = 0
@@ -267,7 +267,7 @@ func (x *VolumeMonitorClass) OverrideDriveDisconnected(cb func(*VolumeMonitor, D
 	}
 }
 
-// GetDriveDisconnected gets the callback function.
+// GetDriveDisconnected gets the "drive_disconnected" callback function.
 func (x *VolumeMonitorClass) GetDriveDisconnected() func(*VolumeMonitor, Drive) {
 	if x.xDriveDisconnected == 0 {
 		return nil
@@ -279,7 +279,7 @@ func (x *VolumeMonitorClass) GetDriveDisconnected() func(*VolumeMonitor, Drive) 
 	}
 }
 
-// OverrideDriveChanged sets the callback function.
+// OverrideDriveChanged sets the "drive_changed" callback function.
 func (x *VolumeMonitorClass) OverrideDriveChanged(cb func(*VolumeMonitor, Drive)) {
 	if cb == nil {
 		x.xDriveChanged = 0
@@ -290,7 +290,7 @@ func (x *VolumeMonitorClass) OverrideDriveChanged(cb func(*VolumeMonitor, Drive)
 	}
 }
 
-// GetDriveChanged gets the callback function.
+// GetDriveChanged gets the "drive_changed" callback function.
 func (x *VolumeMonitorClass) GetDriveChanged() func(*VolumeMonitor, Drive) {
 	if x.xDriveChanged == 0 {
 		return nil
@@ -302,7 +302,7 @@ func (x *VolumeMonitorClass) GetDriveChanged() func(*VolumeMonitor, Drive) {
 	}
 }
 
-// OverrideIsSupported sets the callback function.
+// OverrideIsSupported sets the "is_supported" callback function.
 func (x *VolumeMonitorClass) OverrideIsSupported(cb func() bool) {
 	if cb == nil {
 		x.xIsSupported = 0
@@ -313,7 +313,7 @@ func (x *VolumeMonitorClass) OverrideIsSupported(cb func() bool) {
 	}
 }
 
-// GetIsSupported gets the callback function.
+// GetIsSupported gets the "is_supported" callback function.
 func (x *VolumeMonitorClass) GetIsSupported() func() bool {
 	if x.xIsSupported == 0 {
 		return nil
@@ -325,7 +325,7 @@ func (x *VolumeMonitorClass) GetIsSupported() func() bool {
 	}
 }
 
-// OverrideGetConnectedDrives sets the callback function.
+// OverrideGetConnectedDrives sets the "get_connected_drives" callback function.
 func (x *VolumeMonitorClass) OverrideGetConnectedDrives(cb func(*VolumeMonitor) *glib.List) {
 	if cb == nil {
 		x.xGetConnectedDrives = 0
@@ -336,7 +336,7 @@ func (x *VolumeMonitorClass) OverrideGetConnectedDrives(cb func(*VolumeMonitor) 
 	}
 }
 
-// GetGetConnectedDrives gets the callback function.
+// GetGetConnectedDrives gets the "get_connected_drives" callback function.
 func (x *VolumeMonitorClass) GetGetConnectedDrives() func(*VolumeMonitor) *glib.List {
 	if x.xGetConnectedDrives == 0 {
 		return nil
@@ -348,7 +348,7 @@ func (x *VolumeMonitorClass) GetGetConnectedDrives() func(*VolumeMonitor) *glib.
 	}
 }
 
-// OverrideGetVolumes sets the callback function.
+// OverrideGetVolumes sets the "get_volumes" callback function.
 func (x *VolumeMonitorClass) OverrideGetVolumes(cb func(*VolumeMonitor) *glib.List) {
 	if cb == nil {
 		x.xGetVolumes = 0
@@ -359,7 +359,7 @@ func (x *VolumeMonitorClass) OverrideGetVolumes(cb func(*VolumeMonitor) *glib.Li
 	}
 }
 
-// GetGetVolumes gets the callback function.
+// GetGetVolumes gets the "get_volumes" callback function.
 func (x *VolumeMonitorClass) GetGetVolumes() func(*VolumeMonitor) *glib.List {
 	if x.xGetVolumes == 0 {
 		return nil
@@ -371,7 +371,7 @@ func (x *VolumeMonitorClass) GetGetVolumes() func(*VolumeMonitor) *glib.List {
 	}
 }
 
-// OverrideGetMounts sets the callback function.
+// OverrideGetMounts sets the "get_mounts" callback function.
 func (x *VolumeMonitorClass) OverrideGetMounts(cb func(*VolumeMonitor) *glib.List) {
 	if cb == nil {
 		x.xGetMounts = 0
@@ -382,7 +382,7 @@ func (x *VolumeMonitorClass) OverrideGetMounts(cb func(*VolumeMonitor) *glib.Lis
 	}
 }
 
-// GetGetMounts gets the callback function.
+// GetGetMounts gets the "get_mounts" callback function.
 func (x *VolumeMonitorClass) GetGetMounts() func(*VolumeMonitor) *glib.List {
 	if x.xGetMounts == 0 {
 		return nil
@@ -394,7 +394,7 @@ func (x *VolumeMonitorClass) GetGetMounts() func(*VolumeMonitor) *glib.List {
 	}
 }
 
-// OverrideGetVolumeForUuid sets the callback function.
+// OverrideGetVolumeForUuid sets the "get_volume_for_uuid" callback function.
 func (x *VolumeMonitorClass) OverrideGetVolumeForUuid(cb func(*VolumeMonitor, string) *VolumeBase) {
 	if cb == nil {
 		x.xGetVolumeForUuid = 0
@@ -409,7 +409,7 @@ func (x *VolumeMonitorClass) OverrideGetVolumeForUuid(cb func(*VolumeMonitor, st
 	}
 }
 
-// GetGetVolumeForUuid gets the callback function.
+// GetGetVolumeForUuid gets the "get_volume_for_uuid" callback function.
 func (x *VolumeMonitorClass) GetGetVolumeForUuid() func(*VolumeMonitor, string) *VolumeBase {
 	if x.xGetVolumeForUuid == 0 {
 		return nil
@@ -427,7 +427,7 @@ func (x *VolumeMonitorClass) GetGetVolumeForUuid() func(*VolumeMonitor, string) 
 	}
 }
 
-// OverrideGetMountForUuid sets the callback function.
+// OverrideGetMountForUuid sets the "get_mount_for_uuid" callback function.
 func (x *VolumeMonitorClass) OverrideGetMountForUuid(cb func(*VolumeMonitor, string) *MountBase) {
 	if cb == nil {
 		x.xGetMountForUuid = 0
@@ -442,7 +442,7 @@ func (x *VolumeMonitorClass) OverrideGetMountForUuid(cb func(*VolumeMonitor, str
 	}
 }
 
-// GetGetMountForUuid gets the callback function.
+// GetGetMountForUuid gets the "get_mount_for_uuid" callback function.
 func (x *VolumeMonitorClass) GetGetMountForUuid() func(*VolumeMonitor, string) *MountBase {
 	if x.xGetMountForUuid == 0 {
 		return nil
@@ -460,7 +460,7 @@ func (x *VolumeMonitorClass) GetGetMountForUuid() func(*VolumeMonitor, string) *
 	}
 }
 
-// OverrideAdoptOrphanMount sets the callback function.
+// OverrideAdoptOrphanMount sets the "adopt_orphan_mount" callback function.
 func (x *VolumeMonitorClass) OverrideAdoptOrphanMount(cb func(Mount, *VolumeMonitor) *VolumeBase) {
 	if cb == nil {
 		x.xAdoptOrphanMount = 0
@@ -475,7 +475,7 @@ func (x *VolumeMonitorClass) OverrideAdoptOrphanMount(cb func(Mount, *VolumeMoni
 	}
 }
 
-// GetAdoptOrphanMount gets the callback function.
+// GetAdoptOrphanMount gets the "adopt_orphan_mount" callback function.
 func (x *VolumeMonitorClass) GetAdoptOrphanMount() func(Mount, *VolumeMonitor) *VolumeBase {
 	if x.xAdoptOrphanMount == 0 {
 		return nil
@@ -493,7 +493,7 @@ func (x *VolumeMonitorClass) GetAdoptOrphanMount() func(Mount, *VolumeMonitor) *
 	}
 }
 
-// OverrideDriveEjectButton sets the callback function.
+// OverrideDriveEjectButton sets the "drive_eject_button" callback function.
 func (x *VolumeMonitorClass) OverrideDriveEjectButton(cb func(*VolumeMonitor, Drive)) {
 	if cb == nil {
 		x.xDriveEjectButton = 0
@@ -504,7 +504,7 @@ func (x *VolumeMonitorClass) OverrideDriveEjectButton(cb func(*VolumeMonitor, Dr
 	}
 }
 
-// GetDriveEjectButton gets the callback function.
+// GetDriveEjectButton gets the "drive_eject_button" callback function.
 func (x *VolumeMonitorClass) GetDriveEjectButton() func(*VolumeMonitor, Drive) {
 	if x.xDriveEjectButton == 0 {
 		return nil
@@ -516,7 +516,7 @@ func (x *VolumeMonitorClass) GetDriveEjectButton() func(*VolumeMonitor, Drive) {
 	}
 }
 
-// OverrideDriveStopButton sets the callback function.
+// OverrideDriveStopButton sets the "drive_stop_button" callback function.
 func (x *VolumeMonitorClass) OverrideDriveStopButton(cb func(*VolumeMonitor, Drive)) {
 	if cb == nil {
 		x.xDriveStopButton = 0
@@ -527,7 +527,7 @@ func (x *VolumeMonitorClass) OverrideDriveStopButton(cb func(*VolumeMonitor, Dri
 	}
 }
 
-// GetDriveStopButton gets the callback function.
+// GetDriveStopButton gets the "drive_stop_button" callback function.
 func (x *VolumeMonitorClass) GetDriveStopButton() func(*VolumeMonitor, Drive) {
 	if x.xDriveStopButton == 0 {
 		return nil
@@ -539,7 +539,7 @@ func (x *VolumeMonitorClass) GetDriveStopButton() func(*VolumeMonitor, Drive) {
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *VolumeMonitorClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -550,7 +550,7 @@ func (x *VolumeMonitorClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *VolumeMonitorClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -562,7 +562,7 @@ func (x *VolumeMonitorClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *VolumeMonitorClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -573,7 +573,7 @@ func (x *VolumeMonitorClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *VolumeMonitorClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -585,7 +585,7 @@ func (x *VolumeMonitorClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *VolumeMonitorClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -596,7 +596,7 @@ func (x *VolumeMonitorClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *VolumeMonitorClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -608,7 +608,7 @@ func (x *VolumeMonitorClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *VolumeMonitorClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -619,7 +619,7 @@ func (x *VolumeMonitorClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *VolumeMonitorClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -631,7 +631,7 @@ func (x *VolumeMonitorClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *VolumeMonitorClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -642,7 +642,7 @@ func (x *VolumeMonitorClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *VolumeMonitorClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -654,7 +654,7 @@ func (x *VolumeMonitorClass) GetGReserved5() func() {
 	}
 }
 
-// OverrideGReserved6 sets the callback function.
+// OverrideGReserved6 sets the "_g_reserved6" callback function.
 func (x *VolumeMonitorClass) OverrideGReserved6(cb func()) {
 	if cb == nil {
 		x.xGReserved6 = 0
@@ -665,7 +665,7 @@ func (x *VolumeMonitorClass) OverrideGReserved6(cb func()) {
 	}
 }
 
-// GetGReserved6 gets the callback function.
+// GetGReserved6 gets the "_g_reserved6" callback function.
 func (x *VolumeMonitorClass) GetGReserved6() func() {
 	if x.xGReserved6 == 0 {
 		return nil

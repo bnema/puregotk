@@ -8,6 +8,7 @@ import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -37,7 +38,7 @@ func (x *BufferedInputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideFill sets the callback function.
+// OverrideFill sets the "fill" callback function.
 func (x *BufferedInputStreamClass) OverrideFill(cb func(*BufferedInputStream, int, *Cancellable) int) {
 	if cb == nil {
 		x.xFill = 0
@@ -48,7 +49,7 @@ func (x *BufferedInputStreamClass) OverrideFill(cb func(*BufferedInputStream, in
 	}
 }
 
-// GetFill gets the callback function.
+// GetFill gets the "fill" callback function.
 func (x *BufferedInputStreamClass) GetFill() func(*BufferedInputStream, int, *Cancellable) int {
 	if x.xFill == 0 {
 		return nil
@@ -60,7 +61,7 @@ func (x *BufferedInputStreamClass) GetFill() func(*BufferedInputStream, int, *Ca
 	}
 }
 
-// OverrideFillAsync sets the callback function.
+// OverrideFillAsync sets the "fill_async" callback function.
 func (x *BufferedInputStreamClass) OverrideFillAsync(cb func(*BufferedInputStream, int, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xFillAsync = 0
@@ -71,7 +72,7 @@ func (x *BufferedInputStreamClass) OverrideFillAsync(cb func(*BufferedInputStrea
 	}
 }
 
-// GetFillAsync gets the callback function.
+// GetFillAsync gets the "fill_async" callback function.
 func (x *BufferedInputStreamClass) GetFillAsync() func(*BufferedInputStream, int, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xFillAsync == 0 {
 		return nil
@@ -83,7 +84,7 @@ func (x *BufferedInputStreamClass) GetFillAsync() func(*BufferedInputStream, int
 	}
 }
 
-// OverrideFillFinish sets the callback function.
+// OverrideFillFinish sets the "fill_finish" callback function.
 func (x *BufferedInputStreamClass) OverrideFillFinish(cb func(*BufferedInputStream, AsyncResult) int) {
 	if cb == nil {
 		x.xFillFinish = 0
@@ -94,7 +95,7 @@ func (x *BufferedInputStreamClass) OverrideFillFinish(cb func(*BufferedInputStre
 	}
 }
 
-// GetFillFinish gets the callback function.
+// GetFillFinish gets the "fill_finish" callback function.
 func (x *BufferedInputStreamClass) GetFillFinish() func(*BufferedInputStream, AsyncResult) int {
 	if x.xFillFinish == 0 {
 		return nil
@@ -106,7 +107,7 @@ func (x *BufferedInputStreamClass) GetFillFinish() func(*BufferedInputStream, As
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *BufferedInputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -117,7 +118,7 @@ func (x *BufferedInputStreamClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *BufferedInputStreamClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -129,7 +130,7 @@ func (x *BufferedInputStreamClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *BufferedInputStreamClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -140,7 +141,7 @@ func (x *BufferedInputStreamClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *BufferedInputStreamClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -152,7 +153,7 @@ func (x *BufferedInputStreamClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *BufferedInputStreamClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -163,7 +164,7 @@ func (x *BufferedInputStreamClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *BufferedInputStreamClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -175,7 +176,7 @@ func (x *BufferedInputStreamClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *BufferedInputStreamClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -186,7 +187,7 @@ func (x *BufferedInputStreamClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *BufferedInputStreamClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -198,7 +199,7 @@ func (x *BufferedInputStreamClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *BufferedInputStreamClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -209,7 +210,7 @@ func (x *BufferedInputStreamClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *BufferedInputStreamClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -386,12 +387,12 @@ func (x *BufferedInputStream) Peek(BufferVar []byte, OffsetVar uint, CountVar ui
 	return cret
 }
 
-var xBufferedInputStreamPeekBuffer func(uintptr, uint) uintptr
+var xBufferedInputStreamPeekBuffer func(uintptr, *uint) uintptr
 
 // Returns the buffer with the currently available bytes. The returned
 // buffer must not be modified and will become invalid when reading from
 // the stream or filling the buffer.
-func (x *BufferedInputStream) PeekBuffer(CountVar uint) uintptr {
+func (x *BufferedInputStream) PeekBuffer(CountVar *uint) uintptr {
 
 	cret := xBufferedInputStreamPeekBuffer(x.GoPointer(), CountVar)
 	return cret
@@ -443,6 +444,23 @@ func (c *BufferedInputStream) GoPointer() uintptr {
 
 func (c *BufferedInputStream) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyBufferSize sets the "buffer-size" property.
+// The size of the backend buffer, in bytes.
+func (x *BufferedInputStream) SetPropertyBufferSize(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("buffer-size", &v)
+}
+
+// GetPropertyBufferSize gets the "buffer-size" property.
+// The size of the backend buffer, in bytes.
+func (x *BufferedInputStream) GetPropertyBufferSize() uint {
+	var v gobject.Value
+	x.GetProperty("buffer-size", &v)
+	return v.GetUint()
 }
 
 // Tests if the stream supports the #GSeekableIface.

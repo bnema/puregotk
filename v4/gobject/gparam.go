@@ -38,7 +38,7 @@ func (x *ParamSpecClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideFinalize sets the callback function.
+// OverrideFinalize sets the "finalize" callback function.
 // The instance finalization function (optional), should chain
 //
 //	up to the finalize method of the parent class.
@@ -52,7 +52,7 @@ func (x *ParamSpecClass) OverrideFinalize(cb func(*ParamSpec)) {
 	}
 }
 
-// GetFinalize gets the callback function.
+// GetFinalize gets the "finalize" callback function.
 // The instance finalization function (optional), should chain
 //
 //	up to the finalize method of the parent class.
@@ -67,7 +67,7 @@ func (x *ParamSpecClass) GetFinalize() func(*ParamSpec) {
 	}
 }
 
-// OverrideValueSetDefault sets the callback function.
+// OverrideValueSetDefault sets the "value_set_default" callback function.
 // Resets a @value to the default value for this type
 //
 //	(recommended, the default is g_value_reset()), see
@@ -82,7 +82,7 @@ func (x *ParamSpecClass) OverrideValueSetDefault(cb func(*ParamSpec, *Value)) {
 	}
 }
 
-// GetValueSetDefault gets the callback function.
+// GetValueSetDefault gets the "value_set_default" callback function.
 // Resets a @value to the default value for this type
 //
 //	(recommended, the default is g_value_reset()), see
@@ -98,7 +98,7 @@ func (x *ParamSpecClass) GetValueSetDefault() func(*ParamSpec, *Value) {
 	}
 }
 
-// OverrideValueValidate sets the callback function.
+// OverrideValueValidate sets the "value_validate" callback function.
 // Ensures that the contents of @value comply with the
 //
 //	specifications set out by this type (optional), see
@@ -113,7 +113,7 @@ func (x *ParamSpecClass) OverrideValueValidate(cb func(*ParamSpec, *Value) bool)
 	}
 }
 
-// GetValueValidate gets the callback function.
+// GetValueValidate gets the "value_validate" callback function.
 // Ensures that the contents of @value comply with the
 //
 //	specifications set out by this type (optional), see
@@ -129,7 +129,7 @@ func (x *ParamSpecClass) GetValueValidate() func(*ParamSpec, *Value) bool {
 	}
 }
 
-// OverrideValuesCmp sets the callback function.
+// OverrideValuesCmp sets the "values_cmp" callback function.
 // Compares @value1 with @value2 according to this type
 //
 //	(recommended, the default is memcmp()), see g_param_values_cmp().
@@ -143,7 +143,7 @@ func (x *ParamSpecClass) OverrideValuesCmp(cb func(*ParamSpec, *Value, *Value) i
 	}
 }
 
-// GetValuesCmp gets the callback function.
+// GetValuesCmp gets the "values_cmp" callback function.
 // Compares @value1 with @value2 according to this type
 //
 //	(recommended, the default is memcmp()), see g_param_values_cmp().
@@ -158,7 +158,7 @@ func (x *ParamSpecClass) GetValuesCmp() func(*ParamSpec, *Value, *Value) int {
 	}
 }
 
-// OverrideValueIsValid sets the callback function.
+// OverrideValueIsValid sets the "value_is_valid" callback function.
 // Checks if contents of @value comply with the specifications
 //
 //	set out by this type, without modifying the value. This vfunc is optional.
@@ -173,7 +173,7 @@ func (x *ParamSpecClass) OverrideValueIsValid(cb func(*ParamSpec, *Value) bool) 
 	}
 }
 
-// GetValueIsValid gets the callback function.
+// GetValueIsValid gets the "value_is_valid" callback function.
 // Checks if contents of @value comply with the specifications
 //
 //	set out by this type, without modifying the value. This vfunc is optional.
@@ -220,11 +220,11 @@ func (x *ParamSpecPool) Insert(PspecVar *ParamSpec, OwnerTypeVar types.GType) {
 
 }
 
-var xParamSpecPoolList func(uintptr, types.GType, uint) uintptr
+var xParamSpecPoolList func(uintptr, types.GType, *uint) uintptr
 
 // Gets an array of all #GParamSpecs owned by @owner_type in
 // the pool.
-func (x *ParamSpecPool) List(OwnerTypeVar types.GType, NPspecsPVar uint) uintptr {
+func (x *ParamSpecPool) List(OwnerTypeVar types.GType, NPspecsPVar *uint) uintptr {
 
 	cret := xParamSpecPoolList(x.GoPointer(), OwnerTypeVar, NPspecsPVar)
 	return cret
@@ -298,7 +298,7 @@ func (x *ParamSpecTypeInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideInstanceInit sets the callback function.
+// OverrideInstanceInit sets the "instance_init" callback function.
 // Location of the instance initialization function (optional).
 func (x *ParamSpecTypeInfo) OverrideInstanceInit(cb func(*ParamSpec)) {
 	if cb == nil {
@@ -310,7 +310,7 @@ func (x *ParamSpecTypeInfo) OverrideInstanceInit(cb func(*ParamSpec)) {
 	}
 }
 
-// GetInstanceInit gets the callback function.
+// GetInstanceInit gets the "instance_init" callback function.
 // Location of the instance initialization function (optional).
 func (x *ParamSpecTypeInfo) GetInstanceInit() func(*ParamSpec) {
 	if x.xInstanceInit == 0 {
@@ -323,7 +323,7 @@ func (x *ParamSpecTypeInfo) GetInstanceInit() func(*ParamSpec) {
 	}
 }
 
-// OverrideFinalize sets the callback function.
+// OverrideFinalize sets the "finalize" callback function.
 // The instance finalization function (optional).
 func (x *ParamSpecTypeInfo) OverrideFinalize(cb func(*ParamSpec)) {
 	if cb == nil {
@@ -335,7 +335,7 @@ func (x *ParamSpecTypeInfo) OverrideFinalize(cb func(*ParamSpec)) {
 	}
 }
 
-// GetFinalize gets the callback function.
+// GetFinalize gets the "finalize" callback function.
 // The instance finalization function (optional).
 func (x *ParamSpecTypeInfo) GetFinalize() func(*ParamSpec) {
 	if x.xFinalize == 0 {
@@ -348,7 +348,7 @@ func (x *ParamSpecTypeInfo) GetFinalize() func(*ParamSpec) {
 	}
 }
 
-// OverrideValueSetDefault sets the callback function.
+// OverrideValueSetDefault sets the "value_set_default" callback function.
 // Resets a @value to the default value for @pspec
 //
 //	(recommended, the default is g_value_reset()), see
@@ -363,7 +363,7 @@ func (x *ParamSpecTypeInfo) OverrideValueSetDefault(cb func(*ParamSpec, *Value))
 	}
 }
 
-// GetValueSetDefault gets the callback function.
+// GetValueSetDefault gets the "value_set_default" callback function.
 // Resets a @value to the default value for @pspec
 //
 //	(recommended, the default is g_value_reset()), see
@@ -379,7 +379,7 @@ func (x *ParamSpecTypeInfo) GetValueSetDefault() func(*ParamSpec, *Value) {
 	}
 }
 
-// OverrideValueValidate sets the callback function.
+// OverrideValueValidate sets the "value_validate" callback function.
 // Ensures that the contents of @value comply with the
 //
 //	specifications set out by @pspec (optional), see
@@ -394,7 +394,7 @@ func (x *ParamSpecTypeInfo) OverrideValueValidate(cb func(*ParamSpec, *Value) bo
 	}
 }
 
-// GetValueValidate gets the callback function.
+// GetValueValidate gets the "value_validate" callback function.
 // Ensures that the contents of @value comply with the
 //
 //	specifications set out by @pspec (optional), see
@@ -410,7 +410,7 @@ func (x *ParamSpecTypeInfo) GetValueValidate() func(*ParamSpec, *Value) bool {
 	}
 }
 
-// OverrideValuesCmp sets the callback function.
+// OverrideValuesCmp sets the "values_cmp" callback function.
 // Compares @value1 with @value2 according to @pspec
 //
 //	(recommended, the default is memcmp()), see g_param_values_cmp().
@@ -424,7 +424,7 @@ func (x *ParamSpecTypeInfo) OverrideValuesCmp(cb func(*ParamSpec, *Value, *Value
 	}
 }
 
-// GetValuesCmp gets the callback function.
+// GetValuesCmp gets the "values_cmp" callback function.
 // Compares @value1 with @value2 according to @pspec
 //
 //	(recommended, the default is memcmp()), see g_param_values_cmp().

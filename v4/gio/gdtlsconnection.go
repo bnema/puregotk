@@ -43,7 +43,7 @@ func (x *DtlsConnectionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideAcceptCertificate sets the callback function.
+// OverrideAcceptCertificate sets the "accept_certificate" callback function.
 // Check whether to accept a certificate.
 func (x *DtlsConnectionInterface) OverrideAcceptCertificate(cb func(DtlsConnection, *TlsCertificate, TlsCertificateFlags) bool) {
 	if cb == nil {
@@ -55,7 +55,7 @@ func (x *DtlsConnectionInterface) OverrideAcceptCertificate(cb func(DtlsConnecti
 	}
 }
 
-// GetAcceptCertificate gets the callback function.
+// GetAcceptCertificate gets the "accept_certificate" callback function.
 // Check whether to accept a certificate.
 func (x *DtlsConnectionInterface) GetAcceptCertificate() func(DtlsConnection, *TlsCertificate, TlsCertificateFlags) bool {
 	if x.xAcceptCertificate == 0 {
@@ -68,7 +68,7 @@ func (x *DtlsConnectionInterface) GetAcceptCertificate() func(DtlsConnection, *T
 	}
 }
 
-// OverrideHandshake sets the callback function.
+// OverrideHandshake sets the "handshake" callback function.
 // Perform a handshake operation.
 func (x *DtlsConnectionInterface) OverrideHandshake(cb func(DtlsConnection, *Cancellable) bool) {
 	if cb == nil {
@@ -80,7 +80,7 @@ func (x *DtlsConnectionInterface) OverrideHandshake(cb func(DtlsConnection, *Can
 	}
 }
 
-// GetHandshake gets the callback function.
+// GetHandshake gets the "handshake" callback function.
 // Perform a handshake operation.
 func (x *DtlsConnectionInterface) GetHandshake() func(DtlsConnection, *Cancellable) bool {
 	if x.xHandshake == 0 {
@@ -93,7 +93,7 @@ func (x *DtlsConnectionInterface) GetHandshake() func(DtlsConnection, *Cancellab
 	}
 }
 
-// OverrideHandshakeAsync sets the callback function.
+// OverrideHandshakeAsync sets the "handshake_async" callback function.
 // Start an asynchronous handshake operation.
 func (x *DtlsConnectionInterface) OverrideHandshakeAsync(cb func(DtlsConnection, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -105,7 +105,7 @@ func (x *DtlsConnectionInterface) OverrideHandshakeAsync(cb func(DtlsConnection,
 	}
 }
 
-// GetHandshakeAsync gets the callback function.
+// GetHandshakeAsync gets the "handshake_async" callback function.
 // Start an asynchronous handshake operation.
 func (x *DtlsConnectionInterface) GetHandshakeAsync() func(DtlsConnection, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xHandshakeAsync == 0 {
@@ -118,7 +118,7 @@ func (x *DtlsConnectionInterface) GetHandshakeAsync() func(DtlsConnection, int, 
 	}
 }
 
-// OverrideHandshakeFinish sets the callback function.
+// OverrideHandshakeFinish sets the "handshake_finish" callback function.
 // Finish an asynchronous handshake operation.
 func (x *DtlsConnectionInterface) OverrideHandshakeFinish(cb func(DtlsConnection, AsyncResult) bool) {
 	if cb == nil {
@@ -130,7 +130,7 @@ func (x *DtlsConnectionInterface) OverrideHandshakeFinish(cb func(DtlsConnection
 	}
 }
 
-// GetHandshakeFinish gets the callback function.
+// GetHandshakeFinish gets the "handshake_finish" callback function.
 // Finish an asynchronous handshake operation.
 func (x *DtlsConnectionInterface) GetHandshakeFinish() func(DtlsConnection, AsyncResult) bool {
 	if x.xHandshakeFinish == 0 {
@@ -143,7 +143,7 @@ func (x *DtlsConnectionInterface) GetHandshakeFinish() func(DtlsConnection, Asyn
 	}
 }
 
-// OverrideShutdown sets the callback function.
+// OverrideShutdown sets the "shutdown" callback function.
 // Shut down one or both directions of the connection.
 func (x *DtlsConnectionInterface) OverrideShutdown(cb func(DtlsConnection, bool, bool, *Cancellable) bool) {
 	if cb == nil {
@@ -155,7 +155,7 @@ func (x *DtlsConnectionInterface) OverrideShutdown(cb func(DtlsConnection, bool,
 	}
 }
 
-// GetShutdown gets the callback function.
+// GetShutdown gets the "shutdown" callback function.
 // Shut down one or both directions of the connection.
 func (x *DtlsConnectionInterface) GetShutdown() func(DtlsConnection, bool, bool, *Cancellable) bool {
 	if x.xShutdown == 0 {
@@ -168,7 +168,7 @@ func (x *DtlsConnectionInterface) GetShutdown() func(DtlsConnection, bool, bool,
 	}
 }
 
-// OverrideShutdownAsync sets the callback function.
+// OverrideShutdownAsync sets the "shutdown_async" callback function.
 // Start an asynchronous shutdown operation.
 func (x *DtlsConnectionInterface) OverrideShutdownAsync(cb func(DtlsConnection, bool, bool, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -180,7 +180,7 @@ func (x *DtlsConnectionInterface) OverrideShutdownAsync(cb func(DtlsConnection, 
 	}
 }
 
-// GetShutdownAsync gets the callback function.
+// GetShutdownAsync gets the "shutdown_async" callback function.
 // Start an asynchronous shutdown operation.
 func (x *DtlsConnectionInterface) GetShutdownAsync() func(DtlsConnection, bool, bool, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xShutdownAsync == 0 {
@@ -193,7 +193,7 @@ func (x *DtlsConnectionInterface) GetShutdownAsync() func(DtlsConnection, bool, 
 	}
 }
 
-// OverrideShutdownFinish sets the callback function.
+// OverrideShutdownFinish sets the "shutdown_finish" callback function.
 // Finish an asynchronous shutdown operation.
 func (x *DtlsConnectionInterface) OverrideShutdownFinish(cb func(DtlsConnection, AsyncResult) bool) {
 	if cb == nil {
@@ -205,7 +205,7 @@ func (x *DtlsConnectionInterface) OverrideShutdownFinish(cb func(DtlsConnection,
 	}
 }
 
-// GetShutdownFinish gets the callback function.
+// GetShutdownFinish gets the "shutdown_finish" callback function.
 // Finish an asynchronous shutdown operation.
 func (x *DtlsConnectionInterface) GetShutdownFinish() func(DtlsConnection, AsyncResult) bool {
 	if x.xShutdownFinish == 0 {
@@ -218,7 +218,7 @@ func (x *DtlsConnectionInterface) GetShutdownFinish() func(DtlsConnection, Async
 	}
 }
 
-// OverrideSetAdvertisedProtocols sets the callback function.
+// OverrideSetAdvertisedProtocols sets the "set_advertised_protocols" callback function.
 // Set APLN protocol list (Since: 2.60)
 func (x *DtlsConnectionInterface) OverrideSetAdvertisedProtocols(cb func(DtlsConnection, []string)) {
 	if cb == nil {
@@ -230,7 +230,7 @@ func (x *DtlsConnectionInterface) OverrideSetAdvertisedProtocols(cb func(DtlsCon
 	}
 }
 
-// GetSetAdvertisedProtocols gets the callback function.
+// GetSetAdvertisedProtocols gets the "set_advertised_protocols" callback function.
 // Set APLN protocol list (Since: 2.60)
 func (x *DtlsConnectionInterface) GetSetAdvertisedProtocols() func(DtlsConnection, []string) {
 	if x.xSetAdvertisedProtocols == 0 {
@@ -243,7 +243,7 @@ func (x *DtlsConnectionInterface) GetSetAdvertisedProtocols() func(DtlsConnectio
 	}
 }
 
-// OverrideGetNegotiatedProtocol sets the callback function.
+// OverrideGetNegotiatedProtocol sets the "get_negotiated_protocol" callback function.
 // Get ALPN-negotiated protocol (Since: 2.60)
 func (x *DtlsConnectionInterface) OverrideGetNegotiatedProtocol(cb func(DtlsConnection) string) {
 	if cb == nil {
@@ -255,7 +255,7 @@ func (x *DtlsConnectionInterface) OverrideGetNegotiatedProtocol(cb func(DtlsConn
 	}
 }
 
-// GetGetNegotiatedProtocol gets the callback function.
+// GetGetNegotiatedProtocol gets the "get_negotiated_protocol" callback function.
 // Get ALPN-negotiated protocol (Since: 2.60)
 func (x *DtlsConnectionInterface) GetGetNegotiatedProtocol() func(DtlsConnection) string {
 	if x.xGetNegotiatedProtocol == 0 {
@@ -268,7 +268,7 @@ func (x *DtlsConnectionInterface) GetGetNegotiatedProtocol() func(DtlsConnection
 	}
 }
 
-// OverrideGetBindingData sets the callback function.
+// OverrideGetBindingData sets the "get_binding_data" callback function.
 // Retrieve TLS channel binding data (Since: 2.66)
 func (x *DtlsConnectionInterface) OverrideGetBindingData(cb func(DtlsConnection, TlsChannelBindingType, []byte) bool) {
 	if cb == nil {
@@ -280,7 +280,7 @@ func (x *DtlsConnectionInterface) OverrideGetBindingData(cb func(DtlsConnection,
 	}
 }
 
-// GetGetBindingData gets the callback function.
+// GetGetBindingData gets the "get_binding_data" callback function.
 // Retrieve TLS channel binding data (Since: 2.66)
 func (x *DtlsConnectionInterface) GetGetBindingData() func(DtlsConnection, TlsChannelBindingType, []byte) bool {
 	if x.xGetBindingData == 0 {
@@ -322,7 +322,7 @@ type DtlsConnection interface {
 	CloseFinish(ResultVar AsyncResult) (bool, error)
 	EmitAcceptCertificate(PeerCertVar *TlsCertificate, ErrorsVar TlsCertificateFlags) bool
 	GetCertificate() *TlsCertificate
-	GetChannelBindingData(TypeVar TlsChannelBindingType, DataVar []byte) (bool, error)
+	GetChannelBindingData(TypeVar TlsChannelBindingType, DataVar *[]byte) (bool, error)
 	GetCiphersuiteName() string
 	GetDatabase() *TlsDatabase
 	GetInteraction() *TlsInteraction
@@ -455,7 +455,7 @@ func (x *DtlsConnectionBase) GetCertificate() *TlsCertificate {
 // will be available though.  That could happen if TLS connection does not
 // support @type or the binding data is not available yet due to additional
 // negotiation or input required.
-func (x *DtlsConnectionBase) GetChannelBindingData(TypeVar TlsChannelBindingType, DataVar []byte) (bool, error) {
+func (x *DtlsConnectionBase) GetChannelBindingData(TypeVar TlsChannelBindingType, DataVar *[]byte) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGDtlsConnectionGetChannelBindingData(x.GoPointer(), TypeVar, DataVar, &cerr)
@@ -795,12 +795,81 @@ func (x *DtlsConnectionBase) ShutdownFinish(ResultVar AsyncResult) (bool, error)
 
 }
 
+// SetPropertyAdvertisedProtocols sets the "advertised-protocols" property.
+// The list of application-layer protocols that the connection
+// advertises that it is willing to speak. See
+// g_dtls_connection_set_advertised_protocols().
+func (x *DtlsConnectionBase) SetPropertyAdvertisedProtocols(value []string) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	obj.SetProperty("advertised-protocols", &v)
+}
+
+// GetPropertyAdvertisedProtocols gets the "advertised-protocols" property.
+// The list of application-layer protocols that the connection
+// advertises that it is willing to speak. See
+// g_dtls_connection_set_advertised_protocols().
+func (x *DtlsConnectionBase) GetPropertyAdvertisedProtocols() []string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("advertised-protocols", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// GetPropertyCiphersuiteName gets the "ciphersuite-name" property.
+// The name of the DTLS ciphersuite in use. See g_dtls_connection_get_ciphersuite_name().
+func (x *DtlsConnectionBase) GetPropertyCiphersuiteName() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("ciphersuite-name", &v)
+	return v.GetString()
+}
+
+// GetPropertyNegotiatedProtocol gets the "negotiated-protocol" property.
+// The application-layer protocol negotiated during the TLS
+// handshake. See g_dtls_connection_get_negotiated_protocol().
+func (x *DtlsConnectionBase) GetPropertyNegotiatedProtocol() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("negotiated-protocol", &v)
+	return v.GetString()
+}
+
+// SetPropertyRequireCloseNotify sets the "require-close-notify" property.
+// Whether or not proper TLS close notification is required.
+// See g_dtls_connection_set_require_close_notify().
+func (x *DtlsConnectionBase) SetPropertyRequireCloseNotify(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("require-close-notify", &v)
+}
+
+// GetPropertyRequireCloseNotify gets the "require-close-notify" property.
+// Whether or not proper TLS close notification is required.
+// See g_dtls_connection_set_require_close_notify().
+func (x *DtlsConnectionBase) GetPropertyRequireCloseNotify() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("require-close-notify", &v)
+	return v.GetBoolean()
+}
+
 var XGDtlsConnectionClose func(uintptr, uintptr, **glib.Error) bool
 var XGDtlsConnectionCloseAsync func(uintptr, int, uintptr, uintptr, uintptr)
 var XGDtlsConnectionCloseFinish func(uintptr, uintptr, **glib.Error) bool
 var XGDtlsConnectionEmitAcceptCertificate func(uintptr, uintptr, TlsCertificateFlags) bool
 var XGDtlsConnectionGetCertificate func(uintptr) uintptr
-var XGDtlsConnectionGetChannelBindingData func(uintptr, TlsChannelBindingType, []byte, **glib.Error) bool
+var XGDtlsConnectionGetChannelBindingData func(uintptr, TlsChannelBindingType, *[]byte, **glib.Error) bool
 var XGDtlsConnectionGetCiphersuiteName func(uintptr) string
 var XGDtlsConnectionGetDatabase func(uintptr) uintptr
 var XGDtlsConnectionGetInteraction func(uintptr) uintptr

@@ -185,6 +185,40 @@ func (c *StringFilter) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyIgnoreCase sets the "ignore-case" property.
+// If matching is case sensitive.
+func (x *StringFilter) SetPropertyIgnoreCase(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("ignore-case", &v)
+}
+
+// GetPropertyIgnoreCase gets the "ignore-case" property.
+// If matching is case sensitive.
+func (x *StringFilter) GetPropertyIgnoreCase() bool {
+	var v gobject.Value
+	x.GetProperty("ignore-case", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySearch sets the "search" property.
+// The search term.
+func (x *StringFilter) SetPropertySearch(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("search", &v)
+}
+
+// GetPropertySearch gets the "search" property.
+// The search term.
+func (x *StringFilter) GetPropertySearch() string {
+	var v gobject.Value
+	x.GetProperty("search", &v)
+	return v.GetString()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

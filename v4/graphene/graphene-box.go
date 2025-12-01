@@ -176,10 +176,10 @@ func (x *Box) GetSize(SizeVar *Vec3) {
 
 }
 
-var xBoxGetVertices func(uintptr, [8]Vec3)
+var xBoxGetVertices func(uintptr, *[8]Vec3)
 
 // Computes the vertices of the given #graphene_box_t.
-func (x *Box) GetVertices(VerticesVar [8]Vec3) {
+func (x *Box) GetVertices(VerticesVar *[8]Vec3) {
 
 	xBoxGetVertices(x.GoPointer(), VerticesVar)
 

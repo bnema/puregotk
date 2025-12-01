@@ -302,6 +302,47 @@ func (c *Animation) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFollowEnableAnimationsSetting sets the "follow-enable-animations-setting" property.
+// Whether to skip the animation when animations are globally disabled.
+//
+// The default behavior is to skip the animation. Set to `FALSE` to disable
+// this behavior.
+//
+// This can be useful for cases where animation is essential, like spinners,
+// or in demo applications. Most other animations should keep it enabled.
+//
+// See [property@Gtk.Settings:gtk-enable-animations].
+func (x *Animation) SetPropertyFollowEnableAnimationsSetting(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("follow-enable-animations-setting", &v)
+}
+
+// GetPropertyFollowEnableAnimationsSetting gets the "follow-enable-animations-setting" property.
+// Whether to skip the animation when animations are globally disabled.
+//
+// The default behavior is to skip the animation. Set to `FALSE` to disable
+// this behavior.
+//
+// This can be useful for cases where animation is essential, like spinners,
+// or in demo applications. Most other animations should keep it enabled.
+//
+// See [property@Gtk.Settings:gtk-enable-animations].
+func (x *Animation) GetPropertyFollowEnableAnimationsSetting() bool {
+	var v gobject.Value
+	x.GetProperty("follow-enable-animations-setting", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyValue gets the "value" property.
+// The current value of the animation.
+func (x *Animation) GetPropertyValue() float64 {
+	var v gobject.Value
+	x.GetProperty("value", &v)
+	return v.GetDouble()
+}
+
 // This signal is emitted when the animation has been completed, either on its
 // own or via calling [method@Animation.skip].
 func (x *Animation) ConnectDone(cb *func(Animation)) uint32 {

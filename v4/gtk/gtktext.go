@@ -594,6 +594,263 @@ func (c *Text) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActivatesDefault sets the "activates-default" property.
+// Whether to activate the default widget when &lt;kbd&gt;Enter&lt;/kbd&gt; is pressed.
+func (x *Text) SetPropertyActivatesDefault(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activates-default", &v)
+}
+
+// GetPropertyActivatesDefault gets the "activates-default" property.
+// Whether to activate the default widget when &lt;kbd&gt;Enter&lt;/kbd&gt; is pressed.
+func (x *Text) GetPropertyActivatesDefault() bool {
+	var v gobject.Value
+	x.GetProperty("activates-default", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAttributes sets the "attributes" property.
+// A list of Pango attributes to apply to the text.
+//
+// This is mainly useful to change the size or weight of the text.
+//
+// The `PangoAttribute`'s @start_index and @end_index must refer to the
+// `GtkEntryBuffer` text, i.e. without the preedit string.
+func (x *Text) SetPropertyAttributes(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("attributes", &v)
+}
+
+// GetPropertyAttributes gets the "attributes" property.
+// A list of Pango attributes to apply to the text.
+//
+// This is mainly useful to change the size or weight of the text.
+//
+// The `PangoAttribute`'s @start_index and @end_index must refer to the
+// `GtkEntryBuffer` text, i.e. without the preedit string.
+func (x *Text) GetPropertyAttributes() uintptr {
+	var v gobject.Value
+	x.GetProperty("attributes", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyEnableEmojiCompletion sets the "enable-emoji-completion" property.
+// Whether to suggest Emoji replacements.
+func (x *Text) SetPropertyEnableEmojiCompletion(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-emoji-completion", &v)
+}
+
+// GetPropertyEnableEmojiCompletion gets the "enable-emoji-completion" property.
+// Whether to suggest Emoji replacements.
+func (x *Text) GetPropertyEnableEmojiCompletion() bool {
+	var v gobject.Value
+	x.GetProperty("enable-emoji-completion", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyImModule sets the "im-module" property.
+// Which input method module should be used.
+//
+// See [class@Gtk.IMMulticontext].
+//
+// Setting this to a non-`NULL` value overrides the system-wide
+// input method. See the [property@Gtk.Settings:gtk-im-module]
+// setting.
+func (x *Text) SetPropertyImModule(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("im-module", &v)
+}
+
+// GetPropertyImModule gets the "im-module" property.
+// Which input method module should be used.
+//
+// See [class@Gtk.IMMulticontext].
+//
+// Setting this to a non-`NULL` value overrides the system-wide
+// input method. See the [property@Gtk.Settings:gtk-im-module]
+// setting.
+func (x *Text) GetPropertyImModule() string {
+	var v gobject.Value
+	x.GetProperty("im-module", &v)
+	return v.GetString()
+}
+
+// SetPropertyInvisibleChar sets the "invisible-char" property.
+// The character to used when masking contents (in “password mode”).
+func (x *Text) SetPropertyInvisibleChar(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("invisible-char", &v)
+}
+
+// GetPropertyInvisibleChar gets the "invisible-char" property.
+// The character to used when masking contents (in “password mode”).
+func (x *Text) GetPropertyInvisibleChar() uint {
+	var v gobject.Value
+	x.GetProperty("invisible-char", &v)
+	return v.GetUint()
+}
+
+// SetPropertyInvisibleCharSet sets the "invisible-char-set" property.
+// Whether the invisible char has been set.
+func (x *Text) SetPropertyInvisibleCharSet(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("invisible-char-set", &v)
+}
+
+// GetPropertyInvisibleCharSet gets the "invisible-char-set" property.
+// Whether the invisible char has been set.
+func (x *Text) GetPropertyInvisibleCharSet() bool {
+	var v gobject.Value
+	x.GetProperty("invisible-char-set", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaxLength sets the "max-length" property.
+// Maximum number of characters that are allowed.
+//
+// Zero indicates no limit.
+func (x *Text) SetPropertyMaxLength(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("max-length", &v)
+}
+
+// GetPropertyMaxLength gets the "max-length" property.
+// Maximum number of characters that are allowed.
+//
+// Zero indicates no limit.
+func (x *Text) GetPropertyMaxLength() int {
+	var v gobject.Value
+	x.GetProperty("max-length", &v)
+	return v.GetInt()
+}
+
+// SetPropertyOverwriteMode sets the "overwrite-mode" property.
+// If text is overwritten when typing.
+func (x *Text) SetPropertyOverwriteMode(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("overwrite-mode", &v)
+}
+
+// GetPropertyOverwriteMode gets the "overwrite-mode" property.
+// If text is overwritten when typing.
+func (x *Text) GetPropertyOverwriteMode() bool {
+	var v gobject.Value
+	x.GetProperty("overwrite-mode", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPlaceholderText sets the "placeholder-text" property.
+// The text that will be displayed in the `GtkText` when it is empty
+// and unfocused.
+func (x *Text) SetPropertyPlaceholderText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("placeholder-text", &v)
+}
+
+// GetPropertyPlaceholderText gets the "placeholder-text" property.
+// The text that will be displayed in the `GtkText` when it is empty
+// and unfocused.
+func (x *Text) GetPropertyPlaceholderText() string {
+	var v gobject.Value
+	x.GetProperty("placeholder-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyPropagateTextWidth sets the "propagate-text-width" property.
+// Whether the widget should grow and shrink with the content.
+func (x *Text) SetPropertyPropagateTextWidth(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("propagate-text-width", &v)
+}
+
+// GetPropertyPropagateTextWidth gets the "propagate-text-width" property.
+// Whether the widget should grow and shrink with the content.
+func (x *Text) GetPropertyPropagateTextWidth() bool {
+	var v gobject.Value
+	x.GetProperty("propagate-text-width", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyScrollOffset gets the "scroll-offset" property.
+// Number of pixels scrolled of the screen to the left.
+func (x *Text) GetPropertyScrollOffset() int {
+	var v gobject.Value
+	x.GetProperty("scroll-offset", &v)
+	return v.GetInt()
+}
+
+// SetPropertyTabs sets the "tabs" property.
+// Custom tabs for this text widget.
+func (x *Text) SetPropertyTabs(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("tabs", &v)
+}
+
+// GetPropertyTabs gets the "tabs" property.
+// Custom tabs for this text widget.
+func (x *Text) GetPropertyTabs() uintptr {
+	var v gobject.Value
+	x.GetProperty("tabs", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyTruncateMultiline sets the "truncate-multiline" property.
+// When true, pasted multi-line text is truncated to the first line.
+func (x *Text) SetPropertyTruncateMultiline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("truncate-multiline", &v)
+}
+
+// GetPropertyTruncateMultiline gets the "truncate-multiline" property.
+// When true, pasted multi-line text is truncated to the first line.
+func (x *Text) GetPropertyTruncateMultiline() bool {
+	var v gobject.Value
+	x.GetProperty("truncate-multiline", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVisibility sets the "visibility" property.
+// If false, the text is masked with the “invisible char”.
+func (x *Text) SetPropertyVisibility(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("visibility", &v)
+}
+
+// GetPropertyVisibility gets the "visibility" property.
+// If false, the text is masked with the “invisible char”.
+func (x *Text) GetPropertyVisibility() bool {
+	var v gobject.Value
+	x.GetProperty("visibility", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when the user hits the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
 //
 // The default bindings for this signal are all forms
@@ -944,7 +1201,7 @@ func (x *Text) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Text) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Text) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -1354,7 +1611,7 @@ func (x *Text) GetPosition() int {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *Text) GetSelectionBounds(StartPosVar int, EndPosVar int) bool {
+func (x *Text) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret

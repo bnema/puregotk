@@ -235,6 +235,152 @@ func (c *AlertDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyButtons sets the "buttons" property.
+// Labels for buttons to show in the alert.
+//
+// The labels should be translated and may contain
+// a `_` character to indicate the mnemonic character.
+//
+// If this property is not set, then a 'Close' button is
+// automatically created.
+func (x *AlertDialog) SetPropertyButtons(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("buttons", &v)
+}
+
+// GetPropertyButtons gets the "buttons" property.
+// Labels for buttons to show in the alert.
+//
+// The labels should be translated and may contain
+// a `_` character to indicate the mnemonic character.
+//
+// If this property is not set, then a 'Close' button is
+// automatically created.
+func (x *AlertDialog) GetPropertyButtons() []string {
+	var v gobject.Value
+	x.GetProperty("buttons", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyCancelButton sets the "cancel-button" property.
+// Determines what happens when the &lt;kbd&gt;Escape&lt;/kbd&gt; key is pressed
+// while the alert is shown.
+//
+// If this property holds the index of a button in [property@Gtk.AlertDialog:buttons],
+// then pressing Escape is treated as if that button was pressed. If it is -1
+// or not a valid index for the `buttons` array, then an error is returned.
+//
+// If `buttons` is `NULL`, then the automatically created 'Close' button
+// is treated as both cancel and default button, so 0 is returned.
+func (x *AlertDialog) SetPropertyCancelButton(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("cancel-button", &v)
+}
+
+// GetPropertyCancelButton gets the "cancel-button" property.
+// Determines what happens when the &lt;kbd&gt;Escape&lt;/kbd&gt; key is pressed
+// while the alert is shown.
+//
+// If this property holds the index of a button in [property@Gtk.AlertDialog:buttons],
+// then pressing Escape is treated as if that button was pressed. If it is -1
+// or not a valid index for the `buttons` array, then an error is returned.
+//
+// If `buttons` is `NULL`, then the automatically created 'Close' button
+// is treated as both cancel and default button, so 0 is returned.
+func (x *AlertDialog) GetPropertyCancelButton() int {
+	var v gobject.Value
+	x.GetProperty("cancel-button", &v)
+	return v.GetInt()
+}
+
+// SetPropertyDefaultButton sets the "default-button" property.
+// Determines what happens when the &lt;kbd&gt;Return&lt;/kbd&gt; key is pressed
+// while the alert is shown.
+//
+// If this property holds the index of a button in [property@Gtk.AlertDialog:buttons],
+// then pressing Return is treated as if that button was pressed. If it is -1
+// or not a valid index for the `buttons` array, then nothing happens.
+//
+// If `buttons` is `NULL`, then the automatically created 'Close' button
+// is treated as both cancel and default button, so 0 is returned.
+func (x *AlertDialog) SetPropertyDefaultButton(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("default-button", &v)
+}
+
+// GetPropertyDefaultButton gets the "default-button" property.
+// Determines what happens when the &lt;kbd&gt;Return&lt;/kbd&gt; key is pressed
+// while the alert is shown.
+//
+// If this property holds the index of a button in [property@Gtk.AlertDialog:buttons],
+// then pressing Return is treated as if that button was pressed. If it is -1
+// or not a valid index for the `buttons` array, then nothing happens.
+//
+// If `buttons` is `NULL`, then the automatically created 'Close' button
+// is treated as both cancel and default button, so 0 is returned.
+func (x *AlertDialog) GetPropertyDefaultButton() int {
+	var v gobject.Value
+	x.GetProperty("default-button", &v)
+	return v.GetInt()
+}
+
+// SetPropertyDetail sets the "detail" property.
+// The detail text for the alert.
+func (x *AlertDialog) SetPropertyDetail(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("detail", &v)
+}
+
+// GetPropertyDetail gets the "detail" property.
+// The detail text for the alert.
+func (x *AlertDialog) GetPropertyDetail() string {
+	var v gobject.Value
+	x.GetProperty("detail", &v)
+	return v.GetString()
+}
+
+// SetPropertyMessage sets the "message" property.
+// The message for the alert.
+func (x *AlertDialog) SetPropertyMessage(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("message", &v)
+}
+
+// GetPropertyMessage gets the "message" property.
+// The message for the alert.
+func (x *AlertDialog) GetPropertyMessage() string {
+	var v gobject.Value
+	x.GetProperty("message", &v)
+	return v.GetString()
+}
+
+// SetPropertyModal sets the "modal" property.
+// Whether the alert is modal.
+func (x *AlertDialog) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the alert is modal.
+func (x *AlertDialog) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

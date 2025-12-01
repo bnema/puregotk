@@ -150,6 +150,40 @@ func (c *BuilderListItemFactory) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyBytes sets the "bytes" property.
+// `GBytes` containing the UI definition.
+func (x *BuilderListItemFactory) SetPropertyBytes(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("bytes", &v)
+}
+
+// GetPropertyBytes gets the "bytes" property.
+// `GBytes` containing the UI definition.
+func (x *BuilderListItemFactory) GetPropertyBytes() uintptr {
+	var v gobject.Value
+	x.GetProperty("bytes", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyResource sets the "resource" property.
+// Path of the resource containing the UI definition.
+func (x *BuilderListItemFactory) SetPropertyResource(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("resource", &v)
+}
+
+// GetPropertyResource gets the "resource" property.
+// Path of the resource containing the UI definition.
+func (x *BuilderListItemFactory) GetPropertyResource() string {
+	var v gobject.Value
+	x.GetProperty("resource", &v)
+	return v.GetString()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

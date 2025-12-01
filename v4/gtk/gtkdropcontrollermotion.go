@@ -110,6 +110,36 @@ func (c *DropControllerMotion) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyContainsPointer gets the "contains-pointer" property.
+// Whether the pointer of a Drag-and-Drop operation is in
+// the controller's widget or a descendant.
+//
+// See also [property@Gtk.DropControllerMotion:is-pointer].
+//
+// When handling crossing events, this property is updated
+// before [signal@Gtk.DropControllerMotion::enter], but after
+// [signal@Gtk.DropControllerMotion::leave] is emitted.
+func (x *DropControllerMotion) GetPropertyContainsPointer() bool {
+	var v gobject.Value
+	x.GetProperty("contains-pointer", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsPointer gets the "is-pointer" property.
+// Whether the pointer is in the controllers widget itself,
+// as opposed to in a descendent widget.
+//
+// See also [property@Gtk.DropControllerMotion:contains-pointer].
+//
+// When handling crossing events, this property is updated
+// before [signal@Gtk.DropControllerMotion::enter], but after
+// [signal@Gtk.DropControllerMotion::leave] is emitted.
+func (x *DropControllerMotion) GetPropertyIsPointer() bool {
+	var v gobject.Value
+	x.GetProperty("is-pointer", &v)
+	return v.GetBoolean()
+}
+
 // Signals that the pointer has entered the widget.
 func (x *DropControllerMotion) ConnectEnter(cb *func(DropControllerMotion, float64, float64)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))

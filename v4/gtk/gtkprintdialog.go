@@ -395,6 +395,61 @@ func (c *PrintDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAcceptLabel sets the "accept-label" property.
+// A label that may be shown on the accept button of a print dialog
+// that is presented by [method@Gtk.PrintDialog.setup].
+func (x *PrintDialog) SetPropertyAcceptLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("accept-label", &v)
+}
+
+// GetPropertyAcceptLabel gets the "accept-label" property.
+// A label that may be shown on the accept button of a print dialog
+// that is presented by [method@Gtk.PrintDialog.setup].
+func (x *PrintDialog) GetPropertyAcceptLabel() string {
+	var v gobject.Value
+	x.GetProperty("accept-label", &v)
+	return v.GetString()
+}
+
+// SetPropertyModal sets the "modal" property.
+// Whether the print dialog is modal.
+func (x *PrintDialog) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the print dialog is modal.
+func (x *PrintDialog) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// A title that may be shown on the print dialog that is
+// presented by [method@Gtk.PrintDialog.setup].
+func (x *PrintDialog) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// A title that may be shown on the print dialog that is
+// presented by [method@Gtk.PrintDialog.setup].
+func (x *PrintDialog) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

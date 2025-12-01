@@ -28,7 +28,7 @@ func (x *ShortcutManagerInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideAddController sets the callback function.
+// OverrideAddController sets the "add_controller" callback function.
 // Add a `GtkShortcutController` to be managed.
 func (x *ShortcutManagerInterface) OverrideAddController(cb func(ShortcutManager, *ShortcutController)) {
 	if cb == nil {
@@ -40,7 +40,7 @@ func (x *ShortcutManagerInterface) OverrideAddController(cb func(ShortcutManager
 	}
 }
 
-// GetAddController gets the callback function.
+// GetAddController gets the "add_controller" callback function.
 // Add a `GtkShortcutController` to be managed.
 func (x *ShortcutManagerInterface) GetAddController() func(ShortcutManager, *ShortcutController) {
 	if x.xAddController == 0 {
@@ -53,7 +53,7 @@ func (x *ShortcutManagerInterface) GetAddController() func(ShortcutManager, *Sho
 	}
 }
 
-// OverrideRemoveController sets the callback function.
+// OverrideRemoveController sets the "remove_controller" callback function.
 // Remove a `GtkShortcutController` that had previously
 //
 //	been added
@@ -67,7 +67,7 @@ func (x *ShortcutManagerInterface) OverrideRemoveController(cb func(ShortcutMana
 	}
 }
 
-// GetRemoveController gets the callback function.
+// GetRemoveController gets the "remove_controller" callback function.
 // Remove a `GtkShortcutController` that had previously
 //
 //	been added

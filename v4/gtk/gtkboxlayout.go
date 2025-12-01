@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -154,6 +155,69 @@ func (c *BoxLayout) GoPointer() uintptr {
 
 func (c *BoxLayout) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyBaselineChild sets the "baseline-child" property.
+// The child that determines the baseline of the box
+// in vertical layout.
+//
+// If the child does baseline positioning, then its baseline
+// is lined up with the baseline of the box. If it doesn't, then
+// the bottom edge of the child is used.
+func (x *BoxLayout) SetPropertyBaselineChild(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("baseline-child", &v)
+}
+
+// GetPropertyBaselineChild gets the "baseline-child" property.
+// The child that determines the baseline of the box
+// in vertical layout.
+//
+// If the child does baseline positioning, then its baseline
+// is lined up with the baseline of the box. If it doesn't, then
+// the bottom edge of the child is used.
+func (x *BoxLayout) GetPropertyBaselineChild() int {
+	var v gobject.Value
+	x.GetProperty("baseline-child", &v)
+	return v.GetInt()
+}
+
+// SetPropertyHomogeneous sets the "homogeneous" property.
+// Whether the box layout should distribute the available space
+// equally among the children.
+func (x *BoxLayout) SetPropertyHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("homogeneous", &v)
+}
+
+// GetPropertyHomogeneous gets the "homogeneous" property.
+// Whether the box layout should distribute the available space
+// equally among the children.
+func (x *BoxLayout) GetPropertyHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySpacing sets the "spacing" property.
+// The space to put between the children.
+func (x *BoxLayout) SetPropertySpacing(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("spacing", &v)
+}
+
+// GetPropertySpacing gets the "spacing" property.
+// The space to put between the children.
+func (x *BoxLayout) GetPropertySpacing() int {
+	var v gobject.Value
+	x.GetProperty("spacing", &v)
+	return v.GetInt()
 }
 
 // Retrieves the orientation of the @orientable.

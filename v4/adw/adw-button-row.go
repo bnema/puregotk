@@ -153,6 +153,40 @@ func (c *ButtonRow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEndIconName sets the "end-icon-name" property.
+// The icon name to show after the title.
+func (x *ButtonRow) SetPropertyEndIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("end-icon-name", &v)
+}
+
+// GetPropertyEndIconName gets the "end-icon-name" property.
+// The icon name to show after the title.
+func (x *ButtonRow) GetPropertyEndIconName() string {
+	var v gobject.Value
+	x.GetProperty("end-icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyStartIconName sets the "start-icon-name" property.
+// The icon name to show before the title.
+func (x *ButtonRow) SetPropertyStartIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("start-icon-name", &v)
+}
+
+// GetPropertyStartIconName gets the "start-icon-name" property.
+// The icon name to show before the title.
+func (x *ButtonRow) GetPropertyStartIconName() string {
+	var v gobject.Value
+	x.GetProperty("start-icon-name", &v)
+	return v.GetString()
+}
+
 // This signal is emitted after the row has been activated.
 func (x *ButtonRow) ConnectActivated(cb *func(ButtonRow)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -230,7 +264,7 @@ func (x *ButtonRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ButtonRow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ButtonRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

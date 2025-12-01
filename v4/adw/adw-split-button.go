@@ -362,6 +362,121 @@ func (c *SplitButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCanShrink sets the "can-shrink" property.
+// Whether the button can be smaller than the natural size of its contents.
+//
+// If set to `TRUE`, the label will ellipsize.
+//
+// See [property@Gtk.Button:can-shrink] and
+// [property@Gtk.MenuButton:can-shrink].
+func (x *SplitButton) SetPropertyCanShrink(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-shrink", &v)
+}
+
+// GetPropertyCanShrink gets the "can-shrink" property.
+// Whether the button can be smaller than the natural size of its contents.
+//
+// If set to `TRUE`, the label will ellipsize.
+//
+// See [property@Gtk.Button:can-shrink] and
+// [property@Gtk.MenuButton:can-shrink].
+func (x *SplitButton) GetPropertyCanShrink() bool {
+	var v gobject.Value
+	x.GetProperty("can-shrink", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyDropdownTooltip sets the "dropdown-tooltip" property.
+// The tooltip of the dropdown button.
+//
+// The tooltip can be marked up with the Pango text markup language.
+func (x *SplitButton) SetPropertyDropdownTooltip(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("dropdown-tooltip", &v)
+}
+
+// GetPropertyDropdownTooltip gets the "dropdown-tooltip" property.
+// The tooltip of the dropdown button.
+//
+// The tooltip can be marked up with the Pango text markup language.
+func (x *SplitButton) GetPropertyDropdownTooltip() string {
+	var v gobject.Value
+	x.GetProperty("dropdown-tooltip", &v)
+	return v.GetString()
+}
+
+// SetPropertyIconName sets the "icon-name" property.
+// The name of the icon used to automatically populate the button.
+//
+// Setting the icon name will set [property@SplitButton:label] and
+// [property@SplitButton:child] to `NULL`.
+func (x *SplitButton) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The name of the icon used to automatically populate the button.
+//
+// Setting the icon name will set [property@SplitButton:label] and
+// [property@SplitButton:child] to `NULL`.
+func (x *SplitButton) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyLabel sets the "label" property.
+// The label for the button.
+//
+// Setting the label will set [property@SplitButton:icon-name] and
+// [property@SplitButton:child] to `NULL`.
+func (x *SplitButton) SetPropertyLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("label", &v)
+}
+
+// GetPropertyLabel gets the "label" property.
+// The label for the button.
+//
+// Setting the label will set [property@SplitButton:icon-name] and
+// [property@SplitButton:child] to `NULL`.
+func (x *SplitButton) GetPropertyLabel() string {
+	var v gobject.Value
+	x.GetProperty("label", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// Whether an underline in the text indicates a mnemonic.
+//
+// See [property@SplitButton:label].
+func (x *SplitButton) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// Whether an underline in the text indicates a mnemonic.
+//
+// See [property@SplitButton:label].
+func (x *SplitButton) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to animate press then release.
 //
 // This is an action signal. Applications should never connect to this signal,
@@ -462,7 +577,7 @@ func (x *SplitButton) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *SplitButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *SplitButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

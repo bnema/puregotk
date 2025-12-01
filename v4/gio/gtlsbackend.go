@@ -40,7 +40,7 @@ func (x *TlsBackendInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideSupportsTls sets the callback function.
+// OverrideSupportsTls sets the "supports_tls" callback function.
 // returns whether the backend supports TLS.
 func (x *TlsBackendInterface) OverrideSupportsTls(cb func(TlsBackend) bool) {
 	if cb == nil {
@@ -52,7 +52,7 @@ func (x *TlsBackendInterface) OverrideSupportsTls(cb func(TlsBackend) bool) {
 	}
 }
 
-// GetSupportsTls gets the callback function.
+// GetSupportsTls gets the "supports_tls" callback function.
 // returns whether the backend supports TLS.
 func (x *TlsBackendInterface) GetSupportsTls() func(TlsBackend) bool {
 	if x.xSupportsTls == 0 {
@@ -65,7 +65,7 @@ func (x *TlsBackendInterface) GetSupportsTls() func(TlsBackend) bool {
 	}
 }
 
-// OverrideGetCertificateType sets the callback function.
+// OverrideGetCertificateType sets the "get_certificate_type" callback function.
 // returns the #GTlsCertificate implementation type
 func (x *TlsBackendInterface) OverrideGetCertificateType(cb func() types.GType) {
 	if cb == nil {
@@ -77,7 +77,7 @@ func (x *TlsBackendInterface) OverrideGetCertificateType(cb func() types.GType) 
 	}
 }
 
-// GetGetCertificateType gets the callback function.
+// GetGetCertificateType gets the "get_certificate_type" callback function.
 // returns the #GTlsCertificate implementation type
 func (x *TlsBackendInterface) GetGetCertificateType() func() types.GType {
 	if x.xGetCertificateType == 0 {
@@ -90,7 +90,7 @@ func (x *TlsBackendInterface) GetGetCertificateType() func() types.GType {
 	}
 }
 
-// OverrideGetClientConnectionType sets the callback function.
+// OverrideGetClientConnectionType sets the "get_client_connection_type" callback function.
 // returns the #GTlsClientConnection implementation type
 func (x *TlsBackendInterface) OverrideGetClientConnectionType(cb func() types.GType) {
 	if cb == nil {
@@ -102,7 +102,7 @@ func (x *TlsBackendInterface) OverrideGetClientConnectionType(cb func() types.GT
 	}
 }
 
-// GetGetClientConnectionType gets the callback function.
+// GetGetClientConnectionType gets the "get_client_connection_type" callback function.
 // returns the #GTlsClientConnection implementation type
 func (x *TlsBackendInterface) GetGetClientConnectionType() func() types.GType {
 	if x.xGetClientConnectionType == 0 {
@@ -115,7 +115,7 @@ func (x *TlsBackendInterface) GetGetClientConnectionType() func() types.GType {
 	}
 }
 
-// OverrideGetServerConnectionType sets the callback function.
+// OverrideGetServerConnectionType sets the "get_server_connection_type" callback function.
 // returns the #GTlsServerConnection implementation type
 func (x *TlsBackendInterface) OverrideGetServerConnectionType(cb func() types.GType) {
 	if cb == nil {
@@ -127,7 +127,7 @@ func (x *TlsBackendInterface) OverrideGetServerConnectionType(cb func() types.GT
 	}
 }
 
-// GetGetServerConnectionType gets the callback function.
+// GetGetServerConnectionType gets the "get_server_connection_type" callback function.
 // returns the #GTlsServerConnection implementation type
 func (x *TlsBackendInterface) GetGetServerConnectionType() func() types.GType {
 	if x.xGetServerConnectionType == 0 {
@@ -140,7 +140,7 @@ func (x *TlsBackendInterface) GetGetServerConnectionType() func() types.GType {
 	}
 }
 
-// OverrideGetFileDatabaseType sets the callback function.
+// OverrideGetFileDatabaseType sets the "get_file_database_type" callback function.
 // returns the #GTlsFileDatabase implementation type.
 func (x *TlsBackendInterface) OverrideGetFileDatabaseType(cb func() types.GType) {
 	if cb == nil {
@@ -152,7 +152,7 @@ func (x *TlsBackendInterface) OverrideGetFileDatabaseType(cb func() types.GType)
 	}
 }
 
-// GetGetFileDatabaseType gets the callback function.
+// GetGetFileDatabaseType gets the "get_file_database_type" callback function.
 // returns the #GTlsFileDatabase implementation type.
 func (x *TlsBackendInterface) GetGetFileDatabaseType() func() types.GType {
 	if x.xGetFileDatabaseType == 0 {
@@ -165,7 +165,7 @@ func (x *TlsBackendInterface) GetGetFileDatabaseType() func() types.GType {
 	}
 }
 
-// OverrideGetDefaultDatabase sets the callback function.
+// OverrideGetDefaultDatabase sets the "get_default_database" callback function.
 // returns a default #GTlsDatabase instance.
 func (x *TlsBackendInterface) OverrideGetDefaultDatabase(cb func(TlsBackend) *TlsDatabase) {
 	if cb == nil {
@@ -181,7 +181,7 @@ func (x *TlsBackendInterface) OverrideGetDefaultDatabase(cb func(TlsBackend) *Tl
 	}
 }
 
-// GetGetDefaultDatabase gets the callback function.
+// GetGetDefaultDatabase gets the "get_default_database" callback function.
 // returns a default #GTlsDatabase instance.
 func (x *TlsBackendInterface) GetGetDefaultDatabase() func(TlsBackend) *TlsDatabase {
 	if x.xGetDefaultDatabase == 0 {
@@ -200,7 +200,7 @@ func (x *TlsBackendInterface) GetGetDefaultDatabase() func(TlsBackend) *TlsDatab
 	}
 }
 
-// OverrideSupportsDtls sets the callback function.
+// OverrideSupportsDtls sets the "supports_dtls" callback function.
 // returns whether the backend supports DTLS
 func (x *TlsBackendInterface) OverrideSupportsDtls(cb func(TlsBackend) bool) {
 	if cb == nil {
@@ -212,7 +212,7 @@ func (x *TlsBackendInterface) OverrideSupportsDtls(cb func(TlsBackend) bool) {
 	}
 }
 
-// GetSupportsDtls gets the callback function.
+// GetSupportsDtls gets the "supports_dtls" callback function.
 // returns whether the backend supports DTLS
 func (x *TlsBackendInterface) GetSupportsDtls() func(TlsBackend) bool {
 	if x.xSupportsDtls == 0 {
@@ -225,7 +225,7 @@ func (x *TlsBackendInterface) GetSupportsDtls() func(TlsBackend) bool {
 	}
 }
 
-// OverrideGetDtlsClientConnectionType sets the callback function.
+// OverrideGetDtlsClientConnectionType sets the "get_dtls_client_connection_type" callback function.
 // returns the #GDtlsClientConnection implementation type
 func (x *TlsBackendInterface) OverrideGetDtlsClientConnectionType(cb func() types.GType) {
 	if cb == nil {
@@ -237,7 +237,7 @@ func (x *TlsBackendInterface) OverrideGetDtlsClientConnectionType(cb func() type
 	}
 }
 
-// GetGetDtlsClientConnectionType gets the callback function.
+// GetGetDtlsClientConnectionType gets the "get_dtls_client_connection_type" callback function.
 // returns the #GDtlsClientConnection implementation type
 func (x *TlsBackendInterface) GetGetDtlsClientConnectionType() func() types.GType {
 	if x.xGetDtlsClientConnectionType == 0 {
@@ -250,7 +250,7 @@ func (x *TlsBackendInterface) GetGetDtlsClientConnectionType() func() types.GTyp
 	}
 }
 
-// OverrideGetDtlsServerConnectionType sets the callback function.
+// OverrideGetDtlsServerConnectionType sets the "get_dtls_server_connection_type" callback function.
 // returns the #GDtlsServerConnection implementation type
 func (x *TlsBackendInterface) OverrideGetDtlsServerConnectionType(cb func() types.GType) {
 	if cb == nil {
@@ -262,7 +262,7 @@ func (x *TlsBackendInterface) OverrideGetDtlsServerConnectionType(cb func() type
 	}
 }
 
-// GetGetDtlsServerConnectionType gets the callback function.
+// GetGetDtlsServerConnectionType gets the "get_dtls_server_connection_type" callback function.
 // returns the #GDtlsServerConnection implementation type
 func (x *TlsBackendInterface) GetGetDtlsServerConnectionType() func() types.GType {
 	if x.xGetDtlsServerConnectionType == 0 {

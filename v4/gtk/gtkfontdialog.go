@@ -168,7 +168,7 @@ func (x *FontDialog) ChooseFontAndFeatures(ParentVar *Window, InitialValueVar *p
 
 }
 
-var xFontDialogChooseFontAndFeaturesFinish func(uintptr, uintptr, **pango.FontDescription, string, **pango.Language, **glib.Error) bool
+var xFontDialogChooseFontAndFeaturesFinish func(uintptr, uintptr, **pango.FontDescription, *string, **pango.Language, **glib.Error) bool
 
 // Finishes the [method@Gtk.FontDialog.choose_font_and_features] call.
 //
@@ -177,7 +177,7 @@ var xFontDialogChooseFontAndFeaturesFinish func(uintptr, uintptr, **pango.FontDe
 //
 // Note that this function returns a [error@Gtk.DialogError.DISMISSED]
 // error if the user cancels the dialog.
-func (x *FontDialog) ChooseFontAndFeaturesFinish(ResultVar gio.AsyncResult, FontDescVar **pango.FontDescription, FontFeaturesVar string, LanguageVar **pango.Language) (bool, error) {
+func (x *FontDialog) ChooseFontAndFeaturesFinish(ResultVar gio.AsyncResult, FontDescVar **pango.FontDescription, FontFeaturesVar *string, LanguageVar **pango.Language) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xFontDialogChooseFontAndFeaturesFinish(x.GoPointer(), ResultVar.GoPointer(), FontDescVar, FontFeaturesVar, LanguageVar, &cerr)
@@ -330,6 +330,59 @@ func (c *FontDialog) GoPointer() uintptr {
 
 func (c *FontDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyLanguage sets the "language" property.
+// The language for which the font features are selected.
+func (x *FontDialog) SetPropertyLanguage(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("language", &v)
+}
+
+// GetPropertyLanguage gets the "language" property.
+// The language for which the font features are selected.
+func (x *FontDialog) GetPropertyLanguage() uintptr {
+	var v gobject.Value
+	x.GetProperty("language", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyModal sets the "modal" property.
+// Whether the font chooser dialog is modal.
+func (x *FontDialog) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the font chooser dialog is modal.
+func (x *FontDialog) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// A title that may be shown on the font chooser
+// dialog that is presented by [method@Gtk.FontDialog.choose_font].
+func (x *FontDialog) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// A title that may be shown on the font chooser
+// dialog that is presented by [method@Gtk.FontDialog.choose_font].
+func (x *FontDialog) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
 }
 
 func init() {

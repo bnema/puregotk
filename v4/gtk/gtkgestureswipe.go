@@ -64,14 +64,14 @@ func NewGestureSwipe() *GestureSwipe {
 	return cls
 }
 
-var xGestureSwipeGetVelocity func(uintptr, float64, float64) bool
+var xGestureSwipeGetVelocity func(uintptr, *float64, *float64) bool
 
 // Gets the current velocity.
 //
 // If the gesture is recognized, this function returns %TRUE and fills
 // in @velocity_x and @velocity_y with the recorded velocity, as per the
 // last events processed.
-func (x *GestureSwipe) GetVelocity(VelocityXVar float64, VelocityYVar float64) bool {
+func (x *GestureSwipe) GetVelocity(VelocityXVar *float64, VelocityYVar *float64) bool {
 
 	cret := xGestureSwipeGetVelocity(x.GoPointer(), VelocityXVar, VelocityYVar)
 	return cret

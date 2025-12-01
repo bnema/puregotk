@@ -28,7 +28,7 @@ func (x *ButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideClicked sets the callback function.
+// OverrideClicked sets the "clicked" callback function.
 // Signal emitted when the button has been activated (pressed and released).
 func (x *ButtonClass) OverrideClicked(cb func(*Button)) {
 	if cb == nil {
@@ -40,7 +40,7 @@ func (x *ButtonClass) OverrideClicked(cb func(*Button)) {
 	}
 }
 
-// GetClicked gets the callback function.
+// GetClicked gets the "clicked" callback function.
 // Signal emitted when the button has been activated (pressed and released).
 func (x *ButtonClass) GetClicked() func(*Button) {
 	if x.xClicked == 0 {
@@ -53,7 +53,7 @@ func (x *ButtonClass) GetClicked() func(*Button) {
 	}
 }
 
-// OverrideActivate sets the callback function.
+// OverrideActivate sets the "activate" callback function.
 // Signal that causes the button to animate press then
 //
 //	release. Applications should never connect to this signal, but use
@@ -68,7 +68,7 @@ func (x *ButtonClass) OverrideActivate(cb func(*Button)) {
 	}
 }
 
-// GetActivate gets the callback function.
+// GetActivate gets the "activate" callback function.
 // Signal that causes the button to animate press then
 //
 //	release. Applications should never connect to this signal, but use
@@ -387,6 +387,105 @@ func (c *Button) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCanShrink sets the "can-shrink" property.
+// Whether the size of the button can be made smaller than the natural
+// size of its contents.
+//
+// For text buttons, setting this property will allow ellipsizing the label.
+//
+// If the contents of a button are an icon or a custom widget, setting this
+// property has no effect.
+func (x *Button) SetPropertyCanShrink(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-shrink", &v)
+}
+
+// GetPropertyCanShrink gets the "can-shrink" property.
+// Whether the size of the button can be made smaller than the natural
+// size of its contents.
+//
+// For text buttons, setting this property will allow ellipsizing the label.
+//
+// If the contents of a button are an icon or a custom widget, setting this
+// property has no effect.
+func (x *Button) GetPropertyCanShrink() bool {
+	var v gobject.Value
+	x.GetProperty("can-shrink", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasFrame sets the "has-frame" property.
+// Whether the button has a frame.
+func (x *Button) SetPropertyHasFrame(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-frame", &v)
+}
+
+// GetPropertyHasFrame gets the "has-frame" property.
+// Whether the button has a frame.
+func (x *Button) GetPropertyHasFrame() bool {
+	var v gobject.Value
+	x.GetProperty("has-frame", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIconName sets the "icon-name" property.
+// The name of the icon used to automatically populate the button.
+func (x *Button) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The name of the icon used to automatically populate the button.
+func (x *Button) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyLabel sets the "label" property.
+// Text of the label inside the button, if the button contains a label widget.
+func (x *Button) SetPropertyLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("label", &v)
+}
+
+// GetPropertyLabel gets the "label" property.
+// Text of the label inside the button, if the button contains a label widget.
+func (x *Button) GetPropertyLabel() string {
+	var v gobject.Value
+	x.GetProperty("label", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// If set, an underline in the text indicates that the following character is
+// to be used as mnemonic.
+func (x *Button) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// If set, an underline in the text indicates that the following character is
+// to be used as mnemonic.
+func (x *Button) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to animate press then release.
 //
 // This is an action signal. Applications should never connect
@@ -490,7 +589,7 @@ func (x *Button) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Button) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Button) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

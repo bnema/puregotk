@@ -131,6 +131,31 @@ func (c *Viewport) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyScrollToFocus sets the "scroll-to-focus" property.
+// Whether to scroll when the focus changes.
+//
+// Before 4.6.2, this property was mistakenly defaulting to FALSE, so if your
+// code needs to work with older versions, consider setting it explicitly to
+// TRUE.
+func (x *Viewport) SetPropertyScrollToFocus(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("scroll-to-focus", &v)
+}
+
+// GetPropertyScrollToFocus gets the "scroll-to-focus" property.
+// Whether to scroll when the focus changes.
+//
+// Before 4.6.2, this property was mistakenly defaulting to FALSE, so if your
+// code needs to work with older versions, consider setting it explicitly to
+// TRUE.
+func (x *Viewport) GetPropertyScrollToFocus() bool {
+	var v gobject.Value
+	x.GetProperty("scroll-to-focus", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -188,7 +213,7 @@ func (x *Viewport) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Viewport) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Viewport) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

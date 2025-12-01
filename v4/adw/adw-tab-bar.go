@@ -317,6 +317,120 @@ func (c *TabBar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAutohide sets the "autohide" property.
+// Whether the tabs automatically hide.
+//
+// If set to `TRUE`, the tab bar disappears when [property@TabBar:view] has 0
+// or 1 tab, no pinned tabs, and no tab is being transferred.
+//
+// See [property@TabBar:tabs-revealed].
+func (x *TabBar) SetPropertyAutohide(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("autohide", &v)
+}
+
+// GetPropertyAutohide gets the "autohide" property.
+// Whether the tabs automatically hide.
+//
+// If set to `TRUE`, the tab bar disappears when [property@TabBar:view] has 0
+// or 1 tab, no pinned tabs, and no tab is being transferred.
+//
+// See [property@TabBar:tabs-revealed].
+func (x *TabBar) GetPropertyAutohide() bool {
+	var v gobject.Value
+	x.GetProperty("autohide", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyExpandTabs sets the "expand-tabs" property.
+// Whether tabs expand to full width.
+//
+// If set to `TRUE`, the tabs will always vary width filling the whole width
+// when possible, otherwise tabs will always have the minimum possible size.
+func (x *TabBar) SetPropertyExpandTabs(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("expand-tabs", &v)
+}
+
+// GetPropertyExpandTabs gets the "expand-tabs" property.
+// Whether tabs expand to full width.
+//
+// If set to `TRUE`, the tabs will always vary width filling the whole width
+// when possible, otherwise tabs will always have the minimum possible size.
+func (x *TabBar) GetPropertyExpandTabs() bool {
+	var v gobject.Value
+	x.GetProperty("expand-tabs", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyExtraDragPreload sets the "extra-drag-preload" property.
+// Whether the drop data should be preloaded on hover.
+//
+// See [property@Gtk.DropTarget:preload].
+func (x *TabBar) SetPropertyExtraDragPreload(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("extra-drag-preload", &v)
+}
+
+// GetPropertyExtraDragPreload gets the "extra-drag-preload" property.
+// Whether the drop data should be preloaded on hover.
+//
+// See [property@Gtk.DropTarget:preload].
+func (x *TabBar) GetPropertyExtraDragPreload() bool {
+	var v gobject.Value
+	x.GetProperty("extra-drag-preload", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyInverted sets the "inverted" property.
+// Whether tabs use inverted layout.
+//
+// If set to `TRUE`, non-pinned tabs will have the close button at the
+// beginning and the indicator at the end rather than the opposite.
+func (x *TabBar) SetPropertyInverted(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("inverted", &v)
+}
+
+// GetPropertyInverted gets the "inverted" property.
+// Whether tabs use inverted layout.
+//
+// If set to `TRUE`, non-pinned tabs will have the close button at the
+// beginning and the indicator at the end rather than the opposite.
+func (x *TabBar) GetPropertyInverted() bool {
+	var v gobject.Value
+	x.GetProperty("inverted", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsOverflowing gets the "is-overflowing" property.
+// Whether the tab bar is overflowing.
+//
+// If `TRUE`, all tabs cannot be displayed at once and require scrolling.
+func (x *TabBar) GetPropertyIsOverflowing() bool {
+	var v gobject.Value
+	x.GetProperty("is-overflowing", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyTabsRevealed gets the "tabs-revealed" property.
+// Whether the tabs are currently revealed.
+//
+// See [property@TabBar:autohide].
+func (x *TabBar) GetPropertyTabsRevealed() bool {
+	var v gobject.Value
+	x.GetProperty("tabs-revealed", &v)
+	return v.GetBoolean()
+}
+
 // This signal is emitted when content is dropped onto a tab.
 //
 // The content must be of one of the types set up via
@@ -427,7 +541,7 @@ func (x *TabBar) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *TabBar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *TabBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

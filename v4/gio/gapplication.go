@@ -55,7 +55,7 @@ func (x *ApplicationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideStartup sets the callback function.
+// OverrideStartup sets the "startup" callback function.
 // invoked on the primary instance immediately after registration
 func (x *ApplicationClass) OverrideStartup(cb func(*Application)) {
 	if cb == nil {
@@ -67,7 +67,7 @@ func (x *ApplicationClass) OverrideStartup(cb func(*Application)) {
 	}
 }
 
-// GetStartup gets the callback function.
+// GetStartup gets the "startup" callback function.
 // invoked on the primary instance immediately after registration
 func (x *ApplicationClass) GetStartup() func(*Application) {
 	if x.xStartup == 0 {
@@ -80,7 +80,7 @@ func (x *ApplicationClass) GetStartup() func(*Application) {
 	}
 }
 
-// OverrideActivate sets the callback function.
+// OverrideActivate sets the "activate" callback function.
 // invoked on the primary instance when an activation occurs
 func (x *ApplicationClass) OverrideActivate(cb func(*Application)) {
 	if cb == nil {
@@ -92,7 +92,7 @@ func (x *ApplicationClass) OverrideActivate(cb func(*Application)) {
 	}
 }
 
-// GetActivate gets the callback function.
+// GetActivate gets the "activate" callback function.
 // invoked on the primary instance when an activation occurs
 func (x *ApplicationClass) GetActivate() func(*Application) {
 	if x.xActivate == 0 {
@@ -105,7 +105,7 @@ func (x *ApplicationClass) GetActivate() func(*Application) {
 	}
 }
 
-// OverrideOpen sets the callback function.
+// OverrideOpen sets the "open" callback function.
 // invoked on the primary instance when there are files to open
 func (x *ApplicationClass) OverrideOpen(cb func(*Application, uintptr, int, string)) {
 	if cb == nil {
@@ -117,7 +117,7 @@ func (x *ApplicationClass) OverrideOpen(cb func(*Application, uintptr, int, stri
 	}
 }
 
-// GetOpen gets the callback function.
+// GetOpen gets the "open" callback function.
 // invoked on the primary instance when there are files to open
 func (x *ApplicationClass) GetOpen() func(*Application, uintptr, int, string) {
 	if x.xOpen == 0 {
@@ -130,7 +130,7 @@ func (x *ApplicationClass) GetOpen() func(*Application, uintptr, int, string) {
 	}
 }
 
-// OverrideCommandLine sets the callback function.
+// OverrideCommandLine sets the "command_line" callback function.
 // invoked on the primary instance when a command-line is
 //
 //	not handled locally
@@ -144,7 +144,7 @@ func (x *ApplicationClass) OverrideCommandLine(cb func(*Application, *Applicatio
 	}
 }
 
-// GetCommandLine gets the callback function.
+// GetCommandLine gets the "command_line" callback function.
 // invoked on the primary instance when a command-line is
 //
 //	not handled locally
@@ -159,42 +159,42 @@ func (x *ApplicationClass) GetCommandLine() func(*Application, *ApplicationComma
 	}
 }
 
-// OverrideLocalCommandLine sets the callback function.
+// OverrideLocalCommandLine sets the "local_command_line" callback function.
 // invoked (locally). The virtual function has the chance
 //
 //	to inspect (and possibly replace) command line arguments. See
 //	g_application_run() for more information. Also see the
 //	#GApplication::handle-local-options signal, which is a simpler
 //	alternative to handling some commandline options locally
-func (x *ApplicationClass) OverrideLocalCommandLine(cb func(*Application, []string, int) bool) {
+func (x *ApplicationClass) OverrideLocalCommandLine(cb func(*Application, []string, *int) bool) {
 	if cb == nil {
 		x.xLocalCommandLine = 0
 	} else {
-		x.xLocalCommandLine = purego.NewCallback(func(ApplicationVarp uintptr, ArgumentsVarp []string, ExitStatusVarp int) bool {
+		x.xLocalCommandLine = purego.NewCallback(func(ApplicationVarp uintptr, ArgumentsVarp []string, ExitStatusVarp *int) bool {
 			return cb(ApplicationNewFromInternalPtr(ApplicationVarp), ArgumentsVarp, ExitStatusVarp)
 		})
 	}
 }
 
-// GetLocalCommandLine gets the callback function.
+// GetLocalCommandLine gets the "local_command_line" callback function.
 // invoked (locally). The virtual function has the chance
 //
 //	to inspect (and possibly replace) command line arguments. See
 //	g_application_run() for more information. Also see the
 //	#GApplication::handle-local-options signal, which is a simpler
 //	alternative to handling some commandline options locally
-func (x *ApplicationClass) GetLocalCommandLine() func(*Application, []string, int) bool {
+func (x *ApplicationClass) GetLocalCommandLine() func(*Application, []string, *int) bool {
 	if x.xLocalCommandLine == 0 {
 		return nil
 	}
-	var rawCallback func(ApplicationVarp uintptr, ArgumentsVarp []string, ExitStatusVarp int) bool
+	var rawCallback func(ApplicationVarp uintptr, ArgumentsVarp []string, ExitStatusVarp *int) bool
 	purego.RegisterFunc(&rawCallback, x.xLocalCommandLine)
-	return func(ApplicationVar *Application, ArgumentsVar []string, ExitStatusVar int) bool {
+	return func(ApplicationVar *Application, ArgumentsVar []string, ExitStatusVar *int) bool {
 		return rawCallback(ApplicationVar.GoPointer(), ArgumentsVar, ExitStatusVar)
 	}
 }
 
-// OverrideBeforeEmit sets the callback function.
+// OverrideBeforeEmit sets the "before_emit" callback function.
 // invoked on the primary instance before 'activate', 'open',
 //
 //	'command-line' or any action invocation, gets the 'platform data' from
@@ -209,7 +209,7 @@ func (x *ApplicationClass) OverrideBeforeEmit(cb func(*Application, *glib.Varian
 	}
 }
 
-// GetBeforeEmit gets the callback function.
+// GetBeforeEmit gets the "before_emit" callback function.
 // invoked on the primary instance before 'activate', 'open',
 //
 //	'command-line' or any action invocation, gets the 'platform data' from
@@ -225,7 +225,7 @@ func (x *ApplicationClass) GetBeforeEmit() func(*Application, *glib.Variant) {
 	}
 }
 
-// OverrideAfterEmit sets the callback function.
+// OverrideAfterEmit sets the "after_emit" callback function.
 // invoked on the primary instance after 'activate', 'open',
 //
 //	'command-line' or any action invocation, gets the 'platform data' from
@@ -240,7 +240,7 @@ func (x *ApplicationClass) OverrideAfterEmit(cb func(*Application, *glib.Variant
 	}
 }
 
-// GetAfterEmit gets the callback function.
+// GetAfterEmit gets the "after_emit" callback function.
 // invoked on the primary instance after 'activate', 'open',
 //
 //	'command-line' or any action invocation, gets the 'platform data' from
@@ -256,7 +256,7 @@ func (x *ApplicationClass) GetAfterEmit() func(*Application, *glib.Variant) {
 	}
 }
 
-// OverrideAddPlatformData sets the callback function.
+// OverrideAddPlatformData sets the "add_platform_data" callback function.
 // invoked (locally) to add 'platform data' to be sent to
 //
 //	the primary instance when activating, opening or invoking actions. Must chain up
@@ -270,7 +270,7 @@ func (x *ApplicationClass) OverrideAddPlatformData(cb func(*Application, *glib.V
 	}
 }
 
-// GetAddPlatformData gets the callback function.
+// GetAddPlatformData gets the "add_platform_data" callback function.
 // invoked (locally) to add 'platform data' to be sent to
 //
 //	the primary instance when activating, opening or invoking actions. Must chain up
@@ -285,7 +285,7 @@ func (x *ApplicationClass) GetAddPlatformData() func(*Application, *glib.Variant
 	}
 }
 
-// OverrideQuitMainloop sets the callback function.
+// OverrideQuitMainloop sets the "quit_mainloop" callback function.
 // Used to be invoked on the primary instance when the use
 //
 //	count of the application drops to zero (and after any inactivity
@@ -300,7 +300,7 @@ func (x *ApplicationClass) OverrideQuitMainloop(cb func(*Application)) {
 	}
 }
 
-// GetQuitMainloop gets the callback function.
+// GetQuitMainloop gets the "quit_mainloop" callback function.
 // Used to be invoked on the primary instance when the use
 //
 //	count of the application drops to zero (and after any inactivity
@@ -316,7 +316,7 @@ func (x *ApplicationClass) GetQuitMainloop() func(*Application) {
 	}
 }
 
-// OverrideRunMainloop sets the callback function.
+// OverrideRunMainloop sets the "run_mainloop" callback function.
 // Used to be invoked on the primary instance from
 //
 //	g_application_run() if the use-count is non-zero. Since 2.32,
@@ -332,7 +332,7 @@ func (x *ApplicationClass) OverrideRunMainloop(cb func(*Application)) {
 	}
 }
 
-// GetRunMainloop gets the callback function.
+// GetRunMainloop gets the "run_mainloop" callback function.
 // Used to be invoked on the primary instance from
 //
 //	g_application_run() if the use-count is non-zero. Since 2.32,
@@ -349,7 +349,7 @@ func (x *ApplicationClass) GetRunMainloop() func(*Application) {
 	}
 }
 
-// OverrideShutdown sets the callback function.
+// OverrideShutdown sets the "shutdown" callback function.
 // invoked only on the registered primary instance immediately
 //
 //	after the main loop terminates
@@ -363,7 +363,7 @@ func (x *ApplicationClass) OverrideShutdown(cb func(*Application)) {
 	}
 }
 
-// GetShutdown gets the callback function.
+// GetShutdown gets the "shutdown" callback function.
 // invoked only on the registered primary instance immediately
 //
 //	after the main loop terminates
@@ -378,7 +378,7 @@ func (x *ApplicationClass) GetShutdown() func(*Application) {
 	}
 }
 
-// OverrideDbusRegister sets the callback function.
+// OverrideDbusRegister sets the "dbus_register" callback function.
 // invoked locally during registration, if the application is
 //
 //	using its D-Bus backend. You can use this to export extra objects on the
@@ -397,7 +397,7 @@ func (x *ApplicationClass) OverrideDbusRegister(cb func(*Application, *DBusConne
 	}
 }
 
-// GetDbusRegister gets the callback function.
+// GetDbusRegister gets the "dbus_register" callback function.
 // invoked locally during registration, if the application is
 //
 //	using its D-Bus backend. You can use this to export extra objects on the
@@ -417,7 +417,7 @@ func (x *ApplicationClass) GetDbusRegister() func(*Application, *DBusConnection,
 	}
 }
 
-// OverrideDbusUnregister sets the callback function.
+// OverrideDbusUnregister sets the "dbus_unregister" callback function.
 // invoked locally during unregistration, if the application
 //
 //	is using its D-Bus backend. Use this to undo anything done by
@@ -432,7 +432,7 @@ func (x *ApplicationClass) OverrideDbusUnregister(cb func(*Application, *DBusCon
 	}
 }
 
-// GetDbusUnregister gets the callback function.
+// GetDbusUnregister gets the "dbus_unregister" callback function.
 // invoked locally during unregistration, if the application
 //
 //	is using its D-Bus backend. Use this to undo anything done by
@@ -448,7 +448,7 @@ func (x *ApplicationClass) GetDbusUnregister() func(*Application, *DBusConnectio
 	}
 }
 
-// OverrideHandleLocalOptions sets the callback function.
+// OverrideHandleLocalOptions sets the "handle_local_options" callback function.
 // invoked locally after the parsing of the commandline
 //
 //	options has occurred. Since: 2.40
@@ -462,7 +462,7 @@ func (x *ApplicationClass) OverrideHandleLocalOptions(cb func(*Application, *gli
 	}
 }
 
-// GetHandleLocalOptions gets the callback function.
+// GetHandleLocalOptions gets the "handle_local_options" callback function.
 // invoked locally after the parsing of the commandline
 //
 //	options has occurred. Since: 2.40
@@ -477,7 +477,7 @@ func (x *ApplicationClass) GetHandleLocalOptions() func(*Application, *glib.Vari
 	}
 }
 
-// OverrideNameLost sets the callback function.
+// OverrideNameLost sets the "name_lost" callback function.
 // invoked when another instance is taking over the name. Since: 2.60
 func (x *ApplicationClass) OverrideNameLost(cb func(*Application) bool) {
 	if cb == nil {
@@ -489,7 +489,7 @@ func (x *ApplicationClass) OverrideNameLost(cb func(*Application) bool) {
 	}
 }
 
-// GetNameLost gets the callback function.
+// GetNameLost gets the "name_lost" callback function.
 // invoked when another instance is taking over the name. Since: 2.60
 func (x *ApplicationClass) GetNameLost() func(*Application) bool {
 	if x.xNameLost == 0 {
@@ -1432,6 +1432,99 @@ func (c *Application) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyApplicationId sets the "application-id" property.
+// The unique identifier for the application.
+func (x *Application) SetPropertyApplicationId(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("application-id", &v)
+}
+
+// GetPropertyApplicationId gets the "application-id" property.
+// The unique identifier for the application.
+func (x *Application) GetPropertyApplicationId() string {
+	var v gobject.Value
+	x.GetProperty("application-id", &v)
+	return v.GetString()
+}
+
+// SetPropertyInactivityTimeout sets the "inactivity-timeout" property.
+// Time (in milliseconds) to stay alive after becoming idle.
+func (x *Application) SetPropertyInactivityTimeout(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("inactivity-timeout", &v)
+}
+
+// GetPropertyInactivityTimeout gets the "inactivity-timeout" property.
+// Time (in milliseconds) to stay alive after becoming idle.
+func (x *Application) GetPropertyInactivityTimeout() uint {
+	var v gobject.Value
+	x.GetProperty("inactivity-timeout", &v)
+	return v.GetUint()
+}
+
+// GetPropertyIsBusy gets the "is-busy" property.
+// Whether the application is currently marked as busy through
+// g_application_mark_busy() or g_application_bind_busy_property().
+func (x *Application) GetPropertyIsBusy() bool {
+	var v gobject.Value
+	x.GetProperty("is-busy", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsRegistered gets the "is-registered" property.
+// Whether [method@Gio.Application.register] has been called.
+func (x *Application) GetPropertyIsRegistered() bool {
+	var v gobject.Value
+	x.GetProperty("is-registered", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsRemote gets the "is-remote" property.
+// Whether this application instance is remote.
+func (x *Application) GetPropertyIsRemote() bool {
+	var v gobject.Value
+	x.GetProperty("is-remote", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyResourceBasePath sets the "resource-base-path" property.
+// The base resource path for the application.
+func (x *Application) SetPropertyResourceBasePath(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("resource-base-path", &v)
+}
+
+// GetPropertyResourceBasePath gets the "resource-base-path" property.
+// The base resource path for the application.
+func (x *Application) GetPropertyResourceBasePath() string {
+	var v gobject.Value
+	x.GetProperty("resource-base-path", &v)
+	return v.GetString()
+}
+
+// SetPropertyVersion sets the "version" property.
+// The human-readable version number of the application.
+func (x *Application) SetPropertyVersion(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("version", &v)
+}
+
+// GetPropertyVersion gets the "version" property.
+// The human-readable version number of the application.
+func (x *Application) GetPropertyVersion() string {
+	var v gobject.Value
+	x.GetProperty("version", &v)
+	return v.GetString()
+}
+
 // The ::activate signal is emitted on the primary instance when an
 // activation occurs. See g_application_activate().
 func (x *Application) ConnectActivate(cb *func(Application)) uint32 {
@@ -1847,7 +1940,7 @@ func (x *Application) ListActions() []string {
 // fields (as indicated by having a non-`NULL` reference passed in) are
 // filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
-func (x *Application) QueryAction(ActionNameVar string, EnabledVar bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
+func (x *Application) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
 	return cret

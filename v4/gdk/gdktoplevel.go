@@ -8,6 +8,7 @@ import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -316,6 +317,148 @@ func (x *ToplevelBase) TitlebarGesture(GestureVar TitlebarGesture) bool {
 
 	cret := XGdkToplevelTitlebarGesture(x.GoPointer(), GestureVar)
 	return cret
+}
+
+// SetPropertyDecorated sets the "decorated" property.
+// Whether the window manager should add decorations.
+func (x *ToplevelBase) SetPropertyDecorated(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("decorated", &v)
+}
+
+// GetPropertyDecorated gets the "decorated" property.
+// Whether the window manager should add decorations.
+func (x *ToplevelBase) GetPropertyDecorated() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("decorated", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyDeletable sets the "deletable" property.
+// Whether the window manager should allow to close the surface.
+func (x *ToplevelBase) SetPropertyDeletable(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("deletable", &v)
+}
+
+// GetPropertyDeletable gets the "deletable" property.
+// Whether the window manager should allow to close the surface.
+func (x *ToplevelBase) GetPropertyDeletable() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("deletable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIconList sets the "icon-list" property.
+// A list of textures to use as icon.
+func (x *ToplevelBase) SetPropertyIconList(value uintptr) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	obj.SetProperty("icon-list", &v)
+}
+
+// GetPropertyIconList gets the "icon-list" property.
+// A list of textures to use as icon.
+func (x *ToplevelBase) GetPropertyIconList() uintptr {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("icon-list", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyModal sets the "modal" property.
+// Whether the surface is modal.
+func (x *ToplevelBase) SetPropertyModal(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the surface is modal.
+func (x *ToplevelBase) GetPropertyModal() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyShortcutsInhibited gets the "shortcuts-inhibited" property.
+// Whether the surface should inhibit keyboard shortcuts.
+func (x *ToplevelBase) GetPropertyShortcutsInhibited() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("shortcuts-inhibited", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyStartupId sets the "startup-id" property.
+// The startup ID of the surface.
+//
+// See [class@Gdk.AppLaunchContext] for more information about
+// startup feedback.
+func (x *ToplevelBase) SetPropertyStartupId(value string) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	obj.SetProperty("startup-id", &v)
+}
+
+// GetPropertyStartupId gets the "startup-id" property.
+// The startup ID of the surface.
+//
+// See [class@Gdk.AppLaunchContext] for more information about
+// startup feedback.
+func (x *ToplevelBase) GetPropertyStartupId() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("startup-id", &v)
+	return v.GetString()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the surface.
+func (x *ToplevelBase) SetPropertyTitle(value string) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	obj.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the surface.
+func (x *ToplevelBase) GetPropertyTitle() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("title", &v)
+	return v.GetString()
 }
 
 var XGdkToplevelBeginMove func(uintptr, uintptr, int, float64, float64, uint32)

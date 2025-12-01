@@ -95,10 +95,10 @@ func (x *PrintJob) GetNumCopies() int {
 	return cret
 }
 
-var xPrintJobGetPageRanges func(uintptr, int) uintptr
+var xPrintJobGetPageRanges func(uintptr, *int) uintptr
 
 // Gets the page ranges for this job.
-func (x *PrintJob) GetPageRanges(NRangesVar int) uintptr {
+func (x *PrintJob) GetPageRanges(NRangesVar *int) uintptr {
 
 	cret := xPrintJobGetPageRanges(x.GoPointer(), NRangesVar)
 	return cret
@@ -397,6 +397,42 @@ func (c *PrintJob) GoPointer() uintptr {
 
 func (c *PrintJob) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the print job.
+func (x *PrintJob) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the print job.
+func (x *PrintJob) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyTrackPrintStatus sets the "track-print-status" property.
+// %TRUE if the print job will continue to emit status-changed
+// signals after the print data has been setn to the printer.
+func (x *PrintJob) SetPropertyTrackPrintStatus(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("track-print-status", &v)
+}
+
+// GetPropertyTrackPrintStatus gets the "track-print-status" property.
+// %TRUE if the print job will continue to emit status-changed
+// signals after the print data has been setn to the printer.
+func (x *PrintJob) GetPropertyTrackPrintStatus() bool {
+	var v gobject.Value
+	x.GetProperty("track-print-status", &v)
+	return v.GetBoolean()
 }
 
 // Emitted when the status of a job changes.

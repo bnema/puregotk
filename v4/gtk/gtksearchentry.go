@@ -228,6 +228,61 @@ func (c *SearchEntry) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActivatesDefault sets the "activates-default" property.
+// Whether to activate the default widget when Enter is pressed.
+func (x *SearchEntry) SetPropertyActivatesDefault(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activates-default", &v)
+}
+
+// GetPropertyActivatesDefault gets the "activates-default" property.
+// Whether to activate the default widget when Enter is pressed.
+func (x *SearchEntry) GetPropertyActivatesDefault() bool {
+	var v gobject.Value
+	x.GetProperty("activates-default", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPlaceholderText sets the "placeholder-text" property.
+// The text that will be displayed in the `GtkSearchEntry`
+// when it is empty and unfocused.
+func (x *SearchEntry) SetPropertyPlaceholderText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("placeholder-text", &v)
+}
+
+// GetPropertyPlaceholderText gets the "placeholder-text" property.
+// The text that will be displayed in the `GtkSearchEntry`
+// when it is empty and unfocused.
+func (x *SearchEntry) GetPropertyPlaceholderText() string {
+	var v gobject.Value
+	x.GetProperty("placeholder-text", &v)
+	return v.GetString()
+}
+
+// SetPropertySearchDelay sets the "search-delay" property.
+// The delay in milliseconds from last keypress to the search
+// changed signal.
+func (x *SearchEntry) SetPropertySearchDelay(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("search-delay", &v)
+}
+
+// GetPropertySearchDelay gets the "search-delay" property.
+// The delay in milliseconds from last keypress to the search
+// changed signal.
+func (x *SearchEntry) GetPropertySearchDelay() uint {
+	var v gobject.Value
+	x.GetProperty("search-delay", &v)
+	return v.GetUint()
+}
+
 // Emitted when the entry is activated.
 //
 // The keybindings for this signal are all forms of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
@@ -433,7 +488,7 @@ func (x *SearchEntry) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *SearchEntry) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *SearchEntry) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -806,7 +861,7 @@ func (x *SearchEntry) GetPosition() int {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *SearchEntry) GetSelectionBounds(StartPosVar int, EndPosVar int) bool {
+func (x *SearchEntry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret

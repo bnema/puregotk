@@ -43,7 +43,7 @@ func (x *SorterClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideCompare sets the callback function.
+// OverrideCompare sets the "compare" callback function.
 // Compare two items. See gtk_sorter_compare() for details.
 func (x *SorterClass) OverrideCompare(cb func(*Sorter, *gobject.Object, *gobject.Object) Ordering) {
 	if cb == nil {
@@ -55,7 +55,7 @@ func (x *SorterClass) OverrideCompare(cb func(*Sorter, *gobject.Object, *gobject
 	}
 }
 
-// GetCompare gets the callback function.
+// GetCompare gets the "compare" callback function.
 // Compare two items. See gtk_sorter_compare() for details.
 func (x *SorterClass) GetCompare() func(*Sorter, *gobject.Object, *gobject.Object) Ordering {
 	if x.xCompare == 0 {
@@ -68,7 +68,7 @@ func (x *SorterClass) GetCompare() func(*Sorter, *gobject.Object, *gobject.Objec
 	}
 }
 
-// OverrideGetOrder sets the callback function.
+// OverrideGetOrder sets the "get_order" callback function.
 // Get the `GtkSorderOrder` that applies to the current sorter.
 //
 //	If unimplemented, it returns %GTK_SORTER_ORDER_PARTIAL.
@@ -82,7 +82,7 @@ func (x *SorterClass) OverrideGetOrder(cb func(*Sorter) SorterOrder) {
 	}
 }
 
-// GetGetOrder gets the callback function.
+// GetGetOrder gets the "get_order" callback function.
 // Get the `GtkSorderOrder` that applies to the current sorter.
 //
 //	If unimplemented, it returns %GTK_SORTER_ORDER_PARTIAL.
@@ -97,7 +97,7 @@ func (x *SorterClass) GetGetOrder() func(*Sorter) SorterOrder {
 	}
 }
 
-// OverrideGtkReserved1 sets the callback function.
+// OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *SorterClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {
 		x.xGtkReserved1 = 0
@@ -108,7 +108,7 @@ func (x *SorterClass) OverrideGtkReserved1(cb func()) {
 	}
 }
 
-// GetGtkReserved1 gets the callback function.
+// GetGtkReserved1 gets the "_gtk_reserved1" callback function.
 func (x *SorterClass) GetGtkReserved1() func() {
 	if x.xGtkReserved1 == 0 {
 		return nil
@@ -120,7 +120,7 @@ func (x *SorterClass) GetGtkReserved1() func() {
 	}
 }
 
-// OverrideGtkReserved2 sets the callback function.
+// OverrideGtkReserved2 sets the "_gtk_reserved2" callback function.
 func (x *SorterClass) OverrideGtkReserved2(cb func()) {
 	if cb == nil {
 		x.xGtkReserved2 = 0
@@ -131,7 +131,7 @@ func (x *SorterClass) OverrideGtkReserved2(cb func()) {
 	}
 }
 
-// GetGtkReserved2 gets the callback function.
+// GetGtkReserved2 gets the "_gtk_reserved2" callback function.
 func (x *SorterClass) GetGtkReserved2() func() {
 	if x.xGtkReserved2 == 0 {
 		return nil
@@ -143,7 +143,7 @@ func (x *SorterClass) GetGtkReserved2() func() {
 	}
 }
 
-// OverrideGtkReserved3 sets the callback function.
+// OverrideGtkReserved3 sets the "_gtk_reserved3" callback function.
 func (x *SorterClass) OverrideGtkReserved3(cb func()) {
 	if cb == nil {
 		x.xGtkReserved3 = 0
@@ -154,7 +154,7 @@ func (x *SorterClass) OverrideGtkReserved3(cb func()) {
 	}
 }
 
-// GetGtkReserved3 gets the callback function.
+// GetGtkReserved3 gets the "_gtk_reserved3" callback function.
 func (x *SorterClass) GetGtkReserved3() func() {
 	if x.xGtkReserved3 == 0 {
 		return nil
@@ -166,7 +166,7 @@ func (x *SorterClass) GetGtkReserved3() func() {
 	}
 }
 
-// OverrideGtkReserved4 sets the callback function.
+// OverrideGtkReserved4 sets the "_gtk_reserved4" callback function.
 func (x *SorterClass) OverrideGtkReserved4(cb func()) {
 	if cb == nil {
 		x.xGtkReserved4 = 0
@@ -177,7 +177,7 @@ func (x *SorterClass) OverrideGtkReserved4(cb func()) {
 	}
 }
 
-// GetGtkReserved4 gets the callback function.
+// GetGtkReserved4 gets the "_gtk_reserved4" callback function.
 func (x *SorterClass) GetGtkReserved4() func() {
 	if x.xGtkReserved4 == 0 {
 		return nil
@@ -189,7 +189,7 @@ func (x *SorterClass) GetGtkReserved4() func() {
 	}
 }
 
-// OverrideGtkReserved5 sets the callback function.
+// OverrideGtkReserved5 sets the "_gtk_reserved5" callback function.
 func (x *SorterClass) OverrideGtkReserved5(cb func()) {
 	if cb == nil {
 		x.xGtkReserved5 = 0
@@ -200,7 +200,7 @@ func (x *SorterClass) OverrideGtkReserved5(cb func()) {
 	}
 }
 
-// GetGtkReserved5 gets the callback function.
+// GetGtkReserved5 gets the "_gtk_reserved5" callback function.
 func (x *SorterClass) GetGtkReserved5() func() {
 	if x.xGtkReserved5 == 0 {
 		return nil
@@ -212,7 +212,7 @@ func (x *SorterClass) GetGtkReserved5() func() {
 	}
 }
 
-// OverrideGtkReserved6 sets the callback function.
+// OverrideGtkReserved6 sets the "_gtk_reserved6" callback function.
 func (x *SorterClass) OverrideGtkReserved6(cb func()) {
 	if cb == nil {
 		x.xGtkReserved6 = 0
@@ -223,7 +223,7 @@ func (x *SorterClass) OverrideGtkReserved6(cb func()) {
 	}
 }
 
-// GetGtkReserved6 gets the callback function.
+// GetGtkReserved6 gets the "_gtk_reserved6" callback function.
 func (x *SorterClass) GetGtkReserved6() func() {
 	if x.xGtkReserved6 == 0 {
 		return nil
@@ -235,7 +235,7 @@ func (x *SorterClass) GetGtkReserved6() func() {
 	}
 }
 
-// OverrideGtkReserved7 sets the callback function.
+// OverrideGtkReserved7 sets the "_gtk_reserved7" callback function.
 func (x *SorterClass) OverrideGtkReserved7(cb func()) {
 	if cb == nil {
 		x.xGtkReserved7 = 0
@@ -246,7 +246,7 @@ func (x *SorterClass) OverrideGtkReserved7(cb func()) {
 	}
 }
 
-// GetGtkReserved7 gets the callback function.
+// GetGtkReserved7 gets the "_gtk_reserved7" callback function.
 func (x *SorterClass) GetGtkReserved7() func() {
 	if x.xGtkReserved7 == 0 {
 		return nil
@@ -258,7 +258,7 @@ func (x *SorterClass) GetGtkReserved7() func() {
 	}
 }
 
-// OverrideGtkReserved8 sets the callback function.
+// OverrideGtkReserved8 sets the "_gtk_reserved8" callback function.
 func (x *SorterClass) OverrideGtkReserved8(cb func()) {
 	if cb == nil {
 		x.xGtkReserved8 = 0
@@ -269,7 +269,7 @@ func (x *SorterClass) OverrideGtkReserved8(cb func()) {
 	}
 }
 
-// GetGtkReserved8 gets the callback function.
+// GetGtkReserved8 gets the "_gtk_reserved8" callback function.
 func (x *SorterClass) GetGtkReserved8() func() {
 	if x.xGtkReserved8 == 0 {
 		return nil

@@ -8,6 +8,7 @@ import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -31,7 +32,7 @@ func (x *ColorChooserInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetRgba sets the callback function.
+// OverrideGetRgba sets the "get_rgba" callback function.
 func (x *ColorChooserInterface) OverrideGetRgba(cb func(ColorChooser, *gdk.RGBA)) {
 	if cb == nil {
 		x.xGetRgba = 0
@@ -42,7 +43,7 @@ func (x *ColorChooserInterface) OverrideGetRgba(cb func(ColorChooser, *gdk.RGBA)
 	}
 }
 
-// GetGetRgba gets the callback function.
+// GetGetRgba gets the "get_rgba" callback function.
 func (x *ColorChooserInterface) GetGetRgba() func(ColorChooser, *gdk.RGBA) {
 	if x.xGetRgba == 0 {
 		return nil
@@ -54,7 +55,7 @@ func (x *ColorChooserInterface) GetGetRgba() func(ColorChooser, *gdk.RGBA) {
 	}
 }
 
-// OverrideSetRgba sets the callback function.
+// OverrideSetRgba sets the "set_rgba" callback function.
 func (x *ColorChooserInterface) OverrideSetRgba(cb func(ColorChooser, *gdk.RGBA)) {
 	if cb == nil {
 		x.xSetRgba = 0
@@ -65,7 +66,7 @@ func (x *ColorChooserInterface) OverrideSetRgba(cb func(ColorChooser, *gdk.RGBA)
 	}
 }
 
-// GetSetRgba gets the callback function.
+// GetSetRgba gets the "set_rgba" callback function.
 func (x *ColorChooserInterface) GetSetRgba() func(ColorChooser, *gdk.RGBA) {
 	if x.xSetRgba == 0 {
 		return nil
@@ -77,7 +78,7 @@ func (x *ColorChooserInterface) GetSetRgba() func(ColorChooser, *gdk.RGBA) {
 	}
 }
 
-// OverrideAddPalette sets the callback function.
+// OverrideAddPalette sets the "add_palette" callback function.
 func (x *ColorChooserInterface) OverrideAddPalette(cb func(ColorChooser, Orientation, int, int, []gdk.RGBA)) {
 	if cb == nil {
 		x.xAddPalette = 0
@@ -88,7 +89,7 @@ func (x *ColorChooserInterface) OverrideAddPalette(cb func(ColorChooser, Orienta
 	}
 }
 
-// GetAddPalette gets the callback function.
+// GetAddPalette gets the "add_palette" callback function.
 func (x *ColorChooserInterface) GetAddPalette() func(ColorChooser, Orientation, int, int, []gdk.RGBA) {
 	if x.xAddPalette == 0 {
 		return nil
@@ -100,7 +101,7 @@ func (x *ColorChooserInterface) GetAddPalette() func(ColorChooser, Orientation, 
 	}
 }
 
-// OverrideColorActivated sets the callback function.
+// OverrideColorActivated sets the "color_activated" callback function.
 func (x *ColorChooserInterface) OverrideColorActivated(cb func(ColorChooser, *gdk.RGBA)) {
 	if cb == nil {
 		x.xColorActivated = 0
@@ -111,7 +112,7 @@ func (x *ColorChooserInterface) OverrideColorActivated(cb func(ColorChooser, *gd
 	}
 }
 
-// GetColorActivated gets the callback function.
+// GetColorActivated gets the "color_activated" callback function.
 func (x *ColorChooserInterface) GetColorActivated() func(ColorChooser, *gdk.RGBA) {
 	if x.xColorActivated == 0 {
 		return nil
@@ -211,6 +212,68 @@ func (x *ColorChooserBase) SetUseAlpha(UseAlphaVar bool) {
 
 	XGtkColorChooserSetUseAlpha(x.GoPointer(), UseAlphaVar)
 
+}
+
+// SetPropertyRgba sets the "rgba" property.
+// The currently selected color, as a `GdkRGBA` struct.
+//
+// The property can be set to change the current selection
+// programmatically.
+func (x *ColorChooserBase) SetPropertyRgba(value uintptr) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	obj.SetProperty("rgba", &v)
+}
+
+// GetPropertyRgba gets the "rgba" property.
+// The currently selected color, as a `GdkRGBA` struct.
+//
+// The property can be set to change the current selection
+// programmatically.
+func (x *ColorChooserBase) GetPropertyRgba() uintptr {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("rgba", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyUseAlpha sets the "use-alpha" property.
+// Whether colors may have alpha (translucency).
+//
+// When ::use-alpha is %FALSE, the `GdkRGBA` struct obtained
+// via the [property@Gtk.ColorChooser:rgba] property will be
+// forced to have alpha == 1.
+//
+// Implementations are expected to show alpha by rendering the color
+// over a non-uniform background (like a checkerboard pattern).
+func (x *ColorChooserBase) SetPropertyUseAlpha(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("use-alpha", &v)
+}
+
+// GetPropertyUseAlpha gets the "use-alpha" property.
+// Whether colors may have alpha (translucency).
+//
+// When ::use-alpha is %FALSE, the `GdkRGBA` struct obtained
+// via the [property@Gtk.ColorChooser:rgba] property will be
+// forced to have alpha == 1.
+//
+// Implementations are expected to show alpha by rendering the color
+// over a non-uniform background (like a checkerboard pattern).
+func (x *ColorChooserBase) GetPropertyUseAlpha() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("use-alpha", &v)
+	return v.GetBoolean()
 }
 
 var XGtkColorChooserAddPalette func(uintptr, Orientation, int, int, []gdk.RGBA)

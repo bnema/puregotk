@@ -94,13 +94,13 @@ func NewFixed() *Fixed {
 	return cls
 }
 
-var xFixedGetChildPosition func(uintptr, uintptr, float64, float64)
+var xFixedGetChildPosition func(uintptr, uintptr, *float64, *float64)
 
 // Retrieves the translation transformation of the
 // given child `GtkWidget` in the `GtkFixed`.
 //
 // See also: [method@Gtk.Fixed.get_child_transform].
-func (x *Fixed) GetChildPosition(WidgetVar *Widget, XVar float64, YVar float64) {
+func (x *Fixed) GetChildPosition(WidgetVar *Widget, XVar *float64, YVar *float64) {
 
 	xFixedGetChildPosition(x.GoPointer(), WidgetVar.GoPointer(), XVar, YVar)
 
@@ -225,7 +225,7 @@ func (x *Fixed) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Fixed) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Fixed) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

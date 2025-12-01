@@ -205,6 +205,35 @@ func (c *ApplicationWindow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyShowMenubar sets the "show-menubar" property.
+// If this property is true, the window will display a menubar
+// unless it is shown by the desktop shell.
+//
+// See [method@Gtk.Application.set_menubar].
+//
+// If false, the window will not display a menubar, regardless
+// of whether the desktop shell is showing it or not.
+func (x *ApplicationWindow) SetPropertyShowMenubar(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-menubar", &v)
+}
+
+// GetPropertyShowMenubar gets the "show-menubar" property.
+// If this property is true, the window will display a menubar
+// unless it is shown by the desktop shell.
+//
+// See [method@Gtk.Application.set_menubar].
+//
+// If false, the window will not display a menubar, regardless
+// of whether the desktop shell is showing it or not.
+func (x *ApplicationWindow) GetPropertyShowMenubar() bool {
+	var v gobject.Value
+	x.GetProperty("show-menubar", &v)
+	return v.GetBoolean()
+}
+
 // Emits the [signal@Gio.ActionGroup::action-added] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
@@ -430,7 +459,7 @@ func (x *ApplicationWindow) ListActions() []string {
 // fields (as indicated by having a non-`NULL` reference passed in) are
 // filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
-func (x *ApplicationWindow) QueryAction(ActionNameVar string, EnabledVar bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
+func (x *ApplicationWindow) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := gio.XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
 	return cret
@@ -611,7 +640,7 @@ func (x *ApplicationWindow) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ApplicationWindow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ApplicationWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -866,7 +895,7 @@ func (x *ApplicationWindow) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *ApplicationWindow) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *ApplicationWindow) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

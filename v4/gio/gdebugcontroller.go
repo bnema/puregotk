@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -77,6 +78,29 @@ func (x *DebugControllerBase) SetDebugEnabled(DebugEnabledVar bool) {
 
 	XGDebugControllerSetDebugEnabled(x.GoPointer(), DebugEnabledVar)
 
+}
+
+// SetPropertyDebugEnabled sets the "debug-enabled" property.
+// %TRUE if debug output should be exposed (for example by forwarding it to
+// the journal), %FALSE otherwise.
+func (x *DebugControllerBase) SetPropertyDebugEnabled(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("debug-enabled", &v)
+}
+
+// GetPropertyDebugEnabled gets the "debug-enabled" property.
+// %TRUE if debug output should be exposed (for example by forwarding it to
+// the journal), %FALSE otherwise.
+func (x *DebugControllerBase) GetPropertyDebugEnabled() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("debug-enabled", &v)
+	return v.GetBoolean()
 }
 
 var XGDebugControllerGetDebugEnabled func(uintptr) bool

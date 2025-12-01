@@ -28,7 +28,7 @@ func (x *CheckButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideToggled sets the callback function.
+// OverrideToggled sets the "toggled" callback function.
 func (x *CheckButtonClass) OverrideToggled(cb func(*CheckButton)) {
 	if cb == nil {
 		x.xToggled = 0
@@ -39,7 +39,7 @@ func (x *CheckButtonClass) OverrideToggled(cb func(*CheckButton)) {
 	}
 }
 
-// GetToggled gets the callback function.
+// GetToggled gets the "toggled" callback function.
 func (x *CheckButtonClass) GetToggled() func(*CheckButton) {
 	if x.xToggled == 0 {
 		return nil
@@ -51,7 +51,7 @@ func (x *CheckButtonClass) GetToggled() func(*CheckButton) {
 	}
 }
 
-// OverrideActivate sets the callback function.
+// OverrideActivate sets the "activate" callback function.
 func (x *CheckButtonClass) OverrideActivate(cb func(*CheckButton)) {
 	if cb == nil {
 		x.xActivate = 0
@@ -62,7 +62,7 @@ func (x *CheckButtonClass) OverrideActivate(cb func(*CheckButton)) {
 	}
 }
 
-// GetActivate gets the callback function.
+// GetActivate gets the "activate" callback function.
 func (x *CheckButtonClass) GetActivate() func(*CheckButton) {
 	if x.xActivate == 0 {
 		return nil
@@ -363,6 +363,88 @@ func (c *CheckButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActive sets the "active" property.
+// If the check button is active.
+//
+// Setting `active` to %TRUE will add the `:checked:` state to both
+// the check button and the indicator CSS node.
+func (x *CheckButton) SetPropertyActive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("active", &v)
+}
+
+// GetPropertyActive gets the "active" property.
+// If the check button is active.
+//
+// Setting `active` to %TRUE will add the `:checked:` state to both
+// the check button and the indicator CSS node.
+func (x *CheckButton) GetPropertyActive() bool {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyInconsistent sets the "inconsistent" property.
+// If the check button is in an “in between” state.
+//
+// The inconsistent state only affects visual appearance,
+// not the semantics of the button.
+func (x *CheckButton) SetPropertyInconsistent(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("inconsistent", &v)
+}
+
+// GetPropertyInconsistent gets the "inconsistent" property.
+// If the check button is in an “in between” state.
+//
+// The inconsistent state only affects visual appearance,
+// not the semantics of the button.
+func (x *CheckButton) GetPropertyInconsistent() bool {
+	var v gobject.Value
+	x.GetProperty("inconsistent", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLabel sets the "label" property.
+// Text of the label inside the check button, if it contains a label widget.
+func (x *CheckButton) SetPropertyLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("label", &v)
+}
+
+// GetPropertyLabel gets the "label" property.
+// Text of the label inside the check button, if it contains a label widget.
+func (x *CheckButton) GetPropertyLabel() string {
+	var v gobject.Value
+	x.GetProperty("label", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// If set, an underline in the text indicates that the following
+// character is to be used as mnemonic.
+func (x *CheckButton) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// If set, an underline in the text indicates that the following
+// character is to be used as mnemonic.
+func (x *CheckButton) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to when the check button is activated.
 //
 // The `::activate` signal on `GtkCheckButton` is an action signal and
@@ -470,7 +552,7 @@ func (x *CheckButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *CheckButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *CheckButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

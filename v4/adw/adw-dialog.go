@@ -29,7 +29,7 @@ func (x *DialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideCloseAttempt sets the callback function.
+// OverrideCloseAttempt sets the "close_attempt" callback function.
 func (x *DialogClass) OverrideCloseAttempt(cb func(*Dialog)) {
 	if cb == nil {
 		x.xCloseAttempt = 0
@@ -40,7 +40,7 @@ func (x *DialogClass) OverrideCloseAttempt(cb func(*Dialog)) {
 	}
 }
 
-// GetCloseAttempt gets the callback function.
+// GetCloseAttempt gets the "close_attempt" callback function.
 func (x *DialogClass) GetCloseAttempt() func(*Dialog) {
 	if x.xCloseAttempt == 0 {
 		return nil
@@ -52,7 +52,7 @@ func (x *DialogClass) GetCloseAttempt() func(*Dialog) {
 	}
 }
 
-// OverrideClosed sets the callback function.
+// OverrideClosed sets the "closed" callback function.
 func (x *DialogClass) OverrideClosed(cb func(*Dialog)) {
 	if cb == nil {
 		x.xClosed = 0
@@ -63,7 +63,7 @@ func (x *DialogClass) OverrideClosed(cb func(*Dialog)) {
 	}
 }
 
-// GetClosed gets the callback function.
+// GetClosed gets the "closed" callback function.
 func (x *DialogClass) GetClosed() func(*Dialog) {
 	if x.xClosed == 0 {
 		return nil
@@ -494,6 +494,129 @@ func (c *Dialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCanClose sets the "can-close" property.
+// Whether the dialog can be closed.
+//
+// If set to `FALSE`, the close button, shortcuts and
+// [method@Dialog.close] will result in [signal@Dialog::close-attempt] being
+// emitted instead, and bottom sheet close swipe will be disabled.
+// [method@Dialog.force_close] still works.
+func (x *Dialog) SetPropertyCanClose(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-close", &v)
+}
+
+// GetPropertyCanClose gets the "can-close" property.
+// Whether the dialog can be closed.
+//
+// If set to `FALSE`, the close button, shortcuts and
+// [method@Dialog.close] will result in [signal@Dialog::close-attempt] being
+// emitted instead, and bottom sheet close swipe will be disabled.
+// [method@Dialog.force_close] still works.
+func (x *Dialog) GetPropertyCanClose() bool {
+	var v gobject.Value
+	x.GetProperty("can-close", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyContentHeight sets the "content-height" property.
+// The height of the dialog's contents.
+//
+// Set it to -1 to reset it to the content's natural height.
+//
+// See also: [property@Gtk.Window:default-height]
+func (x *Dialog) SetPropertyContentHeight(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("content-height", &v)
+}
+
+// GetPropertyContentHeight gets the "content-height" property.
+// The height of the dialog's contents.
+//
+// Set it to -1 to reset it to the content's natural height.
+//
+// See also: [property@Gtk.Window:default-height]
+func (x *Dialog) GetPropertyContentHeight() int {
+	var v gobject.Value
+	x.GetProperty("content-height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyContentWidth sets the "content-width" property.
+// The width of the dialog's contents.
+//
+// Set it to -1 to reset it to the content's natural width.
+//
+// See also: [property@Gtk.Window:default-width]
+func (x *Dialog) SetPropertyContentWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("content-width", &v)
+}
+
+// GetPropertyContentWidth gets the "content-width" property.
+// The width of the dialog's contents.
+//
+// Set it to -1 to reset it to the content's natural width.
+//
+// See also: [property@Gtk.Window:default-width]
+func (x *Dialog) GetPropertyContentWidth() int {
+	var v gobject.Value
+	x.GetProperty("content-width", &v)
+	return v.GetInt()
+}
+
+// SetPropertyFollowsContentSize sets the "follows-content-size" property.
+// Whether to size content automatically.
+//
+// If set to `TRUE`, always use the content's natural size instead of
+// [property@Dialog:content-width] and [property@Dialog:content-height]. If
+// the content resizes, the dialog will immediately resize as well.
+//
+// See also: [property@Gtk.Window:resizable]
+func (x *Dialog) SetPropertyFollowsContentSize(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("follows-content-size", &v)
+}
+
+// GetPropertyFollowsContentSize gets the "follows-content-size" property.
+// Whether to size content automatically.
+//
+// If set to `TRUE`, always use the content's natural size instead of
+// [property@Dialog:content-width] and [property@Dialog:content-height]. If
+// the content resizes, the dialog will immediately resize as well.
+//
+// See also: [property@Gtk.Window:resizable]
+func (x *Dialog) GetPropertyFollowsContentSize() bool {
+	var v gobject.Value
+	x.GetProperty("follows-content-size", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the dialog.
+func (x *Dialog) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the dialog.
+func (x *Dialog) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 // Emitted when the close button or shortcut is used, or
 // [method@Dialog.close] is called while [property@Dialog:can-close] is set to
 // `FALSE`.
@@ -593,7 +716,7 @@ func (x *Dialog) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Dialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Dialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

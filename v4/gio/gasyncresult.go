@@ -29,7 +29,7 @@ func (x *AsyncResultIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetUserData sets the callback function.
+// OverrideGetUserData sets the "get_user_data" callback function.
 // Gets the user data passed to the callback.
 func (x *AsyncResultIface) OverrideGetUserData(cb func(AsyncResult) uintptr) {
 	if cb == nil {
@@ -41,7 +41,7 @@ func (x *AsyncResultIface) OverrideGetUserData(cb func(AsyncResult) uintptr) {
 	}
 }
 
-// GetGetUserData gets the callback function.
+// GetGetUserData gets the "get_user_data" callback function.
 // Gets the user data passed to the callback.
 func (x *AsyncResultIface) GetGetUserData() func(AsyncResult) uintptr {
 	if x.xGetUserData == 0 {
@@ -54,7 +54,7 @@ func (x *AsyncResultIface) GetGetUserData() func(AsyncResult) uintptr {
 	}
 }
 
-// OverrideGetSourceObject sets the callback function.
+// OverrideGetSourceObject sets the "get_source_object" callback function.
 // Gets the source object that issued the asynchronous operation.
 func (x *AsyncResultIface) OverrideGetSourceObject(cb func(AsyncResult) *gobject.Object) {
 	if cb == nil {
@@ -70,7 +70,7 @@ func (x *AsyncResultIface) OverrideGetSourceObject(cb func(AsyncResult) *gobject
 	}
 }
 
-// GetGetSourceObject gets the callback function.
+// GetGetSourceObject gets the "get_source_object" callback function.
 // Gets the source object that issued the asynchronous operation.
 func (x *AsyncResultIface) GetGetSourceObject() func(AsyncResult) *gobject.Object {
 	if x.xGetSourceObject == 0 {
@@ -89,7 +89,7 @@ func (x *AsyncResultIface) GetGetSourceObject() func(AsyncResult) *gobject.Objec
 	}
 }
 
-// OverrideIsTagged sets the callback function.
+// OverrideIsTagged sets the "is_tagged" callback function.
 // Checks if a result is tagged with a particular source.
 func (x *AsyncResultIface) OverrideIsTagged(cb func(AsyncResult, uintptr) bool) {
 	if cb == nil {
@@ -101,7 +101,7 @@ func (x *AsyncResultIface) OverrideIsTagged(cb func(AsyncResult, uintptr) bool) 
 	}
 }
 
-// GetIsTagged gets the callback function.
+// GetIsTagged gets the "is_tagged" callback function.
 // Checks if a result is tagged with a particular source.
 func (x *AsyncResultIface) GetIsTagged() func(AsyncResult, uintptr) bool {
 	if x.xIsTagged == 0 {

@@ -31,32 +31,32 @@ func (x *TlsPasswordClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetValue sets the callback function.
+// OverrideGetValue sets the "get_value" callback function.
 // virtual method for g_tls_password_get_value()
-func (x *TlsPasswordClass) OverrideGetValue(cb func(*TlsPassword, uint) uintptr) {
+func (x *TlsPasswordClass) OverrideGetValue(cb func(*TlsPassword, *uint) uintptr) {
 	if cb == nil {
 		x.xGetValue = 0
 	} else {
-		x.xGetValue = purego.NewCallback(func(PasswordVarp uintptr, LengthVarp uint) uintptr {
+		x.xGetValue = purego.NewCallback(func(PasswordVarp uintptr, LengthVarp *uint) uintptr {
 			return cb(TlsPasswordNewFromInternalPtr(PasswordVarp), LengthVarp)
 		})
 	}
 }
 
-// GetGetValue gets the callback function.
+// GetGetValue gets the "get_value" callback function.
 // virtual method for g_tls_password_get_value()
-func (x *TlsPasswordClass) GetGetValue() func(*TlsPassword, uint) uintptr {
+func (x *TlsPasswordClass) GetGetValue() func(*TlsPassword, *uint) uintptr {
 	if x.xGetValue == 0 {
 		return nil
 	}
-	var rawCallback func(PasswordVarp uintptr, LengthVarp uint) uintptr
+	var rawCallback func(PasswordVarp uintptr, LengthVarp *uint) uintptr
 	purego.RegisterFunc(&rawCallback, x.xGetValue)
-	return func(PasswordVar *TlsPassword, LengthVar uint) uintptr {
+	return func(PasswordVar *TlsPassword, LengthVar *uint) uintptr {
 		return rawCallback(PasswordVar.GoPointer(), LengthVar)
 	}
 }
 
-// OverrideSetValue sets the callback function.
+// OverrideSetValue sets the "set_value" callback function.
 // virtual method for g_tls_password_set_value()
 func (x *TlsPasswordClass) OverrideSetValue(cb func(*TlsPassword, []byte, int, *glib.DestroyNotify)) {
 	if cb == nil {
@@ -68,7 +68,7 @@ func (x *TlsPasswordClass) OverrideSetValue(cb func(*TlsPassword, []byte, int, *
 	}
 }
 
-// GetSetValue gets the callback function.
+// GetSetValue gets the "set_value" callback function.
 // virtual method for g_tls_password_set_value()
 func (x *TlsPasswordClass) GetSetValue() func(*TlsPassword, []byte, int, *glib.DestroyNotify) {
 	if x.xSetValue == 0 {
@@ -81,7 +81,7 @@ func (x *TlsPasswordClass) GetSetValue() func(*TlsPassword, []byte, int, *glib.D
 	}
 }
 
-// OverrideGetDefaultWarning sets the callback function.
+// OverrideGetDefaultWarning sets the "get_default_warning" callback function.
 // virtual method for g_tls_password_get_warning() if no
 //
 //	value has been set using g_tls_password_set_warning()
@@ -95,7 +95,7 @@ func (x *TlsPasswordClass) OverrideGetDefaultWarning(cb func(*TlsPassword) strin
 	}
 }
 
-// GetGetDefaultWarning gets the callback function.
+// GetGetDefaultWarning gets the "get_default_warning" callback function.
 // virtual method for g_tls_password_get_warning() if no
 //
 //	value has been set using g_tls_password_set_warning()
@@ -170,14 +170,14 @@ func (x *TlsPassword) GetFlags() TlsPasswordFlags {
 	return cret
 }
 
-var xTlsPasswordGetValue func(uintptr, uint) uintptr
+var xTlsPasswordGetValue func(uintptr, *uint) uintptr
 
 // Get the password value. If @length is not %NULL then it will be
 // filled in with the length of the password value. (Note that the
 // password value is not nul-terminated, so you can only pass %NULL
 // for @length in contexts where you know the password will have a
 // certain fixed length.)
-func (x *TlsPassword) GetValue(LengthVar uint) uintptr {
+func (x *TlsPassword) GetValue(LengthVar *uint) uintptr {
 
 	cret := xTlsPasswordGetValue(x.GoPointer(), LengthVar)
 	return cret
@@ -264,6 +264,40 @@ func (c *TlsPassword) GoPointer() uintptr {
 
 func (c *TlsPassword) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyDescription sets the "description" property.
+// Description of what the password is for.
+func (x *TlsPassword) SetPropertyDescription(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("description", &v)
+}
+
+// GetPropertyDescription gets the "description" property.
+// Description of what the password is for.
+func (x *TlsPassword) GetPropertyDescription() string {
+	var v gobject.Value
+	x.GetProperty("description", &v)
+	return v.GetString()
+}
+
+// SetPropertyWarning sets the "warning" property.
+// Warning about the password.
+func (x *TlsPassword) SetPropertyWarning(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("warning", &v)
+}
+
+// GetPropertyWarning gets the "warning" property.
+// Warning about the password.
+func (x *TlsPassword) GetPropertyWarning() string {
+	var v gobject.Value
+	x.GetProperty("warning", &v)
+	return v.GetString()
 }
 
 func init() {

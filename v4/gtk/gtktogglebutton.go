@@ -26,7 +26,7 @@ func (x *ToggleButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideToggled sets the callback function.
+// OverrideToggled sets the "toggled" callback function.
 func (x *ToggleButtonClass) OverrideToggled(cb func(*ToggleButton)) {
 	if cb == nil {
 		x.xToggled = 0
@@ -37,7 +37,7 @@ func (x *ToggleButtonClass) OverrideToggled(cb func(*ToggleButton)) {
 	}
 }
 
-// GetToggled gets the callback function.
+// GetToggled gets the "toggled" callback function.
 func (x *ToggleButtonClass) GetToggled() func(*ToggleButton) {
 	if x.xToggled == 0 {
 		return nil
@@ -269,6 +269,23 @@ func (c *ToggleButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActive sets the "active" property.
+// If the toggle button should be pressed in.
+func (x *ToggleButton) SetPropertyActive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("active", &v)
+}
+
+// GetPropertyActive gets the "active" property.
+// If the toggle button should be pressed in.
+func (x *ToggleButton) GetPropertyActive() bool {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetBoolean()
+}
+
 // Emitted whenever the `GtkToggleButton`'s state is changed.
 func (x *ToggleButton) ConnectToggled(cb *func(ToggleButton)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -346,7 +363,7 @@ func (x *ToggleButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ToggleButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ToggleButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

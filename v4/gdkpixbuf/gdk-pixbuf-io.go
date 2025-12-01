@@ -352,7 +352,7 @@ func (x *PixbufModule) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideReserved1 sets the callback function.
+// OverrideReserved1 sets the "_reserved1" callback function.
 func (x *PixbufModule) OverrideReserved1(cb func()) {
 	if cb == nil {
 		x.xReserved1 = 0
@@ -363,7 +363,7 @@ func (x *PixbufModule) OverrideReserved1(cb func()) {
 	}
 }
 
-// GetReserved1 gets the callback function.
+// GetReserved1 gets the "_reserved1" callback function.
 func (x *PixbufModule) GetReserved1() func() {
 	if x.xReserved1 == 0 {
 		return nil
@@ -375,7 +375,7 @@ func (x *PixbufModule) GetReserved1() func() {
 	}
 }
 
-// OverrideReserved2 sets the callback function.
+// OverrideReserved2 sets the "_reserved2" callback function.
 func (x *PixbufModule) OverrideReserved2(cb func()) {
 	if cb == nil {
 		x.xReserved2 = 0
@@ -386,7 +386,7 @@ func (x *PixbufModule) OverrideReserved2(cb func()) {
 	}
 }
 
-// GetReserved2 gets the callback function.
+// GetReserved2 gets the "_reserved2" callback function.
 func (x *PixbufModule) GetReserved2() func() {
 	if x.xReserved2 == 0 {
 		return nil
@@ -398,7 +398,7 @@ func (x *PixbufModule) GetReserved2() func() {
 	}
 }
 
-// OverrideReserved3 sets the callback function.
+// OverrideReserved3 sets the "_reserved3" callback function.
 func (x *PixbufModule) OverrideReserved3(cb func()) {
 	if cb == nil {
 		x.xReserved3 = 0
@@ -409,7 +409,7 @@ func (x *PixbufModule) OverrideReserved3(cb func()) {
 	}
 }
 
-// GetReserved3 gets the callback function.
+// GetReserved3 gets the "_reserved3" callback function.
 func (x *PixbufModule) GetReserved3() func() {
 	if x.xReserved3 == 0 {
 		return nil
@@ -421,7 +421,7 @@ func (x *PixbufModule) GetReserved3() func() {
 	}
 }
 
-// OverrideReserved4 sets the callback function.
+// OverrideReserved4 sets the "_reserved4" callback function.
 func (x *PixbufModule) OverrideReserved4(cb func()) {
 	if cb == nil {
 		x.xReserved4 = 0
@@ -432,7 +432,7 @@ func (x *PixbufModule) OverrideReserved4(cb func()) {
 	}
 }
 
-// GetReserved4 gets the callback function.
+// GetReserved4 gets the "_reserved4" callback function.
 func (x *PixbufModule) GetReserved4() func() {
 	if x.xReserved4 == 0 {
 		return nil

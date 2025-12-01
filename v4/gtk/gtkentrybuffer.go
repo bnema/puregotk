@@ -50,7 +50,7 @@ func (x *EntryBufferClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideInsertedText sets the callback function.
+// OverrideInsertedText sets the "inserted_text" callback function.
 func (x *EntryBufferClass) OverrideInsertedText(cb func(*EntryBuffer, uint, string, uint)) {
 	if cb == nil {
 		x.xInsertedText = 0
@@ -61,7 +61,7 @@ func (x *EntryBufferClass) OverrideInsertedText(cb func(*EntryBuffer, uint, stri
 	}
 }
 
-// GetInsertedText gets the callback function.
+// GetInsertedText gets the "inserted_text" callback function.
 func (x *EntryBufferClass) GetInsertedText() func(*EntryBuffer, uint, string, uint) {
 	if x.xInsertedText == 0 {
 		return nil
@@ -73,7 +73,7 @@ func (x *EntryBufferClass) GetInsertedText() func(*EntryBuffer, uint, string, ui
 	}
 }
 
-// OverrideDeletedText sets the callback function.
+// OverrideDeletedText sets the "deleted_text" callback function.
 func (x *EntryBufferClass) OverrideDeletedText(cb func(*EntryBuffer, uint, uint)) {
 	if cb == nil {
 		x.xDeletedText = 0
@@ -84,7 +84,7 @@ func (x *EntryBufferClass) OverrideDeletedText(cb func(*EntryBuffer, uint, uint)
 	}
 }
 
-// GetDeletedText gets the callback function.
+// GetDeletedText gets the "deleted_text" callback function.
 func (x *EntryBufferClass) GetDeletedText() func(*EntryBuffer, uint, uint) {
 	if x.xDeletedText == 0 {
 		return nil
@@ -96,7 +96,7 @@ func (x *EntryBufferClass) GetDeletedText() func(*EntryBuffer, uint, uint) {
 	}
 }
 
-// OverrideGetText sets the callback function.
+// OverrideGetText sets the "get_text" callback function.
 func (x *EntryBufferClass) OverrideGetText(cb func(*EntryBuffer, uint) string) {
 	if cb == nil {
 		x.xGetText = 0
@@ -107,7 +107,7 @@ func (x *EntryBufferClass) OverrideGetText(cb func(*EntryBuffer, uint) string) {
 	}
 }
 
-// GetGetText gets the callback function.
+// GetGetText gets the "get_text" callback function.
 func (x *EntryBufferClass) GetGetText() func(*EntryBuffer, uint) string {
 	if x.xGetText == 0 {
 		return nil
@@ -119,7 +119,7 @@ func (x *EntryBufferClass) GetGetText() func(*EntryBuffer, uint) string {
 	}
 }
 
-// OverrideGetLength sets the callback function.
+// OverrideGetLength sets the "get_length" callback function.
 func (x *EntryBufferClass) OverrideGetLength(cb func(*EntryBuffer) uint) {
 	if cb == nil {
 		x.xGetLength = 0
@@ -130,7 +130,7 @@ func (x *EntryBufferClass) OverrideGetLength(cb func(*EntryBuffer) uint) {
 	}
 }
 
-// GetGetLength gets the callback function.
+// GetGetLength gets the "get_length" callback function.
 func (x *EntryBufferClass) GetGetLength() func(*EntryBuffer) uint {
 	if x.xGetLength == 0 {
 		return nil
@@ -142,7 +142,7 @@ func (x *EntryBufferClass) GetGetLength() func(*EntryBuffer) uint {
 	}
 }
 
-// OverrideInsertText sets the callback function.
+// OverrideInsertText sets the "insert_text" callback function.
 func (x *EntryBufferClass) OverrideInsertText(cb func(*EntryBuffer, uint, string, uint) uint) {
 	if cb == nil {
 		x.xInsertText = 0
@@ -153,7 +153,7 @@ func (x *EntryBufferClass) OverrideInsertText(cb func(*EntryBuffer, uint, string
 	}
 }
 
-// GetInsertText gets the callback function.
+// GetInsertText gets the "insert_text" callback function.
 func (x *EntryBufferClass) GetInsertText() func(*EntryBuffer, uint, string, uint) uint {
 	if x.xInsertText == 0 {
 		return nil
@@ -165,7 +165,7 @@ func (x *EntryBufferClass) GetInsertText() func(*EntryBuffer, uint, string, uint
 	}
 }
 
-// OverrideDeleteText sets the callback function.
+// OverrideDeleteText sets the "delete_text" callback function.
 func (x *EntryBufferClass) OverrideDeleteText(cb func(*EntryBuffer, uint, uint) uint) {
 	if cb == nil {
 		x.xDeleteText = 0
@@ -176,7 +176,7 @@ func (x *EntryBufferClass) OverrideDeleteText(cb func(*EntryBuffer, uint, uint) 
 	}
 }
 
-// GetDeleteText gets the callback function.
+// GetDeleteText gets the "delete_text" callback function.
 func (x *EntryBufferClass) GetDeleteText() func(*EntryBuffer, uint, uint) uint {
 	if x.xDeleteText == 0 {
 		return nil
@@ -188,7 +188,7 @@ func (x *EntryBufferClass) GetDeleteText() func(*EntryBuffer, uint, uint) uint {
 	}
 }
 
-// OverrideGtkReserved1 sets the callback function.
+// OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *EntryBufferClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {
 		x.xGtkReserved1 = 0
@@ -199,7 +199,7 @@ func (x *EntryBufferClass) OverrideGtkReserved1(cb func()) {
 	}
 }
 
-// GetGtkReserved1 gets the callback function.
+// GetGtkReserved1 gets the "_gtk_reserved1" callback function.
 func (x *EntryBufferClass) GetGtkReserved1() func() {
 	if x.xGtkReserved1 == 0 {
 		return nil
@@ -211,7 +211,7 @@ func (x *EntryBufferClass) GetGtkReserved1() func() {
 	}
 }
 
-// OverrideGtkReserved2 sets the callback function.
+// OverrideGtkReserved2 sets the "_gtk_reserved2" callback function.
 func (x *EntryBufferClass) OverrideGtkReserved2(cb func()) {
 	if cb == nil {
 		x.xGtkReserved2 = 0
@@ -222,7 +222,7 @@ func (x *EntryBufferClass) OverrideGtkReserved2(cb func()) {
 	}
 }
 
-// GetGtkReserved2 gets the callback function.
+// GetGtkReserved2 gets the "_gtk_reserved2" callback function.
 func (x *EntryBufferClass) GetGtkReserved2() func() {
 	if x.xGtkReserved2 == 0 {
 		return nil
@@ -234,7 +234,7 @@ func (x *EntryBufferClass) GetGtkReserved2() func() {
 	}
 }
 
-// OverrideGtkReserved3 sets the callback function.
+// OverrideGtkReserved3 sets the "_gtk_reserved3" callback function.
 func (x *EntryBufferClass) OverrideGtkReserved3(cb func()) {
 	if cb == nil {
 		x.xGtkReserved3 = 0
@@ -245,7 +245,7 @@ func (x *EntryBufferClass) OverrideGtkReserved3(cb func()) {
 	}
 }
 
-// GetGtkReserved3 gets the callback function.
+// GetGtkReserved3 gets the "_gtk_reserved3" callback function.
 func (x *EntryBufferClass) GetGtkReserved3() func() {
 	if x.xGtkReserved3 == 0 {
 		return nil
@@ -257,7 +257,7 @@ func (x *EntryBufferClass) GetGtkReserved3() func() {
 	}
 }
 
-// OverrideGtkReserved4 sets the callback function.
+// OverrideGtkReserved4 sets the "_gtk_reserved4" callback function.
 func (x *EntryBufferClass) OverrideGtkReserved4(cb func()) {
 	if cb == nil {
 		x.xGtkReserved4 = 0
@@ -268,7 +268,7 @@ func (x *EntryBufferClass) OverrideGtkReserved4(cb func()) {
 	}
 }
 
-// GetGtkReserved4 gets the callback function.
+// GetGtkReserved4 gets the "_gtk_reserved4" callback function.
 func (x *EntryBufferClass) GetGtkReserved4() func() {
 	if x.xGtkReserved4 == 0 {
 		return nil
@@ -280,7 +280,7 @@ func (x *EntryBufferClass) GetGtkReserved4() func() {
 	}
 }
 
-// OverrideGtkReserved5 sets the callback function.
+// OverrideGtkReserved5 sets the "_gtk_reserved5" callback function.
 func (x *EntryBufferClass) OverrideGtkReserved5(cb func()) {
 	if cb == nil {
 		x.xGtkReserved5 = 0
@@ -291,7 +291,7 @@ func (x *EntryBufferClass) OverrideGtkReserved5(cb func()) {
 	}
 }
 
-// GetGtkReserved5 gets the callback function.
+// GetGtkReserved5 gets the "_gtk_reserved5" callback function.
 func (x *EntryBufferClass) GetGtkReserved5() func() {
 	if x.xGtkReserved5 == 0 {
 		return nil
@@ -303,7 +303,7 @@ func (x *EntryBufferClass) GetGtkReserved5() func() {
 	}
 }
 
-// OverrideGtkReserved6 sets the callback function.
+// OverrideGtkReserved6 sets the "_gtk_reserved6" callback function.
 func (x *EntryBufferClass) OverrideGtkReserved6(cb func()) {
 	if cb == nil {
 		x.xGtkReserved6 = 0
@@ -314,7 +314,7 @@ func (x *EntryBufferClass) OverrideGtkReserved6(cb func()) {
 	}
 }
 
-// GetGtkReserved6 gets the callback function.
+// GetGtkReserved6 gets the "_gtk_reserved6" callback function.
 func (x *EntryBufferClass) GetGtkReserved6() func() {
 	if x.xGtkReserved6 == 0 {
 		return nil
@@ -326,7 +326,7 @@ func (x *EntryBufferClass) GetGtkReserved6() func() {
 	}
 }
 
-// OverrideGtkReserved7 sets the callback function.
+// OverrideGtkReserved7 sets the "_gtk_reserved7" callback function.
 func (x *EntryBufferClass) OverrideGtkReserved7(cb func()) {
 	if cb == nil {
 		x.xGtkReserved7 = 0
@@ -337,7 +337,7 @@ func (x *EntryBufferClass) OverrideGtkReserved7(cb func()) {
 	}
 }
 
-// GetGtkReserved7 gets the callback function.
+// GetGtkReserved7 gets the "_gtk_reserved7" callback function.
 func (x *EntryBufferClass) GetGtkReserved7() func() {
 	if x.xGtkReserved7 == 0 {
 		return nil
@@ -349,7 +349,7 @@ func (x *EntryBufferClass) GetGtkReserved7() func() {
 	}
 }
 
-// OverrideGtkReserved8 sets the callback function.
+// OverrideGtkReserved8 sets the "_gtk_reserved8" callback function.
 func (x *EntryBufferClass) OverrideGtkReserved8(cb func()) {
 	if cb == nil {
 		x.xGtkReserved8 = 0
@@ -360,7 +360,7 @@ func (x *EntryBufferClass) OverrideGtkReserved8(cb func()) {
 	}
 }
 
-// GetGtkReserved8 gets the callback function.
+// GetGtkReserved8 gets the "_gtk_reserved8" callback function.
 func (x *EntryBufferClass) GetGtkReserved8() func() {
 	if x.xGtkReserved8 == 0 {
 		return nil
@@ -547,6 +547,48 @@ func (c *EntryBuffer) GoPointer() uintptr {
 
 func (c *EntryBuffer) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyLength gets the "length" property.
+// The length (in characters) of the text in buffer.
+func (x *EntryBuffer) GetPropertyLength() uint {
+	var v gobject.Value
+	x.GetProperty("length", &v)
+	return v.GetUint()
+}
+
+// SetPropertyMaxLength sets the "max-length" property.
+// The maximum length (in characters) of the text in the buffer.
+func (x *EntryBuffer) SetPropertyMaxLength(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("max-length", &v)
+}
+
+// GetPropertyMaxLength gets the "max-length" property.
+// The maximum length (in characters) of the text in the buffer.
+func (x *EntryBuffer) GetPropertyMaxLength() int {
+	var v gobject.Value
+	x.GetProperty("max-length", &v)
+	return v.GetInt()
+}
+
+// SetPropertyText sets the "text" property.
+// The contents of the buffer.
+func (x *EntryBuffer) SetPropertyText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("text", &v)
+}
+
+// GetPropertyText gets the "text" property.
+// The contents of the buffer.
+func (x *EntryBuffer) GetPropertyText() string {
+	var v gobject.Value
+	x.GetProperty("text", &v)
+	return v.GetString()
 }
 
 // The text is altered in the default handler for this signal.

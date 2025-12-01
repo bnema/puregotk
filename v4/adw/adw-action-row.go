@@ -27,7 +27,7 @@ func (x *ActionRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideActivate sets the callback function.
+// OverrideActivate sets the "activate" callback function.
 // Activates the row to trigger its main action.
 func (x *ActionRowClass) OverrideActivate(cb func(*ActionRow)) {
 	if cb == nil {
@@ -39,7 +39,7 @@ func (x *ActionRowClass) OverrideActivate(cb func(*ActionRow)) {
 	}
 }
 
-// GetActivate gets the callback function.
+// GetActivate gets the "activate" callback function.
 // Activates the row to trigger its main action.
 func (x *ActionRowClass) GetActivate() func(*ActionRow) {
 	if x.xActivate == 0 {
@@ -320,6 +320,111 @@ func (c *ActionRow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyIconName sets the "icon-name" property.
+// The icon name for this row.
+func (x *ActionRow) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The icon name for this row.
+func (x *ActionRow) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertySubtitle sets the "subtitle" property.
+// The subtitle for this row.
+//
+// The subtitle is interpreted as Pango markup unless
+// [property@PreferencesRow:use-markup] is set to `FALSE`.
+func (x *ActionRow) SetPropertySubtitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("subtitle", &v)
+}
+
+// GetPropertySubtitle gets the "subtitle" property.
+// The subtitle for this row.
+//
+// The subtitle is interpreted as Pango markup unless
+// [property@PreferencesRow:use-markup] is set to `FALSE`.
+func (x *ActionRow) GetPropertySubtitle() string {
+	var v gobject.Value
+	x.GetProperty("subtitle", &v)
+	return v.GetString()
+}
+
+// SetPropertySubtitleLines sets the "subtitle-lines" property.
+// The number of lines at the end of which the subtitle label will be
+// ellipsized.
+//
+// If the value is 0, the number of lines won't be limited.
+func (x *ActionRow) SetPropertySubtitleLines(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("subtitle-lines", &v)
+}
+
+// GetPropertySubtitleLines gets the "subtitle-lines" property.
+// The number of lines at the end of which the subtitle label will be
+// ellipsized.
+//
+// If the value is 0, the number of lines won't be limited.
+func (x *ActionRow) GetPropertySubtitleLines() int {
+	var v gobject.Value
+	x.GetProperty("subtitle-lines", &v)
+	return v.GetInt()
+}
+
+// SetPropertySubtitleSelectable sets the "subtitle-selectable" property.
+// Whether the user can copy the subtitle from the label.
+//
+// See also [property@Gtk.Label:selectable].
+func (x *ActionRow) SetPropertySubtitleSelectable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("subtitle-selectable", &v)
+}
+
+// GetPropertySubtitleSelectable gets the "subtitle-selectable" property.
+// Whether the user can copy the subtitle from the label.
+//
+// See also [property@Gtk.Label:selectable].
+func (x *ActionRow) GetPropertySubtitleSelectable() bool {
+	var v gobject.Value
+	x.GetProperty("subtitle-selectable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitleLines sets the "title-lines" property.
+// The number of lines at the end of which the title label will be ellipsized.
+//
+// If the value is 0, the number of lines won't be limited.
+func (x *ActionRow) SetPropertyTitleLines(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("title-lines", &v)
+}
+
+// GetPropertyTitleLines gets the "title-lines" property.
+// The number of lines at the end of which the title label will be ellipsized.
+//
+// If the value is 0, the number of lines won't be limited.
+func (x *ActionRow) GetPropertyTitleLines() int {
+	var v gobject.Value
+	x.GetProperty("title-lines", &v)
+	return v.GetInt()
+}
+
 // This signal is emitted after the row has been activated.
 func (x *ActionRow) ConnectActivated(cb *func(ActionRow)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -397,7 +502,7 @@ func (x *ActionRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ActionRow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ActionRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

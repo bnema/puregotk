@@ -247,13 +247,13 @@ func (x *IOChannel) GetFlags() IOFlags {
 	return cret
 }
 
-var xIOChannelGetLineTerm func(uintptr, int) string
+var xIOChannelGetLineTerm func(uintptr, *int) string
 
 // This returns the string that #GIOChannel uses to determine
 // where in the file a line break occurs. A value of %NULL
 // indicates autodetection. Since 2.84, the return value is always
 // nul-terminated.
-func (x *IOChannel) GetLineTerm(LengthVar int) string {
+func (x *IOChannel) GetLineTerm(LengthVar *int) string {
 
 	cret := xIOChannelGetLineTerm(x.GoPointer(), LengthVar)
 	return cret
@@ -281,10 +281,10 @@ func (x *IOChannel) Read(BufVar string, CountVar uint, BytesReadVar uint) IOErro
 	return cret
 }
 
-var xIOChannelReadChars func(uintptr, []byte, uint, uint, **Error) IOStatus
+var xIOChannelReadChars func(uintptr, *[]byte, uint, *uint, **Error) IOStatus
 
 // Replacement for g_io_channel_read() with the new API.
-func (x *IOChannel) ReadChars(BufVar []byte, CountVar uint, BytesReadVar uint) (IOStatus, error) {
+func (x *IOChannel) ReadChars(BufVar *[]byte, CountVar uint, BytesReadVar *uint) (IOStatus, error) {
 	var cerr *Error
 
 	cret := xIOChannelReadChars(x.GoPointer(), BufVar, CountVar, BytesReadVar, &cerr)
@@ -295,13 +295,13 @@ func (x *IOChannel) ReadChars(BufVar []byte, CountVar uint, BytesReadVar uint) (
 
 }
 
-var xIOChannelReadLine func(uintptr, string, uint, uint, **Error) IOStatus
+var xIOChannelReadLine func(uintptr, *string, *uint, *uint, **Error) IOStatus
 
 // Reads a line, including the terminating character(s),
 // from a #GIOChannel into a newly-allocated string.
 // @str_return will contain allocated memory if the return
 // is %G_IO_STATUS_NORMAL.
-func (x *IOChannel) ReadLine(StrReturnVar string, LengthVar uint, TerminatorPosVar uint) (IOStatus, error) {
+func (x *IOChannel) ReadLine(StrReturnVar *string, LengthVar *uint, TerminatorPosVar *uint) (IOStatus, error) {
 	var cerr *Error
 
 	cret := xIOChannelReadLine(x.GoPointer(), StrReturnVar, LengthVar, TerminatorPosVar, &cerr)
@@ -326,10 +326,10 @@ func (x *IOChannel) ReadLineString(BufferVar *String, TerminatorPosVar uint) (IO
 
 }
 
-var xIOChannelReadToEnd func(uintptr, []byte, uint, **Error) IOStatus
+var xIOChannelReadToEnd func(uintptr, *[]byte, *uint, **Error) IOStatus
 
 // Reads all the remaining data from the file.
-func (x *IOChannel) ReadToEnd(StrReturnVar []byte, LengthVar uint) (IOStatus, error) {
+func (x *IOChannel) ReadToEnd(StrReturnVar *[]byte, LengthVar *uint) (IOStatus, error) {
 	var cerr *Error
 
 	cret := xIOChannelReadToEnd(x.GoPointer(), StrReturnVar, LengthVar, &cerr)
@@ -340,11 +340,11 @@ func (x *IOChannel) ReadToEnd(StrReturnVar []byte, LengthVar uint) (IOStatus, er
 
 }
 
-var xIOChannelReadUnichar func(uintptr, uint32, **Error) IOStatus
+var xIOChannelReadUnichar func(uintptr, *uint32, **Error) IOStatus
 
 // Reads a Unicode character from @channel.
 // This function cannot be called on a channel with %NULL encoding.
-func (x *IOChannel) ReadUnichar(ThecharVar uint32) (IOStatus, error) {
+func (x *IOChannel) ReadUnichar(ThecharVar *uint32) (IOStatus, error) {
 	var cerr *Error
 
 	cret := xIOChannelReadUnichar(x.GoPointer(), ThecharVar, &cerr)
@@ -555,7 +555,7 @@ func (x *IOChannel) Write(BufVar string, CountVar uint, BytesWrittenVar uint) IO
 	return cret
 }
 
-var xIOChannelWriteChars func(uintptr, []byte, int, uint, **Error) IOStatus
+var xIOChannelWriteChars func(uintptr, []byte, int, *uint, **Error) IOStatus
 
 // Replacement for g_io_channel_write() with the new API.
 //
@@ -563,7 +563,7 @@ var xIOChannelWriteChars func(uintptr, []byte, int, uint, **Error) IOStatus
 // mixing of reading and writing is not allowed. A call to g_io_channel_write_chars ()
 // may only be made on a channel from which data has been read in the
 // cases described in the documentation for g_io_channel_set_encoding ().
-func (x *IOChannel) WriteChars(BufVar []byte, CountVar int, BytesWrittenVar uint) (IOStatus, error) {
+func (x *IOChannel) WriteChars(BufVar []byte, CountVar int, BytesWrittenVar *uint) (IOStatus, error) {
 	var cerr *Error
 
 	cret := xIOChannelWriteChars(x.GoPointer(), BufVar, CountVar, BytesWrittenVar, &cerr)
@@ -615,7 +615,7 @@ func (x *IOFuncs) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideIoRead sets the callback function.
+// OverrideIoRead sets the "io_read" callback function.
 // reads raw bytes from the channel.  This is called from
 //
 //	various functions such as g_io_channel_read_chars() to
@@ -631,7 +631,7 @@ func (x *IOFuncs) OverrideIoRead(cb func(*IOChannel, string, uint, uint) IOStatu
 	}
 }
 
-// GetIoRead gets the callback function.
+// GetIoRead gets the "io_read" callback function.
 // reads raw bytes from the channel.  This is called from
 //
 //	various functions such as g_io_channel_read_chars() to
@@ -648,7 +648,7 @@ func (x *IOFuncs) GetIoRead() func(*IOChannel, string, uint, uint) IOStatus {
 	}
 }
 
-// OverrideIoWrite sets the callback function.
+// OverrideIoWrite sets the "io_write" callback function.
 // writes raw bytes to the channel.  This is called from
 //
 //	various functions such as g_io_channel_write_chars() to
@@ -664,7 +664,7 @@ func (x *IOFuncs) OverrideIoWrite(cb func(*IOChannel, string, uint, uint) IOStat
 	}
 }
 
-// GetIoWrite gets the callback function.
+// GetIoWrite gets the "io_write" callback function.
 // writes raw bytes to the channel.  This is called from
 //
 //	various functions such as g_io_channel_write_chars() to
@@ -681,7 +681,7 @@ func (x *IOFuncs) GetIoWrite() func(*IOChannel, string, uint, uint) IOStatus {
 	}
 }
 
-// OverrideIoSeek sets the callback function.
+// OverrideIoSeek sets the "io_seek" callback function.
 // seeks the channel.  This is called from
 //
 //	g_io_channel_seek() on channels that support it.
@@ -695,7 +695,7 @@ func (x *IOFuncs) OverrideIoSeek(cb func(*IOChannel, int64, SeekType) IOStatus) 
 	}
 }
 
-// GetIoSeek gets the callback function.
+// GetIoSeek gets the "io_seek" callback function.
 // seeks the channel.  This is called from
 //
 //	g_io_channel_seek() on channels that support it.
@@ -710,7 +710,7 @@ func (x *IOFuncs) GetIoSeek() func(*IOChannel, int64, SeekType) IOStatus {
 	}
 }
 
-// OverrideIoClose sets the callback function.
+// OverrideIoClose sets the "io_close" callback function.
 // closes the channel.  This is called from
 //
 //	g_io_channel_close() after flushing the buffers.
@@ -724,7 +724,7 @@ func (x *IOFuncs) OverrideIoClose(cb func(*IOChannel) IOStatus) {
 	}
 }
 
-// GetIoClose gets the callback function.
+// GetIoClose gets the "io_close" callback function.
 // closes the channel.  This is called from
 //
 //	g_io_channel_close() after flushing the buffers.
@@ -739,7 +739,7 @@ func (x *IOFuncs) GetIoClose() func(*IOChannel) IOStatus {
 	}
 }
 
-// OverrideIoCreateWatch sets the callback function.
+// OverrideIoCreateWatch sets the "io_create_watch" callback function.
 // creates a watch on the channel.  This call
 //
 //	corresponds directly to g_io_create_watch().
@@ -753,7 +753,7 @@ func (x *IOFuncs) OverrideIoCreateWatch(cb func(*IOChannel, IOCondition) *Source
 	}
 }
 
-// GetIoCreateWatch gets the callback function.
+// GetIoCreateWatch gets the "io_create_watch" callback function.
 // creates a watch on the channel.  This call
 //
 //	corresponds directly to g_io_create_watch().
@@ -768,7 +768,7 @@ func (x *IOFuncs) GetIoCreateWatch() func(*IOChannel, IOCondition) *Source {
 	}
 }
 
-// OverrideIoFree sets the callback function.
+// OverrideIoFree sets the "io_free" callback function.
 // called from g_io_channel_unref() when the channel needs to
 //
 //	be freed.  This function must free the memory associated
@@ -786,7 +786,7 @@ func (x *IOFuncs) OverrideIoFree(cb func(*IOChannel)) {
 	}
 }
 
-// GetIoFree gets the callback function.
+// GetIoFree gets the "io_free" callback function.
 // called from g_io_channel_unref() when the channel needs to
 //
 //	be freed.  This function must free the memory associated
@@ -805,7 +805,7 @@ func (x *IOFuncs) GetIoFree() func(*IOChannel) {
 	}
 }
 
-// OverrideIoSetFlags sets the callback function.
+// OverrideIoSetFlags sets the "io_set_flags" callback function.
 // sets the #GIOFlags on the channel.  This is called
 //
 //	from g_io_channel_set_flags() with all flags except
@@ -821,7 +821,7 @@ func (x *IOFuncs) OverrideIoSetFlags(cb func(*IOChannel, IOFlags) IOStatus) {
 	}
 }
 
-// GetIoSetFlags gets the callback function.
+// GetIoSetFlags gets the "io_set_flags" callback function.
 // sets the #GIOFlags on the channel.  This is called
 //
 //	from g_io_channel_set_flags() with all flags except
@@ -838,7 +838,7 @@ func (x *IOFuncs) GetIoSetFlags() func(*IOChannel, IOFlags) IOStatus {
 	}
 }
 
-// OverrideIoGetFlags sets the callback function.
+// OverrideIoGetFlags sets the "io_get_flags" callback function.
 // gets the #GIOFlags for the channel.  This function
 //
 //	need only return the %G_IO_FLAG_APPEND and
@@ -854,7 +854,7 @@ func (x *IOFuncs) OverrideIoGetFlags(cb func(*IOChannel) IOFlags) {
 	}
 }
 
-// GetIoGetFlags gets the callback function.
+// GetIoGetFlags gets the "io_get_flags" callback function.
 // gets the #GIOFlags for the channel.  This function
 //
 //	need only return the %G_IO_FLAG_APPEND and

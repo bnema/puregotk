@@ -34,7 +34,7 @@ func (x *IconIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideHash sets the callback function.
+// OverrideHash sets the "hash" callback function.
 // A hash for a given #GIcon.
 func (x *IconIface) OverrideHash(cb func(Icon) uint) {
 	if cb == nil {
@@ -46,7 +46,7 @@ func (x *IconIface) OverrideHash(cb func(Icon) uint) {
 	}
 }
 
-// GetHash gets the callback function.
+// GetHash gets the "hash" callback function.
 // A hash for a given #GIcon.
 func (x *IconIface) GetHash() func(Icon) uint {
 	if x.xHash == 0 {
@@ -59,7 +59,7 @@ func (x *IconIface) GetHash() func(Icon) uint {
 	}
 }
 
-// OverrideEqual sets the callback function.
+// OverrideEqual sets the "equal" callback function.
 // Checks if two #GIcons are equal.
 func (x *IconIface) OverrideEqual(cb func(Icon, Icon) bool) {
 	if cb == nil {
@@ -71,7 +71,7 @@ func (x *IconIface) OverrideEqual(cb func(Icon, Icon) bool) {
 	}
 }
 
-// GetEqual gets the callback function.
+// GetEqual gets the "equal" callback function.
 // Checks if two #GIcons are equal.
 func (x *IconIface) GetEqual() func(Icon, Icon) bool {
 	if x.xEqual == 0 {
@@ -84,36 +84,36 @@ func (x *IconIface) GetEqual() func(Icon, Icon) bool {
 	}
 }
 
-// OverrideToTokens sets the callback function.
+// OverrideToTokens sets the "to_tokens" callback function.
 // Serializes a #GIcon into tokens. The tokens must not
 // contain any whitespace. Don't implement if the #GIcon can't be
 // serialized (Since 2.20).
-func (x *IconIface) OverrideToTokens(cb func(Icon, []string, int) bool) {
+func (x *IconIface) OverrideToTokens(cb func(Icon, *[]string, *int) bool) {
 	if cb == nil {
 		x.xToTokens = 0
 	} else {
-		x.xToTokens = purego.NewCallback(func(IconVarp uintptr, TokensVarp []string, OutVersionVarp int) bool {
+		x.xToTokens = purego.NewCallback(func(IconVarp uintptr, TokensVarp *[]string, OutVersionVarp *int) bool {
 			return cb(&IconBase{Ptr: IconVarp}, TokensVarp, OutVersionVarp)
 		})
 	}
 }
 
-// GetToTokens gets the callback function.
+// GetToTokens gets the "to_tokens" callback function.
 // Serializes a #GIcon into tokens. The tokens must not
 // contain any whitespace. Don't implement if the #GIcon can't be
 // serialized (Since 2.20).
-func (x *IconIface) GetToTokens() func(Icon, []string, int) bool {
+func (x *IconIface) GetToTokens() func(Icon, *[]string, *int) bool {
 	if x.xToTokens == 0 {
 		return nil
 	}
-	var rawCallback func(IconVarp uintptr, TokensVarp []string, OutVersionVarp int) bool
+	var rawCallback func(IconVarp uintptr, TokensVarp *[]string, OutVersionVarp *int) bool
 	purego.RegisterFunc(&rawCallback, x.xToTokens)
-	return func(IconVar Icon, TokensVar []string, OutVersionVar int) bool {
+	return func(IconVar Icon, TokensVar *[]string, OutVersionVar *int) bool {
 		return rawCallback(IconVar.GoPointer(), TokensVar, OutVersionVar)
 	}
 }
 
-// OverrideFromTokens sets the callback function.
+// OverrideFromTokens sets the "from_tokens" callback function.
 // Constructs a #GIcon from tokens. Set the #GError if
 // the tokens are malformed. Don't implement if the #GIcon can't be
 // serialized (Since 2.20).
@@ -131,7 +131,7 @@ func (x *IconIface) OverrideFromTokens(cb func(string, int, int) *IconBase) {
 	}
 }
 
-// GetFromTokens gets the callback function.
+// GetFromTokens gets the "from_tokens" callback function.
 // Constructs a #GIcon from tokens. Set the #GError if
 // the tokens are malformed. Don't implement if the #GIcon can't be
 // serialized (Since 2.20).
@@ -152,7 +152,7 @@ func (x *IconIface) GetFromTokens() func(string, int, int) *IconBase {
 	}
 }
 
-// OverrideSerialize sets the callback function.
+// OverrideSerialize sets the "serialize" callback function.
 // Serializes a #GIcon into a #GVariant. Since: 2.38
 func (x *IconIface) OverrideSerialize(cb func(Icon) *glib.Variant) {
 	if cb == nil {
@@ -164,7 +164,7 @@ func (x *IconIface) OverrideSerialize(cb func(Icon) *glib.Variant) {
 	}
 }
 
-// GetSerialize gets the callback function.
+// GetSerialize gets the "serialize" callback function.
 // Serializes a #GIcon into a #GVariant. Since: 2.38
 func (x *IconIface) GetSerialize() func(Icon) *glib.Variant {
 	if x.xSerialize == 0 {

@@ -6,12 +6,12 @@ import (
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
-var xBase64Decode func(string, uint) uintptr
+var xBase64Decode func(string, *uint) uintptr
 
 // Decode a sequence of Base-64 encoded text into binary data.  Note
 // that the returned binary data is not necessarily zero-terminated,
 // so it should not be used as a character string.
-func Base64Decode(TextVar string, OutLenVar uint) uintptr {
+func Base64Decode(TextVar string, OutLenVar *uint) uintptr {
 
 	cret := xBase64Decode(TextVar, OutLenVar)
 	return cret
@@ -27,7 +27,7 @@ func Base64DecodeInplace(TextVar []byte, OutLenVar uint) byte {
 	return cret
 }
 
-var xBase64DecodeStep func([]byte, uint, []byte, int, uint) uint
+var xBase64DecodeStep func([]byte, uint, *[]byte, int, uint) uint
 
 // Incrementally decode a sequence of binary data from its Base-64 stringified
 // representation. By calling this function multiple times you can convert
@@ -37,7 +37,7 @@ var xBase64DecodeStep func([]byte, uint, []byte, int, uint) uint
 // be written to it. Since base64 encodes 3 bytes in 4 chars you need
 // at least: (@len / 4) * 3 + 3 bytes (+ 3 may be needed in case of non-zero
 // state).
-func Base64DecodeStep(InVar []byte, LenVar uint, OutVar []byte, StateVar int, SaveVar uint) uint {
+func Base64DecodeStep(InVar []byte, LenVar uint, OutVar *[]byte, StateVar int, SaveVar uint) uint {
 
 	cret := xBase64DecodeStep(InVar, LenVar, OutVar, StateVar, SaveVar)
 	return cret
@@ -53,7 +53,7 @@ func Base64Encode(DataVar []byte, LenVar uint) string {
 	return cret
 }
 
-var xBase64EncodeClose func(bool, []byte, int, int) uint
+var xBase64EncodeClose func(bool, *[]byte, int, int) uint
 
 // Flush the status from a sequence of calls to g_base64_encode_step().
 //
@@ -62,13 +62,13 @@ var xBase64EncodeClose func(bool, []byte, int, int) uint
 // line-breaking is enabled.
 //
 // The @out array will not be automatically nul-terminated.
-func Base64EncodeClose(BreakLinesVar bool, OutVar []byte, StateVar int, SaveVar int) uint {
+func Base64EncodeClose(BreakLinesVar bool, OutVar *[]byte, StateVar int, SaveVar int) uint {
 
 	cret := xBase64EncodeClose(BreakLinesVar, OutVar, StateVar, SaveVar)
 	return cret
 }
 
-var xBase64EncodeStep func([]byte, uint, bool, []byte, int, int) uint
+var xBase64EncodeStep func([]byte, uint, bool, *[]byte, int, int) uint
 
 // Incrementally encode a sequence of binary data into its Base-64 stringified
 // representation. By calling this function multiple times you can convert
@@ -89,7 +89,7 @@ var xBase64EncodeStep func([]byte, uint, bool, []byte, int, int) uint
 // Note however that it breaks the lines with `LF` characters, not
 // `CR LF` sequences, so the result cannot be passed directly to SMTP
 // or certain other protocols.
-func Base64EncodeStep(InVar []byte, LenVar uint, BreakLinesVar bool, OutVar []byte, StateVar int, SaveVar int) uint {
+func Base64EncodeStep(InVar []byte, LenVar uint, BreakLinesVar bool, OutVar *[]byte, StateVar int, SaveVar int) uint {
 
 	cret := xBase64EncodeStep(InVar, LenVar, BreakLinesVar, OutVar, StateVar, SaveVar)
 	return cret

@@ -102,12 +102,12 @@ func (x *HashTableIter) Init(HashTableVar *HashTable) {
 
 }
 
-var xHashTableIterNext func(uintptr, uintptr, uintptr) bool
+var xHashTableIterNext func(uintptr, *uintptr, *uintptr) bool
 
 // Advances @iter and retrieves the key and/or value that are now
 // pointed to as a result of this advancement. If %FALSE is returned,
 // @key and @value are not set, and the iterator becomes invalid.
-func (x *HashTableIter) Next(KeyVar uintptr, ValueVar uintptr) bool {
+func (x *HashTableIter) Next(KeyVar *uintptr, ValueVar *uintptr) bool {
 
 	cret := xHashTableIterNext(x.GoPointer(), KeyVar, ValueVar)
 	return cret
@@ -405,7 +405,7 @@ func HashTableLookup(HashTableVar *HashTable, KeyVar uintptr) uintptr {
 	return cret
 }
 
-var xHashTableLookupExtended func(*HashTable, uintptr, uintptr, uintptr) bool
+var xHashTableLookupExtended func(*HashTable, uintptr, *uintptr, *uintptr) bool
 
 // Looks up a key in the #GHashTable, returning the original key and the
 // associated value and a #gboolean which is %TRUE if the key was found. This
@@ -415,7 +415,7 @@ var xHashTableLookupExtended func(*HashTable, uintptr, uintptr, uintptr) bool
 // You can actually pass %NULL for @lookup_key to test
 // whether the %NULL key exists, provided the hash and equal functions
 // of @hash_table are %NULL-safe.
-func HashTableLookupExtended(HashTableVar *HashTable, LookupKeyVar uintptr, OrigKeyVar uintptr, ValueVar uintptr) bool {
+func HashTableLookupExtended(HashTableVar *HashTable, LookupKeyVar uintptr, OrigKeyVar *uintptr, ValueVar *uintptr) bool {
 
 	cret := xHashTableLookupExtended(HashTableVar, LookupKeyVar, OrigKeyVar, ValueVar)
 	return cret
@@ -547,7 +547,7 @@ func HashTableStealAllValues(HashTableVar *HashTable) uintptr {
 	return cret
 }
 
-var xHashTableStealExtended func(*HashTable, uintptr, uintptr, uintptr) bool
+var xHashTableStealExtended func(*HashTable, uintptr, *uintptr, *uintptr) bool
 
 // Looks up a key in the #GHashTable, stealing the original key and the
 // associated value and returning %TRUE if the key was found. If the key was
@@ -566,7 +566,7 @@ var xHashTableStealExtended func(*HashTable, uintptr, uintptr, uintptr) bool
 // their keys, for example by using g_hash_table_add(). Before 2.82, when
 // stealing both the key and the value from such a dictionary, the value was
 // %NULL. Since 2.82, the returned value and key will be the same.
-func HashTableStealExtended(HashTableVar *HashTable, LookupKeyVar uintptr, StolenKeyVar uintptr, StolenValueVar uintptr) bool {
+func HashTableStealExtended(HashTableVar *HashTable, LookupKeyVar uintptr, StolenKeyVar *uintptr, StolenValueVar *uintptr) bool {
 
 	cret := xHashTableStealExtended(HashTableVar, LookupKeyVar, StolenKeyVar, StolenValueVar)
 	return cret

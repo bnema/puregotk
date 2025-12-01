@@ -285,6 +285,80 @@ func (c *GridView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEnableRubberband sets the "enable-rubberband" property.
+// Allow rubberband selection.
+func (x *GridView) SetPropertyEnableRubberband(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-rubberband", &v)
+}
+
+// GetPropertyEnableRubberband gets the "enable-rubberband" property.
+// Allow rubberband selection.
+func (x *GridView) GetPropertyEnableRubberband() bool {
+	var v gobject.Value
+	x.GetProperty("enable-rubberband", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaxColumns sets the "max-columns" property.
+// Maximum number of columns per row.
+//
+// If this number is smaller than [property@Gtk.GridView:min-columns],
+// that value is used instead.
+func (x *GridView) SetPropertyMaxColumns(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("max-columns", &v)
+}
+
+// GetPropertyMaxColumns gets the "max-columns" property.
+// Maximum number of columns per row.
+//
+// If this number is smaller than [property@Gtk.GridView:min-columns],
+// that value is used instead.
+func (x *GridView) GetPropertyMaxColumns() uint {
+	var v gobject.Value
+	x.GetProperty("max-columns", &v)
+	return v.GetUint()
+}
+
+// SetPropertyMinColumns sets the "min-columns" property.
+// Minimum number of columns per row.
+func (x *GridView) SetPropertyMinColumns(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("min-columns", &v)
+}
+
+// GetPropertyMinColumns gets the "min-columns" property.
+// Minimum number of columns per row.
+func (x *GridView) GetPropertyMinColumns() uint {
+	var v gobject.Value
+	x.GetProperty("min-columns", &v)
+	return v.GetUint()
+}
+
+// SetPropertySingleClickActivate sets the "single-click-activate" property.
+// Activate rows on single click and select them on hover.
+func (x *GridView) SetPropertySingleClickActivate(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("single-click-activate", &v)
+}
+
+// GetPropertySingleClickActivate gets the "single-click-activate" property.
+// Activate rows on single click and select them on hover.
+func (x *GridView) GetPropertySingleClickActivate() bool {
+	var v gobject.Value
+	x.GetProperty("single-click-activate", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when a cell has been activated by the user,
 // usually via activating the GtkGridView|list.activate-item action.
 //
@@ -367,7 +441,7 @@ func (x *GridView) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *GridView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *GridView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

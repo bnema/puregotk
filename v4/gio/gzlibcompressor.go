@@ -119,6 +119,64 @@ func (c *ZlibCompressor) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyLevel sets the "level" property.
+// The level of compression from `0` (no compression) to `9` (most
+// compression).
+//
+// `-1` for the default level.
+func (x *ZlibCompressor) SetPropertyLevel(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("level", &v)
+}
+
+// GetPropertyLevel gets the "level" property.
+// The level of compression from `0` (no compression) to `9` (most
+// compression).
+//
+// `-1` for the default level.
+func (x *ZlibCompressor) GetPropertyLevel() int {
+	var v gobject.Value
+	x.GetProperty("level", &v)
+	return v.GetInt()
+}
+
+// SetPropertyOs sets the "os" property.
+// The OS code of the gzip header.
+//
+// This will be used if set to a non-negative value, and if
+// [property@Gio.ZlibCompressor:format] is
+// [enum@Gio.ZlibCompressorFormat.GZIP], the compressor will set the OS code of
+// the gzip header to this value.
+//
+// If the value is unset, zlib will set the OS code depending on the platform.
+// This may be undesirable when reproducible output is desired. In that case setting
+// the OS code to `3` (for Unix) is recommended.
+func (x *ZlibCompressor) SetPropertyOs(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("os", &v)
+}
+
+// GetPropertyOs gets the "os" property.
+// The OS code of the gzip header.
+//
+// This will be used if set to a non-negative value, and if
+// [property@Gio.ZlibCompressor:format] is
+// [enum@Gio.ZlibCompressorFormat.GZIP], the compressor will set the OS code of
+// the gzip header to this value.
+//
+// If the value is unset, zlib will set the OS code depending on the platform.
+// This may be undesirable when reproducible output is desired. In that case setting
+// the OS code to `3` (for Unix) is recommended.
+func (x *ZlibCompressor) GetPropertyOs() int {
+	var v gobject.Value
+	x.GetProperty("os", &v)
+	return v.GetInt()
+}
+
 // This is the main operation used when converting data. It is to be called
 // multiple times in a loop, and each time it will do some work, i.e.
 // producing some output (in @outbuf) or consuming some input (from @inbuf) or
@@ -201,7 +259,7 @@ func (c *ZlibCompressor) SetGoPointer(ptr uintptr) {
 // at a partial multibyte sequence). Converters are supposed to try
 // to produce as much output as possible and then return an error
 // (typically %G_IO_ERROR_PARTIAL_INPUT).
-func (x *ZlibCompressor) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar uint, BytesWrittenVar uint) (ConverterResult, error) {
+func (x *ZlibCompressor) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar *uint, BytesWrittenVar *uint) (ConverterResult, error) {
 	var cerr *glib.Error
 
 	cret := XGConverterConvert(x.GoPointer(), InbufVar, InbufSizeVar, OutbufVar, OutbufSizeVar, FlagsVar, BytesReadVar, BytesWrittenVar, &cerr)

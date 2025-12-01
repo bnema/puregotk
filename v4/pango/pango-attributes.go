@@ -38,7 +38,7 @@ func (x *AttrClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideCopy sets the callback function.
+// OverrideCopy sets the "copy" callback function.
 // function to duplicate an attribute of this type
 //
 //	(see [method@Pango.Attribute.copy])
@@ -52,7 +52,7 @@ func (x *AttrClass) OverrideCopy(cb func(*Attribute) *Attribute) {
 	}
 }
 
-// GetCopy gets the callback function.
+// GetCopy gets the "copy" callback function.
 // function to duplicate an attribute of this type
 //
 //	(see [method@Pango.Attribute.copy])
@@ -67,7 +67,7 @@ func (x *AttrClass) GetCopy() func(*Attribute) *Attribute {
 	}
 }
 
-// OverrideDestroy sets the callback function.
+// OverrideDestroy sets the "destroy" callback function.
 // function to free an attribute of this type
 //
 //	(see [method@Pango.Attribute.destroy])
@@ -81,7 +81,7 @@ func (x *AttrClass) OverrideDestroy(cb func(*Attribute)) {
 	}
 }
 
-// GetDestroy gets the callback function.
+// GetDestroy gets the "destroy" callback function.
 // function to free an attribute of this type
 //
 //	(see [method@Pango.Attribute.destroy])
@@ -96,7 +96,7 @@ func (x *AttrClass) GetDestroy() func(*Attribute) {
 	}
 }
 
-// OverrideEqual sets the callback function.
+// OverrideEqual sets the "equal" callback function.
 // function to check two attributes of this type for equality
 //
 //	(see [method@Pango.Attribute.equal])
@@ -110,7 +110,7 @@ func (x *AttrClass) OverrideEqual(cb func(*Attribute, *Attribute) bool) {
 	}
 }
 
-// GetEqual gets the callback function.
+// GetEqual gets the "equal" callback function.
 // function to check two attributes of this type for equality
 //
 //	(see [method@Pango.Attribute.equal])
@@ -277,7 +277,7 @@ func (x *AttrIterator) Next() bool {
 	return cret
 }
 
-var xAttrIteratorRange func(uintptr, int, int)
+var xAttrIteratorRange func(uintptr, *int, *int)
 
 // Get the range of the current segment.
 //
@@ -285,7 +285,7 @@ var xAttrIteratorRange func(uintptr, int, int)
 // like the values in `PangoAttribute`. To deal with this API
 // oversight, stored return values that wouldn't fit into
 // a signed integer are clamped to %G_MAXINT.
-func (x *AttrIterator) Range(StartVar int, EndVar int) {
+func (x *AttrIterator) Range(StartVar *int, EndVar *int) {
 
 	xAttrIteratorRange(x.GoPointer(), StartVar, EndVar)
 

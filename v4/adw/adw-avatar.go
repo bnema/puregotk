@@ -221,6 +221,88 @@ func (c *Avatar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyIconName sets the "icon-name" property.
+// The name of an icon to use as a fallback.
+//
+// If no name is set, `avatar-default-symbolic` will be used.
+func (x *Avatar) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The name of an icon to use as a fallback.
+//
+// If no name is set, `avatar-default-symbolic` will be used.
+func (x *Avatar) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyShowInitials sets the "show-initials" property.
+// Whether initials are used instead of an icon on the fallback avatar.
+//
+// See [property@Avatar:icon-name] for how to change the fallback icon.
+func (x *Avatar) SetPropertyShowInitials(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-initials", &v)
+}
+
+// GetPropertyShowInitials gets the "show-initials" property.
+// Whether initials are used instead of an icon on the fallback avatar.
+//
+// See [property@Avatar:icon-name] for how to change the fallback icon.
+func (x *Avatar) GetPropertyShowInitials() bool {
+	var v gobject.Value
+	x.GetProperty("show-initials", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySize sets the "size" property.
+// The size of the avatar.
+func (x *Avatar) SetPropertySize(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("size", &v)
+}
+
+// GetPropertySize gets the "size" property.
+// The size of the avatar.
+func (x *Avatar) GetPropertySize() int {
+	var v gobject.Value
+	x.GetProperty("size", &v)
+	return v.GetInt()
+}
+
+// SetPropertyText sets the "text" property.
+// Sets the text used to generate the fallback initials and color.
+//
+// It's only used to generate the color if [property@Avatar:show-initials] is
+// `FALSE`.
+func (x *Avatar) SetPropertyText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("text", &v)
+}
+
+// GetPropertyText gets the "text" property.
+// Sets the text used to generate the fallback initials and color.
+//
+// It's only used to generate the color if [property@Avatar:show-initials] is
+// `FALSE`.
+func (x *Avatar) GetPropertyText() string {
+	var v gobject.Value
+	x.GetProperty("text", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -278,7 +360,7 @@ func (x *Avatar) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Avatar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Avatar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

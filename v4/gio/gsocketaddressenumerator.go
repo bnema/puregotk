@@ -29,7 +29,7 @@ func (x *SocketAddressEnumeratorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideNext sets the callback function.
+// OverrideNext sets the "next" callback function.
 // Virtual method for g_socket_address_enumerator_next().
 func (x *SocketAddressEnumeratorClass) OverrideNext(cb func(*SocketAddressEnumerator, *Cancellable) *SocketAddress) {
 	if cb == nil {
@@ -45,7 +45,7 @@ func (x *SocketAddressEnumeratorClass) OverrideNext(cb func(*SocketAddressEnumer
 	}
 }
 
-// GetNext gets the callback function.
+// GetNext gets the "next" callback function.
 // Virtual method for g_socket_address_enumerator_next().
 func (x *SocketAddressEnumeratorClass) GetNext() func(*SocketAddressEnumerator, *Cancellable) *SocketAddress {
 	if x.xNext == 0 {
@@ -64,7 +64,7 @@ func (x *SocketAddressEnumeratorClass) GetNext() func(*SocketAddressEnumerator, 
 	}
 }
 
-// OverrideNextAsync sets the callback function.
+// OverrideNextAsync sets the "next_async" callback function.
 // Virtual method for g_socket_address_enumerator_next_async().
 func (x *SocketAddressEnumeratorClass) OverrideNextAsync(cb func(*SocketAddressEnumerator, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -76,7 +76,7 @@ func (x *SocketAddressEnumeratorClass) OverrideNextAsync(cb func(*SocketAddressE
 	}
 }
 
-// GetNextAsync gets the callback function.
+// GetNextAsync gets the "next_async" callback function.
 // Virtual method for g_socket_address_enumerator_next_async().
 func (x *SocketAddressEnumeratorClass) GetNextAsync() func(*SocketAddressEnumerator, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xNextAsync == 0 {
@@ -89,7 +89,7 @@ func (x *SocketAddressEnumeratorClass) GetNextAsync() func(*SocketAddressEnumera
 	}
 }
 
-// OverrideNextFinish sets the callback function.
+// OverrideNextFinish sets the "next_finish" callback function.
 // Virtual method for g_socket_address_enumerator_next_finish().
 func (x *SocketAddressEnumeratorClass) OverrideNextFinish(cb func(*SocketAddressEnumerator, AsyncResult) *SocketAddress) {
 	if cb == nil {
@@ -105,7 +105,7 @@ func (x *SocketAddressEnumeratorClass) OverrideNextFinish(cb func(*SocketAddress
 	}
 }
 
-// GetNextFinish gets the callback function.
+// GetNextFinish gets the "next_finish" callback function.
 // Virtual method for g_socket_address_enumerator_next_finish().
 func (x *SocketAddressEnumeratorClass) GetNextFinish() func(*SocketAddressEnumerator, AsyncResult) *SocketAddress {
 	if x.xNextFinish == 0 {

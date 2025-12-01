@@ -53,7 +53,7 @@ func (x *TlsDatabaseClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideVerifyChain sets the callback function.
+// OverrideVerifyChain sets the "verify_chain" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_verify_chain().
@@ -67,7 +67,7 @@ func (x *TlsDatabaseClass) OverrideVerifyChain(cb func(*TlsDatabase, *TlsCertifi
 	}
 }
 
-// GetVerifyChain gets the callback function.
+// GetVerifyChain gets the "verify_chain" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_verify_chain().
@@ -82,7 +82,7 @@ func (x *TlsDatabaseClass) GetVerifyChain() func(*TlsDatabase, *TlsCertificate, 
 	}
 }
 
-// OverrideVerifyChainAsync sets the callback function.
+// OverrideVerifyChainAsync sets the "verify_chain_async" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_verify_chain_async().
@@ -96,7 +96,7 @@ func (x *TlsDatabaseClass) OverrideVerifyChainAsync(cb func(*TlsDatabase, *TlsCe
 	}
 }
 
-// GetVerifyChainAsync gets the callback function.
+// GetVerifyChainAsync gets the "verify_chain_async" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_verify_chain_async().
@@ -111,7 +111,7 @@ func (x *TlsDatabaseClass) GetVerifyChainAsync() func(*TlsDatabase, *TlsCertific
 	}
 }
 
-// OverrideVerifyChainFinish sets the callback function.
+// OverrideVerifyChainFinish sets the "verify_chain_finish" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_verify_chain_finish().
@@ -125,7 +125,7 @@ func (x *TlsDatabaseClass) OverrideVerifyChainFinish(cb func(*TlsDatabase, Async
 	}
 }
 
-// GetVerifyChainFinish gets the callback function.
+// GetVerifyChainFinish gets the "verify_chain_finish" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_verify_chain_finish().
@@ -140,7 +140,7 @@ func (x *TlsDatabaseClass) GetVerifyChainFinish() func(*TlsDatabase, AsyncResult
 	}
 }
 
-// OverrideCreateCertificateHandle sets the callback function.
+// OverrideCreateCertificateHandle sets the "create_certificate_handle" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_create_certificate_handle().
@@ -154,7 +154,7 @@ func (x *TlsDatabaseClass) OverrideCreateCertificateHandle(cb func(*TlsDatabase,
 	}
 }
 
-// GetCreateCertificateHandle gets the callback function.
+// GetCreateCertificateHandle gets the "create_certificate_handle" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_create_certificate_handle().
@@ -169,7 +169,7 @@ func (x *TlsDatabaseClass) GetCreateCertificateHandle() func(*TlsDatabase, *TlsC
 	}
 }
 
-// OverrideLookupCertificateForHandle sets the callback function.
+// OverrideLookupCertificateForHandle sets the "lookup_certificate_for_handle" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_for_handle().
@@ -187,7 +187,7 @@ func (x *TlsDatabaseClass) OverrideLookupCertificateForHandle(cb func(*TlsDataba
 	}
 }
 
-// GetLookupCertificateForHandle gets the callback function.
+// GetLookupCertificateForHandle gets the "lookup_certificate_for_handle" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_for_handle().
@@ -208,7 +208,7 @@ func (x *TlsDatabaseClass) GetLookupCertificateForHandle() func(*TlsDatabase, st
 	}
 }
 
-// OverrideLookupCertificateForHandleAsync sets the callback function.
+// OverrideLookupCertificateForHandleAsync sets the "lookup_certificate_for_handle_async" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_for_handle_async().
@@ -222,7 +222,7 @@ func (x *TlsDatabaseClass) OverrideLookupCertificateForHandleAsync(cb func(*TlsD
 	}
 }
 
-// GetLookupCertificateForHandleAsync gets the callback function.
+// GetLookupCertificateForHandleAsync gets the "lookup_certificate_for_handle_async" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_for_handle_async().
@@ -237,7 +237,7 @@ func (x *TlsDatabaseClass) GetLookupCertificateForHandleAsync() func(*TlsDatabas
 	}
 }
 
-// OverrideLookupCertificateForHandleFinish sets the callback function.
+// OverrideLookupCertificateForHandleFinish sets the "lookup_certificate_for_handle_finish" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_for_handle_finish().
@@ -255,7 +255,7 @@ func (x *TlsDatabaseClass) OverrideLookupCertificateForHandleFinish(cb func(*Tls
 	}
 }
 
-// GetLookupCertificateForHandleFinish gets the callback function.
+// GetLookupCertificateForHandleFinish gets the "lookup_certificate_for_handle_finish" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_for_handle_finish().
@@ -276,7 +276,7 @@ func (x *TlsDatabaseClass) GetLookupCertificateForHandleFinish() func(*TlsDataba
 	}
 }
 
-// OverrideLookupCertificateIssuer sets the callback function.
+// OverrideLookupCertificateIssuer sets the "lookup_certificate_issuer" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_issuer().
@@ -294,7 +294,7 @@ func (x *TlsDatabaseClass) OverrideLookupCertificateIssuer(cb func(*TlsDatabase,
 	}
 }
 
-// GetLookupCertificateIssuer gets the callback function.
+// GetLookupCertificateIssuer gets the "lookup_certificate_issuer" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_issuer().
@@ -315,7 +315,7 @@ func (x *TlsDatabaseClass) GetLookupCertificateIssuer() func(*TlsDatabase, *TlsC
 	}
 }
 
-// OverrideLookupCertificateIssuerAsync sets the callback function.
+// OverrideLookupCertificateIssuerAsync sets the "lookup_certificate_issuer_async" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_issuer_async().
@@ -329,7 +329,7 @@ func (x *TlsDatabaseClass) OverrideLookupCertificateIssuerAsync(cb func(*TlsData
 	}
 }
 
-// GetLookupCertificateIssuerAsync gets the callback function.
+// GetLookupCertificateIssuerAsync gets the "lookup_certificate_issuer_async" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_issuer_async().
@@ -344,7 +344,7 @@ func (x *TlsDatabaseClass) GetLookupCertificateIssuerAsync() func(*TlsDatabase, 
 	}
 }
 
-// OverrideLookupCertificateIssuerFinish sets the callback function.
+// OverrideLookupCertificateIssuerFinish sets the "lookup_certificate_issuer_finish" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_issuer_finish().
@@ -362,7 +362,7 @@ func (x *TlsDatabaseClass) OverrideLookupCertificateIssuerFinish(cb func(*TlsDat
 	}
 }
 
-// GetLookupCertificateIssuerFinish gets the callback function.
+// GetLookupCertificateIssuerFinish gets the "lookup_certificate_issuer_finish" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificate_issuer_finish().
@@ -383,7 +383,7 @@ func (x *TlsDatabaseClass) GetLookupCertificateIssuerFinish() func(*TlsDatabase,
 	}
 }
 
-// OverrideLookupCertificatesIssuedBy sets the callback function.
+// OverrideLookupCertificatesIssuedBy sets the "lookup_certificates_issued_by" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificates_issued_by().
@@ -397,7 +397,7 @@ func (x *TlsDatabaseClass) OverrideLookupCertificatesIssuedBy(cb func(*TlsDataba
 	}
 }
 
-// GetLookupCertificatesIssuedBy gets the callback function.
+// GetLookupCertificatesIssuedBy gets the "lookup_certificates_issued_by" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificates_issued_by().
@@ -412,7 +412,7 @@ func (x *TlsDatabaseClass) GetLookupCertificatesIssuedBy() func(*TlsDatabase, []
 	}
 }
 
-// OverrideLookupCertificatesIssuedByAsync sets the callback function.
+// OverrideLookupCertificatesIssuedByAsync sets the "lookup_certificates_issued_by_async" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificates_issued_by_async().
@@ -426,7 +426,7 @@ func (x *TlsDatabaseClass) OverrideLookupCertificatesIssuedByAsync(cb func(*TlsD
 	}
 }
 
-// GetLookupCertificatesIssuedByAsync gets the callback function.
+// GetLookupCertificatesIssuedByAsync gets the "lookup_certificates_issued_by_async" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificates_issued_by_async().
@@ -441,7 +441,7 @@ func (x *TlsDatabaseClass) GetLookupCertificatesIssuedByAsync() func(*TlsDatabas
 	}
 }
 
-// OverrideLookupCertificatesIssuedByFinish sets the callback function.
+// OverrideLookupCertificatesIssuedByFinish sets the "lookup_certificates_issued_by_finish" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificates_issued_by_finish().
@@ -455,7 +455,7 @@ func (x *TlsDatabaseClass) OverrideLookupCertificatesIssuedByFinish(cb func(*Tls
 	}
 }
 
-// GetLookupCertificatesIssuedByFinish gets the callback function.
+// GetLookupCertificatesIssuedByFinish gets the "lookup_certificates_issued_by_finish" callback function.
 // Virtual method implementing
 //
 //	g_tls_database_lookup_certificates_issued_by_finish().

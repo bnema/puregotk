@@ -143,6 +143,52 @@ func (c *Switch) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActive sets the "active" property.
+// Whether the `GtkSwitch` widget is in its on or off state.
+func (x *Switch) SetPropertyActive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("active", &v)
+}
+
+// GetPropertyActive gets the "active" property.
+// Whether the `GtkSwitch` widget is in its on or off state.
+func (x *Switch) GetPropertyActive() bool {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyState sets the "state" property.
+// The backend state that is controlled by the switch.
+//
+// Applications should usually set the [property@Gtk.Switch:active] property,
+// except when indicating a change to the backend state which occurs
+// separately from the user's interaction.
+//
+// See [signal@Gtk.Switch::state-set] for details.
+func (x *Switch) SetPropertyState(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("state", &v)
+}
+
+// GetPropertyState gets the "state" property.
+// The backend state that is controlled by the switch.
+//
+// Applications should usually set the [property@Gtk.Switch:active] property,
+// except when indicating a change to the backend state which occurs
+// separately from the user's interaction.
+//
+// See [signal@Gtk.Switch::state-set] for details.
+func (x *Switch) GetPropertyState() bool {
+	var v gobject.Value
+	x.GetProperty("state", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to animate the switch.
 //
 // Applications should never connect to this signal,
@@ -253,7 +299,7 @@ func (x *Switch) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Switch) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Switch) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

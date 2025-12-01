@@ -112,6 +112,14 @@ func (c *FlattenListModel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *FlattenListModel) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is
@@ -208,7 +216,7 @@ func (x *FlattenListModel) ItemsChanged(PositionVar uint, RemovedVar uint, Added
 //
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
-func (x *FlattenListModel) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+func (x *FlattenListModel) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 

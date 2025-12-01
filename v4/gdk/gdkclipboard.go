@@ -118,12 +118,12 @@ func (x *Clipboard) ReadAsync(MimeTypesVar []string, IoPriorityVar int, Cancella
 
 }
 
-var xClipboardReadFinish func(uintptr, uintptr, string, **glib.Error) uintptr
+var xClipboardReadFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
 
 // Finishes an asynchronous clipboard read.
 //
 // See [method@Gdk.Clipboard.read_async].
-func (x *Clipboard) ReadFinish(ResultVar gio.AsyncResult, OutMimeTypeVar string) (*gio.InputStream, error) {
+func (x *Clipboard) ReadFinish(ResultVar gio.AsyncResult, OutMimeTypeVar *string) (*gio.InputStream, error) {
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
@@ -356,6 +356,22 @@ func (c *Clipboard) GoPointer() uintptr {
 
 func (c *Clipboard) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyFormats gets the "formats" property.
+// The possible formats that the clipboard can provide its data in.
+func (x *Clipboard) GetPropertyFormats() uintptr {
+	var v gobject.Value
+	x.GetProperty("formats", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyLocal gets the "local" property.
+// %TRUE if the contents of the clipboard are owned by this process.
+func (x *Clipboard) GetPropertyLocal() bool {
+	var v gobject.Value
+	x.GetProperty("local", &v)
+	return v.GetBoolean()
 }
 
 // Emitted when the clipboard changes ownership.

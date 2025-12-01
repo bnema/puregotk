@@ -269,6 +269,67 @@ func (c *TreeExpander) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyHideExpander sets the "hide-expander" property.
+// Whether the expander icon should be hidden in a GtkTreeListRow.
+// Note that this property simply hides the icon.  The actions and keybinding
+// (i.e. collapse and expand) are not affected by this property.
+//
+// A common use for this property would be to bind to the number of children in a
+// GtkTreeListRow's model in order to hide the expander when a row has no children.
+func (x *TreeExpander) SetPropertyHideExpander(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("hide-expander", &v)
+}
+
+// GetPropertyHideExpander gets the "hide-expander" property.
+// Whether the expander icon should be hidden in a GtkTreeListRow.
+// Note that this property simply hides the icon.  The actions and keybinding
+// (i.e. collapse and expand) are not affected by this property.
+//
+// A common use for this property would be to bind to the number of children in a
+// GtkTreeListRow's model in order to hide the expander when a row has no children.
+func (x *TreeExpander) GetPropertyHideExpander() bool {
+	var v gobject.Value
+	x.GetProperty("hide-expander", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIndentForDepth sets the "indent-for-depth" property.
+// TreeExpander indents the child according to its depth.
+func (x *TreeExpander) SetPropertyIndentForDepth(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("indent-for-depth", &v)
+}
+
+// GetPropertyIndentForDepth gets the "indent-for-depth" property.
+// TreeExpander indents the child according to its depth.
+func (x *TreeExpander) GetPropertyIndentForDepth() bool {
+	var v gobject.Value
+	x.GetProperty("indent-for-depth", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIndentForIcon sets the "indent-for-icon" property.
+// TreeExpander indents the child by the width of an expander-icon if it is not expandable.
+func (x *TreeExpander) SetPropertyIndentForIcon(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("indent-for-icon", &v)
+}
+
+// GetPropertyIndentForIcon gets the "indent-for-icon" property.
+// TreeExpander indents the child by the width of an expander-icon if it is not expandable.
+func (x *TreeExpander) GetPropertyIndentForIcon() bool {
+	var v gobject.Value
+	x.GetProperty("indent-for-icon", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -326,7 +387,7 @@ func (x *TreeExpander) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *TreeExpander) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *TreeExpander) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

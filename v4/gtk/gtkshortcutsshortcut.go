@@ -85,6 +85,184 @@ func (c *ShortcutsShortcut) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAccelerator sets the "accelerator" property.
+// The accelerator(s) represented by this object.
+//
+// This property is used if [property@Gtk.ShortcutsShortcut:shortcut-type]
+// is set to %GTK_SHORTCUT_ACCELERATOR.
+//
+// The syntax of this property is (an extension of) the syntax understood
+// by [func@Gtk.accelerator_parse]. Multiple accelerators can be specified
+// by separating them with a space, but keep in mind that the available width
+// is limited.
+//
+// It is also possible to specify ranges of shortcuts, using `...` between
+// the keys. Sequences of keys can be specified using a `+` or `&amp;` between
+// the keys.
+//
+// Examples:
+//
+// - A single shortcut: `&lt;ctl&gt;&lt;alt&gt;delete`
+// - Two alternative shortcuts: `&lt;shift&gt;a Home`
+// - A range of shortcuts: `&lt;alt&gt;1...&lt;alt&gt;9`
+// - Several keys pressed together: `Control_L&amp;Control_R`
+// - A sequence of shortcuts or keys: `&lt;ctl&gt;c+&lt;ctl&gt;x`
+//
+// Use "+" instead of "&amp;" when the keys may (or have to be) pressed
+// sequentially (e.g use "t+t" for 'press the t key twice').
+//
+// Note that `&lt;`, `&gt;` and `&amp;` need to be escaped as `&amp;lt;`, `&amp;gt`; and `&amp;amp`; when used
+// in .ui files.
+func (x *ShortcutsShortcut) SetPropertyAccelerator(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("accelerator", &v)
+}
+
+// GetPropertyAccelerator gets the "accelerator" property.
+// The accelerator(s) represented by this object.
+//
+// This property is used if [property@Gtk.ShortcutsShortcut:shortcut-type]
+// is set to %GTK_SHORTCUT_ACCELERATOR.
+//
+// The syntax of this property is (an extension of) the syntax understood
+// by [func@Gtk.accelerator_parse]. Multiple accelerators can be specified
+// by separating them with a space, but keep in mind that the available width
+// is limited.
+//
+// It is also possible to specify ranges of shortcuts, using `...` between
+// the keys. Sequences of keys can be specified using a `+` or `&amp;` between
+// the keys.
+//
+// Examples:
+//
+// - A single shortcut: `&lt;ctl&gt;&lt;alt&gt;delete`
+// - Two alternative shortcuts: `&lt;shift&gt;a Home`
+// - A range of shortcuts: `&lt;alt&gt;1...&lt;alt&gt;9`
+// - Several keys pressed together: `Control_L&amp;Control_R`
+// - A sequence of shortcuts or keys: `&lt;ctl&gt;c+&lt;ctl&gt;x`
+//
+// Use "+" instead of "&amp;" when the keys may (or have to be) pressed
+// sequentially (e.g use "t+t" for 'press the t key twice').
+//
+// Note that `&lt;`, `&gt;` and `&amp;` need to be escaped as `&amp;lt;`, `&amp;gt`; and `&amp;amp`; when used
+// in .ui files.
+func (x *ShortcutsShortcut) GetPropertyAccelerator() string {
+	var v gobject.Value
+	x.GetProperty("accelerator", &v)
+	return v.GetString()
+}
+
+// SetPropertyActionName sets the "action-name" property.
+// A detailed action name.
+//
+// If this is set for a shortcut of type %GTK_SHORTCUT_ACCELERATOR,
+// then GTK will use the accelerators that are associated with the
+// action via [method@Gtk.Application.set_accels_for_action], and
+// setting [property@Gtk.ShortcutsShortcut:accelerator] is not necessary.
+func (x *ShortcutsShortcut) SetPropertyActionName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("action-name", &v)
+}
+
+// GetPropertyActionName gets the "action-name" property.
+// A detailed action name.
+//
+// If this is set for a shortcut of type %GTK_SHORTCUT_ACCELERATOR,
+// then GTK will use the accelerators that are associated with the
+// action via [method@Gtk.Application.set_accels_for_action], and
+// setting [property@Gtk.ShortcutsShortcut:accelerator] is not necessary.
+func (x *ShortcutsShortcut) GetPropertyActionName() string {
+	var v gobject.Value
+	x.GetProperty("action-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyIconSet sets the "icon-set" property.
+// %TRUE if an icon has been set.
+func (x *ShortcutsShortcut) SetPropertyIconSet(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("icon-set", &v)
+}
+
+// GetPropertyIconSet gets the "icon-set" property.
+// %TRUE if an icon has been set.
+func (x *ShortcutsShortcut) GetPropertyIconSet() bool {
+	var v gobject.Value
+	x.GetProperty("icon-set", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySubtitle sets the "subtitle" property.
+// The subtitle for the shortcut or gesture.
+//
+// This is typically used for gestures and should be a short, one-line
+// text that describes the gesture itself. For the predefined gesture
+// types, GTK provides a subtitle on its own.
+func (x *ShortcutsShortcut) SetPropertySubtitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("subtitle", &v)
+}
+
+// GetPropertySubtitle gets the "subtitle" property.
+// The subtitle for the shortcut or gesture.
+//
+// This is typically used for gestures and should be a short, one-line
+// text that describes the gesture itself. For the predefined gesture
+// types, GTK provides a subtitle on its own.
+func (x *ShortcutsShortcut) GetPropertySubtitle() string {
+	var v gobject.Value
+	x.GetProperty("subtitle", &v)
+	return v.GetString()
+}
+
+// SetPropertySubtitleSet sets the "subtitle-set" property.
+// %TRUE if a subtitle has been set.
+func (x *ShortcutsShortcut) SetPropertySubtitleSet(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("subtitle-set", &v)
+}
+
+// GetPropertySubtitleSet gets the "subtitle-set" property.
+// %TRUE if a subtitle has been set.
+func (x *ShortcutsShortcut) GetPropertySubtitleSet() bool {
+	var v gobject.Value
+	x.GetProperty("subtitle-set", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The textual description for the shortcut or gesture represented by
+// this object.
+//
+// This should be a short string that can fit in a single line.
+func (x *ShortcutsShortcut) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The textual description for the shortcut or gesture represented by
+// this object.
+//
+// This should be a short string that can fit in a single line.
+func (x *ShortcutsShortcut) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -142,7 +320,7 @@ func (x *ShortcutsShortcut) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ShortcutsShortcut) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ShortcutsShortcut) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

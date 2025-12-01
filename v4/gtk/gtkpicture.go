@@ -436,6 +436,59 @@ func (c *Picture) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAlternativeText sets the "alternative-text" property.
+// The alternative textual description for the picture.
+func (x *Picture) SetPropertyAlternativeText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("alternative-text", &v)
+}
+
+// GetPropertyAlternativeText gets the "alternative-text" property.
+// The alternative textual description for the picture.
+func (x *Picture) GetPropertyAlternativeText() string {
+	var v gobject.Value
+	x.GetProperty("alternative-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyCanShrink sets the "can-shrink" property.
+// If the `GtkPicture` can be made smaller than the natural size of its contents.
+func (x *Picture) SetPropertyCanShrink(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-shrink", &v)
+}
+
+// GetPropertyCanShrink gets the "can-shrink" property.
+// If the `GtkPicture` can be made smaller than the natural size of its contents.
+func (x *Picture) GetPropertyCanShrink() bool {
+	var v gobject.Value
+	x.GetProperty("can-shrink", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyKeepAspectRatio sets the "keep-aspect-ratio" property.
+// Whether the GtkPicture will render its contents trying to preserve the aspect
+// ratio.
+func (x *Picture) SetPropertyKeepAspectRatio(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("keep-aspect-ratio", &v)
+}
+
+// GetPropertyKeepAspectRatio gets the "keep-aspect-ratio" property.
+// Whether the GtkPicture will render its contents trying to preserve the aspect
+// ratio.
+func (x *Picture) GetPropertyKeepAspectRatio() bool {
+	var v gobject.Value
+	x.GetProperty("keep-aspect-ratio", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -493,7 +546,7 @@ func (x *Picture) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Picture) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Picture) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

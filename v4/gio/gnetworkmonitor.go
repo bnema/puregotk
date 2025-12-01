@@ -31,7 +31,7 @@ func (x *NetworkMonitorInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideNetworkChanged sets the callback function.
+// OverrideNetworkChanged sets the "network_changed" callback function.
 // the virtual function pointer for the
 //
 //	GNetworkMonitor::network-changed signal.
@@ -45,7 +45,7 @@ func (x *NetworkMonitorInterface) OverrideNetworkChanged(cb func(NetworkMonitor,
 	}
 }
 
-// GetNetworkChanged gets the callback function.
+// GetNetworkChanged gets the "network_changed" callback function.
 // the virtual function pointer for the
 //
 //	GNetworkMonitor::network-changed signal.
@@ -60,7 +60,7 @@ func (x *NetworkMonitorInterface) GetNetworkChanged() func(NetworkMonitor, bool)
 	}
 }
 
-// OverrideCanReach sets the callback function.
+// OverrideCanReach sets the "can_reach" callback function.
 // the virtual function pointer for g_network_monitor_can_reach()
 func (x *NetworkMonitorInterface) OverrideCanReach(cb func(NetworkMonitor, SocketConnectable, *Cancellable) bool) {
 	if cb == nil {
@@ -72,7 +72,7 @@ func (x *NetworkMonitorInterface) OverrideCanReach(cb func(NetworkMonitor, Socke
 	}
 }
 
-// GetCanReach gets the callback function.
+// GetCanReach gets the "can_reach" callback function.
 // the virtual function pointer for g_network_monitor_can_reach()
 func (x *NetworkMonitorInterface) GetCanReach() func(NetworkMonitor, SocketConnectable, *Cancellable) bool {
 	if x.xCanReach == 0 {
@@ -85,7 +85,7 @@ func (x *NetworkMonitorInterface) GetCanReach() func(NetworkMonitor, SocketConne
 	}
 }
 
-// OverrideCanReachAsync sets the callback function.
+// OverrideCanReachAsync sets the "can_reach_async" callback function.
 // the virtual function pointer for
 //
 //	g_network_monitor_can_reach_async()
@@ -99,7 +99,7 @@ func (x *NetworkMonitorInterface) OverrideCanReachAsync(cb func(NetworkMonitor, 
 	}
 }
 
-// GetCanReachAsync gets the callback function.
+// GetCanReachAsync gets the "can_reach_async" callback function.
 // the virtual function pointer for
 //
 //	g_network_monitor_can_reach_async()
@@ -114,7 +114,7 @@ func (x *NetworkMonitorInterface) GetCanReachAsync() func(NetworkMonitor, Socket
 	}
 }
 
-// OverrideCanReachFinish sets the callback function.
+// OverrideCanReachFinish sets the "can_reach_finish" callback function.
 // the virtual function pointer for
 //
 //	g_network_monitor_can_reach_finish()
@@ -128,7 +128,7 @@ func (x *NetworkMonitorInterface) OverrideCanReachFinish(cb func(NetworkMonitor,
 	}
 }
 
-// GetCanReachFinish gets the callback function.
+// GetCanReachFinish gets the "can_reach_finish" callback function.
 // the virtual function pointer for
 //
 //	g_network_monitor_can_reach_finish()
@@ -278,6 +278,62 @@ func (x *NetworkMonitorBase) GetNetworkMetered() bool {
 
 	cret := XGNetworkMonitorGetNetworkMetered(x.GoPointer())
 	return cret
+}
+
+// GetPropertyNetworkAvailable gets the "network-available" property.
+// Whether the network is considered available. That is, whether the
+// system has a default route for at least one of IPv4 or IPv6.
+//
+// Real-world networks are of course much more complicated than
+// this; the machine may be connected to a wifi hotspot that
+// requires payment before allowing traffic through, or may be
+// connected to a functioning router that has lost its own upstream
+// connectivity. Some hosts might only be accessible when a VPN is
+// active. Other hosts might only be accessible when the VPN is
+// not active. Thus, it is best to use g_network_monitor_can_reach()
+// or g_network_monitor_can_reach_async() to test for reachability
+// on a host-by-host basis. (On the other hand, when the property is
+// %FALSE, the application can reasonably expect that no remote
+// hosts at all are reachable, and should indicate this to the user
+// in its UI.)
+//
+// See also #GNetworkMonitor::network-changed.
+func (x *NetworkMonitorBase) GetPropertyNetworkAvailable() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("network-available", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNetworkMetered gets the "network-metered" property.
+// Whether the network is considered metered.
+//
+// That is, whether the
+// system has traffic flowing through the default connection that is
+// subject to limitations set by service providers. For example, traffic
+// might be billed by the amount of data transmitted, or there might be a
+// quota on the amount of traffic per month. This is typical with tethered
+// connections (3G and 4G) and in such situations, bandwidth intensive
+// applications may wish to avoid network activity where possible if it will
+// cost the user money or use up their limited quota. Anything more than a
+// few hundreds of kilobytes of data usage per hour should be avoided without
+// asking permission from the user.
+//
+// If more information is required about specific devices then the
+// system network management API should be used instead (for example,
+// NetworkManager or ConnMan).
+//
+// If this information is not available then no networks will be
+// marked as metered.
+//
+// See also #GNetworkMonitor:network-available.
+func (x *NetworkMonitorBase) GetPropertyNetworkMetered() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("network-metered", &v)
+	return v.GetBoolean()
 }
 
 var XGNetworkMonitorCanReach func(uintptr, uintptr, uintptr, **glib.Error) bool

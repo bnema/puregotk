@@ -36,7 +36,7 @@ func (x *DatagramBasedInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideReceiveMessages sets the callback function.
+// OverrideReceiveMessages sets the "receive_messages" callback function.
 // Virtual method for g_datagram_based_receive_messages().
 func (x *DatagramBasedInterface) OverrideReceiveMessages(cb func(DatagramBased, []InputMessage, uint, int, int64, *Cancellable) int) {
 	if cb == nil {
@@ -48,7 +48,7 @@ func (x *DatagramBasedInterface) OverrideReceiveMessages(cb func(DatagramBased, 
 	}
 }
 
-// GetReceiveMessages gets the callback function.
+// GetReceiveMessages gets the "receive_messages" callback function.
 // Virtual method for g_datagram_based_receive_messages().
 func (x *DatagramBasedInterface) GetReceiveMessages() func(DatagramBased, []InputMessage, uint, int, int64, *Cancellable) int {
 	if x.xReceiveMessages == 0 {
@@ -61,7 +61,7 @@ func (x *DatagramBasedInterface) GetReceiveMessages() func(DatagramBased, []Inpu
 	}
 }
 
-// OverrideSendMessages sets the callback function.
+// OverrideSendMessages sets the "send_messages" callback function.
 // Virtual method for g_datagram_based_send_messages().
 func (x *DatagramBasedInterface) OverrideSendMessages(cb func(DatagramBased, []OutputMessage, uint, int, int64, *Cancellable) int) {
 	if cb == nil {
@@ -73,7 +73,7 @@ func (x *DatagramBasedInterface) OverrideSendMessages(cb func(DatagramBased, []O
 	}
 }
 
-// GetSendMessages gets the callback function.
+// GetSendMessages gets the "send_messages" callback function.
 // Virtual method for g_datagram_based_send_messages().
 func (x *DatagramBasedInterface) GetSendMessages() func(DatagramBased, []OutputMessage, uint, int, int64, *Cancellable) int {
 	if x.xSendMessages == 0 {
@@ -86,7 +86,7 @@ func (x *DatagramBasedInterface) GetSendMessages() func(DatagramBased, []OutputM
 	}
 }
 
-// OverrideCreateSource sets the callback function.
+// OverrideCreateSource sets the "create_source" callback function.
 // Virtual method for g_datagram_based_create_source().
 func (x *DatagramBasedInterface) OverrideCreateSource(cb func(DatagramBased, glib.IOCondition, *Cancellable) *glib.Source) {
 	if cb == nil {
@@ -98,7 +98,7 @@ func (x *DatagramBasedInterface) OverrideCreateSource(cb func(DatagramBased, gli
 	}
 }
 
-// GetCreateSource gets the callback function.
+// GetCreateSource gets the "create_source" callback function.
 // Virtual method for g_datagram_based_create_source().
 func (x *DatagramBasedInterface) GetCreateSource() func(DatagramBased, glib.IOCondition, *Cancellable) *glib.Source {
 	if x.xCreateSource == 0 {
@@ -111,7 +111,7 @@ func (x *DatagramBasedInterface) GetCreateSource() func(DatagramBased, glib.IOCo
 	}
 }
 
-// OverrideConditionCheck sets the callback function.
+// OverrideConditionCheck sets the "condition_check" callback function.
 // Virtual method for g_datagram_based_condition_check().
 func (x *DatagramBasedInterface) OverrideConditionCheck(cb func(DatagramBased, glib.IOCondition) glib.IOCondition) {
 	if cb == nil {
@@ -123,7 +123,7 @@ func (x *DatagramBasedInterface) OverrideConditionCheck(cb func(DatagramBased, g
 	}
 }
 
-// GetConditionCheck gets the callback function.
+// GetConditionCheck gets the "condition_check" callback function.
 // Virtual method for g_datagram_based_condition_check().
 func (x *DatagramBasedInterface) GetConditionCheck() func(DatagramBased, glib.IOCondition) glib.IOCondition {
 	if x.xConditionCheck == 0 {
@@ -136,7 +136,7 @@ func (x *DatagramBasedInterface) GetConditionCheck() func(DatagramBased, glib.IO
 	}
 }
 
-// OverrideConditionWait sets the callback function.
+// OverrideConditionWait sets the "condition_wait" callback function.
 // Virtual method for
 //
 //	g_datagram_based_condition_wait().
@@ -150,7 +150,7 @@ func (x *DatagramBasedInterface) OverrideConditionWait(cb func(DatagramBased, gl
 	}
 }
 
-// GetConditionWait gets the callback function.
+// GetConditionWait gets the "condition_wait" callback function.
 // Virtual method for
 //
 //	g_datagram_based_condition_wait().

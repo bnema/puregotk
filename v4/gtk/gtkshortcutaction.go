@@ -298,6 +298,23 @@ func (c *NamedAction) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActionName sets the "action-name" property.
+// The name of the action to activate.
+func (x *NamedAction) SetPropertyActionName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("action-name", &v)
+}
+
+// GetPropertyActionName gets the "action-name" property.
+// The name of the action to activate.
+func (x *NamedAction) GetPropertyActionName() string {
+	var v gobject.Value
+	x.GetProperty("action-name", &v)
+	return v.GetString()
+}
+
 // Does nothing.
 type NothingAction struct {
 	ShortcutAction
@@ -524,6 +541,23 @@ func (c *SignalAction) GoPointer() uintptr {
 
 func (c *SignalAction) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertySignalName sets the "signal-name" property.
+// The name of the signal to emit.
+func (x *SignalAction) SetPropertySignalName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("signal-name", &v)
+}
+
+// GetPropertySignalName gets the "signal-name" property.
+// The name of the signal to emit.
+func (x *SignalAction) GetPropertySignalName() string {
+	var v gobject.Value
+	x.GetProperty("signal-name", &v)
+	return v.GetString()
 }
 
 func init() {

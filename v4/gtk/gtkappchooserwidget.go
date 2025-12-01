@@ -200,6 +200,140 @@ func (c *AppChooserWidget) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDefaultText sets the "default-text" property.
+// The text that appears in the widget when there are no applications
+// for the given content type.
+func (x *AppChooserWidget) SetPropertyDefaultText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("default-text", &v)
+}
+
+// GetPropertyDefaultText gets the "default-text" property.
+// The text that appears in the widget when there are no applications
+// for the given content type.
+func (x *AppChooserWidget) GetPropertyDefaultText() string {
+	var v gobject.Value
+	x.GetProperty("default-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyShowAll sets the "show-all" property.
+// If %TRUE, the app chooser presents all applications
+// in a single list, without subsections for default,
+// recommended or related applications.
+func (x *AppChooserWidget) SetPropertyShowAll(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-all", &v)
+}
+
+// GetPropertyShowAll gets the "show-all" property.
+// If %TRUE, the app chooser presents all applications
+// in a single list, without subsections for default,
+// recommended or related applications.
+func (x *AppChooserWidget) GetPropertyShowAll() bool {
+	var v gobject.Value
+	x.GetProperty("show-all", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowDefault sets the "show-default" property.
+// Determines whether the app chooser should show the default
+// handler for the content type in a separate section.
+//
+// If %FALSE, the default handler is listed among the recommended
+// applications.
+func (x *AppChooserWidget) SetPropertyShowDefault(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-default", &v)
+}
+
+// GetPropertyShowDefault gets the "show-default" property.
+// Determines whether the app chooser should show the default
+// handler for the content type in a separate section.
+//
+// If %FALSE, the default handler is listed among the recommended
+// applications.
+func (x *AppChooserWidget) GetPropertyShowDefault() bool {
+	var v gobject.Value
+	x.GetProperty("show-default", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowFallback sets the "show-fallback" property.
+// Determines whether the app chooser should show a section
+// for fallback applications.
+//
+// If %FALSE, the fallback applications are listed among the
+// other applications.
+func (x *AppChooserWidget) SetPropertyShowFallback(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-fallback", &v)
+}
+
+// GetPropertyShowFallback gets the "show-fallback" property.
+// Determines whether the app chooser should show a section
+// for fallback applications.
+//
+// If %FALSE, the fallback applications are listed among the
+// other applications.
+func (x *AppChooserWidget) GetPropertyShowFallback() bool {
+	var v gobject.Value
+	x.GetProperty("show-fallback", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowOther sets the "show-other" property.
+// Determines whether the app chooser should show a section
+// for other applications.
+func (x *AppChooserWidget) SetPropertyShowOther(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-other", &v)
+}
+
+// GetPropertyShowOther gets the "show-other" property.
+// Determines whether the app chooser should show a section
+// for other applications.
+func (x *AppChooserWidget) GetPropertyShowOther() bool {
+	var v gobject.Value
+	x.GetProperty("show-other", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowRecommended sets the "show-recommended" property.
+// Determines whether the app chooser should show a section
+// for recommended applications.
+//
+// If %FALSE, the recommended applications are listed
+// among the other applications.
+func (x *AppChooserWidget) SetPropertyShowRecommended(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-recommended", &v)
+}
+
+// GetPropertyShowRecommended gets the "show-recommended" property.
+// Determines whether the app chooser should show a section
+// for recommended applications.
+//
+// If %FALSE, the recommended applications are listed
+// among the other applications.
+func (x *AppChooserWidget) GetPropertyShowRecommended() bool {
+	var v gobject.Value
+	x.GetProperty("show-recommended", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when an application item is activated from the widget's list.
 //
 // This usually happens when the user double clicks an item, or an item
@@ -301,7 +435,7 @@ func (x *AppChooserWidget) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AppChooserWidget) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *AppChooserWidget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

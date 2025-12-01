@@ -378,6 +378,151 @@ func (c *EntryCompletion) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyInlineCompletion sets the "inline-completion" property.
+// Determines whether the common prefix of the possible completions
+// should be inserted automatically in the entry.
+//
+// Note that this requires text-column to be set, even if you are
+// using a custom match function.
+func (x *EntryCompletion) SetPropertyInlineCompletion(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("inline-completion", &v)
+}
+
+// GetPropertyInlineCompletion gets the "inline-completion" property.
+// Determines whether the common prefix of the possible completions
+// should be inserted automatically in the entry.
+//
+// Note that this requires text-column to be set, even if you are
+// using a custom match function.
+func (x *EntryCompletion) GetPropertyInlineCompletion() bool {
+	var v gobject.Value
+	x.GetProperty("inline-completion", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyInlineSelection sets the "inline-selection" property.
+// Determines whether the possible completions on the popup
+// will appear in the entry as you navigate through them.
+func (x *EntryCompletion) SetPropertyInlineSelection(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("inline-selection", &v)
+}
+
+// GetPropertyInlineSelection gets the "inline-selection" property.
+// Determines whether the possible completions on the popup
+// will appear in the entry as you navigate through them.
+func (x *EntryCompletion) GetPropertyInlineSelection() bool {
+	var v gobject.Value
+	x.GetProperty("inline-selection", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMinimumKeyLength sets the "minimum-key-length" property.
+// The minimum key length as set for completion.
+func (x *EntryCompletion) SetPropertyMinimumKeyLength(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("minimum-key-length", &v)
+}
+
+// GetPropertyMinimumKeyLength gets the "minimum-key-length" property.
+// The minimum key length as set for completion.
+func (x *EntryCompletion) GetPropertyMinimumKeyLength() int {
+	var v gobject.Value
+	x.GetProperty("minimum-key-length", &v)
+	return v.GetInt()
+}
+
+// SetPropertyPopupCompletion sets the "popup-completion" property.
+// Determines whether the possible completions should be
+// shown in a popup window.
+func (x *EntryCompletion) SetPropertyPopupCompletion(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("popup-completion", &v)
+}
+
+// GetPropertyPopupCompletion gets the "popup-completion" property.
+// Determines whether the possible completions should be
+// shown in a popup window.
+func (x *EntryCompletion) GetPropertyPopupCompletion() bool {
+	var v gobject.Value
+	x.GetProperty("popup-completion", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPopupSetWidth sets the "popup-set-width" property.
+// Determines whether the completions popup window will be
+// resized to the width of the entry.
+func (x *EntryCompletion) SetPropertyPopupSetWidth(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("popup-set-width", &v)
+}
+
+// GetPropertyPopupSetWidth gets the "popup-set-width" property.
+// Determines whether the completions popup window will be
+// resized to the width of the entry.
+func (x *EntryCompletion) GetPropertyPopupSetWidth() bool {
+	var v gobject.Value
+	x.GetProperty("popup-set-width", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPopupSingleMatch sets the "popup-single-match" property.
+// Determines whether the completions popup window will shown
+// for a single possible completion.
+//
+// You probably want to set this to %FALSE if you are using
+// [property@Gtk.EntryCompletion:inline-completion].
+func (x *EntryCompletion) SetPropertyPopupSingleMatch(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("popup-single-match", &v)
+}
+
+// GetPropertyPopupSingleMatch gets the "popup-single-match" property.
+// Determines whether the completions popup window will shown
+// for a single possible completion.
+//
+// You probably want to set this to %FALSE if you are using
+// [property@Gtk.EntryCompletion:inline-completion].
+func (x *EntryCompletion) GetPropertyPopupSingleMatch() bool {
+	var v gobject.Value
+	x.GetProperty("popup-single-match", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTextColumn sets the "text-column" property.
+// The column of the model containing the strings.
+//
+// Note that the strings must be UTF-8.
+func (x *EntryCompletion) SetPropertyTextColumn(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("text-column", &v)
+}
+
+// GetPropertyTextColumn gets the "text-column" property.
+// The column of the model containing the strings.
+//
+// Note that the strings must be UTF-8.
+func (x *EntryCompletion) GetPropertyTextColumn() int {
+	var v gobject.Value
+	x.GetProperty("text-column", &v)
+	return v.GetInt()
+}
+
 // Emitted when a match from the cursor is on a match of the list.
 //
 // The default behaviour is to replace the contents

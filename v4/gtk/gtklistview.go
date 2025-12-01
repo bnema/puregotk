@@ -362,6 +362,57 @@ func (c *ListView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEnableRubberband sets the "enable-rubberband" property.
+// Allow rubberband selection.
+func (x *ListView) SetPropertyEnableRubberband(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-rubberband", &v)
+}
+
+// GetPropertyEnableRubberband gets the "enable-rubberband" property.
+// Allow rubberband selection.
+func (x *ListView) GetPropertyEnableRubberband() bool {
+	var v gobject.Value
+	x.GetProperty("enable-rubberband", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowSeparators sets the "show-separators" property.
+// Show separators between rows.
+func (x *ListView) SetPropertyShowSeparators(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-separators", &v)
+}
+
+// GetPropertyShowSeparators gets the "show-separators" property.
+// Show separators between rows.
+func (x *ListView) GetPropertyShowSeparators() bool {
+	var v gobject.Value
+	x.GetProperty("show-separators", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySingleClickActivate sets the "single-click-activate" property.
+// Activate rows on single click and select them on hover.
+func (x *ListView) SetPropertySingleClickActivate(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("single-click-activate", &v)
+}
+
+// GetPropertySingleClickActivate gets the "single-click-activate" property.
+// Activate rows on single click and select them on hover.
+func (x *ListView) GetPropertySingleClickActivate() bool {
+	var v gobject.Value
+	x.GetProperty("single-click-activate", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when a row has been activated by the user.
 //
 // Activation usually happens via the list.activate-item action of
@@ -446,7 +497,7 @@ func (x *ListView) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ListView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ListView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

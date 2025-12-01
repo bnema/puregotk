@@ -21,7 +21,7 @@ import (
 //
 // This function may fail and return `NULL`, in which case
 // the fallback cursor will be used.
-type CursorGetTextureCallback func(uintptr, int, float64, int, int, int, int, uintptr) uintptr
+type CursorGetTextureCallback func(uintptr, int, float64, *int, *int, *int, *int, uintptr) uintptr
 
 // Used to create and destroy cursors.
 //
@@ -260,6 +260,61 @@ func (c *Cursor) GoPointer() uintptr {
 
 func (c *Cursor) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyHotspotX sets the "hotspot-x" property.
+// X position of the cursor hotspot in the cursor image.
+func (x *Cursor) SetPropertyHotspotX(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("hotspot-x", &v)
+}
+
+// GetPropertyHotspotX gets the "hotspot-x" property.
+// X position of the cursor hotspot in the cursor image.
+func (x *Cursor) GetPropertyHotspotX() int {
+	var v gobject.Value
+	x.GetProperty("hotspot-x", &v)
+	return v.GetInt()
+}
+
+// SetPropertyHotspotY sets the "hotspot-y" property.
+// Y position of the cursor hotspot in the cursor image.
+func (x *Cursor) SetPropertyHotspotY(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("hotspot-y", &v)
+}
+
+// GetPropertyHotspotY gets the "hotspot-y" property.
+// Y position of the cursor hotspot in the cursor image.
+func (x *Cursor) GetPropertyHotspotY() int {
+	var v gobject.Value
+	x.GetProperty("hotspot-y", &v)
+	return v.GetInt()
+}
+
+// SetPropertyName sets the "name" property.
+// Name of this this cursor.
+//
+// The name will be %NULL if the cursor was created from a texture.
+func (x *Cursor) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// Name of this this cursor.
+//
+// The name will be %NULL if the cursor was created from a texture.
+func (x *Cursor) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
 }
 
 func init() {

@@ -145,14 +145,14 @@ func (x *Gesture) GetBoundingBox(RectVar *gdk.Rectangle) bool {
 	return cret
 }
 
-var xGestureGetBoundingBoxCenter func(uintptr, float64, float64) bool
+var xGestureGetBoundingBoxCenter func(uintptr, *float64, *float64) bool
 
 // If there are touch sequences being currently handled by @gesture,
 // returns %TRUE and fills in @x and @y with the center of the bounding
 // box containing all active touches.
 //
 // Otherwise, %FALSE will be returned.
-func (x *Gesture) GetBoundingBoxCenter(XVar float64, YVar float64) bool {
+func (x *Gesture) GetBoundingBoxCenter(XVar *float64, YVar *float64) bool {
 
 	cret := xGestureGetBoundingBoxCenter(x.GoPointer(), XVar, YVar)
 	return cret
@@ -217,14 +217,14 @@ func (x *Gesture) GetLastUpdatedSequence() *gdk.EventSequence {
 	return cret
 }
 
-var xGestureGetPoint func(uintptr, *gdk.EventSequence, float64, float64) bool
+var xGestureGetPoint func(uintptr, *gdk.EventSequence, *float64, *float64) bool
 
 // If @sequence is currently being interpreted by @gesture,
 // returns %TRUE and fills in @x and @y with the last coordinates
 // stored for that event sequence.
 //
 // The coordinates are always relative to the widget allocation.
-func (x *Gesture) GetPoint(SequenceVar *gdk.EventSequence, XVar float64, YVar float64) bool {
+func (x *Gesture) GetPoint(SequenceVar *gdk.EventSequence, XVar *float64, YVar *float64) bool {
 
 	cret := xGestureGetPoint(x.GoPointer(), SequenceVar, XVar, YVar)
 	return cret
@@ -446,6 +446,25 @@ func (c *Gesture) GoPointer() uintptr {
 
 func (c *Gesture) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyNPoints sets the "n-points" property.
+// The number of touch points that trigger
+// recognition on this gesture.
+func (x *Gesture) SetPropertyNPoints(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("n-points", &v)
+}
+
+// GetPropertyNPoints gets the "n-points" property.
+// The number of touch points that trigger
+// recognition on this gesture.
+func (x *Gesture) GetPropertyNPoints() uint {
+	var v gobject.Value
+	x.GetProperty("n-points", &v)
+	return v.GetUint()
 }
 
 // Emitted when the gesture is recognized.

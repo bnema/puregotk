@@ -53,7 +53,7 @@ func (x *ListBoxRowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideActivate sets the callback function.
+// OverrideActivate sets the "activate" callback function.
 func (x *ListBoxRowClass) OverrideActivate(cb func(*ListBoxRow)) {
 	if cb == nil {
 		x.xActivate = 0
@@ -64,7 +64,7 @@ func (x *ListBoxRowClass) OverrideActivate(cb func(*ListBoxRow)) {
 	}
 }
 
-// GetActivate gets the callback function.
+// GetActivate gets the "activate" callback function.
 func (x *ListBoxRowClass) GetActivate() func(*ListBoxRow) {
 	if x.xActivate == 0 {
 		return nil
@@ -648,6 +648,59 @@ func (c *ListBox) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAcceptUnpairedRelease sets the "accept-unpaired-release" property.
+// Whether to accept unpaired release events.
+func (x *ListBox) SetPropertyAcceptUnpairedRelease(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("accept-unpaired-release", &v)
+}
+
+// GetPropertyAcceptUnpairedRelease gets the "accept-unpaired-release" property.
+// Whether to accept unpaired release events.
+func (x *ListBox) GetPropertyAcceptUnpairedRelease() bool {
+	var v gobject.Value
+	x.GetProperty("accept-unpaired-release", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyActivateOnSingleClick sets the "activate-on-single-click" property.
+// Determines whether children can be activated with a single
+// click, or require a double-click.
+func (x *ListBox) SetPropertyActivateOnSingleClick(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activate-on-single-click", &v)
+}
+
+// GetPropertyActivateOnSingleClick gets the "activate-on-single-click" property.
+// Determines whether children can be activated with a single
+// click, or require a double-click.
+func (x *ListBox) GetPropertyActivateOnSingleClick() bool {
+	var v gobject.Value
+	x.GetProperty("activate-on-single-click", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowSeparators sets the "show-separators" property.
+// Whether to show separators between rows.
+func (x *ListBox) SetPropertyShowSeparators(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-separators", &v)
+}
+
+// GetPropertyShowSeparators gets the "show-separators" property.
+// Whether to show separators between rows.
+func (x *ListBox) GetPropertyShowSeparators() bool {
+	var v gobject.Value
+	x.GetProperty("show-separators", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when the cursor row is activated.
 func (x *ListBox) ConnectActivateCursorRow(cb *func(ListBox)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
@@ -893,7 +946,7 @@ func (x *ListBox) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ListBox) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ListBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -1305,6 +1358,42 @@ func (c *ListBoxRow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActivatable sets the "activatable" property.
+// Determines whether the ::row-activated
+// signal will be emitted for this row.
+func (x *ListBoxRow) SetPropertyActivatable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activatable", &v)
+}
+
+// GetPropertyActivatable gets the "activatable" property.
+// Determines whether the ::row-activated
+// signal will be emitted for this row.
+func (x *ListBoxRow) GetPropertyActivatable() bool {
+	var v gobject.Value
+	x.GetProperty("activatable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySelectable sets the "selectable" property.
+// Determines whether this row can be selected.
+func (x *ListBoxRow) SetPropertySelectable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("selectable", &v)
+}
+
+// GetPropertySelectable gets the "selectable" property.
+// Determines whether this row can be selected.
+func (x *ListBoxRow) GetPropertySelectable() bool {
+	var v gobject.Value
+	x.GetProperty("selectable", &v)
+	return v.GetBoolean()
+}
+
 // This is a keybinding signal, which will cause this row to be activated.
 //
 // If you want to be notified when the user activates a row (by key or not),
@@ -1386,7 +1475,7 @@ func (x *ListBoxRow) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ListBoxRow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ListBoxRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

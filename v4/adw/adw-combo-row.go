@@ -369,6 +369,89 @@ func (c *ComboRow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEnableSearch sets the "enable-search" property.
+// Whether to show a search entry in the popup.
+//
+// If set to `TRUE`, a search entry will be shown in the popup that
+// allows to search for items in the list.
+//
+// Search requires [property@ComboRow:expression] to be set.
+func (x *ComboRow) SetPropertyEnableSearch(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-search", &v)
+}
+
+// GetPropertyEnableSearch gets the "enable-search" property.
+// Whether to show a search entry in the popup.
+//
+// If set to `TRUE`, a search entry will be shown in the popup that
+// allows to search for items in the list.
+//
+// Search requires [property@ComboRow:expression] to be set.
+func (x *ComboRow) GetPropertyEnableSearch() bool {
+	var v gobject.Value
+	x.GetProperty("enable-search", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySelected sets the "selected" property.
+// The position of the selected item.
+//
+// If no item is selected, the property has the value
+// [const@Gtk.INVALID_LIST_POSITION]
+func (x *ComboRow) SetPropertySelected(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("selected", &v)
+}
+
+// GetPropertySelected gets the "selected" property.
+// The position of the selected item.
+//
+// If no item is selected, the property has the value
+// [const@Gtk.INVALID_LIST_POSITION]
+func (x *ComboRow) GetPropertySelected() uint {
+	var v gobject.Value
+	x.GetProperty("selected", &v)
+	return v.GetUint()
+}
+
+// SetPropertyUseSubtitle sets the "use-subtitle" property.
+// Whether to use the current value as the subtitle.
+//
+// If you use a custom list item factory, you will need to give the row a
+// name conversion expression with [property@ComboRow:expression].
+//
+// If set to `TRUE`, you should not access [property@ActionRow:subtitle].
+//
+// The subtitle is interpreted as Pango markup if
+// [property@PreferencesRow:use-markup] is set to `TRUE`.
+func (x *ComboRow) SetPropertyUseSubtitle(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-subtitle", &v)
+}
+
+// GetPropertyUseSubtitle gets the "use-subtitle" property.
+// Whether to use the current value as the subtitle.
+//
+// If you use a custom list item factory, you will need to give the row a
+// name conversion expression with [property@ComboRow:expression].
+//
+// If set to `TRUE`, you should not access [property@ActionRow:subtitle].
+//
+// The subtitle is interpreted as Pango markup if
+// [property@PreferencesRow:use-markup] is set to `TRUE`.
+func (x *ComboRow) GetPropertyUseSubtitle() bool {
+	var v gobject.Value
+	x.GetProperty("use-subtitle", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -426,7 +509,7 @@ func (x *ComboRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ComboRow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ComboRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

@@ -297,6 +297,56 @@ func (c *Binding) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertySourceProperty sets the "source-property" property.
+// The name of the property of #GBinding:source that should be used
+// as the source of the binding.
+//
+// This should be in [canonical form][canonical-parameter-names] to get the
+// best performance.
+func (x *Binding) SetPropertySourceProperty(value string) {
+	var v Value
+	v.Init(TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("source-property", &v)
+}
+
+// GetPropertySourceProperty gets the "source-property" property.
+// The name of the property of #GBinding:source that should be used
+// as the source of the binding.
+//
+// This should be in [canonical form][canonical-parameter-names] to get the
+// best performance.
+func (x *Binding) GetPropertySourceProperty() string {
+	var v Value
+	x.GetProperty("source-property", &v)
+	return v.GetString()
+}
+
+// SetPropertyTargetProperty sets the "target-property" property.
+// The name of the property of #GBinding:target that should be used
+// as the target of the binding.
+//
+// This should be in [canonical form][canonical-parameter-names] to get the
+// best performance.
+func (x *Binding) SetPropertyTargetProperty(value string) {
+	var v Value
+	v.Init(TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("target-property", &v)
+}
+
+// GetPropertyTargetProperty gets the "target-property" property.
+// The name of the property of #GBinding:target that should be used
+// as the target of the binding.
+//
+// This should be in [canonical form][canonical-parameter-names] to get the
+// best performance.
+func (x *Binding) GetPropertyTargetProperty() string {
+	var v Value
+	x.GetProperty("target-property", &v)
+	return v.GetString()
+}
+
 func init() {
 	core.SetPackageName("GOBJECT", "gobject-2.0")
 	core.SetSharedLibraries("GOBJECT", []string{"libgobject-2.0.so.0"})

@@ -200,7 +200,7 @@ func (x *Printer) GetDescription() string {
 	return cret
 }
 
-var xPrinterGetHardMargins func(uintptr, float64, float64, float64, float64) bool
+var xPrinterGetHardMargins func(uintptr, *float64, *float64, *float64, *float64) bool
 
 // Retrieve the hard margins of @printer.
 //
@@ -210,13 +210,13 @@ var xPrinterGetHardMargins func(uintptr, float64, float64, float64, float64) boo
 // Note: This will not succeed unless the printer’s details are
 // available, see [method@Gtk.Printer.has_details] and
 // [method@Gtk.Printer.request_details].
-func (x *Printer) GetHardMargins(TopVar float64, BottomVar float64, LeftVar float64, RightVar float64) bool {
+func (x *Printer) GetHardMargins(TopVar *float64, BottomVar *float64, LeftVar *float64, RightVar *float64) bool {
 
 	cret := xPrinterGetHardMargins(x.GoPointer(), TopVar, BottomVar, LeftVar, RightVar)
 	return cret
 }
 
-var xPrinterGetHardMarginsForPaperSize func(uintptr, *PaperSize, float64, float64, float64, float64) bool
+var xPrinterGetHardMarginsForPaperSize func(uintptr, *PaperSize, *float64, *float64, *float64, *float64) bool
 
 // Retrieve the hard margins of @printer for @paper_size.
 //
@@ -226,7 +226,7 @@ var xPrinterGetHardMarginsForPaperSize func(uintptr, *PaperSize, float64, float6
 // Note: This will not succeed unless the printer’s details are
 // available, see [method@Gtk.Printer.has_details] and
 // [method@Gtk.Printer.request_details].
-func (x *Printer) GetHardMarginsForPaperSize(PaperSizeVar *PaperSize, TopVar float64, BottomVar float64, LeftVar float64, RightVar float64) bool {
+func (x *Printer) GetHardMarginsForPaperSize(PaperSizeVar *PaperSize, TopVar *float64, BottomVar *float64, LeftVar *float64, RightVar *float64) bool {
 
 	cret := xPrinterGetHardMarginsForPaperSize(x.GoPointer(), PaperSizeVar, TopVar, BottomVar, LeftVar, RightVar)
 	return cret
@@ -373,6 +373,125 @@ func (c *Printer) GoPointer() uintptr {
 
 func (c *Printer) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyAcceptingJobs gets the "accepting-jobs" property.
+// %TRUE if the printer is accepting jobs.
+func (x *Printer) GetPropertyAcceptingJobs() bool {
+	var v gobject.Value
+	x.GetProperty("accepting-jobs", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAcceptsPdf sets the "accepts-pdf" property.
+// %TRUE if this printer can accept PDF.
+func (x *Printer) SetPropertyAcceptsPdf(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("accepts-pdf", &v)
+}
+
+// GetPropertyAcceptsPdf gets the "accepts-pdf" property.
+// %TRUE if this printer can accept PDF.
+func (x *Printer) GetPropertyAcceptsPdf() bool {
+	var v gobject.Value
+	x.GetProperty("accepts-pdf", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAcceptsPs sets the "accepts-ps" property.
+// %TRUE if this printer can accept PostScript.
+func (x *Printer) SetPropertyAcceptsPs(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("accepts-ps", &v)
+}
+
+// GetPropertyAcceptsPs gets the "accepts-ps" property.
+// %TRUE if this printer can accept PostScript.
+func (x *Printer) GetPropertyAcceptsPs() bool {
+	var v gobject.Value
+	x.GetProperty("accepts-ps", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// Icon name to use for the printer.
+func (x *Printer) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyIsVirtual sets the "is-virtual" property.
+// %FALSE if this represents a real hardware device.
+func (x *Printer) SetPropertyIsVirtual(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("is-virtual", &v)
+}
+
+// GetPropertyIsVirtual gets the "is-virtual" property.
+// %FALSE if this represents a real hardware device.
+func (x *Printer) GetPropertyIsVirtual() bool {
+	var v gobject.Value
+	x.GetProperty("is-virtual", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyJobCount gets the "job-count" property.
+// Number of jobs queued in the printer.
+func (x *Printer) GetPropertyJobCount() int {
+	var v gobject.Value
+	x.GetProperty("job-count", &v)
+	return v.GetInt()
+}
+
+// GetPropertyLocation gets the "location" property.
+// Information about the location of the printer.
+func (x *Printer) GetPropertyLocation() string {
+	var v gobject.Value
+	x.GetProperty("location", &v)
+	return v.GetString()
+}
+
+// SetPropertyName sets the "name" property.
+// The name of the printer.
+func (x *Printer) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The name of the printer.
+func (x *Printer) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// GetPropertyPaused gets the "paused" property.
+// %TRUE if this printer is paused.
+//
+// A paused printer still accepts jobs, but it does
+// not print them.
+func (x *Printer) GetPropertyPaused() bool {
+	var v gobject.Value
+	x.GetProperty("paused", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyStateMessage gets the "state-message" property.
+// String giving the current status of the printer.
+func (x *Printer) GetPropertyStateMessage() string {
+	var v gobject.Value
+	x.GetProperty("state-message", &v)
+	return v.GetString()
 }
 
 // Emitted in response to a request for detailed information

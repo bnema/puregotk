@@ -37,7 +37,7 @@ func (x *SocketServiceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideIncoming sets the callback function.
+// OverrideIncoming sets the "incoming" callback function.
 // signal emitted when new connections are accepted
 func (x *SocketServiceClass) OverrideIncoming(cb func(*SocketService, *SocketConnection, *gobject.Object) bool) {
 	if cb == nil {
@@ -49,7 +49,7 @@ func (x *SocketServiceClass) OverrideIncoming(cb func(*SocketService, *SocketCon
 	}
 }
 
-// GetIncoming gets the callback function.
+// GetIncoming gets the "incoming" callback function.
 // signal emitted when new connections are accepted
 func (x *SocketServiceClass) GetIncoming() func(*SocketService, *SocketConnection, *gobject.Object) bool {
 	if x.xIncoming == 0 {
@@ -62,7 +62,7 @@ func (x *SocketServiceClass) GetIncoming() func(*SocketService, *SocketConnectio
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *SocketServiceClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -73,7 +73,7 @@ func (x *SocketServiceClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *SocketServiceClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -85,7 +85,7 @@ func (x *SocketServiceClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *SocketServiceClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -96,7 +96,7 @@ func (x *SocketServiceClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *SocketServiceClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -108,7 +108,7 @@ func (x *SocketServiceClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *SocketServiceClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -119,7 +119,7 @@ func (x *SocketServiceClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *SocketServiceClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -131,7 +131,7 @@ func (x *SocketServiceClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *SocketServiceClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -142,7 +142,7 @@ func (x *SocketServiceClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *SocketServiceClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -154,7 +154,7 @@ func (x *SocketServiceClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *SocketServiceClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -165,7 +165,7 @@ func (x *SocketServiceClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *SocketServiceClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -177,7 +177,7 @@ func (x *SocketServiceClass) GetGReserved5() func() {
 	}
 }
 
-// OverrideGReserved6 sets the callback function.
+// OverrideGReserved6 sets the "_g_reserved6" callback function.
 func (x *SocketServiceClass) OverrideGReserved6(cb func()) {
 	if cb == nil {
 		x.xGReserved6 = 0
@@ -188,7 +188,7 @@ func (x *SocketServiceClass) OverrideGReserved6(cb func()) {
 	}
 }
 
-// GetGReserved6 gets the callback function.
+// GetGReserved6 gets the "_g_reserved6" callback function.
 func (x *SocketServiceClass) GetGReserved6() func() {
 	if x.xGReserved6 == 0 {
 		return nil
@@ -331,6 +331,23 @@ func (c *SocketService) GoPointer() uintptr {
 
 func (c *SocketService) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyActive sets the "active" property.
+// Whether the service is currently accepting connections.
+func (x *SocketService) SetPropertyActive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("active", &v)
+}
+
+// GetPropertyActive gets the "active" property.
+// Whether the service is currently accepting connections.
+func (x *SocketService) GetPropertyActive() bool {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetBoolean()
 }
 
 // The ::incoming signal is emitted when a new incoming connection

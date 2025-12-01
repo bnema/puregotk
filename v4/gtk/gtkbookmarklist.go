@@ -137,6 +137,73 @@ func (c *BookmarkList) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAttributes sets the "attributes" property.
+// The attributes to query.
+func (x *BookmarkList) SetPropertyAttributes(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("attributes", &v)
+}
+
+// GetPropertyAttributes gets the "attributes" property.
+// The attributes to query.
+func (x *BookmarkList) GetPropertyAttributes() string {
+	var v gobject.Value
+	x.GetProperty("attributes", &v)
+	return v.GetString()
+}
+
+// SetPropertyFilename sets the "filename" property.
+// The bookmark file to load.
+func (x *BookmarkList) SetPropertyFilename(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("filename", &v)
+}
+
+// GetPropertyFilename gets the "filename" property.
+// The bookmark file to load.
+func (x *BookmarkList) GetPropertyFilename() string {
+	var v gobject.Value
+	x.GetProperty("filename", &v)
+	return v.GetString()
+}
+
+// SetPropertyIoPriority sets the "io-priority" property.
+// Priority used when loading.
+func (x *BookmarkList) SetPropertyIoPriority(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("io-priority", &v)
+}
+
+// GetPropertyIoPriority gets the "io-priority" property.
+// Priority used when loading.
+func (x *BookmarkList) GetPropertyIoPriority() int {
+	var v gobject.Value
+	x.GetProperty("io-priority", &v)
+	return v.GetInt()
+}
+
+// GetPropertyLoading gets the "loading" property.
+// %TRUE if files are being loaded.
+func (x *BookmarkList) GetPropertyLoading() bool {
+	var v gobject.Value
+	x.GetProperty("loading", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *BookmarkList) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is

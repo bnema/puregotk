@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 	"github.com/jwijenbergh/puregotk/v4/gtk"
 )
@@ -476,6 +477,171 @@ func (c *WrapLayout) GoPointer() uintptr {
 
 func (c *WrapLayout) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAlign sets the "align" property.
+// The alignment of the children within each line.
+//
+// 0 means the children are placed at the start of the line, 1 means they are
+// placed at the end of the line. 0.5 means they are placed in the middle of
+// the line.
+//
+// Alignment is only used when [property@WrapLayout:justify] is set to
+// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [property@WrapLayout:justify-last-line] is `FALSE`.
+func (x *WrapLayout) SetPropertyAlign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("align", &v)
+}
+
+// GetPropertyAlign gets the "align" property.
+// The alignment of the children within each line.
+//
+// 0 means the children are placed at the start of the line, 1 means they are
+// placed at the end of the line. 0.5 means they are placed in the middle of
+// the line.
+//
+// Alignment is only used when [property@WrapLayout:justify] is set to
+// `ADW_JUSTIFY_NONE`, or on the last line when the
+// [property@WrapLayout:justify-last-line] is `FALSE`.
+func (x *WrapLayout) GetPropertyAlign() float32 {
+	var v gobject.Value
+	x.GetProperty("align", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyChildSpacing sets the "child-spacing" property.
+// The spacing between widgets on the same line.
+//
+// See [property@WrapLayout:child-spacing-unit].
+func (x *WrapLayout) SetPropertyChildSpacing(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("child-spacing", &v)
+}
+
+// GetPropertyChildSpacing gets the "child-spacing" property.
+// The spacing between widgets on the same line.
+//
+// See [property@WrapLayout:child-spacing-unit].
+func (x *WrapLayout) GetPropertyChildSpacing() int {
+	var v gobject.Value
+	x.GetProperty("child-spacing", &v)
+	return v.GetInt()
+}
+
+// SetPropertyJustifyLastLine sets the "justify-last-line" property.
+// Whether the last line should be stretched to fill the entire widget.
+//
+// See [property@WrapLayout:justify].
+func (x *WrapLayout) SetPropertyJustifyLastLine(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("justify-last-line", &v)
+}
+
+// GetPropertyJustifyLastLine gets the "justify-last-line" property.
+// Whether the last line should be stretched to fill the entire widget.
+//
+// See [property@WrapLayout:justify].
+func (x *WrapLayout) GetPropertyJustifyLastLine() bool {
+	var v gobject.Value
+	x.GetProperty("justify-last-line", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLineHomogeneous sets the "line-homogeneous" property.
+// Whether all lines should take the same amount of space.
+func (x *WrapLayout) SetPropertyLineHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("line-homogeneous", &v)
+}
+
+// GetPropertyLineHomogeneous gets the "line-homogeneous" property.
+// Whether all lines should take the same amount of space.
+func (x *WrapLayout) GetPropertyLineHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("line-homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLineSpacing sets the "line-spacing" property.
+// The spacing between lines.
+//
+// See [property@WrapLayout:line-spacing-unit].
+func (x *WrapLayout) SetPropertyLineSpacing(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("line-spacing", &v)
+}
+
+// GetPropertyLineSpacing gets the "line-spacing" property.
+// The spacing between lines.
+//
+// See [property@WrapLayout:line-spacing-unit].
+func (x *WrapLayout) GetPropertyLineSpacing() int {
+	var v gobject.Value
+	x.GetProperty("line-spacing", &v)
+	return v.GetInt()
+}
+
+// SetPropertyNaturalLineLength sets the "natural-line-length" property.
+// Determines the natural size for each line.
+//
+// It should be used to limit the line lengths, for example when used in
+// popovers.
+//
+// See [property@WrapLayout:natural-line-length-unit].
+func (x *WrapLayout) SetPropertyNaturalLineLength(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("natural-line-length", &v)
+}
+
+// GetPropertyNaturalLineLength gets the "natural-line-length" property.
+// Determines the natural size for each line.
+//
+// It should be used to limit the line lengths, for example when used in
+// popovers.
+//
+// See [property@WrapLayout:natural-line-length-unit].
+func (x *WrapLayout) GetPropertyNaturalLineLength() int {
+	var v gobject.Value
+	x.GetProperty("natural-line-length", &v)
+	return v.GetInt()
+}
+
+// SetPropertyWrapReverse sets the "wrap-reverse" property.
+// Whether wrap direction should be reversed.
+//
+// By default, lines wrap downwards in a horizontal box, and towards the end
+// in a vertical box. If set to `TRUE`, they wrap upwards or towards the start
+// respectively.
+func (x *WrapLayout) SetPropertyWrapReverse(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("wrap-reverse", &v)
+}
+
+// GetPropertyWrapReverse gets the "wrap-reverse" property.
+// Whether wrap direction should be reversed.
+//
+// By default, lines wrap downwards in a horizontal box, and towards the end
+// in a vertical box. If set to `TRUE`, they wrap upwards or towards the start
+// respectively.
+func (x *WrapLayout) GetPropertyWrapReverse() bool {
+	var v gobject.Value
+	x.GetProperty("wrap-reverse", &v)
+	return v.GetBoolean()
 }
 
 // Retrieves the orientation of the @orientable.

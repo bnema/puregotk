@@ -138,7 +138,7 @@ func (x *GlyphString) Free() {
 
 }
 
-var xGlyphStringGetLogicalWidths func(uintptr, string, int, int, []int)
+var xGlyphStringGetLogicalWidths func(uintptr, string, int, int, *[]int)
 
 // Given a `PangoGlyphString` and corresponding text, determine the width
 // corresponding to each character.
@@ -147,7 +147,7 @@ var xGlyphStringGetLogicalWidths func(uintptr, string, int, int, []int)
 // entire cluster is divided equally among the characters.
 //
 // See also [method@Pango.GlyphItem.get_logical_widths].
-func (x *GlyphString) GetLogicalWidths(TextVar string, LengthVar int, EmbeddingLevelVar int, LogicalWidthsVar []int) {
+func (x *GlyphString) GetLogicalWidths(TextVar string, LengthVar int, EmbeddingLevelVar int, LogicalWidthsVar *[]int) {
 
 	xGlyphStringGetLogicalWidths(x.GoPointer(), TextVar, LengthVar, EmbeddingLevelVar, LogicalWidthsVar)
 
@@ -167,7 +167,7 @@ func (x *GlyphString) GetWidth() int {
 	return cret
 }
 
-var xGlyphStringIndexToX func(uintptr, string, int, *Analysis, int, bool, int)
+var xGlyphStringIndexToX func(uintptr, string, int, *Analysis, int, bool, *int)
 
 // Converts from character position to x position.
 //
@@ -182,13 +182,13 @@ var xGlyphStringIndexToX func(uintptr, string, int, *Analysis, int, bool, int)
 //	&lt;img alt="Glyph positions" src="glyphstring-positions-light.png"&gt;
 //
 // &lt;/picture&gt;
-func (x *GlyphString) IndexToX(TextVar string, LengthVar int, AnalysisVar *Analysis, IndexVar int, TrailingVar bool, XPosVar int) {
+func (x *GlyphString) IndexToX(TextVar string, LengthVar int, AnalysisVar *Analysis, IndexVar int, TrailingVar bool, XPosVar *int) {
 
 	xGlyphStringIndexToX(x.GoPointer(), TextVar, LengthVar, AnalysisVar, IndexVar, TrailingVar, XPosVar)
 
 }
 
-var xGlyphStringIndexToXFull func(uintptr, string, int, *Analysis, *LogAttr, int, bool, int)
+var xGlyphStringIndexToXFull func(uintptr, string, int, *Analysis, *LogAttr, int, bool, *int)
 
 // Converts from character position to x position.
 //
@@ -196,7 +196,7 @@ var xGlyphStringIndexToXFull func(uintptr, string, int, *Analysis, *LogAttr, int
 // accepts a `PangoLogAttr` array. The grapheme boundary information
 // in it can be used to disambiguate positioning inside some complex
 // clusters.
-func (x *GlyphString) IndexToXFull(TextVar string, LengthVar int, AnalysisVar *Analysis, AttrsVar *LogAttr, IndexVar int, TrailingVar bool, XPosVar int) {
+func (x *GlyphString) IndexToXFull(TextVar string, LengthVar int, AnalysisVar *Analysis, AttrsVar *LogAttr, IndexVar int, TrailingVar bool, XPosVar *int) {
 
 	xGlyphStringIndexToXFull(x.GoPointer(), TextVar, LengthVar, AnalysisVar, AttrsVar, IndexVar, TrailingVar, XPosVar)
 
@@ -211,7 +211,7 @@ func (x *GlyphString) SetSize(NewLenVar int) {
 
 }
 
-var xGlyphStringXToIndex func(uintptr, string, int, *Analysis, int, int, int)
+var xGlyphStringXToIndex func(uintptr, string, int, *Analysis, int, *int, *int)
 
 // Convert from x offset to character position.
 //
@@ -220,7 +220,7 @@ var xGlyphStringXToIndex func(uintptr, string, int, *Analysis, int, int, int)
 // not allowed (such as Thai), the returned value may not be a valid
 // cursor position; the caller must combine the result with the logical
 // attributes for the text to compute the valid cursor position.
-func (x *GlyphString) XToIndex(TextVar string, LengthVar int, AnalysisVar *Analysis, XPosVar int, IndexVar int, TrailingVar int) {
+func (x *GlyphString) XToIndex(TextVar string, LengthVar int, AnalysisVar *Analysis, XPosVar int, IndexVar *int, TrailingVar *int) {
 
 	xGlyphStringXToIndex(x.GoPointer(), TextVar, LengthVar, AnalysisVar, XPosVar, IndexVar, TrailingVar)
 

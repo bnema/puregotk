@@ -161,6 +161,39 @@ func (c *ColumnViewCell) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFocusable sets the "focusable" property.
+// If the item can be focused with the keyboard.
+func (x *ColumnViewCell) SetPropertyFocusable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("focusable", &v)
+}
+
+// GetPropertyFocusable gets the "focusable" property.
+// If the item can be focused with the keyboard.
+func (x *ColumnViewCell) GetPropertyFocusable() bool {
+	var v gobject.Value
+	x.GetProperty("focusable", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyPosition gets the "position" property.
+// Position of the item.
+func (x *ColumnViewCell) GetPropertyPosition() uint {
+	var v gobject.Value
+	x.GetProperty("position", &v)
+	return v.GetUint()
+}
+
+// GetPropertySelected gets the "selected" property.
+// If the item is currently selected.
+func (x *ColumnViewCell) GetPropertySelected() bool {
+	var v gobject.Value
+	x.GetProperty("selected", &v)
+	return v.GetBoolean()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

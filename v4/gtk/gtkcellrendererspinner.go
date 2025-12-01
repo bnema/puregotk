@@ -65,6 +65,48 @@ func (c *CellRendererSpinner) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActive sets the "active" property.
+// Whether the spinner is active (ie. shown) in the cell
+func (x *CellRendererSpinner) SetPropertyActive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("active", &v)
+}
+
+// GetPropertyActive gets the "active" property.
+// Whether the spinner is active (ie. shown) in the cell
+func (x *CellRendererSpinner) GetPropertyActive() bool {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPulse sets the "pulse" property.
+// Pulse of the spinner. Increment this value to draw the next frame of the
+// spinner animation. Usually, you would update this value in a timeout.
+//
+// By default, the `GtkSpinner` widget draws one full cycle of the animation,
+// consisting of 12 frames, in 750 milliseconds.
+func (x *CellRendererSpinner) SetPropertyPulse(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("pulse", &v)
+}
+
+// GetPropertyPulse gets the "pulse" property.
+// Pulse of the spinner. Increment this value to draw the next frame of the
+// spinner animation. Usually, you would update this value in a timeout.
+//
+// By default, the `GtkSpinner` widget draws one full cycle of the animation,
+// consisting of 12 frames, in 750 milliseconds.
+func (x *CellRendererSpinner) GetPropertyPulse() uint {
+	var v gobject.Value
+	x.GetProperty("pulse", &v)
+	return v.GetUint()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

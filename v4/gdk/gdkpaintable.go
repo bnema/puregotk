@@ -41,7 +41,7 @@ func (x *PaintableInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideSnapshot sets the callback function.
+// OverrideSnapshot sets the "snapshot" callback function.
 // Snapshot the paintable. The given @width and @height are
 //
 //	guaranteed to be larger than 0.0. The resulting snapshot must modify
@@ -57,7 +57,7 @@ func (x *PaintableInterface) OverrideSnapshot(cb func(Paintable, *Snapshot, floa
 	}
 }
 
-// GetSnapshot gets the callback function.
+// GetSnapshot gets the "snapshot" callback function.
 // Snapshot the paintable. The given @width and @height are
 //
 //	guaranteed to be larger than 0.0. The resulting snapshot must modify
@@ -74,7 +74,7 @@ func (x *PaintableInterface) GetSnapshot() func(Paintable, *Snapshot, float64, f
 	}
 }
 
-// OverrideGetCurrentImage sets the callback function.
+// OverrideGetCurrentImage sets the "get_current_image" callback function.
 // return a `GdkPaintable` that does not change over
 //
 //	time. This means the `GDK_PAINTABLE_STATIC_SIZE` and
@@ -93,7 +93,7 @@ func (x *PaintableInterface) OverrideGetCurrentImage(cb func(Paintable) *Paintab
 	}
 }
 
-// GetGetCurrentImage gets the callback function.
+// GetGetCurrentImage gets the "get_current_image" callback function.
 // return a `GdkPaintable` that does not change over
 //
 //	time. This means the `GDK_PAINTABLE_STATIC_SIZE` and
@@ -115,7 +115,7 @@ func (x *PaintableInterface) GetGetCurrentImage() func(Paintable) *PaintableBase
 	}
 }
 
-// OverrideGetFlags sets the callback function.
+// OverrideGetFlags sets the "get_flags" callback function.
 // Get the flags for this instance. See [flags@Gdk.PaintableFlags]
 //
 //	for details.
@@ -129,7 +129,7 @@ func (x *PaintableInterface) OverrideGetFlags(cb func(Paintable) PaintableFlags)
 	}
 }
 
-// GetGetFlags gets the callback function.
+// GetGetFlags gets the "get_flags" callback function.
 // Get the flags for this instance. See [flags@Gdk.PaintableFlags]
 //
 //	for details.
@@ -144,7 +144,7 @@ func (x *PaintableInterface) GetGetFlags() func(Paintable) PaintableFlags {
 	}
 }
 
-// OverrideGetIntrinsicWidth sets the callback function.
+// OverrideGetIntrinsicWidth sets the "get_intrinsic_width" callback function.
 // The preferred width for this object to be
 //
 //	snapshot at or 0 if none. This is purely a hint. The object must still
@@ -159,7 +159,7 @@ func (x *PaintableInterface) OverrideGetIntrinsicWidth(cb func(Paintable) int) {
 	}
 }
 
-// GetGetIntrinsicWidth gets the callback function.
+// GetGetIntrinsicWidth gets the "get_intrinsic_width" callback function.
 // The preferred width for this object to be
 //
 //	snapshot at or 0 if none. This is purely a hint. The object must still
@@ -175,7 +175,7 @@ func (x *PaintableInterface) GetGetIntrinsicWidth() func(Paintable) int {
 	}
 }
 
-// OverrideGetIntrinsicHeight sets the callback function.
+// OverrideGetIntrinsicHeight sets the "get_intrinsic_height" callback function.
 // The preferred height for this object to be
 //
 //	snapshot at or 0 if none. This is purely a hint. The object must still
@@ -190,7 +190,7 @@ func (x *PaintableInterface) OverrideGetIntrinsicHeight(cb func(Paintable) int) 
 	}
 }
 
-// GetGetIntrinsicHeight gets the callback function.
+// GetGetIntrinsicHeight gets the "get_intrinsic_height" callback function.
 // The preferred height for this object to be
 //
 //	snapshot at or 0 if none. This is purely a hint. The object must still
@@ -206,7 +206,7 @@ func (x *PaintableInterface) GetGetIntrinsicHeight() func(Paintable) int {
 	}
 }
 
-// OverrideGetIntrinsicAspectRatio sets the callback function.
+// OverrideGetIntrinsicAspectRatio sets the "get_intrinsic_aspect_ratio" callback function.
 // The preferred aspect ratio for this object
 //
 //	or 0 if none. If both [vfunc@Gdk.Paintable.get_intrinsic_width]
@@ -222,7 +222,7 @@ func (x *PaintableInterface) OverrideGetIntrinsicAspectRatio(cb func(Paintable) 
 	}
 }
 
-// GetGetIntrinsicAspectRatio gets the callback function.
+// GetGetIntrinsicAspectRatio gets the "get_intrinsic_aspect_ratio" callback function.
 // The preferred aspect ratio for this object
 //
 //	or 0 if none. If both [vfunc@Gdk.Paintable.get_intrinsic_width]
@@ -286,7 +286,7 @@ func (x *PaintableInterface) GetGetIntrinsicAspectRatio() func(Paintable) float6
 type Paintable interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar float64, ConcreteHeightVar float64)
+	ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64)
 	GetCurrentImage() *PaintableBase
 	GetFlags() PaintableFlags
 	GetIntrinsicAspectRatio() float64
@@ -328,7 +328,7 @@ func (x *PaintableBase) SetGoPointer(ptr uintptr) {
 // and @specified_height are known, but it is useful to call this
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
-func (x *PaintableBase) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar float64, ConcreteHeightVar float64) {
+func (x *PaintableBase) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
 
 	XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
 
@@ -462,7 +462,7 @@ func (x *PaintableBase) Snapshot(SnapshotVar *Snapshot, WidthVar float64, Height
 
 }
 
-var XGdkPaintableComputeConcreteSize func(uintptr, float64, float64, float64, float64, float64, float64)
+var XGdkPaintableComputeConcreteSize func(uintptr, float64, float64, float64, float64, *float64, *float64)
 var XGdkPaintableGetCurrentImage func(uintptr) uintptr
 var XGdkPaintableGetFlags func(uintptr) PaintableFlags
 var XGdkPaintableGetIntrinsicAspectRatio func(uintptr) float64

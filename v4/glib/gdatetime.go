@@ -787,10 +787,10 @@ func (x *DateTime) GetYear() int {
 	return cret
 }
 
-var xDateTimeGetYmd func(uintptr, int, int, int)
+var xDateTimeGetYmd func(uintptr, *int, *int, *int)
 
 // Retrieves the Gregorian day, month, and year of a given #GDateTime.
-func (x *DateTime) GetYmd(YearVar int, MonthVar int, DayVar int) {
+func (x *DateTime) GetYmd(YearVar *int, MonthVar *int, DayVar *int) {
 
 	xDateTimeGetYmd(x.GoPointer(), YearVar, MonthVar, DayVar)
 

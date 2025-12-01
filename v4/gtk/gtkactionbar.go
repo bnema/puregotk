@@ -174,6 +174,23 @@ func (c *ActionBar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyRevealed sets the "revealed" property.
+// Controls whether the action bar shows its contents.
+func (x *ActionBar) SetPropertyRevealed(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("revealed", &v)
+}
+
+// GetPropertyRevealed gets the "revealed" property.
+// Controls whether the action bar shows its contents.
+func (x *ActionBar) GetPropertyRevealed() bool {
+	var v gobject.Value
+	x.GetProperty("revealed", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -231,7 +248,7 @@ func (x *ActionBar) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ActionBar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ActionBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

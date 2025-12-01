@@ -25,7 +25,7 @@ func (x *FrameClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideComputeChildAllocation sets the callback function.
+// OverrideComputeChildAllocation sets the "compute_child_allocation" callback function.
 func (x *FrameClass) OverrideComputeChildAllocation(cb func(*Frame, *Allocation)) {
 	if cb == nil {
 		x.xComputeChildAllocation = 0
@@ -36,7 +36,7 @@ func (x *FrameClass) OverrideComputeChildAllocation(cb func(*Frame, *Allocation)
 	}
 }
 
-// GetComputeChildAllocation gets the callback function.
+// GetComputeChildAllocation gets the "compute_child_allocation" callback function.
 func (x *FrameClass) GetComputeChildAllocation() func(*Frame, *Allocation) {
 	if x.xComputeChildAllocation == 0 {
 		return nil
@@ -239,6 +239,40 @@ func (c *Frame) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyLabel sets the "label" property.
+// Text of the frame's label.
+func (x *Frame) SetPropertyLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("label", &v)
+}
+
+// GetPropertyLabel gets the "label" property.
+// Text of the frame's label.
+func (x *Frame) GetPropertyLabel() string {
+	var v gobject.Value
+	x.GetProperty("label", &v)
+	return v.GetString()
+}
+
+// SetPropertyLabelXalign sets the "label-xalign" property.
+// The horizontal alignment of the label.
+func (x *Frame) SetPropertyLabelXalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("label-xalign", &v)
+}
+
+// GetPropertyLabelXalign gets the "label-xalign" property.
+// The horizontal alignment of the label.
+func (x *Frame) GetPropertyLabelXalign() float32 {
+	var v gobject.Value
+	x.GetProperty("label-xalign", &v)
+	return v.GetFloat()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -296,7 +330,7 @@ func (x *Frame) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Frame) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Frame) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

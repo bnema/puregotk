@@ -92,6 +92,110 @@ func (c *ShortcutsSection) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyMaxHeight sets the "max-height" property.
+// The maximum number of lines to allow per column.
+//
+// This property can be used to influence how the groups in this
+// section are distributed across pages and columns. The default
+// value of 15 should work in most cases.
+func (x *ShortcutsSection) SetPropertyMaxHeight(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("max-height", &v)
+}
+
+// GetPropertyMaxHeight gets the "max-height" property.
+// The maximum number of lines to allow per column.
+//
+// This property can be used to influence how the groups in this
+// section are distributed across pages and columns. The default
+// value of 15 should work in most cases.
+func (x *ShortcutsSection) GetPropertyMaxHeight() uint {
+	var v gobject.Value
+	x.GetProperty("max-height", &v)
+	return v.GetUint()
+}
+
+// SetPropertySectionName sets the "section-name" property.
+// A unique name to identify this section among the sections
+// added to the `GtkShortcutsWindow`.
+//
+// Setting the [property@Gtk.ShortcutsWindow:section-name] property
+// to this string will make this section shown in the `GtkShortcutsWindow`.
+func (x *ShortcutsSection) SetPropertySectionName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("section-name", &v)
+}
+
+// GetPropertySectionName gets the "section-name" property.
+// A unique name to identify this section among the sections
+// added to the `GtkShortcutsWindow`.
+//
+// Setting the [property@Gtk.ShortcutsWindow:section-name] property
+// to this string will make this section shown in the `GtkShortcutsWindow`.
+func (x *ShortcutsSection) GetPropertySectionName() string {
+	var v gobject.Value
+	x.GetProperty("section-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The string to show in the section selector of the `GtkShortcutsWindow`
+// for this section.
+//
+// If there is only one section, you don't need to set a title,
+// since the section selector will not be shown in this case.
+func (x *ShortcutsSection) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The string to show in the section selector of the `GtkShortcutsWindow`
+// for this section.
+//
+// If there is only one section, you don't need to set a title,
+// since the section selector will not be shown in this case.
+func (x *ShortcutsSection) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyViewName sets the "view-name" property.
+// A view name to filter the groups in this section by.
+//
+// See [property@Gtk.ShortcutsGroup:view].
+//
+// Applications are expected to use the
+// [property@Gtk.ShortcutsWindow:view-name] property
+// for this purpose.
+func (x *ShortcutsSection) SetPropertyViewName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("view-name", &v)
+}
+
+// GetPropertyViewName gets the "view-name" property.
+// A view name to filter the groups in this section by.
+//
+// See [property@Gtk.ShortcutsGroup:view].
+//
+// Applications are expected to use the
+// [property@Gtk.ShortcutsWindow:view-name] property
+// for this purpose.
+func (x *ShortcutsSection) GetPropertyViewName() string {
+	var v gobject.Value
+	x.GetProperty("view-name", &v)
+	return v.GetString()
+}
+
 // Emitted when we change the current page.
 //
 // The default bindings for this signal are
@@ -173,7 +277,7 @@ func (x *ShortcutsSection) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ShortcutsSection) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ShortcutsSection) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

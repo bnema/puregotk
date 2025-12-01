@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -204,6 +205,93 @@ func (c *GridLayout) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyBaselineRow sets the "baseline-row" property.
+// The row to align to the baseline, when `GtkWidget:valign` is set
+// to %GTK_ALIGN_BASELINE.
+func (x *GridLayout) SetPropertyBaselineRow(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("baseline-row", &v)
+}
+
+// GetPropertyBaselineRow gets the "baseline-row" property.
+// The row to align to the baseline, when `GtkWidget:valign` is set
+// to %GTK_ALIGN_BASELINE.
+func (x *GridLayout) GetPropertyBaselineRow() int {
+	var v gobject.Value
+	x.GetProperty("baseline-row", &v)
+	return v.GetInt()
+}
+
+// SetPropertyColumnHomogeneous sets the "column-homogeneous" property.
+// Whether all the columns in the grid have the same width.
+func (x *GridLayout) SetPropertyColumnHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("column-homogeneous", &v)
+}
+
+// GetPropertyColumnHomogeneous gets the "column-homogeneous" property.
+// Whether all the columns in the grid have the same width.
+func (x *GridLayout) GetPropertyColumnHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("column-homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyColumnSpacing sets the "column-spacing" property.
+// The amount of space between to consecutive columns.
+func (x *GridLayout) SetPropertyColumnSpacing(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("column-spacing", &v)
+}
+
+// GetPropertyColumnSpacing gets the "column-spacing" property.
+// The amount of space between to consecutive columns.
+func (x *GridLayout) GetPropertyColumnSpacing() int {
+	var v gobject.Value
+	x.GetProperty("column-spacing", &v)
+	return v.GetInt()
+}
+
+// SetPropertyRowHomogeneous sets the "row-homogeneous" property.
+// Whether all the rows in the grid have the same height.
+func (x *GridLayout) SetPropertyRowHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("row-homogeneous", &v)
+}
+
+// GetPropertyRowHomogeneous gets the "row-homogeneous" property.
+// Whether all the rows in the grid have the same height.
+func (x *GridLayout) GetPropertyRowHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("row-homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRowSpacing sets the "row-spacing" property.
+// The amount of space between to consecutive rows.
+func (x *GridLayout) SetPropertyRowSpacing(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("row-spacing", &v)
+}
+
+// GetPropertyRowSpacing gets the "row-spacing" property.
+// The amount of space between to consecutive rows.
+func (x *GridLayout) GetPropertyRowSpacing() int {
+	var v gobject.Value
+	x.GetProperty("row-spacing", &v)
+	return v.GetInt()
+}
+
 // `GtkLayoutChild` subclass for children in a `GtkGridLayout`.
 type GridLayoutChild struct {
 	LayoutChild
@@ -302,6 +390,74 @@ func (c *GridLayoutChild) GoPointer() uintptr {
 
 func (c *GridLayoutChild) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyColumn sets the "column" property.
+// The column to place the child in.
+func (x *GridLayoutChild) SetPropertyColumn(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("column", &v)
+}
+
+// GetPropertyColumn gets the "column" property.
+// The column to place the child in.
+func (x *GridLayoutChild) GetPropertyColumn() int {
+	var v gobject.Value
+	x.GetProperty("column", &v)
+	return v.GetInt()
+}
+
+// SetPropertyColumnSpan sets the "column-span" property.
+// The number of columns the child spans to.
+func (x *GridLayoutChild) SetPropertyColumnSpan(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("column-span", &v)
+}
+
+// GetPropertyColumnSpan gets the "column-span" property.
+// The number of columns the child spans to.
+func (x *GridLayoutChild) GetPropertyColumnSpan() int {
+	var v gobject.Value
+	x.GetProperty("column-span", &v)
+	return v.GetInt()
+}
+
+// SetPropertyRow sets the "row" property.
+// The row to place the child in.
+func (x *GridLayoutChild) SetPropertyRow(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("row", &v)
+}
+
+// GetPropertyRow gets the "row" property.
+// The row to place the child in.
+func (x *GridLayoutChild) GetPropertyRow() int {
+	var v gobject.Value
+	x.GetProperty("row", &v)
+	return v.GetInt()
+}
+
+// SetPropertyRowSpan sets the "row-span" property.
+// The number of rows the child spans to.
+func (x *GridLayoutChild) SetPropertyRowSpan(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("row-span", &v)
+}
+
+// GetPropertyRowSpan gets the "row-span" property.
+// The number of rows the child spans to.
+func (x *GridLayoutChild) GetPropertyRowSpan() int {
+	var v gobject.Value
+	x.GetProperty("row-span", &v)
+	return v.GetInt()
 }
 
 func init() {

@@ -34,7 +34,7 @@ func (x *TypeModuleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideLoad sets the callback function.
+// OverrideLoad sets the "load" callback function.
 // loads the module and registers one or more types using
 //
 //	g_type_module_register_type().
@@ -48,7 +48,7 @@ func (x *TypeModuleClass) OverrideLoad(cb func(*TypeModule) bool) {
 	}
 }
 
-// GetLoad gets the callback function.
+// GetLoad gets the "load" callback function.
 // loads the module and registers one or more types using
 //
 //	g_type_module_register_type().
@@ -63,7 +63,7 @@ func (x *TypeModuleClass) GetLoad() func(*TypeModule) bool {
 	}
 }
 
-// OverrideUnload sets the callback function.
+// OverrideUnload sets the "unload" callback function.
 // unloads the module
 func (x *TypeModuleClass) OverrideUnload(cb func(*TypeModule)) {
 	if cb == nil {
@@ -75,7 +75,7 @@ func (x *TypeModuleClass) OverrideUnload(cb func(*TypeModule)) {
 	}
 }
 
-// GetUnload gets the callback function.
+// GetUnload gets the "unload" callback function.
 // unloads the module
 func (x *TypeModuleClass) GetUnload() func(*TypeModule) {
 	if x.xUnload == 0 {
@@ -88,7 +88,7 @@ func (x *TypeModuleClass) GetUnload() func(*TypeModule) {
 	}
 }
 
-// OverrideReserved1 sets the callback function.
+// OverrideReserved1 sets the "reserved1" callback function.
 func (x *TypeModuleClass) OverrideReserved1(cb func()) {
 	if cb == nil {
 		x.xReserved1 = 0
@@ -99,7 +99,7 @@ func (x *TypeModuleClass) OverrideReserved1(cb func()) {
 	}
 }
 
-// GetReserved1 gets the callback function.
+// GetReserved1 gets the "reserved1" callback function.
 func (x *TypeModuleClass) GetReserved1() func() {
 	if x.xReserved1 == 0 {
 		return nil
@@ -111,7 +111,7 @@ func (x *TypeModuleClass) GetReserved1() func() {
 	}
 }
 
-// OverrideReserved2 sets the callback function.
+// OverrideReserved2 sets the "reserved2" callback function.
 func (x *TypeModuleClass) OverrideReserved2(cb func()) {
 	if cb == nil {
 		x.xReserved2 = 0
@@ -122,7 +122,7 @@ func (x *TypeModuleClass) OverrideReserved2(cb func()) {
 	}
 }
 
-// GetReserved2 gets the callback function.
+// GetReserved2 gets the "reserved2" callback function.
 func (x *TypeModuleClass) GetReserved2() func() {
 	if x.xReserved2 == 0 {
 		return nil
@@ -134,7 +134,7 @@ func (x *TypeModuleClass) GetReserved2() func() {
 	}
 }
 
-// OverrideReserved3 sets the callback function.
+// OverrideReserved3 sets the "reserved3" callback function.
 func (x *TypeModuleClass) OverrideReserved3(cb func()) {
 	if cb == nil {
 		x.xReserved3 = 0
@@ -145,7 +145,7 @@ func (x *TypeModuleClass) OverrideReserved3(cb func()) {
 	}
 }
 
-// GetReserved3 gets the callback function.
+// GetReserved3 gets the "reserved3" callback function.
 func (x *TypeModuleClass) GetReserved3() func() {
 	if x.xReserved3 == 0 {
 		return nil
@@ -157,7 +157,7 @@ func (x *TypeModuleClass) GetReserved3() func() {
 	}
 }
 
-// OverrideReserved4 sets the callback function.
+// OverrideReserved4 sets the "reserved4" callback function.
 func (x *TypeModuleClass) OverrideReserved4(cb func()) {
 	if cb == nil {
 		x.xReserved4 = 0
@@ -168,7 +168,7 @@ func (x *TypeModuleClass) OverrideReserved4(cb func()) {
 	}
 }
 
-// GetReserved4 gets the callback function.
+// GetReserved4 gets the "reserved4" callback function.
 func (x *TypeModuleClass) GetReserved4() func() {
 	if x.xReserved4 == 0 {
 		return nil

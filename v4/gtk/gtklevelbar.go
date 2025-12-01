@@ -229,10 +229,10 @@ func (x *LevelBar) GetMode() LevelBarMode {
 	return cret
 }
 
-var xLevelBarGetOffsetValue func(uintptr, string, float64) bool
+var xLevelBarGetOffsetValue func(uintptr, string, *float64) bool
 
 // Fetches the value specified for the offset marker @name in @self.
-func (x *LevelBar) GetOffsetValue(NameVar string, ValueVar float64) bool {
+func (x *LevelBar) GetOffsetValue(NameVar string, ValueVar *float64) bool {
 
 	cret := xLevelBarGetOffsetValue(x.GoPointer(), NameVar, ValueVar)
 	return cret
@@ -321,6 +321,80 @@ func (c *LevelBar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyInverted sets the "inverted" property.
+// Whether the `GtkLeveBar` is inverted.
+//
+// Level bars normally grow from top to bottom or left to right.
+// Inverted level bars grow in the opposite direction.
+func (x *LevelBar) SetPropertyInverted(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("inverted", &v)
+}
+
+// GetPropertyInverted gets the "inverted" property.
+// Whether the `GtkLeveBar` is inverted.
+//
+// Level bars normally grow from top to bottom or left to right.
+// Inverted level bars grow in the opposite direction.
+func (x *LevelBar) GetPropertyInverted() bool {
+	var v gobject.Value
+	x.GetProperty("inverted", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaxValue sets the "max-value" property.
+// Determines the maximum value of the interval that can be displayed by the bar.
+func (x *LevelBar) SetPropertyMaxValue(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("max-value", &v)
+}
+
+// GetPropertyMaxValue gets the "max-value" property.
+// Determines the maximum value of the interval that can be displayed by the bar.
+func (x *LevelBar) GetPropertyMaxValue() float64 {
+	var v gobject.Value
+	x.GetProperty("max-value", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyMinValue sets the "min-value" property.
+// Determines the minimum value of the interval that can be displayed by the bar.
+func (x *LevelBar) SetPropertyMinValue(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("min-value", &v)
+}
+
+// GetPropertyMinValue gets the "min-value" property.
+// Determines the minimum value of the interval that can be displayed by the bar.
+func (x *LevelBar) GetPropertyMinValue() float64 {
+	var v gobject.Value
+	x.GetProperty("min-value", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyValue sets the "value" property.
+// Determines the currently filled value of the level bar.
+func (x *LevelBar) SetPropertyValue(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("value", &v)
+}
+
+// GetPropertyValue gets the "value" property.
+// Determines the currently filled value of the level bar.
+func (x *LevelBar) GetPropertyValue() float64 {
+	var v gobject.Value
+	x.GetProperty("value", &v)
+	return v.GetDouble()
+}
+
 // Emitted when an offset specified on the bar changes value.
 //
 // This typically is the result of a [method@Gtk.LevelBar.add_offset_value]
@@ -405,7 +479,7 @@ func (x *LevelBar) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *LevelBar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *LevelBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

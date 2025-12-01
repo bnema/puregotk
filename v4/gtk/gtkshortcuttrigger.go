@@ -212,6 +212,23 @@ func (c *KeyvalTrigger) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyKeyval sets the "keyval" property.
+// The key value for the trigger.
+func (x *KeyvalTrigger) SetPropertyKeyval(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("keyval", &v)
+}
+
+// GetPropertyKeyval gets the "keyval" property.
+// The key value for the trigger.
+func (x *KeyvalTrigger) GetPropertyKeyval() uint {
+	var v gobject.Value
+	x.GetProperty("keyval", &v)
+	return v.GetUint()
+}
+
 // Triggers when a specific mnemonic is pressed.
 //
 // Mnemonics require a *mnemonic modifier* (typically &lt;kbd&gt;Alt&lt;/kbd&gt;) to be
@@ -270,6 +287,23 @@ func (c *MnemonicTrigger) GoPointer() uintptr {
 
 func (c *MnemonicTrigger) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyKeyval sets the "keyval" property.
+// The key value for the trigger.
+func (x *MnemonicTrigger) SetPropertyKeyval(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("keyval", &v)
+}
+
+// GetPropertyKeyval gets the "keyval" property.
+// The key value for the trigger.
+func (x *MnemonicTrigger) GetPropertyKeyval() uint {
+	var v gobject.Value
+	x.GetProperty("keyval", &v)
+	return v.GetUint()
 }
 
 // A `GtkShortcutTrigger` that never triggers.

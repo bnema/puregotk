@@ -37,7 +37,7 @@ func (x *NativeDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideResponse sets the callback function.
+// OverrideResponse sets the "response" callback function.
 // class handler for the `GtkNativeDialog::response` signal
 func (x *NativeDialogClass) OverrideResponse(cb func(*NativeDialog, int)) {
 	if cb == nil {
@@ -49,7 +49,7 @@ func (x *NativeDialogClass) OverrideResponse(cb func(*NativeDialog, int)) {
 	}
 }
 
-// GetResponse gets the callback function.
+// GetResponse gets the "response" callback function.
 // class handler for the `GtkNativeDialog::response` signal
 func (x *NativeDialogClass) GetResponse() func(*NativeDialog, int) {
 	if x.xResponse == 0 {
@@ -62,7 +62,7 @@ func (x *NativeDialogClass) GetResponse() func(*NativeDialog, int) {
 	}
 }
 
-// OverrideShow sets the callback function.
+// OverrideShow sets the "show" callback function.
 func (x *NativeDialogClass) OverrideShow(cb func(*NativeDialog)) {
 	if cb == nil {
 		x.xShow = 0
@@ -73,7 +73,7 @@ func (x *NativeDialogClass) OverrideShow(cb func(*NativeDialog)) {
 	}
 }
 
-// GetShow gets the callback function.
+// GetShow gets the "show" callback function.
 func (x *NativeDialogClass) GetShow() func(*NativeDialog) {
 	if x.xShow == 0 {
 		return nil
@@ -85,7 +85,7 @@ func (x *NativeDialogClass) GetShow() func(*NativeDialog) {
 	}
 }
 
-// OverrideHide sets the callback function.
+// OverrideHide sets the "hide" callback function.
 func (x *NativeDialogClass) OverrideHide(cb func(*NativeDialog)) {
 	if cb == nil {
 		x.xHide = 0
@@ -96,7 +96,7 @@ func (x *NativeDialogClass) OverrideHide(cb func(*NativeDialog)) {
 	}
 }
 
-// GetHide gets the callback function.
+// GetHide gets the "hide" callback function.
 func (x *NativeDialogClass) GetHide() func(*NativeDialog) {
 	if x.xHide == 0 {
 		return nil
@@ -108,7 +108,7 @@ func (x *NativeDialogClass) GetHide() func(*NativeDialog) {
 	}
 }
 
-// OverrideGtkReserved1 sets the callback function.
+// OverrideGtkReserved1 sets the "_gtk_reserved1" callback function.
 func (x *NativeDialogClass) OverrideGtkReserved1(cb func()) {
 	if cb == nil {
 		x.xGtkReserved1 = 0
@@ -119,7 +119,7 @@ func (x *NativeDialogClass) OverrideGtkReserved1(cb func()) {
 	}
 }
 
-// GetGtkReserved1 gets the callback function.
+// GetGtkReserved1 gets the "_gtk_reserved1" callback function.
 func (x *NativeDialogClass) GetGtkReserved1() func() {
 	if x.xGtkReserved1 == 0 {
 		return nil
@@ -131,7 +131,7 @@ func (x *NativeDialogClass) GetGtkReserved1() func() {
 	}
 }
 
-// OverrideGtkReserved2 sets the callback function.
+// OverrideGtkReserved2 sets the "_gtk_reserved2" callback function.
 func (x *NativeDialogClass) OverrideGtkReserved2(cb func()) {
 	if cb == nil {
 		x.xGtkReserved2 = 0
@@ -142,7 +142,7 @@ func (x *NativeDialogClass) OverrideGtkReserved2(cb func()) {
 	}
 }
 
-// GetGtkReserved2 gets the callback function.
+// GetGtkReserved2 gets the "_gtk_reserved2" callback function.
 func (x *NativeDialogClass) GetGtkReserved2() func() {
 	if x.xGtkReserved2 == 0 {
 		return nil
@@ -154,7 +154,7 @@ func (x *NativeDialogClass) GetGtkReserved2() func() {
 	}
 }
 
-// OverrideGtkReserved3 sets the callback function.
+// OverrideGtkReserved3 sets the "_gtk_reserved3" callback function.
 func (x *NativeDialogClass) OverrideGtkReserved3(cb func()) {
 	if cb == nil {
 		x.xGtkReserved3 = 0
@@ -165,7 +165,7 @@ func (x *NativeDialogClass) OverrideGtkReserved3(cb func()) {
 	}
 }
 
-// GetGtkReserved3 gets the callback function.
+// GetGtkReserved3 gets the "_gtk_reserved3" callback function.
 func (x *NativeDialogClass) GetGtkReserved3() func() {
 	if x.xGtkReserved3 == 0 {
 		return nil
@@ -177,7 +177,7 @@ func (x *NativeDialogClass) GetGtkReserved3() func() {
 	}
 }
 
-// OverrideGtkReserved4 sets the callback function.
+// OverrideGtkReserved4 sets the "_gtk_reserved4" callback function.
 func (x *NativeDialogClass) OverrideGtkReserved4(cb func()) {
 	if cb == nil {
 		x.xGtkReserved4 = 0
@@ -188,7 +188,7 @@ func (x *NativeDialogClass) OverrideGtkReserved4(cb func()) {
 	}
 }
 
-// GetGtkReserved4 gets the callback function.
+// GetGtkReserved4 gets the "_gtk_reserved4" callback function.
 func (x *NativeDialogClass) GetGtkReserved4() func() {
 	if x.xGtkReserved4 == 0 {
 		return nil
@@ -374,6 +374,57 @@ func (c *NativeDialog) GoPointer() uintptr {
 
 func (c *NativeDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyModal sets the "modal" property.
+// Whether the window should be modal with respect to its transient parent.
+func (x *NativeDialog) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// Whether the window should be modal with respect to its transient parent.
+func (x *NativeDialog) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the dialog window
+func (x *NativeDialog) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the dialog window
+func (x *NativeDialog) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyVisible sets the "visible" property.
+// Whether the window is currently visible.
+func (x *NativeDialog) SetPropertyVisible(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("visible", &v)
+}
+
+// GetPropertyVisible gets the "visible" property.
+// Whether the window is currently visible.
+func (x *NativeDialog) GetPropertyVisible() bool {
+	var v gobject.Value
+	x.GetProperty("visible", &v)
+	return v.GetBoolean()
 }
 
 // Emitted when the user responds to the dialog.

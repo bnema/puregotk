@@ -25,33 +25,33 @@ func (x *SectionModelInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetSection sets the callback function.
+// OverrideGetSection sets the "get_section" callback function.
 // Return the section that covers the given position. If
 //
 //	the position is outside the number of items, returns a single range from
 //	n_items to G_MAXUINT
-func (x *SectionModelInterface) OverrideGetSection(cb func(SectionModel, uint, uint, uint)) {
+func (x *SectionModelInterface) OverrideGetSection(cb func(SectionModel, uint, *uint, *uint)) {
 	if cb == nil {
 		x.xGetSection = 0
 	} else {
-		x.xGetSection = purego.NewCallback(func(SelfVarp uintptr, PositionVarp uint, OutStartVarp uint, OutEndVarp uint) {
+		x.xGetSection = purego.NewCallback(func(SelfVarp uintptr, PositionVarp uint, OutStartVarp *uint, OutEndVarp *uint) {
 			cb(&SectionModelBase{Ptr: SelfVarp}, PositionVarp, OutStartVarp, OutEndVarp)
 		})
 	}
 }
 
-// GetGetSection gets the callback function.
+// GetGetSection gets the "get_section" callback function.
 // Return the section that covers the given position. If
 //
 //	the position is outside the number of items, returns a single range from
 //	n_items to G_MAXUINT
-func (x *SectionModelInterface) GetGetSection() func(SectionModel, uint, uint, uint) {
+func (x *SectionModelInterface) GetGetSection() func(SectionModel, uint, *uint, *uint) {
 	if x.xGetSection == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, PositionVarp uint, OutStartVarp uint, OutEndVarp uint)
+	var rawCallback func(SelfVarp uintptr, PositionVarp uint, OutStartVarp *uint, OutEndVarp *uint)
 	purego.RegisterFunc(&rawCallback, x.xGetSection)
-	return func(SelfVar SectionModel, PositionVar uint, OutStartVar uint, OutEndVar uint) {
+	return func(SelfVar SectionModel, PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 		rawCallback(SelfVar.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 	}
 }
@@ -74,7 +74,7 @@ func (x *SectionModelInterface) GetGetSection() func(SectionModel, uint, uint, u
 type SectionModel interface {
 	GoPointer() uintptr
 	SetGoPointer(uintptr)
-	GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint)
+	GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint)
 	SectionsChanged(PositionVar uint, NItemsVar uint)
 }
 
@@ -104,7 +104,7 @@ func (x *SectionModelBase) SetGoPointer(ptr uintptr) {
 //
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
-func (x *SectionModelBase) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+func (x *SectionModelBase) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 
@@ -131,7 +131,7 @@ func (x *SectionModelBase) SectionsChanged(PositionVar uint, NItemsVar uint) {
 
 }
 
-var XGtkSectionModelGetSection func(uintptr, uint, uint, uint)
+var XGtkSectionModelGetSection func(uintptr, uint, *uint, *uint)
 var XGtkSectionModelSectionsChanged func(uintptr, uint, uint)
 
 func init() {

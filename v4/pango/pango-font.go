@@ -39,7 +39,7 @@ func (x *FontClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideDescribe sets the callback function.
+// OverrideDescribe sets the "describe" callback function.
 func (x *FontClass) OverrideDescribe(cb func(*Font) *FontDescription) {
 	if cb == nil {
 		x.xDescribe = 0
@@ -50,7 +50,7 @@ func (x *FontClass) OverrideDescribe(cb func(*Font) *FontDescription) {
 	}
 }
 
-// GetDescribe gets the callback function.
+// GetDescribe gets the "describe" callback function.
 func (x *FontClass) GetDescribe() func(*Font) *FontDescription {
 	if x.xDescribe == 0 {
 		return nil
@@ -62,7 +62,7 @@ func (x *FontClass) GetDescribe() func(*Font) *FontDescription {
 	}
 }
 
-// OverrideGetCoverage sets the callback function.
+// OverrideGetCoverage sets the "get_coverage" callback function.
 func (x *FontClass) OverrideGetCoverage(cb func(*Font, *Language) *Coverage) {
 	if cb == nil {
 		x.xGetCoverage = 0
@@ -77,7 +77,7 @@ func (x *FontClass) OverrideGetCoverage(cb func(*Font, *Language) *Coverage) {
 	}
 }
 
-// GetGetCoverage gets the callback function.
+// GetGetCoverage gets the "get_coverage" callback function.
 func (x *FontClass) GetGetCoverage() func(*Font, *Language) *Coverage {
 	if x.xGetCoverage == 0 {
 		return nil
@@ -95,7 +95,7 @@ func (x *FontClass) GetGetCoverage() func(*Font, *Language) *Coverage {
 	}
 }
 
-// OverrideGetGlyphExtents sets the callback function.
+// OverrideGetGlyphExtents sets the "get_glyph_extents" callback function.
 func (x *FontClass) OverrideGetGlyphExtents(cb func(*Font, Glyph, *Rectangle, *Rectangle)) {
 	if cb == nil {
 		x.xGetGlyphExtents = 0
@@ -106,7 +106,7 @@ func (x *FontClass) OverrideGetGlyphExtents(cb func(*Font, Glyph, *Rectangle, *R
 	}
 }
 
-// GetGetGlyphExtents gets the callback function.
+// GetGetGlyphExtents gets the "get_glyph_extents" callback function.
 func (x *FontClass) GetGetGlyphExtents() func(*Font, Glyph, *Rectangle, *Rectangle) {
 	if x.xGetGlyphExtents == 0 {
 		return nil
@@ -118,7 +118,7 @@ func (x *FontClass) GetGetGlyphExtents() func(*Font, Glyph, *Rectangle, *Rectang
 	}
 }
 
-// OverrideGetMetrics sets the callback function.
+// OverrideGetMetrics sets the "get_metrics" callback function.
 func (x *FontClass) OverrideGetMetrics(cb func(*Font, *Language) *FontMetrics) {
 	if cb == nil {
 		x.xGetMetrics = 0
@@ -129,7 +129,7 @@ func (x *FontClass) OverrideGetMetrics(cb func(*Font, *Language) *FontMetrics) {
 	}
 }
 
-// GetGetMetrics gets the callback function.
+// GetGetMetrics gets the "get_metrics" callback function.
 func (x *FontClass) GetGetMetrics() func(*Font, *Language) *FontMetrics {
 	if x.xGetMetrics == 0 {
 		return nil
@@ -141,7 +141,7 @@ func (x *FontClass) GetGetMetrics() func(*Font, *Language) *FontMetrics {
 	}
 }
 
-// OverrideGetFontMap sets the callback function.
+// OverrideGetFontMap sets the "get_font_map" callback function.
 func (x *FontClass) OverrideGetFontMap(cb func(*Font) *FontMap) {
 	if cb == nil {
 		x.xGetFontMap = 0
@@ -156,7 +156,7 @@ func (x *FontClass) OverrideGetFontMap(cb func(*Font) *FontMap) {
 	}
 }
 
-// GetGetFontMap gets the callback function.
+// GetGetFontMap gets the "get_font_map" callback function.
 func (x *FontClass) GetGetFontMap() func(*Font) *FontMap {
 	if x.xGetFontMap == 0 {
 		return nil
@@ -174,7 +174,7 @@ func (x *FontClass) GetGetFontMap() func(*Font) *FontMap {
 	}
 }
 
-// OverrideDescribeAbsolute sets the callback function.
+// OverrideDescribeAbsolute sets the "describe_absolute" callback function.
 func (x *FontClass) OverrideDescribeAbsolute(cb func(*Font) *FontDescription) {
 	if cb == nil {
 		x.xDescribeAbsolute = 0
@@ -185,7 +185,7 @@ func (x *FontClass) OverrideDescribeAbsolute(cb func(*Font) *FontDescription) {
 	}
 }
 
-// GetDescribeAbsolute gets the callback function.
+// GetDescribeAbsolute gets the "describe_absolute" callback function.
 func (x *FontClass) GetDescribeAbsolute() func(*Font) *FontDescription {
 	if x.xDescribeAbsolute == 0 {
 		return nil
@@ -197,30 +197,30 @@ func (x *FontClass) GetDescribeAbsolute() func(*Font) *FontDescription {
 	}
 }
 
-// OverrideGetFeatures sets the callback function.
-func (x *FontClass) OverrideGetFeatures(cb func(*Font, []uintptr, uint, uint)) {
+// OverrideGetFeatures sets the "get_features" callback function.
+func (x *FontClass) OverrideGetFeatures(cb func(*Font, *[]uintptr, uint, uint)) {
 	if cb == nil {
 		x.xGetFeatures = 0
 	} else {
-		x.xGetFeatures = purego.NewCallback(func(FontVarp uintptr, FeaturesVarp []uintptr, LenVarp uint, NumFeaturesVarp uint) {
+		x.xGetFeatures = purego.NewCallback(func(FontVarp uintptr, FeaturesVarp *[]uintptr, LenVarp uint, NumFeaturesVarp uint) {
 			cb(FontNewFromInternalPtr(FontVarp), FeaturesVarp, LenVarp, NumFeaturesVarp)
 		})
 	}
 }
 
-// GetGetFeatures gets the callback function.
-func (x *FontClass) GetGetFeatures() func(*Font, []uintptr, uint, uint) {
+// GetGetFeatures gets the "get_features" callback function.
+func (x *FontClass) GetGetFeatures() func(*Font, *[]uintptr, uint, uint) {
 	if x.xGetFeatures == 0 {
 		return nil
 	}
-	var rawCallback func(FontVarp uintptr, FeaturesVarp []uintptr, LenVarp uint, NumFeaturesVarp uint)
+	var rawCallback func(FontVarp uintptr, FeaturesVarp *[]uintptr, LenVarp uint, NumFeaturesVarp uint)
 	purego.RegisterFunc(&rawCallback, x.xGetFeatures)
-	return func(FontVar *Font, FeaturesVar []uintptr, LenVar uint, NumFeaturesVar uint) {
+	return func(FontVar *Font, FeaturesVar *[]uintptr, LenVar uint, NumFeaturesVar uint) {
 		rawCallback(FontVar.GoPointer(), FeaturesVar, LenVar, NumFeaturesVar)
 	}
 }
 
-// OverrideCreateHbFont sets the callback function.
+// OverrideCreateHbFont sets the "create_hb_font" callback function.
 func (x *FontClass) OverrideCreateHbFont(cb func(*Font) uintptr) {
 	if cb == nil {
 		x.xCreateHbFont = 0
@@ -231,7 +231,7 @@ func (x *FontClass) OverrideCreateHbFont(cb func(*Font) uintptr) {
 	}
 }
 
-// GetCreateHbFont gets the callback function.
+// GetCreateHbFont gets the "create_hb_font" callback function.
 func (x *FontClass) GetCreateHbFont() func(*Font) uintptr {
 	if x.xCreateHbFont == 0 {
 		return nil
@@ -804,7 +804,7 @@ func (x *FontFaceClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetFaceName sets the callback function.
+// OverrideGetFaceName sets the "get_face_name" callback function.
 func (x *FontFaceClass) OverrideGetFaceName(cb func(*FontFace) string) {
 	if cb == nil {
 		x.xGetFaceName = 0
@@ -815,7 +815,7 @@ func (x *FontFaceClass) OverrideGetFaceName(cb func(*FontFace) string) {
 	}
 }
 
-// GetGetFaceName gets the callback function.
+// GetGetFaceName gets the "get_face_name" callback function.
 func (x *FontFaceClass) GetGetFaceName() func(*FontFace) string {
 	if x.xGetFaceName == 0 {
 		return nil
@@ -827,7 +827,7 @@ func (x *FontFaceClass) GetGetFaceName() func(*FontFace) string {
 	}
 }
 
-// OverrideDescribe sets the callback function.
+// OverrideDescribe sets the "describe" callback function.
 func (x *FontFaceClass) OverrideDescribe(cb func(*FontFace) *FontDescription) {
 	if cb == nil {
 		x.xDescribe = 0
@@ -838,7 +838,7 @@ func (x *FontFaceClass) OverrideDescribe(cb func(*FontFace) *FontDescription) {
 	}
 }
 
-// GetDescribe gets the callback function.
+// GetDescribe gets the "describe" callback function.
 func (x *FontFaceClass) GetDescribe() func(*FontFace) *FontDescription {
 	if x.xDescribe == 0 {
 		return nil
@@ -850,30 +850,30 @@ func (x *FontFaceClass) GetDescribe() func(*FontFace) *FontDescription {
 	}
 }
 
-// OverrideListSizes sets the callback function.
-func (x *FontFaceClass) OverrideListSizes(cb func(*FontFace, []int, int)) {
+// OverrideListSizes sets the "list_sizes" callback function.
+func (x *FontFaceClass) OverrideListSizes(cb func(*FontFace, *[]int, *int)) {
 	if cb == nil {
 		x.xListSizes = 0
 	} else {
-		x.xListSizes = purego.NewCallback(func(FaceVarp uintptr, SizesVarp []int, NSizesVarp int) {
+		x.xListSizes = purego.NewCallback(func(FaceVarp uintptr, SizesVarp *[]int, NSizesVarp *int) {
 			cb(FontFaceNewFromInternalPtr(FaceVarp), SizesVarp, NSizesVarp)
 		})
 	}
 }
 
-// GetListSizes gets the callback function.
-func (x *FontFaceClass) GetListSizes() func(*FontFace, []int, int) {
+// GetListSizes gets the "list_sizes" callback function.
+func (x *FontFaceClass) GetListSizes() func(*FontFace, *[]int, *int) {
 	if x.xListSizes == 0 {
 		return nil
 	}
-	var rawCallback func(FaceVarp uintptr, SizesVarp []int, NSizesVarp int)
+	var rawCallback func(FaceVarp uintptr, SizesVarp *[]int, NSizesVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xListSizes)
-	return func(FaceVar *FontFace, SizesVar []int, NSizesVar int) {
+	return func(FaceVar *FontFace, SizesVar *[]int, NSizesVar *int) {
 		rawCallback(FaceVar.GoPointer(), SizesVar, NSizesVar)
 	}
 }
 
-// OverrideIsSynthesized sets the callback function.
+// OverrideIsSynthesized sets the "is_synthesized" callback function.
 func (x *FontFaceClass) OverrideIsSynthesized(cb func(*FontFace) bool) {
 	if cb == nil {
 		x.xIsSynthesized = 0
@@ -884,7 +884,7 @@ func (x *FontFaceClass) OverrideIsSynthesized(cb func(*FontFace) bool) {
 	}
 }
 
-// GetIsSynthesized gets the callback function.
+// GetIsSynthesized gets the "is_synthesized" callback function.
 func (x *FontFaceClass) GetIsSynthesized() func(*FontFace) bool {
 	if x.xIsSynthesized == 0 {
 		return nil
@@ -896,7 +896,7 @@ func (x *FontFaceClass) GetIsSynthesized() func(*FontFace) bool {
 	}
 }
 
-// OverrideGetFamily sets the callback function.
+// OverrideGetFamily sets the "get_family" callback function.
 func (x *FontFaceClass) OverrideGetFamily(cb func(*FontFace) *FontFamily) {
 	if cb == nil {
 		x.xGetFamily = 0
@@ -911,7 +911,7 @@ func (x *FontFaceClass) OverrideGetFamily(cb func(*FontFace) *FontFamily) {
 	}
 }
 
-// GetGetFamily gets the callback function.
+// GetGetFamily gets the "get_family" callback function.
 func (x *FontFaceClass) GetGetFamily() func(*FontFace) *FontFamily {
 	if x.xGetFamily == 0 {
 		return nil
@@ -929,7 +929,7 @@ func (x *FontFaceClass) GetGetFamily() func(*FontFace) *FontFamily {
 	}
 }
 
-// OverridePangoReserved3 sets the callback function.
+// OverridePangoReserved3 sets the "_pango_reserved3" callback function.
 func (x *FontFaceClass) OverridePangoReserved3(cb func()) {
 	if cb == nil {
 		x.xPangoReserved3 = 0
@@ -940,7 +940,7 @@ func (x *FontFaceClass) OverridePangoReserved3(cb func()) {
 	}
 }
 
-// GetPangoReserved3 gets the callback function.
+// GetPangoReserved3 gets the "_pango_reserved3" callback function.
 func (x *FontFaceClass) GetPangoReserved3() func() {
 	if x.xPangoReserved3 == 0 {
 		return nil
@@ -952,7 +952,7 @@ func (x *FontFaceClass) GetPangoReserved3() func() {
 	}
 }
 
-// OverridePangoReserved4 sets the callback function.
+// OverridePangoReserved4 sets the "_pango_reserved4" callback function.
 func (x *FontFaceClass) OverridePangoReserved4(cb func()) {
 	if cb == nil {
 		x.xPangoReserved4 = 0
@@ -963,7 +963,7 @@ func (x *FontFaceClass) OverridePangoReserved4(cb func()) {
 	}
 }
 
-// GetPangoReserved4 gets the callback function.
+// GetPangoReserved4 gets the "_pango_reserved4" callback function.
 func (x *FontFaceClass) GetPangoReserved4() func() {
 	if x.xPangoReserved4 == 0 {
 		return nil
@@ -997,30 +997,30 @@ func (x *FontFamilyClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideListFaces sets the callback function.
-func (x *FontFamilyClass) OverrideListFaces(cb func(*FontFamily, uintptr, int)) {
+// OverrideListFaces sets the "list_faces" callback function.
+func (x *FontFamilyClass) OverrideListFaces(cb func(*FontFamily, *uintptr, *int)) {
 	if cb == nil {
 		x.xListFaces = 0
 	} else {
-		x.xListFaces = purego.NewCallback(func(FamilyVarp uintptr, FacesVarp uintptr, NFacesVarp int) {
+		x.xListFaces = purego.NewCallback(func(FamilyVarp uintptr, FacesVarp *uintptr, NFacesVarp *int) {
 			cb(FontFamilyNewFromInternalPtr(FamilyVarp), FacesVarp, NFacesVarp)
 		})
 	}
 }
 
-// GetListFaces gets the callback function.
-func (x *FontFamilyClass) GetListFaces() func(*FontFamily, uintptr, int) {
+// GetListFaces gets the "list_faces" callback function.
+func (x *FontFamilyClass) GetListFaces() func(*FontFamily, *uintptr, *int) {
 	if x.xListFaces == 0 {
 		return nil
 	}
-	var rawCallback func(FamilyVarp uintptr, FacesVarp uintptr, NFacesVarp int)
+	var rawCallback func(FamilyVarp uintptr, FacesVarp *uintptr, NFacesVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xListFaces)
-	return func(FamilyVar *FontFamily, FacesVar uintptr, NFacesVar int) {
+	return func(FamilyVar *FontFamily, FacesVar *uintptr, NFacesVar *int) {
 		rawCallback(FamilyVar.GoPointer(), FacesVar, NFacesVar)
 	}
 }
 
-// OverrideGetName sets the callback function.
+// OverrideGetName sets the "get_name" callback function.
 func (x *FontFamilyClass) OverrideGetName(cb func(*FontFamily) string) {
 	if cb == nil {
 		x.xGetName = 0
@@ -1031,7 +1031,7 @@ func (x *FontFamilyClass) OverrideGetName(cb func(*FontFamily) string) {
 	}
 }
 
-// GetGetName gets the callback function.
+// GetGetName gets the "get_name" callback function.
 func (x *FontFamilyClass) GetGetName() func(*FontFamily) string {
 	if x.xGetName == 0 {
 		return nil
@@ -1043,7 +1043,7 @@ func (x *FontFamilyClass) GetGetName() func(*FontFamily) string {
 	}
 }
 
-// OverrideIsMonospace sets the callback function.
+// OverrideIsMonospace sets the "is_monospace" callback function.
 func (x *FontFamilyClass) OverrideIsMonospace(cb func(*FontFamily) bool) {
 	if cb == nil {
 		x.xIsMonospace = 0
@@ -1054,7 +1054,7 @@ func (x *FontFamilyClass) OverrideIsMonospace(cb func(*FontFamily) bool) {
 	}
 }
 
-// GetIsMonospace gets the callback function.
+// GetIsMonospace gets the "is_monospace" callback function.
 func (x *FontFamilyClass) GetIsMonospace() func(*FontFamily) bool {
 	if x.xIsMonospace == 0 {
 		return nil
@@ -1066,7 +1066,7 @@ func (x *FontFamilyClass) GetIsMonospace() func(*FontFamily) bool {
 	}
 }
 
-// OverrideIsVariable sets the callback function.
+// OverrideIsVariable sets the "is_variable" callback function.
 func (x *FontFamilyClass) OverrideIsVariable(cb func(*FontFamily) bool) {
 	if cb == nil {
 		x.xIsVariable = 0
@@ -1077,7 +1077,7 @@ func (x *FontFamilyClass) OverrideIsVariable(cb func(*FontFamily) bool) {
 	}
 }
 
-// GetIsVariable gets the callback function.
+// GetIsVariable gets the "is_variable" callback function.
 func (x *FontFamilyClass) GetIsVariable() func(*FontFamily) bool {
 	if x.xIsVariable == 0 {
 		return nil
@@ -1089,7 +1089,7 @@ func (x *FontFamilyClass) GetIsVariable() func(*FontFamily) bool {
 	}
 }
 
-// OverrideGetFace sets the callback function.
+// OverrideGetFace sets the "get_face" callback function.
 func (x *FontFamilyClass) OverrideGetFace(cb func(*FontFamily, string) *FontFace) {
 	if cb == nil {
 		x.xGetFace = 0
@@ -1104,7 +1104,7 @@ func (x *FontFamilyClass) OverrideGetFace(cb func(*FontFamily, string) *FontFace
 	}
 }
 
-// GetGetFace gets the callback function.
+// GetGetFace gets the "get_face" callback function.
 func (x *FontFamilyClass) GetGetFace() func(*FontFamily, string) *FontFace {
 	if x.xGetFace == 0 {
 		return nil
@@ -1122,7 +1122,7 @@ func (x *FontFamilyClass) GetGetFace() func(*FontFamily, string) *FontFace {
 	}
 }
 
-// OverridePangoReserved2 sets the callback function.
+// OverridePangoReserved2 sets the "_pango_reserved2" callback function.
 func (x *FontFamilyClass) OverridePangoReserved2(cb func()) {
 	if cb == nil {
 		x.xPangoReserved2 = 0
@@ -1133,7 +1133,7 @@ func (x *FontFamilyClass) OverridePangoReserved2(cb func()) {
 	}
 }
 
-// GetPangoReserved2 gets the callback function.
+// GetPangoReserved2 gets the "_pango_reserved2" callback function.
 func (x *FontFamilyClass) GetPangoReserved2() func() {
 	if x.xPangoReserved2 == 0 {
 		return nil
@@ -1666,7 +1666,7 @@ func (x *Font) GetFace() *FontFace {
 	return cls
 }
 
-var xFontGetFeatures func(uintptr, []uintptr, uint, uint)
+var xFontGetFeatures func(uintptr, *[]uintptr, uint, uint)
 
 // Obtain the OpenType features that are provided by the font.
 //
@@ -1675,7 +1675,7 @@ var xFontGetFeatures func(uintptr, []uintptr, uint, uint)
 //
 // Note that this does not include OpenType features which the
 // rendering system enables by default.
-func (x *Font) GetFeatures(FeaturesVar []uintptr, LenVar uint, NumFeaturesVar uint) {
+func (x *Font) GetFeatures(FeaturesVar *[]uintptr, LenVar uint, NumFeaturesVar uint) {
 
 	xFontGetFeatures(x.GoPointer(), FeaturesVar, LenVar, NumFeaturesVar)
 
@@ -1919,7 +1919,7 @@ func (x *FontFace) IsSynthesized() bool {
 	return cret
 }
 
-var xFontFaceListSizes func(uintptr, []int, int)
+var xFontFaceListSizes func(uintptr, *[]int, *int)
 
 // List the available sizes for a font.
 //
@@ -1927,7 +1927,7 @@ var xFontFaceListSizes func(uintptr, []int, int)
 // %NULL at the location pointed to by @sizes and 0 at the location pointed
 // to by @n_sizes. The sizes returned are in Pango units and are sorted
 // in ascending order.
-func (x *FontFace) ListSizes(SizesVar []int, NSizesVar int) {
+func (x *FontFace) ListSizes(SizesVar *[]int, NSizesVar *int) {
 
 	xFontFaceListSizes(x.GoPointer(), SizesVar, NSizesVar)
 
@@ -2030,7 +2030,7 @@ func (x *FontFamily) IsVariable() bool {
 	return cret
 }
 
-var xFontFamilyListFaces func(uintptr, uintptr, int)
+var xFontFamilyListFaces func(uintptr, *uintptr, *int)
 
 // Lists the different font faces that make up @family.
 //
@@ -2042,7 +2042,7 @@ var xFontFamilyListFaces func(uintptr, uintptr, int)
 //
 // `PangoFontFamily` also implemented the [iface@Gio.ListModel] interface
 // for enumerating faces.
-func (x *FontFamily) ListFaces(FacesVar uintptr, NFacesVar int) {
+func (x *FontFamily) ListFaces(FacesVar *uintptr, NFacesVar *int) {
 
 	xFontFamilyListFaces(x.GoPointer(), FacesVar, NFacesVar)
 
@@ -2057,6 +2057,38 @@ func (c *FontFamily) GoPointer() uintptr {
 
 func (c *FontFamily) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyIsMonospace gets the "is-monospace" property.
+// Is this a monospace font
+func (x *FontFamily) GetPropertyIsMonospace() bool {
+	var v gobject.Value
+	x.GetProperty("is-monospace", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsVariable gets the "is-variable" property.
+// Is this a variable font
+func (x *FontFamily) GetPropertyIsVariable() bool {
+	var v gobject.Value
+	x.GetProperty("is-variable", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// The number of items contained in this list.
+func (x *FontFamily) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
+// GetPropertyName gets the "name" property.
+// The name of the family
+func (x *FontFamily) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
 }
 
 // Get the item at @position.

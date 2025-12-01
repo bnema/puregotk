@@ -157,23 +157,23 @@ func (x *TreeViewColumn) AddAttribute(CellRendererVar *CellRenderer, AttributeVa
 
 }
 
-var xTreeViewColumnCellGetPosition func(uintptr, uintptr, int, int) bool
+var xTreeViewColumnCellGetPosition func(uintptr, uintptr, *int, *int) bool
 
 // Obtains the horizontal position and size of a cell in a column.
 //
 // If the  cell is not found in the column, @start_pos and @width
 // are not changed and %FALSE is returned.
-func (x *TreeViewColumn) CellGetPosition(CellRendererVar *CellRenderer, XOffsetVar int, WidthVar int) bool {
+func (x *TreeViewColumn) CellGetPosition(CellRendererVar *CellRenderer, XOffsetVar *int, WidthVar *int) bool {
 
 	cret := xTreeViewColumnCellGetPosition(x.GoPointer(), CellRendererVar.GoPointer(), XOffsetVar, WidthVar)
 	return cret
 }
 
-var xTreeViewColumnCellGetSize func(uintptr, int, int, int, int)
+var xTreeViewColumnCellGetSize func(uintptr, *int, *int, *int, *int)
 
 // Obtains the width and height needed to render the column.  This is used
 // primarily by the `GtkTreeView`.
-func (x *TreeViewColumn) CellGetSize(XOffsetVar int, YOffsetVar int, WidthVar int, HeightVar int) {
+func (x *TreeViewColumn) CellGetSize(XOffsetVar *int, YOffsetVar *int, WidthVar *int, HeightVar *int) {
 
 	xTreeViewColumnCellGetSize(x.GoPointer(), XOffsetVar, YOffsetVar, WidthVar, HeightVar)
 
@@ -715,6 +715,219 @@ func (c *TreeViewColumn) GoPointer() uintptr {
 
 func (c *TreeViewColumn) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAlignment sets the "alignment" property.
+func (x *TreeViewColumn) SetPropertyAlignment(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("alignment", &v)
+}
+
+// GetPropertyAlignment gets the "alignment" property.
+func (x *TreeViewColumn) GetPropertyAlignment() float32 {
+	var v gobject.Value
+	x.GetProperty("alignment", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyClickable sets the "clickable" property.
+func (x *TreeViewColumn) SetPropertyClickable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("clickable", &v)
+}
+
+// GetPropertyClickable gets the "clickable" property.
+func (x *TreeViewColumn) GetPropertyClickable() bool {
+	var v gobject.Value
+	x.GetProperty("clickable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyExpand sets the "expand" property.
+func (x *TreeViewColumn) SetPropertyExpand(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("expand", &v)
+}
+
+// GetPropertyExpand gets the "expand" property.
+func (x *TreeViewColumn) GetPropertyExpand() bool {
+	var v gobject.Value
+	x.GetProperty("expand", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyFixedWidth sets the "fixed-width" property.
+func (x *TreeViewColumn) SetPropertyFixedWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("fixed-width", &v)
+}
+
+// GetPropertyFixedWidth gets the "fixed-width" property.
+func (x *TreeViewColumn) GetPropertyFixedWidth() int {
+	var v gobject.Value
+	x.GetProperty("fixed-width", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMaxWidth sets the "max-width" property.
+func (x *TreeViewColumn) SetPropertyMaxWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("max-width", &v)
+}
+
+// GetPropertyMaxWidth gets the "max-width" property.
+func (x *TreeViewColumn) GetPropertyMaxWidth() int {
+	var v gobject.Value
+	x.GetProperty("max-width", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMinWidth sets the "min-width" property.
+func (x *TreeViewColumn) SetPropertyMinWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("min-width", &v)
+}
+
+// GetPropertyMinWidth gets the "min-width" property.
+func (x *TreeViewColumn) GetPropertyMinWidth() int {
+	var v gobject.Value
+	x.GetProperty("min-width", &v)
+	return v.GetInt()
+}
+
+// SetPropertyReorderable sets the "reorderable" property.
+func (x *TreeViewColumn) SetPropertyReorderable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reorderable", &v)
+}
+
+// GetPropertyReorderable gets the "reorderable" property.
+func (x *TreeViewColumn) GetPropertyReorderable() bool {
+	var v gobject.Value
+	x.GetProperty("reorderable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyResizable sets the "resizable" property.
+func (x *TreeViewColumn) SetPropertyResizable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("resizable", &v)
+}
+
+// GetPropertyResizable gets the "resizable" property.
+func (x *TreeViewColumn) GetPropertyResizable() bool {
+	var v gobject.Value
+	x.GetProperty("resizable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySortColumnId sets the "sort-column-id" property.
+// Logical sort column ID this column sorts on when selected for sorting. Setting the sort column ID makes the column header
+// clickable. Set to -1 to make the column unsortable.
+func (x *TreeViewColumn) SetPropertySortColumnId(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("sort-column-id", &v)
+}
+
+// GetPropertySortColumnId gets the "sort-column-id" property.
+// Logical sort column ID this column sorts on when selected for sorting. Setting the sort column ID makes the column header
+// clickable. Set to -1 to make the column unsortable.
+func (x *TreeViewColumn) GetPropertySortColumnId() int {
+	var v gobject.Value
+	x.GetProperty("sort-column-id", &v)
+	return v.GetInt()
+}
+
+// SetPropertySortIndicator sets the "sort-indicator" property.
+func (x *TreeViewColumn) SetPropertySortIndicator(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("sort-indicator", &v)
+}
+
+// GetPropertySortIndicator gets the "sort-indicator" property.
+func (x *TreeViewColumn) GetPropertySortIndicator() bool {
+	var v gobject.Value
+	x.GetProperty("sort-indicator", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySpacing sets the "spacing" property.
+func (x *TreeViewColumn) SetPropertySpacing(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("spacing", &v)
+}
+
+// GetPropertySpacing gets the "spacing" property.
+func (x *TreeViewColumn) GetPropertySpacing() int {
+	var v gobject.Value
+	x.GetProperty("spacing", &v)
+	return v.GetInt()
+}
+
+// SetPropertyTitle sets the "title" property.
+func (x *TreeViewColumn) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+func (x *TreeViewColumn) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyVisible sets the "visible" property.
+func (x *TreeViewColumn) SetPropertyVisible(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("visible", &v)
+}
+
+// GetPropertyVisible gets the "visible" property.
+func (x *TreeViewColumn) GetPropertyVisible() bool {
+	var v gobject.Value
+	x.GetProperty("visible", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyWidth gets the "width" property.
+func (x *TreeViewColumn) GetPropertyWidth() int {
+	var v gobject.Value
+	x.GetProperty("width", &v)
+	return v.GetInt()
+}
+
+// GetPropertyXOffset gets the "x-offset" property.
+func (x *TreeViewColumn) GetPropertyXOffset() int {
+	var v gobject.Value
+	x.GetProperty("x-offset", &v)
+	return v.GetInt()
 }
 
 // Emitted when the column's header has been clicked.

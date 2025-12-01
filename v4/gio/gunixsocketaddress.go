@@ -7,6 +7,8 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/glib"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -197,6 +199,61 @@ func (c *UnixSocketAddress) GoPointer() uintptr {
 
 func (c *UnixSocketAddress) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAbstract sets the "abstract" property.
+// Whether or not this is an abstract address
+func (x *UnixSocketAddress) SetPropertyAbstract(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("abstract", &v)
+}
+
+// GetPropertyAbstract gets the "abstract" property.
+// Whether or not this is an abstract address
+func (x *UnixSocketAddress) GetPropertyAbstract() bool {
+	var v gobject.Value
+	x.GetProperty("abstract", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPath sets the "path" property.
+// Unix socket path.
+func (x *UnixSocketAddress) SetPropertyPath(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("path", &v)
+}
+
+// GetPropertyPath gets the "path" property.
+// Unix socket path.
+func (x *UnixSocketAddress) GetPropertyPath() string {
+	var v gobject.Value
+	x.GetProperty("path", &v)
+	return v.GetString()
+}
+
+// SetPropertyPathAsArray sets the "path-as-array" property.
+// Unix socket path, as a byte array.
+func (x *UnixSocketAddress) SetPropertyPathAsArray(value []byte) {
+	var v gobject.Value
+	v.Init(glib.ByteArrayGLibType())
+	v.SetBoxed(uintptr(unsafe.Pointer(&value[0])))
+	x.SetProperty("path-as-array", &v)
+}
+
+// GetPropertyPathAsArray gets the "path-as-array" property.
+// Unix socket path, as a byte array.
+func (x *UnixSocketAddress) GetPropertyPathAsArray() []byte {
+	var v gobject.Value
+	x.GetProperty("path-as-array", &v)
+	ptr := v.GetBoxed()
+	if ptr == 0 {
+		return nil
+	}
+	return unsafe.Slice((*byte)(unsafe.Pointer(ptr)), 0)[:0]
 }
 
 // Creates a #GSocketAddressEnumerator for @connectable.

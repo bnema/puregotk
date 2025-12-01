@@ -153,6 +153,59 @@ func (c *PasswordEntry) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActivatesDefault sets the "activates-default" property.
+// Whether to activate the default widget when Enter is pressed.
+func (x *PasswordEntry) SetPropertyActivatesDefault(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activates-default", &v)
+}
+
+// GetPropertyActivatesDefault gets the "activates-default" property.
+// Whether to activate the default widget when Enter is pressed.
+func (x *PasswordEntry) GetPropertyActivatesDefault() bool {
+	var v gobject.Value
+	x.GetProperty("activates-default", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPlaceholderText sets the "placeholder-text" property.
+// The text that will be displayed in the `GtkPasswordEntry`
+// when it is empty and unfocused.
+func (x *PasswordEntry) SetPropertyPlaceholderText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("placeholder-text", &v)
+}
+
+// GetPropertyPlaceholderText gets the "placeholder-text" property.
+// The text that will be displayed in the `GtkPasswordEntry`
+// when it is empty and unfocused.
+func (x *PasswordEntry) GetPropertyPlaceholderText() string {
+	var v gobject.Value
+	x.GetProperty("placeholder-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyShowPeekIcon sets the "show-peek-icon" property.
+// Whether to show an icon for revealing the content.
+func (x *PasswordEntry) SetPropertyShowPeekIcon(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-peek-icon", &v)
+}
+
+// GetPropertyShowPeekIcon gets the "show-peek-icon" property.
+// Whether to show an icon for revealing the content.
+func (x *PasswordEntry) GetPropertyShowPeekIcon() bool {
+	var v gobject.Value
+	x.GetProperty("show-peek-icon", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when the entry is activated.
 //
 // The keybindings for this signal are all forms of the Enter key.
@@ -232,7 +285,7 @@ func (x *PasswordEntry) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PasswordEntry) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *PasswordEntry) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -605,7 +658,7 @@ func (x *PasswordEntry) GetPosition() int {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *PasswordEntry) GetSelectionBounds(StartPosVar int, EndPosVar int) bool {
+func (x *PasswordEntry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret

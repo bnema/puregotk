@@ -138,6 +138,30 @@ func (c *ListHeader) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyEnd gets the "end" property.
+// The first position no longer part of this section.
+func (x *ListHeader) GetPropertyEnd() uint {
+	var v gobject.Value
+	x.GetProperty("end", &v)
+	return v.GetUint()
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// Number of items in this section.
+func (x *ListHeader) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
+// GetPropertyStart gets the "start" property.
+// First position of items in this section.
+func (x *ListHeader) GetPropertyStart() uint {
+	var v gobject.Value
+	x.GetProperty("start", &v)
+	return v.GetUint()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

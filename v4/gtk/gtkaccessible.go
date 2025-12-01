@@ -35,7 +35,7 @@ func (x *AccessibleInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetAtContext sets the callback function.
+// OverrideGetAtContext sets the "get_at_context" callback function.
 // retrieve the platform-specific accessibility context
 //
 //	for the accessible implementation
@@ -53,7 +53,7 @@ func (x *AccessibleInterface) OverrideGetAtContext(cb func(Accessible) *ATContex
 	}
 }
 
-// GetGetAtContext gets the callback function.
+// GetGetAtContext gets the "get_at_context" callback function.
 // retrieve the platform-specific accessibility context
 //
 //	for the accessible implementation
@@ -74,7 +74,7 @@ func (x *AccessibleInterface) GetGetAtContext() func(Accessible) *ATContext {
 	}
 }
 
-// OverrideGetPlatformState sets the callback function.
+// OverrideGetPlatformState sets the "get_platform_state" callback function.
 // retrieve the accessible state
 func (x *AccessibleInterface) OverrideGetPlatformState(cb func(Accessible, AccessiblePlatformState) bool) {
 	if cb == nil {
@@ -86,7 +86,7 @@ func (x *AccessibleInterface) OverrideGetPlatformState(cb func(Accessible, Acces
 	}
 }
 
-// GetGetPlatformState gets the callback function.
+// GetGetPlatformState gets the "get_platform_state" callback function.
 // retrieve the accessible state
 func (x *AccessibleInterface) GetGetPlatformState() func(Accessible, AccessiblePlatformState) bool {
 	if x.xGetPlatformState == 0 {
@@ -99,7 +99,7 @@ func (x *AccessibleInterface) GetGetPlatformState() func(Accessible, AccessibleP
 	}
 }
 
-// OverrideGetAccessibleParent sets the callback function.
+// OverrideGetAccessibleParent sets the "get_accessible_parent" callback function.
 func (x *AccessibleInterface) OverrideGetAccessibleParent(cb func(Accessible) *AccessibleBase) {
 	if cb == nil {
 		x.xGetAccessibleParent = 0
@@ -114,7 +114,7 @@ func (x *AccessibleInterface) OverrideGetAccessibleParent(cb func(Accessible) *A
 	}
 }
 
-// GetGetAccessibleParent gets the callback function.
+// GetGetAccessibleParent gets the "get_accessible_parent" callback function.
 func (x *AccessibleInterface) GetGetAccessibleParent() func(Accessible) *AccessibleBase {
 	if x.xGetAccessibleParent == 0 {
 		return nil
@@ -132,7 +132,7 @@ func (x *AccessibleInterface) GetGetAccessibleParent() func(Accessible) *Accessi
 	}
 }
 
-// OverrideGetFirstAccessibleChild sets the callback function.
+// OverrideGetFirstAccessibleChild sets the "get_first_accessible_child" callback function.
 func (x *AccessibleInterface) OverrideGetFirstAccessibleChild(cb func(Accessible) *AccessibleBase) {
 	if cb == nil {
 		x.xGetFirstAccessibleChild = 0
@@ -147,7 +147,7 @@ func (x *AccessibleInterface) OverrideGetFirstAccessibleChild(cb func(Accessible
 	}
 }
 
-// GetGetFirstAccessibleChild gets the callback function.
+// GetGetFirstAccessibleChild gets the "get_first_accessible_child" callback function.
 func (x *AccessibleInterface) GetGetFirstAccessibleChild() func(Accessible) *AccessibleBase {
 	if x.xGetFirstAccessibleChild == 0 {
 		return nil
@@ -165,7 +165,7 @@ func (x *AccessibleInterface) GetGetFirstAccessibleChild() func(Accessible) *Acc
 	}
 }
 
-// OverrideGetNextAccessibleSibling sets the callback function.
+// OverrideGetNextAccessibleSibling sets the "get_next_accessible_sibling" callback function.
 func (x *AccessibleInterface) OverrideGetNextAccessibleSibling(cb func(Accessible) *AccessibleBase) {
 	if cb == nil {
 		x.xGetNextAccessibleSibling = 0
@@ -180,7 +180,7 @@ func (x *AccessibleInterface) OverrideGetNextAccessibleSibling(cb func(Accessibl
 	}
 }
 
-// GetGetNextAccessibleSibling gets the callback function.
+// GetGetNextAccessibleSibling gets the "get_next_accessible_sibling" callback function.
 func (x *AccessibleInterface) GetGetNextAccessibleSibling() func(Accessible) *AccessibleBase {
 	if x.xGetNextAccessibleSibling == 0 {
 		return nil
@@ -198,25 +198,25 @@ func (x *AccessibleInterface) GetGetNextAccessibleSibling() func(Accessible) *Ac
 	}
 }
 
-// OverrideGetBounds sets the callback function.
-func (x *AccessibleInterface) OverrideGetBounds(cb func(Accessible, int, int, int, int) bool) {
+// OverrideGetBounds sets the "get_bounds" callback function.
+func (x *AccessibleInterface) OverrideGetBounds(cb func(Accessible, *int, *int, *int, *int) bool) {
 	if cb == nil {
 		x.xGetBounds = 0
 	} else {
-		x.xGetBounds = purego.NewCallback(func(SelfVarp uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int) bool {
+		x.xGetBounds = purego.NewCallback(func(SelfVarp uintptr, XVarp *int, YVarp *int, WidthVarp *int, HeightVarp *int) bool {
 			return cb(&AccessibleBase{Ptr: SelfVarp}, XVarp, YVarp, WidthVarp, HeightVarp)
 		})
 	}
 }
 
-// GetGetBounds gets the callback function.
-func (x *AccessibleInterface) GetGetBounds() func(Accessible, int, int, int, int) bool {
+// GetGetBounds gets the "get_bounds" callback function.
+func (x *AccessibleInterface) GetGetBounds() func(Accessible, *int, *int, *int, *int) bool {
 	if x.xGetBounds == 0 {
 		return nil
 	}
-	var rawCallback func(SelfVarp uintptr, XVarp int, YVarp int, WidthVarp int, HeightVarp int) bool
+	var rawCallback func(SelfVarp uintptr, XVarp *int, YVarp *int, WidthVarp *int, HeightVarp *int) bool
 	purego.RegisterFunc(&rawCallback, x.xGetBounds)
-	return func(SelfVar Accessible, XVar int, YVar int, WidthVar int, HeightVar int) bool {
+	return func(SelfVar Accessible, XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 		return rawCallback(SelfVar.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	}
 }
@@ -301,7 +301,7 @@ type Accessible interface {
 	GetAccessibleParent() *AccessibleBase
 	GetAccessibleRole() AccessibleRole
 	GetAtContext() *ATContext
-	GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool
+	GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool
 	GetFirstAccessibleChild() *AccessibleBase
 	GetNextAccessibleSibling() *AccessibleBase
 	GetPlatformState(StateVar AccessiblePlatformState) bool
@@ -397,7 +397,7 @@ func (x *AccessibleBase) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AccessibleBase) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *AccessibleBase) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -612,7 +612,7 @@ var XGtkAccessibleAnnounce func(uintptr, string, AccessibleAnnouncementPriority)
 var XGtkAccessibleGetAccessibleParent func(uintptr) uintptr
 var XGtkAccessibleGetAccessibleRole func(uintptr) AccessibleRole
 var XGtkAccessibleGetAtContext func(uintptr) uintptr
-var XGtkAccessibleGetBounds func(uintptr, int, int, int, int) bool
+var XGtkAccessibleGetBounds func(uintptr, *int, *int, *int, *int) bool
 var XGtkAccessibleGetFirstAccessibleChild func(uintptr) uintptr
 var XGtkAccessibleGetNextAccessibleSibling func(uintptr) uintptr
 var XGtkAccessibleGetPlatformState func(uintptr, AccessiblePlatformState) bool

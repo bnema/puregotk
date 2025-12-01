@@ -271,6 +271,129 @@ func (c *FontDialogButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFontDesc sets the "font-desc" property.
+// The selected font.
+//
+// This property can be set to give the button its initial
+// font, and it will be updated to reflect the users choice
+// in the font chooser dialog.
+//
+// Listen to `notify::font-desc` to get informed about changes
+// to the buttons font.
+func (x *FontDialogButton) SetPropertyFontDesc(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("font-desc", &v)
+}
+
+// GetPropertyFontDesc gets the "font-desc" property.
+// The selected font.
+//
+// This property can be set to give the button its initial
+// font, and it will be updated to reflect the users choice
+// in the font chooser dialog.
+//
+// Listen to `notify::font-desc` to get informed about changes
+// to the buttons font.
+func (x *FontDialogButton) GetPropertyFontDesc() uintptr {
+	var v gobject.Value
+	x.GetProperty("font-desc", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyFontFeatures sets the "font-features" property.
+// The selected font features.
+//
+// This property will be updated to reflect the users choice
+// in the font chooser dialog.
+//
+// Listen to `notify::font-features` to get informed about changes
+// to the buttons font features.
+func (x *FontDialogButton) SetPropertyFontFeatures(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("font-features", &v)
+}
+
+// GetPropertyFontFeatures gets the "font-features" property.
+// The selected font features.
+//
+// This property will be updated to reflect the users choice
+// in the font chooser dialog.
+//
+// Listen to `notify::font-features` to get informed about changes
+// to the buttons font features.
+func (x *FontDialogButton) GetPropertyFontFeatures() string {
+	var v gobject.Value
+	x.GetProperty("font-features", &v)
+	return v.GetString()
+}
+
+// SetPropertyLanguage sets the "language" property.
+// The selected language for font features.
+//
+// This property will be updated to reflect the users choice
+// in the font chooser dialog.
+//
+// Listen to `notify::language` to get informed about changes
+// to the buttons language.
+func (x *FontDialogButton) SetPropertyLanguage(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("language", &v)
+}
+
+// GetPropertyLanguage gets the "language" property.
+// The selected language for font features.
+//
+// This property will be updated to reflect the users choice
+// in the font chooser dialog.
+//
+// Listen to `notify::language` to get informed about changes
+// to the buttons language.
+func (x *FontDialogButton) GetPropertyLanguage() uintptr {
+	var v gobject.Value
+	x.GetProperty("language", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyUseFont sets the "use-font" property.
+// Whether the buttons label will be drawn in the selected font.
+func (x *FontDialogButton) SetPropertyUseFont(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-font", &v)
+}
+
+// GetPropertyUseFont gets the "use-font" property.
+// Whether the buttons label will be drawn in the selected font.
+func (x *FontDialogButton) GetPropertyUseFont() bool {
+	var v gobject.Value
+	x.GetProperty("use-font", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseSize sets the "use-size" property.
+// Whether the buttons label will use the selected font size.
+func (x *FontDialogButton) SetPropertyUseSize(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-size", &v)
+}
+
+// GetPropertyUseSize gets the "use-size" property.
+// Whether the buttons label will use the selected font size.
+func (x *FontDialogButton) GetPropertyUseSize() bool {
+	var v gobject.Value
+	x.GetProperty("use-size", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when the font dialog button is activated.
 //
 // The `::activate` signal on `GtkFontDialogButton` is an action signal
@@ -351,7 +474,7 @@ func (x *FontDialogButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *FontDialogButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *FontDialogButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

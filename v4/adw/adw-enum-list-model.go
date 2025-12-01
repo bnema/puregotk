@@ -87,6 +87,30 @@ func (c *EnumListItem) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyName gets the "name" property.
+// The enum value name.
+func (x *EnumListItem) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// GetPropertyNick gets the "nick" property.
+// The enum value nick.
+func (x *EnumListItem) GetPropertyNick() string {
+	var v gobject.Value
+	x.GetProperty("nick", &v)
+	return v.GetString()
+}
+
+// GetPropertyValue gets the "value" property.
+// The enum value.
+func (x *EnumListItem) GetPropertyValue() int {
+	var v gobject.Value
+	x.GetProperty("value", &v)
+	return v.GetInt()
+}
+
 // A [iface@Gio.ListModel] representing values of a given enum.
 //
 // `AdwEnumListModel` contains objects of type [class@EnumListItem].

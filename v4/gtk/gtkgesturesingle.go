@@ -8,6 +8,7 @@ import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -149,6 +150,61 @@ func (c *GestureSingle) GoPointer() uintptr {
 
 func (c *GestureSingle) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyButton sets the "button" property.
+// Mouse button number to listen to, or 0 to listen for any button.
+func (x *GestureSingle) SetPropertyButton(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("button", &v)
+}
+
+// GetPropertyButton gets the "button" property.
+// Mouse button number to listen to, or 0 to listen for any button.
+func (x *GestureSingle) GetPropertyButton() uint {
+	var v gobject.Value
+	x.GetProperty("button", &v)
+	return v.GetUint()
+}
+
+// SetPropertyExclusive sets the "exclusive" property.
+// Whether the gesture is exclusive.
+//
+// Exclusive gestures only listen to pointer and pointer emulated events.
+func (x *GestureSingle) SetPropertyExclusive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("exclusive", &v)
+}
+
+// GetPropertyExclusive gets the "exclusive" property.
+// Whether the gesture is exclusive.
+//
+// Exclusive gestures only listen to pointer and pointer emulated events.
+func (x *GestureSingle) GetPropertyExclusive() bool {
+	var v gobject.Value
+	x.GetProperty("exclusive", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTouchOnly sets the "touch-only" property.
+// Whether the gesture handles only touch events.
+func (x *GestureSingle) SetPropertyTouchOnly(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("touch-only", &v)
+}
+
+// GetPropertyTouchOnly gets the "touch-only" property.
+// Whether the gesture handles only touch events.
+func (x *GestureSingle) GetPropertyTouchOnly() bool {
+	var v gobject.Value
+	x.GetProperty("touch-only", &v)
+	return v.GetBoolean()
 }
 
 func init() {

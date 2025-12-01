@@ -145,6 +145,37 @@ func (c *ColorDialogButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyRgba sets the "rgba" property.
+// The selected color.
+//
+// This property can be set to give the button its initial
+// color, and it will be updated to reflect the users choice
+// in the color chooser dialog.
+//
+// Listen to `notify::rgba` to get informed about changes
+// to the buttons color.
+func (x *ColorDialogButton) SetPropertyRgba(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("rgba", &v)
+}
+
+// GetPropertyRgba gets the "rgba" property.
+// The selected color.
+//
+// This property can be set to give the button its initial
+// color, and it will be updated to reflect the users choice
+// in the color chooser dialog.
+//
+// Listen to `notify::rgba` to get informed about changes
+// to the buttons color.
+func (x *ColorDialogButton) GetPropertyRgba() uintptr {
+	var v gobject.Value
+	x.GetProperty("rgba", &v)
+	return v.GetPointer()
+}
+
 // Emitted when the color dialog button is activated.
 //
 // The `::activate` signal on `GtkColorDialogButton` is an action signal
@@ -225,7 +256,7 @@ func (x *ColorDialogButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ColorDialogButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ColorDialogButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

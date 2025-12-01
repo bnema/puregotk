@@ -382,6 +382,69 @@ func (c *DropDown) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEnableSearch sets the "enable-search" property.
+// Whether to show a search entry in the popup.
+//
+// Note that search requires [property@Gtk.DropDown:expression]
+// to be set.
+func (x *DropDown) SetPropertyEnableSearch(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-search", &v)
+}
+
+// GetPropertyEnableSearch gets the "enable-search" property.
+// Whether to show a search entry in the popup.
+//
+// Note that search requires [property@Gtk.DropDown:expression]
+// to be set.
+func (x *DropDown) GetPropertyEnableSearch() bool {
+	var v gobject.Value
+	x.GetProperty("enable-search", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySelected sets the "selected" property.
+// The position of the selected item.
+//
+// If no item is selected, the property has the value
+// %GTK_INVALID_LIST_POSITION.
+func (x *DropDown) SetPropertySelected(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("selected", &v)
+}
+
+// GetPropertySelected gets the "selected" property.
+// The position of the selected item.
+//
+// If no item is selected, the property has the value
+// %GTK_INVALID_LIST_POSITION.
+func (x *DropDown) GetPropertySelected() uint {
+	var v gobject.Value
+	x.GetProperty("selected", &v)
+	return v.GetUint()
+}
+
+// SetPropertyShowArrow sets the "show-arrow" property.
+// Whether to show an arrow within the GtkDropDown widget.
+func (x *DropDown) SetPropertyShowArrow(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-arrow", &v)
+}
+
+// GetPropertyShowArrow gets the "show-arrow" property.
+// Whether to show an arrow within the GtkDropDown widget.
+func (x *DropDown) GetPropertyShowArrow() bool {
+	var v gobject.Value
+	x.GetProperty("show-arrow", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to when the drop down is activated.
 //
 // The `::activate` signal on `GtkDropDown` is an action signal and
@@ -462,7 +525,7 @@ func (x *DropDown) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *DropDown) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *DropDown) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

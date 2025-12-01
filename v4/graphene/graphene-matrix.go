@@ -597,7 +597,7 @@ func (x *Matrix) SkewYz(FactorVar float32) {
 
 }
 
-var xMatrixTo2d func(uintptr, float64, float64, float64, float64, float64, float64) bool
+var xMatrixTo2d func(uintptr, *float64, *float64, *float64, *float64, *float64, *float64) bool
 
 // Converts a #graphene_matrix_t to an affine transformation
 // matrix, if the given matrix is compatible.
@@ -614,17 +614,17 @@ var xMatrixTo2d func(uintptr, float64, float64, float64, float64, float64, float
 //
 // This function can be used to convert between a #graphene_matrix_t
 // and an affine matrix type from other libraries.
-func (x *Matrix) To2d(XxVar float64, YxVar float64, XyVar float64, YyVar float64, X0Var float64, Y0Var float64) bool {
+func (x *Matrix) To2d(XxVar *float64, YxVar *float64, XyVar *float64, YyVar *float64, X0Var *float64, Y0Var *float64) bool {
 
 	cret := xMatrixTo2d(x.GoPointer(), XxVar, YxVar, XyVar, YyVar, X0Var, Y0Var)
 	return cret
 }
 
-var xMatrixToFloat func(uintptr, [16]float32)
+var xMatrixToFloat func(uintptr, *[16]float32)
 
 // Converts a #graphene_matrix_t to an array of floating point
 // values.
-func (x *Matrix) ToFloat(VVar [16]float32) {
+func (x *Matrix) ToFloat(VVar *[16]float32) {
 
 	xMatrixToFloat(x.GoPointer(), VVar)
 

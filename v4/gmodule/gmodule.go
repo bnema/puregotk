@@ -67,11 +67,11 @@ func (x *Module) Name() string {
 	return cret
 }
 
-var xModuleSymbol func(uintptr, string, uintptr) bool
+var xModuleSymbol func(uintptr, string, *uintptr) bool
 
 // Gets a symbol pointer from a module, such as one exported
 // by %G_MODULE_EXPORT. Note that a valid symbol can be %NULL.
-func (x *Module) Symbol(SymbolNameVar string, SymbolVar uintptr) bool {
+func (x *Module) Symbol(SymbolNameVar string, SymbolVar *uintptr) bool {
 
 	cret := xModuleSymbol(x.GoPointer(), SymbolNameVar, SymbolVar)
 	return cret

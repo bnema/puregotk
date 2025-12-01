@@ -41,7 +41,7 @@ func (x *FontMapClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideLoadFont sets the callback function.
+// OverrideLoadFont sets the "load_font" callback function.
 // a function to load a font with a given description. See
 // pango_font_map_load_font().
 func (x *FontMapClass) OverrideLoadFont(cb func(*FontMap, *Context, *FontDescription) *Font) {
@@ -58,7 +58,7 @@ func (x *FontMapClass) OverrideLoadFont(cb func(*FontMap, *Context, *FontDescrip
 	}
 }
 
-// GetLoadFont gets the callback function.
+// GetLoadFont gets the "load_font" callback function.
 // a function to load a font with a given description. See
 // pango_font_map_load_font().
 func (x *FontMapClass) GetLoadFont() func(*FontMap, *Context, *FontDescription) *Font {
@@ -78,34 +78,34 @@ func (x *FontMapClass) GetLoadFont() func(*FontMap, *Context, *FontDescription) 
 	}
 }
 
-// OverrideListFamilies sets the callback function.
+// OverrideListFamilies sets the "list_families" callback function.
 // A function to list available font families. See
 // pango_font_map_list_families().
-func (x *FontMapClass) OverrideListFamilies(cb func(*FontMap, uintptr, int)) {
+func (x *FontMapClass) OverrideListFamilies(cb func(*FontMap, *uintptr, *int)) {
 	if cb == nil {
 		x.xListFamilies = 0
 	} else {
-		x.xListFamilies = purego.NewCallback(func(FontmapVarp uintptr, FamiliesVarp uintptr, NFamiliesVarp int) {
+		x.xListFamilies = purego.NewCallback(func(FontmapVarp uintptr, FamiliesVarp *uintptr, NFamiliesVarp *int) {
 			cb(FontMapNewFromInternalPtr(FontmapVarp), FamiliesVarp, NFamiliesVarp)
 		})
 	}
 }
 
-// GetListFamilies gets the callback function.
+// GetListFamilies gets the "list_families" callback function.
 // A function to list available font families. See
 // pango_font_map_list_families().
-func (x *FontMapClass) GetListFamilies() func(*FontMap, uintptr, int) {
+func (x *FontMapClass) GetListFamilies() func(*FontMap, *uintptr, *int) {
 	if x.xListFamilies == 0 {
 		return nil
 	}
-	var rawCallback func(FontmapVarp uintptr, FamiliesVarp uintptr, NFamiliesVarp int)
+	var rawCallback func(FontmapVarp uintptr, FamiliesVarp *uintptr, NFamiliesVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xListFamilies)
-	return func(FontmapVar *FontMap, FamiliesVar uintptr, NFamiliesVar int) {
+	return func(FontmapVar *FontMap, FamiliesVar *uintptr, NFamiliesVar *int) {
 		rawCallback(FontmapVar.GoPointer(), FamiliesVar, NFamiliesVar)
 	}
 }
 
-// OverrideLoadFontset sets the callback function.
+// OverrideLoadFontset sets the "load_fontset" callback function.
 // a function to load a fontset with a given given description
 // suitable for a particular language. See pango_font_map_load_fontset().
 func (x *FontMapClass) OverrideLoadFontset(cb func(*FontMap, *Context, *FontDescription, *Language) *Fontset) {
@@ -122,7 +122,7 @@ func (x *FontMapClass) OverrideLoadFontset(cb func(*FontMap, *Context, *FontDesc
 	}
 }
 
-// GetLoadFontset gets the callback function.
+// GetLoadFontset gets the "load_fontset" callback function.
 // a function to load a fontset with a given given description
 // suitable for a particular language. See pango_font_map_load_fontset().
 func (x *FontMapClass) GetLoadFontset() func(*FontMap, *Context, *FontDescription, *Language) *Fontset {
@@ -142,7 +142,7 @@ func (x *FontMapClass) GetLoadFontset() func(*FontMap, *Context, *FontDescriptio
 	}
 }
 
-// OverrideGetSerial sets the callback function.
+// OverrideGetSerial sets the "get_serial" callback function.
 // a function to get the serial number of the fontmap.
 // See pango_font_map_get_serial().
 func (x *FontMapClass) OverrideGetSerial(cb func(*FontMap) uint) {
@@ -155,7 +155,7 @@ func (x *FontMapClass) OverrideGetSerial(cb func(*FontMap) uint) {
 	}
 }
 
-// GetGetSerial gets the callback function.
+// GetGetSerial gets the "get_serial" callback function.
 // a function to get the serial number of the fontmap.
 // See pango_font_map_get_serial().
 func (x *FontMapClass) GetGetSerial() func(*FontMap) uint {
@@ -169,7 +169,7 @@ func (x *FontMapClass) GetGetSerial() func(*FontMap) uint {
 	}
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 // See pango_font_map_changed()
 func (x *FontMapClass) OverrideChanged(cb func(*FontMap)) {
 	if cb == nil {
@@ -181,7 +181,7 @@ func (x *FontMapClass) OverrideChanged(cb func(*FontMap)) {
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 // See pango_font_map_changed()
 func (x *FontMapClass) GetChanged() func(*FontMap) {
 	if x.xChanged == 0 {
@@ -194,7 +194,7 @@ func (x *FontMapClass) GetChanged() func(*FontMap) {
 	}
 }
 
-// OverrideGetFamily sets the callback function.
+// OverrideGetFamily sets the "get_family" callback function.
 func (x *FontMapClass) OverrideGetFamily(cb func(*FontMap, string) *FontFamily) {
 	if cb == nil {
 		x.xGetFamily = 0
@@ -209,7 +209,7 @@ func (x *FontMapClass) OverrideGetFamily(cb func(*FontMap, string) *FontFamily) 
 	}
 }
 
-// GetGetFamily gets the callback function.
+// GetGetFamily gets the "get_family" callback function.
 func (x *FontMapClass) GetGetFamily() func(*FontMap, string) *FontFamily {
 	if x.xGetFamily == 0 {
 		return nil
@@ -227,7 +227,7 @@ func (x *FontMapClass) GetGetFamily() func(*FontMap, string) *FontFamily {
 	}
 }
 
-// OverrideGetFace sets the callback function.
+// OverrideGetFace sets the "get_face" callback function.
 func (x *FontMapClass) OverrideGetFace(cb func(*FontMap, *Font) *FontFace) {
 	if cb == nil {
 		x.xGetFace = 0
@@ -242,7 +242,7 @@ func (x *FontMapClass) OverrideGetFace(cb func(*FontMap, *Font) *FontFace) {
 	}
 }
 
-// GetGetFace gets the callback function.
+// GetGetFace gets the "get_face" callback function.
 func (x *FontMapClass) GetGetFace() func(*FontMap, *Font) *FontFace {
 	if x.xGetFace == 0 {
 		return nil
@@ -374,7 +374,7 @@ func (x *FontMap) GetSerial() uint {
 	return cret
 }
 
-var xFontMapListFamilies func(uintptr, uintptr, int)
+var xFontMapListFamilies func(uintptr, *uintptr, *int)
 
 // List all families for a fontmap.
 //
@@ -382,7 +382,7 @@ var xFontMapListFamilies func(uintptr, uintptr, int)
 //
 // `PangoFontMap` also implemented the [iface@Gio.ListModel] interface
 // for enumerating families.
-func (x *FontMap) ListFamilies(FamiliesVar uintptr, NFamiliesVar int) {
+func (x *FontMap) ListFamilies(FamiliesVar *uintptr, NFamiliesVar *int) {
 
 	xFontMapListFamilies(x.GoPointer(), FamiliesVar, NFamiliesVar)
 
@@ -453,6 +453,14 @@ func (c *FontMap) GoPointer() uintptr {
 
 func (c *FontMap) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// The number of items contained in this list.
+func (x *FontMap) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
 }
 
 // Get the item at @position.

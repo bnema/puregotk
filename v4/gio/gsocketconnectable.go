@@ -28,7 +28,7 @@ func (x *SocketConnectableIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideEnumerate sets the callback function.
+// OverrideEnumerate sets the "enumerate" callback function.
 // Creates a #GSocketAddressEnumerator
 func (x *SocketConnectableIface) OverrideEnumerate(cb func(SocketConnectable) *SocketAddressEnumerator) {
 	if cb == nil {
@@ -44,7 +44,7 @@ func (x *SocketConnectableIface) OverrideEnumerate(cb func(SocketConnectable) *S
 	}
 }
 
-// GetEnumerate gets the callback function.
+// GetEnumerate gets the "enumerate" callback function.
 // Creates a #GSocketAddressEnumerator
 func (x *SocketConnectableIface) GetEnumerate() func(SocketConnectable) *SocketAddressEnumerator {
 	if x.xEnumerate == 0 {
@@ -63,7 +63,7 @@ func (x *SocketConnectableIface) GetEnumerate() func(SocketConnectable) *SocketA
 	}
 }
 
-// OverrideProxyEnumerate sets the callback function.
+// OverrideProxyEnumerate sets the "proxy_enumerate" callback function.
 // Creates a #GProxyAddressEnumerator
 func (x *SocketConnectableIface) OverrideProxyEnumerate(cb func(SocketConnectable) *SocketAddressEnumerator) {
 	if cb == nil {
@@ -79,7 +79,7 @@ func (x *SocketConnectableIface) OverrideProxyEnumerate(cb func(SocketConnectabl
 	}
 }
 
-// GetProxyEnumerate gets the callback function.
+// GetProxyEnumerate gets the "proxy_enumerate" callback function.
 // Creates a #GProxyAddressEnumerator
 func (x *SocketConnectableIface) GetProxyEnumerate() func(SocketConnectable) *SocketAddressEnumerator {
 	if x.xProxyEnumerate == 0 {
@@ -98,7 +98,7 @@ func (x *SocketConnectableIface) GetProxyEnumerate() func(SocketConnectable) *So
 	}
 }
 
-// OverrideToString sets the callback function.
+// OverrideToString sets the "to_string" callback function.
 // Format the connectable’s address as a string for debugging.
 //
 //	Implementing this is optional. (Since: 2.48)
@@ -112,7 +112,7 @@ func (x *SocketConnectableIface) OverrideToString(cb func(SocketConnectable) str
 	}
 }
 
-// GetToString gets the callback function.
+// GetToString gets the "to_string" callback function.
 // Format the connectable’s address as a string for debugging.
 //
 //	Implementing this is optional. (Since: 2.48)

@@ -34,7 +34,7 @@ func (x *ApplicationCommandLineClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverridePrintLiteral sets the callback function.
+// OverridePrintLiteral sets the "print_literal" callback function.
 func (x *ApplicationCommandLineClass) OverridePrintLiteral(cb func(*ApplicationCommandLine, string)) {
 	if cb == nil {
 		x.xPrintLiteral = 0
@@ -45,7 +45,7 @@ func (x *ApplicationCommandLineClass) OverridePrintLiteral(cb func(*ApplicationC
 	}
 }
 
-// GetPrintLiteral gets the callback function.
+// GetPrintLiteral gets the "print_literal" callback function.
 func (x *ApplicationCommandLineClass) GetPrintLiteral() func(*ApplicationCommandLine, string) {
 	if x.xPrintLiteral == 0 {
 		return nil
@@ -57,7 +57,7 @@ func (x *ApplicationCommandLineClass) GetPrintLiteral() func(*ApplicationCommand
 	}
 }
 
-// OverridePrinterrLiteral sets the callback function.
+// OverridePrinterrLiteral sets the "printerr_literal" callback function.
 func (x *ApplicationCommandLineClass) OverridePrinterrLiteral(cb func(*ApplicationCommandLine, string)) {
 	if cb == nil {
 		x.xPrinterrLiteral = 0
@@ -68,7 +68,7 @@ func (x *ApplicationCommandLineClass) OverridePrinterrLiteral(cb func(*Applicati
 	}
 }
 
-// GetPrinterrLiteral gets the callback function.
+// GetPrinterrLiteral gets the "printerr_literal" callback function.
 func (x *ApplicationCommandLineClass) GetPrinterrLiteral() func(*ApplicationCommandLine, string) {
 	if x.xPrinterrLiteral == 0 {
 		return nil
@@ -80,7 +80,7 @@ func (x *ApplicationCommandLineClass) GetPrinterrLiteral() func(*ApplicationComm
 	}
 }
 
-// OverrideGetStdin sets the callback function.
+// OverrideGetStdin sets the "get_stdin" callback function.
 func (x *ApplicationCommandLineClass) OverrideGetStdin(cb func(*ApplicationCommandLine) *InputStream) {
 	if cb == nil {
 		x.xGetStdin = 0
@@ -95,7 +95,7 @@ func (x *ApplicationCommandLineClass) OverrideGetStdin(cb func(*ApplicationComma
 	}
 }
 
-// GetGetStdin gets the callback function.
+// GetGetStdin gets the "get_stdin" callback function.
 func (x *ApplicationCommandLineClass) GetGetStdin() func(*ApplicationCommandLine) *InputStream {
 	if x.xGetStdin == 0 {
 		return nil
@@ -113,7 +113,7 @@ func (x *ApplicationCommandLineClass) GetGetStdin() func(*ApplicationCommandLine
 	}
 }
 
-// OverrideDone sets the callback function.
+// OverrideDone sets the "done" callback function.
 func (x *ApplicationCommandLineClass) OverrideDone(cb func(*ApplicationCommandLine)) {
 	if cb == nil {
 		x.xDone = 0
@@ -124,7 +124,7 @@ func (x *ApplicationCommandLineClass) OverrideDone(cb func(*ApplicationCommandLi
 	}
 }
 
-// GetDone gets the callback function.
+// GetDone gets the "done" callback function.
 func (x *ApplicationCommandLineClass) GetDone() func(*ApplicationCommandLine) {
 	if x.xDone == 0 {
 		return nil
@@ -383,7 +383,7 @@ func (x *ApplicationCommandLine) Done() {
 
 }
 
-var xApplicationCommandLineGetArguments func(uintptr, int) []string
+var xApplicationCommandLineGetArguments func(uintptr, *int) []string
 
 // Gets the list of arguments that was passed on the command line.
 //
@@ -396,7 +396,7 @@ var xApplicationCommandLineGetArguments func(uintptr, int) []string
 //
 // The return value is %NULL-terminated and should be freed using
 // g_strfreev().
-func (x *ApplicationCommandLine) GetArguments(ArgcVar int) []string {
+func (x *ApplicationCommandLine) GetArguments(ArgcVar *int) []string {
 
 	cret := xApplicationCommandLineGetArguments(x.GoPointer(), ArgcVar)
 	return cret
@@ -638,6 +638,42 @@ func (c *ApplicationCommandLine) GoPointer() uintptr {
 
 func (c *ApplicationCommandLine) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyArguments sets the "arguments" property.
+// The commandline that caused this [signal@Gio.Application::command-line]
+// signal emission.
+func (x *ApplicationCommandLine) SetPropertyArguments(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("arguments", &v)
+}
+
+// GetPropertyIsRemote gets the "is-remote" property.
+// Whether this is a remote commandline.
+func (x *ApplicationCommandLine) GetPropertyIsRemote() bool {
+	var v gobject.Value
+	x.GetProperty("is-remote", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyOptions sets the "options" property.
+// The options sent along with the commandline.
+func (x *ApplicationCommandLine) SetPropertyOptions(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("options", &v)
+}
+
+// SetPropertyPlatformData sets the "platform-data" property.
+// Platform-specific data for the commandline.
+func (x *ApplicationCommandLine) SetPropertyPlatformData(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("platform-data", &v)
 }
 
 func init() {

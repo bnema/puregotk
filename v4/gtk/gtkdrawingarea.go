@@ -33,7 +33,7 @@ func (x *DrawingAreaClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideResize sets the callback function.
+// OverrideResize sets the "resize" callback function.
 func (x *DrawingAreaClass) OverrideResize(cb func(*DrawingArea, int, int)) {
 	if cb == nil {
 		x.xResize = 0
@@ -44,7 +44,7 @@ func (x *DrawingAreaClass) OverrideResize(cb func(*DrawingArea, int, int)) {
 	}
 }
 
-// GetResize gets the callback function.
+// GetResize gets the "resize" callback function.
 func (x *DrawingAreaClass) GetResize() func(*DrawingArea, int, int) {
 	if x.xResize == 0 {
 		return nil
@@ -259,6 +259,40 @@ func (c *DrawingArea) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyContentHeight sets the "content-height" property.
+// The content height.
+func (x *DrawingArea) SetPropertyContentHeight(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("content-height", &v)
+}
+
+// GetPropertyContentHeight gets the "content-height" property.
+// The content height.
+func (x *DrawingArea) GetPropertyContentHeight() int {
+	var v gobject.Value
+	x.GetProperty("content-height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyContentWidth sets the "content-width" property.
+// The content width.
+func (x *DrawingArea) SetPropertyContentWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("content-width", &v)
+}
+
+// GetPropertyContentWidth gets the "content-width" property.
+// The content width.
+func (x *DrawingArea) GetPropertyContentWidth() int {
+	var v gobject.Value
+	x.GetProperty("content-width", &v)
+	return v.GetInt()
+}
+
 // Emitted once when the widget is realized, and then each time the widget
 // is changed while realized.
 //
@@ -340,7 +374,7 @@ func (x *DrawingArea) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *DrawingArea) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *DrawingArea) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

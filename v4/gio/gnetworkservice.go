@@ -131,6 +131,74 @@ func (c *NetworkService) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDomain sets the "domain" property.
+// Network domain, for example `example.com`.
+func (x *NetworkService) SetPropertyDomain(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("domain", &v)
+}
+
+// GetPropertyDomain gets the "domain" property.
+// Network domain, for example `example.com`.
+func (x *NetworkService) GetPropertyDomain() string {
+	var v gobject.Value
+	x.GetProperty("domain", &v)
+	return v.GetString()
+}
+
+// SetPropertyProtocol sets the "protocol" property.
+// Network protocol, for example `tcp`.
+func (x *NetworkService) SetPropertyProtocol(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("protocol", &v)
+}
+
+// GetPropertyProtocol gets the "protocol" property.
+// Network protocol, for example `tcp`.
+func (x *NetworkService) GetPropertyProtocol() string {
+	var v gobject.Value
+	x.GetProperty("protocol", &v)
+	return v.GetString()
+}
+
+// SetPropertyScheme sets the "scheme" property.
+// Network scheme (default is to use service).
+func (x *NetworkService) SetPropertyScheme(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("scheme", &v)
+}
+
+// GetPropertyScheme gets the "scheme" property.
+// Network scheme (default is to use service).
+func (x *NetworkService) GetPropertyScheme() string {
+	var v gobject.Value
+	x.GetProperty("scheme", &v)
+	return v.GetString()
+}
+
+// SetPropertyService sets the "service" property.
+// Service name, for example `ldap`.
+func (x *NetworkService) SetPropertyService(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("service", &v)
+}
+
+// GetPropertyService gets the "service" property.
+// Service name, for example `ldap`.
+func (x *NetworkService) GetPropertyService() string {
+	var v gobject.Value
+	x.GetProperty("service", &v)
+	return v.GetString()
+}
+
 // Creates a #GSocketAddressEnumerator for @connectable.
 func (x *NetworkService) Enumerate() *SocketAddressEnumerator {
 	var cls *SocketAddressEnumerator

@@ -50,7 +50,7 @@ func (x *InputStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideReadFn sets the callback function.
+// OverrideReadFn sets the "read_fn" callback function.
 func (x *InputStreamClass) OverrideReadFn(cb func(*InputStream, uintptr, uint, *Cancellable) int) {
 	if cb == nil {
 		x.xReadFn = 0
@@ -61,7 +61,7 @@ func (x *InputStreamClass) OverrideReadFn(cb func(*InputStream, uintptr, uint, *
 	}
 }
 
-// GetReadFn gets the callback function.
+// GetReadFn gets the "read_fn" callback function.
 func (x *InputStreamClass) GetReadFn() func(*InputStream, uintptr, uint, *Cancellable) int {
 	if x.xReadFn == 0 {
 		return nil
@@ -73,7 +73,7 @@ func (x *InputStreamClass) GetReadFn() func(*InputStream, uintptr, uint, *Cancel
 	}
 }
 
-// OverrideSkip sets the callback function.
+// OverrideSkip sets the "skip" callback function.
 func (x *InputStreamClass) OverrideSkip(cb func(*InputStream, uint, *Cancellable) int) {
 	if cb == nil {
 		x.xSkip = 0
@@ -84,7 +84,7 @@ func (x *InputStreamClass) OverrideSkip(cb func(*InputStream, uint, *Cancellable
 	}
 }
 
-// GetSkip gets the callback function.
+// GetSkip gets the "skip" callback function.
 func (x *InputStreamClass) GetSkip() func(*InputStream, uint, *Cancellable) int {
 	if x.xSkip == 0 {
 		return nil
@@ -96,7 +96,7 @@ func (x *InputStreamClass) GetSkip() func(*InputStream, uint, *Cancellable) int 
 	}
 }
 
-// OverrideCloseFn sets the callback function.
+// OverrideCloseFn sets the "close_fn" callback function.
 func (x *InputStreamClass) OverrideCloseFn(cb func(*InputStream, *Cancellable) bool) {
 	if cb == nil {
 		x.xCloseFn = 0
@@ -107,7 +107,7 @@ func (x *InputStreamClass) OverrideCloseFn(cb func(*InputStream, *Cancellable) b
 	}
 }
 
-// GetCloseFn gets the callback function.
+// GetCloseFn gets the "close_fn" callback function.
 func (x *InputStreamClass) GetCloseFn() func(*InputStream, *Cancellable) bool {
 	if x.xCloseFn == 0 {
 		return nil
@@ -119,30 +119,30 @@ func (x *InputStreamClass) GetCloseFn() func(*InputStream, *Cancellable) bool {
 	}
 }
 
-// OverrideReadAsync sets the callback function.
-func (x *InputStreamClass) OverrideReadAsync(cb func(*InputStream, []byte, uint, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
+// OverrideReadAsync sets the "read_async" callback function.
+func (x *InputStreamClass) OverrideReadAsync(cb func(*InputStream, *[]byte, uint, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xReadAsync = 0
 	} else {
-		x.xReadAsync = purego.NewCallback(func(StreamVarp uintptr, BufferVarp []byte, CountVarp uint, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
+		x.xReadAsync = purego.NewCallback(func(StreamVarp uintptr, BufferVarp *[]byte, CountVarp uint, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr) {
 			cb(InputStreamNewFromInternalPtr(StreamVarp), BufferVarp, CountVarp, IoPriorityVarp, CancellableNewFromInternalPtr(CancellableVarp), (*AsyncReadyCallback)(unsafe.Pointer(CallbackVarp)), UserDataVarp)
 		})
 	}
 }
 
-// GetReadAsync gets the callback function.
-func (x *InputStreamClass) GetReadAsync() func(*InputStream, []byte, uint, int, *Cancellable, *AsyncReadyCallback, uintptr) {
+// GetReadAsync gets the "read_async" callback function.
+func (x *InputStreamClass) GetReadAsync() func(*InputStream, *[]byte, uint, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xReadAsync == 0 {
 		return nil
 	}
-	var rawCallback func(StreamVarp uintptr, BufferVarp []byte, CountVarp uint, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
+	var rawCallback func(StreamVarp uintptr, BufferVarp *[]byte, CountVarp uint, IoPriorityVarp int, CancellableVarp uintptr, CallbackVarp uintptr, UserDataVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xReadAsync)
-	return func(StreamVar *InputStream, BufferVar []byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+	return func(StreamVar *InputStream, BufferVar *[]byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 		rawCallback(StreamVar.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 	}
 }
 
-// OverrideReadFinish sets the callback function.
+// OverrideReadFinish sets the "read_finish" callback function.
 func (x *InputStreamClass) OverrideReadFinish(cb func(*InputStream, AsyncResult) int) {
 	if cb == nil {
 		x.xReadFinish = 0
@@ -153,7 +153,7 @@ func (x *InputStreamClass) OverrideReadFinish(cb func(*InputStream, AsyncResult)
 	}
 }
 
-// GetReadFinish gets the callback function.
+// GetReadFinish gets the "read_finish" callback function.
 func (x *InputStreamClass) GetReadFinish() func(*InputStream, AsyncResult) int {
 	if x.xReadFinish == 0 {
 		return nil
@@ -165,7 +165,7 @@ func (x *InputStreamClass) GetReadFinish() func(*InputStream, AsyncResult) int {
 	}
 }
 
-// OverrideSkipAsync sets the callback function.
+// OverrideSkipAsync sets the "skip_async" callback function.
 func (x *InputStreamClass) OverrideSkipAsync(cb func(*InputStream, uint, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xSkipAsync = 0
@@ -176,7 +176,7 @@ func (x *InputStreamClass) OverrideSkipAsync(cb func(*InputStream, uint, int, *C
 	}
 }
 
-// GetSkipAsync gets the callback function.
+// GetSkipAsync gets the "skip_async" callback function.
 func (x *InputStreamClass) GetSkipAsync() func(*InputStream, uint, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xSkipAsync == 0 {
 		return nil
@@ -188,7 +188,7 @@ func (x *InputStreamClass) GetSkipAsync() func(*InputStream, uint, int, *Cancell
 	}
 }
 
-// OverrideSkipFinish sets the callback function.
+// OverrideSkipFinish sets the "skip_finish" callback function.
 func (x *InputStreamClass) OverrideSkipFinish(cb func(*InputStream, AsyncResult) int) {
 	if cb == nil {
 		x.xSkipFinish = 0
@@ -199,7 +199,7 @@ func (x *InputStreamClass) OverrideSkipFinish(cb func(*InputStream, AsyncResult)
 	}
 }
 
-// GetSkipFinish gets the callback function.
+// GetSkipFinish gets the "skip_finish" callback function.
 func (x *InputStreamClass) GetSkipFinish() func(*InputStream, AsyncResult) int {
 	if x.xSkipFinish == 0 {
 		return nil
@@ -211,7 +211,7 @@ func (x *InputStreamClass) GetSkipFinish() func(*InputStream, AsyncResult) int {
 	}
 }
 
-// OverrideCloseAsync sets the callback function.
+// OverrideCloseAsync sets the "close_async" callback function.
 func (x *InputStreamClass) OverrideCloseAsync(cb func(*InputStream, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xCloseAsync = 0
@@ -222,7 +222,7 @@ func (x *InputStreamClass) OverrideCloseAsync(cb func(*InputStream, int, *Cancel
 	}
 }
 
-// GetCloseAsync gets the callback function.
+// GetCloseAsync gets the "close_async" callback function.
 func (x *InputStreamClass) GetCloseAsync() func(*InputStream, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xCloseAsync == 0 {
 		return nil
@@ -234,7 +234,7 @@ func (x *InputStreamClass) GetCloseAsync() func(*InputStream, int, *Cancellable,
 	}
 }
 
-// OverrideCloseFinish sets the callback function.
+// OverrideCloseFinish sets the "close_finish" callback function.
 func (x *InputStreamClass) OverrideCloseFinish(cb func(*InputStream, AsyncResult) bool) {
 	if cb == nil {
 		x.xCloseFinish = 0
@@ -245,7 +245,7 @@ func (x *InputStreamClass) OverrideCloseFinish(cb func(*InputStream, AsyncResult
 	}
 }
 
-// GetCloseFinish gets the callback function.
+// GetCloseFinish gets the "close_finish" callback function.
 func (x *InputStreamClass) GetCloseFinish() func(*InputStream, AsyncResult) bool {
 	if x.xCloseFinish == 0 {
 		return nil
@@ -257,7 +257,7 @@ func (x *InputStreamClass) GetCloseFinish() func(*InputStream, AsyncResult) bool
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *InputStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -268,7 +268,7 @@ func (x *InputStreamClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *InputStreamClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -280,7 +280,7 @@ func (x *InputStreamClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *InputStreamClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -291,7 +291,7 @@ func (x *InputStreamClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *InputStreamClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -303,7 +303,7 @@ func (x *InputStreamClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *InputStreamClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -314,7 +314,7 @@ func (x *InputStreamClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *InputStreamClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -326,7 +326,7 @@ func (x *InputStreamClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *InputStreamClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -337,7 +337,7 @@ func (x *InputStreamClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *InputStreamClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -349,7 +349,7 @@ func (x *InputStreamClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *InputStreamClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -360,7 +360,7 @@ func (x *InputStreamClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *InputStreamClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -504,7 +504,7 @@ func (x *InputStream) IsClosed() bool {
 	return cret
 }
 
-var xInputStreamRead func(uintptr, []byte, uint, uintptr, **glib.Error) int
+var xInputStreamRead func(uintptr, *[]byte, uint, uintptr, **glib.Error) int
 
 // Tries to read @count bytes from the stream into the buffer starting at
 // @buffer. Will block during this read.
@@ -527,7 +527,7 @@ var xInputStreamRead func(uintptr, []byte, uint, uintptr, **glib.Error) int
 // partial result will be returned, without an error.
 //
 // On error -1 is returned and @error is set accordingly.
-func (x *InputStream) Read(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) (int, error) {
+func (x *InputStream) Read(BufferVar *[]byte, CountVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := xInputStreamRead(x.GoPointer(), BufferVar, CountVar, CancellableVar.GoPointer(), &cerr)
@@ -538,7 +538,7 @@ func (x *InputStream) Read(BufferVar []byte, CountVar uint, CancellableVar *Canc
 
 }
 
-var xInputStreamReadAll func(uintptr, []byte, uint, uint, uintptr, **glib.Error) bool
+var xInputStreamReadAll func(uintptr, *[]byte, uint, *uint, uintptr, **glib.Error) bool
 
 // Tries to read @count bytes from the stream into the buffer starting at
 // @buffer. Will block during this read.
@@ -559,7 +559,7 @@ var xInputStreamReadAll func(uintptr, []byte, uint, uint, uintptr, **glib.Error)
 // read before the error was encountered.  This functionality is only
 // available from C.  If you need it from another language then you must
 // write your own loop around g_input_stream_read().
-func (x *InputStream) ReadAll(BufferVar []byte, CountVar uint, BytesReadVar uint, CancellableVar *Cancellable) (bool, error) {
+func (x *InputStream) ReadAll(BufferVar *[]byte, CountVar uint, BytesReadVar *uint, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xInputStreamReadAll(x.GoPointer(), BufferVar, CountVar, BytesReadVar, CancellableVar.GoPointer(), &cerr)
@@ -570,7 +570,7 @@ func (x *InputStream) ReadAll(BufferVar []byte, CountVar uint, BytesReadVar uint
 
 }
 
-var xInputStreamReadAllAsync func(uintptr, []byte, uint, int, uintptr, uintptr, uintptr)
+var xInputStreamReadAllAsync func(uintptr, *[]byte, uint, int, uintptr, uintptr, uintptr)
 
 // Request an asynchronous read of @count bytes from the stream into the
 // buffer starting at @buffer.
@@ -582,13 +582,13 @@ var xInputStreamReadAllAsync func(uintptr, []byte, uint, int, uintptr, uintptr, 
 // Any outstanding I/O request with higher priority (lower numerical
 // value) will be executed before an outstanding request with lower
 // priority. Default priority is %G_PRIORITY_DEFAULT.
-func (x *InputStream) ReadAllAsync(BufferVar []byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *InputStream) ReadAllAsync(BufferVar *[]byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
 	xInputStreamReadAllAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
-var xInputStreamReadAllFinish func(uintptr, uintptr, uint, **glib.Error) bool
+var xInputStreamReadAllFinish func(uintptr, uintptr, *uint, **glib.Error) bool
 
 // Finishes an asynchronous stream read operation started with
 // [method@InputStream.read_all_async].
@@ -599,7 +599,7 @@ var xInputStreamReadAllFinish func(uintptr, uintptr, uint, **glib.Error) bool
 // read before the error was encountered.  This functionality is only
 // available from C.  If you need it from another language then you must
 // write your own loop around g_input_stream_read_async().
-func (x *InputStream) ReadAllFinish(ResultVar AsyncResult, BytesReadVar uint) (bool, error) {
+func (x *InputStream) ReadAllFinish(ResultVar AsyncResult, BytesReadVar *uint) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xInputStreamReadAllFinish(x.GoPointer(), ResultVar.GoPointer(), BytesReadVar, &cerr)
@@ -610,7 +610,7 @@ func (x *InputStream) ReadAllFinish(ResultVar AsyncResult, BytesReadVar uint) (b
 
 }
 
-var xInputStreamReadAsync func(uintptr, []byte, uint, int, uintptr, uintptr, uintptr)
+var xInputStreamReadAsync func(uintptr, *[]byte, uint, int, uintptr, uintptr, uintptr)
 
 // Request an asynchronous read of @count bytes from the stream into the buffer
 // starting at @buffer. When the operation is finished @callback will be called.
@@ -635,7 +635,7 @@ var xInputStreamReadAsync func(uintptr, []byte, uint, int, uintptr, uintptr, uin
 // The asynchronous methods have a default fallback that uses threads to implement
 // asynchronicity, so they are optional for inheriting classes. However, if you
 // override one you must override all.
-func (x *InputStream) ReadAsync(BufferVar []byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *InputStream) ReadAsync(BufferVar *[]byte, CountVar uint, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
 	xInputStreamReadAsync(x.GoPointer(), BufferVar, CountVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 

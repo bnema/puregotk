@@ -26,7 +26,7 @@ func (x *ScaleButtonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideValueChanged sets the callback function.
+// OverrideValueChanged sets the "value_changed" callback function.
 func (x *ScaleButtonClass) OverrideValueChanged(cb func(*ScaleButton, float64)) {
 	if cb == nil {
 		x.xValueChanged = 0
@@ -37,7 +37,7 @@ func (x *ScaleButtonClass) OverrideValueChanged(cb func(*ScaleButton, float64)) 
 	}
 }
 
-// GetValueChanged gets the callback function.
+// GetValueChanged gets the "value_changed" callback function.
 func (x *ScaleButtonClass) GetValueChanged() func(*ScaleButton, float64) {
 	if x.xValueChanged == 0 {
 		return nil
@@ -265,6 +265,95 @@ func (c *ScaleButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyActive gets the "active" property.
+// If the scale button should be pressed in.
+func (x *ScaleButton) GetPropertyActive() bool {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasFrame sets the "has-frame" property.
+// If the scale button has a frame.
+func (x *ScaleButton) SetPropertyHasFrame(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-frame", &v)
+}
+
+// GetPropertyHasFrame gets the "has-frame" property.
+// If the scale button has a frame.
+func (x *ScaleButton) GetPropertyHasFrame() bool {
+	var v gobject.Value
+	x.GetProperty("has-frame", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIcons sets the "icons" property.
+// The names of the icons to be used by the scale button.
+//
+// The first item in the array will be used in the button
+// when the current value is the lowest value, the second
+// item for the highest value. All the subsequent icons will
+// be used for all the other values, spread evenly over the
+// range of values.
+//
+// If there's only one icon name in the @icons array, it will
+// be used for all the values. If only two icon names are in
+// the @icons array, the first one will be used for the bottom
+// 50% of the scale, and the second one for the top 50%.
+//
+// It is recommended to use at least 3 icons so that the
+// `GtkScaleButton` reflects the current value of the scale
+// better for the users.
+func (x *ScaleButton) SetPropertyIcons(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("icons", &v)
+}
+
+// GetPropertyIcons gets the "icons" property.
+// The names of the icons to be used by the scale button.
+//
+// The first item in the array will be used in the button
+// when the current value is the lowest value, the second
+// item for the highest value. All the subsequent icons will
+// be used for all the other values, spread evenly over the
+// range of values.
+//
+// If there's only one icon name in the @icons array, it will
+// be used for all the values. If only two icon names are in
+// the @icons array, the first one will be used for the bottom
+// 50% of the scale, and the second one for the top 50%.
+//
+// It is recommended to use at least 3 icons so that the
+// `GtkScaleButton` reflects the current value of the scale
+// better for the users.
+func (x *ScaleButton) GetPropertyIcons() []string {
+	var v gobject.Value
+	x.GetProperty("icons", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// SetPropertyValue sets the "value" property.
+// The value of the scale.
+func (x *ScaleButton) SetPropertyValue(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("value", &v)
+}
+
+// GetPropertyValue gets the "value" property.
+// The value of the scale.
+func (x *ScaleButton) GetPropertyValue() float64 {
+	var v gobject.Value
+	x.GetProperty("value", &v)
+	return v.GetDouble()
+}
+
 // Emitted to dismiss the popup.
 //
 // This is a [keybinding signal](class.SignalAction.html).
@@ -391,7 +480,7 @@ func (x *ScaleButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ScaleButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ScaleButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

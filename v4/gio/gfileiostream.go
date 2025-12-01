@@ -49,7 +49,7 @@ func (x *FileIOStreamClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideTell sets the callback function.
+// OverrideTell sets the "tell" callback function.
 func (x *FileIOStreamClass) OverrideTell(cb func(*FileIOStream) int64) {
 	if cb == nil {
 		x.xTell = 0
@@ -60,7 +60,7 @@ func (x *FileIOStreamClass) OverrideTell(cb func(*FileIOStream) int64) {
 	}
 }
 
-// GetTell gets the callback function.
+// GetTell gets the "tell" callback function.
 func (x *FileIOStreamClass) GetTell() func(*FileIOStream) int64 {
 	if x.xTell == 0 {
 		return nil
@@ -72,7 +72,7 @@ func (x *FileIOStreamClass) GetTell() func(*FileIOStream) int64 {
 	}
 }
 
-// OverrideCanSeek sets the callback function.
+// OverrideCanSeek sets the "can_seek" callback function.
 func (x *FileIOStreamClass) OverrideCanSeek(cb func(*FileIOStream) bool) {
 	if cb == nil {
 		x.xCanSeek = 0
@@ -83,7 +83,7 @@ func (x *FileIOStreamClass) OverrideCanSeek(cb func(*FileIOStream) bool) {
 	}
 }
 
-// GetCanSeek gets the callback function.
+// GetCanSeek gets the "can_seek" callback function.
 func (x *FileIOStreamClass) GetCanSeek() func(*FileIOStream) bool {
 	if x.xCanSeek == 0 {
 		return nil
@@ -95,7 +95,7 @@ func (x *FileIOStreamClass) GetCanSeek() func(*FileIOStream) bool {
 	}
 }
 
-// OverrideSeek sets the callback function.
+// OverrideSeek sets the "seek" callback function.
 func (x *FileIOStreamClass) OverrideSeek(cb func(*FileIOStream, int64, glib.SeekType, *Cancellable) bool) {
 	if cb == nil {
 		x.xSeek = 0
@@ -106,7 +106,7 @@ func (x *FileIOStreamClass) OverrideSeek(cb func(*FileIOStream, int64, glib.Seek
 	}
 }
 
-// GetSeek gets the callback function.
+// GetSeek gets the "seek" callback function.
 func (x *FileIOStreamClass) GetSeek() func(*FileIOStream, int64, glib.SeekType, *Cancellable) bool {
 	if x.xSeek == 0 {
 		return nil
@@ -118,7 +118,7 @@ func (x *FileIOStreamClass) GetSeek() func(*FileIOStream, int64, glib.SeekType, 
 	}
 }
 
-// OverrideCanTruncate sets the callback function.
+// OverrideCanTruncate sets the "can_truncate" callback function.
 func (x *FileIOStreamClass) OverrideCanTruncate(cb func(*FileIOStream) bool) {
 	if cb == nil {
 		x.xCanTruncate = 0
@@ -129,7 +129,7 @@ func (x *FileIOStreamClass) OverrideCanTruncate(cb func(*FileIOStream) bool) {
 	}
 }
 
-// GetCanTruncate gets the callback function.
+// GetCanTruncate gets the "can_truncate" callback function.
 func (x *FileIOStreamClass) GetCanTruncate() func(*FileIOStream) bool {
 	if x.xCanTruncate == 0 {
 		return nil
@@ -141,7 +141,7 @@ func (x *FileIOStreamClass) GetCanTruncate() func(*FileIOStream) bool {
 	}
 }
 
-// OverrideTruncateFn sets the callback function.
+// OverrideTruncateFn sets the "truncate_fn" callback function.
 func (x *FileIOStreamClass) OverrideTruncateFn(cb func(*FileIOStream, int64, *Cancellable) bool) {
 	if cb == nil {
 		x.xTruncateFn = 0
@@ -152,7 +152,7 @@ func (x *FileIOStreamClass) OverrideTruncateFn(cb func(*FileIOStream, int64, *Ca
 	}
 }
 
-// GetTruncateFn gets the callback function.
+// GetTruncateFn gets the "truncate_fn" callback function.
 func (x *FileIOStreamClass) GetTruncateFn() func(*FileIOStream, int64, *Cancellable) bool {
 	if x.xTruncateFn == 0 {
 		return nil
@@ -164,7 +164,7 @@ func (x *FileIOStreamClass) GetTruncateFn() func(*FileIOStream, int64, *Cancella
 	}
 }
 
-// OverrideQueryInfo sets the callback function.
+// OverrideQueryInfo sets the "query_info" callback function.
 func (x *FileIOStreamClass) OverrideQueryInfo(cb func(*FileIOStream, string, *Cancellable) *FileInfo) {
 	if cb == nil {
 		x.xQueryInfo = 0
@@ -179,7 +179,7 @@ func (x *FileIOStreamClass) OverrideQueryInfo(cb func(*FileIOStream, string, *Ca
 	}
 }
 
-// GetQueryInfo gets the callback function.
+// GetQueryInfo gets the "query_info" callback function.
 func (x *FileIOStreamClass) GetQueryInfo() func(*FileIOStream, string, *Cancellable) *FileInfo {
 	if x.xQueryInfo == 0 {
 		return nil
@@ -197,7 +197,7 @@ func (x *FileIOStreamClass) GetQueryInfo() func(*FileIOStream, string, *Cancella
 	}
 }
 
-// OverrideQueryInfoAsync sets the callback function.
+// OverrideQueryInfoAsync sets the "query_info_async" callback function.
 func (x *FileIOStreamClass) OverrideQueryInfoAsync(cb func(*FileIOStream, string, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xQueryInfoAsync = 0
@@ -208,7 +208,7 @@ func (x *FileIOStreamClass) OverrideQueryInfoAsync(cb func(*FileIOStream, string
 	}
 }
 
-// GetQueryInfoAsync gets the callback function.
+// GetQueryInfoAsync gets the "query_info_async" callback function.
 func (x *FileIOStreamClass) GetQueryInfoAsync() func(*FileIOStream, string, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xQueryInfoAsync == 0 {
 		return nil
@@ -220,7 +220,7 @@ func (x *FileIOStreamClass) GetQueryInfoAsync() func(*FileIOStream, string, int,
 	}
 }
 
-// OverrideQueryInfoFinish sets the callback function.
+// OverrideQueryInfoFinish sets the "query_info_finish" callback function.
 func (x *FileIOStreamClass) OverrideQueryInfoFinish(cb func(*FileIOStream, AsyncResult) *FileInfo) {
 	if cb == nil {
 		x.xQueryInfoFinish = 0
@@ -235,7 +235,7 @@ func (x *FileIOStreamClass) OverrideQueryInfoFinish(cb func(*FileIOStream, Async
 	}
 }
 
-// GetQueryInfoFinish gets the callback function.
+// GetQueryInfoFinish gets the "query_info_finish" callback function.
 func (x *FileIOStreamClass) GetQueryInfoFinish() func(*FileIOStream, AsyncResult) *FileInfo {
 	if x.xQueryInfoFinish == 0 {
 		return nil
@@ -253,7 +253,7 @@ func (x *FileIOStreamClass) GetQueryInfoFinish() func(*FileIOStream, AsyncResult
 	}
 }
 
-// OverrideGetEtag sets the callback function.
+// OverrideGetEtag sets the "get_etag" callback function.
 func (x *FileIOStreamClass) OverrideGetEtag(cb func(*FileIOStream) string) {
 	if cb == nil {
 		x.xGetEtag = 0
@@ -264,7 +264,7 @@ func (x *FileIOStreamClass) OverrideGetEtag(cb func(*FileIOStream) string) {
 	}
 }
 
-// GetGetEtag gets the callback function.
+// GetGetEtag gets the "get_etag" callback function.
 func (x *FileIOStreamClass) GetGetEtag() func(*FileIOStream) string {
 	if x.xGetEtag == 0 {
 		return nil
@@ -276,7 +276,7 @@ func (x *FileIOStreamClass) GetGetEtag() func(*FileIOStream) string {
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *FileIOStreamClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -287,7 +287,7 @@ func (x *FileIOStreamClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *FileIOStreamClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -299,7 +299,7 @@ func (x *FileIOStreamClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *FileIOStreamClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -310,7 +310,7 @@ func (x *FileIOStreamClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *FileIOStreamClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -322,7 +322,7 @@ func (x *FileIOStreamClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *FileIOStreamClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -333,7 +333,7 @@ func (x *FileIOStreamClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *FileIOStreamClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -345,7 +345,7 @@ func (x *FileIOStreamClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *FileIOStreamClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -356,7 +356,7 @@ func (x *FileIOStreamClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *FileIOStreamClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -368,7 +368,7 @@ func (x *FileIOStreamClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *FileIOStreamClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -379,7 +379,7 @@ func (x *FileIOStreamClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *FileIOStreamClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil

@@ -113,10 +113,10 @@ func (x *PopupLayout) GetAnchorRect() *Rectangle {
 	return cret
 }
 
-var xPopupLayoutGetOffset func(uintptr, int, int)
+var xPopupLayoutGetOffset func(uintptr, *int, *int)
 
 // Retrieves the offset for the anchor rectangle.
-func (x *PopupLayout) GetOffset(DxVar int, DyVar int) {
+func (x *PopupLayout) GetOffset(DxVar *int, DyVar *int) {
 
 	xPopupLayoutGetOffset(x.GoPointer(), DxVar, DyVar)
 
@@ -131,10 +131,10 @@ func (x *PopupLayout) GetRectAnchor() Gravity {
 	return cret
 }
 
-var xPopupLayoutGetShadowWidth func(uintptr, int, int, int, int)
+var xPopupLayoutGetShadowWidth func(uintptr, *int, *int, *int, *int)
 
 // Obtains the shadow widths of this layout.
-func (x *PopupLayout) GetShadowWidth(LeftVar int, RightVar int, TopVar int, BottomVar int) {
+func (x *PopupLayout) GetShadowWidth(LeftVar *int, RightVar *int, TopVar *int, BottomVar *int) {
 
 	xPopupLayoutGetShadowWidth(x.GoPointer(), LeftVar, RightVar, TopVar, BottomVar)
 

@@ -90,6 +90,39 @@ func (c *FileChooserWidget) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertySearchMode sets the "search-mode" property.
+// Whether search mode is enabled.
+func (x *FileChooserWidget) SetPropertySearchMode(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("search-mode", &v)
+}
+
+// GetPropertySearchMode gets the "search-mode" property.
+// Whether search mode is enabled.
+func (x *FileChooserWidget) GetPropertySearchMode() bool {
+	var v gobject.Value
+	x.GetProperty("search-mode", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyShowTime gets the "show-time" property.
+// Whether to show the time.
+func (x *FileChooserWidget) GetPropertyShowTime() bool {
+	var v gobject.Value
+	x.GetProperty("show-time", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertySubtitle gets the "subtitle" property.
+// The subtitle of the file chooser widget.
+func (x *FileChooserWidget) GetPropertySubtitle() string {
+	var v gobject.Value
+	x.GetProperty("subtitle", &v)
+	return v.GetString()
+}
+
 // Emitted when the user asks for it.
 //
 // This is a [keybinding signal](class.SignalAction.html).
@@ -483,7 +516,7 @@ func (x *FileChooserWidget) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *FileChooserWidget) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *FileChooserWidget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

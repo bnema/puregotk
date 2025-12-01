@@ -126,6 +126,93 @@ func (c *SimpleAction) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEnabled sets the "enabled" property.
+// If @action is currently enabled.
+//
+// If the action is disabled then calls to g_action_activate() and
+// g_action_change_state() have no effect.
+func (x *SimpleAction) SetPropertyEnabled(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enabled", &v)
+}
+
+// GetPropertyEnabled gets the "enabled" property.
+// If @action is currently enabled.
+//
+// If the action is disabled then calls to g_action_activate() and
+// g_action_change_state() have no effect.
+func (x *SimpleAction) GetPropertyEnabled() bool {
+	var v gobject.Value
+	x.GetProperty("enabled", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyName sets the "name" property.
+// The name of the action. This is mostly meaningful for identifying
+// the action once it has been added to a #GSimpleActionGroup.
+func (x *SimpleAction) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The name of the action. This is mostly meaningful for identifying
+// the action once it has been added to a #GSimpleActionGroup.
+func (x *SimpleAction) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// SetPropertyParameterType sets the "parameter-type" property.
+// The type of the parameter that must be given when activating the
+// action.
+func (x *SimpleAction) SetPropertyParameterType(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("parameter-type", &v)
+}
+
+// GetPropertyParameterType gets the "parameter-type" property.
+// The type of the parameter that must be given when activating the
+// action.
+func (x *SimpleAction) GetPropertyParameterType() uintptr {
+	var v gobject.Value
+	x.GetProperty("parameter-type", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyState sets the "state" property.
+// The state of the action, or %NULL if the action is stateless.
+func (x *SimpleAction) SetPropertyState(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("state", &v)
+}
+
+// GetPropertyState gets the "state" property.
+// The state of the action, or %NULL if the action is stateless.
+func (x *SimpleAction) GetPropertyState() uintptr {
+	var v gobject.Value
+	x.GetProperty("state", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyStateType gets the "state-type" property.
+// The #GVariantType of the state that the action has, or %NULL if the
+// action is stateless.
+func (x *SimpleAction) GetPropertyStateType() uintptr {
+	var v gobject.Value
+	x.GetProperty("state-type", &v)
+	return v.GetPointer()
+}
+
 // Indicates that the action was just activated.
 //
 // @parameter will always be of the expected type, i.e. the parameter type

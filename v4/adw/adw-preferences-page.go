@@ -281,6 +281,108 @@ func (c *PreferencesPage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDescription sets the "description" property.
+// The description to be displayed at the top of the page.
+func (x *PreferencesPage) SetPropertyDescription(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("description", &v)
+}
+
+// GetPropertyDescription gets the "description" property.
+// The description to be displayed at the top of the page.
+func (x *PreferencesPage) GetPropertyDescription() string {
+	var v gobject.Value
+	x.GetProperty("description", &v)
+	return v.GetString()
+}
+
+// SetPropertyDescriptionCentered sets the "description-centered" property.
+// Whether the description should be centered.
+func (x *PreferencesPage) SetPropertyDescriptionCentered(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("description-centered", &v)
+}
+
+// GetPropertyDescriptionCentered gets the "description-centered" property.
+// Whether the description should be centered.
+func (x *PreferencesPage) GetPropertyDescriptionCentered() bool {
+	var v gobject.Value
+	x.GetProperty("description-centered", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIconName sets the "icon-name" property.
+// The icon name for this page.
+func (x *PreferencesPage) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The icon name for this page.
+func (x *PreferencesPage) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyName sets the "name" property.
+// The name of this page.
+func (x *PreferencesPage) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The name of this page.
+func (x *PreferencesPage) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title for this page.
+func (x *PreferencesPage) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title for this page.
+func (x *PreferencesPage) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// Whether an embedded underline in the title indicates a mnemonic.
+func (x *PreferencesPage) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// Whether an embedded underline in the title indicates a mnemonic.
+func (x *PreferencesPage) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -338,7 +440,7 @@ func (x *PreferencesPage) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PreferencesPage) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *PreferencesPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

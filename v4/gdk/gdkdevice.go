@@ -269,14 +269,14 @@ func (x *Device) GetSource() InputSource {
 	return cret
 }
 
-var xDeviceGetSurfaceAtPosition func(uintptr, float64, float64) uintptr
+var xDeviceGetSurfaceAtPosition func(uintptr, *float64, *float64) uintptr
 
 // Obtains the surface underneath @device, returning the location of the
 // device in @win_x and @win_y.
 //
 // Returns %NULL if the surface tree under @device is not known to GDK
 // (for example, belongs to another application).
-func (x *Device) GetSurfaceAtPosition(WinXVar float64, WinYVar float64) *Surface {
+func (x *Device) GetSurfaceAtPosition(WinXVar *float64, WinYVar *float64) *Surface {
 	var cls *Surface
 
 	cret := xDeviceGetSurfaceAtPosition(x.GoPointer(), WinXVar, WinYVar)
@@ -362,6 +362,175 @@ func (c *Device) GoPointer() uintptr {
 
 func (c *Device) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyActiveLayoutIndex gets the "active-layout-index" property.
+// The index of the keyboard active layout of a `GdkDevice`.
+//
+// Will be -1 if there is no valid active layout.
+//
+// This is only relevant for keyboard devices.
+func (x *Device) GetPropertyActiveLayoutIndex() int {
+	var v gobject.Value
+	x.GetProperty("active-layout-index", &v)
+	return v.GetInt()
+}
+
+// GetPropertyCapsLockState gets the "caps-lock-state" property.
+// Whether Caps Lock is on.
+//
+// This is only relevant for keyboard devices.
+func (x *Device) GetPropertyCapsLockState() bool {
+	var v gobject.Value
+	x.GetProperty("caps-lock-state", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyHasBidiLayouts gets the "has-bidi-layouts" property.
+// Whether the device has both right-to-left and left-to-right layouts.
+//
+// This is only relevant for keyboard devices.
+func (x *Device) GetPropertyHasBidiLayouts() bool {
+	var v gobject.Value
+	x.GetProperty("has-bidi-layouts", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasCursor sets the "has-cursor" property.
+// Whether the device is represented by a cursor on the screen.
+func (x *Device) SetPropertyHasCursor(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-cursor", &v)
+}
+
+// GetPropertyHasCursor gets the "has-cursor" property.
+// Whether the device is represented by a cursor on the screen.
+func (x *Device) GetPropertyHasCursor() bool {
+	var v gobject.Value
+	x.GetProperty("has-cursor", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyLayoutNames gets the "layout-names" property.
+// The names of the keyboard layouts of a `GdkDevice`.
+//
+// This is only relevant for keyboard devices.
+func (x *Device) GetPropertyLayoutNames() []string {
+	var v gobject.Value
+	x.GetProperty("layout-names", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// GetPropertyNAxes gets the "n-axes" property.
+// Number of axes in the device.
+func (x *Device) GetPropertyNAxes() uint {
+	var v gobject.Value
+	x.GetProperty("n-axes", &v)
+	return v.GetUint()
+}
+
+// SetPropertyName sets the "name" property.
+// The device name.
+func (x *Device) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The device name.
+func (x *Device) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// GetPropertyNumLockState gets the "num-lock-state" property.
+// Whether Num Lock is on.
+//
+// This is only relevant for keyboard devices.
+func (x *Device) GetPropertyNumLockState() bool {
+	var v gobject.Value
+	x.GetProperty("num-lock-state", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyNumTouches sets the "num-touches" property.
+// The maximal number of concurrent touches on a touch device.
+//
+// Will be 0 if the device is not a touch device or if the number
+// of touches is unknown.
+func (x *Device) SetPropertyNumTouches(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("num-touches", &v)
+}
+
+// GetPropertyNumTouches gets the "num-touches" property.
+// The maximal number of concurrent touches on a touch device.
+//
+// Will be 0 if the device is not a touch device or if the number
+// of touches is unknown.
+func (x *Device) GetPropertyNumTouches() uint {
+	var v gobject.Value
+	x.GetProperty("num-touches", &v)
+	return v.GetUint()
+}
+
+// SetPropertyProductId sets the "product-id" property.
+// Product ID of this device.
+//
+// See [method@Gdk.Device.get_product_id].
+func (x *Device) SetPropertyProductId(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("product-id", &v)
+}
+
+// GetPropertyProductId gets the "product-id" property.
+// Product ID of this device.
+//
+// See [method@Gdk.Device.get_product_id].
+func (x *Device) GetPropertyProductId() string {
+	var v gobject.Value
+	x.GetProperty("product-id", &v)
+	return v.GetString()
+}
+
+// GetPropertyScrollLockState gets the "scroll-lock-state" property.
+// Whether Scroll Lock is on.
+//
+// This is only relevant for keyboard devices.
+func (x *Device) GetPropertyScrollLockState() bool {
+	var v gobject.Value
+	x.GetProperty("scroll-lock-state", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVendorId sets the "vendor-id" property.
+// Vendor ID of this device.
+//
+// See [method@Gdk.Device.get_vendor_id].
+func (x *Device) SetPropertyVendorId(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("vendor-id", &v)
+}
+
+// GetPropertyVendorId gets the "vendor-id" property.
+// Vendor ID of this device.
+//
+// See [method@Gdk.Device.get_vendor_id].
+func (x *Device) GetPropertyVendorId() string {
+	var v gobject.Value
+	x.GetProperty("vendor-id", &v)
+	return v.GetString()
 }
 
 // Emitted either when the number of either axes or keys changes.

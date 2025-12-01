@@ -48,7 +48,7 @@ func (x *FileEnumeratorClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideNextFile sets the callback function.
+// OverrideNextFile sets the "next_file" callback function.
 func (x *FileEnumeratorClass) OverrideNextFile(cb func(*FileEnumerator, *Cancellable) *FileInfo) {
 	if cb == nil {
 		x.xNextFile = 0
@@ -63,7 +63,7 @@ func (x *FileEnumeratorClass) OverrideNextFile(cb func(*FileEnumerator, *Cancell
 	}
 }
 
-// GetNextFile gets the callback function.
+// GetNextFile gets the "next_file" callback function.
 func (x *FileEnumeratorClass) GetNextFile() func(*FileEnumerator, *Cancellable) *FileInfo {
 	if x.xNextFile == 0 {
 		return nil
@@ -81,7 +81,7 @@ func (x *FileEnumeratorClass) GetNextFile() func(*FileEnumerator, *Cancellable) 
 	}
 }
 
-// OverrideCloseFn sets the callback function.
+// OverrideCloseFn sets the "close_fn" callback function.
 func (x *FileEnumeratorClass) OverrideCloseFn(cb func(*FileEnumerator, *Cancellable) bool) {
 	if cb == nil {
 		x.xCloseFn = 0
@@ -92,7 +92,7 @@ func (x *FileEnumeratorClass) OverrideCloseFn(cb func(*FileEnumerator, *Cancella
 	}
 }
 
-// GetCloseFn gets the callback function.
+// GetCloseFn gets the "close_fn" callback function.
 func (x *FileEnumeratorClass) GetCloseFn() func(*FileEnumerator, *Cancellable) bool {
 	if x.xCloseFn == 0 {
 		return nil
@@ -104,7 +104,7 @@ func (x *FileEnumeratorClass) GetCloseFn() func(*FileEnumerator, *Cancellable) b
 	}
 }
 
-// OverrideNextFilesAsync sets the callback function.
+// OverrideNextFilesAsync sets the "next_files_async" callback function.
 func (x *FileEnumeratorClass) OverrideNextFilesAsync(cb func(*FileEnumerator, int, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xNextFilesAsync = 0
@@ -115,7 +115,7 @@ func (x *FileEnumeratorClass) OverrideNextFilesAsync(cb func(*FileEnumerator, in
 	}
 }
 
-// GetNextFilesAsync gets the callback function.
+// GetNextFilesAsync gets the "next_files_async" callback function.
 func (x *FileEnumeratorClass) GetNextFilesAsync() func(*FileEnumerator, int, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xNextFilesAsync == 0 {
 		return nil
@@ -127,7 +127,7 @@ func (x *FileEnumeratorClass) GetNextFilesAsync() func(*FileEnumerator, int, int
 	}
 }
 
-// OverrideNextFilesFinish sets the callback function.
+// OverrideNextFilesFinish sets the "next_files_finish" callback function.
 func (x *FileEnumeratorClass) OverrideNextFilesFinish(cb func(*FileEnumerator, AsyncResult) *glib.List) {
 	if cb == nil {
 		x.xNextFilesFinish = 0
@@ -138,7 +138,7 @@ func (x *FileEnumeratorClass) OverrideNextFilesFinish(cb func(*FileEnumerator, A
 	}
 }
 
-// GetNextFilesFinish gets the callback function.
+// GetNextFilesFinish gets the "next_files_finish" callback function.
 func (x *FileEnumeratorClass) GetNextFilesFinish() func(*FileEnumerator, AsyncResult) *glib.List {
 	if x.xNextFilesFinish == 0 {
 		return nil
@@ -150,7 +150,7 @@ func (x *FileEnumeratorClass) GetNextFilesFinish() func(*FileEnumerator, AsyncRe
 	}
 }
 
-// OverrideCloseAsync sets the callback function.
+// OverrideCloseAsync sets the "close_async" callback function.
 func (x *FileEnumeratorClass) OverrideCloseAsync(cb func(*FileEnumerator, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xCloseAsync = 0
@@ -161,7 +161,7 @@ func (x *FileEnumeratorClass) OverrideCloseAsync(cb func(*FileEnumerator, int, *
 	}
 }
 
-// GetCloseAsync gets the callback function.
+// GetCloseAsync gets the "close_async" callback function.
 func (x *FileEnumeratorClass) GetCloseAsync() func(*FileEnumerator, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xCloseAsync == 0 {
 		return nil
@@ -173,7 +173,7 @@ func (x *FileEnumeratorClass) GetCloseAsync() func(*FileEnumerator, int, *Cancel
 	}
 }
 
-// OverrideCloseFinish sets the callback function.
+// OverrideCloseFinish sets the "close_finish" callback function.
 func (x *FileEnumeratorClass) OverrideCloseFinish(cb func(*FileEnumerator, AsyncResult) bool) {
 	if cb == nil {
 		x.xCloseFinish = 0
@@ -184,7 +184,7 @@ func (x *FileEnumeratorClass) OverrideCloseFinish(cb func(*FileEnumerator, Async
 	}
 }
 
-// GetCloseFinish gets the callback function.
+// GetCloseFinish gets the "close_finish" callback function.
 func (x *FileEnumeratorClass) GetCloseFinish() func(*FileEnumerator, AsyncResult) bool {
 	if x.xCloseFinish == 0 {
 		return nil
@@ -196,7 +196,7 @@ func (x *FileEnumeratorClass) GetCloseFinish() func(*FileEnumerator, AsyncResult
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *FileEnumeratorClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -207,7 +207,7 @@ func (x *FileEnumeratorClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *FileEnumeratorClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -219,7 +219,7 @@ func (x *FileEnumeratorClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *FileEnumeratorClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -230,7 +230,7 @@ func (x *FileEnumeratorClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *FileEnumeratorClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -242,7 +242,7 @@ func (x *FileEnumeratorClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *FileEnumeratorClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -253,7 +253,7 @@ func (x *FileEnumeratorClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *FileEnumeratorClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -265,7 +265,7 @@ func (x *FileEnumeratorClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *FileEnumeratorClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -276,7 +276,7 @@ func (x *FileEnumeratorClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *FileEnumeratorClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -288,7 +288,7 @@ func (x *FileEnumeratorClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *FileEnumeratorClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -299,7 +299,7 @@ func (x *FileEnumeratorClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *FileEnumeratorClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -311,7 +311,7 @@ func (x *FileEnumeratorClass) GetGReserved5() func() {
 	}
 }
 
-// OverrideGReserved6 sets the callback function.
+// OverrideGReserved6 sets the "_g_reserved6" callback function.
 func (x *FileEnumeratorClass) OverrideGReserved6(cb func()) {
 	if cb == nil {
 		x.xGReserved6 = 0
@@ -322,7 +322,7 @@ func (x *FileEnumeratorClass) OverrideGReserved6(cb func()) {
 	}
 }
 
-// GetGReserved6 gets the callback function.
+// GetGReserved6 gets the "_g_reserved6" callback function.
 func (x *FileEnumeratorClass) GetGReserved6() func() {
 	if x.xGReserved6 == 0 {
 		return nil
@@ -334,7 +334,7 @@ func (x *FileEnumeratorClass) GetGReserved6() func() {
 	}
 }
 
-// OverrideGReserved7 sets the callback function.
+// OverrideGReserved7 sets the "_g_reserved7" callback function.
 func (x *FileEnumeratorClass) OverrideGReserved7(cb func()) {
 	if cb == nil {
 		x.xGReserved7 = 0
@@ -345,7 +345,7 @@ func (x *FileEnumeratorClass) OverrideGReserved7(cb func()) {
 	}
 }
 
-// GetGReserved7 gets the callback function.
+// GetGReserved7 gets the "_g_reserved7" callback function.
 func (x *FileEnumeratorClass) GetGReserved7() func() {
 	if x.xGReserved7 == 0 {
 		return nil
@@ -528,7 +528,7 @@ func (x *FileEnumerator) IsClosed() bool {
 	return cret
 }
 
-var xFileEnumeratorIterate func(uintptr, uintptr, *uintptr, uintptr, **glib.Error) bool
+var xFileEnumeratorIterate func(uintptr, **FileInfo, **File, uintptr, **glib.Error) bool
 
 // This is a version of g_file_enumerator_next_file() that's easier to
 // use correctly from C programs.  With g_file_enumerator_next_file(),
@@ -571,10 +571,10 @@ var xFileEnumeratorIterate func(uintptr, uintptr, *uintptr, uintptr, **glib.Erro
 //	g_object_unref (direnum); // Note: frees the last @info
 //
 // ]|
-func (x *FileEnumerator) Iterate(OutInfoVar **FileInfo, OutChildVar *File, CancellableVar *Cancellable) (bool, error) {
+func (x *FileEnumerator) Iterate(OutInfoVar **FileInfo, OutChildVar **File, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xFileEnumeratorIterate(x.GoPointer(), *gobject.ConvertPtr(OutInfoVar), gobject.ConvertPtr(OutChildVar), CancellableVar.GoPointer(), &cerr)
+	cret := xFileEnumeratorIterate(x.GoPointer(), OutInfoVar, OutChildVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

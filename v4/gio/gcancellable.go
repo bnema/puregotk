@@ -34,7 +34,7 @@ func (x *CancellableClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideCancelled sets the callback function.
+// OverrideCancelled sets the "cancelled" callback function.
 func (x *CancellableClass) OverrideCancelled(cb func(*Cancellable)) {
 	if cb == nil {
 		x.xCancelled = 0
@@ -45,7 +45,7 @@ func (x *CancellableClass) OverrideCancelled(cb func(*Cancellable)) {
 	}
 }
 
-// GetCancelled gets the callback function.
+// GetCancelled gets the "cancelled" callback function.
 func (x *CancellableClass) GetCancelled() func(*Cancellable) {
 	if x.xCancelled == 0 {
 		return nil
@@ -57,7 +57,7 @@ func (x *CancellableClass) GetCancelled() func(*Cancellable) {
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *CancellableClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -68,7 +68,7 @@ func (x *CancellableClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *CancellableClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -80,7 +80,7 @@ func (x *CancellableClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *CancellableClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -91,7 +91,7 @@ func (x *CancellableClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *CancellableClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -103,7 +103,7 @@ func (x *CancellableClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *CancellableClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -114,7 +114,7 @@ func (x *CancellableClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *CancellableClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -126,7 +126,7 @@ func (x *CancellableClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *CancellableClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -137,7 +137,7 @@ func (x *CancellableClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *CancellableClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -149,7 +149,7 @@ func (x *CancellableClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *CancellableClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -160,7 +160,7 @@ func (x *CancellableClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *CancellableClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil

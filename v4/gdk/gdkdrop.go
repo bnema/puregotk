@@ -165,7 +165,7 @@ func (x *Drop) ReadAsync(MimeTypesVar []string, IoPriorityVar int, CancellableVa
 
 }
 
-var xDropReadFinish func(uintptr, uintptr, string, **glib.Error) uintptr
+var xDropReadFinish func(uintptr, uintptr, *string, **glib.Error) uintptr
 
 // Finishes an async drop read operation.
 //
@@ -175,7 +175,7 @@ var xDropReadFinish func(uintptr, uintptr, string, **glib.Error) uintptr
 // g_input_stream_read_bytes_async().
 //
 // See [method@Gdk.Drop.read_async].
-func (x *Drop) ReadFinish(ResultVar gio.AsyncResult, OutMimeTypeVar string) (*gio.InputStream, error) {
+func (x *Drop) ReadFinish(ResultVar gio.AsyncResult, OutMimeTypeVar *string) (*gio.InputStream, error) {
 	var cls *gio.InputStream
 	var cerr *glib.Error
 
@@ -253,6 +253,23 @@ func (c *Drop) GoPointer() uintptr {
 
 func (c *Drop) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyFormats sets the "formats" property.
+// The possible formats that the drop can provide its data in.
+func (x *Drop) SetPropertyFormats(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("formats", &v)
+}
+
+// GetPropertyFormats gets the "formats" property.
+// The possible formats that the drop can provide its data in.
+func (x *Drop) GetPropertyFormats() uintptr {
+	var v gobject.Value
+	x.GetProperty("formats", &v)
+	return v.GetPointer()
 }
 
 func init() {

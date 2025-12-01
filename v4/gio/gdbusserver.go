@@ -156,6 +156,60 @@ func (c *DBusServer) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyActive gets the "active" property.
+// Whether the server is currently active.
+func (x *DBusServer) GetPropertyActive() bool {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAddress sets the "address" property.
+// The D-Bus address to listen on.
+func (x *DBusServer) SetPropertyAddress(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("address", &v)
+}
+
+// GetPropertyAddress gets the "address" property.
+// The D-Bus address to listen on.
+func (x *DBusServer) GetPropertyAddress() string {
+	var v gobject.Value
+	x.GetProperty("address", &v)
+	return v.GetString()
+}
+
+// GetPropertyClientAddress gets the "client-address" property.
+// The D-Bus address that clients can use.
+func (x *DBusServer) GetPropertyClientAddress() string {
+	var v gobject.Value
+	x.GetProperty("client-address", &v)
+	return v.GetString()
+}
+
+// SetPropertyGuid sets the "guid" property.
+// The GUID of the server.
+//
+// See #GDBusConnection:guid for more details.
+func (x *DBusServer) SetPropertyGuid(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("guid", &v)
+}
+
+// GetPropertyGuid gets the "guid" property.
+// The GUID of the server.
+//
+// See #GDBusConnection:guid for more details.
+func (x *DBusServer) GetPropertyGuid() string {
+	var v gobject.Value
+	x.GetProperty("guid", &v)
+	return v.GetString()
+}
+
 // Emitted when a new authenticated connection has been made. Use
 // g_dbus_connection_get_peer_credentials() to figure out what
 // identity (if any), was authenticated.

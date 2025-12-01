@@ -99,6 +99,57 @@ func (c *CharsetConverter) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFromCharset sets the "from-charset" property.
+// The character encoding to convert from.
+func (x *CharsetConverter) SetPropertyFromCharset(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("from-charset", &v)
+}
+
+// GetPropertyFromCharset gets the "from-charset" property.
+// The character encoding to convert from.
+func (x *CharsetConverter) GetPropertyFromCharset() string {
+	var v gobject.Value
+	x.GetProperty("from-charset", &v)
+	return v.GetString()
+}
+
+// SetPropertyToCharset sets the "to-charset" property.
+// The character encoding to convert to.
+func (x *CharsetConverter) SetPropertyToCharset(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("to-charset", &v)
+}
+
+// GetPropertyToCharset gets the "to-charset" property.
+// The character encoding to convert to.
+func (x *CharsetConverter) GetPropertyToCharset() string {
+	var v gobject.Value
+	x.GetProperty("to-charset", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseFallback sets the "use-fallback" property.
+// Use fallback (of form `\&lt;hexval&gt;`) for invalid bytes.
+func (x *CharsetConverter) SetPropertyUseFallback(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-fallback", &v)
+}
+
+// GetPropertyUseFallback gets the "use-fallback" property.
+// Use fallback (of form `\&lt;hexval&gt;`) for invalid bytes.
+func (x *CharsetConverter) GetPropertyUseFallback() bool {
+	var v gobject.Value
+	x.GetProperty("use-fallback", &v)
+	return v.GetBoolean()
+}
+
 // This is the main operation used when converting data. It is to be called
 // multiple times in a loop, and each time it will do some work, i.e.
 // producing some output (in @outbuf) or consuming some input (from @inbuf) or
@@ -181,7 +232,7 @@ func (c *CharsetConverter) SetGoPointer(ptr uintptr) {
 // at a partial multibyte sequence). Converters are supposed to try
 // to produce as much output as possible and then return an error
 // (typically %G_IO_ERROR_PARTIAL_INPUT).
-func (x *CharsetConverter) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar uint, BytesWrittenVar uint) (ConverterResult, error) {
+func (x *CharsetConverter) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []byte, OutbufSizeVar uint, FlagsVar ConverterFlags, BytesReadVar *uint, BytesWrittenVar *uint) (ConverterResult, error) {
 	var cerr *glib.Error
 
 	cret := XGConverterConvert(x.GoPointer(), InbufVar, InbufSizeVar, OutbufVar, OutbufSizeVar, FlagsVar, BytesReadVar, BytesWrittenVar, &cerr)

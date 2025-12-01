@@ -118,7 +118,7 @@ func (x *TreeModelIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideRowChanged sets the callback function.
+// OverrideRowChanged sets the "row_changed" callback function.
 // Signal emitted when a row in the model has changed.
 func (x *TreeModelIface) OverrideRowChanged(cb func(TreeModel, *TreePath, *TreeIter)) {
 	if cb == nil {
@@ -130,7 +130,7 @@ func (x *TreeModelIface) OverrideRowChanged(cb func(TreeModel, *TreePath, *TreeI
 	}
 }
 
-// GetRowChanged gets the callback function.
+// GetRowChanged gets the "row_changed" callback function.
 // Signal emitted when a row in the model has changed.
 func (x *TreeModelIface) GetRowChanged() func(TreeModel, *TreePath, *TreeIter) {
 	if x.xRowChanged == 0 {
@@ -143,7 +143,7 @@ func (x *TreeModelIface) GetRowChanged() func(TreeModel, *TreePath, *TreeIter) {
 	}
 }
 
-// OverrideRowInserted sets the callback function.
+// OverrideRowInserted sets the "row_inserted" callback function.
 // Signal emitted when a new row has been inserted in
 //
 //	the model.
@@ -157,7 +157,7 @@ func (x *TreeModelIface) OverrideRowInserted(cb func(TreeModel, *TreePath, *Tree
 	}
 }
 
-// GetRowInserted gets the callback function.
+// GetRowInserted gets the "row_inserted" callback function.
 // Signal emitted when a new row has been inserted in
 //
 //	the model.
@@ -172,7 +172,7 @@ func (x *TreeModelIface) GetRowInserted() func(TreeModel, *TreePath, *TreeIter) 
 	}
 }
 
-// OverrideRowHasChildToggled sets the callback function.
+// OverrideRowHasChildToggled sets the "row_has_child_toggled" callback function.
 // Signal emitted when a row has gotten the
 //
 //	first child row or lost its last child row.
@@ -186,7 +186,7 @@ func (x *TreeModelIface) OverrideRowHasChildToggled(cb func(TreeModel, *TreePath
 	}
 }
 
-// GetRowHasChildToggled gets the callback function.
+// GetRowHasChildToggled gets the "row_has_child_toggled" callback function.
 // Signal emitted when a row has gotten the
 //
 //	first child row or lost its last child row.
@@ -201,7 +201,7 @@ func (x *TreeModelIface) GetRowHasChildToggled() func(TreeModel, *TreePath, *Tre
 	}
 }
 
-// OverrideRowDeleted sets the callback function.
+// OverrideRowDeleted sets the "row_deleted" callback function.
 // Signal emitted when a row has been deleted.
 func (x *TreeModelIface) OverrideRowDeleted(cb func(TreeModel, *TreePath)) {
 	if cb == nil {
@@ -213,7 +213,7 @@ func (x *TreeModelIface) OverrideRowDeleted(cb func(TreeModel, *TreePath)) {
 	}
 }
 
-// GetRowDeleted gets the callback function.
+// GetRowDeleted gets the "row_deleted" callback function.
 // Signal emitted when a row has been deleted.
 func (x *TreeModelIface) GetRowDeleted() func(TreeModel, *TreePath) {
 	if x.xRowDeleted == 0 {
@@ -226,7 +226,7 @@ func (x *TreeModelIface) GetRowDeleted() func(TreeModel, *TreePath) {
 	}
 }
 
-// OverrideRowsReordered sets the callback function.
+// OverrideRowsReordered sets the "rows_reordered" callback function.
 // Signal emitted when the children of a node in the
 //
 //	GtkTreeModel have been reordered.
@@ -240,7 +240,7 @@ func (x *TreeModelIface) OverrideRowsReordered(cb func(TreeModel, *TreePath, *Tr
 	}
 }
 
-// GetRowsReordered gets the callback function.
+// GetRowsReordered gets the "rows_reordered" callback function.
 // Signal emitted when the children of a node in the
 //
 //	GtkTreeModel have been reordered.
@@ -255,7 +255,7 @@ func (x *TreeModelIface) GetRowsReordered() func(TreeModel, *TreePath, *TreeIter
 	}
 }
 
-// OverrideGetFlags sets the callback function.
+// OverrideGetFlags sets the "get_flags" callback function.
 // Get `GtkTreeModelFlags` supported by this interface.
 func (x *TreeModelIface) OverrideGetFlags(cb func(TreeModel) TreeModelFlags) {
 	if cb == nil {
@@ -267,7 +267,7 @@ func (x *TreeModelIface) OverrideGetFlags(cb func(TreeModel) TreeModelFlags) {
 	}
 }
 
-// GetGetFlags gets the callback function.
+// GetGetFlags gets the "get_flags" callback function.
 // Get `GtkTreeModelFlags` supported by this interface.
 func (x *TreeModelIface) GetGetFlags() func(TreeModel) TreeModelFlags {
 	if x.xGetFlags == 0 {
@@ -280,7 +280,7 @@ func (x *TreeModelIface) GetGetFlags() func(TreeModel) TreeModelFlags {
 	}
 }
 
-// OverrideGetNColumns sets the callback function.
+// OverrideGetNColumns sets the "get_n_columns" callback function.
 // Get the number of columns supported by the model.
 func (x *TreeModelIface) OverrideGetNColumns(cb func(TreeModel) int) {
 	if cb == nil {
@@ -292,7 +292,7 @@ func (x *TreeModelIface) OverrideGetNColumns(cb func(TreeModel) int) {
 	}
 }
 
-// GetGetNColumns gets the callback function.
+// GetGetNColumns gets the "get_n_columns" callback function.
 // Get the number of columns supported by the model.
 func (x *TreeModelIface) GetGetNColumns() func(TreeModel) int {
 	if x.xGetNColumns == 0 {
@@ -305,7 +305,7 @@ func (x *TreeModelIface) GetGetNColumns() func(TreeModel) int {
 	}
 }
 
-// OverrideGetColumnType sets the callback function.
+// OverrideGetColumnType sets the "get_column_type" callback function.
 // Get the type of the column.
 func (x *TreeModelIface) OverrideGetColumnType(cb func(TreeModel, int) types.GType) {
 	if cb == nil {
@@ -317,7 +317,7 @@ func (x *TreeModelIface) OverrideGetColumnType(cb func(TreeModel, int) types.GTy
 	}
 }
 
-// GetGetColumnType gets the callback function.
+// GetGetColumnType gets the "get_column_type" callback function.
 // Get the type of the column.
 func (x *TreeModelIface) GetGetColumnType() func(TreeModel, int) types.GType {
 	if x.xGetColumnType == 0 {
@@ -330,7 +330,7 @@ func (x *TreeModelIface) GetGetColumnType() func(TreeModel, int) types.GType {
 	}
 }
 
-// OverrideGetIter sets the callback function.
+// OverrideGetIter sets the "get_iter" callback function.
 // Sets iter to a valid iterator pointing to path.
 func (x *TreeModelIface) OverrideGetIter(cb func(TreeModel, *TreeIter, *TreePath) bool) {
 	if cb == nil {
@@ -342,7 +342,7 @@ func (x *TreeModelIface) OverrideGetIter(cb func(TreeModel, *TreeIter, *TreePath
 	}
 }
 
-// GetGetIter gets the callback function.
+// GetGetIter gets the "get_iter" callback function.
 // Sets iter to a valid iterator pointing to path.
 func (x *TreeModelIface) GetGetIter() func(TreeModel, *TreeIter, *TreePath) bool {
 	if x.xGetIter == 0 {
@@ -355,7 +355,7 @@ func (x *TreeModelIface) GetGetIter() func(TreeModel, *TreeIter, *TreePath) bool
 	}
 }
 
-// OverrideGetPath sets the callback function.
+// OverrideGetPath sets the "get_path" callback function.
 // Gets a newly-created `GtkTreePath` referenced by iter.
 func (x *TreeModelIface) OverrideGetPath(cb func(TreeModel, *TreeIter) *TreePath) {
 	if cb == nil {
@@ -367,7 +367,7 @@ func (x *TreeModelIface) OverrideGetPath(cb func(TreeModel, *TreeIter) *TreePath
 	}
 }
 
-// GetGetPath gets the callback function.
+// GetGetPath gets the "get_path" callback function.
 // Gets a newly-created `GtkTreePath` referenced by iter.
 func (x *TreeModelIface) GetGetPath() func(TreeModel, *TreeIter) *TreePath {
 	if x.xGetPath == 0 {
@@ -380,7 +380,7 @@ func (x *TreeModelIface) GetGetPath() func(TreeModel, *TreeIter) *TreePath {
 	}
 }
 
-// OverrideGetValue sets the callback function.
+// OverrideGetValue sets the "get_value" callback function.
 // Initializes and sets value to that at column.
 func (x *TreeModelIface) OverrideGetValue(cb func(TreeModel, *TreeIter, int, *gobject.Value)) {
 	if cb == nil {
@@ -392,7 +392,7 @@ func (x *TreeModelIface) OverrideGetValue(cb func(TreeModel, *TreeIter, int, *go
 	}
 }
 
-// GetGetValue gets the callback function.
+// GetGetValue gets the "get_value" callback function.
 // Initializes and sets value to that at column.
 func (x *TreeModelIface) GetGetValue() func(TreeModel, *TreeIter, int, *gobject.Value) {
 	if x.xGetValue == 0 {
@@ -405,7 +405,7 @@ func (x *TreeModelIface) GetGetValue() func(TreeModel, *TreeIter, int, *gobject.
 	}
 }
 
-// OverrideIterNext sets the callback function.
+// OverrideIterNext sets the "iter_next" callback function.
 // Sets iter to point to the node following it at the
 //
 //	current level.
@@ -419,7 +419,7 @@ func (x *TreeModelIface) OverrideIterNext(cb func(TreeModel, *TreeIter) bool) {
 	}
 }
 
-// GetIterNext gets the callback function.
+// GetIterNext gets the "iter_next" callback function.
 // Sets iter to point to the node following it at the
 //
 //	current level.
@@ -434,7 +434,7 @@ func (x *TreeModelIface) GetIterNext() func(TreeModel, *TreeIter) bool {
 	}
 }
 
-// OverrideIterPrevious sets the callback function.
+// OverrideIterPrevious sets the "iter_previous" callback function.
 // Sets iter to point to the previous node at the
 //
 //	current level.
@@ -448,7 +448,7 @@ func (x *TreeModelIface) OverrideIterPrevious(cb func(TreeModel, *TreeIter) bool
 	}
 }
 
-// GetIterPrevious gets the callback function.
+// GetIterPrevious gets the "iter_previous" callback function.
 // Sets iter to point to the previous node at the
 //
 //	current level.
@@ -463,7 +463,7 @@ func (x *TreeModelIface) GetIterPrevious() func(TreeModel, *TreeIter) bool {
 	}
 }
 
-// OverrideIterChildren sets the callback function.
+// OverrideIterChildren sets the "iter_children" callback function.
 // Sets iter to point to the first child of parent.
 func (x *TreeModelIface) OverrideIterChildren(cb func(TreeModel, *TreeIter, *TreeIter) bool) {
 	if cb == nil {
@@ -475,7 +475,7 @@ func (x *TreeModelIface) OverrideIterChildren(cb func(TreeModel, *TreeIter, *Tre
 	}
 }
 
-// GetIterChildren gets the callback function.
+// GetIterChildren gets the "iter_children" callback function.
 // Sets iter to point to the first child of parent.
 func (x *TreeModelIface) GetIterChildren() func(TreeModel, *TreeIter, *TreeIter) bool {
 	if x.xIterChildren == 0 {
@@ -488,7 +488,7 @@ func (x *TreeModelIface) GetIterChildren() func(TreeModel, *TreeIter, *TreeIter)
 	}
 }
 
-// OverrideIterHasChild sets the callback function.
+// OverrideIterHasChild sets the "iter_has_child" callback function.
 // %TRUE if iter has children, %FALSE otherwise.
 func (x *TreeModelIface) OverrideIterHasChild(cb func(TreeModel, *TreeIter) bool) {
 	if cb == nil {
@@ -500,7 +500,7 @@ func (x *TreeModelIface) OverrideIterHasChild(cb func(TreeModel, *TreeIter) bool
 	}
 }
 
-// GetIterHasChild gets the callback function.
+// GetIterHasChild gets the "iter_has_child" callback function.
 // %TRUE if iter has children, %FALSE otherwise.
 func (x *TreeModelIface) GetIterHasChild() func(TreeModel, *TreeIter) bool {
 	if x.xIterHasChild == 0 {
@@ -513,7 +513,7 @@ func (x *TreeModelIface) GetIterHasChild() func(TreeModel, *TreeIter) bool {
 	}
 }
 
-// OverrideIterNChildren sets the callback function.
+// OverrideIterNChildren sets the "iter_n_children" callback function.
 // Gets the number of children that iter has.
 func (x *TreeModelIface) OverrideIterNChildren(cb func(TreeModel, *TreeIter) int) {
 	if cb == nil {
@@ -525,7 +525,7 @@ func (x *TreeModelIface) OverrideIterNChildren(cb func(TreeModel, *TreeIter) int
 	}
 }
 
-// GetIterNChildren gets the callback function.
+// GetIterNChildren gets the "iter_n_children" callback function.
 // Gets the number of children that iter has.
 func (x *TreeModelIface) GetIterNChildren() func(TreeModel, *TreeIter) int {
 	if x.xIterNChildren == 0 {
@@ -538,7 +538,7 @@ func (x *TreeModelIface) GetIterNChildren() func(TreeModel, *TreeIter) int {
 	}
 }
 
-// OverrideIterNthChild sets the callback function.
+// OverrideIterNthChild sets the "iter_nth_child" callback function.
 // Sets iter to be the child of parent, using the
 //
 //	given index.
@@ -552,7 +552,7 @@ func (x *TreeModelIface) OverrideIterNthChild(cb func(TreeModel, *TreeIter, *Tre
 	}
 }
 
-// GetIterNthChild gets the callback function.
+// GetIterNthChild gets the "iter_nth_child" callback function.
 // Sets iter to be the child of parent, using the
 //
 //	given index.
@@ -567,7 +567,7 @@ func (x *TreeModelIface) GetIterNthChild() func(TreeModel, *TreeIter, *TreeIter,
 	}
 }
 
-// OverrideIterParent sets the callback function.
+// OverrideIterParent sets the "iter_parent" callback function.
 // Sets iter to be the parent of child.
 func (x *TreeModelIface) OverrideIterParent(cb func(TreeModel, *TreeIter, *TreeIter) bool) {
 	if cb == nil {
@@ -579,7 +579,7 @@ func (x *TreeModelIface) OverrideIterParent(cb func(TreeModel, *TreeIter, *TreeI
 	}
 }
 
-// GetIterParent gets the callback function.
+// GetIterParent gets the "iter_parent" callback function.
 // Sets iter to be the parent of child.
 func (x *TreeModelIface) GetIterParent() func(TreeModel, *TreeIter, *TreeIter) bool {
 	if x.xIterParent == 0 {
@@ -592,7 +592,7 @@ func (x *TreeModelIface) GetIterParent() func(TreeModel, *TreeIter, *TreeIter) b
 	}
 }
 
-// OverrideRefNode sets the callback function.
+// OverrideRefNode sets the "ref_node" callback function.
 // Lets the tree ref the node.
 func (x *TreeModelIface) OverrideRefNode(cb func(TreeModel, *TreeIter)) {
 	if cb == nil {
@@ -604,7 +604,7 @@ func (x *TreeModelIface) OverrideRefNode(cb func(TreeModel, *TreeIter)) {
 	}
 }
 
-// GetRefNode gets the callback function.
+// GetRefNode gets the "ref_node" callback function.
 // Lets the tree ref the node.
 func (x *TreeModelIface) GetRefNode() func(TreeModel, *TreeIter) {
 	if x.xRefNode == 0 {
@@ -617,7 +617,7 @@ func (x *TreeModelIface) GetRefNode() func(TreeModel, *TreeIter) {
 	}
 }
 
-// OverrideUnrefNode sets the callback function.
+// OverrideUnrefNode sets the "unref_node" callback function.
 // Lets the tree unref the node.
 func (x *TreeModelIface) OverrideUnrefNode(cb func(TreeModel, *TreeIter)) {
 	if cb == nil {
@@ -629,7 +629,7 @@ func (x *TreeModelIface) OverrideUnrefNode(cb func(TreeModel, *TreeIter)) {
 	}
 }
 
-// GetUnrefNode gets the callback function.
+// GetUnrefNode gets the "unref_node" callback function.
 // Lets the tree unref the node.
 func (x *TreeModelIface) GetUnrefNode() func(TreeModel, *TreeIter) {
 	if x.xUnrefNode == 0 {
@@ -785,14 +785,14 @@ func (x *TreePath) GetIndices() int {
 	return cret
 }
 
-var xTreePathGetIndicesWithDepth func(uintptr, int) uintptr
+var xTreePathGetIndicesWithDepth func(uintptr, *int) uintptr
 
 // Returns the current indices of @path.
 //
 // This is an array of integers, each representing a node in a tree.
 // It also returns the number of elements in the array.
 // The array should not be freed.
-func (x *TreePath) GetIndicesWithDepth(DepthVar int) uintptr {
+func (x *TreePath) GetIndicesWithDepth(DepthVar *int) uintptr {
 
 	cret := xTreePathGetIndicesWithDepth(x.GoPointer(), DepthVar)
 	return cret

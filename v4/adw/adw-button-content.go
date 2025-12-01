@@ -201,6 +201,94 @@ func (c *ButtonContent) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCanShrink sets the "can-shrink" property.
+// Whether the button can be smaller than the natural size of its contents.
+//
+// If set to `TRUE`, the label will ellipsize.
+//
+// See [property@Gtk.Button:can-shrink].
+func (x *ButtonContent) SetPropertyCanShrink(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-shrink", &v)
+}
+
+// GetPropertyCanShrink gets the "can-shrink" property.
+// Whether the button can be smaller than the natural size of its contents.
+//
+// If set to `TRUE`, the label will ellipsize.
+//
+// See [property@Gtk.Button:can-shrink].
+func (x *ButtonContent) GetPropertyCanShrink() bool {
+	var v gobject.Value
+	x.GetProperty("can-shrink", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIconName sets the "icon-name" property.
+// The name of the displayed icon.
+//
+// If empty, the icon is not shown.
+func (x *ButtonContent) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The name of the displayed icon.
+//
+// If empty, the icon is not shown.
+func (x *ButtonContent) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyLabel sets the "label" property.
+// The displayed label.
+func (x *ButtonContent) SetPropertyLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("label", &v)
+}
+
+// GetPropertyLabel gets the "label" property.
+// The displayed label.
+func (x *ButtonContent) GetPropertyLabel() string {
+	var v gobject.Value
+	x.GetProperty("label", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// Whether an underline in the text indicates a mnemonic.
+//
+// The mnemonic can be used to activate the parent button.
+//
+// See [property@ButtonContent:label].
+func (x *ButtonContent) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// Whether an underline in the text indicates a mnemonic.
+//
+// The mnemonic can be used to activate the parent button.
+//
+// See [property@ButtonContent:label].
+func (x *ButtonContent) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -258,7 +346,7 @@ func (x *ButtonContent) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ButtonContent) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ButtonContent) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

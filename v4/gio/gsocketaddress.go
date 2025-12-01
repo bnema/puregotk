@@ -28,7 +28,7 @@ func (x *SocketAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetFamily sets the callback function.
+// OverrideGetFamily sets the "get_family" callback function.
 func (x *SocketAddressClass) OverrideGetFamily(cb func(*SocketAddress) SocketFamily) {
 	if cb == nil {
 		x.xGetFamily = 0
@@ -39,7 +39,7 @@ func (x *SocketAddressClass) OverrideGetFamily(cb func(*SocketAddress) SocketFam
 	}
 }
 
-// GetGetFamily gets the callback function.
+// GetGetFamily gets the "get_family" callback function.
 func (x *SocketAddressClass) GetGetFamily() func(*SocketAddress) SocketFamily {
 	if x.xGetFamily == 0 {
 		return nil
@@ -51,7 +51,7 @@ func (x *SocketAddressClass) GetGetFamily() func(*SocketAddress) SocketFamily {
 	}
 }
 
-// OverrideGetNativeSize sets the callback function.
+// OverrideGetNativeSize sets the "get_native_size" callback function.
 func (x *SocketAddressClass) OverrideGetNativeSize(cb func(*SocketAddress) int) {
 	if cb == nil {
 		x.xGetNativeSize = 0
@@ -62,7 +62,7 @@ func (x *SocketAddressClass) OverrideGetNativeSize(cb func(*SocketAddress) int) 
 	}
 }
 
-// GetGetNativeSize gets the callback function.
+// GetGetNativeSize gets the "get_native_size" callback function.
 func (x *SocketAddressClass) GetGetNativeSize() func(*SocketAddress) int {
 	if x.xGetNativeSize == 0 {
 		return nil
@@ -74,7 +74,7 @@ func (x *SocketAddressClass) GetGetNativeSize() func(*SocketAddress) int {
 	}
 }
 
-// OverrideToNative sets the callback function.
+// OverrideToNative sets the "to_native" callback function.
 func (x *SocketAddressClass) OverrideToNative(cb func(*SocketAddress, uintptr, uint) bool) {
 	if cb == nil {
 		x.xToNative = 0
@@ -85,7 +85,7 @@ func (x *SocketAddressClass) OverrideToNative(cb func(*SocketAddress, uintptr, u
 	}
 }
 
-// GetToNative gets the callback function.
+// GetToNative gets the "to_native" callback function.
 func (x *SocketAddressClass) GetToNative() func(*SocketAddress, uintptr, uint) bool {
 	if x.xToNative == 0 {
 		return nil

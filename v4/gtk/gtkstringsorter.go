@@ -163,6 +163,23 @@ func (c *StringSorter) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyIgnoreCase sets the "ignore-case" property.
+// If sorting is case sensitive.
+func (x *StringSorter) SetPropertyIgnoreCase(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("ignore-case", &v)
+}
+
+// GetPropertyIgnoreCase gets the "ignore-case" property.
+// If sorting is case sensitive.
+func (x *StringSorter) GetPropertyIgnoreCase() bool {
+	var v gobject.Value
+	x.GetProperty("ignore-case", &v)
+	return v.GetBoolean()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

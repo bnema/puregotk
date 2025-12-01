@@ -78,7 +78,7 @@ func (x *InitiallyUnownedClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideConstructor sets the callback function.
+// OverrideConstructor sets the "constructor" callback function.
 // the @constructor function is called by g_object_new () to
 //
 //	complete the object initialization after all the construction properties are
@@ -99,7 +99,7 @@ func (x *InitiallyUnownedClass) OverrideConstructor(cb func(types.GType, uint, *
 	}
 }
 
-// GetConstructor gets the callback function.
+// GetConstructor gets the "constructor" callback function.
 // the @constructor function is called by g_object_new () to
 //
 //	complete the object initialization after all the construction properties are
@@ -123,7 +123,7 @@ func (x *InitiallyUnownedClass) GetConstructor() func(types.GType, uint, *Object
 	}
 }
 
-// OverrideSetProperty sets the callback function.
+// OverrideSetProperty sets the "set_property" callback function.
 // the generic setter for all properties of this type. Should be
 //
 //	overridden for every type with properties. If implementations of
@@ -140,7 +140,7 @@ func (x *InitiallyUnownedClass) OverrideSetProperty(cb func(*Object, uint, *Valu
 	}
 }
 
-// GetSetProperty gets the callback function.
+// GetSetProperty gets the "set_property" callback function.
 // the generic setter for all properties of this type. Should be
 //
 //	overridden for every type with properties. If implementations of
@@ -158,7 +158,7 @@ func (x *InitiallyUnownedClass) GetSetProperty() func(*Object, uint, *Value, *Pa
 	}
 }
 
-// OverrideGetProperty sets the callback function.
+// OverrideGetProperty sets the "get_property" callback function.
 // the generic getter for all properties of this type. Should be
 //
 //	overridden for every type with properties.
@@ -172,7 +172,7 @@ func (x *InitiallyUnownedClass) OverrideGetProperty(cb func(*Object, uint, *Valu
 	}
 }
 
-// GetGetProperty gets the callback function.
+// GetGetProperty gets the "get_property" callback function.
 // the generic getter for all properties of this type. Should be
 //
 //	overridden for every type with properties.
@@ -187,7 +187,7 @@ func (x *InitiallyUnownedClass) GetGetProperty() func(*Object, uint, *Value, *Pa
 	}
 }
 
-// OverrideDispose sets the callback function.
+// OverrideDispose sets the "dispose" callback function.
 // the @dispose function is supposed to drop all references to other
 //
 //	objects, but keep the instance otherwise intact, so that client method
@@ -204,7 +204,7 @@ func (x *InitiallyUnownedClass) OverrideDispose(cb func(*Object)) {
 	}
 }
 
-// GetDispose gets the callback function.
+// GetDispose gets the "dispose" callback function.
 // the @dispose function is supposed to drop all references to other
 //
 //	objects, but keep the instance otherwise intact, so that client method
@@ -222,7 +222,7 @@ func (x *InitiallyUnownedClass) GetDispose() func(*Object) {
 	}
 }
 
-// OverrideFinalize sets the callback function.
+// OverrideFinalize sets the "finalize" callback function.
 // instance finalization function, should finish the finalization of
 //
 //	the instance begun in @dispose and chain up to the @finalize method of the
@@ -237,7 +237,7 @@ func (x *InitiallyUnownedClass) OverrideFinalize(cb func(*Object)) {
 	}
 }
 
-// GetFinalize gets the callback function.
+// GetFinalize gets the "finalize" callback function.
 // instance finalization function, should finish the finalization of
 //
 //	the instance begun in @dispose and chain up to the @finalize method of the
@@ -253,7 +253,7 @@ func (x *InitiallyUnownedClass) GetFinalize() func(*Object) {
 	}
 }
 
-// OverrideDispatchPropertiesChanged sets the callback function.
+// OverrideDispatchPropertiesChanged sets the "dispatch_properties_changed" callback function.
 // emits property change notification for a bunch
 //
 //	of properties. Overriding @dispatch_properties_changed should be rarely
@@ -268,7 +268,7 @@ func (x *InitiallyUnownedClass) OverrideDispatchPropertiesChanged(cb func(*Objec
 	}
 }
 
-// GetDispatchPropertiesChanged gets the callback function.
+// GetDispatchPropertiesChanged gets the "dispatch_properties_changed" callback function.
 // emits property change notification for a bunch
 //
 //	of properties. Overriding @dispatch_properties_changed should be rarely
@@ -284,7 +284,7 @@ func (x *InitiallyUnownedClass) GetDispatchPropertiesChanged() func(*Object, uin
 	}
 }
 
-// OverrideNotify sets the callback function.
+// OverrideNotify sets the "notify" callback function.
 // the class closure for the notify signal
 func (x *InitiallyUnownedClass) OverrideNotify(cb func(*Object, *ParamSpec)) {
 	if cb == nil {
@@ -296,7 +296,7 @@ func (x *InitiallyUnownedClass) OverrideNotify(cb func(*Object, *ParamSpec)) {
 	}
 }
 
-// GetNotify gets the callback function.
+// GetNotify gets the "notify" callback function.
 // the class closure for the notify signal
 func (x *InitiallyUnownedClass) GetNotify() func(*Object, *ParamSpec) {
 	if x.xNotify == 0 {
@@ -309,7 +309,7 @@ func (x *InitiallyUnownedClass) GetNotify() func(*Object, *ParamSpec) {
 	}
 }
 
-// OverrideConstructed sets the callback function.
+// OverrideConstructed sets the "constructed" callback function.
 // the @constructed function is called by g_object_new() as the
 //
 //	final step of the object creation process.  At the point of the call, all
@@ -328,7 +328,7 @@ func (x *InitiallyUnownedClass) OverrideConstructed(cb func(*Object)) {
 	}
 }
 
-// GetConstructed gets the callback function.
+// GetConstructed gets the "constructed" callback function.
 // the @constructed function is called by g_object_new() as the
 //
 //	final step of the object creation process.  At the point of the call, all
@@ -526,10 +526,10 @@ func (x *ObjectClass) InstallProperty(PropertyIdVar uint, PspecVar *ParamSpec) {
 
 }
 
-var xObjectClassListProperties func(uintptr, uint) uintptr
+var xObjectClassListProperties func(uintptr, *uint) uintptr
 
 // Get an array of #GParamSpec* for all properties of a class.
-func (x *ObjectClass) ListProperties(NPropertiesVar uint) uintptr {
+func (x *ObjectClass) ListProperties(NPropertiesVar *uint) uintptr {
 
 	cret := xObjectClassListProperties(x.GoPointer(), NPropertiesVar)
 	return cret
@@ -559,7 +559,7 @@ func (x *ObjectClass) OverrideProperty(PropertyIdVar uint, NameVar string) {
 
 }
 
-// OverrideConstructor sets the callback function.
+// OverrideConstructor sets the "constructor" callback function.
 // the @constructor function is called by g_object_new () to
 //
 //	complete the object initialization after all the construction properties are
@@ -580,7 +580,7 @@ func (x *ObjectClass) OverrideConstructor(cb func(types.GType, uint, *ObjectCons
 	}
 }
 
-// GetConstructor gets the callback function.
+// GetConstructor gets the "constructor" callback function.
 // the @constructor function is called by g_object_new () to
 //
 //	complete the object initialization after all the construction properties are
@@ -604,7 +604,7 @@ func (x *ObjectClass) GetConstructor() func(types.GType, uint, *ObjectConstructP
 	}
 }
 
-// OverrideSetProperty sets the callback function.
+// OverrideSetProperty sets the "set_property" callback function.
 // The type of the @set_property function of #GObjectClass.
 func (x *ObjectClass) OverrideSetProperty(cb func(*Object, uint, *Value, *ParamSpec)) {
 	if cb == nil {
@@ -616,7 +616,7 @@ func (x *ObjectClass) OverrideSetProperty(cb func(*Object, uint, *Value, *ParamS
 	}
 }
 
-// GetSetProperty gets the callback function.
+// GetSetProperty gets the "set_property" callback function.
 // The type of the @set_property function of #GObjectClass.
 func (x *ObjectClass) GetSetProperty() func(*Object, uint, *Value, *ParamSpec) {
 	if x.xSetProperty == 0 {
@@ -629,7 +629,7 @@ func (x *ObjectClass) GetSetProperty() func(*Object, uint, *Value, *ParamSpec) {
 	}
 }
 
-// OverrideGetProperty sets the callback function.
+// OverrideGetProperty sets the "get_property" callback function.
 // The type of the @get_property function of #GObjectClass.
 func (x *ObjectClass) OverrideGetProperty(cb func(*Object, uint, *Value, *ParamSpec)) {
 	if cb == nil {
@@ -641,7 +641,7 @@ func (x *ObjectClass) OverrideGetProperty(cb func(*Object, uint, *Value, *ParamS
 	}
 }
 
-// GetGetProperty gets the callback function.
+// GetGetProperty gets the "get_property" callback function.
 // The type of the @get_property function of #GObjectClass.
 func (x *ObjectClass) GetGetProperty() func(*Object, uint, *Value, *ParamSpec) {
 	if x.xGetProperty == 0 {
@@ -654,7 +654,7 @@ func (x *ObjectClass) GetGetProperty() func(*Object, uint, *Value, *ParamSpec) {
 	}
 }
 
-// OverrideDispose sets the callback function.
+// OverrideDispose sets the "dispose" callback function.
 // the @dispose function is supposed to drop all references to other
 //
 //	objects, but keep the instance otherwise intact, so that client method
@@ -671,7 +671,7 @@ func (x *ObjectClass) OverrideDispose(cb func(*Object)) {
 	}
 }
 
-// GetDispose gets the callback function.
+// GetDispose gets the "dispose" callback function.
 // the @dispose function is supposed to drop all references to other
 //
 //	objects, but keep the instance otherwise intact, so that client method
@@ -689,7 +689,7 @@ func (x *ObjectClass) GetDispose() func(*Object) {
 	}
 }
 
-// OverrideFinalize sets the callback function.
+// OverrideFinalize sets the "finalize" callback function.
 // The type of the @finalize function of #GObjectClass.
 func (x *ObjectClass) OverrideFinalize(cb func(*Object)) {
 	if cb == nil {
@@ -701,7 +701,7 @@ func (x *ObjectClass) OverrideFinalize(cb func(*Object)) {
 	}
 }
 
-// GetFinalize gets the callback function.
+// GetFinalize gets the "finalize" callback function.
 // The type of the @finalize function of #GObjectClass.
 func (x *ObjectClass) GetFinalize() func(*Object) {
 	if x.xFinalize == 0 {
@@ -714,7 +714,7 @@ func (x *ObjectClass) GetFinalize() func(*Object) {
 	}
 }
 
-// OverrideDispatchPropertiesChanged sets the callback function.
+// OverrideDispatchPropertiesChanged sets the "dispatch_properties_changed" callback function.
 // emits property change notification for a bunch
 //
 //	of properties. Overriding @dispatch_properties_changed should be rarely
@@ -729,7 +729,7 @@ func (x *ObjectClass) OverrideDispatchPropertiesChanged(cb func(*Object, uint, *
 	}
 }
 
-// GetDispatchPropertiesChanged gets the callback function.
+// GetDispatchPropertiesChanged gets the "dispatch_properties_changed" callback function.
 // emits property change notification for a bunch
 //
 //	of properties. Overriding @dispatch_properties_changed should be rarely
@@ -745,7 +745,7 @@ func (x *ObjectClass) GetDispatchPropertiesChanged() func(*Object, uint, **Param
 	}
 }
 
-// OverrideNotify sets the callback function.
+// OverrideNotify sets the "notify" callback function.
 // the class closure for the notify signal
 func (x *ObjectClass) OverrideNotify(cb func(*Object, *ParamSpec)) {
 	if cb == nil {
@@ -757,7 +757,7 @@ func (x *ObjectClass) OverrideNotify(cb func(*Object, *ParamSpec)) {
 	}
 }
 
-// GetNotify gets the callback function.
+// GetNotify gets the "notify" callback function.
 // the class closure for the notify signal
 func (x *ObjectClass) GetNotify() func(*Object, *ParamSpec) {
 	if x.xNotify == 0 {
@@ -770,7 +770,7 @@ func (x *ObjectClass) GetNotify() func(*Object, *ParamSpec) {
 	}
 }
 
-// OverrideConstructed sets the callback function.
+// OverrideConstructed sets the "constructed" callback function.
 // the @constructed function is called by g_object_new() as the
 //
 //	final step of the object creation process.  At the point of the call, all
@@ -789,7 +789,7 @@ func (x *ObjectClass) OverrideConstructed(cb func(*Object)) {
 	}
 }
 
-// GetConstructed gets the callback function.
+// GetConstructed gets the "constructed" callback function.
 // the @constructed function is called by g_object_new() as the
 //
 //	final step of the object creation process.  At the point of the call, all
@@ -1718,7 +1718,7 @@ func (x *Object) RemoveWeakPointer(WeakPointerLocationVar uintptr) {
 
 }
 
-var xObjectReplaceData func(uintptr, string, uintptr, uintptr, uintptr, uintptr) bool
+var xObjectReplaceData func(uintptr, string, uintptr, uintptr, uintptr, *glib.DestroyNotify) bool
 
 // Compares the user data for the key @key on @object with
 // @oldval, and if they are the same, replaces @oldval with
@@ -1738,11 +1738,11 @@ var xObjectReplaceData func(uintptr, string, uintptr, uintptr, uintptr, uintptr)
 // for @key.
 func (x *Object) ReplaceData(KeyVar string, OldvalVar uintptr, NewvalVar uintptr, DestroyVar *glib.DestroyNotify, OldDestroyVar *glib.DestroyNotify) bool {
 
-	cret := xObjectReplaceData(x.GoPointer(), KeyVar, OldvalVar, NewvalVar, glib.NewCallbackNullable(DestroyVar), glib.NewCallback(OldDestroyVar))
+	cret := xObjectReplaceData(x.GoPointer(), KeyVar, OldvalVar, NewvalVar, glib.NewCallbackNullable(DestroyVar), OldDestroyVar)
 	return cret
 }
 
-var xObjectReplaceQdata func(uintptr, glib.Quark, uintptr, uintptr, uintptr, uintptr) bool
+var xObjectReplaceQdata func(uintptr, glib.Quark, uintptr, uintptr, uintptr, *glib.DestroyNotify) bool
 
 // Compares the user data for the key @quark on @object with
 // @oldval, and if they are the same, replaces @oldval with
@@ -1759,7 +1759,7 @@ var xObjectReplaceQdata func(uintptr, glib.Quark, uintptr, uintptr, uintptr, uin
 // should not destroy the object in the normal way.
 func (x *Object) ReplaceQdata(QuarkVar glib.Quark, OldvalVar uintptr, NewvalVar uintptr, DestroyVar *glib.DestroyNotify, OldDestroyVar *glib.DestroyNotify) bool {
 
-	cret := xObjectReplaceQdata(x.GoPointer(), QuarkVar, OldvalVar, NewvalVar, glib.NewCallbackNullable(DestroyVar), glib.NewCallback(OldDestroyVar))
+	cret := xObjectReplaceQdata(x.GoPointer(), QuarkVar, OldvalVar, NewvalVar, glib.NewCallbackNullable(DestroyVar), OldDestroyVar)
 	return cret
 }
 
@@ -2177,13 +2177,13 @@ func ObjectInterfaceInstallProperty(GIfaceVar *TypeInterface, PspecVar *ParamSpe
 
 }
 
-var xObjectInterfaceListProperties func(*TypeInterface, uint) uintptr
+var xObjectInterfaceListProperties func(*TypeInterface, *uint) uintptr
 
 // Lists the properties of an interface.Generally, the interface
 // vtable passed in as @g_iface will be the default vtable from
 // g_type_default_interface_ref(), or, if you know the interface has
 // already been loaded, g_type_default_interface_peek().
-func ObjectInterfaceListProperties(GIfaceVar *TypeInterface, NPropertiesPVar uint) uintptr {
+func ObjectInterfaceListProperties(GIfaceVar *TypeInterface, NPropertiesPVar *uint) uintptr {
 
 	cret := xObjectInterfaceListProperties(GIfaceVar, NPropertiesPVar)
 	return cret

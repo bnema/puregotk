@@ -242,13 +242,13 @@ func (x *Surface) GetDeviceCursor(DeviceVar *Device) *Cursor {
 	return cls
 }
 
-var xSurfaceGetDevicePosition func(uintptr, uintptr, float64, float64, *ModifierType) bool
+var xSurfaceGetDevicePosition func(uintptr, uintptr, *float64, *float64, *ModifierType) bool
 
 // Obtains the current device position and modifier state.
 //
 // The position is given in coordinates relative to the upper
 // left corner of @surface.
-func (x *Surface) GetDevicePosition(DeviceVar *Device, XVar float64, YVar float64, MaskVar *ModifierType) bool {
+func (x *Surface) GetDevicePosition(DeviceVar *Device, XVar *float64, YVar *float64, MaskVar *ModifierType) bool {
 
 	cret := xSurfaceGetDevicePosition(x.GoPointer(), DeviceVar.GoPointer(), XVar, YVar, MaskVar)
 	return cret
@@ -509,6 +509,49 @@ func (c *Surface) GoPointer() uintptr {
 
 func (c *Surface) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyHeight gets the "height" property.
+// The height of the surface, in pixels.
+func (x *Surface) GetPropertyHeight() int {
+	var v gobject.Value
+	x.GetProperty("height", &v)
+	return v.GetInt()
+}
+
+// GetPropertyMapped gets the "mapped" property.
+// Whether the surface is mapped.
+func (x *Surface) GetPropertyMapped() bool {
+	var v gobject.Value
+	x.GetProperty("mapped", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyScale gets the "scale" property.
+// The scale of the surface.
+func (x *Surface) GetPropertyScale() float64 {
+	var v gobject.Value
+	x.GetProperty("scale", &v)
+	return v.GetDouble()
+}
+
+// GetPropertyScaleFactor gets the "scale-factor" property.
+// The scale factor of the surface.
+//
+// The scale factor is the next larger integer,
+// compared to [property@Gdk.Surface:scale].
+func (x *Surface) GetPropertyScaleFactor() int {
+	var v gobject.Value
+	x.GetProperty("scale-factor", &v)
+	return v.GetInt()
+}
+
+// GetPropertyWidth gets the "width" property.
+// The width of the surface in pixels.
+func (x *Surface) GetPropertyWidth() int {
+	var v gobject.Value
+	x.GetProperty("width", &v)
+	return v.GetInt()
 }
 
 // Emitted when @surface starts being present on the monitor.

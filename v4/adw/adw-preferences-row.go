@@ -159,6 +159,92 @@ func (c *PreferencesRow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyTitle sets the "title" property.
+// The title of the preference represented by this row.
+//
+// The title is interpreted as Pango markup unless
+// [property@PreferencesRow:use-markup] is set to `FALSE`.
+func (x *PreferencesRow) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the preference represented by this row.
+//
+// The title is interpreted as Pango markup unless
+// [property@PreferencesRow:use-markup] is set to `FALSE`.
+func (x *PreferencesRow) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyTitleSelectable sets the "title-selectable" property.
+// Whether the user can copy the title from the label.
+//
+// See also [property@Gtk.Label:selectable].
+func (x *PreferencesRow) SetPropertyTitleSelectable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("title-selectable", &v)
+}
+
+// GetPropertyTitleSelectable gets the "title-selectable" property.
+// Whether the user can copy the title from the label.
+//
+// See also [property@Gtk.Label:selectable].
+func (x *PreferencesRow) GetPropertyTitleSelectable() bool {
+	var v gobject.Value
+	x.GetProperty("title-selectable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseMarkup sets the "use-markup" property.
+// Whether to use Pango markup for the title label.
+//
+// Subclasses may also use it for other labels, such as subtitle.
+//
+// See also [func@Pango.parse_markup].
+func (x *PreferencesRow) SetPropertyUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-markup", &v)
+}
+
+// GetPropertyUseMarkup gets the "use-markup" property.
+// Whether to use Pango markup for the title label.
+//
+// Subclasses may also use it for other labels, such as subtitle.
+//
+// See also [func@Pango.parse_markup].
+func (x *PreferencesRow) GetPropertyUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("use-markup", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// Whether an embedded underline in the title indicates a mnemonic.
+func (x *PreferencesRow) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// Whether an embedded underline in the title indicates a mnemonic.
+func (x *PreferencesRow) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -216,7 +302,7 @@ func (x *PreferencesRow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PreferencesRow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *PreferencesRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

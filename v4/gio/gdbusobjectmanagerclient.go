@@ -29,7 +29,7 @@ func (x *DBusObjectManagerClientClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideInterfaceProxySignal sets the callback function.
+// OverrideInterfaceProxySignal sets the "interface_proxy_signal" callback function.
 // Signal class handler for the #GDBusObjectManagerClient::interface-proxy-signal signal.
 func (x *DBusObjectManagerClientClass) OverrideInterfaceProxySignal(cb func(*DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, string, string, *glib.Variant)) {
 	if cb == nil {
@@ -41,7 +41,7 @@ func (x *DBusObjectManagerClientClass) OverrideInterfaceProxySignal(cb func(*DBu
 	}
 }
 
-// GetInterfaceProxySignal gets the callback function.
+// GetInterfaceProxySignal gets the "interface_proxy_signal" callback function.
 // Signal class handler for the #GDBusObjectManagerClient::interface-proxy-signal signal.
 func (x *DBusObjectManagerClientClass) GetInterfaceProxySignal() func(*DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, string, string, *glib.Variant) {
 	if x.xInterfaceProxySignal == 0 {
@@ -54,7 +54,7 @@ func (x *DBusObjectManagerClientClass) GetInterfaceProxySignal() func(*DBusObjec
 	}
 }
 
-// OverrideInterfaceProxyPropertiesChanged sets the callback function.
+// OverrideInterfaceProxyPropertiesChanged sets the "interface_proxy_properties_changed" callback function.
 // Signal class handler for the #GDBusObjectManagerClient::interface-proxy-properties-changed signal.
 func (x *DBusObjectManagerClientClass) OverrideInterfaceProxyPropertiesChanged(cb func(*DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, *glib.Variant, string)) {
 	if cb == nil {
@@ -66,7 +66,7 @@ func (x *DBusObjectManagerClientClass) OverrideInterfaceProxyPropertiesChanged(c
 	}
 }
 
-// GetInterfaceProxyPropertiesChanged gets the callback function.
+// GetInterfaceProxyPropertiesChanged gets the "interface_proxy_properties_changed" callback function.
 // Signal class handler for the #GDBusObjectManagerClient::interface-proxy-properties-changed signal.
 func (x *DBusObjectManagerClientClass) GetInterfaceProxyPropertiesChanged() func(*DBusObjectManagerClient, *DBusObjectProxy, *DBusProxy, *glib.Variant, string) {
 	if x.xInterfaceProxyPropertiesChanged == 0 {
@@ -331,6 +331,103 @@ func (c *DBusObjectManagerClient) GoPointer() uintptr {
 
 func (c *DBusObjectManagerClient) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyGetProxyTypeDestroyNotify sets the "get-proxy-type-destroy-notify" property.
+// A #GDestroyNotify for the #gpointer user_data in #GDBusObjectManagerClient:get-proxy-type-user-data.
+func (x *DBusObjectManagerClient) SetPropertyGetProxyTypeDestroyNotify(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("get-proxy-type-destroy-notify", &v)
+}
+
+// GetPropertyGetProxyTypeDestroyNotify gets the "get-proxy-type-destroy-notify" property.
+// A #GDestroyNotify for the #gpointer user_data in #GDBusObjectManagerClient:get-proxy-type-user-data.
+func (x *DBusObjectManagerClient) GetPropertyGetProxyTypeDestroyNotify() uintptr {
+	var v gobject.Value
+	x.GetProperty("get-proxy-type-destroy-notify", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyGetProxyTypeFunc sets the "get-proxy-type-func" property.
+// The #GDBusProxyTypeFunc to use when determining what #GType to
+// use for interface proxies or %NULL.
+func (x *DBusObjectManagerClient) SetPropertyGetProxyTypeFunc(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("get-proxy-type-func", &v)
+}
+
+// GetPropertyGetProxyTypeFunc gets the "get-proxy-type-func" property.
+// The #GDBusProxyTypeFunc to use when determining what #GType to
+// use for interface proxies or %NULL.
+func (x *DBusObjectManagerClient) GetPropertyGetProxyTypeFunc() uintptr {
+	var v gobject.Value
+	x.GetProperty("get-proxy-type-func", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyGetProxyTypeUserData sets the "get-proxy-type-user-data" property.
+// The #gpointer user_data to pass to #GDBusObjectManagerClient:get-proxy-type-func.
+func (x *DBusObjectManagerClient) SetPropertyGetProxyTypeUserData(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("get-proxy-type-user-data", &v)
+}
+
+// GetPropertyGetProxyTypeUserData gets the "get-proxy-type-user-data" property.
+// The #gpointer user_data to pass to #GDBusObjectManagerClient:get-proxy-type-func.
+func (x *DBusObjectManagerClient) GetPropertyGetProxyTypeUserData() uintptr {
+	var v gobject.Value
+	x.GetProperty("get-proxy-type-user-data", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyName sets the "name" property.
+// The well-known name or unique name that the manager is for.
+func (x *DBusObjectManagerClient) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The well-known name or unique name that the manager is for.
+func (x *DBusObjectManagerClient) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// GetPropertyNameOwner gets the "name-owner" property.
+// The unique name that owns #GDBusObjectManagerClient:name or %NULL if
+// no-one is currently owning the name. Connect to the
+// #GObject::notify signal to track changes to this property.
+func (x *DBusObjectManagerClient) GetPropertyNameOwner() string {
+	var v gobject.Value
+	x.GetProperty("name-owner", &v)
+	return v.GetString()
+}
+
+// SetPropertyObjectPath sets the "object-path" property.
+// The object path the manager is for.
+func (x *DBusObjectManagerClient) SetPropertyObjectPath(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("object-path", &v)
+}
+
+// GetPropertyObjectPath gets the "object-path" property.
+// The object path the manager is for.
+func (x *DBusObjectManagerClient) GetPropertyObjectPath() string {
+	var v gobject.Value
+	x.GetProperty("object-path", &v)
+	return v.GetString()
 }
 
 // Emitted when one or more D-Bus properties on proxy changes. The

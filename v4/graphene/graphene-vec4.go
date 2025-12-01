@@ -291,11 +291,11 @@ func (x *Vec4) Subtract(BVar *Vec4, ResVar *Vec4) {
 
 }
 
-var xVec4ToFloat func(uintptr, [4]float32)
+var xVec4ToFloat func(uintptr, *[4]float32)
 
 // Stores the components of the given #graphene_vec4_t into an array
 // of floating point values.
-func (x *Vec4) ToFloat(DestVar [4]float32) {
+func (x *Vec4) ToFloat(DestVar *[4]float32) {
 
 	xVec4ToFloat(x.GoPointer(), DestVar)
 

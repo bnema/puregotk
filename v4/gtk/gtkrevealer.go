@@ -212,6 +212,48 @@ func (c *Revealer) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyChildRevealed gets the "child-revealed" property.
+// Whether the child is revealed and the animation target reached.
+func (x *Revealer) GetPropertyChildRevealed() bool {
+	var v gobject.Value
+	x.GetProperty("child-revealed", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRevealChild sets the "reveal-child" property.
+// Whether the revealer should reveal the child.
+func (x *Revealer) SetPropertyRevealChild(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reveal-child", &v)
+}
+
+// GetPropertyRevealChild gets the "reveal-child" property.
+// Whether the revealer should reveal the child.
+func (x *Revealer) GetPropertyRevealChild() bool {
+	var v gobject.Value
+	x.GetProperty("reveal-child", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTransitionDuration sets the "transition-duration" property.
+// The animation duration, in milliseconds.
+func (x *Revealer) SetPropertyTransitionDuration(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("transition-duration", &v)
+}
+
+// GetPropertyTransitionDuration gets the "transition-duration" property.
+// The animation duration, in milliseconds.
+func (x *Revealer) GetPropertyTransitionDuration() uint {
+	var v gobject.Value
+	x.GetProperty("transition-duration", &v)
+	return v.GetUint()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -269,7 +311,7 @@ func (x *Revealer) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Revealer) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Revealer) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

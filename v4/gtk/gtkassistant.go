@@ -427,6 +427,31 @@ func (c *Assistant) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyUseHeaderBar sets the "use-header-bar" property.
+// %TRUE if the assistant uses a `GtkHeaderBar` for action buttons
+// instead of the action-area.
+//
+// For technical reasons, this property is declared as an integer
+// property, but you should only set it to %TRUE or %FALSE.
+func (x *Assistant) SetPropertyUseHeaderBar(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("use-header-bar", &v)
+}
+
+// GetPropertyUseHeaderBar gets the "use-header-bar" property.
+// %TRUE if the assistant uses a `GtkHeaderBar` for action buttons
+// instead of the action-area.
+//
+// For technical reasons, this property is declared as an integer
+// property, but you should only set it to %TRUE or %FALSE.
+func (x *Assistant) GetPropertyUseHeaderBar() int {
+	var v gobject.Value
+	x.GetProperty("use-header-bar", &v)
+	return v.GetInt()
+}
+
 // Emitted when the apply button is clicked.
 //
 // The default behavior of the `GtkAssistant` is to switch to the page
@@ -600,7 +625,7 @@ func (x *Assistant) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Assistant) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Assistant) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -855,7 +880,7 @@ func (x *Assistant) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *Assistant) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *Assistant) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 
@@ -971,6 +996,46 @@ func (c *AssistantPage) GoPointer() uintptr {
 
 func (c *AssistantPage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyComplete sets the "complete" property.
+// Whether all required fields are filled in.
+//
+// GTK uses this information to control the sensitivity
+// of the navigation buttons.
+func (x *AssistantPage) SetPropertyComplete(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("complete", &v)
+}
+
+// GetPropertyComplete gets the "complete" property.
+// Whether all required fields are filled in.
+//
+// GTK uses this information to control the sensitivity
+// of the navigation buttons.
+func (x *AssistantPage) GetPropertyComplete() bool {
+	var v gobject.Value
+	x.GetProperty("complete", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the page.
+func (x *AssistantPage) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the page.
+func (x *AssistantPage) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
 }
 
 func init() {

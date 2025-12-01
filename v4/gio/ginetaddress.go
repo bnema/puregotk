@@ -25,7 +25,7 @@ func (x *InetAddressClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideToString sets the callback function.
+// OverrideToString sets the "to_string" callback function.
 func (x *InetAddressClass) OverrideToString(cb func(*InetAddress) string) {
 	if cb == nil {
 		x.xToString = 0
@@ -36,7 +36,7 @@ func (x *InetAddressClass) OverrideToString(cb func(*InetAddress) string) {
 	}
 }
 
-// GetToString gets the callback function.
+// GetToString gets the "to_string" callback function.
 func (x *InetAddressClass) GetToString() func(*InetAddress) string {
 	if x.xToString == 0 {
 		return nil
@@ -48,7 +48,7 @@ func (x *InetAddressClass) GetToString() func(*InetAddress) string {
 	}
 }
 
-// OverrideToBytes sets the callback function.
+// OverrideToBytes sets the "to_bytes" callback function.
 func (x *InetAddressClass) OverrideToBytes(cb func(*InetAddress) byte) {
 	if cb == nil {
 		x.xToBytes = 0
@@ -59,7 +59,7 @@ func (x *InetAddressClass) OverrideToBytes(cb func(*InetAddress) byte) {
 	}
 }
 
-// GetToBytes gets the callback function.
+// GetToBytes gets the "to_bytes" callback function.
 func (x *InetAddressClass) GetToBytes() func(*InetAddress) byte {
 	if x.xToBytes == 0 {
 		return nil
@@ -364,6 +364,151 @@ func (c *InetAddress) GoPointer() uintptr {
 
 func (c *InetAddress) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyBytes sets the "bytes" property.
+// The raw address data.
+func (x *InetAddress) SetPropertyBytes(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("bytes", &v)
+}
+
+// GetPropertyBytes gets the "bytes" property.
+// The raw address data.
+func (x *InetAddress) GetPropertyBytes() uintptr {
+	var v gobject.Value
+	x.GetProperty("bytes", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyFlowinfo sets the "flowinfo" property.
+// The flowinfo for an IPv6 address.
+// See [method@Gio.InetAddress.get_flowinfo].
+func (x *InetAddress) SetPropertyFlowinfo(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("flowinfo", &v)
+}
+
+// GetPropertyFlowinfo gets the "flowinfo" property.
+// The flowinfo for an IPv6 address.
+// See [method@Gio.InetAddress.get_flowinfo].
+func (x *InetAddress) GetPropertyFlowinfo() uint {
+	var v gobject.Value
+	x.GetProperty("flowinfo", &v)
+	return v.GetUint()
+}
+
+// GetPropertyIsAny gets the "is-any" property.
+// Whether this is the "any" address for its family.
+// See g_inet_address_get_is_any().
+func (x *InetAddress) GetPropertyIsAny() bool {
+	var v gobject.Value
+	x.GetProperty("is-any", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsLinkLocal gets the "is-link-local" property.
+// Whether this is a link-local address.
+// See g_inet_address_get_is_link_local().
+func (x *InetAddress) GetPropertyIsLinkLocal() bool {
+	var v gobject.Value
+	x.GetProperty("is-link-local", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsLoopback gets the "is-loopback" property.
+// Whether this is the loopback address for its family.
+// See g_inet_address_get_is_loopback().
+func (x *InetAddress) GetPropertyIsLoopback() bool {
+	var v gobject.Value
+	x.GetProperty("is-loopback", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsMcGlobal gets the "is-mc-global" property.
+// Whether this is a global multicast address.
+// See g_inet_address_get_is_mc_global().
+func (x *InetAddress) GetPropertyIsMcGlobal() bool {
+	var v gobject.Value
+	x.GetProperty("is-mc-global", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsMcLinkLocal gets the "is-mc-link-local" property.
+// Whether this is a link-local multicast address.
+// See g_inet_address_get_is_mc_link_local().
+func (x *InetAddress) GetPropertyIsMcLinkLocal() bool {
+	var v gobject.Value
+	x.GetProperty("is-mc-link-local", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsMcNodeLocal gets the "is-mc-node-local" property.
+// Whether this is a node-local multicast address.
+// See g_inet_address_get_is_mc_node_local().
+func (x *InetAddress) GetPropertyIsMcNodeLocal() bool {
+	var v gobject.Value
+	x.GetProperty("is-mc-node-local", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsMcOrgLocal gets the "is-mc-org-local" property.
+// Whether this is an organization-local multicast address.
+// See g_inet_address_get_is_mc_org_local().
+func (x *InetAddress) GetPropertyIsMcOrgLocal() bool {
+	var v gobject.Value
+	x.GetProperty("is-mc-org-local", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsMcSiteLocal gets the "is-mc-site-local" property.
+// Whether this is a site-local multicast address.
+// See g_inet_address_get_is_mc_site_local().
+func (x *InetAddress) GetPropertyIsMcSiteLocal() bool {
+	var v gobject.Value
+	x.GetProperty("is-mc-site-local", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsMulticast gets the "is-multicast" property.
+// Whether this is a multicast address.
+// See g_inet_address_get_is_multicast().
+func (x *InetAddress) GetPropertyIsMulticast() bool {
+	var v gobject.Value
+	x.GetProperty("is-multicast", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyIsSiteLocal gets the "is-site-local" property.
+// Whether this is a site-local address.
+// See g_inet_address_get_is_loopback().
+func (x *InetAddress) GetPropertyIsSiteLocal() bool {
+	var v gobject.Value
+	x.GetProperty("is-site-local", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyScopeId sets the "scope-id" property.
+// The scope-id for an IPv6 address.
+// See [method@Gio.InetAddress.get_scope_id].
+func (x *InetAddress) SetPropertyScopeId(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("scope-id", &v)
+}
+
+// GetPropertyScopeId gets the "scope-id" property.
+// The scope-id for an IPv6 address.
+// See [method@Gio.InetAddress.get_scope_id].
+func (x *InetAddress) GetPropertyScopeId() uint {
+	var v gobject.Value
+	x.GetProperty("scope-id", &v)
+	return v.GetUint()
 }
 
 func init() {

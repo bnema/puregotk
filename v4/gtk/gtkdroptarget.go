@@ -190,12 +190,12 @@ func (x *DropTarget) GetFormats() *gdk.ContentFormats {
 	return cret
 }
 
-var xDropTargetGetGtypes func(uintptr, uint) uintptr
+var xDropTargetGetGtypes func(uintptr, *uint) uintptr
 
 // Gets the list of supported `GType`s that can be dropped on the target.
 //
 // If no types have been set, `NULL` will be returned.
-func (x *DropTarget) GetGtypes(NTypesVar uint) uintptr {
+func (x *DropTarget) GetGtypes(NTypesVar *uint) uintptr {
 
 	cret := xDropTargetGetGtypes(x.GoPointer(), NTypesVar)
 	return cret
@@ -271,6 +271,90 @@ func (c *DropTarget) GoPointer() uintptr {
 
 func (c *DropTarget) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyFormats sets the "formats" property.
+// The `GdkContentFormats` that determine the supported data formats.
+func (x *DropTarget) SetPropertyFormats(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("formats", &v)
+}
+
+// GetPropertyFormats gets the "formats" property.
+// The `GdkContentFormats` that determine the supported data formats.
+func (x *DropTarget) GetPropertyFormats() uintptr {
+	var v gobject.Value
+	x.GetProperty("formats", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyPreload sets the "preload" property.
+// Whether the drop data should be preloaded when the pointer is only
+// hovering over the widget but has not been released.
+//
+// Setting this property allows finer grained reaction to an ongoing
+// drop at the cost of loading more data.
+//
+// The default value for this property is %FALSE to avoid downloading
+// huge amounts of data by accident.
+//
+// For example, if somebody drags a full document of gigabytes of text
+// from a text editor across a widget with a preloading drop target,
+// this data will be downloaded, even if the data is ultimately dropped
+// elsewhere.
+//
+// For a lot of data formats, the amount of data is very small (like
+// %GDK_TYPE_RGBA), so enabling this property does not hurt at all.
+// And for local-only Drag-and-Drop operations, no data transfer is done,
+// so enabling it there is free.
+func (x *DropTarget) SetPropertyPreload(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("preload", &v)
+}
+
+// GetPropertyPreload gets the "preload" property.
+// Whether the drop data should be preloaded when the pointer is only
+// hovering over the widget but has not been released.
+//
+// Setting this property allows finer grained reaction to an ongoing
+// drop at the cost of loading more data.
+//
+// The default value for this property is %FALSE to avoid downloading
+// huge amounts of data by accident.
+//
+// For example, if somebody drags a full document of gigabytes of text
+// from a text editor across a widget with a preloading drop target,
+// this data will be downloaded, even if the data is ultimately dropped
+// elsewhere.
+//
+// For a lot of data formats, the amount of data is very small (like
+// %GDK_TYPE_RGBA), so enabling this property does not hurt at all.
+// And for local-only Drag-and-Drop operations, no data transfer is done,
+// so enabling it there is free.
+func (x *DropTarget) GetPropertyPreload() bool {
+	var v gobject.Value
+	x.GetProperty("preload", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyValue gets the "value" property.
+// The value for this drop operation.
+//
+// This is %NULL if the data has not been loaded yet or no drop
+// operation is going on.
+//
+// Data may be available before the [signal@Gtk.DropTarget::drop]
+// signal gets emitted - for example when the [property@Gtk.DropTarget:preload]
+// property is set. You can use the ::notify signal to be notified
+// of available data.
+func (x *DropTarget) GetPropertyValue() uintptr {
+	var v gobject.Value
+	x.GetProperty("value", &v)
+	return v.GetPointer()
 }
 
 // Emitted on the drop site when a drop operation is about to begin.

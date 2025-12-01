@@ -202,6 +202,56 @@ func (c *TreeListModel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAutoexpand sets the "autoexpand" property.
+// If all rows should be expanded by default.
+func (x *TreeListModel) SetPropertyAutoexpand(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("autoexpand", &v)
+}
+
+// GetPropertyAutoexpand gets the "autoexpand" property.
+// If all rows should be expanded by default.
+func (x *TreeListModel) GetPropertyAutoexpand() bool {
+	var v gobject.Value
+	x.GetProperty("autoexpand", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *TreeListModel) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
+// SetPropertyPassthrough sets the "passthrough" property.
+// Gets whether the model is in passthrough mode.
+//
+// If %FALSE, the `GListModel` functions for this object return custom
+// [class@Gtk.TreeListRow] objects. If %TRUE, the values of the child
+// models are pass through unmodified.
+func (x *TreeListModel) SetPropertyPassthrough(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("passthrough", &v)
+}
+
+// GetPropertyPassthrough gets the "passthrough" property.
+// Gets whether the model is in passthrough mode.
+//
+// If %FALSE, the `GListModel` functions for this object return custom
+// [class@Gtk.TreeListRow] objects. If %TRUE, the values of the child
+// models are pass through unmodified.
+func (x *TreeListModel) GetPropertyPassthrough() bool {
+	var v gobject.Value
+	x.GetProperty("passthrough", &v)
+	return v.GetBoolean()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is
@@ -476,6 +526,39 @@ func (c *TreeListRow) GoPointer() uintptr {
 
 func (c *TreeListRow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyDepth gets the "depth" property.
+// The depth in the tree of this row.
+func (x *TreeListRow) GetPropertyDepth() uint {
+	var v gobject.Value
+	x.GetProperty("depth", &v)
+	return v.GetUint()
+}
+
+// GetPropertyExpandable gets the "expandable" property.
+// If this row can ever be expanded.
+func (x *TreeListRow) GetPropertyExpandable() bool {
+	var v gobject.Value
+	x.GetProperty("expandable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyExpanded sets the "expanded" property.
+// If this row is currently expanded.
+func (x *TreeListRow) SetPropertyExpanded(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("expanded", &v)
+}
+
+// GetPropertyExpanded gets the "expanded" property.
+// If this row is currently expanded.
+func (x *TreeListRow) GetPropertyExpanded() bool {
+	var v gobject.Value
+	x.GetProperty("expanded", &v)
+	return v.GetBoolean()
 }
 
 func init() {

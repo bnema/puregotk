@@ -193,6 +193,65 @@ func (c *SingleSelection) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAutoselect sets the "autoselect" property.
+// If the selection will always select an item.
+func (x *SingleSelection) SetPropertyAutoselect(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("autoselect", &v)
+}
+
+// GetPropertyAutoselect gets the "autoselect" property.
+// If the selection will always select an item.
+func (x *SingleSelection) GetPropertyAutoselect() bool {
+	var v gobject.Value
+	x.GetProperty("autoselect", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCanUnselect sets the "can-unselect" property.
+// If unselecting the selected item is allowed.
+func (x *SingleSelection) SetPropertyCanUnselect(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-unselect", &v)
+}
+
+// GetPropertyCanUnselect gets the "can-unselect" property.
+// If unselecting the selected item is allowed.
+func (x *SingleSelection) GetPropertyCanUnselect() bool {
+	var v gobject.Value
+	x.GetProperty("can-unselect", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *SingleSelection) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
+// SetPropertySelected sets the "selected" property.
+// Position of the selected item.
+func (x *SingleSelection) SetPropertySelected(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("selected", &v)
+}
+
+// GetPropertySelected gets the "selected" property.
+// Position of the selected item.
+func (x *SingleSelection) GetPropertySelected() uint {
+	var v gobject.Value
+	x.GetProperty("selected", &v)
+	return v.GetUint()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is
@@ -289,7 +348,7 @@ func (x *SingleSelection) ItemsChanged(PositionVar uint, RemovedVar uint, AddedV
 //
 // If the position is larger than the number of items, a single
 // range from n_items to G_MAXUINT will be returned.
-func (x *SingleSelection) GetSection(PositionVar uint, OutStartVar uint, OutEndVar uint) {
+func (x *SingleSelection) GetSection(PositionVar uint, OutStartVar *uint, OutEndVar *uint) {
 
 	XGtkSectionModelGetSection(x.GoPointer(), PositionVar, OutStartVar, OutEndVar)
 

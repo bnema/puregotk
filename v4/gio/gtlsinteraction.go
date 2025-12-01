@@ -50,7 +50,7 @@ func (x *TlsInteractionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideAskPassword sets the callback function.
+// OverrideAskPassword sets the "ask_password" callback function.
 // ask for a password synchronously. If the implementation
 //
 //	returns %G_TLS_INTERACTION_HANDLED, then the password argument should
@@ -66,7 +66,7 @@ func (x *TlsInteractionClass) OverrideAskPassword(cb func(*TlsInteraction, *TlsP
 	}
 }
 
-// GetAskPassword gets the callback function.
+// GetAskPassword gets the "ask_password" callback function.
 // ask for a password synchronously. If the implementation
 //
 //	returns %G_TLS_INTERACTION_HANDLED, then the password argument should
@@ -83,7 +83,7 @@ func (x *TlsInteractionClass) GetAskPassword() func(*TlsInteraction, *TlsPasswor
 	}
 }
 
-// OverrideAskPasswordAsync sets the callback function.
+// OverrideAskPasswordAsync sets the "ask_password_async" callback function.
 // ask for a password asynchronously.
 func (x *TlsInteractionClass) OverrideAskPasswordAsync(cb func(*TlsInteraction, *TlsPassword, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -95,7 +95,7 @@ func (x *TlsInteractionClass) OverrideAskPasswordAsync(cb func(*TlsInteraction, 
 	}
 }
 
-// GetAskPasswordAsync gets the callback function.
+// GetAskPasswordAsync gets the "ask_password_async" callback function.
 // ask for a password asynchronously.
 func (x *TlsInteractionClass) GetAskPasswordAsync() func(*TlsInteraction, *TlsPassword, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xAskPasswordAsync == 0 {
@@ -108,7 +108,7 @@ func (x *TlsInteractionClass) GetAskPasswordAsync() func(*TlsInteraction, *TlsPa
 	}
 }
 
-// OverrideAskPasswordFinish sets the callback function.
+// OverrideAskPasswordFinish sets the "ask_password_finish" callback function.
 // complete operation to ask for a password asynchronously.
 //
 //	If the implementation returns %G_TLS_INTERACTION_HANDLED, then the
@@ -124,7 +124,7 @@ func (x *TlsInteractionClass) OverrideAskPasswordFinish(cb func(*TlsInteraction,
 	}
 }
 
-// GetAskPasswordFinish gets the callback function.
+// GetAskPasswordFinish gets the "ask_password_finish" callback function.
 // complete operation to ask for a password asynchronously.
 //
 //	If the implementation returns %G_TLS_INTERACTION_HANDLED, then the
@@ -141,7 +141,7 @@ func (x *TlsInteractionClass) GetAskPasswordFinish() func(*TlsInteraction, Async
 	}
 }
 
-// OverrideRequestCertificate sets the callback function.
+// OverrideRequestCertificate sets the "request_certificate" callback function.
 // ask for a certificate synchronously. If the
 //
 //	implementation returns %G_TLS_INTERACTION_HANDLED, then the connection
@@ -157,7 +157,7 @@ func (x *TlsInteractionClass) OverrideRequestCertificate(cb func(*TlsInteraction
 	}
 }
 
-// GetRequestCertificate gets the callback function.
+// GetRequestCertificate gets the "request_certificate" callback function.
 // ask for a certificate synchronously. If the
 //
 //	implementation returns %G_TLS_INTERACTION_HANDLED, then the connection
@@ -174,7 +174,7 @@ func (x *TlsInteractionClass) GetRequestCertificate() func(*TlsInteraction, *Tls
 	}
 }
 
-// OverrideRequestCertificateAsync sets the callback function.
+// OverrideRequestCertificateAsync sets the "request_certificate_async" callback function.
 // ask for a certificate asynchronously.
 func (x *TlsInteractionClass) OverrideRequestCertificateAsync(cb func(*TlsInteraction, *TlsConnection, TlsCertificateRequestFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -186,7 +186,7 @@ func (x *TlsInteractionClass) OverrideRequestCertificateAsync(cb func(*TlsIntera
 	}
 }
 
-// GetRequestCertificateAsync gets the callback function.
+// GetRequestCertificateAsync gets the "request_certificate_async" callback function.
 // ask for a certificate asynchronously.
 func (x *TlsInteractionClass) GetRequestCertificateAsync() func(*TlsInteraction, *TlsConnection, TlsCertificateRequestFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xRequestCertificateAsync == 0 {
@@ -199,7 +199,7 @@ func (x *TlsInteractionClass) GetRequestCertificateAsync() func(*TlsInteraction,
 	}
 }
 
-// OverrideRequestCertificateFinish sets the callback function.
+// OverrideRequestCertificateFinish sets the "request_certificate_finish" callback function.
 // complete operation to ask for a certificate
 //
 //	asynchronously. If the implementation returns %G_TLS_INTERACTION_HANDLED,
@@ -215,7 +215,7 @@ func (x *TlsInteractionClass) OverrideRequestCertificateFinish(cb func(*TlsInter
 	}
 }
 
-// GetRequestCertificateFinish gets the callback function.
+// GetRequestCertificateFinish gets the "request_certificate_finish" callback function.
 // complete operation to ask for a certificate
 //
 //	asynchronously. If the implementation returns %G_TLS_INTERACTION_HANDLED,

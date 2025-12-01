@@ -253,6 +253,89 @@ func (c *PreferencesWindow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCanNavigateBack sets the "can-navigate-back" property.
+// Whether gestures and shortcuts for closing subpages are enabled.
+//
+// The supported gestures are:
+//
+// - One-finger swipe on touchscreens
+// - Horizontal scrolling on touchpads (usually two-finger swipe)
+// - Back mouse button
+//
+// The keyboard back key is also supported, as well as the
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt; shortcut.
+//
+// For right-to-left locales, gestures and shortcuts are reversed.
+//
+// Has no effect for subpages added with
+// [method@PreferencesWindow.push_subpage].
+func (x *PreferencesWindow) SetPropertyCanNavigateBack(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-navigate-back", &v)
+}
+
+// GetPropertyCanNavigateBack gets the "can-navigate-back" property.
+// Whether gestures and shortcuts for closing subpages are enabled.
+//
+// The supported gestures are:
+//
+// - One-finger swipe on touchscreens
+// - Horizontal scrolling on touchpads (usually two-finger swipe)
+// - Back mouse button
+//
+// The keyboard back key is also supported, as well as the
+// &lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt; shortcut.
+//
+// For right-to-left locales, gestures and shortcuts are reversed.
+//
+// Has no effect for subpages added with
+// [method@PreferencesWindow.push_subpage].
+func (x *PreferencesWindow) GetPropertyCanNavigateBack() bool {
+	var v gobject.Value
+	x.GetProperty("can-navigate-back", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySearchEnabled sets the "search-enabled" property.
+// Whether search is enabled.
+func (x *PreferencesWindow) SetPropertySearchEnabled(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("search-enabled", &v)
+}
+
+// GetPropertySearchEnabled gets the "search-enabled" property.
+// Whether search is enabled.
+func (x *PreferencesWindow) GetPropertySearchEnabled() bool {
+	var v gobject.Value
+	x.GetProperty("search-enabled", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVisiblePageName sets the "visible-page-name" property.
+// The name of the currently visible page.
+//
+// See [property@PreferencesWindow:visible-page].
+func (x *PreferencesWindow) SetPropertyVisiblePageName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("visible-page-name", &v)
+}
+
+// GetPropertyVisiblePageName gets the "visible-page-name" property.
+// The name of the currently visible page.
+//
+// See [property@PreferencesWindow:visible-page].
+func (x *PreferencesWindow) GetPropertyVisiblePageName() string {
+	var v gobject.Value
+	x.GetProperty("visible-page-name", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -310,7 +393,7 @@ func (x *PreferencesWindow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *PreferencesWindow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *PreferencesWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -565,7 +648,7 @@ func (x *PreferencesWindow) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *PreferencesWindow) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *PreferencesWindow) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	gtk.XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

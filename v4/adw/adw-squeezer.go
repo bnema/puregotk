@@ -389,6 +389,170 @@ func (c *Squeezer) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAllowNone sets the "allow-none" property.
+// Whether to allow squeezing beyond the last child's minimum size.
+//
+// If set to `TRUE`, the squeezer can shrink to the point where no child can
+// be shown. This is functionally equivalent to appending a widget with 0×0
+// minimum size.
+func (x *Squeezer) SetPropertyAllowNone(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("allow-none", &v)
+}
+
+// GetPropertyAllowNone gets the "allow-none" property.
+// Whether to allow squeezing beyond the last child's minimum size.
+//
+// If set to `TRUE`, the squeezer can shrink to the point where no child can
+// be shown. This is functionally equivalent to appending a widget with 0×0
+// minimum size.
+func (x *Squeezer) GetPropertyAllowNone() bool {
+	var v gobject.Value
+	x.GetProperty("allow-none", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHomogeneous sets the "homogeneous" property.
+// Whether all children have the same size for the opposite orientation.
+//
+// For example, if a squeezer is horizontal and is homogeneous, it will
+// request the same height for all its children. If it isn't, the squeezer may
+// change size when a different child becomes visible.
+func (x *Squeezer) SetPropertyHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("homogeneous", &v)
+}
+
+// GetPropertyHomogeneous gets the "homogeneous" property.
+// Whether all children have the same size for the opposite orientation.
+//
+// For example, if a squeezer is horizontal and is homogeneous, it will
+// request the same height for all its children. If it isn't, the squeezer may
+// change size when a different child becomes visible.
+func (x *Squeezer) GetPropertyHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyInterpolateSize sets the "interpolate-size" property.
+// Whether the squeezer interpolates its size when changing the visible child.
+//
+// If `TRUE`, the squeezer will interpolate its size between the one of the
+// previous visible child and the one of the new visible child, according to
+// the set transition duration and the orientation, e.g. if the squeezer is
+// horizontal, it will interpolate the its height.
+func (x *Squeezer) SetPropertyInterpolateSize(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("interpolate-size", &v)
+}
+
+// GetPropertyInterpolateSize gets the "interpolate-size" property.
+// Whether the squeezer interpolates its size when changing the visible child.
+//
+// If `TRUE`, the squeezer will interpolate its size between the one of the
+// previous visible child and the one of the new visible child, according to
+// the set transition duration and the orientation, e.g. if the squeezer is
+// horizontal, it will interpolate the its height.
+func (x *Squeezer) GetPropertyInterpolateSize() bool {
+	var v gobject.Value
+	x.GetProperty("interpolate-size", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTransitionDuration sets the "transition-duration" property.
+// The transition animation duration, in milliseconds.
+func (x *Squeezer) SetPropertyTransitionDuration(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("transition-duration", &v)
+}
+
+// GetPropertyTransitionDuration gets the "transition-duration" property.
+// The transition animation duration, in milliseconds.
+func (x *Squeezer) GetPropertyTransitionDuration() uint {
+	var v gobject.Value
+	x.GetProperty("transition-duration", &v)
+	return v.GetUint()
+}
+
+// GetPropertyTransitionRunning gets the "transition-running" property.
+// Whether a transition is currently running.
+//
+// If a transition is impossible, the property value will be set to `TRUE` and
+// then immediately to `FALSE`, so it's possible to rely on its notifications
+// to know that a transition has happened.
+func (x *Squeezer) GetPropertyTransitionRunning() bool {
+	var v gobject.Value
+	x.GetProperty("transition-running", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyXalign sets the "xalign" property.
+// The horizontal alignment, from 0 (start) to 1 (end).
+//
+// This affects the children allocation during transitions, when they exceed
+// the size of the squeezer.
+//
+// For example, 0.5 means the child will be centered, 0 means it will keep the
+// start side aligned and overflow the end side, and 1 means the opposite.
+func (x *Squeezer) SetPropertyXalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("xalign", &v)
+}
+
+// GetPropertyXalign gets the "xalign" property.
+// The horizontal alignment, from 0 (start) to 1 (end).
+//
+// This affects the children allocation during transitions, when they exceed
+// the size of the squeezer.
+//
+// For example, 0.5 means the child will be centered, 0 means it will keep the
+// start side aligned and overflow the end side, and 1 means the opposite.
+func (x *Squeezer) GetPropertyXalign() float32 {
+	var v gobject.Value
+	x.GetProperty("xalign", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyYalign sets the "yalign" property.
+// The vertical alignment, from 0 (top) to 1 (bottom).
+//
+// This affects the children allocation during transitions, when they exceed
+// the size of the squeezer.
+//
+// For example, 0.5 means the child will be centered, 0 means it will keep the
+// top side aligned and overflow the bottom side, and 1 means the opposite.
+func (x *Squeezer) SetPropertyYalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("yalign", &v)
+}
+
+// GetPropertyYalign gets the "yalign" property.
+// The vertical alignment, from 0 (top) to 1 (bottom).
+//
+// This affects the children allocation during transitions, when they exceed
+// the size of the squeezer.
+//
+// For example, 0.5 means the child will be centered, 0 means it will keep the
+// top side aligned and overflow the bottom side, and 1 means the opposite.
+func (x *Squeezer) GetPropertyYalign() float32 {
+	var v gobject.Value
+	x.GetProperty("yalign", &v)
+	return v.GetFloat()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -446,7 +610,7 @@ func (x *Squeezer) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Squeezer) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Squeezer) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -751,6 +915,41 @@ func (c *SqueezerPage) GoPointer() uintptr {
 
 func (c *SqueezerPage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyEnabled sets the "enabled" property.
+// Whether the child is enabled.
+//
+// If a child is disabled, it will be ignored when looking for the child
+// fitting the available size best.
+//
+// This allows to programmatically and prematurely hide a child even if it
+// fits in the available space.
+//
+// This can be used e.g. to ensure a certain child is hidden below a certain
+// window width, or any other constraint you find suitable.
+func (x *SqueezerPage) SetPropertyEnabled(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enabled", &v)
+}
+
+// GetPropertyEnabled gets the "enabled" property.
+// Whether the child is enabled.
+//
+// If a child is disabled, it will be ignored when looking for the child
+// fitting the available size best.
+//
+// This allows to programmatically and prematurely hide a child even if it
+// fits in the available space.
+//
+// This can be used e.g. to ensure a certain child is hidden below a certain
+// window width, or any other constraint you find suitable.
+func (x *SqueezerPage) GetPropertyEnabled() bool {
+	var v gobject.Value
+	x.GetProperty("enabled", &v)
+	return v.GetBoolean()
 }
 
 func init() {

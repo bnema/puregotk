@@ -37,7 +37,7 @@ func (x *DBusInterfaceSkeletonClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetInfo sets the callback function.
+// OverrideGetInfo sets the "get_info" callback function.
 // Returns a #GDBusInterfaceInfo. See g_dbus_interface_skeleton_get_info() for details.
 func (x *DBusInterfaceSkeletonClass) OverrideGetInfo(cb func(*DBusInterfaceSkeleton) *DBusInterfaceInfo) {
 	if cb == nil {
@@ -49,7 +49,7 @@ func (x *DBusInterfaceSkeletonClass) OverrideGetInfo(cb func(*DBusInterfaceSkele
 	}
 }
 
-// GetGetInfo gets the callback function.
+// GetGetInfo gets the "get_info" callback function.
 // Returns a #GDBusInterfaceInfo. See g_dbus_interface_skeleton_get_info() for details.
 func (x *DBusInterfaceSkeletonClass) GetGetInfo() func(*DBusInterfaceSkeleton) *DBusInterfaceInfo {
 	if x.xGetInfo == 0 {
@@ -62,7 +62,7 @@ func (x *DBusInterfaceSkeletonClass) GetGetInfo() func(*DBusInterfaceSkeleton) *
 	}
 }
 
-// OverrideGetVtable sets the callback function.
+// OverrideGetVtable sets the "get_vtable" callback function.
 // Returns a #GDBusInterfaceVTable. See g_dbus_interface_skeleton_get_vtable() for details.
 func (x *DBusInterfaceSkeletonClass) OverrideGetVtable(cb func(*DBusInterfaceSkeleton) *DBusInterfaceVTable) {
 	if cb == nil {
@@ -74,7 +74,7 @@ func (x *DBusInterfaceSkeletonClass) OverrideGetVtable(cb func(*DBusInterfaceSke
 	}
 }
 
-// GetGetVtable gets the callback function.
+// GetGetVtable gets the "get_vtable" callback function.
 // Returns a #GDBusInterfaceVTable. See g_dbus_interface_skeleton_get_vtable() for details.
 func (x *DBusInterfaceSkeletonClass) GetGetVtable() func(*DBusInterfaceSkeleton) *DBusInterfaceVTable {
 	if x.xGetVtable == 0 {
@@ -87,7 +87,7 @@ func (x *DBusInterfaceSkeletonClass) GetGetVtable() func(*DBusInterfaceSkeleton)
 	}
 }
 
-// OverrideGetProperties sets the callback function.
+// OverrideGetProperties sets the "get_properties" callback function.
 // Returns a #GVariant with all properties. See g_dbus_interface_skeleton_get_properties().
 func (x *DBusInterfaceSkeletonClass) OverrideGetProperties(cb func(*DBusInterfaceSkeleton) *glib.Variant) {
 	if cb == nil {
@@ -99,7 +99,7 @@ func (x *DBusInterfaceSkeletonClass) OverrideGetProperties(cb func(*DBusInterfac
 	}
 }
 
-// GetGetProperties gets the callback function.
+// GetGetProperties gets the "get_properties" callback function.
 // Returns a #GVariant with all properties. See g_dbus_interface_skeleton_get_properties().
 func (x *DBusInterfaceSkeletonClass) GetGetProperties() func(*DBusInterfaceSkeleton) *glib.Variant {
 	if x.xGetProperties == 0 {
@@ -112,7 +112,7 @@ func (x *DBusInterfaceSkeletonClass) GetGetProperties() func(*DBusInterfaceSkele
 	}
 }
 
-// OverrideFlush sets the callback function.
+// OverrideFlush sets the "flush" callback function.
 // Emits outstanding changes, if any. See g_dbus_interface_skeleton_flush().
 func (x *DBusInterfaceSkeletonClass) OverrideFlush(cb func(*DBusInterfaceSkeleton)) {
 	if cb == nil {
@@ -124,7 +124,7 @@ func (x *DBusInterfaceSkeletonClass) OverrideFlush(cb func(*DBusInterfaceSkeleto
 	}
 }
 
-// GetFlush gets the callback function.
+// GetFlush gets the "flush" callback function.
 // Emits outstanding changes, if any. See g_dbus_interface_skeleton_flush().
 func (x *DBusInterfaceSkeletonClass) GetFlush() func(*DBusInterfaceSkeleton) {
 	if x.xFlush == 0 {
@@ -137,7 +137,7 @@ func (x *DBusInterfaceSkeletonClass) GetFlush() func(*DBusInterfaceSkeleton) {
 	}
 }
 
-// OverrideGAuthorizeMethod sets the callback function.
+// OverrideGAuthorizeMethod sets the "g_authorize_method" callback function.
 // Signal class handler for the #GDBusInterfaceSkeleton::g-authorize-method signal.
 func (x *DBusInterfaceSkeletonClass) OverrideGAuthorizeMethod(cb func(*DBusInterfaceSkeleton, *DBusMethodInvocation) bool) {
 	if cb == nil {
@@ -149,7 +149,7 @@ func (x *DBusInterfaceSkeletonClass) OverrideGAuthorizeMethod(cb func(*DBusInter
 	}
 }
 
-// GetGAuthorizeMethod gets the callback function.
+// GetGAuthorizeMethod gets the "g_authorize_method" callback function.
 // Signal class handler for the #GDBusInterfaceSkeleton::g-authorize-method signal.
 func (x *DBusInterfaceSkeletonClass) GetGAuthorizeMethod() func(*DBusInterfaceSkeleton, *DBusMethodInvocation) bool {
 	if x.xGAuthorizeMethod == 0 {

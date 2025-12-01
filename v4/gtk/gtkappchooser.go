@@ -5,6 +5,7 @@ import (
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gio"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -83,6 +84,31 @@ func (x *AppChooserBase) Refresh() {
 
 	XGtkAppChooserRefresh(x.GoPointer())
 
+}
+
+// SetPropertyContentType sets the "content-type" property.
+// The content type of the `GtkAppChooser` object.
+//
+// See `GContentType` for more information about content types.
+func (x *AppChooserBase) SetPropertyContentType(value string) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	obj.SetProperty("content-type", &v)
+}
+
+// GetPropertyContentType gets the "content-type" property.
+// The content type of the `GtkAppChooser` object.
+//
+// See `GContentType` for more information about content types.
+func (x *AppChooserBase) GetPropertyContentType() string {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("content-type", &v)
+	return v.GetString()
 }
 
 var XGtkAppChooserGetAppInfo func(uintptr) uintptr

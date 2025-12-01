@@ -2,9 +2,12 @@
 package gtk
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -229,6 +232,56 @@ func (c *FileFilter) GoPointer() uintptr {
 
 func (c *FileFilter) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyMimeTypes sets the "mime-types" property.
+// The MIME types that this filter matches.
+func (x *FileFilter) SetPropertyMimeTypes(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("mime-types", &v)
+}
+
+// SetPropertyName sets the "name" property.
+// The human-readable name of the filter.
+//
+// This is the string that will be displayed in the user interface
+// if there is a selectable list of filters.
+func (x *FileFilter) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The human-readable name of the filter.
+//
+// This is the string that will be displayed in the user interface
+// if there is a selectable list of filters.
+func (x *FileFilter) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// SetPropertyPatterns sets the "patterns" property.
+// The patterns that this filter matches.
+func (x *FileFilter) SetPropertyPatterns(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("patterns", &v)
+}
+
+// SetPropertySuffixes sets the "suffixes" property.
+// The suffixes that this filter matches.
+func (x *FileFilter) SetPropertySuffixes(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("suffixes", &v)
 }
 
 // Gets the ID of the @buildable object.

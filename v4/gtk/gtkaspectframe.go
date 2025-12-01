@@ -171,6 +171,80 @@ func (c *AspectFrame) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyObeyChild sets the "obey-child" property.
+// Whether the `GtkAspectFrame` should use the aspect ratio of its child.
+func (x *AspectFrame) SetPropertyObeyChild(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("obey-child", &v)
+}
+
+// GetPropertyObeyChild gets the "obey-child" property.
+// Whether the `GtkAspectFrame` should use the aspect ratio of its child.
+func (x *AspectFrame) GetPropertyObeyChild() bool {
+	var v gobject.Value
+	x.GetProperty("obey-child", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRatio sets the "ratio" property.
+// The aspect ratio to be used by the `GtkAspectFrame`.
+//
+// This property is only used if
+// [property@Gtk.AspectFrame:obey-child] is set to %FALSE.
+func (x *AspectFrame) SetPropertyRatio(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("ratio", &v)
+}
+
+// GetPropertyRatio gets the "ratio" property.
+// The aspect ratio to be used by the `GtkAspectFrame`.
+//
+// This property is only used if
+// [property@Gtk.AspectFrame:obey-child] is set to %FALSE.
+func (x *AspectFrame) GetPropertyRatio() float32 {
+	var v gobject.Value
+	x.GetProperty("ratio", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyXalign sets the "xalign" property.
+// The horizontal alignment of the child.
+func (x *AspectFrame) SetPropertyXalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("xalign", &v)
+}
+
+// GetPropertyXalign gets the "xalign" property.
+// The horizontal alignment of the child.
+func (x *AspectFrame) GetPropertyXalign() float32 {
+	var v gobject.Value
+	x.GetProperty("xalign", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyYalign sets the "yalign" property.
+// The vertical alignment of the child.
+func (x *AspectFrame) SetPropertyYalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("yalign", &v)
+}
+
+// GetPropertyYalign gets the "yalign" property.
+// The vertical alignment of the child.
+func (x *AspectFrame) GetPropertyYalign() float32 {
+	var v gobject.Value
+	x.GetProperty("yalign", &v)
+	return v.GetFloat()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -228,7 +302,7 @@ func (x *AspectFrame) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AspectFrame) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *AspectFrame) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

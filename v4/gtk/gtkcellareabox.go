@@ -114,6 +114,23 @@ func (c *CellAreaBox) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertySpacing sets the "spacing" property.
+// The amount of space to reserve between cells.
+func (x *CellAreaBox) SetPropertySpacing(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("spacing", &v)
+}
+
+// GetPropertySpacing gets the "spacing" property.
+// The amount of space to reserve between cells.
+func (x *CellAreaBox) GetPropertySpacing() int {
+	var v gobject.Value
+	x.GetProperty("spacing", &v)
+	return v.GetInt()
+}
+
 // Gets the ID of the @buildable object.
 //
 // `GtkBuilder` sets the name based on the ID attribute

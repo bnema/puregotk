@@ -88,7 +88,7 @@ type SourceFuncsFinalizeFunc func(*Source)
 //
 // Since 2.36 this may be `NULL`, in which case the effect is as if the
 // function always returns `FALSE` with a timeout of `-1`.
-type SourceFuncsPrepareFunc func(*Source, int) bool
+type SourceFuncsPrepareFunc func(*Source, *int) bool
 
 // A source function that is only called once before being removed from the main
 // context automatically.
@@ -355,7 +355,7 @@ func (x *MainContext) PopThreadDefault() {
 
 }
 
-var xMainContextPrepare func(uintptr, int) bool
+var xMainContextPrepare func(uintptr, *int) bool
 
 // Prepares to poll sources within a main loop.
 //
@@ -364,7 +364,7 @@ var xMainContextPrepare func(uintptr, int) bool
 //
 // You must have successfully acquired the context with
 // [method@GLib.MainContext.acquire] before you may call this function.
-func (x *MainContext) Prepare(PriorityVar int) bool {
+func (x *MainContext) Prepare(PriorityVar *int) bool {
 
 	cret := xMainContextPrepare(x.GoPointer(), PriorityVar)
 	return cret
@@ -465,7 +465,7 @@ func (x *MainContext) PusherNew() *MainContextPusher {
 	return cret
 }
 
-var xMainContextQuery func(uintptr, int, int, []PollFD, int) int
+var xMainContextQuery func(uintptr, int, *int, *[]PollFD, int) int
 
 // Determines information necessary to poll this main loop.
 //
@@ -476,7 +476,7 @@ var xMainContextQuery func(uintptr, int, int, []PollFD, int) int
 //
 // You must have successfully acquired the context with
 // [method@GLib.MainContext.acquire] before you may call this function.
-func (x *MainContext) Query(MaxPriorityVar int, TimeoutVar int, FdsVar []PollFD, NFdsVar int) int {
+func (x *MainContext) Query(MaxPriorityVar int, TimeoutVar *int, FdsVar *[]PollFD, NFdsVar int) int {
 
 	cret := xMainContextQuery(x.GoPointer(), MaxPriorityVar, TimeoutVar, FdsVar, NFdsVar)
 	return cret
@@ -1390,7 +1390,7 @@ func (x *SourceCallbackFuncs) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideRef sets the callback function.
+// OverrideRef sets the "ref" callback function.
 // Called when a reference is added to the callback object
 func (x *SourceCallbackFuncs) OverrideRef(cb func(uintptr)) {
 	if cb == nil {
@@ -1402,7 +1402,7 @@ func (x *SourceCallbackFuncs) OverrideRef(cb func(uintptr)) {
 	}
 }
 
-// GetRef gets the callback function.
+// GetRef gets the "ref" callback function.
 // Called when a reference is added to the callback object
 func (x *SourceCallbackFuncs) GetRef() func(uintptr) {
 	if x.xRef == 0 {
@@ -1415,7 +1415,7 @@ func (x *SourceCallbackFuncs) GetRef() func(uintptr) {
 	}
 }
 
-// OverrideUnref sets the callback function.
+// OverrideUnref sets the "unref" callback function.
 // Called when a reference to the callback object is dropped
 func (x *SourceCallbackFuncs) OverrideUnref(cb func(uintptr)) {
 	if cb == nil {
@@ -1427,7 +1427,7 @@ func (x *SourceCallbackFuncs) OverrideUnref(cb func(uintptr)) {
 	}
 }
 
-// GetUnref gets the callback function.
+// GetUnref gets the "unref" callback function.
 // Called when a reference to the callback object is dropped
 func (x *SourceCallbackFuncs) GetUnref() func(uintptr) {
 	if x.xUnref == 0 {
@@ -1440,7 +1440,7 @@ func (x *SourceCallbackFuncs) GetUnref() func(uintptr) {
 	}
 }
 
-// OverrideGet sets the callback function.
+// OverrideGet sets the "get" callback function.
 // Called to extract the callback function and data from the
 //
 //	callback object.
@@ -1454,7 +1454,7 @@ func (x *SourceCallbackFuncs) OverrideGet(cb func(uintptr, *Source, *SourceFunc,
 	}
 }
 
-// GetGet gets the callback function.
+// GetGet gets the "get" callback function.
 // Called to extract the callback function and data from the
 //
 //	callback object.

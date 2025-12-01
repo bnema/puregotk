@@ -169,6 +169,23 @@ func (c *InetAddressMask) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyLength sets the "length" property.
+// The prefix length, in bytes.
+func (x *InetAddressMask) SetPropertyLength(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("length", &v)
+}
+
+// GetPropertyLength gets the "length" property.
+// The prefix length, in bytes.
+func (x *InetAddressMask) GetPropertyLength() uint {
+	var v gobject.Value
+	x.GetProperty("length", &v)
+	return v.GetUint()
+}
+
 // Initializes the object implementing the interface.
 //
 // This method is intended for language bindings. If writing in C,

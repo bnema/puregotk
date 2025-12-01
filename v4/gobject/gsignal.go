@@ -565,12 +565,12 @@ func SignalIsValidName(NameVar string) bool {
 	return cret
 }
 
-var xSignalListIds func(types.GType, uint) uintptr
+var xSignalListIds func(types.GType, *uint) uintptr
 
 // Lists the signals by id that a certain instance or interface type
 // created. Further information about the signals can be acquired through
 // g_signal_query().
-func SignalListIds(ItypeVar types.GType, NIdsVar uint) uintptr {
+func SignalListIds(ItypeVar types.GType, NIdsVar *uint) uintptr {
 
 	cret := xSignalListIds(ItypeVar, NIdsVar)
 	return cret
@@ -721,11 +721,11 @@ func SignalOverrideClassHandler(SignalNameVar string, InstanceTypeVar types.GTyp
 
 }
 
-var xSignalParseName func(string, types.GType, uint, *glib.Quark, bool) bool
+var xSignalParseName func(string, types.GType, *uint, *glib.Quark, bool) bool
 
 // Internal function to parse a signal name into its @signal_id
 // and @detail quark.
-func SignalParseName(DetailedSignalVar string, ItypeVar types.GType, SignalIdPVar uint, DetailPVar *glib.Quark, ForceDetailQuarkVar bool) bool {
+func SignalParseName(DetailedSignalVar string, ItypeVar types.GType, SignalIdPVar *uint, DetailPVar *glib.Quark, ForceDetailQuarkVar bool) bool {
 
 	cret := xSignalParseName(DetailedSignalVar, ItypeVar, SignalIdPVar, DetailPVar, ForceDetailQuarkVar)
 	return cret

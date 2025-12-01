@@ -224,6 +224,81 @@ func (c *DirectoryList) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAttributes sets the "attributes" property.
+// The attributes to query.
+func (x *DirectoryList) SetPropertyAttributes(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("attributes", &v)
+}
+
+// GetPropertyAttributes gets the "attributes" property.
+// The attributes to query.
+func (x *DirectoryList) GetPropertyAttributes() string {
+	var v gobject.Value
+	x.GetProperty("attributes", &v)
+	return v.GetString()
+}
+
+// GetPropertyError gets the "error" property.
+// Error encountered while loading files.
+func (x *DirectoryList) GetPropertyError() uintptr {
+	var v gobject.Value
+	x.GetProperty("error", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyIoPriority sets the "io-priority" property.
+// Priority used when loading.
+func (x *DirectoryList) SetPropertyIoPriority(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("io-priority", &v)
+}
+
+// GetPropertyIoPriority gets the "io-priority" property.
+// Priority used when loading.
+func (x *DirectoryList) GetPropertyIoPriority() int {
+	var v gobject.Value
+	x.GetProperty("io-priority", &v)
+	return v.GetInt()
+}
+
+// GetPropertyLoading gets the "loading" property.
+// %TRUE if files are being loaded.
+func (x *DirectoryList) GetPropertyLoading() bool {
+	var v gobject.Value
+	x.GetProperty("loading", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMonitored sets the "monitored" property.
+// %TRUE if the directory is monitored for changed.
+func (x *DirectoryList) SetPropertyMonitored(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("monitored", &v)
+}
+
+// GetPropertyMonitored gets the "monitored" property.
+// %TRUE if the directory is monitored for changed.
+func (x *DirectoryList) GetPropertyMonitored() bool {
+	var v gobject.Value
+	x.GetProperty("monitored", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNItems gets the "n-items" property.
+// The number of items. See [method@Gio.ListModel.get_n_items].
+func (x *DirectoryList) GetPropertyNItems() uint {
+	var v gobject.Value
+	x.GetProperty("n-items", &v)
+	return v.GetUint()
+}
+
 // Get the item at @position.
 //
 // If @position is greater than the number of items in @list, %NULL is

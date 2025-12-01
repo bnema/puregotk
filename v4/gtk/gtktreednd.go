@@ -26,7 +26,7 @@ func (x *TreeDragDestIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideDragDataReceived sets the callback function.
+// OverrideDragDataReceived sets the "drag_data_received" callback function.
 // Asks the `GtkTreeDragDest` to insert a row
 //
 //	before the path dest, deriving the contents of the row from
@@ -41,7 +41,7 @@ func (x *TreeDragDestIface) OverrideDragDataReceived(cb func(TreeDragDest, *Tree
 	}
 }
 
-// GetDragDataReceived gets the callback function.
+// GetDragDataReceived gets the "drag_data_received" callback function.
 // Asks the `GtkTreeDragDest` to insert a row
 //
 //	before the path dest, deriving the contents of the row from
@@ -57,7 +57,7 @@ func (x *TreeDragDestIface) GetDragDataReceived() func(TreeDragDest, *TreePath, 
 	}
 }
 
-// OverrideRowDropPossible sets the callback function.
+// OverrideRowDropPossible sets the "row_drop_possible" callback function.
 // Determines whether a drop is possible before
 //
 //	the given dest_path, at the same depth as dest_path.
@@ -71,7 +71,7 @@ func (x *TreeDragDestIface) OverrideRowDropPossible(cb func(TreeDragDest, *TreeP
 	}
 }
 
-// GetRowDropPossible gets the callback function.
+// GetRowDropPossible gets the "row_drop_possible" callback function.
 // Determines whether a drop is possible before
 //
 //	the given dest_path, at the same depth as dest_path.
@@ -102,7 +102,7 @@ func (x *TreeDragSourceIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideRowDraggable sets the callback function.
+// OverrideRowDraggable sets the "row_draggable" callback function.
 // Asks the `GtkTreeDragSource` whether a particular
 //
 //	row can be used as the source of a DND operation.
@@ -116,7 +116,7 @@ func (x *TreeDragSourceIface) OverrideRowDraggable(cb func(TreeDragSource, *Tree
 	}
 }
 
-// GetRowDraggable gets the callback function.
+// GetRowDraggable gets the "row_draggable" callback function.
 // Asks the `GtkTreeDragSource` whether a particular
 //
 //	row can be used as the source of a DND operation.
@@ -131,7 +131,7 @@ func (x *TreeDragSourceIface) GetRowDraggable() func(TreeDragSource, *TreePath) 
 	}
 }
 
-// OverrideDragDataGet sets the callback function.
+// OverrideDragDataGet sets the "drag_data_get" callback function.
 // Asks the `GtkTreeDragSource` to fill in
 //
 //	selection_data with a representation of the row at path.
@@ -149,7 +149,7 @@ func (x *TreeDragSourceIface) OverrideDragDataGet(cb func(TreeDragSource, *TreeP
 	}
 }
 
-// GetDragDataGet gets the callback function.
+// GetDragDataGet gets the "drag_data_get" callback function.
 // Asks the `GtkTreeDragSource` to fill in
 //
 //	selection_data with a representation of the row at path.
@@ -170,7 +170,7 @@ func (x *TreeDragSourceIface) GetDragDataGet() func(TreeDragSource, *TreePath) *
 	}
 }
 
-// OverrideDragDataDelete sets the callback function.
+// OverrideDragDataDelete sets the "drag_data_delete" callback function.
 // Asks the `GtkTreeDragSource` to delete the row at
 //
 //	path, because it was moved somewhere else via drag-and-drop.
@@ -184,7 +184,7 @@ func (x *TreeDragSourceIface) OverrideDragDataDelete(cb func(TreeDragSource, *Tr
 	}
 }
 
-// GetDragDataDelete gets the callback function.
+// GetDragDataDelete gets the "drag_data_delete" callback function.
 // Asks the `GtkTreeDragSource` to delete the row at
 //
 //	path, because it was moved somewhere else via drag-and-drop.
@@ -340,15 +340,15 @@ func TreeCreateRowDragContent(TreeModelVar TreeModel, PathVar *TreePath) *gdk.Co
 	return cls
 }
 
-var xTreeGetRowDragData func(*gobject.Value, *uintptr, **TreePath) bool
+var xTreeGetRowDragData func(*gobject.Value, **TreeModel, **TreePath) bool
 
 // Obtains a @tree_model and @path from value of target type
 // %GTK_TYPE_TREE_ROW_DATA.
 //
 // The returned path must be freed with gtk_tree_path_free().
-func TreeGetRowDragData(ValueVar *gobject.Value, TreeModelVar *TreeModel, PathVar **TreePath) bool {
+func TreeGetRowDragData(ValueVar *gobject.Value, TreeModelVar **TreeModel, PathVar **TreePath) bool {
 
-	cret := xTreeGetRowDragData(ValueVar, gobject.ConvertPtr(TreeModelVar), PathVar)
+	cret := xTreeGetRowDragData(ValueVar, TreeModelVar, PathVar)
 	return cret
 }
 

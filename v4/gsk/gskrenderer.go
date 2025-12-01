@@ -201,6 +201,14 @@ func (c *Renderer) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyRealized gets the "realized" property.
+// Whether the renderer has been associated with a surface or draw context.
+func (x *Renderer) GetPropertyRealized() bool {
+	var v gobject.Value
+	x.GetProperty("realized", &v)
+	return v.GetBoolean()
+}
+
 func init() {
 	core.SetPackageName("GSK", "gtk4")
 	core.SetSharedLibraries("GSK", []string{"libgtk-4.so.1"})

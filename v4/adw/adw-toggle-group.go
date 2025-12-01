@@ -243,6 +243,138 @@ func (c *Toggle) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEnabled sets the "enabled" property.
+// Whether this toggle is enabled.
+func (x *Toggle) SetPropertyEnabled(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enabled", &v)
+}
+
+// GetPropertyEnabled gets the "enabled" property.
+// Whether this toggle is enabled.
+func (x *Toggle) GetPropertyEnabled() bool {
+	var v gobject.Value
+	x.GetProperty("enabled", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIconName sets the "icon-name" property.
+// The toggle icon name.
+//
+// The icon will be displayed alone or next to the label, unless
+// [property@Toggle:child] is set.
+func (x *Toggle) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The toggle icon name.
+//
+// The icon will be displayed alone or next to the label, unless
+// [property@Toggle:child] is set.
+func (x *Toggle) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyLabel sets the "label" property.
+// The toggle label.
+//
+// The label will be displayed alone or next to the icon, unless
+// [property@Toggle:child] is set, but will still be read out by the screen
+// reader.
+func (x *Toggle) SetPropertyLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("label", &v)
+}
+
+// GetPropertyLabel gets the "label" property.
+// The toggle label.
+//
+// The label will be displayed alone or next to the icon, unless
+// [property@Toggle:child] is set, but will still be read out by the screen
+// reader.
+func (x *Toggle) GetPropertyLabel() string {
+	var v gobject.Value
+	x.GetProperty("label", &v)
+	return v.GetString()
+}
+
+// SetPropertyName sets the "name" property.
+// The toggle name.
+//
+// Allows accessing the toggle by its name instead of index.
+//
+// See [property@ToggleGroup:active-name].
+func (x *Toggle) SetPropertyName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("name", &v)
+}
+
+// GetPropertyName gets the "name" property.
+// The toggle name.
+//
+// Allows accessing the toggle by its name instead of index.
+//
+// See [property@ToggleGroup:active-name].
+func (x *Toggle) GetPropertyName() string {
+	var v gobject.Value
+	x.GetProperty("name", &v)
+	return v.GetString()
+}
+
+// SetPropertyTooltip sets the "tooltip" property.
+// The tooltip of the toggle.
+//
+// The tooltip can be marked up with the Pango text markup language.
+func (x *Toggle) SetPropertyTooltip(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("tooltip", &v)
+}
+
+// GetPropertyTooltip gets the "tooltip" property.
+// The tooltip of the toggle.
+//
+// The tooltip can be marked up with the Pango text markup language.
+func (x *Toggle) GetPropertyTooltip() string {
+	var v gobject.Value
+	x.GetProperty("tooltip", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// Whether an embedded underline in the label indicates a mnemonic.
+//
+// See [property@Toggle:label].
+func (x *Toggle) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// Whether an embedded underline in the label indicates a mnemonic.
+//
+// See [property@Toggle:label].
+func (x *Toggle) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
 // A group of exclusive toggles.
 //
 // &lt;picture&gt;
@@ -574,6 +706,112 @@ func (c *ToggleGroup) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActive sets the "active" property.
+// The index of the active toggle.
+//
+// Setting the index to a larger value than the number of toggles in the group
+// unsets the current active toggle.
+//
+// If no toggle is active, the property will be set to
+// [const@Gtk.INVALID_LIST_POSITION].
+func (x *ToggleGroup) SetPropertyActive(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("active", &v)
+}
+
+// GetPropertyActive gets the "active" property.
+// The index of the active toggle.
+//
+// Setting the index to a larger value than the number of toggles in the group
+// unsets the current active toggle.
+//
+// If no toggle is active, the property will be set to
+// [const@Gtk.INVALID_LIST_POSITION].
+func (x *ToggleGroup) GetPropertyActive() uint {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetUint()
+}
+
+// SetPropertyActiveName sets the "active-name" property.
+// The name of the active toggle.
+//
+// The name can be set via [property@Toggle:name]. If the currently active
+// toggle doesn't have a name, the property will be set to `NULL`.
+//
+// Set it to `NULL` to unset the current active toggle.
+func (x *ToggleGroup) SetPropertyActiveName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("active-name", &v)
+}
+
+// GetPropertyActiveName gets the "active-name" property.
+// The name of the active toggle.
+//
+// The name can be set via [property@Toggle:name]. If the currently active
+// toggle doesn't have a name, the property will be set to `NULL`.
+//
+// Set it to `NULL` to unset the current active toggle.
+func (x *ToggleGroup) GetPropertyActiveName() string {
+	var v gobject.Value
+	x.GetProperty("active-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyCanShrink sets the "can-shrink" property.
+// Whether the toggles can be smaller than the natural size of their contents.
+//
+// If set to `TRUE`, the toggle labels will ellipsize.
+//
+// See [property@Gtk.Button:can-shrink].
+func (x *ToggleGroup) SetPropertyCanShrink(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-shrink", &v)
+}
+
+// GetPropertyCanShrink gets the "can-shrink" property.
+// Whether the toggles can be smaller than the natural size of their contents.
+//
+// If set to `TRUE`, the toggle labels will ellipsize.
+//
+// See [property@Gtk.Button:can-shrink].
+func (x *ToggleGroup) GetPropertyCanShrink() bool {
+	var v gobject.Value
+	x.GetProperty("can-shrink", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHomogeneous sets the "homogeneous" property.
+// Whether all toggles take the same size.
+func (x *ToggleGroup) SetPropertyHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("homogeneous", &v)
+}
+
+// GetPropertyHomogeneous gets the "homogeneous" property.
+// Whether all toggles take the same size.
+func (x *ToggleGroup) GetPropertyHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNToggles gets the "n-toggles" property.
+// The number of toggles within the group.
+func (x *ToggleGroup) GetPropertyNToggles() uint {
+	var v gobject.Value
+	x.GetProperty("n-toggles", &v)
+	return v.GetUint()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -631,7 +869,7 @@ func (x *ToggleGroup) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ToggleGroup) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ToggleGroup) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

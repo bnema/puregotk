@@ -1391,7 +1391,7 @@ func (x *ThreadFunctions) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideMutexNew sets the callback function.
+// OverrideMutexNew sets the "mutex_new" callback function.
 // virtual function pointer for g_mutex_new()
 func (x *ThreadFunctions) OverrideMutexNew(cb func() *Mutex) {
 	if cb == nil {
@@ -1403,7 +1403,7 @@ func (x *ThreadFunctions) OverrideMutexNew(cb func() *Mutex) {
 	}
 }
 
-// GetMutexNew gets the callback function.
+// GetMutexNew gets the "mutex_new" callback function.
 // virtual function pointer for g_mutex_new()
 func (x *ThreadFunctions) GetMutexNew() func() *Mutex {
 	if x.xMutexNew == 0 {
@@ -1416,7 +1416,7 @@ func (x *ThreadFunctions) GetMutexNew() func() *Mutex {
 	}
 }
 
-// OverrideMutexLock sets the callback function.
+// OverrideMutexLock sets the "mutex_lock" callback function.
 // virtual function pointer for g_mutex_lock()
 func (x *ThreadFunctions) OverrideMutexLock(cb func(*Mutex)) {
 	if cb == nil {
@@ -1428,7 +1428,7 @@ func (x *ThreadFunctions) OverrideMutexLock(cb func(*Mutex)) {
 	}
 }
 
-// GetMutexLock gets the callback function.
+// GetMutexLock gets the "mutex_lock" callback function.
 // virtual function pointer for g_mutex_lock()
 func (x *ThreadFunctions) GetMutexLock() func(*Mutex) {
 	if x.xMutexLock == 0 {
@@ -1441,7 +1441,7 @@ func (x *ThreadFunctions) GetMutexLock() func(*Mutex) {
 	}
 }
 
-// OverrideMutexTrylock sets the callback function.
+// OverrideMutexTrylock sets the "mutex_trylock" callback function.
 // virtual function pointer for g_mutex_trylock()
 func (x *ThreadFunctions) OverrideMutexTrylock(cb func(*Mutex) bool) {
 	if cb == nil {
@@ -1453,7 +1453,7 @@ func (x *ThreadFunctions) OverrideMutexTrylock(cb func(*Mutex) bool) {
 	}
 }
 
-// GetMutexTrylock gets the callback function.
+// GetMutexTrylock gets the "mutex_trylock" callback function.
 // virtual function pointer for g_mutex_trylock()
 func (x *ThreadFunctions) GetMutexTrylock() func(*Mutex) bool {
 	if x.xMutexTrylock == 0 {
@@ -1466,7 +1466,7 @@ func (x *ThreadFunctions) GetMutexTrylock() func(*Mutex) bool {
 	}
 }
 
-// OverrideMutexUnlock sets the callback function.
+// OverrideMutexUnlock sets the "mutex_unlock" callback function.
 // virtual function pointer for g_mutex_unlock()
 func (x *ThreadFunctions) OverrideMutexUnlock(cb func(*Mutex)) {
 	if cb == nil {
@@ -1478,7 +1478,7 @@ func (x *ThreadFunctions) OverrideMutexUnlock(cb func(*Mutex)) {
 	}
 }
 
-// GetMutexUnlock gets the callback function.
+// GetMutexUnlock gets the "mutex_unlock" callback function.
 // virtual function pointer for g_mutex_unlock()
 func (x *ThreadFunctions) GetMutexUnlock() func(*Mutex) {
 	if x.xMutexUnlock == 0 {
@@ -1491,7 +1491,7 @@ func (x *ThreadFunctions) GetMutexUnlock() func(*Mutex) {
 	}
 }
 
-// OverrideMutexFree sets the callback function.
+// OverrideMutexFree sets the "mutex_free" callback function.
 // virtual function pointer for g_mutex_free()
 func (x *ThreadFunctions) OverrideMutexFree(cb func(*Mutex)) {
 	if cb == nil {
@@ -1503,7 +1503,7 @@ func (x *ThreadFunctions) OverrideMutexFree(cb func(*Mutex)) {
 	}
 }
 
-// GetMutexFree gets the callback function.
+// GetMutexFree gets the "mutex_free" callback function.
 // virtual function pointer for g_mutex_free()
 func (x *ThreadFunctions) GetMutexFree() func(*Mutex) {
 	if x.xMutexFree == 0 {
@@ -1516,7 +1516,7 @@ func (x *ThreadFunctions) GetMutexFree() func(*Mutex) {
 	}
 }
 
-// OverrideCondNew sets the callback function.
+// OverrideCondNew sets the "cond_new" callback function.
 // virtual function pointer for g_cond_new()
 func (x *ThreadFunctions) OverrideCondNew(cb func() *Cond) {
 	if cb == nil {
@@ -1528,7 +1528,7 @@ func (x *ThreadFunctions) OverrideCondNew(cb func() *Cond) {
 	}
 }
 
-// GetCondNew gets the callback function.
+// GetCondNew gets the "cond_new" callback function.
 // virtual function pointer for g_cond_new()
 func (x *ThreadFunctions) GetCondNew() func() *Cond {
 	if x.xCondNew == 0 {
@@ -1541,7 +1541,7 @@ func (x *ThreadFunctions) GetCondNew() func() *Cond {
 	}
 }
 
-// OverrideCondSignal sets the callback function.
+// OverrideCondSignal sets the "cond_signal" callback function.
 // virtual function pointer for g_cond_signal()
 func (x *ThreadFunctions) OverrideCondSignal(cb func(*Cond)) {
 	if cb == nil {
@@ -1553,7 +1553,7 @@ func (x *ThreadFunctions) OverrideCondSignal(cb func(*Cond)) {
 	}
 }
 
-// GetCondSignal gets the callback function.
+// GetCondSignal gets the "cond_signal" callback function.
 // virtual function pointer for g_cond_signal()
 func (x *ThreadFunctions) GetCondSignal() func(*Cond) {
 	if x.xCondSignal == 0 {
@@ -1566,7 +1566,7 @@ func (x *ThreadFunctions) GetCondSignal() func(*Cond) {
 	}
 }
 
-// OverrideCondBroadcast sets the callback function.
+// OverrideCondBroadcast sets the "cond_broadcast" callback function.
 // virtual function pointer for g_cond_broadcast()
 func (x *ThreadFunctions) OverrideCondBroadcast(cb func(*Cond)) {
 	if cb == nil {
@@ -1578,7 +1578,7 @@ func (x *ThreadFunctions) OverrideCondBroadcast(cb func(*Cond)) {
 	}
 }
 
-// GetCondBroadcast gets the callback function.
+// GetCondBroadcast gets the "cond_broadcast" callback function.
 // virtual function pointer for g_cond_broadcast()
 func (x *ThreadFunctions) GetCondBroadcast() func(*Cond) {
 	if x.xCondBroadcast == 0 {
@@ -1591,7 +1591,7 @@ func (x *ThreadFunctions) GetCondBroadcast() func(*Cond) {
 	}
 }
 
-// OverrideCondWait sets the callback function.
+// OverrideCondWait sets the "cond_wait" callback function.
 // virtual function pointer for g_cond_wait()
 func (x *ThreadFunctions) OverrideCondWait(cb func(*Cond, *Mutex)) {
 	if cb == nil {
@@ -1603,7 +1603,7 @@ func (x *ThreadFunctions) OverrideCondWait(cb func(*Cond, *Mutex)) {
 	}
 }
 
-// GetCondWait gets the callback function.
+// GetCondWait gets the "cond_wait" callback function.
 // virtual function pointer for g_cond_wait()
 func (x *ThreadFunctions) GetCondWait() func(*Cond, *Mutex) {
 	if x.xCondWait == 0 {
@@ -1616,7 +1616,7 @@ func (x *ThreadFunctions) GetCondWait() func(*Cond, *Mutex) {
 	}
 }
 
-// OverrideCondTimedWait sets the callback function.
+// OverrideCondTimedWait sets the "cond_timed_wait" callback function.
 // virtual function pointer for g_cond_timed_wait()
 func (x *ThreadFunctions) OverrideCondTimedWait(cb func(*Cond, *Mutex, *TimeVal) bool) {
 	if cb == nil {
@@ -1628,7 +1628,7 @@ func (x *ThreadFunctions) OverrideCondTimedWait(cb func(*Cond, *Mutex, *TimeVal)
 	}
 }
 
-// GetCondTimedWait gets the callback function.
+// GetCondTimedWait gets the "cond_timed_wait" callback function.
 // virtual function pointer for g_cond_timed_wait()
 func (x *ThreadFunctions) GetCondTimedWait() func(*Cond, *Mutex, *TimeVal) bool {
 	if x.xCondTimedWait == 0 {
@@ -1641,7 +1641,7 @@ func (x *ThreadFunctions) GetCondTimedWait() func(*Cond, *Mutex, *TimeVal) bool 
 	}
 }
 
-// OverrideCondFree sets the callback function.
+// OverrideCondFree sets the "cond_free" callback function.
 // virtual function pointer for g_cond_free()
 func (x *ThreadFunctions) OverrideCondFree(cb func(*Cond)) {
 	if cb == nil {
@@ -1653,7 +1653,7 @@ func (x *ThreadFunctions) OverrideCondFree(cb func(*Cond)) {
 	}
 }
 
-// GetCondFree gets the callback function.
+// GetCondFree gets the "cond_free" callback function.
 // virtual function pointer for g_cond_free()
 func (x *ThreadFunctions) GetCondFree() func(*Cond) {
 	if x.xCondFree == 0 {
@@ -1666,7 +1666,7 @@ func (x *ThreadFunctions) GetCondFree() func(*Cond) {
 	}
 }
 
-// OverridePrivateNew sets the callback function.
+// OverridePrivateNew sets the "private_new" callback function.
 // virtual function pointer for g_private_new()
 func (x *ThreadFunctions) OverridePrivateNew(cb func(*DestroyNotify) *Private) {
 	if cb == nil {
@@ -1678,7 +1678,7 @@ func (x *ThreadFunctions) OverridePrivateNew(cb func(*DestroyNotify) *Private) {
 	}
 }
 
-// GetPrivateNew gets the callback function.
+// GetPrivateNew gets the "private_new" callback function.
 // virtual function pointer for g_private_new()
 func (x *ThreadFunctions) GetPrivateNew() func(*DestroyNotify) *Private {
 	if x.xPrivateNew == 0 {
@@ -1691,7 +1691,7 @@ func (x *ThreadFunctions) GetPrivateNew() func(*DestroyNotify) *Private {
 	}
 }
 
-// OverridePrivateGet sets the callback function.
+// OverridePrivateGet sets the "private_get" callback function.
 // virtual function pointer for g_private_get()
 func (x *ThreadFunctions) OverridePrivateGet(cb func(*Private) uintptr) {
 	if cb == nil {
@@ -1703,7 +1703,7 @@ func (x *ThreadFunctions) OverridePrivateGet(cb func(*Private) uintptr) {
 	}
 }
 
-// GetPrivateGet gets the callback function.
+// GetPrivateGet gets the "private_get" callback function.
 // virtual function pointer for g_private_get()
 func (x *ThreadFunctions) GetPrivateGet() func(*Private) uintptr {
 	if x.xPrivateGet == 0 {
@@ -1716,7 +1716,7 @@ func (x *ThreadFunctions) GetPrivateGet() func(*Private) uintptr {
 	}
 }
 
-// OverridePrivateSet sets the callback function.
+// OverridePrivateSet sets the "private_set" callback function.
 // virtual function pointer for g_private_set()
 func (x *ThreadFunctions) OverridePrivateSet(cb func(*Private, uintptr)) {
 	if cb == nil {
@@ -1728,7 +1728,7 @@ func (x *ThreadFunctions) OverridePrivateSet(cb func(*Private, uintptr)) {
 	}
 }
 
-// GetPrivateSet gets the callback function.
+// GetPrivateSet gets the "private_set" callback function.
 // virtual function pointer for g_private_set()
 func (x *ThreadFunctions) GetPrivateSet() func(*Private, uintptr) {
 	if x.xPrivateSet == 0 {
@@ -1741,7 +1741,7 @@ func (x *ThreadFunctions) GetPrivateSet() func(*Private, uintptr) {
 	}
 }
 
-// OverrideThreadCreate sets the callback function.
+// OverrideThreadCreate sets the "thread_create" callback function.
 // virtual function pointer for g_thread_create()
 func (x *ThreadFunctions) OverrideThreadCreate(cb func(*ThreadFunc, uintptr, uint32, bool, bool, ThreadPriority, uintptr)) {
 	if cb == nil {
@@ -1753,7 +1753,7 @@ func (x *ThreadFunctions) OverrideThreadCreate(cb func(*ThreadFunc, uintptr, uin
 	}
 }
 
-// GetThreadCreate gets the callback function.
+// GetThreadCreate gets the "thread_create" callback function.
 // virtual function pointer for g_thread_create()
 func (x *ThreadFunctions) GetThreadCreate() func(*ThreadFunc, uintptr, uint32, bool, bool, ThreadPriority, uintptr) {
 	if x.xThreadCreate == 0 {
@@ -1766,7 +1766,7 @@ func (x *ThreadFunctions) GetThreadCreate() func(*ThreadFunc, uintptr, uint32, b
 	}
 }
 
-// OverrideThreadYield sets the callback function.
+// OverrideThreadYield sets the "thread_yield" callback function.
 // virtual function pointer for g_thread_yield()
 func (x *ThreadFunctions) OverrideThreadYield(cb func()) {
 	if cb == nil {
@@ -1778,7 +1778,7 @@ func (x *ThreadFunctions) OverrideThreadYield(cb func()) {
 	}
 }
 
-// GetThreadYield gets the callback function.
+// GetThreadYield gets the "thread_yield" callback function.
 // virtual function pointer for g_thread_yield()
 func (x *ThreadFunctions) GetThreadYield() func() {
 	if x.xThreadYield == 0 {
@@ -1791,7 +1791,7 @@ func (x *ThreadFunctions) GetThreadYield() func() {
 	}
 }
 
-// OverrideThreadJoin sets the callback function.
+// OverrideThreadJoin sets the "thread_join" callback function.
 // virtual function pointer for g_thread_join()
 func (x *ThreadFunctions) OverrideThreadJoin(cb func(uintptr)) {
 	if cb == nil {
@@ -1803,7 +1803,7 @@ func (x *ThreadFunctions) OverrideThreadJoin(cb func(uintptr)) {
 	}
 }
 
-// GetThreadJoin gets the callback function.
+// GetThreadJoin gets the "thread_join" callback function.
 // virtual function pointer for g_thread_join()
 func (x *ThreadFunctions) GetThreadJoin() func(uintptr) {
 	if x.xThreadJoin == 0 {
@@ -1816,7 +1816,7 @@ func (x *ThreadFunctions) GetThreadJoin() func(uintptr) {
 	}
 }
 
-// OverrideThreadExit sets the callback function.
+// OverrideThreadExit sets the "thread_exit" callback function.
 // virtual function pointer for g_thread_exit()
 func (x *ThreadFunctions) OverrideThreadExit(cb func()) {
 	if cb == nil {
@@ -1828,7 +1828,7 @@ func (x *ThreadFunctions) OverrideThreadExit(cb func()) {
 	}
 }
 
-// GetThreadExit gets the callback function.
+// GetThreadExit gets the "thread_exit" callback function.
 // virtual function pointer for g_thread_exit()
 func (x *ThreadFunctions) GetThreadExit() func() {
 	if x.xThreadExit == 0 {
@@ -1841,7 +1841,7 @@ func (x *ThreadFunctions) GetThreadExit() func() {
 	}
 }
 
-// OverrideThreadSetPriority sets the callback function.
+// OverrideThreadSetPriority sets the "thread_set_priority" callback function.
 // virtual function pointer for
 //
 //	g_thread_set_priority()
@@ -1855,7 +1855,7 @@ func (x *ThreadFunctions) OverrideThreadSetPriority(cb func(uintptr, ThreadPrior
 	}
 }
 
-// GetThreadSetPriority gets the callback function.
+// GetThreadSetPriority gets the "thread_set_priority" callback function.
 // virtual function pointer for
 //
 //	g_thread_set_priority()
@@ -1870,7 +1870,7 @@ func (x *ThreadFunctions) GetThreadSetPriority() func(uintptr, ThreadPriority) {
 	}
 }
 
-// OverrideThreadSelf sets the callback function.
+// OverrideThreadSelf sets the "thread_self" callback function.
 // virtual function pointer for g_thread_self()
 func (x *ThreadFunctions) OverrideThreadSelf(cb func(uintptr)) {
 	if cb == nil {
@@ -1882,7 +1882,7 @@ func (x *ThreadFunctions) OverrideThreadSelf(cb func(uintptr)) {
 	}
 }
 
-// GetThreadSelf gets the callback function.
+// GetThreadSelf gets the "thread_self" callback function.
 // virtual function pointer for g_thread_self()
 func (x *ThreadFunctions) GetThreadSelf() func(uintptr) {
 	if x.xThreadSelf == 0 {
@@ -1895,7 +1895,7 @@ func (x *ThreadFunctions) GetThreadSelf() func(uintptr) {
 	}
 }
 
-// OverrideThreadEqual sets the callback function.
+// OverrideThreadEqual sets the "thread_equal" callback function.
 // used internally by recursive mutex locks and by some
 //
 //	assertion checks
@@ -1909,7 +1909,7 @@ func (x *ThreadFunctions) OverrideThreadEqual(cb func(uintptr, uintptr) bool) {
 	}
 }
 
-// GetThreadEqual gets the callback function.
+// GetThreadEqual gets the "thread_equal" callback function.
 // used internally by recursive mutex locks and by some
 //
 //	assertion checks

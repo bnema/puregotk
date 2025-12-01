@@ -72,6 +72,25 @@ func (c *CellRendererPixbuf) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyIconName sets the "icon-name" property.
+// The name of the themed icon to display.
+// This property only has an effect if not overridden by the "pixbuf" property.
+func (x *CellRendererPixbuf) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The name of the themed icon to display.
+// This property only has an effect if not overridden by the "pixbuf" property.
+func (x *CellRendererPixbuf) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

@@ -285,6 +285,86 @@ func (c *MessageDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertySecondaryText sets the "secondary-text" property.
+// The secondary text of the message dialog.
+func (x *MessageDialog) SetPropertySecondaryText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("secondary-text", &v)
+}
+
+// GetPropertySecondaryText gets the "secondary-text" property.
+// The secondary text of the message dialog.
+func (x *MessageDialog) GetPropertySecondaryText() string {
+	var v gobject.Value
+	x.GetProperty("secondary-text", &v)
+	return v.GetString()
+}
+
+// SetPropertySecondaryUseMarkup sets the "secondary-use-markup" property.
+// %TRUE if the secondary text of the dialog includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *MessageDialog) SetPropertySecondaryUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("secondary-use-markup", &v)
+}
+
+// GetPropertySecondaryUseMarkup gets the "secondary-use-markup" property.
+// %TRUE if the secondary text of the dialog includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *MessageDialog) GetPropertySecondaryUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("secondary-use-markup", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyText sets the "text" property.
+// The primary text of the message dialog.
+//
+// If the dialog has a secondary text, this will appear as the title.
+func (x *MessageDialog) SetPropertyText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("text", &v)
+}
+
+// GetPropertyText gets the "text" property.
+// The primary text of the message dialog.
+//
+// If the dialog has a secondary text, this will appear as the title.
+func (x *MessageDialog) GetPropertyText() string {
+	var v gobject.Value
+	x.GetProperty("text", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseMarkup sets the "use-markup" property.
+// %TRUE if the primary text of the dialog includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *MessageDialog) SetPropertyUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-markup", &v)
+}
+
+// GetPropertyUseMarkup gets the "use-markup" property.
+// %TRUE if the primary text of the dialog includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *MessageDialog) GetPropertyUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("use-markup", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -342,7 +422,7 @@ func (x *MessageDialog) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *MessageDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *MessageDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -597,7 +677,7 @@ func (x *MessageDialog) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *MessageDialog) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *MessageDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

@@ -508,6 +508,330 @@ func (c *TabPage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyIndicatorActivatable sets the "indicator-activatable" property.
+// Whether the indicator icon is activatable.
+//
+// If set to `TRUE`, [signal@TabView::indicator-activated] will be emitted
+// when the indicator icon is clicked.
+//
+// If [property@TabPage:indicator-icon] is not set, does nothing.
+func (x *TabPage) SetPropertyIndicatorActivatable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("indicator-activatable", &v)
+}
+
+// GetPropertyIndicatorActivatable gets the "indicator-activatable" property.
+// Whether the indicator icon is activatable.
+//
+// If set to `TRUE`, [signal@TabView::indicator-activated] will be emitted
+// when the indicator icon is clicked.
+//
+// If [property@TabPage:indicator-icon] is not set, does nothing.
+func (x *TabPage) GetPropertyIndicatorActivatable() bool {
+	var v gobject.Value
+	x.GetProperty("indicator-activatable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIndicatorTooltip sets the "indicator-tooltip" property.
+// The tooltip of the indicator icon.
+//
+// The tooltip can be marked up with the Pango text markup language.
+//
+// See [property@TabPage:indicator-icon].
+func (x *TabPage) SetPropertyIndicatorTooltip(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("indicator-tooltip", &v)
+}
+
+// GetPropertyIndicatorTooltip gets the "indicator-tooltip" property.
+// The tooltip of the indicator icon.
+//
+// The tooltip can be marked up with the Pango text markup language.
+//
+// See [property@TabPage:indicator-icon].
+func (x *TabPage) GetPropertyIndicatorTooltip() string {
+	var v gobject.Value
+	x.GetProperty("indicator-tooltip", &v)
+	return v.GetString()
+}
+
+// SetPropertyKeyword sets the "keyword" property.
+// The search keyboard of the page.
+//
+// [class@TabOverview] can search pages by their keywords in addition to their
+// titles and tooltips.
+//
+// Keywords allow to include e.g. page URLs into tab search in a web browser.
+func (x *TabPage) SetPropertyKeyword(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("keyword", &v)
+}
+
+// GetPropertyKeyword gets the "keyword" property.
+// The search keyboard of the page.
+//
+// [class@TabOverview] can search pages by their keywords in addition to their
+// titles and tooltips.
+//
+// Keywords allow to include e.g. page URLs into tab search in a web browser.
+func (x *TabPage) GetPropertyKeyword() string {
+	var v gobject.Value
+	x.GetProperty("keyword", &v)
+	return v.GetString()
+}
+
+// SetPropertyLiveThumbnail sets the "live-thumbnail" property.
+// Whether to enable live thumbnail for this page.
+//
+// When set to `TRUE`, the page's thumbnail in [class@TabOverview] will update
+// immediately when the page is redrawn or resized.
+//
+// If it's set to `FALSE`, the thumbnail will only be live when the page is
+// selected, and otherwise it will be static and will only update when
+// [method@TabPage.invalidate_thumbnail] or
+// [method@TabView.invalidate_thumbnails] is called.
+func (x *TabPage) SetPropertyLiveThumbnail(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("live-thumbnail", &v)
+}
+
+// GetPropertyLiveThumbnail gets the "live-thumbnail" property.
+// Whether to enable live thumbnail for this page.
+//
+// When set to `TRUE`, the page's thumbnail in [class@TabOverview] will update
+// immediately when the page is redrawn or resized.
+//
+// If it's set to `FALSE`, the thumbnail will only be live when the page is
+// selected, and otherwise it will be static and will only update when
+// [method@TabPage.invalidate_thumbnail] or
+// [method@TabView.invalidate_thumbnails] is called.
+func (x *TabPage) GetPropertyLiveThumbnail() bool {
+	var v gobject.Value
+	x.GetProperty("live-thumbnail", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLoading sets the "loading" property.
+// Whether the page is loading.
+//
+// If set to `TRUE`, [class@TabBar] and [class@TabOverview] will display a
+// spinner in place of icon.
+//
+// If the page is pinned and [property@TabPage:indicator-icon] is set,
+// loading status will not be visible with `AdwTabBar`.
+func (x *TabPage) SetPropertyLoading(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("loading", &v)
+}
+
+// GetPropertyLoading gets the "loading" property.
+// Whether the page is loading.
+//
+// If set to `TRUE`, [class@TabBar] and [class@TabOverview] will display a
+// spinner in place of icon.
+//
+// If the page is pinned and [property@TabPage:indicator-icon] is set,
+// loading status will not be visible with `AdwTabBar`.
+func (x *TabPage) GetPropertyLoading() bool {
+	var v gobject.Value
+	x.GetProperty("loading", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyNeedsAttention sets the "needs-attention" property.
+// Whether the page needs attention.
+//
+// [class@TabBar] will display a line under the tab representing the page if
+// set to `TRUE`. If the tab is not visible, the corresponding edge of the tab
+// bar will be highlighted.
+//
+// [class@TabOverview] will display a dot in the corner of the thumbnail if set
+// to `TRUE`.
+//
+// [class@TabButton] will display a dot if any of the pages that aren't
+// selected have this property set to `TRUE`.
+func (x *TabPage) SetPropertyNeedsAttention(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("needs-attention", &v)
+}
+
+// GetPropertyNeedsAttention gets the "needs-attention" property.
+// Whether the page needs attention.
+//
+// [class@TabBar] will display a line under the tab representing the page if
+// set to `TRUE`. If the tab is not visible, the corresponding edge of the tab
+// bar will be highlighted.
+//
+// [class@TabOverview] will display a dot in the corner of the thumbnail if set
+// to `TRUE`.
+//
+// [class@TabButton] will display a dot if any of the pages that aren't
+// selected have this property set to `TRUE`.
+func (x *TabPage) GetPropertyNeedsAttention() bool {
+	var v gobject.Value
+	x.GetProperty("needs-attention", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyPinned gets the "pinned" property.
+// Whether the page is pinned.
+//
+// See [method@TabView.set_page_pinned].
+func (x *TabPage) GetPropertyPinned() bool {
+	var v gobject.Value
+	x.GetProperty("pinned", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertySelected gets the "selected" property.
+// Whether the page is selected.
+func (x *TabPage) GetPropertySelected() bool {
+	var v gobject.Value
+	x.GetProperty("selected", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyThumbnailXalign sets the "thumbnail-xalign" property.
+// The horizontal alignment of the page thumbnail.
+//
+// If the page is so wide that [class@TabOverview] can't display it completely
+// and has to crop it, horizontal alignment will determine which part of the
+// page will be visible.
+//
+// For example, 0.5 means the center of the page will be visible, 0 means the
+// start edge will be visible and 1 means the end edge will be visible.
+//
+// The default horizontal alignment is 0.
+func (x *TabPage) SetPropertyThumbnailXalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("thumbnail-xalign", &v)
+}
+
+// GetPropertyThumbnailXalign gets the "thumbnail-xalign" property.
+// The horizontal alignment of the page thumbnail.
+//
+// If the page is so wide that [class@TabOverview] can't display it completely
+// and has to crop it, horizontal alignment will determine which part of the
+// page will be visible.
+//
+// For example, 0.5 means the center of the page will be visible, 0 means the
+// start edge will be visible and 1 means the end edge will be visible.
+//
+// The default horizontal alignment is 0.
+func (x *TabPage) GetPropertyThumbnailXalign() float32 {
+	var v gobject.Value
+	x.GetProperty("thumbnail-xalign", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyThumbnailYalign sets the "thumbnail-yalign" property.
+// The vertical alignment of the page thumbnail.
+//
+// If the page is so tall that [class@TabOverview] can't display it completely
+// and has to crop it, vertical alignment will determine which part of the
+// page will be visible.
+//
+// For example, 0.5 means the center of the page will be visible, 0 means the
+// top edge will be visible and 1 means the bottom edge will be visible.
+//
+// The default vertical alignment is 0.
+func (x *TabPage) SetPropertyThumbnailYalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("thumbnail-yalign", &v)
+}
+
+// GetPropertyThumbnailYalign gets the "thumbnail-yalign" property.
+// The vertical alignment of the page thumbnail.
+//
+// If the page is so tall that [class@TabOverview] can't display it completely
+// and has to crop it, vertical alignment will determine which part of the
+// page will be visible.
+//
+// For example, 0.5 means the center of the page will be visible, 0 means the
+// top edge will be visible and 1 means the bottom edge will be visible.
+//
+// The default vertical alignment is 0.
+func (x *TabPage) GetPropertyThumbnailYalign() float32 {
+	var v gobject.Value
+	x.GetProperty("thumbnail-yalign", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the page.
+//
+// [class@TabBar] will display it in the center of the tab unless it's pinned,
+// and will use it as a tooltip unless [property@TabPage:tooltip] is set.
+//
+// [class@TabOverview] will display it below the thumbnail unless it's pinned,
+// or inside the card otherwise, and will use it as a tooltip unless
+// [property@TabPage:tooltip] is set.
+func (x *TabPage) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the page.
+//
+// [class@TabBar] will display it in the center of the tab unless it's pinned,
+// and will use it as a tooltip unless [property@TabPage:tooltip] is set.
+//
+// [class@TabOverview] will display it below the thumbnail unless it's pinned,
+// or inside the card otherwise, and will use it as a tooltip unless
+// [property@TabPage:tooltip] is set.
+func (x *TabPage) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyTooltip sets the "tooltip" property.
+// The tooltip of the page.
+//
+// The tooltip can be marked up with the Pango text markup language.
+//
+// If not set, [class@TabBar] and [class@TabOverview] will use
+// [property@TabPage:title] as a tooltip instead.
+func (x *TabPage) SetPropertyTooltip(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("tooltip", &v)
+}
+
+// GetPropertyTooltip gets the "tooltip" property.
+// The tooltip of the page.
+//
+// The tooltip can be marked up with the Pango text markup language.
+//
+// If not set, [class@TabBar] and [class@TabOverview] will use
+// [property@TabPage:title] as a tooltip instead.
+func (x *TabPage) GetPropertyTooltip() string {
+	var v gobject.Value
+	x.GetProperty("tooltip", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -565,7 +889,7 @@ func (x *TabPage) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *TabPage) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *TabPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -1437,6 +1761,38 @@ func (c *TabView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyIsTransferringPage gets the "is-transferring-page" property.
+// Whether a page is being transferred.
+//
+// This property will be set to `TRUE` when a drag-n-drop tab transfer starts
+// on any `AdwTabView`, and to `FALSE` after it ends.
+//
+// During the transfer, children cannot receive pointer input and a tab can
+// be safely dropped on the tab view.
+func (x *TabView) GetPropertyIsTransferringPage() bool {
+	var v gobject.Value
+	x.GetProperty("is-transferring-page", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyNPages gets the "n-pages" property.
+// The number of pages in the tab view.
+func (x *TabView) GetPropertyNPages() int {
+	var v gobject.Value
+	x.GetProperty("n-pages", &v)
+	return v.GetInt()
+}
+
+// GetPropertyNPinnedPages gets the "n-pinned-pages" property.
+// The number of pinned pages in the tab view.
+//
+// See [method@TabView.set_page_pinned].
+func (x *TabView) GetPropertyNPinnedPages() int {
+	var v gobject.Value
+	x.GetProperty("n-pinned-pages", &v)
+	return v.GetInt()
+}
+
 // Emitted after [method@TabView.close_page] has been called for @page.
 //
 // The handler is expected to call [method@TabView.close_page_finish] to
@@ -1690,7 +2046,7 @@ func (x *TabView) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *TabView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *TabView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

@@ -395,6 +395,175 @@ func (c *TabOverview) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyEnableNewTab sets the "enable-new-tab" property.
+// Whether to enable new tab button.
+//
+// Connect to the [signal@TabOverview::create-tab] signal to use it.
+func (x *TabOverview) SetPropertyEnableNewTab(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-new-tab", &v)
+}
+
+// GetPropertyEnableNewTab gets the "enable-new-tab" property.
+// Whether to enable new tab button.
+//
+// Connect to the [signal@TabOverview::create-tab] signal to use it.
+func (x *TabOverview) GetPropertyEnableNewTab() bool {
+	var v gobject.Value
+	x.GetProperty("enable-new-tab", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyEnableSearch sets the "enable-search" property.
+// Whether to enable search in tabs.
+//
+// Search matches tab titles and tooltips, as well as keywords, set via
+// [property@TabPage:keyword]. Use keywords to search in e.g. page URLs in a
+// web browser.
+//
+// During search, tab reordering and drag-n-drop are disabled.
+//
+// Use [property@TabOverview:search-active] to check out if search is
+// currently active.
+func (x *TabOverview) SetPropertyEnableSearch(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-search", &v)
+}
+
+// GetPropertyEnableSearch gets the "enable-search" property.
+// Whether to enable search in tabs.
+//
+// Search matches tab titles and tooltips, as well as keywords, set via
+// [property@TabPage:keyword]. Use keywords to search in e.g. page URLs in a
+// web browser.
+//
+// During search, tab reordering and drag-n-drop are disabled.
+//
+// Use [property@TabOverview:search-active] to check out if search is
+// currently active.
+func (x *TabOverview) GetPropertyEnableSearch() bool {
+	var v gobject.Value
+	x.GetProperty("enable-search", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyExtraDragPreload sets the "extra-drag-preload" property.
+// Whether the drop data should be preloaded on hover.
+//
+// See [property@Gtk.DropTarget:preload].
+func (x *TabOverview) SetPropertyExtraDragPreload(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("extra-drag-preload", &v)
+}
+
+// GetPropertyExtraDragPreload gets the "extra-drag-preload" property.
+// Whether the drop data should be preloaded on hover.
+//
+// See [property@Gtk.DropTarget:preload].
+func (x *TabOverview) GetPropertyExtraDragPreload() bool {
+	var v gobject.Value
+	x.GetProperty("extra-drag-preload", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyInverted sets the "inverted" property.
+// Whether thumbnails use inverted layout.
+//
+// If set to `TRUE`, thumbnails will have the close or unpin buttons at the
+// beginning and the indicator at the end rather than the other way around.
+func (x *TabOverview) SetPropertyInverted(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("inverted", &v)
+}
+
+// GetPropertyInverted gets the "inverted" property.
+// Whether thumbnails use inverted layout.
+//
+// If set to `TRUE`, thumbnails will have the close or unpin buttons at the
+// beginning and the indicator at the end rather than the other way around.
+func (x *TabOverview) GetPropertyInverted() bool {
+	var v gobject.Value
+	x.GetProperty("inverted", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyOpen sets the "open" property.
+// Whether the overview is open.
+func (x *TabOverview) SetPropertyOpen(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("open", &v)
+}
+
+// GetPropertyOpen gets the "open" property.
+// Whether the overview is open.
+func (x *TabOverview) GetPropertyOpen() bool {
+	var v gobject.Value
+	x.GetProperty("open", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertySearchActive gets the "search-active" property.
+// Whether search is currently active.
+//
+// See [property@TabOverview:enable-search].
+func (x *TabOverview) GetPropertySearchActive() bool {
+	var v gobject.Value
+	x.GetProperty("search-active", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowEndTitleButtons sets the "show-end-title-buttons" property.
+// Whether to show end title buttons in the overview's header bar.
+//
+// See [property@HeaderBar:show-start-title-buttons] for the other side.
+func (x *TabOverview) SetPropertyShowEndTitleButtons(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-end-title-buttons", &v)
+}
+
+// GetPropertyShowEndTitleButtons gets the "show-end-title-buttons" property.
+// Whether to show end title buttons in the overview's header bar.
+//
+// See [property@HeaderBar:show-start-title-buttons] for the other side.
+func (x *TabOverview) GetPropertyShowEndTitleButtons() bool {
+	var v gobject.Value
+	x.GetProperty("show-end-title-buttons", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowStartTitleButtons sets the "show-start-title-buttons" property.
+// Whether to show start title buttons in the overview's header bar.
+//
+// See [property@HeaderBar:show-end-title-buttons] for the other side.
+func (x *TabOverview) SetPropertyShowStartTitleButtons(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-start-title-buttons", &v)
+}
+
+// GetPropertyShowStartTitleButtons gets the "show-start-title-buttons" property.
+// Whether to show start title buttons in the overview's header bar.
+//
+// See [property@HeaderBar:show-end-title-buttons] for the other side.
+func (x *TabOverview) GetPropertyShowStartTitleButtons() bool {
+	var v gobject.Value
+	x.GetProperty("show-start-title-buttons", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when a tab needs to be created.
 //
 // This can happen after the new tab button has been pressed, see
@@ -532,7 +701,7 @@ func (x *TabOverview) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *TabOverview) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *TabOverview) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

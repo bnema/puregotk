@@ -247,6 +247,61 @@ func (c *Box) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyBaselineChild sets the "baseline-child" property.
+// The position of the child that determines the baseline.
+//
+// This is only relevant if the box is in vertical orientation.
+func (x *Box) SetPropertyBaselineChild(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("baseline-child", &v)
+}
+
+// GetPropertyBaselineChild gets the "baseline-child" property.
+// The position of the child that determines the baseline.
+//
+// This is only relevant if the box is in vertical orientation.
+func (x *Box) GetPropertyBaselineChild() int {
+	var v gobject.Value
+	x.GetProperty("baseline-child", &v)
+	return v.GetInt()
+}
+
+// SetPropertyHomogeneous sets the "homogeneous" property.
+// Whether the children should all be the same size.
+func (x *Box) SetPropertyHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("homogeneous", &v)
+}
+
+// GetPropertyHomogeneous gets the "homogeneous" property.
+// Whether the children should all be the same size.
+func (x *Box) GetPropertyHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("homogeneous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySpacing sets the "spacing" property.
+// The amount of space between children.
+func (x *Box) SetPropertySpacing(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("spacing", &v)
+}
+
+// GetPropertySpacing gets the "spacing" property.
+// The amount of space between children.
+func (x *Box) GetPropertySpacing() int {
+	var v gobject.Value
+	x.GetProperty("spacing", &v)
+	return v.GetInt()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -304,7 +359,7 @@ func (x *Box) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Box) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Box) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

@@ -73,6 +73,58 @@ func (c *CellRendererCombo) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyHasEntry sets the "has-entry" property.
+// If %TRUE, the cell renderer will include an entry and allow to enter
+// values other than the ones in the popup list.
+func (x *CellRendererCombo) SetPropertyHasEntry(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-entry", &v)
+}
+
+// GetPropertyHasEntry gets the "has-entry" property.
+// If %TRUE, the cell renderer will include an entry and allow to enter
+// values other than the ones in the popup list.
+func (x *CellRendererCombo) GetPropertyHasEntry() bool {
+	var v gobject.Value
+	x.GetProperty("has-entry", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTextColumn sets the "text-column" property.
+// Specifies the model column which holds the possible values for the
+// combo box.
+//
+// Note that this refers to the model specified in the model property,
+// not the model backing the tree view to which
+// this cell renderer is attached.
+//
+// `GtkCellRendererCombo` automatically adds a text cell renderer for
+// this column to its combo box.
+func (x *CellRendererCombo) SetPropertyTextColumn(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("text-column", &v)
+}
+
+// GetPropertyTextColumn gets the "text-column" property.
+// Specifies the model column which holds the possible values for the
+// combo box.
+//
+// Note that this refers to the model specified in the model property,
+// not the model backing the tree view to which
+// this cell renderer is attached.
+//
+// `GtkCellRendererCombo` automatically adds a text cell renderer for
+// this column to its combo box.
+func (x *CellRendererCombo) GetPropertyTextColumn() int {
+	var v gobject.Value
+	x.GetProperty("text-column", &v)
+	return v.GetInt()
+}
+
 // This signal is emitted each time after the user selected an item in
 // the combo box, either by using the mouse or the arrow keys.  Contrary
 // to GtkComboBox, GtkCellRendererCombo::changed is not emitted for

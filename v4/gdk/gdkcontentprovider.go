@@ -42,7 +42,7 @@ func (x *ContentProviderClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideContentChanged sets the callback function.
+// OverrideContentChanged sets the "content_changed" callback function.
 // Signal class closure for `GdkContentProvider::content-changed`
 func (x *ContentProviderClass) OverrideContentChanged(cb func(*ContentProvider)) {
 	if cb == nil {
@@ -54,7 +54,7 @@ func (x *ContentProviderClass) OverrideContentChanged(cb func(*ContentProvider))
 	}
 }
 
-// GetContentChanged gets the callback function.
+// GetContentChanged gets the "content_changed" callback function.
 // Signal class closure for `GdkContentProvider::content-changed`
 func (x *ContentProviderClass) GetContentChanged() func(*ContentProvider) {
 	if x.xContentChanged == 0 {
@@ -67,7 +67,7 @@ func (x *ContentProviderClass) GetContentChanged() func(*ContentProvider) {
 	}
 }
 
-// OverrideAttachClipboard sets the callback function.
+// OverrideAttachClipboard sets the "attach_clipboard" callback function.
 func (x *ContentProviderClass) OverrideAttachClipboard(cb func(*ContentProvider, *Clipboard)) {
 	if cb == nil {
 		x.xAttachClipboard = 0
@@ -78,7 +78,7 @@ func (x *ContentProviderClass) OverrideAttachClipboard(cb func(*ContentProvider,
 	}
 }
 
-// GetAttachClipboard gets the callback function.
+// GetAttachClipboard gets the "attach_clipboard" callback function.
 func (x *ContentProviderClass) GetAttachClipboard() func(*ContentProvider, *Clipboard) {
 	if x.xAttachClipboard == 0 {
 		return nil
@@ -90,7 +90,7 @@ func (x *ContentProviderClass) GetAttachClipboard() func(*ContentProvider, *Clip
 	}
 }
 
-// OverrideDetachClipboard sets the callback function.
+// OverrideDetachClipboard sets the "detach_clipboard" callback function.
 func (x *ContentProviderClass) OverrideDetachClipboard(cb func(*ContentProvider, *Clipboard)) {
 	if cb == nil {
 		x.xDetachClipboard = 0
@@ -101,7 +101,7 @@ func (x *ContentProviderClass) OverrideDetachClipboard(cb func(*ContentProvider,
 	}
 }
 
-// GetDetachClipboard gets the callback function.
+// GetDetachClipboard gets the "detach_clipboard" callback function.
 func (x *ContentProviderClass) GetDetachClipboard() func(*ContentProvider, *Clipboard) {
 	if x.xDetachClipboard == 0 {
 		return nil
@@ -113,7 +113,7 @@ func (x *ContentProviderClass) GetDetachClipboard() func(*ContentProvider, *Clip
 	}
 }
 
-// OverrideRefFormats sets the callback function.
+// OverrideRefFormats sets the "ref_formats" callback function.
 func (x *ContentProviderClass) OverrideRefFormats(cb func(*ContentProvider) *ContentFormats) {
 	if cb == nil {
 		x.xRefFormats = 0
@@ -124,7 +124,7 @@ func (x *ContentProviderClass) OverrideRefFormats(cb func(*ContentProvider) *Con
 	}
 }
 
-// GetRefFormats gets the callback function.
+// GetRefFormats gets the "ref_formats" callback function.
 func (x *ContentProviderClass) GetRefFormats() func(*ContentProvider) *ContentFormats {
 	if x.xRefFormats == 0 {
 		return nil
@@ -136,7 +136,7 @@ func (x *ContentProviderClass) GetRefFormats() func(*ContentProvider) *ContentFo
 	}
 }
 
-// OverrideRefStorableFormats sets the callback function.
+// OverrideRefStorableFormats sets the "ref_storable_formats" callback function.
 func (x *ContentProviderClass) OverrideRefStorableFormats(cb func(*ContentProvider) *ContentFormats) {
 	if cb == nil {
 		x.xRefStorableFormats = 0
@@ -147,7 +147,7 @@ func (x *ContentProviderClass) OverrideRefStorableFormats(cb func(*ContentProvid
 	}
 }
 
-// GetRefStorableFormats gets the callback function.
+// GetRefStorableFormats gets the "ref_storable_formats" callback function.
 func (x *ContentProviderClass) GetRefStorableFormats() func(*ContentProvider) *ContentFormats {
 	if x.xRefStorableFormats == 0 {
 		return nil
@@ -159,7 +159,7 @@ func (x *ContentProviderClass) GetRefStorableFormats() func(*ContentProvider) *C
 	}
 }
 
-// OverrideWriteMimeTypeAsync sets the callback function.
+// OverrideWriteMimeTypeAsync sets the "write_mime_type_async" callback function.
 func (x *ContentProviderClass) OverrideWriteMimeTypeAsync(cb func(*ContentProvider, string, *gio.OutputStream, int, *gio.Cancellable, *gio.AsyncReadyCallback, uintptr)) {
 	if cb == nil {
 		x.xWriteMimeTypeAsync = 0
@@ -170,7 +170,7 @@ func (x *ContentProviderClass) OverrideWriteMimeTypeAsync(cb func(*ContentProvid
 	}
 }
 
-// GetWriteMimeTypeAsync gets the callback function.
+// GetWriteMimeTypeAsync gets the "write_mime_type_async" callback function.
 func (x *ContentProviderClass) GetWriteMimeTypeAsync() func(*ContentProvider, string, *gio.OutputStream, int, *gio.Cancellable, *gio.AsyncReadyCallback, uintptr) {
 	if x.xWriteMimeTypeAsync == 0 {
 		return nil
@@ -182,7 +182,7 @@ func (x *ContentProviderClass) GetWriteMimeTypeAsync() func(*ContentProvider, st
 	}
 }
 
-// OverrideWriteMimeTypeFinish sets the callback function.
+// OverrideWriteMimeTypeFinish sets the "write_mime_type_finish" callback function.
 func (x *ContentProviderClass) OverrideWriteMimeTypeFinish(cb func(*ContentProvider, gio.AsyncResult) bool) {
 	if cb == nil {
 		x.xWriteMimeTypeFinish = 0
@@ -193,7 +193,7 @@ func (x *ContentProviderClass) OverrideWriteMimeTypeFinish(cb func(*ContentProvi
 	}
 }
 
-// GetWriteMimeTypeFinish gets the callback function.
+// GetWriteMimeTypeFinish gets the "write_mime_type_finish" callback function.
 func (x *ContentProviderClass) GetWriteMimeTypeFinish() func(*ContentProvider, gio.AsyncResult) bool {
 	if x.xWriteMimeTypeFinish == 0 {
 		return nil
@@ -205,7 +205,7 @@ func (x *ContentProviderClass) GetWriteMimeTypeFinish() func(*ContentProvider, g
 	}
 }
 
-// OverrideGetValue sets the callback function.
+// OverrideGetValue sets the "get_value" callback function.
 func (x *ContentProviderClass) OverrideGetValue(cb func(*ContentProvider, *gobject.Value) bool) {
 	if cb == nil {
 		x.xGetValue = 0
@@ -216,7 +216,7 @@ func (x *ContentProviderClass) OverrideGetValue(cb func(*ContentProvider, *gobje
 	}
 }
 
-// GetGetValue gets the callback function.
+// GetGetValue gets the "get_value" callback function.
 func (x *ContentProviderClass) GetGetValue() func(*ContentProvider, *gobject.Value) bool {
 	if x.xGetValue == 0 {
 		return nil
@@ -431,6 +431,22 @@ func (c *ContentProvider) GoPointer() uintptr {
 
 func (c *ContentProvider) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// GetPropertyFormats gets the "formats" property.
+// The possible formats that the provider can provide its data in.
+func (x *ContentProvider) GetPropertyFormats() uintptr {
+	var v gobject.Value
+	x.GetProperty("formats", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyStorableFormats gets the "storable-formats" property.
+// The subset of formats that clipboard managers should store this provider's data in.
+func (x *ContentProvider) GetPropertyStorableFormats() uintptr {
+	var v gobject.Value
+	x.GetProperty("storable-formats", &v)
+	return v.GetPointer()
 }
 
 // Emitted whenever the content provided by this provider has changed.

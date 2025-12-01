@@ -265,6 +265,67 @@ func (c *Constraint) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyConstant sets the "constant" property.
+// The constant value to be added to the [property@Gtk.Constraint:source-attribute].
+func (x *Constraint) SetPropertyConstant(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("constant", &v)
+}
+
+// GetPropertyConstant gets the "constant" property.
+// The constant value to be added to the [property@Gtk.Constraint:source-attribute].
+func (x *Constraint) GetPropertyConstant() float64 {
+	var v gobject.Value
+	x.GetProperty("constant", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyMultiplier sets the "multiplier" property.
+// The multiplication factor to be applied to
+// the [property@Gtk.Constraint:source-attribute].
+func (x *Constraint) SetPropertyMultiplier(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("multiplier", &v)
+}
+
+// GetPropertyMultiplier gets the "multiplier" property.
+// The multiplication factor to be applied to
+// the [property@Gtk.Constraint:source-attribute].
+func (x *Constraint) GetPropertyMultiplier() float64 {
+	var v gobject.Value
+	x.GetProperty("multiplier", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyStrength sets the "strength" property.
+// The strength of the constraint.
+//
+// The strength can be expressed either using one of the symbolic values
+// of the [enum@Gtk.ConstraintStrength] enumeration, or any positive integer
+// value.
+func (x *Constraint) SetPropertyStrength(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("strength", &v)
+}
+
+// GetPropertyStrength gets the "strength" property.
+// The strength of the constraint.
+//
+// The strength can be expressed either using one of the symbolic values
+// of the [enum@Gtk.ConstraintStrength] enumeration, or any positive integer
+// value.
+func (x *Constraint) GetPropertyStrength() int {
+	var v gobject.Value
+	x.GetProperty("strength", &v)
+	return v.GetInt()
+}
+
 func init() {
 	core.SetPackageName("GTK", "gtk4")
 	core.SetSharedLibraries("GTK", []string{"libgtk-4.so.1"})

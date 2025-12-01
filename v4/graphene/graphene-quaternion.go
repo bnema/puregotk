@@ -224,21 +224,21 @@ func (x *Quaternion) Slerp(BVar *Quaternion, FactorVar float32, ResVar *Quaterni
 
 }
 
-var xQuaternionToAngleVec3 func(uintptr, float32, *Vec3)
+var xQuaternionToAngleVec3 func(uintptr, *float32, *Vec3)
 
 // Converts a quaternion into an @angle, @axis pair.
-func (x *Quaternion) ToAngleVec3(AngleVar float32, AxisVar *Vec3) {
+func (x *Quaternion) ToAngleVec3(AngleVar *float32, AxisVar *Vec3) {
 
 	xQuaternionToAngleVec3(x.GoPointer(), AngleVar, AxisVar)
 
 }
 
-var xQuaternionToAngles func(uintptr, float32, float32, float32)
+var xQuaternionToAngles func(uintptr, *float32, *float32, *float32)
 
 // Converts a #graphene_quaternion_t to its corresponding rotations
 // on the [Euler angles](http://en.wikipedia.org/wiki/Euler_angles)
 // on each axis.
-func (x *Quaternion) ToAngles(DegXVar float32, DegYVar float32, DegZVar float32) {
+func (x *Quaternion) ToAngles(DegXVar *float32, DegYVar *float32, DegZVar *float32) {
 
 	xQuaternionToAngles(x.GoPointer(), DegXVar, DegYVar, DegZVar)
 
@@ -254,12 +254,12 @@ func (x *Quaternion) ToMatrix(MVar *Matrix) {
 
 }
 
-var xQuaternionToRadians func(uintptr, float32, float32, float32)
+var xQuaternionToRadians func(uintptr, *float32, *float32, *float32)
 
 // Converts a #graphene_quaternion_t to its corresponding rotations
 // on the [Euler angles](http://en.wikipedia.org/wiki/Euler_angles)
 // on each axis.
-func (x *Quaternion) ToRadians(RadXVar float32, RadYVar float32, RadZVar float32) {
+func (x *Quaternion) ToRadians(RadXVar *float32, RadYVar *float32, RadZVar *float32) {
 
 	xQuaternionToRadians(x.GoPointer(), RadXVar, RadYVar, RadZVar)
 

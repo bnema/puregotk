@@ -229,6 +229,40 @@ func (c *SearchBar) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertySearchModeEnabled sets the "search-mode-enabled" property.
+// Whether the search mode is on and the search bar shown.
+func (x *SearchBar) SetPropertySearchModeEnabled(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("search-mode-enabled", &v)
+}
+
+// GetPropertySearchModeEnabled gets the "search-mode-enabled" property.
+// Whether the search mode is on and the search bar shown.
+func (x *SearchBar) GetPropertySearchModeEnabled() bool {
+	var v gobject.Value
+	x.GetProperty("search-mode-enabled", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyShowCloseButton sets the "show-close-button" property.
+// Whether to show the close button in the search bar.
+func (x *SearchBar) SetPropertyShowCloseButton(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-close-button", &v)
+}
+
+// GetPropertyShowCloseButton gets the "show-close-button" property.
+// Whether to show the close button in the search bar.
+func (x *SearchBar) GetPropertyShowCloseButton() bool {
+	var v gobject.Value
+	x.GetProperty("show-close-button", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -286,7 +320,7 @@ func (x *SearchBar) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *SearchBar) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *SearchBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

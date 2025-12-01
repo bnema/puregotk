@@ -230,6 +230,48 @@ func (c *InlineViewSwitcher) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCanShrink sets the "can-shrink" property.
+// Whether the toggles can be smaller than the natural size of their contents.
+//
+// If set to `TRUE`, the toggle labels will ellipsize.
+//
+// See [property@ToggleGroup:can-shrink].
+func (x *InlineViewSwitcher) SetPropertyCanShrink(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-shrink", &v)
+}
+
+// GetPropertyCanShrink gets the "can-shrink" property.
+// Whether the toggles can be smaller than the natural size of their contents.
+//
+// If set to `TRUE`, the toggle labels will ellipsize.
+//
+// See [property@ToggleGroup:can-shrink].
+func (x *InlineViewSwitcher) GetPropertyCanShrink() bool {
+	var v gobject.Value
+	x.GetProperty("can-shrink", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHomogeneous sets the "homogeneous" property.
+// Whether all toggles take the same size.
+func (x *InlineViewSwitcher) SetPropertyHomogeneous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("homogeneous", &v)
+}
+
+// GetPropertyHomogeneous gets the "homogeneous" property.
+// Whether all toggles take the same size.
+func (x *InlineViewSwitcher) GetPropertyHomogeneous() bool {
+	var v gobject.Value
+	x.GetProperty("homogeneous", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -287,7 +329,7 @@ func (x *InlineViewSwitcher) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *InlineViewSwitcher) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *InlineViewSwitcher) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

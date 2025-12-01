@@ -578,6 +578,193 @@ func (c *ScrolledWindow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyHasFrame sets the "has-frame" property.
+// Whether to draw a frame around the contents.
+func (x *ScrolledWindow) SetPropertyHasFrame(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-frame", &v)
+}
+
+// GetPropertyHasFrame gets the "has-frame" property.
+// Whether to draw a frame around the contents.
+func (x *ScrolledWindow) GetPropertyHasFrame() bool {
+	var v gobject.Value
+	x.GetProperty("has-frame", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyKineticScrolling sets the "kinetic-scrolling" property.
+// Whether kinetic scrolling is enabled or not.
+//
+// Kinetic scrolling only applies to devices with source %GDK_SOURCE_TOUCHSCREEN.
+func (x *ScrolledWindow) SetPropertyKineticScrolling(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("kinetic-scrolling", &v)
+}
+
+// GetPropertyKineticScrolling gets the "kinetic-scrolling" property.
+// Whether kinetic scrolling is enabled or not.
+//
+// Kinetic scrolling only applies to devices with source %GDK_SOURCE_TOUCHSCREEN.
+func (x *ScrolledWindow) GetPropertyKineticScrolling() bool {
+	var v gobject.Value
+	x.GetProperty("kinetic-scrolling", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaxContentHeight sets the "max-content-height" property.
+// The maximum content height of @scrolled_window.
+func (x *ScrolledWindow) SetPropertyMaxContentHeight(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("max-content-height", &v)
+}
+
+// GetPropertyMaxContentHeight gets the "max-content-height" property.
+// The maximum content height of @scrolled_window.
+func (x *ScrolledWindow) GetPropertyMaxContentHeight() int {
+	var v gobject.Value
+	x.GetProperty("max-content-height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMaxContentWidth sets the "max-content-width" property.
+// The maximum content width of @scrolled_window.
+func (x *ScrolledWindow) SetPropertyMaxContentWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("max-content-width", &v)
+}
+
+// GetPropertyMaxContentWidth gets the "max-content-width" property.
+// The maximum content width of @scrolled_window.
+func (x *ScrolledWindow) GetPropertyMaxContentWidth() int {
+	var v gobject.Value
+	x.GetProperty("max-content-width", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMinContentHeight sets the "min-content-height" property.
+// The minimum content height of @scrolled_window.
+func (x *ScrolledWindow) SetPropertyMinContentHeight(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("min-content-height", &v)
+}
+
+// GetPropertyMinContentHeight gets the "min-content-height" property.
+// The minimum content height of @scrolled_window.
+func (x *ScrolledWindow) GetPropertyMinContentHeight() int {
+	var v gobject.Value
+	x.GetProperty("min-content-height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMinContentWidth sets the "min-content-width" property.
+// The minimum content width of @scrolled_window.
+func (x *ScrolledWindow) SetPropertyMinContentWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("min-content-width", &v)
+}
+
+// GetPropertyMinContentWidth gets the "min-content-width" property.
+// The minimum content width of @scrolled_window.
+func (x *ScrolledWindow) GetPropertyMinContentWidth() int {
+	var v gobject.Value
+	x.GetProperty("min-content-width", &v)
+	return v.GetInt()
+}
+
+// SetPropertyOverlayScrolling sets the "overlay-scrolling" property.
+// Whether overlay scrolling is enabled or not.
+//
+// If it is, the scrollbars are only added as traditional widgets
+// when a mouse is present. Otherwise, they are overlaid on top of
+// the content, as narrow indicators.
+//
+// Note that overlay scrolling can also be globally disabled, with
+// the [property@Gtk.Settings:gtk-overlay-scrolling] setting.
+func (x *ScrolledWindow) SetPropertyOverlayScrolling(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("overlay-scrolling", &v)
+}
+
+// GetPropertyOverlayScrolling gets the "overlay-scrolling" property.
+// Whether overlay scrolling is enabled or not.
+//
+// If it is, the scrollbars are only added as traditional widgets
+// when a mouse is present. Otherwise, they are overlaid on top of
+// the content, as narrow indicators.
+//
+// Note that overlay scrolling can also be globally disabled, with
+// the [property@Gtk.Settings:gtk-overlay-scrolling] setting.
+func (x *ScrolledWindow) GetPropertyOverlayScrolling() bool {
+	var v gobject.Value
+	x.GetProperty("overlay-scrolling", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPropagateNaturalHeight sets the "propagate-natural-height" property.
+// Whether the natural height of the child should be calculated and propagated
+// through the scrolled window’s requested natural height.
+//
+// This is useful in cases where an attempt should be made to allocate exactly
+// enough space for the natural size of the child.
+func (x *ScrolledWindow) SetPropertyPropagateNaturalHeight(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("propagate-natural-height", &v)
+}
+
+// GetPropertyPropagateNaturalHeight gets the "propagate-natural-height" property.
+// Whether the natural height of the child should be calculated and propagated
+// through the scrolled window’s requested natural height.
+//
+// This is useful in cases where an attempt should be made to allocate exactly
+// enough space for the natural size of the child.
+func (x *ScrolledWindow) GetPropertyPropagateNaturalHeight() bool {
+	var v gobject.Value
+	x.GetProperty("propagate-natural-height", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPropagateNaturalWidth sets the "propagate-natural-width" property.
+// Whether the natural width of the child should be calculated and propagated
+// through the scrolled window’s requested natural width.
+//
+// This is useful in cases where an attempt should be made to allocate exactly
+// enough space for the natural size of the child.
+func (x *ScrolledWindow) SetPropertyPropagateNaturalWidth(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("propagate-natural-width", &v)
+}
+
+// GetPropertyPropagateNaturalWidth gets the "propagate-natural-width" property.
+// Whether the natural width of the child should be calculated and propagated
+// through the scrolled window’s requested natural width.
+//
+// This is useful in cases where an attempt should be made to allocate exactly
+// enough space for the natural size of the child.
+func (x *ScrolledWindow) GetPropertyPropagateNaturalWidth() bool {
+	var v gobject.Value
+	x.GetProperty("propagate-natural-width", &v)
+	return v.GetBoolean()
+}
+
 // Emitted whenever user initiated scrolling makes the scrolled
 // window firmly surpass the limits defined by the adjustment
 // in that orientation.
@@ -743,7 +930,7 @@ func (x *ScrolledWindow) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ScrolledWindow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ScrolledWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

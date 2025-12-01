@@ -53,7 +53,7 @@ func (x *TextViewClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideMoveCursor sets the callback function.
+// OverrideMoveCursor sets the "move_cursor" callback function.
 // The class handler for the `GtkTextView::move-cursor`
 //
 //	keybinding signal.
@@ -67,7 +67,7 @@ func (x *TextViewClass) OverrideMoveCursor(cb func(*TextView, MovementStep, int,
 	}
 }
 
-// GetMoveCursor gets the callback function.
+// GetMoveCursor gets the "move_cursor" callback function.
 // The class handler for the `GtkTextView::move-cursor`
 //
 //	keybinding signal.
@@ -82,7 +82,7 @@ func (x *TextViewClass) GetMoveCursor() func(*TextView, MovementStep, int, bool)
 	}
 }
 
-// OverrideSetAnchor sets the callback function.
+// OverrideSetAnchor sets the "set_anchor" callback function.
 // The class handler for the `GtkTextView::set-anchor`
 //
 //	keybinding signal.
@@ -96,7 +96,7 @@ func (x *TextViewClass) OverrideSetAnchor(cb func(*TextView)) {
 	}
 }
 
-// GetSetAnchor gets the callback function.
+// GetSetAnchor gets the "set_anchor" callback function.
 // The class handler for the `GtkTextView::set-anchor`
 //
 //	keybinding signal.
@@ -111,7 +111,7 @@ func (x *TextViewClass) GetSetAnchor() func(*TextView) {
 	}
 }
 
-// OverrideInsertAtCursor sets the callback function.
+// OverrideInsertAtCursor sets the "insert_at_cursor" callback function.
 // The class handler for the `GtkTextView::insert-at-cursor`
 //
 //	keybinding signal.
@@ -125,7 +125,7 @@ func (x *TextViewClass) OverrideInsertAtCursor(cb func(*TextView, string)) {
 	}
 }
 
-// GetInsertAtCursor gets the callback function.
+// GetInsertAtCursor gets the "insert_at_cursor" callback function.
 // The class handler for the `GtkTextView::insert-at-cursor`
 //
 //	keybinding signal.
@@ -140,7 +140,7 @@ func (x *TextViewClass) GetInsertAtCursor() func(*TextView, string) {
 	}
 }
 
-// OverrideDeleteFromCursor sets the callback function.
+// OverrideDeleteFromCursor sets the "delete_from_cursor" callback function.
 // The class handler for the `GtkTextView::delete-from-cursor`
 //
 //	keybinding signal.
@@ -154,7 +154,7 @@ func (x *TextViewClass) OverrideDeleteFromCursor(cb func(*TextView, DeleteType, 
 	}
 }
 
-// GetDeleteFromCursor gets the callback function.
+// GetDeleteFromCursor gets the "delete_from_cursor" callback function.
 // The class handler for the `GtkTextView::delete-from-cursor`
 //
 //	keybinding signal.
@@ -169,7 +169,7 @@ func (x *TextViewClass) GetDeleteFromCursor() func(*TextView, DeleteType, int) {
 	}
 }
 
-// OverrideBackspace sets the callback function.
+// OverrideBackspace sets the "backspace" callback function.
 // The class handler for the `GtkTextView::backspace`
 //
 //	keybinding signal.
@@ -183,7 +183,7 @@ func (x *TextViewClass) OverrideBackspace(cb func(*TextView)) {
 	}
 }
 
-// GetBackspace gets the callback function.
+// GetBackspace gets the "backspace" callback function.
 // The class handler for the `GtkTextView::backspace`
 //
 //	keybinding signal.
@@ -198,7 +198,7 @@ func (x *TextViewClass) GetBackspace() func(*TextView) {
 	}
 }
 
-// OverrideCutClipboard sets the callback function.
+// OverrideCutClipboard sets the "cut_clipboard" callback function.
 // The class handler for the `GtkTextView::cut-clipboard`
 //
 //	keybinding signal
@@ -212,7 +212,7 @@ func (x *TextViewClass) OverrideCutClipboard(cb func(*TextView)) {
 	}
 }
 
-// GetCutClipboard gets the callback function.
+// GetCutClipboard gets the "cut_clipboard" callback function.
 // The class handler for the `GtkTextView::cut-clipboard`
 //
 //	keybinding signal
@@ -227,7 +227,7 @@ func (x *TextViewClass) GetCutClipboard() func(*TextView) {
 	}
 }
 
-// OverrideCopyClipboard sets the callback function.
+// OverrideCopyClipboard sets the "copy_clipboard" callback function.
 // The class handler for the `GtkTextView::copy-clipboard`
 //
 //	keybinding signal.
@@ -241,7 +241,7 @@ func (x *TextViewClass) OverrideCopyClipboard(cb func(*TextView)) {
 	}
 }
 
-// GetCopyClipboard gets the callback function.
+// GetCopyClipboard gets the "copy_clipboard" callback function.
 // The class handler for the `GtkTextView::copy-clipboard`
 //
 //	keybinding signal.
@@ -256,7 +256,7 @@ func (x *TextViewClass) GetCopyClipboard() func(*TextView) {
 	}
 }
 
-// OverridePasteClipboard sets the callback function.
+// OverridePasteClipboard sets the "paste_clipboard" callback function.
 // The class handler for the `GtkTextView::paste-clipboard`
 //
 //	keybinding signal.
@@ -270,7 +270,7 @@ func (x *TextViewClass) OverridePasteClipboard(cb func(*TextView)) {
 	}
 }
 
-// GetPasteClipboard gets the callback function.
+// GetPasteClipboard gets the "paste_clipboard" callback function.
 // The class handler for the `GtkTextView::paste-clipboard`
 //
 //	keybinding signal.
@@ -285,7 +285,7 @@ func (x *TextViewClass) GetPasteClipboard() func(*TextView) {
 	}
 }
 
-// OverrideToggleOverwrite sets the callback function.
+// OverrideToggleOverwrite sets the "toggle_overwrite" callback function.
 // The class handler for the `GtkTextView::toggle-overwrite`
 //
 //	keybinding signal.
@@ -299,7 +299,7 @@ func (x *TextViewClass) OverrideToggleOverwrite(cb func(*TextView)) {
 	}
 }
 
-// GetToggleOverwrite gets the callback function.
+// GetToggleOverwrite gets the "toggle_overwrite" callback function.
 // The class handler for the `GtkTextView::toggle-overwrite`
 //
 //	keybinding signal.
@@ -314,7 +314,7 @@ func (x *TextViewClass) GetToggleOverwrite() func(*TextView) {
 	}
 }
 
-// OverrideCreateBuffer sets the callback function.
+// OverrideCreateBuffer sets the "create_buffer" callback function.
 // The create_buffer vfunc is called to create a `GtkTextBuffer`
 //
 //	for the text view. The default implementation is to just call
@@ -333,7 +333,7 @@ func (x *TextViewClass) OverrideCreateBuffer(cb func(*TextView) *TextBuffer) {
 	}
 }
 
-// GetCreateBuffer gets the callback function.
+// GetCreateBuffer gets the "create_buffer" callback function.
 // The create_buffer vfunc is called to create a `GtkTextBuffer`
 //
 //	for the text view. The default implementation is to just call
@@ -355,7 +355,7 @@ func (x *TextViewClass) GetCreateBuffer() func(*TextView) *TextBuffer {
 	}
 }
 
-// OverrideSnapshotLayer sets the callback function.
+// OverrideSnapshotLayer sets the "snapshot_layer" callback function.
 // The snapshot_layer vfunc is called before and after the text
 //
 //	view is drawing its own text. Applications can override this vfunc
@@ -372,7 +372,7 @@ func (x *TextViewClass) OverrideSnapshotLayer(cb func(*TextView, TextViewLayer, 
 	}
 }
 
-// GetSnapshotLayer gets the callback function.
+// GetSnapshotLayer gets the "snapshot_layer" callback function.
 // The snapshot_layer vfunc is called before and after the text
 //
 //	view is drawing its own text. Applications can override this vfunc
@@ -390,7 +390,7 @@ func (x *TextViewClass) GetSnapshotLayer() func(*TextView, TextViewLayer, *Snaps
 	}
 }
 
-// OverrideExtendSelection sets the callback function.
+// OverrideExtendSelection sets the "extend_selection" callback function.
 // The class handler for the `GtkTextView::extend-selection` signal.
 func (x *TextViewClass) OverrideExtendSelection(cb func(*TextView, TextExtendSelection, *TextIter, *TextIter, *TextIter) bool) {
 	if cb == nil {
@@ -402,7 +402,7 @@ func (x *TextViewClass) OverrideExtendSelection(cb func(*TextView, TextExtendSel
 	}
 }
 
-// GetExtendSelection gets the callback function.
+// GetExtendSelection gets the "extend_selection" callback function.
 // The class handler for the `GtkTextView::extend-selection` signal.
 func (x *TextViewClass) GetExtendSelection() func(*TextView, TextExtendSelection, *TextIter, *TextIter, *TextIter) bool {
 	if x.xExtendSelection == 0 {
@@ -415,7 +415,7 @@ func (x *TextViewClass) GetExtendSelection() func(*TextView, TextExtendSelection
 	}
 }
 
-// OverrideInsertEmoji sets the callback function.
+// OverrideInsertEmoji sets the "insert_emoji" callback function.
 // The class handler for the `GtkTextView::insert-emoji` signal.
 func (x *TextViewClass) OverrideInsertEmoji(cb func(*TextView)) {
 	if cb == nil {
@@ -427,7 +427,7 @@ func (x *TextViewClass) OverrideInsertEmoji(cb func(*TextView)) {
 	}
 }
 
-// GetInsertEmoji gets the callback function.
+// GetInsertEmoji gets the "insert_emoji" callback function.
 // The class handler for the `GtkTextView::insert-emoji` signal.
 func (x *TextViewClass) GetInsertEmoji() func(*TextView) {
 	if x.xInsertEmoji == 0 {
@@ -716,10 +716,10 @@ func (x *TextView) BackwardDisplayLineStart(IterVar *TextIter) bool {
 	return cret
 }
 
-var xTextViewBufferToWindowCoords func(uintptr, TextWindowType, int, int, int, int)
+var xTextViewBufferToWindowCoords func(uintptr, TextWindowType, int, int, *int, *int)
 
 // Converts buffer coordinates to window coordinates.
-func (x *TextView) BufferToWindowCoords(WinVar TextWindowType, BufferXVar int, BufferYVar int, WindowXVar int, WindowYVar int) {
+func (x *TextView) BufferToWindowCoords(WinVar TextWindowType, BufferXVar int, BufferYVar int, WindowXVar *int, WindowYVar *int) {
 
 	xTextViewBufferToWindowCoords(x.GoPointer(), WinVar, BufferXVar, BufferYVar, WindowXVar, WindowYVar)
 
@@ -931,7 +931,7 @@ func (x *TextView) GetIterAtLocation(IterVar *TextIter, XVar int, YVar int) bool
 	return cret
 }
 
-var xTextViewGetIterAtPosition func(uintptr, *TextIter, int, int, int) bool
+var xTextViewGetIterAtPosition func(uintptr, *TextIter, *int, int, int) bool
 
 // Retrieves the iterator pointing to the character at buffer
 // coordinates @x and @y.
@@ -943,7 +943,7 @@ var xTextViewGetIterAtPosition func(uintptr, *TextIter, int, int, int) bool
 //
 // Note that this is different from [method@Gtk.TextView.get_iter_at_location],
 // which returns cursor locations, i.e. positions between characters.
-func (x *TextView) GetIterAtPosition(IterVar *TextIter, TrailingVar int, XVar int, YVar int) bool {
+func (x *TextView) GetIterAtPosition(IterVar *TextIter, TrailingVar *int, XVar int, YVar int) bool {
 
 	cret := xTextViewGetIterAtPosition(x.GoPointer(), IterVar, TrailingVar, XVar, YVar)
 	return cret
@@ -984,7 +984,7 @@ func (x *TextView) GetLeftMargin() int {
 	return cret
 }
 
-var xTextViewGetLineAtY func(uintptr, *TextIter, int, int)
+var xTextViewGetLineAtY func(uintptr, *TextIter, int, *int)
 
 // Gets the `GtkTextIter` at the start of the line containing
 // the coordinate @y.
@@ -993,20 +993,20 @@ var xTextViewGetLineAtY func(uintptr, *TextIter, int, int)
 // [method@Gtk.TextView.window_to_buffer_coords]. If non-%NULL,
 // @line_top will be filled with the coordinate of the top edge
 // of the line.
-func (x *TextView) GetLineAtY(TargetIterVar *TextIter, YVar int, LineTopVar int) {
+func (x *TextView) GetLineAtY(TargetIterVar *TextIter, YVar int, LineTopVar *int) {
 
 	xTextViewGetLineAtY(x.GoPointer(), TargetIterVar, YVar, LineTopVar)
 
 }
 
-var xTextViewGetLineYrange func(uintptr, *TextIter, int, int)
+var xTextViewGetLineYrange func(uintptr, *TextIter, *int, *int)
 
 // Gets the y coordinate of the top of the line containing @iter,
 // and the height of the line.
 //
 // The coordinate is a buffer coordinate; convert to window
 // coordinates with [method@Gtk.TextView.buffer_to_window_coords].
-func (x *TextView) GetLineYrange(IterVar *TextIter, YVar int, HeightVar int) {
+func (x *TextView) GetLineYrange(IterVar *TextIter, YVar *int, HeightVar *int) {
 
 	xTextViewGetLineYrange(x.GoPointer(), IterVar, YVar, HeightVar)
 
@@ -1137,7 +1137,7 @@ func (x *TextView) GetTopMargin() int {
 	return cret
 }
 
-var xTextViewGetVisibleOffset func(uintptr, float64, float64)
+var xTextViewGetVisibleOffset func(uintptr, *float64, *float64)
 
 // Gets the X,Y offset in buffer coordinates of the top-left corner of
 // the textview's text contents.
@@ -1148,7 +1148,7 @@ var xTextViewGetVisibleOffset func(uintptr, float64, float64)
 //
 // You might want this when making ulterior widgets align with quantized
 // device pixels of the textview contents such as line numbers.
-func (x *TextView) GetVisibleOffset(XOffsetVar float64, YOffsetVar float64) {
+func (x *TextView) GetVisibleOffset(XOffsetVar *float64, YOffsetVar *float64) {
 
 	xTextViewGetVisibleOffset(x.GoPointer(), XOffsetVar, YOffsetVar)
 
@@ -1619,11 +1619,11 @@ func (x *TextView) StartsDisplayLine(IterVar *TextIter) bool {
 	return cret
 }
 
-var xTextViewWindowToBufferCoords func(uintptr, TextWindowType, int, int, int, int)
+var xTextViewWindowToBufferCoords func(uintptr, TextWindowType, int, int, *int, *int)
 
 // Converts coordinates on the window identified by @win to buffer
 // coordinates.
-func (x *TextView) WindowToBufferCoords(WinVar TextWindowType, WindowXVar int, WindowYVar int, BufferXVar int, BufferYVar int) {
+func (x *TextView) WindowToBufferCoords(WinVar TextWindowType, WindowXVar int, WindowYVar int, BufferXVar *int, BufferYVar *int) {
 
 	xTextViewWindowToBufferCoords(x.GoPointer(), WinVar, WindowXVar, WindowYVar, BufferXVar, BufferYVar)
 
@@ -1638,6 +1638,333 @@ func (c *TextView) GoPointer() uintptr {
 
 func (c *TextView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAcceptsTab sets the "accepts-tab" property.
+// Whether Tab will result in a tab character being entered.
+func (x *TextView) SetPropertyAcceptsTab(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("accepts-tab", &v)
+}
+
+// GetPropertyAcceptsTab gets the "accepts-tab" property.
+// Whether Tab will result in a tab character being entered.
+func (x *TextView) GetPropertyAcceptsTab() bool {
+	var v gobject.Value
+	x.GetProperty("accepts-tab", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyBottomMargin sets the "bottom-margin" property.
+// The bottom margin for text in the text view.
+//
+// Note that this property is confusingly named. In CSS terms,
+// the value set here is padding, and it is applied in addition
+// to the padding from the theme.
+//
+// Don't confuse this property with [property@Gtk.Widget:margin-bottom].
+func (x *TextView) SetPropertyBottomMargin(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("bottom-margin", &v)
+}
+
+// GetPropertyBottomMargin gets the "bottom-margin" property.
+// The bottom margin for text in the text view.
+//
+// Note that this property is confusingly named. In CSS terms,
+// the value set here is padding, and it is applied in addition
+// to the padding from the theme.
+//
+// Don't confuse this property with [property@Gtk.Widget:margin-bottom].
+func (x *TextView) GetPropertyBottomMargin() int {
+	var v gobject.Value
+	x.GetProperty("bottom-margin", &v)
+	return v.GetInt()
+}
+
+// SetPropertyCursorVisible sets the "cursor-visible" property.
+// If the insertion cursor is shown.
+func (x *TextView) SetPropertyCursorVisible(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("cursor-visible", &v)
+}
+
+// GetPropertyCursorVisible gets the "cursor-visible" property.
+// If the insertion cursor is shown.
+func (x *TextView) GetPropertyCursorVisible() bool {
+	var v gobject.Value
+	x.GetProperty("cursor-visible", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyEditable sets the "editable" property.
+// Whether the text can be modified by the user.
+func (x *TextView) SetPropertyEditable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("editable", &v)
+}
+
+// GetPropertyEditable gets the "editable" property.
+// Whether the text can be modified by the user.
+func (x *TextView) GetPropertyEditable() bool {
+	var v gobject.Value
+	x.GetProperty("editable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyImModule sets the "im-module" property.
+// Which IM (input method) module should be used for this text_view.
+//
+// See [class@Gtk.IMMulticontext].
+//
+// Setting this to a non-%NULL value overrides the system-wide IM module
+// setting. See the GtkSettings [property@Gtk.Settings:gtk-im-module] property.
+func (x *TextView) SetPropertyImModule(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("im-module", &v)
+}
+
+// GetPropertyImModule gets the "im-module" property.
+// Which IM (input method) module should be used for this text_view.
+//
+// See [class@Gtk.IMMulticontext].
+//
+// Setting this to a non-%NULL value overrides the system-wide IM module
+// setting. See the GtkSettings [property@Gtk.Settings:gtk-im-module] property.
+func (x *TextView) GetPropertyImModule() string {
+	var v gobject.Value
+	x.GetProperty("im-module", &v)
+	return v.GetString()
+}
+
+// SetPropertyIndent sets the "indent" property.
+// Amount to indent the paragraph, in pixels.
+//
+// A negative value of indent will produce a hanging indentation.
+// That is, the first line will have the full width, and subsequent
+// lines will be indented by the absolute value of indent.
+func (x *TextView) SetPropertyIndent(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("indent", &v)
+}
+
+// GetPropertyIndent gets the "indent" property.
+// Amount to indent the paragraph, in pixels.
+//
+// A negative value of indent will produce a hanging indentation.
+// That is, the first line will have the full width, and subsequent
+// lines will be indented by the absolute value of indent.
+func (x *TextView) GetPropertyIndent() int {
+	var v gobject.Value
+	x.GetProperty("indent", &v)
+	return v.GetInt()
+}
+
+// SetPropertyLeftMargin sets the "left-margin" property.
+// The default left margin for text in the text view.
+//
+// Tags in the buffer may override the default.
+//
+// Note that this property is confusingly named. In CSS terms,
+// the value set here is padding, and it is applied in addition
+// to the padding from the theme.
+func (x *TextView) SetPropertyLeftMargin(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("left-margin", &v)
+}
+
+// GetPropertyLeftMargin gets the "left-margin" property.
+// The default left margin for text in the text view.
+//
+// Tags in the buffer may override the default.
+//
+// Note that this property is confusingly named. In CSS terms,
+// the value set here is padding, and it is applied in addition
+// to the padding from the theme.
+func (x *TextView) GetPropertyLeftMargin() int {
+	var v gobject.Value
+	x.GetProperty("left-margin", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMonospace sets the "monospace" property.
+// Whether text should be displayed in a monospace font.
+//
+// If %TRUE, set the .monospace style class on the
+// text view to indicate that a monospace font is desired.
+func (x *TextView) SetPropertyMonospace(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("monospace", &v)
+}
+
+// GetPropertyMonospace gets the "monospace" property.
+// Whether text should be displayed in a monospace font.
+//
+// If %TRUE, set the .monospace style class on the
+// text view to indicate that a monospace font is desired.
+func (x *TextView) GetPropertyMonospace() bool {
+	var v gobject.Value
+	x.GetProperty("monospace", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyOverwrite sets the "overwrite" property.
+// Whether entered text overwrites existing contents.
+func (x *TextView) SetPropertyOverwrite(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("overwrite", &v)
+}
+
+// GetPropertyOverwrite gets the "overwrite" property.
+// Whether entered text overwrites existing contents.
+func (x *TextView) GetPropertyOverwrite() bool {
+	var v gobject.Value
+	x.GetProperty("overwrite", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPixelsAboveLines sets the "pixels-above-lines" property.
+// Pixels of blank space above paragraphs.
+func (x *TextView) SetPropertyPixelsAboveLines(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("pixels-above-lines", &v)
+}
+
+// GetPropertyPixelsAboveLines gets the "pixels-above-lines" property.
+// Pixels of blank space above paragraphs.
+func (x *TextView) GetPropertyPixelsAboveLines() int {
+	var v gobject.Value
+	x.GetProperty("pixels-above-lines", &v)
+	return v.GetInt()
+}
+
+// SetPropertyPixelsBelowLines sets the "pixels-below-lines" property.
+// Pixels of blank space below paragraphs.
+func (x *TextView) SetPropertyPixelsBelowLines(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("pixels-below-lines", &v)
+}
+
+// GetPropertyPixelsBelowLines gets the "pixels-below-lines" property.
+// Pixels of blank space below paragraphs.
+func (x *TextView) GetPropertyPixelsBelowLines() int {
+	var v gobject.Value
+	x.GetProperty("pixels-below-lines", &v)
+	return v.GetInt()
+}
+
+// SetPropertyPixelsInsideWrap sets the "pixels-inside-wrap" property.
+// Pixels of blank space between wrapped lines in a paragraph.
+func (x *TextView) SetPropertyPixelsInsideWrap(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("pixels-inside-wrap", &v)
+}
+
+// GetPropertyPixelsInsideWrap gets the "pixels-inside-wrap" property.
+// Pixels of blank space between wrapped lines in a paragraph.
+func (x *TextView) GetPropertyPixelsInsideWrap() int {
+	var v gobject.Value
+	x.GetProperty("pixels-inside-wrap", &v)
+	return v.GetInt()
+}
+
+// SetPropertyRightMargin sets the "right-margin" property.
+// The default right margin for text in the text view.
+//
+// Tags in the buffer may override the default.
+//
+// Note that this property is confusingly named. In CSS terms,
+// the value set here is padding, and it is applied in addition
+// to the padding from the theme.
+func (x *TextView) SetPropertyRightMargin(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("right-margin", &v)
+}
+
+// GetPropertyRightMargin gets the "right-margin" property.
+// The default right margin for text in the text view.
+//
+// Tags in the buffer may override the default.
+//
+// Note that this property is confusingly named. In CSS terms,
+// the value set here is padding, and it is applied in addition
+// to the padding from the theme.
+func (x *TextView) GetPropertyRightMargin() int {
+	var v gobject.Value
+	x.GetProperty("right-margin", &v)
+	return v.GetInt()
+}
+
+// SetPropertyTabs sets the "tabs" property.
+// Custom tabs for this text.
+func (x *TextView) SetPropertyTabs(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("tabs", &v)
+}
+
+// GetPropertyTabs gets the "tabs" property.
+// Custom tabs for this text.
+func (x *TextView) GetPropertyTabs() uintptr {
+	var v gobject.Value
+	x.GetProperty("tabs", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyTopMargin sets the "top-margin" property.
+// The top margin for text in the text view.
+//
+// Note that this property is confusingly named. In CSS terms,
+// the value set here is padding, and it is applied in addition
+// to the padding from the theme.
+//
+// Don't confuse this property with [property@Gtk.Widget:margin-top].
+func (x *TextView) SetPropertyTopMargin(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("top-margin", &v)
+}
+
+// GetPropertyTopMargin gets the "top-margin" property.
+// The top margin for text in the text view.
+//
+// Note that this property is confusingly named. In CSS terms,
+// the value set here is padding, and it is applied in addition
+// to the padding from the theme.
+//
+// Don't confuse this property with [property@Gtk.Widget:margin-top].
+func (x *TextView) GetPropertyTopMargin() int {
+	var v gobject.Value
+	x.GetProperty("top-margin", &v)
+	return v.GetInt()
 }
 
 // Gets emitted when the user asks for it.
@@ -2102,7 +2429,7 @@ func (x *TextView) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *TextView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *TextView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

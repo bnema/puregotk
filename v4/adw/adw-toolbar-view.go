@@ -505,6 +505,154 @@ func (c *ToolbarView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyBottomBarHeight gets the "bottom-bar-height" property.
+// The current bottom bar height.
+//
+// Bottom bar height does change depending on
+// [property@ToolbarView:reveal-bottom-bars], including during the transition.
+//
+// See [property@ToolbarView:top-bar-height].
+func (x *ToolbarView) GetPropertyBottomBarHeight() int {
+	var v gobject.Value
+	x.GetProperty("bottom-bar-height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyExtendContentToBottomEdge sets the "extend-content-to-bottom-edge" property.
+// Whether the content widget can extend behind bottom bars.
+//
+// This can be used in combination with
+// [property@ToolbarView:reveal-bottom-bars] to show and hide toolbars in
+// fullscreen.
+//
+// See [property@ToolbarView:extend-content-to-top-edge].
+func (x *ToolbarView) SetPropertyExtendContentToBottomEdge(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("extend-content-to-bottom-edge", &v)
+}
+
+// GetPropertyExtendContentToBottomEdge gets the "extend-content-to-bottom-edge" property.
+// Whether the content widget can extend behind bottom bars.
+//
+// This can be used in combination with
+// [property@ToolbarView:reveal-bottom-bars] to show and hide toolbars in
+// fullscreen.
+//
+// See [property@ToolbarView:extend-content-to-top-edge].
+func (x *ToolbarView) GetPropertyExtendContentToBottomEdge() bool {
+	var v gobject.Value
+	x.GetProperty("extend-content-to-bottom-edge", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyExtendContentToTopEdge sets the "extend-content-to-top-edge" property.
+// Whether the content widget can extend behind top bars.
+//
+// This can be used in combination with [property@ToolbarView:reveal-top-bars]
+// to show and hide toolbars in fullscreen.
+//
+// See [property@ToolbarView:extend-content-to-bottom-edge].
+func (x *ToolbarView) SetPropertyExtendContentToTopEdge(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("extend-content-to-top-edge", &v)
+}
+
+// GetPropertyExtendContentToTopEdge gets the "extend-content-to-top-edge" property.
+// Whether the content widget can extend behind top bars.
+//
+// This can be used in combination with [property@ToolbarView:reveal-top-bars]
+// to show and hide toolbars in fullscreen.
+//
+// See [property@ToolbarView:extend-content-to-bottom-edge].
+func (x *ToolbarView) GetPropertyExtendContentToTopEdge() bool {
+	var v gobject.Value
+	x.GetProperty("extend-content-to-top-edge", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRevealBottomBars sets the "reveal-bottom-bars" property.
+// Whether bottom bars are visible.
+//
+// The transition will be animated.
+//
+// This can be used in combination with
+// [property@ToolbarView:extend-content-to-bottom-edge] to show and hide
+// toolbars in fullscreen.
+//
+// See [property@ToolbarView:reveal-top-bars].
+func (x *ToolbarView) SetPropertyRevealBottomBars(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reveal-bottom-bars", &v)
+}
+
+// GetPropertyRevealBottomBars gets the "reveal-bottom-bars" property.
+// Whether bottom bars are visible.
+//
+// The transition will be animated.
+//
+// This can be used in combination with
+// [property@ToolbarView:extend-content-to-bottom-edge] to show and hide
+// toolbars in fullscreen.
+//
+// See [property@ToolbarView:reveal-top-bars].
+func (x *ToolbarView) GetPropertyRevealBottomBars() bool {
+	var v gobject.Value
+	x.GetProperty("reveal-bottom-bars", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRevealTopBars sets the "reveal-top-bars" property.
+// Whether top bars are revealed.
+//
+// The transition will be animated.
+//
+// This can be used in combination with
+// [property@ToolbarView:extend-content-to-top-edge] to show and hide toolbars
+// in fullscreen.
+//
+// See [property@ToolbarView:reveal-bottom-bars].
+func (x *ToolbarView) SetPropertyRevealTopBars(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reveal-top-bars", &v)
+}
+
+// GetPropertyRevealTopBars gets the "reveal-top-bars" property.
+// Whether top bars are revealed.
+//
+// The transition will be animated.
+//
+// This can be used in combination with
+// [property@ToolbarView:extend-content-to-top-edge] to show and hide toolbars
+// in fullscreen.
+//
+// See [property@ToolbarView:reveal-bottom-bars].
+func (x *ToolbarView) GetPropertyRevealTopBars() bool {
+	var v gobject.Value
+	x.GetProperty("reveal-top-bars", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyTopBarHeight gets the "top-bar-height" property.
+// The current top bar height.
+//
+// Top bar height does change depending [property@ToolbarView:reveal-top-bars],
+// including during the transition.
+//
+// See [property@ToolbarView:bottom-bar-height].
+func (x *ToolbarView) GetPropertyTopBarHeight() int {
+	var v gobject.Value
+	x.GetProperty("top-bar-height", &v)
+	return v.GetInt()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -562,7 +710,7 @@ func (x *ToolbarView) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ToolbarView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ToolbarView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

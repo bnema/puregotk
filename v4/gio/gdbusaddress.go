@@ -60,13 +60,13 @@ func DbusAddressGetStream(AddressVar string, CancellableVar *Cancellable, Callba
 
 }
 
-var xDbusAddressGetStreamFinish func(uintptr, string, **glib.Error) uintptr
+var xDbusAddressGetStreamFinish func(uintptr, *string, **glib.Error) uintptr
 
 // Finishes an operation started with g_dbus_address_get_stream().
 //
 // A server is not required to set a GUID, so @out_guid may be set to %NULL
 // even on success.
-func DbusAddressGetStreamFinish(ResVar AsyncResult, OutGuidVar string) (*IOStream, error) {
+func DbusAddressGetStreamFinish(ResVar AsyncResult, OutGuidVar *string) (*IOStream, error) {
 	var cls *IOStream
 	var cerr *glib.Error
 
@@ -84,7 +84,7 @@ func DbusAddressGetStreamFinish(ResVar AsyncResult, OutGuidVar string) (*IOStrea
 
 }
 
-var xDbusAddressGetStreamSync func(string, string, uintptr, **glib.Error) uintptr
+var xDbusAddressGetStreamSync func(string, *string, uintptr, **glib.Error) uintptr
 
 // Synchronously connects to an endpoint specified by @address and
 // sets up the connection so it is in a state to run the client-side
@@ -96,7 +96,7 @@ var xDbusAddressGetStreamSync func(string, string, uintptr, **glib.Error) uintpt
 //
 // This is a synchronous failable function. See
 // g_dbus_address_get_stream() for the asynchronous version.
-func DbusAddressGetStreamSync(AddressVar string, OutGuidVar string, CancellableVar *Cancellable) (*IOStream, error) {
+func DbusAddressGetStreamSync(AddressVar string, OutGuidVar *string, CancellableVar *Cancellable) (*IOStream, error) {
 	var cls *IOStream
 	var cerr *glib.Error
 

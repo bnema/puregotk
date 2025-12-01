@@ -181,6 +181,23 @@ func (c *DBusObjectManagerServer) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyObjectPath sets the "object-path" property.
+// The object path to register the manager object at.
+func (x *DBusObjectManagerServer) SetPropertyObjectPath(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("object-path", &v)
+}
+
+// GetPropertyObjectPath gets the "object-path" property.
+// The object path to register the manager object at.
+func (x *DBusObjectManagerServer) GetPropertyObjectPath() string {
+	var v gobject.Value
+	x.GetProperty("object-path", &v)
+	return v.GetString()
+}
+
 // Gets the interface proxy for @interface_name at @object_path, if
 // any.
 func (x *DBusObjectManagerServer) GetInterface(ObjectPathVar string, InterfaceNameVar string) *DBusInterfaceBase {

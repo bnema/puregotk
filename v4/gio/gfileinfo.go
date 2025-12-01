@@ -857,10 +857,10 @@ func (x *FileInfo) GetAttributeByteString(AttributeVar string) string {
 	return cret
 }
 
-var xFileInfoGetAttributeData func(uintptr, string, *FileAttributeType, uintptr, *FileAttributeStatus) bool
+var xFileInfoGetAttributeData func(uintptr, string, *FileAttributeType, *uintptr, *FileAttributeStatus) bool
 
 // Gets the attribute type, value and status for an attribute key.
-func (x *FileInfo) GetAttributeData(AttributeVar string, TypeVar *FileAttributeType, ValuePpVar uintptr, StatusVar *FileAttributeStatus) bool {
+func (x *FileInfo) GetAttributeData(AttributeVar string, TypeVar *FileAttributeType, ValuePpVar *uintptr, StatusVar *FileAttributeStatus) bool {
 
 	cret := xFileInfoGetAttributeData(x.GoPointer(), AttributeVar, TypeVar, ValuePpVar, StatusVar)
 	return cret

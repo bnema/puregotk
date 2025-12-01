@@ -102,6 +102,46 @@ func (c *ShortcutLabel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAccelerator sets the "accelerator" property.
+// The accelerator that @self displays.
+//
+// See [property@Gtk.ShortcutsShortcut:accelerator]
+// for the accepted syntax.
+func (x *ShortcutLabel) SetPropertyAccelerator(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("accelerator", &v)
+}
+
+// GetPropertyAccelerator gets the "accelerator" property.
+// The accelerator that @self displays.
+//
+// See [property@Gtk.ShortcutsShortcut:accelerator]
+// for the accepted syntax.
+func (x *ShortcutLabel) GetPropertyAccelerator() string {
+	var v gobject.Value
+	x.GetProperty("accelerator", &v)
+	return v.GetString()
+}
+
+// SetPropertyDisabledText sets the "disabled-text" property.
+// The text that is displayed when no accelerator is set.
+func (x *ShortcutLabel) SetPropertyDisabledText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("disabled-text", &v)
+}
+
+// GetPropertyDisabledText gets the "disabled-text" property.
+// The text that is displayed when no accelerator is set.
+func (x *ShortcutLabel) GetPropertyDisabledText() string {
+	var v gobject.Value
+	x.GetProperty("disabled-text", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -159,7 +199,7 @@ func (x *ShortcutLabel) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ShortcutLabel) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ShortcutLabel) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

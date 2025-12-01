@@ -26,7 +26,7 @@ func (x *UnixCredentialsMessageClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *UnixCredentialsMessageClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -37,7 +37,7 @@ func (x *UnixCredentialsMessageClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *UnixCredentialsMessageClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -49,7 +49,7 @@ func (x *UnixCredentialsMessageClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *UnixCredentialsMessageClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -60,7 +60,7 @@ func (x *UnixCredentialsMessageClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *UnixCredentialsMessageClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil

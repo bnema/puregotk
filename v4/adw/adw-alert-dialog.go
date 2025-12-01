@@ -28,7 +28,7 @@ func (x *AlertDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideResponse sets the callback function.
+// OverrideResponse sets the "response" callback function.
 func (x *AlertDialogClass) OverrideResponse(cb func(*AlertDialog, string)) {
 	if cb == nil {
 		x.xResponse = 0
@@ -39,7 +39,7 @@ func (x *AlertDialogClass) OverrideResponse(cb func(*AlertDialog, string)) {
 	}
 }
 
-// GetResponse gets the callback function.
+// GetResponse gets the "response" callback function.
 func (x *AlertDialogClass) GetResponse() func(*AlertDialog, string) {
 	if x.xResponse == 0 {
 		return nil
@@ -685,6 +685,169 @@ func (c *AlertDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyBody sets the "body" property.
+// The body text of the dialog.
+func (x *AlertDialog) SetPropertyBody(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("body", &v)
+}
+
+// GetPropertyBody gets the "body" property.
+// The body text of the dialog.
+func (x *AlertDialog) GetPropertyBody() string {
+	var v gobject.Value
+	x.GetProperty("body", &v)
+	return v.GetString()
+}
+
+// SetPropertyBodyUseMarkup sets the "body-use-markup" property.
+// Whether the body text includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *AlertDialog) SetPropertyBodyUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("body-use-markup", &v)
+}
+
+// GetPropertyBodyUseMarkup gets the "body-use-markup" property.
+// Whether the body text includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *AlertDialog) GetPropertyBodyUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("body-use-markup", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCloseResponse sets the "close-response" property.
+// The ID of the close response.
+//
+// It will be passed to [signal@AlertDialog::response] if the dialog is
+// closed by pressing &lt;kbd&gt;Escape&lt;/kbd&gt; or with a system action.
+//
+// It doesn't have to correspond to any of the responses in the dialog.
+//
+// The default close response is `close`.
+func (x *AlertDialog) SetPropertyCloseResponse(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("close-response", &v)
+}
+
+// GetPropertyCloseResponse gets the "close-response" property.
+// The ID of the close response.
+//
+// It will be passed to [signal@AlertDialog::response] if the dialog is
+// closed by pressing &lt;kbd&gt;Escape&lt;/kbd&gt; or with a system action.
+//
+// It doesn't have to correspond to any of the responses in the dialog.
+//
+// The default close response is `close`.
+func (x *AlertDialog) GetPropertyCloseResponse() string {
+	var v gobject.Value
+	x.GetProperty("close-response", &v)
+	return v.GetString()
+}
+
+// SetPropertyDefaultResponse sets the "default-response" property.
+// The response ID of the default response.
+//
+// The button corresponding to this response will be set as the default widget
+// of the dialog.
+//
+// If not set, the default widget will not be set, and the last added response
+// will be focused by default.
+//
+// See [property@Dialog:default-widget].
+func (x *AlertDialog) SetPropertyDefaultResponse(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("default-response", &v)
+}
+
+// GetPropertyDefaultResponse gets the "default-response" property.
+// The response ID of the default response.
+//
+// The button corresponding to this response will be set as the default widget
+// of the dialog.
+//
+// If not set, the default widget will not be set, and the last added response
+// will be focused by default.
+//
+// See [property@Dialog:default-widget].
+func (x *AlertDialog) GetPropertyDefaultResponse() string {
+	var v gobject.Value
+	x.GetProperty("default-response", &v)
+	return v.GetString()
+}
+
+// SetPropertyHeading sets the "heading" property.
+// The heading of the dialog.
+func (x *AlertDialog) SetPropertyHeading(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("heading", &v)
+}
+
+// GetPropertyHeading gets the "heading" property.
+// The heading of the dialog.
+func (x *AlertDialog) GetPropertyHeading() string {
+	var v gobject.Value
+	x.GetProperty("heading", &v)
+	return v.GetString()
+}
+
+// SetPropertyHeadingUseMarkup sets the "heading-use-markup" property.
+// Whether the heading includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *AlertDialog) SetPropertyHeadingUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("heading-use-markup", &v)
+}
+
+// GetPropertyHeadingUseMarkup gets the "heading-use-markup" property.
+// Whether the heading includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *AlertDialog) GetPropertyHeadingUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("heading-use-markup", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPreferWideLayout sets the "prefer-wide-layout" property.
+// Whether to prefer wide layout.
+//
+// Prefer horizontal button layout when possible, and wider dialog width
+// otherwise.
+func (x *AlertDialog) SetPropertyPreferWideLayout(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("prefer-wide-layout", &v)
+}
+
+// GetPropertyPreferWideLayout gets the "prefer-wide-layout" property.
+// Whether to prefer wide layout.
+//
+// Prefer horizontal button layout when possible, and wider dialog width
+// otherwise.
+func (x *AlertDialog) GetPropertyPreferWideLayout() bool {
+	var v gobject.Value
+	x.GetProperty("prefer-wide-layout", &v)
+	return v.GetBoolean()
+}
+
 // This signal is emitted when the dialog is closed.
 //
 // @response will be set to the response ID of the button that had been
@@ -769,7 +932,7 @@ func (x *AlertDialog) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *AlertDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *AlertDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

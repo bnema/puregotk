@@ -30,7 +30,7 @@ func (x *MessageDialogClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideResponse sets the callback function.
+// OverrideResponse sets the "response" callback function.
 func (x *MessageDialogClass) OverrideResponse(cb func(*MessageDialog, string)) {
 	if cb == nil {
 		x.xResponse = 0
@@ -41,7 +41,7 @@ func (x *MessageDialogClass) OverrideResponse(cb func(*MessageDialog, string)) {
 	}
 }
 
-// GetResponse gets the callback function.
+// GetResponse gets the "response" callback function.
 func (x *MessageDialogClass) GetResponse() func(*MessageDialog, string) {
 	if x.xResponse == 0 {
 		return nil
@@ -648,6 +648,146 @@ func (c *MessageDialog) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyBody sets the "body" property.
+// The body text of the dialog.
+func (x *MessageDialog) SetPropertyBody(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("body", &v)
+}
+
+// GetPropertyBody gets the "body" property.
+// The body text of the dialog.
+func (x *MessageDialog) GetPropertyBody() string {
+	var v gobject.Value
+	x.GetProperty("body", &v)
+	return v.GetString()
+}
+
+// SetPropertyBodyUseMarkup sets the "body-use-markup" property.
+// Whether the body text includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *MessageDialog) SetPropertyBodyUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("body-use-markup", &v)
+}
+
+// GetPropertyBodyUseMarkup gets the "body-use-markup" property.
+// Whether the body text includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *MessageDialog) GetPropertyBodyUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("body-use-markup", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCloseResponse sets the "close-response" property.
+// The ID of the close response.
+//
+// It will be passed to [signal@MessageDialog::response] if the window is
+// closed by pressing &lt;kbd&gt;Escape&lt;/kbd&gt; or with a system action.
+//
+// It doesn't have to correspond to any of the responses in the dialog.
+//
+// The default close response is `close`.
+func (x *MessageDialog) SetPropertyCloseResponse(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("close-response", &v)
+}
+
+// GetPropertyCloseResponse gets the "close-response" property.
+// The ID of the close response.
+//
+// It will be passed to [signal@MessageDialog::response] if the window is
+// closed by pressing &lt;kbd&gt;Escape&lt;/kbd&gt; or with a system action.
+//
+// It doesn't have to correspond to any of the responses in the dialog.
+//
+// The default close response is `close`.
+func (x *MessageDialog) GetPropertyCloseResponse() string {
+	var v gobject.Value
+	x.GetProperty("close-response", &v)
+	return v.GetString()
+}
+
+// SetPropertyDefaultResponse sets the "default-response" property.
+// The response ID of the default response.
+//
+// The button corresponding to this response will be set as the default widget
+// of the dialog.
+//
+// If not set, the default widget will not be set, and the last added response
+// will be focused by default.
+//
+// See [property@Gtk.Window:default-widget].
+func (x *MessageDialog) SetPropertyDefaultResponse(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("default-response", &v)
+}
+
+// GetPropertyDefaultResponse gets the "default-response" property.
+// The response ID of the default response.
+//
+// The button corresponding to this response will be set as the default widget
+// of the dialog.
+//
+// If not set, the default widget will not be set, and the last added response
+// will be focused by default.
+//
+// See [property@Gtk.Window:default-widget].
+func (x *MessageDialog) GetPropertyDefaultResponse() string {
+	var v gobject.Value
+	x.GetProperty("default-response", &v)
+	return v.GetString()
+}
+
+// SetPropertyHeading sets the "heading" property.
+// The heading of the dialog.
+func (x *MessageDialog) SetPropertyHeading(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("heading", &v)
+}
+
+// GetPropertyHeading gets the "heading" property.
+// The heading of the dialog.
+func (x *MessageDialog) GetPropertyHeading() string {
+	var v gobject.Value
+	x.GetProperty("heading", &v)
+	return v.GetString()
+}
+
+// SetPropertyHeadingUseMarkup sets the "heading-use-markup" property.
+// Whether the heading includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *MessageDialog) SetPropertyHeadingUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("heading-use-markup", &v)
+}
+
+// GetPropertyHeadingUseMarkup gets the "heading-use-markup" property.
+// Whether the heading includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *MessageDialog) GetPropertyHeadingUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("heading-use-markup", &v)
+	return v.GetBoolean()
+}
+
 // This signal is emitted when the dialog is closed.
 //
 // @response will be set to the response ID of the button that had been
@@ -732,7 +872,7 @@ func (x *MessageDialog) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *MessageDialog) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *MessageDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -987,7 +1127,7 @@ func (x *MessageDialog) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *MessageDialog) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *MessageDialog) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	gtk.XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

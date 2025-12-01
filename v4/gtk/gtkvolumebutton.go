@@ -65,6 +65,29 @@ func (c *VolumeButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyUseSymbolic sets the "use-symbolic" property.
+// Whether to use symbolic icons as the icons.
+//
+// Note that if the symbolic icons are not available in your installed
+// theme, then the normal (potentially colorful) icons will be used.
+func (x *VolumeButton) SetPropertyUseSymbolic(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-symbolic", &v)
+}
+
+// GetPropertyUseSymbolic gets the "use-symbolic" property.
+// Whether to use symbolic icons as the icons.
+//
+// Note that if the symbolic icons are not available in your installed
+// theme, then the normal (potentially colorful) icons will be used.
+func (x *VolumeButton) GetPropertyUseSymbolic() bool {
+	var v gobject.Value
+	x.GetProperty("use-symbolic", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -122,7 +145,7 @@ func (x *VolumeButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *VolumeButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *VolumeButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

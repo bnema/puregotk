@@ -197,13 +197,13 @@ func (c *Overlay) SetGoPointer(ptr uintptr) {
 // be full-width/height). If the main child is a
 // `GtkScrolledWindow`, the overlays are placed relative
 // to its contents.
-func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, uintptr) bool) uint32 {
+func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) bool) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		return gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
 	}
 
-	fcb := func(clsPtr uintptr, WidgetVarp uintptr, AllocationVarp uintptr) bool {
+	fcb := func(clsPtr uintptr, WidgetVarp uintptr, AllocationVarp *uintptr) bool {
 		fa := Overlay{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -273,7 +273,7 @@ func (x *Overlay) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Overlay) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Overlay) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

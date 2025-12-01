@@ -37,7 +37,7 @@ func (x *WindowClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideActivateFocus sets the callback function.
+// OverrideActivateFocus sets the "activate_focus" callback function.
 // Activates the current focused widget within the window.
 func (x *WindowClass) OverrideActivateFocus(cb func(*Window)) {
 	if cb == nil {
@@ -49,7 +49,7 @@ func (x *WindowClass) OverrideActivateFocus(cb func(*Window)) {
 	}
 }
 
-// GetActivateFocus gets the callback function.
+// GetActivateFocus gets the "activate_focus" callback function.
 // Activates the current focused widget within the window.
 func (x *WindowClass) GetActivateFocus() func(*Window) {
 	if x.xActivateFocus == 0 {
@@ -62,7 +62,7 @@ func (x *WindowClass) GetActivateFocus() func(*Window) {
 	}
 }
 
-// OverrideActivateDefault sets the callback function.
+// OverrideActivateDefault sets the "activate_default" callback function.
 // Activates the default widget for the window.
 func (x *WindowClass) OverrideActivateDefault(cb func(*Window)) {
 	if cb == nil {
@@ -74,7 +74,7 @@ func (x *WindowClass) OverrideActivateDefault(cb func(*Window)) {
 	}
 }
 
-// GetActivateDefault gets the callback function.
+// GetActivateDefault gets the "activate_default" callback function.
 // Activates the default widget for the window.
 func (x *WindowClass) GetActivateDefault() func(*Window) {
 	if x.xActivateDefault == 0 {
@@ -87,7 +87,7 @@ func (x *WindowClass) GetActivateDefault() func(*Window) {
 	}
 }
 
-// OverrideKeysChanged sets the callback function.
+// OverrideKeysChanged sets the "keys_changed" callback function.
 // Signal gets emitted when the set of accelerators or
 //
 //	mnemonics that are associated with window changes.
@@ -101,7 +101,7 @@ func (x *WindowClass) OverrideKeysChanged(cb func(*Window)) {
 	}
 }
 
-// GetKeysChanged gets the callback function.
+// GetKeysChanged gets the "keys_changed" callback function.
 // Signal gets emitted when the set of accelerators or
 //
 //	mnemonics that are associated with window changes.
@@ -116,7 +116,7 @@ func (x *WindowClass) GetKeysChanged() func(*Window) {
 	}
 }
 
-// OverrideEnableDebugging sets the callback function.
+// OverrideEnableDebugging sets the "enable_debugging" callback function.
 // Class handler for the `GtkWindow::enable-debugging`
 //
 //	keybinding signal.
@@ -130,7 +130,7 @@ func (x *WindowClass) OverrideEnableDebugging(cb func(*Window, bool) bool) {
 	}
 }
 
-// GetEnableDebugging gets the callback function.
+// GetEnableDebugging gets the "enable_debugging" callback function.
 // Class handler for the `GtkWindow::enable-debugging`
 //
 //	keybinding signal.
@@ -145,7 +145,7 @@ func (x *WindowClass) GetEnableDebugging() func(*Window, bool) bool {
 	}
 }
 
-// OverrideCloseRequest sets the callback function.
+// OverrideCloseRequest sets the "close_request" callback function.
 func (x *WindowClass) OverrideCloseRequest(cb func(*Window) bool) {
 	if cb == nil {
 		x.xCloseRequest = 0
@@ -156,7 +156,7 @@ func (x *WindowClass) OverrideCloseRequest(cb func(*Window) bool) {
 	}
 }
 
-// GetCloseRequest gets the callback function.
+// GetCloseRequest gets the "close_request" callback function.
 func (x *WindowClass) GetCloseRequest() func(*Window) bool {
 	if x.xCloseRequest == 0 {
 		return nil
@@ -451,7 +451,7 @@ func (x *Window) GetDecorated() bool {
 	return cret
 }
 
-var xWindowGetDefaultSize func(uintptr, int, int)
+var xWindowGetDefaultSize func(uintptr, *int, *int)
 
 // Gets the default size of the window.
 //
@@ -461,7 +461,7 @@ var xWindowGetDefaultSize func(uintptr, int, int)
 //
 // This function is the recommended way for [saving window state
 // across restarts of applications](https://developer.gnome.org/documentation/tutorials/save-state.html).
-func (x *Window) GetDefaultSize(WidthVar int, HeightVar int) {
+func (x *Window) GetDefaultSize(WidthVar *int, HeightVar *int) {
 
 	xWindowGetDefaultSize(x.GoPointer(), WidthVar, HeightVar)
 
@@ -1227,6 +1227,332 @@ func (c *Window) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDecorated sets the "decorated" property.
+// Whether the window should have a frame (also known as *decorations*).
+func (x *Window) SetPropertyDecorated(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("decorated", &v)
+}
+
+// GetPropertyDecorated gets the "decorated" property.
+// Whether the window should have a frame (also known as *decorations*).
+func (x *Window) GetPropertyDecorated() bool {
+	var v gobject.Value
+	x.GetProperty("decorated", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyDefaultHeight sets the "default-height" property.
+// The default height of the window.
+func (x *Window) SetPropertyDefaultHeight(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("default-height", &v)
+}
+
+// GetPropertyDefaultHeight gets the "default-height" property.
+// The default height of the window.
+func (x *Window) GetPropertyDefaultHeight() int {
+	var v gobject.Value
+	x.GetProperty("default-height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyDefaultWidth sets the "default-width" property.
+// The default width of the window.
+func (x *Window) SetPropertyDefaultWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("default-width", &v)
+}
+
+// GetPropertyDefaultWidth gets the "default-width" property.
+// The default width of the window.
+func (x *Window) GetPropertyDefaultWidth() int {
+	var v gobject.Value
+	x.GetProperty("default-width", &v)
+	return v.GetInt()
+}
+
+// SetPropertyDeletable sets the "deletable" property.
+// Whether the window frame should have a close button.
+func (x *Window) SetPropertyDeletable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("deletable", &v)
+}
+
+// GetPropertyDeletable gets the "deletable" property.
+// Whether the window frame should have a close button.
+func (x *Window) GetPropertyDeletable() bool {
+	var v gobject.Value
+	x.GetProperty("deletable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyDestroyWithParent sets the "destroy-with-parent" property.
+// If this window should be destroyed when the parent is destroyed.
+func (x *Window) SetPropertyDestroyWithParent(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("destroy-with-parent", &v)
+}
+
+// GetPropertyDestroyWithParent gets the "destroy-with-parent" property.
+// If this window should be destroyed when the parent is destroyed.
+func (x *Window) GetPropertyDestroyWithParent() bool {
+	var v gobject.Value
+	x.GetProperty("destroy-with-parent", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyFocusVisible sets the "focus-visible" property.
+// Whether 'focus rectangles' are currently visible in this window.
+//
+// This property is maintained by GTK based on user input
+// and should not be set by applications.
+func (x *Window) SetPropertyFocusVisible(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("focus-visible", &v)
+}
+
+// GetPropertyFocusVisible gets the "focus-visible" property.
+// Whether 'focus rectangles' are currently visible in this window.
+//
+// This property is maintained by GTK based on user input
+// and should not be set by applications.
+func (x *Window) GetPropertyFocusVisible() bool {
+	var v gobject.Value
+	x.GetProperty("focus-visible", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyFullscreened sets the "fullscreened" property.
+// Whether the window is fullscreen.
+//
+// Setting this property is the equivalent of calling
+// [method@Gtk.Window.fullscreen] or [method@Gtk.Window.unfullscreen];
+// either operation is asynchronous, which means you will need to
+// connect to the ::notify signal in order to know whether the
+// operation was successful.
+func (x *Window) SetPropertyFullscreened(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("fullscreened", &v)
+}
+
+// GetPropertyFullscreened gets the "fullscreened" property.
+// Whether the window is fullscreen.
+//
+// Setting this property is the equivalent of calling
+// [method@Gtk.Window.fullscreen] or [method@Gtk.Window.unfullscreen];
+// either operation is asynchronous, which means you will need to
+// connect to the ::notify signal in order to know whether the
+// operation was successful.
+func (x *Window) GetPropertyFullscreened() bool {
+	var v gobject.Value
+	x.GetProperty("fullscreened", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHandleMenubarAccel sets the "handle-menubar-accel" property.
+// Whether the window frame should handle &lt;kbd&gt;F10&lt;/kbd&gt; for activating
+// menubars.
+func (x *Window) SetPropertyHandleMenubarAccel(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("handle-menubar-accel", &v)
+}
+
+// GetPropertyHandleMenubarAccel gets the "handle-menubar-accel" property.
+// Whether the window frame should handle &lt;kbd&gt;F10&lt;/kbd&gt; for activating
+// menubars.
+func (x *Window) GetPropertyHandleMenubarAccel() bool {
+	var v gobject.Value
+	x.GetProperty("handle-menubar-accel", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHideOnClose sets the "hide-on-close" property.
+// If this window should be hidden instead of destroyed when the user clicks
+// the close button.
+func (x *Window) SetPropertyHideOnClose(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("hide-on-close", &v)
+}
+
+// GetPropertyHideOnClose gets the "hide-on-close" property.
+// If this window should be hidden instead of destroyed when the user clicks
+// the close button.
+func (x *Window) GetPropertyHideOnClose() bool {
+	var v gobject.Value
+	x.GetProperty("hide-on-close", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIconName sets the "icon-name" property.
+// Specifies the name of the themed icon to use as the window icon.
+//
+// See [class@Gtk.IconTheme] for more details.
+func (x *Window) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// Specifies the name of the themed icon to use as the window icon.
+//
+// See [class@Gtk.IconTheme] for more details.
+func (x *Window) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// GetPropertyIsActive gets the "is-active" property.
+// Whether the toplevel is the currently active window.
+func (x *Window) GetPropertyIsActive() bool {
+	var v gobject.Value
+	x.GetProperty("is-active", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaximized sets the "maximized" property.
+// Whether the window is maximized.
+//
+// Setting this property is the equivalent of calling
+// [method@Gtk.Window.maximize] or [method@Gtk.Window.unmaximize];
+// either operation is asynchronous, which means you will need to
+// connect to the ::notify signal in order to know whether the
+// operation was successful.
+func (x *Window) SetPropertyMaximized(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("maximized", &v)
+}
+
+// GetPropertyMaximized gets the "maximized" property.
+// Whether the window is maximized.
+//
+// Setting this property is the equivalent of calling
+// [method@Gtk.Window.maximize] or [method@Gtk.Window.unmaximize];
+// either operation is asynchronous, which means you will need to
+// connect to the ::notify signal in order to know whether the
+// operation was successful.
+func (x *Window) GetPropertyMaximized() bool {
+	var v gobject.Value
+	x.GetProperty("maximized", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMnemonicsVisible sets the "mnemonics-visible" property.
+// Whether mnemonics are currently visible in this window.
+//
+// This property is maintained by GTK based on user input,
+// and should not be set by applications.
+func (x *Window) SetPropertyMnemonicsVisible(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("mnemonics-visible", &v)
+}
+
+// GetPropertyMnemonicsVisible gets the "mnemonics-visible" property.
+// Whether mnemonics are currently visible in this window.
+//
+// This property is maintained by GTK based on user input,
+// and should not be set by applications.
+func (x *Window) GetPropertyMnemonicsVisible() bool {
+	var v gobject.Value
+	x.GetProperty("mnemonics-visible", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyModal sets the "modal" property.
+// If true, the window is modal.
+func (x *Window) SetPropertyModal(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("modal", &v)
+}
+
+// GetPropertyModal gets the "modal" property.
+// If true, the window is modal.
+func (x *Window) GetPropertyModal() bool {
+	var v gobject.Value
+	x.GetProperty("modal", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyResizable sets the "resizable" property.
+// If true, users can resize the window.
+func (x *Window) SetPropertyResizable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("resizable", &v)
+}
+
+// GetPropertyResizable gets the "resizable" property.
+// If true, users can resize the window.
+func (x *Window) GetPropertyResizable() bool {
+	var v gobject.Value
+	x.GetProperty("resizable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyStartupId sets the "startup-id" property.
+// A write-only property for setting window's startup notification identifier.
+func (x *Window) SetPropertyStartupId(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("startup-id", &v)
+}
+
+// GetPropertySuspended gets the "suspended" property.
+// Whether the window is suspended.
+//
+// See [method@Gtk.Window.is_suspended] for details about what suspended means.
+func (x *Window) GetPropertySuspended() bool {
+	var v gobject.Value
+	x.GetProperty("suspended", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the window.
+func (x *Window) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the window.
+func (x *Window) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 // Emitted when the user activates the default widget.
 //
 // This is a [keybinding signal](class.SignalAction.html).
@@ -1404,7 +1730,7 @@ func (x *Window) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Window) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Window) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -1659,7 +1985,7 @@ func (x *Window) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *Window) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *Window) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

@@ -32,25 +32,25 @@ func (x *ScaleClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGetLayoutOffsets sets the callback function.
-func (x *ScaleClass) OverrideGetLayoutOffsets(cb func(*Scale, int, int)) {
+// OverrideGetLayoutOffsets sets the "get_layout_offsets" callback function.
+func (x *ScaleClass) OverrideGetLayoutOffsets(cb func(*Scale, *int, *int)) {
 	if cb == nil {
 		x.xGetLayoutOffsets = 0
 	} else {
-		x.xGetLayoutOffsets = purego.NewCallback(func(ScaleVarp uintptr, XVarp int, YVarp int) {
+		x.xGetLayoutOffsets = purego.NewCallback(func(ScaleVarp uintptr, XVarp *int, YVarp *int) {
 			cb(ScaleNewFromInternalPtr(ScaleVarp), XVarp, YVarp)
 		})
 	}
 }
 
-// GetGetLayoutOffsets gets the callback function.
-func (x *ScaleClass) GetGetLayoutOffsets() func(*Scale, int, int) {
+// GetGetLayoutOffsets gets the "get_layout_offsets" callback function.
+func (x *ScaleClass) GetGetLayoutOffsets() func(*Scale, *int, *int) {
 	if x.xGetLayoutOffsets == 0 {
 		return nil
 	}
-	var rawCallback func(ScaleVarp uintptr, XVarp int, YVarp int)
+	var rawCallback func(ScaleVarp uintptr, XVarp *int, YVarp *int)
 	purego.RegisterFunc(&rawCallback, x.xGetLayoutOffsets)
-	return func(ScaleVar *Scale, XVar int, YVar int) {
+	return func(ScaleVar *Scale, XVar *int, YVar *int) {
 		rawCallback(ScaleVar.GoPointer(), XVar, YVar)
 	}
 }
@@ -285,7 +285,7 @@ func (x *Scale) GetLayout() *pango.Layout {
 	return cls
 }
 
-var xScaleGetLayoutOffsets func(uintptr, int, int)
+var xScaleGetLayoutOffsets func(uintptr, *int, *int)
 
 // Obtains the coordinates where the scale will draw the
 // `PangoLayout` representing the text in the scale.
@@ -295,7 +295,7 @@ var xScaleGetLayoutOffsets func(uintptr, int, int)
 //
 // If the [property@Gtk.Scale:draw-value] property is %FALSE, the return
 // values are undefined.
-func (x *Scale) GetLayoutOffsets(XVar int, YVar int) {
+func (x *Scale) GetLayoutOffsets(XVar *int, YVar *int) {
 
 	xScaleGetLayoutOffsets(x.GoPointer(), XVar, YVar)
 
@@ -389,6 +389,57 @@ func (c *Scale) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDigits sets the "digits" property.
+// The number of decimal places that are displayed in the value.
+func (x *Scale) SetPropertyDigits(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("digits", &v)
+}
+
+// GetPropertyDigits gets the "digits" property.
+// The number of decimal places that are displayed in the value.
+func (x *Scale) GetPropertyDigits() int {
+	var v gobject.Value
+	x.GetProperty("digits", &v)
+	return v.GetInt()
+}
+
+// SetPropertyDrawValue sets the "draw-value" property.
+// Whether the current value is displayed as a string next to the slider.
+func (x *Scale) SetPropertyDrawValue(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("draw-value", &v)
+}
+
+// GetPropertyDrawValue gets the "draw-value" property.
+// Whether the current value is displayed as a string next to the slider.
+func (x *Scale) GetPropertyDrawValue() bool {
+	var v gobject.Value
+	x.GetProperty("draw-value", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasOrigin sets the "has-origin" property.
+// Whether the scale has an origin.
+func (x *Scale) SetPropertyHasOrigin(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-origin", &v)
+}
+
+// GetPropertyHasOrigin gets the "has-origin" property.
+// Whether the scale has an origin.
+func (x *Scale) GetPropertyHasOrigin() bool {
+	var v gobject.Value
+	x.GetProperty("has-origin", &v)
+	return v.GetBoolean()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -446,7 +497,7 @@ func (x *Scale) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Scale) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Scale) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

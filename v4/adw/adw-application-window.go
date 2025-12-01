@@ -224,6 +224,39 @@ func (c *ApplicationWindow) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAdaptivePreview sets the "adaptive-preview" property.
+// Whether adaptive preview is currently open.
+//
+// Adaptive preview is a debugging tool used for testing the window
+// contents at specific screen sizes, simulating mobile environment.
+//
+// Adaptive preview can always be accessed from inspector. This function
+// allows applications to open it manually.
+//
+// Most applications should not use this property.
+func (x *ApplicationWindow) SetPropertyAdaptivePreview(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("adaptive-preview", &v)
+}
+
+// GetPropertyAdaptivePreview gets the "adaptive-preview" property.
+// Whether adaptive preview is currently open.
+//
+// Adaptive preview is a debugging tool used for testing the window
+// contents at specific screen sizes, simulating mobile environment.
+//
+// Adaptive preview can always be accessed from inspector. This function
+// allows applications to open it manually.
+//
+// Most applications should not use this property.
+func (x *ApplicationWindow) GetPropertyAdaptivePreview() bool {
+	var v gobject.Value
+	x.GetProperty("adaptive-preview", &v)
+	return v.GetBoolean()
+}
+
 // Emits the [signal@Gio.ActionGroup::action-added] signal on @action_group.
 //
 // This function should only be called by [type@Gio.ActionGroup] implementations.
@@ -449,7 +482,7 @@ func (x *ApplicationWindow) ListActions() []string {
 // fields (as indicated by having a non-`NULL` reference passed in) are
 // filled.  If the action doesn’t exist, `FALSE` is returned and the
 // fields may or may not have been modified.
-func (x *ApplicationWindow) QueryAction(ActionNameVar string, EnabledVar bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
+func (x *ApplicationWindow) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := gio.XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
 	return cret
@@ -630,7 +663,7 @@ func (x *ApplicationWindow) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ApplicationWindow) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ApplicationWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -885,7 +918,7 @@ func (x *ApplicationWindow) GetSurface() *gdk.Surface {
 //
 // This is the translation from @self's surface coordinates into
 // @self's widget coordinates.
-func (x *ApplicationWindow) GetSurfaceTransform(XVar float64, YVar float64) {
+func (x *ApplicationWindow) GetSurfaceTransform(XVar *float64, YVar *float64) {
 
 	gtk.XGtkNativeGetSurfaceTransform(x.GoPointer(), XVar, YVar)
 

@@ -479,6 +479,156 @@ func (c *Toast) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActionName sets the "action-name" property.
+// The name of the associated action.
+//
+// It will be activated when clicking the button.
+//
+// See [property@Toast:action-target].
+func (x *Toast) SetPropertyActionName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("action-name", &v)
+}
+
+// GetPropertyActionName gets the "action-name" property.
+// The name of the associated action.
+//
+// It will be activated when clicking the button.
+//
+// See [property@Toast:action-target].
+func (x *Toast) GetPropertyActionName() string {
+	var v gobject.Value
+	x.GetProperty("action-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyActionTarget sets the "action-target" property.
+// The parameter for action invocations.
+func (x *Toast) SetPropertyActionTarget(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("action-target", &v)
+}
+
+// GetPropertyActionTarget gets the "action-target" property.
+// The parameter for action invocations.
+func (x *Toast) GetPropertyActionTarget() uintptr {
+	var v gobject.Value
+	x.GetProperty("action-target", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyButtonLabel sets the "button-label" property.
+// The label to show on the button.
+//
+// Underlines in the button text can be used to indicate a mnemonic.
+//
+// If set to `NULL`, the button won't be shown.
+//
+// See [property@Toast:action-name].
+func (x *Toast) SetPropertyButtonLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("button-label", &v)
+}
+
+// GetPropertyButtonLabel gets the "button-label" property.
+// The label to show on the button.
+//
+// Underlines in the button text can be used to indicate a mnemonic.
+//
+// If set to `NULL`, the button won't be shown.
+//
+// See [property@Toast:action-name].
+func (x *Toast) GetPropertyButtonLabel() string {
+	var v gobject.Value
+	x.GetProperty("button-label", &v)
+	return v.GetString()
+}
+
+// SetPropertyTimeout sets the "timeout" property.
+// The timeout of the toast, in seconds.
+//
+// If timeout is 0, the toast is displayed indefinitely until manually
+// dismissed.
+//
+// Toasts cannot disappear while being hovered, pressed (on touchscreen), or
+// have keyboard focus inside them.
+func (x *Toast) SetPropertyTimeout(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("timeout", &v)
+}
+
+// GetPropertyTimeout gets the "timeout" property.
+// The timeout of the toast, in seconds.
+//
+// If timeout is 0, the toast is displayed indefinitely until manually
+// dismissed.
+//
+// Toasts cannot disappear while being hovered, pressed (on touchscreen), or
+// have keyboard focus inside them.
+func (x *Toast) GetPropertyTimeout() uint {
+	var v gobject.Value
+	x.GetProperty("timeout", &v)
+	return v.GetUint()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title of the toast.
+//
+// The title can be marked up with the Pango text markup language.
+//
+// Setting a title will unset [property@Toast:custom-title].
+//
+// If [property@Toast:custom-title] is set, it will be used instead.
+func (x *Toast) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title of the toast.
+//
+// The title can be marked up with the Pango text markup language.
+//
+// Setting a title will unset [property@Toast:custom-title].
+//
+// If [property@Toast:custom-title] is set, it will be used instead.
+func (x *Toast) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
+// SetPropertyUseMarkup sets the "use-markup" property.
+// Whether to use Pango markup for the toast title.
+//
+// See also [func@Pango.parse_markup].
+func (x *Toast) SetPropertyUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-markup", &v)
+}
+
+// GetPropertyUseMarkup gets the "use-markup" property.
+// Whether to use Pango markup for the toast title.
+//
+// See also [func@Pango.parse_markup].
+func (x *Toast) GetPropertyUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("use-markup", &v)
+	return v.GetBoolean()
+}
+
 // Emitted after the button has been clicked.
 //
 // It can be used as an alternative to setting an action.

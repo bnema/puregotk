@@ -323,6 +323,235 @@ func (c *Inscription) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAttributes sets the "attributes" property.
+// A list of style attributes to apply to the text of the inscription.
+func (x *Inscription) SetPropertyAttributes(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("attributes", &v)
+}
+
+// GetPropertyAttributes gets the "attributes" property.
+// A list of style attributes to apply to the text of the inscription.
+func (x *Inscription) GetPropertyAttributes() uintptr {
+	var v gobject.Value
+	x.GetProperty("attributes", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyMarkup sets the "markup" property.
+// Utility property that sets both the [property@Gtk.Inscription:text] and
+// [property@Gtk.Inscription:attributes] properties, mainly intended for use in
+// GtkBuilder ui files to ease translation support and bindings.
+//
+// This function uses [func@Pango.parse_markup] to parse the markup into text and
+// attributes. The markup must be valid. If you cannot ensure that, consider using
+// [func@Pango.parse_markup] and setting the two properties yourself.
+func (x *Inscription) SetPropertyMarkup(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("markup", &v)
+}
+
+// SetPropertyMinChars sets the "min-chars" property.
+// The number of characters that should fit into the inscription at minimum.
+//
+// This influences the requested width, not the width actually given to the widget,
+// which might turn out to be larger.
+//
+// Note that this is an approximate character width, so some characters might be
+// wider and some might be thinner, so do not expect the number of characters to
+// exactly match.
+//
+// If you set this property to 0, the inscription will not request any width at all
+// and its width will be determined entirely by its surroundings.
+func (x *Inscription) SetPropertyMinChars(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("min-chars", &v)
+}
+
+// GetPropertyMinChars gets the "min-chars" property.
+// The number of characters that should fit into the inscription at minimum.
+//
+// This influences the requested width, not the width actually given to the widget,
+// which might turn out to be larger.
+//
+// Note that this is an approximate character width, so some characters might be
+// wider and some might be thinner, so do not expect the number of characters to
+// exactly match.
+//
+// If you set this property to 0, the inscription will not request any width at all
+// and its width will be determined entirely by its surroundings.
+func (x *Inscription) GetPropertyMinChars() uint {
+	var v gobject.Value
+	x.GetProperty("min-chars", &v)
+	return v.GetUint()
+}
+
+// SetPropertyMinLines sets the "min-lines" property.
+// The number of lines that should fit into the inscription at minimum.
+//
+// This influences the requested height, not the height actually given to the widget,
+// which might turn out to be larger.
+//
+// Note that this is an approximate line height, so if the text uses things like fancy
+// Unicode or attribute that influence the height, the text might not fit.
+//
+// If you set this property to 0, the inscription will not request any height at all
+// and its height will be determined entirely by its surroundings.
+func (x *Inscription) SetPropertyMinLines(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("min-lines", &v)
+}
+
+// GetPropertyMinLines gets the "min-lines" property.
+// The number of lines that should fit into the inscription at minimum.
+//
+// This influences the requested height, not the height actually given to the widget,
+// which might turn out to be larger.
+//
+// Note that this is an approximate line height, so if the text uses things like fancy
+// Unicode or attribute that influence the height, the text might not fit.
+//
+// If you set this property to 0, the inscription will not request any height at all
+// and its height will be determined entirely by its surroundings.
+func (x *Inscription) GetPropertyMinLines() uint {
+	var v gobject.Value
+	x.GetProperty("min-lines", &v)
+	return v.GetUint()
+}
+
+// SetPropertyNatChars sets the "nat-chars" property.
+// The number of characters that should ideally fit into the inscription.
+//
+// This influences the requested width, not the width actually given to the widget.
+// The widget might turn out larger as well as smaller.
+//
+// If this property is set to a value smaller than [property@Gtk.Inscription:min-chars],
+// that value will be used. In particular, for the default value of 0, this will always
+// be the case.
+func (x *Inscription) SetPropertyNatChars(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("nat-chars", &v)
+}
+
+// GetPropertyNatChars gets the "nat-chars" property.
+// The number of characters that should ideally fit into the inscription.
+//
+// This influences the requested width, not the width actually given to the widget.
+// The widget might turn out larger as well as smaller.
+//
+// If this property is set to a value smaller than [property@Gtk.Inscription:min-chars],
+// that value will be used. In particular, for the default value of 0, this will always
+// be the case.
+func (x *Inscription) GetPropertyNatChars() uint {
+	var v gobject.Value
+	x.GetProperty("nat-chars", &v)
+	return v.GetUint()
+}
+
+// SetPropertyNatLines sets the "nat-lines" property.
+// The number of lines that should ideally fit into the inscription.
+//
+// This influences the requested height, not the height actually given to the widget.
+// The widget might turn out larger as well as smaller.
+//
+// If this property is set to a value smaller than [property@Gtk.Inscription:min-lines],
+// that value will be used. In particular, for the default value of 0, this will always
+// be the case.
+func (x *Inscription) SetPropertyNatLines(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("nat-lines", &v)
+}
+
+// GetPropertyNatLines gets the "nat-lines" property.
+// The number of lines that should ideally fit into the inscription.
+//
+// This influences the requested height, not the height actually given to the widget.
+// The widget might turn out larger as well as smaller.
+//
+// If this property is set to a value smaller than [property@Gtk.Inscription:min-lines],
+// that value will be used. In particular, for the default value of 0, this will always
+// be the case.
+func (x *Inscription) GetPropertyNatLines() uint {
+	var v gobject.Value
+	x.GetProperty("nat-lines", &v)
+	return v.GetUint()
+}
+
+// SetPropertyText sets the "text" property.
+// The displayed text.
+func (x *Inscription) SetPropertyText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("text", &v)
+}
+
+// GetPropertyText gets the "text" property.
+// The displayed text.
+func (x *Inscription) GetPropertyText() string {
+	var v gobject.Value
+	x.GetProperty("text", &v)
+	return v.GetString()
+}
+
+// SetPropertyXalign sets the "xalign" property.
+// The horizontal alignment of the text inside the allocated size.
+//
+// Compare this to [property@Gtk.Widget:halign], which determines how the
+// inscription's size allocation is positioned in the available space.
+func (x *Inscription) SetPropertyXalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("xalign", &v)
+}
+
+// GetPropertyXalign gets the "xalign" property.
+// The horizontal alignment of the text inside the allocated size.
+//
+// Compare this to [property@Gtk.Widget:halign], which determines how the
+// inscription's size allocation is positioned in the available space.
+func (x *Inscription) GetPropertyXalign() float32 {
+	var v gobject.Value
+	x.GetProperty("xalign", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyYalign sets the "yalign" property.
+// The vertical alignment of the text inside the allocated size.
+//
+// Compare this to [property@Gtk.Widget:valign], which determines how the
+// inscription's size allocation is positioned in the available space.
+func (x *Inscription) SetPropertyYalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("yalign", &v)
+}
+
+// GetPropertyYalign gets the "yalign" property.
+// The vertical alignment of the text inside the allocated size.
+//
+// Compare this to [property@Gtk.Widget:valign], which determines how the
+// inscription's size allocation is positioned in the available space.
+func (x *Inscription) GetPropertyYalign() float32 {
+	var v gobject.Value
+	x.GetProperty("yalign", &v)
+	return v.GetFloat()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -380,7 +609,7 @@ func (x *Inscription) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Inscription) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Inscription) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

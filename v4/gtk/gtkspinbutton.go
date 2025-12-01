@@ -318,13 +318,13 @@ func (x *SpinButton) GetDigits() uint {
 	return cret
 }
 
-var xSpinButtonGetIncrements func(uintptr, float64, float64)
+var xSpinButtonGetIncrements func(uintptr, *float64, *float64)
 
 // Gets the current step and page the increments
 // used by @spin_button.
 //
 // See [method@Gtk.SpinButton.set_increments].
-func (x *SpinButton) GetIncrements(StepVar float64, PageVar float64) {
+func (x *SpinButton) GetIncrements(StepVar *float64, PageVar *float64) {
 
 	xSpinButtonGetIncrements(x.GoPointer(), StepVar, PageVar)
 
@@ -339,12 +339,12 @@ func (x *SpinButton) GetNumeric() bool {
 	return cret
 }
 
-var xSpinButtonGetRange func(uintptr, float64, float64)
+var xSpinButtonGetRange func(uintptr, *float64, *float64)
 
 // Gets the range allowed for @spin_button.
 //
 // See [method@Gtk.SpinButton.set_range].
-func (x *SpinButton) GetRange(MinVar float64, MaxVar float64) {
+func (x *SpinButton) GetRange(MinVar *float64, MaxVar *float64) {
 
 	xSpinButtonGetRange(x.GoPointer(), MinVar, MaxVar)
 
@@ -548,6 +548,131 @@ func (c *SpinButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActivatesDefault sets the "activates-default" property.
+// Whether to activate the default widget when the spin button is activated.
+//
+// See [signal@Gtk.SpinButton::activate] for what counts as activation.
+func (x *SpinButton) SetPropertyActivatesDefault(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activates-default", &v)
+}
+
+// GetPropertyActivatesDefault gets the "activates-default" property.
+// Whether to activate the default widget when the spin button is activated.
+//
+// See [signal@Gtk.SpinButton::activate] for what counts as activation.
+func (x *SpinButton) GetPropertyActivatesDefault() bool {
+	var v gobject.Value
+	x.GetProperty("activates-default", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyClimbRate sets the "climb-rate" property.
+// The acceleration rate when you hold down a button or key.
+func (x *SpinButton) SetPropertyClimbRate(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("climb-rate", &v)
+}
+
+// GetPropertyClimbRate gets the "climb-rate" property.
+// The acceleration rate when you hold down a button or key.
+func (x *SpinButton) GetPropertyClimbRate() float64 {
+	var v gobject.Value
+	x.GetProperty("climb-rate", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyDigits sets the "digits" property.
+// The number of decimal places to display.
+func (x *SpinButton) SetPropertyDigits(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("digits", &v)
+}
+
+// GetPropertyDigits gets the "digits" property.
+// The number of decimal places to display.
+func (x *SpinButton) GetPropertyDigits() uint {
+	var v gobject.Value
+	x.GetProperty("digits", &v)
+	return v.GetUint()
+}
+
+// SetPropertyNumeric sets the "numeric" property.
+// Whether non-numeric characters should be ignored.
+func (x *SpinButton) SetPropertyNumeric(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("numeric", &v)
+}
+
+// GetPropertyNumeric gets the "numeric" property.
+// Whether non-numeric characters should be ignored.
+func (x *SpinButton) GetPropertyNumeric() bool {
+	var v gobject.Value
+	x.GetProperty("numeric", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySnapToTicks sets the "snap-to-ticks" property.
+// Whether erroneous values are automatically changed to the spin buttons
+// nearest step increment.
+func (x *SpinButton) SetPropertySnapToTicks(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("snap-to-ticks", &v)
+}
+
+// GetPropertySnapToTicks gets the "snap-to-ticks" property.
+// Whether erroneous values are automatically changed to the spin buttons
+// nearest step increment.
+func (x *SpinButton) GetPropertySnapToTicks() bool {
+	var v gobject.Value
+	x.GetProperty("snap-to-ticks", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyValue sets the "value" property.
+// The current value.
+func (x *SpinButton) SetPropertyValue(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("value", &v)
+}
+
+// GetPropertyValue gets the "value" property.
+// The current value.
+func (x *SpinButton) GetPropertyValue() float64 {
+	var v gobject.Value
+	x.GetProperty("value", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyWrap sets the "wrap" property.
+// Whether a spin button should wrap upon reaching its limits.
+func (x *SpinButton) SetPropertyWrap(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("wrap", &v)
+}
+
+// GetPropertyWrap gets the "wrap" property.
+// Whether a spin button should wrap upon reaching its limits.
+func (x *SpinButton) GetPropertyWrap() bool {
+	var v gobject.Value
+	x.GetProperty("wrap", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when the spin button is activated.
 //
 // The keybindings for this signal are all forms of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
@@ -609,13 +734,13 @@ func (x *SpinButton) ConnectChangeValue(cb *func(SpinButton, ScrollType)) uint32
 // new value.
 //
 // The default conversion uses g_strtod().
-func (x *SpinButton) ConnectInput(cb *func(SpinButton, float64) int) uint32 {
+func (x *SpinButton) ConnectInput(cb *func(SpinButton, *float64) int) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
 		return gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
 	}
 
-	fcb := func(clsPtr uintptr, NewValueVarp float64) int {
+	fcb := func(clsPtr uintptr, NewValueVarp *float64) int {
 		fa := SpinButton{}
 		fa.Ptr = clsPtr
 		cbFn := *cb
@@ -769,7 +894,7 @@ func (x *SpinButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *SpinButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *SpinButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -1172,7 +1297,7 @@ func (x *SpinButton) GetPosition() int {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *SpinButton) GetSelectionBounds(StartPosVar int, EndPosVar int) bool {
+func (x *SpinButton) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret

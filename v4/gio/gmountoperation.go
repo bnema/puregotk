@@ -52,7 +52,7 @@ func (x *MountOperationClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideAskPassword sets the callback function.
+// OverrideAskPassword sets the "ask_password" callback function.
 func (x *MountOperationClass) OverrideAskPassword(cb func(*MountOperation, string, string, string, AskPasswordFlags)) {
 	if cb == nil {
 		x.xAskPassword = 0
@@ -63,7 +63,7 @@ func (x *MountOperationClass) OverrideAskPassword(cb func(*MountOperation, strin
 	}
 }
 
-// GetAskPassword gets the callback function.
+// GetAskPassword gets the "ask_password" callback function.
 func (x *MountOperationClass) GetAskPassword() func(*MountOperation, string, string, string, AskPasswordFlags) {
 	if x.xAskPassword == 0 {
 		return nil
@@ -75,7 +75,7 @@ func (x *MountOperationClass) GetAskPassword() func(*MountOperation, string, str
 	}
 }
 
-// OverrideAskQuestion sets the callback function.
+// OverrideAskQuestion sets the "ask_question" callback function.
 func (x *MountOperationClass) OverrideAskQuestion(cb func(*MountOperation, string, []string)) {
 	if cb == nil {
 		x.xAskQuestion = 0
@@ -86,7 +86,7 @@ func (x *MountOperationClass) OverrideAskQuestion(cb func(*MountOperation, strin
 	}
 }
 
-// GetAskQuestion gets the callback function.
+// GetAskQuestion gets the "ask_question" callback function.
 func (x *MountOperationClass) GetAskQuestion() func(*MountOperation, string, []string) {
 	if x.xAskQuestion == 0 {
 		return nil
@@ -98,7 +98,7 @@ func (x *MountOperationClass) GetAskQuestion() func(*MountOperation, string, []s
 	}
 }
 
-// OverrideReply sets the callback function.
+// OverrideReply sets the "reply" callback function.
 func (x *MountOperationClass) OverrideReply(cb func(*MountOperation, MountOperationResult)) {
 	if cb == nil {
 		x.xReply = 0
@@ -109,7 +109,7 @@ func (x *MountOperationClass) OverrideReply(cb func(*MountOperation, MountOperat
 	}
 }
 
-// GetReply gets the callback function.
+// GetReply gets the "reply" callback function.
 func (x *MountOperationClass) GetReply() func(*MountOperation, MountOperationResult) {
 	if x.xReply == 0 {
 		return nil
@@ -121,7 +121,7 @@ func (x *MountOperationClass) GetReply() func(*MountOperation, MountOperationRes
 	}
 }
 
-// OverrideAborted sets the callback function.
+// OverrideAborted sets the "aborted" callback function.
 func (x *MountOperationClass) OverrideAborted(cb func(*MountOperation)) {
 	if cb == nil {
 		x.xAborted = 0
@@ -132,7 +132,7 @@ func (x *MountOperationClass) OverrideAborted(cb func(*MountOperation)) {
 	}
 }
 
-// GetAborted gets the callback function.
+// GetAborted gets the "aborted" callback function.
 func (x *MountOperationClass) GetAborted() func(*MountOperation) {
 	if x.xAborted == 0 {
 		return nil
@@ -144,7 +144,7 @@ func (x *MountOperationClass) GetAborted() func(*MountOperation) {
 	}
 }
 
-// OverrideShowProcesses sets the callback function.
+// OverrideShowProcesses sets the "show_processes" callback function.
 func (x *MountOperationClass) OverrideShowProcesses(cb func(*MountOperation, string, []glib.Pid, []string)) {
 	if cb == nil {
 		x.xShowProcesses = 0
@@ -155,7 +155,7 @@ func (x *MountOperationClass) OverrideShowProcesses(cb func(*MountOperation, str
 	}
 }
 
-// GetShowProcesses gets the callback function.
+// GetShowProcesses gets the "show_processes" callback function.
 func (x *MountOperationClass) GetShowProcesses() func(*MountOperation, string, []glib.Pid, []string) {
 	if x.xShowProcesses == 0 {
 		return nil
@@ -167,7 +167,7 @@ func (x *MountOperationClass) GetShowProcesses() func(*MountOperation, string, [
 	}
 }
 
-// OverrideShowUnmountProgress sets the callback function.
+// OverrideShowUnmountProgress sets the "show_unmount_progress" callback function.
 func (x *MountOperationClass) OverrideShowUnmountProgress(cb func(*MountOperation, string, int64, int64)) {
 	if cb == nil {
 		x.xShowUnmountProgress = 0
@@ -178,7 +178,7 @@ func (x *MountOperationClass) OverrideShowUnmountProgress(cb func(*MountOperatio
 	}
 }
 
-// GetShowUnmountProgress gets the callback function.
+// GetShowUnmountProgress gets the "show_unmount_progress" callback function.
 func (x *MountOperationClass) GetShowUnmountProgress() func(*MountOperation, string, int64, int64) {
 	if x.xShowUnmountProgress == 0 {
 		return nil
@@ -190,7 +190,7 @@ func (x *MountOperationClass) GetShowUnmountProgress() func(*MountOperation, str
 	}
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *MountOperationClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -201,7 +201,7 @@ func (x *MountOperationClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *MountOperationClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -213,7 +213,7 @@ func (x *MountOperationClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *MountOperationClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -224,7 +224,7 @@ func (x *MountOperationClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *MountOperationClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -236,7 +236,7 @@ func (x *MountOperationClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *MountOperationClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -247,7 +247,7 @@ func (x *MountOperationClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *MountOperationClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -259,7 +259,7 @@ func (x *MountOperationClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *MountOperationClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -270,7 +270,7 @@ func (x *MountOperationClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *MountOperationClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -282,7 +282,7 @@ func (x *MountOperationClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *MountOperationClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -293,7 +293,7 @@ func (x *MountOperationClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *MountOperationClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -305,7 +305,7 @@ func (x *MountOperationClass) GetGReserved5() func() {
 	}
 }
 
-// OverrideGReserved6 sets the callback function.
+// OverrideGReserved6 sets the "_g_reserved6" callback function.
 func (x *MountOperationClass) OverrideGReserved6(cb func()) {
 	if cb == nil {
 		x.xGReserved6 = 0
@@ -316,7 +316,7 @@ func (x *MountOperationClass) OverrideGReserved6(cb func()) {
 	}
 }
 
-// GetGReserved6 gets the callback function.
+// GetGReserved6 gets the "_g_reserved6" callback function.
 func (x *MountOperationClass) GetGReserved6() func() {
 	if x.xGReserved6 == 0 {
 		return nil
@@ -328,7 +328,7 @@ func (x *MountOperationClass) GetGReserved6() func() {
 	}
 }
 
-// OverrideGReserved7 sets the callback function.
+// OverrideGReserved7 sets the "_g_reserved7" callback function.
 func (x *MountOperationClass) OverrideGReserved7(cb func()) {
 	if cb == nil {
 		x.xGReserved7 = 0
@@ -339,7 +339,7 @@ func (x *MountOperationClass) OverrideGReserved7(cb func()) {
 	}
 }
 
-// GetGReserved7 gets the callback function.
+// GetGReserved7 gets the "_g_reserved7" callback function.
 func (x *MountOperationClass) GetGReserved7() func() {
 	if x.xGReserved7 == 0 {
 		return nil
@@ -351,7 +351,7 @@ func (x *MountOperationClass) GetGReserved7() func() {
 	}
 }
 
-// OverrideGReserved8 sets the callback function.
+// OverrideGReserved8 sets the "_g_reserved8" callback function.
 func (x *MountOperationClass) OverrideGReserved8(cb func()) {
 	if cb == nil {
 		x.xGReserved8 = 0
@@ -362,7 +362,7 @@ func (x *MountOperationClass) OverrideGReserved8(cb func()) {
 	}
 }
 
-// GetGReserved8 gets the callback function.
+// GetGReserved8 gets the "_g_reserved8" callback function.
 func (x *MountOperationClass) GetGReserved8() func() {
 	if x.xGReserved8 == 0 {
 		return nil
@@ -374,7 +374,7 @@ func (x *MountOperationClass) GetGReserved8() func() {
 	}
 }
 
-// OverrideGReserved9 sets the callback function.
+// OverrideGReserved9 sets the "_g_reserved9" callback function.
 func (x *MountOperationClass) OverrideGReserved9(cb func()) {
 	if cb == nil {
 		x.xGReserved9 = 0
@@ -385,7 +385,7 @@ func (x *MountOperationClass) OverrideGReserved9(cb func()) {
 	}
 }
 
-// GetGReserved9 gets the callback function.
+// GetGReserved9 gets the "_g_reserved9" callback function.
 func (x *MountOperationClass) GetGReserved9() func() {
 	if x.xGReserved9 == 0 {
 		return nil
@@ -642,6 +642,160 @@ func (c *MountOperation) GoPointer() uintptr {
 
 func (c *MountOperation) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAnonymous sets the "anonymous" property.
+// Whether to use an anonymous user when authenticating.
+func (x *MountOperation) SetPropertyAnonymous(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("anonymous", &v)
+}
+
+// GetPropertyAnonymous gets the "anonymous" property.
+// Whether to use an anonymous user when authenticating.
+func (x *MountOperation) GetPropertyAnonymous() bool {
+	var v gobject.Value
+	x.GetProperty("anonymous", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyChoice sets the "choice" property.
+// The index of the user's choice when a question is asked during the
+// mount operation. See the #GMountOperation::ask-question signal.
+func (x *MountOperation) SetPropertyChoice(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("choice", &v)
+}
+
+// GetPropertyChoice gets the "choice" property.
+// The index of the user's choice when a question is asked during the
+// mount operation. See the #GMountOperation::ask-question signal.
+func (x *MountOperation) GetPropertyChoice() int {
+	var v gobject.Value
+	x.GetProperty("choice", &v)
+	return v.GetInt()
+}
+
+// SetPropertyDomain sets the "domain" property.
+// The domain to use for the mount operation.
+func (x *MountOperation) SetPropertyDomain(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("domain", &v)
+}
+
+// GetPropertyDomain gets the "domain" property.
+// The domain to use for the mount operation.
+func (x *MountOperation) GetPropertyDomain() string {
+	var v gobject.Value
+	x.GetProperty("domain", &v)
+	return v.GetString()
+}
+
+// SetPropertyIsTcryptHiddenVolume sets the "is-tcrypt-hidden-volume" property.
+// Whether the device to be unlocked is a TCRYPT hidden volume.
+// See [the VeraCrypt documentation](https://www.veracrypt.fr/en/Hidden%20Volume.html).
+func (x *MountOperation) SetPropertyIsTcryptHiddenVolume(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("is-tcrypt-hidden-volume", &v)
+}
+
+// GetPropertyIsTcryptHiddenVolume gets the "is-tcrypt-hidden-volume" property.
+// Whether the device to be unlocked is a TCRYPT hidden volume.
+// See [the VeraCrypt documentation](https://www.veracrypt.fr/en/Hidden%20Volume.html).
+func (x *MountOperation) GetPropertyIsTcryptHiddenVolume() bool {
+	var v gobject.Value
+	x.GetProperty("is-tcrypt-hidden-volume", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIsTcryptSystemVolume sets the "is-tcrypt-system-volume" property.
+// Whether the device to be unlocked is a TCRYPT system volume.
+// In this context, a system volume is a volume with a bootloader
+// and operating system installed. This is only supported for Windows
+// operating systems. For further documentation, see
+// [the VeraCrypt documentation](https://www.veracrypt.fr/en/System%20Encryption.html).
+func (x *MountOperation) SetPropertyIsTcryptSystemVolume(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("is-tcrypt-system-volume", &v)
+}
+
+// GetPropertyIsTcryptSystemVolume gets the "is-tcrypt-system-volume" property.
+// Whether the device to be unlocked is a TCRYPT system volume.
+// In this context, a system volume is a volume with a bootloader
+// and operating system installed. This is only supported for Windows
+// operating systems. For further documentation, see
+// [the VeraCrypt documentation](https://www.veracrypt.fr/en/System%20Encryption.html).
+func (x *MountOperation) GetPropertyIsTcryptSystemVolume() bool {
+	var v gobject.Value
+	x.GetProperty("is-tcrypt-system-volume", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPassword sets the "password" property.
+// The password that is used for authentication when carrying out
+// the mount operation.
+func (x *MountOperation) SetPropertyPassword(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("password", &v)
+}
+
+// GetPropertyPassword gets the "password" property.
+// The password that is used for authentication when carrying out
+// the mount operation.
+func (x *MountOperation) GetPropertyPassword() string {
+	var v gobject.Value
+	x.GetProperty("password", &v)
+	return v.GetString()
+}
+
+// SetPropertyPim sets the "pim" property.
+// The VeraCrypt PIM value, when unlocking a VeraCrypt volume. See
+// [the VeraCrypt documentation](https://www.veracrypt.fr/en/Personal%20Iterations%20Multiplier%20(PIM).html).
+func (x *MountOperation) SetPropertyPim(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("pim", &v)
+}
+
+// GetPropertyPim gets the "pim" property.
+// The VeraCrypt PIM value, when unlocking a VeraCrypt volume. See
+// [the VeraCrypt documentation](https://www.veracrypt.fr/en/Personal%20Iterations%20Multiplier%20(PIM).html).
+func (x *MountOperation) GetPropertyPim() uint {
+	var v gobject.Value
+	x.GetProperty("pim", &v)
+	return v.GetUint()
+}
+
+// SetPropertyUsername sets the "username" property.
+// The user name that is used for authentication when carrying out
+// the mount operation.
+func (x *MountOperation) SetPropertyUsername(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("username", &v)
+}
+
+// GetPropertyUsername gets the "username" property.
+// The user name that is used for authentication when carrying out
+// the mount operation.
+func (x *MountOperation) GetPropertyUsername() string {
+	var v gobject.Value
+	x.GetProperty("username", &v)
+	return v.GetString()
 }
 
 // Emitted by the backend when e.g. a device becomes unavailable

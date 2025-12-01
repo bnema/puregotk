@@ -186,25 +186,25 @@ func (x *ContentFormats) ContainMimeType(MimeTypeVar string) bool {
 	return cret
 }
 
-var xContentFormatsGetGtypes func(uintptr, uint) uintptr
+var xContentFormatsGetGtypes func(uintptr, *uint) uintptr
 
 // Gets the `GType`s included in @formats.
 //
 // Note that @formats may not contain any `GType`s, in particular when
 // they are empty. In that case %NULL will be returned.
-func (x *ContentFormats) GetGtypes(NGtypesVar uint) uintptr {
+func (x *ContentFormats) GetGtypes(NGtypesVar *uint) uintptr {
 
 	cret := xContentFormatsGetGtypes(x.GoPointer(), NGtypesVar)
 	return cret
 }
 
-var xContentFormatsGetMimeTypes func(uintptr, uint) []string
+var xContentFormatsGetMimeTypes func(uintptr, *uint) []string
 
 // Gets the mime types included in @formats.
 //
 // Note that @formats may not contain any mime types, in particular
 // when they are empty. In that case %NULL will be returned.
-func (x *ContentFormats) GetMimeTypes(NMimeTypesVar uint) []string {
+func (x *ContentFormats) GetMimeTypes(NMimeTypesVar *uint) []string {
 
 	cret := xContentFormatsGetMimeTypes(x.GoPointer(), NMimeTypesVar)
 	return cret
@@ -400,11 +400,11 @@ func (x *DmabufFormats) Equal(Formats2Var *DmabufFormats) bool {
 	return cret
 }
 
-var xDmabufFormatsGetFormat func(uintptr, uint, uint32, uint64)
+var xDmabufFormatsGetFormat func(uintptr, uint, *uint32, *uint64)
 
 // Gets the fourcc code and modifier for a format
 // that is contained in @formats.
-func (x *DmabufFormats) GetFormat(IdxVar uint, FourccVar uint32, ModifierVar uint64) {
+func (x *DmabufFormats) GetFormat(IdxVar uint, FourccVar *uint32, ModifierVar *uint64) {
 
 	xDmabufFormatsGetFormat(x.GoPointer(), IdxVar, FourccVar, ModifierVar)
 
@@ -592,7 +592,7 @@ func (x *TextureDownloader) Copy() *TextureDownloader {
 	return cret
 }
 
-var xTextureDownloaderDownloadBytes func(uintptr, uint) *glib.Bytes
+var xTextureDownloaderDownloadBytes func(uintptr, *uint) *glib.Bytes
 
 // Downloads the given texture pixels into a `GBytes`. The rowstride will
 // be stored in the stride value.
@@ -604,20 +604,20 @@ var xTextureDownloaderDownloadBytes func(uintptr, uint) *glib.Bytes
 //
 // This function cannot be used with a multiplanar format. Use
 // [method@Gdk.TextureDownloader.download_bytes_with_planes] for that purpose.
-func (x *TextureDownloader) DownloadBytes(OutStrideVar uint) *glib.Bytes {
+func (x *TextureDownloader) DownloadBytes(OutStrideVar *uint) *glib.Bytes {
 
 	cret := xTextureDownloaderDownloadBytes(x.GoPointer(), OutStrideVar)
 	return cret
 }
 
-var xTextureDownloaderDownloadBytesWithPlanes func(uintptr, [4]uint, [4]uint) *glib.Bytes
+var xTextureDownloaderDownloadBytesWithPlanes func(uintptr, *[4]uint, *[4]uint) *glib.Bytes
 
 // Downloads the given texture pixels into a `GBytes`. The offsets and
 // strides of the resulting buffer will be stored in the respective values.
 //
 // If the format does have less than 4 planes, the remaining offsets and strides will be
 // set to `0`.
-func (x *TextureDownloader) DownloadBytesWithPlanes(OutOffsetsVar [4]uint, OutStridesVar [4]uint) *glib.Bytes {
+func (x *TextureDownloader) DownloadBytesWithPlanes(OutOffsetsVar *[4]uint, OutStridesVar *[4]uint) *glib.Bytes {
 
 	cret := xTextureDownloaderDownloadBytesWithPlanes(x.GoPointer(), OutOffsetsVar, OutStridesVar)
 	return cret

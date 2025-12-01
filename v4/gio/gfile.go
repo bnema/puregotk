@@ -231,7 +231,7 @@ func (x *FileIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideDup sets the callback function.
+// OverrideDup sets the "dup" callback function.
 // Duplicates a #GFile.
 func (x *FileIface) OverrideDup(cb func(File) *FileBase) {
 	if cb == nil {
@@ -247,7 +247,7 @@ func (x *FileIface) OverrideDup(cb func(File) *FileBase) {
 	}
 }
 
-// GetDup gets the callback function.
+// GetDup gets the "dup" callback function.
 // Duplicates a #GFile.
 func (x *FileIface) GetDup() func(File) *FileBase {
 	if x.xDup == 0 {
@@ -266,7 +266,7 @@ func (x *FileIface) GetDup() func(File) *FileBase {
 	}
 }
 
-// OverrideHash sets the callback function.
+// OverrideHash sets the "hash" callback function.
 // Creates a hash of a #GFile.
 func (x *FileIface) OverrideHash(cb func(File) uint) {
 	if cb == nil {
@@ -278,7 +278,7 @@ func (x *FileIface) OverrideHash(cb func(File) uint) {
 	}
 }
 
-// GetHash gets the callback function.
+// GetHash gets the "hash" callback function.
 // Creates a hash of a #GFile.
 func (x *FileIface) GetHash() func(File) uint {
 	if x.xHash == 0 {
@@ -291,7 +291,7 @@ func (x *FileIface) GetHash() func(File) uint {
 	}
 }
 
-// OverrideEqual sets the callback function.
+// OverrideEqual sets the "equal" callback function.
 // Checks equality of two given #GFiles.
 func (x *FileIface) OverrideEqual(cb func(File, File) bool) {
 	if cb == nil {
@@ -303,7 +303,7 @@ func (x *FileIface) OverrideEqual(cb func(File, File) bool) {
 	}
 }
 
-// GetEqual gets the callback function.
+// GetEqual gets the "equal" callback function.
 // Checks equality of two given #GFiles.
 func (x *FileIface) GetEqual() func(File, File) bool {
 	if x.xEqual == 0 {
@@ -316,7 +316,7 @@ func (x *FileIface) GetEqual() func(File, File) bool {
 	}
 }
 
-// OverrideIsNative sets the callback function.
+// OverrideIsNative sets the "is_native" callback function.
 // Checks to see if a file is native to the system.
 func (x *FileIface) OverrideIsNative(cb func(File) bool) {
 	if cb == nil {
@@ -328,7 +328,7 @@ func (x *FileIface) OverrideIsNative(cb func(File) bool) {
 	}
 }
 
-// GetIsNative gets the callback function.
+// GetIsNative gets the "is_native" callback function.
 // Checks to see if a file is native to the system.
 func (x *FileIface) GetIsNative() func(File) bool {
 	if x.xIsNative == 0 {
@@ -341,7 +341,7 @@ func (x *FileIface) GetIsNative() func(File) bool {
 	}
 }
 
-// OverrideHasUriScheme sets the callback function.
+// OverrideHasUriScheme sets the "has_uri_scheme" callback function.
 // Checks to see if a #GFile has a given URI scheme.
 func (x *FileIface) OverrideHasUriScheme(cb func(File, string) bool) {
 	if cb == nil {
@@ -353,7 +353,7 @@ func (x *FileIface) OverrideHasUriScheme(cb func(File, string) bool) {
 	}
 }
 
-// GetHasUriScheme gets the callback function.
+// GetHasUriScheme gets the "has_uri_scheme" callback function.
 // Checks to see if a #GFile has a given URI scheme.
 func (x *FileIface) GetHasUriScheme() func(File, string) bool {
 	if x.xHasUriScheme == 0 {
@@ -366,7 +366,7 @@ func (x *FileIface) GetHasUriScheme() func(File, string) bool {
 	}
 }
 
-// OverrideGetUriScheme sets the callback function.
+// OverrideGetUriScheme sets the "get_uri_scheme" callback function.
 // Gets the URI scheme for a #GFile.
 func (x *FileIface) OverrideGetUriScheme(cb func(File) string) {
 	if cb == nil {
@@ -378,7 +378,7 @@ func (x *FileIface) OverrideGetUriScheme(cb func(File) string) {
 	}
 }
 
-// GetGetUriScheme gets the callback function.
+// GetGetUriScheme gets the "get_uri_scheme" callback function.
 // Gets the URI scheme for a #GFile.
 func (x *FileIface) GetGetUriScheme() func(File) string {
 	if x.xGetUriScheme == 0 {
@@ -391,7 +391,7 @@ func (x *FileIface) GetGetUriScheme() func(File) string {
 	}
 }
 
-// OverrideGetBasename sets the callback function.
+// OverrideGetBasename sets the "get_basename" callback function.
 // Gets the basename for a given #GFile.
 func (x *FileIface) OverrideGetBasename(cb func(File) string) {
 	if cb == nil {
@@ -403,7 +403,7 @@ func (x *FileIface) OverrideGetBasename(cb func(File) string) {
 	}
 }
 
-// GetGetBasename gets the callback function.
+// GetGetBasename gets the "get_basename" callback function.
 // Gets the basename for a given #GFile.
 func (x *FileIface) GetGetBasename() func(File) string {
 	if x.xGetBasename == 0 {
@@ -416,7 +416,7 @@ func (x *FileIface) GetGetBasename() func(File) string {
 	}
 }
 
-// OverrideGetPath sets the callback function.
+// OverrideGetPath sets the "get_path" callback function.
 // Gets the current path within a #GFile.
 func (x *FileIface) OverrideGetPath(cb func(File) string) {
 	if cb == nil {
@@ -428,7 +428,7 @@ func (x *FileIface) OverrideGetPath(cb func(File) string) {
 	}
 }
 
-// GetGetPath gets the callback function.
+// GetGetPath gets the "get_path" callback function.
 // Gets the current path within a #GFile.
 func (x *FileIface) GetGetPath() func(File) string {
 	if x.xGetPath == 0 {
@@ -441,7 +441,7 @@ func (x *FileIface) GetGetPath() func(File) string {
 	}
 }
 
-// OverrideGetUri sets the callback function.
+// OverrideGetUri sets the "get_uri" callback function.
 // Gets a URI for the path within a #GFile.
 func (x *FileIface) OverrideGetUri(cb func(File) string) {
 	if cb == nil {
@@ -453,7 +453,7 @@ func (x *FileIface) OverrideGetUri(cb func(File) string) {
 	}
 }
 
-// GetGetUri gets the callback function.
+// GetGetUri gets the "get_uri" callback function.
 // Gets a URI for the path within a #GFile.
 func (x *FileIface) GetGetUri() func(File) string {
 	if x.xGetUri == 0 {
@@ -466,7 +466,7 @@ func (x *FileIface) GetGetUri() func(File) string {
 	}
 }
 
-// OverrideGetParseName sets the callback function.
+// OverrideGetParseName sets the "get_parse_name" callback function.
 // Gets the parsed name for the #GFile.
 func (x *FileIface) OverrideGetParseName(cb func(File) string) {
 	if cb == nil {
@@ -478,7 +478,7 @@ func (x *FileIface) OverrideGetParseName(cb func(File) string) {
 	}
 }
 
-// GetGetParseName gets the callback function.
+// GetGetParseName gets the "get_parse_name" callback function.
 // Gets the parsed name for the #GFile.
 func (x *FileIface) GetGetParseName() func(File) string {
 	if x.xGetParseName == 0 {
@@ -491,7 +491,7 @@ func (x *FileIface) GetGetParseName() func(File) string {
 	}
 }
 
-// OverrideGetParent sets the callback function.
+// OverrideGetParent sets the "get_parent" callback function.
 // Gets the parent directory for the #GFile.
 func (x *FileIface) OverrideGetParent(cb func(File) *FileBase) {
 	if cb == nil {
@@ -507,7 +507,7 @@ func (x *FileIface) OverrideGetParent(cb func(File) *FileBase) {
 	}
 }
 
-// GetGetParent gets the callback function.
+// GetGetParent gets the "get_parent" callback function.
 // Gets the parent directory for the #GFile.
 func (x *FileIface) GetGetParent() func(File) *FileBase {
 	if x.xGetParent == 0 {
@@ -526,7 +526,7 @@ func (x *FileIface) GetGetParent() func(File) *FileBase {
 	}
 }
 
-// OverridePrefixMatches sets the callback function.
+// OverridePrefixMatches sets the "prefix_matches" callback function.
 // Checks whether a #GFile contains a specified file.
 func (x *FileIface) OverridePrefixMatches(cb func(File, File) bool) {
 	if cb == nil {
@@ -538,7 +538,7 @@ func (x *FileIface) OverridePrefixMatches(cb func(File, File) bool) {
 	}
 }
 
-// GetPrefixMatches gets the callback function.
+// GetPrefixMatches gets the "prefix_matches" callback function.
 // Checks whether a #GFile contains a specified file.
 func (x *FileIface) GetPrefixMatches() func(File, File) bool {
 	if x.xPrefixMatches == 0 {
@@ -551,7 +551,7 @@ func (x *FileIface) GetPrefixMatches() func(File, File) bool {
 	}
 }
 
-// OverrideGetRelativePath sets the callback function.
+// OverrideGetRelativePath sets the "get_relative_path" callback function.
 // Gets the path for a #GFile relative to a given path.
 func (x *FileIface) OverrideGetRelativePath(cb func(File, File) string) {
 	if cb == nil {
@@ -563,7 +563,7 @@ func (x *FileIface) OverrideGetRelativePath(cb func(File, File) string) {
 	}
 }
 
-// GetGetRelativePath gets the callback function.
+// GetGetRelativePath gets the "get_relative_path" callback function.
 // Gets the path for a #GFile relative to a given path.
 func (x *FileIface) GetGetRelativePath() func(File, File) string {
 	if x.xGetRelativePath == 0 {
@@ -576,7 +576,7 @@ func (x *FileIface) GetGetRelativePath() func(File, File) string {
 	}
 }
 
-// OverrideResolveRelativePath sets the callback function.
+// OverrideResolveRelativePath sets the "resolve_relative_path" callback function.
 // Resolves a relative path for a #GFile to an absolute path.
 func (x *FileIface) OverrideResolveRelativePath(cb func(File, string) *FileBase) {
 	if cb == nil {
@@ -592,7 +592,7 @@ func (x *FileIface) OverrideResolveRelativePath(cb func(File, string) *FileBase)
 	}
 }
 
-// GetResolveRelativePath gets the callback function.
+// GetResolveRelativePath gets the "resolve_relative_path" callback function.
 // Resolves a relative path for a #GFile to an absolute path.
 func (x *FileIface) GetResolveRelativePath() func(File, string) *FileBase {
 	if x.xResolveRelativePath == 0 {
@@ -611,7 +611,7 @@ func (x *FileIface) GetResolveRelativePath() func(File, string) *FileBase {
 	}
 }
 
-// OverrideGetChildForDisplayName sets the callback function.
+// OverrideGetChildForDisplayName sets the "get_child_for_display_name" callback function.
 // Gets the child #GFile for a given display name.
 func (x *FileIface) OverrideGetChildForDisplayName(cb func(File, string) *FileBase) {
 	if cb == nil {
@@ -627,7 +627,7 @@ func (x *FileIface) OverrideGetChildForDisplayName(cb func(File, string) *FileBa
 	}
 }
 
-// GetGetChildForDisplayName gets the callback function.
+// GetGetChildForDisplayName gets the "get_child_for_display_name" callback function.
 // Gets the child #GFile for a given display name.
 func (x *FileIface) GetGetChildForDisplayName() func(File, string) *FileBase {
 	if x.xGetChildForDisplayName == 0 {
@@ -646,7 +646,7 @@ func (x *FileIface) GetGetChildForDisplayName() func(File, string) *FileBase {
 	}
 }
 
-// OverrideEnumerateChildren sets the callback function.
+// OverrideEnumerateChildren sets the "enumerate_children" callback function.
 // Gets a #GFileEnumerator with the children of a #GFile.
 func (x *FileIface) OverrideEnumerateChildren(cb func(File, string, FileQueryInfoFlags, *Cancellable) *FileEnumerator) {
 	if cb == nil {
@@ -662,7 +662,7 @@ func (x *FileIface) OverrideEnumerateChildren(cb func(File, string, FileQueryInf
 	}
 }
 
-// GetEnumerateChildren gets the callback function.
+// GetEnumerateChildren gets the "enumerate_children" callback function.
 // Gets a #GFileEnumerator with the children of a #GFile.
 func (x *FileIface) GetEnumerateChildren() func(File, string, FileQueryInfoFlags, *Cancellable) *FileEnumerator {
 	if x.xEnumerateChildren == 0 {
@@ -681,7 +681,7 @@ func (x *FileIface) GetEnumerateChildren() func(File, string, FileQueryInfoFlags
 	}
 }
 
-// OverrideEnumerateChildrenAsync sets the callback function.
+// OverrideEnumerateChildrenAsync sets the "enumerate_children_async" callback function.
 // Asynchronously gets a #GFileEnumerator with the children of a #GFile.
 func (x *FileIface) OverrideEnumerateChildrenAsync(cb func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -693,7 +693,7 @@ func (x *FileIface) OverrideEnumerateChildrenAsync(cb func(File, string, FileQue
 	}
 }
 
-// GetEnumerateChildrenAsync gets the callback function.
+// GetEnumerateChildrenAsync gets the "enumerate_children_async" callback function.
 // Asynchronously gets a #GFileEnumerator with the children of a #GFile.
 func (x *FileIface) GetEnumerateChildrenAsync() func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xEnumerateChildrenAsync == 0 {
@@ -706,7 +706,7 @@ func (x *FileIface) GetEnumerateChildrenAsync() func(File, string, FileQueryInfo
 	}
 }
 
-// OverrideEnumerateChildrenFinish sets the callback function.
+// OverrideEnumerateChildrenFinish sets the "enumerate_children_finish" callback function.
 // Finishes asynchronously enumerating the children.
 func (x *FileIface) OverrideEnumerateChildrenFinish(cb func(File, AsyncResult) *FileEnumerator) {
 	if cb == nil {
@@ -722,7 +722,7 @@ func (x *FileIface) OverrideEnumerateChildrenFinish(cb func(File, AsyncResult) *
 	}
 }
 
-// GetEnumerateChildrenFinish gets the callback function.
+// GetEnumerateChildrenFinish gets the "enumerate_children_finish" callback function.
 // Finishes asynchronously enumerating the children.
 func (x *FileIface) GetEnumerateChildrenFinish() func(File, AsyncResult) *FileEnumerator {
 	if x.xEnumerateChildrenFinish == 0 {
@@ -741,7 +741,7 @@ func (x *FileIface) GetEnumerateChildrenFinish() func(File, AsyncResult) *FileEn
 	}
 }
 
-// OverrideQueryInfo sets the callback function.
+// OverrideQueryInfo sets the "query_info" callback function.
 // Gets the #GFileInfo for a #GFile.
 func (x *FileIface) OverrideQueryInfo(cb func(File, string, FileQueryInfoFlags, *Cancellable) *FileInfo) {
 	if cb == nil {
@@ -757,7 +757,7 @@ func (x *FileIface) OverrideQueryInfo(cb func(File, string, FileQueryInfoFlags, 
 	}
 }
 
-// GetQueryInfo gets the callback function.
+// GetQueryInfo gets the "query_info" callback function.
 // Gets the #GFileInfo for a #GFile.
 func (x *FileIface) GetQueryInfo() func(File, string, FileQueryInfoFlags, *Cancellable) *FileInfo {
 	if x.xQueryInfo == 0 {
@@ -776,7 +776,7 @@ func (x *FileIface) GetQueryInfo() func(File, string, FileQueryInfoFlags, *Cance
 	}
 }
 
-// OverrideQueryInfoAsync sets the callback function.
+// OverrideQueryInfoAsync sets the "query_info_async" callback function.
 // Asynchronously gets the #GFileInfo for a #GFile.
 func (x *FileIface) OverrideQueryInfoAsync(cb func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -788,7 +788,7 @@ func (x *FileIface) OverrideQueryInfoAsync(cb func(File, string, FileQueryInfoFl
 	}
 }
 
-// GetQueryInfoAsync gets the callback function.
+// GetQueryInfoAsync gets the "query_info_async" callback function.
 // Asynchronously gets the #GFileInfo for a #GFile.
 func (x *FileIface) GetQueryInfoAsync() func(File, string, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xQueryInfoAsync == 0 {
@@ -801,7 +801,7 @@ func (x *FileIface) GetQueryInfoAsync() func(File, string, FileQueryInfoFlags, i
 	}
 }
 
-// OverrideQueryInfoFinish sets the callback function.
+// OverrideQueryInfoFinish sets the "query_info_finish" callback function.
 // Finishes an asynchronous query info operation.
 func (x *FileIface) OverrideQueryInfoFinish(cb func(File, AsyncResult) *FileInfo) {
 	if cb == nil {
@@ -817,7 +817,7 @@ func (x *FileIface) OverrideQueryInfoFinish(cb func(File, AsyncResult) *FileInfo
 	}
 }
 
-// GetQueryInfoFinish gets the callback function.
+// GetQueryInfoFinish gets the "query_info_finish" callback function.
 // Finishes an asynchronous query info operation.
 func (x *FileIface) GetQueryInfoFinish() func(File, AsyncResult) *FileInfo {
 	if x.xQueryInfoFinish == 0 {
@@ -836,7 +836,7 @@ func (x *FileIface) GetQueryInfoFinish() func(File, AsyncResult) *FileInfo {
 	}
 }
 
-// OverrideQueryFilesystemInfo sets the callback function.
+// OverrideQueryFilesystemInfo sets the "query_filesystem_info" callback function.
 // Gets a #GFileInfo for the file system #GFile is on.
 func (x *FileIface) OverrideQueryFilesystemInfo(cb func(File, string, *Cancellable) *FileInfo) {
 	if cb == nil {
@@ -852,7 +852,7 @@ func (x *FileIface) OverrideQueryFilesystemInfo(cb func(File, string, *Cancellab
 	}
 }
 
-// GetQueryFilesystemInfo gets the callback function.
+// GetQueryFilesystemInfo gets the "query_filesystem_info" callback function.
 // Gets a #GFileInfo for the file system #GFile is on.
 func (x *FileIface) GetQueryFilesystemInfo() func(File, string, *Cancellable) *FileInfo {
 	if x.xQueryFilesystemInfo == 0 {
@@ -871,7 +871,7 @@ func (x *FileIface) GetQueryFilesystemInfo() func(File, string, *Cancellable) *F
 	}
 }
 
-// OverrideQueryFilesystemInfoAsync sets the callback function.
+// OverrideQueryFilesystemInfoAsync sets the "query_filesystem_info_async" callback function.
 // Asynchronously gets a #GFileInfo for the file system #GFile is on.
 func (x *FileIface) OverrideQueryFilesystemInfoAsync(cb func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -883,7 +883,7 @@ func (x *FileIface) OverrideQueryFilesystemInfoAsync(cb func(File, string, int, 
 	}
 }
 
-// GetQueryFilesystemInfoAsync gets the callback function.
+// GetQueryFilesystemInfoAsync gets the "query_filesystem_info_async" callback function.
 // Asynchronously gets a #GFileInfo for the file system #GFile is on.
 func (x *FileIface) GetQueryFilesystemInfoAsync() func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xQueryFilesystemInfoAsync == 0 {
@@ -896,7 +896,7 @@ func (x *FileIface) GetQueryFilesystemInfoAsync() func(File, string, int, *Cance
 	}
 }
 
-// OverrideQueryFilesystemInfoFinish sets the callback function.
+// OverrideQueryFilesystemInfoFinish sets the "query_filesystem_info_finish" callback function.
 // Finishes asynchronously getting the file system info.
 func (x *FileIface) OverrideQueryFilesystemInfoFinish(cb func(File, AsyncResult) *FileInfo) {
 	if cb == nil {
@@ -912,7 +912,7 @@ func (x *FileIface) OverrideQueryFilesystemInfoFinish(cb func(File, AsyncResult)
 	}
 }
 
-// GetQueryFilesystemInfoFinish gets the callback function.
+// GetQueryFilesystemInfoFinish gets the "query_filesystem_info_finish" callback function.
 // Finishes asynchronously getting the file system info.
 func (x *FileIface) GetQueryFilesystemInfoFinish() func(File, AsyncResult) *FileInfo {
 	if x.xQueryFilesystemInfoFinish == 0 {
@@ -931,7 +931,7 @@ func (x *FileIface) GetQueryFilesystemInfoFinish() func(File, AsyncResult) *File
 	}
 }
 
-// OverrideFindEnclosingMount sets the callback function.
+// OverrideFindEnclosingMount sets the "find_enclosing_mount" callback function.
 // Gets a #GMount for the #GFile.
 func (x *FileIface) OverrideFindEnclosingMount(cb func(File, *Cancellable) *MountBase) {
 	if cb == nil {
@@ -947,7 +947,7 @@ func (x *FileIface) OverrideFindEnclosingMount(cb func(File, *Cancellable) *Moun
 	}
 }
 
-// GetFindEnclosingMount gets the callback function.
+// GetFindEnclosingMount gets the "find_enclosing_mount" callback function.
 // Gets a #GMount for the #GFile.
 func (x *FileIface) GetFindEnclosingMount() func(File, *Cancellable) *MountBase {
 	if x.xFindEnclosingMount == 0 {
@@ -966,7 +966,7 @@ func (x *FileIface) GetFindEnclosingMount() func(File, *Cancellable) *MountBase 
 	}
 }
 
-// OverrideFindEnclosingMountAsync sets the callback function.
+// OverrideFindEnclosingMountAsync sets the "find_enclosing_mount_async" callback function.
 // Asynchronously gets the #GMount for a #GFile.
 func (x *FileIface) OverrideFindEnclosingMountAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -978,7 +978,7 @@ func (x *FileIface) OverrideFindEnclosingMountAsync(cb func(File, int, *Cancella
 	}
 }
 
-// GetFindEnclosingMountAsync gets the callback function.
+// GetFindEnclosingMountAsync gets the "find_enclosing_mount_async" callback function.
 // Asynchronously gets the #GMount for a #GFile.
 func (x *FileIface) GetFindEnclosingMountAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xFindEnclosingMountAsync == 0 {
@@ -991,7 +991,7 @@ func (x *FileIface) GetFindEnclosingMountAsync() func(File, int, *Cancellable, *
 	}
 }
 
-// OverrideFindEnclosingMountFinish sets the callback function.
+// OverrideFindEnclosingMountFinish sets the "find_enclosing_mount_finish" callback function.
 // Finishes asynchronously getting the volume.
 func (x *FileIface) OverrideFindEnclosingMountFinish(cb func(File, AsyncResult) *MountBase) {
 	if cb == nil {
@@ -1007,7 +1007,7 @@ func (x *FileIface) OverrideFindEnclosingMountFinish(cb func(File, AsyncResult) 
 	}
 }
 
-// GetFindEnclosingMountFinish gets the callback function.
+// GetFindEnclosingMountFinish gets the "find_enclosing_mount_finish" callback function.
 // Finishes asynchronously getting the volume.
 func (x *FileIface) GetFindEnclosingMountFinish() func(File, AsyncResult) *MountBase {
 	if x.xFindEnclosingMountFinish == 0 {
@@ -1026,7 +1026,7 @@ func (x *FileIface) GetFindEnclosingMountFinish() func(File, AsyncResult) *Mount
 	}
 }
 
-// OverrideSetDisplayName sets the callback function.
+// OverrideSetDisplayName sets the "set_display_name" callback function.
 // Sets the display name for a #GFile.
 func (x *FileIface) OverrideSetDisplayName(cb func(File, string, *Cancellable) *FileBase) {
 	if cb == nil {
@@ -1042,7 +1042,7 @@ func (x *FileIface) OverrideSetDisplayName(cb func(File, string, *Cancellable) *
 	}
 }
 
-// GetSetDisplayName gets the callback function.
+// GetSetDisplayName gets the "set_display_name" callback function.
 // Sets the display name for a #GFile.
 func (x *FileIface) GetSetDisplayName() func(File, string, *Cancellable) *FileBase {
 	if x.xSetDisplayName == 0 {
@@ -1061,7 +1061,7 @@ func (x *FileIface) GetSetDisplayName() func(File, string, *Cancellable) *FileBa
 	}
 }
 
-// OverrideSetDisplayNameAsync sets the callback function.
+// OverrideSetDisplayNameAsync sets the "set_display_name_async" callback function.
 // Asynchronously sets a #GFile's display name.
 func (x *FileIface) OverrideSetDisplayNameAsync(cb func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -1073,7 +1073,7 @@ func (x *FileIface) OverrideSetDisplayNameAsync(cb func(File, string, int, *Canc
 	}
 }
 
-// GetSetDisplayNameAsync gets the callback function.
+// GetSetDisplayNameAsync gets the "set_display_name_async" callback function.
 // Asynchronously sets a #GFile's display name.
 func (x *FileIface) GetSetDisplayNameAsync() func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xSetDisplayNameAsync == 0 {
@@ -1086,7 +1086,7 @@ func (x *FileIface) GetSetDisplayNameAsync() func(File, string, int, *Cancellabl
 	}
 }
 
-// OverrideSetDisplayNameFinish sets the callback function.
+// OverrideSetDisplayNameFinish sets the "set_display_name_finish" callback function.
 // Finishes asynchronously setting a #GFile's display name.
 func (x *FileIface) OverrideSetDisplayNameFinish(cb func(File, AsyncResult) *FileBase) {
 	if cb == nil {
@@ -1102,7 +1102,7 @@ func (x *FileIface) OverrideSetDisplayNameFinish(cb func(File, AsyncResult) *Fil
 	}
 }
 
-// GetSetDisplayNameFinish gets the callback function.
+// GetSetDisplayNameFinish gets the "set_display_name_finish" callback function.
 // Finishes asynchronously setting a #GFile's display name.
 func (x *FileIface) GetSetDisplayNameFinish() func(File, AsyncResult) *FileBase {
 	if x.xSetDisplayNameFinish == 0 {
@@ -1121,7 +1121,7 @@ func (x *FileIface) GetSetDisplayNameFinish() func(File, AsyncResult) *FileBase 
 	}
 }
 
-// OverrideQuerySettableAttributes sets the callback function.
+// OverrideQuerySettableAttributes sets the "query_settable_attributes" callback function.
 // Returns a list of #GFileAttributeInfos that can be set.
 func (x *FileIface) OverrideQuerySettableAttributes(cb func(File, *Cancellable) *FileAttributeInfoList) {
 	if cb == nil {
@@ -1133,7 +1133,7 @@ func (x *FileIface) OverrideQuerySettableAttributes(cb func(File, *Cancellable) 
 	}
 }
 
-// GetQuerySettableAttributes gets the callback function.
+// GetQuerySettableAttributes gets the "query_settable_attributes" callback function.
 // Returns a list of #GFileAttributeInfos that can be set.
 func (x *FileIface) GetQuerySettableAttributes() func(File, *Cancellable) *FileAttributeInfoList {
 	if x.xQuerySettableAttributes == 0 {
@@ -1146,7 +1146,7 @@ func (x *FileIface) GetQuerySettableAttributes() func(File, *Cancellable) *FileA
 	}
 }
 
-// OverrideQuerySettableAttributesAsync sets the callback function.
+// OverrideQuerySettableAttributesAsync sets the "_query_settable_attributes_async" callback function.
 // Asynchronously gets a list of #GFileAttributeInfos that can be set.
 func (x *FileIface) OverrideQuerySettableAttributesAsync(cb func()) {
 	if cb == nil {
@@ -1158,7 +1158,7 @@ func (x *FileIface) OverrideQuerySettableAttributesAsync(cb func()) {
 	}
 }
 
-// GetQuerySettableAttributesAsync gets the callback function.
+// GetQuerySettableAttributesAsync gets the "_query_settable_attributes_async" callback function.
 // Asynchronously gets a list of #GFileAttributeInfos that can be set.
 func (x *FileIface) GetQuerySettableAttributesAsync() func() {
 	if x.xQuerySettableAttributesAsync == 0 {
@@ -1171,7 +1171,7 @@ func (x *FileIface) GetQuerySettableAttributesAsync() func() {
 	}
 }
 
-// OverrideQuerySettableAttributesFinish sets the callback function.
+// OverrideQuerySettableAttributesFinish sets the "_query_settable_attributes_finish" callback function.
 // Finishes asynchronously querying settable attributes.
 func (x *FileIface) OverrideQuerySettableAttributesFinish(cb func()) {
 	if cb == nil {
@@ -1183,7 +1183,7 @@ func (x *FileIface) OverrideQuerySettableAttributesFinish(cb func()) {
 	}
 }
 
-// GetQuerySettableAttributesFinish gets the callback function.
+// GetQuerySettableAttributesFinish gets the "_query_settable_attributes_finish" callback function.
 // Finishes asynchronously querying settable attributes.
 func (x *FileIface) GetQuerySettableAttributesFinish() func() {
 	if x.xQuerySettableAttributesFinish == 0 {
@@ -1196,7 +1196,7 @@ func (x *FileIface) GetQuerySettableAttributesFinish() func() {
 	}
 }
 
-// OverrideQueryWritableNamespaces sets the callback function.
+// OverrideQueryWritableNamespaces sets the "query_writable_namespaces" callback function.
 // Returns a list of #GFileAttributeInfo namespaces that are writable.
 func (x *FileIface) OverrideQueryWritableNamespaces(cb func(File, *Cancellable) *FileAttributeInfoList) {
 	if cb == nil {
@@ -1208,7 +1208,7 @@ func (x *FileIface) OverrideQueryWritableNamespaces(cb func(File, *Cancellable) 
 	}
 }
 
-// GetQueryWritableNamespaces gets the callback function.
+// GetQueryWritableNamespaces gets the "query_writable_namespaces" callback function.
 // Returns a list of #GFileAttributeInfo namespaces that are writable.
 func (x *FileIface) GetQueryWritableNamespaces() func(File, *Cancellable) *FileAttributeInfoList {
 	if x.xQueryWritableNamespaces == 0 {
@@ -1221,7 +1221,7 @@ func (x *FileIface) GetQueryWritableNamespaces() func(File, *Cancellable) *FileA
 	}
 }
 
-// OverrideQueryWritableNamespacesAsync sets the callback function.
+// OverrideQueryWritableNamespacesAsync sets the "_query_writable_namespaces_async" callback function.
 // Asynchronously gets a list of #GFileAttributeInfo namespaces that are writable.
 func (x *FileIface) OverrideQueryWritableNamespacesAsync(cb func()) {
 	if cb == nil {
@@ -1233,7 +1233,7 @@ func (x *FileIface) OverrideQueryWritableNamespacesAsync(cb func()) {
 	}
 }
 
-// GetQueryWritableNamespacesAsync gets the callback function.
+// GetQueryWritableNamespacesAsync gets the "_query_writable_namespaces_async" callback function.
 // Asynchronously gets a list of #GFileAttributeInfo namespaces that are writable.
 func (x *FileIface) GetQueryWritableNamespacesAsync() func() {
 	if x.xQueryWritableNamespacesAsync == 0 {
@@ -1246,7 +1246,7 @@ func (x *FileIface) GetQueryWritableNamespacesAsync() func() {
 	}
 }
 
-// OverrideQueryWritableNamespacesFinish sets the callback function.
+// OverrideQueryWritableNamespacesFinish sets the "_query_writable_namespaces_finish" callback function.
 // Finishes asynchronously querying the writable namespaces.
 func (x *FileIface) OverrideQueryWritableNamespacesFinish(cb func()) {
 	if cb == nil {
@@ -1258,7 +1258,7 @@ func (x *FileIface) OverrideQueryWritableNamespacesFinish(cb func()) {
 	}
 }
 
-// GetQueryWritableNamespacesFinish gets the callback function.
+// GetQueryWritableNamespacesFinish gets the "_query_writable_namespaces_finish" callback function.
 // Finishes asynchronously querying the writable namespaces.
 func (x *FileIface) GetQueryWritableNamespacesFinish() func() {
 	if x.xQueryWritableNamespacesFinish == 0 {
@@ -1271,7 +1271,7 @@ func (x *FileIface) GetQueryWritableNamespacesFinish() func() {
 	}
 }
 
-// OverrideSetAttribute sets the callback function.
+// OverrideSetAttribute sets the "set_attribute" callback function.
 // Sets a #GFileAttributeInfo.
 func (x *FileIface) OverrideSetAttribute(cb func(File, string, FileAttributeType, uintptr, FileQueryInfoFlags, *Cancellable) bool) {
 	if cb == nil {
@@ -1283,7 +1283,7 @@ func (x *FileIface) OverrideSetAttribute(cb func(File, string, FileAttributeType
 	}
 }
 
-// GetSetAttribute gets the callback function.
+// GetSetAttribute gets the "set_attribute" callback function.
 // Sets a #GFileAttributeInfo.
 func (x *FileIface) GetSetAttribute() func(File, string, FileAttributeType, uintptr, FileQueryInfoFlags, *Cancellable) bool {
 	if x.xSetAttribute == 0 {
@@ -1296,7 +1296,7 @@ func (x *FileIface) GetSetAttribute() func(File, string, FileAttributeType, uint
 	}
 }
 
-// OverrideSetAttributesFromInfo sets the callback function.
+// OverrideSetAttributesFromInfo sets the "set_attributes_from_info" callback function.
 // Sets a #GFileAttributeInfo with information from a #GFileInfo.
 func (x *FileIface) OverrideSetAttributesFromInfo(cb func(File, *FileInfo, FileQueryInfoFlags, *Cancellable) bool) {
 	if cb == nil {
@@ -1308,7 +1308,7 @@ func (x *FileIface) OverrideSetAttributesFromInfo(cb func(File, *FileInfo, FileQ
 	}
 }
 
-// GetSetAttributesFromInfo gets the callback function.
+// GetSetAttributesFromInfo gets the "set_attributes_from_info" callback function.
 // Sets a #GFileAttributeInfo with information from a #GFileInfo.
 func (x *FileIface) GetSetAttributesFromInfo() func(File, *FileInfo, FileQueryInfoFlags, *Cancellable) bool {
 	if x.xSetAttributesFromInfo == 0 {
@@ -1321,7 +1321,7 @@ func (x *FileIface) GetSetAttributesFromInfo() func(File, *FileInfo, FileQueryIn
 	}
 }
 
-// OverrideSetAttributesAsync sets the callback function.
+// OverrideSetAttributesAsync sets the "set_attributes_async" callback function.
 // Asynchronously sets a file's attributes.
 func (x *FileIface) OverrideSetAttributesAsync(cb func(File, *FileInfo, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -1333,7 +1333,7 @@ func (x *FileIface) OverrideSetAttributesAsync(cb func(File, *FileInfo, FileQuer
 	}
 }
 
-// GetSetAttributesAsync gets the callback function.
+// GetSetAttributesAsync gets the "set_attributes_async" callback function.
 // Asynchronously sets a file's attributes.
 func (x *FileIface) GetSetAttributesAsync() func(File, *FileInfo, FileQueryInfoFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xSetAttributesAsync == 0 {
@@ -1346,32 +1346,32 @@ func (x *FileIface) GetSetAttributesAsync() func(File, *FileInfo, FileQueryInfoF
 	}
 }
 
-// OverrideSetAttributesFinish sets the callback function.
+// OverrideSetAttributesFinish sets the "set_attributes_finish" callback function.
 // Finishes setting a file's attributes asynchronously.
 func (x *FileIface) OverrideSetAttributesFinish(cb func(File, AsyncResult, **FileInfo) bool) {
 	if cb == nil {
 		x.xSetAttributesFinish = 0
 	} else {
-		x.xSetAttributesFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr, InfoVarp uintptr) bool {
-			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp}, (**FileInfo)(unsafe.Pointer(InfoVarp)))
+		x.xSetAttributesFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr, InfoVarp **FileInfo) bool {
+			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp}, InfoVarp)
 		})
 	}
 }
 
-// GetSetAttributesFinish gets the callback function.
+// GetSetAttributesFinish gets the "set_attributes_finish" callback function.
 // Finishes setting a file's attributes asynchronously.
 func (x *FileIface) GetSetAttributesFinish() func(File, AsyncResult, **FileInfo) bool {
 	if x.xSetAttributesFinish == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, ResultVarp uintptr, InfoVarp uintptr) bool
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr, InfoVarp **FileInfo) bool
 	purego.RegisterFunc(&rawCallback, x.xSetAttributesFinish)
 	return func(FileVar File, ResultVar AsyncResult, InfoVar **FileInfo) bool {
-		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer(), *gobject.ConvertPtr(InfoVar))
+		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer(), InfoVar)
 	}
 }
 
-// OverrideReadFn sets the callback function.
+// OverrideReadFn sets the "read_fn" callback function.
 // Reads a file asynchronously.
 func (x *FileIface) OverrideReadFn(cb func(File, *Cancellable) *FileInputStream) {
 	if cb == nil {
@@ -1387,7 +1387,7 @@ func (x *FileIface) OverrideReadFn(cb func(File, *Cancellable) *FileInputStream)
 	}
 }
 
-// GetReadFn gets the callback function.
+// GetReadFn gets the "read_fn" callback function.
 // Reads a file asynchronously.
 func (x *FileIface) GetReadFn() func(File, *Cancellable) *FileInputStream {
 	if x.xReadFn == 0 {
@@ -1406,7 +1406,7 @@ func (x *FileIface) GetReadFn() func(File, *Cancellable) *FileInputStream {
 	}
 }
 
-// OverrideReadAsync sets the callback function.
+// OverrideReadAsync sets the "read_async" callback function.
 // Asynchronously reads a file.
 func (x *FileIface) OverrideReadAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -1418,7 +1418,7 @@ func (x *FileIface) OverrideReadAsync(cb func(File, int, *Cancellable, *AsyncRea
 	}
 }
 
-// GetReadAsync gets the callback function.
+// GetReadAsync gets the "read_async" callback function.
 // Asynchronously reads a file.
 func (x *FileIface) GetReadAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xReadAsync == 0 {
@@ -1431,7 +1431,7 @@ func (x *FileIface) GetReadAsync() func(File, int, *Cancellable, *AsyncReadyCall
 	}
 }
 
-// OverrideReadFinish sets the callback function.
+// OverrideReadFinish sets the "read_finish" callback function.
 // Finishes asynchronously reading a file.
 func (x *FileIface) OverrideReadFinish(cb func(File, AsyncResult) *FileInputStream) {
 	if cb == nil {
@@ -1447,7 +1447,7 @@ func (x *FileIface) OverrideReadFinish(cb func(File, AsyncResult) *FileInputStre
 	}
 }
 
-// GetReadFinish gets the callback function.
+// GetReadFinish gets the "read_finish" callback function.
 // Finishes asynchronously reading a file.
 func (x *FileIface) GetReadFinish() func(File, AsyncResult) *FileInputStream {
 	if x.xReadFinish == 0 {
@@ -1466,7 +1466,7 @@ func (x *FileIface) GetReadFinish() func(File, AsyncResult) *FileInputStream {
 	}
 }
 
-// OverrideAppendTo sets the callback function.
+// OverrideAppendTo sets the "append_to" callback function.
 // Writes to the end of a file.
 func (x *FileIface) OverrideAppendTo(cb func(File, FileCreateFlags, *Cancellable) *FileOutputStream) {
 	if cb == nil {
@@ -1482,7 +1482,7 @@ func (x *FileIface) OverrideAppendTo(cb func(File, FileCreateFlags, *Cancellable
 	}
 }
 
-// GetAppendTo gets the callback function.
+// GetAppendTo gets the "append_to" callback function.
 // Writes to the end of a file.
 func (x *FileIface) GetAppendTo() func(File, FileCreateFlags, *Cancellable) *FileOutputStream {
 	if x.xAppendTo == 0 {
@@ -1501,7 +1501,7 @@ func (x *FileIface) GetAppendTo() func(File, FileCreateFlags, *Cancellable) *Fil
 	}
 }
 
-// OverrideAppendToAsync sets the callback function.
+// OverrideAppendToAsync sets the "append_to_async" callback function.
 // Asynchronously writes to the end of a file.
 func (x *FileIface) OverrideAppendToAsync(cb func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -1513,7 +1513,7 @@ func (x *FileIface) OverrideAppendToAsync(cb func(File, FileCreateFlags, int, *C
 	}
 }
 
-// GetAppendToAsync gets the callback function.
+// GetAppendToAsync gets the "append_to_async" callback function.
 // Asynchronously writes to the end of a file.
 func (x *FileIface) GetAppendToAsync() func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xAppendToAsync == 0 {
@@ -1526,7 +1526,7 @@ func (x *FileIface) GetAppendToAsync() func(File, FileCreateFlags, int, *Cancell
 	}
 }
 
-// OverrideAppendToFinish sets the callback function.
+// OverrideAppendToFinish sets the "append_to_finish" callback function.
 // Finishes an asynchronous file append operation.
 func (x *FileIface) OverrideAppendToFinish(cb func(File, AsyncResult) *FileOutputStream) {
 	if cb == nil {
@@ -1542,7 +1542,7 @@ func (x *FileIface) OverrideAppendToFinish(cb func(File, AsyncResult) *FileOutpu
 	}
 }
 
-// GetAppendToFinish gets the callback function.
+// GetAppendToFinish gets the "append_to_finish" callback function.
 // Finishes an asynchronous file append operation.
 func (x *FileIface) GetAppendToFinish() func(File, AsyncResult) *FileOutputStream {
 	if x.xAppendToFinish == 0 {
@@ -1561,7 +1561,7 @@ func (x *FileIface) GetAppendToFinish() func(File, AsyncResult) *FileOutputStrea
 	}
 }
 
-// OverrideCreate sets the callback function.
+// OverrideCreate sets the "create" callback function.
 // Creates a new file.
 func (x *FileIface) OverrideCreate(cb func(File, FileCreateFlags, *Cancellable) *FileOutputStream) {
 	if cb == nil {
@@ -1577,7 +1577,7 @@ func (x *FileIface) OverrideCreate(cb func(File, FileCreateFlags, *Cancellable) 
 	}
 }
 
-// GetCreate gets the callback function.
+// GetCreate gets the "create" callback function.
 // Creates a new file.
 func (x *FileIface) GetCreate() func(File, FileCreateFlags, *Cancellable) *FileOutputStream {
 	if x.xCreate == 0 {
@@ -1596,7 +1596,7 @@ func (x *FileIface) GetCreate() func(File, FileCreateFlags, *Cancellable) *FileO
 	}
 }
 
-// OverrideCreateAsync sets the callback function.
+// OverrideCreateAsync sets the "create_async" callback function.
 // Asynchronously creates a file.
 func (x *FileIface) OverrideCreateAsync(cb func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -1608,7 +1608,7 @@ func (x *FileIface) OverrideCreateAsync(cb func(File, FileCreateFlags, int, *Can
 	}
 }
 
-// GetCreateAsync gets the callback function.
+// GetCreateAsync gets the "create_async" callback function.
 // Asynchronously creates a file.
 func (x *FileIface) GetCreateAsync() func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xCreateAsync == 0 {
@@ -1621,7 +1621,7 @@ func (x *FileIface) GetCreateAsync() func(File, FileCreateFlags, int, *Cancellab
 	}
 }
 
-// OverrideCreateFinish sets the callback function.
+// OverrideCreateFinish sets the "create_finish" callback function.
 // Finishes asynchronously creating a file.
 func (x *FileIface) OverrideCreateFinish(cb func(File, AsyncResult) *FileOutputStream) {
 	if cb == nil {
@@ -1637,7 +1637,7 @@ func (x *FileIface) OverrideCreateFinish(cb func(File, AsyncResult) *FileOutputS
 	}
 }
 
-// GetCreateFinish gets the callback function.
+// GetCreateFinish gets the "create_finish" callback function.
 // Finishes asynchronously creating a file.
 func (x *FileIface) GetCreateFinish() func(File, AsyncResult) *FileOutputStream {
 	if x.xCreateFinish == 0 {
@@ -1656,7 +1656,7 @@ func (x *FileIface) GetCreateFinish() func(File, AsyncResult) *FileOutputStream 
 	}
 }
 
-// OverrideReplace sets the callback function.
+// OverrideReplace sets the "replace" callback function.
 // Replaces the contents of a file.
 func (x *FileIface) OverrideReplace(cb func(File, string, bool, FileCreateFlags, *Cancellable) *FileOutputStream) {
 	if cb == nil {
@@ -1672,7 +1672,7 @@ func (x *FileIface) OverrideReplace(cb func(File, string, bool, FileCreateFlags,
 	}
 }
 
-// GetReplace gets the callback function.
+// GetReplace gets the "replace" callback function.
 // Replaces the contents of a file.
 func (x *FileIface) GetReplace() func(File, string, bool, FileCreateFlags, *Cancellable) *FileOutputStream {
 	if x.xReplace == 0 {
@@ -1691,7 +1691,7 @@ func (x *FileIface) GetReplace() func(File, string, bool, FileCreateFlags, *Canc
 	}
 }
 
-// OverrideReplaceAsync sets the callback function.
+// OverrideReplaceAsync sets the "replace_async" callback function.
 // Asynchronously replaces the contents of a file.
 func (x *FileIface) OverrideReplaceAsync(cb func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -1703,7 +1703,7 @@ func (x *FileIface) OverrideReplaceAsync(cb func(File, string, bool, FileCreateF
 	}
 }
 
-// GetReplaceAsync gets the callback function.
+// GetReplaceAsync gets the "replace_async" callback function.
 // Asynchronously replaces the contents of a file.
 func (x *FileIface) GetReplaceAsync() func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xReplaceAsync == 0 {
@@ -1716,7 +1716,7 @@ func (x *FileIface) GetReplaceAsync() func(File, string, bool, FileCreateFlags, 
 	}
 }
 
-// OverrideReplaceFinish sets the callback function.
+// OverrideReplaceFinish sets the "replace_finish" callback function.
 // Finishes asynchronously replacing a file.
 func (x *FileIface) OverrideReplaceFinish(cb func(File, AsyncResult) *FileOutputStream) {
 	if cb == nil {
@@ -1732,7 +1732,7 @@ func (x *FileIface) OverrideReplaceFinish(cb func(File, AsyncResult) *FileOutput
 	}
 }
 
-// GetReplaceFinish gets the callback function.
+// GetReplaceFinish gets the "replace_finish" callback function.
 // Finishes asynchronously replacing a file.
 func (x *FileIface) GetReplaceFinish() func(File, AsyncResult) *FileOutputStream {
 	if x.xReplaceFinish == 0 {
@@ -1751,7 +1751,7 @@ func (x *FileIface) GetReplaceFinish() func(File, AsyncResult) *FileOutputStream
 	}
 }
 
-// OverrideDeleteFile sets the callback function.
+// OverrideDeleteFile sets the "delete_file" callback function.
 // Deletes a file.
 func (x *FileIface) OverrideDeleteFile(cb func(File, *Cancellable) bool) {
 	if cb == nil {
@@ -1763,7 +1763,7 @@ func (x *FileIface) OverrideDeleteFile(cb func(File, *Cancellable) bool) {
 	}
 }
 
-// GetDeleteFile gets the callback function.
+// GetDeleteFile gets the "delete_file" callback function.
 // Deletes a file.
 func (x *FileIface) GetDeleteFile() func(File, *Cancellable) bool {
 	if x.xDeleteFile == 0 {
@@ -1776,7 +1776,7 @@ func (x *FileIface) GetDeleteFile() func(File, *Cancellable) bool {
 	}
 }
 
-// OverrideDeleteFileAsync sets the callback function.
+// OverrideDeleteFileAsync sets the "delete_file_async" callback function.
 // Asynchronously deletes a file.
 func (x *FileIface) OverrideDeleteFileAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -1788,7 +1788,7 @@ func (x *FileIface) OverrideDeleteFileAsync(cb func(File, int, *Cancellable, *As
 	}
 }
 
-// GetDeleteFileAsync gets the callback function.
+// GetDeleteFileAsync gets the "delete_file_async" callback function.
 // Asynchronously deletes a file.
 func (x *FileIface) GetDeleteFileAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xDeleteFileAsync == 0 {
@@ -1801,7 +1801,7 @@ func (x *FileIface) GetDeleteFileAsync() func(File, int, *Cancellable, *AsyncRea
 	}
 }
 
-// OverrideDeleteFileFinish sets the callback function.
+// OverrideDeleteFileFinish sets the "delete_file_finish" callback function.
 // Finishes an asynchronous delete.
 func (x *FileIface) OverrideDeleteFileFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -1813,7 +1813,7 @@ func (x *FileIface) OverrideDeleteFileFinish(cb func(File, AsyncResult) bool) {
 	}
 }
 
-// GetDeleteFileFinish gets the callback function.
+// GetDeleteFileFinish gets the "delete_file_finish" callback function.
 // Finishes an asynchronous delete.
 func (x *FileIface) GetDeleteFileFinish() func(File, AsyncResult) bool {
 	if x.xDeleteFileFinish == 0 {
@@ -1826,7 +1826,7 @@ func (x *FileIface) GetDeleteFileFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideTrash sets the callback function.
+// OverrideTrash sets the "trash" callback function.
 // Sends a #GFile to the Trash location.
 func (x *FileIface) OverrideTrash(cb func(File, *Cancellable) bool) {
 	if cb == nil {
@@ -1838,7 +1838,7 @@ func (x *FileIface) OverrideTrash(cb func(File, *Cancellable) bool) {
 	}
 }
 
-// GetTrash gets the callback function.
+// GetTrash gets the "trash" callback function.
 // Sends a #GFile to the Trash location.
 func (x *FileIface) GetTrash() func(File, *Cancellable) bool {
 	if x.xTrash == 0 {
@@ -1851,7 +1851,7 @@ func (x *FileIface) GetTrash() func(File, *Cancellable) bool {
 	}
 }
 
-// OverrideTrashAsync sets the callback function.
+// OverrideTrashAsync sets the "trash_async" callback function.
 // Asynchronously sends a #GFile to the Trash location.
 func (x *FileIface) OverrideTrashAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -1863,7 +1863,7 @@ func (x *FileIface) OverrideTrashAsync(cb func(File, int, *Cancellable, *AsyncRe
 	}
 }
 
-// GetTrashAsync gets the callback function.
+// GetTrashAsync gets the "trash_async" callback function.
 // Asynchronously sends a #GFile to the Trash location.
 func (x *FileIface) GetTrashAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xTrashAsync == 0 {
@@ -1876,7 +1876,7 @@ func (x *FileIface) GetTrashAsync() func(File, int, *Cancellable, *AsyncReadyCal
 	}
 }
 
-// OverrideTrashFinish sets the callback function.
+// OverrideTrashFinish sets the "trash_finish" callback function.
 // Finishes an asynchronous file trashing operation.
 func (x *FileIface) OverrideTrashFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -1888,7 +1888,7 @@ func (x *FileIface) OverrideTrashFinish(cb func(File, AsyncResult) bool) {
 	}
 }
 
-// GetTrashFinish gets the callback function.
+// GetTrashFinish gets the "trash_finish" callback function.
 // Finishes an asynchronous file trashing operation.
 func (x *FileIface) GetTrashFinish() func(File, AsyncResult) bool {
 	if x.xTrashFinish == 0 {
@@ -1901,7 +1901,7 @@ func (x *FileIface) GetTrashFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideMakeDirectory sets the callback function.
+// OverrideMakeDirectory sets the "make_directory" callback function.
 // Makes a directory.
 func (x *FileIface) OverrideMakeDirectory(cb func(File, *Cancellable) bool) {
 	if cb == nil {
@@ -1913,7 +1913,7 @@ func (x *FileIface) OverrideMakeDirectory(cb func(File, *Cancellable) bool) {
 	}
 }
 
-// GetMakeDirectory gets the callback function.
+// GetMakeDirectory gets the "make_directory" callback function.
 // Makes a directory.
 func (x *FileIface) GetMakeDirectory() func(File, *Cancellable) bool {
 	if x.xMakeDirectory == 0 {
@@ -1926,7 +1926,7 @@ func (x *FileIface) GetMakeDirectory() func(File, *Cancellable) bool {
 	}
 }
 
-// OverrideMakeDirectoryAsync sets the callback function.
+// OverrideMakeDirectoryAsync sets the "make_directory_async" callback function.
 // Asynchronously makes a directory.
 func (x *FileIface) OverrideMakeDirectoryAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -1938,7 +1938,7 @@ func (x *FileIface) OverrideMakeDirectoryAsync(cb func(File, int, *Cancellable, 
 	}
 }
 
-// GetMakeDirectoryAsync gets the callback function.
+// GetMakeDirectoryAsync gets the "make_directory_async" callback function.
 // Asynchronously makes a directory.
 func (x *FileIface) GetMakeDirectoryAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xMakeDirectoryAsync == 0 {
@@ -1951,7 +1951,7 @@ func (x *FileIface) GetMakeDirectoryAsync() func(File, int, *Cancellable, *Async
 	}
 }
 
-// OverrideMakeDirectoryFinish sets the callback function.
+// OverrideMakeDirectoryFinish sets the "make_directory_finish" callback function.
 // Finishes making a directory asynchronously.
 func (x *FileIface) OverrideMakeDirectoryFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -1963,7 +1963,7 @@ func (x *FileIface) OverrideMakeDirectoryFinish(cb func(File, AsyncResult) bool)
 	}
 }
 
-// GetMakeDirectoryFinish gets the callback function.
+// GetMakeDirectoryFinish gets the "make_directory_finish" callback function.
 // Finishes making a directory asynchronously.
 func (x *FileIface) GetMakeDirectoryFinish() func(File, AsyncResult) bool {
 	if x.xMakeDirectoryFinish == 0 {
@@ -1976,7 +1976,7 @@ func (x *FileIface) GetMakeDirectoryFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideMakeSymbolicLink sets the callback function.
+// OverrideMakeSymbolicLink sets the "make_symbolic_link" callback function.
 // Makes a symbolic link. %NULL if symbolic
 //
 //	links are unsupported.
@@ -1990,7 +1990,7 @@ func (x *FileIface) OverrideMakeSymbolicLink(cb func(File, string, *Cancellable)
 	}
 }
 
-// GetMakeSymbolicLink gets the callback function.
+// GetMakeSymbolicLink gets the "make_symbolic_link" callback function.
 // Makes a symbolic link. %NULL if symbolic
 //
 //	links are unsupported.
@@ -2005,7 +2005,7 @@ func (x *FileIface) GetMakeSymbolicLink() func(File, string, *Cancellable) bool 
 	}
 }
 
-// OverrideMakeSymbolicLinkAsync sets the callback function.
+// OverrideMakeSymbolicLinkAsync sets the "make_symbolic_link_async" callback function.
 // Asynchronously makes a symbolic link
 func (x *FileIface) OverrideMakeSymbolicLinkAsync(cb func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2017,7 +2017,7 @@ func (x *FileIface) OverrideMakeSymbolicLinkAsync(cb func(File, string, int, *Ca
 	}
 }
 
-// GetMakeSymbolicLinkAsync gets the callback function.
+// GetMakeSymbolicLinkAsync gets the "make_symbolic_link_async" callback function.
 // Asynchronously makes a symbolic link
 func (x *FileIface) GetMakeSymbolicLinkAsync() func(File, string, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xMakeSymbolicLinkAsync == 0 {
@@ -2030,7 +2030,7 @@ func (x *FileIface) GetMakeSymbolicLinkAsync() func(File, string, int, *Cancella
 	}
 }
 
-// OverrideMakeSymbolicLinkFinish sets the callback function.
+// OverrideMakeSymbolicLinkFinish sets the "make_symbolic_link_finish" callback function.
 // Finishes making a symbolic link asynchronously.
 func (x *FileIface) OverrideMakeSymbolicLinkFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -2042,7 +2042,7 @@ func (x *FileIface) OverrideMakeSymbolicLinkFinish(cb func(File, AsyncResult) bo
 	}
 }
 
-// GetMakeSymbolicLinkFinish gets the callback function.
+// GetMakeSymbolicLinkFinish gets the "make_symbolic_link_finish" callback function.
 // Finishes making a symbolic link asynchronously.
 func (x *FileIface) GetMakeSymbolicLinkFinish() func(File, AsyncResult) bool {
 	if x.xMakeSymbolicLinkFinish == 0 {
@@ -2055,7 +2055,7 @@ func (x *FileIface) GetMakeSymbolicLinkFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideCopy sets the callback function.
+// OverrideCopy sets the "copy" callback function.
 // Copies a file. %NULL if copying is unsupported, which will
 //
 //	cause `GFile` to use a fallback copy method where it reads from the
@@ -2070,7 +2070,7 @@ func (x *FileIface) OverrideCopy(cb func(File, File, FileCopyFlags, *Cancellable
 	}
 }
 
-// GetCopy gets the callback function.
+// GetCopy gets the "copy" callback function.
 // Copies a file. %NULL if copying is unsupported, which will
 //
 //	cause `GFile` to use a fallback copy method where it reads from the
@@ -2086,7 +2086,7 @@ func (x *FileIface) GetCopy() func(File, File, FileCopyFlags, *Cancellable, *Fil
 	}
 }
 
-// OverrideCopyAsync sets the callback function.
+// OverrideCopyAsync sets the "copy_async" callback function.
 // Asynchronously copies a file.
 func (x *FileIface) OverrideCopyAsync(cb func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2098,7 +2098,7 @@ func (x *FileIface) OverrideCopyAsync(cb func(File, File, FileCopyFlags, int, *C
 	}
 }
 
-// GetCopyAsync gets the callback function.
+// GetCopyAsync gets the "copy_async" callback function.
 // Asynchronously copies a file.
 func (x *FileIface) GetCopyAsync() func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
 	if x.xCopyAsync == 0 {
@@ -2111,7 +2111,7 @@ func (x *FileIface) GetCopyAsync() func(File, File, FileCopyFlags, int, *Cancell
 	}
 }
 
-// OverrideCopyFinish sets the callback function.
+// OverrideCopyFinish sets the "copy_finish" callback function.
 // Finishes an asynchronous copy operation.
 func (x *FileIface) OverrideCopyFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -2123,7 +2123,7 @@ func (x *FileIface) OverrideCopyFinish(cb func(File, AsyncResult) bool) {
 	}
 }
 
-// GetCopyFinish gets the callback function.
+// GetCopyFinish gets the "copy_finish" callback function.
 // Finishes an asynchronous copy operation.
 func (x *FileIface) GetCopyFinish() func(File, AsyncResult) bool {
 	if x.xCopyFinish == 0 {
@@ -2136,7 +2136,7 @@ func (x *FileIface) GetCopyFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideMove sets the callback function.
+// OverrideMove sets the "move" callback function.
 // Moves a file.
 func (x *FileIface) OverrideMove(cb func(File, File, FileCopyFlags, *Cancellable, *FileProgressCallback, uintptr) bool) {
 	if cb == nil {
@@ -2148,7 +2148,7 @@ func (x *FileIface) OverrideMove(cb func(File, File, FileCopyFlags, *Cancellable
 	}
 }
 
-// GetMove gets the callback function.
+// GetMove gets the "move" callback function.
 // Moves a file.
 func (x *FileIface) GetMove() func(File, File, FileCopyFlags, *Cancellable, *FileProgressCallback, uintptr) bool {
 	if x.xMove == 0 {
@@ -2161,7 +2161,7 @@ func (x *FileIface) GetMove() func(File, File, FileCopyFlags, *Cancellable, *Fil
 	}
 }
 
-// OverrideMoveAsync sets the callback function.
+// OverrideMoveAsync sets the "move_async" callback function.
 // Asynchronously moves a file. Since: 2.72
 func (x *FileIface) OverrideMoveAsync(cb func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2173,7 +2173,7 @@ func (x *FileIface) OverrideMoveAsync(cb func(File, File, FileCopyFlags, int, *C
 	}
 }
 
-// GetMoveAsync gets the callback function.
+// GetMoveAsync gets the "move_async" callback function.
 // Asynchronously moves a file. Since: 2.72
 func (x *FileIface) GetMoveAsync() func(File, File, FileCopyFlags, int, *Cancellable, *FileProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
 	if x.xMoveAsync == 0 {
@@ -2186,7 +2186,7 @@ func (x *FileIface) GetMoveAsync() func(File, File, FileCopyFlags, int, *Cancell
 	}
 }
 
-// OverrideMoveFinish sets the callback function.
+// OverrideMoveFinish sets the "move_finish" callback function.
 // Finishes an asynchronous move operation. Since: 2.72
 func (x *FileIface) OverrideMoveFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -2198,7 +2198,7 @@ func (x *FileIface) OverrideMoveFinish(cb func(File, AsyncResult) bool) {
 	}
 }
 
-// GetMoveFinish gets the callback function.
+// GetMoveFinish gets the "move_finish" callback function.
 // Finishes an asynchronous move operation. Since: 2.72
 func (x *FileIface) GetMoveFinish() func(File, AsyncResult) bool {
 	if x.xMoveFinish == 0 {
@@ -2211,7 +2211,7 @@ func (x *FileIface) GetMoveFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideMountMountable sets the callback function.
+// OverrideMountMountable sets the "mount_mountable" callback function.
 // Mounts a mountable object.
 func (x *FileIface) OverrideMountMountable(cb func(File, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2223,7 +2223,7 @@ func (x *FileIface) OverrideMountMountable(cb func(File, MountMountFlags, *Mount
 	}
 }
 
-// GetMountMountable gets the callback function.
+// GetMountMountable gets the "mount_mountable" callback function.
 // Mounts a mountable object.
 func (x *FileIface) GetMountMountable() func(File, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xMountMountable == 0 {
@@ -2236,7 +2236,7 @@ func (x *FileIface) GetMountMountable() func(File, MountMountFlags, *MountOperat
 	}
 }
 
-// OverrideMountMountableFinish sets the callback function.
+// OverrideMountMountableFinish sets the "mount_mountable_finish" callback function.
 // Finishes a mounting operation.
 func (x *FileIface) OverrideMountMountableFinish(cb func(File, AsyncResult) *FileBase) {
 	if cb == nil {
@@ -2252,7 +2252,7 @@ func (x *FileIface) OverrideMountMountableFinish(cb func(File, AsyncResult) *Fil
 	}
 }
 
-// GetMountMountableFinish gets the callback function.
+// GetMountMountableFinish gets the "mount_mountable_finish" callback function.
 // Finishes a mounting operation.
 func (x *FileIface) GetMountMountableFinish() func(File, AsyncResult) *FileBase {
 	if x.xMountMountableFinish == 0 {
@@ -2271,7 +2271,7 @@ func (x *FileIface) GetMountMountableFinish() func(File, AsyncResult) *FileBase 
 	}
 }
 
-// OverrideUnmountMountable sets the callback function.
+// OverrideUnmountMountable sets the "unmount_mountable" callback function.
 // Unmounts a mountable object.
 func (x *FileIface) OverrideUnmountMountable(cb func(File, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2283,7 +2283,7 @@ func (x *FileIface) OverrideUnmountMountable(cb func(File, MountUnmountFlags, *C
 	}
 }
 
-// GetUnmountMountable gets the callback function.
+// GetUnmountMountable gets the "unmount_mountable" callback function.
 // Unmounts a mountable object.
 func (x *FileIface) GetUnmountMountable() func(File, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xUnmountMountable == 0 {
@@ -2296,7 +2296,7 @@ func (x *FileIface) GetUnmountMountable() func(File, MountUnmountFlags, *Cancell
 	}
 }
 
-// OverrideUnmountMountableFinish sets the callback function.
+// OverrideUnmountMountableFinish sets the "unmount_mountable_finish" callback function.
 // Finishes an unmount operation.
 func (x *FileIface) OverrideUnmountMountableFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -2308,7 +2308,7 @@ func (x *FileIface) OverrideUnmountMountableFinish(cb func(File, AsyncResult) bo
 	}
 }
 
-// GetUnmountMountableFinish gets the callback function.
+// GetUnmountMountableFinish gets the "unmount_mountable_finish" callback function.
 // Finishes an unmount operation.
 func (x *FileIface) GetUnmountMountableFinish() func(File, AsyncResult) bool {
 	if x.xUnmountMountableFinish == 0 {
@@ -2321,7 +2321,7 @@ func (x *FileIface) GetUnmountMountableFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideEjectMountable sets the callback function.
+// OverrideEjectMountable sets the "eject_mountable" callback function.
 // Ejects a mountable.
 func (x *FileIface) OverrideEjectMountable(cb func(File, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2333,7 +2333,7 @@ func (x *FileIface) OverrideEjectMountable(cb func(File, MountUnmountFlags, *Can
 	}
 }
 
-// GetEjectMountable gets the callback function.
+// GetEjectMountable gets the "eject_mountable" callback function.
 // Ejects a mountable.
 func (x *FileIface) GetEjectMountable() func(File, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xEjectMountable == 0 {
@@ -2346,7 +2346,7 @@ func (x *FileIface) GetEjectMountable() func(File, MountUnmountFlags, *Cancellab
 	}
 }
 
-// OverrideEjectMountableFinish sets the callback function.
+// OverrideEjectMountableFinish sets the "eject_mountable_finish" callback function.
 // Finishes an eject operation.
 func (x *FileIface) OverrideEjectMountableFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -2358,7 +2358,7 @@ func (x *FileIface) OverrideEjectMountableFinish(cb func(File, AsyncResult) bool
 	}
 }
 
-// GetEjectMountableFinish gets the callback function.
+// GetEjectMountableFinish gets the "eject_mountable_finish" callback function.
 // Finishes an eject operation.
 func (x *FileIface) GetEjectMountableFinish() func(File, AsyncResult) bool {
 	if x.xEjectMountableFinish == 0 {
@@ -2371,7 +2371,7 @@ func (x *FileIface) GetEjectMountableFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideMountEnclosingVolume sets the callback function.
+// OverrideMountEnclosingVolume sets the "mount_enclosing_volume" callback function.
 // Mounts a specified location.
 func (x *FileIface) OverrideMountEnclosingVolume(cb func(File, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2383,7 +2383,7 @@ func (x *FileIface) OverrideMountEnclosingVolume(cb func(File, MountMountFlags, 
 	}
 }
 
-// GetMountEnclosingVolume gets the callback function.
+// GetMountEnclosingVolume gets the "mount_enclosing_volume" callback function.
 // Mounts a specified location.
 func (x *FileIface) GetMountEnclosingVolume() func(File, MountMountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xMountEnclosingVolume == 0 {
@@ -2396,7 +2396,7 @@ func (x *FileIface) GetMountEnclosingVolume() func(File, MountMountFlags, *Mount
 	}
 }
 
-// OverrideMountEnclosingVolumeFinish sets the callback function.
+// OverrideMountEnclosingVolumeFinish sets the "mount_enclosing_volume_finish" callback function.
 // Finishes mounting a specified location.
 func (x *FileIface) OverrideMountEnclosingVolumeFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -2408,7 +2408,7 @@ func (x *FileIface) OverrideMountEnclosingVolumeFinish(cb func(File, AsyncResult
 	}
 }
 
-// GetMountEnclosingVolumeFinish gets the callback function.
+// GetMountEnclosingVolumeFinish gets the "mount_enclosing_volume_finish" callback function.
 // Finishes mounting a specified location.
 func (x *FileIface) GetMountEnclosingVolumeFinish() func(File, AsyncResult) bool {
 	if x.xMountEnclosingVolumeFinish == 0 {
@@ -2421,7 +2421,7 @@ func (x *FileIface) GetMountEnclosingVolumeFinish() func(File, AsyncResult) bool
 	}
 }
 
-// OverrideMonitorDir sets the callback function.
+// OverrideMonitorDir sets the "monitor_dir" callback function.
 // Creates a #GFileMonitor for the location.
 func (x *FileIface) OverrideMonitorDir(cb func(File, FileMonitorFlags, *Cancellable) *FileMonitor) {
 	if cb == nil {
@@ -2437,7 +2437,7 @@ func (x *FileIface) OverrideMonitorDir(cb func(File, FileMonitorFlags, *Cancella
 	}
 }
 
-// GetMonitorDir gets the callback function.
+// GetMonitorDir gets the "monitor_dir" callback function.
 // Creates a #GFileMonitor for the location.
 func (x *FileIface) GetMonitorDir() func(File, FileMonitorFlags, *Cancellable) *FileMonitor {
 	if x.xMonitorDir == 0 {
@@ -2456,7 +2456,7 @@ func (x *FileIface) GetMonitorDir() func(File, FileMonitorFlags, *Cancellable) *
 	}
 }
 
-// OverrideMonitorFile sets the callback function.
+// OverrideMonitorFile sets the "monitor_file" callback function.
 // Creates a #GFileMonitor for the location.
 func (x *FileIface) OverrideMonitorFile(cb func(File, FileMonitorFlags, *Cancellable) *FileMonitor) {
 	if cb == nil {
@@ -2472,7 +2472,7 @@ func (x *FileIface) OverrideMonitorFile(cb func(File, FileMonitorFlags, *Cancell
 	}
 }
 
-// GetMonitorFile gets the callback function.
+// GetMonitorFile gets the "monitor_file" callback function.
 // Creates a #GFileMonitor for the location.
 func (x *FileIface) GetMonitorFile() func(File, FileMonitorFlags, *Cancellable) *FileMonitor {
 	if x.xMonitorFile == 0 {
@@ -2491,7 +2491,7 @@ func (x *FileIface) GetMonitorFile() func(File, FileMonitorFlags, *Cancellable) 
 	}
 }
 
-// OverrideOpenReadwrite sets the callback function.
+// OverrideOpenReadwrite sets the "open_readwrite" callback function.
 // Open file read/write. Since 2.22.
 func (x *FileIface) OverrideOpenReadwrite(cb func(File, *Cancellable) *FileIOStream) {
 	if cb == nil {
@@ -2507,7 +2507,7 @@ func (x *FileIface) OverrideOpenReadwrite(cb func(File, *Cancellable) *FileIOStr
 	}
 }
 
-// GetOpenReadwrite gets the callback function.
+// GetOpenReadwrite gets the "open_readwrite" callback function.
 // Open file read/write. Since 2.22.
 func (x *FileIface) GetOpenReadwrite() func(File, *Cancellable) *FileIOStream {
 	if x.xOpenReadwrite == 0 {
@@ -2526,7 +2526,7 @@ func (x *FileIface) GetOpenReadwrite() func(File, *Cancellable) *FileIOStream {
 	}
 }
 
-// OverrideOpenReadwriteAsync sets the callback function.
+// OverrideOpenReadwriteAsync sets the "open_readwrite_async" callback function.
 // Asynchronously opens file read/write. Since 2.22.
 func (x *FileIface) OverrideOpenReadwriteAsync(cb func(File, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2538,7 +2538,7 @@ func (x *FileIface) OverrideOpenReadwriteAsync(cb func(File, int, *Cancellable, 
 	}
 }
 
-// GetOpenReadwriteAsync gets the callback function.
+// GetOpenReadwriteAsync gets the "open_readwrite_async" callback function.
 // Asynchronously opens file read/write. Since 2.22.
 func (x *FileIface) GetOpenReadwriteAsync() func(File, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xOpenReadwriteAsync == 0 {
@@ -2551,7 +2551,7 @@ func (x *FileIface) GetOpenReadwriteAsync() func(File, int, *Cancellable, *Async
 	}
 }
 
-// OverrideOpenReadwriteFinish sets the callback function.
+// OverrideOpenReadwriteFinish sets the "open_readwrite_finish" callback function.
 // Finishes an asynchronous open read/write. Since 2.22.
 func (x *FileIface) OverrideOpenReadwriteFinish(cb func(File, AsyncResult) *FileIOStream) {
 	if cb == nil {
@@ -2567,7 +2567,7 @@ func (x *FileIface) OverrideOpenReadwriteFinish(cb func(File, AsyncResult) *File
 	}
 }
 
-// GetOpenReadwriteFinish gets the callback function.
+// GetOpenReadwriteFinish gets the "open_readwrite_finish" callback function.
 // Finishes an asynchronous open read/write. Since 2.22.
 func (x *FileIface) GetOpenReadwriteFinish() func(File, AsyncResult) *FileIOStream {
 	if x.xOpenReadwriteFinish == 0 {
@@ -2586,7 +2586,7 @@ func (x *FileIface) GetOpenReadwriteFinish() func(File, AsyncResult) *FileIOStre
 	}
 }
 
-// OverrideCreateReadwrite sets the callback function.
+// OverrideCreateReadwrite sets the "create_readwrite" callback function.
 // Creates file read/write. Since 2.22.
 func (x *FileIface) OverrideCreateReadwrite(cb func(File, FileCreateFlags, *Cancellable) *FileIOStream) {
 	if cb == nil {
@@ -2602,7 +2602,7 @@ func (x *FileIface) OverrideCreateReadwrite(cb func(File, FileCreateFlags, *Canc
 	}
 }
 
-// GetCreateReadwrite gets the callback function.
+// GetCreateReadwrite gets the "create_readwrite" callback function.
 // Creates file read/write. Since 2.22.
 func (x *FileIface) GetCreateReadwrite() func(File, FileCreateFlags, *Cancellable) *FileIOStream {
 	if x.xCreateReadwrite == 0 {
@@ -2621,7 +2621,7 @@ func (x *FileIface) GetCreateReadwrite() func(File, FileCreateFlags, *Cancellabl
 	}
 }
 
-// OverrideCreateReadwriteAsync sets the callback function.
+// OverrideCreateReadwriteAsync sets the "create_readwrite_async" callback function.
 // Asynchronously creates file read/write. Since 2.22.
 func (x *FileIface) OverrideCreateReadwriteAsync(cb func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2633,7 +2633,7 @@ func (x *FileIface) OverrideCreateReadwriteAsync(cb func(File, FileCreateFlags, 
 	}
 }
 
-// GetCreateReadwriteAsync gets the callback function.
+// GetCreateReadwriteAsync gets the "create_readwrite_async" callback function.
 // Asynchronously creates file read/write. Since 2.22.
 func (x *FileIface) GetCreateReadwriteAsync() func(File, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xCreateReadwriteAsync == 0 {
@@ -2646,7 +2646,7 @@ func (x *FileIface) GetCreateReadwriteAsync() func(File, FileCreateFlags, int, *
 	}
 }
 
-// OverrideCreateReadwriteFinish sets the callback function.
+// OverrideCreateReadwriteFinish sets the "create_readwrite_finish" callback function.
 // Finishes an asynchronous creates read/write. Since 2.22.
 func (x *FileIface) OverrideCreateReadwriteFinish(cb func(File, AsyncResult) *FileIOStream) {
 	if cb == nil {
@@ -2662,7 +2662,7 @@ func (x *FileIface) OverrideCreateReadwriteFinish(cb func(File, AsyncResult) *Fi
 	}
 }
 
-// GetCreateReadwriteFinish gets the callback function.
+// GetCreateReadwriteFinish gets the "create_readwrite_finish" callback function.
 // Finishes an asynchronous creates read/write. Since 2.22.
 func (x *FileIface) GetCreateReadwriteFinish() func(File, AsyncResult) *FileIOStream {
 	if x.xCreateReadwriteFinish == 0 {
@@ -2681,7 +2681,7 @@ func (x *FileIface) GetCreateReadwriteFinish() func(File, AsyncResult) *FileIOSt
 	}
 }
 
-// OverrideReplaceReadwrite sets the callback function.
+// OverrideReplaceReadwrite sets the "replace_readwrite" callback function.
 // Replaces file read/write. Since 2.22.
 func (x *FileIface) OverrideReplaceReadwrite(cb func(File, string, bool, FileCreateFlags, *Cancellable) *FileIOStream) {
 	if cb == nil {
@@ -2697,7 +2697,7 @@ func (x *FileIface) OverrideReplaceReadwrite(cb func(File, string, bool, FileCre
 	}
 }
 
-// GetReplaceReadwrite gets the callback function.
+// GetReplaceReadwrite gets the "replace_readwrite" callback function.
 // Replaces file read/write. Since 2.22.
 func (x *FileIface) GetReplaceReadwrite() func(File, string, bool, FileCreateFlags, *Cancellable) *FileIOStream {
 	if x.xReplaceReadwrite == 0 {
@@ -2716,7 +2716,7 @@ func (x *FileIface) GetReplaceReadwrite() func(File, string, bool, FileCreateFla
 	}
 }
 
-// OverrideReplaceReadwriteAsync sets the callback function.
+// OverrideReplaceReadwriteAsync sets the "replace_readwrite_async" callback function.
 // Asynchronously replaces file read/write. Since 2.22.
 func (x *FileIface) OverrideReplaceReadwriteAsync(cb func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2728,7 +2728,7 @@ func (x *FileIface) OverrideReplaceReadwriteAsync(cb func(File, string, bool, Fi
 	}
 }
 
-// GetReplaceReadwriteAsync gets the callback function.
+// GetReplaceReadwriteAsync gets the "replace_readwrite_async" callback function.
 // Asynchronously replaces file read/write. Since 2.22.
 func (x *FileIface) GetReplaceReadwriteAsync() func(File, string, bool, FileCreateFlags, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xReplaceReadwriteAsync == 0 {
@@ -2741,7 +2741,7 @@ func (x *FileIface) GetReplaceReadwriteAsync() func(File, string, bool, FileCrea
 	}
 }
 
-// OverrideReplaceReadwriteFinish sets the callback function.
+// OverrideReplaceReadwriteFinish sets the "replace_readwrite_finish" callback function.
 // Finishes an asynchronous replace read/write. Since 2.22.
 func (x *FileIface) OverrideReplaceReadwriteFinish(cb func(File, AsyncResult) *FileIOStream) {
 	if cb == nil {
@@ -2757,7 +2757,7 @@ func (x *FileIface) OverrideReplaceReadwriteFinish(cb func(File, AsyncResult) *F
 	}
 }
 
-// GetReplaceReadwriteFinish gets the callback function.
+// GetReplaceReadwriteFinish gets the "replace_readwrite_finish" callback function.
 // Finishes an asynchronous replace read/write. Since 2.22.
 func (x *FileIface) GetReplaceReadwriteFinish() func(File, AsyncResult) *FileIOStream {
 	if x.xReplaceReadwriteFinish == 0 {
@@ -2776,7 +2776,7 @@ func (x *FileIface) GetReplaceReadwriteFinish() func(File, AsyncResult) *FileIOS
 	}
 }
 
-// OverrideStartMountable sets the callback function.
+// OverrideStartMountable sets the "start_mountable" callback function.
 // Starts a mountable object. Since 2.22.
 func (x *FileIface) OverrideStartMountable(cb func(File, DriveStartFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2788,7 +2788,7 @@ func (x *FileIface) OverrideStartMountable(cb func(File, DriveStartFlags, *Mount
 	}
 }
 
-// GetStartMountable gets the callback function.
+// GetStartMountable gets the "start_mountable" callback function.
 // Starts a mountable object. Since 2.22.
 func (x *FileIface) GetStartMountable() func(File, DriveStartFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xStartMountable == 0 {
@@ -2801,7 +2801,7 @@ func (x *FileIface) GetStartMountable() func(File, DriveStartFlags, *MountOperat
 	}
 }
 
-// OverrideStartMountableFinish sets the callback function.
+// OverrideStartMountableFinish sets the "start_mountable_finish" callback function.
 // Finishes a start operation. Since 2.22.
 func (x *FileIface) OverrideStartMountableFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -2813,7 +2813,7 @@ func (x *FileIface) OverrideStartMountableFinish(cb func(File, AsyncResult) bool
 	}
 }
 
-// GetStartMountableFinish gets the callback function.
+// GetStartMountableFinish gets the "start_mountable_finish" callback function.
 // Finishes a start operation. Since 2.22.
 func (x *FileIface) GetStartMountableFinish() func(File, AsyncResult) bool {
 	if x.xStartMountableFinish == 0 {
@@ -2826,7 +2826,7 @@ func (x *FileIface) GetStartMountableFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideStopMountable sets the callback function.
+// OverrideStopMountable sets the "stop_mountable" callback function.
 // Stops a mountable. Since 2.22.
 func (x *FileIface) OverrideStopMountable(cb func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2838,7 +2838,7 @@ func (x *FileIface) OverrideStopMountable(cb func(File, MountUnmountFlags, *Moun
 	}
 }
 
-// GetStopMountable gets the callback function.
+// GetStopMountable gets the "stop_mountable" callback function.
 // Stops a mountable. Since 2.22.
 func (x *FileIface) GetStopMountable() func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xStopMountable == 0 {
@@ -2851,7 +2851,7 @@ func (x *FileIface) GetStopMountable() func(File, MountUnmountFlags, *MountOpera
 	}
 }
 
-// OverrideStopMountableFinish sets the callback function.
+// OverrideStopMountableFinish sets the "stop_mountable_finish" callback function.
 // Finishes a stop operation. Since 2.22.
 func (x *FileIface) OverrideStopMountableFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -2863,7 +2863,7 @@ func (x *FileIface) OverrideStopMountableFinish(cb func(File, AsyncResult) bool)
 	}
 }
 
-// GetStopMountableFinish gets the callback function.
+// GetStopMountableFinish gets the "stop_mountable_finish" callback function.
 // Finishes a stop operation. Since 2.22.
 func (x *FileIface) GetStopMountableFinish() func(File, AsyncResult) bool {
 	if x.xStopMountableFinish == 0 {
@@ -2876,7 +2876,7 @@ func (x *FileIface) GetStopMountableFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideUnmountMountableWithOperation sets the callback function.
+// OverrideUnmountMountableWithOperation sets the "unmount_mountable_with_operation" callback function.
 // Unmounts a mountable object using a #GMountOperation. Since 2.22.
 func (x *FileIface) OverrideUnmountMountableWithOperation(cb func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2888,7 +2888,7 @@ func (x *FileIface) OverrideUnmountMountableWithOperation(cb func(File, MountUnm
 	}
 }
 
-// GetUnmountMountableWithOperation gets the callback function.
+// GetUnmountMountableWithOperation gets the "unmount_mountable_with_operation" callback function.
 // Unmounts a mountable object using a #GMountOperation. Since 2.22.
 func (x *FileIface) GetUnmountMountableWithOperation() func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xUnmountMountableWithOperation == 0 {
@@ -2901,7 +2901,7 @@ func (x *FileIface) GetUnmountMountableWithOperation() func(File, MountUnmountFl
 	}
 }
 
-// OverrideUnmountMountableWithOperationFinish sets the callback function.
+// OverrideUnmountMountableWithOperationFinish sets the "unmount_mountable_with_operation_finish" callback function.
 // Finishes an unmount operation using a #GMountOperation. Since 2.22.
 func (x *FileIface) OverrideUnmountMountableWithOperationFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -2913,7 +2913,7 @@ func (x *FileIface) OverrideUnmountMountableWithOperationFinish(cb func(File, As
 	}
 }
 
-// GetUnmountMountableWithOperationFinish gets the callback function.
+// GetUnmountMountableWithOperationFinish gets the "unmount_mountable_with_operation_finish" callback function.
 // Finishes an unmount operation using a #GMountOperation. Since 2.22.
 func (x *FileIface) GetUnmountMountableWithOperationFinish() func(File, AsyncResult) bool {
 	if x.xUnmountMountableWithOperationFinish == 0 {
@@ -2926,7 +2926,7 @@ func (x *FileIface) GetUnmountMountableWithOperationFinish() func(File, AsyncRes
 	}
 }
 
-// OverrideEjectMountableWithOperation sets the callback function.
+// OverrideEjectMountableWithOperation sets the "eject_mountable_with_operation" callback function.
 // Ejects a mountable object using a #GMountOperation. Since 2.22.
 func (x *FileIface) OverrideEjectMountableWithOperation(cb func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2938,7 +2938,7 @@ func (x *FileIface) OverrideEjectMountableWithOperation(cb func(File, MountUnmou
 	}
 }
 
-// GetEjectMountableWithOperation gets the callback function.
+// GetEjectMountableWithOperation gets the "eject_mountable_with_operation" callback function.
 // Ejects a mountable object using a #GMountOperation. Since 2.22.
 func (x *FileIface) GetEjectMountableWithOperation() func(File, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xEjectMountableWithOperation == 0 {
@@ -2951,7 +2951,7 @@ func (x *FileIface) GetEjectMountableWithOperation() func(File, MountUnmountFlag
 	}
 }
 
-// OverrideEjectMountableWithOperationFinish sets the callback function.
+// OverrideEjectMountableWithOperationFinish sets the "eject_mountable_with_operation_finish" callback function.
 // Finishes an eject operation using a #GMountOperation. Since 2.22.
 func (x *FileIface) OverrideEjectMountableWithOperationFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -2963,7 +2963,7 @@ func (x *FileIface) OverrideEjectMountableWithOperationFinish(cb func(File, Asyn
 	}
 }
 
-// GetEjectMountableWithOperationFinish gets the callback function.
+// GetEjectMountableWithOperationFinish gets the "eject_mountable_with_operation_finish" callback function.
 // Finishes an eject operation using a #GMountOperation. Since 2.22.
 func (x *FileIface) GetEjectMountableWithOperationFinish() func(File, AsyncResult) bool {
 	if x.xEjectMountableWithOperationFinish == 0 {
@@ -2976,7 +2976,7 @@ func (x *FileIface) GetEjectMountableWithOperationFinish() func(File, AsyncResul
 	}
 }
 
-// OverridePollMountable sets the callback function.
+// OverridePollMountable sets the "poll_mountable" callback function.
 // Polls a mountable object for media changes. Since 2.22.
 func (x *FileIface) OverridePollMountable(cb func(File, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -2988,7 +2988,7 @@ func (x *FileIface) OverridePollMountable(cb func(File, *Cancellable, *AsyncRead
 	}
 }
 
-// GetPollMountable gets the callback function.
+// GetPollMountable gets the "poll_mountable" callback function.
 // Polls a mountable object for media changes. Since 2.22.
 func (x *FileIface) GetPollMountable() func(File, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xPollMountable == 0 {
@@ -3001,7 +3001,7 @@ func (x *FileIface) GetPollMountable() func(File, *Cancellable, *AsyncReadyCallb
 	}
 }
 
-// OverridePollMountableFinish sets the callback function.
+// OverridePollMountableFinish sets the "poll_mountable_finish" callback function.
 // Finishes a poll operation for media changes. Since 2.22.
 func (x *FileIface) OverridePollMountableFinish(cb func(File, AsyncResult) bool) {
 	if cb == nil {
@@ -3013,7 +3013,7 @@ func (x *FileIface) OverridePollMountableFinish(cb func(File, AsyncResult) bool)
 	}
 }
 
-// GetPollMountableFinish gets the callback function.
+// GetPollMountableFinish gets the "poll_mountable_finish" callback function.
 // Finishes a poll operation for media changes. Since 2.22.
 func (x *FileIface) GetPollMountableFinish() func(File, AsyncResult) bool {
 	if x.xPollMountableFinish == 0 {
@@ -3026,32 +3026,32 @@ func (x *FileIface) GetPollMountableFinish() func(File, AsyncResult) bool {
 	}
 }
 
-// OverrideMeasureDiskUsage sets the callback function.
+// OverrideMeasureDiskUsage sets the "measure_disk_usage" callback function.
 // Recursively measures the disk usage of @file. Since 2.38
-func (x *FileIface) OverrideMeasureDiskUsage(cb func(File, FileMeasureFlags, *Cancellable, *FileMeasureProgressCallback, uintptr, uint64, uint64, uint64) bool) {
+func (x *FileIface) OverrideMeasureDiskUsage(cb func(File, FileMeasureFlags, *Cancellable, *FileMeasureProgressCallback, uintptr, *uint64, *uint64, *uint64) bool) {
 	if cb == nil {
 		x.xMeasureDiskUsage = 0
 	} else {
-		x.xMeasureDiskUsage = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileMeasureFlags, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, DiskUsageVarp uint64, NumDirsVarp uint64, NumFilesVarp uint64) bool {
+		x.xMeasureDiskUsage = purego.NewCallback(func(FileVarp uintptr, FlagsVarp FileMeasureFlags, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, DiskUsageVarp *uint64, NumDirsVarp *uint64, NumFilesVarp *uint64) bool {
 			return cb(&FileBase{Ptr: FileVarp}, FlagsVarp, CancellableNewFromInternalPtr(CancellableVarp), (*FileMeasureProgressCallback)(unsafe.Pointer(ProgressCallbackVarp)), ProgressDataVarp, DiskUsageVarp, NumDirsVarp, NumFilesVarp)
 		})
 	}
 }
 
-// GetMeasureDiskUsage gets the callback function.
+// GetMeasureDiskUsage gets the "measure_disk_usage" callback function.
 // Recursively measures the disk usage of @file. Since 2.38
-func (x *FileIface) GetMeasureDiskUsage() func(File, FileMeasureFlags, *Cancellable, *FileMeasureProgressCallback, uintptr, uint64, uint64, uint64) bool {
+func (x *FileIface) GetMeasureDiskUsage() func(File, FileMeasureFlags, *Cancellable, *FileMeasureProgressCallback, uintptr, *uint64, *uint64, *uint64) bool {
 	if x.xMeasureDiskUsage == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, FlagsVarp FileMeasureFlags, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, DiskUsageVarp uint64, NumDirsVarp uint64, NumFilesVarp uint64) bool
+	var rawCallback func(FileVarp uintptr, FlagsVarp FileMeasureFlags, CancellableVarp uintptr, ProgressCallbackVarp uintptr, ProgressDataVarp uintptr, DiskUsageVarp *uint64, NumDirsVarp *uint64, NumFilesVarp *uint64) bool
 	purego.RegisterFunc(&rawCallback, x.xMeasureDiskUsage)
-	return func(FileVar File, FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) bool {
+	return func(FileVar File, FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar *uint64, NumDirsVar *uint64, NumFilesVar *uint64) bool {
 		return rawCallback(FileVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressDataVar, DiskUsageVar, NumDirsVar, NumFilesVar)
 	}
 }
 
-// OverrideMeasureDiskUsageAsync sets the callback function.
+// OverrideMeasureDiskUsageAsync sets the "measure_disk_usage_async" callback function.
 // Asynchronously recursively measures the disk usage of @file. Since 2.38
 func (x *FileIface) OverrideMeasureDiskUsageAsync(cb func(File, FileMeasureFlags, int, *Cancellable, *FileMeasureProgressCallback, uintptr, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -3063,7 +3063,7 @@ func (x *FileIface) OverrideMeasureDiskUsageAsync(cb func(File, FileMeasureFlags
 	}
 }
 
-// GetMeasureDiskUsageAsync gets the callback function.
+// GetMeasureDiskUsageAsync gets the "measure_disk_usage_async" callback function.
 // Asynchronously recursively measures the disk usage of @file. Since 2.38
 func (x *FileIface) GetMeasureDiskUsageAsync() func(File, FileMeasureFlags, int, *Cancellable, *FileMeasureProgressCallback, uintptr, *AsyncReadyCallback, uintptr) {
 	if x.xMeasureDiskUsageAsync == 0 {
@@ -3076,32 +3076,32 @@ func (x *FileIface) GetMeasureDiskUsageAsync() func(File, FileMeasureFlags, int,
 	}
 }
 
-// OverrideMeasureDiskUsageFinish sets the callback function.
+// OverrideMeasureDiskUsageFinish sets the "measure_disk_usage_finish" callback function.
 // Finishes an asynchronous recursive measurement of the disk usage of @file. Since 2.38
-func (x *FileIface) OverrideMeasureDiskUsageFinish(cb func(File, AsyncResult, uint64, uint64, uint64) bool) {
+func (x *FileIface) OverrideMeasureDiskUsageFinish(cb func(File, AsyncResult, *uint64, *uint64, *uint64) bool) {
 	if cb == nil {
 		x.xMeasureDiskUsageFinish = 0
 	} else {
-		x.xMeasureDiskUsageFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr, DiskUsageVarp uint64, NumDirsVarp uint64, NumFilesVarp uint64) bool {
+		x.xMeasureDiskUsageFinish = purego.NewCallback(func(FileVarp uintptr, ResultVarp uintptr, DiskUsageVarp *uint64, NumDirsVarp *uint64, NumFilesVarp *uint64) bool {
 			return cb(&FileBase{Ptr: FileVarp}, &AsyncResultBase{Ptr: ResultVarp}, DiskUsageVarp, NumDirsVarp, NumFilesVarp)
 		})
 	}
 }
 
-// GetMeasureDiskUsageFinish gets the callback function.
+// GetMeasureDiskUsageFinish gets the "measure_disk_usage_finish" callback function.
 // Finishes an asynchronous recursive measurement of the disk usage of @file. Since 2.38
-func (x *FileIface) GetMeasureDiskUsageFinish() func(File, AsyncResult, uint64, uint64, uint64) bool {
+func (x *FileIface) GetMeasureDiskUsageFinish() func(File, AsyncResult, *uint64, *uint64, *uint64) bool {
 	if x.xMeasureDiskUsageFinish == 0 {
 		return nil
 	}
-	var rawCallback func(FileVarp uintptr, ResultVarp uintptr, DiskUsageVarp uint64, NumDirsVarp uint64, NumFilesVarp uint64) bool
+	var rawCallback func(FileVarp uintptr, ResultVarp uintptr, DiskUsageVarp *uint64, NumDirsVarp *uint64, NumFilesVarp *uint64) bool
 	purego.RegisterFunc(&rawCallback, x.xMeasureDiskUsageFinish)
-	return func(FileVar File, ResultVar AsyncResult, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) bool {
+	return func(FileVar File, ResultVar AsyncResult, DiskUsageVar *uint64, NumDirsVar *uint64, NumFilesVar *uint64) bool {
 		return rawCallback(FileVar.GoPointer(), ResultVar.GoPointer(), DiskUsageVar, NumDirsVar, NumFilesVar)
 	}
 }
 
-// OverrideQueryExists sets the callback function.
+// OverrideQueryExists sets the "query_exists" callback function.
 // Queries whether a file exists. Since 2.84
 func (x *FileIface) OverrideQueryExists(cb func(File, *Cancellable) bool) {
 	if cb == nil {
@@ -3113,7 +3113,7 @@ func (x *FileIface) OverrideQueryExists(cb func(File, *Cancellable) bool) {
 	}
 }
 
-// GetQueryExists gets the callback function.
+// GetQueryExists gets the "query_exists" callback function.
 // Queries whether a file exists. Since 2.84
 func (x *FileIface) GetQueryExists() func(File, *Cancellable) bool {
 	if x.xQueryExists == 0 {
@@ -3264,14 +3264,14 @@ type File interface {
 	HasUriScheme(UriSchemeVar string) bool
 	Hash() uint
 	IsNative() bool
-	LoadBytes(CancellableVar *Cancellable, EtagOutVar string) (*glib.Bytes, error)
+	LoadBytes(CancellableVar *Cancellable, EtagOutVar *string) (*glib.Bytes, error)
 	LoadBytesAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	LoadBytesFinish(ResultVar AsyncResult, EtagOutVar string) (*glib.Bytes, error)
-	LoadContents(CancellableVar *Cancellable, ContentsVar []string, LengthVar uint, EtagOutVar string) (bool, error)
+	LoadBytesFinish(ResultVar AsyncResult, EtagOutVar *string) (*glib.Bytes, error)
+	LoadContents(CancellableVar *Cancellable, ContentsVar *[]string, LengthVar *uint, EtagOutVar *string) (bool, error)
 	LoadContentsAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	LoadContentsFinish(ResVar AsyncResult, ContentsVar []string, LengthVar uint, EtagOutVar string) (bool, error)
+	LoadContentsFinish(ResVar AsyncResult, ContentsVar *[]string, LengthVar *uint, EtagOutVar *string) (bool, error)
 	LoadPartialContentsAsync(CancellableVar *Cancellable, ReadMoreCallbackVar *FileReadMoreCallback, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	LoadPartialContentsFinish(ResVar AsyncResult, ContentsVar []string, LengthVar uint, EtagOutVar string) (bool, error)
+	LoadPartialContentsFinish(ResVar AsyncResult, ContentsVar *[]string, LengthVar *uint, EtagOutVar *string) (bool, error)
 	MakeDirectory(CancellableVar *Cancellable) (bool, error)
 	MakeDirectoryAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	MakeDirectoryFinish(ResultVar AsyncResult) (bool, error)
@@ -3279,9 +3279,9 @@ type File interface {
 	MakeSymbolicLink(SymlinkValueVar string, CancellableVar *Cancellable) (bool, error)
 	MakeSymbolicLinkAsync(SymlinkValueVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	MakeSymbolicLinkFinish(ResultVar AsyncResult) (bool, error)
-	MeasureDiskUsage(FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) (bool, error)
+	MeasureDiskUsage(FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar *uint64, NumDirsVar *uint64, NumFilesVar *uint64) (bool, error)
 	MeasureDiskUsageAsync(FlagsVar FileMeasureFlags, IoPriorityVar int, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	MeasureDiskUsageFinish(ResultVar AsyncResult, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) (bool, error)
+	MeasureDiskUsageFinish(ResultVar AsyncResult, DiskUsageVar *uint64, NumDirsVar *uint64, NumFilesVar *uint64) (bool, error)
 	Monitor(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) (*FileMonitor, error)
 	MonitorDirectory(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) (*FileMonitor, error)
 	MonitorFile(FlagsVar FileMonitorFlags, CancellableVar *Cancellable) (*FileMonitor, error)
@@ -3317,10 +3317,10 @@ type File interface {
 	ReadFinish(ResVar AsyncResult) (*FileInputStream, error)
 	Replace(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error)
 	ReplaceAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ReplaceContents(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar string, CancellableVar *Cancellable) (bool, error)
+	ReplaceContents(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error)
 	ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ReplaceContentsFinish(ResVar AsyncResult, NewEtagVar string) (bool, error)
+	ReplaceContentsFinish(ResVar AsyncResult, NewEtagVar *string) (bool, error)
 	ReplaceFinish(ResVar AsyncResult) (*FileOutputStream, error)
 	ReplaceReadwrite(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error)
 	ReplaceReadwriteAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
@@ -4227,7 +4227,7 @@ func (x *FileBase) IsNative() bool {
 // The data contained in the resulting #GBytes is always zero-terminated, but
 // this is not included in the #GBytes length. The resulting #GBytes should be
 // freed with g_bytes_unref() when no longer in use.
-func (x *FileBase) LoadBytes(CancellableVar *Cancellable, EtagOutVar string) (*glib.Bytes, error) {
+func (x *FileBase) LoadBytes(CancellableVar *Cancellable, EtagOutVar *string) (*glib.Bytes, error) {
 	var cerr *glib.Error
 
 	cret := XGFileLoadBytes(x.GoPointer(), CancellableVar.GoPointer(), EtagOutVar, &cerr)
@@ -4263,7 +4263,7 @@ func (x *FileBase) LoadBytesAsync(CancellableVar *Cancellable, CallbackVar *Asyn
 // freed with g_bytes_unref() when no longer in use.
 //
 // See g_file_load_bytes() for more information.
-func (x *FileBase) LoadBytesFinish(ResultVar AsyncResult, EtagOutVar string) (*glib.Bytes, error) {
+func (x *FileBase) LoadBytesFinish(ResultVar AsyncResult, EtagOutVar *string) (*glib.Bytes, error) {
 	var cerr *glib.Error
 
 	cret := XGFileLoadBytesFinish(x.GoPointer(), ResultVar.GoPointer(), EtagOutVar, &cerr)
@@ -4282,7 +4282,7 @@ func (x *FileBase) LoadBytesFinish(ResultVar AsyncResult, EtagOutVar string) (*g
 // If @cancellable is not %NULL, then the operation can be cancelled by
 // triggering the cancellable object from another thread. If the operation
 // was cancelled, the error %G_IO_ERROR_CANCELLED will be returned.
-func (x *FileBase) LoadContents(CancellableVar *Cancellable, ContentsVar []string, LengthVar uint, EtagOutVar string) (bool, error) {
+func (x *FileBase) LoadContents(CancellableVar *Cancellable, ContentsVar *[]string, LengthVar *uint, EtagOutVar *string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileLoadContents(x.GoPointer(), CancellableVar.GoPointer(), ContentsVar, LengthVar, EtagOutVar, &cerr)
@@ -4317,7 +4317,7 @@ func (x *FileBase) LoadContentsAsync(CancellableVar *Cancellable, CallbackVar *A
 // size of the @contents string. The @contents should be freed with
 // g_free() when no longer needed. If @etag_out is present, it will be
 // set to the new entity tag for the @file.
-func (x *FileBase) LoadContentsFinish(ResVar AsyncResult, ContentsVar []string, LengthVar uint, EtagOutVar string) (bool, error) {
+func (x *FileBase) LoadContentsFinish(ResVar AsyncResult, ContentsVar *[]string, LengthVar *uint, EtagOutVar *string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileLoadContentsFinish(x.GoPointer(), ResVar.GoPointer(), ContentsVar, LengthVar, EtagOutVar, &cerr)
@@ -4350,7 +4350,7 @@ func (x *FileBase) LoadPartialContentsAsync(CancellableVar *Cancellable, ReadMor
 // zero-terminated, but this is not included in the resultant @length.
 // The returned @contents should be freed with g_free() when no longer
 // needed.
-func (x *FileBase) LoadPartialContentsFinish(ResVar AsyncResult, ContentsVar []string, LengthVar uint, EtagOutVar string) (bool, error) {
+func (x *FileBase) LoadPartialContentsFinish(ResVar AsyncResult, ContentsVar *[]string, LengthVar *uint, EtagOutVar *string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileLoadPartialContentsFinish(x.GoPointer(), ResVar.GoPointer(), ContentsVar, LengthVar, EtagOutVar, &cerr)
@@ -4490,7 +4490,7 @@ func (x *FileBase) MakeSymbolicLinkFinish(ResultVar AsyncResult) (bool, error) {
 // periodic progress updates while scanning.  See the documentation for
 // #GFileMeasureProgressCallback for information about when and how the
 // callback will be invoked.
-func (x *FileBase) MeasureDiskUsage(FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) (bool, error) {
+func (x *FileBase) MeasureDiskUsage(FlagsVar FileMeasureFlags, CancellableVar *Cancellable, ProgressCallbackVar *FileMeasureProgressCallback, ProgressDataVar uintptr, DiskUsageVar *uint64, NumDirsVar *uint64, NumFilesVar *uint64) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileMeasureDiskUsage(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressDataVar, DiskUsageVar, NumDirsVar, NumFilesVar, &cerr)
@@ -4514,7 +4514,7 @@ func (x *FileBase) MeasureDiskUsageAsync(FlagsVar FileMeasureFlags, IoPriorityVa
 // Collects the results from an earlier call to
 // g_file_measure_disk_usage_async().  See g_file_measure_disk_usage() for
 // more information.
-func (x *FileBase) MeasureDiskUsageFinish(ResultVar AsyncResult, DiskUsageVar uint64, NumDirsVar uint64, NumFilesVar uint64) (bool, error) {
+func (x *FileBase) MeasureDiskUsageFinish(ResultVar AsyncResult, DiskUsageVar *uint64, NumDirsVar *uint64, NumFilesVar *uint64) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileMeasureDiskUsageFinish(x.GoPointer(), ResultVar.GoPointer(), DiskUsageVar, NumDirsVar, NumFilesVar, &cerr)
@@ -5329,7 +5329,7 @@ func (x *FileBase) ReplaceAsync(EtagVar string, MakeBackupVar bool, FlagsVar Fil
 //
 // The returned @new_etag can be used to verify that the file hasn't
 // changed the next time it is saved over.
-func (x *FileBase) ReplaceContents(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar string, CancellableVar *Cancellable) (bool, error) {
+func (x *FileBase) ReplaceContents(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileReplaceContents(x.GoPointer(), ContentsVar, LengthVar, EtagVar, MakeBackupVar, FlagsVar, NewEtagVar, CancellableVar.GoPointer(), &cerr)
@@ -5382,7 +5382,7 @@ func (x *FileBase) ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar st
 // Finishes an asynchronous replace of the given @file. See
 // g_file_replace_contents_async(). Sets @new_etag to the new entity
 // tag for the document, if present.
-func (x *FileBase) ReplaceContentsFinish(ResVar AsyncResult, NewEtagVar string) (bool, error) {
+func (x *FileBase) ReplaceContentsFinish(ResVar AsyncResult, NewEtagVar *string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileReplaceContentsFinish(x.GoPointer(), ResVar.GoPointer(), NewEtagVar, &cerr)
@@ -5636,7 +5636,7 @@ func (x *FileBase) SetAttributesAsync(InfoVar *FileInfo, FlagsVar FileQueryInfoF
 func (x *FileBase) SetAttributesFinish(ResultVar AsyncResult, InfoVar **FileInfo) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGFileSetAttributesFinish(x.GoPointer(), ResultVar.GoPointer(), *gobject.ConvertPtr(InfoVar), &cerr)
+	cret := XGFileSetAttributesFinish(x.GoPointer(), ResultVar.GoPointer(), InfoVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5955,14 +5955,14 @@ var XGFileHasPrefix func(uintptr, uintptr) bool
 var XGFileHasUriScheme func(uintptr, string) bool
 var XGFileHash func(uintptr) uint
 var XGFileIsNative func(uintptr) bool
-var XGFileLoadBytes func(uintptr, uintptr, string, **glib.Error) *glib.Bytes
+var XGFileLoadBytes func(uintptr, uintptr, *string, **glib.Error) *glib.Bytes
 var XGFileLoadBytesAsync func(uintptr, uintptr, uintptr, uintptr)
-var XGFileLoadBytesFinish func(uintptr, uintptr, string, **glib.Error) *glib.Bytes
-var XGFileLoadContents func(uintptr, uintptr, []string, uint, string, **glib.Error) bool
+var XGFileLoadBytesFinish func(uintptr, uintptr, *string, **glib.Error) *glib.Bytes
+var XGFileLoadContents func(uintptr, uintptr, *[]string, *uint, *string, **glib.Error) bool
 var XGFileLoadContentsAsync func(uintptr, uintptr, uintptr, uintptr)
-var XGFileLoadContentsFinish func(uintptr, uintptr, []string, uint, string, **glib.Error) bool
+var XGFileLoadContentsFinish func(uintptr, uintptr, *[]string, *uint, *string, **glib.Error) bool
 var XGFileLoadPartialContentsAsync func(uintptr, uintptr, uintptr, uintptr, uintptr)
-var XGFileLoadPartialContentsFinish func(uintptr, uintptr, []string, uint, string, **glib.Error) bool
+var XGFileLoadPartialContentsFinish func(uintptr, uintptr, *[]string, *uint, *string, **glib.Error) bool
 var XGFileMakeDirectory func(uintptr, uintptr, **glib.Error) bool
 var XGFileMakeDirectoryAsync func(uintptr, int, uintptr, uintptr, uintptr)
 var XGFileMakeDirectoryFinish func(uintptr, uintptr, **glib.Error) bool
@@ -5970,9 +5970,9 @@ var XGFileMakeDirectoryWithParents func(uintptr, uintptr, **glib.Error) bool
 var XGFileMakeSymbolicLink func(uintptr, string, uintptr, **glib.Error) bool
 var XGFileMakeSymbolicLinkAsync func(uintptr, string, int, uintptr, uintptr, uintptr)
 var XGFileMakeSymbolicLinkFinish func(uintptr, uintptr, **glib.Error) bool
-var XGFileMeasureDiskUsage func(uintptr, FileMeasureFlags, uintptr, uintptr, uintptr, uint64, uint64, uint64, **glib.Error) bool
+var XGFileMeasureDiskUsage func(uintptr, FileMeasureFlags, uintptr, uintptr, uintptr, *uint64, *uint64, *uint64, **glib.Error) bool
 var XGFileMeasureDiskUsageAsync func(uintptr, FileMeasureFlags, int, uintptr, uintptr, uintptr, uintptr, uintptr)
-var XGFileMeasureDiskUsageFinish func(uintptr, uintptr, uint64, uint64, uint64, **glib.Error) bool
+var XGFileMeasureDiskUsageFinish func(uintptr, uintptr, *uint64, *uint64, *uint64, **glib.Error) bool
 var XGFileMonitor func(uintptr, FileMonitorFlags, uintptr, **glib.Error) uintptr
 var XGFileMonitorDirectory func(uintptr, FileMonitorFlags, uintptr, **glib.Error) uintptr
 var XGFileMonitorFile func(uintptr, FileMonitorFlags, uintptr, **glib.Error) uintptr
@@ -6008,10 +6008,10 @@ var XGFileReadAsync func(uintptr, int, uintptr, uintptr, uintptr)
 var XGFileReadFinish func(uintptr, uintptr, **glib.Error) uintptr
 var XGFileReplace func(uintptr, string, bool, FileCreateFlags, uintptr, **glib.Error) uintptr
 var XGFileReplaceAsync func(uintptr, string, bool, FileCreateFlags, int, uintptr, uintptr, uintptr)
-var XGFileReplaceContents func(uintptr, string, uint, string, bool, FileCreateFlags, string, uintptr, **glib.Error) bool
+var XGFileReplaceContents func(uintptr, string, uint, string, bool, FileCreateFlags, *string, uintptr, **glib.Error) bool
 var XGFileReplaceContentsAsync func(uintptr, string, uint, string, bool, FileCreateFlags, uintptr, uintptr, uintptr)
 var XGFileReplaceContentsBytesAsync func(uintptr, *glib.Bytes, string, bool, FileCreateFlags, uintptr, uintptr, uintptr)
-var XGFileReplaceContentsFinish func(uintptr, uintptr, string, **glib.Error) bool
+var XGFileReplaceContentsFinish func(uintptr, uintptr, *string, **glib.Error) bool
 var XGFileReplaceFinish func(uintptr, uintptr, **glib.Error) uintptr
 var XGFileReplaceReadwrite func(uintptr, string, bool, FileCreateFlags, uintptr, **glib.Error) uintptr
 var XGFileReplaceReadwriteAsync func(uintptr, string, bool, FileCreateFlags, int, uintptr, uintptr, uintptr)
@@ -6025,7 +6025,7 @@ var XGFileSetAttributeString func(uintptr, string, string, FileQueryInfoFlags, u
 var XGFileSetAttributeUint32 func(uintptr, string, uint32, FileQueryInfoFlags, uintptr, **glib.Error) bool
 var XGFileSetAttributeUint64 func(uintptr, string, uint64, FileQueryInfoFlags, uintptr, **glib.Error) bool
 var XGFileSetAttributesAsync func(uintptr, uintptr, FileQueryInfoFlags, int, uintptr, uintptr, uintptr)
-var XGFileSetAttributesFinish func(uintptr, uintptr, uintptr, **glib.Error) bool
+var XGFileSetAttributesFinish func(uintptr, uintptr, **FileInfo, **glib.Error) bool
 var XGFileSetAttributesFromInfo func(uintptr, uintptr, FileQueryInfoFlags, uintptr, **glib.Error) bool
 var XGFileSetDisplayName func(uintptr, string, uintptr, **glib.Error) uintptr
 var XGFileSetDisplayNameAsync func(uintptr, string, int, uintptr, uintptr, uintptr)
@@ -6155,7 +6155,7 @@ func FileNewForUri(UriVar string) *FileBase {
 	return cls
 }
 
-var xFileNewTmp func(string, uintptr, **glib.Error) uintptr
+var xFileNewTmp func(string, **FileIOStream, **glib.Error) uintptr
 
 // Opens a file in the preferred directory for temporary files (as
 // returned by g_get_tmp_dir()) and returns a #GFile and
@@ -6171,7 +6171,7 @@ func FileNewTmp(TmplVar string, IostreamVar **FileIOStream) (*FileBase, error) {
 	var cls *FileBase
 	var cerr *glib.Error
 
-	cret := xFileNewTmp(TmplVar, *gobject.ConvertPtr(IostreamVar), &cerr)
+	cret := xFileNewTmp(TmplVar, IostreamVar, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -6236,14 +6236,14 @@ func FileNewTmpDirFinish(ResultVar AsyncResult) (*FileBase, error) {
 
 }
 
-var xFileNewTmpFinish func(uintptr, uintptr, **glib.Error) uintptr
+var xFileNewTmpFinish func(uintptr, **FileIOStream, **glib.Error) uintptr
 
 // Finishes a temporary file creation started by g_file_new_tmp_async().
 func FileNewTmpFinish(ResultVar AsyncResult, IostreamVar **FileIOStream) (*FileBase, error) {
 	var cls *FileBase
 	var cerr *glib.Error
 
-	cret := xFileNewTmpFinish(ResultVar.GoPointer(), *gobject.ConvertPtr(IostreamVar), &cerr)
+	cret := xFileNewTmpFinish(ResultVar.GoPointer(), IostreamVar, &cerr)
 
 	if cret == 0 {
 		return nil, cerr

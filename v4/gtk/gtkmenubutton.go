@@ -472,6 +472,148 @@ func (c *MenuButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActive sets the "active" property.
+// Whether the menu button is active.
+func (x *MenuButton) SetPropertyActive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("active", &v)
+}
+
+// GetPropertyActive gets the "active" property.
+// Whether the menu button is active.
+func (x *MenuButton) GetPropertyActive() bool {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAlwaysShowArrow sets the "always-show-arrow" property.
+// Whether to show a dropdown arrow even when using an icon or a custom child.
+func (x *MenuButton) SetPropertyAlwaysShowArrow(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("always-show-arrow", &v)
+}
+
+// GetPropertyAlwaysShowArrow gets the "always-show-arrow" property.
+// Whether to show a dropdown arrow even when using an icon or a custom child.
+func (x *MenuButton) GetPropertyAlwaysShowArrow() bool {
+	var v gobject.Value
+	x.GetProperty("always-show-arrow", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyCanShrink sets the "can-shrink" property.
+// Whether the size of the button can be made smaller than the natural
+// size of its contents.
+func (x *MenuButton) SetPropertyCanShrink(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("can-shrink", &v)
+}
+
+// GetPropertyCanShrink gets the "can-shrink" property.
+// Whether the size of the button can be made smaller than the natural
+// size of its contents.
+func (x *MenuButton) GetPropertyCanShrink() bool {
+	var v gobject.Value
+	x.GetProperty("can-shrink", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasFrame sets the "has-frame" property.
+// Whether the button has a frame.
+func (x *MenuButton) SetPropertyHasFrame(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-frame", &v)
+}
+
+// GetPropertyHasFrame gets the "has-frame" property.
+// Whether the button has a frame.
+func (x *MenuButton) GetPropertyHasFrame() bool {
+	var v gobject.Value
+	x.GetProperty("has-frame", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIconName sets the "icon-name" property.
+// The name of the icon used to automatically populate the button.
+func (x *MenuButton) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The name of the icon used to automatically populate the button.
+func (x *MenuButton) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyLabel sets the "label" property.
+// The label for the button.
+func (x *MenuButton) SetPropertyLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("label", &v)
+}
+
+// GetPropertyLabel gets the "label" property.
+// The label for the button.
+func (x *MenuButton) GetPropertyLabel() string {
+	var v gobject.Value
+	x.GetProperty("label", &v)
+	return v.GetString()
+}
+
+// SetPropertyPrimary sets the "primary" property.
+// Whether the menu button acts as a primary menu.
+//
+// Primary menus can be opened using the &lt;kbd&gt;F10&lt;/kbd&gt; key
+func (x *MenuButton) SetPropertyPrimary(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("primary", &v)
+}
+
+// GetPropertyPrimary gets the "primary" property.
+// Whether the menu button acts as a primary menu.
+//
+// Primary menus can be opened using the &lt;kbd&gt;F10&lt;/kbd&gt; key
+func (x *MenuButton) GetPropertyPrimary() bool {
+	var v gobject.Value
+	x.GetProperty("primary", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// If set an underscore in the text indicates a mnemonic.
+func (x *MenuButton) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// If set an underscore in the text indicates a mnemonic.
+func (x *MenuButton) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to when the menu button is activated.
 //
 // The `::activate` signal on `GtkMenuButton` is an action signal and
@@ -552,7 +694,7 @@ func (x *MenuButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *MenuButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *MenuButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

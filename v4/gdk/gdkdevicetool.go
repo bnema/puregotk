@@ -115,6 +115,40 @@ func (c *DeviceTool) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyHardwareId sets the "hardware-id" property.
+// The hardware ID of the tool.
+func (x *DeviceTool) SetPropertyHardwareId(value uint64) {
+	var v gobject.Value
+	v.Init(gobject.TypeUint64Val)
+	v.SetUint64(value)
+	x.SetProperty("hardware-id", &v)
+}
+
+// GetPropertyHardwareId gets the "hardware-id" property.
+// The hardware ID of the tool.
+func (x *DeviceTool) GetPropertyHardwareId() uint64 {
+	var v gobject.Value
+	x.GetProperty("hardware-id", &v)
+	return v.GetUint64()
+}
+
+// SetPropertySerial sets the "serial" property.
+// The serial number of the tool.
+func (x *DeviceTool) SetPropertySerial(value uint64) {
+	var v gobject.Value
+	v.Init(gobject.TypeUint64Val)
+	v.SetUint64(value)
+	x.SetProperty("serial", &v)
+}
+
+// GetPropertySerial gets the "serial" property.
+// The serial number of the tool.
+func (x *DeviceTool) GetPropertySerial() uint64 {
+	var v gobject.Value
+	x.GetProperty("serial", &v)
+	return v.GetUint64()
+}
+
 func init() {
 	core.SetPackageName("GDK", "gtk4")
 	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})

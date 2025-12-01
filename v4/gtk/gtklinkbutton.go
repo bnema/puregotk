@@ -161,6 +161,44 @@ func (c *LinkButton) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyUri sets the "uri" property.
+// The URI bound to this button.
+func (x *LinkButton) SetPropertyUri(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("uri", &v)
+}
+
+// GetPropertyUri gets the "uri" property.
+// The URI bound to this button.
+func (x *LinkButton) GetPropertyUri() string {
+	var v gobject.Value
+	x.GetProperty("uri", &v)
+	return v.GetString()
+}
+
+// SetPropertyVisited sets the "visited" property.
+// The 'visited' state of this button.
+//
+// A visited link is drawn in a different color.
+func (x *LinkButton) SetPropertyVisited(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("visited", &v)
+}
+
+// GetPropertyVisited gets the "visited" property.
+// The 'visited' state of this button.
+//
+// A visited link is drawn in a different color.
+func (x *LinkButton) GetPropertyVisited() bool {
+	var v gobject.Value
+	x.GetProperty("visited", &v)
+	return v.GetBoolean()
+}
+
 // Emitted each time the `GtkLinkButton` is clicked.
 //
 // The default handler will call [method@Gtk.FileLauncher.launch] with the URI
@@ -245,7 +283,7 @@ func (x *LinkButton) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *LinkButton) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *LinkButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

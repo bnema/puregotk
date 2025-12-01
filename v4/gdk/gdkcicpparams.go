@@ -199,6 +199,113 @@ func (c *CicpParams) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyColorPrimaries sets the "color-primaries" property.
+// The color primaries to use.
+//
+// Supported values:
+//
+// - 1: BT.709 / sRGB
+// - 2: unspecified
+// - 5: PAL
+// - 6,7: BT.601 / NTSC
+// - 9: BT.2020
+// - 12: Display P3
+func (x *CicpParams) SetPropertyColorPrimaries(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("color-primaries", &v)
+}
+
+// GetPropertyColorPrimaries gets the "color-primaries" property.
+// The color primaries to use.
+//
+// Supported values:
+//
+// - 1: BT.709 / sRGB
+// - 2: unspecified
+// - 5: PAL
+// - 6,7: BT.601 / NTSC
+// - 9: BT.2020
+// - 12: Display P3
+func (x *CicpParams) GetPropertyColorPrimaries() uint {
+	var v gobject.Value
+	x.GetProperty("color-primaries", &v)
+	return v.GetUint()
+}
+
+// SetPropertyMatrixCoefficients sets the "matrix-coefficients" property.
+// The matrix coefficients (for YUV to RGB conversion).
+//
+// Supported values:
+//
+// - 0: RGB
+// - 1: BT.709
+// - 2: unspecified
+// - 5,6: BT.601
+// - 9: BT.2020
+func (x *CicpParams) SetPropertyMatrixCoefficients(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("matrix-coefficients", &v)
+}
+
+// GetPropertyMatrixCoefficients gets the "matrix-coefficients" property.
+// The matrix coefficients (for YUV to RGB conversion).
+//
+// Supported values:
+//
+// - 0: RGB
+// - 1: BT.709
+// - 2: unspecified
+// - 5,6: BT.601
+// - 9: BT.2020
+func (x *CicpParams) GetPropertyMatrixCoefficients() uint {
+	var v gobject.Value
+	x.GetProperty("matrix-coefficients", &v)
+	return v.GetUint()
+}
+
+// SetPropertyTransferFunction sets the "transfer-function" property.
+// The transfer function to use.
+//
+// Supported values:
+//
+// - 1,6,14,15: BT.709, BT.601, BT.2020
+// - 2: unspecified
+// - 4: gamma 2.2
+// - 5: gamma 2.8
+// - 8: linear
+// - 13: sRGB
+// - 16: BT.2100 PQ
+// - 18: BT.2100 HLG
+func (x *CicpParams) SetPropertyTransferFunction(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("transfer-function", &v)
+}
+
+// GetPropertyTransferFunction gets the "transfer-function" property.
+// The transfer function to use.
+//
+// Supported values:
+//
+// - 1,6,14,15: BT.709, BT.601, BT.2020
+// - 2: unspecified
+// - 4: gamma 2.2
+// - 5: gamma 2.8
+// - 8: linear
+// - 13: sRGB
+// - 16: BT.2100 PQ
+// - 18: BT.2100 HLG
+func (x *CicpParams) GetPropertyTransferFunction() uint {
+	var v gobject.Value
+	x.GetProperty("transfer-function", &v)
+	return v.GetUint()
+}
+
 func init() {
 	core.SetPackageName("GDK", "gtk4")
 	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})

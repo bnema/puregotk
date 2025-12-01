@@ -47,7 +47,7 @@ func (x *PollableOutputStreamInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideCanPoll sets the callback function.
+// OverrideCanPoll sets the "can_poll" callback function.
 // Checks if the #GPollableOutputStream instance is actually pollable
 func (x *PollableOutputStreamInterface) OverrideCanPoll(cb func(PollableOutputStream) bool) {
 	if cb == nil {
@@ -59,7 +59,7 @@ func (x *PollableOutputStreamInterface) OverrideCanPoll(cb func(PollableOutputSt
 	}
 }
 
-// GetCanPoll gets the callback function.
+// GetCanPoll gets the "can_poll" callback function.
 // Checks if the #GPollableOutputStream instance is actually pollable
 func (x *PollableOutputStreamInterface) GetCanPoll() func(PollableOutputStream) bool {
 	if x.xCanPoll == 0 {
@@ -72,7 +72,7 @@ func (x *PollableOutputStreamInterface) GetCanPoll() func(PollableOutputStream) 
 	}
 }
 
-// OverrideIsWritable sets the callback function.
+// OverrideIsWritable sets the "is_writable" callback function.
 // Checks if the stream is writable
 func (x *PollableOutputStreamInterface) OverrideIsWritable(cb func(PollableOutputStream) bool) {
 	if cb == nil {
@@ -84,7 +84,7 @@ func (x *PollableOutputStreamInterface) OverrideIsWritable(cb func(PollableOutpu
 	}
 }
 
-// GetIsWritable gets the callback function.
+// GetIsWritable gets the "is_writable" callback function.
 // Checks if the stream is writable
 func (x *PollableOutputStreamInterface) GetIsWritable() func(PollableOutputStream) bool {
 	if x.xIsWritable == 0 {
@@ -97,7 +97,7 @@ func (x *PollableOutputStreamInterface) GetIsWritable() func(PollableOutputStrea
 	}
 }
 
-// OverrideCreateSource sets the callback function.
+// OverrideCreateSource sets the "create_source" callback function.
 // Creates a #GSource to poll the stream
 func (x *PollableOutputStreamInterface) OverrideCreateSource(cb func(PollableOutputStream, *Cancellable) *glib.Source) {
 	if cb == nil {
@@ -109,7 +109,7 @@ func (x *PollableOutputStreamInterface) OverrideCreateSource(cb func(PollableOut
 	}
 }
 
-// GetCreateSource gets the callback function.
+// GetCreateSource gets the "create_source" callback function.
 // Creates a #GSource to poll the stream
 func (x *PollableOutputStreamInterface) GetCreateSource() func(PollableOutputStream, *Cancellable) *glib.Source {
 	if x.xCreateSource == 0 {
@@ -122,7 +122,7 @@ func (x *PollableOutputStreamInterface) GetCreateSource() func(PollableOutputStr
 	}
 }
 
-// OverrideWriteNonblocking sets the callback function.
+// OverrideWriteNonblocking sets the "write_nonblocking" callback function.
 // Does a non-blocking write or returns
 //
 //	%G_IO_ERROR_WOULD_BLOCK
@@ -136,7 +136,7 @@ func (x *PollableOutputStreamInterface) OverrideWriteNonblocking(cb func(Pollabl
 	}
 }
 
-// GetWriteNonblocking gets the callback function.
+// GetWriteNonblocking gets the "write_nonblocking" callback function.
 // Does a non-blocking write or returns
 //
 //	%G_IO_ERROR_WOULD_BLOCK
@@ -151,31 +151,31 @@ func (x *PollableOutputStreamInterface) GetWriteNonblocking() func(PollableOutpu
 	}
 }
 
-// OverrideWritevNonblocking sets the callback function.
+// OverrideWritevNonblocking sets the "writev_nonblocking" callback function.
 // Does a vectored non-blocking write, or returns
 //
 //	%G_POLLABLE_RETURN_WOULD_BLOCK
-func (x *PollableOutputStreamInterface) OverrideWritevNonblocking(cb func(PollableOutputStream, []OutputVector, uint, uint) PollableReturn) {
+func (x *PollableOutputStreamInterface) OverrideWritevNonblocking(cb func(PollableOutputStream, []OutputVector, uint, *uint) PollableReturn) {
 	if cb == nil {
 		x.xWritevNonblocking = 0
 	} else {
-		x.xWritevNonblocking = purego.NewCallback(func(StreamVarp uintptr, VectorsVarp []OutputVector, NVectorsVarp uint, BytesWrittenVarp uint) PollableReturn {
+		x.xWritevNonblocking = purego.NewCallback(func(StreamVarp uintptr, VectorsVarp []OutputVector, NVectorsVarp uint, BytesWrittenVarp *uint) PollableReturn {
 			return cb(&PollableOutputStreamBase{Ptr: StreamVarp}, VectorsVarp, NVectorsVarp, BytesWrittenVarp)
 		})
 	}
 }
 
-// GetWritevNonblocking gets the callback function.
+// GetWritevNonblocking gets the "writev_nonblocking" callback function.
 // Does a vectored non-blocking write, or returns
 //
 //	%G_POLLABLE_RETURN_WOULD_BLOCK
-func (x *PollableOutputStreamInterface) GetWritevNonblocking() func(PollableOutputStream, []OutputVector, uint, uint) PollableReturn {
+func (x *PollableOutputStreamInterface) GetWritevNonblocking() func(PollableOutputStream, []OutputVector, uint, *uint) PollableReturn {
 	if x.xWritevNonblocking == 0 {
 		return nil
 	}
-	var rawCallback func(StreamVarp uintptr, VectorsVarp []OutputVector, NVectorsVarp uint, BytesWrittenVarp uint) PollableReturn
+	var rawCallback func(StreamVarp uintptr, VectorsVarp []OutputVector, NVectorsVarp uint, BytesWrittenVarp *uint) PollableReturn
 	purego.RegisterFunc(&rawCallback, x.xWritevNonblocking)
-	return func(StreamVar PollableOutputStream, VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar uint) PollableReturn {
+	return func(StreamVar PollableOutputStream, VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint) PollableReturn {
 		return rawCallback(StreamVar.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar)
 	}
 }
@@ -196,7 +196,7 @@ type PollableOutputStream interface {
 	CreateSource(CancellableVar *Cancellable) *glib.Source
 	IsWritable() bool
 	WriteNonblocking(BufferVar []byte, CountVar uint, CancellableVar *Cancellable) (int, error)
-	WritevNonblocking(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar uint, CancellableVar *Cancellable) (PollableReturn, error)
+	WritevNonblocking(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (PollableReturn, error)
 }
 
 var xPollableOutputStreamGLibType func() types.GType
@@ -315,7 +315,7 @@ func (x *PollableOutputStreamBase) WriteNonblocking(BufferVar []byte, CountVar u
 //
 // The behaviour of this method is undefined if
 // g_pollable_output_stream_can_poll() returns %FALSE for @stream.
-func (x *PollableOutputStreamBase) WritevNonblocking(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar uint, CancellableVar *Cancellable) (PollableReturn, error) {
+func (x *PollableOutputStreamBase) WritevNonblocking(VectorsVar []OutputVector, NVectorsVar uint, BytesWrittenVar *uint, CancellableVar *Cancellable) (PollableReturn, error) {
 	var cerr *glib.Error
 
 	cret := XGPollableOutputStreamWritevNonblocking(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
@@ -330,7 +330,7 @@ var XGPollableOutputStreamCanPoll func(uintptr) bool
 var XGPollableOutputStreamCreateSource func(uintptr, uintptr) *glib.Source
 var XGPollableOutputStreamIsWritable func(uintptr) bool
 var XGPollableOutputStreamWriteNonblocking func(uintptr, []byte, uint, uintptr, **glib.Error) int
-var XGPollableOutputStreamWritevNonblocking func(uintptr, []OutputVector, uint, uint, uintptr, **glib.Error) PollableReturn
+var XGPollableOutputStreamWritevNonblocking func(uintptr, []OutputVector, uint, *uint, uintptr, **glib.Error) PollableReturn
 
 func init() {
 	core.SetPackageName("GIO", "gio-2.0")

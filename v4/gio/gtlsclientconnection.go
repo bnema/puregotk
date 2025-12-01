@@ -25,7 +25,7 @@ func (x *TlsClientConnectionInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideCopySessionState sets the callback function.
+// OverrideCopySessionState sets the "copy_session_state" callback function.
 // Copies session state from one #GTlsClientConnection to another.
 func (x *TlsClientConnectionInterface) OverrideCopySessionState(cb func(TlsClientConnection, TlsClientConnection)) {
 	if cb == nil {
@@ -37,7 +37,7 @@ func (x *TlsClientConnectionInterface) OverrideCopySessionState(cb func(TlsClien
 	}
 }
 
-// GetCopySessionState gets the callback function.
+// GetCopySessionState gets the "copy_session_state" callback function.
 // Copies session state from one #GTlsClientConnection to another.
 func (x *TlsClientConnectionInterface) GetCopySessionState() func(TlsClientConnection, TlsClientConnection) {
 	if x.xCopySessionState == 0 {
@@ -204,6 +204,29 @@ func (x *TlsClientConnectionBase) SetValidationFlags(FlagsVar TlsCertificateFlag
 
 	XGTlsClientConnectionSetValidationFlags(x.GoPointer(), FlagsVar)
 
+}
+
+// SetPropertyUseSsl3 sets the "use-ssl3" property.
+// SSL 3.0 is no longer supported. See
+// g_tls_client_connection_set_use_ssl3() for details.
+func (x *TlsClientConnectionBase) SetPropertyUseSsl3(value bool) {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	obj.SetProperty("use-ssl3", &v)
+}
+
+// GetPropertyUseSsl3 gets the "use-ssl3" property.
+// SSL 3.0 is no longer supported. See
+// g_tls_client_connection_set_use_ssl3() for details.
+func (x *TlsClientConnectionBase) GetPropertyUseSsl3() bool {
+	obj := gobject.Object{}
+	obj.Ptr = x.GoPointer()
+	var v gobject.Value
+	obj.GetProperty("use-ssl3", &v)
+	return v.GetBoolean()
 }
 
 var XGTlsClientConnectionCopySessionState func(uintptr, uintptr)

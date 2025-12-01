@@ -449,7 +449,7 @@ func (x *UriParamsIter) Init(ParamsVar string, LengthVar int, SeparatorsVar stri
 
 }
 
-var xUriParamsIterNext func(uintptr, string, string, **Error) bool
+var xUriParamsIterNext func(uintptr, *string, *string, **Error) bool
 
 // Advances @iter and retrieves the next attribute/value. %FALSE is returned if
 // an error has occurred (in which case @error is set), or if the end of the
@@ -460,7 +460,7 @@ var xUriParamsIterNext func(uintptr, string, string, **Error) bool
 //
 // Note that the same @attribute may be returned multiple times, since URIs
 // allow repeated attributes.
-func (x *UriParamsIter) Next(AttributeVar string, ValueVar string) (bool, error) {
+func (x *UriParamsIter) Next(AttributeVar *string, ValueVar *string) (bool, error) {
 	var cerr *Error
 
 	cret := xUriParamsIterNext(x.GoPointer(), AttributeVar, ValueVar, &cerr)
@@ -827,7 +827,7 @@ func UriResolveRelative(BaseUriStringVar string, UriRefVar string, FlagsVar UriF
 
 }
 
-var xUriSplit func(string, UriFlags, string, string, string, int, string, string, string, **Error) bool
+var xUriSplit func(string, UriFlags, *string, *string, *string, *int, *string, *string, *string, **Error) bool
 
 // Parses @uri_ref (which can be an
 // [absolute or relative URI](#relative-and-absolute-uris)) according to @flags, and
@@ -845,7 +845,7 @@ var xUriSplit func(string, UriFlags, string, string, string, int, string, string
 // %G_URI_FLAGS_HAS_AUTH_PARAMS @flags are ignored by g_uri_split(),
 // since it always returns only the full userinfo; use
 // g_uri_split_with_user() if you want it split up.
-func UriSplit(UriRefVar string, FlagsVar UriFlags, SchemeVar string, UserinfoVar string, HostVar string, PortVar int, PathVar string, QueryVar string, FragmentVar string) (bool, error) {
+func UriSplit(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, UserinfoVar *string, HostVar *string, PortVar *int, PathVar *string, QueryVar *string, FragmentVar *string) (bool, error) {
 	var cerr *Error
 
 	cret := xUriSplit(UriRefVar, FlagsVar, SchemeVar, UserinfoVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar, &cerr)
@@ -856,7 +856,7 @@ func UriSplit(UriRefVar string, FlagsVar UriFlags, SchemeVar string, UserinfoVar
 
 }
 
-var xUriSplitNetwork func(string, UriFlags, string, string, int, **Error) bool
+var xUriSplitNetwork func(string, UriFlags, *string, *string, *int, **Error) bool
 
 // Parses @uri_string (which must be an [absolute URI](#relative-and-absolute-uris))
 // according to @flags, and returns the pieces relevant to connecting to a host.
@@ -864,7 +864,7 @@ var xUriSplitNetwork func(string, UriFlags, string, string, int, **Error) bool
 // mostly a wrapper around that function with simpler arguments.
 // However, it will return an error if @uri_string is a relative URI,
 // or does not contain a hostname component.
-func UriSplitNetwork(UriStringVar string, FlagsVar UriFlags, SchemeVar string, HostVar string, PortVar int) (bool, error) {
+func UriSplitNetwork(UriStringVar string, FlagsVar UriFlags, SchemeVar *string, HostVar *string, PortVar *int) (bool, error) {
 	var cerr *Error
 
 	cret := xUriSplitNetwork(UriStringVar, FlagsVar, SchemeVar, HostVar, PortVar, &cerr)
@@ -875,7 +875,7 @@ func UriSplitNetwork(UriStringVar string, FlagsVar UriFlags, SchemeVar string, H
 
 }
 
-var xUriSplitWithUser func(string, UriFlags, string, string, string, string, string, int, string, string, string, **Error) bool
+var xUriSplitWithUser func(string, UriFlags, *string, *string, *string, *string, *string, *int, *string, *string, *string, **Error) bool
 
 // Parses @uri_ref (which can be an
 // [absolute or relative URI](#relative-and-absolute-uris)) according to @flags, and
@@ -888,7 +888,7 @@ var xUriSplitWithUser func(string, UriFlags, string, string, string, string, str
 // be parsed out if @flags contains %G_URI_FLAGS_HAS_PASSWORD, and
 // @auth_params will only be parsed out if @flags contains
 // %G_URI_FLAGS_HAS_AUTH_PARAMS.
-func UriSplitWithUser(UriRefVar string, FlagsVar UriFlags, SchemeVar string, UserVar string, PasswordVar string, AuthParamsVar string, HostVar string, PortVar int, PathVar string, QueryVar string, FragmentVar string) (bool, error) {
+func UriSplitWithUser(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, UserVar *string, PasswordVar *string, AuthParamsVar *string, HostVar *string, PortVar *int, PathVar *string, QueryVar *string, FragmentVar *string) (bool, error) {
 	var cerr *Error
 
 	cret := xUriSplitWithUser(UriRefVar, FlagsVar, SchemeVar, UserVar, PasswordVar, AuthParamsVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar, &cerr)

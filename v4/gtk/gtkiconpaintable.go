@@ -119,6 +119,70 @@ func (c *IconPaintable) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyIconName sets the "icon-name" property.
+// The icon name that was chosen during lookup.
+func (x *IconPaintable) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The icon name that was chosen during lookup.
+func (x *IconPaintable) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyIsSymbolic sets the "is-symbolic" property.
+// Whether the icon is symbolic or not.
+func (x *IconPaintable) SetPropertyIsSymbolic(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("is-symbolic", &v)
+}
+
+// GetPropertyIsSymbolic gets the "is-symbolic" property.
+// Whether the icon is symbolic or not.
+func (x *IconPaintable) GetPropertyIsSymbolic() bool {
+	var v gobject.Value
+	x.GetProperty("is-symbolic", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyScale sets the "scale" property.
+func (x *IconPaintable) SetPropertyScale(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("scale", &v)
+}
+
+// GetPropertyScale gets the "scale" property.
+func (x *IconPaintable) GetPropertyScale() int {
+	var v gobject.Value
+	x.GetProperty("scale", &v)
+	return v.GetInt()
+}
+
+// SetPropertySize sets the "size" property.
+func (x *IconPaintable) SetPropertySize(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("size", &v)
+}
+
+// GetPropertySize gets the "size" property.
+func (x *IconPaintable) GetPropertySize() int {
+	var v gobject.Value
+	x.GetProperty("size", &v)
+	return v.GetInt()
+}
+
 // Compute a concrete size for the `GdkPaintable`.
 //
 // Applies the sizing algorithm outlined in the
@@ -129,7 +193,7 @@ func (c *IconPaintable) SetGoPointer(ptr uintptr) {
 // and @specified_height are known, but it is useful to call this
 // function in GtkWidget:measure implementations to compute the
 // other dimension when only one dimension is given.
-func (x *IconPaintable) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar float64, ConcreteHeightVar float64) {
+func (x *IconPaintable) ComputeConcreteSize(SpecifiedWidthVar float64, SpecifiedHeightVar float64, DefaultWidthVar float64, DefaultHeightVar float64, ConcreteWidthVar *float64, ConcreteHeightVar *float64) {
 
 	gdk.XGdkPaintableComputeConcreteSize(x.GoPointer(), SpecifiedWidthVar, SpecifiedHeightVar, DefaultWidthVar, DefaultHeightVar, ConcreteWidthVar, ConcreteHeightVar)
 

@@ -317,6 +317,114 @@ func (c *MemoryTextureBuilder) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyBytes sets the "bytes" property.
+// The bytes holding the data.
+func (x *MemoryTextureBuilder) SetPropertyBytes(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("bytes", &v)
+}
+
+// GetPropertyBytes gets the "bytes" property.
+// The bytes holding the data.
+func (x *MemoryTextureBuilder) GetPropertyBytes() uintptr {
+	var v gobject.Value
+	x.GetProperty("bytes", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyColorState sets the "color-state" property.
+// The colorstate describing the data.
+func (x *MemoryTextureBuilder) SetPropertyColorState(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("color-state", &v)
+}
+
+// GetPropertyColorState gets the "color-state" property.
+// The colorstate describing the data.
+func (x *MemoryTextureBuilder) GetPropertyColorState() uintptr {
+	var v gobject.Value
+	x.GetProperty("color-state", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyHeight sets the "height" property.
+// The height of the texture.
+func (x *MemoryTextureBuilder) SetPropertyHeight(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("height", &v)
+}
+
+// GetPropertyHeight gets the "height" property.
+// The height of the texture.
+func (x *MemoryTextureBuilder) GetPropertyHeight() int {
+	var v gobject.Value
+	x.GetProperty("height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyStride sets the "stride" property.
+// The rowstride of the texture.
+//
+// The rowstride is the number of bytes between the first pixel
+// in a row of image data, and the first pixel in the next row.
+func (x *MemoryTextureBuilder) SetPropertyStride(value uint64) {
+	var v gobject.Value
+	v.Init(gobject.TypeUint64Val)
+	v.SetUint64(value)
+	x.SetProperty("stride", &v)
+}
+
+// GetPropertyStride gets the "stride" property.
+// The rowstride of the texture.
+//
+// The rowstride is the number of bytes between the first pixel
+// in a row of image data, and the first pixel in the next row.
+func (x *MemoryTextureBuilder) GetPropertyStride() uint64 {
+	var v gobject.Value
+	x.GetProperty("stride", &v)
+	return v.GetUint64()
+}
+
+// SetPropertyUpdateRegion sets the "update-region" property.
+// The update region for [property@Gdk.MemoryTextureBuilder:update-texture].
+func (x *MemoryTextureBuilder) SetPropertyUpdateRegion(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("update-region", &v)
+}
+
+// GetPropertyUpdateRegion gets the "update-region" property.
+// The update region for [property@Gdk.MemoryTextureBuilder:update-texture].
+func (x *MemoryTextureBuilder) GetPropertyUpdateRegion() uintptr {
+	var v gobject.Value
+	x.GetProperty("update-region", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyWidth sets the "width" property.
+// The width of the texture.
+func (x *MemoryTextureBuilder) SetPropertyWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("width", &v)
+}
+
+// GetPropertyWidth gets the "width" property.
+// The width of the texture.
+func (x *MemoryTextureBuilder) GetPropertyWidth() int {
+	var v gobject.Value
+	x.GetProperty("width", &v)
+	return v.GetInt()
+}
+
 func init() {
 	core.SetPackageName("GDK", "gtk4")
 	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})

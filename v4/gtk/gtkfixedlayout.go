@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 	"github.com/jwijenbergh/puregotk/v4/gsk"
 )
@@ -148,6 +149,23 @@ func (c *FixedLayoutChild) GoPointer() uintptr {
 
 func (c *FixedLayoutChild) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyTransform sets the "transform" property.
+// The transform of the child.
+func (x *FixedLayoutChild) SetPropertyTransform(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("transform", &v)
+}
+
+// GetPropertyTransform gets the "transform" property.
+// The transform of the child.
+func (x *FixedLayoutChild) GetPropertyTransform() uintptr {
+	var v gobject.Value
+	x.GetProperty("transform", &v)
+	return v.GetPointer()
 }
 
 func init() {

@@ -42,7 +42,7 @@ func (x *SocketClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideGReserved1 sets the callback function.
+// OverrideGReserved1 sets the "_g_reserved1" callback function.
 func (x *SocketClass) OverrideGReserved1(cb func()) {
 	if cb == nil {
 		x.xGReserved1 = 0
@@ -53,7 +53,7 @@ func (x *SocketClass) OverrideGReserved1(cb func()) {
 	}
 }
 
-// GetGReserved1 gets the callback function.
+// GetGReserved1 gets the "_g_reserved1" callback function.
 func (x *SocketClass) GetGReserved1() func() {
 	if x.xGReserved1 == 0 {
 		return nil
@@ -65,7 +65,7 @@ func (x *SocketClass) GetGReserved1() func() {
 	}
 }
 
-// OverrideGReserved2 sets the callback function.
+// OverrideGReserved2 sets the "_g_reserved2" callback function.
 func (x *SocketClass) OverrideGReserved2(cb func()) {
 	if cb == nil {
 		x.xGReserved2 = 0
@@ -76,7 +76,7 @@ func (x *SocketClass) OverrideGReserved2(cb func()) {
 	}
 }
 
-// GetGReserved2 gets the callback function.
+// GetGReserved2 gets the "_g_reserved2" callback function.
 func (x *SocketClass) GetGReserved2() func() {
 	if x.xGReserved2 == 0 {
 		return nil
@@ -88,7 +88,7 @@ func (x *SocketClass) GetGReserved2() func() {
 	}
 }
 
-// OverrideGReserved3 sets the callback function.
+// OverrideGReserved3 sets the "_g_reserved3" callback function.
 func (x *SocketClass) OverrideGReserved3(cb func()) {
 	if cb == nil {
 		x.xGReserved3 = 0
@@ -99,7 +99,7 @@ func (x *SocketClass) OverrideGReserved3(cb func()) {
 	}
 }
 
-// GetGReserved3 gets the callback function.
+// GetGReserved3 gets the "_g_reserved3" callback function.
 func (x *SocketClass) GetGReserved3() func() {
 	if x.xGReserved3 == 0 {
 		return nil
@@ -111,7 +111,7 @@ func (x *SocketClass) GetGReserved3() func() {
 	}
 }
 
-// OverrideGReserved4 sets the callback function.
+// OverrideGReserved4 sets the "_g_reserved4" callback function.
 func (x *SocketClass) OverrideGReserved4(cb func()) {
 	if cb == nil {
 		x.xGReserved4 = 0
@@ -122,7 +122,7 @@ func (x *SocketClass) OverrideGReserved4(cb func()) {
 	}
 }
 
-// GetGReserved4 gets the callback function.
+// GetGReserved4 gets the "_g_reserved4" callback function.
 func (x *SocketClass) GetGReserved4() func() {
 	if x.xGReserved4 == 0 {
 		return nil
@@ -134,7 +134,7 @@ func (x *SocketClass) GetGReserved4() func() {
 	}
 }
 
-// OverrideGReserved5 sets the callback function.
+// OverrideGReserved5 sets the "_g_reserved5" callback function.
 func (x *SocketClass) OverrideGReserved5(cb func()) {
 	if cb == nil {
 		x.xGReserved5 = 0
@@ -145,7 +145,7 @@ func (x *SocketClass) OverrideGReserved5(cb func()) {
 	}
 }
 
-// GetGReserved5 gets the callback function.
+// GetGReserved5 gets the "_g_reserved5" callback function.
 func (x *SocketClass) GetGReserved5() func() {
 	if x.xGReserved5 == 0 {
 		return nil
@@ -157,7 +157,7 @@ func (x *SocketClass) GetGReserved5() func() {
 	}
 }
 
-// OverrideGReserved6 sets the callback function.
+// OverrideGReserved6 sets the "_g_reserved6" callback function.
 func (x *SocketClass) OverrideGReserved6(cb func()) {
 	if cb == nil {
 		x.xGReserved6 = 0
@@ -168,7 +168,7 @@ func (x *SocketClass) OverrideGReserved6(cb func()) {
 	}
 }
 
-// GetGReserved6 gets the callback function.
+// GetGReserved6 gets the "_g_reserved6" callback function.
 func (x *SocketClass) GetGReserved6() func() {
 	if x.xGReserved6 == 0 {
 		return nil
@@ -180,7 +180,7 @@ func (x *SocketClass) GetGReserved6() func() {
 	}
 }
 
-// OverrideGReserved7 sets the callback function.
+// OverrideGReserved7 sets the "_g_reserved7" callback function.
 func (x *SocketClass) OverrideGReserved7(cb func()) {
 	if cb == nil {
 		x.xGReserved7 = 0
@@ -191,7 +191,7 @@ func (x *SocketClass) OverrideGReserved7(cb func()) {
 	}
 }
 
-// GetGReserved7 gets the callback function.
+// GetGReserved7 gets the "_g_reserved7" callback function.
 func (x *SocketClass) GetGReserved7() func() {
 	if x.xGReserved7 == 0 {
 		return nil
@@ -203,7 +203,7 @@ func (x *SocketClass) GetGReserved7() func() {
 	}
 }
 
-// OverrideGReserved8 sets the callback function.
+// OverrideGReserved8 sets the "_g_reserved8" callback function.
 func (x *SocketClass) OverrideGReserved8(cb func()) {
 	if cb == nil {
 		x.xGReserved8 = 0
@@ -214,7 +214,7 @@ func (x *SocketClass) OverrideGReserved8(cb func()) {
 	}
 }
 
-// GetGReserved8 gets the callback function.
+// GetGReserved8 gets the "_g_reserved8" callback function.
 func (x *SocketClass) GetGReserved8() func() {
 	if x.xGReserved8 == 0 {
 		return nil
@@ -226,7 +226,7 @@ func (x *SocketClass) GetGReserved8() func() {
 	}
 }
 
-// OverrideGReserved9 sets the callback function.
+// OverrideGReserved9 sets the "_g_reserved9" callback function.
 func (x *SocketClass) OverrideGReserved9(cb func()) {
 	if cb == nil {
 		x.xGReserved9 = 0
@@ -237,7 +237,7 @@ func (x *SocketClass) OverrideGReserved9(cb func()) {
 	}
 }
 
-// GetGReserved9 gets the callback function.
+// GetGReserved9 gets the "_g_reserved9" callback function.
 func (x *SocketClass) GetGReserved9() func() {
 	if x.xGReserved9 == 0 {
 		return nil
@@ -249,7 +249,7 @@ func (x *SocketClass) GetGReserved9() func() {
 	}
 }
 
-// OverrideGReserved10 sets the callback function.
+// OverrideGReserved10 sets the "_g_reserved10" callback function.
 func (x *SocketClass) OverrideGReserved10(cb func()) {
 	if cb == nil {
 		x.xGReserved10 = 0
@@ -260,7 +260,7 @@ func (x *SocketClass) OverrideGReserved10(cb func()) {
 	}
 }
 
-// GetGReserved10 gets the callback function.
+// GetGReserved10 gets the "_g_reserved10" callback function.
 func (x *SocketClass) GetGReserved10() func() {
 	if x.xGReserved10 == 0 {
 		return nil
@@ -876,7 +876,7 @@ func (x *Socket) GetMulticastTtl() uint {
 	return cret
 }
 
-var xSocketGetOption func(uintptr, int, int, int, **glib.Error) bool
+var xSocketGetOption func(uintptr, int, int, *int, **glib.Error) bool
 
 // Gets the value of an integer-valued option on @socket, as with
 // getsockopt(). (If you need to fetch a  non-integer-valued option,
@@ -891,7 +891,7 @@ var xSocketGetOption func(uintptr, int, int, int, **glib.Error) bool
 // Note that even for socket options that are a single byte in size,
 // @value is still a pointer to a #gint variable, not a #guchar;
 // g_socket_get_option() will handle the conversion internally.
-func (x *Socket) GetOption(LevelVar int, OptnameVar int, ValueVar int) (bool, error) {
+func (x *Socket) GetOption(LevelVar int, OptnameVar int, ValueVar *int) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSocketGetOption(x.GoPointer(), LevelVar, OptnameVar, ValueVar, &cerr)
@@ -1104,7 +1104,7 @@ func (x *Socket) Listen() (bool, error) {
 
 }
 
-var xSocketReceive func(uintptr, []byte, uint, uintptr, **glib.Error) int
+var xSocketReceive func(uintptr, *[]byte, uint, uintptr, **glib.Error) int
 
 // Receive data (up to @size bytes) from a socket. This is mainly used by
 // connection-oriented sockets; it is identical to g_socket_receive_from()
@@ -1129,7 +1129,7 @@ var xSocketReceive func(uintptr, []byte, uint, uintptr, **glib.Error) int
 // %G_IO_IN condition.
 //
 // On error -1 is returned and @error is set accordingly.
-func (x *Socket) Receive(BufferVar []byte, SizeVar uint, CancellableVar *Cancellable) (int, error) {
+func (x *Socket) Receive(BufferVar *[]byte, SizeVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := xSocketReceive(x.GoPointer(), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
@@ -1162,7 +1162,7 @@ func (x *Socket) ReceiveBytes(SizeVar uint, TimeoutUsVar int64, CancellableVar *
 
 }
 
-var xSocketReceiveBytesFrom func(uintptr, uintptr, uint, int64, uintptr, **glib.Error) *glib.Bytes
+var xSocketReceiveBytesFrom func(uintptr, **SocketAddress, uint, int64, uintptr, **glib.Error) *glib.Bytes
 
 // Receive data (up to @size bytes) from a socket.
 //
@@ -1181,7 +1181,7 @@ var xSocketReceiveBytesFrom func(uintptr, uintptr, uint, int64, uintptr, **glib.
 func (x *Socket) ReceiveBytesFrom(AddressVar **SocketAddress, SizeVar uint, TimeoutUsVar int64, CancellableVar *Cancellable) (*glib.Bytes, error) {
 	var cerr *glib.Error
 
-	cret := xSocketReceiveBytesFrom(x.GoPointer(), *gobject.ConvertPtr(AddressVar), SizeVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
+	cret := xSocketReceiveBytesFrom(x.GoPointer(), AddressVar, SizeVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1189,7 +1189,7 @@ func (x *Socket) ReceiveBytesFrom(AddressVar **SocketAddress, SizeVar uint, Time
 
 }
 
-var xSocketReceiveFrom func(uintptr, uintptr, []byte, uint, uintptr, **glib.Error) int
+var xSocketReceiveFrom func(uintptr, **SocketAddress, *[]byte, uint, uintptr, **glib.Error) int
 
 // Receive data (up to @size bytes) from a socket.
 //
@@ -1198,10 +1198,10 @@ var xSocketReceiveFrom func(uintptr, uintptr, []byte, uint, uintptr, **glib.Erro
 // @address is owned by the caller.
 //
 // See g_socket_receive() for additional information.
-func (x *Socket) ReceiveFrom(AddressVar **SocketAddress, BufferVar []byte, SizeVar uint, CancellableVar *Cancellable) (int, error) {
+func (x *Socket) ReceiveFrom(AddressVar **SocketAddress, BufferVar *[]byte, SizeVar uint, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xSocketReceiveFrom(x.GoPointer(), *gobject.ConvertPtr(AddressVar), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
+	cret := xSocketReceiveFrom(x.GoPointer(), AddressVar, BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1209,7 +1209,7 @@ func (x *Socket) ReceiveFrom(AddressVar **SocketAddress, BufferVar []byte, SizeV
 
 }
 
-var xSocketReceiveMessage func(uintptr, uintptr, []InputVector, int, uintptr, int, int, uintptr, **glib.Error) int
+var xSocketReceiveMessage func(uintptr, **SocketAddress, []InputVector, int, *uintptr, *int, int, uintptr, **glib.Error) int
 
 // Receive data from a socket.  For receiving multiple messages, see
 // g_socket_receive_messages(); for easier use, see
@@ -1270,10 +1270,10 @@ var xSocketReceiveMessage func(uintptr, uintptr, []InputVector, int, uintptr, in
 // %G_IO_IN condition.
 //
 // On error -1 is returned and @error is set accordingly.
-func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVector, NumVectorsVar int, MessagesVar uintptr, NumMessagesVar int, FlagsVar int, CancellableVar *Cancellable) (int, error) {
+func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVector, NumVectorsVar int, MessagesVar *uintptr, NumMessagesVar *int, FlagsVar int, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
-	cret := xSocketReceiveMessage(x.GoPointer(), *gobject.ConvertPtr(AddressVar), VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+	cret := xSocketReceiveMessage(x.GoPointer(), AddressVar, VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1342,12 +1342,12 @@ func (x *Socket) ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint
 
 }
 
-var xSocketReceiveWithBlocking func(uintptr, []byte, uint, bool, uintptr, **glib.Error) int
+var xSocketReceiveWithBlocking func(uintptr, *[]byte, uint, bool, uintptr, **glib.Error) int
 
 // This behaves exactly the same as g_socket_receive(), except that
 // the choice of blocking or non-blocking behavior is determined by
 // the @blocking argument rather than by @socket's properties.
-func (x *Socket) ReceiveWithBlocking(BufferVar []byte, SizeVar uint, BlockingVar bool, CancellableVar *Cancellable) (int, error) {
+func (x *Socket) ReceiveWithBlocking(BufferVar *[]byte, SizeVar uint, BlockingVar bool, CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := xSocketReceiveWithBlocking(x.GoPointer(), BufferVar, SizeVar, BlockingVar, CancellableVar.GoPointer(), &cerr)
@@ -1440,7 +1440,7 @@ func (x *Socket) SendMessage(AddressVar *SocketAddress, VectorsVar []OutputVecto
 
 }
 
-var xSocketSendMessageWithTimeout func(uintptr, uintptr, []OutputVector, int, uintptr, int, int, int64, uint, uintptr, **glib.Error) PollableReturn
+var xSocketSendMessageWithTimeout func(uintptr, uintptr, []OutputVector, int, uintptr, int, int, int64, *uint, uintptr, **glib.Error) PollableReturn
 
 // This behaves exactly the same as g_socket_send_message(), except that
 // the choice of timeout behavior is determined by the @timeout_us argument
@@ -1449,7 +1449,7 @@ var xSocketSendMessageWithTimeout func(uintptr, uintptr, []OutputVector, int, ui
 // On error %G_POLLABLE_RETURN_FAILED is returned and @error is set accordingly, or
 // if the socket is currently not writable %G_POLLABLE_RETURN_WOULD_BLOCK is
 // returned. @bytes_written will contain 0 in both cases.
-func (x *Socket) SendMessageWithTimeout(AddressVar *SocketAddress, VectorsVar []OutputVector, NumVectorsVar int, MessagesVar uintptr, NumMessagesVar int, FlagsVar int, TimeoutUsVar int64, BytesWrittenVar uint, CancellableVar *Cancellable) (PollableReturn, error) {
+func (x *Socket) SendMessageWithTimeout(AddressVar *SocketAddress, VectorsVar []OutputVector, NumVectorsVar int, MessagesVar uintptr, NumMessagesVar int, FlagsVar int, TimeoutUsVar int64, BytesWrittenVar *uint, CancellableVar *Cancellable) (PollableReturn, error) {
 	var cerr *glib.Error
 
 	cret := xSocketSendMessageWithTimeout(x.GoPointer(), AddressVar.GoPointer(), VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, TimeoutUsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
@@ -1741,6 +1741,159 @@ func (c *Socket) GoPointer() uintptr {
 
 func (c *Socket) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyBlocking sets the "blocking" property.
+// Whether I/O on this socket is blocking.
+func (x *Socket) SetPropertyBlocking(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("blocking", &v)
+}
+
+// GetPropertyBlocking gets the "blocking" property.
+// Whether I/O on this socket is blocking.
+func (x *Socket) GetPropertyBlocking() bool {
+	var v gobject.Value
+	x.GetProperty("blocking", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyBroadcast sets the "broadcast" property.
+// Whether the socket should allow sending to broadcast addresses.
+func (x *Socket) SetPropertyBroadcast(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("broadcast", &v)
+}
+
+// GetPropertyBroadcast gets the "broadcast" property.
+// Whether the socket should allow sending to broadcast addresses.
+func (x *Socket) GetPropertyBroadcast() bool {
+	var v gobject.Value
+	x.GetProperty("broadcast", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyFd sets the "fd" property.
+// The socket’s file descriptor.
+func (x *Socket) SetPropertyFd(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("fd", &v)
+}
+
+// GetPropertyFd gets the "fd" property.
+// The socket’s file descriptor.
+func (x *Socket) GetPropertyFd() int {
+	var v gobject.Value
+	x.GetProperty("fd", &v)
+	return v.GetInt()
+}
+
+// SetPropertyKeepalive sets the "keepalive" property.
+// Whether to keep the connection alive by sending periodic pings.
+func (x *Socket) SetPropertyKeepalive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("keepalive", &v)
+}
+
+// GetPropertyKeepalive gets the "keepalive" property.
+// Whether to keep the connection alive by sending periodic pings.
+func (x *Socket) GetPropertyKeepalive() bool {
+	var v gobject.Value
+	x.GetProperty("keepalive", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyListenBacklog sets the "listen-backlog" property.
+// The number of outstanding connections in the listen queue.
+func (x *Socket) SetPropertyListenBacklog(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("listen-backlog", &v)
+}
+
+// GetPropertyListenBacklog gets the "listen-backlog" property.
+// The number of outstanding connections in the listen queue.
+func (x *Socket) GetPropertyListenBacklog() int {
+	var v gobject.Value
+	x.GetProperty("listen-backlog", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMulticastLoopback sets the "multicast-loopback" property.
+// Whether outgoing multicast packets loop back to the local host.
+func (x *Socket) SetPropertyMulticastLoopback(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("multicast-loopback", &v)
+}
+
+// GetPropertyMulticastLoopback gets the "multicast-loopback" property.
+// Whether outgoing multicast packets loop back to the local host.
+func (x *Socket) GetPropertyMulticastLoopback() bool {
+	var v gobject.Value
+	x.GetProperty("multicast-loopback", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMulticastTtl sets the "multicast-ttl" property.
+// Time-to-live out outgoing multicast packets
+func (x *Socket) SetPropertyMulticastTtl(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("multicast-ttl", &v)
+}
+
+// GetPropertyMulticastTtl gets the "multicast-ttl" property.
+// Time-to-live out outgoing multicast packets
+func (x *Socket) GetPropertyMulticastTtl() uint {
+	var v gobject.Value
+	x.GetProperty("multicast-ttl", &v)
+	return v.GetUint()
+}
+
+// SetPropertyTimeout sets the "timeout" property.
+// The timeout in seconds on socket I/O
+func (x *Socket) SetPropertyTimeout(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("timeout", &v)
+}
+
+// GetPropertyTimeout gets the "timeout" property.
+// The timeout in seconds on socket I/O
+func (x *Socket) GetPropertyTimeout() uint {
+	var v gobject.Value
+	x.GetProperty("timeout", &v)
+	return v.GetUint()
+}
+
+// SetPropertyTtl sets the "ttl" property.
+// Time-to-live for outgoing unicast packets
+func (x *Socket) SetPropertyTtl(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("ttl", &v)
+}
+
+// GetPropertyTtl gets the "ttl" property.
+// Time-to-live for outgoing unicast packets
+func (x *Socket) GetPropertyTtl() uint {
+	var v gobject.Value
+	x.GetProperty("ttl", &v)
+	return v.GetUint()
 }
 
 // Initializes the object implementing the interface.

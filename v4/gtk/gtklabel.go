@@ -406,7 +406,7 @@ func (x *Label) GetLayout() *pango.Layout {
 	return cls
 }
 
-var xLabelGetLayoutOffsets func(uintptr, int, int)
+var xLabelGetLayoutOffsets func(uintptr, *int, *int)
 
 // Obtains the coordinates where the label will draw its Pango layout.
 //
@@ -415,7 +415,7 @@ var xLabelGetLayoutOffsets func(uintptr, int, int)
 // of the label is clicked. Remember when using the [class@Pango.Layout]
 // functions you need to convert to and from pixels using `PANGO_PIXELS()`
 // or [const@Pango.SCALE].
-func (x *Label) GetLayoutOffsets(XVar int, YVar int) {
+func (x *Label) GetLayoutOffsets(XVar *int, YVar *int) {
 
 	xLabelGetLayoutOffsets(x.GoPointer(), XVar, YVar)
 
@@ -496,12 +496,12 @@ func (x *Label) GetSelectable() bool {
 	return cret
 }
 
-var xLabelGetSelectionBounds func(uintptr, int, int) bool
+var xLabelGetSelectionBounds func(uintptr, *int, *int) bool
 
 // Gets the selected range of characters in the label.
 //
 // The returned @start and @end positions are in characters.
-func (x *Label) GetSelectionBounds(StartVar int, EndVar int) bool {
+func (x *Label) GetSelectionBounds(StartVar *int, EndVar *int) bool {
 
 	cret := xLabelGetSelectionBounds(x.GoPointer(), StartVar, EndVar)
 	return cret
@@ -965,6 +965,339 @@ func (c *Label) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAttributes sets the "attributes" property.
+// A list of style attributes to apply to the text of the label.
+func (x *Label) SetPropertyAttributes(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("attributes", &v)
+}
+
+// GetPropertyAttributes gets the "attributes" property.
+// A list of style attributes to apply to the text of the label.
+func (x *Label) GetPropertyAttributes() uintptr {
+	var v gobject.Value
+	x.GetProperty("attributes", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyLabel sets the "label" property.
+// The contents of the label.
+//
+// If the string contains Pango markup (see [func@Pango.parse_markup]),
+// you will have to set the [property@Gtk.Label:use-markup] property to
+// true in order for the label to display the markup attributes. See also
+// [method@Gtk.Label.set_markup] for a convenience function that sets both
+// this property and the [property@Gtk.Label:use-markup] property at the
+// same time.
+//
+// If the string contains underlines acting as mnemonics, you will have to
+// set the [property@Gtk.Label:use-underline] property to true in order
+// for the label to display them.
+func (x *Label) SetPropertyLabel(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("label", &v)
+}
+
+// GetPropertyLabel gets the "label" property.
+// The contents of the label.
+//
+// If the string contains Pango markup (see [func@Pango.parse_markup]),
+// you will have to set the [property@Gtk.Label:use-markup] property to
+// true in order for the label to display the markup attributes. See also
+// [method@Gtk.Label.set_markup] for a convenience function that sets both
+// this property and the [property@Gtk.Label:use-markup] property at the
+// same time.
+//
+// If the string contains underlines acting as mnemonics, you will have to
+// set the [property@Gtk.Label:use-underline] property to true in order
+// for the label to display them.
+func (x *Label) GetPropertyLabel() string {
+	var v gobject.Value
+	x.GetProperty("label", &v)
+	return v.GetString()
+}
+
+// SetPropertyLines sets the "lines" property.
+// The number of lines to which an ellipsized, wrapping label
+// should display before it gets ellipsized. This both prevents the label
+// from ellipsizing before this many lines are displayed, and limits the
+// height request of the label to this many lines.
+//
+// ::: warning
+//
+//	Setting this property has unintuitive and unfortunate consequences
+//	for the minimum _width_ of the label. Specifically, if the height
+//	of the label is such that it fits a smaller number of lines than
+//	the value of this property, the label can not be ellipsized at all,
+//	which means it must be wide enough to fit all the text fully.
+//
+// This property has no effect if the label is not wrapping or ellipsized.
+//
+// Set this property to -1 if you don't want to limit the number of lines.
+func (x *Label) SetPropertyLines(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("lines", &v)
+}
+
+// GetPropertyLines gets the "lines" property.
+// The number of lines to which an ellipsized, wrapping label
+// should display before it gets ellipsized. This both prevents the label
+// from ellipsizing before this many lines are displayed, and limits the
+// height request of the label to this many lines.
+//
+// ::: warning
+//
+//	Setting this property has unintuitive and unfortunate consequences
+//	for the minimum _width_ of the label. Specifically, if the height
+//	of the label is such that it fits a smaller number of lines than
+//	the value of this property, the label can not be ellipsized at all,
+//	which means it must be wide enough to fit all the text fully.
+//
+// This property has no effect if the label is not wrapping or ellipsized.
+//
+// Set this property to -1 if you don't want to limit the number of lines.
+func (x *Label) GetPropertyLines() int {
+	var v gobject.Value
+	x.GetProperty("lines", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMaxWidthChars sets the "max-width-chars" property.
+// The desired maximum width of the label, in characters.
+//
+// If this property is set to -1, the width will be calculated automatically.
+//
+// See the section on [text layout](class.Label.html#text-layout) for details
+// of how [property@Gtk.Label:width-chars] and [property@Gtk.Label:max-width-chars]
+// determine the width of ellipsized and wrapped labels.
+func (x *Label) SetPropertyMaxWidthChars(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("max-width-chars", &v)
+}
+
+// GetPropertyMaxWidthChars gets the "max-width-chars" property.
+// The desired maximum width of the label, in characters.
+//
+// If this property is set to -1, the width will be calculated automatically.
+//
+// See the section on [text layout](class.Label.html#text-layout) for details
+// of how [property@Gtk.Label:width-chars] and [property@Gtk.Label:max-width-chars]
+// determine the width of ellipsized and wrapped labels.
+func (x *Label) GetPropertyMaxWidthChars() int {
+	var v gobject.Value
+	x.GetProperty("max-width-chars", &v)
+	return v.GetInt()
+}
+
+// GetPropertyMnemonicKeyval gets the "mnemonic-keyval" property.
+// The mnemonic accelerator key for the label.
+func (x *Label) GetPropertyMnemonicKeyval() uint {
+	var v gobject.Value
+	x.GetProperty("mnemonic-keyval", &v)
+	return v.GetUint()
+}
+
+// SetPropertySelectable sets the "selectable" property.
+// Whether the label text can be selected with the mouse.
+func (x *Label) SetPropertySelectable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("selectable", &v)
+}
+
+// GetPropertySelectable gets the "selectable" property.
+// Whether the label text can be selected with the mouse.
+func (x *Label) GetPropertySelectable() bool {
+	var v gobject.Value
+	x.GetProperty("selectable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySingleLineMode sets the "single-line-mode" property.
+// Whether the label is in single line mode.
+//
+// In single line mode, the height of the label does not depend on the
+// actual text, it is always set to ascent + descent of the font. This
+// can be an advantage in situations where resizing the label because
+// of text changes would be distracting, e.g. in a statusbar.
+func (x *Label) SetPropertySingleLineMode(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("single-line-mode", &v)
+}
+
+// GetPropertySingleLineMode gets the "single-line-mode" property.
+// Whether the label is in single line mode.
+//
+// In single line mode, the height of the label does not depend on the
+// actual text, it is always set to ascent + descent of the font. This
+// can be an advantage in situations where resizing the label because
+// of text changes would be distracting, e.g. in a statusbar.
+func (x *Label) GetPropertySingleLineMode() bool {
+	var v gobject.Value
+	x.GetProperty("single-line-mode", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTabs sets the "tabs" property.
+// Custom tabs for this label.
+func (x *Label) SetPropertyTabs(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("tabs", &v)
+}
+
+// GetPropertyTabs gets the "tabs" property.
+// Custom tabs for this label.
+func (x *Label) GetPropertyTabs() uintptr {
+	var v gobject.Value
+	x.GetProperty("tabs", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyUseMarkup sets the "use-markup" property.
+// True if the text of the label includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *Label) SetPropertyUseMarkup(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-markup", &v)
+}
+
+// GetPropertyUseMarkup gets the "use-markup" property.
+// True if the text of the label includes Pango markup.
+//
+// See [func@Pango.parse_markup].
+func (x *Label) GetPropertyUseMarkup() bool {
+	var v gobject.Value
+	x.GetProperty("use-markup", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseUnderline sets the "use-underline" property.
+// True if the text of the label indicates a mnemonic with an `_`
+// before the mnemonic character.
+func (x *Label) SetPropertyUseUnderline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-underline", &v)
+}
+
+// GetPropertyUseUnderline gets the "use-underline" property.
+// True if the text of the label indicates a mnemonic with an `_`
+// before the mnemonic character.
+func (x *Label) GetPropertyUseUnderline() bool {
+	var v gobject.Value
+	x.GetProperty("use-underline", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyWidthChars sets the "width-chars" property.
+// The desired width of the label, in characters.
+//
+// If this property is set to -1, the width will be calculated automatically.
+//
+// See the section on [text layout](class.Label.html#text-layout) for details
+// of how [property@Gtk.Label:width-chars] and [property@Gtk.Label:max-width-chars]
+// determine the width of ellipsized and wrapped labels.
+func (x *Label) SetPropertyWidthChars(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("width-chars", &v)
+}
+
+// GetPropertyWidthChars gets the "width-chars" property.
+// The desired width of the label, in characters.
+//
+// If this property is set to -1, the width will be calculated automatically.
+//
+// See the section on [text layout](class.Label.html#text-layout) for details
+// of how [property@Gtk.Label:width-chars] and [property@Gtk.Label:max-width-chars]
+// determine the width of ellipsized and wrapped labels.
+func (x *Label) GetPropertyWidthChars() int {
+	var v gobject.Value
+	x.GetProperty("width-chars", &v)
+	return v.GetInt()
+}
+
+// SetPropertyWrap sets the "wrap" property.
+// True if the label text will wrap if it gets too wide.
+func (x *Label) SetPropertyWrap(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("wrap", &v)
+}
+
+// GetPropertyWrap gets the "wrap" property.
+// True if the label text will wrap if it gets too wide.
+func (x *Label) GetPropertyWrap() bool {
+	var v gobject.Value
+	x.GetProperty("wrap", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyXalign sets the "xalign" property.
+// The horizontal alignment of the label text inside its size allocation.
+//
+// Compare this to [property@Gtk.Widget:halign], which determines how the
+// labels size allocation is positioned in the space available for the label.
+func (x *Label) SetPropertyXalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("xalign", &v)
+}
+
+// GetPropertyXalign gets the "xalign" property.
+// The horizontal alignment of the label text inside its size allocation.
+//
+// Compare this to [property@Gtk.Widget:halign], which determines how the
+// labels size allocation is positioned in the space available for the label.
+func (x *Label) GetPropertyXalign() float32 {
+	var v gobject.Value
+	x.GetProperty("xalign", &v)
+	return v.GetFloat()
+}
+
+// SetPropertyYalign sets the "yalign" property.
+// The vertical alignment of the label text inside its size allocation.
+//
+// Compare this to [property@Gtk.Widget:valign], which determines how the
+// labels size allocation is positioned in the space available for the label.
+func (x *Label) SetPropertyYalign(value float32) {
+	var v gobject.Value
+	v.Init(gobject.TypeFloatVal)
+	v.SetFloat(value)
+	x.SetProperty("yalign", &v)
+}
+
+// GetPropertyYalign gets the "yalign" property.
+// The vertical alignment of the label text inside its size allocation.
+//
+// Compare this to [property@Gtk.Widget:valign], which determines how the
+// labels size allocation is positioned in the space available for the label.
+func (x *Label) GetPropertyYalign() float32 {
+	var v gobject.Value
+	x.GetProperty("yalign", &v)
+	return v.GetFloat()
+}
+
 // Gets emitted when the user activates a link in the label.
 //
 // The `::activate-current-link` is a [keybinding signal](class.SignalAction.html).
@@ -1134,7 +1467,7 @@ func (x *Label) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Label) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Label) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

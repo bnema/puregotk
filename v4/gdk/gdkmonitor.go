@@ -241,6 +241,97 @@ func (c *Monitor) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// GetPropertyConnector gets the "connector" property.
+// The connector name.
+func (x *Monitor) GetPropertyConnector() string {
+	var v gobject.Value
+	x.GetProperty("connector", &v)
+	return v.GetString()
+}
+
+// GetPropertyDescription gets the "description" property.
+// A short description of the monitor, meant for display to the user.
+func (x *Monitor) GetPropertyDescription() string {
+	var v gobject.Value
+	x.GetProperty("description", &v)
+	return v.GetString()
+}
+
+// GetPropertyGeometry gets the "geometry" property.
+// The geometry of the monitor.
+func (x *Monitor) GetPropertyGeometry() uintptr {
+	var v gobject.Value
+	x.GetProperty("geometry", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyHeightMm gets the "height-mm" property.
+// The height of the monitor, in millimeters.
+func (x *Monitor) GetPropertyHeightMm() int {
+	var v gobject.Value
+	x.GetProperty("height-mm", &v)
+	return v.GetInt()
+}
+
+// GetPropertyManufacturer gets the "manufacturer" property.
+// The manufacturer name.
+func (x *Monitor) GetPropertyManufacturer() string {
+	var v gobject.Value
+	x.GetProperty("manufacturer", &v)
+	return v.GetString()
+}
+
+// GetPropertyModel gets the "model" property.
+// The model name.
+func (x *Monitor) GetPropertyModel() string {
+	var v gobject.Value
+	x.GetProperty("model", &v)
+	return v.GetString()
+}
+
+// GetPropertyRefreshRate gets the "refresh-rate" property.
+// The refresh rate, in milli-Hertz.
+func (x *Monitor) GetPropertyRefreshRate() int {
+	var v gobject.Value
+	x.GetProperty("refresh-rate", &v)
+	return v.GetInt()
+}
+
+// GetPropertyScale gets the "scale" property.
+// The scale of the monitor.
+func (x *Monitor) GetPropertyScale() float64 {
+	var v gobject.Value
+	x.GetProperty("scale", &v)
+	return v.GetDouble()
+}
+
+// GetPropertyScaleFactor gets the "scale-factor" property.
+// The scale factor.
+//
+// The scale factor is the next larger integer,
+// compared to [property@Gdk.Surface:scale].
+func (x *Monitor) GetPropertyScaleFactor() int {
+	var v gobject.Value
+	x.GetProperty("scale-factor", &v)
+	return v.GetInt()
+}
+
+// GetPropertyValid gets the "valid" property.
+// Whether the object is still valid.
+func (x *Monitor) GetPropertyValid() bool {
+	var v gobject.Value
+	x.GetProperty("valid", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyWidthMm gets the "width-mm" property.
+// The width of the monitor, in millimeters.
+func (x *Monitor) GetPropertyWidthMm() int {
+	var v gobject.Value
+	x.GetProperty("width-mm", &v)
+	return v.GetInt()
+}
+
 // Emitted when the output represented by @monitor gets disconnected.
 func (x *Monitor) ConnectInvalidate(cb *func(Monitor)) uint32 {
 	cbPtr := uintptr(unsafe.Pointer(cb))

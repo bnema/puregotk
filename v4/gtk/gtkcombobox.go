@@ -31,7 +31,7 @@ func (x *ComboBoxClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 // Signal is emitted when the active item is changed.
 func (x *ComboBoxClass) OverrideChanged(cb func(*ComboBox)) {
 	if cb == nil {
@@ -43,7 +43,7 @@ func (x *ComboBoxClass) OverrideChanged(cb func(*ComboBox)) {
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 // Signal is emitted when the active item is changed.
 func (x *ComboBoxClass) GetChanged() func(*ComboBox) {
 	if x.xChanged == 0 {
@@ -56,7 +56,7 @@ func (x *ComboBoxClass) GetChanged() func(*ComboBox) {
 	}
 }
 
-// OverrideFormatEntryText sets the callback function.
+// OverrideFormatEntryText sets the "format_entry_text" callback function.
 // Signal which allows you to change how the text
 //
 //	displayed in a combo box’s entry is displayed.
@@ -70,7 +70,7 @@ func (x *ComboBoxClass) OverrideFormatEntryText(cb func(*ComboBox, string) strin
 	}
 }
 
-// GetFormatEntryText gets the callback function.
+// GetFormatEntryText gets the "format_entry_text" callback function.
 // Signal which allows you to change how the text
 //
 //	displayed in a combo box’s entry is displayed.
@@ -85,7 +85,7 @@ func (x *ComboBoxClass) GetFormatEntryText() func(*ComboBox, string) string {
 	}
 }
 
-// OverrideActivate sets the callback function.
+// OverrideActivate sets the "activate" callback function.
 func (x *ComboBoxClass) OverrideActivate(cb func(*ComboBox)) {
 	if cb == nil {
 		x.xActivate = 0
@@ -96,7 +96,7 @@ func (x *ComboBoxClass) OverrideActivate(cb func(*ComboBox)) {
 	}
 }
 
-// GetActivate gets the callback function.
+// GetActivate gets the "activate" callback function.
 func (x *ComboBoxClass) GetActivate() func(*ComboBox) {
 	if x.xActivate == 0 {
 		return nil
@@ -580,6 +580,156 @@ func (c *ComboBox) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActive sets the "active" property.
+// The item which is currently active.
+//
+// If the model is a non-flat treemodel, and the active item is not an
+// immediate child of the root of the tree, this property has the value
+// `gtk_tree_path_get_indices (path)[0]`, where `path` is the
+// [struct@Gtk.TreePath] of the active item.
+func (x *ComboBox) SetPropertyActive(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("active", &v)
+}
+
+// GetPropertyActive gets the "active" property.
+// The item which is currently active.
+//
+// If the model is a non-flat treemodel, and the active item is not an
+// immediate child of the root of the tree, this property has the value
+// `gtk_tree_path_get_indices (path)[0]`, where `path` is the
+// [struct@Gtk.TreePath] of the active item.
+func (x *ComboBox) GetPropertyActive() int {
+	var v gobject.Value
+	x.GetProperty("active", &v)
+	return v.GetInt()
+}
+
+// SetPropertyActiveId sets the "active-id" property.
+// The value of the ID column of the active row.
+func (x *ComboBox) SetPropertyActiveId(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("active-id", &v)
+}
+
+// GetPropertyActiveId gets the "active-id" property.
+// The value of the ID column of the active row.
+func (x *ComboBox) GetPropertyActiveId() string {
+	var v gobject.Value
+	x.GetProperty("active-id", &v)
+	return v.GetString()
+}
+
+// SetPropertyEntryTextColumn sets the "entry-text-column" property.
+// The model column to associate with strings from the entry.
+//
+// This is property only relevant if the combo was created with
+// [property@Gtk.ComboBox:has-entry] is %TRUE.
+func (x *ComboBox) SetPropertyEntryTextColumn(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("entry-text-column", &v)
+}
+
+// GetPropertyEntryTextColumn gets the "entry-text-column" property.
+// The model column to associate with strings from the entry.
+//
+// This is property only relevant if the combo was created with
+// [property@Gtk.ComboBox:has-entry] is %TRUE.
+func (x *ComboBox) GetPropertyEntryTextColumn() int {
+	var v gobject.Value
+	x.GetProperty("entry-text-column", &v)
+	return v.GetInt()
+}
+
+// SetPropertyHasEntry sets the "has-entry" property.
+// Whether the combo box has an entry.
+func (x *ComboBox) SetPropertyHasEntry(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-entry", &v)
+}
+
+// GetPropertyHasEntry gets the "has-entry" property.
+// Whether the combo box has an entry.
+func (x *ComboBox) GetPropertyHasEntry() bool {
+	var v gobject.Value
+	x.GetProperty("has-entry", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasFrame sets the "has-frame" property.
+// The `has-frame` property controls whether a frame is drawn around the entry.
+func (x *ComboBox) SetPropertyHasFrame(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-frame", &v)
+}
+
+// GetPropertyHasFrame gets the "has-frame" property.
+// The `has-frame` property controls whether a frame is drawn around the entry.
+func (x *ComboBox) GetPropertyHasFrame() bool {
+	var v gobject.Value
+	x.GetProperty("has-frame", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyIdColumn sets the "id-column" property.
+// The model column that provides string IDs for the values
+// in the model, if != -1.
+func (x *ComboBox) SetPropertyIdColumn(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("id-column", &v)
+}
+
+// GetPropertyIdColumn gets the "id-column" property.
+// The model column that provides string IDs for the values
+// in the model, if != -1.
+func (x *ComboBox) GetPropertyIdColumn() int {
+	var v gobject.Value
+	x.GetProperty("id-column", &v)
+	return v.GetInt()
+}
+
+// SetPropertyPopupFixedWidth sets the "popup-fixed-width" property.
+// Whether the popup's width should be a fixed width matching the
+// allocated width of the combo box.
+func (x *ComboBox) SetPropertyPopupFixedWidth(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("popup-fixed-width", &v)
+}
+
+// GetPropertyPopupFixedWidth gets the "popup-fixed-width" property.
+// Whether the popup's width should be a fixed width matching the
+// allocated width of the combo box.
+func (x *ComboBox) GetPropertyPopupFixedWidth() bool {
+	var v gobject.Value
+	x.GetProperty("popup-fixed-width", &v)
+	return v.GetBoolean()
+}
+
+// GetPropertyPopupShown gets the "popup-shown" property.
+// Whether the combo boxes dropdown is popped up.
+//
+// Note that this property is mainly useful, because
+// it allows you to connect to notify::popup-shown.
+func (x *ComboBox) GetPropertyPopupShown() bool {
+	var v gobject.Value
+	x.GetProperty("popup-shown", &v)
+	return v.GetBoolean()
+}
+
 // Emitted to when the combo box is activated.
 //
 // The `::activate` signal on `GtkComboBox` is an action signal and
@@ -807,7 +957,7 @@ func (x *ComboBox) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *ComboBox) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *ComboBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

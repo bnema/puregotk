@@ -35,7 +35,7 @@ func (x *RangeClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideValueChanged sets the callback function.
+// OverrideValueChanged sets the "value_changed" callback function.
 func (x *RangeClass) OverrideValueChanged(cb func(*Range)) {
 	if cb == nil {
 		x.xValueChanged = 0
@@ -46,7 +46,7 @@ func (x *RangeClass) OverrideValueChanged(cb func(*Range)) {
 	}
 }
 
-// GetValueChanged gets the callback function.
+// GetValueChanged gets the "value_changed" callback function.
 func (x *RangeClass) GetValueChanged() func(*Range) {
 	if x.xValueChanged == 0 {
 		return nil
@@ -58,7 +58,7 @@ func (x *RangeClass) GetValueChanged() func(*Range) {
 	}
 }
 
-// OverrideAdjustBounds sets the callback function.
+// OverrideAdjustBounds sets the "adjust_bounds" callback function.
 func (x *RangeClass) OverrideAdjustBounds(cb func(*Range, float64)) {
 	if cb == nil {
 		x.xAdjustBounds = 0
@@ -69,7 +69,7 @@ func (x *RangeClass) OverrideAdjustBounds(cb func(*Range, float64)) {
 	}
 }
 
-// GetAdjustBounds gets the callback function.
+// GetAdjustBounds gets the "adjust_bounds" callback function.
 func (x *RangeClass) GetAdjustBounds() func(*Range, float64) {
 	if x.xAdjustBounds == 0 {
 		return nil
@@ -81,7 +81,7 @@ func (x *RangeClass) GetAdjustBounds() func(*Range, float64) {
 	}
 }
 
-// OverrideMoveSlider sets the callback function.
+// OverrideMoveSlider sets the "move_slider" callback function.
 func (x *RangeClass) OverrideMoveSlider(cb func(*Range, ScrollType)) {
 	if cb == nil {
 		x.xMoveSlider = 0
@@ -92,7 +92,7 @@ func (x *RangeClass) OverrideMoveSlider(cb func(*Range, ScrollType)) {
 	}
 }
 
-// GetMoveSlider gets the callback function.
+// GetMoveSlider gets the "move_slider" callback function.
 func (x *RangeClass) GetMoveSlider() func(*Range, ScrollType) {
 	if x.xMoveSlider == 0 {
 		return nil
@@ -104,7 +104,7 @@ func (x *RangeClass) GetMoveSlider() func(*Range, ScrollType) {
 	}
 }
 
-// OverrideGetRangeBorder sets the callback function.
+// OverrideGetRangeBorder sets the "get_range_border" callback function.
 func (x *RangeClass) OverrideGetRangeBorder(cb func(*Range, *Border)) {
 	if cb == nil {
 		x.xGetRangeBorder = 0
@@ -115,7 +115,7 @@ func (x *RangeClass) OverrideGetRangeBorder(cb func(*Range, *Border)) {
 	}
 }
 
-// GetGetRangeBorder gets the callback function.
+// GetGetRangeBorder gets the "get_range_border" callback function.
 func (x *RangeClass) GetGetRangeBorder() func(*Range, *Border) {
 	if x.xGetRangeBorder == 0 {
 		return nil
@@ -127,7 +127,7 @@ func (x *RangeClass) GetGetRangeBorder() func(*Range, *Border) {
 	}
 }
 
-// OverrideChangeValue sets the callback function.
+// OverrideChangeValue sets the "change_value" callback function.
 func (x *RangeClass) OverrideChangeValue(cb func(*Range, ScrollType, float64) bool) {
 	if cb == nil {
 		x.xChangeValue = 0
@@ -138,7 +138,7 @@ func (x *RangeClass) OverrideChangeValue(cb func(*Range, ScrollType, float64) bo
 	}
 }
 
-// GetChangeValue gets the callback function.
+// GetChangeValue gets the "change_value" callback function.
 func (x *RangeClass) GetChangeValue() func(*Range, ScrollType, float64) bool {
 	if x.xChangeValue == 0 {
 		return nil
@@ -270,13 +270,13 @@ func (x *Range) GetShowFillLevel() bool {
 	return cret
 }
 
-var xRangeGetSliderRange func(uintptr, int, int)
+var xRangeGetSliderRange func(uintptr, *int, *int)
 
 // This function returns sliders range along the long dimension,
 // in widget-&gt;window coordinates.
 //
 // This function is useful mainly for `GtkRange` subclasses.
-func (x *Range) GetSliderRange(SliderStartVar int, SliderEndVar int) {
+func (x *Range) GetSliderRange(SliderStartVar *int, SliderEndVar *int) {
 
 	xRangeGetSliderRange(x.GoPointer(), SliderStartVar, SliderEndVar)
 
@@ -470,6 +470,101 @@ func (c *Range) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyFillLevel sets the "fill-level" property.
+// The fill level (e.g. prebuffering of a network stream).
+func (x *Range) SetPropertyFillLevel(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("fill-level", &v)
+}
+
+// GetPropertyFillLevel gets the "fill-level" property.
+// The fill level (e.g. prebuffering of a network stream).
+func (x *Range) GetPropertyFillLevel() float64 {
+	var v gobject.Value
+	x.GetProperty("fill-level", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyInverted sets the "inverted" property.
+// If %TRUE, the direction in which the slider moves is inverted.
+func (x *Range) SetPropertyInverted(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("inverted", &v)
+}
+
+// GetPropertyInverted gets the "inverted" property.
+// If %TRUE, the direction in which the slider moves is inverted.
+func (x *Range) GetPropertyInverted() bool {
+	var v gobject.Value
+	x.GetProperty("inverted", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRestrictToFillLevel sets the "restrict-to-fill-level" property.
+// Controls whether slider movement is restricted to an
+// upper boundary set by the fill level.
+func (x *Range) SetPropertyRestrictToFillLevel(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("restrict-to-fill-level", &v)
+}
+
+// GetPropertyRestrictToFillLevel gets the "restrict-to-fill-level" property.
+// Controls whether slider movement is restricted to an
+// upper boundary set by the fill level.
+func (x *Range) GetPropertyRestrictToFillLevel() bool {
+	var v gobject.Value
+	x.GetProperty("restrict-to-fill-level", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyRoundDigits sets the "round-digits" property.
+// The number of digits to round the value to when
+// it changes.
+//
+// See [signal@Gtk.Range::change-value].
+func (x *Range) SetPropertyRoundDigits(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("round-digits", &v)
+}
+
+// GetPropertyRoundDigits gets the "round-digits" property.
+// The number of digits to round the value to when
+// it changes.
+//
+// See [signal@Gtk.Range::change-value].
+func (x *Range) GetPropertyRoundDigits() int {
+	var v gobject.Value
+	x.GetProperty("round-digits", &v)
+	return v.GetInt()
+}
+
+// SetPropertyShowFillLevel sets the "show-fill-level" property.
+// Controls whether fill level indicator graphics are displayed
+// on the trough.
+func (x *Range) SetPropertyShowFillLevel(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-fill-level", &v)
+}
+
+// GetPropertyShowFillLevel gets the "show-fill-level" property.
+// Controls whether fill level indicator graphics are displayed
+// on the trough.
+func (x *Range) GetPropertyShowFillLevel() bool {
+	var v gobject.Value
+	x.GetProperty("show-fill-level", &v)
+	return v.GetBoolean()
+}
+
 // Emitted before clamping a value, to give the application a
 // chance to adjust the bounds.
 func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint32 {
@@ -621,7 +716,7 @@ func (x *Range) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Range) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Range) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

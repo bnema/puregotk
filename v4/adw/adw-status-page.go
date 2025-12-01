@@ -214,6 +214,65 @@ func (c *StatusPage) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDescription sets the "description" property.
+// The description markup to be displayed below the title.
+func (x *StatusPage) SetPropertyDescription(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("description", &v)
+}
+
+// GetPropertyDescription gets the "description" property.
+// The description markup to be displayed below the title.
+func (x *StatusPage) GetPropertyDescription() string {
+	var v gobject.Value
+	x.GetProperty("description", &v)
+	return v.GetString()
+}
+
+// SetPropertyIconName sets the "icon-name" property.
+// The name of the icon to be used.
+//
+// Changing this will set [property@StatusPage:paintable] to `NULL`.
+func (x *StatusPage) SetPropertyIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("icon-name", &v)
+}
+
+// GetPropertyIconName gets the "icon-name" property.
+// The name of the icon to be used.
+//
+// Changing this will set [property@StatusPage:paintable] to `NULL`.
+func (x *StatusPage) GetPropertyIconName() string {
+	var v gobject.Value
+	x.GetProperty("icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyTitle sets the "title" property.
+// The title to be displayed below the icon.
+//
+// It is not parsed as Pango markup.
+func (x *StatusPage) SetPropertyTitle(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("title", &v)
+}
+
+// GetPropertyTitle gets the "title" property.
+// The title to be displayed below the icon.
+//
+// It is not parsed as Pango markup.
+func (x *StatusPage) GetPropertyTitle() string {
+	var v gobject.Value
+	x.GetProperty("title", &v)
+	return v.GetString()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -271,7 +330,7 @@ func (x *StatusPage) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *StatusPage) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *StatusPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

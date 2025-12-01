@@ -353,6 +353,129 @@ func (c *GLTextureBuilder) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyColorState sets the "color-state" property.
+// The color state of the texture.
+func (x *GLTextureBuilder) SetPropertyColorState(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("color-state", &v)
+}
+
+// GetPropertyColorState gets the "color-state" property.
+// The color state of the texture.
+func (x *GLTextureBuilder) GetPropertyColorState() uintptr {
+	var v gobject.Value
+	x.GetProperty("color-state", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyHasMipmap sets the "has-mipmap" property.
+// If the texture has a mipmap.
+func (x *GLTextureBuilder) SetPropertyHasMipmap(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-mipmap", &v)
+}
+
+// GetPropertyHasMipmap gets the "has-mipmap" property.
+// If the texture has a mipmap.
+func (x *GLTextureBuilder) GetPropertyHasMipmap() bool {
+	var v gobject.Value
+	x.GetProperty("has-mipmap", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHeight sets the "height" property.
+// The height of the texture.
+func (x *GLTextureBuilder) SetPropertyHeight(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("height", &v)
+}
+
+// GetPropertyHeight gets the "height" property.
+// The height of the texture.
+func (x *GLTextureBuilder) GetPropertyHeight() int {
+	var v gobject.Value
+	x.GetProperty("height", &v)
+	return v.GetInt()
+}
+
+// SetPropertyId sets the "id" property.
+// The texture ID to use.
+func (x *GLTextureBuilder) SetPropertyId(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("id", &v)
+}
+
+// GetPropertyId gets the "id" property.
+// The texture ID to use.
+func (x *GLTextureBuilder) GetPropertyId() uint {
+	var v gobject.Value
+	x.GetProperty("id", &v)
+	return v.GetUint()
+}
+
+// SetPropertySync sets the "sync" property.
+// An optional `GLSync` object.
+//
+// If this is set, GTK will wait on it before using the texture.
+func (x *GLTextureBuilder) SetPropertySync(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("sync", &v)
+}
+
+// GetPropertySync gets the "sync" property.
+// An optional `GLSync` object.
+//
+// If this is set, GTK will wait on it before using the texture.
+func (x *GLTextureBuilder) GetPropertySync() uintptr {
+	var v gobject.Value
+	x.GetProperty("sync", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyUpdateRegion sets the "update-region" property.
+// The update region for [property@Gdk.GLTextureBuilder:update-texture].
+func (x *GLTextureBuilder) SetPropertyUpdateRegion(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("update-region", &v)
+}
+
+// GetPropertyUpdateRegion gets the "update-region" property.
+// The update region for [property@Gdk.GLTextureBuilder:update-texture].
+func (x *GLTextureBuilder) GetPropertyUpdateRegion() uintptr {
+	var v gobject.Value
+	x.GetProperty("update-region", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyWidth sets the "width" property.
+// The width of the texture.
+func (x *GLTextureBuilder) SetPropertyWidth(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("width", &v)
+}
+
+// GetPropertyWidth gets the "width" property.
+// The width of the texture.
+func (x *GLTextureBuilder) GetPropertyWidth() int {
+	var v gobject.Value
+	x.GetProperty("width", &v)
+	return v.GetInt()
+}
+
 func init() {
 	core.SetPackageName("GDK", "gtk4")
 	core.SetSharedLibraries("GDK", []string{"libgtk-4.so.1"})

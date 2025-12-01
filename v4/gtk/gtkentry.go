@@ -34,7 +34,7 @@ func (x *EntryClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideActivate sets the callback function.
+// OverrideActivate sets the "activate" callback function.
 // Class handler for the `GtkEntry::activate` signal. The default
 //
 //	implementation activates the gtk.activate-default action.
@@ -48,7 +48,7 @@ func (x *EntryClass) OverrideActivate(cb func(*Entry)) {
 	}
 }
 
-// GetActivate gets the callback function.
+// GetActivate gets the "activate" callback function.
 // Class handler for the `GtkEntry::activate` signal. The default
 //
 //	implementation activates the gtk.activate-default action.
@@ -996,6 +996,650 @@ func (c *Entry) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyActivatesDefault sets the "activates-default" property.
+// Whether to activate the default widget when Enter is pressed.
+func (x *Entry) SetPropertyActivatesDefault(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("activates-default", &v)
+}
+
+// GetPropertyActivatesDefault gets the "activates-default" property.
+// Whether to activate the default widget when Enter is pressed.
+func (x *Entry) GetPropertyActivatesDefault() bool {
+	var v gobject.Value
+	x.GetProperty("activates-default", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAttributes sets the "attributes" property.
+// A list of Pango attributes to apply to the text of the entry.
+//
+// This is mainly useful to change the size or weight of the text.
+//
+// The `PangoAttribute`'s @start_index and @end_index must refer to the
+// [class@Gtk.EntryBuffer] text, i.e. without the preedit string.
+func (x *Entry) SetPropertyAttributes(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("attributes", &v)
+}
+
+// GetPropertyAttributes gets the "attributes" property.
+// A list of Pango attributes to apply to the text of the entry.
+//
+// This is mainly useful to change the size or weight of the text.
+//
+// The `PangoAttribute`'s @start_index and @end_index must refer to the
+// [class@Gtk.EntryBuffer] text, i.e. without the preedit string.
+func (x *Entry) GetPropertyAttributes() uintptr {
+	var v gobject.Value
+	x.GetProperty("attributes", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyEnableEmojiCompletion sets the "enable-emoji-completion" property.
+// Whether to suggest Emoji replacements for :-delimited names
+// like `:heart:`.
+func (x *Entry) SetPropertyEnableEmojiCompletion(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enable-emoji-completion", &v)
+}
+
+// GetPropertyEnableEmojiCompletion gets the "enable-emoji-completion" property.
+// Whether to suggest Emoji replacements for :-delimited names
+// like `:heart:`.
+func (x *Entry) GetPropertyEnableEmojiCompletion() bool {
+	var v gobject.Value
+	x.GetProperty("enable-emoji-completion", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyHasFrame sets the "has-frame" property.
+// Whether the entry should draw a frame.
+func (x *Entry) SetPropertyHasFrame(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("has-frame", &v)
+}
+
+// GetPropertyHasFrame gets the "has-frame" property.
+// Whether the entry should draw a frame.
+func (x *Entry) GetPropertyHasFrame() bool {
+	var v gobject.Value
+	x.GetProperty("has-frame", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyImModule sets the "im-module" property.
+// Which IM (input method) module should be used for this entry.
+//
+// See [class@Gtk.IMContext].
+//
+// Setting this to a non-%NULL value overrides the system-wide IM
+// module setting. See the GtkSettings [property@Gtk.Settings:gtk-im-module]
+// property.
+func (x *Entry) SetPropertyImModule(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("im-module", &v)
+}
+
+// GetPropertyImModule gets the "im-module" property.
+// Which IM (input method) module should be used for this entry.
+//
+// See [class@Gtk.IMContext].
+//
+// Setting this to a non-%NULL value overrides the system-wide IM
+// module setting. See the GtkSettings [property@Gtk.Settings:gtk-im-module]
+// property.
+func (x *Entry) GetPropertyImModule() string {
+	var v gobject.Value
+	x.GetProperty("im-module", &v)
+	return v.GetString()
+}
+
+// SetPropertyInvisibleChar sets the "invisible-char" property.
+// The character to use when masking entry contents (“password mode”).
+func (x *Entry) SetPropertyInvisibleChar(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("invisible-char", &v)
+}
+
+// GetPropertyInvisibleChar gets the "invisible-char" property.
+// The character to use when masking entry contents (“password mode”).
+func (x *Entry) GetPropertyInvisibleChar() uint {
+	var v gobject.Value
+	x.GetProperty("invisible-char", &v)
+	return v.GetUint()
+}
+
+// SetPropertyInvisibleCharSet sets the "invisible-char-set" property.
+// Whether the invisible char has been set for the `GtkEntry`.
+func (x *Entry) SetPropertyInvisibleCharSet(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("invisible-char-set", &v)
+}
+
+// GetPropertyInvisibleCharSet gets the "invisible-char-set" property.
+// Whether the invisible char has been set for the `GtkEntry`.
+func (x *Entry) GetPropertyInvisibleCharSet() bool {
+	var v gobject.Value
+	x.GetProperty("invisible-char-set", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaxLength sets the "max-length" property.
+// Maximum number of characters for this entry.
+func (x *Entry) SetPropertyMaxLength(value int) {
+	var v gobject.Value
+	v.Init(gobject.TypeIntVal)
+	v.SetInt(value)
+	x.SetProperty("max-length", &v)
+}
+
+// GetPropertyMaxLength gets the "max-length" property.
+// Maximum number of characters for this entry.
+func (x *Entry) GetPropertyMaxLength() int {
+	var v gobject.Value
+	x.GetProperty("max-length", &v)
+	return v.GetInt()
+}
+
+// SetPropertyMenuEntryIconPrimaryText sets the "menu-entry-icon-primary-text" property.
+// Text for an item in the context menu to activate the primary icon action.
+//
+// When the primary icon is activatable and this property has been set, a new entry
+// in the context menu of this GtkEntry will appear with this text. Selecting that
+// menu entry will result in the primary icon being activated, exactly in the same way
+// as it would be activated from a mouse click.
+//
+// This simplifies adding accessibility support to applications using activatable
+// icons. The activatable icons aren't focusable when navigating the interface with
+// the keyboard This is why Gtk recommends to also add those actions in the context
+// menu. This set of methods greatly simplifies this, by adding a menu item that, when
+// enabled, calls the same callback than clicking on the icon.
+func (x *Entry) SetPropertyMenuEntryIconPrimaryText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("menu-entry-icon-primary-text", &v)
+}
+
+// GetPropertyMenuEntryIconPrimaryText gets the "menu-entry-icon-primary-text" property.
+// Text for an item in the context menu to activate the primary icon action.
+//
+// When the primary icon is activatable and this property has been set, a new entry
+// in the context menu of this GtkEntry will appear with this text. Selecting that
+// menu entry will result in the primary icon being activated, exactly in the same way
+// as it would be activated from a mouse click.
+//
+// This simplifies adding accessibility support to applications using activatable
+// icons. The activatable icons aren't focusable when navigating the interface with
+// the keyboard This is why Gtk recommends to also add those actions in the context
+// menu. This set of methods greatly simplifies this, by adding a menu item that, when
+// enabled, calls the same callback than clicking on the icon.
+func (x *Entry) GetPropertyMenuEntryIconPrimaryText() string {
+	var v gobject.Value
+	x.GetProperty("menu-entry-icon-primary-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyMenuEntryIconSecondaryText sets the "menu-entry-icon-secondary-text" property.
+// Text for an item in the context menu to activate the secondary icon action.
+//
+// When the primary icon is activatable and this property has been set, a new entry
+// in the context menu of this GtkEntry will appear with this text. Selecting that
+// menu entry will result in the primary icon being activated, exactly in the same way
+// as it would be activated from a mouse click.
+//
+// This simplifies adding accessibility support to applications using activatable
+// icons. The activatable icons aren't focusable when navigating the interface with
+// the keyboard This is why Gtk recommends to also add those actions in the context
+// menu. This set of methods greatly simplifies this, by adding a menu item that, when
+// enabled, calls the same callback than clicking on the icon.
+func (x *Entry) SetPropertyMenuEntryIconSecondaryText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("menu-entry-icon-secondary-text", &v)
+}
+
+// GetPropertyMenuEntryIconSecondaryText gets the "menu-entry-icon-secondary-text" property.
+// Text for an item in the context menu to activate the secondary icon action.
+//
+// When the primary icon is activatable and this property has been set, a new entry
+// in the context menu of this GtkEntry will appear with this text. Selecting that
+// menu entry will result in the primary icon being activated, exactly in the same way
+// as it would be activated from a mouse click.
+//
+// This simplifies adding accessibility support to applications using activatable
+// icons. The activatable icons aren't focusable when navigating the interface with
+// the keyboard This is why Gtk recommends to also add those actions in the context
+// menu. This set of methods greatly simplifies this, by adding a menu item that, when
+// enabled, calls the same callback than clicking on the icon.
+func (x *Entry) GetPropertyMenuEntryIconSecondaryText() string {
+	var v gobject.Value
+	x.GetProperty("menu-entry-icon-secondary-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyOverwriteMode sets the "overwrite-mode" property.
+// If text is overwritten when typing in the `GtkEntry`.
+func (x *Entry) SetPropertyOverwriteMode(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("overwrite-mode", &v)
+}
+
+// GetPropertyOverwriteMode gets the "overwrite-mode" property.
+// If text is overwritten when typing in the `GtkEntry`.
+func (x *Entry) GetPropertyOverwriteMode() bool {
+	var v gobject.Value
+	x.GetProperty("overwrite-mode", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPlaceholderText sets the "placeholder-text" property.
+// The text that will be displayed in the `GtkEntry` when it is empty
+// and unfocused.
+func (x *Entry) SetPropertyPlaceholderText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("placeholder-text", &v)
+}
+
+// GetPropertyPlaceholderText gets the "placeholder-text" property.
+// The text that will be displayed in the `GtkEntry` when it is empty
+// and unfocused.
+func (x *Entry) GetPropertyPlaceholderText() string {
+	var v gobject.Value
+	x.GetProperty("placeholder-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyPrimaryIconActivatable sets the "primary-icon-activatable" property.
+// Whether the primary icon is activatable.
+//
+// GTK emits the [signal@Gtk.Entry::icon-press] and
+// [signal@Gtk.Entry::icon-release] signals only on sensitive,
+// activatable icons.
+//
+// Sensitive, but non-activatable icons can be used for purely
+// informational purposes.
+func (x *Entry) SetPropertyPrimaryIconActivatable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("primary-icon-activatable", &v)
+}
+
+// GetPropertyPrimaryIconActivatable gets the "primary-icon-activatable" property.
+// Whether the primary icon is activatable.
+//
+// GTK emits the [signal@Gtk.Entry::icon-press] and
+// [signal@Gtk.Entry::icon-release] signals only on sensitive,
+// activatable icons.
+//
+// Sensitive, but non-activatable icons can be used for purely
+// informational purposes.
+func (x *Entry) GetPropertyPrimaryIconActivatable() bool {
+	var v gobject.Value
+	x.GetProperty("primary-icon-activatable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPrimaryIconName sets the "primary-icon-name" property.
+// The icon name to use for the primary icon for the entry.
+func (x *Entry) SetPropertyPrimaryIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("primary-icon-name", &v)
+}
+
+// GetPropertyPrimaryIconName gets the "primary-icon-name" property.
+// The icon name to use for the primary icon for the entry.
+func (x *Entry) GetPropertyPrimaryIconName() string {
+	var v gobject.Value
+	x.GetProperty("primary-icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertyPrimaryIconSensitive sets the "primary-icon-sensitive" property.
+// Whether the primary icon is sensitive.
+//
+// An insensitive icon appears grayed out. GTK does not emit the
+// [signal@Gtk.Entry::icon-press] and [signal@Gtk.Entry::icon-release]
+// signals and does not allow DND from insensitive icons.
+//
+// An icon should be set insensitive if the action that would trigger
+// when clicked is currently not available.
+func (x *Entry) SetPropertyPrimaryIconSensitive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("primary-icon-sensitive", &v)
+}
+
+// GetPropertyPrimaryIconSensitive gets the "primary-icon-sensitive" property.
+// Whether the primary icon is sensitive.
+//
+// An insensitive icon appears grayed out. GTK does not emit the
+// [signal@Gtk.Entry::icon-press] and [signal@Gtk.Entry::icon-release]
+// signals and does not allow DND from insensitive icons.
+//
+// An icon should be set insensitive if the action that would trigger
+// when clicked is currently not available.
+func (x *Entry) GetPropertyPrimaryIconSensitive() bool {
+	var v gobject.Value
+	x.GetProperty("primary-icon-sensitive", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyPrimaryIconTooltipMarkup sets the "primary-icon-tooltip-markup" property.
+// The contents of the tooltip on the primary icon, with markup.
+//
+// Also see [method@Gtk.Entry.set_icon_tooltip_markup].
+func (x *Entry) SetPropertyPrimaryIconTooltipMarkup(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("primary-icon-tooltip-markup", &v)
+}
+
+// GetPropertyPrimaryIconTooltipMarkup gets the "primary-icon-tooltip-markup" property.
+// The contents of the tooltip on the primary icon, with markup.
+//
+// Also see [method@Gtk.Entry.set_icon_tooltip_markup].
+func (x *Entry) GetPropertyPrimaryIconTooltipMarkup() string {
+	var v gobject.Value
+	x.GetProperty("primary-icon-tooltip-markup", &v)
+	return v.GetString()
+}
+
+// SetPropertyPrimaryIconTooltipText sets the "primary-icon-tooltip-text" property.
+// The contents of the tooltip on the primary icon.
+//
+// Also see [method@Gtk.Entry.set_icon_tooltip_text].
+func (x *Entry) SetPropertyPrimaryIconTooltipText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("primary-icon-tooltip-text", &v)
+}
+
+// GetPropertyPrimaryIconTooltipText gets the "primary-icon-tooltip-text" property.
+// The contents of the tooltip on the primary icon.
+//
+// Also see [method@Gtk.Entry.set_icon_tooltip_text].
+func (x *Entry) GetPropertyPrimaryIconTooltipText() string {
+	var v gobject.Value
+	x.GetProperty("primary-icon-tooltip-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyProgressFraction sets the "progress-fraction" property.
+// The current fraction of the task that's been completed.
+func (x *Entry) SetPropertyProgressFraction(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("progress-fraction", &v)
+}
+
+// GetPropertyProgressFraction gets the "progress-fraction" property.
+// The current fraction of the task that's been completed.
+func (x *Entry) GetPropertyProgressFraction() float64 {
+	var v gobject.Value
+	x.GetProperty("progress-fraction", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyProgressPulseStep sets the "progress-pulse-step" property.
+// The fraction of total entry width to move the progress
+// bouncing block for each pulse.
+//
+// See [method@Gtk.Entry.progress_pulse].
+func (x *Entry) SetPropertyProgressPulseStep(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("progress-pulse-step", &v)
+}
+
+// GetPropertyProgressPulseStep gets the "progress-pulse-step" property.
+// The fraction of total entry width to move the progress
+// bouncing block for each pulse.
+//
+// See [method@Gtk.Entry.progress_pulse].
+func (x *Entry) GetPropertyProgressPulseStep() float64 {
+	var v gobject.Value
+	x.GetProperty("progress-pulse-step", &v)
+	return v.GetDouble()
+}
+
+// GetPropertyScrollOffset gets the "scroll-offset" property.
+// Number of pixels of the entry scrolled off the screen to the left.
+func (x *Entry) GetPropertyScrollOffset() int {
+	var v gobject.Value
+	x.GetProperty("scroll-offset", &v)
+	return v.GetInt()
+}
+
+// SetPropertySecondaryIconActivatable sets the "secondary-icon-activatable" property.
+// Whether the secondary icon is activatable.
+//
+// GTK emits the [signal@Gtk.Entry::icon-press] and
+// [signal@Gtk.Entry::icon-release] signals only on sensitive,
+// activatable icons.
+//
+// Sensitive, but non-activatable icons can be used for purely
+// informational purposes.
+func (x *Entry) SetPropertySecondaryIconActivatable(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("secondary-icon-activatable", &v)
+}
+
+// GetPropertySecondaryIconActivatable gets the "secondary-icon-activatable" property.
+// Whether the secondary icon is activatable.
+//
+// GTK emits the [signal@Gtk.Entry::icon-press] and
+// [signal@Gtk.Entry::icon-release] signals only on sensitive,
+// activatable icons.
+//
+// Sensitive, but non-activatable icons can be used for purely
+// informational purposes.
+func (x *Entry) GetPropertySecondaryIconActivatable() bool {
+	var v gobject.Value
+	x.GetProperty("secondary-icon-activatable", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySecondaryIconName sets the "secondary-icon-name" property.
+// The icon name to use for the secondary icon for the entry.
+func (x *Entry) SetPropertySecondaryIconName(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("secondary-icon-name", &v)
+}
+
+// GetPropertySecondaryIconName gets the "secondary-icon-name" property.
+// The icon name to use for the secondary icon for the entry.
+func (x *Entry) GetPropertySecondaryIconName() string {
+	var v gobject.Value
+	x.GetProperty("secondary-icon-name", &v)
+	return v.GetString()
+}
+
+// SetPropertySecondaryIconSensitive sets the "secondary-icon-sensitive" property.
+// Whether the secondary icon is sensitive.
+//
+// An insensitive icon appears grayed out. GTK does not emit the
+// [signal@Gtk.Entry::icon-press[ and [signal@Gtk.Entry::icon-release]
+// signals and does not allow DND from insensitive icons.
+//
+// An icon should be set insensitive if the action that would trigger
+// when clicked is currently not available.
+func (x *Entry) SetPropertySecondaryIconSensitive(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("secondary-icon-sensitive", &v)
+}
+
+// GetPropertySecondaryIconSensitive gets the "secondary-icon-sensitive" property.
+// Whether the secondary icon is sensitive.
+//
+// An insensitive icon appears grayed out. GTK does not emit the
+// [signal@Gtk.Entry::icon-press[ and [signal@Gtk.Entry::icon-release]
+// signals and does not allow DND from insensitive icons.
+//
+// An icon should be set insensitive if the action that would trigger
+// when clicked is currently not available.
+func (x *Entry) GetPropertySecondaryIconSensitive() bool {
+	var v gobject.Value
+	x.GetProperty("secondary-icon-sensitive", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySecondaryIconTooltipMarkup sets the "secondary-icon-tooltip-markup" property.
+// The contents of the tooltip on the secondary icon, with markup.
+//
+// Also see [method@Gtk.Entry.set_icon_tooltip_markup].
+func (x *Entry) SetPropertySecondaryIconTooltipMarkup(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("secondary-icon-tooltip-markup", &v)
+}
+
+// GetPropertySecondaryIconTooltipMarkup gets the "secondary-icon-tooltip-markup" property.
+// The contents of the tooltip on the secondary icon, with markup.
+//
+// Also see [method@Gtk.Entry.set_icon_tooltip_markup].
+func (x *Entry) GetPropertySecondaryIconTooltipMarkup() string {
+	var v gobject.Value
+	x.GetProperty("secondary-icon-tooltip-markup", &v)
+	return v.GetString()
+}
+
+// SetPropertySecondaryIconTooltipText sets the "secondary-icon-tooltip-text" property.
+// The contents of the tooltip on the secondary icon.
+//
+// Also see [method@Gtk.Entry.set_icon_tooltip_text].
+func (x *Entry) SetPropertySecondaryIconTooltipText(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("secondary-icon-tooltip-text", &v)
+}
+
+// GetPropertySecondaryIconTooltipText gets the "secondary-icon-tooltip-text" property.
+// The contents of the tooltip on the secondary icon.
+//
+// Also see [method@Gtk.Entry.set_icon_tooltip_text].
+func (x *Entry) GetPropertySecondaryIconTooltipText() string {
+	var v gobject.Value
+	x.GetProperty("secondary-icon-tooltip-text", &v)
+	return v.GetString()
+}
+
+// SetPropertyShowEmojiIcon sets the "show-emoji-icon" property.
+// Whether the entry will show an Emoji icon in the secondary icon position
+// to open the Emoji chooser.
+func (x *Entry) SetPropertyShowEmojiIcon(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-emoji-icon", &v)
+}
+
+// GetPropertyShowEmojiIcon gets the "show-emoji-icon" property.
+// Whether the entry will show an Emoji icon in the secondary icon position
+// to open the Emoji chooser.
+func (x *Entry) GetPropertyShowEmojiIcon() bool {
+	var v gobject.Value
+	x.GetProperty("show-emoji-icon", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyTabs sets the "tabs" property.
+// A list of tabstops to apply to the text of the entry.
+func (x *Entry) SetPropertyTabs(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("tabs", &v)
+}
+
+// GetPropertyTabs gets the "tabs" property.
+// A list of tabstops to apply to the text of the entry.
+func (x *Entry) GetPropertyTabs() uintptr {
+	var v gobject.Value
+	x.GetProperty("tabs", &v)
+	return v.GetPointer()
+}
+
+// GetPropertyTextLength gets the "text-length" property.
+// The length of the text in the `GtkEntry`.
+func (x *Entry) GetPropertyTextLength() uint {
+	var v gobject.Value
+	x.GetProperty("text-length", &v)
+	return v.GetUint()
+}
+
+// SetPropertyTruncateMultiline sets the "truncate-multiline" property.
+// When %TRUE, pasted multi-line text is truncated to the first line.
+func (x *Entry) SetPropertyTruncateMultiline(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("truncate-multiline", &v)
+}
+
+// GetPropertyTruncateMultiline gets the "truncate-multiline" property.
+// When %TRUE, pasted multi-line text is truncated to the first line.
+func (x *Entry) GetPropertyTruncateMultiline() bool {
+	var v gobject.Value
+	x.GetProperty("truncate-multiline", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyVisibility sets the "visibility" property.
+// Whether the entry should show the “invisible char” instead of the
+// actual text (“password mode”).
+func (x *Entry) SetPropertyVisibility(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("visibility", &v)
+}
+
+// GetPropertyVisibility gets the "visibility" property.
+// Whether the entry should show the “invisible char” instead of the
+// actual text (“password mode”).
+func (x *Entry) GetPropertyVisibility() bool {
+	var v gobject.Value
+	x.GetProperty("visibility", &v)
+	return v.GetBoolean()
+}
+
 // Emitted when the entry is activated.
 //
 // The keybindings for this signal are all forms of the Enter key.
@@ -1116,7 +1760,7 @@ func (x *Entry) GetAtContext() *ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *Entry) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *Entry) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret
@@ -1512,7 +2156,7 @@ func (x *Entry) GetPosition() int {
 // and %FALSE will be returned.
 //
 // Note that positions are specified in characters, not bytes.
-func (x *Entry) GetSelectionBounds(StartPosVar int, EndPosVar int) bool {
+func (x *Entry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
 	return cret

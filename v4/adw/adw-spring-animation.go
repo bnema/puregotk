@@ -279,6 +279,176 @@ func (c *SpringAnimation) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyClamp sets the "clamp" property.
+// Whether the animation should be clamped.
+//
+// If set to `TRUE`, the animation will abruptly end as soon as it reaches the
+// final value, preventing overshooting.
+//
+// It won't prevent overshooting [property@SpringAnimation:value-from] if a
+// relative negative [property@SpringAnimation:initial-velocity] is set.
+func (x *SpringAnimation) SetPropertyClamp(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("clamp", &v)
+}
+
+// GetPropertyClamp gets the "clamp" property.
+// Whether the animation should be clamped.
+//
+// If set to `TRUE`, the animation will abruptly end as soon as it reaches the
+// final value, preventing overshooting.
+//
+// It won't prevent overshooting [property@SpringAnimation:value-from] if a
+// relative negative [property@SpringAnimation:initial-velocity] is set.
+func (x *SpringAnimation) GetPropertyClamp() bool {
+	var v gobject.Value
+	x.GetProperty("clamp", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyEpsilon sets the "epsilon" property.
+// Precision of the spring.
+//
+// The level of precision used to determine when the animation has come to a
+// rest, that is, when the amplitude of the oscillations becomes smaller than
+// this value.
+//
+// If the epsilon value is too small, the animation will take a long time to
+// stop after the animated value has stopped visibly changing.
+//
+// If the epsilon value is too large, the animation will end prematurely.
+//
+// The default value is 0.001.
+func (x *SpringAnimation) SetPropertyEpsilon(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("epsilon", &v)
+}
+
+// GetPropertyEpsilon gets the "epsilon" property.
+// Precision of the spring.
+//
+// The level of precision used to determine when the animation has come to a
+// rest, that is, when the amplitude of the oscillations becomes smaller than
+// this value.
+//
+// If the epsilon value is too small, the animation will take a long time to
+// stop after the animated value has stopped visibly changing.
+//
+// If the epsilon value is too large, the animation will end prematurely.
+//
+// The default value is 0.001.
+func (x *SpringAnimation) GetPropertyEpsilon() float64 {
+	var v gobject.Value
+	x.GetProperty("epsilon", &v)
+	return v.GetDouble()
+}
+
+// GetPropertyEstimatedDuration gets the "estimated-duration" property.
+// Estimated duration of the animation, in milliseconds.
+//
+// Can be [const@DURATION_INFINITE] if the spring damping is set to 0.
+func (x *SpringAnimation) GetPropertyEstimatedDuration() uint {
+	var v gobject.Value
+	x.GetProperty("estimated-duration", &v)
+	return v.GetUint()
+}
+
+// SetPropertyInitialVelocity sets the "initial-velocity" property.
+// The initial velocity to start the animation with.
+//
+// Initial velocity affects only the animation curve, but not its duration.
+func (x *SpringAnimation) SetPropertyInitialVelocity(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("initial-velocity", &v)
+}
+
+// GetPropertyInitialVelocity gets the "initial-velocity" property.
+// The initial velocity to start the animation with.
+//
+// Initial velocity affects only the animation curve, but not its duration.
+func (x *SpringAnimation) GetPropertyInitialVelocity() float64 {
+	var v gobject.Value
+	x.GetProperty("initial-velocity", &v)
+	return v.GetDouble()
+}
+
+// SetPropertySpringParams sets the "spring-params" property.
+// Physical parameters describing the spring.
+func (x *SpringAnimation) SetPropertySpringParams(value uintptr) {
+	var v gobject.Value
+	v.Init(gobject.TypePointerVal)
+	v.SetPointer(value)
+	x.SetProperty("spring-params", &v)
+}
+
+// GetPropertySpringParams gets the "spring-params" property.
+// Physical parameters describing the spring.
+func (x *SpringAnimation) GetPropertySpringParams() uintptr {
+	var v gobject.Value
+	x.GetProperty("spring-params", &v)
+	return v.GetPointer()
+}
+
+// SetPropertyValueFrom sets the "value-from" property.
+// The value to animate from.
+//
+// The animation will start at this value and end at
+// [property@SpringAnimation:value-to].
+func (x *SpringAnimation) SetPropertyValueFrom(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("value-from", &v)
+}
+
+// GetPropertyValueFrom gets the "value-from" property.
+// The value to animate from.
+//
+// The animation will start at this value and end at
+// [property@SpringAnimation:value-to].
+func (x *SpringAnimation) GetPropertyValueFrom() float64 {
+	var v gobject.Value
+	x.GetProperty("value-from", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyValueTo sets the "value-to" property.
+// The value to animate to.
+//
+// The animation will start at [property@SpringAnimation:value-from] and end
+// at this value.
+func (x *SpringAnimation) SetPropertyValueTo(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("value-to", &v)
+}
+
+// GetPropertyValueTo gets the "value-to" property.
+// The value to animate to.
+//
+// The animation will start at [property@SpringAnimation:value-from] and end
+// at this value.
+func (x *SpringAnimation) GetPropertyValueTo() float64 {
+	var v gobject.Value
+	x.GetProperty("value-to", &v)
+	return v.GetDouble()
+}
+
+// GetPropertyVelocity gets the "velocity" property.
+// Current velocity of the animation.
+func (x *SpringAnimation) GetPropertyVelocity() float64 {
+	var v gobject.Value
+	x.GetProperty("velocity", &v)
+	return v.GetDouble()
+}
+
 func init() {
 	core.SetPackageName("ADW", "libadwaita-1")
 	core.SetSharedLibraries("ADW", []string{"libadwaita-1.so.0"})

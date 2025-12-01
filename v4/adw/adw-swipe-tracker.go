@@ -243,6 +243,147 @@ func (c *SwipeTracker) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyAllowLongSwipes sets the "allow-long-swipes" property.
+// Whether to allow swiping for more than one snap point at a time.
+//
+// If the value is `FALSE`, each swipe can only move to the adjacent snap
+// points.
+func (x *SwipeTracker) SetPropertyAllowLongSwipes(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("allow-long-swipes", &v)
+}
+
+// GetPropertyAllowLongSwipes gets the "allow-long-swipes" property.
+// Whether to allow swiping for more than one snap point at a time.
+//
+// If the value is `FALSE`, each swipe can only move to the adjacent snap
+// points.
+func (x *SwipeTracker) GetPropertyAllowLongSwipes() bool {
+	var v gobject.Value
+	x.GetProperty("allow-long-swipes", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAllowMouseDrag sets the "allow-mouse-drag" property.
+// Whether to allow dragging with mouse pointer.
+func (x *SwipeTracker) SetPropertyAllowMouseDrag(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("allow-mouse-drag", &v)
+}
+
+// GetPropertyAllowMouseDrag gets the "allow-mouse-drag" property.
+// Whether to allow dragging with mouse pointer.
+func (x *SwipeTracker) GetPropertyAllowMouseDrag() bool {
+	var v gobject.Value
+	x.GetProperty("allow-mouse-drag", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyAllowWindowHandle sets the "allow-window-handle" property.
+// Whether to allow touchscreen swiping from `GtkWindowHandle`.
+//
+// This will make dragging the window impossible.
+func (x *SwipeTracker) SetPropertyAllowWindowHandle(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("allow-window-handle", &v)
+}
+
+// GetPropertyAllowWindowHandle gets the "allow-window-handle" property.
+// Whether to allow touchscreen swiping from `GtkWindowHandle`.
+//
+// This will make dragging the window impossible.
+func (x *SwipeTracker) GetPropertyAllowWindowHandle() bool {
+	var v gobject.Value
+	x.GetProperty("allow-window-handle", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyEnabled sets the "enabled" property.
+// Whether the swipe tracker is enabled.
+//
+// When it's not enabled, no events will be processed. Usually widgets will
+// want to expose this via a property.
+func (x *SwipeTracker) SetPropertyEnabled(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("enabled", &v)
+}
+
+// GetPropertyEnabled gets the "enabled" property.
+// Whether the swipe tracker is enabled.
+//
+// When it's not enabled, no events will be processed. Usually widgets will
+// want to expose this via a property.
+func (x *SwipeTracker) GetPropertyEnabled() bool {
+	var v gobject.Value
+	x.GetProperty("enabled", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyLowerOvershoot sets the "lower-overshoot" property.
+// Whether to allow swiping past the first available snap point.
+func (x *SwipeTracker) SetPropertyLowerOvershoot(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("lower-overshoot", &v)
+}
+
+// GetPropertyLowerOvershoot gets the "lower-overshoot" property.
+// Whether to allow swiping past the first available snap point.
+func (x *SwipeTracker) GetPropertyLowerOvershoot() bool {
+	var v gobject.Value
+	x.GetProperty("lower-overshoot", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyReversed sets the "reversed" property.
+// Whether to reverse the swipe direction.
+//
+// If the swipe tracker is horizontal, it can be used for supporting RTL text
+// direction.
+func (x *SwipeTracker) SetPropertyReversed(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("reversed", &v)
+}
+
+// GetPropertyReversed gets the "reversed" property.
+// Whether to reverse the swipe direction.
+//
+// If the swipe tracker is horizontal, it can be used for supporting RTL text
+// direction.
+func (x *SwipeTracker) GetPropertyReversed() bool {
+	var v gobject.Value
+	x.GetProperty("reversed", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUpperOvershoot sets the "upper-overshoot" property.
+// Whether to allow swiping past the last available snap point.
+func (x *SwipeTracker) SetPropertyUpperOvershoot(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("upper-overshoot", &v)
+}
+
+// GetPropertyUpperOvershoot gets the "upper-overshoot" property.
+// Whether to allow swiping past the last available snap point.
+func (x *SwipeTracker) GetPropertyUpperOvershoot() bool {
+	var v gobject.Value
+	x.GetProperty("upper-overshoot", &v)
+	return v.GetBoolean()
+}
+
 // This signal is emitted right before a swipe will be started, after the
 // drag threshold has been passed.
 func (x *SwipeTracker) ConnectBeginSwipe(cb *func(SwipeTracker)) uint32 {

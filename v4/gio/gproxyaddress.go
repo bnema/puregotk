@@ -7,6 +7,7 @@ import (
 
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
+	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
 )
 
@@ -144,6 +145,129 @@ func (c *ProxyAddress) GoPointer() uintptr {
 
 func (c *ProxyAddress) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyDestinationHostname sets the "destination-hostname" property.
+// The proxy destination hostname.
+func (x *ProxyAddress) SetPropertyDestinationHostname(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("destination-hostname", &v)
+}
+
+// GetPropertyDestinationHostname gets the "destination-hostname" property.
+// The proxy destination hostname.
+func (x *ProxyAddress) GetPropertyDestinationHostname() string {
+	var v gobject.Value
+	x.GetProperty("destination-hostname", &v)
+	return v.GetString()
+}
+
+// SetPropertyDestinationPort sets the "destination-port" property.
+// The proxy destination port.
+func (x *ProxyAddress) SetPropertyDestinationPort(value uint) {
+	var v gobject.Value
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
+	x.SetProperty("destination-port", &v)
+}
+
+// GetPropertyDestinationPort gets the "destination-port" property.
+// The proxy destination port.
+func (x *ProxyAddress) GetPropertyDestinationPort() uint {
+	var v gobject.Value
+	x.GetProperty("destination-port", &v)
+	return v.GetUint()
+}
+
+// SetPropertyDestinationProtocol sets the "destination-protocol" property.
+// The protocol being spoke to the destination host, or %NULL if
+// the #GProxyAddress doesn't know.
+func (x *ProxyAddress) SetPropertyDestinationProtocol(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("destination-protocol", &v)
+}
+
+// GetPropertyDestinationProtocol gets the "destination-protocol" property.
+// The protocol being spoke to the destination host, or %NULL if
+// the #GProxyAddress doesn't know.
+func (x *ProxyAddress) GetPropertyDestinationProtocol() string {
+	var v gobject.Value
+	x.GetProperty("destination-protocol", &v)
+	return v.GetString()
+}
+
+// SetPropertyPassword sets the "password" property.
+// The proxy password.
+func (x *ProxyAddress) SetPropertyPassword(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("password", &v)
+}
+
+// GetPropertyPassword gets the "password" property.
+// The proxy password.
+func (x *ProxyAddress) GetPropertyPassword() string {
+	var v gobject.Value
+	x.GetProperty("password", &v)
+	return v.GetString()
+}
+
+// SetPropertyProtocol sets the "protocol" property.
+// The proxy protocol.
+func (x *ProxyAddress) SetPropertyProtocol(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("protocol", &v)
+}
+
+// GetPropertyProtocol gets the "protocol" property.
+// The proxy protocol.
+func (x *ProxyAddress) GetPropertyProtocol() string {
+	var v gobject.Value
+	x.GetProperty("protocol", &v)
+	return v.GetString()
+}
+
+// SetPropertyUri sets the "uri" property.
+// The URI string that the proxy was constructed from (or %NULL
+// if the creator didn't specify this).
+func (x *ProxyAddress) SetPropertyUri(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("uri", &v)
+}
+
+// GetPropertyUri gets the "uri" property.
+// The URI string that the proxy was constructed from (or %NULL
+// if the creator didn't specify this).
+func (x *ProxyAddress) GetPropertyUri() string {
+	var v gobject.Value
+	x.GetProperty("uri", &v)
+	return v.GetString()
+}
+
+// SetPropertyUsername sets the "username" property.
+// The proxy username.
+func (x *ProxyAddress) SetPropertyUsername(value string) {
+	var v gobject.Value
+	v.Init(gobject.TypeStringVal)
+	v.SetString(value)
+	x.SetProperty("username", &v)
+}
+
+// GetPropertyUsername gets the "username" property.
+// The proxy username.
+func (x *ProxyAddress) GetPropertyUsername() string {
+	var v gobject.Value
+	x.GetProperty("username", &v)
+	return v.GetString()
 }
 
 // Creates a #GSocketAddressEnumerator for @connectable.

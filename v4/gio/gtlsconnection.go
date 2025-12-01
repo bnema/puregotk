@@ -37,7 +37,7 @@ func (x *TlsConnectionClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideAcceptCertificate sets the callback function.
+// OverrideAcceptCertificate sets the "accept_certificate" callback function.
 // Check whether to accept a certificate.
 func (x *TlsConnectionClass) OverrideAcceptCertificate(cb func(*TlsConnection, *TlsCertificate, TlsCertificateFlags) bool) {
 	if cb == nil {
@@ -49,7 +49,7 @@ func (x *TlsConnectionClass) OverrideAcceptCertificate(cb func(*TlsConnection, *
 	}
 }
 
-// GetAcceptCertificate gets the callback function.
+// GetAcceptCertificate gets the "accept_certificate" callback function.
 // Check whether to accept a certificate.
 func (x *TlsConnectionClass) GetAcceptCertificate() func(*TlsConnection, *TlsCertificate, TlsCertificateFlags) bool {
 	if x.xAcceptCertificate == 0 {
@@ -62,7 +62,7 @@ func (x *TlsConnectionClass) GetAcceptCertificate() func(*TlsConnection, *TlsCer
 	}
 }
 
-// OverrideHandshake sets the callback function.
+// OverrideHandshake sets the "handshake" callback function.
 // Perform a handshake operation.
 func (x *TlsConnectionClass) OverrideHandshake(cb func(*TlsConnection, *Cancellable) bool) {
 	if cb == nil {
@@ -74,7 +74,7 @@ func (x *TlsConnectionClass) OverrideHandshake(cb func(*TlsConnection, *Cancella
 	}
 }
 
-// GetHandshake gets the callback function.
+// GetHandshake gets the "handshake" callback function.
 // Perform a handshake operation.
 func (x *TlsConnectionClass) GetHandshake() func(*TlsConnection, *Cancellable) bool {
 	if x.xHandshake == 0 {
@@ -87,7 +87,7 @@ func (x *TlsConnectionClass) GetHandshake() func(*TlsConnection, *Cancellable) b
 	}
 }
 
-// OverrideHandshakeAsync sets the callback function.
+// OverrideHandshakeAsync sets the "handshake_async" callback function.
 // Start an asynchronous handshake operation.
 func (x *TlsConnectionClass) OverrideHandshakeAsync(cb func(*TlsConnection, int, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -99,7 +99,7 @@ func (x *TlsConnectionClass) OverrideHandshakeAsync(cb func(*TlsConnection, int,
 	}
 }
 
-// GetHandshakeAsync gets the callback function.
+// GetHandshakeAsync gets the "handshake_async" callback function.
 // Start an asynchronous handshake operation.
 func (x *TlsConnectionClass) GetHandshakeAsync() func(*TlsConnection, int, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xHandshakeAsync == 0 {
@@ -112,7 +112,7 @@ func (x *TlsConnectionClass) GetHandshakeAsync() func(*TlsConnection, int, *Canc
 	}
 }
 
-// OverrideHandshakeFinish sets the callback function.
+// OverrideHandshakeFinish sets the "handshake_finish" callback function.
 // Finish an asynchronous handshake operation.
 func (x *TlsConnectionClass) OverrideHandshakeFinish(cb func(*TlsConnection, AsyncResult) bool) {
 	if cb == nil {
@@ -124,7 +124,7 @@ func (x *TlsConnectionClass) OverrideHandshakeFinish(cb func(*TlsConnection, Asy
 	}
 }
 
-// GetHandshakeFinish gets the callback function.
+// GetHandshakeFinish gets the "handshake_finish" callback function.
 // Finish an asynchronous handshake operation.
 func (x *TlsConnectionClass) GetHandshakeFinish() func(*TlsConnection, AsyncResult) bool {
 	if x.xHandshakeFinish == 0 {
@@ -137,7 +137,7 @@ func (x *TlsConnectionClass) GetHandshakeFinish() func(*TlsConnection, AsyncResu
 	}
 }
 
-// OverrideGetBindingData sets the callback function.
+// OverrideGetBindingData sets the "get_binding_data" callback function.
 // Retrieve TLS channel binding data (Since: 2.66)
 func (x *TlsConnectionClass) OverrideGetBindingData(cb func(*TlsConnection, TlsChannelBindingType, []byte) bool) {
 	if cb == nil {
@@ -149,7 +149,7 @@ func (x *TlsConnectionClass) OverrideGetBindingData(cb func(*TlsConnection, TlsC
 	}
 }
 
-// GetGetBindingData gets the callback function.
+// GetGetBindingData gets the "get_binding_data" callback function.
 // Retrieve TLS channel binding data (Since: 2.66)
 func (x *TlsConnectionClass) GetGetBindingData() func(*TlsConnection, TlsChannelBindingType, []byte) bool {
 	if x.xGetBindingData == 0 {
@@ -162,7 +162,7 @@ func (x *TlsConnectionClass) GetGetBindingData() func(*TlsConnection, TlsChannel
 	}
 }
 
-// OverrideGetNegotiatedProtocol sets the callback function.
+// OverrideGetNegotiatedProtocol sets the "get_negotiated_protocol" callback function.
 // Get ALPN-negotiated protocol (Since: 2.70)
 func (x *TlsConnectionClass) OverrideGetNegotiatedProtocol(cb func(*TlsConnection) string) {
 	if cb == nil {
@@ -174,7 +174,7 @@ func (x *TlsConnectionClass) OverrideGetNegotiatedProtocol(cb func(*TlsConnectio
 	}
 }
 
-// GetGetNegotiatedProtocol gets the callback function.
+// GetGetNegotiatedProtocol gets the "get_negotiated_protocol" callback function.
 // Get ALPN-negotiated protocol (Since: 2.70)
 func (x *TlsConnectionClass) GetGetNegotiatedProtocol() func(*TlsConnection) string {
 	if x.xGetNegotiatedProtocol == 0 {
@@ -264,7 +264,7 @@ func (x *TlsConnection) GetCertificate() *TlsCertificate {
 	return cls
 }
 
-var xTlsConnectionGetChannelBindingData func(uintptr, TlsChannelBindingType, []byte, **glib.Error) bool
+var xTlsConnectionGetChannelBindingData func(uintptr, TlsChannelBindingType, *[]byte, **glib.Error) bool
 
 // Query the TLS backend for TLS channel binding data of @type for @conn.
 //
@@ -279,7 +279,7 @@ var xTlsConnectionGetChannelBindingData func(uintptr, TlsChannelBindingType, []b
 // will be available though.  That could happen if TLS connection does not
 // support @type or the binding data is not available yet due to additional
 // negotiation or input required.
-func (x *TlsConnection) GetChannelBindingData(TypeVar TlsChannelBindingType, DataVar []byte) (bool, error) {
+func (x *TlsConnection) GetChannelBindingData(TypeVar TlsChannelBindingType, DataVar *[]byte) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xTlsConnectionGetChannelBindingData(x.GoPointer(), TypeVar, DataVar, &cerr)
@@ -650,6 +650,84 @@ func (c *TlsConnection) GoPointer() uintptr {
 
 func (c *TlsConnection) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
+}
+
+// SetPropertyAdvertisedProtocols sets the "advertised-protocols" property.
+// The list of application-layer protocols that the connection
+// advertises that it is willing to speak. See
+// g_tls_connection_set_advertised_protocols().
+func (x *TlsConnection) SetPropertyAdvertisedProtocols(value []string) {
+	var v gobject.Value
+	v.Init(glib.StrvGetType())
+	v.SetBoxed(uintptr(unsafe.Pointer(core.ByteSlice(value))))
+	x.SetProperty("advertised-protocols", &v)
+}
+
+// GetPropertyAdvertisedProtocols gets the "advertised-protocols" property.
+// The list of application-layer protocols that the connection
+// advertises that it is willing to speak. See
+// g_tls_connection_set_advertised_protocols().
+func (x *TlsConnection) GetPropertyAdvertisedProtocols() []string {
+	var v gobject.Value
+	x.GetProperty("advertised-protocols", &v)
+	return core.GoStringSlice(v.GetBoxed())
+}
+
+// GetPropertyCiphersuiteName gets the "ciphersuite-name" property.
+// The name of the TLS ciphersuite in use. See g_tls_connection_get_ciphersuite_name().
+func (x *TlsConnection) GetPropertyCiphersuiteName() string {
+	var v gobject.Value
+	x.GetProperty("ciphersuite-name", &v)
+	return v.GetString()
+}
+
+// GetPropertyNegotiatedProtocol gets the "negotiated-protocol" property.
+// The application-layer protocol negotiated during the TLS
+// handshake. See g_tls_connection_get_negotiated_protocol().
+func (x *TlsConnection) GetPropertyNegotiatedProtocol() string {
+	var v gobject.Value
+	x.GetProperty("negotiated-protocol", &v)
+	return v.GetString()
+}
+
+// SetPropertyRequireCloseNotify sets the "require-close-notify" property.
+// Whether or not proper TLS close notification is required.
+// See g_tls_connection_set_require_close_notify().
+func (x *TlsConnection) SetPropertyRequireCloseNotify(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("require-close-notify", &v)
+}
+
+// GetPropertyRequireCloseNotify gets the "require-close-notify" property.
+// Whether or not proper TLS close notification is required.
+// See g_tls_connection_set_require_close_notify().
+func (x *TlsConnection) GetPropertyRequireCloseNotify() bool {
+	var v gobject.Value
+	x.GetProperty("require-close-notify", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyUseSystemCertdb sets the "use-system-certdb" property.
+// Whether or not the system certificate database will be used to
+// verify peer certificates. See
+// g_tls_connection_set_use_system_certdb().
+func (x *TlsConnection) SetPropertyUseSystemCertdb(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("use-system-certdb", &v)
+}
+
+// GetPropertyUseSystemCertdb gets the "use-system-certdb" property.
+// Whether or not the system certificate database will be used to
+// verify peer certificates. See
+// g_tls_connection_set_use_system_certdb().
+func (x *TlsConnection) GetPropertyUseSystemCertdb() bool {
+	var v gobject.Value
+	x.GetProperty("use-system-certdb", &v)
+	return v.GetBoolean()
 }
 
 // Emitted during the TLS handshake after the peer certificate has

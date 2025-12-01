@@ -428,6 +428,155 @@ func (c *NavigationSplitView) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyCollapsed sets the "collapsed" property.
+// Whether the split view is collapsed.
+//
+// When collapsed, the children are put inside an [class@NavigationView],
+// otherwise they are displayed side by side.
+//
+// The [property@NavigationSplitView:show-content] controls which child is
+// visible while collapsed.
+func (x *NavigationSplitView) SetPropertyCollapsed(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("collapsed", &v)
+}
+
+// GetPropertyCollapsed gets the "collapsed" property.
+// Whether the split view is collapsed.
+//
+// When collapsed, the children are put inside an [class@NavigationView],
+// otherwise they are displayed side by side.
+//
+// The [property@NavigationSplitView:show-content] controls which child is
+// visible while collapsed.
+func (x *NavigationSplitView) GetPropertyCollapsed() bool {
+	var v gobject.Value
+	x.GetProperty("collapsed", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertyMaxSidebarWidth sets the "max-sidebar-width" property.
+// The maximum sidebar width.
+//
+// Maximum width is affected by
+// [property@NavigationSplitView:sidebar-width-unit].
+//
+// The sidebar widget can still be allocated with larger width if its own
+// minimum width exceeds it.
+func (x *NavigationSplitView) SetPropertyMaxSidebarWidth(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("max-sidebar-width", &v)
+}
+
+// GetPropertyMaxSidebarWidth gets the "max-sidebar-width" property.
+// The maximum sidebar width.
+//
+// Maximum width is affected by
+// [property@NavigationSplitView:sidebar-width-unit].
+//
+// The sidebar widget can still be allocated with larger width if its own
+// minimum width exceeds it.
+func (x *NavigationSplitView) GetPropertyMaxSidebarWidth() float64 {
+	var v gobject.Value
+	x.GetProperty("max-sidebar-width", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyMinSidebarWidth sets the "min-sidebar-width" property.
+// The minimum sidebar width.
+//
+// Minimum width is affected by
+// [property@NavigationSplitView:sidebar-width-unit].
+//
+// The sidebar widget can still be allocated with larger width if its own
+// minimum width exceeds it.
+func (x *NavigationSplitView) SetPropertyMinSidebarWidth(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("min-sidebar-width", &v)
+}
+
+// GetPropertyMinSidebarWidth gets the "min-sidebar-width" property.
+// The minimum sidebar width.
+//
+// Minimum width is affected by
+// [property@NavigationSplitView:sidebar-width-unit].
+//
+// The sidebar widget can still be allocated with larger width if its own
+// minimum width exceeds it.
+func (x *NavigationSplitView) GetPropertyMinSidebarWidth() float64 {
+	var v gobject.Value
+	x.GetProperty("min-sidebar-width", &v)
+	return v.GetDouble()
+}
+
+// SetPropertyShowContent sets the "show-content" property.
+// Determines the visible page when collapsed.
+//
+// If set to `TRUE`, the content widget will be the visible page when
+// [property@NavigationSplitView:collapsed] is `TRUE`; otherwise the sidebar
+// widget will be visible.
+//
+// If the split view is already collapsed, the visible page changes
+// immediately.
+func (x *NavigationSplitView) SetPropertyShowContent(value bool) {
+	var v gobject.Value
+	v.Init(gobject.TypeBooleanVal)
+	v.SetBoolean(value)
+	x.SetProperty("show-content", &v)
+}
+
+// GetPropertyShowContent gets the "show-content" property.
+// Determines the visible page when collapsed.
+//
+// If set to `TRUE`, the content widget will be the visible page when
+// [property@NavigationSplitView:collapsed] is `TRUE`; otherwise the sidebar
+// widget will be visible.
+//
+// If the split view is already collapsed, the visible page changes
+// immediately.
+func (x *NavigationSplitView) GetPropertyShowContent() bool {
+	var v gobject.Value
+	x.GetProperty("show-content", &v)
+	return v.GetBoolean()
+}
+
+// SetPropertySidebarWidthFraction sets the "sidebar-width-fraction" property.
+// The preferred sidebar width as a fraction of the total width.
+//
+// The preferred width is additionally limited by
+// [property@NavigationSplitView:min-sidebar-width] and
+// [property@NavigationSplitView:max-sidebar-width].
+//
+// The sidebar widget can be allocated with larger width if its own minimum
+// width exceeds the preferred width.
+func (x *NavigationSplitView) SetPropertySidebarWidthFraction(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("sidebar-width-fraction", &v)
+}
+
+// GetPropertySidebarWidthFraction gets the "sidebar-width-fraction" property.
+// The preferred sidebar width as a fraction of the total width.
+//
+// The preferred width is additionally limited by
+// [property@NavigationSplitView:min-sidebar-width] and
+// [property@NavigationSplitView:max-sidebar-width].
+//
+// The sidebar widget can be allocated with larger width if its own minimum
+// width exceeds the preferred width.
+func (x *NavigationSplitView) GetPropertySidebarWidthFraction() float64 {
+	var v gobject.Value
+	x.GetProperty("sidebar-width-fraction", &v)
+	return v.GetDouble()
+}
+
 // Requests the user's screen reader to announce the given message.
 //
 // This kind of notification is useful for messages that
@@ -485,7 +634,7 @@ func (x *NavigationSplitView) GetAtContext() *gtk.ATContext {
 // This functionality can be overridden by `GtkAccessible`
 // implementations, e.g. to get the bounds from an ignored
 // child widget.
-func (x *NavigationSplitView) GetBounds(XVar int, YVar int, WidthVar int, HeightVar int) bool {
+func (x *NavigationSplitView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
 	return cret

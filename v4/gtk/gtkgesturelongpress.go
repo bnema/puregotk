@@ -99,6 +99,23 @@ func (c *GestureLongPress) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
+// SetPropertyDelayFactor sets the "delay-factor" property.
+// Factor by which to modify the default timeout.
+func (x *GestureLongPress) SetPropertyDelayFactor(value float64) {
+	var v gobject.Value
+	v.Init(gobject.TypeDoubleVal)
+	v.SetDouble(value)
+	x.SetProperty("delay-factor", &v)
+}
+
+// GetPropertyDelayFactor gets the "delay-factor" property.
+// Factor by which to modify the default timeout.
+func (x *GestureLongPress) GetPropertyDelayFactor() float64 {
+	var v gobject.Value
+	x.GetProperty("delay-factor", &v)
+	return v.GetDouble()
+}
+
 // Emitted whenever a press moved too far, or was released
 // before [signal@Gtk.GestureLongPress::pressed] happened.
 func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint32 {

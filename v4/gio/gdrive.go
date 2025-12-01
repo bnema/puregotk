@@ -86,7 +86,7 @@ func (x *DriveIface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideChanged sets the callback function.
+// OverrideChanged sets the "changed" callback function.
 // Signal emitted when the drive is changed.
 func (x *DriveIface) OverrideChanged(cb func(Drive)) {
 	if cb == nil {
@@ -98,7 +98,7 @@ func (x *DriveIface) OverrideChanged(cb func(Drive)) {
 	}
 }
 
-// GetChanged gets the callback function.
+// GetChanged gets the "changed" callback function.
 // Signal emitted when the drive is changed.
 func (x *DriveIface) GetChanged() func(Drive) {
 	if x.xChanged == 0 {
@@ -111,7 +111,7 @@ func (x *DriveIface) GetChanged() func(Drive) {
 	}
 }
 
-// OverrideDisconnected sets the callback function.
+// OverrideDisconnected sets the "disconnected" callback function.
 // The removed signal that is emitted when the #GDrive have been disconnected. If the recipient is holding references to the object they should release them so the object can be finalized.
 func (x *DriveIface) OverrideDisconnected(cb func(Drive)) {
 	if cb == nil {
@@ -123,7 +123,7 @@ func (x *DriveIface) OverrideDisconnected(cb func(Drive)) {
 	}
 }
 
-// GetDisconnected gets the callback function.
+// GetDisconnected gets the "disconnected" callback function.
 // The removed signal that is emitted when the #GDrive have been disconnected. If the recipient is holding references to the object they should release them so the object can be finalized.
 func (x *DriveIface) GetDisconnected() func(Drive) {
 	if x.xDisconnected == 0 {
@@ -136,7 +136,7 @@ func (x *DriveIface) GetDisconnected() func(Drive) {
 	}
 }
 
-// OverrideEjectButton sets the callback function.
+// OverrideEjectButton sets the "eject_button" callback function.
 // Signal emitted when the physical eject button (if any) of a drive have been pressed.
 func (x *DriveIface) OverrideEjectButton(cb func(Drive)) {
 	if cb == nil {
@@ -148,7 +148,7 @@ func (x *DriveIface) OverrideEjectButton(cb func(Drive)) {
 	}
 }
 
-// GetEjectButton gets the callback function.
+// GetEjectButton gets the "eject_button" callback function.
 // Signal emitted when the physical eject button (if any) of a drive have been pressed.
 func (x *DriveIface) GetEjectButton() func(Drive) {
 	if x.xEjectButton == 0 {
@@ -161,7 +161,7 @@ func (x *DriveIface) GetEjectButton() func(Drive) {
 	}
 }
 
-// OverrideGetName sets the callback function.
+// OverrideGetName sets the "get_name" callback function.
 // Returns the name for the given #GDrive.
 func (x *DriveIface) OverrideGetName(cb func(Drive) string) {
 	if cb == nil {
@@ -173,7 +173,7 @@ func (x *DriveIface) OverrideGetName(cb func(Drive) string) {
 	}
 }
 
-// GetGetName gets the callback function.
+// GetGetName gets the "get_name" callback function.
 // Returns the name for the given #GDrive.
 func (x *DriveIface) GetGetName() func(Drive) string {
 	if x.xGetName == 0 {
@@ -186,7 +186,7 @@ func (x *DriveIface) GetGetName() func(Drive) string {
 	}
 }
 
-// OverrideGetIcon sets the callback function.
+// OverrideGetIcon sets the "get_icon" callback function.
 // Returns a #GIcon for the given #GDrive.
 func (x *DriveIface) OverrideGetIcon(cb func(Drive) *IconBase) {
 	if cb == nil {
@@ -202,7 +202,7 @@ func (x *DriveIface) OverrideGetIcon(cb func(Drive) *IconBase) {
 	}
 }
 
-// GetGetIcon gets the callback function.
+// GetGetIcon gets the "get_icon" callback function.
 // Returns a #GIcon for the given #GDrive.
 func (x *DriveIface) GetGetIcon() func(Drive) *IconBase {
 	if x.xGetIcon == 0 {
@@ -221,7 +221,7 @@ func (x *DriveIface) GetGetIcon() func(Drive) *IconBase {
 	}
 }
 
-// OverrideHasVolumes sets the callback function.
+// OverrideHasVolumes sets the "has_volumes" callback function.
 // Returns %TRUE if the #GDrive has mountable volumes.
 func (x *DriveIface) OverrideHasVolumes(cb func(Drive) bool) {
 	if cb == nil {
@@ -233,7 +233,7 @@ func (x *DriveIface) OverrideHasVolumes(cb func(Drive) bool) {
 	}
 }
 
-// GetHasVolumes gets the callback function.
+// GetHasVolumes gets the "has_volumes" callback function.
 // Returns %TRUE if the #GDrive has mountable volumes.
 func (x *DriveIface) GetHasVolumes() func(Drive) bool {
 	if x.xHasVolumes == 0 {
@@ -246,7 +246,7 @@ func (x *DriveIface) GetHasVolumes() func(Drive) bool {
 	}
 }
 
-// OverrideGetVolumes sets the callback function.
+// OverrideGetVolumes sets the "get_volumes" callback function.
 // Returns a list #GList of #GVolume for the #GDrive.
 func (x *DriveIface) OverrideGetVolumes(cb func(Drive) *glib.List) {
 	if cb == nil {
@@ -258,7 +258,7 @@ func (x *DriveIface) OverrideGetVolumes(cb func(Drive) *glib.List) {
 	}
 }
 
-// GetGetVolumes gets the callback function.
+// GetGetVolumes gets the "get_volumes" callback function.
 // Returns a list #GList of #GVolume for the #GDrive.
 func (x *DriveIface) GetGetVolumes() func(Drive) *glib.List {
 	if x.xGetVolumes == 0 {
@@ -271,7 +271,7 @@ func (x *DriveIface) GetGetVolumes() func(Drive) *glib.List {
 	}
 }
 
-// OverrideIsMediaRemovable sets the callback function.
+// OverrideIsMediaRemovable sets the "is_media_removable" callback function.
 // Returns %TRUE if the #GDrive supports removal and insertion of media.
 func (x *DriveIface) OverrideIsMediaRemovable(cb func(Drive) bool) {
 	if cb == nil {
@@ -283,7 +283,7 @@ func (x *DriveIface) OverrideIsMediaRemovable(cb func(Drive) bool) {
 	}
 }
 
-// GetIsMediaRemovable gets the callback function.
+// GetIsMediaRemovable gets the "is_media_removable" callback function.
 // Returns %TRUE if the #GDrive supports removal and insertion of media.
 func (x *DriveIface) GetIsMediaRemovable() func(Drive) bool {
 	if x.xIsMediaRemovable == 0 {
@@ -296,7 +296,7 @@ func (x *DriveIface) GetIsMediaRemovable() func(Drive) bool {
 	}
 }
 
-// OverrideHasMedia sets the callback function.
+// OverrideHasMedia sets the "has_media" callback function.
 // Returns %TRUE if the #GDrive has media inserted.
 func (x *DriveIface) OverrideHasMedia(cb func(Drive) bool) {
 	if cb == nil {
@@ -308,7 +308,7 @@ func (x *DriveIface) OverrideHasMedia(cb func(Drive) bool) {
 	}
 }
 
-// GetHasMedia gets the callback function.
+// GetHasMedia gets the "has_media" callback function.
 // Returns %TRUE if the #GDrive has media inserted.
 func (x *DriveIface) GetHasMedia() func(Drive) bool {
 	if x.xHasMedia == 0 {
@@ -321,7 +321,7 @@ func (x *DriveIface) GetHasMedia() func(Drive) bool {
 	}
 }
 
-// OverrideIsMediaCheckAutomatic sets the callback function.
+// OverrideIsMediaCheckAutomatic sets the "is_media_check_automatic" callback function.
 // Returns %TRUE if the #GDrive is capable of automatically detecting media changes.
 func (x *DriveIface) OverrideIsMediaCheckAutomatic(cb func(Drive) bool) {
 	if cb == nil {
@@ -333,7 +333,7 @@ func (x *DriveIface) OverrideIsMediaCheckAutomatic(cb func(Drive) bool) {
 	}
 }
 
-// GetIsMediaCheckAutomatic gets the callback function.
+// GetIsMediaCheckAutomatic gets the "is_media_check_automatic" callback function.
 // Returns %TRUE if the #GDrive is capable of automatically detecting media changes.
 func (x *DriveIface) GetIsMediaCheckAutomatic() func(Drive) bool {
 	if x.xIsMediaCheckAutomatic == 0 {
@@ -346,7 +346,7 @@ func (x *DriveIface) GetIsMediaCheckAutomatic() func(Drive) bool {
 	}
 }
 
-// OverrideCanEject sets the callback function.
+// OverrideCanEject sets the "can_eject" callback function.
 // Returns %TRUE if the #GDrive can eject media.
 func (x *DriveIface) OverrideCanEject(cb func(Drive) bool) {
 	if cb == nil {
@@ -358,7 +358,7 @@ func (x *DriveIface) OverrideCanEject(cb func(Drive) bool) {
 	}
 }
 
-// GetCanEject gets the callback function.
+// GetCanEject gets the "can_eject" callback function.
 // Returns %TRUE if the #GDrive can eject media.
 func (x *DriveIface) GetCanEject() func(Drive) bool {
 	if x.xCanEject == 0 {
@@ -371,7 +371,7 @@ func (x *DriveIface) GetCanEject() func(Drive) bool {
 	}
 }
 
-// OverrideCanPollForMedia sets the callback function.
+// OverrideCanPollForMedia sets the "can_poll_for_media" callback function.
 // Returns %TRUE if the #GDrive is capable of manually polling for media change.
 func (x *DriveIface) OverrideCanPollForMedia(cb func(Drive) bool) {
 	if cb == nil {
@@ -383,7 +383,7 @@ func (x *DriveIface) OverrideCanPollForMedia(cb func(Drive) bool) {
 	}
 }
 
-// GetCanPollForMedia gets the callback function.
+// GetCanPollForMedia gets the "can_poll_for_media" callback function.
 // Returns %TRUE if the #GDrive is capable of manually polling for media change.
 func (x *DriveIface) GetCanPollForMedia() func(Drive) bool {
 	if x.xCanPollForMedia == 0 {
@@ -396,7 +396,7 @@ func (x *DriveIface) GetCanPollForMedia() func(Drive) bool {
 	}
 }
 
-// OverrideEject sets the callback function.
+// OverrideEject sets the "eject" callback function.
 // Ejects a #GDrive.
 func (x *DriveIface) OverrideEject(cb func(Drive, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -408,7 +408,7 @@ func (x *DriveIface) OverrideEject(cb func(Drive, MountUnmountFlags, *Cancellabl
 	}
 }
 
-// GetEject gets the callback function.
+// GetEject gets the "eject" callback function.
 // Ejects a #GDrive.
 func (x *DriveIface) GetEject() func(Drive, MountUnmountFlags, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xEject == 0 {
@@ -421,7 +421,7 @@ func (x *DriveIface) GetEject() func(Drive, MountUnmountFlags, *Cancellable, *As
 	}
 }
 
-// OverrideEjectFinish sets the callback function.
+// OverrideEjectFinish sets the "eject_finish" callback function.
 // Finishes an eject operation.
 func (x *DriveIface) OverrideEjectFinish(cb func(Drive, AsyncResult) bool) {
 	if cb == nil {
@@ -433,7 +433,7 @@ func (x *DriveIface) OverrideEjectFinish(cb func(Drive, AsyncResult) bool) {
 	}
 }
 
-// GetEjectFinish gets the callback function.
+// GetEjectFinish gets the "eject_finish" callback function.
 // Finishes an eject operation.
 func (x *DriveIface) GetEjectFinish() func(Drive, AsyncResult) bool {
 	if x.xEjectFinish == 0 {
@@ -446,7 +446,7 @@ func (x *DriveIface) GetEjectFinish() func(Drive, AsyncResult) bool {
 	}
 }
 
-// OverridePollForMedia sets the callback function.
+// OverridePollForMedia sets the "poll_for_media" callback function.
 // Poll for media insertion/removal on a #GDrive.
 func (x *DriveIface) OverridePollForMedia(cb func(Drive, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -458,7 +458,7 @@ func (x *DriveIface) OverridePollForMedia(cb func(Drive, *Cancellable, *AsyncRea
 	}
 }
 
-// GetPollForMedia gets the callback function.
+// GetPollForMedia gets the "poll_for_media" callback function.
 // Poll for media insertion/removal on a #GDrive.
 func (x *DriveIface) GetPollForMedia() func(Drive, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xPollForMedia == 0 {
@@ -471,7 +471,7 @@ func (x *DriveIface) GetPollForMedia() func(Drive, *Cancellable, *AsyncReadyCall
 	}
 }
 
-// OverridePollForMediaFinish sets the callback function.
+// OverridePollForMediaFinish sets the "poll_for_media_finish" callback function.
 // Finishes a media poll operation.
 func (x *DriveIface) OverridePollForMediaFinish(cb func(Drive, AsyncResult) bool) {
 	if cb == nil {
@@ -483,7 +483,7 @@ func (x *DriveIface) OverridePollForMediaFinish(cb func(Drive, AsyncResult) bool
 	}
 }
 
-// GetPollForMediaFinish gets the callback function.
+// GetPollForMediaFinish gets the "poll_for_media_finish" callback function.
 // Finishes a media poll operation.
 func (x *DriveIface) GetPollForMediaFinish() func(Drive, AsyncResult) bool {
 	if x.xPollForMediaFinish == 0 {
@@ -496,7 +496,7 @@ func (x *DriveIface) GetPollForMediaFinish() func(Drive, AsyncResult) bool {
 	}
 }
 
-// OverrideGetIdentifier sets the callback function.
+// OverrideGetIdentifier sets the "get_identifier" callback function.
 // Returns the identifier of the given kind, or %NULL if
 //
 //	the #GDrive doesn't have one.
@@ -510,7 +510,7 @@ func (x *DriveIface) OverrideGetIdentifier(cb func(Drive, string) string) {
 	}
 }
 
-// GetGetIdentifier gets the callback function.
+// GetGetIdentifier gets the "get_identifier" callback function.
 // Returns the identifier of the given kind, or %NULL if
 //
 //	the #GDrive doesn't have one.
@@ -525,7 +525,7 @@ func (x *DriveIface) GetGetIdentifier() func(Drive, string) string {
 	}
 }
 
-// OverrideEnumerateIdentifiers sets the callback function.
+// OverrideEnumerateIdentifiers sets the "enumerate_identifiers" callback function.
 // Returns an array strings listing the kinds
 //
 //	of identifiers which the #GDrive has.
@@ -539,7 +539,7 @@ func (x *DriveIface) OverrideEnumerateIdentifiers(cb func(Drive) []string) {
 	}
 }
 
-// GetEnumerateIdentifiers gets the callback function.
+// GetEnumerateIdentifiers gets the "enumerate_identifiers" callback function.
 // Returns an array strings listing the kinds
 //
 //	of identifiers which the #GDrive has.
@@ -554,7 +554,7 @@ func (x *DriveIface) GetEnumerateIdentifiers() func(Drive) []string {
 	}
 }
 
-// OverrideGetStartStopType sets the callback function.
+// OverrideGetStartStopType sets the "get_start_stop_type" callback function.
 // Gets a #GDriveStartStopType with details about starting/stopping the drive. Since 2.22.
 func (x *DriveIface) OverrideGetStartStopType(cb func(Drive) DriveStartStopType) {
 	if cb == nil {
@@ -566,7 +566,7 @@ func (x *DriveIface) OverrideGetStartStopType(cb func(Drive) DriveStartStopType)
 	}
 }
 
-// GetGetStartStopType gets the callback function.
+// GetGetStartStopType gets the "get_start_stop_type" callback function.
 // Gets a #GDriveStartStopType with details about starting/stopping the drive. Since 2.22.
 func (x *DriveIface) GetGetStartStopType() func(Drive) DriveStartStopType {
 	if x.xGetStartStopType == 0 {
@@ -579,7 +579,7 @@ func (x *DriveIface) GetGetStartStopType() func(Drive) DriveStartStopType {
 	}
 }
 
-// OverrideCanStart sets the callback function.
+// OverrideCanStart sets the "can_start" callback function.
 // Returns %TRUE if a #GDrive can be started. Since 2.22.
 func (x *DriveIface) OverrideCanStart(cb func(Drive) bool) {
 	if cb == nil {
@@ -591,7 +591,7 @@ func (x *DriveIface) OverrideCanStart(cb func(Drive) bool) {
 	}
 }
 
-// GetCanStart gets the callback function.
+// GetCanStart gets the "can_start" callback function.
 // Returns %TRUE if a #GDrive can be started. Since 2.22.
 func (x *DriveIface) GetCanStart() func(Drive) bool {
 	if x.xCanStart == 0 {
@@ -604,7 +604,7 @@ func (x *DriveIface) GetCanStart() func(Drive) bool {
 	}
 }
 
-// OverrideCanStartDegraded sets the callback function.
+// OverrideCanStartDegraded sets the "can_start_degraded" callback function.
 // Returns %TRUE if a #GDrive can be started degraded. Since 2.22.
 func (x *DriveIface) OverrideCanStartDegraded(cb func(Drive) bool) {
 	if cb == nil {
@@ -616,7 +616,7 @@ func (x *DriveIface) OverrideCanStartDegraded(cb func(Drive) bool) {
 	}
 }
 
-// GetCanStartDegraded gets the callback function.
+// GetCanStartDegraded gets the "can_start_degraded" callback function.
 // Returns %TRUE if a #GDrive can be started degraded. Since 2.22.
 func (x *DriveIface) GetCanStartDegraded() func(Drive) bool {
 	if x.xCanStartDegraded == 0 {
@@ -629,7 +629,7 @@ func (x *DriveIface) GetCanStartDegraded() func(Drive) bool {
 	}
 }
 
-// OverrideStart sets the callback function.
+// OverrideStart sets the "start" callback function.
 // Starts a #GDrive. Since 2.22.
 func (x *DriveIface) OverrideStart(cb func(Drive, DriveStartFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -641,7 +641,7 @@ func (x *DriveIface) OverrideStart(cb func(Drive, DriveStartFlags, *MountOperati
 	}
 }
 
-// GetStart gets the callback function.
+// GetStart gets the "start" callback function.
 // Starts a #GDrive. Since 2.22.
 func (x *DriveIface) GetStart() func(Drive, DriveStartFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xStart == 0 {
@@ -654,7 +654,7 @@ func (x *DriveIface) GetStart() func(Drive, DriveStartFlags, *MountOperation, *C
 	}
 }
 
-// OverrideStartFinish sets the callback function.
+// OverrideStartFinish sets the "start_finish" callback function.
 // Finishes a start operation. Since 2.22.
 func (x *DriveIface) OverrideStartFinish(cb func(Drive, AsyncResult) bool) {
 	if cb == nil {
@@ -666,7 +666,7 @@ func (x *DriveIface) OverrideStartFinish(cb func(Drive, AsyncResult) bool) {
 	}
 }
 
-// GetStartFinish gets the callback function.
+// GetStartFinish gets the "start_finish" callback function.
 // Finishes a start operation. Since 2.22.
 func (x *DriveIface) GetStartFinish() func(Drive, AsyncResult) bool {
 	if x.xStartFinish == 0 {
@@ -679,7 +679,7 @@ func (x *DriveIface) GetStartFinish() func(Drive, AsyncResult) bool {
 	}
 }
 
-// OverrideCanStop sets the callback function.
+// OverrideCanStop sets the "can_stop" callback function.
 // Returns %TRUE if a #GDrive can be stopped. Since 2.22.
 func (x *DriveIface) OverrideCanStop(cb func(Drive) bool) {
 	if cb == nil {
@@ -691,7 +691,7 @@ func (x *DriveIface) OverrideCanStop(cb func(Drive) bool) {
 	}
 }
 
-// GetCanStop gets the callback function.
+// GetCanStop gets the "can_stop" callback function.
 // Returns %TRUE if a #GDrive can be stopped. Since 2.22.
 func (x *DriveIface) GetCanStop() func(Drive) bool {
 	if x.xCanStop == 0 {
@@ -704,7 +704,7 @@ func (x *DriveIface) GetCanStop() func(Drive) bool {
 	}
 }
 
-// OverrideStop sets the callback function.
+// OverrideStop sets the "stop" callback function.
 // Stops a #GDrive. Since 2.22.
 func (x *DriveIface) OverrideStop(cb func(Drive, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -716,7 +716,7 @@ func (x *DriveIface) OverrideStop(cb func(Drive, MountUnmountFlags, *MountOperat
 	}
 }
 
-// GetStop gets the callback function.
+// GetStop gets the "stop" callback function.
 // Stops a #GDrive. Since 2.22.
 func (x *DriveIface) GetStop() func(Drive, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xStop == 0 {
@@ -729,7 +729,7 @@ func (x *DriveIface) GetStop() func(Drive, MountUnmountFlags, *MountOperation, *
 	}
 }
 
-// OverrideStopFinish sets the callback function.
+// OverrideStopFinish sets the "stop_finish" callback function.
 // Finishes a stop operation. Since 2.22.
 func (x *DriveIface) OverrideStopFinish(cb func(Drive, AsyncResult) bool) {
 	if cb == nil {
@@ -741,7 +741,7 @@ func (x *DriveIface) OverrideStopFinish(cb func(Drive, AsyncResult) bool) {
 	}
 }
 
-// GetStopFinish gets the callback function.
+// GetStopFinish gets the "stop_finish" callback function.
 // Finishes a stop operation. Since 2.22.
 func (x *DriveIface) GetStopFinish() func(Drive, AsyncResult) bool {
 	if x.xStopFinish == 0 {
@@ -754,7 +754,7 @@ func (x *DriveIface) GetStopFinish() func(Drive, AsyncResult) bool {
 	}
 }
 
-// OverrideStopButton sets the callback function.
+// OverrideStopButton sets the "stop_button" callback function.
 // Signal emitted when the physical stop button (if any) of a drive have been pressed. Since 2.22.
 func (x *DriveIface) OverrideStopButton(cb func(Drive)) {
 	if cb == nil {
@@ -766,7 +766,7 @@ func (x *DriveIface) OverrideStopButton(cb func(Drive)) {
 	}
 }
 
-// GetStopButton gets the callback function.
+// GetStopButton gets the "stop_button" callback function.
 // Signal emitted when the physical stop button (if any) of a drive have been pressed. Since 2.22.
 func (x *DriveIface) GetStopButton() func(Drive) {
 	if x.xStopButton == 0 {
@@ -779,7 +779,7 @@ func (x *DriveIface) GetStopButton() func(Drive) {
 	}
 }
 
-// OverrideEjectWithOperation sets the callback function.
+// OverrideEjectWithOperation sets the "eject_with_operation" callback function.
 // Starts ejecting a #GDrive using a #GMountOperation. Since 2.22.
 func (x *DriveIface) OverrideEjectWithOperation(cb func(Drive, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr)) {
 	if cb == nil {
@@ -791,7 +791,7 @@ func (x *DriveIface) OverrideEjectWithOperation(cb func(Drive, MountUnmountFlags
 	}
 }
 
-// GetEjectWithOperation gets the callback function.
+// GetEjectWithOperation gets the "eject_with_operation" callback function.
 // Starts ejecting a #GDrive using a #GMountOperation. Since 2.22.
 func (x *DriveIface) GetEjectWithOperation() func(Drive, MountUnmountFlags, *MountOperation, *Cancellable, *AsyncReadyCallback, uintptr) {
 	if x.xEjectWithOperation == 0 {
@@ -804,7 +804,7 @@ func (x *DriveIface) GetEjectWithOperation() func(Drive, MountUnmountFlags, *Mou
 	}
 }
 
-// OverrideEjectWithOperationFinish sets the callback function.
+// OverrideEjectWithOperationFinish sets the "eject_with_operation_finish" callback function.
 // Finishes an eject operation using a #GMountOperation. Since 2.22.
 func (x *DriveIface) OverrideEjectWithOperationFinish(cb func(Drive, AsyncResult) bool) {
 	if cb == nil {
@@ -816,7 +816,7 @@ func (x *DriveIface) OverrideEjectWithOperationFinish(cb func(Drive, AsyncResult
 	}
 }
 
-// GetEjectWithOperationFinish gets the callback function.
+// GetEjectWithOperationFinish gets the "eject_with_operation_finish" callback function.
 // Finishes an eject operation using a #GMountOperation. Since 2.22.
 func (x *DriveIface) GetEjectWithOperationFinish() func(Drive, AsyncResult) bool {
 	if x.xEjectWithOperationFinish == 0 {
@@ -829,7 +829,7 @@ func (x *DriveIface) GetEjectWithOperationFinish() func(Drive, AsyncResult) bool
 	}
 }
 
-// OverrideGetSortKey sets the callback function.
+// OverrideGetSortKey sets the "get_sort_key" callback function.
 // Gets a key used for sorting #GDrive instances or %NULL if no such key exists. Since 2.32.
 func (x *DriveIface) OverrideGetSortKey(cb func(Drive) string) {
 	if cb == nil {
@@ -841,7 +841,7 @@ func (x *DriveIface) OverrideGetSortKey(cb func(Drive) string) {
 	}
 }
 
-// GetGetSortKey gets the callback function.
+// GetGetSortKey gets the "get_sort_key" callback function.
 // Gets a key used for sorting #GDrive instances or %NULL if no such key exists. Since 2.32.
 func (x *DriveIface) GetGetSortKey() func(Drive) string {
 	if x.xGetSortKey == 0 {
@@ -854,7 +854,7 @@ func (x *DriveIface) GetGetSortKey() func(Drive) string {
 	}
 }
 
-// OverrideGetSymbolicIcon sets the callback function.
+// OverrideGetSymbolicIcon sets the "get_symbolic_icon" callback function.
 // Returns a symbolic #GIcon for the given #GDrive. Since 2.34.
 func (x *DriveIface) OverrideGetSymbolicIcon(cb func(Drive) *IconBase) {
 	if cb == nil {
@@ -870,7 +870,7 @@ func (x *DriveIface) OverrideGetSymbolicIcon(cb func(Drive) *IconBase) {
 	}
 }
 
-// GetGetSymbolicIcon gets the callback function.
+// GetGetSymbolicIcon gets the "get_symbolic_icon" callback function.
 // Returns a symbolic #GIcon for the given #GDrive. Since 2.34.
 func (x *DriveIface) GetGetSymbolicIcon() func(Drive) *IconBase {
 	if x.xGetSymbolicIcon == 0 {
@@ -889,7 +889,7 @@ func (x *DriveIface) GetGetSymbolicIcon() func(Drive) *IconBase {
 	}
 }
 
-// OverrideIsRemovable sets the callback function.
+// OverrideIsRemovable sets the "is_removable" callback function.
 // Returns %TRUE if the #GDrive and/or its media is considered removable by the user. Since 2.50.
 func (x *DriveIface) OverrideIsRemovable(cb func(Drive) bool) {
 	if cb == nil {
@@ -901,7 +901,7 @@ func (x *DriveIface) OverrideIsRemovable(cb func(Drive) bool) {
 	}
 }
 
-// GetIsRemovable gets the callback function.
+// GetIsRemovable gets the "is_removable" callback function.
 // Returns %TRUE if the #GDrive and/or its media is considered removable by the user. Since 2.50.
 func (x *DriveIface) GetIsRemovable() func(Drive) bool {
 	if x.xIsRemovable == 0 {

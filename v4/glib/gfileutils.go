@@ -345,7 +345,7 @@ func FileErrorFromErrno(ErrNoVar int) FileError {
 	return cret
 }
 
-var xFileGetContents func(string, []byte, uint, **Error) bool
+var xFileGetContents func(string, *[]byte, *uint, **Error) bool
 
 // Reads an entire file into allocated memory, with good error
 // checking.
@@ -357,7 +357,7 @@ var xFileGetContents func(string, []byte, uint, **Error) bool
 // %FALSE and sets @error. The error domain is %G_FILE_ERROR. Possible error
 // codes are those in the #GFileError enumeration. In the error case,
 // @contents is set to %NULL and @length is set to zero.
-func FileGetContents(FilenameVar string, ContentsVar []byte, LengthVar uint) (bool, error) {
+func FileGetContents(FilenameVar string, ContentsVar *[]byte, LengthVar *uint) (bool, error) {
 	var cerr *Error
 
 	cret := xFileGetContents(FilenameVar, ContentsVar, LengthVar, &cerr)
@@ -368,7 +368,7 @@ func FileGetContents(FilenameVar string, ContentsVar []byte, LengthVar uint) (bo
 
 }
 
-var xFileOpenTmp func(string, string, **Error) int
+var xFileOpenTmp func(string, *string, **Error) int
 
 // Opens a file for writing in the preferred directory for temporary
 // files (as returned by g_get_tmp_dir()).
@@ -386,7 +386,7 @@ var xFileOpenTmp func(string, string, **Error) int
 // is returned in @name_used. This string should be freed with g_free()
 // when not needed any longer. The returned name is in the GLib file
 // name encoding.
-func FileOpenTmp(TmplVar string, NameUsedVar string) (int, error) {
+func FileOpenTmp(TmplVar string, NameUsedVar *string) (int, error) {
 	var cerr *Error
 
 	cret := xFileOpenTmp(TmplVar, NameUsedVar, &cerr)

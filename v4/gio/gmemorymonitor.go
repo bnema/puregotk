@@ -23,7 +23,7 @@ func (x *MemoryMonitorInterface) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-// OverrideLowMemoryWarning sets the callback function.
+// OverrideLowMemoryWarning sets the "low_memory_warning" callback function.
 // the virtual function pointer for the
 //
 //	#GMemoryMonitor::low-memory-warning signal.
@@ -37,7 +37,7 @@ func (x *MemoryMonitorInterface) OverrideLowMemoryWarning(cb func(MemoryMonitor,
 	}
 }
 
-// GetLowMemoryWarning gets the callback function.
+// GetLowMemoryWarning gets the "low_memory_warning" callback function.
 // the virtual function pointer for the
 //
 //	#GMemoryMonitor::low-memory-warning signal.

@@ -133,7 +133,7 @@ func (x *FileIcon) ToString() string {
 
 // Loads a loadable icon. For the asynchronous version of this function,
 // see g_loadable_icon_load_async().
-func (x *FileIcon) Load(SizeVar int, TypeVar string, CancellableVar *Cancellable) (*InputStream, error) {
+func (x *FileIcon) Load(SizeVar int, TypeVar *string, CancellableVar *Cancellable) (*InputStream, error) {
 	var cls *InputStream
 	var cerr *glib.Error
 
@@ -161,7 +161,7 @@ func (x *FileIcon) LoadAsync(SizeVar int, CancellableVar *Cancellable, CallbackV
 }
 
 // Finishes an asynchronous icon load started in g_loadable_icon_load_async().
-func (x *FileIcon) LoadFinish(ResVar AsyncResult, TypeVar string) (*InputStream, error) {
+func (x *FileIcon) LoadFinish(ResVar AsyncResult, TypeVar *string) (*InputStream, error) {
 	var cls *InputStream
 	var cerr *glib.Error
 
