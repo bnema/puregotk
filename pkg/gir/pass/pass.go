@@ -1,9 +1,13 @@
 package pass
 
-import "github.com/jwijenbergh/puregotk/internal/gir/pass"
+import (
+	"github.com/jwijenbergh/puregotk/internal/gir/pass"
+	"github.com/jwijenbergh/puregotk/internal/gir/types"
+)
 
 type (
-	Pass = pass.Pass
+	Pass       = pass.Pass
+	Repository = types.Repository
 )
 
 var (
