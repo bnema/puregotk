@@ -314,7 +314,37 @@ var xOptionContextSetTranslateFunc func(uintptr, uintptr, uintptr, uintptr)
 // domain, see g_option_context_set_translation_domain().
 func (x *OptionContext) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr, DestroyNotifyVar *DestroyNotify) {
 
-	xOptionContextSetTranslateFunc(x.GoPointer(), NewCallbackNullable(FuncVar), DataVar, NewCallbackNullable(DestroyNotifyVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string, arg1 uintptr) string {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	var DestroyNotifyVarRef uintptr
+	if DestroyNotifyVar != nil {
+		DestroyNotifyVarPtr := uintptr(unsafe.Pointer(DestroyNotifyVar))
+		if cbRefPtr, ok := GetCallback(DestroyNotifyVarPtr); ok {
+			DestroyNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyNotifyVar
+				cbFn(arg0)
+			}
+			DestroyNotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+		}
+	}
+
+	xOptionContextSetTranslateFunc(x.GoPointer(), FuncVarRef, DataVar, DestroyNotifyVarRef)
 
 }
 
@@ -404,7 +434,22 @@ var xNewOptionGroup func(string, string, string, uintptr, uintptr) *OptionGroup
 // ‘Application Options:’.
 func NewOptionGroup(NameVar string, DescriptionVar string, HelpDescriptionVar string, UserDataVar uintptr, DestroyVar *DestroyNotify) *OptionGroup {
 
-	cret := xNewOptionGroup(NameVar, DescriptionVar, HelpDescriptionVar, UserDataVar, NewCallbackNullable(DestroyVar))
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	cret := xNewOptionGroup(NameVar, DescriptionVar, HelpDescriptionVar, UserDataVar, DestroyVarRef)
 	return cret
 }
 
@@ -445,7 +490,20 @@ var xOptionGroupSetErrorHook func(uintptr, uintptr)
 // specified when constructing the group with g_option_group_new().
 func (x *OptionGroup) SetErrorHook(ErrorFuncVar *OptionErrorFunc) {
 
-	xOptionGroupSetErrorHook(x.GoPointer(), NewCallback(ErrorFuncVar))
+	ErrorFuncVarPtr := uintptr(unsafe.Pointer(ErrorFuncVar))
+	var ErrorFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(ErrorFuncVarPtr); ok {
+		ErrorFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 *OptionContext, arg1 *OptionGroup, arg2 uintptr, arg3 **Error) {
+			cbFn := *ErrorFuncVar
+			cbFn(arg0, arg1, arg2, arg3)
+		}
+		ErrorFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(ErrorFuncVarPtr, ErrorFuncVarRef)
+	}
+
+	xOptionGroupSetErrorHook(x.GoPointer(), ErrorFuncVarRef)
 
 }
 
@@ -460,7 +518,37 @@ var xOptionGroupSetParseHooks func(uintptr, uintptr, uintptr)
 // with g_option_group_new().
 func (x *OptionGroup) SetParseHooks(PreParseFuncVar *OptionParseFunc, PostParseFuncVar *OptionParseFunc) {
 
-	xOptionGroupSetParseHooks(x.GoPointer(), NewCallbackNullable(PreParseFuncVar), NewCallbackNullable(PostParseFuncVar))
+	var PreParseFuncVarRef uintptr
+	if PreParseFuncVar != nil {
+		PreParseFuncVarPtr := uintptr(unsafe.Pointer(PreParseFuncVar))
+		if cbRefPtr, ok := GetCallback(PreParseFuncVarPtr); ok {
+			PreParseFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *OptionContext, arg1 *OptionGroup, arg2 uintptr, arg3 **Error) bool {
+				cbFn := *PreParseFuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			PreParseFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(PreParseFuncVarPtr, PreParseFuncVarRef)
+		}
+	}
+
+	var PostParseFuncVarRef uintptr
+	if PostParseFuncVar != nil {
+		PostParseFuncVarPtr := uintptr(unsafe.Pointer(PostParseFuncVar))
+		if cbRefPtr, ok := GetCallback(PostParseFuncVarPtr); ok {
+			PostParseFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *OptionContext, arg1 *OptionGroup, arg2 uintptr, arg3 **Error) bool {
+				cbFn := *PostParseFuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			PostParseFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(PostParseFuncVarPtr, PostParseFuncVarRef)
+		}
+	}
+
+	xOptionGroupSetParseHooks(x.GoPointer(), PreParseFuncVarRef, PostParseFuncVarRef)
 
 }
 
@@ -474,7 +562,37 @@ var xOptionGroupSetTranslateFunc func(uintptr, uintptr, uintptr, uintptr)
 // domain, see g_option_group_set_translation_domain().
 func (x *OptionGroup) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr, DestroyNotifyVar *DestroyNotify) {
 
-	xOptionGroupSetTranslateFunc(x.GoPointer(), NewCallbackNullable(FuncVar), DataVar, NewCallbackNullable(DestroyNotifyVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string, arg1 uintptr) string {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	var DestroyNotifyVarRef uintptr
+	if DestroyNotifyVar != nil {
+		DestroyNotifyVarPtr := uintptr(unsafe.Pointer(DestroyNotifyVar))
+		if cbRefPtr, ok := GetCallback(DestroyNotifyVarPtr); ok {
+			DestroyNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyNotifyVar
+				cbFn(arg0)
+			}
+			DestroyNotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+		}
+	}
+
+	xOptionGroupSetTranslateFunc(x.GoPointer(), FuncVarRef, DataVar, DestroyNotifyVarRef)
 
 }
 

@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -101,7 +103,33 @@ var xSubprocessLauncherSetChildSetup func(uintptr, uintptr, uintptr, uintptr)
 // Child setup functions are only available on UNIX.
 func (x *SubprocessLauncher) SetChildSetup(ChildSetupVar *glib.SpawnChildSetupFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
 
-	xSubprocessLauncherSetChildSetup(x.GoPointer(), glib.NewCallback(ChildSetupVar), UserDataVar, glib.NewCallback(DestroyNotifyVar))
+	ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
+	var ChildSetupVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(ChildSetupVarPtr); ok {
+		ChildSetupVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *ChildSetupVar
+			cbFn(arg0)
+		}
+		ChildSetupVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+	}
+
+	DestroyNotifyVarPtr := uintptr(unsafe.Pointer(DestroyNotifyVar))
+	var DestroyNotifyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyNotifyVarPtr); ok {
+		DestroyNotifyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DestroyNotifyVar
+			cbFn(arg0)
+		}
+		DestroyNotifyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+	}
+
+	xSubprocessLauncherSetChildSetup(x.GoPointer(), ChildSetupVarRef, UserDataVar, DestroyNotifyVarRef)
 
 }
 

@@ -100,7 +100,20 @@ var xListStoreFindWithEqualFunc func(uintptr, uintptr, uintptr, *uint) bool
 // Since GLib 2.76 it is possible to pass `NULL` for @item.
 func (x *ListStore) FindWithEqualFunc(ItemVar *gobject.Object, EqualFuncVar *glib.EqualFunc, PositionVar *uint) bool {
 
-	cret := xListStoreFindWithEqualFunc(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(EqualFuncVar), PositionVar)
+	EqualFuncVarPtr := uintptr(unsafe.Pointer(EqualFuncVar))
+	var EqualFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(EqualFuncVarPtr); ok {
+		EqualFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr) bool {
+			cbFn := *EqualFuncVar
+			return cbFn(arg0, arg1)
+		}
+		EqualFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(EqualFuncVarPtr, EqualFuncVarRef)
+	}
+
+	cret := xListStoreFindWithEqualFunc(x.GoPointer(), ItemVar.GoPointer(), EqualFuncVarRef, PositionVar)
 	return cret
 }
 
@@ -114,7 +127,20 @@ var xListStoreFindWithEqualFuncFull func(uintptr, uintptr, uintptr, uintptr, *ui
 // Since GLib 2.76 it is possible to pass `NULL` for @item.
 func (x *ListStore) FindWithEqualFuncFull(ItemVar *gobject.Object, EqualFuncVar *glib.EqualFuncFull, UserDataVar uintptr, PositionVar *uint) bool {
 
-	cret := xListStoreFindWithEqualFuncFull(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(EqualFuncVar), UserDataVar, PositionVar)
+	EqualFuncVarPtr := uintptr(unsafe.Pointer(EqualFuncVar))
+	var EqualFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(EqualFuncVarPtr); ok {
+		EqualFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
+			cbFn := *EqualFuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		EqualFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(EqualFuncVarPtr, EqualFuncVarRef)
+	}
+
+	cret := xListStoreFindWithEqualFuncFull(x.GoPointer(), ItemVar.GoPointer(), EqualFuncVarRef, UserDataVar, PositionVar)
 	return cret
 }
 
@@ -146,7 +172,20 @@ var xListStoreInsertSorted func(uintptr, uintptr, uintptr, uintptr) uint
 // This function takes a ref on @item.
 func (x *ListStore) InsertSorted(ItemVar *gobject.Object, CompareFuncVar *glib.CompareDataFunc, UserDataVar uintptr) uint {
 
-	cret := xListStoreInsertSorted(x.GoPointer(), ItemVar.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
+	CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+	var CompareFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(CompareFuncVarPtr); ok {
+		CompareFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+			cbFn := *CompareFuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		CompareFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+	}
+
+	cret := xListStoreInsertSorted(x.GoPointer(), ItemVar.GoPointer(), CompareFuncVarRef, UserDataVar)
 	return cret
 }
 
@@ -177,7 +216,20 @@ var xListStoreSort func(uintptr, uintptr, uintptr)
 // Sort the items in @store according to @compare_func.
 func (x *ListStore) Sort(CompareFuncVar *glib.CompareDataFunc, UserDataVar uintptr) {
 
-	xListStoreSort(x.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
+	CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+	var CompareFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(CompareFuncVarPtr); ok {
+		CompareFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+			cbFn := *CompareFuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		CompareFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+	}
+
+	xListStoreSort(x.GoPointer(), CompareFuncVarRef, UserDataVar)
 
 }
 

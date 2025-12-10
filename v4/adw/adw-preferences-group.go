@@ -113,7 +113,35 @@ var xPreferencesGroupBindModel func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // See [method@Gtk.ListBox.bind_model].
 func (x *PreferencesGroup) BindModel(ModelVar gio.ListModel, CreateRowFuncVar *gtk.ListBoxCreateWidgetFunc, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) {
 
-	xPreferencesGroupBindModel(x.GoPointer(), ModelVar.GoPointer(), glib.NewCallbackNullable(CreateRowFuncVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	var CreateRowFuncVarRef uintptr
+	if CreateRowFuncVar != nil {
+		CreateRowFuncVarPtr := uintptr(unsafe.Pointer(CreateRowFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CreateRowFuncVarPtr); ok {
+			CreateRowFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) *Widget {
+				cbFn := *CreateRowFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CreateRowFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CreateRowFuncVarPtr, CreateRowFuncVarRef)
+		}
+	}
+
+	UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+	var UserDataFreeFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+		UserDataFreeFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *UserDataFreeFuncVar
+			cbFn(arg0)
+		}
+		UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+	}
+
+	xPreferencesGroupBindModel(x.GoPointer(), ModelVar.GoPointer(), CreateRowFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
 
 }
 

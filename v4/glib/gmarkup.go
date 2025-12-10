@@ -38,7 +38,20 @@ var xNewMarkupParseContext func(*MarkupParser, MarkupParseFlags, uintptr, uintpt
 // free it and create a new parse context).
 func NewMarkupParseContext(ParserVar *MarkupParser, FlagsVar MarkupParseFlags, UserDataVar uintptr, UserDataDnotifyVar *DestroyNotify) *MarkupParseContext {
 
-	cret := xNewMarkupParseContext(ParserVar, FlagsVar, UserDataVar, NewCallback(UserDataDnotifyVar))
+	UserDataDnotifyVarPtr := uintptr(unsafe.Pointer(UserDataDnotifyVar))
+	var UserDataDnotifyVarRef uintptr
+	if cbRefPtr, ok := GetCallback(UserDataDnotifyVarPtr); ok {
+		UserDataDnotifyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *UserDataDnotifyVar
+			cbFn(arg0)
+		}
+		UserDataDnotifyVarRef = purego.NewCallback(fcb)
+		SaveCallback(UserDataDnotifyVarPtr, UserDataDnotifyVarRef)
+	}
+
+	cret := xNewMarkupParseContext(ParserVar, FlagsVar, UserDataVar, UserDataDnotifyVarRef)
 	return cret
 }
 

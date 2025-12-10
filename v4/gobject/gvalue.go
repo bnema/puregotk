@@ -848,7 +848,20 @@ var xValueRegisterTransformFunc func(types.GType, types.GType, uintptr)
 // @dest_type will be replaced.
 func ValueRegisterTransformFunc(SrcTypeVar types.GType, DestTypeVar types.GType, TransformFuncVar *ValueTransform) {
 
-	xValueRegisterTransformFunc(SrcTypeVar, DestTypeVar, glib.NewCallback(TransformFuncVar))
+	TransformFuncVarPtr := uintptr(unsafe.Pointer(TransformFuncVar))
+	var TransformFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(TransformFuncVarPtr); ok {
+		TransformFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 *Value, arg1 *Value) {
+			cbFn := *TransformFuncVar
+			cbFn(arg0, arg1)
+		}
+		TransformFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(TransformFuncVarPtr, TransformFuncVarRef)
+	}
+
+	xValueRegisterTransformFunc(SrcTypeVar, DestTypeVar, TransformFuncVarRef)
 
 }
 

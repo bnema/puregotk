@@ -400,7 +400,35 @@ var xIOSchedulerJobSendToMainloop func(uintptr, uintptr, uintptr, uintptr) bool
 // blocking the I/O job).
 func (x *IOSchedulerJob) SendToMainloop(FuncVar *glib.SourceFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) bool {
 
-	cret := xIOSchedulerJobSendToMainloop(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) bool {
+			cbFn := *FuncVar
+			return cbFn(arg0)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	cret := xIOSchedulerJobSendToMainloop(x.GoPointer(), FuncVarRef, UserDataVar, NotifyVarRef)
 	return cret
 }
 
@@ -417,7 +445,35 @@ var xIOSchedulerJobSendToMainloopAsync func(uintptr, uintptr, uintptr, uintptr)
 // g_io_scheduler_push_job() or by using refcounting for @user_data.
 func (x *IOSchedulerJob) SendToMainloopAsync(FuncVar *glib.SourceFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) {
 
-	xIOSchedulerJobSendToMainloopAsync(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar))
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) bool {
+			cbFn := *FuncVar
+			return cbFn(arg0)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	xIOSchedulerJobSendToMainloopAsync(x.GoPointer(), FuncVarRef, UserDataVar, NotifyVarRef)
 
 }
 

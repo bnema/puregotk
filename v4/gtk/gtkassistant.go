@@ -360,7 +360,35 @@ var xAssistantSetForwardPageFunc func(uintptr, uintptr, uintptr, uintptr)
 // next visible page.
 func (x *Assistant) SetForwardPageFunc(PageFuncVar *AssistantPageFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xAssistantSetForwardPageFunc(x.GoPointer(), glib.NewCallbackNullable(PageFuncVar), DataVar, glib.NewCallback(DestroyVar))
+	var PageFuncVarRef uintptr
+	if PageFuncVar != nil {
+		PageFuncVarPtr := uintptr(unsafe.Pointer(PageFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(PageFuncVarPtr); ok {
+			PageFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 int, arg1 uintptr) int {
+				cbFn := *PageFuncVar
+				return cbFn(arg0, arg1)
+			}
+			PageFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(PageFuncVarPtr, PageFuncVarRef)
+		}
+	}
+
+	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+	var DestroyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+		DestroyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DestroyVar
+			cbFn(arg0)
+		}
+		DestroyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+	}
+
+	xAssistantSetForwardPageFunc(x.GoPointer(), PageFuncVarRef, DataVar, DestroyVarRef)
 
 }
 

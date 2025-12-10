@@ -1519,7 +1519,22 @@ var xAppInfoGetDefaultForTypeAsync func(string, bool, uintptr, uintptr, uintptr)
 // type.
 func AppInfoGetDefaultForTypeAsync(ContentTypeVar string, MustSupportUrisVar bool, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xAppInfoGetDefaultForTypeAsync(ContentTypeVar, MustSupportUrisVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xAppInfoGetDefaultForTypeAsync(ContentTypeVar, MustSupportUrisVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1575,7 +1590,22 @@ var xAppInfoGetDefaultForUriSchemeAsync func(string, uintptr, uintptr, uintptr)
 // `ftp` or `sip`.
 func AppInfoGetDefaultForUriSchemeAsync(UriSchemeVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xAppInfoGetDefaultForUriSchemeAsync(UriSchemeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xAppInfoGetDefaultForUriSchemeAsync(UriSchemeVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1663,7 +1693,22 @@ var xAppInfoLaunchDefaultForUriAsync func(string, uintptr, uintptr, uintptr, uin
 // in receiving error information from their activation.
 func AppInfoLaunchDefaultForUriAsync(UriVar string, ContextVar *AppLaunchContext, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xAppInfoLaunchDefaultForUriAsync(UriVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xAppInfoLaunchDefaultForUriAsync(UriVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

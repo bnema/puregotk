@@ -305,7 +305,22 @@ var xDBusProxyCall func(uintptr, string, *glib.Variant, DBusCallFlags, int, uint
 // the %G_DBUS_MESSAGE_FLAGS_NO_REPLY_EXPECTED flag set.
 func (x *DBusProxy) Call(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusProxyCall(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusProxyCall(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -379,7 +394,22 @@ var xDBusProxyCallWithUnixFdList func(uintptr, string, *glib.Variant, DBusCallFl
 // This method is only available on UNIX.
 func (x *DBusProxy) CallWithUnixFdList(MethodNameVar string, ParametersVar *glib.Variant, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusProxyCallWithUnixFdList(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusProxyCallWithUnixFdList(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1024,7 +1054,22 @@ var xDBusProxyNew func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, stri
 // #GDBusProxy is used in this [example][class@Gio.DBusProxy#a-watch-proxy-example].
 func DBusProxyNew(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusProxyNew(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusProxyNew(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1035,7 +1080,22 @@ var xDBusProxyNewForBus func(BusType, DBusProxyFlags, *DBusInterfaceInfo, string
 // #GDBusProxy is used in this [example][class@Gio.DBusProxy#a-watch-proxy-example].
 func DBusProxyNewForBus(BusTypeVar BusType, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusProxyNewForBus(BusTypeVar, FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusProxyNewForBus(BusTypeVar, FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

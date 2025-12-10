@@ -114,7 +114,22 @@ var xClipboardReadAsync func(uintptr, []string, int, uintptr, uintptr, uintptr)
 // to fulfill the request, preferring the ones listed first.
 func (x *Clipboard) ReadAsync(MimeTypesVar []string, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xClipboardReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xClipboardReadAsync(x.GoPointer(), MimeTypesVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -150,7 +165,22 @@ var xClipboardReadTextAsync func(uintptr, uintptr, uintptr, uintptr)
 // need more control over the operation.
 func (x *Clipboard) ReadTextAsync(CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xClipboardReadTextAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xClipboardReadTextAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -179,7 +209,22 @@ var xClipboardReadTextureAsync func(uintptr, uintptr, uintptr, uintptr)
 // need more control over the operation.
 func (x *Clipboard) ReadTextureAsync(CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xClipboardReadTextureAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xClipboardReadTextureAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -216,7 +261,22 @@ var xClipboardReadValueAsync func(uintptr, types.GType, int, uintptr, uintptr, u
 // [func@content_deserialize_async] to convert the clipboard's data.
 func (x *Clipboard) ReadValueAsync(TypeVar types.GType, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xClipboardReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xClipboardReadValueAsync(x.GoPointer(), TypeVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -327,7 +387,22 @@ var xClipboardStoreAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // is shut down, so you likely don't need to call it.
 func (x *Clipboard) StoreAsync(IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xClipboardStoreAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xClipboardStoreAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

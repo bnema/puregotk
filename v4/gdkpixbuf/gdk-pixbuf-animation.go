@@ -588,7 +588,22 @@ var xPixbufAnimationNewFromStreamAsync func(uintptr, uintptr, uintptr, uintptr)
 // result of the operation.
 func PixbufAnimationNewFromStreamAsync(StreamVar *gio.InputStream, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xPixbufAnimationNewFromStreamAsync(StreamVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xPixbufAnimationNewFromStreamAsync(StreamVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

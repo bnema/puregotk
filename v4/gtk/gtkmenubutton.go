@@ -347,7 +347,37 @@ var xMenuButtonSetCreatePopupFunc func(uintptr, uintptr, uintptr, uintptr)
 // @menu_button. Instead, this can be done manually in @func.
 func (x *MenuButton) SetCreatePopupFunc(FuncVar *MenuButtonCreatePopupFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
 
-	xMenuButtonSetCreatePopupFunc(x.GoPointer(), glib.NewCallbackNullable(FuncVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	var DestroyNotifyVarRef uintptr
+	if DestroyNotifyVar != nil {
+		DestroyNotifyVarPtr := uintptr(unsafe.Pointer(DestroyNotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyNotifyVarPtr); ok {
+			DestroyNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyNotifyVar
+				cbFn(arg0)
+			}
+			DestroyNotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+		}
+	}
+
+	xMenuButtonSetCreatePopupFunc(x.GoPointer(), FuncVarRef, UserDataVar, DestroyNotifyVarRef)
 
 }
 

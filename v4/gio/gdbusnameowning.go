@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -71,7 +73,67 @@ var xBusOwnName func(BusType, string, BusNameOwnerFlags, uintptr, uintptr, uintp
 // unregister the objects (if any) in @name_lost_handler.
 func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, BusAcquiredHandlerVar *BusAcquiredCallback, NameAcquiredHandlerVar *BusNameAcquiredCallback, NameLostHandlerVar *BusNameLostCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	cret := xBusOwnName(BusTypeVar, NameVar, FlagsVar, glib.NewCallbackNullable(BusAcquiredHandlerVar), glib.NewCallbackNullable(NameAcquiredHandlerVar), glib.NewCallbackNullable(NameLostHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
+	var BusAcquiredHandlerVarRef uintptr
+	if BusAcquiredHandlerVar != nil {
+		BusAcquiredHandlerVarPtr := uintptr(unsafe.Pointer(BusAcquiredHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(BusAcquiredHandlerVarPtr); ok {
+			BusAcquiredHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+				cbFn := *BusAcquiredHandlerVar
+				cbFn(arg0, arg1, arg2)
+			}
+			BusAcquiredHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(BusAcquiredHandlerVarPtr, BusAcquiredHandlerVarRef)
+		}
+	}
+
+	var NameAcquiredHandlerVarRef uintptr
+	if NameAcquiredHandlerVar != nil {
+		NameAcquiredHandlerVarPtr := uintptr(unsafe.Pointer(NameAcquiredHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(NameAcquiredHandlerVarPtr); ok {
+			NameAcquiredHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+				cbFn := *NameAcquiredHandlerVar
+				cbFn(arg0, arg1, arg2)
+			}
+			NameAcquiredHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NameAcquiredHandlerVarPtr, NameAcquiredHandlerVarRef)
+		}
+	}
+
+	var NameLostHandlerVarRef uintptr
+	if NameLostHandlerVar != nil {
+		NameLostHandlerVarPtr := uintptr(unsafe.Pointer(NameLostHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(NameLostHandlerVarPtr); ok {
+			NameLostHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+				cbFn := *NameLostHandlerVar
+				cbFn(arg0, arg1, arg2)
+			}
+			NameLostHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NameLostHandlerVarPtr, NameLostHandlerVarRef)
+		}
+	}
+
+	var UserDataFreeFuncVarRef uintptr
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+		}
+	}
+
+	cret := xBusOwnName(BusTypeVar, NameVar, FlagsVar, BusAcquiredHandlerVarRef, NameAcquiredHandlerVarRef, NameLostHandlerVarRef, UserDataVar, UserDataFreeFuncVarRef)
 	return cret
 }
 
@@ -81,7 +143,52 @@ var xBusOwnNameOnConnection func(uintptr, string, BusNameOwnerFlags, uintptr, ui
 // of a [enum@Gio.BusType].
 func BusOwnNameOnConnection(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameOwnerFlags, NameAcquiredHandlerVar *BusNameAcquiredCallback, NameLostHandlerVar *BusNameLostCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	cret := xBusOwnNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, glib.NewCallbackNullable(NameAcquiredHandlerVar), glib.NewCallbackNullable(NameLostHandlerVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
+	var NameAcquiredHandlerVarRef uintptr
+	if NameAcquiredHandlerVar != nil {
+		NameAcquiredHandlerVarPtr := uintptr(unsafe.Pointer(NameAcquiredHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(NameAcquiredHandlerVarPtr); ok {
+			NameAcquiredHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+				cbFn := *NameAcquiredHandlerVar
+				cbFn(arg0, arg1, arg2)
+			}
+			NameAcquiredHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NameAcquiredHandlerVarPtr, NameAcquiredHandlerVarRef)
+		}
+	}
+
+	var NameLostHandlerVarRef uintptr
+	if NameLostHandlerVar != nil {
+		NameLostHandlerVarPtr := uintptr(unsafe.Pointer(NameLostHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(NameLostHandlerVarPtr); ok {
+			NameLostHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+				cbFn := *NameLostHandlerVar
+				cbFn(arg0, arg1, arg2)
+			}
+			NameLostHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NameLostHandlerVarPtr, NameLostHandlerVarRef)
+		}
+	}
+
+	var UserDataFreeFuncVarRef uintptr
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+		}
+	}
+
+	cret := xBusOwnNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, NameAcquiredHandlerVarRef, NameLostHandlerVarRef, UserDataVar, UserDataFreeFuncVarRef)
 	return cret
 }
 

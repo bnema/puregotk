@@ -352,7 +352,37 @@ var xScaleSetFormatValueFunc func(uintptr, uintptr, uintptr, uintptr)
 // [property@Gtk.Scale:digits] property.
 func (x *Scale) SetFormatValueFunc(FuncVar *ScaleFormatValueFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
 
-	xScaleSetFormatValueFunc(x.GoPointer(), glib.NewCallbackNullable(FuncVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 float64, arg2 uintptr) string {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	var DestroyNotifyVarRef uintptr
+	if DestroyNotifyVar != nil {
+		DestroyNotifyVarPtr := uintptr(unsafe.Pointer(DestroyNotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyNotifyVarPtr); ok {
+			DestroyNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyNotifyVar
+				cbFn(arg0)
+			}
+			DestroyNotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+		}
+	}
+
+	xScaleSetFormatValueFunc(x.GoPointer(), FuncVarRef, UserDataVar, DestroyNotifyVarRef)
 
 }
 

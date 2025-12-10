@@ -240,7 +240,22 @@ var xSocketConnectionConnectAsync func(uintptr, uintptr, uintptr, uintptr, uintp
 // Use g_socket_connection_connect_finish() to retrieve the result.
 func (x *SocketConnection) ConnectAsync(AddressVar *SocketAddress, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSocketConnectionConnectAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xSocketConnectionConnectAsync(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

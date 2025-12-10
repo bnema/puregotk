@@ -6196,7 +6196,22 @@ var xFileNewTmpAsync func(string, int, uintptr, uintptr, uintptr)
 // directory components. If it is %NULL, a default template is used.
 func FileNewTmpAsync(TmplVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xFileNewTmpAsync(TmplVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xFileNewTmpAsync(TmplVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -6210,7 +6225,22 @@ var xFileNewTmpDirAsync func(string, int, uintptr, uintptr, uintptr)
 // directory components. If it is %NULL, a default template is used.
 func FileNewTmpDirAsync(TmplVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xFileNewTmpDirAsync(TmplVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xFileNewTmpDirAsync(TmplVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

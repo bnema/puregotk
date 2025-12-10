@@ -213,7 +213,22 @@ var xNewMemoryInputStreamFromData func([]byte, int, uintptr) uintptr
 func NewMemoryInputStreamFromData(DataVar []byte, LenVar int, DestroyVar *glib.DestroyNotify) *MemoryInputStream {
 	var cls *MemoryInputStream
 
-	cret := xNewMemoryInputStreamFromData(DataVar, LenVar, glib.NewCallbackNullable(DestroyVar))
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	cret := xNewMemoryInputStreamFromData(DataVar, LenVar, DestroyVarRef)
 
 	if cret == 0 {
 		return nil
@@ -237,7 +252,22 @@ var xMemoryInputStreamAddData func(uintptr, []byte, int, uintptr)
 // Appends @data to data that can be read from the input stream
 func (x *MemoryInputStream) AddData(DataVar []byte, LenVar int, DestroyVar *glib.DestroyNotify) {
 
-	xMemoryInputStreamAddData(x.GoPointer(), DataVar, LenVar, glib.NewCallbackNullable(DestroyVar))
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	xMemoryInputStreamAddData(x.GoPointer(), DataVar, LenVar, DestroyVarRef)
 
 }
 

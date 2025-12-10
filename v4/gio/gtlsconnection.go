@@ -483,7 +483,22 @@ var xTlsConnectionHandshakeAsync func(uintptr, int, uintptr, uintptr, uintptr)
 // g_tls_connection_handshake() for more information.
 func (x *TlsConnection) HandshakeAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xTlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xTlsConnectionHandshakeAsync(x.GoPointer(), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

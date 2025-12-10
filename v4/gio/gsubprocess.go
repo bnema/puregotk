@@ -195,7 +195,22 @@ var xSubprocessCommunicateAsync func(uintptr, *glib.Bytes, uintptr, uintptr, uin
 // invocation with g_subprocess_communicate_finish().
 func (x *Subprocess) CommunicateAsync(StdinBufVar *glib.Bytes, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSubprocessCommunicateAsync(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xSubprocessCommunicateAsync(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -237,7 +252,22 @@ var xSubprocessCommunicateUtf8Async func(uintptr, string, uintptr, uintptr, uint
 // invocation with g_subprocess_communicate_utf8_finish().
 func (x *Subprocess) CommunicateUtf8Async(StdinBufVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -483,7 +513,22 @@ var xSubprocessWaitAsync func(uintptr, uintptr, uintptr, uintptr)
 // This is the asynchronous version of g_subprocess_wait().
 func (x *Subprocess) WaitAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSubprocessWaitAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xSubprocessWaitAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -508,7 +553,22 @@ var xSubprocessWaitCheckAsync func(uintptr, uintptr, uintptr, uintptr)
 // This is the asynchronous version of g_subprocess_wait_check().
 func (x *Subprocess) WaitCheckAsync(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xSubprocessWaitCheckAsync(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xSubprocessWaitCheckAsync(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

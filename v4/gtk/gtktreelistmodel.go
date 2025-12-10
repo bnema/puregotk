@@ -66,7 +66,33 @@ var xNewTreeListModel func(uintptr, bool, bool, uintptr, uintptr, uintptr) uintp
 func NewTreeListModel(RootVar gio.ListModel, PassthroughVar bool, AutoexpandVar bool, CreateFuncVar *TreeListModelCreateModelFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *TreeListModel {
 	var cls *TreeListModel
 
-	cret := xNewTreeListModel(RootVar.GoPointer(), PassthroughVar, AutoexpandVar, glib.NewCallback(CreateFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	CreateFuncVarPtr := uintptr(unsafe.Pointer(CreateFuncVar))
+	var CreateFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(CreateFuncVarPtr); ok {
+		CreateFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
+			cbFn := *CreateFuncVar
+			return cbFn(arg0, arg1)
+		}
+		CreateFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(CreateFuncVarPtr, CreateFuncVarRef)
+	}
+
+	UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
+	var UserDestroyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
+		UserDestroyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *UserDestroyVar
+			cbFn(arg0)
+		}
+		UserDestroyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+	}
+
+	cret := xNewTreeListModel(RootVar.GoPointer(), PassthroughVar, AutoexpandVar, CreateFuncVarRef, UserDataVar, UserDestroyVarRef)
 
 	if cret == 0 {
 		return nil

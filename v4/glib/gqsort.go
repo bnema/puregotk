@@ -2,6 +2,8 @@
 package glib
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
@@ -15,7 +17,20 @@ var xQsortWithData func(uintptr, int, uint, uintptr, uintptr)
 // Unlike `qsort()`, this is guaranteed to be a stable sort (since GLib 2.32).
 func QsortWithData(PbaseVar uintptr, TotalElemsVar int, SizeVar uint, CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	xQsortWithData(PbaseVar, TotalElemsVar, SizeVar, NewCallback(CompareFuncVar), UserDataVar)
+	CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+	var CompareFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
+		CompareFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+			cbFn := *CompareFuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		CompareFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+	}
+
+	xQsortWithData(PbaseVar, TotalElemsVar, SizeVar, CompareFuncVarRef, UserDataVar)
 
 }
 
@@ -28,7 +43,20 @@ var xSortArray func([]uintptr, uint, uint, uintptr, uintptr)
 // Unlike `qsort()`, this is guaranteed to be a stable sort.
 func SortArray(ArrayVar []uintptr, NElementsVar uint, ElementSizeVar uint, CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	xSortArray(ArrayVar, NElementsVar, ElementSizeVar, NewCallback(CompareFuncVar), UserDataVar)
+	CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+	var CompareFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
+		CompareFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+			cbFn := *CompareFuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		CompareFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+	}
+
+	xSortArray(ArrayVar, NElementsVar, ElementSizeVar, CompareFuncVarRef, UserDataVar)
 
 }
 

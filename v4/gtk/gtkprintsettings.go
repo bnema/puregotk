@@ -253,7 +253,20 @@ var xPrintSettingsForeach func(uintptr, uintptr, uintptr)
 // Calls @func for each key-value pair of @settings.
 func (x *PrintSettings) Foreach(FuncVar *PrintSettingsFunc, UserDataVar uintptr) {
 
-	xPrintSettingsForeach(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar)
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 string, arg1 string, arg2 uintptr) {
+			cbFn := *FuncVar
+			cbFn(arg0, arg1, arg2)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	xPrintSettingsForeach(x.GoPointer(), FuncVarRef, UserDataVar)
 
 }
 

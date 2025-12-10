@@ -492,7 +492,22 @@ var xFileIOStreamQueryInfoAsync func(uintptr, string, int, uintptr, uintptr, uin
 // g_file_io_stream_query_info().
 func (x *FileIOStream) QueryInfoAsync(AttributesVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xFileIOStreamQueryInfoAsync(x.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xFileIOStreamQueryInfoAsync(x.GoPointer(), AttributesVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

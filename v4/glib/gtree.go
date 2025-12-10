@@ -44,7 +44,20 @@ var xNewTree func(uintptr) *Tree
 // Creates a new #GTree.
 func NewTree(KeyCompareFuncVar *CompareFunc) *Tree {
 
-	cret := xNewTree(NewCallback(KeyCompareFuncVar))
+	KeyCompareFuncVarPtr := uintptr(unsafe.Pointer(KeyCompareFuncVar))
+	var KeyCompareFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(KeyCompareFuncVarPtr); ok {
+		KeyCompareFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr) int {
+			cbFn := *KeyCompareFuncVar
+			return cbFn(arg0, arg1)
+		}
+		KeyCompareFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(KeyCompareFuncVarPtr, KeyCompareFuncVarRef)
+	}
+
+	cret := xNewTree(KeyCompareFuncVarRef)
 	return cret
 }
 
@@ -55,7 +68,46 @@ var xNewTreeFull func(uintptr, uintptr, uintptr, uintptr) *Tree
 // removing the entry from the #GTree.
 func NewTreeFull(KeyCompareFuncVar *CompareDataFunc, KeyCompareDataVar uintptr, KeyDestroyFuncVar *DestroyNotify, ValueDestroyFuncVar *DestroyNotify) *Tree {
 
-	cret := xNewTreeFull(NewCallback(KeyCompareFuncVar), KeyCompareDataVar, NewCallback(KeyDestroyFuncVar), NewCallback(ValueDestroyFuncVar))
+	KeyCompareFuncVarPtr := uintptr(unsafe.Pointer(KeyCompareFuncVar))
+	var KeyCompareFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(KeyCompareFuncVarPtr); ok {
+		KeyCompareFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+			cbFn := *KeyCompareFuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		KeyCompareFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(KeyCompareFuncVarPtr, KeyCompareFuncVarRef)
+	}
+
+	KeyDestroyFuncVarPtr := uintptr(unsafe.Pointer(KeyDestroyFuncVar))
+	var KeyDestroyFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(KeyDestroyFuncVarPtr); ok {
+		KeyDestroyFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *KeyDestroyFuncVar
+			cbFn(arg0)
+		}
+		KeyDestroyFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(KeyDestroyFuncVarPtr, KeyDestroyFuncVarRef)
+	}
+
+	ValueDestroyFuncVarPtr := uintptr(unsafe.Pointer(ValueDestroyFuncVar))
+	var ValueDestroyFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(ValueDestroyFuncVarPtr); ok {
+		ValueDestroyFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *ValueDestroyFuncVar
+			cbFn(arg0)
+		}
+		ValueDestroyFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(ValueDestroyFuncVarPtr, ValueDestroyFuncVarRef)
+	}
+
+	cret := xNewTreeFull(KeyCompareFuncVarRef, KeyCompareDataVar, KeyDestroyFuncVarRef, ValueDestroyFuncVarRef)
 	return cret
 }
 
@@ -65,7 +117,20 @@ var xNewTreeWithData func(uintptr, uintptr) *Tree
 // See g_tree_new() for more details.
 func NewTreeWithData(KeyCompareFuncVar *CompareDataFunc, KeyCompareDataVar uintptr) *Tree {
 
-	cret := xNewTreeWithData(NewCallback(KeyCompareFuncVar), KeyCompareDataVar)
+	KeyCompareFuncVarPtr := uintptr(unsafe.Pointer(KeyCompareFuncVar))
+	var KeyCompareFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(KeyCompareFuncVarPtr); ok {
+		KeyCompareFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+			cbFn := *KeyCompareFuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		KeyCompareFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(KeyCompareFuncVarPtr, KeyCompareFuncVarRef)
+	}
+
+	cret := xNewTreeWithData(KeyCompareFuncVarRef, KeyCompareDataVar)
 	return cret
 }
 
@@ -95,7 +160,20 @@ var xTreeForeach func(uintptr, uintptr, uintptr)
 // the tree, then walk the list and remove each item.
 func (x *Tree) Foreach(FuncVar *TraverseFunc, UserDataVar uintptr) {
 
-	xTreeForeach(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
+			cbFn := *FuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	xTreeForeach(x.GoPointer(), FuncVarRef, UserDataVar)
 
 }
 
@@ -111,7 +189,20 @@ var xTreeForeachNode func(uintptr, uintptr, uintptr)
 // the tree, then walk the list and remove each item.
 func (x *Tree) ForeachNode(FuncVar *TraverseNodeFunc, UserDataVar uintptr) {
 
-	xTreeForeachNode(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 *TreeNode, arg1 uintptr) bool {
+			cbFn := *FuncVar
+			return cbFn(arg0, arg1)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	xTreeForeachNode(x.GoPointer(), FuncVarRef, UserDataVar)
 
 }
 
@@ -317,7 +408,20 @@ var xTreeSearch func(uintptr, uintptr, uintptr) uintptr
 // pairs that have a larger key.
 func (x *Tree) Search(SearchFuncVar *CompareFunc, UserDataVar uintptr) uintptr {
 
-	cret := xTreeSearch(x.GoPointer(), NewCallback(SearchFuncVar), UserDataVar)
+	SearchFuncVarPtr := uintptr(unsafe.Pointer(SearchFuncVar))
+	var SearchFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(SearchFuncVarPtr); ok {
+		SearchFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr) int {
+			cbFn := *SearchFuncVar
+			return cbFn(arg0, arg1)
+		}
+		SearchFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(SearchFuncVarPtr, SearchFuncVarRef)
+	}
+
+	cret := xTreeSearch(x.GoPointer(), SearchFuncVarRef, UserDataVar)
 	return cret
 }
 
@@ -334,7 +438,20 @@ var xTreeSearchNode func(uintptr, uintptr, uintptr) *TreeNode
 // pairs that have a larger key.
 func (x *Tree) SearchNode(SearchFuncVar *CompareFunc, UserDataVar uintptr) *TreeNode {
 
-	cret := xTreeSearchNode(x.GoPointer(), NewCallback(SearchFuncVar), UserDataVar)
+	SearchFuncVarPtr := uintptr(unsafe.Pointer(SearchFuncVar))
+	var SearchFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(SearchFuncVarPtr); ok {
+		SearchFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr) int {
+			cbFn := *SearchFuncVar
+			return cbFn(arg0, arg1)
+		}
+		SearchFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(SearchFuncVarPtr, SearchFuncVarRef)
+	}
+
+	cret := xTreeSearchNode(x.GoPointer(), SearchFuncVarRef, UserDataVar)
 	return cret
 }
 
@@ -355,7 +472,20 @@ var xTreeTraverse func(uintptr, uintptr, TraverseType, uintptr)
 // Calls the given function for each node in the #GTree.
 func (x *Tree) Traverse(TraverseFuncVar *TraverseFunc, TraverseTypeVar TraverseType, UserDataVar uintptr) {
 
-	xTreeTraverse(x.GoPointer(), NewCallback(TraverseFuncVar), TraverseTypeVar, UserDataVar)
+	TraverseFuncVarPtr := uintptr(unsafe.Pointer(TraverseFuncVar))
+	var TraverseFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(TraverseFuncVarPtr); ok {
+		TraverseFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
+			cbFn := *TraverseFuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		TraverseFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(TraverseFuncVarPtr, TraverseFuncVarRef)
+	}
+
+	xTreeTraverse(x.GoPointer(), TraverseFuncVarRef, TraverseTypeVar, UserDataVar)
 
 }
 

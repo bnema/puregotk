@@ -203,7 +203,20 @@ var xClosureAddFinalizeNotifier func(uintptr, uintptr, uintptr)
 // notifiers will be run before the finalize notifiers.
 func (x *Closure) AddFinalizeNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
 
-	xClosureAddFinalizeNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallback(NotifyFuncVar))
+	NotifyFuncVarPtr := uintptr(unsafe.Pointer(NotifyFuncVar))
+	var NotifyFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(NotifyFuncVarPtr); ok {
+		NotifyFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 *Closure) {
+			cbFn := *NotifyFuncVar
+			cbFn(arg0, arg1)
+		}
+		NotifyFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(NotifyFuncVarPtr, NotifyFuncVarRef)
+	}
+
+	xClosureAddFinalizeNotifier(x.GoPointer(), NotifyDataVar, NotifyFuncVarRef)
 
 }
 
@@ -216,7 +229,20 @@ var xClosureAddInvalidateNotifier func(uintptr, uintptr, uintptr)
 // in an unspecified order.
 func (x *Closure) AddInvalidateNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
 
-	xClosureAddInvalidateNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallback(NotifyFuncVar))
+	NotifyFuncVarPtr := uintptr(unsafe.Pointer(NotifyFuncVar))
+	var NotifyFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(NotifyFuncVarPtr); ok {
+		NotifyFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 *Closure) {
+			cbFn := *NotifyFuncVar
+			cbFn(arg0, arg1)
+		}
+		NotifyFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(NotifyFuncVarPtr, NotifyFuncVarRef)
+	}
+
+	xClosureAddInvalidateNotifier(x.GoPointer(), NotifyDataVar, NotifyFuncVarRef)
 
 }
 
@@ -230,7 +256,33 @@ var xClosureAddMarshalGuards func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // example of marshal guards.
 func (x *Closure) AddMarshalGuards(PreMarshalDataVar uintptr, PreMarshalNotifyVar *ClosureNotify, PostMarshalDataVar uintptr, PostMarshalNotifyVar *ClosureNotify) {
 
-	xClosureAddMarshalGuards(x.GoPointer(), PreMarshalDataVar, glib.NewCallback(PreMarshalNotifyVar), PostMarshalDataVar, glib.NewCallback(PostMarshalNotifyVar))
+	PreMarshalNotifyVarPtr := uintptr(unsafe.Pointer(PreMarshalNotifyVar))
+	var PreMarshalNotifyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(PreMarshalNotifyVarPtr); ok {
+		PreMarshalNotifyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 *Closure) {
+			cbFn := *PreMarshalNotifyVar
+			cbFn(arg0, arg1)
+		}
+		PreMarshalNotifyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(PreMarshalNotifyVarPtr, PreMarshalNotifyVarRef)
+	}
+
+	PostMarshalNotifyVarPtr := uintptr(unsafe.Pointer(PostMarshalNotifyVar))
+	var PostMarshalNotifyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(PostMarshalNotifyVarPtr); ok {
+		PostMarshalNotifyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 *Closure) {
+			cbFn := *PostMarshalNotifyVar
+			cbFn(arg0, arg1)
+		}
+		PostMarshalNotifyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(PostMarshalNotifyVarPtr, PostMarshalNotifyVarRef)
+	}
+
+	xClosureAddMarshalGuards(x.GoPointer(), PreMarshalDataVar, PreMarshalNotifyVarRef, PostMarshalDataVar, PostMarshalNotifyVarRef)
 
 }
 
@@ -283,7 +335,20 @@ var xClosureRemoveFinalizeNotifier func(uintptr, uintptr, uintptr)
 // Notice that notifiers are automatically removed after they are run.
 func (x *Closure) RemoveFinalizeNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
 
-	xClosureRemoveFinalizeNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallback(NotifyFuncVar))
+	NotifyFuncVarPtr := uintptr(unsafe.Pointer(NotifyFuncVar))
+	var NotifyFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(NotifyFuncVarPtr); ok {
+		NotifyFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 *Closure) {
+			cbFn := *NotifyFuncVar
+			cbFn(arg0, arg1)
+		}
+		NotifyFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(NotifyFuncVarPtr, NotifyFuncVarRef)
+	}
+
+	xClosureRemoveFinalizeNotifier(x.GoPointer(), NotifyDataVar, NotifyFuncVarRef)
 
 }
 
@@ -294,7 +359,20 @@ var xClosureRemoveInvalidateNotifier func(uintptr, uintptr, uintptr)
 // Notice that notifiers are automatically removed after they are run.
 func (x *Closure) RemoveInvalidateNotifier(NotifyDataVar uintptr, NotifyFuncVar *ClosureNotify) {
 
-	xClosureRemoveInvalidateNotifier(x.GoPointer(), NotifyDataVar, glib.NewCallback(NotifyFuncVar))
+	NotifyFuncVarPtr := uintptr(unsafe.Pointer(NotifyFuncVar))
+	var NotifyFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(NotifyFuncVarPtr); ok {
+		NotifyFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 *Closure) {
+			cbFn := *NotifyFuncVar
+			cbFn(arg0, arg1)
+		}
+		NotifyFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(NotifyFuncVarPtr, NotifyFuncVarRef)
+	}
+
+	xClosureRemoveInvalidateNotifier(x.GoPointer(), NotifyDataVar, NotifyFuncVarRef)
 
 }
 
@@ -312,7 +390,20 @@ var xClosureSetMarshal func(uintptr, uintptr)
 // See also: g_closure_set_meta_marshal()
 func (x *Closure) SetMarshal(MarshalVar *ClosureMarshal) {
 
-	xClosureSetMarshal(x.GoPointer(), glib.NewCallback(MarshalVar))
+	MarshalVarPtr := uintptr(unsafe.Pointer(MarshalVar))
+	var MarshalVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(MarshalVarPtr); ok {
+		MarshalVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 *Closure, arg1 *Value, arg2 uint, arg3 []Value, arg4 uintptr, arg5 uintptr) {
+			cbFn := *MarshalVar
+			cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
+		}
+		MarshalVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(MarshalVarPtr, MarshalVarRef)
+	}
+
+	xClosureSetMarshal(x.GoPointer(), MarshalVarRef)
 
 }
 
@@ -337,7 +428,20 @@ var xClosureSetMetaMarshal func(uintptr, uintptr, uintptr)
 // @marshal_data argument.
 func (x *Closure) SetMetaMarshal(MarshalDataVar uintptr, MetaMarshalVar *ClosureMarshal) {
 
-	xClosureSetMetaMarshal(x.GoPointer(), MarshalDataVar, glib.NewCallback(MetaMarshalVar))
+	MetaMarshalVarPtr := uintptr(unsafe.Pointer(MetaMarshalVar))
+	var MetaMarshalVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(MetaMarshalVarPtr); ok {
+		MetaMarshalVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 *Closure, arg1 *Value, arg2 uint, arg3 []Value, arg4 uintptr, arg5 uintptr) {
+			cbFn := *MetaMarshalVar
+			cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
+		}
+		MetaMarshalVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(MetaMarshalVarPtr, MetaMarshalVarRef)
+	}
+
+	xClosureSetMetaMarshal(x.GoPointer(), MarshalDataVar, MetaMarshalVarRef)
 
 }
 
@@ -467,7 +571,33 @@ var xCclosureNew func(uintptr, uintptr, uintptr) *Closure
 // @destroy_data will be called as a finalize notifier on the #GClosure.
 func CclosureNew(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar *ClosureNotify) *Closure {
 
-	cret := xCclosureNew(glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallback(DestroyDataVar))
+	CallbackFuncVarPtr := uintptr(unsafe.Pointer(CallbackFuncVar))
+	var CallbackFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(CallbackFuncVarPtr); ok {
+		CallbackFuncVarRef = cbRefPtr
+	} else {
+		fcb := func() {
+			cbFn := *CallbackFuncVar
+			cbFn()
+		}
+		CallbackFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
+	}
+
+	DestroyDataVarPtr := uintptr(unsafe.Pointer(DestroyDataVar))
+	var DestroyDataVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyDataVarPtr); ok {
+		DestroyDataVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 *Closure) {
+			cbFn := *DestroyDataVar
+			cbFn(arg0, arg1)
+		}
+		DestroyDataVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyDataVarPtr, DestroyDataVarRef)
+	}
+
+	cret := xCclosureNew(CallbackFuncVarRef, UserDataVar, DestroyDataVarRef)
 	return cret
 }
 
@@ -479,7 +609,33 @@ var xCclosureNewSwap func(uintptr, uintptr, uintptr) *Closure
 // @destroy_data will be called as a finalize notifier on the #GClosure.
 func CclosureNewSwap(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar *ClosureNotify) *Closure {
 
-	cret := xCclosureNewSwap(glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallback(DestroyDataVar))
+	CallbackFuncVarPtr := uintptr(unsafe.Pointer(CallbackFuncVar))
+	var CallbackFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(CallbackFuncVarPtr); ok {
+		CallbackFuncVarRef = cbRefPtr
+	} else {
+		fcb := func() {
+			cbFn := *CallbackFuncVar
+			cbFn()
+		}
+		CallbackFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
+	}
+
+	DestroyDataVarPtr := uintptr(unsafe.Pointer(DestroyDataVar))
+	var DestroyDataVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyDataVarPtr); ok {
+		DestroyDataVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 *Closure) {
+			cbFn := *DestroyDataVar
+			cbFn(arg0, arg1)
+		}
+		DestroyDataVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyDataVarPtr, DestroyDataVarRef)
+	}
+
+	cret := xCclosureNewSwap(CallbackFuncVarRef, UserDataVar, DestroyDataVarRef)
 	return cret
 }
 

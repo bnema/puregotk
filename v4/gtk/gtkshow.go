@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gio"
@@ -29,7 +31,22 @@ var xShowUriFull func(uintptr, string, uint32, uintptr, uintptr, uintptr)
 // necessary for sandbox helpers to parent their dialogs properly.
 func ShowUriFull(ParentVar *Window, UriVar string, TimestampVar uint32, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xShowUriFull(ParentVar.GoPointer(), UriVar, TimestampVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xShowUriFull(ParentVar.GoPointer(), UriVar, TimestampVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

@@ -27,7 +27,22 @@ var xSimpleAsyncReportErrorInIdle func(uintptr, uintptr, uintptr, glib.Quark, in
 // information.
 func SimpleAsyncReportErrorInIdle(ObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, DomainVar glib.Quark, CodeVar int, FormatVar string, varArgs ...interface{}) {
 
-	xSimpleAsyncReportErrorInIdle(ObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xSimpleAsyncReportErrorInIdle(ObjectVar.GoPointer(), CallbackVarRef, UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
 
 }
 
@@ -38,7 +53,22 @@ var xSimpleAsyncReportGerrorInIdle func(uintptr, uintptr, uintptr, *glib.Error)
 // than building a new one.
 func SimpleAsyncReportGerrorInIdle(ObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, ErrorVar *glib.Error) {
 
-	xSimpleAsyncReportGerrorInIdle(ObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, ErrorVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xSimpleAsyncReportGerrorInIdle(ObjectVar.GoPointer(), CallbackVarRef, UserDataVar, ErrorVar)
 
 }
 
@@ -49,7 +79,22 @@ var xSimpleAsyncReportTakeGerrorInIdle func(uintptr, uintptr, uintptr, *glib.Err
 // ownership of @error, so the caller does not have to free it any more.
 func SimpleAsyncReportTakeGerrorInIdle(ObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, ErrorVar *glib.Error) {
 
-	xSimpleAsyncReportTakeGerrorInIdle(ObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, ErrorVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xSimpleAsyncReportTakeGerrorInIdle(ObjectVar.GoPointer(), CallbackVarRef, UserDataVar, ErrorVar)
 
 }
 
@@ -257,7 +302,22 @@ var xNewSimpleAsyncResult func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewSimpleAsyncResult(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, SourceTagVar uintptr) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	cret := xNewSimpleAsyncResult(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, SourceTagVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	cret := xNewSimpleAsyncResult(SourceObjectVar.GoPointer(), CallbackVarRef, UserDataVar, SourceTagVar)
 
 	if cret == 0 {
 		return nil
@@ -273,7 +333,22 @@ var xNewSimpleAsyncResultError func(uintptr, uintptr, uintptr, glib.Quark, int, 
 func NewSimpleAsyncResultError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, DomainVar glib.Quark, CodeVar int, FormatVar string, varArgs ...interface{}) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	cret := xNewSimpleAsyncResultError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	cret := xNewSimpleAsyncResultError(SourceObjectVar.GoPointer(), CallbackVarRef, UserDataVar, DomainVar, CodeVar, FormatVar, varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -289,7 +364,22 @@ var xNewSimpleAsyncResultFromError func(uintptr, uintptr, uintptr, *glib.Error) 
 func NewSimpleAsyncResultFromError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, ErrorVar *glib.Error) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	cret := xNewSimpleAsyncResultFromError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, ErrorVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	cret := xNewSimpleAsyncResultFromError(SourceObjectVar.GoPointer(), CallbackVarRef, UserDataVar, ErrorVar)
 
 	if cret == 0 {
 		return nil
@@ -306,7 +396,22 @@ var xNewSimpleAsyncResultTakeError func(uintptr, uintptr, uintptr, *glib.Error) 
 func NewSimpleAsyncResultTakeError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, UserDataVar uintptr, ErrorVar *glib.Error) *SimpleAsyncResult {
 	var cls *SimpleAsyncResult
 
-	cret := xNewSimpleAsyncResultTakeError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, ErrorVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	cret := xNewSimpleAsyncResultTakeError(SourceObjectVar.GoPointer(), CallbackVarRef, UserDataVar, ErrorVar)
 
 	if cret == 0 {
 		return nil
@@ -411,7 +516,20 @@ var xSimpleAsyncResultRunInThread func(uintptr, uintptr, int, uintptr)
 // is needed to run the job and report its completion.
 func (x *SimpleAsyncResult) RunInThread(FuncVar *SimpleAsyncThreadFunc, IoPriorityVar int, CancellableVar *Cancellable) {
 
-	xSimpleAsyncResultRunInThread(x.GoPointer(), glib.NewCallback(FuncVar), IoPriorityVar, CancellableVar.GoPointer())
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+			cbFn := *FuncVar
+			cbFn(arg0, arg1, arg2)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	xSimpleAsyncResultRunInThread(x.GoPointer(), FuncVarRef, IoPriorityVar, CancellableVar.GoPointer())
 
 }
 
@@ -493,7 +611,20 @@ var xSimpleAsyncResultSetOpResGpointer func(uintptr, uintptr, uintptr)
 // Sets the operation result within the asynchronous result to a pointer.
 func (x *SimpleAsyncResult) SetOpResGpointer(OpResVar uintptr, DestroyOpResVar *glib.DestroyNotify) {
 
-	xSimpleAsyncResultSetOpResGpointer(x.GoPointer(), OpResVar, glib.NewCallback(DestroyOpResVar))
+	DestroyOpResVarPtr := uintptr(unsafe.Pointer(DestroyOpResVar))
+	var DestroyOpResVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyOpResVarPtr); ok {
+		DestroyOpResVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DestroyOpResVar
+			cbFn(arg0)
+		}
+		DestroyOpResVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyOpResVarPtr, DestroyOpResVarRef)
+	}
+
+	xSimpleAsyncResultSetOpResGpointer(x.GoPointer(), OpResVar, DestroyOpResVarRef)
 
 }
 

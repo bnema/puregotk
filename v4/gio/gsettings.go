@@ -793,7 +793,50 @@ var xSettingsBindWithMapping func(uintptr, string, uintptr, string, SettingsBind
 // binding overrides the first one.
 func (x *Settings) BindWithMapping(KeyVar string, ObjectVar *gobject.Object, PropertyVar string, FlagsVar SettingsBindFlags, GetMappingVar *SettingsBindGetMapping, SetMappingVar *SettingsBindSetMapping, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xSettingsBindWithMapping(x.GoPointer(), KeyVar, ObjectVar.GoPointer(), PropertyVar, FlagsVar, glib.NewCallbackNullable(GetMappingVar), glib.NewCallbackNullable(SetMappingVar), UserDataVar, glib.NewCallback(DestroyVar))
+	var GetMappingVarRef uintptr
+	if GetMappingVar != nil {
+		GetMappingVarPtr := uintptr(unsafe.Pointer(GetMappingVar))
+		if cbRefPtr, ok := glib.GetCallback(GetMappingVarPtr); ok {
+			GetMappingVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *gobject.Value, arg1 *glib.Variant, arg2 uintptr) bool {
+				cbFn := *GetMappingVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			GetMappingVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(GetMappingVarPtr, GetMappingVarRef)
+		}
+	}
+
+	var SetMappingVarRef uintptr
+	if SetMappingVar != nil {
+		SetMappingVarPtr := uintptr(unsafe.Pointer(SetMappingVar))
+		if cbRefPtr, ok := glib.GetCallback(SetMappingVarPtr); ok {
+			SetMappingVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *gobject.Value, arg1 *glib.VariantType, arg2 uintptr) *glib.Variant {
+				cbFn := *SetMappingVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			SetMappingVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(SetMappingVarPtr, SetMappingVarRef)
+		}
+	}
+
+	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+	var DestroyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+		DestroyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DestroyVar
+			cbFn(arg0)
+		}
+		DestroyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+	}
+
+	xSettingsBindWithMapping(x.GoPointer(), KeyVar, ObjectVar.GoPointer(), PropertyVar, FlagsVar, GetMappingVarRef, SetMappingVarRef, UserDataVar, DestroyVarRef)
 
 }
 
@@ -1085,7 +1128,20 @@ var xSettingsGetMapped func(uintptr, string, uintptr, uintptr) uintptr
 // just as any other value would be.
 func (x *Settings) GetMapped(KeyVar string, MappingVar *SettingsGetMapping, UserDataVar uintptr) uintptr {
 
-	cret := xSettingsGetMapped(x.GoPointer(), KeyVar, glib.NewCallback(MappingVar), UserDataVar)
+	MappingVarPtr := uintptr(unsafe.Pointer(MappingVar))
+	var MappingVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(MappingVarPtr); ok {
+		MappingVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 *glib.Variant, arg1 *uintptr, arg2 uintptr) bool {
+			cbFn := *MappingVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		MappingVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(MappingVarPtr, MappingVarRef)
+	}
+
+	cret := xSettingsGetMapped(x.GoPointer(), KeyVar, MappingVarRef, UserDataVar)
 	return cret
 }
 

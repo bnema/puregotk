@@ -9,9 +9,10 @@ package {{.PkgName}}
     {{ $HasSignals = true }}
   {{end}}
 {{end}}
-{{ $NeedsUnsafe := or .Records $HasSignals }}
-{{ $NeedsPurego := or .NeedsInit $HasSignals }}
-{{ $AnyImports := or .NeedsInit .Records $HasSignals }}
+{{ $HasCallbacks := or .HasReceiverCallbacks .HasFunctionCallbacks }}
+{{ $NeedsUnsafe := or .Records $HasSignals $HasCallbacks }}
+{{ $NeedsPurego := or .NeedsInit $HasSignals $HasCallbacks }}
+{{ $AnyImports := or .NeedsInit .Records $HasSignals $HasCallbacks }}
 
 {{if $AnyImports}}
 import (
@@ -66,7 +67,39 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
-     {{if .Ret.Value}}cret :={{end}}x{{.Name}}({{convd .Args.API.Call}})
+     {{- /* Generate closure wrappers for callback parameters */}}
+     {{range .Args.Callbacks}}
+     {{if .Nullable -}}
+     var {{.Name}}Ref uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+          if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+               {{.Name}}Ref = cbRefPtr
+          } else {
+               fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+                    cbFn := *{{.Name}}
+                    {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+               }
+               {{.Name}}Ref = purego.NewCallback(fcb)
+               {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+          }
+     }
+     {{- else -}}
+     {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+     var {{.Name}}Ref uintptr
+     if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+          {{.Name}}Ref = cbRefPtr
+     } else {
+          fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+               cbFn := *{{.Name}}
+               {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+          }
+          {{.Name}}Ref = purego.NewCallback(fcb)
+          {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+     }
+     {{- end}}
+     {{end}}
+     {{if .Ret.Value}}cret :={{end}}x{{.Name}}({{convd .Args.API.CallWithRefs}})
      {{.Ret.Fmt $NotGObject}}
 }
 {{end}}
@@ -78,7 +111,39 @@ var x{{$outer.Name}}{{.Name}} func(uintptr {{convc .Args.Pure.Types}}) {{.Ret.Ra
 {{.Doc}}
 func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
-     {{if .Ret.Value}}cret :={{end}}x{{$outer.Name}}{{.Name}}(x.GoPointer() {{convcd .Args.API.Call}})
+     {{- /* Generate closure wrappers for callback parameters */}}
+     {{range .Args.Callbacks}}
+     {{if .Nullable -}}
+     var {{.Name}}Ref uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+          if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+               {{.Name}}Ref = cbRefPtr
+          } else {
+               fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+                    cbFn := *{{.Name}}
+                    {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+               }
+               {{.Name}}Ref = purego.NewCallback(fcb)
+               {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+          }
+     }
+     {{- else -}}
+     {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+     var {{.Name}}Ref uintptr
+     if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+          {{.Name}}Ref = cbRefPtr
+     } else {
+          fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+               cbFn := *{{.Name}}
+               {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+          }
+          {{.Name}}Ref = purego.NewCallback(fcb)
+          {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+     }
+     {{- end}}
+     {{end}}
+     {{if .Ret.Value}}cret :={{end}}x{{$outer.Name}}{{.Name}}(x.GoPointer() {{convcd .Args.API.CallWithRefs}})
      {{.Ret.Fmt $NotGObject}}
 }
 {{end}}
@@ -239,7 +304,39 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
-     {{if .Ret.Value}}cret := {{end}}x{{.Name}}({{convd .Args.API.Call}})
+     {{- /* Generate closure wrappers for callback parameters */}}
+     {{range .Args.Callbacks}}
+     {{if .Nullable -}}
+     var {{.Name}}Ref uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+          if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+               {{.Name}}Ref = cbRefPtr
+          } else {
+               fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+                    cbFn := *{{.Name}}
+                    {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+               }
+               {{.Name}}Ref = purego.NewCallback(fcb)
+               {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+          }
+     }
+     {{- else -}}
+     {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+     var {{.Name}}Ref uintptr
+     if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+          {{.Name}}Ref = cbRefPtr
+     } else {
+          fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+               cbFn := *{{.Name}}
+               {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+          }
+          {{.Name}}Ref = purego.NewCallback(fcb)
+          {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+     }
+     {{- end}}
+     {{end}}
+     {{if .Ret.Value}}cret := {{end}}x{{.Name}}({{convd .Args.API.CallWithRefs}})
      {{.Ret.Fmt $NotGObject}}
 }
 {{end}}
@@ -274,7 +371,39 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
-     {{if .Ret.Value}}cret :={{end}}x{{.Name}}({{convd .Args.API.Call}})
+     {{- /* Generate closure wrappers for callback parameters */}}
+     {{range .Args.Callbacks}}
+     {{if .Nullable -}}
+     var {{.Name}}Ref uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+          if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+               {{.Name}}Ref = cbRefPtr
+          } else {
+               fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+                    cbFn := *{{.Name}}
+                    {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+               }
+               {{.Name}}Ref = purego.NewCallback(fcb)
+               {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+          }
+     }
+     {{- else -}}
+     {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+     var {{.Name}}Ref uintptr
+     if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+          {{.Name}}Ref = cbRefPtr
+     } else {
+          fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+               cbFn := *{{.Name}}
+               {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+          }
+          {{.Name}}Ref = purego.NewCallback(fcb)
+          {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+     }
+     {{- end}}
+     {{end}}
+     {{if .Ret.Value}}cret :={{end}}x{{.Name}}({{convd .Args.API.CallWithRefs}})
      {{.Ret.Fmt $NotGObject}}
 }
 {{end}}
@@ -286,7 +415,39 @@ var x{{$outer.Name}}{{.Name}} func(uintptr {{convc .Args.Pure.Types}}) {{.Ret.Ra
 {{.Doc}}
 func (x *{{$outer.Name}}) {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
-     {{if .Ret.Value}}cret :={{end}}x{{$outer.Name}}{{.Name}}(x.GoPointer() {{convcd .Args.API.Call}})
+     {{- /* Generate closure wrappers for callback parameters */}}
+     {{range .Args.Callbacks}}
+     {{if .Nullable -}}
+     var {{.Name}}Ref uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+          if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+               {{.Name}}Ref = cbRefPtr
+          } else {
+               fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+                    cbFn := *{{.Name}}
+                    {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+               }
+               {{.Name}}Ref = purego.NewCallback(fcb)
+               {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+          }
+     }
+     {{- else -}}
+     {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+     var {{.Name}}Ref uintptr
+     if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+          {{.Name}}Ref = cbRefPtr
+     } else {
+          fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+               cbFn := *{{.Name}}
+               {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+          }
+          {{.Name}}Ref = purego.NewCallback(fcb)
+          {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+     }
+     {{- end}}
+     {{end}}
+     {{if .Ret.Value}}cret :={{end}}x{{$outer.Name}}{{.Name}}(x.GoPointer() {{convcd .Args.API.CallWithRefs}})
      {{.Ret.Fmt $NotGObject}}
 }
 {{end}}
@@ -369,7 +530,39 @@ var x{{.Name}} func({{conv .Args.Pure.Types}}) {{.Ret.Raw}}
 {{.Doc}}
 func {{.Name}}({{conv .Args.API.Full}}) {{.Ret.Return}} {
      {{.Ret.Preamble $NotGLib}}
-     {{if .Ret.Value}}cret := {{end}}x{{.Name}}({{convd .Args.API.Call}})
+     {{- /* Generate closure wrappers for callback parameters */}}
+     {{range .Args.Callbacks}}
+     {{if .Nullable -}}
+     var {{.Name}}Ref uintptr
+     if {{.Name}} != nil {
+          {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+          if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+               {{.Name}}Ref = cbRefPtr
+          } else {
+               fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+                    cbFn := *{{.Name}}
+                    {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+               }
+               {{.Name}}Ref = purego.NewCallback(fcb)
+               {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+          }
+     }
+     {{- else -}}
+     {{.Name}}Ptr := uintptr(unsafe.Pointer({{.Name}}))
+     var {{.Name}}Ref uintptr
+     if cbRefPtr, ok := {{if $NotGLib}}glib.{{end}}GetCallback({{.Name}}Ptr); ok {
+          {{.Name}}Ref = cbRefPtr
+     } else {
+          fcb := func({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}} {{$t}}{{end}}) {{.RetRaw}} {
+               cbFn := *{{.Name}}
+               {{if .RetRaw}}return {{end}}cbFn({{range $i, $t := .PureTypes}}{{if $i}}, {{end}}arg{{$i}}{{end}})
+          }
+          {{.Name}}Ref = purego.NewCallback(fcb)
+          {{if $NotGLib}}glib.{{end}}SaveCallback({{.Name}}Ptr, {{.Name}}Ref)
+     }
+     {{- end}}
+     {{end}}
+     {{if .Ret.Value}}cret := {{end}}x{{.Name}}({{convd .Args.API.CallWithRefs}})
      {{.Ret.Fmt $NotGObject}}
 }
 {{end}}

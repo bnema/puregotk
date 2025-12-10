@@ -279,7 +279,20 @@ var xClearPointer func(uintptr, uintptr)
 // ```
 func ClearPointer(PpVar uintptr, DestroyVar *DestroyNotify) {
 
-	xClearPointer(PpVar, NewCallback(DestroyVar))
+	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+	var DestroyVarRef uintptr
+	if cbRefPtr, ok := GetCallback(DestroyVarPtr); ok {
+		DestroyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DestroyVar
+			cbFn(arg0)
+		}
+		DestroyVarRef = purego.NewCallback(fcb)
+		SaveCallback(DestroyVarPtr, DestroyVarRef)
+	}
+
+	xClearPointer(PpVar, DestroyVarRef)
 
 }
 

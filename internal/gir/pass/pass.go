@@ -423,20 +423,59 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		// as they should only be loaded when there are classes
 		needsInit := (len(functions[fn]) + methods) > 0
 
+		// Check if any receiver method has callback parameters
+		// This is used to conditionally import unsafe and purego
+		hasReceiverCallbacks := false
+		for _, rec := range records[fn] {
+			for _, r := range rec.Receivers {
+				if len(r.Args.Callbacks) > 0 {
+					hasReceiverCallbacks = true
+					break
+				}
+			}
+			if hasReceiverCallbacks {
+				break
+			}
+		}
+		if !hasReceiverCallbacks {
+			for _, cls := range classes[fn] {
+				for _, r := range cls.Receivers {
+					if len(r.Args.Callbacks) > 0 {
+						hasReceiverCallbacks = true
+						break
+					}
+				}
+				if hasReceiverCallbacks {
+					break
+				}
+			}
+		}
+
+		// Check if any standalone function has callback parameters
+		hasFunctionCallbacks := false
+		for _, f := range functions[fn] {
+			if len(f.Args.Callbacks) > 0 {
+				hasFunctionCallbacks = true
+				break
+			}
+		}
+
 		args := types.TemplateArg{
-			PkgName:         pkgName,
-			PkgEnv:          strings.ToUpper(pkgName),
-			PkgConfigName:   pkgConfigName,
-			SharedLibraries: sharedLibraries,
-			NeedsInit:       needsInit,
-			Aliases:         aliases[fn],
-			Callbacks:       callbacks[fn],
-			Records:         records[fn],
-			Enums:           enums[fn],
-			Constants:       constants[fn],
-			Functions:       functions[fn],
-			Interfaces:      interfaces[fn],
-			Classes:         classes[fn],
+			PkgName:              pkgName,
+			PkgEnv:               strings.ToUpper(pkgName),
+			PkgConfigName:        pkgConfigName,
+			SharedLibraries:      sharedLibraries,
+			NeedsInit:            needsInit,
+			HasReceiverCallbacks: hasReceiverCallbacks,
+			HasFunctionCallbacks: hasFunctionCallbacks,
+			Aliases:              aliases[fn],
+			Callbacks:            callbacks[fn],
+			Records:              records[fn],
+			Enums:                enums[fn],
+			Constants:            constants[fn],
+			Functions:            functions[fn],
+			Interfaces:           interfaces[fn],
+			Classes:              classes[fn],
 		}
 
 		os.MkdirAll(fmt.Sprintf(dir+"/%s", pkgName), 0o755)

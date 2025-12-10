@@ -209,7 +209,35 @@ var xListBoxBindModel func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // should be implemented by the model.
 func (x *ListBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *ListBoxCreateWidgetFunc, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) {
 
-	xListBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), glib.NewCallbackNullable(CreateWidgetFuncVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	var CreateWidgetFuncVarRef uintptr
+	if CreateWidgetFuncVar != nil {
+		CreateWidgetFuncVarPtr := uintptr(unsafe.Pointer(CreateWidgetFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CreateWidgetFuncVarPtr); ok {
+			CreateWidgetFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
+				cbFn := *CreateWidgetFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CreateWidgetFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CreateWidgetFuncVarPtr, CreateWidgetFuncVarRef)
+		}
+	}
+
+	UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+	var UserDataFreeFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+		UserDataFreeFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *UserDataFreeFuncVar
+			cbFn(arg0)
+		}
+		UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+	}
+
+	xListBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), CreateWidgetFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
 
 }
 
@@ -475,7 +503,20 @@ var xListBoxSelectedForeach func(uintptr, uintptr, uintptr)
 // Note that the selection cannot be modified from within this function.
 func (x *ListBox) SelectedForeach(FuncVar *ListBoxForeachFunc, DataVar uintptr) {
 
-	xListBoxSelectedForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+			cbFn := *FuncVar
+			cbFn(arg0, arg1, arg2)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	xListBoxSelectedForeach(x.GoPointer(), FuncVarRef, DataVar)
 
 }
 
@@ -524,7 +565,35 @@ var xListBoxSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // (see [method@Gtk.ListBox.bind_model]).
 func (x *ListBox) SetFilterFunc(FilterFuncVar *ListBoxFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xListBoxSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	var FilterFuncVarRef uintptr
+	if FilterFuncVar != nil {
+		FilterFuncVarPtr := uintptr(unsafe.Pointer(FilterFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FilterFuncVarPtr); ok {
+			FilterFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) bool {
+				cbFn := *FilterFuncVar
+				return cbFn(arg0, arg1)
+			}
+			FilterFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FilterFuncVarPtr, FilterFuncVarRef)
+		}
+	}
+
+	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+	var DestroyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+		DestroyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DestroyVar
+			cbFn(arg0)
+		}
+		DestroyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+	}
+
+	xListBoxSetFilterFunc(x.GoPointer(), FilterFuncVarRef, UserDataVar, DestroyVarRef)
 
 }
 
@@ -557,7 +626,35 @@ var xListBoxSetHeaderFunc func(uintptr, uintptr, uintptr, uintptr)
 // [method@Gtk.ListBox.invalidate_headers] is called.
 func (x *ListBox) SetHeaderFunc(UpdateHeaderVar *ListBoxUpdateHeaderFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xListBoxSetHeaderFunc(x.GoPointer(), glib.NewCallbackNullable(UpdateHeaderVar), UserDataVar, glib.NewCallback(DestroyVar))
+	var UpdateHeaderVarRef uintptr
+	if UpdateHeaderVar != nil {
+		UpdateHeaderVarPtr := uintptr(unsafe.Pointer(UpdateHeaderVar))
+		if cbRefPtr, ok := glib.GetCallback(UpdateHeaderVarPtr); ok {
+			UpdateHeaderVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *UpdateHeaderVar
+				cbFn(arg0, arg1, arg2)
+			}
+			UpdateHeaderVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UpdateHeaderVarPtr, UpdateHeaderVarRef)
+		}
+	}
+
+	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+	var DestroyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+		DestroyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DestroyVar
+			cbFn(arg0)
+		}
+		DestroyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+	}
+
+	xListBoxSetHeaderFunc(x.GoPointer(), UpdateHeaderVarRef, UserDataVar, DestroyVarRef)
 
 }
 
@@ -606,7 +703,35 @@ var xListBoxSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // (see [method@Gtk.ListBox.bind_model]).
 func (x *ListBox) SetSortFunc(SortFuncVar *ListBoxSortFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xListBoxSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	var SortFuncVarRef uintptr
+	if SortFuncVar != nil {
+		SortFuncVarPtr := uintptr(unsafe.Pointer(SortFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(SortFuncVarPtr); ok {
+			SortFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *SortFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			SortFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(SortFuncVarPtr, SortFuncVarRef)
+		}
+	}
+
+	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+	var DestroyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+		DestroyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DestroyVar
+			cbFn(arg0)
+		}
+		DestroyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+	}
+
+	xListBoxSetSortFunc(x.GoPointer(), SortFuncVarRef, UserDataVar, DestroyVarRef)
 
 }
 

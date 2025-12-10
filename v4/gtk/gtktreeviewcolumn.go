@@ -523,7 +523,35 @@ var xTreeViewColumnSetCellDataFunc func(uintptr, uintptr, uintptr, uintptr, uint
 // older one.
 func (x *TreeViewColumn) SetCellDataFunc(CellRendererVar *CellRenderer, FuncVar *TreeCellDataFunc, FuncDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xTreeViewColumnSetCellDataFunc(x.GoPointer(), CellRendererVar.GoPointer(), glib.NewCallbackNullable(FuncVar), FuncDataVar, glib.NewCallback(DestroyVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 *TreeIter, arg4 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2, arg3, arg4)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+	var DestroyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+		DestroyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DestroyVar
+			cbFn(arg0)
+		}
+		DestroyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+	}
+
+	xTreeViewColumnSetCellDataFunc(x.GoPointer(), CellRendererVar.GoPointer(), FuncVarRef, FuncDataVar, DestroyVarRef)
 
 }
 

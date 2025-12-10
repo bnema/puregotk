@@ -2,6 +2,8 @@
 package gdkpixbuf
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gio"
@@ -219,7 +221,22 @@ var xNewPixbufFromData func([]byte, Colorspace, bool, int, int, int, int, uintpt
 func NewPixbufFromData(DataVar []byte, ColorspaceVar Colorspace, HasAlphaVar bool, BitsPerSampleVar int, WidthVar int, HeightVar int, RowstrideVar int, DestroyFnVar *PixbufDestroyNotify, DestroyFnDataVar uintptr) *Pixbuf {
 	var cls *Pixbuf
 
-	cret := xNewPixbufFromData(DataVar, ColorspaceVar, HasAlphaVar, BitsPerSampleVar, WidthVar, HeightVar, RowstrideVar, glib.NewCallbackNullable(DestroyFnVar), DestroyFnDataVar)
+	var DestroyFnVarRef uintptr
+	if DestroyFnVar != nil {
+		DestroyFnVarPtr := uintptr(unsafe.Pointer(DestroyFnVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyFnVarPtr); ok {
+			DestroyFnVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 []byte, arg1 uintptr) {
+				cbFn := *DestroyFnVar
+				cbFn(arg0, arg1)
+			}
+			DestroyFnVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyFnVarPtr, DestroyFnVarRef)
+		}
+	}
+
+	cret := xNewPixbufFromData(DataVar, ColorspaceVar, HasAlphaVar, BitsPerSampleVar, WidthVar, HeightVar, RowstrideVar, DestroyFnVarRef, DestroyFnDataVar)
 
 	if cret == 0 {
 		return nil
@@ -1144,7 +1161,20 @@ var xPixbufSaveToCallback func(uintptr, uintptr, uintptr, string, **glib.Error, 
 // See [method@GdkPixbuf.Pixbuf.save] for more details.
 func (x *Pixbuf) SaveToCallback(SaveFuncVar *PixbufSaveFunc, UserDataVar uintptr, TypeVar string, ErrorVar **glib.Error, varArgs ...interface{}) bool {
 
-	cret := xPixbufSaveToCallback(x.GoPointer(), glib.NewCallback(SaveFuncVar), UserDataVar, TypeVar, ErrorVar, varArgs...)
+	SaveFuncVarPtr := uintptr(unsafe.Pointer(SaveFuncVar))
+	var SaveFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(SaveFuncVarPtr); ok {
+		SaveFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 []byte, arg1 uint, arg2 **glib.Error, arg3 uintptr) bool {
+			cbFn := *SaveFuncVar
+			return cbFn(arg0, arg1, arg2, arg3)
+		}
+		SaveFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(SaveFuncVarPtr, SaveFuncVarRef)
+	}
+
+	cret := xPixbufSaveToCallback(x.GoPointer(), SaveFuncVarRef, UserDataVar, TypeVar, ErrorVar, varArgs...)
 	return cret
 }
 
@@ -1161,7 +1191,20 @@ var xPixbufSaveToCallbackv func(uintptr, uintptr, uintptr, string, []string, []s
 func (x *Pixbuf) SaveToCallbackv(SaveFuncVar *PixbufSaveFunc, UserDataVar uintptr, TypeVar string, OptionKeysVar []string, OptionValuesVar []string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xPixbufSaveToCallbackv(x.GoPointer(), glib.NewCallback(SaveFuncVar), UserDataVar, TypeVar, OptionKeysVar, OptionValuesVar, &cerr)
+	SaveFuncVarPtr := uintptr(unsafe.Pointer(SaveFuncVar))
+	var SaveFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(SaveFuncVarPtr); ok {
+		SaveFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 []byte, arg1 uint, arg2 **glib.Error, arg3 uintptr) bool {
+			cbFn := *SaveFuncVar
+			return cbFn(arg0, arg1, arg2, arg3)
+		}
+		SaveFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(SaveFuncVarPtr, SaveFuncVarRef)
+	}
+
+	cret := xPixbufSaveToCallbackv(x.GoPointer(), SaveFuncVarRef, UserDataVar, TypeVar, OptionKeysVar, OptionValuesVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1201,7 +1244,22 @@ var xPixbufSaveToStreamAsync func(uintptr, uintptr, string, uintptr, uintptr, ui
 // the operation.
 func (x *Pixbuf) SaveToStreamAsync(StreamVar *gio.OutputStream, TypeVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr, varArgs ...interface{}) {
 
-	xPixbufSaveToStreamAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar, varArgs...)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xPixbufSaveToStreamAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar, varArgs...)
 
 }
 
@@ -1237,7 +1295,22 @@ var xPixbufSaveToStreamvAsync func(uintptr, uintptr, string, []string, []string,
 // the operation.
 func (x *Pixbuf) SaveToStreamvAsync(StreamVar *gio.OutputStream, TypeVar string, OptionKeysVar []string, OptionValuesVar []string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xPixbufSaveToStreamvAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xPixbufSaveToStreamvAsync(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1627,7 +1700,22 @@ var xPixbufGetFileInfoAsync func(string, uintptr, uintptr, uintptr)
 // get the result of the operation.
 func PixbufGetFileInfoAsync(FilenameVar string, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xPixbufGetFileInfoAsync(FilenameVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xPixbufGetFileInfoAsync(FilenameVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1694,7 +1782,22 @@ var xPixbufNewFromStreamAsync func(uintptr, uintptr, uintptr, uintptr)
 // the operation.
 func PixbufNewFromStreamAsync(StreamVar *gio.InputStream, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xPixbufNewFromStreamAsync(StreamVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xPixbufNewFromStreamAsync(StreamVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1709,7 +1812,22 @@ var xPixbufNewFromStreamAtScaleAsync func(uintptr, int, int, bool, uintptr, uint
 // You can then call gdk_pixbuf_new_from_stream_finish() to get the result of the operation.
 func PixbufNewFromStreamAtScaleAsync(StreamVar *gio.InputStream, WidthVar int, HeightVar int, PreserveAspectRatioVar bool, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xPixbufNewFromStreamAtScaleAsync(StreamVar.GoPointer(), WidthVar, HeightVar, PreserveAspectRatioVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xPixbufNewFromStreamAtScaleAsync(StreamVar.GoPointer(), WidthVar, HeightVar, PreserveAspectRatioVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

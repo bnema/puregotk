@@ -633,7 +633,22 @@ var xNewTask func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewTask(SourceObjectVar *gobject.Object, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, CallbackDataVar uintptr) *Task {
 	var cls *Task
 
-	cret := xNewTask(SourceObjectVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), CallbackDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	cret := xNewTask(SourceObjectVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, CallbackDataVar)
 
 	if cret == 0 {
 		return nil
@@ -658,7 +673,20 @@ var xTaskAttachSource func(uintptr, *glib.Source, uintptr)
 // This takes a reference on @task until @source is destroyed.
 func (x *Task) AttachSource(SourceVar *glib.Source, CallbackVar *glib.SourceFunc) {
 
-	xTaskAttachSource(x.GoPointer(), SourceVar, glib.NewCallback(CallbackVar))
+	CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+	var CallbackVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+		CallbackVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) bool {
+			cbFn := *CallbackVar
+			return cbFn(arg0)
+		}
+		CallbackVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+	}
+
+	xTaskAttachSource(x.GoPointer(), SourceVar, CallbackVarRef)
 
 }
 
@@ -977,7 +1005,22 @@ var xTaskReturnPointer func(uintptr, uintptr, uintptr)
 // reference on it.
 func (x *Task) ReturnPointer(ResultVar uintptr, ResultDestroyVar *glib.DestroyNotify) {
 
-	xTaskReturnPointer(x.GoPointer(), ResultVar, glib.NewCallbackNullable(ResultDestroyVar))
+	var ResultDestroyVarRef uintptr
+	if ResultDestroyVar != nil {
+		ResultDestroyVarPtr := uintptr(unsafe.Pointer(ResultDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(ResultDestroyVarPtr); ok {
+			ResultDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ResultDestroyVar
+				cbFn(arg0)
+			}
+			ResultDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(ResultDestroyVarPtr, ResultDestroyVarRef)
+		}
+	}
+
+	xTaskReturnPointer(x.GoPointer(), ResultVar, ResultDestroyVarRef)
 
 }
 
@@ -1040,7 +1083,20 @@ var xTaskRunInThread func(uintptr, uintptr)
 // g_task_run_in_thread().
 func (x *Task) RunInThread(TaskFuncVar *TaskThreadFunc) {
 
-	xTaskRunInThread(x.GoPointer(), glib.NewCallback(TaskFuncVar))
+	TaskFuncVarPtr := uintptr(unsafe.Pointer(TaskFuncVar))
+	var TaskFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(TaskFuncVarPtr); ok {
+		TaskFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) {
+			cbFn := *TaskFuncVar
+			cbFn(arg0, arg1, arg2, arg3)
+		}
+		TaskFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(TaskFuncVarPtr, TaskFuncVarRef)
+	}
+
+	xTaskRunInThread(x.GoPointer(), TaskFuncVarRef)
 
 }
 
@@ -1064,7 +1120,20 @@ var xTaskRunInThreadSync func(uintptr, uintptr)
 // limited number of them at a time.
 func (x *Task) RunInThreadSync(TaskFuncVar *TaskThreadFunc) {
 
-	xTaskRunInThreadSync(x.GoPointer(), glib.NewCallback(TaskFuncVar))
+	TaskFuncVarPtr := uintptr(unsafe.Pointer(TaskFuncVar))
+	var TaskFuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(TaskFuncVarPtr); ok {
+		TaskFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) {
+			cbFn := *TaskFuncVar
+			cbFn(arg0, arg1, arg2, arg3)
+		}
+		TaskFuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(TaskFuncVarPtr, TaskFuncVarRef)
+	}
+
+	xTaskRunInThreadSync(x.GoPointer(), TaskFuncVarRef)
 
 }
 
@@ -1197,7 +1266,22 @@ var xTaskSetTaskData func(uintptr, uintptr, uintptr)
 // Sets @task's task data (freeing the existing task data, if any).
 func (x *Task) SetTaskData(TaskDataVar uintptr, TaskDataDestroyVar *glib.DestroyNotify) {
 
-	xTaskSetTaskData(x.GoPointer(), TaskDataVar, glib.NewCallbackNullable(TaskDataDestroyVar))
+	var TaskDataDestroyVarRef uintptr
+	if TaskDataDestroyVar != nil {
+		TaskDataDestroyVarPtr := uintptr(unsafe.Pointer(TaskDataDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(TaskDataDestroyVarPtr); ok {
+			TaskDataDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *TaskDataDestroyVar
+				cbFn(arg0)
+			}
+			TaskDataDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(TaskDataDestroyVarPtr, TaskDataDestroyVarRef)
+		}
+	}
+
+	xTaskSetTaskData(x.GoPointer(), TaskDataVar, TaskDataDestroyVarRef)
 
 }
 
@@ -1296,7 +1380,22 @@ var xTaskReportError func(uintptr, uintptr, uintptr, uintptr, *glib.Error)
 // See also g_task_report_new_error().
 func TaskReportError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, CallbackDataVar uintptr, SourceTagVar uintptr, ErrorVar *glib.Error) {
 
-	xTaskReportError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), CallbackDataVar, SourceTagVar, ErrorVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xTaskReportError(SourceObjectVar.GoPointer(), CallbackVarRef, CallbackDataVar, SourceTagVar, ErrorVar)
 
 }
 
@@ -1313,7 +1412,22 @@ var xTaskReportNewError func(uintptr, uintptr, uintptr, uintptr, glib.Quark, int
 // See also g_task_report_error().
 func TaskReportNewError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCallback, CallbackDataVar uintptr, SourceTagVar uintptr, DomainVar glib.Quark, CodeVar int, FormatVar string, varArgs ...interface{}) {
 
-	xTaskReportNewError(SourceObjectVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), CallbackDataVar, SourceTagVar, DomainVar, CodeVar, FormatVar, varArgs...)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xTaskReportNewError(SourceObjectVar.GoPointer(), CallbackVarRef, CallbackDataVar, SourceTagVar, DomainVar, CodeVar, FormatVar, varArgs...)
 
 }
 

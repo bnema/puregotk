@@ -536,7 +536,20 @@ var xIconViewSelectedForeach func(uintptr, uintptr, uintptr)
 // selection cannot be modified from within this function.
 func (x *IconView) SelectedForeach(FuncVar *IconViewForeachFunc, DataVar uintptr) {
 
-	xIconViewSelectedForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 *TreePath, arg2 uintptr) {
+			cbFn := *FuncVar
+			cbFn(arg0, arg1, arg2)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	xIconViewSelectedForeach(x.GoPointer(), FuncVarRef, DataVar)
 
 }
 

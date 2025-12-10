@@ -76,7 +76,22 @@ var xFontDialogChooseFace func(uintptr, uintptr, uintptr, uintptr, uintptr, uint
 // A font face represents a font family and style, but no specific font size.
 func (x *FontDialog) ChooseFace(ParentVar *Window, InitialValueVar *pango.FontFace, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xFontDialogChooseFace(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xFontDialogChooseFace(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -111,7 +126,22 @@ var xFontDialogChooseFamily func(uintptr, uintptr, uintptr, uintptr, uintptr, ui
 // The font chooser dialog will be set up for selecting a font family.
 func (x *FontDialog) ChooseFamily(ParentVar *Window, InitialValueVar *pango.FontFamily, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xFontDialogChooseFamily(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xFontDialogChooseFamily(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -149,7 +179,22 @@ var xFontDialogChooseFont func(uintptr, uintptr, *pango.FontDescription, uintptr
 // use [method@Gtk.FontDialog.choose_font_and_features] instead.
 func (x *FontDialog) ChooseFont(ParentVar *Window, InitialValueVar *pango.FontDescription, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xFontDialogChooseFont(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xFontDialogChooseFont(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -164,7 +209,22 @@ var xFontDialogChooseFontAndFeatures func(uintptr, uintptr, *pango.FontDescripti
 // enabling glyph variants or ligatures.
 func (x *FontDialog) ChooseFontAndFeatures(ParentVar *Window, InitialValueVar *pango.FontDescription, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xFontDialogChooseFontAndFeatures(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xFontDialogChooseFontAndFeatures(x.GoPointer(), ParentVar.GoPointer(), InitialValueVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

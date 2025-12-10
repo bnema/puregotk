@@ -172,7 +172,20 @@ var xThreadPoolSetSortFunction func(uintptr, uintptr, uintptr)
 // created.
 func (x *ThreadPool) SetSortFunction(FuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	xThreadPoolSetSortFunction(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+			cbFn := *FuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	xThreadPoolSetSortFunction(x.GoPointer(), FuncVarRef, UserDataVar)
 
 }
 

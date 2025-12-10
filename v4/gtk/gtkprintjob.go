@@ -232,7 +232,33 @@ var xPrintJobSend func(uintptr, uintptr, uintptr, uintptr)
 // Sends the print job off to the printer.
 func (x *PrintJob) Send(CallbackVar *PrintJobCompleteFunc, UserDataVar uintptr, DnotifyVar *glib.DestroyNotify) {
 
-	xPrintJobSend(x.GoPointer(), glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(DnotifyVar))
+	CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+	var CallbackVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+		CallbackVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr, arg2 *glib.Error) {
+			cbFn := *CallbackVar
+			cbFn(arg0, arg1, arg2)
+		}
+		CallbackVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+	}
+
+	DnotifyVarPtr := uintptr(unsafe.Pointer(DnotifyVar))
+	var DnotifyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DnotifyVarPtr); ok {
+		DnotifyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DnotifyVar
+			cbFn(arg0)
+		}
+		DnotifyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DnotifyVarPtr, DnotifyVarRef)
+	}
+
+	xPrintJobSend(x.GoPointer(), CallbackVarRef, UserDataVar, DnotifyVarRef)
 
 }
 

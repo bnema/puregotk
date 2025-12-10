@@ -131,7 +131,20 @@ var xCompletionSetCompare func(uintptr, uintptr)
 // comparison function is strncmp().
 func (x *Completion) SetCompare(StrncmpFuncVar *CompletionStrncmpFunc) {
 
-	xCompletionSetCompare(x.GoPointer(), NewCallback(StrncmpFuncVar))
+	StrncmpFuncVarPtr := uintptr(unsafe.Pointer(StrncmpFuncVar))
+	var StrncmpFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(StrncmpFuncVarPtr); ok {
+		StrncmpFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 string, arg1 string, arg2 uint) int {
+			cbFn := *StrncmpFuncVar
+			return cbFn(arg0, arg1, arg2)
+		}
+		StrncmpFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(StrncmpFuncVarPtr, StrncmpFuncVarRef)
+	}
+
+	xCompletionSetCompare(x.GoPointer(), StrncmpFuncVarRef)
 
 }
 

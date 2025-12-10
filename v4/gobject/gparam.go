@@ -770,7 +770,22 @@ var xParamSpecSetQdataFull func(uintptr, glib.Quark, uintptr, uintptr)
 // g_param_spec_set_qdata() with the same @quark.
 func (x *ParamSpec) SetQdataFull(QuarkVar glib.Quark, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xParamSpecSetQdataFull(x.GoPointer(), QuarkVar, DataVar, glib.NewCallbackNullable(DestroyVar))
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	xParamSpecSetQdataFull(x.GoPointer(), QuarkVar, DataVar, DestroyVarRef)
 
 }
 

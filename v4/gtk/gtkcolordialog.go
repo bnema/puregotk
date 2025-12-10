@@ -72,7 +72,22 @@ var xColorDialogChooseRgba func(uintptr, uintptr, *gdk.RGBA, uintptr, uintptr, u
 // Presents a color chooser dialog to the user.
 func (x *ColorDialog) ChooseRgba(ParentVar *Window, InitialColorVar *gdk.RGBA, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xColorDialogChooseRgba(x.GoPointer(), ParentVar.GoPointer(), InitialColorVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xColorDialogChooseRgba(x.GoPointer(), ParentVar.GoPointer(), InitialColorVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

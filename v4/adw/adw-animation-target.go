@@ -92,7 +92,33 @@ var xNewCallbackAnimationTarget func(uintptr, uintptr, uintptr) uintptr
 func NewCallbackAnimationTarget(CallbackVar *AnimationTargetFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) *CallbackAnimationTarget {
 	var cls *CallbackAnimationTarget
 
-	cret := xNewCallbackAnimationTarget(glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallback(DestroyVar))
+	CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+	var CallbackVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+		CallbackVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 float64, arg1 uintptr) {
+			cbFn := *CallbackVar
+			cbFn(arg0, arg1)
+		}
+		CallbackVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+	}
+
+	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+	var DestroyVarRef uintptr
+	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+		DestroyVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr) {
+			cbFn := *DestroyVar
+			cbFn(arg0)
+		}
+		DestroyVarRef = purego.NewCallback(fcb)
+		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+	}
+
+	cret := xNewCallbackAnimationTarget(CallbackVarRef, UserDataVar, DestroyVarRef)
 
 	if cret == 0 {
 		return nil

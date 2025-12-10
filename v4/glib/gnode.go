@@ -67,7 +67,20 @@ var xNodeChildrenForeach func(uintptr, TraverseFlags, uintptr, uintptr)
 // that would modify the structure of the tree.
 func (x *Node) ChildrenForeach(FlagsVar TraverseFlags, FuncVar *NodeForeachFunc, DataVar uintptr) {
 
-	xNodeChildrenForeach(x.GoPointer(), FlagsVar, NewCallback(FuncVar), DataVar)
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 *Node, arg1 uintptr) {
+			cbFn := *FuncVar
+			cbFn(arg0, arg1)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	xNodeChildrenForeach(x.GoPointer(), FlagsVar, FuncVarRef, DataVar)
 
 }
 
@@ -86,7 +99,20 @@ var xNodeCopyDeep func(uintptr, uintptr, uintptr) *Node
 // Recursively copies a #GNode and its data.
 func (x *Node) CopyDeep(CopyFuncVar *CopyFunc, DataVar uintptr) *Node {
 
-	cret := xNodeCopyDeep(x.GoPointer(), NewCallback(CopyFuncVar), DataVar)
+	CopyFuncVarPtr := uintptr(unsafe.Pointer(CopyFuncVar))
+	var CopyFuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(CopyFuncVarPtr); ok {
+		CopyFuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
+			cbFn := *CopyFuncVar
+			return cbFn(arg0, arg1)
+		}
+		CopyFuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(CopyFuncVarPtr, CopyFuncVarRef)
+	}
+
+	cret := xNodeCopyDeep(x.GoPointer(), CopyFuncVarRef, DataVar)
 	return cret
 }
 
@@ -275,7 +301,20 @@ var xNodeTraverse func(uintptr, TraverseType, TraverseFlags, int, uintptr, uintp
 // @func must not do anything that would modify the structure of the tree.
 func (x *Node) Traverse(OrderVar TraverseType, FlagsVar TraverseFlags, MaxDepthVar int, FuncVar *NodeTraverseFunc, DataVar uintptr) {
 
-	xNodeTraverse(x.GoPointer(), OrderVar, FlagsVar, MaxDepthVar, NewCallback(FuncVar), DataVar)
+	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+	var FuncVarRef uintptr
+	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+		FuncVarRef = cbRefPtr
+	} else {
+		fcb := func(arg0 *Node, arg1 uintptr) bool {
+			cbFn := *FuncVar
+			return cbFn(arg0, arg1)
+		}
+		FuncVarRef = purego.NewCallback(fcb)
+		SaveCallback(FuncVarPtr, FuncVarRef)
+	}
+
+	xNodeTraverse(x.GoPointer(), OrderVar, FlagsVar, MaxDepthVar, FuncVarRef, DataVar)
 
 }
 

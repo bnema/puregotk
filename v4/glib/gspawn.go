@@ -2,6 +2,8 @@
 package glib
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
@@ -156,7 +158,22 @@ var xSpawnAsync func(string, []string, []string, SpawnFlags, uintptr, uintptr, *
 func SpawnAsync(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, ChildPidVar *Pid) (bool, error) {
 	var cerr *Error
 
-	cret := xSpawnAsync(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, ChildPidVar, &cerr)
+	var ChildSetupVarRef uintptr
+	if ChildSetupVar != nil {
+		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
+		if cbRefPtr, ok := GetCallback(ChildSetupVarPtr); ok {
+			ChildSetupVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ChildSetupVar
+				cbFn(arg0)
+			}
+			ChildSetupVarRef = purego.NewCallback(fcb)
+			SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+		}
+	}
+
+	cret := xSpawnAsync(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, ChildPidVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -173,7 +190,22 @@ var xSpawnAsyncWithFds func(string, []string, []string, SpawnFlags, uintptr, uin
 func SpawnAsyncWithFds(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, ChildPidVar *Pid, StdinFdVar int, StdoutFdVar int, StderrFdVar int) (bool, error) {
 	var cerr *Error
 
-	cret := xSpawnAsyncWithFds(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, ChildPidVar, StdinFdVar, StdoutFdVar, StderrFdVar, &cerr)
+	var ChildSetupVarRef uintptr
+	if ChildSetupVar != nil {
+		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
+		if cbRefPtr, ok := GetCallback(ChildSetupVarPtr); ok {
+			ChildSetupVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ChildSetupVar
+				cbFn(arg0)
+			}
+			ChildSetupVarRef = purego.NewCallback(fcb)
+			SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+		}
+	}
+
+	cret := xSpawnAsyncWithFds(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, ChildPidVar, StdinFdVar, StdoutFdVar, StderrFdVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -188,7 +220,22 @@ var xSpawnAsyncWithPipes func(string, []string, []string, SpawnFlags, uintptr, u
 func SpawnAsyncWithPipes(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, ChildPidVar *Pid, StandardInputVar *int, StandardOutputVar *int, StandardErrorVar *int) (bool, error) {
 	var cerr *Error
 
-	cret := xSpawnAsyncWithPipes(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, ChildPidVar, StandardInputVar, StandardOutputVar, StandardErrorVar, &cerr)
+	var ChildSetupVarRef uintptr
+	if ChildSetupVar != nil {
+		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
+		if cbRefPtr, ok := GetCallback(ChildSetupVarPtr); ok {
+			ChildSetupVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ChildSetupVar
+				cbFn(arg0)
+			}
+			ChildSetupVarRef = purego.NewCallback(fcb)
+			SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+		}
+	}
+
+	cret := xSpawnAsyncWithPipes(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, ChildPidVar, StandardInputVar, StandardOutputVar, StandardErrorVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -395,7 +442,22 @@ var xSpawnAsyncWithPipesAndFds func(string, []string, []string, SpawnFlags, uint
 func SpawnAsyncWithPipesAndFds(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, StdinFdVar int, StdoutFdVar int, StderrFdVar int, SourceFdsVar []int, TargetFdsVar []int, NFdsVar uint, ChildPidOutVar *Pid, StdinPipeOutVar *int, StdoutPipeOutVar *int, StderrPipeOutVar *int) (bool, error) {
 	var cerr *Error
 
-	cret := xSpawnAsyncWithPipesAndFds(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, StdinFdVar, StdoutFdVar, StderrFdVar, SourceFdsVar, TargetFdsVar, NFdsVar, ChildPidOutVar, StdinPipeOutVar, StdoutPipeOutVar, StderrPipeOutVar, &cerr)
+	var ChildSetupVarRef uintptr
+	if ChildSetupVar != nil {
+		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
+		if cbRefPtr, ok := GetCallback(ChildSetupVarPtr); ok {
+			ChildSetupVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ChildSetupVar
+				cbFn(arg0)
+			}
+			ChildSetupVarRef = purego.NewCallback(fcb)
+			SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+		}
+	}
+
+	cret := xSpawnAsyncWithPipesAndFds(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, StdinFdVar, StdoutFdVar, StderrFdVar, SourceFdsVar, TargetFdsVar, NFdsVar, ChildPidOutVar, StdinPipeOutVar, StdoutPipeOutVar, StderrPipeOutVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -581,7 +643,22 @@ var xSpawnSync func(string, []string, []string, SpawnFlags, uintptr, uintptr, *[
 func SpawnSync(WorkingDirectoryVar string, ArgvVar []string, EnvpVar []string, FlagsVar SpawnFlags, ChildSetupVar *SpawnChildSetupFunc, UserDataVar uintptr, StandardOutputVar *[]byte, StandardErrorVar *[]byte, WaitStatusVar *int) (bool, error) {
 	var cerr *Error
 
-	cret := xSpawnSync(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, NewCallbackNullable(ChildSetupVar), UserDataVar, StandardOutputVar, StandardErrorVar, WaitStatusVar, &cerr)
+	var ChildSetupVarRef uintptr
+	if ChildSetupVar != nil {
+		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
+		if cbRefPtr, ok := GetCallback(ChildSetupVarPtr); ok {
+			ChildSetupVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ChildSetupVar
+				cbFn(arg0)
+			}
+			ChildSetupVarRef = purego.NewCallback(fcb)
+			SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+		}
+	}
+
+	cret := xSpawnSync(WorkingDirectoryVar, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, StandardOutputVar, StandardErrorVar, WaitStatusVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
