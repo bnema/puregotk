@@ -50,6 +50,59 @@ type funcArgsTemplate struct {
 	Callbacks []CallbackParam
 }
 
+func qualifyCallbackType(t string, callbackNS string, currentNS string) string {
+	if t == "" || callbackNS == "" || strings.EqualFold(callbackNS, currentNS) {
+		return t
+	}
+
+	if strings.Contains(t, ".") {
+		return t
+	}
+
+	ptrPrefix := ""
+	base := t
+	for strings.HasPrefix(base, "*") {
+		ptrPrefix += "*"
+		base = strings.TrimPrefix(base, "*")
+	}
+
+	slicePrefix := ""
+	for strings.HasPrefix(base, "[]") {
+		slicePrefix += "[]"
+		base = strings.TrimPrefix(base, "[]")
+	}
+
+	arrayPrefix := ""
+	for strings.HasPrefix(base, "[") {
+		end := strings.Index(base, "]")
+		if end == -1 {
+			break
+		}
+		arrayPrefix += base[:end+1]
+		base = base[end+1:]
+	}
+
+	switch base {
+	case "bool", "byte", "complex64", "complex128", "error", "float32", "float64", "int", "int8", "int16", "int32", "int64", "rune", "string", "uint", "uint8", "uint16", "uint32", "uint64", "uintptr":
+		return t
+	}
+
+	if base == "" {
+		return t
+	}
+
+	qualifiedBase := callbackNS + "." + base
+	return ptrPrefix + slicePrefix + arrayPrefix + qualifiedBase
+}
+
+func qualifyCallbackTypes(types []string, callbackNS string, currentNS string) []string {
+	qualified := make([]string, len(types))
+	for i, t := range types {
+		qualified[i] = qualifyCallbackType(t, callbackNS, currentNS)
+	}
+	return qualified
+}
+
 func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool) {
 	c := n
 	cRef := n // For CallWithRefs, defaults to same as Call
@@ -211,19 +264,30 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 	// This enables the template to generate proper closure wrapping
 	if kind == CallbackType && !isOut {
 		if cb, ok := kinds.GetCallback(lns, originalType); ok {
+			// Determine the callback's namespace from the original type name
+			// e.g., "gio.AsyncReadyCallback" -> "gio", "AsyncReadyCallback" -> lns
+			cbNs := lns
+			if parts := strings.Split(originalType, "."); len(parts) > 1 {
+				cbNs = parts[0]
+			}
+
 			// Get the callback's pure argument types and return type
-			cbArgs := cb.Parameters.Template(lns, "", kinds, cb.Throws)
+			// Use cbNs (callback's namespace) for proper type lookups
+			cbArgs := cb.Parameters.Template(cbNs, "", kinds, cb.Throws)
 			var retRaw string
 			if cb.ReturnValue != nil {
-				cbRet := cb.ReturnValue.Template(lns, "", kinds, cb.Throws)
+				cbRet := cb.ReturnValue.Template(cbNs, "", kinds, cb.Throws)
 				retRaw = cbRet.Raw
 			}
+
+			qualifiedPureTypes := qualifyCallbackTypes(cbArgs.Pure.Types, cbNs, ns)
+			qualifiedRetRaw := qualifyCallbackType(retRaw, cbNs, ns)
 
 			f.Callbacks = append(f.Callbacks, CallbackParam{
 				Name:      varName,
 				TypeName:  strings.TrimPrefix(goType, "*"),
-				PureTypes: cbArgs.Pure.Types,
-				RetRaw:    retRaw,
+				PureTypes: qualifiedPureTypes,
+				RetRaw:    qualifiedRetRaw,
 				Nullable:  p.Nullable,
 			})
 
