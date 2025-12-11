@@ -187,7 +187,7 @@ func NewCClosureExpression(ValueTypeVar types.GType, MarshalVar *gobject.Closure
 		if cbRefPtr, ok := glib.GetCallback(MarshalVarPtr); ok {
 			MarshalVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 *Closure, arg1 *Value, arg2 uint, arg3 []Value, arg4 uintptr, arg5 uintptr) {
+			fcb := func(arg0 *gobject.Closure, arg1 *gobject.Value, arg2 uint, arg3 []gobject.Value, arg4 uintptr, arg5 uintptr) {
 				cbFn := *MarshalVar
 				cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
 			}
@@ -215,7 +215,7 @@ func NewCClosureExpression(ValueTypeVar types.GType, MarshalVar *gobject.Closure
 		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
 			UserDestroyVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *Closure) {
+			fcb := func(arg0 uintptr, arg1 *gobject.Closure) {
 				cbFn := *UserDestroyVar
 				cbFn(arg0, arg1)
 			}

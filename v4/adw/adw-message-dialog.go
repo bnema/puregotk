@@ -300,7 +300,7 @@ func (x *MessageDialog) Choose(CancellableVar *gio.Cancellable, CallbackVar *gio
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}

@@ -119,7 +119,7 @@ func (x *PreferencesGroup) BindModel(ModelVar gio.ListModel, CreateRowFuncVar *g
 		if cbRefPtr, ok := glib.GetCallback(CreateRowFuncVarPtr); ok {
 			CreateRowFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 uintptr) *Widget {
+			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
 				cbFn := *CreateRowFuncVar
 				return cbFn(arg0, arg1)
 			}

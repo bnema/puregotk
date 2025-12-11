@@ -120,7 +120,7 @@ func (x *Clipboard) ReadAsync(MimeTypesVar []string, IoPriorityVar int, Cancella
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -171,7 +171,7 @@ func (x *Clipboard) ReadTextAsync(CancellableVar *gio.Cancellable, CallbackVar *
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -215,7 +215,7 @@ func (x *Clipboard) ReadTextureAsync(CancellableVar *gio.Cancellable, CallbackVa
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -267,7 +267,7 @@ func (x *Clipboard) ReadValueAsync(TypeVar types.GType, IoPriorityVar int, Cance
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -393,7 +393,7 @@ func (x *Clipboard) StoreAsync(IoPriorityVar int, CancellableVar *gio.Cancellabl
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}

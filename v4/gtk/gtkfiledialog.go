@@ -187,7 +187,7 @@ func (x *FileDialog) Open(ParentVar *Window, CancellableVar *gio.Cancellable, Ca
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -242,7 +242,7 @@ func (x *FileDialog) OpenMultiple(ParentVar *Window, CancellableVar *gio.Cancell
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -300,7 +300,7 @@ func (x *FileDialog) OpenMultipleTextFiles(ParentVar *Window, CancellableVar *gi
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -354,7 +354,7 @@ func (x *FileDialog) OpenTextFile(ParentVar *Window, CancellableVar *gio.Cancell
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -412,7 +412,7 @@ func (x *FileDialog) Save(ParentVar *Window, CancellableVar *gio.Cancellable, Ca
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -467,7 +467,7 @@ func (x *FileDialog) SaveTextFile(ParentVar *Window, CancellableVar *gio.Cancell
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -532,7 +532,7 @@ func (x *FileDialog) SelectFolder(ParentVar *Window, CancellableVar *gio.Cancell
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -588,7 +588,7 @@ func (x *FileDialog) SelectMultipleFolders(ParentVar *Window, CancellableVar *gi
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}

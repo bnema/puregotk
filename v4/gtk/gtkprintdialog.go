@@ -232,7 +232,7 @@ func (x *PrintDialog) Print(ParentVar *Window, SetupVar *PrintSetup, Cancellable
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -259,7 +259,7 @@ func (x *PrintDialog) PrintFile(ParentVar *Window, SetupVar *PrintSetup, FileVar
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -395,7 +395,7 @@ func (x *PrintDialog) Setup(ParentVar *Window, CancellableVar *gio.Cancellable, 
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}

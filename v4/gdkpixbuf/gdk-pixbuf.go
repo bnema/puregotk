@@ -1250,7 +1250,7 @@ func (x *Pixbuf) SaveToStreamAsync(StreamVar *gio.OutputStream, TypeVar string, 
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -1301,7 +1301,7 @@ func (x *Pixbuf) SaveToStreamvAsync(StreamVar *gio.OutputStream, TypeVar string,
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -1706,7 +1706,7 @@ func PixbufGetFileInfoAsync(FilenameVar string, CancellableVar *gio.Cancellable,
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -1788,7 +1788,7 @@ func PixbufNewFromStreamAsync(StreamVar *gio.InputStream, CancellableVar *gio.Ca
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
@@ -1818,7 +1818,7 @@ func PixbufNewFromStreamAtScaleAsync(StreamVar *gio.InputStream, WidthVar int, H
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 *AsyncResult, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *CallbackVar
 				cbFn(arg0, arg1, arg2)
 			}
