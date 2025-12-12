@@ -93,7 +93,31 @@ func AddNamespace(val, ns string) string {
 	if ns == "" || strings.Count(val, ".") >= 1 {
 		return val
 	}
+	// Don't add namespace to Go builtin types
+	if isGoBuiltinType(val) {
+		return val
+	}
 	return PrefixValue(val, ns+".")
+}
+
+// goBuiltinTypes contains Go builtin types that should never be namespace-prefixed
+var goBuiltinTypes = map[string]bool{
+	"bool": true, "byte": true, "complex64": true, "complex128": true,
+	"error": true, "float32": true, "float64": true, "int": true,
+	"int8": true, "int16": true, "int32": true, "int64": true,
+	"rune": true, "string": true, "uint": true, "uint8": true,
+	"uint16": true, "uint32": true, "uint64": true, "uintptr": true,
+}
+
+// isGoBuiltinType checks if the given type (after stripping pointers and slices) is a Go builtin
+func isGoBuiltinType(gotype string) bool {
+	// Strip pointer prefixes
+	baseType := strings.TrimLeft(gotype, "*")
+	// Strip slice prefix
+	baseType = strings.TrimPrefix(baseType, "[]")
+	// Strip any remaining pointers (e.g., *[]byte -> []byte -> byte)
+	baseType = strings.TrimLeft(baseType, "*")
+	return goBuiltinTypes[baseType]
 }
 
 // NormalizeNamespace converts a type to one that always includes a lowercase namespace
@@ -102,6 +126,14 @@ func NormalizeNamespace(ns string, gotype string, strip bool) string {
 	if ns == "" {
 		return ""
 	}
+
+	// Check if this is a Go builtin type before any modifications
+	// Note: gotype here may still have * prefixes which are trimmed below
+	trimmedForCheck := strings.Trim(gotype, "*")
+	if isGoBuiltinType(trimmedForCheck) {
+		return trimmedForCheck
+	}
+
 	gotype = strings.Trim(gotype, "*")
 	splt := strings.Split(gotype, ".")
 	if len(splt) <= 1 {
