@@ -823,17 +823,19 @@ func (x *Settings) BindWithMapping(KeyVar string, ObjectVar *gobject.Object, Pro
 		}
 	}
 
-	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
 	var DestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-		DestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DestroyVar
-			cbFn(arg0)
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 		}
-		DestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 	}
 
 	xSettingsBindWithMapping(x.GoPointer(), KeyVar, ObjectVar.GoPointer(), PropertyVar, FlagsVar, GetMappingVarRef, SetMappingVarRef, UserDataVar, DestroyVarRef)
@@ -1128,17 +1130,19 @@ var xSettingsGetMapped func(uintptr, string, uintptr, uintptr) uintptr
 // just as any other value would be.
 func (x *Settings) GetMapped(KeyVar string, MappingVar *SettingsGetMapping, UserDataVar uintptr) uintptr {
 
-	MappingVarPtr := uintptr(unsafe.Pointer(MappingVar))
 	var MappingVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(MappingVarPtr); ok {
-		MappingVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *glib.Variant, arg1 *uintptr, arg2 uintptr) bool {
-			cbFn := *MappingVar
-			return cbFn(arg0, arg1, arg2)
+	if MappingVar != nil {
+		MappingVarPtr := uintptr(unsafe.Pointer(MappingVar))
+		if cbRefPtr, ok := glib.GetCallback(MappingVarPtr); ok {
+			MappingVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *glib.Variant, arg1 *uintptr, arg2 uintptr) bool {
+				cbFn := *MappingVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			MappingVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(MappingVarPtr, MappingVarRef)
 		}
-		MappingVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(MappingVarPtr, MappingVarRef)
 	}
 
 	cret := xSettingsGetMapped(x.GoPointer(), KeyVar, MappingVarRef, UserDataVar)

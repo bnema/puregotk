@@ -528,17 +528,19 @@ var xPrintRunPageSetupDialogAsync func(uintptr, uintptr, uintptr, uintptr, uintp
 // @done_cb from a signal handler for the ::response signal of the dialog.
 func PrintRunPageSetupDialogAsync(ParentVar *Window, PageSetupVar *PageSetup, SettingsVar *PrintSettings, DoneCbVar *PageSetupDoneFunc, DataVar uintptr) {
 
-	DoneCbVarPtr := uintptr(unsafe.Pointer(DoneCbVar))
 	var DoneCbVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(DoneCbVarPtr); ok {
-		DoneCbVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *DoneCbVar
-			cbFn(arg0, arg1)
+	if DoneCbVar != nil {
+		DoneCbVarPtr := uintptr(unsafe.Pointer(DoneCbVar))
+		if cbRefPtr, ok := glib.GetCallback(DoneCbVarPtr); ok {
+			DoneCbVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *DoneCbVar
+				cbFn(arg0, arg1)
+			}
+			DoneCbVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DoneCbVarPtr, DoneCbVarRef)
 		}
-		DoneCbVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(DoneCbVarPtr, DoneCbVarRef)
 	}
 
 	xPrintRunPageSetupDialogAsync(ParentVar.GoPointer(), PageSetupVar.GoPointer(), SettingsVar.GoPointer(), DoneCbVarRef, DataVar)

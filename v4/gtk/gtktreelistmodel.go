@@ -66,30 +66,34 @@ var xNewTreeListModel func(uintptr, bool, bool, uintptr, uintptr, uintptr) uintp
 func NewTreeListModel(RootVar gio.ListModel, PassthroughVar bool, AutoexpandVar bool, CreateFuncVar *TreeListModelCreateModelFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *TreeListModel {
 	var cls *TreeListModel
 
-	CreateFuncVarPtr := uintptr(unsafe.Pointer(CreateFuncVar))
 	var CreateFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CreateFuncVarPtr); ok {
-		CreateFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
-			cbFn := *CreateFuncVar
-			return cbFn(arg0, arg1)
+	if CreateFuncVar != nil {
+		CreateFuncVarPtr := uintptr(unsafe.Pointer(CreateFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CreateFuncVarPtr); ok {
+			CreateFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
+				cbFn := *CreateFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CreateFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CreateFuncVarPtr, CreateFuncVarRef)
 		}
-		CreateFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CreateFuncVarPtr, CreateFuncVarRef)
 	}
 
-	UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
 	var UserDestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-		UserDestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDestroyVar
-			cbFn(arg0)
+	if UserDestroyVar != nil {
+		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
+			UserDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDestroyVar
+				cbFn(arg0)
+			}
+			UserDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
 		}
-		UserDestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
 	}
 
 	cret := xNewTreeListModel(RootVar.GoPointer(), PassthroughVar, AutoexpandVar, CreateFuncVarRef, UserDataVar, UserDestroyVarRef)

@@ -390,17 +390,19 @@ var xAttrListFilter func(uintptr, uintptr, uintptr) *AttrList
 // inserts them into a new list.
 func (x *AttrList) Filter(FuncVar *AttrFilterFunc, DataVar uintptr) *AttrList {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Attribute, arg1 uintptr) bool {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Attribute, arg1 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	cret := xAttrListFilter(x.GoPointer(), FuncVarRef, DataVar)

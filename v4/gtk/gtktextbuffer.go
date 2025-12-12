@@ -627,30 +627,34 @@ var xTextBufferAddCommitNotify func(uintptr, TextBufferNotifyFlags, uintptr, uin
 // other signal handlers which may further modify the [type@Gtk.TextBuffer].
 func (x *TextBuffer) AddCommitNotify(FlagsVar TextBufferNotifyFlags, CommitNotifyVar *TextBufferCommitNotify, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) uint {
 
-	CommitNotifyVarPtr := uintptr(unsafe.Pointer(CommitNotifyVar))
 	var CommitNotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CommitNotifyVarPtr); ok {
-		CommitNotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 TextBufferNotifyFlags, arg2 uint, arg3 uint, arg4 uintptr) {
-			cbFn := *CommitNotifyVar
-			cbFn(arg0, arg1, arg2, arg3, arg4)
+	if CommitNotifyVar != nil {
+		CommitNotifyVarPtr := uintptr(unsafe.Pointer(CommitNotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(CommitNotifyVarPtr); ok {
+			CommitNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 TextBufferNotifyFlags, arg2 uint, arg3 uint, arg4 uintptr) {
+				cbFn := *CommitNotifyVar
+				cbFn(arg0, arg1, arg2, arg3, arg4)
+			}
+			CommitNotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CommitNotifyVarPtr, CommitNotifyVarRef)
 		}
-		CommitNotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CommitNotifyVarPtr, CommitNotifyVarRef)
 	}
 
-	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
 	var DestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-		DestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DestroyVar
-			cbFn(arg0)
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 		}
-		DestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 	}
 
 	cret := xTextBufferAddCommitNotify(x.GoPointer(), FlagsVar, CommitNotifyVarRef, UserDataVar, DestroyVarRef)

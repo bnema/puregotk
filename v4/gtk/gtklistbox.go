@@ -224,17 +224,19 @@ func (x *ListBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *ListBox
 		}
 	}
 
-	UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
 	var UserDataFreeFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
-		UserDataFreeFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDataFreeFuncVar
-			cbFn(arg0)
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
 		}
-		UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
 	}
 
 	xListBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), CreateWidgetFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
@@ -503,17 +505,19 @@ var xListBoxSelectedForeach func(uintptr, uintptr, uintptr)
 // Note that the selection cannot be modified from within this function.
 func (x *ListBox) SelectedForeach(FuncVar *ListBoxForeachFunc, DataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-			cbFn := *FuncVar
-			cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xListBoxSelectedForeach(x.GoPointer(), FuncVarRef, DataVar)
@@ -580,17 +584,19 @@ func (x *ListBox) SetFilterFunc(FilterFuncVar *ListBoxFilterFunc, UserDataVar ui
 		}
 	}
 
-	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
 	var DestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-		DestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DestroyVar
-			cbFn(arg0)
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 		}
-		DestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 	}
 
 	xListBoxSetFilterFunc(x.GoPointer(), FilterFuncVarRef, UserDataVar, DestroyVarRef)
@@ -641,17 +647,19 @@ func (x *ListBox) SetHeaderFunc(UpdateHeaderVar *ListBoxUpdateHeaderFunc, UserDa
 		}
 	}
 
-	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
 	var DestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-		DestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DestroyVar
-			cbFn(arg0)
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 		}
-		DestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 	}
 
 	xListBoxSetHeaderFunc(x.GoPointer(), UpdateHeaderVarRef, UserDataVar, DestroyVarRef)
@@ -718,17 +726,19 @@ func (x *ListBox) SetSortFunc(SortFuncVar *ListBoxSortFunc, UserDataVar uintptr,
 		}
 	}
 
-	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
 	var DestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-		DestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DestroyVar
-			cbFn(arg0)
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 		}
-		DestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 	}
 
 	xListBoxSetSortFunc(x.GoPointer(), SortFuncVarRef, UserDataVar, DestroyVarRef)

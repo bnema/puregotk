@@ -931,17 +931,19 @@ var xCclosureNewObject func(uintptr, uintptr) *Closure
 // after the object is is freed.
 func CclosureNewObject(CallbackFuncVar *Callback, ObjectVar *Object) *Closure {
 
-	CallbackFuncVarPtr := uintptr(unsafe.Pointer(CallbackFuncVar))
 	var CallbackFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CallbackFuncVarPtr); ok {
-		CallbackFuncVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *CallbackFuncVar
-			cbFn()
+	if CallbackFuncVar != nil {
+		CallbackFuncVarPtr := uintptr(unsafe.Pointer(CallbackFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackFuncVarPtr); ok {
+			CallbackFuncVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CallbackFuncVar
+				cbFn()
+			}
+			CallbackFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
 		}
-		CallbackFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
 	}
 
 	cret := xCclosureNewObject(CallbackFuncVarRef, ObjectVar.GoPointer())
@@ -957,17 +959,19 @@ var xCclosureNewObjectSwap func(uintptr, uintptr) *Closure
 // after the object is is freed.
 func CclosureNewObjectSwap(CallbackFuncVar *Callback, ObjectVar *Object) *Closure {
 
-	CallbackFuncVarPtr := uintptr(unsafe.Pointer(CallbackFuncVar))
 	var CallbackFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CallbackFuncVarPtr); ok {
-		CallbackFuncVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *CallbackFuncVar
-			cbFn()
+	if CallbackFuncVar != nil {
+		CallbackFuncVarPtr := uintptr(unsafe.Pointer(CallbackFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackFuncVarPtr); ok {
+			CallbackFuncVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CallbackFuncVar
+				cbFn()
+			}
+			CallbackFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
 		}
-		CallbackFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
 	}
 
 	cret := xCclosureNewObjectSwap(CallbackFuncVarRef, ObjectVar.GoPointer())
@@ -1012,17 +1016,19 @@ var xSignalConnectObject func(*TypeInstance, string, uintptr, uintptr, ConnectFl
 // details.
 func SignalConnectObject(InstanceVar *TypeInstance, DetailedSignalVar string, CHandlerVar *Callback, GobjectVar *Object, ConnectFlagsVar ConnectFlags) uint32 {
 
-	CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
 	var CHandlerVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-		CHandlerVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *CHandlerVar
-			cbFn()
+	if CHandlerVar != nil {
+		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
+			CHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CHandlerVar
+				cbFn()
+			}
+			CHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 		}
-		CHandlerVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 	}
 
 	cret := xSignalConnectObject(InstanceVar, DetailedSignalVar, CHandlerVarRef, GobjectVar.GoPointer(), ConnectFlagsVar)
@@ -1237,17 +1243,19 @@ var xObjectAddToggleRef func(uintptr, uintptr, uintptr)
 // A g_object_add_toggle_ref() must be released with g_object_remove_toggle_ref().
 func (x *Object) AddToggleRef(NotifyVar *ToggleNotify, DataVar uintptr) {
 
-	NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
 	var NotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-		NotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 bool) {
-			cbFn := *NotifyVar
-			cbFn(arg0, arg1, arg2)
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 bool) {
+				cbFn := *NotifyVar
+				cbFn(arg0, arg1, arg2)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 		}
-		NotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 	}
 
 	xObjectAddToggleRef(x.GoPointer(), NotifyVarRef, DataVar)
@@ -1830,17 +1838,19 @@ var xObjectRemoveToggleRef func(uintptr, uintptr, uintptr)
 // you must take care of that yourself.
 func (x *Object) RemoveToggleRef(NotifyVar *ToggleNotify, DataVar uintptr) {
 
-	NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
 	var NotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-		NotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 bool) {
-			cbFn := *NotifyVar
-			cbFn(arg0, arg1, arg2)
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 bool) {
+				cbFn := *NotifyVar
+				cbFn(arg0, arg1, arg2)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 		}
-		NotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 	}
 
 	xObjectRemoveToggleRef(x.GoPointer(), NotifyVarRef, DataVar)
@@ -2254,17 +2264,19 @@ var xObjectWeakRef func(uintptr, uintptr, uintptr)
 // Use #GWeakRef if thread-safety is required.
 func (x *Object) WeakRef(NotifyVar *WeakNotify, DataVar uintptr) {
 
-	NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
 	var NotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-		NotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *NotifyVar
-			cbFn(arg0, arg1)
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0, arg1)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 		}
-		NotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 	}
 
 	xObjectWeakRef(x.GoPointer(), NotifyVarRef, DataVar)
@@ -2276,17 +2288,19 @@ var xObjectWeakUnref func(uintptr, uintptr, uintptr)
 // Removes a weak reference callback to an object.
 func (x *Object) WeakUnref(NotifyVar *WeakNotify, DataVar uintptr) {
 
-	NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
 	var NotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-		NotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *NotifyVar
-			cbFn(arg0, arg1)
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0, arg1)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 		}
-		NotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 	}
 
 	xObjectWeakUnref(x.GoPointer(), NotifyVarRef, DataVar)

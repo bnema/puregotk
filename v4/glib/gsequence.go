@@ -39,17 +39,19 @@ var xSequenceForeach func(uintptr, uintptr, uintptr)
 // to the function. @func must not modify the sequence itself.
 func (x *Sequence) Foreach(FuncVar *Func, UserDataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *FuncVar
-			cbFn(arg0, arg1)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xSequenceForeach(x.GoPointer(), FuncVarRef, UserDataVar)
@@ -122,17 +124,19 @@ var xSequenceInsertSorted func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // g_sequence_sort() or g_sequence_sort_iter().
 func (x *Sequence) InsertSorted(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) *SequenceIter {
 
-	CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
 	var CmpFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-		CmpFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *CmpFuncVar
-			return cbFn(arg0, arg1, arg2)
+	if CmpFuncVar != nil {
+		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
+		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
+			CmpFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *CmpFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CmpFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 		}
-		CmpFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 	}
 
 	cret := xSequenceInsertSorted(x.GoPointer(), DataVar, CmpFuncVarRef, CmpDataVar)
@@ -155,17 +159,19 @@ var xSequenceInsertSortedIter func(uintptr, uintptr, uintptr, uintptr) *Sequence
 // g_sequence_sort() or g_sequence_sort_iter().
 func (x *Sequence) InsertSortedIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) *SequenceIter {
 
-	IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
 	var IterCmpVarRef uintptr
-	if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
-		IterCmpVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
-			cbFn := *IterCmpVar
-			return cbFn(arg0, arg1, arg2)
+	if IterCmpVar != nil {
+		IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
+		if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
+			IterCmpVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
+				cbFn := *IterCmpVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			IterCmpVarRef = purego.NewCallback(fcb)
+			SaveCallback(IterCmpVarPtr, IterCmpVarRef)
 		}
-		IterCmpVarRef = purego.NewCallback(fcb)
-		SaveCallback(IterCmpVarPtr, IterCmpVarRef)
 	}
 
 	cret := xSequenceInsertSortedIter(x.GoPointer(), DataVar, IterCmpVarRef, CmpDataVar)
@@ -202,17 +208,19 @@ var xSequenceLookup func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // unsorted.
 func (x *Sequence) Lookup(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) *SequenceIter {
 
-	CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
 	var CmpFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-		CmpFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *CmpFuncVar
-			return cbFn(arg0, arg1, arg2)
+	if CmpFuncVar != nil {
+		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
+		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
+			CmpFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *CmpFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CmpFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 		}
-		CmpFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 	}
 
 	cret := xSequenceLookup(x.GoPointer(), DataVar, CmpFuncVarRef, CmpDataVar)
@@ -233,17 +241,19 @@ var xSequenceLookupIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // unsorted.
 func (x *Sequence) LookupIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) *SequenceIter {
 
-	IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
 	var IterCmpVarRef uintptr
-	if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
-		IterCmpVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
-			cbFn := *IterCmpVar
-			return cbFn(arg0, arg1, arg2)
+	if IterCmpVar != nil {
+		IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
+		if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
+			IterCmpVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
+				cbFn := *IterCmpVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			IterCmpVarRef = purego.NewCallback(fcb)
+			SaveCallback(IterCmpVarPtr, IterCmpVarRef)
 		}
-		IterCmpVarRef = purego.NewCallback(fcb)
-		SaveCallback(IterCmpVarPtr, IterCmpVarRef)
 	}
 
 	cret := xSequenceLookupIter(x.GoPointer(), DataVar, IterCmpVarRef, CmpDataVar)
@@ -276,17 +286,19 @@ var xSequenceSearch func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // unsorted.
 func (x *Sequence) Search(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) *SequenceIter {
 
-	CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
 	var CmpFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-		CmpFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *CmpFuncVar
-			return cbFn(arg0, arg1, arg2)
+	if CmpFuncVar != nil {
+		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
+		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
+			CmpFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *CmpFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CmpFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 		}
-		CmpFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 	}
 
 	cret := xSequenceSearch(x.GoPointer(), DataVar, CmpFuncVarRef, CmpDataVar)
@@ -310,17 +322,19 @@ var xSequenceSearchIter func(uintptr, uintptr, uintptr, uintptr) *SequenceIter
 // unsorted.
 func (x *Sequence) SearchIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) *SequenceIter {
 
-	IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
 	var IterCmpVarRef uintptr
-	if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
-		IterCmpVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
-			cbFn := *IterCmpVar
-			return cbFn(arg0, arg1, arg2)
+	if IterCmpVar != nil {
+		IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
+		if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
+			IterCmpVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
+				cbFn := *IterCmpVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			IterCmpVarRef = purego.NewCallback(fcb)
+			SaveCallback(IterCmpVarPtr, IterCmpVarRef)
 		}
-		IterCmpVarRef = purego.NewCallback(fcb)
-		SaveCallback(IterCmpVarPtr, IterCmpVarRef)
 	}
 
 	cret := xSequenceSearchIter(x.GoPointer(), DataVar, IterCmpVarRef, CmpDataVar)
@@ -337,17 +351,19 @@ var xSequenceSort func(uintptr, uintptr, uintptr)
 // if the second comes before the first.
 func (x *Sequence) Sort(CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) {
 
-	CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
 	var CmpFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-		CmpFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *CmpFuncVar
-			return cbFn(arg0, arg1, arg2)
+	if CmpFuncVar != nil {
+		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
+		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
+			CmpFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *CmpFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CmpFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 		}
-		CmpFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 	}
 
 	xSequenceSort(x.GoPointer(), CmpFuncVarRef, CmpDataVar)
@@ -365,17 +381,19 @@ var xSequenceSortIter func(uintptr, uintptr, uintptr)
 // iterator comes before the first.
 func (x *Sequence) SortIter(CmpFuncVar *SequenceIterCompareFunc, CmpDataVar uintptr) {
 
-	CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
 	var CmpFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-		CmpFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
-			cbFn := *CmpFuncVar
-			return cbFn(arg0, arg1, arg2)
+	if CmpFuncVar != nil {
+		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
+		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
+			CmpFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
+				cbFn := *CmpFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CmpFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 		}
-		CmpFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 	}
 
 	xSequenceSortIter(x.GoPointer(), CmpFuncVarRef, CmpDataVar)
@@ -479,17 +497,19 @@ var xSequenceForeachRange func(*SequenceIter, *SequenceIter, uintptr, uintptr)
 // itself.
 func SequenceForeachRange(BeginVar *SequenceIter, EndVar *SequenceIter, FuncVar *Func, UserDataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *FuncVar
-			cbFn(arg0, arg1)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xSequenceForeachRange(BeginVar, EndVar, FuncVarRef, UserDataVar)
@@ -606,17 +626,19 @@ var xSequenceSortChanged func(*SequenceIter, uintptr, uintptr)
 // the second item comes before the first.
 func SequenceSortChanged(IterVar *SequenceIter, CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) {
 
-	CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
 	var CmpFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
-		CmpFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *CmpFuncVar
-			return cbFn(arg0, arg1, arg2)
+	if CmpFuncVar != nil {
+		CmpFuncVarPtr := uintptr(unsafe.Pointer(CmpFuncVar))
+		if cbRefPtr, ok := GetCallback(CmpFuncVarPtr); ok {
+			CmpFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *CmpFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CmpFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 		}
-		CmpFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
 	}
 
 	xSequenceSortChanged(IterVar, CmpFuncVarRef, CmpDataVar)
@@ -636,17 +658,19 @@ var xSequenceSortChangedIter func(*SequenceIter, uintptr, uintptr)
 // iterator comes before the first.
 func SequenceSortChangedIter(IterVar *SequenceIter, IterCmpVar *SequenceIterCompareFunc, CmpDataVar uintptr) {
 
-	IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
 	var IterCmpVarRef uintptr
-	if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
-		IterCmpVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
-			cbFn := *IterCmpVar
-			return cbFn(arg0, arg1, arg2)
+	if IterCmpVar != nil {
+		IterCmpVarPtr := uintptr(unsafe.Pointer(IterCmpVar))
+		if cbRefPtr, ok := GetCallback(IterCmpVarPtr); ok {
+			IterCmpVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *SequenceIter, arg1 *SequenceIter, arg2 uintptr) int {
+				cbFn := *IterCmpVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			IterCmpVarRef = purego.NewCallback(fcb)
+			SaveCallback(IterCmpVarPtr, IterCmpVarRef)
 		}
-		IterCmpVarRef = purego.NewCallback(fcb)
-		SaveCallback(IterCmpVarPtr, IterCmpVarRef)
 	}
 
 	xSequenceSortChangedIter(IterVar, IterCmpVarRef, CmpDataVar)

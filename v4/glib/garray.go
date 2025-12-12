@@ -147,17 +147,19 @@ var xNewBytesWithFreeFunc func([]byte, uint, uintptr, uintptr) *Bytes
 // @data may be `NULL` if @size is 0.
 func NewBytesWithFreeFunc(DataVar []byte, SizeVar uint, FreeFuncVar *DestroyNotify, UserDataVar uintptr) *Bytes {
 
-	FreeFuncVarPtr := uintptr(unsafe.Pointer(FreeFuncVar))
 	var FreeFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FreeFuncVarPtr); ok {
-		FreeFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *FreeFuncVar
-			cbFn(arg0)
+	if FreeFuncVar != nil {
+		FreeFuncVarPtr := uintptr(unsafe.Pointer(FreeFuncVar))
+		if cbRefPtr, ok := GetCallback(FreeFuncVarPtr); ok {
+			FreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *FreeFuncVar
+				cbFn(arg0)
+			}
+			FreeFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FreeFuncVarPtr, FreeFuncVarRef)
 		}
-		FreeFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FreeFuncVarPtr, FreeFuncVarRef)
 	}
 
 	cret := xNewBytesWithFreeFunc(DataVar, SizeVar, FreeFuncVarRef, UserDataVar)
@@ -566,17 +568,19 @@ var xByteArraySort func([]byte, uintptr)
 // their addresses.
 func ByteArraySort(ArrayVar []byte, CompareFuncVar *CompareFunc) {
 
-	CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
 	var CompareFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
-		CompareFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) int {
-			cbFn := *CompareFuncVar
-			return cbFn(arg0, arg1)
+	if CompareFuncVar != nil {
+		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+		if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
+			CompareFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) int {
+				cbFn := *CompareFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CompareFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
 		}
-		CompareFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
 	}
 
 	xByteArraySort(ArrayVar, CompareFuncVarRef)
@@ -589,17 +593,19 @@ var xByteArraySortWithData func([]byte, uintptr, uintptr)
 // user data argument.
 func ByteArraySortWithData(ArrayVar []byte, CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
 	var CompareFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
-		CompareFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *CompareFuncVar
-			return cbFn(arg0, arg1, arg2)
+	if CompareFuncVar != nil {
+		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+		if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
+			CompareFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *CompareFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CompareFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
 		}
-		CompareFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
 	}
 
 	xByteArraySortWithData(ArrayVar, CompareFuncVarRef, UserDataVar)

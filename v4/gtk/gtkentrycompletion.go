@@ -285,30 +285,34 @@ var xEntryCompletionSetMatchFunc func(uintptr, uintptr, uintptr, uintptr)
 // should not be in the completion list.
 func (x *EntryCompletion) SetMatchFunc(FuncVar *EntryCompletionMatchFunc, FuncDataVar uintptr, FuncNotifyVar *glib.DestroyNotify) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 string, arg2 *TreeIter, arg3 uintptr) bool {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1, arg2, arg3)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 *TreeIter, arg3 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
-	FuncNotifyVarPtr := uintptr(unsafe.Pointer(FuncNotifyVar))
 	var FuncNotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncNotifyVarPtr); ok {
-		FuncNotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *FuncNotifyVar
-			cbFn(arg0)
+	if FuncNotifyVar != nil {
+		FuncNotifyVarPtr := uintptr(unsafe.Pointer(FuncNotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncNotifyVarPtr); ok {
+			FuncNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *FuncNotifyVar
+				cbFn(arg0)
+			}
+			FuncNotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncNotifyVarPtr, FuncNotifyVarRef)
 		}
-		FuncNotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncNotifyVarPtr, FuncNotifyVarRef)
 	}
 
 	xEntryCompletionSetMatchFunc(x.GoPointer(), FuncVarRef, FuncDataVar, FuncNotifyVarRef)

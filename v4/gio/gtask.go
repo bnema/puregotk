@@ -673,17 +673,19 @@ var xTaskAttachSource func(uintptr, *glib.Source, uintptr)
 // This takes a reference on @task until @source is destroyed.
 func (x *Task) AttachSource(SourceVar *glib.Source, CallbackVar *glib.SourceFunc) {
 
-	CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
 	var CallbackVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-		CallbackVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) bool {
-			cbFn := *CallbackVar
-			return cbFn(arg0)
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *CallbackVar
+				return cbFn(arg0)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 		}
-		CallbackVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 	}
 
 	xTaskAttachSource(x.GoPointer(), SourceVar, CallbackVarRef)
@@ -1083,17 +1085,19 @@ var xTaskRunInThread func(uintptr, uintptr)
 // g_task_run_in_thread().
 func (x *Task) RunInThread(TaskFuncVar *TaskThreadFunc) {
 
-	TaskFuncVarPtr := uintptr(unsafe.Pointer(TaskFuncVar))
 	var TaskFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(TaskFuncVarPtr); ok {
-		TaskFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) {
-			cbFn := *TaskFuncVar
-			cbFn(arg0, arg1, arg2, arg3)
+	if TaskFuncVar != nil {
+		TaskFuncVarPtr := uintptr(unsafe.Pointer(TaskFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(TaskFuncVarPtr); ok {
+			TaskFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) {
+				cbFn := *TaskFuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			TaskFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(TaskFuncVarPtr, TaskFuncVarRef)
 		}
-		TaskFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(TaskFuncVarPtr, TaskFuncVarRef)
 	}
 
 	xTaskRunInThread(x.GoPointer(), TaskFuncVarRef)
@@ -1120,17 +1124,19 @@ var xTaskRunInThreadSync func(uintptr, uintptr)
 // limited number of them at a time.
 func (x *Task) RunInThreadSync(TaskFuncVar *TaskThreadFunc) {
 
-	TaskFuncVarPtr := uintptr(unsafe.Pointer(TaskFuncVar))
 	var TaskFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(TaskFuncVarPtr); ok {
-		TaskFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) {
-			cbFn := *TaskFuncVar
-			cbFn(arg0, arg1, arg2, arg3)
+	if TaskFuncVar != nil {
+		TaskFuncVarPtr := uintptr(unsafe.Pointer(TaskFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(TaskFuncVarPtr); ok {
+			TaskFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) {
+				cbFn := *TaskFuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			TaskFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(TaskFuncVarPtr, TaskFuncVarRef)
 		}
-		TaskFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(TaskFuncVarPtr, TaskFuncVarRef)
 	}
 
 	xTaskRunInThreadSync(x.GoPointer(), TaskFuncVarRef)

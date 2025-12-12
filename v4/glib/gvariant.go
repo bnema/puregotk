@@ -466,17 +466,19 @@ var xNewVariantFromData func(*VariantType, []byte, uint, bool, uintptr, uintptr)
 // process.
 func NewVariantFromData(TypeVar *VariantType, DataVar []byte, SizeVar uint, TrustedVar bool, NotifyVar *DestroyNotify, UserDataVar uintptr) *Variant {
 
-	NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
 	var NotifyVarRef uintptr
-	if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
-		NotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *NotifyVar
-			cbFn(arg0)
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
 		}
-		NotifyVarRef = purego.NewCallback(fcb)
-		SaveCallback(NotifyVarPtr, NotifyVarRef)
 	}
 
 	cret := xNewVariantFromData(TypeVar, DataVar, SizeVar, TrustedVar, NotifyVarRef, UserDataVar)

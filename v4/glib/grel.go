@@ -104,30 +104,34 @@ var xRelationIndex func(uintptr, int, uintptr, uintptr)
 // before any records are added to the #GRelation.
 func (x *Relation) Index(FieldVar int, HashFuncVar *HashFunc, KeyEqualFuncVar *EqualFunc) {
 
-	HashFuncVarPtr := uintptr(unsafe.Pointer(HashFuncVar))
 	var HashFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(HashFuncVarPtr); ok {
-		HashFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) uint {
-			cbFn := *HashFuncVar
-			return cbFn(arg0)
+	if HashFuncVar != nil {
+		HashFuncVarPtr := uintptr(unsafe.Pointer(HashFuncVar))
+		if cbRefPtr, ok := GetCallback(HashFuncVarPtr); ok {
+			HashFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) uint {
+				cbFn := *HashFuncVar
+				return cbFn(arg0)
+			}
+			HashFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(HashFuncVarPtr, HashFuncVarRef)
 		}
-		HashFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(HashFuncVarPtr, HashFuncVarRef)
 	}
 
-	KeyEqualFuncVarPtr := uintptr(unsafe.Pointer(KeyEqualFuncVar))
 	var KeyEqualFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(KeyEqualFuncVarPtr); ok {
-		KeyEqualFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) bool {
-			cbFn := *KeyEqualFuncVar
-			return cbFn(arg0, arg1)
+	if KeyEqualFuncVar != nil {
+		KeyEqualFuncVarPtr := uintptr(unsafe.Pointer(KeyEqualFuncVar))
+		if cbRefPtr, ok := GetCallback(KeyEqualFuncVarPtr); ok {
+			KeyEqualFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) bool {
+				cbFn := *KeyEqualFuncVar
+				return cbFn(arg0, arg1)
+			}
+			KeyEqualFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(KeyEqualFuncVarPtr, KeyEqualFuncVarRef)
 		}
-		KeyEqualFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(KeyEqualFuncVarPtr, KeyEqualFuncVarRef)
 	}
 
 	xRelationIndex(x.GoPointer(), FieldVar, HashFuncVarRef, KeyEqualFuncVarRef)

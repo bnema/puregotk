@@ -84,30 +84,34 @@ var xNewCursorFromCallback func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewCursorFromCallback(CallbackVar *CursorGetTextureCallback, DataVar uintptr, DestroyVar *glib.DestroyNotify, FallbackVar *Cursor) *Cursor {
 	var cls *Cursor
 
-	CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
 	var CallbackVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-		CallbackVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 int, arg2 float64, arg3 *int, arg4 *int, arg5 *int, arg6 *int, arg7 uintptr) uintptr {
-			cbFn := *CallbackVar
-			return cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 int, arg2 float64, arg3 *int, arg4 *int, arg5 *int, arg6 *int, arg7 uintptr) uintptr {
+				cbFn := *CallbackVar
+				return cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 		}
-		CallbackVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 	}
 
-	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
 	var DestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
-		DestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DestroyVar
-			cbFn(arg0)
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 		}
-		DestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
 	}
 
 	cret := xNewCursorFromCallback(CallbackVarRef, DataVar, DestroyVarRef, FallbackVar.GoPointer())

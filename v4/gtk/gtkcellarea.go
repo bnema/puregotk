@@ -1299,17 +1299,19 @@ var xCellAreaForeach func(uintptr, uintptr, uintptr)
 // Calls @callback for every `GtkCellRenderer` in @area.
 func (x *CellArea) Foreach(CallbackVar *CellCallback, CallbackDataVar uintptr) {
 
-	CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
 	var CallbackVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-		CallbackVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) bool {
-			cbFn := *CallbackVar
-			return cbFn(arg0, arg1)
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) bool {
+				cbFn := *CallbackVar
+				return cbFn(arg0, arg1)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 		}
-		CallbackVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 	}
 
 	xCellAreaForeach(x.GoPointer(), CallbackVarRef, CallbackDataVar)
@@ -1322,17 +1324,19 @@ var xCellAreaForeachAlloc func(uintptr, uintptr, uintptr, *gdk.Rectangle, *gdk.R
 // allocated rectangle inside @cell_area.
 func (x *CellArea) ForeachAlloc(ContextVar *CellAreaContext, WidgetVar *Widget, CellAreaVar *gdk.Rectangle, BackgroundAreaVar *gdk.Rectangle, CallbackVar *CellAllocCallback, CallbackDataVar uintptr) {
 
-	CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
 	var CallbackVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-		CallbackVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 *gdk.Rectangle, arg2 *gdk.Rectangle, arg3 uintptr) bool {
-			cbFn := *CallbackVar
-			return cbFn(arg0, arg1, arg2, arg3)
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *gdk.Rectangle, arg2 *gdk.Rectangle, arg3 uintptr) bool {
+				cbFn := *CallbackVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 		}
-		CallbackVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 	}
 
 	xCellAreaForeachAlloc(x.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), CellAreaVar, BackgroundAreaVar, CallbackVarRef, CallbackDataVar)

@@ -82,17 +82,19 @@ var xSignalGroupConnect func(uintptr, string, uintptr, uintptr)
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) Connect(DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr) {
 
-	CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
 	var CHandlerVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-		CHandlerVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *CHandlerVar
-			cbFn()
+	if CHandlerVar != nil {
+		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
+			CHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CHandlerVar
+				cbFn()
+			}
+			CHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 		}
-		CHandlerVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 	}
 
 	xSignalGroupConnect(x.GoPointer(), DetailedSignalVar, CHandlerVarRef, DataVar)
@@ -109,17 +111,19 @@ var xSignalGroupConnectAfter func(uintptr, string, uintptr, uintptr)
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) ConnectAfter(DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr) {
 
-	CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
 	var CHandlerVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-		CHandlerVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *CHandlerVar
-			cbFn()
+	if CHandlerVar != nil {
+		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
+			CHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CHandlerVar
+				cbFn()
+			}
+			CHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 		}
-		CHandlerVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 	}
 
 	xSignalGroupConnectAfter(x.GoPointer(), DetailedSignalVar, CHandlerVarRef, DataVar)
@@ -145,30 +149,34 @@ var xSignalGroupConnectData func(uintptr, string, uintptr, uintptr, uintptr, Con
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) ConnectData(DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr, NotifyVar *ClosureNotify, FlagsVar ConnectFlags) {
 
-	CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
 	var CHandlerVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-		CHandlerVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *CHandlerVar
-			cbFn()
+	if CHandlerVar != nil {
+		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
+			CHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CHandlerVar
+				cbFn()
+			}
+			CHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 		}
-		CHandlerVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 	}
 
-	NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
 	var NotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-		NotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 *Closure) {
-			cbFn := *NotifyVar
-			cbFn(arg0, arg1)
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *Closure) {
+				cbFn := *NotifyVar
+				cbFn(arg0, arg1)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 		}
-		NotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 	}
 
 	xSignalGroupConnectData(x.GoPointer(), DetailedSignalVar, CHandlerVarRef, DataVar, NotifyVarRef, FlagsVar)
@@ -186,17 +194,19 @@ var xSignalGroupConnectObject func(uintptr, string, uintptr, uintptr, ConnectFla
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) ConnectObject(DetailedSignalVar string, CHandlerVar *Callback, ObjectVar uintptr, FlagsVar ConnectFlags) {
 
-	CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
 	var CHandlerVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-		CHandlerVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *CHandlerVar
-			cbFn()
+	if CHandlerVar != nil {
+		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
+			CHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CHandlerVar
+				cbFn()
+			}
+			CHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 		}
-		CHandlerVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 	}
 
 	xSignalGroupConnectObject(x.GoPointer(), DetailedSignalVar, CHandlerVarRef, ObjectVar, FlagsVar)
@@ -214,17 +224,19 @@ var xSignalGroupConnectSwapped func(uintptr, string, uintptr, uintptr)
 // You cannot connect a signal handler after #GSignalGroup:target has been set.
 func (x *SignalGroup) ConnectSwapped(DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr) {
 
-	CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
 	var CHandlerVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-		CHandlerVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *CHandlerVar
-			cbFn()
+	if CHandlerVar != nil {
+		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
+			CHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CHandlerVar
+				cbFn()
+			}
+			CHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 		}
-		CHandlerVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 	}
 
 	xSignalGroupConnectSwapped(x.GoPointer(), DetailedSignalVar, CHandlerVarRef, DataVar)

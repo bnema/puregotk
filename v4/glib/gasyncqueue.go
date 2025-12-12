@@ -144,17 +144,19 @@ var xAsyncQueuePushSorted func(uintptr, uintptr, uintptr, uintptr)
 // For an example of @func see g_async_queue_sort().
 func (x *AsyncQueue) PushSorted(DataVar uintptr, FuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xAsyncQueuePushSorted(x.GoPointer(), DataVar, FuncVarRef, UserDataVar)
@@ -180,17 +182,19 @@ var xAsyncQueuePushSortedUnlocked func(uintptr, uintptr, uintptr, uintptr)
 // For an example of @func see g_async_queue_sort().
 func (x *AsyncQueue) PushSortedUnlocked(DataVar uintptr, FuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xAsyncQueuePushSortedUnlocked(x.GoPointer(), DataVar, FuncVarRef, UserDataVar)
@@ -277,17 +281,19 @@ var xAsyncQueueSort func(uintptr, uintptr, uintptr)
 // ]|
 func (x *AsyncQueue) Sort(FuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xAsyncQueueSort(x.GoPointer(), FuncVarRef, UserDataVar)
@@ -307,17 +313,19 @@ var xAsyncQueueSortUnlocked func(uintptr, uintptr, uintptr)
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) SortUnlocked(FuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xAsyncQueueSortUnlocked(x.GoPointer(), FuncVarRef, UserDataVar)

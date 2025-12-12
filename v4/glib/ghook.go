@@ -135,17 +135,19 @@ var xHookListMarshal func(uintptr, bool, uintptr, uintptr)
 // Calls a function on each valid #GHook.
 func (x *HookList) Marshal(MayRecurseVar bool, MarshallerVar *HookMarshaller, MarshalDataVar uintptr) {
 
-	MarshallerVarPtr := uintptr(unsafe.Pointer(MarshallerVar))
 	var MarshallerVarRef uintptr
-	if cbRefPtr, ok := GetCallback(MarshallerVarPtr); ok {
-		MarshallerVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Hook, arg1 uintptr) {
-			cbFn := *MarshallerVar
-			cbFn(arg0, arg1)
+	if MarshallerVar != nil {
+		MarshallerVarPtr := uintptr(unsafe.Pointer(MarshallerVar))
+		if cbRefPtr, ok := GetCallback(MarshallerVarPtr); ok {
+			MarshallerVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Hook, arg1 uintptr) {
+				cbFn := *MarshallerVar
+				cbFn(arg0, arg1)
+			}
+			MarshallerVarRef = purego.NewCallback(fcb)
+			SaveCallback(MarshallerVarPtr, MarshallerVarRef)
 		}
-		MarshallerVarRef = purego.NewCallback(fcb)
-		SaveCallback(MarshallerVarPtr, MarshallerVarRef)
 	}
 
 	xHookListMarshal(x.GoPointer(), MayRecurseVar, MarshallerVarRef, MarshalDataVar)
@@ -158,17 +160,19 @@ var xHookListMarshalCheck func(uintptr, bool, uintptr, uintptr)
 // function returns %FALSE.
 func (x *HookList) MarshalCheck(MayRecurseVar bool, MarshallerVar *HookCheckMarshaller, MarshalDataVar uintptr) {
 
-	MarshallerVarPtr := uintptr(unsafe.Pointer(MarshallerVar))
 	var MarshallerVarRef uintptr
-	if cbRefPtr, ok := GetCallback(MarshallerVarPtr); ok {
-		MarshallerVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Hook, arg1 uintptr) bool {
-			cbFn := *MarshallerVar
-			return cbFn(arg0, arg1)
+	if MarshallerVar != nil {
+		MarshallerVarPtr := uintptr(unsafe.Pointer(MarshallerVar))
+		if cbRefPtr, ok := GetCallback(MarshallerVarPtr); ok {
+			MarshallerVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Hook, arg1 uintptr) bool {
+				cbFn := *MarshallerVar
+				return cbFn(arg0, arg1)
+			}
+			MarshallerVarRef = purego.NewCallback(fcb)
+			SaveCallback(MarshallerVarPtr, MarshallerVarRef)
 		}
-		MarshallerVarRef = purego.NewCallback(fcb)
-		SaveCallback(MarshallerVarPtr, MarshallerVarRef)
 	}
 
 	xHookListMarshalCheck(x.GoPointer(), MayRecurseVar, MarshallerVarRef, MarshalDataVar)
@@ -240,17 +244,19 @@ var xHookInsertSorted func(*HookList, *Hook, uintptr)
 // Inserts a #GHook into a #GHookList, sorted by the given function.
 func HookInsertSorted(HookListVar *HookList, HookVar *Hook, FuncVar *HookCompareFunc) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Hook, arg1 *Hook) int {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Hook, arg1 *Hook) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xHookInsertSorted(HookListVar, HookVar, FuncVarRef)

@@ -527,30 +527,34 @@ var xDBusConnectionAddFilter func(uintptr, uintptr, uintptr, uintptr) uint
 // destroyed.)
 func (x *DBusConnection) AddFilter(FilterFunctionVar *DBusMessageFilterFunction, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	FilterFunctionVarPtr := uintptr(unsafe.Pointer(FilterFunctionVar))
 	var FilterFunctionVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FilterFunctionVarPtr); ok {
-		FilterFunctionVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 bool, arg3 uintptr) uintptr {
-			cbFn := *FilterFunctionVar
-			return cbFn(arg0, arg1, arg2, arg3)
+	if FilterFunctionVar != nil {
+		FilterFunctionVarPtr := uintptr(unsafe.Pointer(FilterFunctionVar))
+		if cbRefPtr, ok := glib.GetCallback(FilterFunctionVarPtr); ok {
+			FilterFunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 bool, arg3 uintptr) uintptr {
+				cbFn := *FilterFunctionVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			FilterFunctionVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FilterFunctionVarPtr, FilterFunctionVarRef)
 		}
-		FilterFunctionVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FilterFunctionVarPtr, FilterFunctionVarRef)
 	}
 
-	UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
 	var UserDataFreeFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
-		UserDataFreeFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDataFreeFuncVar
-			cbFn(arg0)
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
 		}
-		UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
 	}
 
 	cret := xDBusConnectionAddFilter(x.GoPointer(), FilterFunctionVarRef, UserDataVar, UserDataFreeFuncVarRef)
@@ -1164,17 +1168,19 @@ var xDBusConnectionRegisterObject func(uintptr, string, *DBusInterfaceInfo, *DBu
 func (x *DBusConnection) RegisterObject(ObjectPathVar string, InterfaceInfoVar *DBusInterfaceInfo, VtableVar *DBusInterfaceVTable, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) (uint, error) {
 	var cerr *glib.Error
 
-	UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
 	var UserDataFreeFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
-		UserDataFreeFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDataFreeFuncVar
-			cbFn(arg0)
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
 		}
-		UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
 	}
 
 	cret := xDBusConnectionRegisterObject(x.GoPointer(), ObjectPathVar, InterfaceInfoVar, VtableVar, UserDataVar, UserDataFreeFuncVarRef, &cerr)
@@ -1269,17 +1275,19 @@ var xDBusConnectionRegisterSubtree func(uintptr, string, *DBusSubtreeVTable, DBu
 func (x *DBusConnection) RegisterSubtree(ObjectPathVar string, VtableVar *DBusSubtreeVTable, FlagsVar DBusSubtreeFlags, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) (uint, error) {
 	var cerr *glib.Error
 
-	UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
 	var UserDataFreeFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
-		UserDataFreeFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDataFreeFuncVar
-			cbFn(arg0)
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
 		}
-		UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
 	}
 
 	cret := xDBusConnectionRegisterSubtree(x.GoPointer(), ObjectPathVar, VtableVar, FlagsVar, UserDataVar, UserDataFreeFuncVarRef, &cerr)
@@ -1547,17 +1555,19 @@ var xDBusConnectionSignalSubscribe func(uintptr, string, string, string, string,
 // This function can never fail.
 func (x *DBusConnection) SignalSubscribe(SenderVar string, InterfaceNameVar string, MemberVar string, ObjectPathVar string, Arg0Var string, FlagsVar DBusSignalFlags, CallbackVar *DBusSignalCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
 	var CallbackVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-		CallbackVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 string, arg4 string, arg5 *glib.Variant, arg6 uintptr) {
-			cbFn := *CallbackVar
-			cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 string, arg4 string, arg5 *glib.Variant, arg6 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 		}
-		CallbackVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 	}
 
 	var UserDataFreeFuncVarRef uintptr

@@ -159,17 +159,19 @@ var xWidgetClassAddBinding func(uintptr, uint, gdk.ModifierType, uintptr, string
 // shortcut.
 func (x *WidgetClass) AddBinding(KeyvalVar uint, ModsVar gdk.ModifierType, CallbackVar *ShortcutFunc, FormatStringVar string, varArgs ...interface{}) {
 
-	CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
 	var CallbackVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-		CallbackVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 *glib.Variant, arg2 uintptr) bool {
-			cbFn := *CallbackVar
-			return cbFn(arg0, arg1, arg2)
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *glib.Variant, arg2 uintptr) bool {
+				cbFn := *CallbackVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 		}
-		CallbackVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 	}
 
 	xWidgetClassAddBinding(x.GoPointer(), KeyvalVar, ModsVar, CallbackVarRef, FormatStringVar, varArgs...)
@@ -241,17 +243,19 @@ var xWidgetClassBindTemplateCallbackFull func(uintptr, string, uintptr)
 // class initializer after calling [method@Gtk.WidgetClass.set_template].
 func (x *WidgetClass) BindTemplateCallbackFull(CallbackNameVar string, CallbackSymbolVar *gobject.Callback) {
 
-	CallbackSymbolVarPtr := uintptr(unsafe.Pointer(CallbackSymbolVar))
 	var CallbackSymbolVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CallbackSymbolVarPtr); ok {
-		CallbackSymbolVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *CallbackSymbolVar
-			cbFn()
+	if CallbackSymbolVar != nil {
+		CallbackSymbolVarPtr := uintptr(unsafe.Pointer(CallbackSymbolVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackSymbolVarPtr); ok {
+			CallbackSymbolVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CallbackSymbolVar
+				cbFn()
+			}
+			CallbackSymbolVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackSymbolVarPtr, CallbackSymbolVarRef)
 		}
-		CallbackSymbolVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CallbackSymbolVarPtr, CallbackSymbolVarRef)
 	}
 
 	xWidgetClassBindTemplateCallbackFull(x.GoPointer(), CallbackNameVar, CallbackSymbolVarRef)
@@ -354,17 +358,19 @@ var xWidgetClassInstallAction func(uintptr, string, string, uintptr)
 // with [method@Gtk.Widget.action_set_enabled]).
 func (x *WidgetClass) InstallAction(ActionNameVar string, ParameterTypeVar string, ActivateVar *WidgetActionActivateFunc) {
 
-	ActivateVarPtr := uintptr(unsafe.Pointer(ActivateVar))
 	var ActivateVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(ActivateVarPtr); ok {
-		ActivateVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 string, arg2 *glib.Variant) {
-			cbFn := *ActivateVar
-			cbFn(arg0, arg1, arg2)
+	if ActivateVar != nil {
+		ActivateVarPtr := uintptr(unsafe.Pointer(ActivateVar))
+		if cbRefPtr, ok := glib.GetCallback(ActivateVarPtr); ok {
+			ActivateVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 *glib.Variant) {
+				cbFn := *ActivateVar
+				cbFn(arg0, arg1, arg2)
+			}
+			ActivateVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(ActivateVarPtr, ActivateVarRef)
 		}
-		ActivateVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(ActivateVarPtr, ActivateVarRef)
 	}
 
 	xWidgetClassInstallAction(x.GoPointer(), ActionNameVar, ParameterTypeVar, ActivateVarRef)
@@ -1871,30 +1877,34 @@ var xWidgetAddTickCallback func(uintptr, uintptr, uintptr, uintptr) uint
 // to [method@Gtk.Widget.remove_tick_callback].
 func (x *Widget) AddTickCallback(CallbackVar *TickCallback, UserDataVar uintptr, NotifyVar *glib.DestroyNotify) uint {
 
-	CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
 	var CallbackVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
-		CallbackVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
-			cbFn := *CallbackVar
-			return cbFn(arg0, arg1, arg2)
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
+				cbFn := *CallbackVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 		}
-		CallbackVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
 	}
 
-	NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
 	var NotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-		NotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *NotifyVar
-			cbFn(arg0)
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 		}
-		NotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 	}
 
 	cret := xWidgetAddTickCallback(x.GoPointer(), CallbackVarRef, UserDataVar, NotifyVarRef)

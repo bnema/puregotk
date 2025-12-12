@@ -70,17 +70,19 @@ func NewCustomFilter(MatchFuncVar *CustomFilterFunc, UserDataVar uintptr, UserDe
 		}
 	}
 
-	UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
 	var UserDestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-		UserDestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDestroyVar
-			cbFn(arg0)
+	if UserDestroyVar != nil {
+		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
+			UserDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDestroyVar
+				cbFn(arg0)
+			}
+			UserDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
 		}
-		UserDestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
 	}
 
 	cret := xNewCustomFilter(MatchFuncVarRef, UserDataVar, UserDestroyVarRef)
@@ -121,17 +123,19 @@ func (x *CustomFilter) SetFilterFunc(MatchFuncVar *CustomFilterFunc, UserDataVar
 		}
 	}
 
-	UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
 	var UserDestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-		UserDestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDestroyVar
-			cbFn(arg0)
+	if UserDestroyVar != nil {
+		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
+			UserDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDestroyVar
+				cbFn(arg0)
+			}
+			UserDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
 		}
-		UserDestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
 	}
 
 	xCustomFilterSetFilterFunc(x.GoPointer(), MatchFuncVarRef, UserDataVar, UserDestroyVarRef)

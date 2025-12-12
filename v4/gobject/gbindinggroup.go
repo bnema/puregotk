@@ -103,17 +103,19 @@ func (x *BindingGroup) BindFull(SourcePropertyVar string, TargetVar *Object, Tar
 		}
 	}
 
-	UserDataDestroyVarPtr := uintptr(unsafe.Pointer(UserDataDestroyVar))
 	var UserDataDestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(UserDataDestroyVarPtr); ok {
-		UserDataDestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDataDestroyVar
-			cbFn(arg0)
+	if UserDataDestroyVar != nil {
+		UserDataDestroyVarPtr := uintptr(unsafe.Pointer(UserDataDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataDestroyVarPtr); ok {
+			UserDataDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataDestroyVar
+				cbFn(arg0)
+			}
+			UserDataDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataDestroyVarPtr, UserDataDestroyVarRef)
 		}
-		UserDataDestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(UserDataDestroyVarPtr, UserDataDestroyVarRef)
 	}
 
 	xBindingGroupBindFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, TransformToVarRef, TransformFromVarRef, UserDataVar, UserDataDestroyVarRef)

@@ -121,17 +121,19 @@ var xAtexit func(uintptr)
 // program.
 func Atexit(FuncVar *VoidFunc) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *FuncVar
-			cbFn()
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *FuncVar
+				cbFn()
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xAtexit(FuncVarRef)

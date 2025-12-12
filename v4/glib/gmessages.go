@@ -339,17 +339,19 @@ var xLogSetDefaultHandler func(uintptr, uintptr) uintptr
 // [Using Structured Logging](logging.html#using-structured-logging).
 func LogSetDefaultHandler(LogFuncVar *LogFunc, UserDataVar uintptr) uintptr {
 
-	LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
 	var LogFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
-		LogFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
-			cbFn := *LogFuncVar
-			cbFn(arg0, arg1, arg2, arg3)
+	if LogFuncVar != nil {
+		LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
+		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
+			LogFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
+				cbFn := *LogFuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			LogFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
 		}
-		LogFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(LogFuncVarPtr, LogFuncVarRef)
 	}
 
 	cret := xLogSetDefaultHandler(LogFuncVarRef, UserDataVar)
@@ -425,17 +427,19 @@ var xLogSetHandler func(string, LogLevelFlags, uintptr, uintptr) uint
 // ```
 func LogSetHandler(LogDomainVar string, LogLevelsVar LogLevelFlags, LogFuncVar *LogFunc, UserDataVar uintptr) uint {
 
-	LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
 	var LogFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
-		LogFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
-			cbFn := *LogFuncVar
-			cbFn(arg0, arg1, arg2, arg3)
+	if LogFuncVar != nil {
+		LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
+		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
+			LogFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
+				cbFn := *LogFuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			LogFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
 		}
-		LogFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(LogFuncVarPtr, LogFuncVarRef)
 	}
 
 	cret := xLogSetHandler(LogDomainVar, LogLevelsVar, LogFuncVarRef, UserDataVar)
@@ -453,30 +457,34 @@ var xLogSetHandlerFull func(string, LogLevelFlags, uintptr, uintptr, uintptr) ui
 // application domain.
 func LogSetHandlerFull(LogDomainVar string, LogLevelsVar LogLevelFlags, LogFuncVar *LogFunc, UserDataVar uintptr, DestroyVar *DestroyNotify) uint {
 
-	LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
 	var LogFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
-		LogFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
-			cbFn := *LogFuncVar
-			cbFn(arg0, arg1, arg2, arg3)
+	if LogFuncVar != nil {
+		LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
+		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
+			LogFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
+				cbFn := *LogFuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			LogFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
 		}
-		LogFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(LogFuncVarPtr, LogFuncVarRef)
 	}
 
-	DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
 	var DestroyVarRef uintptr
-	if cbRefPtr, ok := GetCallback(DestroyVarPtr); ok {
-		DestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DestroyVar
-			cbFn(arg0)
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			SaveCallback(DestroyVarPtr, DestroyVarRef)
 		}
-		DestroyVarRef = purego.NewCallback(fcb)
-		SaveCallback(DestroyVarPtr, DestroyVarRef)
 	}
 
 	cret := xLogSetHandlerFull(LogDomainVar, LogLevelsVar, LogFuncVarRef, UserDataVar, DestroyVarRef)
@@ -498,30 +506,34 @@ var xLogSetWriterFunc func(uintptr, uintptr, uintptr)
 // There can only be one writer function. It is an error to set more than one.
 func LogSetWriterFunc(FuncVar *LogWriterFunc, UserDataVar uintptr, UserDataFreeVar *DestroyNotify) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 LogLevelFlags, arg1 []LogField, arg2 uint, arg3 uintptr) LogWriterOutput {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1, arg2, arg3)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 LogLevelFlags, arg1 []LogField, arg2 uint, arg3 uintptr) LogWriterOutput {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
-	UserDataFreeVarPtr := uintptr(unsafe.Pointer(UserDataFreeVar))
 	var UserDataFreeVarRef uintptr
-	if cbRefPtr, ok := GetCallback(UserDataFreeVarPtr); ok {
-		UserDataFreeVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDataFreeVar
-			cbFn(arg0)
+	if UserDataFreeVar != nil {
+		UserDataFreeVarPtr := uintptr(unsafe.Pointer(UserDataFreeVar))
+		if cbRefPtr, ok := GetCallback(UserDataFreeVarPtr); ok {
+			UserDataFreeVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeVar
+				cbFn(arg0)
+			}
+			UserDataFreeVarRef = purego.NewCallback(fcb)
+			SaveCallback(UserDataFreeVarPtr, UserDataFreeVarRef)
 		}
-		UserDataFreeVarRef = purego.NewCallback(fcb)
-		SaveCallback(UserDataFreeVarPtr, UserDataFreeVarRef)
 	}
 
 	xLogSetWriterFunc(FuncVarRef, UserDataVar, UserDataFreeVarRef)

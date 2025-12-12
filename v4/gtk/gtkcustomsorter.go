@@ -115,17 +115,19 @@ func (x *CustomSorter) SetSortFunc(SortFuncVar *glib.CompareDataFunc, UserDataVa
 		}
 	}
 
-	UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
 	var UserDestroyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
-		UserDestroyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDestroyVar
-			cbFn(arg0)
+	if UserDestroyVar != nil {
+		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
+			UserDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDestroyVar
+				cbFn(arg0)
+			}
+			UserDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
 		}
-		UserDestroyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
 	}
 
 	xCustomSorterSetSortFunc(x.GoPointer(), SortFuncVarRef, UserDataVar, UserDestroyVarRef)

@@ -247,17 +247,19 @@ var xPathForeach func(uintptr, PathForeachFlags, uintptr, uintptr) bool
 //     an approximation of the path using just the allowed operations.
 func (x *Path) Foreach(FlagsVar PathForeachFlags, FuncVar *PathForeachFunc, UserDataVar uintptr) bool {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 PathOperation, arg1 []graphene.Point, arg2 uint, arg3 float32, arg4 uintptr) bool {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1, arg2, arg3, arg4)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 PathOperation, arg1 []graphene.Point, arg2 uint, arg3 float32, arg4 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2, arg3, arg4)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	cret := xPathForeach(x.GoPointer(), FlagsVar, FuncVarRef, UserDataVar)
@@ -283,17 +285,19 @@ var xPathForeachIntersection func(uintptr, *Path, uintptr, uintptr) bool
 // If @func returns `FALSE`, the iteration is stopped.
 func (x *Path) ForeachIntersection(Path2Var *Path, FuncVar *PathIntersectionFunc, UserDataVar uintptr) bool {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Path, arg1 *PathPoint, arg2 *Path, arg3 *PathPoint, arg4 PathIntersection, arg5 uintptr) bool {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Path, arg1 *PathPoint, arg2 *Path, arg3 *PathPoint, arg4 PathIntersection, arg5 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	cret := xPathForeachIntersection(x.GoPointer(), Path2Var, FuncVarRef, UserDataVar)

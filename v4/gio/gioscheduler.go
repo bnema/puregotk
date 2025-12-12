@@ -33,17 +33,19 @@ var xIoSchedulerPushJob func(uintptr, uintptr, uintptr, int, uintptr)
 // g_io_scheduler_cancel_all_jobs().
 func IoSchedulerPushJob(JobFuncVar *IOSchedulerJobFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify, IoPriorityVar int, CancellableVar *Cancellable) {
 
-	JobFuncVarPtr := uintptr(unsafe.Pointer(JobFuncVar))
 	var JobFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(JobFuncVarPtr); ok {
-		JobFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *IOSchedulerJob, arg1 uintptr, arg2 uintptr) bool {
-			cbFn := *JobFuncVar
-			return cbFn(arg0, arg1, arg2)
+	if JobFuncVar != nil {
+		JobFuncVarPtr := uintptr(unsafe.Pointer(JobFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(JobFuncVarPtr); ok {
+			JobFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *IOSchedulerJob, arg1 uintptr, arg2 uintptr) bool {
+				cbFn := *JobFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			JobFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(JobFuncVarPtr, JobFuncVarRef)
 		}
-		JobFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(JobFuncVarPtr, JobFuncVarRef)
 	}
 
 	var NotifyVarRef uintptr

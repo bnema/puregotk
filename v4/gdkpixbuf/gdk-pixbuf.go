@@ -1161,17 +1161,19 @@ var xPixbufSaveToCallback func(uintptr, uintptr, uintptr, string, **glib.Error, 
 // See [method@GdkPixbuf.Pixbuf.save] for more details.
 func (x *Pixbuf) SaveToCallback(SaveFuncVar *PixbufSaveFunc, UserDataVar uintptr, TypeVar string, ErrorVar **glib.Error, varArgs ...interface{}) bool {
 
-	SaveFuncVarPtr := uintptr(unsafe.Pointer(SaveFuncVar))
 	var SaveFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(SaveFuncVarPtr); ok {
-		SaveFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 []byte, arg1 uint, arg2 **glib.Error, arg3 uintptr) bool {
-			cbFn := *SaveFuncVar
-			return cbFn(arg0, arg1, arg2, arg3)
+	if SaveFuncVar != nil {
+		SaveFuncVarPtr := uintptr(unsafe.Pointer(SaveFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(SaveFuncVarPtr); ok {
+			SaveFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 []byte, arg1 uint, arg2 **glib.Error, arg3 uintptr) bool {
+				cbFn := *SaveFuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			SaveFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(SaveFuncVarPtr, SaveFuncVarRef)
 		}
-		SaveFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(SaveFuncVarPtr, SaveFuncVarRef)
 	}
 
 	cret := xPixbufSaveToCallback(x.GoPointer(), SaveFuncVarRef, UserDataVar, TypeVar, ErrorVar, varArgs...)
@@ -1191,17 +1193,19 @@ var xPixbufSaveToCallbackv func(uintptr, uintptr, uintptr, string, []string, []s
 func (x *Pixbuf) SaveToCallbackv(SaveFuncVar *PixbufSaveFunc, UserDataVar uintptr, TypeVar string, OptionKeysVar []string, OptionValuesVar []string) (bool, error) {
 	var cerr *glib.Error
 
-	SaveFuncVarPtr := uintptr(unsafe.Pointer(SaveFuncVar))
 	var SaveFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(SaveFuncVarPtr); ok {
-		SaveFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 []byte, arg1 uint, arg2 **glib.Error, arg3 uintptr) bool {
-			cbFn := *SaveFuncVar
-			return cbFn(arg0, arg1, arg2, arg3)
+	if SaveFuncVar != nil {
+		SaveFuncVarPtr := uintptr(unsafe.Pointer(SaveFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(SaveFuncVarPtr); ok {
+			SaveFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 []byte, arg1 uint, arg2 **glib.Error, arg3 uintptr) bool {
+				cbFn := *SaveFuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			SaveFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(SaveFuncVarPtr, SaveFuncVarRef)
 		}
-		SaveFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(SaveFuncVarPtr, SaveFuncVarRef)
 	}
 
 	cret := xPixbufSaveToCallbackv(x.GoPointer(), SaveFuncVarRef, UserDataVar, TypeVar, OptionKeysVar, OptionValuesVar, &cerr)

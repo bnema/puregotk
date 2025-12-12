@@ -128,17 +128,19 @@ func (x *PreferencesGroup) BindModel(ModelVar gio.ListModel, CreateRowFuncVar *g
 		}
 	}
 
-	UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
 	var UserDataFreeFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
-		UserDataFreeFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *UserDataFreeFuncVar
-			cbFn(arg0)
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
 		}
-		UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
 	}
 
 	xPreferencesGroupBindModel(x.GoPointer(), ModelVar.GoPointer(), CreateRowFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)

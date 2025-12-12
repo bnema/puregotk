@@ -228,17 +228,19 @@ var xSignalAddEmissionHook func(uint, glib.Quark, uintptr, uintptr, uintptr) uin
 // for signals which don't have %G_SIGNAL_NO_HOOKS flag set.
 func SignalAddEmissionHook(SignalIdVar uint, DetailVar glib.Quark, HookFuncVar *SignalEmissionHook, HookDataVar uintptr, DataDestroyVar *glib.DestroyNotify) uint32 {
 
-	HookFuncVarPtr := uintptr(unsafe.Pointer(HookFuncVar))
 	var HookFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(HookFuncVarPtr); ok {
-		HookFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *SignalInvocationHint, arg1 uint, arg2 []Value, arg3 uintptr) bool {
-			cbFn := *HookFuncVar
-			return cbFn(arg0, arg1, arg2, arg3)
+	if HookFuncVar != nil {
+		HookFuncVarPtr := uintptr(unsafe.Pointer(HookFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(HookFuncVarPtr); ok {
+			HookFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *SignalInvocationHint, arg1 uint, arg2 []Value, arg3 uintptr) bool {
+				cbFn := *HookFuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			HookFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(HookFuncVarPtr, HookFuncVarRef)
 		}
-		HookFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(HookFuncVarPtr, HookFuncVarRef)
 	}
 
 	var DataDestroyVarRef uintptr
@@ -341,17 +343,19 @@ var xSignalConnectData func(uintptr, string, uintptr, uintptr, uintptr, ConnectF
 // details.
 func SignalConnectData(InstanceVar *Object, DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr, DestroyDataVar *ClosureNotify, ConnectFlagsVar ConnectFlags) uint32 {
 
-	CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
 	var CHandlerVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
-		CHandlerVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *CHandlerVar
-			cbFn()
+	if CHandlerVar != nil {
+		CHandlerVarPtr := uintptr(unsafe.Pointer(CHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(CHandlerVarPtr); ok {
+			CHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CHandlerVar
+				cbFn()
+			}
+			CHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 		}
-		CHandlerVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
 	}
 
 	var DestroyDataVarRef uintptr
@@ -848,17 +852,19 @@ var xSignalOverrideClassHandler func(string, types.GType, uintptr)
 // parent class closure from inside the overridden one.
 func SignalOverrideClassHandler(SignalNameVar string, InstanceTypeVar types.GType, ClassHandlerVar *Callback) {
 
-	ClassHandlerVarPtr := uintptr(unsafe.Pointer(ClassHandlerVar))
 	var ClassHandlerVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(ClassHandlerVarPtr); ok {
-		ClassHandlerVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *ClassHandlerVar
-			cbFn()
+	if ClassHandlerVar != nil {
+		ClassHandlerVarPtr := uintptr(unsafe.Pointer(ClassHandlerVar))
+		if cbRefPtr, ok := glib.GetCallback(ClassHandlerVarPtr); ok {
+			ClassHandlerVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *ClassHandlerVar
+				cbFn()
+			}
+			ClassHandlerVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(ClassHandlerVarPtr, ClassHandlerVarRef)
 		}
-		ClassHandlerVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(ClassHandlerVarPtr, ClassHandlerVarRef)
 	}
 
 	xSignalOverrideClassHandler(SignalNameVar, InstanceTypeVar, ClassHandlerVarRef)

@@ -291,17 +291,19 @@ var xTreeModelFilterSetModifyFunc func(uintptr, int, []types.GType, uintptr, uin
 // can only be called once for a given filter model.
 func (x *TreeModelFilter) SetModifyFunc(NColumnsVar int, TypesVar []types.GType, FuncVar *TreeModelFilterModifyFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 *TreeIter, arg2 *gobject.Value, arg3 int, arg4 uintptr) {
-			cbFn := *FuncVar
-			cbFn(arg0, arg1, arg2, arg3, arg4)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *TreeIter, arg2 *gobject.Value, arg3 int, arg4 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2, arg3, arg4)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	var DestroyVarRef uintptr
@@ -381,17 +383,19 @@ var xTreeModelFilterSetVisibleFunc func(uintptr, uintptr, uintptr, uintptr)
 // once for a given filter model.
 func (x *TreeModelFilter) SetVisibleFunc(FuncVar *TreeModelFilterVisibleFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 *TreeIter, arg2 uintptr) bool {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *TreeIter, arg2 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	var DestroyVarRef uintptr

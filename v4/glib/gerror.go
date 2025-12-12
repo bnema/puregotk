@@ -149,43 +149,49 @@ var xErrorDomainRegister func(string, uint, uintptr, uintptr, uintptr) Quark
 // g_error_domain_register_static().
 func ErrorDomainRegister(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, ErrorTypeInitVar *ErrorInitFunc, ErrorTypeCopyVar *ErrorCopyFunc, ErrorTypeClearVar *ErrorClearFunc) Quark {
 
-	ErrorTypeInitVarPtr := uintptr(unsafe.Pointer(ErrorTypeInitVar))
 	var ErrorTypeInitVarRef uintptr
-	if cbRefPtr, ok := GetCallback(ErrorTypeInitVarPtr); ok {
-		ErrorTypeInitVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Error) {
-			cbFn := *ErrorTypeInitVar
-			cbFn(arg0)
+	if ErrorTypeInitVar != nil {
+		ErrorTypeInitVarPtr := uintptr(unsafe.Pointer(ErrorTypeInitVar))
+		if cbRefPtr, ok := GetCallback(ErrorTypeInitVarPtr); ok {
+			ErrorTypeInitVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Error) {
+				cbFn := *ErrorTypeInitVar
+				cbFn(arg0)
+			}
+			ErrorTypeInitVarRef = purego.NewCallback(fcb)
+			SaveCallback(ErrorTypeInitVarPtr, ErrorTypeInitVarRef)
 		}
-		ErrorTypeInitVarRef = purego.NewCallback(fcb)
-		SaveCallback(ErrorTypeInitVarPtr, ErrorTypeInitVarRef)
 	}
 
-	ErrorTypeCopyVarPtr := uintptr(unsafe.Pointer(ErrorTypeCopyVar))
 	var ErrorTypeCopyVarRef uintptr
-	if cbRefPtr, ok := GetCallback(ErrorTypeCopyVarPtr); ok {
-		ErrorTypeCopyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Error, arg1 *Error) {
-			cbFn := *ErrorTypeCopyVar
-			cbFn(arg0, arg1)
+	if ErrorTypeCopyVar != nil {
+		ErrorTypeCopyVarPtr := uintptr(unsafe.Pointer(ErrorTypeCopyVar))
+		if cbRefPtr, ok := GetCallback(ErrorTypeCopyVarPtr); ok {
+			ErrorTypeCopyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Error, arg1 *Error) {
+				cbFn := *ErrorTypeCopyVar
+				cbFn(arg0, arg1)
+			}
+			ErrorTypeCopyVarRef = purego.NewCallback(fcb)
+			SaveCallback(ErrorTypeCopyVarPtr, ErrorTypeCopyVarRef)
 		}
-		ErrorTypeCopyVarRef = purego.NewCallback(fcb)
-		SaveCallback(ErrorTypeCopyVarPtr, ErrorTypeCopyVarRef)
 	}
 
-	ErrorTypeClearVarPtr := uintptr(unsafe.Pointer(ErrorTypeClearVar))
 	var ErrorTypeClearVarRef uintptr
-	if cbRefPtr, ok := GetCallback(ErrorTypeClearVarPtr); ok {
-		ErrorTypeClearVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Error) {
-			cbFn := *ErrorTypeClearVar
-			cbFn(arg0)
+	if ErrorTypeClearVar != nil {
+		ErrorTypeClearVarPtr := uintptr(unsafe.Pointer(ErrorTypeClearVar))
+		if cbRefPtr, ok := GetCallback(ErrorTypeClearVarPtr); ok {
+			ErrorTypeClearVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Error) {
+				cbFn := *ErrorTypeClearVar
+				cbFn(arg0)
+			}
+			ErrorTypeClearVarRef = purego.NewCallback(fcb)
+			SaveCallback(ErrorTypeClearVarPtr, ErrorTypeClearVarRef)
 		}
-		ErrorTypeClearVarRef = purego.NewCallback(fcb)
-		SaveCallback(ErrorTypeClearVarPtr, ErrorTypeClearVarRef)
 	}
 
 	cret := xErrorDomainRegister(ErrorTypeNameVar, ErrorTypePrivateSizeVar, ErrorTypeInitVarRef, ErrorTypeCopyVarRef, ErrorTypeClearVarRef)
@@ -213,43 +219,49 @@ var xErrorDomainRegisterStatic func(string, uint, uintptr, uintptr, uintptr) Qua
 // already takes care of passing valid information to this function.
 func ErrorDomainRegisterStatic(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, ErrorTypeInitVar *ErrorInitFunc, ErrorTypeCopyVar *ErrorCopyFunc, ErrorTypeClearVar *ErrorClearFunc) Quark {
 
-	ErrorTypeInitVarPtr := uintptr(unsafe.Pointer(ErrorTypeInitVar))
 	var ErrorTypeInitVarRef uintptr
-	if cbRefPtr, ok := GetCallback(ErrorTypeInitVarPtr); ok {
-		ErrorTypeInitVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Error) {
-			cbFn := *ErrorTypeInitVar
-			cbFn(arg0)
+	if ErrorTypeInitVar != nil {
+		ErrorTypeInitVarPtr := uintptr(unsafe.Pointer(ErrorTypeInitVar))
+		if cbRefPtr, ok := GetCallback(ErrorTypeInitVarPtr); ok {
+			ErrorTypeInitVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Error) {
+				cbFn := *ErrorTypeInitVar
+				cbFn(arg0)
+			}
+			ErrorTypeInitVarRef = purego.NewCallback(fcb)
+			SaveCallback(ErrorTypeInitVarPtr, ErrorTypeInitVarRef)
 		}
-		ErrorTypeInitVarRef = purego.NewCallback(fcb)
-		SaveCallback(ErrorTypeInitVarPtr, ErrorTypeInitVarRef)
 	}
 
-	ErrorTypeCopyVarPtr := uintptr(unsafe.Pointer(ErrorTypeCopyVar))
 	var ErrorTypeCopyVarRef uintptr
-	if cbRefPtr, ok := GetCallback(ErrorTypeCopyVarPtr); ok {
-		ErrorTypeCopyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Error, arg1 *Error) {
-			cbFn := *ErrorTypeCopyVar
-			cbFn(arg0, arg1)
+	if ErrorTypeCopyVar != nil {
+		ErrorTypeCopyVarPtr := uintptr(unsafe.Pointer(ErrorTypeCopyVar))
+		if cbRefPtr, ok := GetCallback(ErrorTypeCopyVarPtr); ok {
+			ErrorTypeCopyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Error, arg1 *Error) {
+				cbFn := *ErrorTypeCopyVar
+				cbFn(arg0, arg1)
+			}
+			ErrorTypeCopyVarRef = purego.NewCallback(fcb)
+			SaveCallback(ErrorTypeCopyVarPtr, ErrorTypeCopyVarRef)
 		}
-		ErrorTypeCopyVarRef = purego.NewCallback(fcb)
-		SaveCallback(ErrorTypeCopyVarPtr, ErrorTypeCopyVarRef)
 	}
 
-	ErrorTypeClearVarPtr := uintptr(unsafe.Pointer(ErrorTypeClearVar))
 	var ErrorTypeClearVarRef uintptr
-	if cbRefPtr, ok := GetCallback(ErrorTypeClearVarPtr); ok {
-		ErrorTypeClearVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *Error) {
-			cbFn := *ErrorTypeClearVar
-			cbFn(arg0)
+	if ErrorTypeClearVar != nil {
+		ErrorTypeClearVarPtr := uintptr(unsafe.Pointer(ErrorTypeClearVar))
+		if cbRefPtr, ok := GetCallback(ErrorTypeClearVarPtr); ok {
+			ErrorTypeClearVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Error) {
+				cbFn := *ErrorTypeClearVar
+				cbFn(arg0)
+			}
+			ErrorTypeClearVarRef = purego.NewCallback(fcb)
+			SaveCallback(ErrorTypeClearVarPtr, ErrorTypeClearVarRef)
 		}
-		ErrorTypeClearVarRef = purego.NewCallback(fcb)
-		SaveCallback(ErrorTypeClearVarPtr, ErrorTypeClearVarRef)
 	}
 
 	cret := xErrorDomainRegisterStatic(ErrorTypeNameVar, ErrorTypePrivateSizeVar, ErrorTypeInitVarRef, ErrorTypeCopyVarRef, ErrorTypeClearVarRef)

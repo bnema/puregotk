@@ -1028,17 +1028,19 @@ var xRegexReplaceEval func(uintptr, []string, int, int, RegexMatchFlags, uintptr
 func (x *Regex) ReplaceEval(StringVar []string, StringLenVar int, StartPositionVar int, MatchOptionsVar RegexMatchFlags, EvalVar *RegexEvalCallback, UserDataVar uintptr) (string, error) {
 	var cerr *Error
 
-	EvalVarPtr := uintptr(unsafe.Pointer(EvalVar))
 	var EvalVarRef uintptr
-	if cbRefPtr, ok := GetCallback(EvalVarPtr); ok {
-		EvalVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *MatchInfo, arg1 *String, arg2 uintptr) bool {
-			cbFn := *EvalVar
-			return cbFn(arg0, arg1, arg2)
+	if EvalVar != nil {
+		EvalVarPtr := uintptr(unsafe.Pointer(EvalVar))
+		if cbRefPtr, ok := GetCallback(EvalVarPtr); ok {
+			EvalVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *MatchInfo, arg1 *String, arg2 uintptr) bool {
+				cbFn := *EvalVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			EvalVarRef = purego.NewCallback(fcb)
+			SaveCallback(EvalVarPtr, EvalVarRef)
 		}
-		EvalVarRef = purego.NewCallback(fcb)
-		SaveCallback(EvalVarPtr, EvalVarRef)
 	}
 
 	cret := xRegexReplaceEval(x.GoPointer(), StringVar, StringLenVar, StartPositionVar, MatchOptionsVar, EvalVarRef, UserDataVar, &cerr)

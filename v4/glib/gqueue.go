@@ -100,17 +100,19 @@ var xQueueFindCustom func(uintptr, uintptr, uintptr) *List
 // first argument and the given user data as the second argument.
 func (x *Queue) FindCustom(DataVar uintptr, FuncVar *CompareFunc) *List {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) int {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	cret := xQueueFindCustom(x.GoPointer(), DataVar, FuncVarRef)
@@ -126,17 +128,19 @@ var xQueueForeach func(uintptr, uintptr, uintptr)
 // not modify any part of the queue after that element.
 func (x *Queue) Foreach(FuncVar *Func, UserDataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *FuncVar
-			cbFn(arg0, arg1)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xQueueForeach(x.GoPointer(), FuncVarRef, UserDataVar)
@@ -166,17 +170,19 @@ var xQueueFreeFull func(uintptr, uintptr)
 // element from it).
 func (x *Queue) FreeFull(FreeFuncVar *DestroyNotify) {
 
-	FreeFuncVarPtr := uintptr(unsafe.Pointer(FreeFuncVar))
 	var FreeFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FreeFuncVarPtr); ok {
-		FreeFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *FreeFuncVar
-			cbFn(arg0)
+	if FreeFuncVar != nil {
+		FreeFuncVarPtr := uintptr(unsafe.Pointer(FreeFuncVar))
+		if cbRefPtr, ok := GetCallback(FreeFuncVarPtr); ok {
+			FreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *FreeFuncVar
+				cbFn(arg0)
+			}
+			FreeFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FreeFuncVarPtr, FreeFuncVarRef)
 		}
-		FreeFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FreeFuncVarPtr, FreeFuncVarRef)
 	}
 
 	xQueueFreeFull(x.GoPointer(), FreeFuncVarRef)
@@ -264,17 +270,19 @@ var xQueueInsertSorted func(uintptr, uintptr, uintptr, uintptr)
 // Inserts @data into @queue using @func to determine the new position.
 func (x *Queue) InsertSorted(DataVar uintptr, FuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *FuncVar
-			return cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xQueueInsertSorted(x.GoPointer(), DataVar, FuncVarRef, UserDataVar)
@@ -493,17 +501,19 @@ var xQueueSort func(uintptr, uintptr, uintptr)
 // Sorts @queue using @compare_func.
 func (x *Queue) Sort(CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
 	var CompareFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
-		CompareFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
-			cbFn := *CompareFuncVar
-			return cbFn(arg0, arg1, arg2)
+	if CompareFuncVar != nil {
+		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+		if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
+			CompareFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *CompareFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CompareFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
 		}
-		CompareFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
 	}
 
 	xQueueSort(x.GoPointer(), CompareFuncVarRef, UserDataVar)

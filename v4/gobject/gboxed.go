@@ -49,30 +49,34 @@ var xBoxedTypeRegisterStatic func(string, uintptr, uintptr) types.GType
 // will create the appropriate `*_get_type()` function for the boxed type.
 func BoxedTypeRegisterStatic(NameVar string, BoxedCopyVar *BoxedCopyFunc, BoxedFreeVar *BoxedFreeFunc) types.GType {
 
-	BoxedCopyVarPtr := uintptr(unsafe.Pointer(BoxedCopyVar))
 	var BoxedCopyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(BoxedCopyVarPtr); ok {
-		BoxedCopyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) uintptr {
-			cbFn := *BoxedCopyVar
-			return cbFn(arg0)
+	if BoxedCopyVar != nil {
+		BoxedCopyVarPtr := uintptr(unsafe.Pointer(BoxedCopyVar))
+		if cbRefPtr, ok := glib.GetCallback(BoxedCopyVarPtr); ok {
+			BoxedCopyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) uintptr {
+				cbFn := *BoxedCopyVar
+				return cbFn(arg0)
+			}
+			BoxedCopyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(BoxedCopyVarPtr, BoxedCopyVarRef)
 		}
-		BoxedCopyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(BoxedCopyVarPtr, BoxedCopyVarRef)
 	}
 
-	BoxedFreeVarPtr := uintptr(unsafe.Pointer(BoxedFreeVar))
 	var BoxedFreeVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(BoxedFreeVarPtr); ok {
-		BoxedFreeVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *BoxedFreeVar
-			cbFn(arg0)
+	if BoxedFreeVar != nil {
+		BoxedFreeVarPtr := uintptr(unsafe.Pointer(BoxedFreeVar))
+		if cbRefPtr, ok := glib.GetCallback(BoxedFreeVarPtr); ok {
+			BoxedFreeVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *BoxedFreeVar
+				cbFn(arg0)
+			}
+			BoxedFreeVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(BoxedFreeVarPtr, BoxedFreeVarRef)
 		}
-		BoxedFreeVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(BoxedFreeVarPtr, BoxedFreeVarRef)
 	}
 
 	cret := xBoxedTypeRegisterStatic(NameVar, BoxedCopyVarRef, BoxedFreeVarRef)

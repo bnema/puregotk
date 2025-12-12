@@ -97,17 +97,19 @@ var xAtomicRcBoxReleaseFull func(uintptr, uintptr)
 // when the callback is called and will be freed.
 func AtomicRcBoxReleaseFull(MemBlockVar uintptr, ClearFuncVar *DestroyNotify) {
 
-	ClearFuncVarPtr := uintptr(unsafe.Pointer(ClearFuncVar))
 	var ClearFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(ClearFuncVarPtr); ok {
-		ClearFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *ClearFuncVar
-			cbFn(arg0)
+	if ClearFuncVar != nil {
+		ClearFuncVarPtr := uintptr(unsafe.Pointer(ClearFuncVar))
+		if cbRefPtr, ok := GetCallback(ClearFuncVarPtr); ok {
+			ClearFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ClearFuncVar
+				cbFn(arg0)
+			}
+			ClearFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ClearFuncVarPtr, ClearFuncVarRef)
 		}
-		ClearFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(ClearFuncVarPtr, ClearFuncVarRef)
 	}
 
 	xAtomicRcBoxReleaseFull(MemBlockVar, ClearFuncVarRef)
@@ -198,17 +200,19 @@ var xRcBoxReleaseFull func(uintptr, uintptr)
 // resources allocated for @mem_block.
 func RcBoxReleaseFull(MemBlockVar uintptr, ClearFuncVar *DestroyNotify) {
 
-	ClearFuncVarPtr := uintptr(unsafe.Pointer(ClearFuncVar))
 	var ClearFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(ClearFuncVarPtr); ok {
-		ClearFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *ClearFuncVar
-			cbFn(arg0)
+	if ClearFuncVar != nil {
+		ClearFuncVarPtr := uintptr(unsafe.Pointer(ClearFuncVar))
+		if cbRefPtr, ok := GetCallback(ClearFuncVarPtr); ok {
+			ClearFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ClearFuncVar
+				cbFn(arg0)
+			}
+			ClearFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ClearFuncVarPtr, ClearFuncVarRef)
 		}
-		ClearFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(ClearFuncVarPtr, ClearFuncVarRef)
 	}
 
 	xRcBoxReleaseFull(MemBlockVar, ClearFuncVarRef)

@@ -516,17 +516,19 @@ var xSimpleAsyncResultRunInThread func(uintptr, uintptr, int, uintptr)
 // is needed to run the job and report its completion.
 func (x *SimpleAsyncResult) RunInThread(FuncVar *SimpleAsyncThreadFunc, IoPriorityVar int, CancellableVar *Cancellable) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
-			cbFn := *FuncVar
-			cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xSimpleAsyncResultRunInThread(x.GoPointer(), FuncVarRef, IoPriorityVar, CancellableVar.GoPointer())
@@ -611,17 +613,19 @@ var xSimpleAsyncResultSetOpResGpointer func(uintptr, uintptr, uintptr)
 // Sets the operation result within the asynchronous result to a pointer.
 func (x *SimpleAsyncResult) SetOpResGpointer(OpResVar uintptr, DestroyOpResVar *glib.DestroyNotify) {
 
-	DestroyOpResVarPtr := uintptr(unsafe.Pointer(DestroyOpResVar))
 	var DestroyOpResVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(DestroyOpResVarPtr); ok {
-		DestroyOpResVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DestroyOpResVar
-			cbFn(arg0)
+	if DestroyOpResVar != nil {
+		DestroyOpResVarPtr := uintptr(unsafe.Pointer(DestroyOpResVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyOpResVarPtr); ok {
+			DestroyOpResVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyOpResVar
+				cbFn(arg0)
+			}
+			DestroyOpResVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyOpResVarPtr, DestroyOpResVarRef)
 		}
-		DestroyOpResVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(DestroyOpResVarPtr, DestroyOpResVarRef)
 	}
 
 	xSimpleAsyncResultSetOpResGpointer(x.GoPointer(), OpResVar, DestroyOpResVarRef)

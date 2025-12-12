@@ -1193,30 +1193,34 @@ var xTreeViewInsertColumnWithDataFunc func(uintptr, int, string, uintptr, uintpt
 // “sizing” property set to be GTK_TREE_VIEW_COLUMN_FIXED.
 func (x *TreeView) InsertColumnWithDataFunc(PositionVar int, TitleVar string, CellVar *CellRenderer, FuncVar *TreeCellDataFunc, DataVar uintptr, DnotifyVar *glib.DestroyNotify) int {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 *TreeIter, arg4 uintptr) {
-			cbFn := *FuncVar
-			cbFn(arg0, arg1, arg2, arg3, arg4)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 *TreeIter, arg4 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2, arg3, arg4)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
-	DnotifyVarPtr := uintptr(unsafe.Pointer(DnotifyVar))
 	var DnotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(DnotifyVarPtr); ok {
-		DnotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DnotifyVar
-			cbFn(arg0)
+	if DnotifyVar != nil {
+		DnotifyVarPtr := uintptr(unsafe.Pointer(DnotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(DnotifyVarPtr); ok {
+			DnotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DnotifyVar
+				cbFn(arg0)
+			}
+			DnotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DnotifyVarPtr, DnotifyVarRef)
 		}
-		DnotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(DnotifyVarPtr, DnotifyVarRef)
 	}
 
 	cret := xTreeViewInsertColumnWithDataFunc(x.GoPointer(), PositionVar, TitleVar, CellVar.GoPointer(), FuncVarRef, DataVar, DnotifyVarRef)
@@ -1263,17 +1267,19 @@ var xTreeViewMapExpandedRows func(uintptr, uintptr, uintptr)
 // Calls @func on all expanded rows.
 func (x *TreeView) MapExpandedRows(FuncVar *TreeViewMappingFunc, DataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 *TreePath, arg2 uintptr) {
-			cbFn := *FuncVar
-			cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *TreePath, arg2 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xTreeViewMapExpandedRows(x.GoPointer(), FuncVarRef, DataVar)
@@ -1699,17 +1705,19 @@ var xTreeViewSetSearchEqualFunc func(uintptr, uintptr, uintptr, uintptr)
 // `GtkTreeView`SearchEqualFunc returns %FALSE on matches.
 func (x *TreeView) SetSearchEqualFunc(SearchEqualFuncVar *TreeViewSearchEqualFunc, SearchUserDataVar uintptr, SearchDestroyVar *glib.DestroyNotify) {
 
-	SearchEqualFuncVarPtr := uintptr(unsafe.Pointer(SearchEqualFuncVar))
 	var SearchEqualFuncVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(SearchEqualFuncVarPtr); ok {
-		SearchEqualFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 int, arg2 string, arg3 *TreeIter, arg4 uintptr) bool {
-			cbFn := *SearchEqualFuncVar
-			return cbFn(arg0, arg1, arg2, arg3, arg4)
+	if SearchEqualFuncVar != nil {
+		SearchEqualFuncVarPtr := uintptr(unsafe.Pointer(SearchEqualFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(SearchEqualFuncVarPtr); ok {
+			SearchEqualFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 int, arg2 string, arg3 *TreeIter, arg4 uintptr) bool {
+				cbFn := *SearchEqualFuncVar
+				return cbFn(arg0, arg1, arg2, arg3, arg4)
+			}
+			SearchEqualFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(SearchEqualFuncVarPtr, SearchEqualFuncVarRef)
 		}
-		SearchEqualFuncVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(SearchEqualFuncVarPtr, SearchEqualFuncVarRef)
 	}
 
 	var SearchDestroyVarRef uintptr

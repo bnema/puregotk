@@ -420,17 +420,19 @@ var xTestAddDataFunc func(string, uintptr, uintptr)
 // and it is recommended to do so even if it isn’t.
 func TestAddDataFunc(TestpathVar string, TestDataVar uintptr, TestFuncVar *TestDataFunc) {
 
-	TestFuncVarPtr := uintptr(unsafe.Pointer(TestFuncVar))
 	var TestFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(TestFuncVarPtr); ok {
-		TestFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *TestFuncVar
-			cbFn(arg0)
+	if TestFuncVar != nil {
+		TestFuncVarPtr := uintptr(unsafe.Pointer(TestFuncVar))
+		if cbRefPtr, ok := GetCallback(TestFuncVarPtr); ok {
+			TestFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *TestFuncVar
+				cbFn(arg0)
+			}
+			TestFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(TestFuncVarPtr, TestFuncVarRef)
 		}
-		TestFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(TestFuncVarPtr, TestFuncVarRef)
 	}
 
 	xTestAddDataFunc(TestpathVar, TestDataVar, TestFuncVarRef)
@@ -445,30 +447,34 @@ var xTestAddDataFuncFull func(string, uintptr, uintptr, uintptr)
 // is freeing @test_data after the test run is complete.
 func TestAddDataFuncFull(TestpathVar string, TestDataVar uintptr, TestFuncVar *TestDataFunc, DataFreeFuncVar *DestroyNotify) {
 
-	TestFuncVarPtr := uintptr(unsafe.Pointer(TestFuncVar))
 	var TestFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(TestFuncVarPtr); ok {
-		TestFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *TestFuncVar
-			cbFn(arg0)
+	if TestFuncVar != nil {
+		TestFuncVarPtr := uintptr(unsafe.Pointer(TestFuncVar))
+		if cbRefPtr, ok := GetCallback(TestFuncVarPtr); ok {
+			TestFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *TestFuncVar
+				cbFn(arg0)
+			}
+			TestFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(TestFuncVarPtr, TestFuncVarRef)
 		}
-		TestFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(TestFuncVarPtr, TestFuncVarRef)
 	}
 
-	DataFreeFuncVarPtr := uintptr(unsafe.Pointer(DataFreeFuncVar))
 	var DataFreeFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(DataFreeFuncVarPtr); ok {
-		DataFreeFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DataFreeFuncVar
-			cbFn(arg0)
+	if DataFreeFuncVar != nil {
+		DataFreeFuncVarPtr := uintptr(unsafe.Pointer(DataFreeFuncVar))
+		if cbRefPtr, ok := GetCallback(DataFreeFuncVarPtr); ok {
+			DataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DataFreeFuncVar
+				cbFn(arg0)
+			}
+			DataFreeFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(DataFreeFuncVarPtr, DataFreeFuncVarRef)
 		}
-		DataFreeFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(DataFreeFuncVarPtr, DataFreeFuncVarRef)
 	}
 
 	xTestAddDataFuncFull(TestpathVar, TestDataVar, TestFuncVarRef, DataFreeFuncVarRef)
@@ -493,17 +499,19 @@ var xTestAddFunc func(string, uintptr)
 // it is recommended to do so even if it isn’t.
 func TestAddFunc(TestpathVar string, TestFuncVar *TestFunc) {
 
-	TestFuncVarPtr := uintptr(unsafe.Pointer(TestFuncVar))
 	var TestFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(TestFuncVarPtr); ok {
-		TestFuncVarRef = cbRefPtr
-	} else {
-		fcb := func() {
-			cbFn := *TestFuncVar
-			cbFn()
+	if TestFuncVar != nil {
+		TestFuncVarPtr := uintptr(unsafe.Pointer(TestFuncVar))
+		if cbRefPtr, ok := GetCallback(TestFuncVarPtr); ok {
+			TestFuncVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *TestFuncVar
+				cbFn()
+			}
+			TestFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(TestFuncVarPtr, TestFuncVarRef)
 		}
-		TestFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(TestFuncVarPtr, TestFuncVarRef)
 	}
 
 	xTestAddFunc(TestpathVar, TestFuncVarRef)
@@ -514,43 +522,49 @@ var xTestAddVtable func(string, uint, uintptr, uintptr, uintptr, uintptr)
 
 func TestAddVtable(TestpathVar string, DataSizeVar uint, TestDataVar uintptr, DataSetupVar *TestFixtureFunc, DataTestVar *TestFixtureFunc, DataTeardownVar *TestFixtureFunc) {
 
-	DataSetupVarPtr := uintptr(unsafe.Pointer(DataSetupVar))
 	var DataSetupVarRef uintptr
-	if cbRefPtr, ok := GetCallback(DataSetupVarPtr); ok {
-		DataSetupVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *DataSetupVar
-			cbFn(arg0, arg1)
+	if DataSetupVar != nil {
+		DataSetupVarPtr := uintptr(unsafe.Pointer(DataSetupVar))
+		if cbRefPtr, ok := GetCallback(DataSetupVarPtr); ok {
+			DataSetupVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *DataSetupVar
+				cbFn(arg0, arg1)
+			}
+			DataSetupVarRef = purego.NewCallback(fcb)
+			SaveCallback(DataSetupVarPtr, DataSetupVarRef)
 		}
-		DataSetupVarRef = purego.NewCallback(fcb)
-		SaveCallback(DataSetupVarPtr, DataSetupVarRef)
 	}
 
-	DataTestVarPtr := uintptr(unsafe.Pointer(DataTestVar))
 	var DataTestVarRef uintptr
-	if cbRefPtr, ok := GetCallback(DataTestVarPtr); ok {
-		DataTestVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *DataTestVar
-			cbFn(arg0, arg1)
+	if DataTestVar != nil {
+		DataTestVarPtr := uintptr(unsafe.Pointer(DataTestVar))
+		if cbRefPtr, ok := GetCallback(DataTestVarPtr); ok {
+			DataTestVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *DataTestVar
+				cbFn(arg0, arg1)
+			}
+			DataTestVarRef = purego.NewCallback(fcb)
+			SaveCallback(DataTestVarPtr, DataTestVarRef)
 		}
-		DataTestVarRef = purego.NewCallback(fcb)
-		SaveCallback(DataTestVarPtr, DataTestVarRef)
 	}
 
-	DataTeardownVarPtr := uintptr(unsafe.Pointer(DataTeardownVar))
 	var DataTeardownVarRef uintptr
-	if cbRefPtr, ok := GetCallback(DataTeardownVarPtr); ok {
-		DataTeardownVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *DataTeardownVar
-			cbFn(arg0, arg1)
+	if DataTeardownVar != nil {
+		DataTeardownVarPtr := uintptr(unsafe.Pointer(DataTeardownVar))
+		if cbRefPtr, ok := GetCallback(DataTeardownVarPtr); ok {
+			DataTeardownVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *DataTeardownVar
+				cbFn(arg0, arg1)
+			}
+			DataTeardownVarRef = purego.NewCallback(fcb)
+			SaveCallback(DataTeardownVarPtr, DataTeardownVarRef)
 		}
-		DataTeardownVarRef = purego.NewCallback(fcb)
-		SaveCallback(DataTeardownVarPtr, DataTeardownVarRef)
 	}
 
 	xTestAddVtable(TestpathVar, DataSizeVar, TestDataVar, DataSetupVarRef, DataTestVarRef, DataTeardownVarRef)
@@ -657,43 +671,49 @@ var xTestCreateCase func(string, uint, uintptr, uintptr, uintptr, uintptr) *Test
 // varying @test_name and @data_test arguments.
 func TestCreateCase(TestNameVar string, DataSizeVar uint, TestDataVar uintptr, DataSetupVar *TestFixtureFunc, DataTestVar *TestFixtureFunc, DataTeardownVar *TestFixtureFunc) *TestCase {
 
-	DataSetupVarPtr := uintptr(unsafe.Pointer(DataSetupVar))
 	var DataSetupVarRef uintptr
-	if cbRefPtr, ok := GetCallback(DataSetupVarPtr); ok {
-		DataSetupVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *DataSetupVar
-			cbFn(arg0, arg1)
+	if DataSetupVar != nil {
+		DataSetupVarPtr := uintptr(unsafe.Pointer(DataSetupVar))
+		if cbRefPtr, ok := GetCallback(DataSetupVarPtr); ok {
+			DataSetupVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *DataSetupVar
+				cbFn(arg0, arg1)
+			}
+			DataSetupVarRef = purego.NewCallback(fcb)
+			SaveCallback(DataSetupVarPtr, DataSetupVarRef)
 		}
-		DataSetupVarRef = purego.NewCallback(fcb)
-		SaveCallback(DataSetupVarPtr, DataSetupVarRef)
 	}
 
-	DataTestVarPtr := uintptr(unsafe.Pointer(DataTestVar))
 	var DataTestVarRef uintptr
-	if cbRefPtr, ok := GetCallback(DataTestVarPtr); ok {
-		DataTestVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *DataTestVar
-			cbFn(arg0, arg1)
+	if DataTestVar != nil {
+		DataTestVarPtr := uintptr(unsafe.Pointer(DataTestVar))
+		if cbRefPtr, ok := GetCallback(DataTestVarPtr); ok {
+			DataTestVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *DataTestVar
+				cbFn(arg0, arg1)
+			}
+			DataTestVarRef = purego.NewCallback(fcb)
+			SaveCallback(DataTestVarPtr, DataTestVarRef)
 		}
-		DataTestVarRef = purego.NewCallback(fcb)
-		SaveCallback(DataTestVarPtr, DataTestVarRef)
 	}
 
-	DataTeardownVarPtr := uintptr(unsafe.Pointer(DataTeardownVar))
 	var DataTeardownVarRef uintptr
-	if cbRefPtr, ok := GetCallback(DataTeardownVarPtr); ok {
-		DataTeardownVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr, arg1 uintptr) {
-			cbFn := *DataTeardownVar
-			cbFn(arg0, arg1)
+	if DataTeardownVar != nil {
+		DataTeardownVarPtr := uintptr(unsafe.Pointer(DataTeardownVar))
+		if cbRefPtr, ok := GetCallback(DataTeardownVarPtr); ok {
+			DataTeardownVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *DataTeardownVar
+				cbFn(arg0, arg1)
+			}
+			DataTeardownVarRef = purego.NewCallback(fcb)
+			SaveCallback(DataTeardownVarPtr, DataTeardownVarRef)
 		}
-		DataTeardownVarRef = purego.NewCallback(fcb)
-		SaveCallback(DataTeardownVarPtr, DataTeardownVarRef)
 	}
 
 	cret := xTestCreateCase(TestNameVar, DataSizeVar, TestDataVar, DataSetupVarRef, DataTestVarRef, DataTeardownVarRef)
@@ -1009,17 +1029,19 @@ var xTestLogSetFatalHandler func(uintptr, uintptr)
 // [Using Structured Logging](logging.html#using-structured-logging).
 func TestLogSetFatalHandler(LogFuncVar *TestLogFatalFunc, UserDataVar uintptr) {
 
-	LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
 	var LogFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
-		LogFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) bool {
-			cbFn := *LogFuncVar
-			return cbFn(arg0, arg1, arg2, arg3)
+	if LogFuncVar != nil {
+		LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
+		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
+			LogFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) bool {
+				cbFn := *LogFuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			LogFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
 		}
-		LogFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(LogFuncVarPtr, LogFuncVarRef)
 	}
 
 	xTestLogSetFatalHandler(LogFuncVarRef, UserDataVar)
@@ -1082,17 +1104,19 @@ var xTestQueueDestroy func(uintptr, uintptr)
 // before `A()` during teardown.
 func TestQueueDestroy(DestroyFuncVar *DestroyNotify, DestroyDataVar uintptr) {
 
-	DestroyFuncVarPtr := uintptr(unsafe.Pointer(DestroyFuncVar))
 	var DestroyFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(DestroyFuncVarPtr); ok {
-		DestroyFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DestroyFuncVar
-			cbFn(arg0)
+	if DestroyFuncVar != nil {
+		DestroyFuncVarPtr := uintptr(unsafe.Pointer(DestroyFuncVar))
+		if cbRefPtr, ok := GetCallback(DestroyFuncVarPtr); ok {
+			DestroyFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyFuncVar
+				cbFn(arg0)
+			}
+			DestroyFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(DestroyFuncVarPtr, DestroyFuncVarRef)
 		}
-		DestroyFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(DestroyFuncVarPtr, DestroyFuncVarRef)
 	}
 
 	xTestQueueDestroy(DestroyFuncVarRef, DestroyDataVar)

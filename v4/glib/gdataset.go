@@ -63,17 +63,19 @@ var xDatalistForeach func(**Data, uintptr, uintptr)
 // than skipping over elements that are removed.
 func DatalistForeach(DatalistVar **Data, FuncVar *DataForeachFunc, UserDataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 Quark, arg1 uintptr, arg2 uintptr) {
-			cbFn := *FuncVar
-			cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 Quark, arg1 uintptr, arg2 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xDatalistForeach(DatalistVar, FuncVarRef, UserDataVar)
@@ -288,17 +290,19 @@ var xDatasetForeach func(uintptr, uintptr, uintptr)
 // than skipping over elements that are removed.
 func DatasetForeach(DatasetLocationVar uintptr, FuncVar *DataForeachFunc, UserDataVar uintptr) {
 
-	FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
 	var FuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
-		FuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 Quark, arg1 uintptr, arg2 uintptr) {
-			cbFn := *FuncVar
-			cbFn(arg0, arg1, arg2)
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 Quark, arg1 uintptr, arg2 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
 		}
-		FuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(FuncVarPtr, FuncVarRef)
 	}
 
 	xDatasetForeach(DatasetLocationVar, FuncVarRef, UserDataVar)
@@ -332,17 +336,19 @@ var xDatasetIdSetDataFull func(uintptr, Quark, uintptr, uintptr)
 // is called.
 func DatasetIdSetDataFull(DatasetLocationVar uintptr, KeyIdVar Quark, DataVar uintptr, DestroyFuncVar *DestroyNotify) {
 
-	DestroyFuncVarPtr := uintptr(unsafe.Pointer(DestroyFuncVar))
 	var DestroyFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(DestroyFuncVarPtr); ok {
-		DestroyFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *DestroyFuncVar
-			cbFn(arg0)
+	if DestroyFuncVar != nil {
+		DestroyFuncVarPtr := uintptr(unsafe.Pointer(DestroyFuncVar))
+		if cbRefPtr, ok := GetCallback(DestroyFuncVarPtr); ok {
+			DestroyFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyFuncVar
+				cbFn(arg0)
+			}
+			DestroyFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(DestroyFuncVarPtr, DestroyFuncVarRef)
 		}
-		DestroyFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(DestroyFuncVarPtr, DestroyFuncVarRef)
 	}
 
 	xDatasetIdSetDataFull(DatasetLocationVar, KeyIdVar, DataVar, DestroyFuncVarRef)

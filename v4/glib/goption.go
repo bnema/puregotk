@@ -490,17 +490,19 @@ var xOptionGroupSetErrorHook func(uintptr, uintptr)
 // specified when constructing the group with g_option_group_new().
 func (x *OptionGroup) SetErrorHook(ErrorFuncVar *OptionErrorFunc) {
 
-	ErrorFuncVarPtr := uintptr(unsafe.Pointer(ErrorFuncVar))
 	var ErrorFuncVarRef uintptr
-	if cbRefPtr, ok := GetCallback(ErrorFuncVarPtr); ok {
-		ErrorFuncVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 *OptionContext, arg1 *OptionGroup, arg2 uintptr, arg3 **Error) {
-			cbFn := *ErrorFuncVar
-			cbFn(arg0, arg1, arg2, arg3)
+	if ErrorFuncVar != nil {
+		ErrorFuncVarPtr := uintptr(unsafe.Pointer(ErrorFuncVar))
+		if cbRefPtr, ok := GetCallback(ErrorFuncVarPtr); ok {
+			ErrorFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *OptionContext, arg1 *OptionGroup, arg2 uintptr, arg3 **Error) {
+				cbFn := *ErrorFuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			ErrorFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ErrorFuncVarPtr, ErrorFuncVarRef)
 		}
-		ErrorFuncVarRef = purego.NewCallback(fcb)
-		SaveCallback(ErrorFuncVarPtr, ErrorFuncVarRef)
 	}
 
 	xOptionGroupSetErrorHook(x.GoPointer(), ErrorFuncVarRef)

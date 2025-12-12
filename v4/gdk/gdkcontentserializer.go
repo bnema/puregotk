@@ -28,30 +28,34 @@ var xContentRegisterSerializer func(types.GType, string, uintptr, uintptr, uintp
 // so applications can override the built-in serializers.
 func ContentRegisterSerializer(TypeVar types.GType, MimeTypeVar string, SerializeVar *ContentSerializeFunc, DataVar uintptr, NotifyVar *glib.DestroyNotify) {
 
-	SerializeVarPtr := uintptr(unsafe.Pointer(SerializeVar))
 	var SerializeVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(SerializeVarPtr); ok {
-		SerializeVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *SerializeVar
-			cbFn(arg0)
+	if SerializeVar != nil {
+		SerializeVarPtr := uintptr(unsafe.Pointer(SerializeVar))
+		if cbRefPtr, ok := glib.GetCallback(SerializeVarPtr); ok {
+			SerializeVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *SerializeVar
+				cbFn(arg0)
+			}
+			SerializeVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(SerializeVarPtr, SerializeVarRef)
 		}
-		SerializeVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(SerializeVarPtr, SerializeVarRef)
 	}
 
-	NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
 	var NotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-		NotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *NotifyVar
-			cbFn(arg0)
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 		}
-		NotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 	}
 
 	xContentRegisterSerializer(TypeVar, MimeTypeVar, SerializeVarRef, DataVar, NotifyVarRef)
@@ -247,17 +251,19 @@ var xContentSerializerSetTaskData func(uintptr, uintptr, uintptr)
 // Associate data with the current serialization operation.
 func (x *ContentSerializer) SetTaskData(DataVar uintptr, NotifyVar *glib.DestroyNotify) {
 
-	NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
 	var NotifyVarRef uintptr
-	if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
-		NotifyVarRef = cbRefPtr
-	} else {
-		fcb := func(arg0 uintptr) {
-			cbFn := *NotifyVar
-			cbFn(arg0)
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 		}
-		NotifyVarRef = purego.NewCallback(fcb)
-		glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
 	}
 
 	xContentSerializerSetTaskData(x.GoPointer(), DataVar, NotifyVarRef)
