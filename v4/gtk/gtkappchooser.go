@@ -95,7 +95,7 @@ func (x *AppChooserBase) SetPropertyContentType(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("content-type", &v)
 }
 

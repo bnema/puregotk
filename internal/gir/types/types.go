@@ -658,7 +658,7 @@ func (p *Parameter) VarName() string {
 	return snaked + "Var"
 }
 
-func (p *Parameters) Template(ns string, ifacens string, kinds KindMap, throws bool) funcArgsTemplate {
+func (p *Parameters) Template(ns string, ifacens string, kinds KindMap, throws bool, ctx ArgContext) funcArgsTemplate {
 	if p == nil {
 		return funcArgsTemplate{}
 	}
@@ -668,7 +668,7 @@ func (p *Parameters) Template(ns string, ifacens string, kinds KindMap, throws b
 	}
 	args := funcArgsTemplate{}
 	for _, par := range params {
-		args.Add(par, ifacens, ns, kinds)
+		args.Add(par, ifacens, ns, kinds, ctx)
 	}
 	if throws {
 		args.AddThrows(ns)

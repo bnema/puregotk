@@ -174,15 +174,15 @@ func (x *Stack) AddChild(ChildVar *Widget) *StackPage {
 	return cls
 }
 
-var xStackAddNamed func(uintptr, uintptr, string) uintptr
+var xStackAddNamed func(uintptr, uintptr, uintptr) uintptr
 
 // Adds a child to @stack.
 //
 // The child is identified by the @name.
-func (x *Stack) AddNamed(ChildVar *Widget, NameVar string) *StackPage {
+func (x *Stack) AddNamed(ChildVar *Widget, NameVar *string) *StackPage {
 	var cls *StackPage
 
-	cret := xStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), NameVar)
+	cret := xStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), core.NullableStringToPtr(NameVar))
 
 	if cret == 0 {
 		return nil
@@ -193,17 +193,17 @@ func (x *Stack) AddNamed(ChildVar *Widget, NameVar string) *StackPage {
 	return cls
 }
 
-var xStackAddTitled func(uintptr, uintptr, string, string) uintptr
+var xStackAddTitled func(uintptr, uintptr, uintptr, string) uintptr
 
 // Adds a child to @stack.
 //
 // The child is identified by the @name. The @title
 // will be used by `GtkStackSwitcher` to represent
 // @child in a tab bar, so it should be short.
-func (x *Stack) AddTitled(ChildVar *Widget, NameVar string, TitleVar string) *StackPage {
+func (x *Stack) AddTitled(ChildVar *Widget, NameVar *string, TitleVar string) *StackPage {
 	var cls *StackPage
 
-	cret := xStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), NameVar, TitleVar)
+	cret := xStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), core.NullableStringToPtr(NameVar), TitleVar)
 
 	if cret == 0 {
 		return nil
@@ -573,7 +573,7 @@ func (x *Stack) GetPropertyVhomogeneous() bool {
 func (x *Stack) SetPropertyVisibleChildName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("visible-child-name", &v)
 }
 
@@ -1024,7 +1024,7 @@ func (c *StackPage) SetGoPointer(ptr uintptr) {
 func (x *StackPage) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -1041,7 +1041,7 @@ func (x *StackPage) GetPropertyIconName() string {
 func (x *StackPage) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -1083,7 +1083,7 @@ func (x *StackPage) GetPropertyNeedsAttention() bool {
 func (x *StackPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

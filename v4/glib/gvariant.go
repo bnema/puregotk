@@ -752,7 +752,7 @@ func NewVariantUint64(ValueVar uint64) *Variant {
 	return cret
 }
 
-var xNewVariantVa func(string, string, []interface{}) *Variant
+var xNewVariantVa func(string, uintptr, []interface{}) *Variant
 
 // This function is intended to be used by libraries based on
 // #GVariant that want to provide g_variant_new()-like functionality
@@ -790,9 +790,9 @@ var xNewVariantVa func(string, string, []interface{}) *Variant
 // At this point, the caller will have their own full reference to the
 // result.  This can also be done by adding the result to a container,
 // or by passing it to another g_variant_new() call.
-func NewVariantVa(FormatStringVar string, EndptrVar string, AppVar []interface{}) *Variant {
+func NewVariantVa(FormatStringVar string, EndptrVar *string, AppVar []interface{}) *Variant {
 
-	cret := xNewVariantVa(FormatStringVar, EndptrVar, AppVar)
+	cret := xNewVariantVa(FormatStringVar, core.NullableStringToPtr(EndptrVar), AppVar)
 	return cret
 }
 
@@ -1450,7 +1450,7 @@ func (x *Variant) GetUint64() uint64 {
 	return cret
 }
 
-var xVariantGetVa func(uintptr, string, string, []interface{})
+var xVariantGetVa func(uintptr, string, uintptr, []interface{})
 
 // This function is intended to be used by libraries based on #GVariant
 // that want to provide g_variant_get()-like functionality to their
@@ -1476,9 +1476,9 @@ var xVariantGetVa func(uintptr, string, string, []interface{})
 // the values and also determines if the values are copied or borrowed,
 // see the section on
 // [`GVariant` format strings](gvariant-format-strings.html#pointers).
-func (x *Variant) GetVa(FormatStringVar string, EndptrVar string, AppVar []interface{}) {
+func (x *Variant) GetVa(FormatStringVar string, EndptrVar *string, AppVar []interface{}) {
 
-	xVariantGetVa(x.GoPointer(), FormatStringVar, EndptrVar, AppVar)
+	xVariantGetVa(x.GoPointer(), FormatStringVar, core.NullableStringToPtr(EndptrVar), AppVar)
 
 }
 
@@ -2746,7 +2746,7 @@ func VariantIsSignature(StringVar string) bool {
 	return cret
 }
 
-var xVariantParse func(*VariantType, string, string, string, **Error) *Variant
+var xVariantParse func(*VariantType, string, uintptr, uintptr, **Error) *Variant
 
 // Parses a #GVariant from a text representation.
 //
@@ -2784,10 +2784,10 @@ var xVariantParse func(*VariantType, string, string, string, **Error) *Variant
 // There may be implementation specific restrictions on deeply nested values,
 // which would result in a %G_VARIANT_PARSE_ERROR_RECURSION error. #GVariant is
 // guaranteed to handle nesting up to at least 64 levels.
-func VariantParse(TypeVar *VariantType, TextVar string, LimitVar string, EndptrVar string) (*Variant, error) {
+func VariantParse(TypeVar *VariantType, TextVar string, LimitVar *string, EndptrVar *string) (*Variant, error) {
 	var cerr *Error
 
-	cret := xVariantParse(TypeVar, TextVar, LimitVar, EndptrVar, &cerr)
+	cret := xVariantParse(TypeVar, TextVar, core.NullableStringToPtr(LimitVar), core.NullableStringToPtr(EndptrVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

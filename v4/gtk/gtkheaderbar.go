@@ -201,7 +201,7 @@ func (x *HeaderBar) Remove(ChildVar *Widget) {
 
 }
 
-var xHeaderBarSetDecorationLayout func(uintptr, string)
+var xHeaderBarSetDecorationLayout func(uintptr, uintptr)
 
 // Sets the decoration layout for this header bar.
 //
@@ -220,9 +220,9 @@ var xHeaderBarSetDecorationLayout func(uintptr, string)
 //
 // For example, “icon:minimize,maximize,close” specifies an icon
 // on the left, and minimize, maximize and close buttons on the right.
-func (x *HeaderBar) SetDecorationLayout(LayoutVar string) {
+func (x *HeaderBar) SetDecorationLayout(LayoutVar *string) {
 
-	xHeaderBarSetDecorationLayout(x.GoPointer(), LayoutVar)
+	xHeaderBarSetDecorationLayout(x.GoPointer(), core.NullableStringToPtr(LayoutVar))
 
 }
 
@@ -288,7 +288,7 @@ func (c *HeaderBar) SetGoPointer(ptr uintptr) {
 func (x *HeaderBar) SetPropertyDecorationLayout(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("decoration-layout", &v)
 }
 

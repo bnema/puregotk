@@ -1249,7 +1249,7 @@ func (x *Thread) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewThread func(string, uintptr, uintptr) *Thread
+var xNewThread func(uintptr, uintptr, uintptr) *Thread
 
 // This function creates a new thread. The new thread starts by invoking
 // @func with the argument data. The thread will run until @func returns
@@ -1278,7 +1278,7 @@ var xNewThread func(string, uintptr, uintptr) *Thread
 // inheriting the thread priority but were spawned with the default priority.
 // Starting with GLib 2.64 the behaviour is now consistent between Windows and
 // POSIX and all threads inherit their parent thread's priority.
-func NewThread(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
+func NewThread(NameVar *string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
 
 	var FuncVarRef uintptr
 	if FuncVar != nil {
@@ -1295,18 +1295,18 @@ func NewThread(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
 		}
 	}
 
-	cret := xNewThread(NameVar, FuncVarRef, DataVar)
+	cret := xNewThread(core.NullableStringToPtr(NameVar), FuncVarRef, DataVar)
 	return cret
 }
 
-var xThreadTryNew func(string, uintptr, uintptr, **Error) *Thread
+var xThreadTryNew func(uintptr, uintptr, uintptr, **Error) *Thread
 
 // This function is the same as g_thread_new() except that
 // it allows for the possibility of failure.
 //
 // If a thread can not be created (due to resource limits),
 // @error is set and %NULL is returned.
-func ThreadTryNew(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) (*Thread, error) {
+func ThreadTryNew(NameVar *string, FuncVar *ThreadFunc, DataVar uintptr) (*Thread, error) {
 	var cerr *Error
 
 	var FuncVarRef uintptr
@@ -1324,7 +1324,7 @@ func ThreadTryNew(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) (*Thread
 		}
 	}
 
-	cret := xThreadTryNew(NameVar, FuncVarRef, DataVar, &cerr)
+	cret := xThreadTryNew(core.NullableStringToPtr(NameVar), FuncVarRef, DataVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

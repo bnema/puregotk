@@ -396,7 +396,7 @@ func (x *SplitButton) GetPropertyCanShrink() bool {
 func (x *SplitButton) SetPropertyDropdownTooltip(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("dropdown-tooltip", &v)
 }
 
@@ -418,7 +418,7 @@ func (x *SplitButton) GetPropertyDropdownTooltip() string {
 func (x *SplitButton) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -441,7 +441,7 @@ func (x *SplitButton) GetPropertyIconName() string {
 func (x *SplitButton) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 
@@ -815,9 +815,9 @@ func (x *SplitButton) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *SplitButton) SetActionName(ActionNameVar string) {
+func (x *SplitButton) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 

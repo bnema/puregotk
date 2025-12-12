@@ -423,7 +423,7 @@ func (x *ToplevelBase) SetPropertyStartupId(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("startup-id", &v)
 }
 
@@ -447,7 +447,7 @@ func (x *ToplevelBase) SetPropertyTitle(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("title", &v)
 }
 

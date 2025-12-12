@@ -480,7 +480,7 @@ func StrMatchString(SearchTermVar string, PotentialHitVar string, AcceptAlternat
 	return cret
 }
 
-var xStrToAscii func(string, string) string
+var xStrToAscii func(string, uintptr) string
 
 // Transliterate @str to plain ASCII.
 //
@@ -500,13 +500,13 @@ var xStrToAscii func(string, string) string
 // If you want to do translation for no specific locale, and you want it
 // to be done independently of the currently locale, specify `"C"` for
 // @from_locale.
-func StrToAscii(StrVar string, FromLocaleVar string) string {
+func StrToAscii(StrVar string, FromLocaleVar *string) string {
 
-	cret := xStrToAscii(StrVar, FromLocaleVar)
+	cret := xStrToAscii(StrVar, core.NullableStringToPtr(FromLocaleVar))
 	return cret
 }
 
-var xStrTokenizeAndFold func(string, string, *[]string) []string
+var xStrTokenizeAndFold func(string, uintptr, *[]string) []string
 
 // Tokenizes @string and performs folding on each token.
 //
@@ -523,9 +523,9 @@ var xStrTokenizeAndFold func(string, string, *[]string) []string
 // for doing so is unspecified, but @translit_locale (if specified) may
 // improve the transliteration if the language of the source string is
 // known.
-func StrTokenizeAndFold(StringVar string, TranslitLocaleVar string, AsciiAlternatesVar *[]string) []string {
+func StrTokenizeAndFold(StringVar string, TranslitLocaleVar *string, AsciiAlternatesVar *[]string) []string {
 
-	cret := xStrTokenizeAndFold(StringVar, TranslitLocaleVar, AsciiAlternatesVar)
+	cret := xStrTokenizeAndFold(StringVar, core.NullableStringToPtr(TranslitLocaleVar), AsciiAlternatesVar)
 	return cret
 }
 
@@ -635,7 +635,7 @@ func Strconcat(String1Var string, varArgs ...interface{}) string {
 	return cret
 }
 
-var xStrdelimit func(string, string, byte) string
+var xStrdelimit func(string, uintptr, byte) string
 
 // Converts any delimiter characters in @string to @new_delimiter.
 //
@@ -654,9 +654,9 @@ var xStrdelimit func(string, string, byte) string
 // …
 // g_free (reformatted);
 // ```
-func Strdelimit(StringVar string, DelimitersVar string, NewDelimiterVar byte) string {
+func Strdelimit(StringVar string, DelimitersVar *string, NewDelimiterVar byte) string {
 
-	cret := xStrdelimit(StringVar, DelimitersVar, NewDelimiterVar)
+	cret := xStrdelimit(StringVar, core.NullableStringToPtr(DelimitersVar), NewDelimiterVar)
 	return cret
 }
 
@@ -669,12 +669,12 @@ func Strdown(StringVar string) string {
 	return cret
 }
 
-var xStrdup func(string) string
+var xStrdup func(uintptr) string
 
 // Duplicates a string. If @str is `NULL` it returns `NULL`.
-func Strdup(StrVar string) string {
+func Strdup(StrVar *string) string {
 
-	cret := xStrdup(StrVar)
+	cret := xStrdup(core.NullableStringToPtr(StrVar))
 	return cret
 }
 
@@ -752,7 +752,7 @@ func Strerror(ErrnumVar int) string {
 	return cret
 }
 
-var xStrescape func(string, string) string
+var xStrescape func(string, uintptr) string
 
 // It replaces the following special characters in the string @source
 // with their corresponding C escape sequence:
@@ -773,9 +773,9 @@ var xStrescape func(string, string) string
 // Characters supplied in @exceptions are not escaped.
 //
 // [func@GLib.strcompress] does the reverse conversion.
-func Strescape(SourceVar string, ExceptionsVar string) string {
+func Strescape(SourceVar string, ExceptionsVar *string) string {
 
-	cret := xStrescape(SourceVar, ExceptionsVar)
+	cret := xStrescape(SourceVar, core.NullableStringToPtr(ExceptionsVar))
 	return cret
 }
 
@@ -790,17 +790,17 @@ func Strfreev(StrArrayVar []string) {
 
 }
 
-var xStrjoin func(string, ...interface{}) string
+var xStrjoin func(uintptr, ...interface{}) string
 
 // Joins a number of strings together to form one long string, with the
 // optional @separator inserted between each of them.
-func Strjoin(SeparatorVar string, varArgs ...interface{}) string {
+func Strjoin(SeparatorVar *string, varArgs ...interface{}) string {
 
-	cret := xStrjoin(SeparatorVar, varArgs...)
+	cret := xStrjoin(core.NullableStringToPtr(SeparatorVar), varArgs...)
 	return cret
 }
 
-var xStrjoinv func(string, []string) string
+var xStrjoinv func(uintptr, []string) string
 
 // Joins an array of strings together to form one long string, with the
 // optional @separator inserted between each of them.
@@ -808,9 +808,9 @@ var xStrjoinv func(string, []string) string
 // If @str_array has no items, the return value will be an
 // empty string. If @str_array contains a single item, @separator will not
 // appear in the resulting string.
-func Strjoinv(SeparatorVar string, StrArrayVar []string) string {
+func Strjoinv(SeparatorVar *string, StrArrayVar []string) string {
 
-	cret := xStrjoinv(SeparatorVar, StrArrayVar)
+	cret := xStrjoinv(core.NullableStringToPtr(SeparatorVar), StrArrayVar)
 	return cret
 }
 
@@ -869,7 +869,7 @@ func Strncasecmp(S1Var string, S2Var string, NVar uint) int {
 	return cret
 }
 
-var xStrndup func(string, uint) string
+var xStrndup func(uintptr, uint) string
 
 // Duplicates the first @n bytes of a string, returning a newly-allocated
 // buffer @n + 1 bytes long which will always be nul-terminated. If @str
@@ -878,9 +878,9 @@ var xStrndup func(string, uint) string
 //
 // To copy a number of characters from a UTF-8 encoded string,
 // use [func@GLib.utf8_strncpy] instead.
-func Strndup(StrVar string, NVar uint) string {
+func Strndup(StrVar *string, NVar uint) string {
 
-	cret := xStrndup(StrVar, NVar)
+	cret := xStrndup(core.NullableStringToPtr(StrVar), NVar)
 	return cret
 }
 

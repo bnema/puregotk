@@ -230,7 +230,7 @@ func (x *KeyFile) GetBooleanList(GroupNameVar string, KeyVar string, LengthVar *
 
 }
 
-var xKeyFileGetComment func(uintptr, string, string, **Error) string
+var xKeyFileGetComment func(uintptr, uintptr, uintptr, **Error) string
 
 // Retrieves a comment above @key from @group_name.
 //
@@ -241,10 +241,10 @@ var xKeyFileGetComment func(uintptr, string, string, **Error) string
 // Note that the returned string does not include the `#` comment markers,
 // but does include any whitespace after them (on each line). It includes
 // the line breaks between lines, but does not include the final line break.
-func (x *KeyFile) GetComment(GroupNameVar string, KeyVar string) (string, error) {
+func (x *KeyFile) GetComment(GroupNameVar *string, KeyVar *string) (string, error) {
 	var cerr *Error
 
-	cret := xKeyFileGetComment(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
+	cret := xKeyFileGetComment(x.GoPointer(), core.NullableStringToPtr(GroupNameVar), core.NullableStringToPtr(KeyVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -377,7 +377,7 @@ func (x *KeyFile) GetKeys(GroupNameVar string, LengthVar *uint) ([]string, error
 
 }
 
-var xKeyFileGetLocaleForKey func(uintptr, string, string, string) string
+var xKeyFileGetLocaleForKey func(uintptr, string, string, uintptr) string
 
 // Returns the actual locale which the result of
 // [method@GLib.KeyFile.get_locale_string] or
@@ -388,13 +388,13 @@ var xKeyFileGetLocaleForKey func(uintptr, string, string, string) string
 // @group_name, @key and @locale, the result of those functions will
 // have originally been tagged with the locale that is the result of
 // this function.
-func (x *KeyFile) GetLocaleForKey(GroupNameVar string, KeyVar string, LocaleVar string) string {
+func (x *KeyFile) GetLocaleForKey(GroupNameVar string, KeyVar string, LocaleVar *string) string {
 
-	cret := xKeyFileGetLocaleForKey(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar)
+	cret := xKeyFileGetLocaleForKey(x.GoPointer(), GroupNameVar, KeyVar, core.NullableStringToPtr(LocaleVar))
 	return cret
 }
 
-var xKeyFileGetLocaleString func(uintptr, string, string, string, **Error) string
+var xKeyFileGetLocaleString func(uintptr, string, string, uintptr, **Error) string
 
 // Returns the value associated with @key under @group_name
 // translated in the given @locale if available.
@@ -412,10 +412,10 @@ var xKeyFileGetLocaleString func(uintptr, string, string, string, **Error) strin
 // returned. If the value associated
 // with @key cannot be interpreted or no suitable translation can
 // be found then the untranslated value is returned.
-func (x *KeyFile) GetLocaleString(GroupNameVar string, KeyVar string, LocaleVar string) (string, error) {
+func (x *KeyFile) GetLocaleString(GroupNameVar string, KeyVar string, LocaleVar *string) (string, error) {
 	var cerr *Error
 
-	cret := xKeyFileGetLocaleString(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar, &cerr)
+	cret := xKeyFileGetLocaleString(x.GoPointer(), GroupNameVar, KeyVar, core.NullableStringToPtr(LocaleVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -423,7 +423,7 @@ func (x *KeyFile) GetLocaleString(GroupNameVar string, KeyVar string, LocaleVar 
 
 }
 
-var xKeyFileGetLocaleStringList func(uintptr, string, string, string, *uint, **Error) []string
+var xKeyFileGetLocaleStringList func(uintptr, string, string, uintptr, *uint, **Error) []string
 
 // Returns the values associated with @key under @group_name
 // translated in the given @locale if available.
@@ -443,10 +443,10 @@ var xKeyFileGetLocaleStringList func(uintptr, string, string, string, *uint, **E
 // can be found then the untranslated values are returned. The
 // returned array is `NULL`-terminated, so @length may optionally
 // be `NULL`.
-func (x *KeyFile) GetLocaleStringList(GroupNameVar string, KeyVar string, LocaleVar string, LengthVar *uint) ([]string, error) {
+func (x *KeyFile) GetLocaleStringList(GroupNameVar string, KeyVar string, LocaleVar *string, LengthVar *uint) ([]string, error) {
 	var cerr *Error
 
-	cret := xKeyFileGetLocaleStringList(x.GoPointer(), GroupNameVar, KeyVar, LocaleVar, LengthVar, &cerr)
+	cret := xKeyFileGetLocaleStringList(x.GoPointer(), GroupNameVar, KeyVar, core.NullableStringToPtr(LocaleVar), LengthVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -686,17 +686,17 @@ func (x *KeyFile) Ref() *KeyFile {
 	return cret
 }
 
-var xKeyFileRemoveComment func(uintptr, string, string, **Error) bool
+var xKeyFileRemoveComment func(uintptr, uintptr, uintptr, **Error) bool
 
 // Removes a comment above @key from @group_name.
 //
 // If @key is `NULL` then @comment will be removed above @group_name.
 // If both @key and @group_name are `NULL`, then @comment will
 // be removed above the first group in the file.
-func (x *KeyFile) RemoveComment(GroupNameVar string, KeyVar string) (bool, error) {
+func (x *KeyFile) RemoveComment(GroupNameVar *string, KeyVar *string) (bool, error) {
 	var cerr *Error
 
-	cret := xKeyFileRemoveComment(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
+	cret := xKeyFileRemoveComment(x.GoPointer(), core.NullableStringToPtr(GroupNameVar), core.NullableStringToPtr(KeyVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -778,7 +778,7 @@ func (x *KeyFile) SetBooleanList(GroupNameVar string, KeyVar string, ListVar []b
 
 }
 
-var xKeyFileSetComment func(uintptr, string, string, string, **Error) bool
+var xKeyFileSetComment func(uintptr, uintptr, uintptr, string, **Error) bool
 
 // Places a comment above @key from @group_name.
 //
@@ -793,10 +793,10 @@ var xKeyFileSetComment func(uintptr, string, string, string, **Error) bool
 //
 // Note that this function prepends a `#` comment marker to
 // each line of @comment.
-func (x *KeyFile) SetComment(GroupNameVar string, KeyVar string, CommentVar string) (bool, error) {
+func (x *KeyFile) SetComment(GroupNameVar *string, KeyVar *string, CommentVar string) (bool, error) {
 	var cerr *Error
 
-	cret := xKeyFileSetComment(x.GoPointer(), GroupNameVar, KeyVar, CommentVar, &cerr)
+	cret := xKeyFileSetComment(x.GoPointer(), core.NullableStringToPtr(GroupNameVar), core.NullableStringToPtr(KeyVar), CommentVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

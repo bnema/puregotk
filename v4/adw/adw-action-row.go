@@ -253,12 +253,12 @@ func (x *ActionRow) SetActivatableWidget(WidgetVar *gtk.Widget) {
 
 }
 
-var xActionRowSetIconName func(uintptr, string)
+var xActionRowSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @self.
-func (x *ActionRow) SetIconName(IconNameVar string) {
+func (x *ActionRow) SetIconName(IconNameVar *string) {
 
-	xActionRowSetIconName(x.GoPointer(), IconNameVar)
+	xActionRowSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
@@ -325,7 +325,7 @@ func (c *ActionRow) SetGoPointer(ptr uintptr) {
 func (x *ActionRow) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -345,7 +345,7 @@ func (x *ActionRow) GetPropertyIconName() string {
 func (x *ActionRow) SetPropertySubtitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("subtitle", &v)
 }
 
@@ -740,9 +740,9 @@ func (x *ActionRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *ActionRow) SetActionName(ActionNameVar string) {
+func (x *ActionRow) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 

@@ -751,7 +751,7 @@ func (x *Entry) SetIconFromGicon(IconPosVar EntryIconPosition, IconVar gio.Icon)
 
 }
 
-var xEntrySetIconFromIconName func(uintptr, EntryIconPosition, string)
+var xEntrySetIconFromIconName func(uintptr, EntryIconPosition, uintptr)
 
 // Sets the icon shown in the entry at the specified position
 // from the current icon theme.
@@ -761,9 +761,9 @@ var xEntrySetIconFromIconName func(uintptr, EntryIconPosition, string)
 //
 // If @icon_name is %NULL, no icon will be shown in the
 // specified position.
-func (x *Entry) SetIconFromIconName(IconPosVar EntryIconPosition, IconNameVar string) {
+func (x *Entry) SetIconFromIconName(IconPosVar EntryIconPosition, IconNameVar *string) {
 
-	xEntrySetIconFromIconName(x.GoPointer(), IconPosVar, IconNameVar)
+	xEntrySetIconFromIconName(x.GoPointer(), IconPosVar, core.NullableStringToPtr(IconNameVar))
 
 }
 
@@ -787,7 +787,7 @@ func (x *Entry) SetIconSensitive(IconPosVar EntryIconPosition, SensitiveVar bool
 
 }
 
-var xEntrySetIconTooltipMarkup func(uintptr, EntryIconPosition, string)
+var xEntrySetIconTooltipMarkup func(uintptr, EntryIconPosition, uintptr)
 
 // Sets @tooltip as the contents of the tooltip for the icon at
 // the specified position.
@@ -798,13 +798,13 @@ var xEntrySetIconTooltipMarkup func(uintptr, EntryIconPosition, string)
 //
 // See also [method@Gtk.Widget.set_tooltip_markup] and
 // [method@Gtk.Entry.set_icon_tooltip_text].
-func (x *Entry) SetIconTooltipMarkup(IconPosVar EntryIconPosition, TooltipVar string) {
+func (x *Entry) SetIconTooltipMarkup(IconPosVar EntryIconPosition, TooltipVar *string) {
 
-	xEntrySetIconTooltipMarkup(x.GoPointer(), IconPosVar, TooltipVar)
+	xEntrySetIconTooltipMarkup(x.GoPointer(), IconPosVar, core.NullableStringToPtr(TooltipVar))
 
 }
 
-var xEntrySetIconTooltipText func(uintptr, EntryIconPosition, string)
+var xEntrySetIconTooltipText func(uintptr, EntryIconPosition, uintptr)
 
 // Sets @tooltip as the contents of the tooltip for the icon
 // at the specified position.
@@ -823,9 +823,9 @@ var xEntrySetIconTooltipText func(uintptr, EntryIconPosition, string)
 // [property@Gtk.Widget:has-tooltip] back to %TRUE, or
 // setting at least one non-empty tooltip on any icon
 // achieves the same result.
-func (x *Entry) SetIconTooltipText(IconPosVar EntryIconPosition, TooltipVar string) {
+func (x *Entry) SetIconTooltipText(IconPosVar EntryIconPosition, TooltipVar *string) {
 
-	xEntrySetIconTooltipText(x.GoPointer(), IconPosVar, TooltipVar)
+	xEntrySetIconTooltipText(x.GoPointer(), IconPosVar, core.NullableStringToPtr(TooltipVar))
 
 }
 
@@ -905,15 +905,15 @@ func (x *Entry) SetOverwriteMode(OverwriteVar bool) {
 
 }
 
-var xEntrySetPlaceholderText func(uintptr, string)
+var xEntrySetPlaceholderText func(uintptr, uintptr)
 
 // Sets text to be displayed in @entry when it is empty.
 //
 // This can be used to give a visual hint of the expected
 // contents of the `GtkEntry`.
-func (x *Entry) SetPlaceholderText(TextVar string) {
+func (x *Entry) SetPlaceholderText(TextVar *string) {
 
-	xEntrySetPlaceholderText(x.GoPointer(), TextVar)
+	xEntrySetPlaceholderText(x.GoPointer(), core.NullableStringToPtr(TextVar))
 
 }
 
@@ -1087,7 +1087,7 @@ func (x *Entry) GetPropertyHasFrame() bool {
 func (x *Entry) SetPropertyImModule(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("im-module", &v)
 }
 
@@ -1172,7 +1172,7 @@ func (x *Entry) GetPropertyMaxLength() int {
 func (x *Entry) SetPropertyMenuEntryIconPrimaryText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("menu-entry-icon-primary-text", &v)
 }
 
@@ -1211,7 +1211,7 @@ func (x *Entry) GetPropertyMenuEntryIconPrimaryText() string {
 func (x *Entry) SetPropertyMenuEntryIconSecondaryText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("menu-entry-icon-secondary-text", &v)
 }
 
@@ -1257,7 +1257,7 @@ func (x *Entry) GetPropertyOverwriteMode() bool {
 func (x *Entry) SetPropertyPlaceholderText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("placeholder-text", &v)
 }
 
@@ -1306,7 +1306,7 @@ func (x *Entry) GetPropertyPrimaryIconActivatable() bool {
 func (x *Entry) SetPropertyPrimaryIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("primary-icon-name", &v)
 }
 
@@ -1356,7 +1356,7 @@ func (x *Entry) GetPropertyPrimaryIconSensitive() bool {
 func (x *Entry) SetPropertyPrimaryIconTooltipMarkup(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("primary-icon-tooltip-markup", &v)
 }
 
@@ -1377,7 +1377,7 @@ func (x *Entry) GetPropertyPrimaryIconTooltipMarkup() string {
 func (x *Entry) SetPropertyPrimaryIconTooltipText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("primary-icon-tooltip-text", &v)
 }
 
@@ -1475,7 +1475,7 @@ func (x *Entry) GetPropertySecondaryIconActivatable() bool {
 func (x *Entry) SetPropertySecondaryIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("secondary-icon-name", &v)
 }
 
@@ -1525,7 +1525,7 @@ func (x *Entry) GetPropertySecondaryIconSensitive() bool {
 func (x *Entry) SetPropertySecondaryIconTooltipMarkup(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("secondary-icon-tooltip-markup", &v)
 }
 
@@ -1546,7 +1546,7 @@ func (x *Entry) GetPropertySecondaryIconTooltipMarkup() string {
 func (x *Entry) SetPropertySecondaryIconTooltipText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("secondary-icon-tooltip-text", &v)
 }
 

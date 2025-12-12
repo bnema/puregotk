@@ -446,7 +446,7 @@ func (c *PrintDialog) SetGoPointer(ptr uintptr) {
 func (x *PrintDialog) SetPropertyAcceptLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accept-label", &v)
 }
 
@@ -482,7 +482,7 @@ func (x *PrintDialog) GetPropertyModal() bool {
 func (x *PrintDialog) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

@@ -350,7 +350,7 @@ func (x *AlertDialog) GetPropertyDefaultButton() int {
 func (x *AlertDialog) SetPropertyDetail(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("detail", &v)
 }
 
@@ -367,7 +367,7 @@ func (x *AlertDialog) GetPropertyDetail() string {
 func (x *AlertDialog) SetPropertyMessage(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("message", &v)
 }
 

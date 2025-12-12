@@ -219,12 +219,12 @@ func (x *PreferencesGroup) Remove(ChildVar *gtk.Widget) {
 
 }
 
-var xPreferencesGroupSetDescription func(uintptr, string)
+var xPreferencesGroupSetDescription func(uintptr, uintptr)
 
 // Sets the description for @self.
-func (x *PreferencesGroup) SetDescription(DescriptionVar string) {
+func (x *PreferencesGroup) SetDescription(DescriptionVar *string) {
 
-	xPreferencesGroupSetDescription(x.GoPointer(), DescriptionVar)
+	xPreferencesGroupSetDescription(x.GoPointer(), core.NullableStringToPtr(DescriptionVar))
 
 }
 
@@ -279,7 +279,7 @@ func (c *PreferencesGroup) SetGoPointer(ptr uintptr) {
 func (x *PreferencesGroup) SetPropertyDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("description", &v)
 }
 
@@ -321,7 +321,7 @@ func (x *PreferencesGroup) GetPropertySeparateRows() bool {
 func (x *PreferencesGroup) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

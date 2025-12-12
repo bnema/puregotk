@@ -142,7 +142,7 @@ func (c *LockButton) SetGoPointer(ptr uintptr) {
 func (x *LockButton) SetPropertyTextLock(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text-lock", &v)
 }
 
@@ -159,7 +159,7 @@ func (x *LockButton) GetPropertyTextLock() string {
 func (x *LockButton) SetPropertyTextUnlock(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text-unlock", &v)
 }
 
@@ -176,7 +176,7 @@ func (x *LockButton) GetPropertyTextUnlock() string {
 func (x *LockButton) SetPropertyTooltipLock(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tooltip-lock", &v)
 }
 
@@ -193,7 +193,7 @@ func (x *LockButton) GetPropertyTooltipLock() string {
 func (x *LockButton) SetPropertyTooltipNotAuthorized(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tooltip-not-authorized", &v)
 }
 
@@ -210,7 +210,7 @@ func (x *LockButton) GetPropertyTooltipNotAuthorized() string {
 func (x *LockButton) SetPropertyTooltipUnlock(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tooltip-unlock", &v)
 }
 
@@ -517,9 +517,9 @@ func (x *LockButton) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *LockButton) SetActionName(ActionNameVar string) {
+func (x *LockButton) SetActionName(ActionNameVar *string) {
 
-	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 

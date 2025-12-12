@@ -438,7 +438,7 @@ func (x *IOChannel) SetCloseOnUnref(DoCloseVar bool) {
 
 }
 
-var xIOChannelSetEncoding func(uintptr, string, **Error) IOStatus
+var xIOChannelSetEncoding func(uintptr, uintptr, **Error) IOStatus
 
 // Sets the encoding for the input/output of the channel.
 // The internal encoding is always UTF-8. The default encoding
@@ -474,10 +474,10 @@ var xIOChannelSetEncoding func(uintptr, string, **Error) IOStatus
 // g_io_channel_seek_position() with an offset of %G_SEEK_CUR, and, if
 // they are "seekable", cannot call g_io_channel_write_chars() after
 // calling one of the API "read" functions.
-func (x *IOChannel) SetEncoding(EncodingVar string) (IOStatus, error) {
+func (x *IOChannel) SetEncoding(EncodingVar *string) (IOStatus, error) {
 	var cerr *Error
 
-	cret := xIOChannelSetEncoding(x.GoPointer(), EncodingVar, &cerr)
+	cret := xIOChannelSetEncoding(x.GoPointer(), core.NullableStringToPtr(EncodingVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -499,13 +499,13 @@ func (x *IOChannel) SetFlags(FlagsVar IOFlags) (IOStatus, error) {
 
 }
 
-var xIOChannelSetLineTerm func(uintptr, string, int)
+var xIOChannelSetLineTerm func(uintptr, uintptr, int)
 
 // This sets the string that #GIOChannel uses to determine
 // where in the file a line break occurs.
-func (x *IOChannel) SetLineTerm(LineTermVar string, LengthVar int) {
+func (x *IOChannel) SetLineTerm(LineTermVar *string, LengthVar int) {
 
-	xIOChannelSetLineTerm(x.GoPointer(), LineTermVar, LengthVar)
+	xIOChannelSetLineTerm(x.GoPointer(), core.NullableStringToPtr(LineTermVar), LengthVar)
 
 }
 

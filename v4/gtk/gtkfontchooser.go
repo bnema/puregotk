@@ -507,7 +507,7 @@ func (x *FontChooserBase) SetPropertyFont(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("font", &v)
 }
 
@@ -562,7 +562,7 @@ func (x *FontChooserBase) SetPropertyLanguage(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("language", &v)
 }
 
@@ -583,7 +583,7 @@ func (x *FontChooserBase) SetPropertyPreviewText(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("preview-text", &v)
 }
 

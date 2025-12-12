@@ -570,12 +570,12 @@ func (x *MountOperation) SetChoice(ChoiceVar int) {
 
 }
 
-var xMountOperationSetDomain func(uintptr, string)
+var xMountOperationSetDomain func(uintptr, uintptr)
 
 // Sets the mount operation's domain.
-func (x *MountOperation) SetDomain(DomainVar string) {
+func (x *MountOperation) SetDomain(DomainVar *string) {
 
-	xMountOperationSetDomain(x.GoPointer(), DomainVar)
+	xMountOperationSetDomain(x.GoPointer(), core.NullableStringToPtr(DomainVar))
 
 }
 
@@ -597,12 +597,12 @@ func (x *MountOperation) SetIsTcryptSystemVolume(SystemVolumeVar bool) {
 
 }
 
-var xMountOperationSetPassword func(uintptr, string)
+var xMountOperationSetPassword func(uintptr, uintptr)
 
 // Sets the mount operation's password to @password.
-func (x *MountOperation) SetPassword(PasswordVar string) {
+func (x *MountOperation) SetPassword(PasswordVar *string) {
 
-	xMountOperationSetPassword(x.GoPointer(), PasswordVar)
+	xMountOperationSetPassword(x.GoPointer(), core.NullableStringToPtr(PasswordVar))
 
 }
 
@@ -624,12 +624,12 @@ func (x *MountOperation) SetPim(PimVar uint) {
 
 }
 
-var xMountOperationSetUsername func(uintptr, string)
+var xMountOperationSetUsername func(uintptr, uintptr)
 
 // Sets the user name within @op to @username.
-func (x *MountOperation) SetUsername(UsernameVar string) {
+func (x *MountOperation) SetUsername(UsernameVar *string) {
 
-	xMountOperationSetUsername(x.GoPointer(), UsernameVar)
+	xMountOperationSetUsername(x.GoPointer(), core.NullableStringToPtr(UsernameVar))
 
 }
 
@@ -685,7 +685,7 @@ func (x *MountOperation) GetPropertyChoice() int {
 func (x *MountOperation) SetPropertyDomain(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("domain", &v)
 }
 
@@ -747,7 +747,7 @@ func (x *MountOperation) GetPropertyIsTcryptSystemVolume() bool {
 func (x *MountOperation) SetPropertyPassword(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("password", &v)
 }
 
@@ -785,7 +785,7 @@ func (x *MountOperation) GetPropertyPim() uint {
 func (x *MountOperation) SetPropertyUsername(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("username", &v)
 }
 

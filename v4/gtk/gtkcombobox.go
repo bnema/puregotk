@@ -449,7 +449,7 @@ func (x *ComboBox) SetActive(IndexVar int) {
 
 }
 
-var xComboBoxSetActiveId func(uintptr, string) bool
+var xComboBoxSetActiveId func(uintptr, uintptr) bool
 
 // Changes the active row of @combo_box to the one that has an ID equal to
 // @active_id.
@@ -460,9 +460,9 @@ var xComboBoxSetActiveId func(uintptr, string) bool
 // If the [property@Gtk.ComboBox:id-column] property of @combo_box is
 // unset or if no row has the given ID then the function does nothing
 // and returns %FALSE.
-func (x *ComboBox) SetActiveId(ActiveIdVar string) bool {
+func (x *ComboBox) SetActiveId(ActiveIdVar *string) bool {
 
-	cret := xComboBoxSetActiveId(x.GoPointer(), ActiveIdVar)
+	cret := xComboBoxSetActiveId(x.GoPointer(), core.NullableStringToPtr(ActiveIdVar))
 	return cret
 }
 
@@ -642,7 +642,7 @@ func (x *ComboBox) GetPropertyActive() int {
 func (x *ComboBox) SetPropertyActiveId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("active-id", &v)
 }
 

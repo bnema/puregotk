@@ -318,7 +318,7 @@ const (
 	SETTINGS_BACKEND_EXTENSION_POINT_NAME string = "gsettings-backend"
 )
 
-var xKeyfileSettingsBackendNew func(string, string, string) uintptr
+var xKeyfileSettingsBackendNew func(string, string, uintptr) uintptr
 
 // Creates a keyfile-backed [class@Gio.SettingsBackend].
 //
@@ -369,10 +369,10 @@ var xKeyfileSettingsBackendNew func(string, string, string) uintptr
 // the directory specified by the `GKeyfileSettingsBackend:defaults-dir`
 // property, and a list of locked keys from a text file with the name `locks` in
 // the same location.
-func KeyfileSettingsBackendNew(FilenameVar string, RootPathVar string, RootGroupVar string) *SettingsBackend {
+func KeyfileSettingsBackendNew(FilenameVar string, RootPathVar string, RootGroupVar *string) *SettingsBackend {
 	var cls *SettingsBackend
 
-	cret := xKeyfileSettingsBackendNew(FilenameVar, RootPathVar, RootGroupVar)
+	cret := xKeyfileSettingsBackendNew(FilenameVar, RootPathVar, core.NullableStringToPtr(RootGroupVar))
 
 	if cret == 0 {
 		return nil

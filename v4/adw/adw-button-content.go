@@ -233,7 +233,7 @@ func (x *ButtonContent) GetPropertyCanShrink() bool {
 func (x *ButtonContent) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -252,7 +252,7 @@ func (x *ButtonContent) GetPropertyIconName() string {
 func (x *ButtonContent) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 

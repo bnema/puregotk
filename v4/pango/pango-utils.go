@@ -59,7 +59,7 @@ func Log2visGetEmbeddingLevels(TextVar string, LengthVar int, PbaseDirVar *Direc
 	return cret
 }
 
-var xParseEnum func(types.GType, string, *int, bool, *string) bool
+var xParseEnum func(types.GType, uintptr, *int, bool, *string) bool
 
 // Parses an enum type and stores the result in @value.
 //
@@ -71,9 +71,9 @@ var xParseEnum func(types.GType, string, *int, bool, *string) bool
 //
 // If failed and @possible_values is not %NULL, returned string should
 // be freed using g_free().
-func ParseEnum(TypeVar types.GType, StrVar string, ValueVar *int, WarnVar bool, PossibleValuesVar *string) bool {
+func ParseEnum(TypeVar types.GType, StrVar *string, ValueVar *int, WarnVar bool, PossibleValuesVar *string) bool {
 
-	cret := xParseEnum(TypeVar, StrVar, ValueVar, WarnVar, PossibleValuesVar)
+	cret := xParseEnum(TypeVar, core.NullableStringToPtr(StrVar), ValueVar, WarnVar, PossibleValuesVar)
 	return cret
 }
 

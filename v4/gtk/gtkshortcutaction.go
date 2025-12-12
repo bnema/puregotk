@@ -333,7 +333,7 @@ func (c *NamedAction) SetGoPointer(ptr uintptr) {
 func (x *NamedAction) SetPropertyActionName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("action-name", &v)
 }
 
@@ -578,7 +578,7 @@ func (c *SignalAction) SetGoPointer(ptr uintptr) {
 func (x *SignalAction) SetPropertySignalName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("signal-name", &v)
 }
 

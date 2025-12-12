@@ -215,7 +215,7 @@ func NewDBusProxyForBusSync(BusTypeVar BusType, FlagsVar DBusProxyFlags, InfoVar
 
 }
 
-var xNewDBusProxySync func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, string, string, uintptr, **glib.Error) uintptr
+var xNewDBusProxySync func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, uintptr, string, string, uintptr, **glib.Error) uintptr
 
 // Creates a proxy for accessing @interface_name on the remote object
 // at @object_path owned by @name at @connection and synchronously
@@ -239,11 +239,11 @@ var xNewDBusProxySync func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, 
 // and g_dbus_proxy_new_finish() for the asynchronous version.
 //
 // #GDBusProxy is used in this [example][class@Gio.DBusProxy#a-watch-proxy-example].
-func NewDBusProxySync(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable) (*DBusProxy, error) {
+func NewDBusProxySync(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar *string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable) (*DBusProxy, error) {
 	var cls *DBusProxy
 	var cerr *glib.Error
 
-	cret := xNewDBusProxySync(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), &cerr)
+	cret := xNewDBusProxySync(ConnectionVar.GoPointer(), FlagsVar, InfoVar, core.NullableStringToPtr(NameVar), ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -738,7 +738,7 @@ func (x *DBusProxy) GetPropertyGInterfaceInfo() uintptr {
 func (x *DBusProxy) SetPropertyGInterfaceName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("g-interface-name", &v)
 }
 
@@ -755,7 +755,7 @@ func (x *DBusProxy) GetPropertyGInterfaceName() string {
 func (x *DBusProxy) SetPropertyGName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("g-name", &v)
 }
 
@@ -782,7 +782,7 @@ func (x *DBusProxy) GetPropertyGNameOwner() string {
 func (x *DBusProxy) SetPropertyGObjectPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("g-object-path", &v)
 }
 
@@ -1023,7 +1023,7 @@ func (x *DBusProxy) Init(CancellableVar *Cancellable) (bool, error) {
 
 }
 
-var xDBusProxyNew func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, string, string, uintptr, uintptr, uintptr)
+var xDBusProxyNew func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, uintptr, string, string, uintptr, uintptr, uintptr)
 
 // Creates a proxy for accessing @interface_name on the remote object
 // at @object_path owned by @name at @connection and asynchronously
@@ -1052,7 +1052,7 @@ var xDBusProxyNew func(uintptr, DBusProxyFlags, *DBusInterfaceInfo, string, stri
 // See g_dbus_proxy_new_sync() and for a synchronous version of this constructor.
 //
 // #GDBusProxy is used in this [example][class@Gio.DBusProxy#a-watch-proxy-example].
-func DBusProxyNew(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func DBusProxyNew(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVar *DBusInterfaceInfo, NameVar *string, ObjectPathVar string, InterfaceNameVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
 	var CallbackVarRef uintptr
 	if CallbackVar != nil {
@@ -1069,7 +1069,7 @@ func DBusProxyNew(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVa
 		}
 	}
 
-	xDBusProxyNew(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVar, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	xDBusProxyNew(ConnectionVar.GoPointer(), FlagsVar, InfoVar, core.NullableStringToPtr(NameVar), ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

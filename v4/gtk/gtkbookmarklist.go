@@ -46,13 +46,13 @@ func BookmarkListNewFromInternalPtr(ptr uintptr) *BookmarkList {
 	return cls
 }
 
-var xNewBookmarkList func(string, string) uintptr
+var xNewBookmarkList func(uintptr, uintptr) uintptr
 
 // Creates a new `GtkBookmarkList` with the given @attributes.
-func NewBookmarkList(FilenameVar string, AttributesVar string) *BookmarkList {
+func NewBookmarkList(FilenameVar *string, AttributesVar *string) *BookmarkList {
 	var cls *BookmarkList
 
-	cret := xNewBookmarkList(FilenameVar, AttributesVar)
+	cret := xNewBookmarkList(core.NullableStringToPtr(FilenameVar), core.NullableStringToPtr(AttributesVar))
 
 	if cret == 0 {
 		return nil
@@ -103,15 +103,15 @@ func (x *BookmarkList) IsLoading() bool {
 	return cret
 }
 
-var xBookmarkListSetAttributes func(uintptr, string)
+var xBookmarkListSetAttributes func(uintptr, uintptr)
 
 // Sets the @attributes to be enumerated and starts the enumeration.
 //
 // If @attributes is %NULL, no attributes will be queried, but a list
 // of `GFileInfo`s will still be created.
-func (x *BookmarkList) SetAttributes(AttributesVar string) {
+func (x *BookmarkList) SetAttributes(AttributesVar *string) {
 
-	xBookmarkListSetAttributes(x.GoPointer(), AttributesVar)
+	xBookmarkListSetAttributes(x.GoPointer(), core.NullableStringToPtr(AttributesVar))
 
 }
 
@@ -142,7 +142,7 @@ func (c *BookmarkList) SetGoPointer(ptr uintptr) {
 func (x *BookmarkList) SetPropertyAttributes(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("attributes", &v)
 }
 
@@ -159,7 +159,7 @@ func (x *BookmarkList) GetPropertyAttributes() string {
 func (x *BookmarkList) SetPropertyFilename(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("filename", &v)
 }
 

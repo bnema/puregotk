@@ -568,7 +568,7 @@ func (x *FontDescription) SetFamilyStatic(FamilyVar string) {
 
 }
 
-var xFontDescriptionSetFeatures func(uintptr, string)
+var xFontDescriptionSetFeatures func(uintptr, uintptr)
 
 // Sets the features field of a font description.
 //
@@ -594,9 +594,9 @@ var xFontDescriptionSetFeatures func(uintptr, string)
 // [hb_ot_layout_table_get_feature_tags](https://harfbuzz.github.io/harfbuzz-hb-ot-layout.html#hb-ot-layout-table-get-feature-tags).
 //
 // Features that are not supported by the font are silently ignored.
-func (x *FontDescription) SetFeatures(FeaturesVar string) {
+func (x *FontDescription) SetFeatures(FeaturesVar *string) {
 
-	xFontDescriptionSetFeatures(x.GoPointer(), FeaturesVar)
+	xFontDescriptionSetFeatures(x.GoPointer(), core.NullableStringToPtr(FeaturesVar))
 
 }
 
@@ -687,7 +687,7 @@ func (x *FontDescription) SetVariant(VariantVar Variant) {
 
 }
 
-var xFontDescriptionSetVariations func(uintptr, string)
+var xFontDescriptionSetVariations func(uintptr, uintptr)
 
 // Sets the variations field of a font description.
 //
@@ -705,9 +705,9 @@ var xFontDescriptionSetVariations func(uintptr, string)
 // Pango does not currently have a way to find supported axes of
 // a font. Both harfbuzz and freetype have API for this. See
 // for example [hb_ot_var_get_axis_infos](https://harfbuzz.github.io/harfbuzz-hb-ot-var.html#hb-ot-var-get-axis-infos).
-func (x *FontDescription) SetVariations(VariationsVar string) {
+func (x *FontDescription) SetVariations(VariationsVar *string) {
 
-	xFontDescriptionSetVariations(x.GoPointer(), VariationsVar)
+	xFontDescriptionSetVariations(x.GoPointer(), core.NullableStringToPtr(VariationsVar))
 
 }
 
@@ -1965,13 +1965,13 @@ func FontFamilyNewFromInternalPtr(ptr uintptr) *FontFamily {
 	return cls
 }
 
-var xFontFamilyGetFace func(uintptr, string) uintptr
+var xFontFamilyGetFace func(uintptr, uintptr) uintptr
 
 // Gets the `PangoFontFace` of @family with the given name.
-func (x *FontFamily) GetFace(NameVar string) *FontFace {
+func (x *FontFamily) GetFace(NameVar *string) *FontFace {
 	var cls *FontFace
 
-	cret := xFontFamilyGetFace(x.GoPointer(), NameVar)
+	cret := xFontFamilyGetFace(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 	if cret == 0 {
 		return nil

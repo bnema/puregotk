@@ -1017,7 +1017,7 @@ func (x *Window) SetHideOnClose(SettingVar bool) {
 
 }
 
-var xWindowSetIconName func(uintptr, string)
+var xWindowSetIconName func(uintptr, uintptr)
 
 // Sets the icon for the window from a named themed icon.
 //
@@ -1026,9 +1026,9 @@ var xWindowSetIconName func(uintptr, string)
 //
 // Note that this has nothing to do with the WM_ICON_NAME
 // property which is mentioned in the ICCCM.
-func (x *Window) SetIconName(NameVar string) {
+func (x *Window) SetIconName(NameVar *string) {
 
-	xWindowSetIconName(x.GoPointer(), NameVar)
+	xWindowSetIconName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -1093,7 +1093,7 @@ func (x *Window) SetStartupId(StartupIdVar string) {
 
 }
 
-var xWindowSetTitle func(uintptr, string)
+var xWindowSetTitle func(uintptr, uintptr)
 
 // Sets the title of the window.
 //
@@ -1105,9 +1105,9 @@ var xWindowSetTitle func(uintptr, string)
 // include the application name and current document filename, for example.
 //
 // Passing `NULL` does the same as setting the title to an empty string.
-func (x *Window) SetTitle(TitleVar string) {
+func (x *Window) SetTitle(TitleVar *string) {
 
-	xWindowSetTitle(x.GoPointer(), TitleVar)
+	xWindowSetTitle(x.GoPointer(), core.NullableStringToPtr(TitleVar))
 
 }
 
@@ -1409,7 +1409,7 @@ func (x *Window) GetPropertyHideOnClose() bool {
 func (x *Window) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -1522,7 +1522,7 @@ func (x *Window) GetPropertyResizable() bool {
 func (x *Window) SetPropertyStartupId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("startup-id", &v)
 }
 
@@ -1541,7 +1541,7 @@ func (x *Window) GetPropertySuspended() bool {
 func (x *Window) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

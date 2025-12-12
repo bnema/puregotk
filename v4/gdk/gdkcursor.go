@@ -335,7 +335,7 @@ func (x *Cursor) GetPropertyHotspotY() int {
 func (x *Cursor) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 

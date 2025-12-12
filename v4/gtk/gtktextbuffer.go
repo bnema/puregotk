@@ -813,7 +813,7 @@ func (x *TextBuffer) CreateChildAnchor(IterVar *TextIter) *TextChildAnchor {
 	return cls
 }
 
-var xTextBufferCreateMark func(uintptr, string, *TextIter, bool) uintptr
+var xTextBufferCreateMark func(uintptr, uintptr, *TextIter, bool) uintptr
 
 // Creates a mark at position @where.
 //
@@ -834,10 +834,10 @@ var xTextBufferCreateMark func(uintptr, string, *TextIter, bool) uintptr
 //
 // Emits the [signal@Gtk.TextBuffer::mark-set] signal as notification
 // of the mark's initial placement.
-func (x *TextBuffer) CreateMark(MarkNameVar string, WhereVar *TextIter, LeftGravityVar bool) *TextMark {
+func (x *TextBuffer) CreateMark(MarkNameVar *string, WhereVar *TextIter, LeftGravityVar bool) *TextMark {
 	var cls *TextMark
 
-	cret := xTextBufferCreateMark(x.GoPointer(), MarkNameVar, WhereVar, LeftGravityVar)
+	cret := xTextBufferCreateMark(x.GoPointer(), core.NullableStringToPtr(MarkNameVar), WhereVar, LeftGravityVar)
 
 	if cret == 0 {
 		return nil
@@ -848,7 +848,7 @@ func (x *TextBuffer) CreateMark(MarkNameVar string, WhereVar *TextIter, LeftGrav
 	return cls
 }
 
-var xTextBufferCreateTag func(uintptr, string, string, ...interface{}) uintptr
+var xTextBufferCreateTag func(uintptr, uintptr, uintptr, ...interface{}) uintptr
 
 // Creates a tag and adds it to the tag table for @buffer.
 //
@@ -863,10 +863,10 @@ var xTextBufferCreateTag func(uintptr, string, string, ...interface{}) uintptr
 //
 // The @first_property_name argument and subsequent arguments are a list
 // of properties to set on the tag, as with g_object_set().
-func (x *TextBuffer) CreateTag(TagNameVar string, FirstPropertyNameVar string, varArgs ...interface{}) *TextTag {
+func (x *TextBuffer) CreateTag(TagNameVar *string, FirstPropertyNameVar *string, varArgs ...interface{}) *TextTag {
 	var cls *TextTag
 
-	cret := xTextBufferCreateTag(x.GoPointer(), TagNameVar, FirstPropertyNameVar, varArgs...)
+	cret := xTextBufferCreateTag(x.GoPointer(), core.NullableStringToPtr(TagNameVar), core.NullableStringToPtr(FirstPropertyNameVar), varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -1821,7 +1821,7 @@ func (x *TextBuffer) GetPropertyHasSelection() bool {
 func (x *TextBuffer) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 

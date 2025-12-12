@@ -226,3 +226,20 @@ func GoString(c uintptr) string {
 	}
 	return string(unsafe.Slice((*byte)(ptr), length))
 }
+
+// NullableStringToPtr converts a nullable Go string to a uintptr suitable for C calls.
+func NullableStringToPtr(s *string) uintptr {
+	if s == nil {
+		return 0
+	}
+	return uintptr(unsafe.Pointer(CString(*s)))
+}
+
+// PtrToNullableString converts a nullable char* to a Go *string (nil when NULL).
+func PtrToNullableString(ptr uintptr) *string {
+	if ptr == 0 {
+		return nil
+	}
+	str := GoString(ptr)
+	return &str
+}

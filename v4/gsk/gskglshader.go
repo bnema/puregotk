@@ -585,7 +585,7 @@ func (c *GLShader) SetGoPointer(ptr uintptr) {
 func (x *GLShader) SetPropertyResource(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("resource", &v)
 }
 

@@ -143,13 +143,13 @@ func (x *DisplayManager) ListDisplays() *glib.SList {
 	return cret
 }
 
-var xDisplayManagerOpenDisplay func(uintptr, string) uintptr
+var xDisplayManagerOpenDisplay func(uintptr, uintptr) uintptr
 
 // Opens a display.
-func (x *DisplayManager) OpenDisplay(NameVar string) *Display {
+func (x *DisplayManager) OpenDisplay(NameVar *string) *Display {
 	var cls *Display
 
-	cret := xDisplayManagerOpenDisplay(x.GoPointer(), NameVar)
+	cret := xDisplayManagerOpenDisplay(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 	if cret == 0 {
 		return nil

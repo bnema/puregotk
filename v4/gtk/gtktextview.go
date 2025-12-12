@@ -1730,7 +1730,7 @@ func (x *TextView) GetPropertyEditable() bool {
 func (x *TextView) SetPropertyImModule(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("im-module", &v)
 }
 

@@ -537,9 +537,9 @@ func (x *Switch) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *Switch) SetActionName(ActionNameVar string) {
+func (x *Switch) SetActionName(ActionNameVar *string) {
 
-	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 

@@ -169,7 +169,7 @@ func (x *DBusServer) GetPropertyActive() bool {
 func (x *DBusServer) SetPropertyAddress(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("address", &v)
 }
 
@@ -196,7 +196,7 @@ func (x *DBusServer) GetPropertyClientAddress() string {
 func (x *DBusServer) SetPropertyGuid(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("guid", &v)
 }
 

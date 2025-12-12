@@ -172,41 +172,41 @@ func (x *Toggle) SetEnabled(EnabledVar bool) {
 
 }
 
-var xToggleSetIconName func(uintptr, string)
+var xToggleSetIconName func(uintptr, uintptr)
 
 // Sets the icon name of @self to @icon_name.
 //
 // The icon will be displayed alone or next to the label, unless
 // [property@Toggle:child] is set.
-func (x *Toggle) SetIconName(IconNameVar string) {
+func (x *Toggle) SetIconName(IconNameVar *string) {
 
-	xToggleSetIconName(x.GoPointer(), IconNameVar)
+	xToggleSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
-var xToggleSetLabel func(uintptr, string)
+var xToggleSetLabel func(uintptr, uintptr)
 
 // Sets the label of @self to @label.
 //
 // The label will be displayed alone or next to the icon, unless
 // [property@Toggle:child] is set, but will still be read out by the screen
 // reader.
-func (x *Toggle) SetLabel(LabelVar string) {
+func (x *Toggle) SetLabel(LabelVar *string) {
 
-	xToggleSetLabel(x.GoPointer(), LabelVar)
+	xToggleSetLabel(x.GoPointer(), core.NullableStringToPtr(LabelVar))
 
 }
 
-var xToggleSetName func(uintptr, string)
+var xToggleSetName func(uintptr, uintptr)
 
 // Sets the name of @self to @name.
 //
 // Allows accessing @self by its name instead of index.
 //
 // See [property@ToggleGroup:active-name].
-func (x *Toggle) SetName(NameVar string) {
+func (x *Toggle) SetName(NameVar *string) {
 
-	xToggleSetName(x.GoPointer(), NameVar)
+	xToggleSetName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -268,7 +268,7 @@ func (x *Toggle) GetPropertyEnabled() bool {
 func (x *Toggle) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -292,7 +292,7 @@ func (x *Toggle) GetPropertyIconName() string {
 func (x *Toggle) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 
@@ -317,7 +317,7 @@ func (x *Toggle) GetPropertyLabel() string {
 func (x *Toggle) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -340,7 +340,7 @@ func (x *Toggle) GetPropertyName() string {
 func (x *Toggle) SetPropertyTooltip(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tooltip", &v)
 }
 
@@ -659,16 +659,16 @@ func (x *ToggleGroup) SetActive(ActiveVar uint) {
 
 }
 
-var xToggleGroupSetActiveName func(uintptr, string)
+var xToggleGroupSetActiveName func(uintptr, uintptr)
 
 // Sets the active toggle for @self.
 //
 // The name can be set via [property@Toggle:name].
 //
 // If @name is `NULL`, unset the current active toggle instead.
-func (x *ToggleGroup) SetActiveName(NameVar string) {
+func (x *ToggleGroup) SetActiveName(NameVar *string) {
 
-	xToggleGroupSetActiveName(x.GoPointer(), NameVar)
+	xToggleGroupSetActiveName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -745,7 +745,7 @@ func (x *ToggleGroup) GetPropertyActive() uint {
 func (x *ToggleGroup) SetPropertyActiveName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("active-name", &v)
 }
 

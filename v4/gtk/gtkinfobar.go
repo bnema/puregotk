@@ -127,7 +127,7 @@ func NewInfoBar() *InfoBar {
 	return cls
 }
 
-var xNewInfoBarWithButtons func(string, ...interface{}) uintptr
+var xNewInfoBarWithButtons func(uintptr, ...interface{}) uintptr
 
 // Creates a new `GtkInfoBar` with buttons.
 //
@@ -137,10 +137,10 @@ var xNewInfoBarWithButtons func(string, ...interface{}) uintptr
 // user clicks one of these dialog buttons, GtkInfoBar will emit
 // the [signal@Gtk.InfoBar::response] signal with the corresponding
 // response ID.
-func NewInfoBarWithButtons(FirstButtonTextVar string, varArgs ...interface{}) *InfoBar {
+func NewInfoBarWithButtons(FirstButtonTextVar *string, varArgs ...interface{}) *InfoBar {
 	var cls *InfoBar
 
-	cret := xNewInfoBarWithButtons(FirstButtonTextVar, varArgs...)
+	cret := xNewInfoBarWithButtons(core.NullableStringToPtr(FirstButtonTextVar), varArgs...)
 
 	if cret == 0 {
 		return nil

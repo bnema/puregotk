@@ -76,13 +76,13 @@ func InscriptionNewFromInternalPtr(ptr uintptr) *Inscription {
 	return cls
 }
 
-var xNewInscription func(string) uintptr
+var xNewInscription func(uintptr) uintptr
 
 // Creates a new `GtkInscription` with the given text.
-func NewInscription(TextVar string) *Inscription {
+func NewInscription(TextVar *string) *Inscription {
 	var cls *Inscription
 
-	cret := xNewInscription(TextVar)
+	cret := xNewInscription(core.NullableStringToPtr(TextVar))
 
 	if cret == 0 {
 		return nil
@@ -208,14 +208,14 @@ func (x *Inscription) SetAttributes(AttrsVar *pango.AttrList) {
 
 }
 
-var xInscriptionSetMarkup func(uintptr, string)
+var xInscriptionSetMarkup func(uintptr, uintptr)
 
 // Utility function to set the text and attributes to be displayed.
 //
 // See the [property@Gtk.Inscription:markup] property.
-func (x *Inscription) SetMarkup(MarkupVar string) {
+func (x *Inscription) SetMarkup(MarkupVar *string) {
 
-	xInscriptionSetMarkup(x.GoPointer(), MarkupVar)
+	xInscriptionSetMarkup(x.GoPointer(), core.NullableStringToPtr(MarkupVar))
 
 }
 
@@ -263,12 +263,12 @@ func (x *Inscription) SetNatLines(NatLinesVar uint) {
 
 }
 
-var xInscriptionSetText func(uintptr, string)
+var xInscriptionSetText func(uintptr, uintptr)
 
 // Sets the text to be displayed.
-func (x *Inscription) SetText(TextVar string) {
+func (x *Inscription) SetText(TextVar *string) {
 
-	xInscriptionSetText(x.GoPointer(), TextVar)
+	xInscriptionSetText(x.GoPointer(), core.NullableStringToPtr(TextVar))
 
 }
 
@@ -351,7 +351,7 @@ func (x *Inscription) GetPropertyAttributes() uintptr {
 func (x *Inscription) SetPropertyMarkup(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("markup", &v)
 }
 
@@ -494,7 +494,7 @@ func (x *Inscription) GetPropertyNatLines() uint {
 func (x *Inscription) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 

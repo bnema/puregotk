@@ -144,7 +144,7 @@ func (x *WidgetClass) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xWidgetClassAddBinding func(uintptr, uint, gdk.ModifierType, uintptr, string, ...interface{})
+var xWidgetClassAddBinding func(uintptr, uint, gdk.ModifierType, uintptr, uintptr, ...interface{})
 
 // Creates a new shortcut for @widget_class that calls the given @callback
 // with arguments according to @format_string.
@@ -157,7 +157,7 @@ var xWidgetClassAddBinding func(uintptr, uint, gdk.ModifierType, uintptr, string
 // initialization. It does not provide for user data, if you need that,
 // you will have to use [method@Gtk.WidgetClass.add_shortcut] with a custom
 // shortcut.
-func (x *WidgetClass) AddBinding(KeyvalVar uint, ModsVar gdk.ModifierType, CallbackVar *ShortcutFunc, FormatStringVar string, varArgs ...interface{}) {
+func (x *WidgetClass) AddBinding(KeyvalVar uint, ModsVar gdk.ModifierType, CallbackVar *ShortcutFunc, FormatStringVar *string, varArgs ...interface{}) {
 
 	var CallbackVarRef uintptr
 	if CallbackVar != nil {
@@ -174,11 +174,11 @@ func (x *WidgetClass) AddBinding(KeyvalVar uint, ModsVar gdk.ModifierType, Callb
 		}
 	}
 
-	xWidgetClassAddBinding(x.GoPointer(), KeyvalVar, ModsVar, CallbackVarRef, FormatStringVar, varArgs...)
+	xWidgetClassAddBinding(x.GoPointer(), KeyvalVar, ModsVar, CallbackVarRef, core.NullableStringToPtr(FormatStringVar), varArgs...)
 
 }
 
-var xWidgetClassAddBindingAction func(uintptr, uint, gdk.ModifierType, string, string, ...interface{})
+var xWidgetClassAddBindingAction func(uintptr, uint, gdk.ModifierType, string, uintptr, ...interface{})
 
 // Creates a new shortcut for @widget_class that activates the given
 // @action_name with arguments read according to @format_string.
@@ -189,13 +189,13 @@ var xWidgetClassAddBindingAction func(uintptr, uint, gdk.ModifierType, string, s
 // This function is a convenience wrapper around
 // [method@Gtk.WidgetClass.add_shortcut] and must be called during class
 // initialization.
-func (x *WidgetClass) AddBindingAction(KeyvalVar uint, ModsVar gdk.ModifierType, ActionNameVar string, FormatStringVar string, varArgs ...interface{}) {
+func (x *WidgetClass) AddBindingAction(KeyvalVar uint, ModsVar gdk.ModifierType, ActionNameVar string, FormatStringVar *string, varArgs ...interface{}) {
 
-	xWidgetClassAddBindingAction(x.GoPointer(), KeyvalVar, ModsVar, ActionNameVar, FormatStringVar, varArgs...)
+	xWidgetClassAddBindingAction(x.GoPointer(), KeyvalVar, ModsVar, ActionNameVar, core.NullableStringToPtr(FormatStringVar), varArgs...)
 
 }
 
-var xWidgetClassAddBindingSignal func(uintptr, uint, gdk.ModifierType, string, string, ...interface{})
+var xWidgetClassAddBindingSignal func(uintptr, uint, gdk.ModifierType, string, uintptr, ...interface{})
 
 // Creates a new shortcut for @widget_class that emits the given action
 // @signal with arguments read according to @format_string.
@@ -206,9 +206,9 @@ var xWidgetClassAddBindingSignal func(uintptr, uint, gdk.ModifierType, string, s
 // This function is a convenience wrapper around
 // [method@Gtk.WidgetClass.add_shortcut] and must be called during class
 // initialization.
-func (x *WidgetClass) AddBindingSignal(KeyvalVar uint, ModsVar gdk.ModifierType, SignalVar string, FormatStringVar string, varArgs ...interface{}) {
+func (x *WidgetClass) AddBindingSignal(KeyvalVar uint, ModsVar gdk.ModifierType, SignalVar string, FormatStringVar *string, varArgs ...interface{}) {
 
-	xWidgetClassAddBindingSignal(x.GoPointer(), KeyvalVar, ModsVar, SignalVar, FormatStringVar, varArgs...)
+	xWidgetClassAddBindingSignal(x.GoPointer(), KeyvalVar, ModsVar, SignalVar, core.NullableStringToPtr(FormatStringVar), varArgs...)
 
 }
 
@@ -347,7 +347,7 @@ func (x *WidgetClass) GetLayoutManagerType() types.GType {
 	return cret
 }
 
-var xWidgetClassInstallAction func(uintptr, string, string, uintptr)
+var xWidgetClassInstallAction func(uintptr, string, uintptr, uintptr)
 
 // Adds an action for all instances of a widget class.
 //
@@ -356,7 +356,7 @@ var xWidgetClassInstallAction func(uintptr, string, string, uintptr)
 // Actions installed by this function are stateless. The only state
 // they have is whether they are enabled or not (which can be changed
 // with [method@Gtk.Widget.action_set_enabled]).
-func (x *WidgetClass) InstallAction(ActionNameVar string, ParameterTypeVar string, ActivateVar *WidgetActionActivateFunc) {
+func (x *WidgetClass) InstallAction(ActionNameVar string, ParameterTypeVar *string, ActivateVar *WidgetActionActivateFunc) {
 
 	var ActivateVarRef uintptr
 	if ActivateVar != nil {
@@ -373,7 +373,7 @@ func (x *WidgetClass) InstallAction(ActionNameVar string, ParameterTypeVar strin
 		}
 	}
 
-	xWidgetClassInstallAction(x.GoPointer(), ActionNameVar, ParameterTypeVar, ActivateVarRef)
+	xWidgetClassInstallAction(x.GoPointer(), ActionNameVar, core.NullableStringToPtr(ParameterTypeVar), ActivateVarRef)
 
 }
 
@@ -1755,7 +1755,7 @@ func (x *Widget) Activate() bool {
 	return cret
 }
 
-var xWidgetActivateAction func(uintptr, string, string, ...interface{}) bool
+var xWidgetActivateAction func(uintptr, string, uintptr, ...interface{}) bool
 
 // Activates an action for the widget.
 //
@@ -1764,9 +1764,9 @@ var xWidgetActivateAction func(uintptr, string, string, ...interface{}) bool
 //
 // This is a wrapper around [method@Gtk.Widget.activate_action_variant]
 // that constructs the @args variant according to @format_string.
-func (x *Widget) ActivateAction(NameVar string, FormatStringVar string, varArgs ...interface{}) bool {
+func (x *Widget) ActivateAction(NameVar string, FormatStringVar *string, varArgs ...interface{}) bool {
 
-	cret := xWidgetActivateAction(x.GoPointer(), NameVar, FormatStringVar, varArgs...)
+	cret := xWidgetActivateAction(x.GoPointer(), NameVar, core.NullableStringToPtr(FormatStringVar), varArgs...)
 	return cret
 }
 
@@ -2063,7 +2063,7 @@ func (x *Widget) CreatePangoContext() *pango.Context {
 	return cls
 }
 
-var xWidgetCreatePangoLayout func(uintptr, string) uintptr
+var xWidgetCreatePangoLayout func(uintptr, uintptr) uintptr
 
 // Creates a new `PangoLayout` that is configured for the widget.
 //
@@ -2074,10 +2074,10 @@ var xWidgetCreatePangoLayout func(uintptr, string) uintptr
 // you need to re-create it when the widgets `PangoContext`
 // is replaced. This can be tracked by listening to changes
 // of the [property@Gtk.Widget:root] property on the widget.
-func (x *Widget) CreatePangoLayout(TextVar string) *pango.Layout {
+func (x *Widget) CreatePangoLayout(TextVar *string) *pango.Layout {
 	var cls *pango.Layout
 
-	cret := xWidgetCreatePangoLayout(x.GoPointer(), TextVar)
+	cret := xWidgetCreatePangoLayout(x.GoPointer(), core.NullableStringToPtr(TextVar))
 
 	if cret == 0 {
 		return nil
@@ -3807,7 +3807,7 @@ func (x *Widget) SetCursor(CursorVar *gdk.Cursor) {
 
 }
 
-var xWidgetSetCursorFromName func(uintptr, string)
+var xWidgetSetCursorFromName func(uintptr, uintptr)
 
 // Sets the cursor to be shown when the pointer hovers over
 // the widget.
@@ -3820,9 +3820,9 @@ var xWidgetSetCursorFromName func(uintptr, string)
 // On top of that, this function allows @name to be `NULL`, which
 // will do the same as calling [method@Gtk.Widget.set_cursor]
 // with a `NULL` cursor.
-func (x *Widget) SetCursorFromName(NameVar string) {
+func (x *Widget) SetCursorFromName(NameVar *string) {
 
-	xWidgetSetCursorFromName(x.GoPointer(), NameVar)
+	xWidgetSetCursorFromName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -4223,7 +4223,7 @@ func (x *Widget) SetStateFlags(FlagsVar StateFlags, ClearVar bool) {
 
 }
 
-var xWidgetSetTooltipMarkup func(uintptr, string)
+var xWidgetSetTooltipMarkup func(uintptr, uintptr)
 
 // Sets the contents of the tooltip for widget.
 //
@@ -4234,13 +4234,13 @@ var xWidgetSetTooltipMarkup func(uintptr, string)
 // default handler for the [signal@Gtk.Widget::query-tooltip] signal.
 //
 // See also [method@Gtk.Tooltip.set_markup].
-func (x *Widget) SetTooltipMarkup(MarkupVar string) {
+func (x *Widget) SetTooltipMarkup(MarkupVar *string) {
 
-	xWidgetSetTooltipMarkup(x.GoPointer(), MarkupVar)
+	xWidgetSetTooltipMarkup(x.GoPointer(), core.NullableStringToPtr(MarkupVar))
 
 }
 
-var xWidgetSetTooltipText func(uintptr, string)
+var xWidgetSetTooltipText func(uintptr, uintptr)
 
 // Sets the contents of the tooltip for the widget.
 //
@@ -4252,9 +4252,9 @@ var xWidgetSetTooltipText func(uintptr, string)
 // [signal@Gtk.Widget::query-tooltip] signal.
 //
 // See also [method@Gtk.Tooltip.set_text].
-func (x *Widget) SetTooltipText(TextVar string) {
+func (x *Widget) SetTooltipText(TextVar *string) {
 
-	xWidgetSetTooltipText(x.GoPointer(), TextVar)
+	xWidgetSetTooltipText(x.GoPointer(), core.NullableStringToPtr(TextVar))
 
 }
 
@@ -4518,7 +4518,7 @@ func (x *Widget) GetPropertyCssClasses() []string {
 func (x *Widget) SetPropertyCssName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("css-name", &v)
 }
 
@@ -4813,7 +4813,7 @@ func (x *Widget) GetPropertyMarginTop() int {
 func (x *Widget) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -4901,7 +4901,7 @@ func (x *Widget) GetPropertySensitive() bool {
 func (x *Widget) SetPropertyTooltipMarkup(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tooltip-markup", &v)
 }
 
@@ -4941,7 +4941,7 @@ func (x *Widget) GetPropertyTooltipMarkup() string {
 func (x *Widget) SetPropertyTooltipText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tooltip-text", &v)
 }
 

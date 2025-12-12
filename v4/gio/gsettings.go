@@ -629,7 +629,7 @@ func NewSettings(SchemaIdVar string) *Settings {
 	return cls
 }
 
-var xNewSettingsFull func(*SettingsSchema, uintptr, string) uintptr
+var xNewSettingsFull func(*SettingsSchema, uintptr, uintptr) uintptr
 
 // Creates a new [class@Gio.Settings] object with a given schema, backend and
 // path.
@@ -654,10 +654,10 @@ var xNewSettingsFull func(*SettingsSchema, uintptr, string) uintptr
 // error if @path is `NULL` and the schema has no path of its own or if
 // @path is non-`NULL` and not equal to the path that the schema does
 // have.
-func NewSettingsFull(SchemaVar *SettingsSchema, BackendVar *SettingsBackend, PathVar string) *Settings {
+func NewSettingsFull(SchemaVar *SettingsSchema, BackendVar *SettingsBackend, PathVar *string) *Settings {
 	var cls *Settings
 
-	cret := xNewSettingsFull(SchemaVar, BackendVar.GoPointer(), PathVar)
+	cret := xNewSettingsFull(SchemaVar, BackendVar.GoPointer(), core.NullableStringToPtr(PathVar))
 
 	if cret == 0 {
 		return nil
@@ -1552,7 +1552,7 @@ func (x *Settings) GetPropertyHasUnapplied() bool {
 func (x *Settings) SetPropertyPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("path", &v)
 }
 
@@ -1577,7 +1577,7 @@ func (x *Settings) GetPropertyPath() string {
 func (x *Settings) SetPropertySchema(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("schema", &v)
 }
 
@@ -1603,7 +1603,7 @@ func (x *Settings) GetPropertySchema() string {
 func (x *Settings) SetPropertySchemaId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("schema-id", &v)
 }
 

@@ -1165,7 +1165,7 @@ func (x *Task) SetCheckCancellable(CheckCancellableVar bool) {
 
 }
 
-var xTaskSetName func(uintptr, string)
+var xTaskSetName func(uintptr, uintptr)
 
 // Sets @task’s name, used in debugging and profiling. The name defaults to
 // %NULL.
@@ -1176,9 +1176,9 @@ var xTaskSetName func(uintptr, string)
 //
 // This function may only be called before the @task is first used in a thread
 // other than the one it was constructed in.
-func (x *Task) SetName(NameVar string) {
+func (x *Task) SetName(NameVar *string) {
 
-	xTaskSetName(x.GoPointer(), NameVar)
+	xTaskSetName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -1253,7 +1253,7 @@ func (x *Task) SetSourceTag(SourceTagVar uintptr) {
 
 }
 
-var xTaskSetStaticName func(uintptr, string)
+var xTaskSetStaticName func(uintptr, uintptr)
 
 // Sets @task’s name, used in debugging and profiling.
 //
@@ -1261,9 +1261,9 @@ var xTaskSetStaticName func(uintptr, string)
 //
 // This function is called automatically by [method@Gio.Task.set_source_tag]
 // unless a name is set.
-func (x *Task) SetStaticName(NameVar string) {
+func (x *Task) SetStaticName(NameVar *string) {
 
-	xTaskSetStaticName(x.GoPointer(), NameVar)
+	xTaskSetStaticName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 

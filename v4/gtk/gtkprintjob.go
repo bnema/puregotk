@@ -434,7 +434,7 @@ func (c *PrintJob) SetGoPointer(ptr uintptr) {
 func (x *PrintJob) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

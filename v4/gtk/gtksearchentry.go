@@ -198,12 +198,12 @@ func (x *SearchEntry) SetKeyCaptureWidget(WidgetVar *Widget) {
 
 }
 
-var xSearchEntrySetPlaceholderText func(uintptr, string)
+var xSearchEntrySetPlaceholderText func(uintptr, uintptr)
 
 // Sets the placeholder text associated with @entry.
-func (x *SearchEntry) SetPlaceholderText(TextVar string) {
+func (x *SearchEntry) SetPlaceholderText(TextVar *string) {
 
-	xSearchEntrySetPlaceholderText(x.GoPointer(), TextVar)
+	xSearchEntrySetPlaceholderText(x.GoPointer(), core.NullableStringToPtr(TextVar))
 
 }
 
@@ -251,7 +251,7 @@ func (x *SearchEntry) GetPropertyActivatesDefault() bool {
 func (x *SearchEntry) SetPropertyPlaceholderText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("placeholder-text", &v)
 }
 

@@ -670,15 +670,15 @@ func DisplayGetDefault() *Display {
 	return cls
 }
 
-var xDisplayOpen func(string) uintptr
+var xDisplayOpen func(uintptr) uintptr
 
 // Opens a display.
 //
 // If opening the display fails, `NULL` is returned.
-func DisplayOpen(DisplayNameVar string) *Display {
+func DisplayOpen(DisplayNameVar *string) *Display {
 	var cls *Display
 
-	cret := xDisplayOpen(DisplayNameVar)
+	cret := xDisplayOpen(core.NullableStringToPtr(DisplayNameVar))
 
 	if cret == 0 {
 		return nil

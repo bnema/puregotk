@@ -598,19 +598,19 @@ const (
 	GUriErrorBadFragmentValue UriError = 9
 )
 
-var xUriBuild func(UriFlags, string, string, string, int, string, string, string) *Uri
+var xUriBuild func(UriFlags, string, uintptr, uintptr, int, string, uintptr, uintptr) *Uri
 
 // Creates a new #GUri from the given components according to @flags.
 //
 // See also g_uri_build_with_user(), which allows specifying the
 // components of the "userinfo" separately.
-func UriBuild(FlagsVar UriFlags, SchemeVar string, UserinfoVar string, HostVar string, PortVar int, PathVar string, QueryVar string, FragmentVar string) *Uri {
+func UriBuild(FlagsVar UriFlags, SchemeVar string, UserinfoVar *string, HostVar *string, PortVar int, PathVar string, QueryVar *string, FragmentVar *string) *Uri {
 
-	cret := xUriBuild(FlagsVar, SchemeVar, UserinfoVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar)
+	cret := xUriBuild(FlagsVar, SchemeVar, core.NullableStringToPtr(UserinfoVar), core.NullableStringToPtr(HostVar), PortVar, PathVar, core.NullableStringToPtr(QueryVar), core.NullableStringToPtr(FragmentVar))
 	return cret
 }
 
-var xUriBuildWithUser func(UriFlags, string, string, string, string, string, int, string, string, string) *Uri
+var xUriBuildWithUser func(UriFlags, string, uintptr, uintptr, uintptr, uintptr, int, string, uintptr, uintptr) *Uri
 
 // Creates a new #GUri from the given components according to @flags
 // (%G_URI_FLAGS_HAS_PASSWORD is added unconditionally). The @flags must be
@@ -620,13 +620,13 @@ var xUriBuildWithUser func(UriFlags, string, string, string, string, string, int
 // In contrast to g_uri_build(), this allows specifying the components
 // of the ‘userinfo’ field separately. Note that @user must be non-%NULL
 // if either @password or @auth_params is non-%NULL.
-func UriBuildWithUser(FlagsVar UriFlags, SchemeVar string, UserVar string, PasswordVar string, AuthParamsVar string, HostVar string, PortVar int, PathVar string, QueryVar string, FragmentVar string) *Uri {
+func UriBuildWithUser(FlagsVar UriFlags, SchemeVar string, UserVar *string, PasswordVar *string, AuthParamsVar *string, HostVar *string, PortVar int, PathVar string, QueryVar *string, FragmentVar *string) *Uri {
 
-	cret := xUriBuildWithUser(FlagsVar, SchemeVar, UserVar, PasswordVar, AuthParamsVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar)
+	cret := xUriBuildWithUser(FlagsVar, SchemeVar, core.NullableStringToPtr(UserVar), core.NullableStringToPtr(PasswordVar), core.NullableStringToPtr(AuthParamsVar), core.NullableStringToPtr(HostVar), PortVar, PathVar, core.NullableStringToPtr(QueryVar), core.NullableStringToPtr(FragmentVar))
 	return cret
 }
 
-var xUriEscapeBytes func([]byte, uint, string) string
+var xUriEscapeBytes func([]byte, uint, uintptr) string
 
 // Escapes arbitrary data for use in a URI.
 //
@@ -639,13 +639,13 @@ var xUriEscapeBytes func([]byte, uint, string) string
 //
 // Though technically incorrect, this will also allow escaping nul
 // bytes as `%“00`.
-func UriEscapeBytes(UnescapedVar []byte, LengthVar uint, ReservedCharsAllowedVar string) string {
+func UriEscapeBytes(UnescapedVar []byte, LengthVar uint, ReservedCharsAllowedVar *string) string {
 
-	cret := xUriEscapeBytes(UnescapedVar, LengthVar, ReservedCharsAllowedVar)
+	cret := xUriEscapeBytes(UnescapedVar, LengthVar, core.NullableStringToPtr(ReservedCharsAllowedVar))
 	return cret
 }
 
-var xUriEscapeString func(string, string, bool) string
+var xUriEscapeString func(string, uintptr, bool) string
 
 // Escapes a string for use in a URI.
 //
@@ -655,9 +655,9 @@ var xUriEscapeString func(string, string, bool) string
 // they are not escaped. This is useful for the "reserved" characters
 // in the URI specification, since those are allowed unescaped in some
 // portions of a URI.
-func UriEscapeString(UnescapedVar string, ReservedCharsAllowedVar string, AllowUtf8Var bool) string {
+func UriEscapeString(UnescapedVar string, ReservedCharsAllowedVar *string, AllowUtf8Var bool) string {
 
-	cret := xUriEscapeString(UnescapedVar, ReservedCharsAllowedVar, AllowUtf8Var)
+	cret := xUriEscapeString(UnescapedVar, core.NullableStringToPtr(ReservedCharsAllowedVar), AllowUtf8Var)
 	return cret
 }
 
@@ -682,7 +682,7 @@ func UriIsValid(UriStringVar string, FlagsVar UriFlags) (bool, error) {
 
 }
 
-var xUriJoin func(UriFlags, string, string, string, int, string, string, string) string
+var xUriJoin func(UriFlags, uintptr, uintptr, uintptr, int, string, uintptr, uintptr) string
 
 // Joins the given components together according to @flags to create
 // an absolute URI string. @path may not be %NULL (though it may be the empty
@@ -698,13 +698,13 @@ var xUriJoin func(UriFlags, string, string, string, int, string, string, string)
 //
 // %G_URI_FLAGS_HAS_PASSWORD and %G_URI_FLAGS_HAS_AUTH_PARAMS are ignored if set
 // in @flags.
-func UriJoin(FlagsVar UriFlags, SchemeVar string, UserinfoVar string, HostVar string, PortVar int, PathVar string, QueryVar string, FragmentVar string) string {
+func UriJoin(FlagsVar UriFlags, SchemeVar *string, UserinfoVar *string, HostVar *string, PortVar int, PathVar string, QueryVar *string, FragmentVar *string) string {
 
-	cret := xUriJoin(FlagsVar, SchemeVar, UserinfoVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar)
+	cret := xUriJoin(FlagsVar, core.NullableStringToPtr(SchemeVar), core.NullableStringToPtr(UserinfoVar), core.NullableStringToPtr(HostVar), PortVar, PathVar, core.NullableStringToPtr(QueryVar), core.NullableStringToPtr(FragmentVar))
 	return cret
 }
 
-var xUriJoinWithUser func(UriFlags, string, string, string, string, string, int, string, string, string) string
+var xUriJoinWithUser func(UriFlags, uintptr, uintptr, uintptr, uintptr, uintptr, int, string, uintptr, uintptr) string
 
 // Joins the given components together according to @flags to create
 // an absolute URI string. @path may not be %NULL (though it may be the empty
@@ -715,9 +715,9 @@ var xUriJoinWithUser func(UriFlags, string, string, string, string, string, int,
 //
 // %G_URI_FLAGS_HAS_PASSWORD and %G_URI_FLAGS_HAS_AUTH_PARAMS are ignored if set
 // in @flags.
-func UriJoinWithUser(FlagsVar UriFlags, SchemeVar string, UserVar string, PasswordVar string, AuthParamsVar string, HostVar string, PortVar int, PathVar string, QueryVar string, FragmentVar string) string {
+func UriJoinWithUser(FlagsVar UriFlags, SchemeVar *string, UserVar *string, PasswordVar *string, AuthParamsVar *string, HostVar *string, PortVar int, PathVar string, QueryVar *string, FragmentVar *string) string {
 
-	cret := xUriJoinWithUser(FlagsVar, SchemeVar, UserVar, PasswordVar, AuthParamsVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar)
+	cret := xUriJoinWithUser(FlagsVar, core.NullableStringToPtr(SchemeVar), core.NullableStringToPtr(UserVar), core.NullableStringToPtr(PasswordVar), core.NullableStringToPtr(AuthParamsVar), core.NullableStringToPtr(HostVar), PortVar, PathVar, core.NullableStringToPtr(QueryVar), core.NullableStringToPtr(FragmentVar))
 	return cret
 }
 
@@ -807,7 +807,7 @@ func UriPeekScheme(UriVar string) string {
 	return cret
 }
 
-var xUriResolveRelative func(string, string, UriFlags, **Error) string
+var xUriResolveRelative func(uintptr, string, UriFlags, **Error) string
 
 // Parses @uri_ref according to @flags and, if it is a
 // [relative URI](#relative-and-absolute-uris), resolves it relative to
@@ -816,10 +816,10 @@ var xUriResolveRelative func(string, string, UriFlags, **Error) string
 //
 // (If @base_uri_string is %NULL, this just returns @uri_ref, or
 // %NULL if @uri_ref is invalid or not absolute.)
-func UriResolveRelative(BaseUriStringVar string, UriRefVar string, FlagsVar UriFlags) (string, error) {
+func UriResolveRelative(BaseUriStringVar *string, UriRefVar string, FlagsVar UriFlags) (string, error) {
 	var cerr *Error
 
-	cret := xUriResolveRelative(BaseUriStringVar, UriRefVar, FlagsVar, &cerr)
+	cret := xUriResolveRelative(core.NullableStringToPtr(BaseUriStringVar), UriRefVar, FlagsVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -899,7 +899,7 @@ func UriSplitWithUser(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, Us
 
 }
 
-var xUriUnescapeBytes func(string, int, string, **Error) *Bytes
+var xUriUnescapeBytes func(string, int, uintptr, **Error) *Bytes
 
 // Unescapes a segment of an escaped string as binary data.
 //
@@ -911,10 +911,10 @@ var xUriUnescapeBytes func(string, int, string, **Error) *Bytes
 // returned. This is useful if you want to avoid for instance having a slash
 // being expanded in an escaped path element, which might confuse pathname
 // handling.
-func UriUnescapeBytes(EscapedStringVar string, LengthVar int, IllegalCharactersVar string) (*Bytes, error) {
+func UriUnescapeBytes(EscapedStringVar string, LengthVar int, IllegalCharactersVar *string) (*Bytes, error) {
 	var cerr *Error
 
-	cret := xUriUnescapeBytes(EscapedStringVar, LengthVar, IllegalCharactersVar, &cerr)
+	cret := xUriUnescapeBytes(EscapedStringVar, LengthVar, core.NullableStringToPtr(IllegalCharactersVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -922,7 +922,7 @@ func UriUnescapeBytes(EscapedStringVar string, LengthVar int, IllegalCharactersV
 
 }
 
-var xUriUnescapeSegment func(string, string, string) string
+var xUriUnescapeSegment func(uintptr, uintptr, uintptr) string
 
 // Unescapes a segment of an escaped string.
 //
@@ -934,13 +934,13 @@ var xUriUnescapeSegment func(string, string, string) string
 //
 // Note: `NUL` byte is not accepted in the output, in contrast to
 // g_uri_unescape_bytes().
-func UriUnescapeSegment(EscapedStringVar string, EscapedStringEndVar string, IllegalCharactersVar string) string {
+func UriUnescapeSegment(EscapedStringVar *string, EscapedStringEndVar *string, IllegalCharactersVar *string) string {
 
-	cret := xUriUnescapeSegment(EscapedStringVar, EscapedStringEndVar, IllegalCharactersVar)
+	cret := xUriUnescapeSegment(core.NullableStringToPtr(EscapedStringVar), core.NullableStringToPtr(EscapedStringEndVar), core.NullableStringToPtr(IllegalCharactersVar))
 	return cret
 }
 
-var xUriUnescapeString func(string, string) string
+var xUriUnescapeString func(string, uintptr) string
 
 // Unescapes a whole escaped string.
 //
@@ -949,9 +949,9 @@ var xUriUnescapeString func(string, string) string
 // that is an error and %NULL will be returned. This is useful if you
 // want to avoid for instance having a slash being expanded in an
 // escaped path element, which might confuse pathname handling.
-func UriUnescapeString(EscapedStringVar string, IllegalCharactersVar string) string {
+func UriUnescapeString(EscapedStringVar string, IllegalCharactersVar *string) string {
 
-	cret := xUriUnescapeString(EscapedStringVar, IllegalCharactersVar)
+	cret := xUriUnescapeString(EscapedStringVar, core.NullableStringToPtr(IllegalCharactersVar))
 	return cret
 }
 

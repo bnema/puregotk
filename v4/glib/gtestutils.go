@@ -379,25 +379,25 @@ func AssertionMessageError(DomainVar string, FileVar string, LineVar int, FuncVa
 
 }
 
-var xAssertionMessageExpr func(string, string, int, string, string)
+var xAssertionMessageExpr func(uintptr, string, int, string, uintptr)
 
 // Internal function used to print messages from the public
 // g_assert() and g_assert_not_reached() macros.
-func AssertionMessageExpr(DomainVar string, FileVar string, LineVar int, FuncVar string, ExprVar string) {
+func AssertionMessageExpr(DomainVar *string, FileVar string, LineVar int, FuncVar string, ExprVar *string) {
 
-	xAssertionMessageExpr(DomainVar, FileVar, LineVar, FuncVar, ExprVar)
+	xAssertionMessageExpr(core.NullableStringToPtr(DomainVar), FileVar, LineVar, FuncVar, core.NullableStringToPtr(ExprVar))
 
 }
 
-var xStrcmp0 func(string, string) int
+var xStrcmp0 func(uintptr, uintptr) int
 
 // Compares @str1 and @str2 like `strcmp()`.
 //
 // Handles `NULL` gracefully by sorting it before non-`NULL` strings.
 // Comparing two `NULL` pointers returns 0.
-func Strcmp0(Str1Var string, Str2Var string) int {
+func Strcmp0(Str1Var *string, Str2Var *string) int {
 
-	cret := xStrcmp0(Str1Var, Str2Var)
+	cret := xStrcmp0(core.NullableStringToPtr(Str1Var), core.NullableStringToPtr(Str2Var))
 	return cret
 }
 
@@ -742,7 +742,7 @@ func TestDisableCrashReporting() {
 
 }
 
-var xTestExpectMessage func(string, LogLevelFlags, string)
+var xTestExpectMessage func(uintptr, LogLevelFlags, string)
 
 // Indicates that a message with the given @log_domain and @log_level,
 // with text matching @pattern, is expected to be logged.
@@ -781,9 +781,9 @@ var xTestExpectMessage func(string, LogLevelFlags, string)
 //
 // If messages at [flags@GLib.LogLevelFlags.LEVEL_DEBUG] are emitted, but not explicitly
 // expected via [func@GLib.test_expect_message] then they will be ignored.
-func TestExpectMessage(LogDomainVar string, LogLevelVar LogLevelFlags, PatternVar string) {
+func TestExpectMessage(LogDomainVar *string, LogLevelVar LogLevelFlags, PatternVar string) {
 
-	xTestExpectMessage(LogDomainVar, LogLevelVar, PatternVar)
+	xTestExpectMessage(core.NullableStringToPtr(LogDomainVar), LogLevelVar, PatternVar)
 
 }
 
@@ -905,7 +905,7 @@ func TestGetRoot() *TestSuite {
 	return cret
 }
 
-var xTestIncomplete func(string)
+var xTestIncomplete func(uintptr)
 
 // Indicates that a test failed because of some incomplete
 // functionality.
@@ -918,9 +918,9 @@ var xTestIncomplete func(string)
 // the test.
 //
 // If not called from inside a test, this function does nothing.
-func TestIncomplete(MsgVar string) {
+func TestIncomplete(MsgVar *string) {
 
-	xTestIncomplete(MsgVar)
+	xTestIncomplete(core.NullableStringToPtr(MsgVar))
 
 }
 
@@ -1268,7 +1268,7 @@ func TestSetNonfatalAssertions() {
 
 }
 
-var xTestSkip func(string)
+var xTestSkip func(uintptr)
 
 // Indicates that a test was skipped.
 //
@@ -1278,9 +1278,9 @@ var xTestSkip func(string)
 // the test.
 //
 // If not called from inside a test, this function does nothing.
-func TestSkip(MsgVar string) {
+func TestSkip(MsgVar *string) {
 
-	xTestSkip(MsgVar)
+	xTestSkip(core.NullableStringToPtr(MsgVar))
 
 }
 
@@ -1439,20 +1439,20 @@ func TestTrapReachedTimeout() bool {
 	return cret
 }
 
-var xTestTrapSubprocess func(string, uint64, TestSubprocessFlags)
+var xTestTrapSubprocess func(uintptr, uint64, TestSubprocessFlags)
 
 // Respawns the test program to run only @test_path in a subprocess.
 //
 // This is equivalent to calling [func@GLib.test_trap_subprocess_with_envp]
 // with `envp` set to `NULL`. See the documentation for that function
 // for full details.
-func TestTrapSubprocess(TestPathVar string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
+func TestTrapSubprocess(TestPathVar *string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
 
-	xTestTrapSubprocess(TestPathVar, UsecTimeoutVar, TestFlagsVar)
+	xTestTrapSubprocess(core.NullableStringToPtr(TestPathVar), UsecTimeoutVar, TestFlagsVar)
 
 }
 
-var xTestTrapSubprocessWithEnvp func(string, []string, uint64, TestSubprocessFlags)
+var xTestTrapSubprocessWithEnvp func(uintptr, []string, uint64, TestSubprocessFlags)
 
 // Respawns the test program to run only @test_path in a subprocess with
 // a given environment.
@@ -1545,9 +1545,9 @@ var xTestTrapSubprocessWithEnvp func(string, []string, uint64, TestSubprocessFla
 //	}
 //
 // ```
-func TestTrapSubprocessWithEnvp(TestPathVar string, EnvpVar []string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
+func TestTrapSubprocessWithEnvp(TestPathVar *string, EnvpVar []string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
 
-	xTestTrapSubprocessWithEnvp(TestPathVar, EnvpVar, UsecTimeoutVar, TestFlagsVar)
+	xTestTrapSubprocessWithEnvp(core.NullableStringToPtr(TestPathVar), EnvpVar, UsecTimeoutVar, TestFlagsVar)
 
 }
 

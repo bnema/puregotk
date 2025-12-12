@@ -88,13 +88,13 @@ func NewLinkButton(UriVar string) *LinkButton {
 	return cls
 }
 
-var xNewLinkButtonWithLabel func(string, string) uintptr
+var xNewLinkButtonWithLabel func(string, uintptr) uintptr
 
 // Creates a new `GtkLinkButton` containing a label.
-func NewLinkButtonWithLabel(UriVar string, LabelVar string) *LinkButton {
+func NewLinkButtonWithLabel(UriVar string, LabelVar *string) *LinkButton {
 	var cls *LinkButton
 
-	cret := xNewLinkButtonWithLabel(UriVar, LabelVar)
+	cret := xNewLinkButtonWithLabel(UriVar, core.NullableStringToPtr(LabelVar))
 
 	if cret == 0 {
 		return nil
@@ -166,7 +166,7 @@ func (c *LinkButton) SetGoPointer(ptr uintptr) {
 func (x *LinkButton) SetPropertyUri(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("uri", &v)
 }
 
@@ -521,9 +521,9 @@ func (x *LinkButton) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *LinkButton) SetActionName(ActionNameVar string) {
+func (x *LinkButton) SetActionName(ActionNameVar *string) {
 
-	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 

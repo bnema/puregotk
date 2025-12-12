@@ -234,21 +234,21 @@ func (x *PreferencesPage) SetDescriptionCentered(CenteredVar bool) {
 
 }
 
-var xPreferencesPageSetIconName func(uintptr, string)
+var xPreferencesPageSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @self.
-func (x *PreferencesPage) SetIconName(IconNameVar string) {
+func (x *PreferencesPage) SetIconName(IconNameVar *string) {
 
-	xPreferencesPageSetIconName(x.GoPointer(), IconNameVar)
+	xPreferencesPageSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
-var xPreferencesPageSetName func(uintptr, string)
+var xPreferencesPageSetName func(uintptr, uintptr)
 
 // Sets the name of @self.
-func (x *PreferencesPage) SetName(NameVar string) {
+func (x *PreferencesPage) SetName(NameVar *string) {
 
-	xPreferencesPageSetName(x.GoPointer(), NameVar)
+	xPreferencesPageSetName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -286,7 +286,7 @@ func (c *PreferencesPage) SetGoPointer(ptr uintptr) {
 func (x *PreferencesPage) SetPropertyDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("description", &v)
 }
 
@@ -320,7 +320,7 @@ func (x *PreferencesPage) GetPropertyDescriptionCentered() bool {
 func (x *PreferencesPage) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -337,7 +337,7 @@ func (x *PreferencesPage) GetPropertyIconName() string {
 func (x *PreferencesPage) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -354,7 +354,7 @@ func (x *PreferencesPage) GetPropertyName() string {
 func (x *PreferencesPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

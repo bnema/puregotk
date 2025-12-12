@@ -524,14 +524,14 @@ func (x *Value) SetInt64(VInt64Var int64) {
 
 }
 
-var xValueSetInternedString func(uintptr, string)
+var xValueSetInternedString func(uintptr, uintptr)
 
 // Set the contents of a %G_TYPE_STRING #GValue to @v_string.  The string is
 // assumed to be static and interned (canonical, for example from
 // g_intern_string()), and is thus not duplicated when setting the #GValue.
-func (x *Value) SetInternedString(VStringVar string) {
+func (x *Value) SetInternedString(VStringVar *string) {
 
-	xValueSetInternedString(x.GoPointer(), VStringVar)
+	xValueSetInternedString(x.GoPointer(), core.NullableStringToPtr(VStringVar))
 
 }
 
@@ -620,7 +620,7 @@ func (x *Value) SetStaticBoxed(VBoxedVar uintptr) {
 
 }
 
-var xValueSetStaticString func(uintptr, string)
+var xValueSetStaticString func(uintptr, uintptr)
 
 // Set the contents of a %G_TYPE_STRING #GValue to @v_string.
 // The string is assumed to be static, and is thus not duplicated
@@ -628,27 +628,27 @@ var xValueSetStaticString func(uintptr, string)
 //
 // If the the string is a canonical string, using g_value_set_interned_string()
 // is more appropriate.
-func (x *Value) SetStaticString(VStringVar string) {
+func (x *Value) SetStaticString(VStringVar *string) {
 
-	xValueSetStaticString(x.GoPointer(), VStringVar)
+	xValueSetStaticString(x.GoPointer(), core.NullableStringToPtr(VStringVar))
 
 }
 
-var xValueSetString func(uintptr, string)
+var xValueSetString func(uintptr, uintptr)
 
 // Set the contents of a %G_TYPE_STRING #GValue to a copy of @v_string.
-func (x *Value) SetString(VStringVar string) {
+func (x *Value) SetString(VStringVar *string) {
 
-	xValueSetString(x.GoPointer(), VStringVar)
+	xValueSetString(x.GoPointer(), core.NullableStringToPtr(VStringVar))
 
 }
 
-var xValueSetStringTakeOwnership func(uintptr, string)
+var xValueSetStringTakeOwnership func(uintptr, uintptr)
 
 // This is an internal function introduced mainly for C marshallers.
-func (x *Value) SetStringTakeOwnership(VStringVar string) {
+func (x *Value) SetStringTakeOwnership(VStringVar *string) {
 
-	xValueSetStringTakeOwnership(x.GoPointer(), VStringVar)
+	xValueSetStringTakeOwnership(x.GoPointer(), core.NullableStringToPtr(VStringVar))
 
 }
 
@@ -752,12 +752,12 @@ func (x *Value) TakeParam(ParamVar *ParamSpec) {
 
 }
 
-var xValueTakeString func(uintptr, string)
+var xValueTakeString func(uintptr, uintptr)
 
 // Sets the contents of a %G_TYPE_STRING #GValue to @v_string.
-func (x *Value) TakeString(VStringVar string) {
+func (x *Value) TakeString(VStringVar *string) {
 
-	xValueTakeString(x.GoPointer(), VStringVar)
+	xValueTakeString(x.GoPointer(), core.NullableStringToPtr(VStringVar))
 
 }
 

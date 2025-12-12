@@ -191,13 +191,13 @@ func FileChooserNativeNewFromInternalPtr(ptr uintptr) *FileChooserNative {
 	return cls
 }
 
-var xNewFileChooserNative func(string, uintptr, FileChooserAction, string, string) uintptr
+var xNewFileChooserNative func(uintptr, uintptr, FileChooserAction, uintptr, uintptr) uintptr
 
 // Creates a new `GtkFileChooserNative`.
-func NewFileChooserNative(TitleVar string, ParentVar *Window, ActionVar FileChooserAction, AcceptLabelVar string, CancelLabelVar string) *FileChooserNative {
+func NewFileChooserNative(TitleVar *string, ParentVar *Window, ActionVar FileChooserAction, AcceptLabelVar *string, CancelLabelVar *string) *FileChooserNative {
 	var cls *FileChooserNative
 
-	cret := xNewFileChooserNative(TitleVar, ParentVar.GoPointer(), ActionVar, AcceptLabelVar, CancelLabelVar)
+	cret := xNewFileChooserNative(core.NullableStringToPtr(TitleVar), ParentVar.GoPointer(), ActionVar, core.NullableStringToPtr(AcceptLabelVar), core.NullableStringToPtr(CancelLabelVar))
 
 	if cret == 0 {
 		return nil
@@ -225,7 +225,7 @@ func (x *FileChooserNative) GetCancelLabel() string {
 	return cret
 }
 
-var xFileChooserNativeSetAcceptLabel func(uintptr, string)
+var xFileChooserNativeSetAcceptLabel func(uintptr, uintptr)
 
 // Sets the custom label text for the accept button.
 //
@@ -235,13 +235,13 @@ var xFileChooserNativeSetAcceptLabel func(uintptr, string)
 // a keyboard accelerator called a mnemonic.
 //
 // Pressing Alt and that key should activate the button.
-func (x *FileChooserNative) SetAcceptLabel(AcceptLabelVar string) {
+func (x *FileChooserNative) SetAcceptLabel(AcceptLabelVar *string) {
 
-	xFileChooserNativeSetAcceptLabel(x.GoPointer(), AcceptLabelVar)
+	xFileChooserNativeSetAcceptLabel(x.GoPointer(), core.NullableStringToPtr(AcceptLabelVar))
 
 }
 
-var xFileChooserNativeSetCancelLabel func(uintptr, string)
+var xFileChooserNativeSetCancelLabel func(uintptr, uintptr)
 
 // Sets the custom label text for the cancel button.
 //
@@ -251,9 +251,9 @@ var xFileChooserNativeSetCancelLabel func(uintptr, string)
 // a keyboard accelerator called a mnemonic.
 //
 // Pressing Alt and that key should activate the button.
-func (x *FileChooserNative) SetCancelLabel(CancelLabelVar string) {
+func (x *FileChooserNative) SetCancelLabel(CancelLabelVar *string) {
 
-	xFileChooserNativeSetCancelLabel(x.GoPointer(), CancelLabelVar)
+	xFileChooserNativeSetCancelLabel(x.GoPointer(), core.NullableStringToPtr(CancelLabelVar))
 
 }
 
@@ -274,7 +274,7 @@ func (c *FileChooserNative) SetGoPointer(ptr uintptr) {
 func (x *FileChooserNative) SetPropertyAcceptLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accept-label", &v)
 }
 
@@ -293,7 +293,7 @@ func (x *FileChooserNative) GetPropertyAcceptLabel() string {
 func (x *FileChooserNative) SetPropertyCancelLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("cancel-label", &v)
 }
 

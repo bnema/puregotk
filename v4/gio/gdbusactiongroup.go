@@ -302,7 +302,7 @@ func (x *DBusActionGroup) ChangeActionStateFull(ActionNameVar string, ValueVar *
 
 }
 
-var xDBusActionGroupGet func(uintptr, string, string) uintptr
+var xDBusActionGroupGet func(uintptr, uintptr, string) uintptr
 
 // Obtains a #GDBusActionGroup for the action group which is exported at
 // the given @bus_name and @object_path.
@@ -317,10 +317,10 @@ var xDBusActionGroupGet func(uintptr, string, string) uintptr
 // already be filled in.  The correct thing to do is connect the signals
 // for the action group to monitor for changes and then to call
 // g_action_group_list_actions() to get the initial list.
-func DBusActionGroupGet(ConnectionVar *DBusConnection, BusNameVar string, ObjectPathVar string) *DBusActionGroup {
+func DBusActionGroupGet(ConnectionVar *DBusConnection, BusNameVar *string, ObjectPathVar string) *DBusActionGroup {
 	var cls *DBusActionGroup
 
-	cret := xDBusActionGroupGet(ConnectionVar.GoPointer(), BusNameVar, ObjectPathVar)
+	cret := xDBusActionGroupGet(ConnectionVar.GoPointer(), core.NullableStringToPtr(BusNameVar), ObjectPathVar)
 
 	if cret == 0 {
 		return nil

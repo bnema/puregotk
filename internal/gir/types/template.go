@@ -48,6 +48,32 @@ type funcArgsTemplate struct {
 
 	// Callbacks tracks callback parameters for proper closure generation
 	Callbacks []CallbackParam
+
+	// UsesNullableHelper indicates nullable string handling that needs core import.
+	UsesNullableHelper bool
+}
+
+// ArgContext indicates where the arguments are flowing so we can handle
+// direction-sensitive cases (e.g. nullable strings) differently.
+type ArgContext int
+
+const (
+	// ArgsFromGoToC covers regular functions/methods where Go calls into C.
+	ArgsFromGoToC ArgContext = iota
+	// ArgsFromCToGo covers callbacks/signals where C calls into Go.
+	ArgsFromCToGo
+)
+
+func isStringType(t string) bool {
+	if strings.HasPrefix(t, "[]") {
+		return false
+	}
+	return strings.TrimLeft(t, "*") == "string"
+}
+
+// NeedsCore reports whether this argument set requires core helpers.
+func (f funcArgsTemplate) NeedsCore() bool {
+	return f.UsesNullableHelper
 }
 
 func qualifyCallbackType(t string, callbackNS string, currentNS string) string {
@@ -103,7 +129,7 @@ func qualifyCallbackTypes(types []string, callbackNS string, currentNS string) [
 	return qualified
 }
 
-func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool) {
+func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool, ctx ArgContext) {
 	c := n
 	cRef := n // For CallWithRefs, defaults to same as Call
 	stars := strings.Count(t, "*")
@@ -125,6 +151,15 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 		c = n
 		cRef = n
 	} else {
+		// Nullable strings differ based on direction. For Go->C we need a *string API type
+		// and pass a pointer (or nil) to C. For C->Go we keep the string as-is.
+		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
+			f.UsesNullableHelper = true
+			t = "*string"
+			c = fmt.Sprintf("core.NullableStringToPtr(%s)", n)
+			cRef = c
+		}
+
 		switch k {
 		case CallbackType:
 			// Call uses glib.NewCallback for contexts like callback accessor getters
@@ -176,7 +211,7 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 	f.API.Full = append(f.API.Full, n+" "+t)
 }
 
-func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool) {
+func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool, nullable bool, ctx ArgContext) {
 	n += "p"
 	c := n
 	stars := strings.Count(t, "*")
@@ -189,6 +224,12 @@ func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool) {
 		}
 		c = n
 	} else {
+		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
+			f.UsesNullableHelper = true
+			t = "uintptr"
+			c = fmt.Sprintf("core.NullableStringToPtr(%s)", strings.TrimSuffix(n, "p"))
+		}
+
 		switch k {
 		case RecordsType:
 			if stars == 0 {
@@ -228,7 +269,7 @@ func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool) {
 	f.Pure.Full = append(f.Pure.Full, n+" "+t)
 }
 
-func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap) {
+func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap, ctx ArgContext) {
 	// get the lookup namespace
 	// as if the interface namespace is non-empty
 	// means we can also lookup in the namespace of the interface
@@ -257,8 +298,8 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 
 	isOut := p.Direction == "out"
 
-	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut)
-	f.AddPure(goType, varName, kind, isOut)
+	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, ctx)
+	f.AddPure(goType, varName, kind, isOut, p.Nullable, ctx)
 
 	// For callback parameters (not out parameters), populate callback metadata
 	// This enables the template to generate proper closure wrapping
@@ -273,7 +314,7 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 
 			// Get the callback's pure argument types and return type
 			// Use cbNs (callback's namespace) for proper type lookups
-			cbArgs := cb.Parameters.Template(cbNs, "", kinds, cb.Throws)
+			cbArgs := cb.Parameters.Template(cbNs, "", kinds, cb.Throws, ArgsFromCToGo)
 			var retRaw string
 			if cb.ReturnValue != nil {
 				cbRet := cb.ReturnValue.Template(cbNs, "", kinds, cb.Throws)
@@ -611,6 +652,8 @@ type TemplateArg struct {
 	SharedLibraries []string
 	// NeedsInit declares whether or not this file needs an init code to register functions with purego
 	NeedsInit bool
+	// NeedsCore indicates if core helpers are required even without init.
+	NeedsCore bool
 	// HasReceiverCallbacks indicates if any receiver method has callback parameters
 	// This is used to conditionally import unsafe and purego
 	HasReceiverCallbacks bool

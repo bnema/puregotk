@@ -156,7 +156,7 @@ func (x *CellRendererText) GetPropertyAttributes() uintptr {
 func (x *CellRendererText) SetPropertyBackground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("background", &v)
 }
 
@@ -241,7 +241,7 @@ func (x *CellRendererText) GetPropertyEllipsizeSet() bool {
 func (x *CellRendererText) SetPropertyFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("family", &v)
 }
 
@@ -271,7 +271,7 @@ func (x *CellRendererText) GetPropertyFamilySet() bool {
 func (x *CellRendererText) SetPropertyFont(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("font", &v)
 }
 
@@ -301,7 +301,7 @@ func (x *CellRendererText) GetPropertyFontDesc() uintptr {
 func (x *CellRendererText) SetPropertyForeground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("foreground", &v)
 }
 
@@ -341,7 +341,7 @@ func (x *CellRendererText) GetPropertyForegroundSet() bool {
 func (x *CellRendererText) SetPropertyLanguage(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("language", &v)
 }
 
@@ -371,7 +371,7 @@ func (x *CellRendererText) GetPropertyLanguageSet() bool {
 func (x *CellRendererText) SetPropertyMarkup(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("markup", &v)
 }
 
@@ -412,7 +412,7 @@ func (x *CellRendererText) GetPropertyMaxWidthChars() int {
 func (x *CellRendererText) SetPropertyPlaceholderText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("placeholder-text", &v)
 }
 
@@ -609,7 +609,7 @@ func (x *CellRendererText) GetPropertyStyleSet() bool {
 func (x *CellRendererText) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 

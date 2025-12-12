@@ -142,7 +142,7 @@ func (c *AppChooserDialog) SetGoPointer(ptr uintptr) {
 func (x *AppChooserDialog) SetPropertyHeading(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("heading", &v)
 }
 

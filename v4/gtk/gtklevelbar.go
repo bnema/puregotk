@@ -229,12 +229,12 @@ func (x *LevelBar) GetMode() LevelBarMode {
 	return cret
 }
 
-var xLevelBarGetOffsetValue func(uintptr, string, *float64) bool
+var xLevelBarGetOffsetValue func(uintptr, uintptr, *float64) bool
 
 // Fetches the value specified for the offset marker @name in @self.
-func (x *LevelBar) GetOffsetValue(NameVar string, ValueVar *float64) bool {
+func (x *LevelBar) GetOffsetValue(NameVar *string, ValueVar *float64) bool {
 
-	cret := xLevelBarGetOffsetValue(x.GoPointer(), NameVar, ValueVar)
+	cret := xLevelBarGetOffsetValue(x.GoPointer(), core.NullableStringToPtr(NameVar), ValueVar)
 	return cret
 }
 
@@ -247,15 +247,15 @@ func (x *LevelBar) GetValue() float64 {
 	return cret
 }
 
-var xLevelBarRemoveOffsetValue func(uintptr, string)
+var xLevelBarRemoveOffsetValue func(uintptr, uintptr)
 
 // Removes an offset marker from a `GtkLevelBar`.
 //
 // The marker must have been previously added with
 // [method@Gtk.LevelBar.add_offset_value].
-func (x *LevelBar) RemoveOffsetValue(NameVar string) {
+func (x *LevelBar) RemoveOffsetValue(NameVar *string) {
 
-	xLevelBarRemoveOffsetValue(x.GoPointer(), NameVar)
+	xLevelBarRemoveOffsetValue(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 

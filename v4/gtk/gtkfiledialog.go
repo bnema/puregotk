@@ -625,16 +625,16 @@ func (x *FileDialog) SelectMultipleFoldersFinish(ResultVar gio.AsyncResult) (*gi
 
 }
 
-var xFileDialogSetAcceptLabel func(uintptr, string)
+var xFileDialogSetAcceptLabel func(uintptr, uintptr)
 
 // Sets the label shown on the file chooser's accept button.
 //
 // Leaving the accept label unset or setting it as `NULL` will
 // fall back to a default label, depending on what API is used
 // to launch the file dialog.
-func (x *FileDialog) SetAcceptLabel(AcceptLabelVar string) {
+func (x *FileDialog) SetAcceptLabel(AcceptLabelVar *string) {
 
-	xFileDialogSetAcceptLabel(x.GoPointer(), AcceptLabelVar)
+	xFileDialogSetAcceptLabel(x.GoPointer(), core.NullableStringToPtr(AcceptLabelVar))
 
 }
 
@@ -687,7 +687,7 @@ func (x *FileDialog) SetInitialFolder(FolderVar gio.File) {
 
 }
 
-var xFileDialogSetInitialName func(uintptr, string)
+var xFileDialogSetInitialName func(uintptr, uintptr)
 
 // Sets the filename that will be initially selected.
 //
@@ -697,9 +697,9 @@ var xFileDialogSetInitialName func(uintptr, string)
 // If a file with this name already exists in the directory set
 // via [property@Gtk.FileDialog:initial-folder], the dialog will
 // preselect it.
-func (x *FileDialog) SetInitialName(NameVar string) {
+func (x *FileDialog) SetInitialName(NameVar *string) {
 
-	xFileDialogSetInitialName(x.GoPointer(), NameVar)
+	xFileDialogSetInitialName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -738,7 +738,7 @@ func (c *FileDialog) SetGoPointer(ptr uintptr) {
 func (x *FileDialog) SetPropertyAcceptLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accept-label", &v)
 }
 
@@ -757,7 +757,7 @@ func (x *FileDialog) GetPropertyAcceptLabel() string {
 func (x *FileDialog) SetPropertyInitialName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("initial-name", &v)
 }
 
@@ -793,7 +793,7 @@ func (x *FileDialog) GetPropertyModal() bool {
 func (x *FileDialog) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

@@ -577,7 +577,7 @@ func (x *MenuButton) GetPropertyHasFrame() bool {
 func (x *MenuButton) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -594,7 +594,7 @@ func (x *MenuButton) GetPropertyIconName() string {
 func (x *MenuButton) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 

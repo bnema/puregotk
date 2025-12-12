@@ -89,13 +89,13 @@ func PrintUnixDialogNewFromInternalPtr(ptr uintptr) *PrintUnixDialog {
 	return cls
 }
 
-var xNewPrintUnixDialog func(string, uintptr) uintptr
+var xNewPrintUnixDialog func(uintptr, uintptr) uintptr
 
 // Creates a new `GtkPrintUnixDialog`.
-func NewPrintUnixDialog(TitleVar string, ParentVar *Window) *PrintUnixDialog {
+func NewPrintUnixDialog(TitleVar *string, ParentVar *Window) *PrintUnixDialog {
 	var cls *PrintUnixDialog
 
-	cret := xNewPrintUnixDialog(TitleVar, ParentVar.GoPointer())
+	cret := xNewPrintUnixDialog(core.NullableStringToPtr(TitleVar), ParentVar.GoPointer())
 
 	if cret == 0 {
 		return nil

@@ -266,14 +266,14 @@ func FilenameFromUtf8(Utf8stringVar string, LenVar int, BytesReadVar *uint, Byte
 
 }
 
-var xFilenameToUri func(string, string, **Error) string
+var xFilenameToUri func(string, uintptr, **Error) string
 
 // Converts an absolute filename to an escaped ASCII-encoded URI, with the path
 // component following Section 3.3. of RFC 2396.
-func FilenameToUri(FilenameVar string, HostnameVar string) (string, error) {
+func FilenameToUri(FilenameVar string, HostnameVar *string) (string, error) {
 	var cerr *Error
 
-	cret := xFilenameToUri(FilenameVar, HostnameVar, &cerr)
+	cret := xFilenameToUri(FilenameVar, core.NullableStringToPtr(HostnameVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

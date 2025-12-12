@@ -279,14 +279,14 @@ func NewDBusObjectManagerClientForBusSync(BusTypeVar BusType, FlagsVar DBusObjec
 
 }
 
-var xNewDBusObjectManagerClientSync func(uintptr, DBusObjectManagerClientFlags, string, string, uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
+var xNewDBusObjectManagerClientSync func(uintptr, DBusObjectManagerClientFlags, uintptr, string, uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
 
 // Creates a new #GDBusObjectManagerClient object.
 //
 // This is a synchronous failable constructor - the calling thread is
 // blocked until a reply is received. See g_dbus_object_manager_client_new()
 // for the asynchronous version.
-func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBusObjectManagerClientFlags, NameVar string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable) (*DBusObjectManagerClient, error) {
+func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBusObjectManagerClientFlags, NameVar *string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable) (*DBusObjectManagerClient, error) {
 	var cls *DBusObjectManagerClient
 	var cerr *glib.Error
 
@@ -320,7 +320,7 @@ func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBus
 		}
 	}
 
-	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), &cerr)
+	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, core.NullableStringToPtr(NameVar), ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -451,7 +451,7 @@ func (x *DBusObjectManagerClient) GetPropertyGetProxyTypeUserData() uintptr {
 func (x *DBusObjectManagerClient) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -478,7 +478,7 @@ func (x *DBusObjectManagerClient) GetPropertyNameOwner() string {
 func (x *DBusObjectManagerClient) SetPropertyObjectPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("object-path", &v)
 }
 

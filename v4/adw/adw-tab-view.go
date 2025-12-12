@@ -544,7 +544,7 @@ func (x *TabPage) GetPropertyIndicatorActivatable() bool {
 func (x *TabPage) SetPropertyIndicatorTooltip(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("indicator-tooltip", &v)
 }
 
@@ -570,7 +570,7 @@ func (x *TabPage) GetPropertyIndicatorTooltip() string {
 func (x *TabPage) SetPropertyKeyword(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("keyword", &v)
 }
 
@@ -786,7 +786,7 @@ func (x *TabPage) GetPropertyThumbnailYalign() float32 {
 func (x *TabPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -815,7 +815,7 @@ func (x *TabPage) GetPropertyTitle() string {
 func (x *TabPage) SetPropertyTooltip(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tooltip", &v)
 }
 

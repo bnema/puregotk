@@ -605,7 +605,7 @@ func (x *Dialog) GetPropertyFollowsContentSize() bool {
 func (x *Dialog) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

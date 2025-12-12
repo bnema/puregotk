@@ -148,7 +148,7 @@ type Actionable interface {
 	SetGoPointer(uintptr)
 	GetActionName() string
 	GetActionTargetValue() *glib.Variant
-	SetActionName(ActionNameVar string)
+	SetActionName(ActionNameVar *string)
 	SetActionTarget(FormatStringVar string, varArgs ...interface{})
 	SetActionTargetValue(TargetValueVar *glib.Variant)
 	SetDetailedActionName(DetailedActionNameVar string)
@@ -202,9 +202,9 @@ func (x *ActionableBase) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *ActionableBase) SetActionName(ActionNameVar string) {
+func (x *ActionableBase) SetActionName(ActionNameVar *string) {
 
-	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 
@@ -265,7 +265,7 @@ func (x *ActionableBase) SetPropertyActionName(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("action-name", &v)
 }
 
@@ -302,7 +302,7 @@ func (x *ActionableBase) GetPropertyActionTarget() uintptr {
 
 var XGtkActionableGetActionName func(uintptr) string
 var XGtkActionableGetActionTargetValue func(uintptr) *glib.Variant
-var XGtkActionableSetActionName func(uintptr, string)
+var XGtkActionableSetActionName func(uintptr, uintptr)
 var XGtkActionableSetActionTarget func(uintptr, string, ...interface{})
 var XGtkActionableSetActionTargetValue func(uintptr, *glib.Variant)
 var XGtkActionableSetDetailedActionName func(uintptr, string)

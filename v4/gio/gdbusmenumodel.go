@@ -37,7 +37,7 @@ func (c *DBusMenuModel) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-var xDBusMenuModelGet func(uintptr, string, string) uintptr
+var xDBusMenuModelGet func(uintptr, uintptr, string) uintptr
 
 // Obtains a #GDBusMenuModel for the menu model which is exported
 // at the given @bus_name and @object_path.
@@ -47,10 +47,10 @@ var xDBusMenuModelGet func(uintptr, string, string) uintptr
 // with respect to this context.  All calls on the returned menu model
 // (and linked models) must also originate from this same context, with
 // the thread default main context unchanged.
-func DBusMenuModelGet(ConnectionVar *DBusConnection, BusNameVar string, ObjectPathVar string) *DBusMenuModel {
+func DBusMenuModelGet(ConnectionVar *DBusConnection, BusNameVar *string, ObjectPathVar string) *DBusMenuModel {
 	var cls *DBusMenuModel
 
-	cret := xDBusMenuModelGet(ConnectionVar.GoPointer(), BusNameVar, ObjectPathVar)
+	cret := xDBusMenuModelGet(ConnectionVar.GoPointer(), core.NullableStringToPtr(BusNameVar), ObjectPathVar)
 
 	if cret == 0 {
 		return nil

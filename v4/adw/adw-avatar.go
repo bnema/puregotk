@@ -68,13 +68,13 @@ func AvatarNewFromInternalPtr(ptr uintptr) *Avatar {
 	return cls
 }
 
-var xNewAvatar func(int, string, bool) uintptr
+var xNewAvatar func(int, uintptr, bool) uintptr
 
 // Creates a new `AdwAvatar`.
-func NewAvatar(SizeVar int, TextVar string, ShowInitialsVar bool) *Avatar {
+func NewAvatar(SizeVar int, TextVar *string, ShowInitialsVar bool) *Avatar {
 	var cls *Avatar
 
-	cret := xNewAvatar(SizeVar, TextVar, ShowInitialsVar)
+	cret := xNewAvatar(SizeVar, core.NullableStringToPtr(TextVar), ShowInitialsVar)
 
 	if cret == 0 {
 		return nil
@@ -167,14 +167,14 @@ func (x *Avatar) SetCustomImage(CustomImageVar gdk.Paintable) {
 
 }
 
-var xAvatarSetIconName func(uintptr, string)
+var xAvatarSetIconName func(uintptr, uintptr)
 
 // Sets the name of an icon to use as a fallback.
 //
 // If no name is set, `avatar-default-symbolic` will be used.
-func (x *Avatar) SetIconName(IconNameVar string) {
+func (x *Avatar) SetIconName(IconNameVar *string) {
 
-	xAvatarSetIconName(x.GoPointer(), IconNameVar)
+	xAvatarSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
@@ -198,15 +198,15 @@ func (x *Avatar) SetSize(SizeVar int) {
 
 }
 
-var xAvatarSetText func(uintptr, string)
+var xAvatarSetText func(uintptr, uintptr)
 
 // Sets the text used to generate the fallback initials and color.
 //
 // It's only used to generate the color if [property@Avatar:show-initials] is
 // `FALSE`.
-func (x *Avatar) SetText(TextVar string) {
+func (x *Avatar) SetText(TextVar *string) {
 
-	xAvatarSetText(x.GoPointer(), TextVar)
+	xAvatarSetText(x.GoPointer(), core.NullableStringToPtr(TextVar))
 
 }
 
@@ -228,7 +228,7 @@ func (c *Avatar) SetGoPointer(ptr uintptr) {
 func (x *Avatar) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -288,7 +288,7 @@ func (x *Avatar) GetPropertySize() int {
 func (x *Avatar) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 

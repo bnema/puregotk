@@ -232,7 +232,7 @@ func AlertDialogNewFromInternalPtr(ptr uintptr) *AlertDialog {
 	return cls
 }
 
-var xNewAlertDialog func(string, string) uintptr
+var xNewAlertDialog func(uintptr, uintptr) uintptr
 
 // Creates a new `AdwAlertDialog`.
 //
@@ -250,10 +250,10 @@ var xNewAlertDialog func(string, string) uintptr
 //	filename);
 //
 // ```
-func NewAlertDialog(HeadingVar string, BodyVar string) *AlertDialog {
+func NewAlertDialog(HeadingVar *string, BodyVar *string) *AlertDialog {
 	var cls *AlertDialog
 
-	cret := xNewAlertDialog(HeadingVar, BodyVar)
+	cret := xNewAlertDialog(core.NullableStringToPtr(HeadingVar), core.NullableStringToPtr(BodyVar))
 
 	if cret == 0 {
 		return nil
@@ -572,7 +572,7 @@ func (x *AlertDialog) SetCloseResponse(ResponseVar string) {
 
 }
 
-var xAlertDialogSetDefaultResponse func(uintptr, string)
+var xAlertDialogSetDefaultResponse func(uintptr, uintptr)
 
 // Sets the ID of the default response of @self.
 //
@@ -583,9 +583,9 @@ var xAlertDialogSetDefaultResponse func(uintptr, string)
 // will be focused by default.
 //
 // See [property@Dialog:default-widget].
-func (x *AlertDialog) SetDefaultResponse(ResponseVar string) {
+func (x *AlertDialog) SetDefaultResponse(ResponseVar *string) {
 
-	xAlertDialogSetDefaultResponse(x.GoPointer(), ResponseVar)
+	xAlertDialogSetDefaultResponse(x.GoPointer(), core.NullableStringToPtr(ResponseVar))
 
 }
 
@@ -600,12 +600,12 @@ func (x *AlertDialog) SetExtraChild(ChildVar *gtk.Widget) {
 
 }
 
-var xAlertDialogSetHeading func(uintptr, string)
+var xAlertDialogSetHeading func(uintptr, uintptr)
 
 // Sets the heading of @self.
-func (x *AlertDialog) SetHeading(HeadingVar string) {
+func (x *AlertDialog) SetHeading(HeadingVar *string) {
 
-	xAlertDialogSetHeading(x.GoPointer(), HeadingVar)
+	xAlertDialogSetHeading(x.GoPointer(), core.NullableStringToPtr(HeadingVar))
 
 }
 
@@ -705,7 +705,7 @@ func (c *AlertDialog) SetGoPointer(ptr uintptr) {
 func (x *AlertDialog) SetPropertyBody(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("body", &v)
 }
 
@@ -750,7 +750,7 @@ func (x *AlertDialog) GetPropertyBodyUseMarkup() bool {
 func (x *AlertDialog) SetPropertyCloseResponse(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("close-response", &v)
 }
 
@@ -782,7 +782,7 @@ func (x *AlertDialog) GetPropertyCloseResponse() string {
 func (x *AlertDialog) SetPropertyDefaultResponse(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("default-response", &v)
 }
 
@@ -807,7 +807,7 @@ func (x *AlertDialog) GetPropertyDefaultResponse() string {
 func (x *AlertDialog) SetPropertyHeading(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("heading", &v)
 }
 

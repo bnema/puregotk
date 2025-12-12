@@ -74,7 +74,7 @@ func NewBookmarkFile() *BookmarkFile {
 	return cret
 }
 
-var xBookmarkFileAddApplication func(uintptr, string, string, string)
+var xBookmarkFileAddApplication func(uintptr, string, uintptr, uintptr)
 
 // Adds the application with @name and @exec to the list of
 // applications that have registered a bookmark for @uri into
@@ -98,9 +98,9 @@ var xBookmarkFileAddApplication func(uintptr, string, string, string)
 // @uri inside @bookmark.
 //
 // If no bookmark for @uri is found, one is created.
-func (x *BookmarkFile) AddApplication(UriVar string, NameVar string, ExecVar string) {
+func (x *BookmarkFile) AddApplication(UriVar string, NameVar *string, ExecVar *string) {
 
-	xBookmarkFileAddApplication(x.GoPointer(), UriVar, NameVar, ExecVar)
+	xBookmarkFileAddApplication(x.GoPointer(), UriVar, core.NullableStringToPtr(NameVar), core.NullableStringToPtr(ExecVar))
 
 }
 
@@ -373,7 +373,7 @@ func (x *BookmarkFile) GetSize() int {
 	return cret
 }
 
-var xBookmarkFileGetTitle func(uintptr, string, **Error) string
+var xBookmarkFileGetTitle func(uintptr, uintptr, **Error) string
 
 // Returns the title of the bookmark for @uri.
 //
@@ -381,10 +381,10 @@ var xBookmarkFileGetTitle func(uintptr, string, **Error) string
 //
 // In the event the URI cannot be found, %NULL is returned and
 // @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
-func (x *BookmarkFile) GetTitle(UriVar string) (string, error) {
+func (x *BookmarkFile) GetTitle(UriVar *string) (string, error) {
 	var cerr *Error
 
-	cret := xBookmarkFileGetTitle(x.GoPointer(), UriVar, &cerr)
+	cret := xBookmarkFileGetTitle(x.GoPointer(), core.NullableStringToPtr(UriVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -532,7 +532,7 @@ func (x *BookmarkFile) LoadFromFile(FilenameVar string) (bool, error) {
 
 }
 
-var xBookmarkFileMoveItem func(uintptr, string, string, **Error) bool
+var xBookmarkFileMoveItem func(uintptr, string, uintptr, **Error) bool
 
 // Changes the URI of a bookmark item from @old_uri to @new_uri.  Any
 // existing bookmark for @new_uri will be overwritten.  If @new_uri is
@@ -540,10 +540,10 @@ var xBookmarkFileMoveItem func(uintptr, string, string, **Error) bool
 //
 // In the event the URI cannot be found, %FALSE is returned and
 // @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
-func (x *BookmarkFile) MoveItem(OldUriVar string, NewUriVar string) (bool, error) {
+func (x *BookmarkFile) MoveItem(OldUriVar string, NewUriVar *string) (bool, error) {
 	var cerr *Error
 
-	cret := xBookmarkFileMoveItem(x.GoPointer(), OldUriVar, NewUriVar, &cerr)
+	cret := xBookmarkFileMoveItem(x.GoPointer(), OldUriVar, core.NullableStringToPtr(NewUriVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -709,16 +709,16 @@ func (x *BookmarkFile) SetApplicationInfo(UriVar string, NameVar string, ExecVar
 
 }
 
-var xBookmarkFileSetDescription func(uintptr, string, string)
+var xBookmarkFileSetDescription func(uintptr, uintptr, string)
 
 // Sets @description as the description of the bookmark for @uri.
 //
 // If @uri is %NULL, the description of @bookmark is set.
 //
 // If a bookmark for @uri cannot be found then it is created.
-func (x *BookmarkFile) SetDescription(UriVar string, DescriptionVar string) {
+func (x *BookmarkFile) SetDescription(UriVar *string, DescriptionVar string) {
 
-	xBookmarkFileSetDescription(x.GoPointer(), UriVar, DescriptionVar)
+	xBookmarkFileSetDescription(x.GoPointer(), core.NullableStringToPtr(UriVar), DescriptionVar)
 
 }
 
@@ -734,16 +734,16 @@ func (x *BookmarkFile) SetGroups(UriVar string, GroupsVar []string, LengthVar ui
 
 }
 
-var xBookmarkFileSetIcon func(uintptr, string, string, string)
+var xBookmarkFileSetIcon func(uintptr, string, uintptr, string)
 
 // Sets the icon for the bookmark for @uri. If @href is %NULL, unsets
 // the currently set icon. @href can either be a full URL for the icon
 // file or the icon name following the Icon Naming specification.
 //
 // If no bookmark for @uri is found one is created.
-func (x *BookmarkFile) SetIcon(UriVar string, HrefVar string, MimeTypeVar string) {
+func (x *BookmarkFile) SetIcon(UriVar string, HrefVar *string, MimeTypeVar string) {
 
-	xBookmarkFileSetIcon(x.GoPointer(), UriVar, HrefVar, MimeTypeVar)
+	xBookmarkFileSetIcon(x.GoPointer(), UriVar, core.NullableStringToPtr(HrefVar), MimeTypeVar)
 
 }
 
@@ -801,7 +801,7 @@ func (x *BookmarkFile) SetModifiedDateTime(UriVar string, ModifiedVar *DateTime)
 
 }
 
-var xBookmarkFileSetTitle func(uintptr, string, string)
+var xBookmarkFileSetTitle func(uintptr, uintptr, string)
 
 // Sets @title as the title of the bookmark for @uri inside the
 // bookmark file @bookmark.
@@ -809,9 +809,9 @@ var xBookmarkFileSetTitle func(uintptr, string, string)
 // If @uri is %NULL, the title of @bookmark is set.
 //
 // If a bookmark for @uri cannot be found then it is created.
-func (x *BookmarkFile) SetTitle(UriVar string, TitleVar string) {
+func (x *BookmarkFile) SetTitle(UriVar *string, TitleVar string) {
 
-	xBookmarkFileSetTitle(x.GoPointer(), UriVar, TitleVar)
+	xBookmarkFileSetTitle(x.GoPointer(), core.NullableStringToPtr(UriVar), TitleVar)
 
 }
 

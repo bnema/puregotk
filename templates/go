@@ -12,7 +12,8 @@ package {{.PkgName}}
 {{ $HasCallbacks := or .HasReceiverCallbacks .HasFunctionCallbacks }}
 {{ $NeedsUnsafe := or .Records $HasSignals $HasCallbacks }}
 {{ $NeedsPurego := or .NeedsInit $HasSignals $HasCallbacks }}
-{{ $AnyImports := or .NeedsInit .Records $HasSignals $HasCallbacks }}
+{{ $NeedsCore := or .NeedsInit .NeedsCore }}
+{{ $AnyImports := or $NeedsCore .Records $HasSignals $HasCallbacks }}
 
 {{if $AnyImports}}
 import (
@@ -25,7 +26,7 @@ import (
 {{- if $NeedsPurego}}
 	"github.com/jwijenbergh/purego"
 {{- end}}
-{{- if .NeedsInit}}
+{{- if $NeedsCore}}
 	"github.com/jwijenbergh/puregotk/pkg/core"
 {{- end}}
 )

@@ -72,7 +72,7 @@ func TextMarkNewFromInternalPtr(ptr uintptr) *TextMark {
 	return cls
 }
 
-var xNewTextMark func(string, bool) uintptr
+var xNewTextMark func(uintptr, bool) uintptr
 
 // Creates a text mark.
 //
@@ -85,10 +85,10 @@ var xNewTextMark func(string, bool) uintptr
 // on the right of newly-inserted text. The standard left-to-right cursor
 // is a mark with right gravity (when you type, the cursor stays on the
 // right side of the text you’re typing).
-func NewTextMark(NameVar string, LeftGravityVar bool) *TextMark {
+func NewTextMark(NameVar *string, LeftGravityVar bool) *TextMark {
 	var cls *TextMark
 
-	cret := xNewTextMark(NameVar, LeftGravityVar)
+	cret := xNewTextMark(core.NullableStringToPtr(NameVar), LeftGravityVar)
 
 	if cret == 0 {
 		return nil
@@ -217,7 +217,7 @@ func (x *TextMark) GetPropertyLeftGravity() bool {
 func (x *TextMark) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 

@@ -280,7 +280,7 @@ func (x *HeaderBar) SetCenteringPolicy(CenteringPolicyVar CenteringPolicy) {
 
 }
 
-var xHeaderBarSetDecorationLayout func(uintptr, string)
+var xHeaderBarSetDecorationLayout func(uintptr, uintptr)
 
 // Sets the decoration layout for @self.
 //
@@ -294,9 +294,9 @@ var xHeaderBarSetDecorationLayout func(uintptr, string)
 //
 // For example, “icon:minimize,maximize,close” specifies an icon at the start,
 // and minimize, maximize and close buttons at the end.
-func (x *HeaderBar) SetDecorationLayout(LayoutVar string) {
+func (x *HeaderBar) SetDecorationLayout(LayoutVar *string) {
 
-	xHeaderBarSetDecorationLayout(x.GoPointer(), LayoutVar)
+	xHeaderBarSetDecorationLayout(x.GoPointer(), core.NullableStringToPtr(LayoutVar))
 
 }
 
@@ -404,7 +404,7 @@ func (c *HeaderBar) SetGoPointer(ptr uintptr) {
 func (x *HeaderBar) SetPropertyDecorationLayout(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("decoration-layout", &v)
 }
 

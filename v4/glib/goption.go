@@ -42,13 +42,13 @@ func (x *OptionContext) AddGroup(GroupVar *OptionGroup) {
 
 }
 
-var xOptionContextAddMainEntries func(uintptr, []OptionEntry, string)
+var xOptionContextAddMainEntries func(uintptr, []OptionEntry, uintptr)
 
 // A convenience function which creates a main group if it doesn't
 // exist, adds the @entries to it and sets the translation domain.
-func (x *OptionContext) AddMainEntries(EntriesVar []OptionEntry, TranslationDomainVar string) {
+func (x *OptionContext) AddMainEntries(EntriesVar []OptionEntry, TranslationDomainVar *string) {
 
-	xOptionContextAddMainEntries(x.GoPointer(), EntriesVar, TranslationDomainVar)
+	xOptionContextAddMainEntries(x.GoPointer(), EntriesVar, core.NullableStringToPtr(TranslationDomainVar))
 
 }
 
@@ -201,16 +201,16 @@ func (x *OptionContext) ParseStrv(ArgumentsVar []string) (bool, error) {
 
 }
 
-var xOptionContextSetDescription func(uintptr, string)
+var xOptionContextSetDescription func(uintptr, uintptr)
 
 // Adds a string to be displayed in `--help` output after the list
 // of options. This text often includes a bug reporting address.
 //
 // Note that the summary is translated (see
 // g_option_context_set_translate_func()).
-func (x *OptionContext) SetDescription(DescriptionVar string) {
+func (x *OptionContext) SetDescription(DescriptionVar *string) {
 
-	xOptionContextSetDescription(x.GoPointer(), DescriptionVar)
+	xOptionContextSetDescription(x.GoPointer(), core.NullableStringToPtr(DescriptionVar))
 
 }
 
@@ -285,7 +285,7 @@ func (x *OptionContext) SetStrictPosix(StrictPosixVar bool) {
 
 }
 
-var xOptionContextSetSummary func(uintptr, string)
+var xOptionContextSetSummary func(uintptr, uintptr)
 
 // Adds a string to be displayed in `--help` output before the list
 // of options. This is typically a summary of the program functionality.
@@ -293,9 +293,9 @@ var xOptionContextSetSummary func(uintptr, string)
 // Note that the summary is translated (see
 // g_option_context_set_translate_func() and
 // g_option_context_set_translation_domain()).
-func (x *OptionContext) SetSummary(SummaryVar string) {
+func (x *OptionContext) SetSummary(SummaryVar *string) {
 
-	xOptionContextSetSummary(x.GoPointer(), SummaryVar)
+	xOptionContextSetSummary(x.GoPointer(), core.NullableStringToPtr(SummaryVar))
 
 }
 

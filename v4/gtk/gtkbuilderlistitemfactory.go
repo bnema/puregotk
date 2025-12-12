@@ -172,7 +172,7 @@ func (x *BuilderListItemFactory) GetPropertyBytes() uintptr {
 func (x *BuilderListItemFactory) SetPropertyResource(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("resource", &v)
 }
 

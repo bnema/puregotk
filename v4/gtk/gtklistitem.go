@@ -264,7 +264,7 @@ func (c *ListItem) SetGoPointer(ptr uintptr) {
 func (x *ListItem) SetPropertyAccessibleDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accessible-description", &v)
 }
 
@@ -281,7 +281,7 @@ func (x *ListItem) GetPropertyAccessibleDescription() string {
 func (x *ListItem) SetPropertyAccessibleLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accessible-label", &v)
 }
 

@@ -322,7 +322,7 @@ func (x *PreferencesWindow) GetPropertySearchEnabled() bool {
 func (x *PreferencesWindow) SetPropertyVisiblePageName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("visible-page-name", &v)
 }
 

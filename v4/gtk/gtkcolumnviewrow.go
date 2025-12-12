@@ -219,7 +219,7 @@ func (c *ColumnViewRow) SetGoPointer(ptr uintptr) {
 func (x *ColumnViewRow) SetPropertyAccessibleDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accessible-description", &v)
 }
 
@@ -236,7 +236,7 @@ func (x *ColumnViewRow) GetPropertyAccessibleDescription() string {
 func (x *ColumnViewRow) SetPropertyAccessibleLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accessible-label", &v)
 }
 

@@ -1435,7 +1435,7 @@ var XGAppInfoShouldShow func(uintptr) bool
 var XGAppInfoSupportsFiles func(uintptr) bool
 var XGAppInfoSupportsUris func(uintptr) bool
 
-var xAppInfoCreateFromCommandline func(string, string, AppInfoCreateFlags, **glib.Error) uintptr
+var xAppInfoCreateFromCommandline func(string, uintptr, AppInfoCreateFlags, **glib.Error) uintptr
 
 // Creates a new [iface@Gio.AppInfo] from the given information.
 //
@@ -1446,11 +1446,11 @@ var xAppInfoCreateFromCommandline func(string, string, AppInfoCreateFlags, **gli
 // being swallowed by `Exec` key unquoting. See
 // [the specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s07.html)
 // for exact quoting rules.
-func AppInfoCreateFromCommandline(CommandlineVar string, ApplicationNameVar string, FlagsVar AppInfoCreateFlags) (*AppInfoBase, error) {
+func AppInfoCreateFromCommandline(CommandlineVar string, ApplicationNameVar *string, FlagsVar AppInfoCreateFlags) (*AppInfoBase, error) {
 	var cls *AppInfoBase
 	var cerr *glib.Error
 
-	cret := xAppInfoCreateFromCommandline(CommandlineVar, ApplicationNameVar, FlagsVar, &cerr)
+	cret := xAppInfoCreateFromCommandline(CommandlineVar, core.NullableStringToPtr(ApplicationNameVar), FlagsVar, &cerr)
 
 	if cret == 0 {
 		return nil, cerr

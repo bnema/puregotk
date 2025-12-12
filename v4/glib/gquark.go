@@ -34,7 +34,7 @@ import (
 // pointer comparison, rather than using `strcmp()`.
 type Quark = uint32
 
-var xInternStaticString func(string) string
+var xInternStaticString func(uintptr) string
 
 // Returns a canonical representation for @string. Interned strings
 // can be compared for equality by comparing the pointers, instead of
@@ -44,13 +44,13 @@ var xInternStaticString func(string) string
 // This function must not be used before library constructors have finished
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
-func InternStaticString(StringVar string) string {
+func InternStaticString(StringVar *string) string {
 
-	cret := xInternStaticString(StringVar)
+	cret := xInternStaticString(core.NullableStringToPtr(StringVar))
 	return cret
 }
 
-var xInternString func(string) string
+var xInternString func(uintptr) string
 
 // Returns a canonical representation for @string. Interned strings
 // can be compared for equality by comparing the pointers, instead of
@@ -59,13 +59,13 @@ var xInternString func(string) string
 // This function must not be used before library constructors have finished
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
-func InternString(StringVar string) string {
+func InternString(StringVar *string) string {
 
-	cret := xInternString(StringVar)
+	cret := xInternString(core.NullableStringToPtr(StringVar))
 	return cret
 }
 
-var xQuarkFromStaticString func(string) Quark
+var xQuarkFromStaticString func(uintptr) Quark
 
 // Gets the #GQuark identifying the given (static) string. If the
 // string does not currently have an associated #GQuark, a new #GQuark
@@ -83,13 +83,13 @@ var xQuarkFromStaticString func(string) Quark
 // This function must not be used before library constructors have finished
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
-func QuarkFromStaticString(StringVar string) Quark {
+func QuarkFromStaticString(StringVar *string) Quark {
 
-	cret := xQuarkFromStaticString(StringVar)
+	cret := xQuarkFromStaticString(core.NullableStringToPtr(StringVar))
 	return cret
 }
 
-var xQuarkFromString func(string) Quark
+var xQuarkFromString func(uintptr) Quark
 
 // Gets the #GQuark identifying the given string. If the string does
 // not currently have an associated #GQuark, a new #GQuark is created,
@@ -98,9 +98,9 @@ var xQuarkFromString func(string) Quark
 // This function must not be used before library constructors have finished
 // running. In particular, this means it cannot be used to initialize global
 // variables in C++.
-func QuarkFromString(StringVar string) Quark {
+func QuarkFromString(StringVar *string) Quark {
 
-	cret := xQuarkFromString(StringVar)
+	cret := xQuarkFromString(core.NullableStringToPtr(StringVar))
 	return cret
 }
 
@@ -113,7 +113,7 @@ func QuarkToString(QuarkVar Quark) string {
 	return cret
 }
 
-var xQuarkTryString func(string) Quark
+var xQuarkTryString func(uintptr) Quark
 
 // Gets the #GQuark associated with the given string, or 0 if string is
 // %NULL or it has no associated #GQuark.
@@ -123,9 +123,9 @@ var xQuarkTryString func(string) Quark
 //
 // This function must not be used before library constructors have finished
 // running.
-func QuarkTryString(StringVar string) Quark {
+func QuarkTryString(StringVar *string) Quark {
 
-	cret := xQuarkTryString(StringVar)
+	cret := xQuarkTryString(core.NullableStringToPtr(StringVar))
 	return cret
 }
 

@@ -206,7 +206,7 @@ func (c *AppChooserWidget) SetGoPointer(ptr uintptr) {
 func (x *AppChooserWidget) SetPropertyDefaultText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("default-text", &v)
 }
 

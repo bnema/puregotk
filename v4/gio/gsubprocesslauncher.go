@@ -197,7 +197,7 @@ func (x *SubprocessLauncher) SetFlags(FlagsVar SubprocessFlags) {
 
 }
 
-var xSubprocessLauncherSetStderrFilePath func(uintptr, string)
+var xSubprocessLauncherSetStderrFilePath func(uintptr, uintptr)
 
 // Sets the file path to use as the stderr for spawned processes.
 //
@@ -213,13 +213,13 @@ var xSubprocessLauncherSetStderrFilePath func(uintptr, string)
 // if the launcher flags contain any flags directing stderr elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) SetStderrFilePath(PathVar string) {
+func (x *SubprocessLauncher) SetStderrFilePath(PathVar *string) {
 
-	xSubprocessLauncherSetStderrFilePath(x.GoPointer(), PathVar)
+	xSubprocessLauncherSetStderrFilePath(x.GoPointer(), core.NullableStringToPtr(PathVar))
 
 }
 
-var xSubprocessLauncherSetStdinFilePath func(uintptr, string)
+var xSubprocessLauncherSetStdinFilePath func(uintptr, uintptr)
 
 // Sets the file path to use as the stdin for spawned processes.
 //
@@ -231,13 +231,13 @@ var xSubprocessLauncherSetStdinFilePath func(uintptr, string)
 // the launcher flags contain any flags directing stdin elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) SetStdinFilePath(PathVar string) {
+func (x *SubprocessLauncher) SetStdinFilePath(PathVar *string) {
 
-	xSubprocessLauncherSetStdinFilePath(x.GoPointer(), PathVar)
+	xSubprocessLauncherSetStdinFilePath(x.GoPointer(), core.NullableStringToPtr(PathVar))
 
 }
 
-var xSubprocessLauncherSetStdoutFilePath func(uintptr, string)
+var xSubprocessLauncherSetStdoutFilePath func(uintptr, uintptr)
 
 // Sets the file path to use as the stdout for spawned processes.
 //
@@ -250,9 +250,9 @@ var xSubprocessLauncherSetStdoutFilePath func(uintptr, string)
 // if the launcher flags contain any flags directing stdout elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) SetStdoutFilePath(PathVar string) {
+func (x *SubprocessLauncher) SetStdoutFilePath(PathVar *string) {
 
-	xSubprocessLauncherSetStdoutFilePath(x.GoPointer(), PathVar)
+	xSubprocessLauncherSetStdoutFilePath(x.GoPointer(), core.NullableStringToPtr(PathVar))
 
 }
 

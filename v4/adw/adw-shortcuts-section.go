@@ -50,13 +50,13 @@ func ShortcutsSectionNewFromInternalPtr(ptr uintptr) *ShortcutsSection {
 	return cls
 }
 
-var xNewShortcutsSection func(string) uintptr
+var xNewShortcutsSection func(uintptr) uintptr
 
 // Creates a new `AdwShortcutsSection` with @title as its title if provided.
-func NewShortcutsSection(TitleVar string) *ShortcutsSection {
+func NewShortcutsSection(TitleVar *string) *ShortcutsSection {
 	var cls *ShortcutsSection
 
-	cret := xNewShortcutsSection(TitleVar)
+	cret := xNewShortcutsSection(core.NullableStringToPtr(TitleVar))
 
 	if cret == 0 {
 		return nil
@@ -84,12 +84,12 @@ func (x *ShortcutsSection) GetTitle() string {
 	return cret
 }
 
-var xShortcutsSectionSetTitle func(uintptr, string)
+var xShortcutsSectionSetTitle func(uintptr, uintptr)
 
 // Sets the title of @self.
-func (x *ShortcutsSection) SetTitle(TitleVar string) {
+func (x *ShortcutsSection) SetTitle(TitleVar *string) {
 
-	xShortcutsSectionSetTitle(x.GoPointer(), TitleVar)
+	xShortcutsSectionSetTitle(x.GoPointer(), core.NullableStringToPtr(TitleVar))
 
 }
 
@@ -109,7 +109,7 @@ func (c *ShortcutsSection) SetGoPointer(ptr uintptr) {
 func (x *ShortcutsSection) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

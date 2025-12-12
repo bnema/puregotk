@@ -211,7 +211,7 @@ func NewScaleWithRange(OrientationVar Orientation, MinVar float64, MaxVar float6
 	return cls
 }
 
-var xScaleAddMark func(uintptr, float64, PositionType, string)
+var xScaleAddMark func(uintptr, float64, PositionType, uintptr)
 
 // Adds a mark at @value.
 //
@@ -222,9 +222,9 @@ var xScaleAddMark func(uintptr, float64, PositionType, string)
 // If @markup is not %NULL, text is shown next to the tick mark.
 //
 // To remove marks from a scale, use [method@Gtk.Scale.clear_marks].
-func (x *Scale) AddMark(ValueVar float64, PositionVar PositionType, MarkupVar string) {
+func (x *Scale) AddMark(ValueVar float64, PositionVar PositionType, MarkupVar *string) {
 
-	xScaleAddMark(x.GoPointer(), ValueVar, PositionVar, MarkupVar)
+	xScaleAddMark(x.GoPointer(), ValueVar, PositionVar, core.NullableStringToPtr(MarkupVar))
 
 }
 

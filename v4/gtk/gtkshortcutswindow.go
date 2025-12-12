@@ -136,7 +136,7 @@ func (c *ShortcutsWindow) SetGoPointer(ptr uintptr) {
 func (x *ShortcutsWindow) SetPropertySectionName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("section-name", &v)
 }
 
@@ -162,7 +162,7 @@ func (x *ShortcutsWindow) GetPropertySectionName() string {
 func (x *ShortcutsWindow) SetPropertyViewName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("view-name", &v)
 }
 

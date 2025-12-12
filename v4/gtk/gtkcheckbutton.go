@@ -180,13 +180,13 @@ func NewCheckButton() *CheckButton {
 	return cls
 }
 
-var xNewCheckButtonWithLabel func(string) uintptr
+var xNewCheckButtonWithLabel func(uintptr) uintptr
 
 // Creates a new `GtkCheckButton` with the given text.
-func NewCheckButtonWithLabel(LabelVar string) *CheckButton {
+func NewCheckButtonWithLabel(LabelVar *string) *CheckButton {
 	var cls *CheckButton
 
-	cret := xNewCheckButtonWithLabel(LabelVar)
+	cret := xNewCheckButtonWithLabel(core.NullableStringToPtr(LabelVar))
 
 	if cret == 0 {
 		return nil
@@ -197,13 +197,13 @@ func NewCheckButtonWithLabel(LabelVar string) *CheckButton {
 	return cls
 }
 
-var xNewCheckButtonWithMnemonic func(string) uintptr
+var xNewCheckButtonWithMnemonic func(uintptr) uintptr
 
 // Creates a new `GtkCheckButton` with the given text and a mnemonic.
-func NewCheckButtonWithMnemonic(LabelVar string) *CheckButton {
+func NewCheckButtonWithMnemonic(LabelVar *string) *CheckButton {
 	var cls *CheckButton
 
-	cret := xNewCheckButtonWithMnemonic(LabelVar)
+	cret := xNewCheckButtonWithMnemonic(core.NullableStringToPtr(LabelVar))
 
 	if cret == 0 {
 		return nil
@@ -326,16 +326,16 @@ func (x *CheckButton) SetInconsistent(InconsistentVar bool) {
 
 }
 
-var xCheckButtonSetLabel func(uintptr, string)
+var xCheckButtonSetLabel func(uintptr, uintptr)
 
 // Sets the text of @self.
 //
 // If [property@Gtk.CheckButton:use-underline] is %TRUE, an underscore
 // in @label is interpreted as mnemonic indicator, see
 // [method@Gtk.CheckButton.set_use_underline] for details on this behavior.
-func (x *CheckButton) SetLabel(LabelVar string) {
+func (x *CheckButton) SetLabel(LabelVar *string) {
 
-	xCheckButtonSetLabel(x.GoPointer(), LabelVar)
+	xCheckButtonSetLabel(x.GoPointer(), core.NullableStringToPtr(LabelVar))
 
 }
 
@@ -414,7 +414,7 @@ func (x *CheckButton) GetPropertyInconsistent() bool {
 func (x *CheckButton) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 
@@ -790,9 +790,9 @@ func (x *CheckButton) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *CheckButton) SetActionName(ActionNameVar string) {
+func (x *CheckButton) SetActionName(ActionNameVar *string) {
 
-	XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 

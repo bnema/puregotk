@@ -266,7 +266,7 @@ func (c *MultiLayoutView) SetGoPointer(ptr uintptr) {
 func (x *MultiLayoutView) SetPropertyLayoutName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("layout-name", &v)
 }
 

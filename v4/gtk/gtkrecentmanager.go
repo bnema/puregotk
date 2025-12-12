@@ -53,17 +53,17 @@ func (x *RecentInfo) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xRecentInfoCreateAppInfo func(uintptr, string, **glib.Error) uintptr
+var xRecentInfoCreateAppInfo func(uintptr, uintptr, **glib.Error) uintptr
 
 // Creates a `GAppInfo` for the specified `GtkRecentInfo`
 //
 // In case of error, @error will be set either with a
 // %GTK_RECENT_MANAGER_ERROR or a %G_IO_ERROR
-func (x *RecentInfo) CreateAppInfo(AppNameVar string) (*gio.AppInfoBase, error) {
+func (x *RecentInfo) CreateAppInfo(AppNameVar *string) (*gio.AppInfoBase, error) {
 	var cls *gio.AppInfoBase
 	var cerr *glib.Error
 
-	cret := xRecentInfoCreateAppInfo(x.GoPointer(), AppNameVar, &cerr)
+	cret := xRecentInfoCreateAppInfo(x.GoPointer(), core.NullableStringToPtr(AppNameVar), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -690,16 +690,16 @@ func (x *RecentManager) LookupItem(UriVar string) (*RecentInfo, error) {
 
 }
 
-var xRecentManagerMoveItem func(uintptr, string, string, **glib.Error) bool
+var xRecentManagerMoveItem func(uintptr, string, uintptr, **glib.Error) bool
 
 // Changes the location of a recently used resource from @uri to @new_uri.
 //
 // Please note that this function will not affect the resource pointed
 // by the URIs, but only the URI used in the recently used resources list.
-func (x *RecentManager) MoveItem(UriVar string, NewUriVar string) (bool, error) {
+func (x *RecentManager) MoveItem(UriVar string, NewUriVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xRecentManagerMoveItem(x.GoPointer(), UriVar, NewUriVar, &cerr)
+	cret := xRecentManagerMoveItem(x.GoPointer(), UriVar, core.NullableStringToPtr(NewUriVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -753,7 +753,7 @@ func (c *RecentManager) SetGoPointer(ptr uintptr) {
 func (x *RecentManager) SetPropertyFilename(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("filename", &v)
 }
 

@@ -265,7 +265,7 @@ func (x *ProxyAddressEnumerator) GetPropertyDefaultPort() uint {
 func (x *ProxyAddressEnumerator) SetPropertyUri(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("uri", &v)
 }
 

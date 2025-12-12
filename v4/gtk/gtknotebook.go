@@ -572,16 +572,16 @@ func (x *Notebook) SetCurrentPage(PageNumVar int) {
 
 }
 
-var xNotebookSetGroupName func(uintptr, string)
+var xNotebookSetGroupName func(uintptr, uintptr)
 
 // Sets a group name for @notebook.
 //
 // Notebooks with the same name will be able to exchange tabs
 // via drag and drop. A notebook with a %NULL group name will
 // not be able to exchange tabs with any other notebook.
-func (x *Notebook) SetGroupName(GroupNameVar string) {
+func (x *Notebook) SetGroupName(GroupNameVar *string) {
 
-	xNotebookSetGroupName(x.GoPointer(), GroupNameVar)
+	xNotebookSetGroupName(x.GoPointer(), core.NullableStringToPtr(GroupNameVar))
 
 }
 
@@ -763,7 +763,7 @@ func (x *Notebook) GetPropertyEnablePopup() bool {
 func (x *Notebook) SetPropertyGroupName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("group-name", &v)
 }
 
@@ -1418,7 +1418,7 @@ func (x *NotebookPage) GetPropertyDetachable() bool {
 func (x *NotebookPage) SetPropertyMenuLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("menu-label", &v)
 }
 
@@ -1503,7 +1503,7 @@ func (x *NotebookPage) GetPropertyTabFill() bool {
 func (x *NotebookPage) SetPropertyTabLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tab-label", &v)
 }
 

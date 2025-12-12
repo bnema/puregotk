@@ -65,13 +65,13 @@ func TextTagNewFromInternalPtr(ptr uintptr) *TextTag {
 	return cls
 }
 
-var xNewTextTag func(string) uintptr
+var xNewTextTag func(uintptr) uintptr
 
 // Creates a `GtkTextTag`.
-func NewTextTag(NameVar string) *TextTag {
+func NewTextTag(NameVar *string) *TextTag {
 	var cls *TextTag
 
-	cret := xNewTextTag(NameVar)
+	cret := xNewTextTag(core.NullableStringToPtr(NameVar))
 
 	if cret == 0 {
 		return nil
@@ -200,7 +200,7 @@ func (x *TextTag) GetPropertyAllowBreaksSet() bool {
 func (x *TextTag) SetPropertyBackground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("background", &v)
 }
 
@@ -353,7 +353,7 @@ func (x *TextTag) GetPropertyFallbackSet() bool {
 func (x *TextTag) SetPropertyFamily(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("family", &v)
 }
 
@@ -390,7 +390,7 @@ func (x *TextTag) GetPropertyFamilySet() bool {
 func (x *TextTag) SetPropertyFont(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("font", &v)
 }
 
@@ -427,7 +427,7 @@ func (x *TextTag) GetPropertyFontDesc() uintptr {
 func (x *TextTag) SetPropertyFontFeatures(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("font-features", &v)
 }
 
@@ -461,7 +461,7 @@ func (x *TextTag) GetPropertyFontFeaturesSet() bool {
 func (x *TextTag) SetPropertyForeground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("foreground", &v)
 }
 
@@ -645,7 +645,7 @@ func (x *TextTag) GetPropertyJustificationSet() bool {
 func (x *TextTag) SetPropertyLanguage(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("language", &v)
 }
 
@@ -789,7 +789,7 @@ func (x *TextTag) GetPropertyLineHeightSet() bool {
 func (x *TextTag) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -863,7 +863,7 @@ func (x *TextTag) GetPropertyOverlineSet() bool {
 func (x *TextTag) SetPropertyParagraphBackground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("paragraph-background", &v)
 }
 

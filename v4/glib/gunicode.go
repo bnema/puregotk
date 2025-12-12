@@ -1249,7 +1249,7 @@ func Utf8CollateKeyForFilename(StrVar string, LenVar int) string {
 	return cret
 }
 
-var xUtf8FindNextChar func(string, string) string
+var xUtf8FindNextChar func(string, uintptr) string
 
 // Finds the start of the next UTF-8 character in the string after @p.
 //
@@ -1261,9 +1261,9 @@ var xUtf8FindNextChar func(string, string) string
 // string is reached, a pointer to the terminating nul byte is returned. If
 // @end is non-`NULL`, the return value will be `NULL` if the end of the string
 // is reached.
-func Utf8FindNextChar(PVar string, EndVar string) string {
+func Utf8FindNextChar(PVar string, EndVar *string) string {
 
-	cret := xUtf8FindNextChar(PVar, EndVar)
+	cret := xUtf8FindNextChar(PVar, core.NullableStringToPtr(EndVar))
 	return cret
 }
 

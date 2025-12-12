@@ -134,7 +134,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Name:  util.ConstructorName(c.Name, rec.Name),
 				CName: c.CIdentifier,
 				Doc:   c.Doc.StringSafe(),
-				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws),
+				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws, types.ArgsFromGoToC),
 				Ret:   c.ReturnValue.Template(ns.Name, "", p.Types, c.Throws),
 			}
 		}
@@ -148,7 +148,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				fieldName = "x" + util.SnakeToCamel(f.Name) // Prefix callback pointer fields with `x` to make them private
 
 				callbackName := util.SnakeToCamel(f.Name)
-				args := f.Callback.Parameters.Template(ns.Name, "", p.Types, f.Callback.Throws)
+				args := f.Callback.Parameters.Template(ns.Name, "", p.Types, f.Callback.Throws, types.ArgsFromCToGo)
 				ret := f.Callback.ReturnValue.Template(ns.Name, "", p.Types, f.Callback.Throws)
 
 				apiTypes := args.API.Types
@@ -228,7 +228,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Doc:   f.Doc.StringSafe(),
 				Name:  name,
 				CName: f.CIdentifier,
-				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws),
+				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC),
 				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws),
 			})
 		}
@@ -252,7 +252,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		cbT := types.CallbackTemplate{
 			Doc:  cb.Doc.StringSafe(),
 			Name: cb.Name,
-			Args: cb.Parameters.Template(ns.Name, "", p.Types, cb.Throws),
+			Args: cb.Parameters.Template(ns.Name, "", p.Types, cb.Throws, types.ArgsFromCToGo),
 			Ret:  cb.ReturnValue.Template(ns.Name, "", p.Types, cb.Throws),
 		}
 		callbacks[fn] = append(callbacks[fn], cbT)
@@ -307,7 +307,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			Name:  name,
 			CName: f.CIdentifier,
 			Doc:   f.Doc.StringSafe(),
-			Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws),
+			Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC),
 			Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws),
 		})
 	}
@@ -326,7 +326,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Name:  util.ConstructorName(c.Name, cls.Name),
 				CName: c.CIdentifier,
 				Doc:   c.Doc.StringSafe(),
-				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws),
+				Args:  c.Parameters.Template(ns.Name, "", p.Types, c.Throws, types.ArgsFromGoToC),
 				Ret:   c.ReturnValue.Template(ns.Name, "", p.Types, c.Throws),
 			}
 		}
@@ -336,7 +336,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Doc:   s.Doc.StringSafe(),
 				Name:  util.DashToCamel(s.Name),
 				CName: s.Name,
-				Args:  s.Parameters.Template(ns.Name, "", p.Types, false),
+				Args:  s.Parameters.Template(ns.Name, "", p.Types, false, types.ArgsFromCToGo),
 				Ret:   s.ReturnValue.Template(ns.Name, "", p.Types, false),
 			}
 		}
@@ -348,7 +348,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Doc:   f.Doc.StringSafe(),
 				Name:  name,
 				CName: f.CIdentifier,
-				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws),
+				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC),
 				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws),
 			}
 		}
@@ -359,7 +359,7 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 				Name:  name,
 				CName: f.CIdentifier,
 				Doc:   f.Doc.StringSafe(),
-				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws),
+				Args:  f.Parameters.Template(ns.Name, "", p.Types, f.Throws, types.ArgsFromGoToC),
 				Ret:   f.ReturnValue.Template(ns.Name, "", p.Types, f.Throws),
 			}
 		}
@@ -460,12 +460,51 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 			}
 		}
 
+		needsCoreHelpers := false
+		checkFuncArgs := func(funcs []types.FuncTemplate) {
+			if needsCoreHelpers {
+				return
+			}
+			for _, f := range funcs {
+				if f.Args.NeedsCore() {
+					needsCoreHelpers = true
+					return
+				}
+			}
+		}
+		checkInterfaceArgs := func(funcs []types.InterfaceFuncTemplate) {
+			if needsCoreHelpers {
+				return
+			}
+			for _, f := range funcs {
+				if f.Args.NeedsCore() {
+					needsCoreHelpers = true
+					return
+				}
+			}
+		}
+
+		for _, rec := range records[fn] {
+			checkFuncArgs(rec.Constructors)
+			checkFuncArgs(rec.Receivers)
+		}
+		for _, cls := range classes[fn] {
+			checkFuncArgs(cls.Constructors)
+			checkFuncArgs(cls.Receivers)
+			checkFuncArgs(cls.Functions)
+		}
+		checkFuncArgs(functions[fn])
+		for _, inter := range interfaces[fn] {
+			checkInterfaceArgs(inter.Methods)
+		}
+
 		args := types.TemplateArg{
 			PkgName:              pkgName,
 			PkgEnv:               strings.ToUpper(pkgName),
 			PkgConfigName:        pkgConfigName,
 			SharedLibraries:      sharedLibraries,
 			NeedsInit:            needsInit,
+			NeedsCore:            needsCoreHelpers,
 			HasReceiverCallbacks: hasReceiverCallbacks,
 			HasFunctionCallbacks: hasFunctionCallbacks,
 			Aliases:              aliases[fn],

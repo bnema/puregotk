@@ -50,20 +50,20 @@ func (x *TimeZone) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewTimeZone func(string) *TimeZone
+var xNewTimeZone func(uintptr) *TimeZone
 
 // A version of g_time_zone_new_identifier() which returns the UTC time zone
 // if @identifier could not be parsed or loaded.
 //
 // If you need to check whether @identifier was loaded successfully, use
 // g_time_zone_new_identifier().
-func NewTimeZone(IdentifierVar string) *TimeZone {
+func NewTimeZone(IdentifierVar *string) *TimeZone {
 
-	cret := xNewTimeZone(IdentifierVar)
+	cret := xNewTimeZone(core.NullableStringToPtr(IdentifierVar))
 	return cret
 }
 
-var xNewTimeZoneIdentifier func(string) *TimeZone
+var xNewTimeZoneIdentifier func(uintptr) *TimeZone
 
 // Creates a #GTimeZone corresponding to @identifier. If @identifier cannot be
 // parsed or loaded, %NULL is returned.
@@ -130,9 +130,9 @@ var xNewTimeZoneIdentifier func(string) *TimeZone
 //
 // You should release the return value by calling g_time_zone_unref()
 // when you are done with it.
-func NewTimeZoneIdentifier(IdentifierVar string) *TimeZone {
+func NewTimeZoneIdentifier(IdentifierVar *string) *TimeZone {
 
-	cret := xNewTimeZoneIdentifier(IdentifierVar)
+	cret := xNewTimeZoneIdentifier(core.NullableStringToPtr(IdentifierVar))
 	return cret
 }
 

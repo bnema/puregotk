@@ -90,7 +90,7 @@ func (x *ShortcutsGroup) GetPropertyHeight() uint {
 func (x *ShortcutsGroup) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -112,7 +112,7 @@ func (x *ShortcutsGroup) GetPropertyTitle() string {
 func (x *ShortcutsGroup) SetPropertyView(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("view", &v)
 }
 

@@ -3315,15 +3315,15 @@ type File interface {
 	Read(CancellableVar *Cancellable) (*FileInputStream, error)
 	ReadAsync(IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	ReadFinish(ResVar AsyncResult) (*FileInputStream, error)
-	Replace(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error)
-	ReplaceAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ReplaceContents(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error)
-	ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
-	ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	Replace(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error)
+	ReplaceAsync(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	ReplaceContents(ContentsVar string, LengthVar uint, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error)
+	ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	ReplaceContentsFinish(ResVar AsyncResult, NewEtagVar *string) (bool, error)
 	ReplaceFinish(ResVar AsyncResult) (*FileOutputStream, error)
-	ReplaceReadwrite(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error)
-	ReplaceReadwriteAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
+	ReplaceReadwrite(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error)
+	ReplaceReadwriteAsync(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr)
 	ReplaceReadwriteFinish(ResVar AsyncResult) (*FileIOStream, error)
 	ResolveRelativePath(RelativePathVar string) *FileBase
 	SetAttribute(AttributeVar string, TypeVar FileAttributeType, ValuePVar uintptr, FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) (bool, error)
@@ -5280,11 +5280,11 @@ func (x *FileBase) ReadFinish(ResVar AsyncResult) (*FileInputStream, error) {
 // %G_IO_ERROR_INVALID_FILENAME error, and if the name is to long
 // %G_IO_ERROR_FILENAME_TOO_LONG will be returned. Other errors are
 // possible too, and depend on what kind of filesystem the file is on.
-func (x *FileBase) Replace(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error) {
+func (x *FileBase) Replace(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileOutputStream, error) {
 	var cls *FileOutputStream
 	var cerr *glib.Error
 
-	cret := XGFileReplace(x.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+	cret := XGFileReplace(x.GoPointer(), core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5307,9 +5307,9 @@ func (x *FileBase) Replace(EtagVar string, MakeBackupVar bool, FlagsVar FileCrea
 // When the operation is finished, @callback will be called.
 // You can then call g_file_replace_finish() to get the result
 // of the operation.
-func (x *FileBase) ReplaceAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) ReplaceAsync(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGFileReplaceAsync(x.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	XGFileReplaceAsync(x.GoPointer(), core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -5329,10 +5329,10 @@ func (x *FileBase) ReplaceAsync(EtagVar string, MakeBackupVar bool, FlagsVar Fil
 //
 // The returned @new_etag can be used to verify that the file hasn't
 // changed the next time it is saved over.
-func (x *FileBase) ReplaceContents(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error) {
+func (x *FileBase) ReplaceContents(ContentsVar string, LengthVar uint, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGFileReplaceContents(x.GoPointer(), ContentsVar, LengthVar, EtagVar, MakeBackupVar, FlagsVar, NewEtagVar, CancellableVar.GoPointer(), &cerr)
+	cret := XGFileReplaceContents(x.GoPointer(), ContentsVar, LengthVar, core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, NewEtagVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5359,9 +5359,9 @@ func (x *FileBase) ReplaceContents(ContentsVar string, LengthVar uint, EtagVar s
 // until @callback is called. See g_file_replace_contents_bytes_async()
 // for a #GBytes version that will automatically hold a reference to the
 // contents (without copying) for the duration of the call.
-func (x *FileBase) ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGFileReplaceContentsAsync(x.GoPointer(), ContentsVar, LengthVar, EtagVar, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	XGFileReplaceContentsAsync(x.GoPointer(), ContentsVar, LengthVar, core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -5373,9 +5373,9 @@ func (x *FileBase) ReplaceContentsAsync(ContentsVar string, LengthVar uint, Etag
 // When this operation has completed, @callback will be called with
 // @user_user data, and the operation can be finalized with
 // g_file_replace_contents_finish().
-func (x *FileBase) ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGFileReplaceContentsBytesAsync(x.GoPointer(), ContentsVar, EtagVar, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	XGFileReplaceContentsBytesAsync(x.GoPointer(), ContentsVar, core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -5423,11 +5423,11 @@ func (x *FileBase) ReplaceFinish(ResVar AsyncResult) (*FileOutputStream, error) 
 // Note that in many non-local file cases read and write streams are not
 // supported, so make sure you really need to do read and write streaming,
 // rather than just opening for reading or writing.
-func (x *FileBase) ReplaceReadwrite(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error) {
+func (x *FileBase) ReplaceReadwrite(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable) (*FileIOStream, error) {
 	var cls *FileIOStream
 	var cerr *glib.Error
 
-	cret := XGFileReplaceReadwrite(x.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+	cret := XGFileReplaceReadwrite(x.GoPointer(), core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5451,9 +5451,9 @@ func (x *FileBase) ReplaceReadwrite(EtagVar string, MakeBackupVar bool, FlagsVar
 // When the operation is finished, @callback will be called.
 // You can then call g_file_replace_readwrite_finish() to get
 // the result of the operation.
-func (x *FileBase) ReplaceReadwriteAsync(EtagVar string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *FileBase) ReplaceReadwriteAsync(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGFileReplaceReadwriteAsync(x.GoPointer(), EtagVar, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	XGFileReplaceReadwriteAsync(x.GoPointer(), core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
 
 }
 
@@ -6006,15 +6006,15 @@ var XGFileQueryWritableNamespaces func(uintptr, uintptr, **glib.Error) *FileAttr
 var XGFileRead func(uintptr, uintptr, **glib.Error) uintptr
 var XGFileReadAsync func(uintptr, int, uintptr, uintptr, uintptr)
 var XGFileReadFinish func(uintptr, uintptr, **glib.Error) uintptr
-var XGFileReplace func(uintptr, string, bool, FileCreateFlags, uintptr, **glib.Error) uintptr
-var XGFileReplaceAsync func(uintptr, string, bool, FileCreateFlags, int, uintptr, uintptr, uintptr)
-var XGFileReplaceContents func(uintptr, string, uint, string, bool, FileCreateFlags, *string, uintptr, **glib.Error) bool
-var XGFileReplaceContentsAsync func(uintptr, string, uint, string, bool, FileCreateFlags, uintptr, uintptr, uintptr)
-var XGFileReplaceContentsBytesAsync func(uintptr, *glib.Bytes, string, bool, FileCreateFlags, uintptr, uintptr, uintptr)
+var XGFileReplace func(uintptr, uintptr, bool, FileCreateFlags, uintptr, **glib.Error) uintptr
+var XGFileReplaceAsync func(uintptr, uintptr, bool, FileCreateFlags, int, uintptr, uintptr, uintptr)
+var XGFileReplaceContents func(uintptr, string, uint, uintptr, bool, FileCreateFlags, *string, uintptr, **glib.Error) bool
+var XGFileReplaceContentsAsync func(uintptr, string, uint, uintptr, bool, FileCreateFlags, uintptr, uintptr, uintptr)
+var XGFileReplaceContentsBytesAsync func(uintptr, *glib.Bytes, uintptr, bool, FileCreateFlags, uintptr, uintptr, uintptr)
 var XGFileReplaceContentsFinish func(uintptr, uintptr, *string, **glib.Error) bool
 var XGFileReplaceFinish func(uintptr, uintptr, **glib.Error) uintptr
-var XGFileReplaceReadwrite func(uintptr, string, bool, FileCreateFlags, uintptr, **glib.Error) uintptr
-var XGFileReplaceReadwriteAsync func(uintptr, string, bool, FileCreateFlags, int, uintptr, uintptr, uintptr)
+var XGFileReplaceReadwrite func(uintptr, uintptr, bool, FileCreateFlags, uintptr, **glib.Error) uintptr
+var XGFileReplaceReadwriteAsync func(uintptr, uintptr, bool, FileCreateFlags, int, uintptr, uintptr, uintptr)
 var XGFileReplaceReadwriteFinish func(uintptr, uintptr, **glib.Error) uintptr
 var XGFileResolveRelativePath func(uintptr, string) uintptr
 var XGFileSetAttribute func(uintptr, string, FileAttributeType, uintptr, FileQueryInfoFlags, uintptr, **glib.Error) bool
@@ -6155,7 +6155,7 @@ func FileNewForUri(UriVar string) *FileBase {
 	return cls
 }
 
-var xFileNewTmp func(string, **FileIOStream, **glib.Error) uintptr
+var xFileNewTmp func(uintptr, **FileIOStream, **glib.Error) uintptr
 
 // Opens a file in the preferred directory for temporary files (as
 // returned by g_get_tmp_dir()) and returns a #GFile and
@@ -6167,11 +6167,11 @@ var xFileNewTmp func(string, **FileIOStream, **glib.Error) uintptr
 //
 // Unlike the other #GFile constructors, this will return %NULL if
 // a temporary file could not be created.
-func FileNewTmp(TmplVar string, IostreamVar **FileIOStream) (*FileBase, error) {
+func FileNewTmp(TmplVar *string, IostreamVar **FileIOStream) (*FileBase, error) {
 	var cls *FileBase
 	var cerr *glib.Error
 
-	cret := xFileNewTmp(TmplVar, IostreamVar, &cerr)
+	cret := xFileNewTmp(core.NullableStringToPtr(TmplVar), IostreamVar, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -6185,7 +6185,7 @@ func FileNewTmp(TmplVar string, IostreamVar **FileIOStream) (*FileBase, error) {
 
 }
 
-var xFileNewTmpAsync func(string, int, uintptr, uintptr, uintptr)
+var xFileNewTmpAsync func(uintptr, int, uintptr, uintptr, uintptr)
 
 // Asynchronously opens a file in the preferred directory for temporary files
 //
@@ -6194,7 +6194,7 @@ var xFileNewTmpAsync func(string, int, uintptr, uintptr, uintptr)
 // @tmpl should be a string in the GLib file name encoding
 // containing a sequence of six 'X' characters, and containing no
 // directory components. If it is %NULL, a default template is used.
-func FileNewTmpAsync(TmplVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func FileNewTmpAsync(TmplVar *string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
 	var CallbackVarRef uintptr
 	if CallbackVar != nil {
@@ -6211,11 +6211,11 @@ func FileNewTmpAsync(TmplVar string, IoPriorityVar int, CancellableVar *Cancella
 		}
 	}
 
-	xFileNewTmpAsync(TmplVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	xFileNewTmpAsync(core.NullableStringToPtr(TmplVar), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
-var xFileNewTmpDirAsync func(string, int, uintptr, uintptr, uintptr)
+var xFileNewTmpDirAsync func(uintptr, int, uintptr, uintptr, uintptr)
 
 // Asynchronously creates a directory in the preferred directory for
 // temporary files (as returned by g_get_tmp_dir()) as g_dir_make_tmp().
@@ -6223,7 +6223,7 @@ var xFileNewTmpDirAsync func(string, int, uintptr, uintptr, uintptr)
 // @tmpl should be a string in the GLib file name encoding
 // containing a sequence of six 'X' characters, and containing no
 // directory components. If it is %NULL, a default template is used.
-func FileNewTmpDirAsync(TmplVar string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func FileNewTmpDirAsync(TmplVar *string, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
 	var CallbackVarRef uintptr
 	if CallbackVar != nil {
@@ -6240,7 +6240,7 @@ func FileNewTmpDirAsync(TmplVar string, IoPriorityVar int, CancellableVar *Cance
 		}
 	}
 
-	xFileNewTmpDirAsync(TmplVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	xFileNewTmpDirAsync(core.NullableStringToPtr(TmplVar), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

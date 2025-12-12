@@ -351,15 +351,15 @@ func (x *MediaFile) SetFile(FileVar gio.File) {
 
 }
 
-var xMediaFileSetFilename func(uintptr, string)
+var xMediaFileSetFilename func(uintptr, uintptr)
 
 // Sets the `GtkMediaFile` to play the given file.
 //
 // This is a utility function that converts the given @filename
 // to a `GFile` and calls [method@Gtk.MediaFile.set_file].
-func (x *MediaFile) SetFilename(FilenameVar string) {
+func (x *MediaFile) SetFilename(FilenameVar *string) {
 
-	xMediaFileSetFilename(x.GoPointer(), FilenameVar)
+	xMediaFileSetFilename(x.GoPointer(), core.NullableStringToPtr(FilenameVar))
 
 }
 
@@ -377,15 +377,15 @@ func (x *MediaFile) SetInputStream(StreamVar *gio.InputStream) {
 
 }
 
-var xMediaFileSetResource func(uintptr, string)
+var xMediaFileSetResource func(uintptr, uintptr)
 
 // Sets the `GtkMediaFile` to play the given resource.
 //
 // This is a utility function that converts the given @resource_path
 // to a `GFile` and calls [method@Gtk.MediaFile.set_file].
-func (x *MediaFile) SetResource(ResourcePathVar string) {
+func (x *MediaFile) SetResource(ResourcePathVar *string) {
 
-	xMediaFileSetResource(x.GoPointer(), ResourcePathVar)
+	xMediaFileSetResource(x.GoPointer(), core.NullableStringToPtr(ResourcePathVar))
 
 }
 

@@ -137,7 +137,7 @@ func MessageDialogNewFromInternalPtr(ptr uintptr) *MessageDialog {
 	return cls
 }
 
-var xNewMessageDialog func(uintptr, DialogFlags, MessageType, ButtonsType, string, ...interface{}) uintptr
+var xNewMessageDialog func(uintptr, DialogFlags, MessageType, ButtonsType, uintptr, ...interface{}) uintptr
 
 // Creates a new message dialog.
 //
@@ -145,10 +145,10 @@ var xNewMessageDialog func(uintptr, DialogFlags, MessageType, ButtonsType, strin
 // When the user clicks a button a “response” signal is emitted with
 // response IDs from [enum@Gtk.ResponseType]. See [class@Gtk.Dialog]
 // for more details.
-func NewMessageDialog(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar string, varArgs ...interface{}) *MessageDialog {
+func NewMessageDialog(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar *string, varArgs ...interface{}) *MessageDialog {
 	var cls *MessageDialog
 
-	cret := xNewMessageDialog(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, MessageFormatVar, varArgs...)
+	cret := xNewMessageDialog(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, core.NullableStringToPtr(MessageFormatVar), varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -159,7 +159,7 @@ func NewMessageDialog(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageTy
 	return cls
 }
 
-var xNewMessageDialogWithMarkup func(uintptr, DialogFlags, MessageType, ButtonsType, string, ...interface{}) uintptr
+var xNewMessageDialogWithMarkup func(uintptr, DialogFlags, MessageType, ButtonsType, uintptr, ...interface{}) uintptr
 
 // Creates a new message dialog.
 //
@@ -193,10 +193,10 @@ var xNewMessageDialogWithMarkup func(uintptr, DialogFlags, MessageType, ButtonsT
 //	markup);
 //
 // ```
-func NewMessageDialogWithMarkup(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar string, varArgs ...interface{}) *MessageDialog {
+func NewMessageDialogWithMarkup(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar *string, varArgs ...interface{}) *MessageDialog {
 	var cls *MessageDialog
 
-	cret := xNewMessageDialogWithMarkup(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, MessageFormatVar, varArgs...)
+	cret := xNewMessageDialogWithMarkup(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, core.NullableStringToPtr(MessageFormatVar), varArgs...)
 
 	if cret == 0 {
 		return nil
@@ -234,12 +234,12 @@ func (x *MessageDialog) FormatSecondaryMarkup(MessageFormatVar string, varArgs .
 
 }
 
-var xMessageDialogFormatSecondaryText func(uintptr, string, ...interface{})
+var xMessageDialogFormatSecondaryText func(uintptr, uintptr, ...interface{})
 
 // Sets the secondary text of the message dialog.
-func (x *MessageDialog) FormatSecondaryText(MessageFormatVar string, varArgs ...interface{}) {
+func (x *MessageDialog) FormatSecondaryText(MessageFormatVar *string, varArgs ...interface{}) {
 
-	xMessageDialogFormatSecondaryText(x.GoPointer(), MessageFormatVar, varArgs...)
+	xMessageDialogFormatSecondaryText(x.GoPointer(), core.NullableStringToPtr(MessageFormatVar), varArgs...)
 
 }
 
@@ -290,7 +290,7 @@ func (c *MessageDialog) SetGoPointer(ptr uintptr) {
 func (x *MessageDialog) SetPropertySecondaryText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("secondary-text", &v)
 }
 
@@ -330,7 +330,7 @@ func (x *MessageDialog) GetPropertySecondaryUseMarkup() bool {
 func (x *MessageDialog) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 

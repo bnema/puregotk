@@ -252,6 +252,9 @@ func PropertyScalarSet(notGObject bool, gvalueType, setMethod string) string {
 	if notGObject {
 		prefix = "gobject."
 	}
+	if setMethod == "SetString" {
+		return prefix + gvalueType + ")\n\tv." + setMethod + "(&value"
+	}
 	return prefix + gvalueType + ")\n\tv." + setMethod + "(value"
 }
 

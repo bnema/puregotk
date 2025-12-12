@@ -228,17 +228,17 @@ func (x *Subprocess) CommunicateFinish(ResultVar AsyncResult, StdoutBufVar **gli
 
 }
 
-var xSubprocessCommunicateUtf8 func(uintptr, string, uintptr, *string, *string, **glib.Error) bool
+var xSubprocessCommunicateUtf8 func(uintptr, uintptr, uintptr, *string, *string, **glib.Error) bool
 
 // Like g_subprocess_communicate(), but validates the output of the
 // process as UTF-8, and returns it as a regular NUL terminated string.
 //
 // On error, @stdout_buf and @stderr_buf will be set to undefined values and
 // should not be used.
-func (x *Subprocess) CommunicateUtf8(StdinBufVar string, CancellableVar *Cancellable, StdoutBufVar *string, StderrBufVar *string) (bool, error) {
+func (x *Subprocess) CommunicateUtf8(StdinBufVar *string, CancellableVar *Cancellable, StdoutBufVar *string, StderrBufVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSubprocessCommunicateUtf8(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
+	cret := xSubprocessCommunicateUtf8(x.GoPointer(), core.NullableStringToPtr(StdinBufVar), CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -246,11 +246,11 @@ func (x *Subprocess) CommunicateUtf8(StdinBufVar string, CancellableVar *Cancell
 
 }
 
-var xSubprocessCommunicateUtf8Async func(uintptr, string, uintptr, uintptr, uintptr)
+var xSubprocessCommunicateUtf8Async func(uintptr, uintptr, uintptr, uintptr, uintptr)
 
 // Asynchronous version of g_subprocess_communicate_utf8().  Complete
 // invocation with g_subprocess_communicate_utf8_finish().
-func (x *Subprocess) CommunicateUtf8Async(StdinBufVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *Subprocess) CommunicateUtf8Async(StdinBufVar *string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
 	var CallbackVarRef uintptr
 	if CallbackVar != nil {
@@ -267,7 +267,7 @@ func (x *Subprocess) CommunicateUtf8Async(StdinBufVar string, CancellableVar *Ca
 		}
 	}
 
-	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	xSubprocessCommunicateUtf8Async(x.GoPointer(), core.NullableStringToPtr(StdinBufVar), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

@@ -239,7 +239,7 @@ func (x *ProgressBar) SetShowText(ShowTextVar bool) {
 
 }
 
-var xProgressBarSetText func(uintptr, string)
+var xProgressBarSetText func(uintptr, uintptr)
 
 // Causes the given @text to appear next to the progress bar.
 //
@@ -252,9 +252,9 @@ var xProgressBarSetText func(uintptr, string)
 // percentage. If @text is the empty string, the progress bar will still
 // be styled and sized suitably for containing text, as long as
 // [property@Gtk.ProgressBar:show-text] is %TRUE.
-func (x *ProgressBar) SetText(TextVar string) {
+func (x *ProgressBar) SetText(TextVar *string) {
 
-	xProgressBarSetText(x.GoPointer(), TextVar)
+	xProgressBarSetText(x.GoPointer(), core.NullableStringToPtr(TextVar))
 
 }
 
@@ -360,7 +360,7 @@ func (x *ProgressBar) GetPropertyShowText() bool {
 func (x *ProgressBar) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 

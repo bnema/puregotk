@@ -306,7 +306,7 @@ func NewDialog() *Dialog {
 	return cls
 }
 
-var xNewDialogWithButtons func(string, uintptr, DialogFlags, string, ...interface{}) uintptr
+var xNewDialogWithButtons func(uintptr, uintptr, DialogFlags, uintptr, ...interface{}) uintptr
 
 // Creates a new `GtkDialog` with the given title and transient parent.
 //
@@ -343,10 +343,10 @@ var xNewDialogWithButtons func(string, uintptr, DialogFlags, string, ...interfac
 //	NULL);
 //
 // ```
-func NewDialogWithButtons(TitleVar string, ParentVar *Window, FlagsVar DialogFlags, FirstButtonTextVar string, varArgs ...interface{}) *Dialog {
+func NewDialogWithButtons(TitleVar *string, ParentVar *Window, FlagsVar DialogFlags, FirstButtonTextVar *string, varArgs ...interface{}) *Dialog {
 	var cls *Dialog
 
-	cret := xNewDialogWithButtons(TitleVar, ParentVar.GoPointer(), FlagsVar, FirstButtonTextVar, varArgs...)
+	cret := xNewDialogWithButtons(core.NullableStringToPtr(TitleVar), ParentVar.GoPointer(), FlagsVar, core.NullableStringToPtr(FirstButtonTextVar), varArgs...)
 
 	if cret == 0 {
 		return nil
