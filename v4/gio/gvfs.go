@@ -614,7 +614,67 @@ var xVfsRegisterUriScheme func(uintptr, string, uintptr, uintptr, uintptr, uintp
 // a custom URI scheme, use g_vfs_unregister_uri_scheme().
 func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc, UriDataVar uintptr, UriDestroyVar *glib.DestroyNotify, ParseNameFuncVar *VfsFileLookupFunc, ParseNameDataVar uintptr, ParseNameDestroyVar *glib.DestroyNotify) bool {
 
-	cret := xVfsRegisterUriScheme(x.GoPointer(), SchemeVar, glib.NewCallbackNullable(UriFuncVar), UriDataVar, glib.NewCallbackNullable(UriDestroyVar), glib.NewCallbackNullable(ParseNameFuncVar), ParseNameDataVar, glib.NewCallbackNullable(ParseNameDestroyVar))
+	var UriFuncVarRef uintptr
+	if UriFuncVar != nil {
+		UriFuncVarPtr := uintptr(unsafe.Pointer(UriFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UriFuncVarPtr); ok {
+			UriFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) uintptr {
+				cbFn := *UriFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			UriFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UriFuncVarPtr, UriFuncVarRef)
+		}
+	}
+
+	var UriDestroyVarRef uintptr
+	if UriDestroyVar != nil {
+		UriDestroyVarPtr := uintptr(unsafe.Pointer(UriDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UriDestroyVarPtr); ok {
+			UriDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UriDestroyVar
+				cbFn(arg0)
+			}
+			UriDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UriDestroyVarPtr, UriDestroyVarRef)
+		}
+	}
+
+	var ParseNameFuncVarRef uintptr
+	if ParseNameFuncVar != nil {
+		ParseNameFuncVarPtr := uintptr(unsafe.Pointer(ParseNameFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(ParseNameFuncVarPtr); ok {
+			ParseNameFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) uintptr {
+				cbFn := *ParseNameFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			ParseNameFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(ParseNameFuncVarPtr, ParseNameFuncVarRef)
+		}
+	}
+
+	var ParseNameDestroyVarRef uintptr
+	if ParseNameDestroyVar != nil {
+		ParseNameDestroyVarPtr := uintptr(unsafe.Pointer(ParseNameDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(ParseNameDestroyVarPtr); ok {
+			ParseNameDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ParseNameDestroyVar
+				cbFn(arg0)
+			}
+			ParseNameDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(ParseNameDestroyVarPtr, ParseNameDestroyVarRef)
+		}
+	}
+
+	cret := xVfsRegisterUriScheme(x.GoPointer(), SchemeVar, UriFuncVarRef, UriDataVar, UriDestroyVarRef, ParseNameFuncVarRef, ParseNameDataVar, ParseNameDestroyVarRef)
 	return cret
 }
 

@@ -291,7 +291,7 @@ func (c *PopoverMenu) SetGoPointer(ptr uintptr) {
 func (x *PopoverMenu) SetPropertyVisibleSubmenu(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("visible-submenu", &v)
 }
 

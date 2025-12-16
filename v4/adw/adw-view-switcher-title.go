@@ -240,7 +240,7 @@ func (c *ViewSwitcherTitle) SetGoPointer(ptr uintptr) {
 func (x *ViewSwitcherTitle) SetPropertySubtitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("subtitle", &v)
 }
 
@@ -262,7 +262,7 @@ func (x *ViewSwitcherTitle) GetPropertySubtitle() string {
 func (x *ViewSwitcherTitle) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

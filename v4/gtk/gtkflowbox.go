@@ -198,7 +198,37 @@ var xFlowBoxBindModel func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // should be implemented by the model.
 func (x *FlowBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *FlowBoxCreateWidgetFunc, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) {
 
-	xFlowBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), glib.NewCallback(CreateWidgetFuncVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	var CreateWidgetFuncVarRef uintptr
+	if CreateWidgetFuncVar != nil {
+		CreateWidgetFuncVarPtr := uintptr(unsafe.Pointer(CreateWidgetFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CreateWidgetFuncVarPtr); ok {
+			CreateWidgetFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
+				cbFn := *CreateWidgetFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CreateWidgetFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CreateWidgetFuncVarPtr, CreateWidgetFuncVarRef)
+		}
+	}
+
+	var UserDataFreeFuncVarRef uintptr
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+		}
+	}
+
+	xFlowBoxBindModel(x.GoPointer(), ModelVar.GoPointer(), CreateWidgetFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
 
 }
 
@@ -414,7 +444,22 @@ var xFlowBoxSelectedForeach func(uintptr, uintptr, uintptr)
 // this function.
 func (x *FlowBox) SelectedForeach(FuncVar *FlowBoxForeachFunc, DataVar uintptr) {
 
-	xFlowBoxSelectedForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xFlowBoxSelectedForeach(x.GoPointer(), FuncVarRef, DataVar)
 
 }
 
@@ -454,7 +499,37 @@ var xFlowBoxSetFilterFunc func(uintptr, uintptr, uintptr, uintptr)
 // (see [method@Gtk.FlowBox.bind_model]).
 func (x *FlowBox) SetFilterFunc(FilterFuncVar *FlowBoxFilterFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xFlowBoxSetFilterFunc(x.GoPointer(), glib.NewCallbackNullable(FilterFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	var FilterFuncVarRef uintptr
+	if FilterFuncVar != nil {
+		FilterFuncVarPtr := uintptr(unsafe.Pointer(FilterFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FilterFuncVarPtr); ok {
+			FilterFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) bool {
+				cbFn := *FilterFuncVar
+				return cbFn(arg0, arg1)
+			}
+			FilterFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FilterFuncVarPtr, FilterFuncVarRef)
+		}
+	}
+
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	xFlowBoxSetFilterFunc(x.GoPointer(), FilterFuncVarRef, UserDataVar, DestroyVarRef)
 
 }
 
@@ -544,7 +619,37 @@ var xFlowBoxSetSortFunc func(uintptr, uintptr, uintptr, uintptr)
 // (see [method@Gtk.FlowBox.bind_model]).
 func (x *FlowBox) SetSortFunc(SortFuncVar *FlowBoxSortFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xFlowBoxSetSortFunc(x.GoPointer(), glib.NewCallbackNullable(SortFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	var SortFuncVarRef uintptr
+	if SortFuncVar != nil {
+		SortFuncVarPtr := uintptr(unsafe.Pointer(SortFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(SortFuncVarPtr); ok {
+			SortFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *SortFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			SortFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(SortFuncVarPtr, SortFuncVarRef)
+		}
+	}
+
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	xFlowBoxSetSortFunc(x.GoPointer(), SortFuncVarRef, UserDataVar, DestroyVarRef)
 
 }
 

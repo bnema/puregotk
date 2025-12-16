@@ -156,16 +156,16 @@ func (x *CssProvider) LoadFromString(StringVar string) {
 
 }
 
-var xCssProviderLoadNamed func(uintptr, string, string)
+var xCssProviderLoadNamed func(uintptr, string, uintptr)
 
 // Loads a theme from the usual theme paths.
 //
 // The actual process of finding the theme might change between
 // releases, but it is guaranteed that this function uses the same
 // mechanism to load the theme that GTK uses for loading its own theme.
-func (x *CssProvider) LoadNamed(NameVar string, VariantVar string) {
+func (x *CssProvider) LoadNamed(NameVar string, VariantVar *string) {
 
-	xCssProviderLoadNamed(x.GoPointer(), NameVar, VariantVar)
+	xCssProviderLoadNamed(x.GoPointer(), NameVar, core.NullableStringToPtr(VariantVar))
 
 }
 

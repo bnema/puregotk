@@ -281,7 +281,22 @@ var xOnceImpl func(uintptr, uintptr, uintptr) uintptr
 
 func (x *Once) Impl(FuncVar *ThreadFunc, ArgVar uintptr) uintptr {
 
-	cret := xOnceImpl(x.GoPointer(), NewCallback(FuncVar), ArgVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) uintptr {
+				cbFn := *FuncVar
+				return cbFn(arg0)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xOnceImpl(x.GoPointer(), FuncVarRef, ArgVar)
 	return cret
 }
 
@@ -859,7 +874,22 @@ var xStaticPrivateSet func(uintptr, uintptr, uintptr)
 // @notify is used quite differently from @destructor in g_private_new().
 func (x *StaticPrivate) Set(DataVar uintptr, NotifyVar *DestroyNotify) {
 
-	xStaticPrivateSet(x.GoPointer(), DataVar, NewCallback(NotifyVar))
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	xStaticPrivateSet(x.GoPointer(), DataVar, NotifyVarRef)
 
 }
 
@@ -1219,7 +1249,7 @@ func (x *Thread) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewThread func(string, uintptr, uintptr) *Thread
+var xNewThread func(uintptr, uintptr, uintptr) *Thread
 
 // This function creates a new thread. The new thread starts by invoking
 // @func with the argument data. The thread will run until @func returns
@@ -1248,23 +1278,53 @@ var xNewThread func(string, uintptr, uintptr) *Thread
 // inheriting the thread priority but were spawned with the default priority.
 // Starting with GLib 2.64 the behaviour is now consistent between Windows and
 // POSIX and all threads inherit their parent thread's priority.
-func NewThread(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
+func NewThread(NameVar *string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
 
-	cret := xNewThread(NameVar, NewCallback(FuncVar), DataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) uintptr {
+				cbFn := *FuncVar
+				return cbFn(arg0)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xNewThread(core.NullableStringToPtr(NameVar), FuncVarRef, DataVar)
 	return cret
 }
 
-var xThreadTryNew func(string, uintptr, uintptr, **Error) *Thread
+var xThreadTryNew func(uintptr, uintptr, uintptr, **Error) *Thread
 
 // This function is the same as g_thread_new() except that
 // it allows for the possibility of failure.
 //
 // If a thread can not be created (due to resource limits),
 // @error is set and %NULL is returned.
-func ThreadTryNew(NameVar string, FuncVar *ThreadFunc, DataVar uintptr) (*Thread, error) {
+func ThreadTryNew(NameVar *string, FuncVar *ThreadFunc, DataVar uintptr) (*Thread, error) {
 	var cerr *Error
 
-	cret := xThreadTryNew(NameVar, NewCallback(FuncVar), DataVar, &cerr)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) uintptr {
+				cbFn := *FuncVar
+				return cbFn(arg0)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xThreadTryNew(core.NullableStringToPtr(NameVar), FuncVarRef, DataVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2160,7 +2220,22 @@ var xPrivateNew func(uintptr) *Private
 // Creates a new #GPrivate.
 func PrivateNew(NotifyVar *DestroyNotify) *Private {
 
-	cret := xPrivateNew(NewCallback(NotifyVar))
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	cret := xPrivateNew(NotifyVarRef)
 	return cret
 }
 
@@ -2181,7 +2256,22 @@ var xThreadCreate func(uintptr, uintptr, bool, **Error) *Thread
 func ThreadCreate(FuncVar *ThreadFunc, DataVar uintptr, JoinableVar bool) (*Thread, error) {
 	var cerr *Error
 
-	cret := xThreadCreate(NewCallback(FuncVar), DataVar, JoinableVar, &cerr)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) uintptr {
+				cbFn := *FuncVar
+				return cbFn(arg0)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xThreadCreate(FuncVarRef, DataVar, JoinableVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2195,7 +2285,22 @@ var xThreadCreateFull func(uintptr, uintptr, uint32, bool, bool, ThreadPriority,
 func ThreadCreateFull(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint32, JoinableVar bool, BoundVar bool, PriorityVar ThreadPriority) (*Thread, error) {
 	var cerr *Error
 
-	cret := xThreadCreateFull(NewCallback(FuncVar), DataVar, StackSizeVar, JoinableVar, BoundVar, PriorityVar, &cerr)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) uintptr {
+				cbFn := *FuncVar
+				return cbFn(arg0)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xThreadCreateFull(FuncVarRef, DataVar, StackSizeVar, JoinableVar, BoundVar, PriorityVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2239,7 +2344,22 @@ var xThreadForeach func(uintptr, uintptr)
 // which is quadratic in the number of existing threads.
 func ThreadForeach(ThreadFuncVar *Func, UserDataVar uintptr) {
 
-	xThreadForeach(NewCallback(ThreadFuncVar), UserDataVar)
+	var ThreadFuncVarRef uintptr
+	if ThreadFuncVar != nil {
+		ThreadFuncVarPtr := uintptr(unsafe.Pointer(ThreadFuncVar))
+		if cbRefPtr, ok := GetCallback(ThreadFuncVarPtr); ok {
+			ThreadFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *ThreadFuncVar
+				cbFn(arg0, arg1)
+			}
+			ThreadFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ThreadFuncVarPtr, ThreadFuncVarRef)
+		}
+	}
+
+	xThreadForeach(ThreadFuncVarRef, UserDataVar)
 
 }
 

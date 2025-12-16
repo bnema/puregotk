@@ -6,7 +6,7 @@ import (
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
 
-var xLanguageFromString func(string) *Language
+var xLanguageFromString func(uintptr) *Language
 
 // Convert a language tag to a `PangoLanguage`.
 //
@@ -20,9 +20,9 @@ var xLanguageFromString func(string) *Language
 //
 // Use [func@Pango.Language.get_default] if you want to get the
 // `PangoLanguage` for the current locale of the process.
-func LanguageFromString(LanguageVar string) *Language {
+func LanguageFromString(LanguageVar *string) *Language {
 
-	cret := xLanguageFromString(LanguageVar)
+	cret := xLanguageFromString(core.NullableStringToPtr(LanguageVar))
 	return cret
 }
 

@@ -1435,7 +1435,7 @@ var XGAppInfoShouldShow func(uintptr) bool
 var XGAppInfoSupportsFiles func(uintptr) bool
 var XGAppInfoSupportsUris func(uintptr) bool
 
-var xAppInfoCreateFromCommandline func(string, string, AppInfoCreateFlags, **glib.Error) uintptr
+var xAppInfoCreateFromCommandline func(string, uintptr, AppInfoCreateFlags, **glib.Error) uintptr
 
 // Creates a new [iface@Gio.AppInfo] from the given information.
 //
@@ -1446,11 +1446,11 @@ var xAppInfoCreateFromCommandline func(string, string, AppInfoCreateFlags, **gli
 // being swallowed by `Exec` key unquoting. See
 // [the specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s07.html)
 // for exact quoting rules.
-func AppInfoCreateFromCommandline(CommandlineVar string, ApplicationNameVar string, FlagsVar AppInfoCreateFlags) (*AppInfoBase, error) {
+func AppInfoCreateFromCommandline(CommandlineVar string, ApplicationNameVar *string, FlagsVar AppInfoCreateFlags) (*AppInfoBase, error) {
 	var cls *AppInfoBase
 	var cerr *glib.Error
 
-	cret := xAppInfoCreateFromCommandline(CommandlineVar, ApplicationNameVar, FlagsVar, &cerr)
+	cret := xAppInfoCreateFromCommandline(CommandlineVar, core.NullableStringToPtr(ApplicationNameVar), FlagsVar, &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -1519,7 +1519,22 @@ var xAppInfoGetDefaultForTypeAsync func(string, bool, uintptr, uintptr, uintptr)
 // type.
 func AppInfoGetDefaultForTypeAsync(ContentTypeVar string, MustSupportUrisVar bool, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xAppInfoGetDefaultForTypeAsync(ContentTypeVar, MustSupportUrisVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xAppInfoGetDefaultForTypeAsync(ContentTypeVar, MustSupportUrisVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1575,7 +1590,22 @@ var xAppInfoGetDefaultForUriSchemeAsync func(string, uintptr, uintptr, uintptr)
 // `ftp` or `sip`.
 func AppInfoGetDefaultForUriSchemeAsync(UriSchemeVar string, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xAppInfoGetDefaultForUriSchemeAsync(UriSchemeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xAppInfoGetDefaultForUriSchemeAsync(UriSchemeVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1663,7 +1693,22 @@ var xAppInfoLaunchDefaultForUriAsync func(string, uintptr, uintptr, uintptr, uin
 // in receiving error information from their activation.
 func AppInfoLaunchDefaultForUriAsync(UriVar string, ContextVar *AppLaunchContext, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xAppInfoLaunchDefaultForUriAsync(UriVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xAppInfoLaunchDefaultForUriAsync(UriVar, ContextVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

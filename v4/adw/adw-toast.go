@@ -327,20 +327,20 @@ func (x *Toast) GetUseMarkup() bool {
 	return cret
 }
 
-var xToastSetActionName func(uintptr, string)
+var xToastSetActionName func(uintptr, uintptr)
 
 // Sets the name of the associated action.
 //
 // It will be activated when clicking the button.
 //
 // See [property@Toast:action-target].
-func (x *Toast) SetActionName(ActionNameVar string) {
+func (x *Toast) SetActionName(ActionNameVar *string) {
 
-	xToastSetActionName(x.GoPointer(), ActionNameVar)
+	xToastSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 
-var xToastSetActionTarget func(uintptr, string, ...interface{})
+var xToastSetActionTarget func(uintptr, uintptr, ...interface{})
 
 // Sets the parameter for action invocations.
 //
@@ -351,9 +351,9 @@ var xToastSetActionTarget func(uintptr, string, ...interface{})
 // If you are setting a string-valued target and want to set
 // the action name at the same time, you can use
 // [method@Toast.set_detailed_action_name].
-func (x *Toast) SetActionTarget(FormatStringVar string, varArgs ...interface{}) {
+func (x *Toast) SetActionTarget(FormatStringVar *string, varArgs ...interface{}) {
 
-	xToastSetActionTarget(x.GoPointer(), FormatStringVar, varArgs...)
+	xToastSetActionTarget(x.GoPointer(), core.NullableStringToPtr(FormatStringVar), varArgs...)
 
 }
 
@@ -369,7 +369,7 @@ func (x *Toast) SetActionTargetValue(ActionTargetVar *glib.Variant) {
 
 }
 
-var xToastSetButtonLabel func(uintptr, string)
+var xToastSetButtonLabel func(uintptr, uintptr)
 
 // Sets the label to show on the button.
 //
@@ -378,9 +378,9 @@ var xToastSetButtonLabel func(uintptr, string)
 // If set to `NULL`, the button won't be shown.
 //
 // See [property@Toast:action-name].
-func (x *Toast) SetButtonLabel(ButtonLabelVar string) {
+func (x *Toast) SetButtonLabel(ButtonLabelVar *string) {
 
-	xToastSetButtonLabel(x.GoPointer(), ButtonLabelVar)
+	xToastSetButtonLabel(x.GoPointer(), core.NullableStringToPtr(ButtonLabelVar))
 
 }
 
@@ -398,15 +398,15 @@ func (x *Toast) SetCustomTitle(WidgetVar *gtk.Widget) {
 
 }
 
-var xToastSetDetailedActionName func(uintptr, string)
+var xToastSetDetailedActionName func(uintptr, uintptr)
 
 // Sets the action name and its parameter.
 //
 // @detailed_action_name is a string in the format accepted by
 // [func@Gio.Action.parse_detailed_name].
-func (x *Toast) SetDetailedActionName(DetailedActionNameVar string) {
+func (x *Toast) SetDetailedActionName(DetailedActionNameVar *string) {
 
-	xToastSetDetailedActionName(x.GoPointer(), DetailedActionNameVar)
+	xToastSetDetailedActionName(x.GoPointer(), core.NullableStringToPtr(DetailedActionNameVar))
 
 }
 
@@ -488,7 +488,7 @@ func (c *Toast) SetGoPointer(ptr uintptr) {
 func (x *Toast) SetPropertyActionName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("action-name", &v)
 }
 
@@ -532,7 +532,7 @@ func (x *Toast) GetPropertyActionTarget() uintptr {
 func (x *Toast) SetPropertyButtonLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("button-label", &v)
 }
 
@@ -590,7 +590,7 @@ func (x *Toast) GetPropertyTimeout() uint {
 func (x *Toast) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

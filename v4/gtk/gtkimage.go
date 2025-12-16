@@ -166,17 +166,17 @@ func NewImageFromGicon(IconVar gio.Icon) *Image {
 	return cls
 }
 
-var xNewImageFromIconName func(string) uintptr
+var xNewImageFromIconName func(uintptr) uintptr
 
 // Creates a `GtkImage` displaying an icon from the current icon theme.
 //
 // If the icon name isn’t known, a “broken image” icon will be
 // displayed instead. If the current icon theme is changed, the icon
 // will be updated appropriately.
-func NewImageFromIconName(IconNameVar string) *Image {
+func NewImageFromIconName(IconNameVar *string) *Image {
 	var cls *Image
 
-	cret := xNewImageFromIconName(IconNameVar)
+	cret := xNewImageFromIconName(core.NullableStringToPtr(IconNameVar))
 
 	if cret == 0 {
 		return nil
@@ -373,7 +373,7 @@ func (x *Image) GetStorageType() ImageType {
 	return cret
 }
 
-var xImageSetFromFile func(uintptr, string)
+var xImageSetFromFile func(uintptr, uintptr)
 
 // Sets a `GtkImage` to show a file.
 //
@@ -385,9 +385,9 @@ var xImageSetFromFile func(uintptr, string)
 //	Use a proper image loading framework such as libglycin, which can
 //	load many image formats into a `GdkTexture`, and then use
 //	[method@Gtk.Image.set_from_paintable].
-func (x *Image) SetFromFile(FilenameVar string) {
+func (x *Image) SetFromFile(FilenameVar *string) {
 
-	xImageSetFromFile(x.GoPointer(), FilenameVar)
+	xImageSetFromFile(x.GoPointer(), core.NullableStringToPtr(FilenameVar))
 
 }
 
@@ -402,14 +402,14 @@ func (x *Image) SetFromGicon(IconVar gio.Icon) {
 
 }
 
-var xImageSetFromIconName func(uintptr, string)
+var xImageSetFromIconName func(uintptr, uintptr)
 
 // Sets a `GtkImage` to show a named icon.
 //
 // See [ctor@Gtk.Image.new_from_icon_name] for details.
-func (x *Image) SetFromIconName(IconNameVar string) {
+func (x *Image) SetFromIconName(IconNameVar *string) {
 
-	xImageSetFromIconName(x.GoPointer(), IconNameVar)
+	xImageSetFromIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
@@ -439,14 +439,14 @@ func (x *Image) SetFromPixbuf(PixbufVar *gdkpixbuf.Pixbuf) {
 
 }
 
-var xImageSetFromResource func(uintptr, string)
+var xImageSetFromResource func(uintptr, uintptr)
 
 // Sets a `GtkImage` to show a resource.
 //
 // See [ctor@Gtk.Image.new_from_resource] for details.
-func (x *Image) SetFromResource(ResourcePathVar string) {
+func (x *Image) SetFromResource(ResourcePathVar *string) {
 
-	xImageSetFromResource(x.GoPointer(), ResourcePathVar)
+	xImageSetFromResource(x.GoPointer(), core.NullableStringToPtr(ResourcePathVar))
 
 }
 
@@ -487,7 +487,7 @@ func (c *Image) SetGoPointer(ptr uintptr) {
 func (x *Image) SetPropertyFile(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("file", &v)
 }
 
@@ -506,7 +506,7 @@ func (x *Image) GetPropertyFile() string {
 func (x *Image) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -550,7 +550,7 @@ func (x *Image) GetPropertyPixelSize() int {
 func (x *Image) SetPropertyResource(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("resource", &v)
 }
 

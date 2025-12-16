@@ -126,13 +126,13 @@ func ExpanderNewFromInternalPtr(ptr uintptr) *Expander {
 	return cls
 }
 
-var xNewExpander func(string) uintptr
+var xNewExpander func(uintptr) uintptr
 
 // Creates a new expander using @label as the text of the label.
-func NewExpander(LabelVar string) *Expander {
+func NewExpander(LabelVar *string) *Expander {
 	var cls *Expander
 
-	cret := xNewExpander(LabelVar)
+	cret := xNewExpander(core.NullableStringToPtr(LabelVar))
 
 	if cret == 0 {
 		return nil
@@ -143,7 +143,7 @@ func NewExpander(LabelVar string) *Expander {
 	return cls
 }
 
-var xNewExpanderWithMnemonic func(string) uintptr
+var xNewExpanderWithMnemonic func(uintptr) uintptr
 
 // Creates a new expander using @label as the text of the label.
 //
@@ -153,10 +153,10 @@ var xNewExpanderWithMnemonic func(string) uintptr
 // a keyboard accelerator called a mnemonic.
 //
 // Pressing Alt and that key activates the button.
-func NewExpanderWithMnemonic(LabelVar string) *Expander {
+func NewExpanderWithMnemonic(LabelVar *string) *Expander {
 	var cls *Expander
 
-	cret := xNewExpanderWithMnemonic(LabelVar)
+	cret := xNewExpanderWithMnemonic(core.NullableStringToPtr(LabelVar))
 
 	if cret == 0 {
 		return nil
@@ -276,14 +276,14 @@ func (x *Expander) SetExpanded(ExpandedVar bool) {
 
 }
 
-var xExpanderSetLabel func(uintptr, string)
+var xExpanderSetLabel func(uintptr, uintptr)
 
 // Sets the text of the label of the expander to @label.
 //
 // This will also clear any previously set labels.
-func (x *Expander) SetLabel(LabelVar string) {
+func (x *Expander) SetLabel(LabelVar *string) {
 
-	xExpanderSetLabel(x.GoPointer(), LabelVar)
+	xExpanderSetLabel(x.GoPointer(), core.NullableStringToPtr(LabelVar))
 
 }
 
@@ -360,7 +360,7 @@ func (x *Expander) GetPropertyExpanded() bool {
 func (x *Expander) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 

@@ -810,7 +810,22 @@ var xTypeAddClassCacheFunc func(uintptr, uintptr)
 // chain.
 func TypeAddClassCacheFunc(CacheDataVar uintptr, CacheFuncVar *TypeClassCacheFunc) {
 
-	xTypeAddClassCacheFunc(CacheDataVar, glib.NewCallback(CacheFuncVar))
+	var CacheFuncVarRef uintptr
+	if CacheFuncVar != nil {
+		CacheFuncVarPtr := uintptr(unsafe.Pointer(CacheFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CacheFuncVarPtr); ok {
+			CacheFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *TypeClass) bool {
+				cbFn := *CacheFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CacheFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CacheFuncVarPtr, CacheFuncVarRef)
+		}
+	}
+
+	xTypeAddClassCacheFunc(CacheDataVar, CacheFuncVarRef)
 
 }
 
@@ -853,7 +868,22 @@ var xTypeAddInterfaceCheck func(uintptr, uintptr)
 // interfaces.
 func TypeAddInterfaceCheck(CheckDataVar uintptr, CheckFuncVar *TypeInterfaceCheckFunc) {
 
-	xTypeAddInterfaceCheck(CheckDataVar, glib.NewCallback(CheckFuncVar))
+	var CheckFuncVarRef uintptr
+	if CheckFuncVar != nil {
+		CheckFuncVarPtr := uintptr(unsafe.Pointer(CheckFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CheckFuncVarPtr); ok {
+			CheckFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *TypeInterface) {
+				cbFn := *CheckFuncVar
+				cbFn(arg0, arg1)
+			}
+			CheckFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CheckFuncVarPtr, CheckFuncVarRef)
+		}
+	}
+
+	xTypeAddInterfaceCheck(CheckDataVar, CheckFuncVarRef)
 
 }
 
@@ -1474,7 +1504,37 @@ var xTypeRegisterStaticSimple func(types.GType, string, uint, uintptr, uint, uin
 // struct and calling g_type_register_static().
 func TypeRegisterStaticSimple(ParentTypeVar types.GType, TypeNameVar string, ClassSizeVar uint, ClassInitVar *ClassInitFunc, InstanceSizeVar uint, InstanceInitVar *InstanceInitFunc, FlagsVar TypeFlags) types.GType {
 
-	cret := xTypeRegisterStaticSimple(ParentTypeVar, TypeNameVar, ClassSizeVar, glib.NewCallback(ClassInitVar), InstanceSizeVar, glib.NewCallback(InstanceInitVar), FlagsVar)
+	var ClassInitVarRef uintptr
+	if ClassInitVar != nil {
+		ClassInitVarPtr := uintptr(unsafe.Pointer(ClassInitVar))
+		if cbRefPtr, ok := glib.GetCallback(ClassInitVarPtr); ok {
+			ClassInitVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *TypeClass, arg1 uintptr) {
+				cbFn := *ClassInitVar
+				cbFn(arg0, arg1)
+			}
+			ClassInitVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(ClassInitVarPtr, ClassInitVarRef)
+		}
+	}
+
+	var InstanceInitVarRef uintptr
+	if InstanceInitVar != nil {
+		InstanceInitVarPtr := uintptr(unsafe.Pointer(InstanceInitVar))
+		if cbRefPtr, ok := glib.GetCallback(InstanceInitVarPtr); ok {
+			InstanceInitVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *TypeInstance, arg1 *TypeClass) {
+				cbFn := *InstanceInitVar
+				cbFn(arg0, arg1)
+			}
+			InstanceInitVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(InstanceInitVarPtr, InstanceInitVarRef)
+		}
+	}
+
+	cret := xTypeRegisterStaticSimple(ParentTypeVar, TypeNameVar, ClassSizeVar, ClassInitVarRef, InstanceSizeVar, InstanceInitVarRef, FlagsVar)
 	return cret
 }
 
@@ -1485,7 +1545,22 @@ var xTypeRemoveClassCacheFunc func(uintptr, uintptr)
 // g_type_remove_class_cache_func() to avoid leaks.
 func TypeRemoveClassCacheFunc(CacheDataVar uintptr, CacheFuncVar *TypeClassCacheFunc) {
 
-	xTypeRemoveClassCacheFunc(CacheDataVar, glib.NewCallback(CacheFuncVar))
+	var CacheFuncVarRef uintptr
+	if CacheFuncVar != nil {
+		CacheFuncVarPtr := uintptr(unsafe.Pointer(CacheFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CacheFuncVarPtr); ok {
+			CacheFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *TypeClass) bool {
+				cbFn := *CacheFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CacheFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CacheFuncVarPtr, CacheFuncVarRef)
+		}
+	}
+
+	xTypeRemoveClassCacheFunc(CacheDataVar, CacheFuncVarRef)
 
 }
 
@@ -1495,7 +1570,22 @@ var xTypeRemoveInterfaceCheck func(uintptr, uintptr)
 // g_type_add_interface_check().
 func TypeRemoveInterfaceCheck(CheckDataVar uintptr, CheckFuncVar *TypeInterfaceCheckFunc) {
 
-	xTypeRemoveInterfaceCheck(CheckDataVar, glib.NewCallback(CheckFuncVar))
+	var CheckFuncVarRef uintptr
+	if CheckFuncVar != nil {
+		CheckFuncVarPtr := uintptr(unsafe.Pointer(CheckFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CheckFuncVarPtr); ok {
+			CheckFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *TypeInterface) {
+				cbFn := *CheckFuncVar
+				cbFn(arg0, arg1)
+			}
+			CheckFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CheckFuncVarPtr, CheckFuncVarRef)
+		}
+	}
+
+	xTypeRemoveInterfaceCheck(CheckDataVar, CheckFuncVarRef)
 
 }
 

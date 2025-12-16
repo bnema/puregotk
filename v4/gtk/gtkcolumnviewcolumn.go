@@ -48,7 +48,7 @@ func ColumnViewColumnNewFromInternalPtr(ptr uintptr) *ColumnViewColumn {
 	return cls
 }
 
-var xNewColumnViewColumn func(string, uintptr) uintptr
+var xNewColumnViewColumn func(uintptr, uintptr) uintptr
 
 // Creates a new `GtkColumnViewColumn` that uses the given @factory for
 // mapping items to widgets.
@@ -63,10 +63,10 @@ var xNewColumnViewColumn func(string, uintptr) uintptr
 //	gtk_builder_list_item_factory_new_from_resource ("/name.ui"));
 //
 // ```
-func NewColumnViewColumn(TitleVar string, FactoryVar *ListItemFactory) *ColumnViewColumn {
+func NewColumnViewColumn(TitleVar *string, FactoryVar *ListItemFactory) *ColumnViewColumn {
 	var cls *ColumnViewColumn
 
-	cret := xNewColumnViewColumn(TitleVar, FactoryVar.GoPointer())
+	cret := xNewColumnViewColumn(core.NullableStringToPtr(TitleVar), FactoryVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -248,7 +248,7 @@ func (x *ColumnViewColumn) SetHeaderMenu(MenuVar *gio.MenuModel) {
 
 }
 
-var xColumnViewColumnSetId func(uintptr, string)
+var xColumnViewColumnSetId func(uintptr, uintptr)
 
 // Sets the id of this column.
 //
@@ -256,9 +256,9 @@ var xColumnViewColumnSetId func(uintptr, string)
 // storing column view configuration.
 //
 // It is up to callers to ensure uniqueness of IDs.
-func (x *ColumnViewColumn) SetId(IdVar string) {
+func (x *ColumnViewColumn) SetId(IdVar *string) {
 
-	xColumnViewColumnSetId(x.GoPointer(), IdVar)
+	xColumnViewColumnSetId(x.GoPointer(), core.NullableStringToPtr(IdVar))
 
 }
 
@@ -289,16 +289,16 @@ func (x *ColumnViewColumn) SetSorter(SorterVar *Sorter) {
 
 }
 
-var xColumnViewColumnSetTitle func(uintptr, string)
+var xColumnViewColumnSetTitle func(uintptr, uintptr)
 
 // Sets the title of this column.
 //
 // The title is displayed in the header of a `GtkColumnView`
 // for this column and is therefore user-facing text that should
 // be translated.
-func (x *ColumnViewColumn) SetTitle(TitleVar string) {
+func (x *ColumnViewColumn) SetTitle(TitleVar *string) {
 
-	xColumnViewColumnSetTitle(x.GoPointer(), TitleVar)
+	xColumnViewColumnSetTitle(x.GoPointer(), core.NullableStringToPtr(TitleVar))
 
 }
 
@@ -369,7 +369,7 @@ func (x *ColumnViewColumn) GetPropertyFixedWidth() int {
 func (x *ColumnViewColumn) SetPropertyId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("id", &v)
 }
 
@@ -409,7 +409,7 @@ func (x *ColumnViewColumn) GetPropertyResizable() bool {
 func (x *ColumnViewColumn) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

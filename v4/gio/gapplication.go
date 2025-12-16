@@ -649,7 +649,7 @@ func ApplicationNewFromInternalPtr(ptr uintptr) *Application {
 	return cls
 }
 
-var xNewApplication func(string, ApplicationFlags) uintptr
+var xNewApplication func(uintptr, ApplicationFlags) uintptr
 
 // Creates a new #GApplication instance.
 //
@@ -658,10 +658,10 @@ var xNewApplication func(string, ApplicationFlags) uintptr
 //
 // If no application ID is given then some features of #GApplication
 // (most notably application uniqueness) will be disabled.
-func NewApplication(ApplicationIdVar string, FlagsVar ApplicationFlags) *Application {
+func NewApplication(ApplicationIdVar *string, FlagsVar ApplicationFlags) *Application {
 	var cls *Application
 
-	cret := xNewApplication(ApplicationIdVar, FlagsVar)
+	cret := xNewApplication(core.NullableStringToPtr(ApplicationIdVar), FlagsVar)
 
 	if cret == 0 {
 		return nil
@@ -685,7 +685,7 @@ func (x *Application) Activate() {
 
 }
 
-var xApplicationAddMainOption func(uintptr, string, byte, glib.OptionFlags, glib.OptionArg, string, string)
+var xApplicationAddMainOption func(uintptr, string, byte, glib.OptionFlags, glib.OptionArg, string, uintptr)
 
 // Add an option to be handled by @application.
 //
@@ -700,9 +700,9 @@ var xApplicationAddMainOption func(uintptr, string, byte, glib.OptionFlags, glib
 // g_application_add_main_option_entries() for more details.
 //
 // See #GOptionEntry for more documentation of the arguments.
-func (x *Application) AddMainOption(LongNameVar string, ShortNameVar byte, FlagsVar glib.OptionFlags, ArgVar glib.OptionArg, DescriptionVar string, ArgDescriptionVar string) {
+func (x *Application) AddMainOption(LongNameVar string, ShortNameVar byte, FlagsVar glib.OptionFlags, ArgVar glib.OptionArg, DescriptionVar string, ArgDescriptionVar *string) {
 
-	xApplicationAddMainOption(x.GoPointer(), LongNameVar, ShortNameVar, FlagsVar, ArgVar, DescriptionVar, ArgDescriptionVar)
+	xApplicationAddMainOption(x.GoPointer(), LongNameVar, ShortNameVar, FlagsVar, ArgVar, DescriptionVar, core.NullableStringToPtr(ArgDescriptionVar))
 
 }
 
@@ -1178,7 +1178,7 @@ func (x *Application) Run(ArgcVar int, ArgvVar []string) int {
 	return cret
 }
 
-var xApplicationSendNotification func(uintptr, string, uintptr)
+var xApplicationSendNotification func(uintptr, uintptr, uintptr)
 
 // Sends a notification on behalf of @application to the desktop shell.
 // There is no guarantee that the notification is displayed immediately,
@@ -1209,9 +1209,9 @@ var xApplicationSendNotification func(uintptr, string, uintptr)
 //
 // It is an error to call this function if @application has no
 // application ID.
-func (x *Application) SendNotification(IdVar string, NotificationVar *Notification) {
+func (x *Application) SendNotification(IdVar *string, NotificationVar *Notification) {
 
-	xApplicationSendNotification(x.GoPointer(), IdVar, NotificationVar.GoPointer())
+	xApplicationSendNotification(x.GoPointer(), core.NullableStringToPtr(IdVar), NotificationVar.GoPointer())
 
 }
 
@@ -1225,7 +1225,7 @@ func (x *Application) SetActionGroup(ActionGroupVar ActionGroup) {
 
 }
 
-var xApplicationSetApplicationId func(uintptr, string)
+var xApplicationSetApplicationId func(uintptr, uintptr)
 
 // Sets the unique identifier for @application.
 //
@@ -1234,9 +1234,9 @@ var xApplicationSetApplicationId func(uintptr, string)
 //
 // If non-%NULL, the application id must be valid.  See
 // g_application_id_is_valid().
-func (x *Application) SetApplicationId(ApplicationIdVar string) {
+func (x *Application) SetApplicationId(ApplicationIdVar *string) {
 
-	xApplicationSetApplicationId(x.GoPointer(), ApplicationIdVar)
+	xApplicationSetApplicationId(x.GoPointer(), core.NullableStringToPtr(ApplicationIdVar))
 
 }
 
@@ -1284,18 +1284,18 @@ func (x *Application) SetInactivityTimeout(InactivityTimeoutVar uint) {
 
 }
 
-var xApplicationSetOptionContextDescription func(uintptr, string)
+var xApplicationSetOptionContextDescription func(uintptr, uintptr)
 
 // Adds a description to the @application option context.
 //
 // See g_option_context_set_description() for more information.
-func (x *Application) SetOptionContextDescription(DescriptionVar string) {
+func (x *Application) SetOptionContextDescription(DescriptionVar *string) {
 
-	xApplicationSetOptionContextDescription(x.GoPointer(), DescriptionVar)
+	xApplicationSetOptionContextDescription(x.GoPointer(), core.NullableStringToPtr(DescriptionVar))
 
 }
 
-var xApplicationSetOptionContextParameterString func(uintptr, string)
+var xApplicationSetOptionContextParameterString func(uintptr, uintptr)
 
 // Sets the parameter string to be used by the commandline handling of @application.
 //
@@ -1303,24 +1303,24 @@ var xApplicationSetOptionContextParameterString func(uintptr, string)
 // when the internal #GOptionContext of @application is created.
 //
 // See g_option_context_new() for more information about @parameter_string.
-func (x *Application) SetOptionContextParameterString(ParameterStringVar string) {
+func (x *Application) SetOptionContextParameterString(ParameterStringVar *string) {
 
-	xApplicationSetOptionContextParameterString(x.GoPointer(), ParameterStringVar)
+	xApplicationSetOptionContextParameterString(x.GoPointer(), core.NullableStringToPtr(ParameterStringVar))
 
 }
 
-var xApplicationSetOptionContextSummary func(uintptr, string)
+var xApplicationSetOptionContextSummary func(uintptr, uintptr)
 
 // Adds a summary to the @application option context.
 //
 // See g_option_context_set_summary() for more information.
-func (x *Application) SetOptionContextSummary(SummaryVar string) {
+func (x *Application) SetOptionContextSummary(SummaryVar *string) {
 
-	xApplicationSetOptionContextSummary(x.GoPointer(), SummaryVar)
+	xApplicationSetOptionContextSummary(x.GoPointer(), core.NullableStringToPtr(SummaryVar))
 
 }
 
-var xApplicationSetResourceBasePath func(uintptr, string)
+var xApplicationSetResourceBasePath func(uintptr, uintptr)
 
 // Sets (or unsets) the base resource path of @application.
 //
@@ -1355,9 +1355,9 @@ var xApplicationSetResourceBasePath func(uintptr, string)
 // this function during the instance initialization. Alternatively, you
 // can call this function in the #GApplicationClass.startup virtual function,
 // before chaining up to the parent implementation.
-func (x *Application) SetResourceBasePath(ResourcePathVar string) {
+func (x *Application) SetResourceBasePath(ResourcePathVar *string) {
 
-	xApplicationSetResourceBasePath(x.GoPointer(), ResourcePathVar)
+	xApplicationSetResourceBasePath(x.GoPointer(), core.NullableStringToPtr(ResourcePathVar))
 
 }
 
@@ -1437,7 +1437,7 @@ func (c *Application) SetGoPointer(ptr uintptr) {
 func (x *Application) SetPropertyApplicationId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("application-id", &v)
 }
 
@@ -1496,7 +1496,7 @@ func (x *Application) GetPropertyIsRemote() bool {
 func (x *Application) SetPropertyResourceBasePath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("resource-base-path", &v)
 }
 
@@ -1513,7 +1513,7 @@ func (x *Application) GetPropertyResourceBasePath() string {
 func (x *Application) SetPropertyVersion(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("version", &v)
 }
 

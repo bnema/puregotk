@@ -2,6 +2,8 @@
 package glib
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
@@ -95,7 +97,22 @@ var xAtomicRcBoxReleaseFull func(uintptr, uintptr)
 // when the callback is called and will be freed.
 func AtomicRcBoxReleaseFull(MemBlockVar uintptr, ClearFuncVar *DestroyNotify) {
 
-	xAtomicRcBoxReleaseFull(MemBlockVar, NewCallback(ClearFuncVar))
+	var ClearFuncVarRef uintptr
+	if ClearFuncVar != nil {
+		ClearFuncVarPtr := uintptr(unsafe.Pointer(ClearFuncVar))
+		if cbRefPtr, ok := GetCallback(ClearFuncVarPtr); ok {
+			ClearFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ClearFuncVar
+				cbFn(arg0)
+			}
+			ClearFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ClearFuncVarPtr, ClearFuncVarRef)
+		}
+	}
+
+	xAtomicRcBoxReleaseFull(MemBlockVar, ClearFuncVarRef)
 
 }
 
@@ -183,7 +200,22 @@ var xRcBoxReleaseFull func(uintptr, uintptr)
 // resources allocated for @mem_block.
 func RcBoxReleaseFull(MemBlockVar uintptr, ClearFuncVar *DestroyNotify) {
 
-	xRcBoxReleaseFull(MemBlockVar, NewCallback(ClearFuncVar))
+	var ClearFuncVarRef uintptr
+	if ClearFuncVar != nil {
+		ClearFuncVarPtr := uintptr(unsafe.Pointer(ClearFuncVar))
+		if cbRefPtr, ok := GetCallback(ClearFuncVarPtr); ok {
+			ClearFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ClearFuncVar
+				cbFn(arg0)
+			}
+			ClearFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ClearFuncVarPtr, ClearFuncVarRef)
+		}
+	}
+
+	xRcBoxReleaseFull(MemBlockVar, ClearFuncVarRef)
 
 }
 

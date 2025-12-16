@@ -783,7 +783,7 @@ func (x *Leaflet) GetPropertyModeTransitionDuration() uint {
 func (x *Leaflet) SetPropertyVisibleChildName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("visible-child-name", &v)
 }
 
@@ -1189,12 +1189,12 @@ func (x *LeafletPage) GetNavigatable() bool {
 	return cret
 }
 
-var xLeafletPageSetName func(uintptr, string)
+var xLeafletPageSetName func(uintptr, uintptr)
 
 // Sets the name of the @self.
-func (x *LeafletPage) SetName(NameVar string) {
+func (x *LeafletPage) SetName(NameVar *string) {
 
-	xLeafletPageSetName(x.GoPointer(), NameVar)
+	xLeafletPageSetName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -1228,7 +1228,7 @@ func (c *LeafletPage) SetGoPointer(ptr uintptr) {
 func (x *LeafletPage) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 

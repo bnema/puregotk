@@ -208,15 +208,15 @@ func FileChooserDialogNewFromInternalPtr(ptr uintptr) *FileChooserDialog {
 	return cls
 }
 
-var xNewFileChooserDialog func(string, uintptr, FileChooserAction, string, ...interface{}) uintptr
+var xNewFileChooserDialog func(uintptr, uintptr, FileChooserAction, uintptr, ...interface{}) uintptr
 
 // Creates a new `GtkFileChooserDialog`.
 //
 // This function is analogous to [ctor@Gtk.Dialog.new_with_buttons].
-func NewFileChooserDialog(TitleVar string, ParentVar *Window, ActionVar FileChooserAction, FirstButtonTextVar string, varArgs ...interface{}) *FileChooserDialog {
+func NewFileChooserDialog(TitleVar *string, ParentVar *Window, ActionVar FileChooserAction, FirstButtonTextVar *string, varArgs ...interface{}) *FileChooserDialog {
 	var cls *FileChooserDialog
 
-	cret := xNewFileChooserDialog(TitleVar, ParentVar.GoPointer(), ActionVar, FirstButtonTextVar, varArgs...)
+	cret := xNewFileChooserDialog(core.NullableStringToPtr(TitleVar), ParentVar.GoPointer(), ActionVar, core.NullableStringToPtr(FirstButtonTextVar), varArgs...)
 
 	if cret == 0 {
 		return nil

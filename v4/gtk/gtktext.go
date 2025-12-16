@@ -510,16 +510,16 @@ func (x *Text) SetOverwriteMode(OverwriteVar bool) {
 
 }
 
-var xTextSetPlaceholderText func(uintptr, string)
+var xTextSetPlaceholderText func(uintptr, uintptr)
 
 // Sets the text to be displayed when the text widget is
 // empty and unfocused.
 //
 // This can be used to give a visual hint of the expected
 // contents of the text widget.
-func (x *Text) SetPlaceholderText(TextVar string) {
+func (x *Text) SetPlaceholderText(TextVar *string) {
 
-	xTextSetPlaceholderText(x.GoPointer(), TextVar)
+	xTextSetPlaceholderText(x.GoPointer(), core.NullableStringToPtr(TextVar))
 
 }
 
@@ -666,7 +666,7 @@ func (x *Text) GetPropertyEnableEmojiCompletion() bool {
 func (x *Text) SetPropertyImModule(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("im-module", &v)
 }
 
@@ -762,7 +762,7 @@ func (x *Text) GetPropertyOverwriteMode() bool {
 func (x *Text) SetPropertyPlaceholderText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("placeholder-text", &v)
 }
 

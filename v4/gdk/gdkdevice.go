@@ -436,7 +436,7 @@ func (x *Device) GetPropertyNAxes() uint {
 func (x *Device) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -488,7 +488,7 @@ func (x *Device) GetPropertyNumTouches() uint {
 func (x *Device) SetPropertyProductId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("product-id", &v)
 }
 
@@ -519,7 +519,7 @@ func (x *Device) GetPropertyScrollLockState() bool {
 func (x *Device) SetPropertyVendorId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("vendor-id", &v)
 }
 

@@ -212,12 +212,12 @@ func (x *FontDialogButton) SetFontDesc(FontDescVar *pango.FontDescription) {
 
 }
 
-var xFontDialogButtonSetFontFeatures func(uintptr, string)
+var xFontDialogButtonSetFontFeatures func(uintptr, uintptr)
 
 // Sets the font features of the button.
-func (x *FontDialogButton) SetFontFeatures(FontFeaturesVar string) {
+func (x *FontDialogButton) SetFontFeatures(FontFeaturesVar *string) {
 
-	xFontDialogButtonSetFontFeatures(x.GoPointer(), FontFeaturesVar)
+	xFontDialogButtonSetFontFeatures(x.GoPointer(), core.NullableStringToPtr(FontFeaturesVar))
 
 }
 
@@ -313,7 +313,7 @@ func (x *FontDialogButton) GetPropertyFontDesc() uintptr {
 func (x *FontDialogButton) SetPropertyFontFeatures(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("font-features", &v)
 }
 

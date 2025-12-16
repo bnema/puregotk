@@ -398,15 +398,15 @@ func EntryBufferNewFromInternalPtr(ptr uintptr) *EntryBuffer {
 	return cls
 }
 
-var xNewEntryBuffer func(string, int) uintptr
+var xNewEntryBuffer func(uintptr, int) uintptr
 
 // Create a new `GtkEntryBuffer` object.
 //
 // Optionally, specify initial text to set in the buffer.
-func NewEntryBuffer(InitialCharsVar string, NInitialCharsVar int) *EntryBuffer {
+func NewEntryBuffer(InitialCharsVar *string, NInitialCharsVar int) *EntryBuffer {
 	var cls *EntryBuffer
 
-	cret := xNewEntryBuffer(InitialCharsVar, NInitialCharsVar)
+	cret := xNewEntryBuffer(core.NullableStringToPtr(InitialCharsVar), NInitialCharsVar)
 
 	if cret == 0 {
 		return nil
@@ -579,7 +579,7 @@ func (x *EntryBuffer) GetPropertyMaxLength() int {
 func (x *EntryBuffer) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 

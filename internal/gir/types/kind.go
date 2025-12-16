@@ -53,6 +53,17 @@ func (km KindMap) MustInterface(ns string, name string) Interface {
 	return p.Value.(Interface)
 }
 
+// GetCallback retrieves a callback definition by namespace and name.
+// Returns the Callback and true if found, otherwise nil and false.
+func (km KindMap) GetCallback(ns string, name string) (Callback, bool) {
+	p := km.pair(ns, name)
+	if p.K != CallbackType {
+		return Callback{}, false
+	}
+	cb, ok := p.Value.(Callback)
+	return cb, ok
+}
+
 type KindPair struct {
 	K     Kind
 	Value interface{}

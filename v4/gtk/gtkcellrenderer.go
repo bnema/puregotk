@@ -743,7 +743,7 @@ func (c *CellRenderer) SetGoPointer(ptr uintptr) {
 func (x *CellRenderer) SetPropertyCellBackground(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("cell-background", &v)
 }
 

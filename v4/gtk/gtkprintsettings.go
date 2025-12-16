@@ -207,18 +207,18 @@ func NewPrintSettingsFromGvariant(VariantVar *glib.Variant) *PrintSettings {
 	return cls
 }
 
-var xNewPrintSettingsFromKeyFile func(*glib.KeyFile, string, **glib.Error) uintptr
+var xNewPrintSettingsFromKeyFile func(*glib.KeyFile, uintptr, **glib.Error) uintptr
 
 // Reads the print settings from the group @group_name in @key_file.
 //
 // Returns a new `GtkPrintSettings` object with the restored settings,
 // or %NULL if an error occurred. If the file could not be loaded then
 // error is set to either `GFileError` or `GKeyFileError`.
-func NewPrintSettingsFromKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar string) (*PrintSettings, error) {
+func NewPrintSettingsFromKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) (*PrintSettings, error) {
 	var cls *PrintSettings
 	var cerr *glib.Error
 
-	cret := xNewPrintSettingsFromKeyFile(KeyFileVar, GroupNameVar, &cerr)
+	cret := xNewPrintSettingsFromKeyFile(KeyFileVar, core.NullableStringToPtr(GroupNameVar), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -253,7 +253,22 @@ var xPrintSettingsForeach func(uintptr, uintptr, uintptr)
 // Calls @func for each key-value pair of @settings.
 func (x *PrintSettings) Foreach(FuncVar *PrintSettingsFunc, UserDataVar uintptr) {
 
-	xPrintSettingsForeach(x.GoPointer(), glib.NewCallback(FuncVar), UserDataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string, arg1 string, arg2 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xPrintSettingsForeach(x.GoPointer(), FuncVarRef, UserDataVar)
 
 }
 
@@ -601,16 +616,16 @@ func (x *PrintSettings) LoadFile(FileNameVar string) (bool, error) {
 
 }
 
-var xPrintSettingsLoadKeyFile func(uintptr, *glib.KeyFile, string, **glib.Error) bool
+var xPrintSettingsLoadKeyFile func(uintptr, *glib.KeyFile, uintptr, **glib.Error) bool
 
 // Reads the print settings from the group @group_name in @key_file.
 //
 // If the file could not be loaded then error is set to either a
 // `GFileError` or `GKeyFileError`.
-func (x *PrintSettings) LoadKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar string) (bool, error) {
+func (x *PrintSettings) LoadKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xPrintSettingsLoadKeyFile(x.GoPointer(), KeyFileVar, GroupNameVar, &cerr)
+	cret := xPrintSettingsLoadKeyFile(x.GoPointer(), KeyFileVar, core.NullableStringToPtr(GroupNameVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -618,12 +633,12 @@ func (x *PrintSettings) LoadKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar strin
 
 }
 
-var xPrintSettingsSet func(uintptr, string, string)
+var xPrintSettingsSet func(uintptr, string, uintptr)
 
 // Associates @value with @key.
-func (x *PrintSettings) Set(KeyVar string, ValueVar string) {
+func (x *PrintSettings) Set(KeyVar string, ValueVar *string) {
 
-	xPrintSettingsSet(x.GoPointer(), KeyVar, ValueVar)
+	xPrintSettingsSet(x.GoPointer(), KeyVar, core.NullableStringToPtr(ValueVar))
 
 }
 
@@ -923,12 +938,12 @@ func (x *PrintSettings) ToGvariant() *glib.Variant {
 	return cret
 }
 
-var xPrintSettingsToKeyFile func(uintptr, *glib.KeyFile, string)
+var xPrintSettingsToKeyFile func(uintptr, *glib.KeyFile, uintptr)
 
 // This function adds the print settings from @settings to @key_file.
-func (x *PrintSettings) ToKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar string) {
+func (x *PrintSettings) ToKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) {
 
-	xPrintSettingsToKeyFile(x.GoPointer(), KeyFileVar, GroupNameVar)
+	xPrintSettingsToKeyFile(x.GoPointer(), KeyFileVar, core.NullableStringToPtr(GroupNameVar))
 
 }
 

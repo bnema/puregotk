@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"fmt"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -229,12 +230,12 @@ func (x *LevelBar) GetMode() LevelBarMode {
 	return cret
 }
 
-var xLevelBarGetOffsetValue func(uintptr, string, *float64) bool
+var xLevelBarGetOffsetValue func(uintptr, uintptr, *float64) bool
 
 // Fetches the value specified for the offset marker @name in @self.
-func (x *LevelBar) GetOffsetValue(NameVar string, ValueVar *float64) bool {
+func (x *LevelBar) GetOffsetValue(NameVar *string, ValueVar *float64) bool {
 
-	cret := xLevelBarGetOffsetValue(x.GoPointer(), NameVar, ValueVar)
+	cret := xLevelBarGetOffsetValue(x.GoPointer(), core.NullableStringToPtr(NameVar), ValueVar)
 	return cret
 }
 
@@ -247,15 +248,15 @@ func (x *LevelBar) GetValue() float64 {
 	return cret
 }
 
-var xLevelBarRemoveOffsetValue func(uintptr, string)
+var xLevelBarRemoveOffsetValue func(uintptr, uintptr)
 
 // Removes an offset marker from a `GtkLevelBar`.
 //
 // The marker must have been previously added with
 // [method@Gtk.LevelBar.add_offset_value].
-func (x *LevelBar) RemoveOffsetValue(NameVar string) {
+func (x *LevelBar) RemoveOffsetValue(NameVar *string) {
 
-	xLevelBarRemoveOffsetValue(x.GoPointer(), NameVar)
+	xLevelBarRemoveOffsetValue(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -420,6 +421,28 @@ func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint32 {
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
+}
+
+// ConnectOffsetChangedWithDetail connects to the "offset-changed" signal with a detail string.
+// The detail is appended as "offset-changed::<detail>".
+func (x *LevelBar) ConnectOffsetChangedWithDetail(detail string, cb *func(LevelBar, string)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("offset-changed::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, NameVarp string) {
+		fa := LevelBar{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, NameVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
 // Requests the user's screen reader to announce the given message.

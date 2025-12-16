@@ -77,7 +77,7 @@ func (x *PatternSpec) Free() {
 
 }
 
-var xPatternSpecMatch func(uintptr, uint, string, string) bool
+var xPatternSpecMatch func(uintptr, uint, string, uintptr) bool
 
 // Matches a string against a compiled pattern.
 //
@@ -98,9 +98,9 @@ var xPatternSpecMatch func(uintptr, uint, string, string) bool
 // not be obtained by [func@GLib.strreverse]. This works only if the string
 // does not contain any multibyte characters. GLib offers the
 // [func@GLib.utf8_strreverse] function to reverse UTF-8 encoded strings.
-func (x *PatternSpec) Match(StringLengthVar uint, StringVar string, StringReversedVar string) bool {
+func (x *PatternSpec) Match(StringLengthVar uint, StringVar string, StringReversedVar *string) bool {
 
-	cret := xPatternSpecMatch(x.GoPointer(), StringLengthVar, StringVar, StringReversedVar)
+	cret := xPatternSpecMatch(x.GoPointer(), StringLengthVar, StringVar, core.NullableStringToPtr(StringReversedVar))
 	return cret
 }
 
@@ -117,7 +117,7 @@ func (x *PatternSpec) MatchString(StringVar string) bool {
 	return cret
 }
 
-var xPatternMatch func(*PatternSpec, uint, string, string) bool
+var xPatternMatch func(*PatternSpec, uint, string, uintptr) bool
 
 // Matches a string against a compiled pattern.
 //
@@ -138,9 +138,9 @@ var xPatternMatch func(*PatternSpec, uint, string, string) bool
 // not be obtained by [func@GLib.strreverse]. This works only if the string
 // does not contain any multibyte characters. GLib offers the
 // [func@GLib.utf8_strreverse] function to reverse UTF-8 encoded strings.
-func PatternMatch(PspecVar *PatternSpec, StringLengthVar uint, StringVar string, StringReversedVar string) bool {
+func PatternMatch(PspecVar *PatternSpec, StringLengthVar uint, StringVar string, StringReversedVar *string) bool {
 
-	cret := xPatternMatch(PspecVar, StringLengthVar, StringVar, StringReversedVar)
+	cret := xPatternMatch(PspecVar, StringLengthVar, StringVar, core.NullableStringToPtr(StringReversedVar))
 	return cret
 }
 

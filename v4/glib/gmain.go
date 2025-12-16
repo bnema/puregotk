@@ -279,7 +279,22 @@ var xMainContextInvoke func(uintptr, uintptr, uintptr)
 // will be continuously run in a loop (and may prevent this call from returning).
 func (x *MainContext) Invoke(FunctionVar *SourceFunc, DataVar uintptr) {
 
-	xMainContextInvoke(x.GoPointer(), NewCallback(FunctionVar), DataVar)
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *FunctionVar
+				return cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	xMainContextInvoke(x.GoPointer(), FunctionVarRef, DataVar)
 
 }
 
@@ -297,7 +312,37 @@ var xMainContextInvokeFull func(uintptr, int, uintptr, uintptr, uintptr)
 // thread or with any particular context acquired.
 func (x *MainContext) InvokeFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) {
 
-	xMainContextInvokeFull(x.GoPointer(), PriorityVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *FunctionVar
+				return cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	xMainContextInvokeFull(x.GoPointer(), PriorityVar, FunctionVarRef, DataVar, NotifyVarRef)
 
 }
 
@@ -530,7 +575,22 @@ var xMainContextSetPollFunc func(uintptr, uintptr)
 // loop with an external event loop.
 func (x *MainContext) SetPollFunc(FuncVar *PollFunc) {
 
-	xMainContextSetPollFunc(x.GoPointer(), NewCallback(FuncVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *PollFD, arg1 uint, arg2 int) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xMainContextSetPollFunc(x.GoPointer(), FuncVarRef)
 
 }
 
@@ -1196,7 +1256,37 @@ var xSourceSetCallback func(uintptr, uintptr, uintptr, uintptr)
 // of also unsetting the callback.
 func (x *Source) SetCallback(FuncVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) {
 
-	xSourceSetCallback(x.GoPointer(), NewCallback(FuncVar), DataVar, NewCallbackNullable(NotifyVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	xSourceSetCallback(x.GoPointer(), FuncVarRef, DataVar, NotifyVarRef)
 
 }
 
@@ -1257,7 +1347,22 @@ var xSourceSetDisposeFunction func(uintptr, uintptr)
 // This should only ever be called from [struct@GLib.Source] implementations.
 func (x *Source) SetDisposeFunction(DisposeVar *SourceDisposeFunc) {
 
-	xSourceSetDisposeFunction(x.GoPointer(), NewCallback(DisposeVar))
+	var DisposeVarRef uintptr
+	if DisposeVar != nil {
+		DisposeVarPtr := uintptr(unsafe.Pointer(DisposeVar))
+		if cbRefPtr, ok := GetCallback(DisposeVarPtr); ok {
+			DisposeVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Source) {
+				cbFn := *DisposeVar
+				cbFn(arg0)
+			}
+			DisposeVarRef = purego.NewCallback(fcb)
+			SaveCallback(DisposeVarPtr, DisposeVarRef)
+		}
+	}
+
+	xSourceSetDisposeFunction(x.GoPointer(), DisposeVarRef)
 
 }
 
@@ -1595,7 +1700,22 @@ var xChildWatchAdd func(Pid, uintptr, uintptr) uint
 // need greater control.
 func ChildWatchAdd(PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr) uint {
 
-	cret := xChildWatchAdd(PidVar, NewCallback(FunctionVar), DataVar)
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 Pid, arg1 int, arg2 uintptr) {
+				cbFn := *FunctionVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	cret := xChildWatchAdd(PidVar, FunctionVarRef, DataVar)
 	return cret
 }
 
@@ -1628,7 +1748,37 @@ var xChildWatchAddFull func(int, Pid, uintptr, uintptr, uintptr) uint
 // need greater control.
 func ChildWatchAddFull(PriorityVar int, PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xChildWatchAddFull(PriorityVar, PidVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 Pid, arg1 int, arg2 uintptr) {
+				cbFn := *FunctionVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	cret := xChildWatchAddFull(PriorityVar, PidVar, FunctionVarRef, DataVar, NotifyVarRef)
 	return cret
 }
 
@@ -1694,7 +1844,22 @@ var xClearHandleId func(uint, uintptr)
 // pointer casts.
 func ClearHandleId(TagPtrVar uint, ClearFuncVar *ClearHandleFunc) {
 
-	xClearHandleId(TagPtrVar, NewCallback(ClearFuncVar))
+	var ClearFuncVarRef uintptr
+	if ClearFuncVar != nil {
+		ClearFuncVarPtr := uintptr(unsafe.Pointer(ClearFuncVar))
+		if cbRefPtr, ok := GetCallback(ClearFuncVarPtr); ok {
+			ClearFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uint) {
+				cbFn := *ClearFuncVar
+				cbFn(arg0)
+			}
+			ClearFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ClearFuncVarPtr, ClearFuncVarRef)
+		}
+	}
+
+	xClearHandleId(TagPtrVar, ClearFuncVarRef)
 
 }
 
@@ -1767,7 +1932,22 @@ var xIdleAdd func(uintptr, uintptr) uint
 // need greater control or to use a custom main context.
 func IdleAdd(FunctionVar *SourceFunc, DataVar uintptr) uint {
 
-	cret := xIdleAdd(NewCallback(FunctionVar), DataVar)
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *FunctionVar
+				return cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	cret := xIdleAdd(FunctionVarRef, DataVar)
 	return cret
 }
 
@@ -1789,7 +1969,37 @@ var xIdleAddFull func(int, uintptr, uintptr, uintptr) uint
 // need greater control or to use a custom main context.
 func IdleAddFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xIdleAddFull(PriorityVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *FunctionVar
+				return cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	cret := xIdleAddFull(PriorityVar, FunctionVarRef, DataVar, NotifyVarRef)
 	return cret
 }
 
@@ -1807,7 +2017,22 @@ var xIdleAddOnce func(uintptr, uintptr) uint
 // This function otherwise behaves like [func@GLib.idle_add].
 func IdleAddOnce(FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
 
-	cret := xIdleAddOnce(NewCallback(FunctionVar), DataVar)
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *FunctionVar
+				cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	cret := xIdleAddOnce(FunctionVarRef, DataVar)
 	return cret
 }
 
@@ -2130,7 +2355,22 @@ var xTimeoutAdd func(uint, uintptr, uintptr) uint
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAdd(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint {
 
-	cret := xTimeoutAdd(IntervalVar, NewCallback(FunctionVar), DataVar)
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *FunctionVar
+				return cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	cret := xTimeoutAdd(IntervalVar, FunctionVarRef, DataVar)
 	return cret
 }
 
@@ -2166,7 +2406,37 @@ var xTimeoutAddFull func(int, uint, uintptr, uintptr, uintptr) uint
 // See [func@GLib.get_monotonic_time].
 func TimeoutAddFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xTimeoutAddFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *FunctionVar
+				return cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	cret := xTimeoutAddFull(PriorityVar, IntervalVar, FunctionVarRef, DataVar, NotifyVarRef)
 	return cret
 }
 
@@ -2181,7 +2451,22 @@ var xTimeoutAddOnce func(uint, uintptr, uintptr) uint
 // This function otherwise behaves like [func@GLib.timeout_add].
 func TimeoutAddOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
 
-	cret := xTimeoutAddOnce(IntervalVar, NewCallback(FunctionVar), DataVar)
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *FunctionVar
+				cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	cret := xTimeoutAddOnce(IntervalVar, FunctionVarRef, DataVar)
 	return cret
 }
 
@@ -2212,7 +2497,22 @@ var xTimeoutAddSeconds func(uint, uintptr, uintptr) uint
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSeconds(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint {
 
-	cret := xTimeoutAddSeconds(IntervalVar, NewCallback(FunctionVar), DataVar)
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *FunctionVar
+				return cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	cret := xTimeoutAddSeconds(IntervalVar, FunctionVarRef, DataVar)
 	return cret
 }
 
@@ -2260,7 +2560,37 @@ var xTimeoutAddSecondsFull func(int, uint, uintptr, uintptr, uintptr) uint
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSecondsFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, NewCallback(FunctionVar), DataVar, NewCallbackNullable(NotifyVar))
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *FunctionVar
+				return cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, FunctionVarRef, DataVar, NotifyVarRef)
 	return cret
 }
 
@@ -2270,7 +2600,22 @@ var xTimeoutAddSecondsOnce func(uint, uintptr, uintptr) uint
 // seconds.
 func TimeoutAddSecondsOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
 
-	cret := xTimeoutAddSecondsOnce(IntervalVar, NewCallback(FunctionVar), DataVar)
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *FunctionVar
+				cbFn(arg0)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	cret := xTimeoutAddSecondsOnce(IntervalVar, FunctionVarRef, DataVar)
 	return cret
 }
 

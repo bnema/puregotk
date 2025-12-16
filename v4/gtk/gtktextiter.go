@@ -136,7 +136,22 @@ var xTextIterBackwardFindChar func(uintptr, uintptr, uintptr, *TextIter) bool
 // but goes backward from @iter.
 func (x *TextIter) BackwardFindChar(PredVar *TextCharPredicate, UserDataVar uintptr, LimitVar *TextIter) bool {
 
-	cret := xTextIterBackwardFindChar(x.GoPointer(), glib.NewCallback(PredVar), UserDataVar, LimitVar)
+	var PredVarRef uintptr
+	if PredVar != nil {
+		PredVarPtr := uintptr(unsafe.Pointer(PredVar))
+		if cbRefPtr, ok := glib.GetCallback(PredVarPtr); ok {
+			PredVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uint32, arg1 uintptr) bool {
+				cbFn := *PredVar
+				return cbFn(arg0, arg1)
+			}
+			PredVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(PredVarPtr, PredVarRef)
+		}
+	}
+
+	cret := xTextIterBackwardFindChar(x.GoPointer(), PredVarRef, UserDataVar, LimitVar)
 	return cret
 }
 
@@ -551,7 +566,22 @@ var xTextIterForwardFindChar func(uintptr, uintptr, uintptr, *TextIter) bool
 // @limit is non-%NULL, otherwise to the end iterator.
 func (x *TextIter) ForwardFindChar(PredVar *TextCharPredicate, UserDataVar uintptr, LimitVar *TextIter) bool {
 
-	cret := xTextIterForwardFindChar(x.GoPointer(), glib.NewCallback(PredVar), UserDataVar, LimitVar)
+	var PredVarRef uintptr
+	if PredVar != nil {
+		PredVarPtr := uintptr(unsafe.Pointer(PredVar))
+		if cbRefPtr, ok := glib.GetCallback(PredVarPtr); ok {
+			PredVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uint32, arg1 uintptr) bool {
+				cbFn := *PredVar
+				return cbFn(arg0, arg1)
+			}
+			PredVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(PredVarPtr, PredVarRef)
+		}
+	}
+
+	cret := xTextIterForwardFindChar(x.GoPointer(), PredVarRef, UserDataVar, LimitVar)
 	return cret
 }
 

@@ -133,14 +133,14 @@ func (x *ConstraintGuide) SetMinSize(WidthVar int, HeightVar int) {
 
 }
 
-var xConstraintGuideSetName func(uintptr, string)
+var xConstraintGuideSetName func(uintptr, uintptr)
 
 // Sets a name for the given `GtkConstraintGuide`.
 //
 // The name is useful for debugging purposes.
-func (x *ConstraintGuide) SetName(NameVar string) {
+func (x *ConstraintGuide) SetName(NameVar *string) {
 
-	xConstraintGuideSetName(x.GoPointer(), NameVar)
+	xConstraintGuideSetName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -250,7 +250,7 @@ func (x *ConstraintGuide) GetPropertyMinWidth() int {
 func (x *ConstraintGuide) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 

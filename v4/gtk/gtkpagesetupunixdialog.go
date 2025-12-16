@@ -44,13 +44,13 @@ func PageSetupUnixDialogNewFromInternalPtr(ptr uintptr) *PageSetupUnixDialog {
 	return cls
 }
 
-var xNewPageSetupUnixDialog func(string, uintptr) uintptr
+var xNewPageSetupUnixDialog func(uintptr, uintptr) uintptr
 
 // Creates a new page setup dialog.
-func NewPageSetupUnixDialog(TitleVar string, ParentVar *Window) *PageSetupUnixDialog {
+func NewPageSetupUnixDialog(TitleVar *string, ParentVar *Window) *PageSetupUnixDialog {
 	var cls *PageSetupUnixDialog
 
-	cret := xNewPageSetupUnixDialog(TitleVar, ParentVar.GoPointer())
+	cret := xNewPageSetupUnixDialog(core.NullableStringToPtr(TitleVar), ParentVar.GoPointer())
 
 	if cret == 0 {
 		return nil

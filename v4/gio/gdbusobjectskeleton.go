@@ -169,7 +169,7 @@ func (c *DBusObjectSkeleton) SetGoPointer(ptr uintptr) {
 func (x *DBusObjectSkeleton) SetPropertyGObjectPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("g-object-path", &v)
 }
 

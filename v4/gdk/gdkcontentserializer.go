@@ -2,6 +2,8 @@
 package gdk
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gio"
@@ -26,7 +28,37 @@ var xContentRegisterSerializer func(types.GType, string, uintptr, uintptr, uintp
 // so applications can override the built-in serializers.
 func ContentRegisterSerializer(TypeVar types.GType, MimeTypeVar string, SerializeVar *ContentSerializeFunc, DataVar uintptr, NotifyVar *glib.DestroyNotify) {
 
-	xContentRegisterSerializer(TypeVar, MimeTypeVar, glib.NewCallback(SerializeVar), DataVar, glib.NewCallback(NotifyVar))
+	var SerializeVarRef uintptr
+	if SerializeVar != nil {
+		SerializeVarPtr := uintptr(unsafe.Pointer(SerializeVar))
+		if cbRefPtr, ok := glib.GetCallback(SerializeVarPtr); ok {
+			SerializeVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *SerializeVar
+				cbFn(arg0)
+			}
+			SerializeVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(SerializeVarPtr, SerializeVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	xContentRegisterSerializer(TypeVar, MimeTypeVar, SerializeVarRef, DataVar, NotifyVarRef)
 
 }
 
@@ -38,7 +70,22 @@ var xContentSerializeAsync func(uintptr, string, *gobject.Value, int, uintptr, u
 // indicate a higher priority.
 func ContentSerializeAsync(StreamVar *gio.OutputStream, MimeTypeVar string, ValueVar *gobject.Value, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xContentSerializeAsync(StreamVar.GoPointer(), MimeTypeVar, ValueVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xContentSerializeAsync(StreamVar.GoPointer(), MimeTypeVar, ValueVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -204,7 +251,22 @@ var xContentSerializerSetTaskData func(uintptr, uintptr, uintptr)
 // Associate data with the current serialization operation.
 func (x *ContentSerializer) SetTaskData(DataVar uintptr, NotifyVar *glib.DestroyNotify) {
 
-	xContentSerializerSetTaskData(x.GoPointer(), DataVar, glib.NewCallback(NotifyVar))
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	xContentSerializerSetTaskData(x.GoPointer(), DataVar, NotifyVarRef)
 
 }
 

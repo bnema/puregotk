@@ -252,7 +252,7 @@ func (x *Settings) GetPropertyGtkCursorBlinkTimeout() int {
 func (x *Settings) SetPropertyGtkCursorThemeName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-cursor-theme-name", &v)
 }
 
@@ -311,7 +311,7 @@ func (x *Settings) GetPropertyGtkCursorThemeSize() int {
 func (x *Settings) SetPropertyGtkDecorationLayout(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-decoration-layout", &v)
 }
 
@@ -613,7 +613,7 @@ func (x *Settings) GetPropertyGtkErrorBell() bool {
 func (x *Settings) SetPropertyGtkFontName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-font-name", &v)
 }
 
@@ -675,7 +675,7 @@ func (x *Settings) GetPropertyGtkHintFontMetrics() bool {
 func (x *Settings) SetPropertyGtkIconThemeName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-icon-theme-name", &v)
 }
 
@@ -702,7 +702,7 @@ func (x *Settings) GetPropertyGtkIconThemeName() string {
 func (x *Settings) SetPropertyGtkImModule(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-im-module", &v)
 }
 
@@ -851,7 +851,7 @@ func (x *Settings) GetPropertyGtkPrimaryButtonWarpsSlider() bool {
 func (x *Settings) SetPropertyGtkPrintBackends(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-print-backends", &v)
 }
 
@@ -881,7 +881,7 @@ func (x *Settings) GetPropertyGtkPrintBackends() string {
 func (x *Settings) SetPropertyGtkPrintPreviewCommand(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-print-preview-command", &v)
 }
 
@@ -1037,7 +1037,7 @@ func (x *Settings) GetPropertyGtkShowStatusShapes() bool {
 func (x *Settings) SetPropertyGtkSoundThemeName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-sound-theme-name", &v)
 }
 
@@ -1082,7 +1082,7 @@ func (x *Settings) GetPropertyGtkSplitCursor() bool {
 func (x *Settings) SetPropertyGtkThemeName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-theme-name", &v)
 }
 
@@ -1106,7 +1106,7 @@ func (x *Settings) GetPropertyGtkThemeName() string {
 func (x *Settings) SetPropertyGtkTitlebarDoubleClick(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-titlebar-double-click", &v)
 }
 
@@ -1131,7 +1131,7 @@ func (x *Settings) GetPropertyGtkTitlebarDoubleClick() string {
 func (x *Settings) SetPropertyGtkTitlebarMiddleClick(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-titlebar-middle-click", &v)
 }
 
@@ -1156,7 +1156,7 @@ func (x *Settings) GetPropertyGtkTitlebarMiddleClick() string {
 func (x *Settings) SetPropertyGtkTitlebarRightClick(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-titlebar-right-click", &v)
 }
 
@@ -1243,7 +1243,7 @@ func (x *Settings) GetPropertyGtkXftHinting() int {
 func (x *Settings) SetPropertyGtkXftHintstyle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-xft-hintstyle", &v)
 }
 
@@ -1268,7 +1268,7 @@ func (x *Settings) GetPropertyGtkXftHintstyle() string {
 func (x *Settings) SetPropertyGtkXftRgba(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("gtk-xft-rgba", &v)
 }
 

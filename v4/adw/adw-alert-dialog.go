@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"fmt"
 	"structs"
 	"unsafe"
 
@@ -232,7 +233,7 @@ func AlertDialogNewFromInternalPtr(ptr uintptr) *AlertDialog {
 	return cls
 }
 
-var xNewAlertDialog func(string, string) uintptr
+var xNewAlertDialog func(uintptr, uintptr) uintptr
 
 // Creates a new `AdwAlertDialog`.
 //
@@ -250,10 +251,10 @@ var xNewAlertDialog func(string, string) uintptr
 //	filename);
 //
 // ```
-func NewAlertDialog(HeadingVar string, BodyVar string) *AlertDialog {
+func NewAlertDialog(HeadingVar *string, BodyVar *string) *AlertDialog {
 	var cls *AlertDialog
 
-	cret := xNewAlertDialog(HeadingVar, BodyVar)
+	cret := xNewAlertDialog(core.NullableStringToPtr(HeadingVar), core.NullableStringToPtr(BodyVar))
 
 	if cret == 0 {
 		return nil
@@ -321,7 +322,22 @@ var xAlertDialogChoose func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // will be shown within it. Otherwise, it will be a separate window.
 func (x *AlertDialog) Choose(ParentVar *gtk.Widget, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xAlertDialogChoose(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xAlertDialogChoose(x.GoPointer(), ParentVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -557,7 +573,7 @@ func (x *AlertDialog) SetCloseResponse(ResponseVar string) {
 
 }
 
-var xAlertDialogSetDefaultResponse func(uintptr, string)
+var xAlertDialogSetDefaultResponse func(uintptr, uintptr)
 
 // Sets the ID of the default response of @self.
 //
@@ -568,9 +584,9 @@ var xAlertDialogSetDefaultResponse func(uintptr, string)
 // will be focused by default.
 //
 // See [property@Dialog:default-widget].
-func (x *AlertDialog) SetDefaultResponse(ResponseVar string) {
+func (x *AlertDialog) SetDefaultResponse(ResponseVar *string) {
 
-	xAlertDialogSetDefaultResponse(x.GoPointer(), ResponseVar)
+	xAlertDialogSetDefaultResponse(x.GoPointer(), core.NullableStringToPtr(ResponseVar))
 
 }
 
@@ -585,12 +601,12 @@ func (x *AlertDialog) SetExtraChild(ChildVar *gtk.Widget) {
 
 }
 
-var xAlertDialogSetHeading func(uintptr, string)
+var xAlertDialogSetHeading func(uintptr, uintptr)
 
 // Sets the heading of @self.
-func (x *AlertDialog) SetHeading(HeadingVar string) {
+func (x *AlertDialog) SetHeading(HeadingVar *string) {
 
-	xAlertDialogSetHeading(x.GoPointer(), HeadingVar)
+	xAlertDialogSetHeading(x.GoPointer(), core.NullableStringToPtr(HeadingVar))
 
 }
 
@@ -690,7 +706,7 @@ func (c *AlertDialog) SetGoPointer(ptr uintptr) {
 func (x *AlertDialog) SetPropertyBody(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("body", &v)
 }
 
@@ -735,7 +751,7 @@ func (x *AlertDialog) GetPropertyBodyUseMarkup() bool {
 func (x *AlertDialog) SetPropertyCloseResponse(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("close-response", &v)
 }
 
@@ -767,7 +783,7 @@ func (x *AlertDialog) GetPropertyCloseResponse() string {
 func (x *AlertDialog) SetPropertyDefaultResponse(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("default-response", &v)
 }
 
@@ -792,7 +808,7 @@ func (x *AlertDialog) GetPropertyDefaultResponse() string {
 func (x *AlertDialog) SetPropertyHeading(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("heading", &v)
 }
 
@@ -873,6 +889,28 @@ func (x *AlertDialog) ConnectResponse(cb *func(AlertDialog, string)) uint32 {
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+}
+
+// ConnectResponseWithDetail connects to the "response" signal with a detail string.
+// The detail is appended as "response::<detail>".
+func (x *AlertDialog) ConnectResponseWithDetail(detail string, cb *func(AlertDialog, string)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("response::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, ResponseVarp string) {
+		fa := AlertDialog{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, ResponseVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
 // Requests the user's screen reader to announce the given message.

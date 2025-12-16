@@ -154,7 +154,7 @@ func (x *Banner) GetUseMarkup() bool {
 	return cret
 }
 
-var xBannerSetButtonLabel func(uintptr, string)
+var xBannerSetButtonLabel func(uintptr, uintptr)
 
 // Sets the button label for @self.
 //
@@ -162,9 +162,9 @@ var xBannerSetButtonLabel func(uintptr, string)
 //
 // The button can be used with a `GAction`, or with the
 // [signal@Banner::button-clicked] signal.
-func (x *Banner) SetButtonLabel(LabelVar string) {
+func (x *Banner) SetButtonLabel(LabelVar *string) {
 
-	xBannerSetButtonLabel(x.GoPointer(), LabelVar)
+	xBannerSetButtonLabel(x.GoPointer(), core.NullableStringToPtr(LabelVar))
 
 }
 
@@ -239,7 +239,7 @@ func (c *Banner) SetGoPointer(ptr uintptr) {
 func (x *Banner) SetPropertyButtonLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("button-label", &v)
 }
 
@@ -280,7 +280,7 @@ func (x *Banner) GetPropertyRevealed() bool {
 func (x *Banner) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -632,9 +632,9 @@ func (x *Banner) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *Banner) SetActionName(ActionNameVar string) {
+func (x *Banner) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 

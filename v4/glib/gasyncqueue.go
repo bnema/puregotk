@@ -144,7 +144,22 @@ var xAsyncQueuePushSorted func(uintptr, uintptr, uintptr, uintptr)
 // For an example of @func see g_async_queue_sort().
 func (x *AsyncQueue) PushSorted(DataVar uintptr, FuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	xAsyncQueuePushSorted(x.GoPointer(), DataVar, NewCallback(FuncVar), UserDataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xAsyncQueuePushSorted(x.GoPointer(), DataVar, FuncVarRef, UserDataVar)
 
 }
 
@@ -167,7 +182,22 @@ var xAsyncQueuePushSortedUnlocked func(uintptr, uintptr, uintptr, uintptr)
 // For an example of @func see g_async_queue_sort().
 func (x *AsyncQueue) PushSortedUnlocked(DataVar uintptr, FuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	xAsyncQueuePushSortedUnlocked(x.GoPointer(), DataVar, NewCallback(FuncVar), UserDataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xAsyncQueuePushSortedUnlocked(x.GoPointer(), DataVar, FuncVarRef, UserDataVar)
 
 }
 
@@ -251,7 +281,22 @@ var xAsyncQueueSort func(uintptr, uintptr, uintptr)
 // ]|
 func (x *AsyncQueue) Sort(FuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	xAsyncQueueSort(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xAsyncQueueSort(x.GoPointer(), FuncVarRef, UserDataVar)
 
 }
 
@@ -268,7 +313,22 @@ var xAsyncQueueSortUnlocked func(uintptr, uintptr, uintptr)
 // This function must be called while holding the @queue's lock.
 func (x *AsyncQueue) SortUnlocked(FuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	xAsyncQueueSortUnlocked(x.GoPointer(), NewCallback(FuncVar), UserDataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xAsyncQueueSortUnlocked(x.GoPointer(), FuncVarRef, UserDataVar)
 
 }
 
@@ -407,7 +467,22 @@ var xAsyncQueueNewFull func(uintptr) *AsyncQueue
 // the queue is destroyed after the final unref.
 func AsyncQueueNewFull(ItemFreeFuncVar *DestroyNotify) *AsyncQueue {
 
-	cret := xAsyncQueueNewFull(NewCallbackNullable(ItemFreeFuncVar))
+	var ItemFreeFuncVarRef uintptr
+	if ItemFreeFuncVar != nil {
+		ItemFreeFuncVarPtr := uintptr(unsafe.Pointer(ItemFreeFuncVar))
+		if cbRefPtr, ok := GetCallback(ItemFreeFuncVarPtr); ok {
+			ItemFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ItemFreeFuncVar
+				cbFn(arg0)
+			}
+			ItemFreeFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ItemFreeFuncVarPtr, ItemFreeFuncVarRef)
+		}
+	}
+
+	cret := xAsyncQueueNewFull(ItemFreeFuncVarRef)
 	return cret
 }
 

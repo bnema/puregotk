@@ -213,7 +213,22 @@ var xTreeSelectionSelectedForeach func(uintptr, uintptr, uintptr)
 // gtk_tree_selection_get_selected_rows() might be more useful.
 func (x *TreeSelection) SelectedForeach(FuncVar *TreeSelectionForeachFunc, DataVar uintptr) {
 
-	xTreeSelectionSelectedForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *TreePath, arg2 *TreeIter, arg3 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xTreeSelectionSelectedForeach(x.GoPointer(), FuncVarRef, DataVar)
 
 }
 
@@ -238,7 +253,37 @@ var xTreeSelectionSetSelectFunction func(uintptr, uintptr, uintptr, uintptr)
 // if the state of the node should be left unchanged.
 func (x *TreeSelection) SetSelectFunction(FuncVar *TreeSelectionFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xTreeSelectionSetSelectFunction(x.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallback(DestroyVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 *TreePath, arg3 bool, arg4 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2, arg3, arg4)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	xTreeSelectionSetSelectFunction(x.GoPointer(), FuncVarRef, DataVar, DestroyVarRef)
 
 }
 

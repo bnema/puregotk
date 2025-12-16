@@ -113,7 +113,37 @@ var xPreferencesGroupBindModel func(uintptr, uintptr, uintptr, uintptr, uintptr)
 // See [method@Gtk.ListBox.bind_model].
 func (x *PreferencesGroup) BindModel(ModelVar gio.ListModel, CreateRowFuncVar *gtk.ListBoxCreateWidgetFunc, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) {
 
-	xPreferencesGroupBindModel(x.GoPointer(), ModelVar.GoPointer(), glib.NewCallbackNullable(CreateRowFuncVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	var CreateRowFuncVarRef uintptr
+	if CreateRowFuncVar != nil {
+		CreateRowFuncVarPtr := uintptr(unsafe.Pointer(CreateRowFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CreateRowFuncVarPtr); ok {
+			CreateRowFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
+				cbFn := *CreateRowFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CreateRowFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CreateRowFuncVarPtr, CreateRowFuncVarRef)
+		}
+	}
+
+	var UserDataFreeFuncVarRef uintptr
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+		}
+	}
+
+	xPreferencesGroupBindModel(x.GoPointer(), ModelVar.GoPointer(), CreateRowFuncVarRef, UserDataVar, UserDataFreeFuncVarRef)
 
 }
 
@@ -189,12 +219,12 @@ func (x *PreferencesGroup) Remove(ChildVar *gtk.Widget) {
 
 }
 
-var xPreferencesGroupSetDescription func(uintptr, string)
+var xPreferencesGroupSetDescription func(uintptr, uintptr)
 
 // Sets the description for @self.
-func (x *PreferencesGroup) SetDescription(DescriptionVar string) {
+func (x *PreferencesGroup) SetDescription(DescriptionVar *string) {
 
-	xPreferencesGroupSetDescription(x.GoPointer(), DescriptionVar)
+	xPreferencesGroupSetDescription(x.GoPointer(), core.NullableStringToPtr(DescriptionVar))
 
 }
 
@@ -249,7 +279,7 @@ func (c *PreferencesGroup) SetGoPointer(ptr uintptr) {
 func (x *PreferencesGroup) SetPropertyDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("description", &v)
 }
 
@@ -291,7 +321,7 @@ func (x *PreferencesGroup) GetPropertySeparateRows() bool {
 func (x *PreferencesGroup) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

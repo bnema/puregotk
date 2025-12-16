@@ -2,6 +2,8 @@
 package gdk
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gio"
@@ -25,7 +27,22 @@ var xContentDeserializeAsync func(uintptr, string, types.GType, int, uintptr, ui
 // indicate a higher priority.
 func ContentDeserializeAsync(StreamVar *gio.InputStream, MimeTypeVar string, TypeVar types.GType, IoPriorityVar int, CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xContentDeserializeAsync(StreamVar.GoPointer(), MimeTypeVar, TypeVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xContentDeserializeAsync(StreamVar.GoPointer(), MimeTypeVar, TypeVar, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -52,7 +69,37 @@ var xContentRegisterDeserializer func(string, types.GType, uintptr, uintptr, uin
 // so applications can override the built-in deserializers.
 func ContentRegisterDeserializer(MimeTypeVar string, TypeVar types.GType, DeserializeVar *ContentDeserializeFunc, DataVar uintptr, NotifyVar *glib.DestroyNotify) {
 
-	xContentRegisterDeserializer(MimeTypeVar, TypeVar, glib.NewCallback(DeserializeVar), DataVar, glib.NewCallback(NotifyVar))
+	var DeserializeVarRef uintptr
+	if DeserializeVar != nil {
+		DeserializeVarPtr := uintptr(unsafe.Pointer(DeserializeVar))
+		if cbRefPtr, ok := glib.GetCallback(DeserializeVarPtr); ok {
+			DeserializeVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DeserializeVar
+				cbFn(arg0)
+			}
+			DeserializeVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DeserializeVarPtr, DeserializeVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	xContentRegisterDeserializer(MimeTypeVar, TypeVar, DeserializeVarRef, DataVar, NotifyVarRef)
 
 }
 
@@ -203,7 +250,22 @@ var xContentDeserializerSetTaskData func(uintptr, uintptr, uintptr)
 // Associate data with the current deserialization operation.
 func (x *ContentDeserializer) SetTaskData(DataVar uintptr, NotifyVar *glib.DestroyNotify) {
 
-	xContentDeserializerSetTaskData(x.GoPointer(), DataVar, glib.NewCallback(NotifyVar))
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	xContentDeserializerSetTaskData(x.GoPointer(), DataVar, NotifyVarRef)
 
 }
 

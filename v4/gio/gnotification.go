@@ -107,7 +107,7 @@ func (x *Notification) AddButton(LabelVar string, DetailedActionVar string) {
 
 }
 
-var xNotificationAddButtonWithTarget func(uintptr, string, string, string, ...interface{})
+var xNotificationAddButtonWithTarget func(uintptr, string, string, uintptr, ...interface{})
 
 // Adds a button to @notification that activates @action when clicked.
 // @action must be an application-wide action (it must start with "app.").
@@ -116,9 +116,9 @@ var xNotificationAddButtonWithTarget func(uintptr, string, string, string, ...in
 // positional parameters into a #GVariant instance, similar to
 // g_variant_new(). @action will be activated with that #GVariant as its
 // parameter.
-func (x *Notification) AddButtonWithTarget(LabelVar string, ActionVar string, TargetFormatVar string, varArgs ...interface{}) {
+func (x *Notification) AddButtonWithTarget(LabelVar string, ActionVar string, TargetFormatVar *string, varArgs ...interface{}) {
 
-	xNotificationAddButtonWithTarget(x.GoPointer(), LabelVar, ActionVar, TargetFormatVar, varArgs...)
+	xNotificationAddButtonWithTarget(x.GoPointer(), LabelVar, ActionVar, core.NullableStringToPtr(TargetFormatVar), varArgs...)
 
 }
 
@@ -135,16 +135,16 @@ func (x *Notification) AddButtonWithTargetValue(LabelVar string, ActionVar strin
 
 }
 
-var xNotificationSetBody func(uintptr, string)
+var xNotificationSetBody func(uintptr, uintptr)
 
 // Sets the body of @notification to @body.
-func (x *Notification) SetBody(BodyVar string) {
+func (x *Notification) SetBody(BodyVar *string) {
 
-	xNotificationSetBody(x.GoPointer(), BodyVar)
+	xNotificationSetBody(x.GoPointer(), core.NullableStringToPtr(BodyVar))
 
 }
 
-var xNotificationSetCategory func(uintptr, string)
+var xNotificationSetCategory func(uintptr, uintptr)
 
 // Sets the type of @notification to @category. Categories have a main
 // type like `email`, `im` or `device` and can have a detail separated
@@ -152,9 +152,9 @@ var xNotificationSetCategory func(uintptr, string)
 // helps the notification server to select proper feedback to the user.
 //
 // Standard categories are [listed in the specification](https://specifications.freedesktop.org/notification-spec/latest/ar01s06.html).
-func (x *Notification) SetCategory(CategoryVar string) {
+func (x *Notification) SetCategory(CategoryVar *string) {
 
-	xNotificationSetCategory(x.GoPointer(), CategoryVar)
+	xNotificationSetCategory(x.GoPointer(), core.NullableStringToPtr(CategoryVar))
 
 }
 
@@ -177,7 +177,7 @@ func (x *Notification) SetDefaultAction(DetailedActionVar string) {
 
 }
 
-var xNotificationSetDefaultActionAndTarget func(uintptr, string, string, ...interface{})
+var xNotificationSetDefaultActionAndTarget func(uintptr, string, uintptr, ...interface{})
 
 // Sets the default action of @notification to @action. This action is
 // activated when the notification is clicked on. It must be an
@@ -190,9 +190,9 @@ var xNotificationSetDefaultActionAndTarget func(uintptr, string, string, ...inte
 //
 // When no default action is set, the application that the notification
 // was sent on is activated.
-func (x *Notification) SetDefaultActionAndTarget(ActionVar string, TargetFormatVar string, varArgs ...interface{}) {
+func (x *Notification) SetDefaultActionAndTarget(ActionVar string, TargetFormatVar *string, varArgs ...interface{}) {
 
-	xNotificationSetDefaultActionAndTarget(x.GoPointer(), ActionVar, TargetFormatVar, varArgs...)
+	xNotificationSetDefaultActionAndTarget(x.GoPointer(), ActionVar, core.NullableStringToPtr(TargetFormatVar), varArgs...)
 
 }
 

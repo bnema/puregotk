@@ -357,25 +357,25 @@ func (x *AboutDialog) SetAuthors(AuthorsVar []string) {
 
 }
 
-var xAboutDialogSetComments func(uintptr, string)
+var xAboutDialogSetComments func(uintptr, uintptr)
 
 // Sets the comments string to display in the about dialog.
 //
 // This should be a short string of one or two lines.
-func (x *AboutDialog) SetComments(CommentsVar string) {
+func (x *AboutDialog) SetComments(CommentsVar *string) {
 
-	xAboutDialogSetComments(x.GoPointer(), CommentsVar)
+	xAboutDialogSetComments(x.GoPointer(), core.NullableStringToPtr(CommentsVar))
 
 }
 
-var xAboutDialogSetCopyright func(uintptr, string)
+var xAboutDialogSetCopyright func(uintptr, uintptr)
 
 // Sets the copyright string to display in the about dialog.
 //
 // This should be a short string of one or two lines.
-func (x *AboutDialog) SetCopyright(CopyrightVar string) {
+func (x *AboutDialog) SetCopyright(CopyrightVar *string) {
 
-	xAboutDialogSetCopyright(x.GoPointer(), CopyrightVar)
+	xAboutDialogSetCopyright(x.GoPointer(), core.NullableStringToPtr(CopyrightVar))
 
 }
 
@@ -389,15 +389,15 @@ func (x *AboutDialog) SetDocumenters(DocumentersVar []string) {
 
 }
 
-var xAboutDialogSetLicense func(uintptr, string)
+var xAboutDialogSetLicense func(uintptr, uintptr)
 
 // Sets the license information to be displayed in the
 // about dialog.
 //
 // If `license` is `NULL`, the license page is hidden.
-func (x *AboutDialog) SetLicense(LicenseVar string) {
+func (x *AboutDialog) SetLicense(LicenseVar *string) {
 
-	xAboutDialogSetLicense(x.GoPointer(), LicenseVar)
+	xAboutDialogSetLicense(x.GoPointer(), core.NullableStringToPtr(LicenseVar))
 
 }
 
@@ -423,28 +423,28 @@ func (x *AboutDialog) SetLogo(LogoVar gdk.Paintable) {
 
 }
 
-var xAboutDialogSetLogoIconName func(uintptr, string)
+var xAboutDialogSetLogoIconName func(uintptr, uintptr)
 
 // Sets the icon name to be displayed as logo in the about dialog.
-func (x *AboutDialog) SetLogoIconName(IconNameVar string) {
+func (x *AboutDialog) SetLogoIconName(IconNameVar *string) {
 
-	xAboutDialogSetLogoIconName(x.GoPointer(), IconNameVar)
+	xAboutDialogSetLogoIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
-var xAboutDialogSetProgramName func(uintptr, string)
+var xAboutDialogSetProgramName func(uintptr, uintptr)
 
 // Sets the name to display in the about dialog.
 //
 // If `name` is not set, the string returned
 // by `g_get_application_name()` is used.
-func (x *AboutDialog) SetProgramName(NameVar string) {
+func (x *AboutDialog) SetProgramName(NameVar *string) {
 
-	xAboutDialogSetProgramName(x.GoPointer(), NameVar)
+	xAboutDialogSetProgramName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
-var xAboutDialogSetSystemInformation func(uintptr, string)
+var xAboutDialogSetSystemInformation func(uintptr, uintptr)
 
 // Sets the system information to be displayed in the about
 // dialog.
@@ -453,13 +453,13 @@ var xAboutDialogSetSystemInformation func(uintptr, string)
 // page is hidden.
 //
 // See [property@Gtk.AboutDialog:system-information].
-func (x *AboutDialog) SetSystemInformation(SystemInformationVar string) {
+func (x *AboutDialog) SetSystemInformation(SystemInformationVar *string) {
 
-	xAboutDialogSetSystemInformation(x.GoPointer(), SystemInformationVar)
+	xAboutDialogSetSystemInformation(x.GoPointer(), core.NullableStringToPtr(SystemInformationVar))
 
 }
 
-var xAboutDialogSetTranslatorCredits func(uintptr, string)
+var xAboutDialogSetTranslatorCredits func(uintptr, uintptr)
 
 // Sets the translator credits string which is displayed in
 // the credits page.
@@ -481,27 +481,27 @@ var xAboutDialogSetTranslatorCredits func(uintptr, string)
 // for this purpose, since translators will already know the purpose of
 // that `msgid`, and since `GtkAboutDialog` will detect if “translator-credits”
 // is untranslated and omit translator credits.
-func (x *AboutDialog) SetTranslatorCredits(TranslatorCreditsVar string) {
+func (x *AboutDialog) SetTranslatorCredits(TranslatorCreditsVar *string) {
 
-	xAboutDialogSetTranslatorCredits(x.GoPointer(), TranslatorCreditsVar)
+	xAboutDialogSetTranslatorCredits(x.GoPointer(), core.NullableStringToPtr(TranslatorCreditsVar))
 
 }
 
-var xAboutDialogSetVersion func(uintptr, string)
+var xAboutDialogSetVersion func(uintptr, uintptr)
 
 // Sets the version string to display in the about dialog.
-func (x *AboutDialog) SetVersion(VersionVar string) {
+func (x *AboutDialog) SetVersion(VersionVar *string) {
 
-	xAboutDialogSetVersion(x.GoPointer(), VersionVar)
+	xAboutDialogSetVersion(x.GoPointer(), core.NullableStringToPtr(VersionVar))
 
 }
 
-var xAboutDialogSetWebsite func(uintptr, string)
+var xAboutDialogSetWebsite func(uintptr, uintptr)
 
 // Sets the URL to use for the website link.
-func (x *AboutDialog) SetWebsite(WebsiteVar string) {
+func (x *AboutDialog) SetWebsite(WebsiteVar *string) {
 
-	xAboutDialogSetWebsite(x.GoPointer(), WebsiteVar)
+	xAboutDialogSetWebsite(x.GoPointer(), core.NullableStringToPtr(WebsiteVar))
 
 }
 
@@ -590,7 +590,7 @@ func (x *AboutDialog) GetPropertyAuthors() []string {
 func (x *AboutDialog) SetPropertyComments(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("comments", &v)
 }
 
@@ -611,7 +611,7 @@ func (x *AboutDialog) GetPropertyComments() string {
 func (x *AboutDialog) SetPropertyCopyright(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("copyright", &v)
 }
 
@@ -664,7 +664,7 @@ func (x *AboutDialog) GetPropertyDocumenters() []string {
 func (x *AboutDialog) SetPropertyLicense(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("license", &v)
 }
 
@@ -696,7 +696,7 @@ func (x *AboutDialog) GetPropertyLicense() string {
 func (x *AboutDialog) SetPropertyLogoIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("logo-icon-name", &v)
 }
 
@@ -718,7 +718,7 @@ func (x *AboutDialog) GetPropertyLogoIconName() string {
 func (x *AboutDialog) SetPropertyProgramName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("program-name", &v)
 }
 
@@ -746,7 +746,7 @@ func (x *AboutDialog) GetPropertyProgramName() string {
 func (x *AboutDialog) SetPropertySystemInformation(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("system-information", &v)
 }
 
@@ -776,7 +776,7 @@ func (x *AboutDialog) GetPropertySystemInformation() string {
 func (x *AboutDialog) SetPropertyTranslatorCredits(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("translator-credits", &v)
 }
 
@@ -798,7 +798,7 @@ func (x *AboutDialog) GetPropertyTranslatorCredits() string {
 func (x *AboutDialog) SetPropertyVersion(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("version", &v)
 }
 
@@ -817,7 +817,7 @@ func (x *AboutDialog) GetPropertyVersion() string {
 func (x *AboutDialog) SetPropertyWebsite(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("website", &v)
 }
 
@@ -836,7 +836,7 @@ func (x *AboutDialog) GetPropertyWebsite() string {
 func (x *AboutDialog) SetPropertyWebsiteLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("website-label", &v)
 }
 

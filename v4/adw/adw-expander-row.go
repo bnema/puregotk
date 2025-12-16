@@ -227,12 +227,12 @@ func (x *ExpanderRow) SetExpanded(ExpandedVar bool) {
 
 }
 
-var xExpanderRowSetIconName func(uintptr, string)
+var xExpanderRowSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @self.
-func (x *ExpanderRow) SetIconName(IconNameVar string) {
+func (x *ExpanderRow) SetIconName(IconNameVar *string) {
 
-	xExpanderRowSetIconName(x.GoPointer(), IconNameVar)
+	xExpanderRowSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
@@ -331,7 +331,7 @@ func (x *ExpanderRow) GetPropertyExpanded() bool {
 func (x *ExpanderRow) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -368,7 +368,7 @@ func (x *ExpanderRow) GetPropertyShowEnableSwitch() bool {
 func (x *ExpanderRow) SetPropertySubtitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("subtitle", &v)
 }
 
@@ -722,9 +722,9 @@ func (x *ExpanderRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *ExpanderRow) SetActionName(ActionNameVar string) {
+func (x *ExpanderRow) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 

@@ -151,15 +151,15 @@ func (x *ViewStack) Add(ChildVar *gtk.Widget) *ViewStackPage {
 	return cls
 }
 
-var xViewStackAddNamed func(uintptr, uintptr, string) uintptr
+var xViewStackAddNamed func(uintptr, uintptr, uintptr) uintptr
 
 // Adds a child to @self.
 //
 // The child is identified by the @name.
-func (x *ViewStack) AddNamed(ChildVar *gtk.Widget, NameVar string) *ViewStackPage {
+func (x *ViewStack) AddNamed(ChildVar *gtk.Widget, NameVar *string) *ViewStackPage {
 	var cls *ViewStackPage
 
-	cret := xViewStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), NameVar)
+	cret := xViewStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), core.NullableStringToPtr(NameVar))
 
 	if cret == 0 {
 		return nil
@@ -170,16 +170,16 @@ func (x *ViewStack) AddNamed(ChildVar *gtk.Widget, NameVar string) *ViewStackPag
 	return cls
 }
 
-var xViewStackAddTitled func(uintptr, uintptr, string, string) uintptr
+var xViewStackAddTitled func(uintptr, uintptr, uintptr, string) uintptr
 
 // Adds a child to @self.
 //
 // The child is identified by the @name. The @title will be used by
 // [class@ViewSwitcher] to represent @child, so it should be short.
-func (x *ViewStack) AddTitled(ChildVar *gtk.Widget, NameVar string, TitleVar string) *ViewStackPage {
+func (x *ViewStack) AddTitled(ChildVar *gtk.Widget, NameVar *string, TitleVar string) *ViewStackPage {
 	var cls *ViewStackPage
 
-	cret := xViewStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), NameVar, TitleVar)
+	cret := xViewStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), core.NullableStringToPtr(NameVar), TitleVar)
 
 	if cret == 0 {
 		return nil
@@ -190,16 +190,16 @@ func (x *ViewStack) AddTitled(ChildVar *gtk.Widget, NameVar string, TitleVar str
 	return cls
 }
 
-var xViewStackAddTitledWithIcon func(uintptr, uintptr, string, string, string) uintptr
+var xViewStackAddTitledWithIcon func(uintptr, uintptr, uintptr, string, string) uintptr
 
 // Adds a child to @self.
 //
 // The child is identified by the @name. The @title and @icon_name will be used
 // by [class@ViewSwitcher] to represent @child.
-func (x *ViewStack) AddTitledWithIcon(ChildVar *gtk.Widget, NameVar string, TitleVar string, IconNameVar string) *ViewStackPage {
+func (x *ViewStack) AddTitledWithIcon(ChildVar *gtk.Widget, NameVar *string, TitleVar string, IconNameVar string) *ViewStackPage {
 	var cls *ViewStackPage
 
-	cret := xViewStackAddTitledWithIcon(x.GoPointer(), ChildVar.GoPointer(), NameVar, TitleVar, IconNameVar)
+	cret := xViewStackAddTitledWithIcon(x.GoPointer(), ChildVar.GoPointer(), core.NullableStringToPtr(NameVar), TitleVar, IconNameVar)
 
 	if cret == 0 {
 		return nil
@@ -556,7 +556,7 @@ func (x *ViewStack) GetPropertyVhomogeneous() bool {
 func (x *ViewStack) SetPropertyVisibleChildName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("visible-child-name", &v)
 }
 
@@ -962,21 +962,21 @@ func (x *ViewStackPage) SetBadgeNumber(BadgeNumberVar uint) {
 
 }
 
-var xViewStackPageSetIconName func(uintptr, string)
+var xViewStackPageSetIconName func(uintptr, uintptr)
 
 // Sets the icon name of the page.
-func (x *ViewStackPage) SetIconName(IconNameVar string) {
+func (x *ViewStackPage) SetIconName(IconNameVar *string) {
 
-	xViewStackPageSetIconName(x.GoPointer(), IconNameVar)
+	xViewStackPageSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
-var xViewStackPageSetName func(uintptr, string)
+var xViewStackPageSetName func(uintptr, uintptr)
 
 // Sets the name of the page.
-func (x *ViewStackPage) SetName(NameVar string) {
+func (x *ViewStackPage) SetName(NameVar *string) {
 
-	xViewStackPageSetName(x.GoPointer(), NameVar)
+	xViewStackPageSetName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -991,12 +991,12 @@ func (x *ViewStackPage) SetNeedsAttention(NeedsAttentionVar bool) {
 
 }
 
-var xViewStackPageSetTitle func(uintptr, string)
+var xViewStackPageSetTitle func(uintptr, uintptr)
 
 // Sets the page title.
-func (x *ViewStackPage) SetTitle(TitleVar string) {
+func (x *ViewStackPage) SetTitle(TitleVar *string) {
 
-	xViewStackPageSetTitle(x.GoPointer(), TitleVar)
+	xViewStackPageSetTitle(x.GoPointer(), core.NullableStringToPtr(TitleVar))
 
 }
 
@@ -1064,7 +1064,7 @@ func (x *ViewStackPage) GetPropertyBadgeNumber() uint {
 func (x *ViewStackPage) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -1081,7 +1081,7 @@ func (x *ViewStackPage) GetPropertyIconName() string {
 func (x *ViewStackPage) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -1119,7 +1119,7 @@ func (x *ViewStackPage) GetPropertyNeedsAttention() bool {
 func (x *ViewStackPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

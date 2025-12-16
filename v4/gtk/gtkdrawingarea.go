@@ -244,7 +244,37 @@ var xDrawingAreaSetDrawFunc func(uintptr, uintptr, uintptr, uintptr)
 // on the drawing area. This will cause a redraw and will call @draw_func again.
 func (x *DrawingArea) SetDrawFunc(DrawFuncVar *DrawingAreaDrawFunc, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xDrawingAreaSetDrawFunc(x.GoPointer(), glib.NewCallbackNullable(DrawFuncVar), UserDataVar, glib.NewCallback(DestroyVar))
+	var DrawFuncVarRef uintptr
+	if DrawFuncVar != nil {
+		DrawFuncVarPtr := uintptr(unsafe.Pointer(DrawFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(DrawFuncVarPtr); ok {
+			DrawFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *cairo.Context, arg2 int, arg3 int, arg4 uintptr) {
+				cbFn := *DrawFuncVar
+				cbFn(arg0, arg1, arg2, arg3, arg4)
+			}
+			DrawFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DrawFuncVarPtr, DrawFuncVarRef)
+		}
+	}
+
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	xDrawingAreaSetDrawFunc(x.GoPointer(), DrawFuncVarRef, UserDataVar, DestroyVarRef)
 
 }
 

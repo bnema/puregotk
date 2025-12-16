@@ -159,7 +159,7 @@ func AssertWarning(LogDomainVar string, FileVar string, LineVar int, PrettyFunct
 
 }
 
-var xLog func(string, LogLevelFlags, string, ...interface{})
+var xLog func(uintptr, LogLevelFlags, string, ...interface{})
 
 // Logs an error or debugging message.
 //
@@ -173,13 +173,13 @@ var xLog func(string, LogLevelFlags, string, ...interface{})
 //
 // If [structured logging is enabled](logging.html#using-structured-logging) this will
 // output via the structured log writer function (see [func@GLib.log_set_writer_func]).
-func Log(LogDomainVar string, LogLevelVar LogLevelFlags, FormatVar string, varArgs ...interface{}) {
+func Log(LogDomainVar *string, LogLevelVar LogLevelFlags, FormatVar string, varArgs ...interface{}) {
 
-	xLog(LogDomainVar, LogLevelVar, FormatVar, varArgs...)
+	xLog(core.NullableStringToPtr(LogDomainVar), LogLevelVar, FormatVar, varArgs...)
 
 }
 
-var xLogDefaultHandler func(string, LogLevelFlags, string, uintptr)
+var xLogDefaultHandler func(uintptr, LogLevelFlags, uintptr, uintptr)
 
 // The default log handler set up by GLib; [func@GLib.log_set_default_handler]
 // allows to install an alternate default log handler.
@@ -212,9 +212,9 @@ var xLogDefaultHandler func(string, LogLevelFlags, string, uintptr)
 //
 // This has no effect if structured logging is enabled; see
 // [Using Structured Logging](logging.html#using-structured-logging).
-func LogDefaultHandler(LogDomainVar string, LogLevelVar LogLevelFlags, MessageVar string, UnusedDataVar uintptr) {
+func LogDefaultHandler(LogDomainVar *string, LogLevelVar LogLevelFlags, MessageVar *string, UnusedDataVar uintptr) {
 
-	xLogDefaultHandler(LogDomainVar, LogLevelVar, MessageVar, UnusedDataVar)
+	xLogDefaultHandler(core.NullableStringToPtr(LogDomainVar), LogLevelVar, core.NullableStringToPtr(MessageVar), UnusedDataVar)
 
 }
 
@@ -339,7 +339,22 @@ var xLogSetDefaultHandler func(uintptr, uintptr) uintptr
 // [Using Structured Logging](logging.html#using-structured-logging).
 func LogSetDefaultHandler(LogFuncVar *LogFunc, UserDataVar uintptr) uintptr {
 
-	cret := xLogSetDefaultHandler(NewCallback(LogFuncVar), UserDataVar)
+	var LogFuncVarRef uintptr
+	if LogFuncVar != nil {
+		LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
+		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
+			LogFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
+				cbFn := *LogFuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			LogFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
+		}
+	}
+
+	cret := xLogSetDefaultHandler(LogFuncVarRef, UserDataVar)
 	return cret
 }
 
@@ -365,7 +380,7 @@ func LogSetFatalMask(LogDomainVar string, FatalMaskVar LogLevelFlags) LogLevelFl
 	return cret
 }
 
-var xLogSetHandler func(string, LogLevelFlags, uintptr, uintptr) uint
+var xLogSetHandler func(uintptr, LogLevelFlags, uintptr, uintptr) uint
 
 // Sets the log handler for a domain and a set of log levels.
 //
@@ -410,13 +425,28 @@ var xLogSetHandler func(string, LogLevelFlags, uintptr, uintptr) uint
 //	| G_LOG_FLAG_RECURSION, my_log_handler, NULL);
 //
 // ```
-func LogSetHandler(LogDomainVar string, LogLevelsVar LogLevelFlags, LogFuncVar *LogFunc, UserDataVar uintptr) uint {
+func LogSetHandler(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFuncVar *LogFunc, UserDataVar uintptr) uint {
 
-	cret := xLogSetHandler(LogDomainVar, LogLevelsVar, NewCallback(LogFuncVar), UserDataVar)
+	var LogFuncVarRef uintptr
+	if LogFuncVar != nil {
+		LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
+		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
+			LogFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
+				cbFn := *LogFuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			LogFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
+		}
+	}
+
+	cret := xLogSetHandler(core.NullableStringToPtr(LogDomainVar), LogLevelsVar, LogFuncVarRef, UserDataVar)
 	return cret
 }
 
-var xLogSetHandlerFull func(string, LogLevelFlags, uintptr, uintptr, uintptr) uint
+var xLogSetHandlerFull func(uintptr, LogLevelFlags, uintptr, uintptr, uintptr) uint
 
 // Like [func@GLib.log_set_handler], but takes a destroy notify for the @user_data.
 //
@@ -425,9 +455,39 @@ var xLogSetHandlerFull func(string, LogLevelFlags, uintptr, uintptr, uintptr) ui
 //
 // The `log_domain` parameter can be set to `NULL` or an empty string to use the default
 // application domain.
-func LogSetHandlerFull(LogDomainVar string, LogLevelsVar LogLevelFlags, LogFuncVar *LogFunc, UserDataVar uintptr, DestroyVar *DestroyNotify) uint {
+func LogSetHandlerFull(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFuncVar *LogFunc, UserDataVar uintptr, DestroyVar *DestroyNotify) uint {
 
-	cret := xLogSetHandlerFull(LogDomainVar, LogLevelsVar, NewCallback(LogFuncVar), UserDataVar, NewCallback(DestroyVar))
+	var LogFuncVarRef uintptr
+	if LogFuncVar != nil {
+		LogFuncVarPtr := uintptr(unsafe.Pointer(LogFuncVar))
+		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
+			LogFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
+				cbFn := *LogFuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			LogFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
+		}
+	}
+
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	cret := xLogSetHandlerFull(core.NullableStringToPtr(LogDomainVar), LogLevelsVar, LogFuncVarRef, UserDataVar, DestroyVarRef)
 	return cret
 }
 
@@ -446,7 +506,37 @@ var xLogSetWriterFunc func(uintptr, uintptr, uintptr)
 // There can only be one writer function. It is an error to set more than one.
 func LogSetWriterFunc(FuncVar *LogWriterFunc, UserDataVar uintptr, UserDataFreeVar *DestroyNotify) {
 
-	xLogSetWriterFunc(NewCallback(FuncVar), UserDataVar, NewCallback(UserDataFreeVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 LogLevelFlags, arg1 []LogField, arg2 uint, arg3 uintptr) LogWriterOutput {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	var UserDataFreeVarRef uintptr
+	if UserDataFreeVar != nil {
+		UserDataFreeVarPtr := uintptr(unsafe.Pointer(UserDataFreeVar))
+		if cbRefPtr, ok := GetCallback(UserDataFreeVarPtr); ok {
+			UserDataFreeVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeVar
+				cbFn(arg0)
+			}
+			UserDataFreeVarRef = purego.NewCallback(fcb)
+			SaveCallback(UserDataFreeVarPtr, UserDataFreeVarRef)
+		}
+	}
+
+	xLogSetWriterFunc(FuncVarRef, UserDataVar, UserDataFreeVarRef)
 
 }
 
@@ -578,7 +668,7 @@ func LogStructuredStandard(LogDomainVar string, LogLevelVar LogLevelFlags, FileV
 
 }
 
-var xLogVariant func(string, LogLevelFlags, *Variant)
+var xLogVariant func(uintptr, LogLevelFlags, *Variant)
 
 // Log a message with structured data, accepting the data within a [type@GLib.Variant].
 //
@@ -595,9 +685,9 @@ var xLogVariant func(string, LogLevelFlags, *Variant)
 // [method@GLib.Variant.print] will be used to convert the value into a string.
 //
 // For more details on its usage and about the parameters, see [func@GLib.log_structured].
-func LogVariant(LogDomainVar string, LogLevelVar LogLevelFlags, FieldsVar *Variant) {
+func LogVariant(LogDomainVar *string, LogLevelVar LogLevelFlags, FieldsVar *Variant) {
 
-	xLogVariant(LogDomainVar, LogLevelVar, FieldsVar)
+	xLogVariant(core.NullableStringToPtr(LogDomainVar), LogLevelVar, FieldsVar)
 
 }
 
@@ -631,15 +721,15 @@ func LogWriterDefault(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVa
 	return cret
 }
 
-var xLogWriterDefaultSetDebugDomains func(string)
+var xLogWriterDefaultSetDebugDomains func(uintptr)
 
 // Reset the list of domains to be logged, that might be initially set by the
 // `G_MESSAGES_DEBUG` or `DEBUG_INVOCATION` environment variables.
 //
 // This function is thread-safe.
-func LogWriterDefaultSetDebugDomains(DomainsVar string) {
+func LogWriterDefaultSetDebugDomains(DomainsVar *string) {
 
-	xLogWriterDefaultSetDebugDomains(DomainsVar)
+	xLogWriterDefaultSetDebugDomains(core.NullableStringToPtr(DomainsVar))
 
 }
 
@@ -666,7 +756,7 @@ func LogWriterDefaultSetUseStderr(UseStderrVar bool) {
 
 }
 
-var xLogWriterDefaultWouldDrop func(LogLevelFlags, string) bool
+var xLogWriterDefaultWouldDrop func(LogLevelFlags, uintptr) bool
 
 // Check whether [func@GLib.log_writer_default] and [func@GLib.log_default_handler] would
 // ignore a message with the given domain and level.
@@ -699,9 +789,9 @@ var xLogWriterDefaultWouldDrop func(LogLevelFlags, string) bool
 //	}
 //
 // ```
-func LogWriterDefaultWouldDrop(LogLevelVar LogLevelFlags, LogDomainVar string) bool {
+func LogWriterDefaultWouldDrop(LogLevelVar LogLevelFlags, LogDomainVar *string) bool {
 
-	cret := xLogWriterDefaultWouldDrop(LogLevelVar, LogDomainVar)
+	cret := xLogWriterDefaultWouldDrop(LogLevelVar, core.NullableStringToPtr(LogDomainVar))
 	return cret
 }
 
@@ -817,7 +907,7 @@ func LogWriterSyslog(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar
 	return cret
 }
 
-var xLogv func(string, LogLevelFlags, string, []interface{})
+var xLogv func(uintptr, LogLevelFlags, string, []interface{})
 
 // Logs an error or debugging message.
 //
@@ -834,9 +924,9 @@ var xLogv func(string, LogLevelFlags, string, []interface{})
 //
 // The `log_domain` parameter can be set to `NULL` or an empty string to use the default
 // application domain.
-func Logv(LogDomainVar string, LogLevelVar LogLevelFlags, FormatVar string, ArgsVar []interface{}) {
+func Logv(LogDomainVar *string, LogLevelVar LogLevelFlags, FormatVar string, ArgsVar []interface{}) {
 
-	xLogv(LogDomainVar, LogLevelVar, FormatVar, ArgsVar)
+	xLogv(core.NullableStringToPtr(LogDomainVar), LogLevelVar, FormatVar, ArgsVar)
 
 }
 
@@ -894,13 +984,13 @@ func PrintfStringUpperBound(FormatVar string, ArgsVar []interface{}) uint {
 	return cret
 }
 
-var xReturnIfFailWarning func(string, string, string)
+var xReturnIfFailWarning func(uintptr, string, uintptr)
 
 // Internal function used to print messages from the public [func@GLib.return_if_fail]
 // and [func@GLib.return_val_if_fail] macros.
-func ReturnIfFailWarning(LogDomainVar string, PrettyFunctionVar string, ExpressionVar string) {
+func ReturnIfFailWarning(LogDomainVar *string, PrettyFunctionVar string, ExpressionVar *string) {
 
-	xReturnIfFailWarning(LogDomainVar, PrettyFunctionVar, ExpressionVar)
+	xReturnIfFailWarning(core.NullableStringToPtr(LogDomainVar), PrettyFunctionVar, core.NullableStringToPtr(ExpressionVar))
 
 }
 
@@ -923,7 +1013,22 @@ var xSetPrintHandler func(uintptr) uintptr
 // in all platforms. Before GLib 2.76, this was `NULL`.
 func SetPrintHandler(FuncVar *PrintFunc) uintptr {
 
-	cret := xSetPrintHandler(NewCallbackNullable(FuncVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string) {
+				cbFn := *FuncVar
+				cbFn(arg0)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xSetPrintHandler(FuncVarRef)
 	return cret
 }
 
@@ -946,17 +1051,32 @@ var xSetPrinterrHandler func(uintptr) uintptr
 // Before GLib 2.76, this was `NULL`.
 func SetPrinterrHandler(FuncVar *PrintFunc) uintptr {
 
-	cret := xSetPrinterrHandler(NewCallbackNullable(FuncVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 string) {
+				cbFn := *FuncVar
+				cbFn(arg0)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xSetPrinterrHandler(FuncVarRef)
 	return cret
 }
 
-var xWarnMessage func(string, string, int, string, string)
+var xWarnMessage func(uintptr, string, int, string, uintptr)
 
 // Internal function used to print messages from the public [func@GLib.warn_if_reached]
 // and [func@GLib.warn_if_fail] macros.
-func WarnMessage(DomainVar string, FileVar string, LineVar int, FuncVar string, WarnexprVar string) {
+func WarnMessage(DomainVar *string, FileVar string, LineVar int, FuncVar string, WarnexprVar *string) {
 
-	xWarnMessage(DomainVar, FileVar, LineVar, FuncVar, WarnexprVar)
+	xWarnMessage(core.NullableStringToPtr(DomainVar), FileVar, LineVar, FuncVar, core.NullableStringToPtr(WarnexprVar))
 
 }
 

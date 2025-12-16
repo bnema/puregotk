@@ -147,7 +147,7 @@ func (x *PropertyAction) GetPropertyInvertBoolean() bool {
 func (x *PropertyAction) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -177,7 +177,7 @@ func (x *PropertyAction) GetPropertyParameterType() uintptr {
 func (x *PropertyAction) SetPropertyPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("property-name", &v)
 }
 

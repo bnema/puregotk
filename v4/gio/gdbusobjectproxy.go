@@ -103,7 +103,7 @@ func (c *DBusObjectProxy) SetGoPointer(ptr uintptr) {
 func (x *DBusObjectProxy) SetPropertyGObjectPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("g-object-path", &v)
 }
 

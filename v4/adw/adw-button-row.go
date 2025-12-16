@@ -124,21 +124,21 @@ func (x *ButtonRow) GetStartIconName() string {
 	return cret
 }
 
-var xButtonRowSetEndIconName func(uintptr, string)
+var xButtonRowSetEndIconName func(uintptr, uintptr)
 
 // Sets the end icon name for @self.
-func (x *ButtonRow) SetEndIconName(IconNameVar string) {
+func (x *ButtonRow) SetEndIconName(IconNameVar *string) {
 
-	xButtonRowSetEndIconName(x.GoPointer(), IconNameVar)
+	xButtonRowSetEndIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
-var xButtonRowSetStartIconName func(uintptr, string)
+var xButtonRowSetStartIconName func(uintptr, uintptr)
 
 // Sets the start icon name for @self.
-func (x *ButtonRow) SetStartIconName(IconNameVar string) {
+func (x *ButtonRow) SetStartIconName(IconNameVar *string) {
 
-	xButtonRowSetStartIconName(x.GoPointer(), IconNameVar)
+	xButtonRowSetStartIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
@@ -158,7 +158,7 @@ func (c *ButtonRow) SetGoPointer(ptr uintptr) {
 func (x *ButtonRow) SetPropertyEndIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("end-icon-name", &v)
 }
 
@@ -175,7 +175,7 @@ func (x *ButtonRow) GetPropertyEndIconName() string {
 func (x *ButtonRow) SetPropertyStartIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("start-icon-name", &v)
 }
 
@@ -502,9 +502,9 @@ func (x *ButtonRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *ButtonRow) SetActionName(ActionNameVar string) {
+func (x *ButtonRow) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 

@@ -174,7 +174,7 @@ func (c *ShortcutLabel) SetGoPointer(ptr uintptr) {
 func (x *ShortcutLabel) SetPropertyAccelerator(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accelerator", &v)
 }
 
@@ -191,7 +191,7 @@ func (x *ShortcutLabel) GetPropertyAccelerator() string {
 func (x *ShortcutLabel) SetPropertyDisabledText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("disabled-text", &v)
 }
 

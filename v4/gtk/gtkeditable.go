@@ -822,7 +822,7 @@ func (x *EditableBase) SetPropertyText(value string) {
 	obj.Ptr = x.GoPointer()
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	obj.SetProperty("text", &v)
 }
 

@@ -274,7 +274,22 @@ var xBuilderCScopeAddCallbackSymbol func(uintptr, string, uintptr)
 // namespace.
 func (x *BuilderCScope) AddCallbackSymbol(CallbackNameVar string, CallbackSymbolVar *gobject.Callback) {
 
-	xBuilderCScopeAddCallbackSymbol(x.GoPointer(), CallbackNameVar, glib.NewCallback(CallbackSymbolVar))
+	var CallbackSymbolVarRef uintptr
+	if CallbackSymbolVar != nil {
+		CallbackSymbolVarPtr := uintptr(unsafe.Pointer(CallbackSymbolVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackSymbolVarPtr); ok {
+			CallbackSymbolVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CallbackSymbolVar
+				cbFn()
+			}
+			CallbackSymbolVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackSymbolVarPtr, CallbackSymbolVarRef)
+		}
+	}
+
+	xBuilderCScopeAddCallbackSymbol(x.GoPointer(), CallbackNameVar, CallbackSymbolVarRef)
 
 }
 
@@ -286,7 +301,22 @@ var xBuilderCScopeAddCallbackSymbols func(uintptr, string, uintptr, ...interface
 // for each symbol.
 func (x *BuilderCScope) AddCallbackSymbols(FirstCallbackNameVar string, FirstCallbackSymbolVar *gobject.Callback, varArgs ...interface{}) {
 
-	xBuilderCScopeAddCallbackSymbols(x.GoPointer(), FirstCallbackNameVar, glib.NewCallback(FirstCallbackSymbolVar), varArgs...)
+	var FirstCallbackSymbolVarRef uintptr
+	if FirstCallbackSymbolVar != nil {
+		FirstCallbackSymbolVarPtr := uintptr(unsafe.Pointer(FirstCallbackSymbolVar))
+		if cbRefPtr, ok := glib.GetCallback(FirstCallbackSymbolVarPtr); ok {
+			FirstCallbackSymbolVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *FirstCallbackSymbolVar
+				cbFn()
+			}
+			FirstCallbackSymbolVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FirstCallbackSymbolVarPtr, FirstCallbackSymbolVarRef)
+		}
+	}
+
+	xBuilderCScopeAddCallbackSymbols(x.GoPointer(), FirstCallbackNameVar, FirstCallbackSymbolVarRef, varArgs...)
 
 }
 

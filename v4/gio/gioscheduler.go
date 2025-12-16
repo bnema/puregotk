@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -31,7 +33,37 @@ var xIoSchedulerPushJob func(uintptr, uintptr, uintptr, int, uintptr)
 // g_io_scheduler_cancel_all_jobs().
 func IoSchedulerPushJob(JobFuncVar *IOSchedulerJobFunc, UserDataVar uintptr, NotifyVar *glib.DestroyNotify, IoPriorityVar int, CancellableVar *Cancellable) {
 
-	xIoSchedulerPushJob(glib.NewCallback(JobFuncVar), UserDataVar, glib.NewCallbackNullable(NotifyVar), IoPriorityVar, CancellableVar.GoPointer())
+	var JobFuncVarRef uintptr
+	if JobFuncVar != nil {
+		JobFuncVarPtr := uintptr(unsafe.Pointer(JobFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(JobFuncVarPtr); ok {
+			JobFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *IOSchedulerJob, arg1 uintptr, arg2 uintptr) bool {
+				cbFn := *JobFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			JobFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(JobFuncVarPtr, JobFuncVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	xIoSchedulerPushJob(JobFuncVarRef, UserDataVar, NotifyVarRef, IoPriorityVar, CancellableVar.GoPointer())
 
 }
 

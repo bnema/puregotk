@@ -284,7 +284,7 @@ func (x *NavigationPage) SetChild(ChildVar *gtk.Widget) {
 
 }
 
-var xNavigationPageSetTag func(uintptr, string)
+var xNavigationPageSetTag func(uintptr, uintptr)
 
 // Sets the tag for @self.
 //
@@ -296,9 +296,9 @@ var xNavigationPageSetTag func(uintptr, string)
 // Tags must be unique within each [class@NavigationView].
 //
 // The tag also must be set to use the `navigation.push` action.
-func (x *NavigationPage) SetTag(TagVar string) {
+func (x *NavigationPage) SetTag(TagVar *string) {
 
-	xNavigationPageSetTag(x.GoPointer(), TagVar)
+	xNavigationPageSetTag(x.GoPointer(), core.NullableStringToPtr(TagVar))
 
 }
 
@@ -374,7 +374,7 @@ func (x *NavigationPage) GetPropertyCanPop() bool {
 func (x *NavigationPage) SetPropertyTag(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("tag", &v)
 }
 
@@ -403,7 +403,7 @@ func (x *NavigationPage) GetPropertyTag() string {
 func (x *NavigationPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

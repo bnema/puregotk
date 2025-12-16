@@ -145,7 +145,22 @@ var xValueArraySort func(uintptr, uintptr) *ValueArray
 // C qsort() function.
 func (x *ValueArray) Sort(CompareFuncVar *glib.CompareFunc) *ValueArray {
 
-	cret := xValueArraySort(x.GoPointer(), glib.NewCallback(CompareFuncVar))
+	var CompareFuncVarRef uintptr
+	if CompareFuncVar != nil {
+		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CompareFuncVarPtr); ok {
+			CompareFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) int {
+				cbFn := *CompareFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CompareFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+		}
+	}
+
+	cret := xValueArraySort(x.GoPointer(), CompareFuncVarRef)
 	return cret
 }
 
@@ -158,7 +173,22 @@ var xValueArraySortWithData func(uintptr, uintptr, uintptr) *ValueArray
 // C qsort() function.
 func (x *ValueArray) SortWithData(CompareFuncVar *glib.CompareDataFunc, UserDataVar uintptr) *ValueArray {
 
-	cret := xValueArraySortWithData(x.GoPointer(), glib.NewCallback(CompareFuncVar), UserDataVar)
+	var CompareFuncVarRef uintptr
+	if CompareFuncVar != nil {
+		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CompareFuncVarPtr); ok {
+			CompareFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *CompareFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CompareFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+		}
+	}
+
+	cret := xValueArraySortWithData(x.GoPointer(), CompareFuncVarRef, UserDataVar)
 	return cret
 }
 

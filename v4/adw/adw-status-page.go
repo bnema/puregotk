@@ -159,25 +159,25 @@ func (x *StatusPage) SetChild(ChildVar *gtk.Widget) {
 
 }
 
-var xStatusPageSetDescription func(uintptr, string)
+var xStatusPageSetDescription func(uintptr, uintptr)
 
 // Sets the description markup for @self.
 //
 // The description is displayed below the title. It is parsed as Pango markup.
-func (x *StatusPage) SetDescription(DescriptionVar string) {
+func (x *StatusPage) SetDescription(DescriptionVar *string) {
 
-	xStatusPageSetDescription(x.GoPointer(), DescriptionVar)
+	xStatusPageSetDescription(x.GoPointer(), core.NullableStringToPtr(DescriptionVar))
 
 }
 
-var xStatusPageSetIconName func(uintptr, string)
+var xStatusPageSetIconName func(uintptr, uintptr)
 
 // Sets the icon name for @self.
 //
 // Changing this will set [property@StatusPage:paintable] to `NULL`.
-func (x *StatusPage) SetIconName(IconNameVar string) {
+func (x *StatusPage) SetIconName(IconNameVar *string) {
 
-	xStatusPageSetIconName(x.GoPointer(), IconNameVar)
+	xStatusPageSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 
@@ -219,7 +219,7 @@ func (c *StatusPage) SetGoPointer(ptr uintptr) {
 func (x *StatusPage) SetPropertyDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("description", &v)
 }
 
@@ -238,7 +238,7 @@ func (x *StatusPage) GetPropertyDescription() string {
 func (x *StatusPage) SetPropertyIconName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("icon-name", &v)
 }
 
@@ -259,7 +259,7 @@ func (x *StatusPage) GetPropertyIconName() string {
 func (x *StatusPage) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

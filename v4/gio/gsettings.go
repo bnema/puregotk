@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"fmt"
 	"structs"
 	"unsafe"
 
@@ -629,7 +630,7 @@ func NewSettings(SchemaIdVar string) *Settings {
 	return cls
 }
 
-var xNewSettingsFull func(*SettingsSchema, uintptr, string) uintptr
+var xNewSettingsFull func(*SettingsSchema, uintptr, uintptr) uintptr
 
 // Creates a new [class@Gio.Settings] object with a given schema, backend and
 // path.
@@ -654,10 +655,10 @@ var xNewSettingsFull func(*SettingsSchema, uintptr, string) uintptr
 // error if @path is `NULL` and the schema has no path of its own or if
 // @path is non-`NULL` and not equal to the path that the schema does
 // have.
-func NewSettingsFull(SchemaVar *SettingsSchema, BackendVar *SettingsBackend, PathVar string) *Settings {
+func NewSettingsFull(SchemaVar *SettingsSchema, BackendVar *SettingsBackend, PathVar *string) *Settings {
 	var cls *Settings
 
-	cret := xNewSettingsFull(SchemaVar, BackendVar.GoPointer(), PathVar)
+	cret := xNewSettingsFull(SchemaVar, BackendVar.GoPointer(), core.NullableStringToPtr(PathVar))
 
 	if cret == 0 {
 		return nil
@@ -793,7 +794,52 @@ var xSettingsBindWithMapping func(uintptr, string, uintptr, string, SettingsBind
 // binding overrides the first one.
 func (x *Settings) BindWithMapping(KeyVar string, ObjectVar *gobject.Object, PropertyVar string, FlagsVar SettingsBindFlags, GetMappingVar *SettingsBindGetMapping, SetMappingVar *SettingsBindSetMapping, UserDataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xSettingsBindWithMapping(x.GoPointer(), KeyVar, ObjectVar.GoPointer(), PropertyVar, FlagsVar, glib.NewCallbackNullable(GetMappingVar), glib.NewCallbackNullable(SetMappingVar), UserDataVar, glib.NewCallback(DestroyVar))
+	var GetMappingVarRef uintptr
+	if GetMappingVar != nil {
+		GetMappingVarPtr := uintptr(unsafe.Pointer(GetMappingVar))
+		if cbRefPtr, ok := glib.GetCallback(GetMappingVarPtr); ok {
+			GetMappingVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *gobject.Value, arg1 *glib.Variant, arg2 uintptr) bool {
+				cbFn := *GetMappingVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			GetMappingVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(GetMappingVarPtr, GetMappingVarRef)
+		}
+	}
+
+	var SetMappingVarRef uintptr
+	if SetMappingVar != nil {
+		SetMappingVarPtr := uintptr(unsafe.Pointer(SetMappingVar))
+		if cbRefPtr, ok := glib.GetCallback(SetMappingVarPtr); ok {
+			SetMappingVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *gobject.Value, arg1 *glib.VariantType, arg2 uintptr) *glib.Variant {
+				cbFn := *SetMappingVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			SetMappingVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(SetMappingVarPtr, SetMappingVarRef)
+		}
+	}
+
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	xSettingsBindWithMapping(x.GoPointer(), KeyVar, ObjectVar.GoPointer(), PropertyVar, FlagsVar, GetMappingVarRef, SetMappingVarRef, UserDataVar, DestroyVarRef)
 
 }
 
@@ -1085,7 +1131,22 @@ var xSettingsGetMapped func(uintptr, string, uintptr, uintptr) uintptr
 // just as any other value would be.
 func (x *Settings) GetMapped(KeyVar string, MappingVar *SettingsGetMapping, UserDataVar uintptr) uintptr {
 
-	cret := xSettingsGetMapped(x.GoPointer(), KeyVar, glib.NewCallback(MappingVar), UserDataVar)
+	var MappingVarRef uintptr
+	if MappingVar != nil {
+		MappingVarPtr := uintptr(unsafe.Pointer(MappingVar))
+		if cbRefPtr, ok := glib.GetCallback(MappingVarPtr); ok {
+			MappingVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *glib.Variant, arg1 *uintptr, arg2 uintptr) bool {
+				cbFn := *MappingVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			MappingVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(MappingVarPtr, MappingVarRef)
+		}
+	}
+
+	cret := xSettingsGetMapped(x.GoPointer(), KeyVar, MappingVarRef, UserDataVar)
 	return cret
 }
 
@@ -1492,7 +1553,7 @@ func (x *Settings) GetPropertyHasUnapplied() bool {
 func (x *Settings) SetPropertyPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("path", &v)
 }
 
@@ -1517,7 +1578,7 @@ func (x *Settings) GetPropertyPath() string {
 func (x *Settings) SetPropertySchema(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("schema", &v)
 }
 
@@ -1543,7 +1604,7 @@ func (x *Settings) GetPropertySchema() string {
 func (x *Settings) SetPropertySchemaId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("schema-id", &v)
 }
 
@@ -1652,6 +1713,28 @@ func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
 }
 
+// ConnectChangedWithDetail connects to the "changed" signal with a detail string.
+// The detail is appended as "changed::<detail>".
+func (x *Settings) ConnectChangedWithDetail(detail string, cb *func(Settings, string)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("changed::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, KeyVarp string) {
+		fa := Settings{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, KeyVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+}
+
 // Emitted once per writability change event that affects this settings object.
 //
 // You should connect
@@ -1715,6 +1798,28 @@ func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint32 {
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return gobject.SignalConnect(x.GoPointer(), "writable-changed", cbRefPtr)
+}
+
+// ConnectWritableChangedWithDetail connects to the "writable-changed" signal with a detail string.
+// The detail is appended as "writable-changed::<detail>".
+func (x *Settings) ConnectWritableChangedWithDetail(detail string, cb *func(Settings, string)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("writable-changed::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, KeyVarp string) {
+		fa := Settings{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, KeyVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
 var xSettingsListRelocatableSchemas func() []string

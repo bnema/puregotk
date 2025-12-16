@@ -132,16 +132,16 @@ func NewPictureForFile(FileVar gio.File) *Picture {
 	return cls
 }
 
-var xNewPictureForFilename func(string) uintptr
+var xNewPictureForFilename func(uintptr) uintptr
 
 // Creates a new `GtkPicture` displaying the file @filename.
 //
 // This is a utility function that calls [ctor@Gtk.Picture.new_for_file].
 // See that function for details.
-func NewPictureForFilename(FilenameVar string) *Picture {
+func NewPictureForFilename(FilenameVar *string) *Picture {
 	var cls *Picture
 
-	cret := xNewPictureForFilename(FilenameVar)
+	cret := xNewPictureForFilename(core.NullableStringToPtr(FilenameVar))
 
 	if cret == 0 {
 		return nil
@@ -194,16 +194,16 @@ func NewPictureForPixbuf(PixbufVar *gdkpixbuf.Pixbuf) *Picture {
 	return cls
 }
 
-var xNewPictureForResource func(string) uintptr
+var xNewPictureForResource func(uintptr) uintptr
 
 // Creates a new `GtkPicture` displaying the resource at @resource_path.
 //
 // This is a utility function that calls [ctor@Gtk.Picture.new_for_file].
 // See that function for details.
-func NewPictureForResource(ResourcePathVar string) *Picture {
+func NewPictureForResource(ResourcePathVar *string) *Picture {
 	var cls *Picture
 
-	cret := xNewPictureForResource(ResourcePathVar)
+	cret := xNewPictureForResource(core.NullableStringToPtr(ResourcePathVar))
 
 	if cret == 0 {
 		return nil
@@ -291,7 +291,7 @@ func (x *Picture) GetPaintable() *gdk.PaintableBase {
 	return cls
 }
 
-var xPictureSetAlternativeText func(uintptr, string)
+var xPictureSetAlternativeText func(uintptr, uintptr)
 
 // Sets an alternative textual description for the picture contents.
 //
@@ -300,9 +300,9 @@ var xPictureSetAlternativeText func(uintptr, string)
 // This text will be made available to accessibility tools.
 //
 // If the picture cannot be described textually, set this property to %NULL.
-func (x *Picture) SetAlternativeText(AlternativeTextVar string) {
+func (x *Picture) SetAlternativeText(AlternativeTextVar *string) {
 
-	xPictureSetAlternativeText(x.GoPointer(), AlternativeTextVar)
+	xPictureSetAlternativeText(x.GoPointer(), core.NullableStringToPtr(AlternativeTextVar))
 
 }
 
@@ -353,7 +353,7 @@ func (x *Picture) SetFile(FileVar gio.File) {
 
 }
 
-var xPictureSetFilename func(uintptr, string)
+var xPictureSetFilename func(uintptr, uintptr)
 
 // Makes @self load and display the given @filename.
 //
@@ -365,9 +365,9 @@ var xPictureSetFilename func(uintptr, string)
 //	Use a proper image loading framework such as libglycin, which can
 //	load many image formats into a `GdkTexture`, and then use
 //	[method@Gtk.Image.set_from_paintable].
-func (x *Picture) SetFilename(FilenameVar string) {
+func (x *Picture) SetFilename(FilenameVar *string) {
 
-	xPictureSetFilename(x.GoPointer(), FilenameVar)
+	xPictureSetFilename(x.GoPointer(), core.NullableStringToPtr(FilenameVar))
 
 }
 
@@ -413,15 +413,15 @@ func (x *Picture) SetPixbuf(PixbufVar *gdkpixbuf.Pixbuf) {
 
 }
 
-var xPictureSetResource func(uintptr, string)
+var xPictureSetResource func(uintptr, uintptr)
 
 // Makes @self load and display the resource at the given
 // @resource_path.
 //
 // This is a utility function that calls [method@Gtk.Picture.set_file].
-func (x *Picture) SetResource(ResourcePathVar string) {
+func (x *Picture) SetResource(ResourcePathVar *string) {
 
-	xPictureSetResource(x.GoPointer(), ResourcePathVar)
+	xPictureSetResource(x.GoPointer(), core.NullableStringToPtr(ResourcePathVar))
 
 }
 
@@ -441,7 +441,7 @@ func (c *Picture) SetGoPointer(ptr uintptr) {
 func (x *Picture) SetPropertyAlternativeText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("alternative-text", &v)
 }
 

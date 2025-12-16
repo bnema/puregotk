@@ -987,7 +987,7 @@ func (x *Socket) IsConnected() bool {
 	return cret
 }
 
-var xSocketJoinMulticastGroup func(uintptr, uintptr, bool, string, **glib.Error) bool
+var xSocketJoinMulticastGroup func(uintptr, uintptr, bool, uintptr, **glib.Error) bool
 
 // Registers @socket to receive multicast messages sent to @group.
 // @socket must be a %G_SOCKET_TYPE_DATAGRAM socket, and must have
@@ -1003,10 +1003,10 @@ var xSocketJoinMulticastGroup func(uintptr, uintptr, bool, string, **glib.Error)
 //
 // To bind to a given source-specific multicast address, use
 // g_socket_join_multicast_group_ssm() instead.
-func (x *Socket) JoinMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bool, IfaceVar string) (bool, error) {
+func (x *Socket) JoinMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bool, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketJoinMulticastGroup(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar, IfaceVar, &cerr)
+	cret := xSocketJoinMulticastGroup(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar, core.NullableStringToPtr(IfaceVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1014,7 +1014,7 @@ func (x *Socket) JoinMulticastGroup(GroupVar *InetAddress, SourceSpecificVar boo
 
 }
 
-var xSocketJoinMulticastGroupSsm func(uintptr, uintptr, uintptr, string, **glib.Error) bool
+var xSocketJoinMulticastGroupSsm func(uintptr, uintptr, uintptr, uintptr, **glib.Error) bool
 
 // Registers @socket to receive multicast messages sent to @group.
 // @socket must be a %G_SOCKET_TYPE_DATAGRAM socket, and must have
@@ -1031,10 +1031,10 @@ var xSocketJoinMulticastGroupSsm func(uintptr, uintptr, uintptr, string, **glib.
 // Note that this function can be called multiple times for the same
 // @group with different @source_specific in order to receive multicast
 // packets from more than one source.
-func (x *Socket) JoinMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar string) (bool, error) {
+func (x *Socket) JoinMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketJoinMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), IfaceVar, &cerr)
+	cret := xSocketJoinMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), core.NullableStringToPtr(IfaceVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1042,7 +1042,7 @@ func (x *Socket) JoinMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar 
 
 }
 
-var xSocketLeaveMulticastGroup func(uintptr, uintptr, bool, string, **glib.Error) bool
+var xSocketLeaveMulticastGroup func(uintptr, uintptr, bool, uintptr, **glib.Error) bool
 
 // Removes @socket from the multicast group defined by @group, @iface,
 // and @source_specific (which must all have the same values they had
@@ -1053,10 +1053,10 @@ var xSocketLeaveMulticastGroup func(uintptr, uintptr, bool, string, **glib.Error
 //
 // To unbind to a given source-specific multicast address, use
 // g_socket_leave_multicast_group_ssm() instead.
-func (x *Socket) LeaveMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bool, IfaceVar string) (bool, error) {
+func (x *Socket) LeaveMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bool, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketLeaveMulticastGroup(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar, IfaceVar, &cerr)
+	cret := xSocketLeaveMulticastGroup(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar, core.NullableStringToPtr(IfaceVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1064,7 +1064,7 @@ func (x *Socket) LeaveMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bo
 
 }
 
-var xSocketLeaveMulticastGroupSsm func(uintptr, uintptr, uintptr, string, **glib.Error) bool
+var xSocketLeaveMulticastGroupSsm func(uintptr, uintptr, uintptr, uintptr, **glib.Error) bool
 
 // Removes @socket from the multicast group defined by @group, @iface,
 // and @source_specific (which must all have the same values they had
@@ -1072,10 +1072,10 @@ var xSocketLeaveMulticastGroupSsm func(uintptr, uintptr, uintptr, string, **glib
 //
 // @socket remains bound to its address and port, and can still receive
 // unicast messages after calling this.
-func (x *Socket) LeaveMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar string) (bool, error) {
+func (x *Socket) LeaveMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSocketLeaveMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), IfaceVar, &cerr)
+	cret := xSocketLeaveMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), core.NullableStringToPtr(IfaceVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

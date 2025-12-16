@@ -531,7 +531,7 @@ func (x *Renderer) DrawGlyph(FontVar *Font, GlyphVar Glyph, XVar float64, YVar f
 
 }
 
-var xRendererDrawGlyphItem func(uintptr, string, *GlyphItem, int, int)
+var xRendererDrawGlyphItem func(uintptr, uintptr, *GlyphItem, int, int)
 
 // Draws the glyphs in @glyph_item with the specified `PangoRenderer`,
 // embedding the text associated with the glyphs in the output if the
@@ -551,9 +551,9 @@ var xRendererDrawGlyphItem func(uintptr, string, *GlyphItem, int, int)
 //
 // The default implementation of this method simply falls back to
 // [method@Pango.Renderer.draw_glyphs].
-func (x *Renderer) DrawGlyphItem(TextVar string, GlyphItemVar *GlyphItem, XVar int, YVar int) {
+func (x *Renderer) DrawGlyphItem(TextVar *string, GlyphItemVar *GlyphItem, XVar int, YVar int) {
 
-	xRendererDrawGlyphItem(x.GoPointer(), TextVar, GlyphItemVar, XVar, YVar)
+	xRendererDrawGlyphItem(x.GoPointer(), core.NullableStringToPtr(TextVar), GlyphItemVar, XVar, YVar)
 
 }
 

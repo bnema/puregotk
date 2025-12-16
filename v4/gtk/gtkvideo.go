@@ -91,16 +91,16 @@ func NewVideoForFile(FileVar gio.File) *Video {
 	return cls
 }
 
-var xNewVideoForFilename func(string) uintptr
+var xNewVideoForFilename func(uintptr) uintptr
 
 // Creates a `GtkVideo` to play back the given @filename.
 //
 // This is a utility function that calls [ctor@Gtk.Video.new_for_file],
 // See that function for details.
-func NewVideoForFilename(FilenameVar string) *Video {
+func NewVideoForFilename(FilenameVar *string) *Video {
 	var cls *Video
 
-	cret := xNewVideoForFilename(FilenameVar)
+	cret := xNewVideoForFilename(core.NullableStringToPtr(FilenameVar))
 
 	if cret == 0 {
 		return nil
@@ -128,16 +128,16 @@ func NewVideoForMediaStream(StreamVar *MediaStream) *Video {
 	return cls
 }
 
-var xNewVideoForResource func(string) uintptr
+var xNewVideoForResource func(uintptr) uintptr
 
 // Creates a `GtkVideo` to play back the resource at the
 // given @resource_path.
 //
 // This is a utility function that calls [ctor@Gtk.Video.new_for_file].
-func NewVideoForResource(ResourcePathVar string) *Video {
+func NewVideoForResource(ResourcePathVar *string) *Video {
 	var cls *Video
 
-	cret := xNewVideoForResource(ResourcePathVar)
+	cret := xNewVideoForResource(core.NullableStringToPtr(ResourcePathVar))
 
 	if cret == 0 {
 		return nil
@@ -231,14 +231,14 @@ func (x *Video) SetFile(FileVar gio.File) {
 
 }
 
-var xVideoSetFilename func(uintptr, string)
+var xVideoSetFilename func(uintptr, uintptr)
 
 // Makes @self play the given @filename.
 //
 // This is a utility function that calls gtk_video_set_file(),
-func (x *Video) SetFilename(FilenameVar string) {
+func (x *Video) SetFilename(FilenameVar *string) {
 
-	xVideoSetFilename(x.GoPointer(), FilenameVar)
+	xVideoSetFilename(x.GoPointer(), core.NullableStringToPtr(FilenameVar))
 
 }
 
@@ -278,14 +278,14 @@ func (x *Video) SetMediaStream(StreamVar *MediaStream) {
 
 }
 
-var xVideoSetResource func(uintptr, string)
+var xVideoSetResource func(uintptr, uintptr)
 
 // Makes @self play the resource at the given @resource_path.
 //
 // This is a utility function that calls [method@Gtk.Video.set_file].
-func (x *Video) SetResource(ResourcePathVar string) {
+func (x *Video) SetResource(ResourcePathVar *string) {
 
-	xVideoSetResource(x.GoPointer(), ResourcePathVar)
+	xVideoSetResource(x.GoPointer(), core.NullableStringToPtr(ResourcePathVar))
 
 }
 

@@ -164,12 +164,12 @@ func (x *EventController) Reset() {
 
 }
 
-var xEventControllerSetName func(uintptr, string)
+var xEventControllerSetName func(uintptr, uintptr)
 
 // Sets a name on the controller that can be used for debugging.
-func (x *EventController) SetName(NameVar string) {
+func (x *EventController) SetName(NameVar *string) {
 
-	xEventControllerSetName(x.GoPointer(), NameVar)
+	xEventControllerSetName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -198,12 +198,12 @@ func (x *EventController) SetPropagationPhase(PhaseVar PropagationPhase) {
 
 }
 
-var xEventControllerSetStaticName func(uintptr, string)
+var xEventControllerSetStaticName func(uintptr, uintptr)
 
 // Sets a name on the controller that can be used for debugging.
-func (x *EventController) SetStaticName(NameVar string) {
+func (x *EventController) SetStaticName(NameVar *string) {
 
-	xEventControllerSetStaticName(x.GoPointer(), NameVar)
+	xEventControllerSetStaticName(x.GoPointer(), core.NullableStringToPtr(NameVar))
 
 }
 
@@ -223,7 +223,7 @@ func (c *EventController) SetGoPointer(ptr uintptr) {
 func (x *EventController) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 

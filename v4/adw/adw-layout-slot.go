@@ -88,7 +88,7 @@ func (c *LayoutSlot) SetGoPointer(ptr uintptr) {
 func (x *LayoutSlot) SetPropertyId(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("id", &v)
 }
 

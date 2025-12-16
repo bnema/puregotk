@@ -61,16 +61,16 @@ func DirectoryListNewFromInternalPtr(ptr uintptr) *DirectoryList {
 	return cls
 }
 
-var xNewDirectoryList func(string, uintptr) uintptr
+var xNewDirectoryList func(uintptr, uintptr) uintptr
 
 // Creates a new `GtkDirectoryList`.
 //
 // The `GtkDirectoryList` is querying the given @file
 // with the given @attributes.
-func NewDirectoryList(AttributesVar string, FileVar gio.File) *DirectoryList {
+func NewDirectoryList(AttributesVar *string, FileVar gio.File) *DirectoryList {
 	var cls *DirectoryList
 
-	cret := xNewDirectoryList(AttributesVar, FileVar.GoPointer())
+	cret := xNewDirectoryList(core.NullableStringToPtr(AttributesVar), FileVar.GoPointer())
 
 	if cret == 0 {
 		return nil
@@ -155,15 +155,15 @@ func (x *DirectoryList) IsLoading() bool {
 	return cret
 }
 
-var xDirectoryListSetAttributes func(uintptr, string)
+var xDirectoryListSetAttributes func(uintptr, uintptr)
 
 // Sets the @attributes to be enumerated and starts the enumeration.
 //
 // If @attributes is %NULL, the list of file infos will still be created, it will just
 // not contain any extra attributes.
-func (x *DirectoryList) SetAttributes(AttributesVar string) {
+func (x *DirectoryList) SetAttributes(AttributesVar *string) {
 
-	xDirectoryListSetAttributes(x.GoPointer(), AttributesVar)
+	xDirectoryListSetAttributes(x.GoPointer(), core.NullableStringToPtr(AttributesVar))
 
 }
 
@@ -229,7 +229,7 @@ func (c *DirectoryList) SetGoPointer(ptr uintptr) {
 func (x *DirectoryList) SetPropertyAttributes(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("attributes", &v)
 }
 

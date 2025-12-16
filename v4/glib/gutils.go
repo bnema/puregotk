@@ -121,7 +121,22 @@ var xAtexit func(uintptr)
 // program.
 func Atexit(FuncVar *VoidFunc) {
 
-	xAtexit(NewCallback(FuncVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *FuncVar
+				cbFn()
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xAtexit(FuncVarRef)
 
 }
 
@@ -596,7 +611,7 @@ func NullifyPointer(NullifyLocationVar uintptr) {
 
 }
 
-var xParseDebugString func(string, []DebugKey, uint) uint
+var xParseDebugString func(uintptr, []DebugKey, uint) uint
 
 // Parses a string containing debugging options
 // into a %guint containing bit flags. This is used
@@ -610,9 +625,9 @@ var xParseDebugString func(string, []DebugKey, uint) uint
 //
 // If @string is equal to "help", all the available keys in @keys
 // are printed out to standard error.
-func ParseDebugString(StringVar string, KeysVar []DebugKey, NkeysVar uint) uint {
+func ParseDebugString(StringVar *string, KeysVar []DebugKey, NkeysVar uint) uint {
 
-	cret := xParseDebugString(StringVar, KeysVar, NkeysVar)
+	cret := xParseDebugString(core.NullableStringToPtr(StringVar), KeysVar, NkeysVar)
 	return cret
 }
 

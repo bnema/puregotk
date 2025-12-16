@@ -421,7 +421,7 @@ func (x *FontMap) LoadFontset(ContextVar *Context, DescVar *FontDescription, Lan
 	return cls
 }
 
-var xFontMapReloadFont func(uintptr, uintptr, float64, uintptr, string) uintptr
+var xFontMapReloadFont func(uintptr, uintptr, float64, uintptr, uintptr) uintptr
 
 // Returns a new font that is like @font, except that it is scaled
 // by @scale, its backend-dependent configuration (e.g. cairo font options)
@@ -431,10 +431,10 @@ var xFontMapReloadFont func(uintptr, uintptr, float64, uintptr, string) uintptr
 // Note that the scaling here is meant to be linear, so this
 // scaling can be used to render a font on a hi-dpi display
 // without changing its optical size.
-func (x *FontMap) ReloadFont(FontVar *Font, ScaleVar float64, ContextVar *Context, VariationsVar string) *Font {
+func (x *FontMap) ReloadFont(FontVar *Font, ScaleVar float64, ContextVar *Context, VariationsVar *string) *Font {
 	var cls *Font
 
-	cret := xFontMapReloadFont(x.GoPointer(), FontVar.GoPointer(), ScaleVar, ContextVar.GoPointer(), VariationsVar)
+	cret := xFontMapReloadFont(x.GoPointer(), FontVar.GoPointer(), ScaleVar, ContextVar.GoPointer(), core.NullableStringToPtr(VariationsVar))
 
 	if cret == 0 {
 		return nil

@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"fmt"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -216,7 +217,7 @@ func (c *AppChooserButton) SetGoPointer(ptr uintptr) {
 func (x *AppChooserButton) SetPropertyHeading(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("heading", &v)
 }
 
@@ -350,6 +351,28 @@ func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton,
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return gobject.SignalConnect(x.GoPointer(), "custom-item-activated", cbRefPtr)
+}
+
+// ConnectCustomItemActivatedWithDetail connects to the "custom-item-activated" signal with a detail string.
+// The detail is appended as "custom-item-activated::<detail>".
+func (x *AppChooserButton) ConnectCustomItemActivatedWithDetail(detail string, cb *func(AppChooserButton, string)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("custom-item-activated::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, ItemNameVarp string) {
+		fa := AppChooserButton{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, ItemNameVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
 // Requests the user's screen reader to announce the given message.

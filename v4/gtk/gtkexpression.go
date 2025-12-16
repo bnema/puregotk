@@ -181,7 +181,52 @@ var xNewCClosureExpression func(types.GType, uintptr, uint, uintptr, uintptr, ui
 func NewCClosureExpression(ValueTypeVar types.GType, MarshalVar *gobject.ClosureMarshal, NParamsVar uint, ParamsVar uintptr, CallbackFuncVar *gobject.Callback, UserDataVar uintptr, UserDestroyVar *gobject.ClosureNotify) *CClosureExpression {
 	var cls *CClosureExpression
 
-	cret := xNewCClosureExpression(ValueTypeVar, glib.NewCallbackNullable(MarshalVar), NParamsVar, ParamsVar, glib.NewCallback(CallbackFuncVar), UserDataVar, glib.NewCallbackNullable(UserDestroyVar))
+	var MarshalVarRef uintptr
+	if MarshalVar != nil {
+		MarshalVarPtr := uintptr(unsafe.Pointer(MarshalVar))
+		if cbRefPtr, ok := glib.GetCallback(MarshalVarPtr); ok {
+			MarshalVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *gobject.Closure, arg1 *gobject.Value, arg2 uint, arg3 []gobject.Value, arg4 uintptr, arg5 uintptr) {
+				cbFn := *MarshalVar
+				cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
+			}
+			MarshalVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(MarshalVarPtr, MarshalVarRef)
+		}
+	}
+
+	var CallbackFuncVarRef uintptr
+	if CallbackFuncVar != nil {
+		CallbackFuncVarPtr := uintptr(unsafe.Pointer(CallbackFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackFuncVarPtr); ok {
+			CallbackFuncVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CallbackFuncVar
+				cbFn()
+			}
+			CallbackFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
+		}
+	}
+
+	var UserDestroyVarRef uintptr
+	if UserDestroyVar != nil {
+		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
+			UserDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *gobject.Closure) {
+				cbFn := *UserDestroyVar
+				cbFn(arg0, arg1)
+			}
+			UserDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+		}
+	}
+
+	cret := xNewCClosureExpression(ValueTypeVar, MarshalVarRef, NParamsVar, ParamsVar, CallbackFuncVarRef, UserDataVar, UserDestroyVarRef)
 
 	if cret == 0 {
 		return nil
@@ -629,7 +674,37 @@ var xExpressionWatch func(uintptr, uintptr, uintptr, uintptr, uintptr) *Expressi
 // the @notify will be invoked.
 func (x *Expression) Watch(ThisVar *gobject.Object, NotifyVar *ExpressionNotify, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *ExpressionWatch {
 
-	cret := xExpressionWatch(x.GoPointer(), ThisVar.GoPointer(), glib.NewCallback(NotifyVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	var UserDestroyVarRef uintptr
+	if UserDestroyVar != nil {
+		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
+			UserDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDestroyVar
+				cbFn(arg0)
+			}
+			UserDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+		}
+	}
+
+	cret := xExpressionWatch(x.GoPointer(), ThisVar.GoPointer(), NotifyVarRef, UserDataVar, UserDestroyVarRef)
 	return cret
 }
 

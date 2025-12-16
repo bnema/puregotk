@@ -228,7 +228,37 @@ var xNewMemoryOutputStream func(uintptr, uint, uintptr, uintptr) uintptr
 func NewMemoryOutputStream(DataVar uintptr, SizeVar uint, ReallocFunctionVar *ReallocFunc, DestroyFunctionVar *glib.DestroyNotify) *MemoryOutputStream {
 	var cls *MemoryOutputStream
 
-	cret := xNewMemoryOutputStream(DataVar, SizeVar, glib.NewCallbackNullable(ReallocFunctionVar), glib.NewCallbackNullable(DestroyFunctionVar))
+	var ReallocFunctionVarRef uintptr
+	if ReallocFunctionVar != nil {
+		ReallocFunctionVarPtr := uintptr(unsafe.Pointer(ReallocFunctionVar))
+		if cbRefPtr, ok := glib.GetCallback(ReallocFunctionVarPtr); ok {
+			ReallocFunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uint) uintptr {
+				cbFn := *ReallocFunctionVar
+				return cbFn(arg0, arg1)
+			}
+			ReallocFunctionVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(ReallocFunctionVarPtr, ReallocFunctionVarRef)
+		}
+	}
+
+	var DestroyFunctionVarRef uintptr
+	if DestroyFunctionVar != nil {
+		DestroyFunctionVarPtr := uintptr(unsafe.Pointer(DestroyFunctionVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyFunctionVarPtr); ok {
+			DestroyFunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyFunctionVar
+				cbFn(arg0)
+			}
+			DestroyFunctionVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyFunctionVarPtr, DestroyFunctionVarRef)
+		}
+	}
+
+	cret := xNewMemoryOutputStream(DataVar, SizeVar, ReallocFunctionVarRef, DestroyFunctionVarRef)
 
 	if cret == 0 {
 		return nil

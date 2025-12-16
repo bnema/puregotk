@@ -2,6 +2,8 @@
 package pangocairo
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/cairo"
@@ -236,7 +238,37 @@ var xContextSetShapeRenderer func(uintptr, uintptr, uintptr, uintptr)
 // See `PangoCairoShapeRendererFunc` for details.
 func ContextSetShapeRenderer(ContextVar *pango.Context, FuncVar *ShapeRendererFunc, DataVar uintptr, DnotifyVar *glib.DestroyNotify) {
 
-	xContextSetShapeRenderer(ContextVar.GoPointer(), glib.NewCallbackNullable(FuncVar), DataVar, glib.NewCallbackNullable(DnotifyVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *cairo.Context, arg1 *pango.AttrShape, arg2 bool, arg3 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	var DnotifyVarRef uintptr
+	if DnotifyVar != nil {
+		DnotifyVarPtr := uintptr(unsafe.Pointer(DnotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(DnotifyVarPtr); ok {
+			DnotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DnotifyVar
+				cbFn(arg0)
+			}
+			DnotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DnotifyVarPtr, DnotifyVarRef)
+		}
+	}
+
+	xContextSetShapeRenderer(ContextVar.GoPointer(), FuncVarRef, DataVar, DnotifyVarRef)
 
 }
 

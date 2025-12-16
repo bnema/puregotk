@@ -47,7 +47,22 @@ var xNewGLTexture func(uintptr, uint, int, int, uintptr, uintptr) uintptr
 func NewGLTexture(ContextVar *GLContext, IdVar uint, WidthVar int, HeightVar int, DestroyVar *glib.DestroyNotify, DataVar uintptr) *GLTexture {
 	var cls *GLTexture
 
-	cret := xNewGLTexture(ContextVar.GoPointer(), IdVar, WidthVar, HeightVar, glib.NewCallback(DestroyVar), DataVar)
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	cret := xNewGLTexture(ContextVar.GoPointer(), IdVar, WidthVar, HeightVar, DestroyVarRef, DataVar)
 
 	if cret == 0 {
 		return nil

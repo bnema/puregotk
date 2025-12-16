@@ -167,7 +167,7 @@ func (c *PreferencesRow) SetGoPointer(ptr uintptr) {
 func (x *PreferencesRow) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 
@@ -540,9 +540,9 @@ func (x *PreferencesRow) GetActionTargetValue() *glib.Variant {
 // containing [class@ApplicationWindow] or its associated [class@Application],
 // respectively. This is the same form used for actions in the [class@Gio.Menu]
 // associated with the window.
-func (x *PreferencesRow) SetActionName(ActionNameVar string) {
+func (x *PreferencesRow) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVar)
+	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
 
 }
 

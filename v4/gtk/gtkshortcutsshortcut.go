@@ -116,7 +116,7 @@ func (c *ShortcutsShortcut) SetGoPointer(ptr uintptr) {
 func (x *ShortcutsShortcut) SetPropertyAccelerator(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("accelerator", &v)
 }
 
@@ -164,7 +164,7 @@ func (x *ShortcutsShortcut) GetPropertyAccelerator() string {
 func (x *ShortcutsShortcut) SetPropertyActionName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("action-name", &v)
 }
 
@@ -207,7 +207,7 @@ func (x *ShortcutsShortcut) GetPropertyIconSet() bool {
 func (x *ShortcutsShortcut) SetPropertySubtitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("subtitle", &v)
 }
 
@@ -248,7 +248,7 @@ func (x *ShortcutsShortcut) GetPropertySubtitleSet() bool {
 func (x *ShortcutsShortcut) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

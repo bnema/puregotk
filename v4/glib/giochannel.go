@@ -438,7 +438,7 @@ func (x *IOChannel) SetCloseOnUnref(DoCloseVar bool) {
 
 }
 
-var xIOChannelSetEncoding func(uintptr, string, **Error) IOStatus
+var xIOChannelSetEncoding func(uintptr, uintptr, **Error) IOStatus
 
 // Sets the encoding for the input/output of the channel.
 // The internal encoding is always UTF-8. The default encoding
@@ -474,10 +474,10 @@ var xIOChannelSetEncoding func(uintptr, string, **Error) IOStatus
 // g_io_channel_seek_position() with an offset of %G_SEEK_CUR, and, if
 // they are "seekable", cannot call g_io_channel_write_chars() after
 // calling one of the API "read" functions.
-func (x *IOChannel) SetEncoding(EncodingVar string) (IOStatus, error) {
+func (x *IOChannel) SetEncoding(EncodingVar *string) (IOStatus, error) {
 	var cerr *Error
 
-	cret := xIOChannelSetEncoding(x.GoPointer(), EncodingVar, &cerr)
+	cret := xIOChannelSetEncoding(x.GoPointer(), core.NullableStringToPtr(EncodingVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -499,13 +499,13 @@ func (x *IOChannel) SetFlags(FlagsVar IOFlags) (IOStatus, error) {
 
 }
 
-var xIOChannelSetLineTerm func(uintptr, string, int)
+var xIOChannelSetLineTerm func(uintptr, uintptr, int)
 
 // This sets the string that #GIOChannel uses to determine
 // where in the file a line break occurs.
-func (x *IOChannel) SetLineTerm(LineTermVar string, LengthVar int) {
+func (x *IOChannel) SetLineTerm(LineTermVar *string, LengthVar int) {
 
-	xIOChannelSetLineTerm(x.GoPointer(), LineTermVar, LengthVar)
+	xIOChannelSetLineTerm(x.GoPointer(), core.NullableStringToPtr(LineTermVar), LengthVar)
 
 }
 
@@ -1018,7 +1018,22 @@ var xIoAddWatch func(*IOChannel, IOCondition, uintptr, uintptr) uint
 // with the default priority.
 func IoAddWatch(ChannelVar *IOChannel, ConditionVar IOCondition, FuncVar *IOFunc, UserDataVar uintptr) uint {
 
-	cret := xIoAddWatch(ChannelVar, ConditionVar, NewCallback(FuncVar), UserDataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *IOChannel, arg1 IOCondition, arg2 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xIoAddWatch(ChannelVar, ConditionVar, FuncVarRef, UserDataVar)
 	return cret
 }
 
@@ -1032,7 +1047,37 @@ var xIoAddWatchFull func(*IOChannel, int, IOCondition, uintptr, uintptr, uintptr
 // You can do these steps manually if you need greater control.
 func IoAddWatchFull(ChannelVar *IOChannel, PriorityVar int, ConditionVar IOCondition, FuncVar *IOFunc, UserDataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xIoAddWatchFull(ChannelVar, PriorityVar, ConditionVar, NewCallback(FuncVar), UserDataVar, NewCallback(NotifyVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *IOChannel, arg1 IOCondition, arg2 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	cret := xIoAddWatchFull(ChannelVar, PriorityVar, ConditionVar, FuncVarRef, UserDataVar, NotifyVarRef)
 	return cret
 }
 

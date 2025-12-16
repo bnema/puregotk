@@ -164,7 +164,37 @@ var xNewCallbackAction func(uintptr, uintptr, uintptr) uintptr
 func NewCallbackAction(CallbackVar *ShortcutFunc, DataVar uintptr, DestroyVar *glib.DestroyNotify) *CallbackAction {
 	var cls *CallbackAction
 
-	cret := xNewCallbackAction(glib.NewCallback(CallbackVar), DataVar, glib.NewCallback(DestroyVar))
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *glib.Variant, arg2 uintptr) bool {
+				cbFn := *CallbackVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	cret := xNewCallbackAction(CallbackVarRef, DataVar, DestroyVarRef)
 
 	if cret == 0 {
 		return nil
@@ -303,7 +333,7 @@ func (c *NamedAction) SetGoPointer(ptr uintptr) {
 func (x *NamedAction) SetPropertyActionName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("action-name", &v)
 }
 
@@ -548,7 +578,7 @@ func (c *SignalAction) SetGoPointer(ptr uintptr) {
 func (x *SignalAction) SetPropertySignalName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("signal-name", &v)
 }
 

@@ -343,16 +343,16 @@ func (x *IconTheme) SetSearchPath(PathVar []string) {
 
 }
 
-var xIconThemeSetThemeName func(uintptr, string)
+var xIconThemeSetThemeName func(uintptr, uintptr)
 
 // Sets the name of the icon theme that the `GtkIconTheme` object uses
 // overriding system configuration.
 //
 // This function cannot be called on the icon theme objects returned
 // from [func@Gtk.IconTheme.get_for_display].
-func (x *IconTheme) SetThemeName(ThemeNameVar string) {
+func (x *IconTheme) SetThemeName(ThemeNameVar *string) {
 
-	xIconThemeSetThemeName(x.GoPointer(), ThemeNameVar)
+	xIconThemeSetThemeName(x.GoPointer(), core.NullableStringToPtr(ThemeNameVar))
 
 }
 
@@ -444,7 +444,7 @@ func (x *IconTheme) GetPropertySearchPath() []string {
 func (x *IconTheme) SetPropertyThemeName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("theme-name", &v)
 }
 

@@ -240,7 +240,22 @@ var xTlsPasswordSetValueFull func(uintptr, []byte, int, uintptr)
 // considered part of the password in this case.)
 func (x *TlsPassword) SetValueFull(ValueVar []byte, LengthVar int, DestroyVar *glib.DestroyNotify) {
 
-	xTlsPasswordSetValueFull(x.GoPointer(), ValueVar, LengthVar, glib.NewCallbackNullable(DestroyVar))
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	xTlsPasswordSetValueFull(x.GoPointer(), ValueVar, LengthVar, DestroyVarRef)
 
 }
 
@@ -271,7 +286,7 @@ func (c *TlsPassword) SetGoPointer(ptr uintptr) {
 func (x *TlsPassword) SetPropertyDescription(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("description", &v)
 }
 
@@ -288,7 +303,7 @@ func (x *TlsPassword) GetPropertyDescription() string {
 func (x *TlsPassword) SetPropertyWarning(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("warning", &v)
 }
 

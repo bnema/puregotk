@@ -129,18 +129,18 @@ func NewPageSetupFromGvariant(VariantVar *glib.Variant) *PageSetup {
 	return cls
 }
 
-var xNewPageSetupFromKeyFile func(*glib.KeyFile, string, **glib.Error) uintptr
+var xNewPageSetupFromKeyFile func(*glib.KeyFile, uintptr, **glib.Error) uintptr
 
 // Reads the page setup from the group @group_name in the key file
 // @key_file.
 //
 // Returns a new `GtkPageSetup` object with the restored
 // page setup, or %NULL if an error occurred.
-func NewPageSetupFromKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar string) (*PageSetup, error) {
+func NewPageSetupFromKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) (*PageSetup, error) {
 	var cls *PageSetup
 	var cerr *glib.Error
 
-	cret := xNewPageSetupFromKeyFile(KeyFileVar, GroupNameVar, &cerr)
+	cret := xNewPageSetupFromKeyFile(KeyFileVar, core.NullableStringToPtr(GroupNameVar), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -292,14 +292,14 @@ func (x *PageSetup) LoadFile(FileNameVar string) (bool, error) {
 
 }
 
-var xPageSetupLoadKeyFile func(uintptr, *glib.KeyFile, string, **glib.Error) bool
+var xPageSetupLoadKeyFile func(uintptr, *glib.KeyFile, uintptr, **glib.Error) bool
 
 // Reads the page setup from the group @group_name in the key file
 // @key_file.
-func (x *PageSetup) LoadKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar string) (bool, error) {
+func (x *PageSetup) LoadKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xPageSetupLoadKeyFile(x.GoPointer(), KeyFileVar, GroupNameVar, &cerr)
+	cret := xPageSetupLoadKeyFile(x.GoPointer(), KeyFileVar, core.NullableStringToPtr(GroupNameVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -397,12 +397,12 @@ func (x *PageSetup) ToGvariant() *glib.Variant {
 	return cret
 }
 
-var xPageSetupToKeyFile func(uintptr, *glib.KeyFile, string)
+var xPageSetupToKeyFile func(uintptr, *glib.KeyFile, uintptr)
 
 // This function adds the page setup from @setup to @key_file.
-func (x *PageSetup) ToKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar string) {
+func (x *PageSetup) ToKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) {
 
-	xPageSetupToKeyFile(x.GoPointer(), KeyFileVar, GroupNameVar)
+	xPageSetupToKeyFile(x.GoPointer(), KeyFileVar, core.NullableStringToPtr(GroupNameVar))
 
 }
 

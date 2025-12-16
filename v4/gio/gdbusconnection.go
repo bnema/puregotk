@@ -225,7 +225,22 @@ var xBusGet func(BusType, uintptr, uintptr, uintptr)
 // the synchronous version.
 func BusGet(BusTypeVar BusType, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xBusGet(BusTypeVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xBusGet(BusTypeVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -446,7 +461,7 @@ func NewDBusConnectionForAddressSync(AddressVar string, FlagsVar DBusConnectionF
 
 }
 
-var xNewDBusConnectionSync func(uintptr, string, DBusConnectionFlags, uintptr, uintptr, **glib.Error) uintptr
+var xNewDBusConnectionSync func(uintptr, uintptr, DBusConnectionFlags, uintptr, uintptr, **glib.Error) uintptr
 
 // Synchronously sets up a D-Bus connection for exchanging D-Bus messages
 // with the end represented by @stream.
@@ -463,11 +478,11 @@ var xNewDBusConnectionSync func(uintptr, string, DBusConnectionFlags, uintptr, u
 //
 // This is a synchronous failable constructor. See
 // g_dbus_connection_new() for the asynchronous version.
-func NewDBusConnectionSync(StreamVar *IOStream, GuidVar string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable) (*DBusConnection, error) {
+func NewDBusConnectionSync(StreamVar *IOStream, GuidVar *string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable) (*DBusConnection, error) {
 	var cls *DBusConnection
 	var cerr *glib.Error
 
-	cret := xNewDBusConnectionSync(StreamVar.GoPointer(), GuidVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
+	cret := xNewDBusConnectionSync(StreamVar.GoPointer(), core.NullableStringToPtr(GuidVar), FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -512,11 +527,41 @@ var xDBusConnectionAddFilter func(uintptr, uintptr, uintptr, uintptr) uint
 // destroyed.)
 func (x *DBusConnection) AddFilter(FilterFunctionVar *DBusMessageFilterFunction, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	cret := xDBusConnectionAddFilter(x.GoPointer(), glib.NewCallback(FilterFunctionVar), UserDataVar, glib.NewCallback(UserDataFreeFuncVar))
+	var FilterFunctionVarRef uintptr
+	if FilterFunctionVar != nil {
+		FilterFunctionVarPtr := uintptr(unsafe.Pointer(FilterFunctionVar))
+		if cbRefPtr, ok := glib.GetCallback(FilterFunctionVarPtr); ok {
+			FilterFunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 bool, arg3 uintptr) uintptr {
+				cbFn := *FilterFunctionVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			FilterFunctionVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FilterFunctionVarPtr, FilterFunctionVarRef)
+		}
+	}
+
+	var UserDataFreeFuncVarRef uintptr
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+		}
+	}
+
+	cret := xDBusConnectionAddFilter(x.GoPointer(), FilterFunctionVarRef, UserDataVar, UserDataFreeFuncVarRef)
 	return cret
 }
 
-var xDBusConnectionCall func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, uintptr, uintptr)
+var xDBusConnectionCall func(uintptr, uintptr, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, uintptr, uintptr)
 
 // Asynchronously invokes the @method_name method on the
 // @interface_name D-Bus interface on the remote object at
@@ -565,9 +610,24 @@ var xDBusConnectionCall func(uintptr, string, string, string, string, *glib.Vari
 //
 // If @callback is %NULL then the D-Bus method call message will be sent with
 // the %G_DBUS_MESSAGE_FLAGS_NO_REPLY_EXPECTED flag set.
-func (x *DBusConnection) Call(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *DBusConnection) Call(BusNameVar *string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionCall(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusConnectionCall(x.GoPointer(), core.NullableStringToPtr(BusNameVar), ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -585,7 +645,7 @@ func (x *DBusConnection) CallFinish(ResVar AsyncResult) (*glib.Variant, error) {
 
 }
 
-var xDBusConnectionCallSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, **glib.Error) *glib.Variant
+var xDBusConnectionCallSync func(uintptr, uintptr, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, **glib.Error) *glib.Variant
 
 // Synchronously invokes the @method_name method on the
 // @interface_name D-Bus interface on the remote object at
@@ -625,10 +685,10 @@ var xDBusConnectionCallSync func(uintptr, string, string, string, string, *glib.
 // The calling thread is blocked until a reply is received. See
 // g_dbus_connection_call() for the asynchronous version of
 // this method.
-func (x *DBusConnection) CallSync(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable) (*glib.Variant, error) {
+func (x *DBusConnection) CallSync(BusNameVar *string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionCallSync(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), &cerr)
+	cret := xDBusConnectionCallSync(x.GoPointer(), core.NullableStringToPtr(BusNameVar), ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -636,7 +696,7 @@ func (x *DBusConnection) CallSync(BusNameVar string, ObjectPathVar string, Inter
 
 }
 
-var xDBusConnectionCallWithUnixFdList func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, uintptr, uintptr, uintptr)
+var xDBusConnectionCallWithUnixFdList func(uintptr, uintptr, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, uintptr, uintptr, uintptr)
 
 // Like g_dbus_connection_call() but also takes a #GUnixFDList object.
 //
@@ -653,9 +713,24 @@ var xDBusConnectionCallWithUnixFdList func(uintptr, string, string, string, stri
 // value of type %G_VARIANT_TYPE_HANDLE in the body of the message.
 //
 // This method is only available on UNIX.
-func (x *DBusConnection) CallWithUnixFdList(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func (x *DBusConnection) CallWithUnixFdList(BusNameVar *string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionCallWithUnixFdList(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusConnectionCallWithUnixFdList(x.GoPointer(), core.NullableStringToPtr(BusNameVar), ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -684,17 +759,17 @@ func (x *DBusConnection) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, Res
 
 }
 
-var xDBusConnectionCallWithUnixFdListSync func(uintptr, string, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, **UnixFDList, uintptr, **glib.Error) *glib.Variant
+var xDBusConnectionCallWithUnixFdListSync func(uintptr, uintptr, string, string, string, *glib.Variant, *glib.VariantType, DBusCallFlags, int, uintptr, **UnixFDList, uintptr, **glib.Error) *glib.Variant
 
 // Like g_dbus_connection_call_sync() but also takes and returns #GUnixFDList objects.
 // See g_dbus_connection_call_with_unix_fd_list() and
 // g_dbus_connection_call_with_unix_fd_list_finish() for more details.
 //
 // This method is only available on UNIX.
-func (x *DBusConnection) CallWithUnixFdListSync(BusNameVar string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
+func (x *DBusConnection) CallWithUnixFdListSync(BusNameVar *string, ObjectPathVar string, InterfaceNameVar string, MethodNameVar string, ParametersVar *glib.Variant, ReplyTypeVar *glib.VariantType, FlagsVar DBusCallFlags, TimeoutMsecVar int, FdListVar *UnixFDList, OutFdListVar **UnixFDList, CancellableVar *Cancellable) (*glib.Variant, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), BusNameVar, ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), OutFdListVar, CancellableVar.GoPointer(), &cerr)
+	cret := xDBusConnectionCallWithUnixFdListSync(x.GoPointer(), core.NullableStringToPtr(BusNameVar), ObjectPathVar, InterfaceNameVar, MethodNameVar, ParametersVar, ReplyTypeVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), OutFdListVar, CancellableVar.GoPointer(), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -730,7 +805,22 @@ var xDBusConnectionClose func(uintptr, uintptr, uintptr, uintptr)
 // version.
 func (x *DBusConnection) Close(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionClose(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusConnectionClose(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -765,7 +855,7 @@ func (x *DBusConnection) CloseSync(CancellableVar *Cancellable) (bool, error) {
 
 }
 
-var xDBusConnectionEmitSignal func(uintptr, string, string, string, string, *glib.Variant, **glib.Error) bool
+var xDBusConnectionEmitSignal func(uintptr, uintptr, string, string, string, *glib.Variant, **glib.Error) bool
 
 // Emits a signal.
 //
@@ -774,10 +864,10 @@ var xDBusConnectionEmitSignal func(uintptr, string, string, string, string, *gli
 // This can only fail if @parameters is not compatible with the D-Bus protocol
 // (%G_IO_ERROR_INVALID_ARGUMENT), or if @connection has been closed
 // (%G_IO_ERROR_CLOSED).
-func (x *DBusConnection) EmitSignal(DestinationBusNameVar string, ObjectPathVar string, InterfaceNameVar string, SignalNameVar string, ParametersVar *glib.Variant) (bool, error) {
+func (x *DBusConnection) EmitSignal(DestinationBusNameVar *string, ObjectPathVar string, InterfaceNameVar string, SignalNameVar string, ParametersVar *glib.Variant) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionEmitSignal(x.GoPointer(), DestinationBusNameVar, ObjectPathVar, InterfaceNameVar, SignalNameVar, ParametersVar, &cerr)
+	cret := xDBusConnectionEmitSignal(x.GoPointer(), core.NullableStringToPtr(DestinationBusNameVar), ObjectPathVar, InterfaceNameVar, SignalNameVar, ParametersVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -866,7 +956,22 @@ var xDBusConnectionFlush func(uintptr, uintptr, uintptr, uintptr)
 // version.
 func (x *DBusConnection) Flush(CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionFlush(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusConnectionFlush(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1063,7 +1168,22 @@ var xDBusConnectionRegisterObject func(uintptr, string, *DBusInterfaceInfo, *DBu
 func (x *DBusConnection) RegisterObject(ObjectPathVar string, InterfaceInfoVar *DBusInterfaceInfo, VtableVar *DBusInterfaceVTable, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) (uint, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionRegisterObject(x.GoPointer(), ObjectPathVar, InterfaceInfoVar, VtableVar, UserDataVar, glib.NewCallback(UserDataFreeFuncVar), &cerr)
+	var UserDataFreeFuncVarRef uintptr
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+		}
+	}
+
+	cret := xDBusConnectionRegisterObject(x.GoPointer(), ObjectPathVar, InterfaceInfoVar, VtableVar, UserDataVar, UserDataFreeFuncVarRef, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1155,7 +1275,22 @@ var xDBusConnectionRegisterSubtree func(uintptr, string, *DBusSubtreeVTable, DBu
 func (x *DBusConnection) RegisterSubtree(ObjectPathVar string, VtableVar *DBusSubtreeVTable, FlagsVar DBusSubtreeFlags, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) (uint, error) {
 	var cerr *glib.Error
 
-	cret := xDBusConnectionRegisterSubtree(x.GoPointer(), ObjectPathVar, VtableVar, FlagsVar, UserDataVar, glib.NewCallback(UserDataFreeFuncVar), &cerr)
+	var UserDataFreeFuncVarRef uintptr
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+		}
+	}
+
+	cret := xDBusConnectionRegisterSubtree(x.GoPointer(), ObjectPathVar, VtableVar, FlagsVar, UserDataVar, UserDataFreeFuncVarRef, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1248,7 +1383,22 @@ var xDBusConnectionSendMessageWithReply func(uintptr, uintptr, DBusSendMessageFl
 // UNIX file descriptors.
 func (x *DBusConnection) SendMessageWithReply(MessageVar *DBusMessage, FlagsVar DBusSendMessageFlags, TimeoutMsecVar int, OutSerialVar *uint32, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionSendMessageWithReply(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusConnectionSendMessageWithReply(x.GoPointer(), MessageVar.GoPointer(), FlagsVar, TimeoutMsecVar, OutSerialVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1352,7 +1502,7 @@ func (x *DBusConnection) SetExitOnClose(ExitOnCloseVar bool) {
 
 }
 
-var xDBusConnectionSignalSubscribe func(uintptr, string, string, string, string, string, DBusSignalFlags, uintptr, uintptr, uintptr) uint
+var xDBusConnectionSignalSubscribe func(uintptr, uintptr, uintptr, uintptr, uintptr, uintptr, DBusSignalFlags, uintptr, uintptr, uintptr) uint
 
 // Subscribes to signals on @connection and invokes @callback whenever
 // the signal is received. Note that @callback will be invoked in the
@@ -1403,9 +1553,39 @@ var xDBusConnectionSignalSubscribe func(uintptr, string, string, string, string,
 // to never be zero.
 //
 // This function can never fail.
-func (x *DBusConnection) SignalSubscribe(SenderVar string, InterfaceNameVar string, MemberVar string, ObjectPathVar string, Arg0Var string, FlagsVar DBusSignalFlags, CallbackVar *DBusSignalCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
+func (x *DBusConnection) SignalSubscribe(SenderVar *string, InterfaceNameVar *string, MemberVar *string, ObjectPathVar *string, Arg0Var *string, FlagsVar DBusSignalFlags, CallbackVar *DBusSignalCallback, UserDataVar uintptr, UserDataFreeFuncVar *glib.DestroyNotify) uint {
 
-	cret := xDBusConnectionSignalSubscribe(x.GoPointer(), SenderVar, InterfaceNameVar, MemberVar, ObjectPathVar, Arg0Var, FlagsVar, glib.NewCallback(CallbackVar), UserDataVar, glib.NewCallbackNullable(UserDataFreeFuncVar))
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 string, arg4 string, arg5 *glib.Variant, arg6 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	var UserDataFreeFuncVarRef uintptr
+	if UserDataFreeFuncVar != nil {
+		UserDataFreeFuncVarPtr := uintptr(unsafe.Pointer(UserDataFreeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataFreeFuncVarPtr); ok {
+			UserDataFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataFreeFuncVar
+				cbFn(arg0)
+			}
+			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+		}
+	}
+
+	cret := xDBusConnectionSignalSubscribe(x.GoPointer(), core.NullableStringToPtr(SenderVar), core.NullableStringToPtr(InterfaceNameVar), core.NullableStringToPtr(MemberVar), core.NullableStringToPtr(ObjectPathVar), core.NullableStringToPtr(Arg0Var), FlagsVar, CallbackVarRef, UserDataVar, UserDataFreeFuncVarRef)
 	return cret
 }
 
@@ -1504,7 +1684,7 @@ func (c *DBusConnection) SetGoPointer(ptr uintptr) {
 func (x *DBusConnection) SetPropertyAddress(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("address", &v)
 }
 
@@ -1569,7 +1749,7 @@ func (x *DBusConnection) GetPropertyExitOnClose() bool {
 func (x *DBusConnection) SetPropertyGuid(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("guid", &v)
 }
 
@@ -1770,7 +1950,7 @@ func (x *DBusConnection) Init(CancellableVar *Cancellable) (bool, error) {
 
 }
 
-var xDBusConnectionNew func(uintptr, string, DBusConnectionFlags, uintptr, uintptr, uintptr, uintptr)
+var xDBusConnectionNew func(uintptr, uintptr, DBusConnectionFlags, uintptr, uintptr, uintptr, uintptr)
 
 // Asynchronously sets up a D-Bus connection for exchanging D-Bus messages
 // with the end represented by @stream.
@@ -1792,9 +1972,24 @@ var xDBusConnectionNew func(uintptr, string, DBusConnectionFlags, uintptr, uintp
 // This is an asynchronous failable constructor. See
 // g_dbus_connection_new_sync() for the synchronous
 // version.
-func DBusConnectionNew(StreamVar *IOStream, GuidVar string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
+func DBusConnectionNew(StreamVar *IOStream, GuidVar *string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionNew(StreamVar.GoPointer(), GuidVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusConnectionNew(StreamVar.GoPointer(), core.NullableStringToPtr(GuidVar), FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -1824,7 +2019,22 @@ var xDBusConnectionNewForAddress func(string, DBusConnectionFlags, uintptr, uint
 // version.
 func DBusConnectionNewForAddress(AddressVar string, FlagsVar DBusConnectionFlags, ObserverVar *DBusAuthObserver, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusConnectionNewForAddress(AddressVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusConnectionNewForAddress(AddressVar, FlagsVar, ObserverVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

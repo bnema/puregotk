@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"fmt"
 	"structs"
 	"unsafe"
 
@@ -208,7 +209,7 @@ func MessageDialogNewFromInternalPtr(ptr uintptr) *MessageDialog {
 	return cls
 }
 
-var xNewMessageDialog func(uintptr, string, string) uintptr
+var xNewMessageDialog func(uintptr, uintptr, uintptr) uintptr
 
 // Creates a new `AdwMessageDialog`.
 //
@@ -226,10 +227,10 @@ var xNewMessageDialog func(uintptr, string, string) uintptr
 //	filename);
 //
 // ```
-func NewMessageDialog(ParentVar *gtk.Window, HeadingVar string, BodyVar string) *MessageDialog {
+func NewMessageDialog(ParentVar *gtk.Window, HeadingVar *string, BodyVar *string) *MessageDialog {
 	var cls *MessageDialog
 
-	cret := xNewMessageDialog(ParentVar.GoPointer(), HeadingVar, BodyVar)
+	cret := xNewMessageDialog(ParentVar.GoPointer(), core.NullableStringToPtr(HeadingVar), core.NullableStringToPtr(BodyVar))
 
 	if cret == 0 {
 		return nil
@@ -294,7 +295,22 @@ var xMessageDialogChoose func(uintptr, uintptr, uintptr, uintptr)
 // This function shows @self to the user.
 func (x *MessageDialog) Choose(CancellableVar *gio.Cancellable, CallbackVar *gio.AsyncReadyCallback, UserDataVar uintptr) {
 
-	xMessageDialogChoose(x.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xMessageDialogChoose(x.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -532,7 +548,7 @@ func (x *MessageDialog) SetCloseResponse(ResponseVar string) {
 
 }
 
-var xMessageDialogSetDefaultResponse func(uintptr, string)
+var xMessageDialogSetDefaultResponse func(uintptr, uintptr)
 
 // Sets the ID of the default response of @self.
 //
@@ -543,9 +559,9 @@ var xMessageDialogSetDefaultResponse func(uintptr, string)
 // will be focused by default.
 //
 // See [property@Gtk.Window:default-widget].
-func (x *MessageDialog) SetDefaultResponse(ResponseVar string) {
+func (x *MessageDialog) SetDefaultResponse(ResponseVar *string) {
 
-	xMessageDialogSetDefaultResponse(x.GoPointer(), ResponseVar)
+	xMessageDialogSetDefaultResponse(x.GoPointer(), core.NullableStringToPtr(ResponseVar))
 
 }
 
@@ -560,12 +576,12 @@ func (x *MessageDialog) SetExtraChild(ChildVar *gtk.Widget) {
 
 }
 
-var xMessageDialogSetHeading func(uintptr, string)
+var xMessageDialogSetHeading func(uintptr, uintptr)
 
 // Sets the heading of @self.
-func (x *MessageDialog) SetHeading(HeadingVar string) {
+func (x *MessageDialog) SetHeading(HeadingVar *string) {
 
-	xMessageDialogSetHeading(x.GoPointer(), HeadingVar)
+	xMessageDialogSetHeading(x.GoPointer(), core.NullableStringToPtr(HeadingVar))
 
 }
 
@@ -653,7 +669,7 @@ func (c *MessageDialog) SetGoPointer(ptr uintptr) {
 func (x *MessageDialog) SetPropertyBody(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("body", &v)
 }
 
@@ -698,7 +714,7 @@ func (x *MessageDialog) GetPropertyBodyUseMarkup() bool {
 func (x *MessageDialog) SetPropertyCloseResponse(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("close-response", &v)
 }
 
@@ -730,7 +746,7 @@ func (x *MessageDialog) GetPropertyCloseResponse() string {
 func (x *MessageDialog) SetPropertyDefaultResponse(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("default-response", &v)
 }
 
@@ -755,7 +771,7 @@ func (x *MessageDialog) GetPropertyDefaultResponse() string {
 func (x *MessageDialog) SetPropertyHeading(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("heading", &v)
 }
 
@@ -813,6 +829,28 @@ func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint32 
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+}
+
+// ConnectResponseWithDetail connects to the "response" signal with a detail string.
+// The detail is appended as "response::<detail>".
+func (x *MessageDialog) ConnectResponseWithDetail(detail string, cb *func(MessageDialog, string)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("response::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, ResponseVarp string) {
+		fa := MessageDialog{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, ResponseVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
 // Requests the user's screen reader to announce the given message.

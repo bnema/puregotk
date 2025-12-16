@@ -30,7 +30,22 @@ var xClearSlist func(**SList, uintptr)
 // @slist_ptr must be a valid pointer. If @slist_ptr points to a null #GSList, this does nothing.
 func ClearSlist(SlistPtrVar **SList, DestroyVar *DestroyNotify) {
 
-	xClearSlist(SlistPtrVar, NewCallbackNullable(DestroyVar))
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	xClearSlist(SlistPtrVar, DestroyVarRef)
 
 }
 

@@ -129,7 +129,7 @@ func (c *WindowTitle) SetGoPointer(ptr uintptr) {
 func (x *WindowTitle) SetPropertySubtitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("subtitle", &v)
 }
 
@@ -151,7 +151,7 @@ func (x *WindowTitle) GetPropertySubtitle() string {
 func (x *WindowTitle) SetPropertyTitle(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("title", &v)
 }
 

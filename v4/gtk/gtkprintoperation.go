@@ -528,7 +528,22 @@ var xPrintRunPageSetupDialogAsync func(uintptr, uintptr, uintptr, uintptr, uintp
 // @done_cb from a signal handler for the ::response signal of the dialog.
 func PrintRunPageSetupDialogAsync(ParentVar *Window, PageSetupVar *PageSetup, SettingsVar *PrintSettings, DoneCbVar *PageSetupDoneFunc, DataVar uintptr) {
 
-	xPrintRunPageSetupDialogAsync(ParentVar.GoPointer(), PageSetupVar.GoPointer(), SettingsVar.GoPointer(), glib.NewCallback(DoneCbVar), DataVar)
+	var DoneCbVarRef uintptr
+	if DoneCbVar != nil {
+		DoneCbVarPtr := uintptr(unsafe.Pointer(DoneCbVar))
+		if cbRefPtr, ok := glib.GetCallback(DoneCbVarPtr); ok {
+			DoneCbVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *DoneCbVar
+				cbFn(arg0, arg1)
+			}
+			DoneCbVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DoneCbVarPtr, DoneCbVarRef)
+		}
+	}
+
+	xPrintRunPageSetupDialogAsync(ParentVar.GoPointer(), PageSetupVar.GoPointer(), SettingsVar.GoPointer(), DoneCbVarRef, DataVar)
 
 }
 
@@ -910,12 +925,12 @@ func (x *PrintOperation) SetCurrentPage(CurrentPageVar int) {
 
 }
 
-var xPrintOperationSetCustomTabLabel func(uintptr, string)
+var xPrintOperationSetCustomTabLabel func(uintptr, uintptr)
 
 // Sets the label for the tab holding custom widgets.
-func (x *PrintOperation) SetCustomTabLabel(LabelVar string) {
+func (x *PrintOperation) SetCustomTabLabel(LabelVar *string) {
 
-	xPrintOperationSetCustomTabLabel(x.GoPointer(), LabelVar)
+	xPrintOperationSetCustomTabLabel(x.GoPointer(), core.NullableStringToPtr(LabelVar))
 
 }
 
@@ -1178,7 +1193,7 @@ func (x *PrintOperation) GetPropertyCurrentPage() int {
 func (x *PrintOperation) SetPropertyCustomTabLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("custom-tab-label", &v)
 }
 
@@ -1227,7 +1242,7 @@ func (x *PrintOperation) GetPropertyEmbedPageSetup() bool {
 func (x *PrintOperation) SetPropertyExportFilename(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("export-filename", &v)
 }
 
@@ -1280,7 +1295,7 @@ func (x *PrintOperation) GetPropertyHasSelection() bool {
 func (x *PrintOperation) SetPropertyJobName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("job-name", &v)
 }
 

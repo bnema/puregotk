@@ -249,15 +249,15 @@ func LabelNewFromInternalPtr(ptr uintptr) *Label {
 	return cls
 }
 
-var xNewLabel func(string) uintptr
+var xNewLabel func(uintptr) uintptr
 
 // Creates a new label with the given text inside it.
 //
 // You can pass `NULL` to get an empty label widget.
-func NewLabel(StrVar string) *Label {
+func NewLabel(StrVar *string) *Label {
 	var cls *Label
 
-	cret := xNewLabel(StrVar)
+	cret := xNewLabel(core.NullableStringToPtr(StrVar))
 
 	if cret == 0 {
 		return nil
@@ -268,7 +268,7 @@ func NewLabel(StrVar string) *Label {
 	return cls
 }
 
-var xNewLabelWithMnemonic func(string) uintptr
+var xNewLabelWithMnemonic func(uintptr) uintptr
 
 // Creates a new label with the given text inside it, and a mnemonic.
 //
@@ -284,10 +284,10 @@ var xNewLabelWithMnemonic func(string) uintptr
 // widget. For instance, if the label is inside a button or menu item,
 // the button or menu item will automatically become the mnemonic widget
 // and be activated by the mnemonic.
-func NewLabelWithMnemonic(StrVar string) *Label {
+func NewLabelWithMnemonic(StrVar *string) *Label {
 	var cls *Label
 
-	cret := xNewLabelWithMnemonic(StrVar)
+	cret := xNewLabelWithMnemonic(core.NullableStringToPtr(StrVar))
 
 	if cret == 0 {
 		return nil
@@ -998,7 +998,7 @@ func (x *Label) GetPropertyAttributes() uintptr {
 func (x *Label) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 

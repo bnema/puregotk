@@ -211,7 +211,7 @@ func NewScaleWithRange(OrientationVar Orientation, MinVar float64, MaxVar float6
 	return cls
 }
 
-var xScaleAddMark func(uintptr, float64, PositionType, string)
+var xScaleAddMark func(uintptr, float64, PositionType, uintptr)
 
 // Adds a mark at @value.
 //
@@ -222,9 +222,9 @@ var xScaleAddMark func(uintptr, float64, PositionType, string)
 // If @markup is not %NULL, text is shown next to the tick mark.
 //
 // To remove marks from a scale, use [method@Gtk.Scale.clear_marks].
-func (x *Scale) AddMark(ValueVar float64, PositionVar PositionType, MarkupVar string) {
+func (x *Scale) AddMark(ValueVar float64, PositionVar PositionType, MarkupVar *string) {
 
-	xScaleAddMark(x.GoPointer(), ValueVar, PositionVar, MarkupVar)
+	xScaleAddMark(x.GoPointer(), ValueVar, PositionVar, core.NullableStringToPtr(MarkupVar))
 
 }
 
@@ -352,7 +352,37 @@ var xScaleSetFormatValueFunc func(uintptr, uintptr, uintptr, uintptr)
 // [property@Gtk.Scale:digits] property.
 func (x *Scale) SetFormatValueFunc(FuncVar *ScaleFormatValueFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
 
-	xScaleSetFormatValueFunc(x.GoPointer(), glib.NewCallbackNullable(FuncVar), UserDataVar, glib.NewCallbackNullable(DestroyNotifyVar))
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 float64, arg2 uintptr) string {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	var DestroyNotifyVarRef uintptr
+	if DestroyNotifyVar != nil {
+		DestroyNotifyVarPtr := uintptr(unsafe.Pointer(DestroyNotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyNotifyVarPtr); ok {
+			DestroyNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyNotifyVar
+				cbFn(arg0)
+			}
+			DestroyNotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+		}
+	}
+
+	xScaleSetFormatValueFunc(x.GoPointer(), FuncVarRef, UserDataVar, DestroyNotifyVarRef)
 
 }
 

@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -101,7 +103,37 @@ var xSubprocessLauncherSetChildSetup func(uintptr, uintptr, uintptr, uintptr)
 // Child setup functions are only available on UNIX.
 func (x *SubprocessLauncher) SetChildSetup(ChildSetupVar *glib.SpawnChildSetupFunc, UserDataVar uintptr, DestroyNotifyVar *glib.DestroyNotify) {
 
-	xSubprocessLauncherSetChildSetup(x.GoPointer(), glib.NewCallback(ChildSetupVar), UserDataVar, glib.NewCallback(DestroyNotifyVar))
+	var ChildSetupVarRef uintptr
+	if ChildSetupVar != nil {
+		ChildSetupVarPtr := uintptr(unsafe.Pointer(ChildSetupVar))
+		if cbRefPtr, ok := glib.GetCallback(ChildSetupVarPtr); ok {
+			ChildSetupVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ChildSetupVar
+				cbFn(arg0)
+			}
+			ChildSetupVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+		}
+	}
+
+	var DestroyNotifyVarRef uintptr
+	if DestroyNotifyVar != nil {
+		DestroyNotifyVarPtr := uintptr(unsafe.Pointer(DestroyNotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyNotifyVarPtr); ok {
+			DestroyNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyNotifyVar
+				cbFn(arg0)
+			}
+			DestroyNotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+		}
+	}
+
+	xSubprocessLauncherSetChildSetup(x.GoPointer(), ChildSetupVarRef, UserDataVar, DestroyNotifyVarRef)
 
 }
 
@@ -165,7 +197,7 @@ func (x *SubprocessLauncher) SetFlags(FlagsVar SubprocessFlags) {
 
 }
 
-var xSubprocessLauncherSetStderrFilePath func(uintptr, string)
+var xSubprocessLauncherSetStderrFilePath func(uintptr, uintptr)
 
 // Sets the file path to use as the stderr for spawned processes.
 //
@@ -181,13 +213,13 @@ var xSubprocessLauncherSetStderrFilePath func(uintptr, string)
 // if the launcher flags contain any flags directing stderr elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) SetStderrFilePath(PathVar string) {
+func (x *SubprocessLauncher) SetStderrFilePath(PathVar *string) {
 
-	xSubprocessLauncherSetStderrFilePath(x.GoPointer(), PathVar)
+	xSubprocessLauncherSetStderrFilePath(x.GoPointer(), core.NullableStringToPtr(PathVar))
 
 }
 
-var xSubprocessLauncherSetStdinFilePath func(uintptr, string)
+var xSubprocessLauncherSetStdinFilePath func(uintptr, uintptr)
 
 // Sets the file path to use as the stdin for spawned processes.
 //
@@ -199,13 +231,13 @@ var xSubprocessLauncherSetStdinFilePath func(uintptr, string)
 // the launcher flags contain any flags directing stdin elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) SetStdinFilePath(PathVar string) {
+func (x *SubprocessLauncher) SetStdinFilePath(PathVar *string) {
 
-	xSubprocessLauncherSetStdinFilePath(x.GoPointer(), PathVar)
+	xSubprocessLauncherSetStdinFilePath(x.GoPointer(), core.NullableStringToPtr(PathVar))
 
 }
 
-var xSubprocessLauncherSetStdoutFilePath func(uintptr, string)
+var xSubprocessLauncherSetStdoutFilePath func(uintptr, uintptr)
 
 // Sets the file path to use as the stdout for spawned processes.
 //
@@ -218,9 +250,9 @@ var xSubprocessLauncherSetStdoutFilePath func(uintptr, string)
 // if the launcher flags contain any flags directing stdout elsewhere.
 //
 // This feature is only available on UNIX.
-func (x *SubprocessLauncher) SetStdoutFilePath(PathVar string) {
+func (x *SubprocessLauncher) SetStdoutFilePath(PathVar *string) {
 
-	xSubprocessLauncherSetStdoutFilePath(x.GoPointer(), PathVar)
+	xSubprocessLauncherSetStdoutFilePath(x.GoPointer(), core.NullableStringToPtr(PathVar))
 
 }
 

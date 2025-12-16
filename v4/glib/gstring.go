@@ -40,12 +40,12 @@ func (x *String) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xNewString func(string) *String
+var xNewString func(uintptr) *String
 
 // Creates a new #GString, initialized with the given string.
-func NewString(InitVar string) *String {
+func NewString(InitVar *string) *String {
 
-	cret := xNewString(InitVar)
+	cret := xNewString(core.NullableStringToPtr(InitVar))
 	return cret
 }
 
@@ -64,16 +64,16 @@ func NewStringLen(InitVar string, LenVar int) *String {
 	return cret
 }
 
-var xNewStringTake func(string) *String
+var xNewStringTake func(uintptr) *String
 
 // Creates a new #GString, initialized with the given string.
 //
 // After this call, @init belongs to the #GString and may no longer be
 // modified by the caller. The memory of @init has to be dynamically
 // allocated and will eventually be freed with g_free().
-func NewStringTake(InitVar string) *String {
+func NewStringTake(InitVar *string) *String {
 
-	cret := xNewStringTake(InitVar)
+	cret := xNewStringTake(core.NullableStringToPtr(InitVar))
 	return cret
 }
 

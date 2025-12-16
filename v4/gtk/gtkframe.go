@@ -112,15 +112,15 @@ func FrameNewFromInternalPtr(ptr uintptr) *Frame {
 	return cls
 }
 
-var xNewFrame func(string) uintptr
+var xNewFrame func(uintptr) uintptr
 
 // Creates a new `GtkFrame`, with optional label @label.
 //
 // If @label is %NULL, the label is omitted.
-func NewFrame(LabelVar string) *Frame {
+func NewFrame(LabelVar *string) *Frame {
 	var cls *Frame
 
-	cret := xNewFrame(LabelVar)
+	cret := xNewFrame(core.NullableStringToPtr(LabelVar))
 
 	if cret == 0 {
 		return nil
@@ -195,13 +195,13 @@ func (x *Frame) SetChild(ChildVar *Widget) {
 
 }
 
-var xFrameSetLabel func(uintptr, string)
+var xFrameSetLabel func(uintptr, uintptr)
 
 // Creates a new `GtkLabel` with the @label and sets it as the frame's
 // label widget.
-func (x *Frame) SetLabel(LabelVar string) {
+func (x *Frame) SetLabel(LabelVar *string) {
 
-	xFrameSetLabel(x.GoPointer(), LabelVar)
+	xFrameSetLabel(x.GoPointer(), core.NullableStringToPtr(LabelVar))
 
 }
 
@@ -244,7 +244,7 @@ func (c *Frame) SetGoPointer(ptr uintptr) {
 func (x *Frame) SetPropertyLabel(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("label", &v)
 }
 

@@ -32,15 +32,15 @@ func ShowAboutDialog(ParentVar *gtk.Widget, FirstPropertyNameVar string, varArgs
 
 }
 
-var xShowAboutDialogFromAppdata func(uintptr, string, string, string, ...interface{})
+var xShowAboutDialogFromAppdata func(uintptr, string, uintptr, string, ...interface{})
 
 // A convenience function for showing an application’s about dialog from
 // AppStream metadata.
 //
 // See [ctor@AboutDialog.new_from_appdata] for details.
-func ShowAboutDialogFromAppdata(ParentVar *gtk.Widget, ResourcePathVar string, ReleaseNotesVersionVar string, FirstPropertyNameVar string, varArgs ...interface{}) {
+func ShowAboutDialogFromAppdata(ParentVar *gtk.Widget, ResourcePathVar string, ReleaseNotesVersionVar *string, FirstPropertyNameVar string, varArgs ...interface{}) {
 
-	xShowAboutDialogFromAppdata(ParentVar.GoPointer(), ResourcePathVar, ReleaseNotesVersionVar, FirstPropertyNameVar, varArgs...)
+	xShowAboutDialogFromAppdata(ParentVar.GoPointer(), ResourcePathVar, core.NullableStringToPtr(ReleaseNotesVersionVar), FirstPropertyNameVar, varArgs...)
 
 }
 
@@ -253,7 +253,7 @@ func NewAboutDialog() *AboutDialog {
 	return cls
 }
 
-var xNewAboutDialogFromAppdata func(string, string) uintptr
+var xNewAboutDialogFromAppdata func(string, uintptr) uintptr
 
 // Creates a new `AdwAboutDialog` using AppStream metadata.
 //
@@ -276,10 +276,10 @@ var xNewAboutDialogFromAppdata func(string, string) uintptr
 // [property@AboutDialog:release-notes-version] is set to match it, while
 // [property@AboutDialog:release-notes] is set from the AppStream release
 // description for that version.
-func NewAboutDialogFromAppdata(ResourcePathVar string, ReleaseNotesVersionVar string) *AboutDialog {
+func NewAboutDialogFromAppdata(ResourcePathVar string, ReleaseNotesVersionVar *string) *AboutDialog {
 	var cls *AboutDialog
 
-	cret := xNewAboutDialogFromAppdata(ResourcePathVar, ReleaseNotesVersionVar)
+	cret := xNewAboutDialogFromAppdata(ResourcePathVar, core.NullableStringToPtr(ReleaseNotesVersionVar))
 
 	if cret == 0 {
 		return nil
@@ -290,7 +290,7 @@ func NewAboutDialogFromAppdata(ResourcePathVar string, ReleaseNotesVersionVar st
 	return cls
 }
 
-var xAboutDialogAddAcknowledgementSection func(uintptr, string, []string)
+var xAboutDialogAddAcknowledgementSection func(uintptr, uintptr, []string)
 
 // Adds a section to the Acknowledgements page.
 //
@@ -309,13 +309,13 @@ var xAboutDialogAddAcknowledgementSection func(uintptr, string, []string)
 // * [property@AboutDialog:documenters]
 // * [property@AboutDialog:translator-credits]
 // * [method@AboutDialog.add_credit_section]
-func (x *AboutDialog) AddAcknowledgementSection(NameVar string, PeopleVar []string) {
+func (x *AboutDialog) AddAcknowledgementSection(NameVar *string, PeopleVar []string) {
 
-	xAboutDialogAddAcknowledgementSection(x.GoPointer(), NameVar, PeopleVar)
+	xAboutDialogAddAcknowledgementSection(x.GoPointer(), core.NullableStringToPtr(NameVar), PeopleVar)
 
 }
 
-var xAboutDialogAddCreditSection func(uintptr, string, []string)
+var xAboutDialogAddCreditSection func(uintptr, uintptr, []string)
 
 // Adds an extra section to the Credits page.
 //
@@ -332,13 +332,13 @@ var xAboutDialogAddCreditSection func(uintptr, string, []string)
 // * [property@AboutDialog:documenters]
 // * [property@AboutDialog:translator-credits]
 // * [method@AboutDialog.add_acknowledgement_section]
-func (x *AboutDialog) AddCreditSection(NameVar string, PeopleVar []string) {
+func (x *AboutDialog) AddCreditSection(NameVar *string, PeopleVar []string) {
 
-	xAboutDialogAddCreditSection(x.GoPointer(), NameVar, PeopleVar)
+	xAboutDialogAddCreditSection(x.GoPointer(), core.NullableStringToPtr(NameVar), PeopleVar)
 
 }
 
-var xAboutDialogAddLegalSection func(uintptr, string, string, gtk.License, string)
+var xAboutDialogAddLegalSection func(uintptr, string, uintptr, gtk.License, uintptr)
 
 // Adds an extra section to the Legal page.
 //
@@ -385,9 +385,9 @@ var xAboutDialogAddLegalSection func(uintptr, string, string, gtk.License, strin
 //	"Something completely custom here.");
 //
 // ```
-func (x *AboutDialog) AddLegalSection(TitleVar string, CopyrightVar string, LicenseTypeVar gtk.License, LicenseVar string) {
+func (x *AboutDialog) AddLegalSection(TitleVar string, CopyrightVar *string, LicenseTypeVar gtk.License, LicenseVar *string) {
 
-	xAboutDialogAddLegalSection(x.GoPointer(), TitleVar, CopyrightVar, LicenseTypeVar, LicenseVar)
+	xAboutDialogAddLegalSection(x.GoPointer(), TitleVar, core.NullableStringToPtr(CopyrightVar), LicenseTypeVar, core.NullableStringToPtr(LicenseVar))
 
 }
 
@@ -1002,7 +1002,7 @@ func (c *AboutDialog) SetGoPointer(ptr uintptr) {
 func (x *AboutDialog) SetPropertyApplicationIcon(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("application-icon", &v)
 }
 
@@ -1023,7 +1023,7 @@ func (x *AboutDialog) GetPropertyApplicationIcon() string {
 func (x *AboutDialog) SetPropertyApplicationName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("application-name", &v)
 }
 
@@ -1092,7 +1092,7 @@ func (x *AboutDialog) GetPropertyArtists() []string {
 func (x *AboutDialog) SetPropertyComments(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("comments", &v)
 }
 
@@ -1123,7 +1123,7 @@ func (x *AboutDialog) GetPropertyComments() string {
 func (x *AboutDialog) SetPropertyCopyright(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("copyright", &v)
 }
 
@@ -1159,7 +1159,7 @@ func (x *AboutDialog) GetPropertyCopyright() string {
 func (x *AboutDialog) SetPropertyDebugInfo(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("debug-info", &v)
 }
 
@@ -1191,7 +1191,7 @@ func (x *AboutDialog) GetPropertyDebugInfo() string {
 func (x *AboutDialog) SetPropertyDebugInfoFilename(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("debug-info-filename", &v)
 }
 
@@ -1267,7 +1267,7 @@ func (x *AboutDialog) GetPropertyDesigners() []string {
 func (x *AboutDialog) SetPropertyDeveloperName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("developer-name", &v)
 }
 
@@ -1385,7 +1385,7 @@ func (x *AboutDialog) GetPropertyDocumenters() []string {
 func (x *AboutDialog) SetPropertyIssueUrl(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("issue-url", &v)
 }
 
@@ -1418,7 +1418,7 @@ func (x *AboutDialog) GetPropertyIssueUrl() string {
 func (x *AboutDialog) SetPropertyLicense(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("license", &v)
 }
 
@@ -1472,7 +1472,7 @@ func (x *AboutDialog) GetPropertyLicense() string {
 func (x *AboutDialog) SetPropertyReleaseNotes(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("release-notes", &v)
 }
 
@@ -1523,7 +1523,7 @@ func (x *AboutDialog) GetPropertyReleaseNotes() string {
 func (x *AboutDialog) SetPropertyReleaseNotesVersion(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("release-notes-version", &v)
 }
 
@@ -1553,7 +1553,7 @@ func (x *AboutDialog) GetPropertyReleaseNotesVersion() string {
 func (x *AboutDialog) SetPropertySupportUrl(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("support-url", &v)
 }
 
@@ -1589,7 +1589,7 @@ func (x *AboutDialog) GetPropertySupportUrl() string {
 func (x *AboutDialog) SetPropertyTranslatorCredits(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("translator-credits", &v)
 }
 
@@ -1628,7 +1628,7 @@ func (x *AboutDialog) GetPropertyTranslatorCredits() string {
 func (x *AboutDialog) SetPropertyVersion(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("version", &v)
 }
 
@@ -1655,7 +1655,7 @@ func (x *AboutDialog) GetPropertyVersion() string {
 func (x *AboutDialog) SetPropertyWebsite(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("website", &v)
 }
 

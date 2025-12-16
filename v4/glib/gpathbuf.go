@@ -116,12 +116,12 @@ func (x *PathBuf) Init() *PathBuf {
 	return cret
 }
 
-var xPathBufInitFromPath func(uintptr, string) *PathBuf
+var xPathBufInitFromPath func(uintptr, uintptr) *PathBuf
 
 // Initializes a `GPathBuf` instance with the given path.
-func (x *PathBuf) InitFromPath(PathVar string) *PathBuf {
+func (x *PathBuf) InitFromPath(PathVar *string) *PathBuf {
 
-	cret := xPathBufInitFromPath(x.GoPointer(), PathVar)
+	cret := xPathBufInitFromPath(x.GoPointer(), core.NullableStringToPtr(PathVar))
 	return cret
 }
 
@@ -191,7 +191,7 @@ func (x *PathBuf) Push(PathVar string) *PathBuf {
 	return cret
 }
 
-var xPathBufSetExtension func(uintptr, string) bool
+var xPathBufSetExtension func(uintptr, uintptr) bool
 
 // Adds an extension to the file name in the path buffer.
 //
@@ -199,9 +199,9 @@ var xPathBufSetExtension func(uintptr, string) bool
 //
 // If the path buffer does not have a file name set, this function returns
 // `FALSE` and leaves the path buffer unmodified.
-func (x *PathBuf) SetExtension(ExtensionVar string) bool {
+func (x *PathBuf) SetExtension(ExtensionVar *string) bool {
 
-	cret := xPathBufSetExtension(x.GoPointer(), ExtensionVar)
+	cret := xPathBufSetExtension(x.GoPointer(), core.NullableStringToPtr(ExtensionVar))
 	return cret
 }
 

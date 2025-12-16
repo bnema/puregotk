@@ -107,7 +107,7 @@ const (
 	GModuleErrorCheckFailedValue ModuleError = 1
 )
 
-var xModuleBuildPath func(string, string) string
+var xModuleBuildPath func(uintptr, string) string
 
 // A portable way to build the filename of a module. The platform-specific
 // prefix and suffix are added to the filename, if needed, and the result
@@ -122,9 +122,9 @@ var xModuleBuildPath func(string, string) string
 // @directory of `/lib` and a @module_name of "mylibrary" will return
 // `/lib/libmylibrary.so`. On a Windows system, using `\Windows` as the
 // directory it will return `\Windows\mylibrary.dll`.
-func ModuleBuildPath(DirectoryVar string, ModuleNameVar string) string {
+func ModuleBuildPath(DirectoryVar *string, ModuleNameVar string) string {
 
-	cret := xModuleBuildPath(DirectoryVar, ModuleNameVar)
+	cret := xModuleBuildPath(core.NullableStringToPtr(DirectoryVar), ModuleNameVar)
 	return cret
 }
 

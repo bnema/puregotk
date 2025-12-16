@@ -235,7 +235,37 @@ func NewDBusObjectManagerClientForBusSync(BusTypeVar BusType, FlagsVar DBusObjec
 	var cls *DBusObjectManagerClient
 	var cerr *glib.Error
 
-	cret := xNewDBusObjectManagerClientForBusSync(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), &cerr)
+	var GetProxyTypeFuncVarRef uintptr
+	if GetProxyTypeFuncVar != nil {
+		GetProxyTypeFuncVarPtr := uintptr(unsafe.Pointer(GetProxyTypeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeFuncVarPtr); ok {
+			GetProxyTypeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 uintptr) types.GType {
+				cbFn := *GetProxyTypeFuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			GetProxyTypeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(GetProxyTypeFuncVarPtr, GetProxyTypeFuncVarRef)
+		}
+	}
+
+	var GetProxyTypeDestroyNotifyVarRef uintptr
+	if GetProxyTypeDestroyNotifyVar != nil {
+		GetProxyTypeDestroyNotifyVarPtr := uintptr(unsafe.Pointer(GetProxyTypeDestroyNotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeDestroyNotifyVarPtr); ok {
+			GetProxyTypeDestroyNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *GetProxyTypeDestroyNotifyVar
+				cbFn(arg0)
+			}
+			GetProxyTypeDestroyNotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(GetProxyTypeDestroyNotifyVarPtr, GetProxyTypeDestroyNotifyVarRef)
+		}
+	}
+
+	cret := xNewDBusObjectManagerClientForBusSync(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -249,18 +279,48 @@ func NewDBusObjectManagerClientForBusSync(BusTypeVar BusType, FlagsVar DBusObjec
 
 }
 
-var xNewDBusObjectManagerClientSync func(uintptr, DBusObjectManagerClientFlags, string, string, uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
+var xNewDBusObjectManagerClientSync func(uintptr, DBusObjectManagerClientFlags, uintptr, string, uintptr, uintptr, uintptr, uintptr, **glib.Error) uintptr
 
 // Creates a new #GDBusObjectManagerClient object.
 //
 // This is a synchronous failable constructor - the calling thread is
 // blocked until a reply is received. See g_dbus_object_manager_client_new()
 // for the asynchronous version.
-func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBusObjectManagerClientFlags, NameVar string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable) (*DBusObjectManagerClient, error) {
+func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBusObjectManagerClientFlags, NameVar *string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable) (*DBusObjectManagerClient, error) {
 	var cls *DBusObjectManagerClient
 	var cerr *glib.Error
 
-	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), &cerr)
+	var GetProxyTypeFuncVarRef uintptr
+	if GetProxyTypeFuncVar != nil {
+		GetProxyTypeFuncVarPtr := uintptr(unsafe.Pointer(GetProxyTypeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeFuncVarPtr); ok {
+			GetProxyTypeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 uintptr) types.GType {
+				cbFn := *GetProxyTypeFuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			GetProxyTypeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(GetProxyTypeFuncVarPtr, GetProxyTypeFuncVarRef)
+		}
+	}
+
+	var GetProxyTypeDestroyNotifyVarRef uintptr
+	if GetProxyTypeDestroyNotifyVar != nil {
+		GetProxyTypeDestroyNotifyVarPtr := uintptr(unsafe.Pointer(GetProxyTypeDestroyNotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeDestroyNotifyVarPtr); ok {
+			GetProxyTypeDestroyNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *GetProxyTypeDestroyNotifyVar
+				cbFn(arg0)
+			}
+			GetProxyTypeDestroyNotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(GetProxyTypeDestroyNotifyVarPtr, GetProxyTypeDestroyNotifyVarRef)
+		}
+	}
+
+	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, core.NullableStringToPtr(NameVar), ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -391,7 +451,7 @@ func (x *DBusObjectManagerClient) GetPropertyGetProxyTypeUserData() uintptr {
 func (x *DBusObjectManagerClient) SetPropertyName(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("name", &v)
 }
 
@@ -418,7 +478,7 @@ func (x *DBusObjectManagerClient) GetPropertyNameOwner() string {
 func (x *DBusObjectManagerClient) SetPropertyObjectPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("object-path", &v)
 }
 
@@ -666,7 +726,52 @@ var xDBusObjectManagerClientNew func(uintptr, DBusObjectManagerClientFlags, stri
 // g_dbus_object_manager_client_new_sync() for the synchronous version.
 func DBusObjectManagerClientNew(ConnectionVar *DBusConnection, FlagsVar DBusObjectManagerClientFlags, NameVar string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusObjectManagerClientNew(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var GetProxyTypeFuncVarRef uintptr
+	if GetProxyTypeFuncVar != nil {
+		GetProxyTypeFuncVarPtr := uintptr(unsafe.Pointer(GetProxyTypeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeFuncVarPtr); ok {
+			GetProxyTypeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 uintptr) types.GType {
+				cbFn := *GetProxyTypeFuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			GetProxyTypeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(GetProxyTypeFuncVarPtr, GetProxyTypeFuncVarRef)
+		}
+	}
+
+	var GetProxyTypeDestroyNotifyVarRef uintptr
+	if GetProxyTypeDestroyNotifyVar != nil {
+		GetProxyTypeDestroyNotifyVarPtr := uintptr(unsafe.Pointer(GetProxyTypeDestroyNotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeDestroyNotifyVarPtr); ok {
+			GetProxyTypeDestroyNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *GetProxyTypeDestroyNotifyVar
+				cbFn(arg0)
+			}
+			GetProxyTypeDestroyNotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(GetProxyTypeDestroyNotifyVarPtr, GetProxyTypeDestroyNotifyVarRef)
+		}
+	}
+
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusObjectManagerClientNew(ConnectionVar.GoPointer(), FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -683,7 +788,52 @@ var xDBusObjectManagerClientNewForBus func(BusType, DBusObjectManagerClientFlags
 // g_dbus_object_manager_client_new_for_bus_sync() for the synchronous version.
 func DBusObjectManagerClientNewForBus(BusTypeVar BusType, FlagsVar DBusObjectManagerClientFlags, NameVar string, ObjectPathVar string, GetProxyTypeFuncVar *DBusProxyTypeFunc, GetProxyTypeUserDataVar uintptr, GetProxyTypeDestroyNotifyVar *glib.DestroyNotify, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xDBusObjectManagerClientNewForBus(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, glib.NewCallbackNullable(GetProxyTypeFuncVar), GetProxyTypeUserDataVar, glib.NewCallbackNullable(GetProxyTypeDestroyNotifyVar), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var GetProxyTypeFuncVarRef uintptr
+	if GetProxyTypeFuncVar != nil {
+		GetProxyTypeFuncVarPtr := uintptr(unsafe.Pointer(GetProxyTypeFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeFuncVarPtr); ok {
+			GetProxyTypeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 uintptr) types.GType {
+				cbFn := *GetProxyTypeFuncVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			GetProxyTypeFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(GetProxyTypeFuncVarPtr, GetProxyTypeFuncVarRef)
+		}
+	}
+
+	var GetProxyTypeDestroyNotifyVarRef uintptr
+	if GetProxyTypeDestroyNotifyVar != nil {
+		GetProxyTypeDestroyNotifyVarPtr := uintptr(unsafe.Pointer(GetProxyTypeDestroyNotifyVar))
+		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeDestroyNotifyVarPtr); ok {
+			GetProxyTypeDestroyNotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *GetProxyTypeDestroyNotifyVar
+				cbFn(arg0)
+			}
+			GetProxyTypeDestroyNotifyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(GetProxyTypeDestroyNotifyVarPtr, GetProxyTypeDestroyNotifyVarRef)
+		}
+	}
+
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xDBusObjectManagerClientNewForBus(BusTypeVar, FlagsVar, NameVar, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

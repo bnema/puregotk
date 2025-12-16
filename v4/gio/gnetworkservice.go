@@ -136,7 +136,7 @@ func (c *NetworkService) SetGoPointer(ptr uintptr) {
 func (x *NetworkService) SetPropertyDomain(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("domain", &v)
 }
 
@@ -153,7 +153,7 @@ func (x *NetworkService) GetPropertyDomain() string {
 func (x *NetworkService) SetPropertyProtocol(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("protocol", &v)
 }
 
@@ -170,7 +170,7 @@ func (x *NetworkService) GetPropertyProtocol() string {
 func (x *NetworkService) SetPropertyScheme(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("scheme", &v)
 }
 
@@ -187,7 +187,7 @@ func (x *NetworkService) GetPropertyScheme() string {
 func (x *NetworkService) SetPropertyService(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("service", &v)
 }
 

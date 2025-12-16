@@ -203,7 +203,7 @@ func NewTlsCertificateFromPem(DataVar string, LengthVar int) (*TlsCertificate, e
 
 }
 
-var xNewTlsCertificateFromPkcs11Uris func(string, string, **glib.Error) uintptr
+var xNewTlsCertificateFromPkcs11Uris func(string, uintptr, **glib.Error) uintptr
 
 // Creates a #GTlsCertificate from a
 // [PKCS \#11](https://docs.oasis-open.org/pkcs11/pkcs11-base/v3.0/os/pkcs11-base-v3.0-os.html) URI.
@@ -232,11 +232,11 @@ var xNewTlsCertificateFromPkcs11Uris func(string, string, **glib.Error) uintptr
 // @private_key_pkcs11_uri allows using a private key exposed under a different URI.
 //
 // Note that the private key is not accessed until usage and may fail or require a PIN later.
-func NewTlsCertificateFromPkcs11Uris(Pkcs11UriVar string, PrivateKeyPkcs11UriVar string) (*TlsCertificate, error) {
+func NewTlsCertificateFromPkcs11Uris(Pkcs11UriVar string, PrivateKeyPkcs11UriVar *string) (*TlsCertificate, error) {
 	var cls *TlsCertificate
 	var cerr *glib.Error
 
-	cret := xNewTlsCertificateFromPkcs11Uris(Pkcs11UriVar, PrivateKeyPkcs11UriVar, &cerr)
+	cret := xNewTlsCertificateFromPkcs11Uris(Pkcs11UriVar, core.NullableStringToPtr(PrivateKeyPkcs11UriVar), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -250,7 +250,7 @@ func NewTlsCertificateFromPkcs11Uris(Pkcs11UriVar string, PrivateKeyPkcs11UriVar
 
 }
 
-var xNewTlsCertificateFromPkcs12 func([]byte, uint, string, **glib.Error) uintptr
+var xNewTlsCertificateFromPkcs12 func([]byte, uint, uintptr, **glib.Error) uintptr
 
 // Creates a #GTlsCertificate from the data in @data. It must contain
 // a certificate and matching private key.
@@ -269,11 +269,11 @@ var xNewTlsCertificateFromPkcs12 func([]byte, uint, string, **glib.Error) uintpt
 // %G_IO_ERROR_NOT_SUPPORTED.
 //
 // Other parsing failures will error with %G_TLS_ERROR_BAD_CERTIFICATE.
-func NewTlsCertificateFromPkcs12(DataVar []byte, LengthVar uint, PasswordVar string) (*TlsCertificate, error) {
+func NewTlsCertificateFromPkcs12(DataVar []byte, LengthVar uint, PasswordVar *string) (*TlsCertificate, error) {
 	var cls *TlsCertificate
 	var cerr *glib.Error
 
-	cret := xNewTlsCertificateFromPkcs12(DataVar, LengthVar, PasswordVar, &cerr)
+	cret := xNewTlsCertificateFromPkcs12(DataVar, LengthVar, core.NullableStringToPtr(PasswordVar), &cerr)
 
 	if cret == 0 {
 		return nil, cerr
@@ -455,7 +455,7 @@ func (x *TlsCertificate) GetPropertyCertificate() []byte {
 func (x *TlsCertificate) SetPropertyCertificatePem(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("certificate-pem", &v)
 }
 
@@ -527,7 +527,7 @@ func (x *TlsCertificate) GetPropertyNotValidBefore() uintptr {
 func (x *TlsCertificate) SetPropertyPassword(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("password", &v)
 }
 
@@ -540,7 +540,7 @@ func (x *TlsCertificate) SetPropertyPassword(value string) {
 func (x *TlsCertificate) SetPropertyPkcs11Uri(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("pkcs11-uri", &v)
 }
 
@@ -642,7 +642,7 @@ func (x *TlsCertificate) GetPropertyPrivateKey() []byte {
 func (x *TlsCertificate) SetPropertyPrivateKeyPem(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("private-key-pem", &v)
 }
 
@@ -677,7 +677,7 @@ func (x *TlsCertificate) GetPropertyPrivateKeyPem() string {
 func (x *TlsCertificate) SetPropertyPrivateKeyPkcs11Uri(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("private-key-pkcs11-uri", &v)
 }
 

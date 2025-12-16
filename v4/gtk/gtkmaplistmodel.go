@@ -86,7 +86,37 @@ var xNewMapListModel func(uintptr, uintptr, uintptr, uintptr) uintptr
 func NewMapListModel(ModelVar gio.ListModel, MapFuncVar *MapListModelMapFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) *MapListModel {
 	var cls *MapListModel
 
-	cret := xNewMapListModel(ModelVar.GoPointer(), glib.NewCallbackNullable(MapFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	var MapFuncVarRef uintptr
+	if MapFuncVar != nil {
+		MapFuncVarPtr := uintptr(unsafe.Pointer(MapFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(MapFuncVarPtr); ok {
+			MapFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
+				cbFn := *MapFuncVar
+				return cbFn(arg0, arg1)
+			}
+			MapFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(MapFuncVarPtr, MapFuncVarRef)
+		}
+	}
+
+	var UserDestroyVarRef uintptr
+	if UserDestroyVar != nil {
+		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
+			UserDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDestroyVar
+				cbFn(arg0)
+			}
+			UserDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+		}
+	}
+
+	cret := xNewMapListModel(ModelVar.GoPointer(), MapFuncVarRef, UserDataVar, UserDestroyVarRef)
 
 	if cret == 0 {
 		return nil
@@ -137,7 +167,37 @@ var xMapListModelSetMapFunc func(uintptr, uintptr, uintptr, uintptr)
 // function returns items of the appropriate type.
 func (x *MapListModel) SetMapFunc(MapFuncVar *MapListModelMapFunc, UserDataVar uintptr, UserDestroyVar *glib.DestroyNotify) {
 
-	xMapListModelSetMapFunc(x.GoPointer(), glib.NewCallbackNullable(MapFuncVar), UserDataVar, glib.NewCallback(UserDestroyVar))
+	var MapFuncVarRef uintptr
+	if MapFuncVar != nil {
+		MapFuncVarPtr := uintptr(unsafe.Pointer(MapFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(MapFuncVarPtr); ok {
+			MapFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
+				cbFn := *MapFuncVar
+				return cbFn(arg0, arg1)
+			}
+			MapFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(MapFuncVarPtr, MapFuncVarRef)
+		}
+	}
+
+	var UserDestroyVarRef uintptr
+	if UserDestroyVar != nil {
+		UserDestroyVarPtr := uintptr(unsafe.Pointer(UserDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDestroyVarPtr); ok {
+			UserDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDestroyVar
+				cbFn(arg0)
+			}
+			UserDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+		}
+	}
+
+	xMapListModelSetMapFunc(x.GoPointer(), MapFuncVarRef, UserDataVar, UserDestroyVarRef)
 
 }
 

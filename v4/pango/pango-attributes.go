@@ -390,7 +390,22 @@ var xAttrListFilter func(uintptr, uintptr, uintptr) *AttrList
 // inserts them into a new list.
 func (x *AttrList) Filter(FuncVar *AttrFilterFunc, DataVar uintptr) *AttrList {
 
-	cret := xAttrListFilter(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 *Attribute, arg1 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xAttrListFilter(x.GoPointer(), FuncVarRef, DataVar)
 	return cret
 }
 
@@ -1323,7 +1338,37 @@ var xAttrShapeNewWithData func(*Rectangle, *Rectangle, uintptr, uintptr, uintptr
 // rendering the glyph.
 func AttrShapeNewWithData(InkRectVar *Rectangle, LogicalRectVar *Rectangle, DataVar uintptr, CopyFuncVar *AttrDataCopyFunc, DestroyFuncVar *glib.DestroyNotify) *Attribute {
 
-	cret := xAttrShapeNewWithData(InkRectVar, LogicalRectVar, DataVar, glib.NewCallbackNullable(CopyFuncVar), glib.NewCallbackNullable(DestroyFuncVar))
+	var CopyFuncVarRef uintptr
+	if CopyFuncVar != nil {
+		CopyFuncVarPtr := uintptr(unsafe.Pointer(CopyFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(CopyFuncVarPtr); ok {
+			CopyFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) uintptr {
+				cbFn := *CopyFuncVar
+				return cbFn(arg0)
+			}
+			CopyFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CopyFuncVarPtr, CopyFuncVarRef)
+		}
+	}
+
+	var DestroyFuncVarRef uintptr
+	if DestroyFuncVar != nil {
+		DestroyFuncVarPtr := uintptr(unsafe.Pointer(DestroyFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyFuncVarPtr); ok {
+			DestroyFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyFuncVar
+				cbFn(arg0)
+			}
+			DestroyFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyFuncVarPtr, DestroyFuncVarRef)
+		}
+	}
+
+	cret := xAttrShapeNewWithData(InkRectVar, LogicalRectVar, DataVar, CopyFuncVarRef, DestroyFuncVarRef)
 	return cret
 }
 

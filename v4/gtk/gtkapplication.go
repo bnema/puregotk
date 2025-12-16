@@ -199,7 +199,7 @@ func ApplicationNewFromInternalPtr(ptr uintptr) *Application {
 	return cls
 }
 
-var xNewApplication func(string, gio.ApplicationFlags) uintptr
+var xNewApplication func(uintptr, gio.ApplicationFlags) uintptr
 
 // Creates a new application instance.
 //
@@ -219,10 +219,10 @@ var xNewApplication func(string, gio.ApplicationFlags) uintptr
 //
 // If no application ID is given then some features (most notably application
 // uniqueness) will be disabled.
-func NewApplication(ApplicationIdVar string, FlagsVar gio.ApplicationFlags) *Application {
+func NewApplication(ApplicationIdVar *string, FlagsVar gio.ApplicationFlags) *Application {
 	var cls *Application
 
-	cret := xNewApplication(ApplicationIdVar, FlagsVar)
+	cret := xNewApplication(core.NullableStringToPtr(ApplicationIdVar), FlagsVar)
 
 	if cret == 0 {
 		return nil
@@ -385,7 +385,7 @@ func (x *Application) GetWindows() *glib.List {
 	return cret
 }
 
-var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, string) uint
+var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, uintptr) uint
 
 // Informs the session manager that certain types of actions should be
 // inhibited.
@@ -414,9 +414,9 @@ var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, string) 
 // The cookie that is returned by this function  should be used as an
 // argument to [method@Gtk.Application.uninhibit] in order to remove
 // the request.
-func (x *Application) Inhibit(WindowVar *Window, FlagsVar ApplicationInhibitFlags, ReasonVar string) uint {
+func (x *Application) Inhibit(WindowVar *Window, FlagsVar ApplicationInhibitFlags, ReasonVar *string) uint {
 
-	cret := xApplicationInhibit(x.GoPointer(), WindowVar.GoPointer(), FlagsVar, ReasonVar)
+	cret := xApplicationInhibit(x.GoPointer(), WindowVar.GoPointer(), FlagsVar, core.NullableStringToPtr(ReasonVar))
 	return cret
 }
 

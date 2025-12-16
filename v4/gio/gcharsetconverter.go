@@ -104,7 +104,7 @@ func (c *CharsetConverter) SetGoPointer(ptr uintptr) {
 func (x *CharsetConverter) SetPropertyFromCharset(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("from-charset", &v)
 }
 
@@ -121,7 +121,7 @@ func (x *CharsetConverter) GetPropertyFromCharset() string {
 func (x *CharsetConverter) SetPropertyToCharset(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("to-charset", &v)
 }
 

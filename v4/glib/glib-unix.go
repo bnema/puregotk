@@ -99,7 +99,22 @@ var xUnixFdAdd func(int, IOCondition, uintptr, uintptr) uint
 // The source will never close the fd -- you must do it yourself.
 func UnixFdAdd(FdVar int, ConditionVar IOCondition, FunctionVar *UnixFDSourceFunc, UserDataVar uintptr) uint {
 
-	cret := xUnixFdAdd(FdVar, ConditionVar, NewCallback(FunctionVar), UserDataVar)
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 int, arg1 IOCondition, arg2 uintptr) bool {
+				cbFn := *FunctionVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	cret := xUnixFdAdd(FdVar, ConditionVar, FunctionVarRef, UserDataVar)
 	return cret
 }
 
@@ -113,7 +128,37 @@ var xUnixFdAddFull func(int, int, IOCondition, uintptr, uintptr, uintptr) uint
 // @user_data.
 func UnixFdAddFull(PriorityVar int, FdVar int, ConditionVar IOCondition, FunctionVar *UnixFDSourceFunc, UserDataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xUnixFdAddFull(PriorityVar, FdVar, ConditionVar, NewCallback(FunctionVar), UserDataVar, NewCallback(NotifyVar))
+	var FunctionVarRef uintptr
+	if FunctionVar != nil {
+		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
+		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
+			FunctionVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 int, arg1 IOCondition, arg2 uintptr) bool {
+				cbFn := *FunctionVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FunctionVarRef = purego.NewCallback(fcb)
+			SaveCallback(FunctionVarPtr, FunctionVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	cret := xUnixFdAddFull(PriorityVar, FdVar, ConditionVar, FunctionVarRef, UserDataVar, NotifyVarRef)
 	return cret
 }
 
@@ -211,7 +256,22 @@ var xUnixSignalAdd func(int, uintptr, uintptr) uint
 // using g_source_remove().
 func UnixSignalAdd(SignumVar int, HandlerVar *SourceFunc, UserDataVar uintptr) uint {
 
-	cret := xUnixSignalAdd(SignumVar, NewCallback(HandlerVar), UserDataVar)
+	var HandlerVarRef uintptr
+	if HandlerVar != nil {
+		HandlerVarPtr := uintptr(unsafe.Pointer(HandlerVar))
+		if cbRefPtr, ok := GetCallback(HandlerVarPtr); ok {
+			HandlerVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *HandlerVar
+				return cbFn(arg0)
+			}
+			HandlerVarRef = purego.NewCallback(fcb)
+			SaveCallback(HandlerVarPtr, HandlerVarRef)
+		}
+	}
+
+	cret := xUnixSignalAdd(SignumVar, HandlerVarRef, UserDataVar)
 	return cret
 }
 
@@ -222,7 +282,37 @@ var xUnixSignalAddFull func(int, int, uintptr, uintptr, uintptr) uint
 // using g_source_remove().
 func UnixSignalAddFull(PriorityVar int, SignumVar int, HandlerVar *SourceFunc, UserDataVar uintptr, NotifyVar *DestroyNotify) uint {
 
-	cret := xUnixSignalAddFull(PriorityVar, SignumVar, NewCallback(HandlerVar), UserDataVar, NewCallback(NotifyVar))
+	var HandlerVarRef uintptr
+	if HandlerVar != nil {
+		HandlerVarPtr := uintptr(unsafe.Pointer(HandlerVar))
+		if cbRefPtr, ok := GetCallback(HandlerVarPtr); ok {
+			HandlerVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) bool {
+				cbFn := *HandlerVar
+				return cbFn(arg0)
+			}
+			HandlerVarRef = purego.NewCallback(fcb)
+			SaveCallback(HandlerVarPtr, HandlerVarRef)
+		}
+	}
+
+	var NotifyVarRef uintptr
+	if NotifyVar != nil {
+		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
+		if cbRefPtr, ok := GetCallback(NotifyVarPtr); ok {
+			NotifyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *NotifyVar
+				cbFn(arg0)
+			}
+			NotifyVarRef = purego.NewCallback(fcb)
+			SaveCallback(NotifyVarPtr, NotifyVarRef)
+		}
+	}
+
+	cret := xUnixSignalAddFull(PriorityVar, SignumVar, HandlerVarRef, UserDataVar, NotifyVarRef)
 	return cret
 }
 

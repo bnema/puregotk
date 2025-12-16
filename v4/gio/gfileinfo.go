@@ -1249,12 +1249,12 @@ func (x *FileInfo) HasNamespace(NameSpaceVar string) bool {
 	return cret
 }
 
-var xFileInfoListAttributes func(uintptr, string) []string
+var xFileInfoListAttributes func(uintptr, uintptr) []string
 
 // Lists the file info structure's attributes.
-func (x *FileInfo) ListAttributes(NameSpaceVar string) []string {
+func (x *FileInfo) ListAttributes(NameSpaceVar *string) []string {
 
-	cret := xFileInfoListAttributes(x.GoPointer(), NameSpaceVar)
+	cret := xFileInfoListAttributes(x.GoPointer(), core.NullableStringToPtr(NameSpaceVar))
 	return cret
 }
 

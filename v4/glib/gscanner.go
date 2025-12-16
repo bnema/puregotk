@@ -223,7 +223,22 @@ var xScannerScopeForeachSymbol func(uintptr, uint, uintptr, uintptr)
 // parameter.
 func (x *Scanner) ScopeForeachSymbol(ScopeIdVar uint, FuncVar *HFunc, UserDataVar uintptr) {
 
-	xScannerScopeForeachSymbol(x.GoPointer(), ScopeIdVar, NewCallback(FuncVar), UserDataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xScannerScopeForeachSymbol(x.GoPointer(), ScopeIdVar, FuncVarRef, UserDataVar)
 
 }
 

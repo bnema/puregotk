@@ -124,7 +124,7 @@ func NewComboBoxTextWithEntry() *ComboBoxText {
 	return cls
 }
 
-var xComboBoxTextAppend func(uintptr, string, string)
+var xComboBoxTextAppend func(uintptr, uintptr, string)
 
 // Appends @text to the list of strings stored in @combo_box.
 //
@@ -132,9 +132,9 @@ var xComboBoxTextAppend func(uintptr, string, string)
 //
 // This is the same as calling [method@Gtk.ComboBoxText.insert]
 // with a position of -1.
-func (x *ComboBoxText) Append(IdVar string, TextVar string) {
+func (x *ComboBoxText) Append(IdVar *string, TextVar string) {
 
-	xComboBoxTextAppend(x.GoPointer(), IdVar, TextVar)
+	xComboBoxTextAppend(x.GoPointer(), core.NullableStringToPtr(IdVar), TextVar)
 
 }
 
@@ -164,7 +164,7 @@ func (x *ComboBoxText) GetActiveText() string {
 	return cret
 }
 
-var xComboBoxTextInsert func(uintptr, int, string, string)
+var xComboBoxTextInsert func(uintptr, int, uintptr, string)
 
 // Inserts @text at @position in the list of strings stored in @combo_box.
 //
@@ -172,9 +172,9 @@ var xComboBoxTextInsert func(uintptr, int, string, string)
 // See [property@Gtk.ComboBox:id-column].
 //
 // If @position is negative then @text is appended.
-func (x *ComboBoxText) Insert(PositionVar int, IdVar string, TextVar string) {
+func (x *ComboBoxText) Insert(PositionVar int, IdVar *string, TextVar string) {
 
-	xComboBoxTextInsert(x.GoPointer(), PositionVar, IdVar, TextVar)
+	xComboBoxTextInsert(x.GoPointer(), PositionVar, core.NullableStringToPtr(IdVar), TextVar)
 
 }
 
@@ -192,7 +192,7 @@ func (x *ComboBoxText) InsertText(PositionVar int, TextVar string) {
 
 }
 
-var xComboBoxTextPrepend func(uintptr, string, string)
+var xComboBoxTextPrepend func(uintptr, uintptr, string)
 
 // Prepends @text to the list of strings stored in @combo_box.
 //
@@ -200,9 +200,9 @@ var xComboBoxTextPrepend func(uintptr, string, string)
 //
 // This is the same as calling [method@Gtk.ComboBoxText.insert]
 // with a position of 0.
-func (x *ComboBoxText) Prepend(IdVar string, TextVar string) {
+func (x *ComboBoxText) Prepend(IdVar *string, TextVar string) {
 
-	xComboBoxTextPrepend(x.GoPointer(), IdVar, TextVar)
+	xComboBoxTextPrepend(x.GoPointer(), core.NullableStringToPtr(IdVar), TextVar)
 
 }
 

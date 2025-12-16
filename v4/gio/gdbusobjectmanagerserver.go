@@ -186,7 +186,7 @@ func (c *DBusObjectManagerServer) SetGoPointer(ptr uintptr) {
 func (x *DBusObjectManagerServer) SetPropertyObjectPath(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("object-path", &v)
 }
 

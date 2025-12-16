@@ -290,7 +290,37 @@ var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint32
 //   - [method@Gio.Cancellable.release_fd]
 func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, DataDestroyFuncVar *glib.DestroyNotify) uint32 {
 
-	cret := xCancellableConnect(x.GoPointer(), glib.NewCallback(CallbackVar), DataVar, glib.NewCallbackNullable(DataDestroyFuncVar))
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func() {
+				cbFn := *CallbackVar
+				cbFn()
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	var DataDestroyFuncVarRef uintptr
+	if DataDestroyFuncVar != nil {
+		DataDestroyFuncVarPtr := uintptr(unsafe.Pointer(DataDestroyFuncVar))
+		if cbRefPtr, ok := glib.GetCallback(DataDestroyFuncVarPtr); ok {
+			DataDestroyFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DataDestroyFuncVar
+				cbFn(arg0)
+			}
+			DataDestroyFuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DataDestroyFuncVarPtr, DataDestroyFuncVarRef)
+		}
+	}
+
+	cret := xCancellableConnect(x.GoPointer(), CallbackVarRef, DataVar, DataDestroyFuncVarRef)
 	return cret
 }
 

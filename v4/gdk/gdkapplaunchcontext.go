@@ -98,7 +98,7 @@ func (x *AppLaunchContext) SetIcon(IconVar gio.Icon) {
 
 }
 
-var xAppLaunchContextSetIconName func(uintptr, string)
+var xAppLaunchContextSetIconName func(uintptr, uintptr)
 
 // Sets the icon for applications that are launched with this context.
 //
@@ -109,9 +109,9 @@ var xAppLaunchContextSetIconName func(uintptr, string)
 // If neither @icon or @icon_name is set, the icon is taken from either
 // the file that is passed to launched application or from the `GAppInfo`
 // for the launched application itself.
-func (x *AppLaunchContext) SetIconName(IconNameVar string) {
+func (x *AppLaunchContext) SetIconName(IconNameVar *string) {
 
-	xAppLaunchContextSetIconName(x.GoPointer(), IconNameVar)
+	xAppLaunchContextSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
 
 }
 

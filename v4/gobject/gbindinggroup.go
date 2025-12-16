@@ -2,6 +2,8 @@
 package gobject
 
 import (
+	"unsafe"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -71,7 +73,52 @@ var xBindingGroupBindFull func(uintptr, string, uintptr, string, BindingFlags, u
 // See g_object_bind_property_full() for more information.
 func (x *BindingGroup) BindFull(SourcePropertyVar string, TargetVar *Object, TargetPropertyVar string, FlagsVar BindingFlags, TransformToVar *BindingTransformFunc, TransformFromVar *BindingTransformFunc, UserDataVar uintptr, UserDataDestroyVar *glib.DestroyNotify) {
 
-	xBindingGroupBindFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, glib.NewCallbackNullable(TransformToVar), glib.NewCallbackNullable(TransformFromVar), UserDataVar, glib.NewCallback(UserDataDestroyVar))
+	var TransformToVarRef uintptr
+	if TransformToVar != nil {
+		TransformToVarPtr := uintptr(unsafe.Pointer(TransformToVar))
+		if cbRefPtr, ok := glib.GetCallback(TransformToVarPtr); ok {
+			TransformToVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *Value, arg2 *Value, arg3 uintptr) bool {
+				cbFn := *TransformToVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			TransformToVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(TransformToVarPtr, TransformToVarRef)
+		}
+	}
+
+	var TransformFromVarRef uintptr
+	if TransformFromVar != nil {
+		TransformFromVarPtr := uintptr(unsafe.Pointer(TransformFromVar))
+		if cbRefPtr, ok := glib.GetCallback(TransformFromVarPtr); ok {
+			TransformFromVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 *Value, arg2 *Value, arg3 uintptr) bool {
+				cbFn := *TransformFromVar
+				return cbFn(arg0, arg1, arg2, arg3)
+			}
+			TransformFromVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(TransformFromVarPtr, TransformFromVarRef)
+		}
+	}
+
+	var UserDataDestroyVarRef uintptr
+	if UserDataDestroyVar != nil {
+		UserDataDestroyVarPtr := uintptr(unsafe.Pointer(UserDataDestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(UserDataDestroyVarPtr); ok {
+			UserDataDestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *UserDataDestroyVar
+				cbFn(arg0)
+			}
+			UserDataDestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(UserDataDestroyVarPtr, UserDataDestroyVarRef)
+		}
+	}
+
+	xBindingGroupBindFull(x.GoPointer(), SourcePropertyVar, TargetVar.GoPointer(), TargetPropertyVar, FlagsVar, TransformToVarRef, TransformFromVarRef, UserDataVar, UserDataDestroyVarRef)
 
 }
 

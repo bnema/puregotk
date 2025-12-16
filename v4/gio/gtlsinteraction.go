@@ -321,7 +321,22 @@ var xTlsInteractionAskPasswordAsync func(uintptr, uintptr, uintptr, uintptr, uin
 // Certain implementations may not support immediate cancellation.
 func (x *TlsInteraction) AskPasswordAsync(PasswordVar *TlsPassword, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xTlsInteractionAskPasswordAsync(x.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xTlsInteractionAskPasswordAsync(x.GoPointer(), PasswordVar.GoPointer(), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 
@@ -453,7 +468,22 @@ var xTlsInteractionRequestCertificateAsync func(uintptr, uintptr, TlsCertificate
 // request, which will usually abort the TLS connection.
 func (x *TlsInteraction) RequestCertificateAsync(ConnectionVar *TlsConnection, FlagsVar TlsCertificateRequestFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	xTlsInteractionRequestCertificateAsync(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	var CallbackVarRef uintptr
+	if CallbackVar != nil {
+		CallbackVarPtr := uintptr(unsafe.Pointer(CallbackVar))
+		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
+			CallbackVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *CallbackVar
+				cbFn(arg0, arg1, arg2)
+			}
+			CallbackVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+		}
+	}
+
+	xTlsInteractionRequestCertificateAsync(x.GoPointer(), ConnectionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
 
 }
 

@@ -94,7 +94,22 @@ var xTextTagTableForeach func(uintptr, uintptr, uintptr)
 // over it (you can’t add/remove tags).
 func (x *TextTagTable) Foreach(FuncVar *TextTagTableForeach, DataVar uintptr) {
 
-	xTextTagTableForeach(x.GoPointer(), glib.NewCallback(FuncVar), DataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xTextTagTableForeach(x.GoPointer(), FuncVarRef, DataVar)
 
 }
 

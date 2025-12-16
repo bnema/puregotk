@@ -770,7 +770,22 @@ var xParamSpecSetQdataFull func(uintptr, glib.Quark, uintptr, uintptr)
 // g_param_spec_set_qdata() with the same @quark.
 func (x *ParamSpec) SetQdataFull(QuarkVar glib.Quark, DataVar uintptr, DestroyVar *glib.DestroyNotify) {
 
-	xParamSpecSetQdataFull(x.GoPointer(), QuarkVar, DataVar, glib.NewCallbackNullable(DestroyVar))
+	var DestroyVarRef uintptr
+	if DestroyVar != nil {
+		DestroyVarPtr := uintptr(unsafe.Pointer(DestroyVar))
+		if cbRefPtr, ok := glib.GetCallback(DestroyVarPtr); ok {
+			DestroyVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *DestroyVar
+				cbFn(arg0)
+			}
+			DestroyVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+		}
+	}
+
+	xParamSpecSetQdataFull(x.GoPointer(), QuarkVar, DataVar, DestroyVarRef)
 
 }
 
@@ -821,7 +836,7 @@ func (c *ParamSpec) SetGoPointer(ptr uintptr) {
 	c.Ptr = ptr
 }
 
-var xParamSpecInternal func(types.GType, string, string, string, ParamFlags) uintptr
+var xParamSpecInternal func(types.GType, string, uintptr, uintptr, ParamFlags) uintptr
 
 // Creates a new #GParamSpec instance.
 //
@@ -835,10 +850,10 @@ var xParamSpecInternal func(types.GType, string, string, string, ParamFlags) uin
 // omitted, while for other libraries such as GStreamer and its plugins they
 // are essential. When in doubt, follow the conventions used in the
 // surrounding code and supporting libraries.
-func ParamSpecInternal(ParamTypeVar types.GType, NameVar string, NickVar string, BlurbVar string, FlagsVar ParamFlags) *ParamSpec {
+func ParamSpecInternal(ParamTypeVar types.GType, NameVar string, NickVar *string, BlurbVar *string, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xParamSpecInternal(ParamTypeVar, NameVar, NickVar, BlurbVar, FlagsVar)
+	cret := xParamSpecInternal(ParamTypeVar, NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), FlagsVar)
 
 	if cret == 0 {
 		return nil

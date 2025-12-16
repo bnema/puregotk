@@ -116,7 +116,7 @@ func (x *CellRendererProgress) GetPropertyPulse() int {
 func (x *CellRendererProgress) SetPropertyText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("text", &v)
 }
 

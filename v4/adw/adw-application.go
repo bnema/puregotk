@@ -86,7 +86,7 @@ func ApplicationNewFromInternalPtr(ptr uintptr) *Application {
 	return cls
 }
 
-var xNewApplication func(string, gio.ApplicationFlags) uintptr
+var xNewApplication func(uintptr, gio.ApplicationFlags) uintptr
 
 // Creates a new `AdwApplication`.
 //
@@ -95,10 +95,10 @@ var xNewApplication func(string, gio.ApplicationFlags) uintptr
 //
 // If no application ID is given then some features (most notably application
 // uniqueness) will be disabled.
-func NewApplication(ApplicationIdVar string, FlagsVar gio.ApplicationFlags) *Application {
+func NewApplication(ApplicationIdVar *string, FlagsVar gio.ApplicationFlags) *Application {
 	var cls *Application
 
-	cret := xNewApplication(ApplicationIdVar, FlagsVar)
+	cret := xNewApplication(core.NullableStringToPtr(ApplicationIdVar), FlagsVar)
 
 	if cret == 0 {
 		return nil

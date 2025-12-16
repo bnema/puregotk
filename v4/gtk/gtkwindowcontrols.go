@@ -147,7 +147,7 @@ func (x *WindowControls) GetUseNativeControls() bool {
 	return cret
 }
 
-var xWindowControlsSetDecorationLayout func(uintptr, string)
+var xWindowControlsSetDecorationLayout func(uintptr, uintptr)
 
 // Sets the decoration layout for the title buttons.
 //
@@ -164,9 +164,9 @@ var xWindowControlsSetDecorationLayout func(uintptr, string)
 //
 // If [property@Gtk.WindowControls:side] value is [enum@Gtk.PackType.start],
 // @self will display the part before the colon, otherwise after that.
-func (x *WindowControls) SetDecorationLayout(LayoutVar string) {
+func (x *WindowControls) SetDecorationLayout(LayoutVar *string) {
 
-	xWindowControlsSetDecorationLayout(x.GoPointer(), LayoutVar)
+	xWindowControlsSetDecorationLayout(x.GoPointer(), core.NullableStringToPtr(LayoutVar))
 
 }
 
@@ -215,7 +215,7 @@ func (c *WindowControls) SetGoPointer(ptr uintptr) {
 func (x *WindowControls) SetPropertyDecorationLayout(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("decoration-layout", &v)
 }
 

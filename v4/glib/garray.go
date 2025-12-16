@@ -147,7 +147,22 @@ var xNewBytesWithFreeFunc func([]byte, uint, uintptr, uintptr) *Bytes
 // @data may be `NULL` if @size is 0.
 func NewBytesWithFreeFunc(DataVar []byte, SizeVar uint, FreeFuncVar *DestroyNotify, UserDataVar uintptr) *Bytes {
 
-	cret := xNewBytesWithFreeFunc(DataVar, SizeVar, NewCallback(FreeFuncVar), UserDataVar)
+	var FreeFuncVarRef uintptr
+	if FreeFuncVar != nil {
+		FreeFuncVarPtr := uintptr(unsafe.Pointer(FreeFuncVar))
+		if cbRefPtr, ok := GetCallback(FreeFuncVarPtr); ok {
+			FreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *FreeFuncVar
+				cbFn(arg0)
+			}
+			FreeFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FreeFuncVarPtr, FreeFuncVarRef)
+		}
+	}
+
+	cret := xNewBytesWithFreeFunc(DataVar, SizeVar, FreeFuncVarRef, UserDataVar)
 	return cret
 }
 
@@ -553,7 +568,22 @@ var xByteArraySort func([]byte, uintptr)
 // their addresses.
 func ByteArraySort(ArrayVar []byte, CompareFuncVar *CompareFunc) {
 
-	xByteArraySort(ArrayVar, NewCallback(CompareFuncVar))
+	var CompareFuncVarRef uintptr
+	if CompareFuncVar != nil {
+		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+		if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
+			CompareFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) int {
+				cbFn := *CompareFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CompareFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+		}
+	}
+
+	xByteArraySort(ArrayVar, CompareFuncVarRef)
 
 }
 
@@ -563,7 +593,22 @@ var xByteArraySortWithData func([]byte, uintptr, uintptr)
 // user data argument.
 func ByteArraySortWithData(ArrayVar []byte, CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
 
-	xByteArraySortWithData(ArrayVar, NewCallback(CompareFuncVar), UserDataVar)
+	var CompareFuncVarRef uintptr
+	if CompareFuncVar != nil {
+		CompareFuncVarPtr := uintptr(unsafe.Pointer(CompareFuncVar))
+		if cbRefPtr, ok := GetCallback(CompareFuncVarPtr); ok {
+			CompareFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) int {
+				cbFn := *CompareFuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			CompareFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+		}
+	}
+
+	xByteArraySortWithData(ArrayVar, CompareFuncVarRef, UserDataVar)
 
 }
 
@@ -619,7 +664,22 @@ var xPtrArrayFindWithEqualFunc func([]uintptr, uintptr, uintptr, *uint) bool
 // equality is used.
 func PtrArrayFindWithEqualFunc(HaystackVar []uintptr, NeedleVar uintptr, EqualFuncVar *EqualFunc, IndexVar *uint) bool {
 
-	cret := xPtrArrayFindWithEqualFunc(HaystackVar, NeedleVar, NewCallbackNullable(EqualFuncVar), IndexVar)
+	var EqualFuncVarRef uintptr
+	if EqualFuncVar != nil {
+		EqualFuncVarPtr := uintptr(unsafe.Pointer(EqualFuncVar))
+		if cbRefPtr, ok := GetCallback(EqualFuncVarPtr); ok {
+			EqualFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) bool {
+				cbFn := *EqualFuncVar
+				return cbFn(arg0, arg1)
+			}
+			EqualFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(EqualFuncVarPtr, EqualFuncVarRef)
+		}
+	}
+
+	cret := xPtrArrayFindWithEqualFunc(HaystackVar, NeedleVar, EqualFuncVarRef, IndexVar)
 	return cret
 }
 
@@ -644,7 +704,37 @@ var xPtrArrayNewFromArray func([]uintptr, uint, uintptr, uintptr, uintptr) uintp
 // than `gsize`.
 func PtrArrayNewFromArray(DataVar []uintptr, LenVar uint, CopyFuncVar *CopyFunc, CopyFuncUserDataVar uintptr, ElementFreeFuncVar *DestroyNotify) uintptr {
 
-	cret := xPtrArrayNewFromArray(DataVar, LenVar, NewCallbackNullable(CopyFuncVar), CopyFuncUserDataVar, NewCallbackNullable(ElementFreeFuncVar))
+	var CopyFuncVarRef uintptr
+	if CopyFuncVar != nil {
+		CopyFuncVarPtr := uintptr(unsafe.Pointer(CopyFuncVar))
+		if cbRefPtr, ok := GetCallback(CopyFuncVarPtr); ok {
+			CopyFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
+				cbFn := *CopyFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CopyFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CopyFuncVarPtr, CopyFuncVarRef)
+		}
+	}
+
+	var ElementFreeFuncVarRef uintptr
+	if ElementFreeFuncVar != nil {
+		ElementFreeFuncVarPtr := uintptr(unsafe.Pointer(ElementFreeFuncVar))
+		if cbRefPtr, ok := GetCallback(ElementFreeFuncVarPtr); ok {
+			ElementFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ElementFreeFuncVar
+				cbFn(arg0)
+			}
+			ElementFreeFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ElementFreeFuncVarPtr, ElementFreeFuncVarRef)
+		}
+	}
+
+	cret := xPtrArrayNewFromArray(DataVar, LenVar, CopyFuncVarRef, CopyFuncUserDataVar, ElementFreeFuncVarRef)
 	return cret
 }
 
@@ -665,7 +755,37 @@ var xPtrArrayNewFromNullTerminatedArray func([]uintptr, uintptr, uintptr, uintpt
 // shorter than `gsize`.
 func PtrArrayNewFromNullTerminatedArray(DataVar []uintptr, CopyFuncVar *CopyFunc, CopyFuncUserDataVar uintptr, ElementFreeFuncVar *DestroyNotify) uintptr {
 
-	cret := xPtrArrayNewFromNullTerminatedArray(DataVar, NewCallbackNullable(CopyFuncVar), CopyFuncUserDataVar, NewCallbackNullable(ElementFreeFuncVar))
+	var CopyFuncVarRef uintptr
+	if CopyFuncVar != nil {
+		CopyFuncVarPtr := uintptr(unsafe.Pointer(CopyFuncVar))
+		if cbRefPtr, ok := GetCallback(CopyFuncVarPtr); ok {
+			CopyFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr) uintptr {
+				cbFn := *CopyFuncVar
+				return cbFn(arg0, arg1)
+			}
+			CopyFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(CopyFuncVarPtr, CopyFuncVarRef)
+		}
+	}
+
+	var ElementFreeFuncVarRef uintptr
+	if ElementFreeFuncVar != nil {
+		ElementFreeFuncVarPtr := uintptr(unsafe.Pointer(ElementFreeFuncVar))
+		if cbRefPtr, ok := GetCallback(ElementFreeFuncVarPtr); ok {
+			ElementFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ElementFreeFuncVar
+				cbFn(arg0)
+			}
+			ElementFreeFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ElementFreeFuncVarPtr, ElementFreeFuncVarRef)
+		}
+	}
+
+	cret := xPtrArrayNewFromNullTerminatedArray(DataVar, CopyFuncVarRef, CopyFuncUserDataVar, ElementFreeFuncVarRef)
 	return cret
 }
 
@@ -689,7 +809,22 @@ var xPtrArrayNewTake func([]uintptr, uint, uintptr) uintptr
 // than `gsize`.
 func PtrArrayNewTake(DataVar []uintptr, LenVar uint, ElementFreeFuncVar *DestroyNotify) uintptr {
 
-	cret := xPtrArrayNewTake(DataVar, LenVar, NewCallbackNullable(ElementFreeFuncVar))
+	var ElementFreeFuncVarRef uintptr
+	if ElementFreeFuncVar != nil {
+		ElementFreeFuncVarPtr := uintptr(unsafe.Pointer(ElementFreeFuncVar))
+		if cbRefPtr, ok := GetCallback(ElementFreeFuncVarPtr); ok {
+			ElementFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ElementFreeFuncVar
+				cbFn(arg0)
+			}
+			ElementFreeFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ElementFreeFuncVarPtr, ElementFreeFuncVarRef)
+		}
+	}
+
+	cret := xPtrArrayNewTake(DataVar, LenVar, ElementFreeFuncVarRef)
 	return cret
 }
 
@@ -716,7 +851,22 @@ var xPtrArrayNewTakeNullTerminated func([]uintptr, uintptr) uintptr
 // in `guint`, which may be shorter than `gsize`.
 func PtrArrayNewTakeNullTerminated(DataVar []uintptr, ElementFreeFuncVar *DestroyNotify) uintptr {
 
-	cret := xPtrArrayNewTakeNullTerminated(DataVar, NewCallbackNullable(ElementFreeFuncVar))
+	var ElementFreeFuncVarRef uintptr
+	if ElementFreeFuncVar != nil {
+		ElementFreeFuncVarPtr := uintptr(unsafe.Pointer(ElementFreeFuncVar))
+		if cbRefPtr, ok := GetCallback(ElementFreeFuncVarPtr); ok {
+			ElementFreeFuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) {
+				cbFn := *ElementFreeFuncVar
+				cbFn(arg0)
+			}
+			ElementFreeFuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(ElementFreeFuncVarPtr, ElementFreeFuncVarRef)
+		}
+	}
+
+	cret := xPtrArrayNewTakeNullTerminated(DataVar, ElementFreeFuncVarRef)
 	return cret
 }
 

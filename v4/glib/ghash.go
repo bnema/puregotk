@@ -286,7 +286,22 @@ var xHashTableFind func(*HashTable, uintptr, uintptr) uintptr
 // values in a hash table ends up needing O(n*n) operations).
 func HashTableFind(HashTableVar *HashTable, PredicateVar *HRFunc, UserDataVar uintptr) uintptr {
 
-	cret := xHashTableFind(HashTableVar, NewCallback(PredicateVar), UserDataVar)
+	var PredicateVarRef uintptr
+	if PredicateVar != nil {
+		PredicateVarPtr := uintptr(unsafe.Pointer(PredicateVar))
+		if cbRefPtr, ok := GetCallback(PredicateVarPtr); ok {
+			PredicateVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
+				cbFn := *PredicateVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			PredicateVarRef = purego.NewCallback(fcb)
+			SaveCallback(PredicateVarPtr, PredicateVarRef)
+		}
+	}
+
+	cret := xHashTableFind(HashTableVar, PredicateVarRef, UserDataVar)
 	return cret
 }
 
@@ -306,7 +321,22 @@ var xHashTableForeach func(*HashTable, uintptr, uintptr)
 // order searches in contrast to g_hash_table_lookup().
 func HashTableForeach(HashTableVar *HashTable, FuncVar *HFunc, UserDataVar uintptr) {
 
-	xHashTableForeach(HashTableVar, NewCallback(FuncVar), UserDataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
+				cbFn := *FuncVar
+				cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	xHashTableForeach(HashTableVar, FuncVarRef, UserDataVar)
 
 }
 
@@ -322,7 +352,22 @@ var xHashTableForeachRemove func(*HashTable, uintptr, uintptr) uint
 // key/value pairs in the hash table.
 func HashTableForeachRemove(HashTableVar *HashTable, FuncVar *HRFunc, UserDataVar uintptr) uint {
 
-	cret := xHashTableForeachRemove(HashTableVar, NewCallback(FuncVar), UserDataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xHashTableForeachRemove(HashTableVar, FuncVarRef, UserDataVar)
 	return cret
 }
 
@@ -337,7 +382,22 @@ var xHashTableForeachSteal func(*HashTable, uintptr, uintptr) uint
 // key/value pairs in the hash table.
 func HashTableForeachSteal(HashTableVar *HashTable, FuncVar *HRFunc, UserDataVar uintptr) uint {
 
-	cret := xHashTableForeachSteal(HashTableVar, NewCallback(FuncVar), UserDataVar)
+	var FuncVarRef uintptr
+	if FuncVar != nil {
+		FuncVarPtr := uintptr(unsafe.Pointer(FuncVar))
+		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
+			FuncVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) bool {
+				cbFn := *FuncVar
+				return cbFn(arg0, arg1, arg2)
+			}
+			FuncVarRef = purego.NewCallback(fcb)
+			SaveCallback(FuncVarPtr, FuncVarRef)
+		}
+	}
+
+	cret := xHashTableForeachSteal(HashTableVar, FuncVarRef, UserDataVar)
 	return cret
 }
 

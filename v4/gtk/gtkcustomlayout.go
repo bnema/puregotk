@@ -62,7 +62,52 @@ var xNewCustomLayout func(uintptr, uintptr, uintptr) uintptr
 func NewCustomLayout(RequestModeVar *CustomRequestModeFunc, MeasureVar *CustomMeasureFunc, AllocateVar *CustomAllocateFunc) *CustomLayout {
 	var cls *CustomLayout
 
-	cret := xNewCustomLayout(glib.NewCallbackNullable(RequestModeVar), glib.NewCallback(MeasureVar), glib.NewCallback(AllocateVar))
+	var RequestModeVarRef uintptr
+	if RequestModeVar != nil {
+		RequestModeVarPtr := uintptr(unsafe.Pointer(RequestModeVar))
+		if cbRefPtr, ok := glib.GetCallback(RequestModeVarPtr); ok {
+			RequestModeVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr) SizeRequestMode {
+				cbFn := *RequestModeVar
+				return cbFn(arg0)
+			}
+			RequestModeVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(RequestModeVarPtr, RequestModeVarRef)
+		}
+	}
+
+	var MeasureVarRef uintptr
+	if MeasureVar != nil {
+		MeasureVarPtr := uintptr(unsafe.Pointer(MeasureVar))
+		if cbRefPtr, ok := glib.GetCallback(MeasureVarPtr); ok {
+			MeasureVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 Orientation, arg2 int, arg3 *int, arg4 *int, arg5 *int, arg6 *int) {
+				cbFn := *MeasureVar
+				cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+			}
+			MeasureVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(MeasureVarPtr, MeasureVarRef)
+		}
+	}
+
+	var AllocateVarRef uintptr
+	if AllocateVar != nil {
+		AllocateVarPtr := uintptr(unsafe.Pointer(AllocateVar))
+		if cbRefPtr, ok := glib.GetCallback(AllocateVarPtr); ok {
+			AllocateVarRef = cbRefPtr
+		} else {
+			fcb := func(arg0 uintptr, arg1 int, arg2 int, arg3 int) {
+				cbFn := *AllocateVar
+				cbFn(arg0, arg1, arg2, arg3)
+			}
+			AllocateVarRef = purego.NewCallback(fcb)
+			glib.SaveCallback(AllocateVarPtr, AllocateVarRef)
+		}
+	}
+
+	cret := xNewCustomLayout(RequestModeVarRef, MeasureVarRef, AllocateVarRef)
 
 	if cret == 0 {
 		return nil

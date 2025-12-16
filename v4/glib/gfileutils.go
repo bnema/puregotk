@@ -282,7 +282,7 @@ func BuildPathv(SeparatorVar string, ArgsVar []string) string {
 	return cret
 }
 
-var xCanonicalizeFilename func(string, string) string
+var xCanonicalizeFilename func(string, uintptr) string
 
 // Gets the canonical file name from @filename. All triple slashes are turned into
 // single slashes, and all `..` and `.`s resolved against @relative_to.
@@ -298,13 +298,13 @@ var xCanonicalizeFilename func(string, string) string
 // exist.
 //
 // No file system I/O is done.
-func CanonicalizeFilename(FilenameVar string, RelativeToVar string) string {
+func CanonicalizeFilename(FilenameVar string, RelativeToVar *string) string {
 
-	cret := xCanonicalizeFilename(FilenameVar, RelativeToVar)
+	cret := xCanonicalizeFilename(FilenameVar, core.NullableStringToPtr(RelativeToVar))
 	return cret
 }
 
-var xDirMakeTmp func(string, **Error) string
+var xDirMakeTmp func(uintptr, **Error) string
 
 // Creates a subdirectory in the preferred directory for temporary
 // files (as returned by g_get_tmp_dir()).
@@ -317,10 +317,10 @@ var xDirMakeTmp func(string, **Error) string
 //
 // Note that in contrast to g_mkdtemp() (and mkdtemp()) @tmpl is not
 // modified, and might thus be a read-only literal string.
-func DirMakeTmp(TmplVar string) (string, error) {
+func DirMakeTmp(TmplVar *string) (string, error) {
 	var cerr *Error
 
-	cret := xDirMakeTmp(TmplVar, &cerr)
+	cret := xDirMakeTmp(core.NullableStringToPtr(TmplVar), &cerr)
 	if cerr == nil {
 		return cret, nil
 	}
@@ -368,7 +368,7 @@ func FileGetContents(FilenameVar string, ContentsVar *[]byte, LengthVar *uint) (
 
 }
 
-var xFileOpenTmp func(string, *string, **Error) int
+var xFileOpenTmp func(uintptr, *string, **Error) int
 
 // Opens a file for writing in the preferred directory for temporary
 // files (as returned by g_get_tmp_dir()).
@@ -386,10 +386,10 @@ var xFileOpenTmp func(string, *string, **Error) int
 // is returned in @name_used. This string should be freed with g_free()
 // when not needed any longer. The returned name is in the GLib file
 // name encoding.
-func FileOpenTmp(TmplVar string, NameUsedVar *string) (int, error) {
+func FileOpenTmp(TmplVar *string, NameUsedVar *string) (int, error) {
 	var cerr *Error
 
-	cret := xFileOpenTmp(TmplVar, NameUsedVar, &cerr)
+	cret := xFileOpenTmp(core.NullableStringToPtr(TmplVar), NameUsedVar, &cerr)
 	if cerr == nil {
 		return cret, nil
 	}

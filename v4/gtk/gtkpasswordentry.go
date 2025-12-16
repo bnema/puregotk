@@ -176,7 +176,7 @@ func (x *PasswordEntry) GetPropertyActivatesDefault() bool {
 func (x *PasswordEntry) SetPropertyPlaceholderText(value string) {
 	var v gobject.Value
 	v.Init(gobject.TypeStringVal)
-	v.SetString(value)
+	v.SetString(&value)
 	x.SetProperty("placeholder-text", &v)
 }
 
