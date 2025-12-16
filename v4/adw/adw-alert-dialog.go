@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"fmt"
 	"structs"
 	"unsafe"
 
@@ -888,6 +889,28 @@ func (x *AlertDialog) ConnectResponse(cb *func(AlertDialog, string)) uint32 {
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+}
+
+// ConnectResponseWithDetail connects to the "response" signal with a detail string.
+// The detail is appended as "response::<detail>".
+func (x *AlertDialog) ConnectResponseWithDetail(detail string, cb *func(AlertDialog, string)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("response::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, ResponseVarp string) {
+		fa := AlertDialog{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, ResponseVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
 // Requests the user's screen reader to announce the given message.

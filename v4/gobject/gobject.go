@@ -2,6 +2,7 @@
 package gobject
 
 import (
+	"fmt"
 	"structs"
 	"unsafe"
 
@@ -2362,6 +2363,28 @@ func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint32 {
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return SignalConnect(x.GoPointer(), "notify", cbRefPtr)
+}
+
+// ConnectNotifyWithDetail connects to the "notify" signal with a detail string.
+// The detail is appended as "notify::<detail>".
+func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, uintptr)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("notify::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, PspecVarp uintptr) {
+		fa := Object{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, PspecVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
 var xObjectCompatControl func(uint, uintptr) uint

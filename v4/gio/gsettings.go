@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"fmt"
 	"structs"
 	"unsafe"
 
@@ -1712,6 +1713,28 @@ func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint32 {
 	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
 }
 
+// ConnectChangedWithDetail connects to the "changed" signal with a detail string.
+// The detail is appended as "changed::<detail>".
+func (x *Settings) ConnectChangedWithDetail(detail string, cb *func(Settings, string)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("changed::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, KeyVarp string) {
+		fa := Settings{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, KeyVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+}
+
 // Emitted once per writability change event that affects this settings object.
 //
 // You should connect
@@ -1775,6 +1798,28 @@ func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint32 {
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return gobject.SignalConnect(x.GoPointer(), "writable-changed", cbRefPtr)
+}
+
+// ConnectWritableChangedWithDetail connects to the "writable-changed" signal with a detail string.
+// The detail is appended as "writable-changed::<detail>".
+func (x *Settings) ConnectWritableChangedWithDetail(detail string, cb *func(Settings, string)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("writable-changed::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, KeyVarp string) {
+		fa := Settings{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, KeyVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
 var xSettingsListRelocatableSchemas func() []string

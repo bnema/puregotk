@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"fmt"
 	"structs"
 	"unsafe"
 
@@ -847,6 +848,28 @@ func (x *DBusProxy) ConnectGSignal(cb *func(DBusProxy, string, string, uintptr))
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return gobject.SignalConnect(x.GoPointer(), "g-signal", cbRefPtr)
+}
+
+// ConnectGSignalWithDetail connects to the "g-signal" signal with a detail string.
+// The detail is appended as "g-signal::<detail>".
+func (x *DBusProxy) ConnectGSignalWithDetail(detail string, cb *func(DBusProxy, string, string, uintptr)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("g-signal::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp uintptr) {
+		fa := DBusProxy{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, SenderNameVarp, SignalNameVarp, ParametersVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
 // Starts asynchronous initialization of the object implementing the

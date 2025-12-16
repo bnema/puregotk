@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"fmt"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -420,6 +421,28 @@ func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint32 {
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallback(cbPtr, cbRefPtr)
 	return gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
+}
+
+// ConnectOffsetChangedWithDetail connects to the "offset-changed" signal with a detail string.
+// The detail is appended as "offset-changed::<detail>".
+func (x *LevelBar) ConnectOffsetChangedWithDetail(detail string, cb *func(LevelBar, string)) uint32 {
+	cbPtr := uintptr(unsafe.Pointer(cb))
+	signalName := fmt.Sprintf("offset-changed::%s", detail)
+	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
+		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	}
+
+	fcb := func(clsPtr uintptr, NameVarp string) {
+		fa := LevelBar{}
+		fa.Ptr = clsPtr
+		cbFn := *cb
+
+		cbFn(fa, NameVarp)
+
+	}
+	cbRefPtr := purego.NewCallback(fcb)
+	glib.SaveCallback(cbPtr, cbRefPtr)
+	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
 // Requests the user's screen reader to announce the given message.
