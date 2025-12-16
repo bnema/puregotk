@@ -333,11 +333,12 @@ func (p *Pass) writeGo(r types.Repository, gotemp *template.Template, dir string
 		signals := make([]types.SignalsTemplate, len(cls.Signals))
 		for i, s := range cls.Signals {
 			signals[i] = types.SignalsTemplate{
-				Doc:   s.Doc.StringSafe(),
-				Name:  util.DashToCamel(s.Name),
-				CName: s.Name,
-				Args:  s.Parameters.Template(ns.Name, "", p.Types, false, types.ArgsFromCToGo),
-				Ret:   s.ReturnValue.Template(ns.Name, "", p.Types, false),
+				Doc:      s.Doc.StringSafe(),
+				Name:     util.DashToCamel(s.Name),
+				CName:    s.Name,
+				Args:     s.Parameters.Template(ns.Name, "", p.Types, false, types.ArgsFromCToGo),
+				Ret:      s.ReturnValue.Template(ns.Name, "", p.Types, false),
+				Detailed: s.Detailed,
 			}
 		}
 		receivers := make([]types.FuncTemplate, len(cls.Methods))

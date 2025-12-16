@@ -579,11 +579,12 @@ type InterfaceFuncTemplate struct {
 }
 
 type SignalsTemplate struct {
-	Doc   string
-	Name  string
-	CName string
-	Args  funcArgsTemplate
-	Ret   funcRetTemplate
+	Doc      string
+	Name     string
+	CName    string
+	Args     funcArgsTemplate
+	Ret      funcRetTemplate
+	Detailed bool
 }
 
 type PropertyTemplate struct {
