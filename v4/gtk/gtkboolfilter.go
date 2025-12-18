@@ -78,6 +78,7 @@ var xBoolFilterGetInvert func(uintptr) bool
 func (x *BoolFilter) GetInvert() bool {
 
 	cret := xBoolFilterGetInvert(x.GoPointer())
+
 	return cret
 }
 

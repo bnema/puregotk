@@ -70,6 +70,7 @@ func (x *DebugControllerBase) SetGoPointer(ptr uintptr) {
 func (x *DebugControllerBase) GetDebugEnabled() bool {
 
 	cret := XGDebugControllerGetDebugEnabled(x.GoPointer())
+
 	return cret
 }
 

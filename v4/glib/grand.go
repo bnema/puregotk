@@ -36,6 +36,7 @@ var xNewRand func() *Rand
 func NewRand() *Rand {
 
 	cret := xNewRand()
+
 	return cret
 }
 
@@ -45,6 +46,7 @@ var xNewRandWithSeed func(uint32) *Rand
 func NewRandWithSeed(SeedVar uint32) *Rand {
 
 	cret := xNewRandWithSeed(SeedVar)
+
 	return cret
 }
 
@@ -54,6 +56,7 @@ var xNewRandWithSeedArray func(uint32, uint) *Rand
 func NewRandWithSeedArray(SeedVar uint32, SeedLengthVar uint) *Rand {
 
 	cret := xNewRandWithSeedArray(SeedVar, SeedLengthVar)
+
 	return cret
 }
 
@@ -65,6 +68,7 @@ var xRandCopy func(uintptr) *Rand
 func (x *Rand) Copy() *Rand {
 
 	cret := xRandCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -75,6 +79,7 @@ var xRandDouble func(uintptr) float64
 func (x *Rand) Double() float64 {
 
 	cret := xRandDouble(x.GoPointer())
+
 	return cret
 }
 
@@ -85,6 +90,7 @@ var xRandDoubleRange func(uintptr, float64, float64) float64
 func (x *Rand) DoubleRange(BeginVar float64, EndVar float64) float64 {
 
 	cret := xRandDoubleRange(x.GoPointer(), BeginVar, EndVar)
+
 	return cret
 }
 
@@ -104,6 +110,7 @@ var xRandInt func(uintptr) uint32
 func (x *Rand) Int() uint32 {
 
 	cret := xRandInt(x.GoPointer())
+
 	return cret
 }
 
@@ -114,6 +121,7 @@ var xRandIntRange func(uintptr, int32, int32) int32
 func (x *Rand) IntRange(BeginVar int32, EndVar int32) int32 {
 
 	cret := xRandIntRange(x.GoPointer(), BeginVar, EndVar)
+
 	return cret
 }
 
@@ -145,6 +153,7 @@ var xRandomDouble func() float64
 func RandomDouble() float64 {
 
 	cret := xRandomDouble()
+
 	return cret
 }
 
@@ -155,6 +164,7 @@ var xRandomDoubleRange func(float64, float64) float64
 func RandomDoubleRange(BeginVar float64, EndVar float64) float64 {
 
 	cret := xRandomDoubleRange(BeginVar, EndVar)
+
 	return cret
 }
 
@@ -165,6 +175,7 @@ var xRandomInt func() uint32
 func RandomInt() uint32 {
 
 	cret := xRandomInt()
+
 	return cret
 }
 
@@ -175,6 +186,7 @@ var xRandomIntRange func(int32, int32) int32
 func RandomIntRange(BeginVar int32, EndVar int32) int32 {
 
 	cret := xRandomIntRange(BeginVar, EndVar)
+
 	return cret
 }
 

@@ -146,6 +146,7 @@ func (x *CarouselIndicatorLines) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *CarouselIndicatorLines) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -171,6 +172,7 @@ func (x *CarouselIndicatorLines) GetAtContext() *gtk.ATContext {
 func (x *CarouselIndicatorLines) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -210,6 +212,7 @@ func (x *CarouselIndicatorLines) GetNextAccessibleSibling() *gtk.AccessibleBase 
 func (x *CarouselIndicatorLines) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -386,6 +389,7 @@ func (x *CarouselIndicatorLines) UpdateStateValue(NStatesVar int, StatesVar []gt
 func (x *CarouselIndicatorLines) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -393,6 +397,7 @@ func (x *CarouselIndicatorLines) GetBuildableId() string {
 func (x *CarouselIndicatorLines) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

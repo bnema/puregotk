@@ -696,6 +696,7 @@ var xTextViewBackwardDisplayLine func(uintptr, *TextIter) bool
 func (x *TextView) BackwardDisplayLine(IterVar *TextIter) bool {
 
 	cret := xTextViewBackwardDisplayLine(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -713,6 +714,7 @@ var xTextViewBackwardDisplayLineStart func(uintptr, *TextIter) bool
 func (x *TextView) BackwardDisplayLineStart(IterVar *TextIter) bool {
 
 	cret := xTextViewBackwardDisplayLineStart(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -739,6 +741,7 @@ var xTextViewForwardDisplayLine func(uintptr, *TextIter) bool
 func (x *TextView) ForwardDisplayLine(IterVar *TextIter) bool {
 
 	cret := xTextViewForwardDisplayLine(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -756,6 +759,7 @@ var xTextViewForwardDisplayLineEnd func(uintptr, *TextIter) bool
 func (x *TextView) ForwardDisplayLineEnd(IterVar *TextIter) bool {
 
 	cret := xTextViewForwardDisplayLineEnd(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -767,6 +771,7 @@ var xTextViewGetAcceptsTab func(uintptr) bool
 func (x *TextView) GetAcceptsTab() bool {
 
 	cret := xTextViewGetAcceptsTab(x.GoPointer())
+
 	return cret
 }
 
@@ -776,6 +781,7 @@ var xTextViewGetBottomMargin func(uintptr) int
 func (x *TextView) GetBottomMargin() int {
 
 	cret := xTextViewGetBottomMargin(x.GoPointer())
+
 	return cret
 }
 
@@ -833,6 +839,7 @@ var xTextViewGetCursorVisible func(uintptr) bool
 func (x *TextView) GetCursorVisible() bool {
 
 	cret := xTextViewGetCursorVisible(x.GoPointer())
+
 	return cret
 }
 
@@ -844,6 +851,7 @@ var xTextViewGetEditable func(uintptr) bool
 func (x *TextView) GetEditable() bool {
 
 	cret := xTextViewGetEditable(x.GoPointer())
+
 	return cret
 }
 
@@ -896,6 +904,7 @@ var xTextViewGetIndent func(uintptr) int
 func (x *TextView) GetIndent() int {
 
 	cret := xTextViewGetIndent(x.GoPointer())
+
 	return cret
 }
 
@@ -905,6 +914,7 @@ var xTextViewGetInputHints func(uintptr) InputHints
 func (x *TextView) GetInputHints() InputHints {
 
 	cret := xTextViewGetInputHints(x.GoPointer())
+
 	return cret
 }
 
@@ -914,6 +924,7 @@ var xTextViewGetInputPurpose func(uintptr) InputPurpose
 func (x *TextView) GetInputPurpose() InputPurpose {
 
 	cret := xTextViewGetInputPurpose(x.GoPointer())
+
 	return cret
 }
 
@@ -928,6 +939,7 @@ var xTextViewGetIterAtLocation func(uintptr, *TextIter, int, int) bool
 func (x *TextView) GetIterAtLocation(IterVar *TextIter, XVar int, YVar int) bool {
 
 	cret := xTextViewGetIterAtLocation(x.GoPointer(), IterVar, XVar, YVar)
+
 	return cret
 }
 
@@ -946,6 +958,7 @@ var xTextViewGetIterAtPosition func(uintptr, *TextIter, *int, int, int) bool
 func (x *TextView) GetIterAtPosition(IterVar *TextIter, TrailingVar *int, XVar int, YVar int) bool {
 
 	cret := xTextViewGetIterAtPosition(x.GoPointer(), IterVar, TrailingVar, XVar, YVar)
+
 	return cret
 }
 
@@ -970,6 +983,7 @@ var xTextViewGetJustification func(uintptr) Justification
 func (x *TextView) GetJustification() Justification {
 
 	cret := xTextViewGetJustification(x.GoPointer())
+
 	return cret
 }
 
@@ -981,6 +995,7 @@ var xTextViewGetLeftMargin func(uintptr) int
 func (x *TextView) GetLeftMargin() int {
 
 	cret := xTextViewGetLeftMargin(x.GoPointer())
+
 	return cret
 }
 
@@ -1038,6 +1053,7 @@ var xTextViewGetMonospace func(uintptr) bool
 func (x *TextView) GetMonospace() bool {
 
 	cret := xTextViewGetMonospace(x.GoPointer())
+
 	return cret
 }
 
@@ -1047,6 +1063,7 @@ var xTextViewGetOverwrite func(uintptr) bool
 func (x *TextView) GetOverwrite() bool {
 
 	cret := xTextViewGetOverwrite(x.GoPointer())
+
 	return cret
 }
 
@@ -1059,6 +1076,7 @@ var xTextViewGetPixelsAboveLines func(uintptr) int
 func (x *TextView) GetPixelsAboveLines() int {
 
 	cret := xTextViewGetPixelsAboveLines(x.GoPointer())
+
 	return cret
 }
 
@@ -1071,6 +1089,7 @@ var xTextViewGetPixelsBelowLines func(uintptr) int
 func (x *TextView) GetPixelsBelowLines() int {
 
 	cret := xTextViewGetPixelsBelowLines(x.GoPointer())
+
 	return cret
 }
 
@@ -1081,6 +1100,7 @@ var xTextViewGetPixelsInsideWrap func(uintptr) int
 func (x *TextView) GetPixelsInsideWrap() int {
 
 	cret := xTextViewGetPixelsInsideWrap(x.GoPointer())
+
 	return cret
 }
 
@@ -1092,6 +1112,7 @@ var xTextViewGetRightMargin func(uintptr) int
 func (x *TextView) GetRightMargin() int {
 
 	cret := xTextViewGetRightMargin(x.GoPointer())
+
 	return cret
 }
 
@@ -1125,6 +1146,7 @@ var xTextViewGetTabs func(uintptr) *pango.TabArray
 func (x *TextView) GetTabs() *pango.TabArray {
 
 	cret := xTextViewGetTabs(x.GoPointer())
+
 	return cret
 }
 
@@ -1134,6 +1156,7 @@ var xTextViewGetTopMargin func(uintptr) int
 func (x *TextView) GetTopMargin() int {
 
 	cret := xTextViewGetTopMargin(x.GoPointer())
+
 	return cret
 }
 
@@ -1173,6 +1196,7 @@ var xTextViewGetWrapMode func(uintptr) WrapMode
 func (x *TextView) GetWrapMode() WrapMode {
 
 	cret := xTextViewGetWrapMode(x.GoPointer())
+
 	return cret
 }
 
@@ -1215,6 +1239,7 @@ var xTextViewImContextFilterKeypress func(uintptr, uintptr) bool
 func (x *TextView) ImContextFilterKeypress(EventVar *gdk.Event) bool {
 
 	cret := xTextViewImContextFilterKeypress(x.GoPointer(), EventVar.GoPointer())
+
 	return cret
 }
 
@@ -1225,6 +1250,7 @@ var xTextViewMoveMarkOnscreen func(uintptr, uintptr) bool
 func (x *TextView) MoveMarkOnscreen(MarkVar *TextMark) bool {
 
 	cret := xTextViewMoveMarkOnscreen(x.GoPointer(), MarkVar.GoPointer())
+
 	return cret
 }
 
@@ -1256,6 +1282,7 @@ var xTextViewMoveVisually func(uintptr, *TextIter, int) bool
 func (x *TextView) MoveVisually(IterVar *TextIter, CountVar int) bool {
 
 	cret := xTextViewMoveVisually(x.GoPointer(), IterVar, CountVar)
+
 	return cret
 }
 
@@ -1266,6 +1293,7 @@ var xTextViewPlaceCursorOnscreen func(uintptr) bool
 func (x *TextView) PlaceCursorOnscreen() bool {
 
 	cret := xTextViewPlaceCursorOnscreen(x.GoPointer())
+
 	return cret
 }
 
@@ -1336,6 +1364,7 @@ var xTextViewScrollToIter func(uintptr, *TextIter, float64, bool, float64, float
 func (x *TextView) ScrollToIter(IterVar *TextIter, WithinMarginVar float64, UseAlignVar bool, XalignVar float64, YalignVar float64) bool {
 
 	cret := xTextViewScrollToIter(x.GoPointer(), IterVar, WithinMarginVar, UseAlignVar, XalignVar, YalignVar)
+
 	return cret
 }
 
@@ -1616,6 +1645,7 @@ var xTextViewStartsDisplayLine func(uintptr, *TextIter) bool
 func (x *TextView) StartsDisplayLine(IterVar *TextIter) bool {
 
 	cret := xTextViewStartsDisplayLine(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -2407,6 +2437,7 @@ func (x *TextView) GetAccessibleParent() *AccessibleBase {
 func (x *TextView) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -2432,6 +2463,7 @@ func (x *TextView) GetAtContext() *ATContext {
 func (x *TextView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -2471,6 +2503,7 @@ func (x *TextView) GetNextAccessibleSibling() *AccessibleBase {
 func (x *TextView) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -2684,6 +2717,7 @@ func (x *TextView) UpdateSelectionBound() {
 func (x *TextView) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -2696,6 +2730,7 @@ func (x *TextView) GetBuildableId() string {
 func (x *TextView) GetBorder(BorderVar *Border) bool {
 
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
+
 	return cret
 }
 
@@ -2718,6 +2753,7 @@ func (x *TextView) GetHadjustment() *Adjustment {
 func (x *TextView) GetHscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
+
 	return cret
 }
 
@@ -2740,6 +2776,7 @@ func (x *TextView) GetVadjustment() *Adjustment {
 func (x *TextView) GetVscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
+
 	return cret
 }
 

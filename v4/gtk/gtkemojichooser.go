@@ -168,6 +168,7 @@ func (x *EmojiChooser) GetAccessibleParent() *AccessibleBase {
 func (x *EmojiChooser) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -193,6 +194,7 @@ func (x *EmojiChooser) GetAtContext() *ATContext {
 func (x *EmojiChooser) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -232,6 +234,7 @@ func (x *EmojiChooser) GetNextAccessibleSibling() *AccessibleBase {
 func (x *EmojiChooser) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -408,6 +411,7 @@ func (x *EmojiChooser) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSt
 func (x *EmojiChooser) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

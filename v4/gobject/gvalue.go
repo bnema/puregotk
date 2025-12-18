@@ -2,6 +2,7 @@
 package gobject
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -72,6 +73,7 @@ var xValueDupBoxed func(uintptr) uintptr
 func (x *Value) DupBoxed() uintptr {
 
 	cret := xValueDupBoxed(x.GoPointer())
+
 	return cret
 }
 
@@ -116,6 +118,7 @@ var xValueDupString func(uintptr) string
 func (x *Value) DupString() string {
 
 	cret := xValueDupString(x.GoPointer())
+
 	return cret
 }
 
@@ -126,6 +129,7 @@ var xValueDupVariant func(uintptr) *glib.Variant
 func (x *Value) DupVariant() *glib.Variant {
 
 	cret := xValueDupVariant(x.GoPointer())
+
 	return cret
 }
 
@@ -137,6 +141,7 @@ var xValueFitsPointer func(uintptr) bool
 func (x *Value) FitsPointer() bool {
 
 	cret := xValueFitsPointer(x.GoPointer())
+
 	return cret
 }
 
@@ -146,6 +151,7 @@ var xValueGetBoolean func(uintptr) bool
 func (x *Value) GetBoolean() bool {
 
 	cret := xValueGetBoolean(x.GoPointer())
+
 	return cret
 }
 
@@ -155,6 +161,7 @@ var xValueGetBoxed func(uintptr) uintptr
 func (x *Value) GetBoxed() uintptr {
 
 	cret := xValueGetBoxed(x.GoPointer())
+
 	return cret
 }
 
@@ -167,6 +174,7 @@ var xValueGetChar func(uintptr) byte
 func (x *Value) GetChar() byte {
 
 	cret := xValueGetChar(x.GoPointer())
+
 	return cret
 }
 
@@ -176,6 +184,7 @@ var xValueGetDouble func(uintptr) float64
 func (x *Value) GetDouble() float64 {
 
 	cret := xValueGetDouble(x.GoPointer())
+
 	return cret
 }
 
@@ -185,6 +194,7 @@ var xValueGetEnum func(uintptr) int
 func (x *Value) GetEnum() int {
 
 	cret := xValueGetEnum(x.GoPointer())
+
 	return cret
 }
 
@@ -194,6 +204,7 @@ var xValueGetFlags func(uintptr) uint
 func (x *Value) GetFlags() uint {
 
 	cret := xValueGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -203,6 +214,7 @@ var xValueGetFloat func(uintptr) float32
 func (x *Value) GetFloat() float32 {
 
 	cret := xValueGetFloat(x.GoPointer())
+
 	return cret
 }
 
@@ -212,6 +224,7 @@ var xValueGetGtype func(uintptr) types.GType
 func (x *Value) GetGtype() types.GType {
 
 	cret := xValueGetGtype(x.GoPointer())
+
 	return cret
 }
 
@@ -221,6 +234,7 @@ var xValueGetInt func(uintptr) int
 func (x *Value) GetInt() int {
 
 	cret := xValueGetInt(x.GoPointer())
+
 	return cret
 }
 
@@ -230,6 +244,7 @@ var xValueGetInt64 func(uintptr) int64
 func (x *Value) GetInt64() int64 {
 
 	cret := xValueGetInt64(x.GoPointer())
+
 	return cret
 }
 
@@ -239,6 +254,7 @@ var xValueGetLong func(uintptr) int32
 func (x *Value) GetLong() int32 {
 
 	cret := xValueGetLong(x.GoPointer())
+
 	return cret
 }
 
@@ -282,6 +298,7 @@ var xValueGetPointer func(uintptr) uintptr
 func (x *Value) GetPointer() uintptr {
 
 	cret := xValueGetPointer(x.GoPointer())
+
 	return cret
 }
 
@@ -291,6 +308,7 @@ var xValueGetSchar func(uintptr) int8
 func (x *Value) GetSchar() int8 {
 
 	cret := xValueGetSchar(x.GoPointer())
+
 	return cret
 }
 
@@ -300,6 +318,7 @@ var xValueGetString func(uintptr) string
 func (x *Value) GetString() string {
 
 	cret := xValueGetString(x.GoPointer())
+
 	return cret
 }
 
@@ -309,6 +328,7 @@ var xValueGetUchar func(uintptr) byte
 func (x *Value) GetUchar() byte {
 
 	cret := xValueGetUchar(x.GoPointer())
+
 	return cret
 }
 
@@ -318,6 +338,7 @@ var xValueGetUint func(uintptr) uint
 func (x *Value) GetUint() uint {
 
 	cret := xValueGetUint(x.GoPointer())
+
 	return cret
 }
 
@@ -327,6 +348,7 @@ var xValueGetUint64 func(uintptr) uint64
 func (x *Value) GetUint64() uint64 {
 
 	cret := xValueGetUint64(x.GoPointer())
+
 	return cret
 }
 
@@ -336,6 +358,7 @@ var xValueGetUlong func(uintptr) uint32
 func (x *Value) GetUlong() uint32 {
 
 	cret := xValueGetUlong(x.GoPointer())
+
 	return cret
 }
 
@@ -345,6 +368,7 @@ var xValueGetVariant func(uintptr) *glib.Variant
 func (x *Value) GetVariant() *glib.Variant {
 
 	cret := xValueGetVariant(x.GoPointer())
+
 	return cret
 }
 
@@ -368,6 +392,7 @@ var xValueInit func(uintptr, types.GType) *Value
 func (x *Value) Init(GTypeVar types.GType) *Value {
 
 	cret := xValueInit(x.GoPointer(), GTypeVar)
+
 	return cret
 }
 
@@ -399,6 +424,7 @@ var xValuePeekPointer func(uintptr) uintptr
 func (x *Value) PeekPointer() uintptr {
 
 	cret := xValuePeekPointer(x.GoPointer())
+
 	return cret
 }
 
@@ -410,6 +436,7 @@ var xValueReset func(uintptr) *Value
 func (x *Value) Reset() *Value {
 
 	cret := xValueReset(x.GoPointer())
+
 	return cret
 }
 
@@ -531,7 +558,11 @@ var xValueSetInternedString func(uintptr, uintptr)
 // g_intern_string()), and is thus not duplicated when setting the #GValue.
 func (x *Value) SetInternedString(VStringVar *string) {
 
-	xValueSetInternedString(x.GoPointer(), core.NullableStringToPtr(VStringVar))
+	VStringVarPtr, VStringVarBytes := core.NullableStringToPtr(VStringVar)
+
+	xValueSetInternedString(x.GoPointer(), VStringVarPtr)
+
+	runtime.KeepAlive(VStringVarBytes)
 
 }
 
@@ -630,7 +661,11 @@ var xValueSetStaticString func(uintptr, uintptr)
 // is more appropriate.
 func (x *Value) SetStaticString(VStringVar *string) {
 
-	xValueSetStaticString(x.GoPointer(), core.NullableStringToPtr(VStringVar))
+	VStringVarPtr, VStringVarBytes := core.NullableStringToPtr(VStringVar)
+
+	xValueSetStaticString(x.GoPointer(), VStringVarPtr)
+
+	runtime.KeepAlive(VStringVarBytes)
 
 }
 
@@ -639,7 +674,11 @@ var xValueSetString func(uintptr, uintptr)
 // Set the contents of a %G_TYPE_STRING #GValue to a copy of @v_string.
 func (x *Value) SetString(VStringVar *string) {
 
-	xValueSetString(x.GoPointer(), core.NullableStringToPtr(VStringVar))
+	VStringVarPtr, VStringVarBytes := core.NullableStringToPtr(VStringVar)
+
+	xValueSetString(x.GoPointer(), VStringVarPtr)
+
+	runtime.KeepAlive(VStringVarBytes)
 
 }
 
@@ -648,7 +687,11 @@ var xValueSetStringTakeOwnership func(uintptr, uintptr)
 // This is an internal function introduced mainly for C marshallers.
 func (x *Value) SetStringTakeOwnership(VStringVar *string) {
 
-	xValueSetStringTakeOwnership(x.GoPointer(), core.NullableStringToPtr(VStringVar))
+	VStringVarPtr, VStringVarBytes := core.NullableStringToPtr(VStringVar)
+
+	xValueSetStringTakeOwnership(x.GoPointer(), VStringVarPtr)
+
+	runtime.KeepAlive(VStringVarBytes)
 
 }
 
@@ -712,6 +755,7 @@ var xValueStealString func(uintptr) string
 func (x *Value) StealString() string {
 
 	cret := xValueStealString(x.GoPointer())
+
 	return cret
 }
 
@@ -757,7 +801,11 @@ var xValueTakeString func(uintptr, uintptr)
 // Sets the contents of a %G_TYPE_STRING #GValue to @v_string.
 func (x *Value) TakeString(VStringVar *string) {
 
-	xValueTakeString(x.GoPointer(), core.NullableStringToPtr(VStringVar))
+	VStringVarPtr, VStringVarBytes := core.NullableStringToPtr(VStringVar)
+
+	xValueTakeString(x.GoPointer(), VStringVarPtr)
+
+	runtime.KeepAlive(VStringVarBytes)
 
 }
 
@@ -798,6 +846,7 @@ var xValueTransform func(uintptr, *Value) bool
 func (x *Value) Transform(DestValueVar *Value) bool {
 
 	cret := xValueTransform(x.GoPointer(), DestValueVar)
+
 	return cret
 }
 
@@ -874,6 +923,7 @@ var xValueTypeCompatible func(types.GType, types.GType) bool
 func ValueTypeCompatible(SrcTypeVar types.GType, DestTypeVar types.GType) bool {
 
 	cret := xValueTypeCompatible(SrcTypeVar, DestTypeVar)
+
 	return cret
 }
 
@@ -888,6 +938,7 @@ var xValueTypeTransformable func(types.GType, types.GType) bool
 func ValueTypeTransformable(SrcTypeVar types.GType, DestTypeVar types.GType) bool {
 
 	cret := xValueTypeTransformable(SrcTypeVar, DestTypeVar)
+
 	return cret
 }
 

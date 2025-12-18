@@ -181,6 +181,7 @@ var xWrapLayoutGetAlign func(uintptr) float32
 func (x *WrapLayout) GetAlign() float32 {
 
 	cret := xWrapLayoutGetAlign(x.GoPointer())
+
 	return cret
 }
 
@@ -190,6 +191,7 @@ var xWrapLayoutGetChildSpacing func(uintptr) int
 func (x *WrapLayout) GetChildSpacing() int {
 
 	cret := xWrapLayoutGetChildSpacing(x.GoPointer())
+
 	return cret
 }
 
@@ -199,6 +201,7 @@ var xWrapLayoutGetChildSpacingUnit func(uintptr) LengthUnit
 func (x *WrapLayout) GetChildSpacingUnit() LengthUnit {
 
 	cret := xWrapLayoutGetChildSpacingUnit(x.GoPointer())
+
 	return cret
 }
 
@@ -208,6 +211,7 @@ var xWrapLayoutGetJustify func(uintptr) JustifyMode
 func (x *WrapLayout) GetJustify() JustifyMode {
 
 	cret := xWrapLayoutGetJustify(x.GoPointer())
+
 	return cret
 }
 
@@ -217,6 +221,7 @@ var xWrapLayoutGetJustifyLastLine func(uintptr) bool
 func (x *WrapLayout) GetJustifyLastLine() bool {
 
 	cret := xWrapLayoutGetJustifyLastLine(x.GoPointer())
+
 	return cret
 }
 
@@ -226,6 +231,7 @@ var xWrapLayoutGetLineHomogeneous func(uintptr) bool
 func (x *WrapLayout) GetLineHomogeneous() bool {
 
 	cret := xWrapLayoutGetLineHomogeneous(x.GoPointer())
+
 	return cret
 }
 
@@ -235,6 +241,7 @@ var xWrapLayoutGetLineSpacing func(uintptr) int
 func (x *WrapLayout) GetLineSpacing() int {
 
 	cret := xWrapLayoutGetLineSpacing(x.GoPointer())
+
 	return cret
 }
 
@@ -244,6 +251,7 @@ var xWrapLayoutGetLineSpacingUnit func(uintptr) LengthUnit
 func (x *WrapLayout) GetLineSpacingUnit() LengthUnit {
 
 	cret := xWrapLayoutGetLineSpacingUnit(x.GoPointer())
+
 	return cret
 }
 
@@ -253,6 +261,7 @@ var xWrapLayoutGetNaturalLineLength func(uintptr) int
 func (x *WrapLayout) GetNaturalLineLength() int {
 
 	cret := xWrapLayoutGetNaturalLineLength(x.GoPointer())
+
 	return cret
 }
 
@@ -262,6 +271,7 @@ var xWrapLayoutGetNaturalLineLengthUnit func(uintptr) LengthUnit
 func (x *WrapLayout) GetNaturalLineLengthUnit() LengthUnit {
 
 	cret := xWrapLayoutGetNaturalLineLengthUnit(x.GoPointer())
+
 	return cret
 }
 
@@ -271,6 +281,7 @@ var xWrapLayoutGetPackDirection func(uintptr) PackDirection
 func (x *WrapLayout) GetPackDirection() PackDirection {
 
 	cret := xWrapLayoutGetPackDirection(x.GoPointer())
+
 	return cret
 }
 
@@ -280,6 +291,7 @@ var xWrapLayoutGetWrapPolicy func(uintptr) WrapPolicy
 func (x *WrapLayout) GetWrapPolicy() WrapPolicy {
 
 	cret := xWrapLayoutGetWrapPolicy(x.GoPointer())
+
 	return cret
 }
 
@@ -289,6 +301,7 @@ var xWrapLayoutGetWrapReverse func(uintptr) bool
 func (x *WrapLayout) GetWrapReverse() bool {
 
 	cret := xWrapLayoutGetWrapReverse(x.GoPointer())
+
 	return cret
 }
 
@@ -648,6 +661,7 @@ func (x *WrapLayout) GetPropertyWrapReverse() bool {
 func (x *WrapLayout) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

@@ -141,6 +141,7 @@ func (x *Spinner) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *Spinner) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -166,6 +167,7 @@ func (x *Spinner) GetAtContext() *gtk.ATContext {
 func (x *Spinner) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -205,6 +207,7 @@ func (x *Spinner) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *Spinner) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -381,6 +384,7 @@ func (x *Spinner) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSta
 func (x *Spinner) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

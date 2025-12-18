@@ -281,6 +281,7 @@ func (x *BreakpointBin) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *BreakpointBin) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -306,6 +307,7 @@ func (x *BreakpointBin) GetAtContext() *gtk.ATContext {
 func (x *BreakpointBin) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -345,6 +347,7 @@ func (x *BreakpointBin) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *BreakpointBin) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -521,6 +524,7 @@ func (x *BreakpointBin) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessi
 func (x *BreakpointBin) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
@@ -134,7 +136,11 @@ var xComboBoxTextAppend func(uintptr, uintptr, string)
 // with a position of -1.
 func (x *ComboBoxText) Append(IdVar *string, TextVar string) {
 
-	xComboBoxTextAppend(x.GoPointer(), core.NullableStringToPtr(IdVar), TextVar)
+	IdVarPtr, IdVarBytes := core.NullableStringToPtr(IdVar)
+
+	xComboBoxTextAppend(x.GoPointer(), IdVarPtr, TextVar)
+
+	runtime.KeepAlive(IdVarBytes)
 
 }
 
@@ -161,6 +167,7 @@ var xComboBoxTextGetActiveText func(uintptr) string
 func (x *ComboBoxText) GetActiveText() string {
 
 	cret := xComboBoxTextGetActiveText(x.GoPointer())
+
 	return cret
 }
 
@@ -174,7 +181,11 @@ var xComboBoxTextInsert func(uintptr, int, uintptr, string)
 // If @position is negative then @text is appended.
 func (x *ComboBoxText) Insert(PositionVar int, IdVar *string, TextVar string) {
 
-	xComboBoxTextInsert(x.GoPointer(), PositionVar, core.NullableStringToPtr(IdVar), TextVar)
+	IdVarPtr, IdVarBytes := core.NullableStringToPtr(IdVar)
+
+	xComboBoxTextInsert(x.GoPointer(), PositionVar, IdVarPtr, TextVar)
+
+	runtime.KeepAlive(IdVarBytes)
 
 }
 
@@ -202,7 +213,11 @@ var xComboBoxTextPrepend func(uintptr, uintptr, string)
 // with a position of 0.
 func (x *ComboBoxText) Prepend(IdVar *string, TextVar string) {
 
-	xComboBoxTextPrepend(x.GoPointer(), core.NullableStringToPtr(IdVar), TextVar)
+	IdVarPtr, IdVarBytes := core.NullableStringToPtr(IdVar)
+
+	xComboBoxTextPrepend(x.GoPointer(), IdVarPtr, TextVar)
+
+	runtime.KeepAlive(IdVarBytes)
 
 }
 
@@ -282,6 +297,7 @@ func (x *ComboBoxText) GetAccessibleParent() *AccessibleBase {
 func (x *ComboBoxText) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -307,6 +323,7 @@ func (x *ComboBoxText) GetAtContext() *ATContext {
 func (x *ComboBoxText) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -346,6 +363,7 @@ func (x *ComboBoxText) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ComboBoxText) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -522,6 +540,7 @@ func (x *ComboBoxText) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSt
 func (x *ComboBoxText) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -605,6 +624,7 @@ func (x *ComboBoxText) GetArea() *CellArea {
 func (x *ComboBoxText) GetCells() *glib.List {
 
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
+
 	return cret
 }
 

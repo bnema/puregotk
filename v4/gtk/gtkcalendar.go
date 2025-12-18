@@ -122,6 +122,7 @@ var xCalendarGetDate func(uintptr) *glib.DateTime
 func (x *Calendar) GetDate() *glib.DateTime {
 
 	cret := xCalendarGetDate(x.GoPointer())
+
 	return cret
 }
 
@@ -131,6 +132,7 @@ var xCalendarGetDay func(uintptr) int
 func (x *Calendar) GetDay() int {
 
 	cret := xCalendarGetDay(x.GoPointer())
+
 	return cret
 }
 
@@ -140,6 +142,7 @@ var xCalendarGetDayIsMarked func(uintptr, uint) bool
 func (x *Calendar) GetDayIsMarked(DayVar uint) bool {
 
 	cret := xCalendarGetDayIsMarked(x.GoPointer(), DayVar)
+
 	return cret
 }
 
@@ -149,6 +152,7 @@ var xCalendarGetMonth func(uintptr) int
 func (x *Calendar) GetMonth() int {
 
 	cret := xCalendarGetMonth(x.GoPointer())
+
 	return cret
 }
 
@@ -162,6 +166,7 @@ var xCalendarGetShowDayNames func(uintptr) bool
 func (x *Calendar) GetShowDayNames() bool {
 
 	cret := xCalendarGetShowDayNames(x.GoPointer())
+
 	return cret
 }
 
@@ -174,6 +179,7 @@ var xCalendarGetShowHeading func(uintptr) bool
 func (x *Calendar) GetShowHeading() bool {
 
 	cret := xCalendarGetShowHeading(x.GoPointer())
+
 	return cret
 }
 
@@ -187,6 +193,7 @@ var xCalendarGetShowWeekNumbers func(uintptr) bool
 func (x *Calendar) GetShowWeekNumbers() bool {
 
 	cret := xCalendarGetShowWeekNumbers(x.GoPointer())
+
 	return cret
 }
 
@@ -196,6 +203,7 @@ var xCalendarGetYear func(uintptr) int
 func (x *Calendar) GetYear() int {
 
 	cret := xCalendarGetYear(x.GoPointer())
+
 	return cret
 }
 
@@ -578,6 +586,7 @@ func (x *Calendar) GetAccessibleParent() *AccessibleBase {
 func (x *Calendar) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -603,6 +612,7 @@ func (x *Calendar) GetAtContext() *ATContext {
 func (x *Calendar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -642,6 +652,7 @@ func (x *Calendar) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Calendar) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -818,6 +829,7 @@ func (x *Calendar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *Calendar) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

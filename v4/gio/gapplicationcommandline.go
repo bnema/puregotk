@@ -399,6 +399,7 @@ var xApplicationCommandLineGetArguments func(uintptr, *int) []string
 func (x *ApplicationCommandLine) GetArguments(ArgcVar *int) []string {
 
 	cret := xApplicationCommandLineGetArguments(x.GoPointer(), ArgcVar)
+
 	return cret
 }
 
@@ -415,6 +416,7 @@ var xApplicationCommandLineGetCwd func(uintptr) string
 func (x *ApplicationCommandLine) GetCwd() string {
 
 	cret := xApplicationCommandLineGetCwd(x.GoPointer())
+
 	return cret
 }
 
@@ -438,6 +440,7 @@ var xApplicationCommandLineGetEnviron func(uintptr) []string
 func (x *ApplicationCommandLine) GetEnviron() []string {
 
 	cret := xApplicationCommandLineGetEnviron(x.GoPointer())
+
 	return cret
 }
 
@@ -448,6 +451,7 @@ var xApplicationCommandLineGetExitStatus func(uintptr) int
 func (x *ApplicationCommandLine) GetExitStatus() int {
 
 	cret := xApplicationCommandLineGetExitStatus(x.GoPointer())
+
 	return cret
 }
 
@@ -457,6 +461,7 @@ var xApplicationCommandLineGetIsRemote func(uintptr) bool
 func (x *ApplicationCommandLine) GetIsRemote() bool {
 
 	cret := xApplicationCommandLineGetIsRemote(x.GoPointer())
+
 	return cret
 }
 
@@ -477,6 +482,7 @@ var xApplicationCommandLineGetOptionsDict func(uintptr) *glib.VariantDict
 func (x *ApplicationCommandLine) GetOptionsDict() *glib.VariantDict {
 
 	cret := xApplicationCommandLineGetOptionsDict(x.GoPointer())
+
 	return cret
 }
 
@@ -496,6 +502,7 @@ var xApplicationCommandLineGetPlatformData func(uintptr) *glib.Variant
 func (x *ApplicationCommandLine) GetPlatformData() *glib.Variant {
 
 	cret := xApplicationCommandLineGetPlatformData(x.GoPointer())
+
 	return cret
 }
 
@@ -540,6 +547,7 @@ var xApplicationCommandLineGetenv func(uintptr, string) string
 func (x *ApplicationCommandLine) Getenv(NameVar string) string {
 
 	cret := xApplicationCommandLineGetenv(x.GoPointer(), NameVar)
+
 	return cret
 }
 

@@ -142,6 +142,7 @@ func (x *DragIcon) GetAccessibleParent() *AccessibleBase {
 func (x *DragIcon) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -167,6 +168,7 @@ func (x *DragIcon) GetAtContext() *ATContext {
 func (x *DragIcon) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -206,6 +208,7 @@ func (x *DragIcon) GetNextAccessibleSibling() *AccessibleBase {
 func (x *DragIcon) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -382,6 +385,7 @@ func (x *DragIcon) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *DragIcon) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

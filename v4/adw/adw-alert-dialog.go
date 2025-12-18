@@ -3,6 +3,7 @@ package adw
 
 import (
 	"fmt"
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -254,7 +255,15 @@ var xNewAlertDialog func(uintptr, uintptr) uintptr
 func NewAlertDialog(HeadingVar *string, BodyVar *string) *AlertDialog {
 	var cls *AlertDialog
 
-	cret := xNewAlertDialog(core.NullableStringToPtr(HeadingVar), core.NullableStringToPtr(BodyVar))
+	HeadingVarPtr, HeadingVarBytes := core.NullableStringToPtr(HeadingVar)
+
+	BodyVarPtr, BodyVarBytes := core.NullableStringToPtr(BodyVar)
+
+	cret := xNewAlertDialog(HeadingVarPtr, BodyVarPtr)
+
+	runtime.KeepAlive(HeadingVarBytes)
+
+	runtime.KeepAlive(BodyVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -347,6 +356,7 @@ var xAlertDialogChooseFinish func(uintptr, uintptr) string
 func (x *AlertDialog) ChooseFinish(ResultVar gio.AsyncResult) string {
 
 	cret := xAlertDialogChooseFinish(x.GoPointer(), ResultVar.GoPointer())
+
 	return cret
 }
 
@@ -412,6 +422,7 @@ var xAlertDialogGetBody func(uintptr) string
 func (x *AlertDialog) GetBody() string {
 
 	cret := xAlertDialogGetBody(x.GoPointer())
+
 	return cret
 }
 
@@ -421,6 +432,7 @@ var xAlertDialogGetBodyUseMarkup func(uintptr) bool
 func (x *AlertDialog) GetBodyUseMarkup() bool {
 
 	cret := xAlertDialogGetBodyUseMarkup(x.GoPointer())
+
 	return cret
 }
 
@@ -430,6 +442,7 @@ var xAlertDialogGetCloseResponse func(uintptr) string
 func (x *AlertDialog) GetCloseResponse() string {
 
 	cret := xAlertDialogGetCloseResponse(x.GoPointer())
+
 	return cret
 }
 
@@ -439,6 +452,7 @@ var xAlertDialogGetDefaultResponse func(uintptr) string
 func (x *AlertDialog) GetDefaultResponse() string {
 
 	cret := xAlertDialogGetDefaultResponse(x.GoPointer())
+
 	return cret
 }
 
@@ -465,6 +479,7 @@ var xAlertDialogGetHeading func(uintptr) string
 func (x *AlertDialog) GetHeading() string {
 
 	cret := xAlertDialogGetHeading(x.GoPointer())
+
 	return cret
 }
 
@@ -474,6 +489,7 @@ var xAlertDialogGetHeadingUseMarkup func(uintptr) bool
 func (x *AlertDialog) GetHeadingUseMarkup() bool {
 
 	cret := xAlertDialogGetHeadingUseMarkup(x.GoPointer())
+
 	return cret
 }
 
@@ -483,6 +499,7 @@ var xAlertDialogGetPreferWideLayout func(uintptr) bool
 func (x *AlertDialog) GetPreferWideLayout() bool {
 
 	cret := xAlertDialogGetPreferWideLayout(x.GoPointer())
+
 	return cret
 }
 
@@ -494,6 +511,7 @@ var xAlertDialogGetResponseAppearance func(uintptr, string) ResponseAppearance
 func (x *AlertDialog) GetResponseAppearance(ResponseVar string) ResponseAppearance {
 
 	cret := xAlertDialogGetResponseAppearance(x.GoPointer(), ResponseVar)
+
 	return cret
 }
 
@@ -505,6 +523,7 @@ var xAlertDialogGetResponseEnabled func(uintptr, string) bool
 func (x *AlertDialog) GetResponseEnabled(ResponseVar string) bool {
 
 	cret := xAlertDialogGetResponseEnabled(x.GoPointer(), ResponseVar)
+
 	return cret
 }
 
@@ -516,6 +535,7 @@ var xAlertDialogGetResponseLabel func(uintptr, string) string
 func (x *AlertDialog) GetResponseLabel(ResponseVar string) string {
 
 	cret := xAlertDialogGetResponseLabel(x.GoPointer(), ResponseVar)
+
 	return cret
 }
 
@@ -525,6 +545,7 @@ var xAlertDialogHasResponse func(uintptr, string) bool
 func (x *AlertDialog) HasResponse(ResponseVar string) bool {
 
 	cret := xAlertDialogHasResponse(x.GoPointer(), ResponseVar)
+
 	return cret
 }
 
@@ -586,7 +607,11 @@ var xAlertDialogSetDefaultResponse func(uintptr, uintptr)
 // See [property@Dialog:default-widget].
 func (x *AlertDialog) SetDefaultResponse(ResponseVar *string) {
 
-	xAlertDialogSetDefaultResponse(x.GoPointer(), core.NullableStringToPtr(ResponseVar))
+	ResponseVarPtr, ResponseVarBytes := core.NullableStringToPtr(ResponseVar)
+
+	xAlertDialogSetDefaultResponse(x.GoPointer(), ResponseVarPtr)
+
+	runtime.KeepAlive(ResponseVarBytes)
 
 }
 
@@ -606,7 +631,11 @@ var xAlertDialogSetHeading func(uintptr, uintptr)
 // Sets the heading of @self.
 func (x *AlertDialog) SetHeading(HeadingVar *string) {
 
-	xAlertDialogSetHeading(x.GoPointer(), core.NullableStringToPtr(HeadingVar))
+	HeadingVarPtr, HeadingVarBytes := core.NullableStringToPtr(HeadingVar)
+
+	xAlertDialogSetHeading(x.GoPointer(), HeadingVarPtr)
+
+	runtime.KeepAlive(HeadingVarBytes)
 
 }
 
@@ -948,6 +977,7 @@ func (x *AlertDialog) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *AlertDialog) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -973,6 +1003,7 @@ func (x *AlertDialog) GetAtContext() *gtk.ATContext {
 func (x *AlertDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1012,6 +1043,7 @@ func (x *AlertDialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *AlertDialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1188,6 +1220,7 @@ func (x *AlertDialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 func (x *AlertDialog) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

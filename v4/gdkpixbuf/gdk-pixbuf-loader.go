@@ -289,6 +289,7 @@ func (x *PixbufLoader) Close() (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPixbufLoaderClose(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -327,6 +328,7 @@ var xPixbufLoaderGetFormat func(uintptr) *PixbufFormat
 func (x *PixbufLoader) GetFormat() *PixbufFormat {
 
 	cret := xPixbufLoaderGetFormat(x.GoPointer())
+
 	return cret
 }
 
@@ -384,6 +386,7 @@ func (x *PixbufLoader) Write(BufVar []byte, CountVar uint) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPixbufLoaderWrite(x.GoPointer(), BufVar, CountVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -398,6 +401,7 @@ func (x *PixbufLoader) WriteBytes(BufferVar *glib.Bytes) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPixbufLoaderWriteBytes(x.GoPointer(), BufferVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

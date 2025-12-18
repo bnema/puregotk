@@ -59,6 +59,7 @@ var xBitTrylock func(uintptr, int) bool
 func BitTrylock(AddressVar uintptr, LockBitVar int) bool {
 
 	cret := xBitTrylock(AddressVar, LockBitVar)
+
 	return cret
 }
 
@@ -130,6 +131,7 @@ var xPointerBitLockMaskPtr func(uintptr, uint, bool, uintptr, uintptr) uintptr
 func PointerBitLockMaskPtr(PtrVar uintptr, LockBitVar uint, SetVar bool, PreserveMaskVar uintptr, PreservePtrVar uintptr) uintptr {
 
 	cret := xPointerBitLockMaskPtr(PtrVar, LockBitVar, SetVar, PreserveMaskVar, PreservePtrVar)
+
 	return cret
 }
 
@@ -146,6 +148,7 @@ var xPointerBitTrylock func(uintptr, int) bool
 func PointerBitTrylock(AddressVar uintptr, LockBitVar int) bool {
 
 	cret := xPointerBitTrylock(AddressVar, LockBitVar)
+
 	return cret
 }
 

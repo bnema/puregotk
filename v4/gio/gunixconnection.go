@@ -160,6 +160,7 @@ func (x *UnixConnection) ReceiveFd(CancellableVar *Cancellable) (int, error) {
 	var cerr *glib.Error
 
 	cret := xUnixConnectionReceiveFd(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -192,6 +193,7 @@ func (x *UnixConnection) SendCredentials(CancellableVar *Cancellable) (bool, err
 	var cerr *glib.Error
 
 	cret := xUnixConnectionSendCredentials(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -237,6 +239,7 @@ func (x *UnixConnection) SendCredentialsFinish(ResultVar AsyncResult) (bool, err
 	var cerr *glib.Error
 
 	cret := xUnixConnectionSendCredentialsFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -257,6 +260,7 @@ func (x *UnixConnection) SendFd(FdVar int, CancellableVar *Cancellable) (bool, e
 	var cerr *glib.Error
 
 	cret := xUnixConnectionSendFd(x.GoPointer(), FdVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

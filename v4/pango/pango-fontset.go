@@ -331,6 +331,7 @@ var xFontsetGetMetrics func(uintptr) *FontMetrics
 func (x *Fontset) GetMetrics() *FontMetrics {
 
 	cret := xFontsetGetMetrics(x.GoPointer())
+
 	return cret
 }
 

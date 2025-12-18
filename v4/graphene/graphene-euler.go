@@ -40,6 +40,7 @@ var xEulerAlloc func() *Euler
 func EulerAlloc() *Euler {
 
 	cret := xEulerAlloc()
+
 	return cret
 }
 
@@ -49,6 +50,7 @@ var xEulerEqual func(uintptr, *Euler) bool
 func (x *Euler) Equal(BVar *Euler) bool {
 
 	cret := xEulerEqual(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -70,6 +72,7 @@ var xEulerGetAlpha func(uintptr) float32
 func (x *Euler) GetAlpha() float32 {
 
 	cret := xEulerGetAlpha(x.GoPointer())
+
 	return cret
 }
 
@@ -82,6 +85,7 @@ var xEulerGetBeta func(uintptr) float32
 func (x *Euler) GetBeta() float32 {
 
 	cret := xEulerGetBeta(x.GoPointer())
+
 	return cret
 }
 
@@ -94,6 +98,7 @@ var xEulerGetGamma func(uintptr) float32
 func (x *Euler) GetGamma() float32 {
 
 	cret := xEulerGetGamma(x.GoPointer())
+
 	return cret
 }
 
@@ -109,6 +114,7 @@ var xEulerGetOrder func(uintptr) EulerOrder
 func (x *Euler) GetOrder() EulerOrder {
 
 	cret := xEulerGetOrder(x.GoPointer())
+
 	return cret
 }
 
@@ -118,6 +124,7 @@ var xEulerGetX func(uintptr) float32
 func (x *Euler) GetX() float32 {
 
 	cret := xEulerGetX(x.GoPointer())
+
 	return cret
 }
 
@@ -127,6 +134,7 @@ var xEulerGetY func(uintptr) float32
 func (x *Euler) GetY() float32 {
 
 	cret := xEulerGetY(x.GoPointer())
+
 	return cret
 }
 
@@ -136,6 +144,7 @@ var xEulerGetZ func(uintptr) float32
 func (x *Euler) GetZ() float32 {
 
 	cret := xEulerGetZ(x.GoPointer())
+
 	return cret
 }
 
@@ -147,6 +156,7 @@ var xEulerInit func(uintptr, float32, float32, float32) *Euler
 func (x *Euler) Init(XVar float32, YVar float32, ZVar float32) *Euler {
 
 	cret := xEulerInit(x.GoPointer(), XVar, YVar, ZVar)
+
 	return cret
 }
 
@@ -160,6 +170,7 @@ var xEulerInitFromEuler func(uintptr, *Euler) *Euler
 func (x *Euler) InitFromEuler(SrcVar *Euler) *Euler {
 
 	cret := xEulerInitFromEuler(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -172,6 +183,7 @@ var xEulerInitFromMatrix func(uintptr, *Matrix, EulerOrder) *Euler
 func (x *Euler) InitFromMatrix(MVar *Matrix, OrderVar EulerOrder) *Euler {
 
 	cret := xEulerInitFromMatrix(x.GoPointer(), MVar, OrderVar)
+
 	return cret
 }
 
@@ -184,6 +196,7 @@ var xEulerInitFromQuaternion func(uintptr, *Quaternion, EulerOrder) *Euler
 func (x *Euler) InitFromQuaternion(QVar *Quaternion, OrderVar EulerOrder) *Euler {
 
 	cret := xEulerInitFromQuaternion(x.GoPointer(), QVar, OrderVar)
+
 	return cret
 }
 
@@ -194,6 +207,7 @@ var xEulerInitFromRadians func(uintptr, float32, float32, float32, EulerOrder) *
 func (x *Euler) InitFromRadians(XVar float32, YVar float32, ZVar float32, OrderVar EulerOrder) *Euler {
 
 	cret := xEulerInitFromRadians(x.GoPointer(), XVar, YVar, ZVar, OrderVar)
+
 	return cret
 }
 
@@ -207,6 +221,7 @@ var xEulerInitFromVec3 func(uintptr, *Vec3, EulerOrder) *Euler
 func (x *Euler) InitFromVec3(VVar *Vec3, OrderVar EulerOrder) *Euler {
 
 	cret := xEulerInitFromVec3(x.GoPointer(), VVar, OrderVar)
+
 	return cret
 }
 
@@ -216,6 +231,7 @@ var xEulerInitWithOrder func(uintptr, float32, float32, float32, EulerOrder) *Eu
 func (x *Euler) InitWithOrder(XVar float32, YVar float32, ZVar float32, OrderVar EulerOrder) *Euler {
 
 	cret := xEulerInitWithOrder(x.GoPointer(), XVar, YVar, ZVar, OrderVar)
+
 	return cret
 }
 

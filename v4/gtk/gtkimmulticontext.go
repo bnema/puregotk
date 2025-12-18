@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -171,6 +172,7 @@ var xIMMulticontextGetContextId func(uintptr) string
 func (x *IMMulticontext) GetContextId() string {
 
 	cret := xIMMulticontextGetContextId(x.GoPointer())
+
 	return cret
 }
 
@@ -186,7 +188,11 @@ var xIMMulticontextSetContextId func(uintptr, uintptr)
 // property.
 func (x *IMMulticontext) SetContextId(ContextIdVar *string) {
 
-	xIMMulticontextSetContextId(x.GoPointer(), core.NullableStringToPtr(ContextIdVar))
+	ContextIdVarPtr, ContextIdVarBytes := core.NullableStringToPtr(ContextIdVar)
+
+	xIMMulticontextSetContextId(x.GoPointer(), ContextIdVarPtr)
+
+	runtime.KeepAlive(ContextIdVarBytes)
 
 }
 

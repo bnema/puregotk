@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -58,7 +60,15 @@ var xMenuAppend func(uintptr, uintptr, uintptr)
 // flexible alternative.
 func (x *Menu) Append(LabelVar *string, DetailedActionVar *string) {
 
-	xMenuAppend(x.GoPointer(), core.NullableStringToPtr(LabelVar), core.NullableStringToPtr(DetailedActionVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	DetailedActionVarPtr, DetailedActionVarBytes := core.NullableStringToPtr(DetailedActionVar)
+
+	xMenuAppend(x.GoPointer(), LabelVarPtr, DetailedActionVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
+
+	runtime.KeepAlive(DetailedActionVarBytes)
 
 }
 
@@ -80,7 +90,11 @@ var xMenuAppendSection func(uintptr, uintptr, uintptr)
 // more flexible alternative.
 func (x *Menu) AppendSection(LabelVar *string, SectionVar *MenuModel) {
 
-	xMenuAppendSection(x.GoPointer(), core.NullableStringToPtr(LabelVar), SectionVar.GoPointer())
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	xMenuAppendSection(x.GoPointer(), LabelVarPtr, SectionVar.GoPointer())
+
+	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -91,7 +105,11 @@ var xMenuAppendSubmenu func(uintptr, uintptr, uintptr)
 // more flexible alternative.
 func (x *Menu) AppendSubmenu(LabelVar *string, SubmenuVar *MenuModel) {
 
-	xMenuAppendSubmenu(x.GoPointer(), core.NullableStringToPtr(LabelVar), SubmenuVar.GoPointer())
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	xMenuAppendSubmenu(x.GoPointer(), LabelVarPtr, SubmenuVar.GoPointer())
+
+	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -118,7 +136,15 @@ var xMenuInsert func(uintptr, int, uintptr, uintptr)
 // alternative.
 func (x *Menu) Insert(PositionVar int, LabelVar *string, DetailedActionVar *string) {
 
-	xMenuInsert(x.GoPointer(), PositionVar, core.NullableStringToPtr(LabelVar), core.NullableStringToPtr(DetailedActionVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	DetailedActionVarPtr, DetailedActionVarBytes := core.NullableStringToPtr(DetailedActionVar)
+
+	xMenuInsert(x.GoPointer(), PositionVar, LabelVarPtr, DetailedActionVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
+
+	runtime.KeepAlive(DetailedActionVarBytes)
 
 }
 
@@ -154,7 +180,11 @@ var xMenuInsertSection func(uintptr, int, uintptr, uintptr)
 // flexible alternative.
 func (x *Menu) InsertSection(PositionVar int, LabelVar *string, SectionVar *MenuModel) {
 
-	xMenuInsertSection(x.GoPointer(), PositionVar, core.NullableStringToPtr(LabelVar), SectionVar.GoPointer())
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	xMenuInsertSection(x.GoPointer(), PositionVar, LabelVarPtr, SectionVar.GoPointer())
+
+	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -165,7 +195,11 @@ var xMenuInsertSubmenu func(uintptr, int, uintptr, uintptr)
 // flexible alternative.
 func (x *Menu) InsertSubmenu(PositionVar int, LabelVar *string, SubmenuVar *MenuModel) {
 
-	xMenuInsertSubmenu(x.GoPointer(), PositionVar, core.NullableStringToPtr(LabelVar), SubmenuVar.GoPointer())
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	xMenuInsertSubmenu(x.GoPointer(), PositionVar, LabelVarPtr, SubmenuVar.GoPointer())
+
+	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -176,7 +210,15 @@ var xMenuPrepend func(uintptr, uintptr, uintptr)
 // flexible alternative.
 func (x *Menu) Prepend(LabelVar *string, DetailedActionVar *string) {
 
-	xMenuPrepend(x.GoPointer(), core.NullableStringToPtr(LabelVar), core.NullableStringToPtr(DetailedActionVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	DetailedActionVarPtr, DetailedActionVarBytes := core.NullableStringToPtr(DetailedActionVar)
+
+	xMenuPrepend(x.GoPointer(), LabelVarPtr, DetailedActionVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
+
+	runtime.KeepAlive(DetailedActionVarBytes)
 
 }
 
@@ -198,7 +240,11 @@ var xMenuPrependSection func(uintptr, uintptr, uintptr)
 // a more flexible alternative.
 func (x *Menu) PrependSection(LabelVar *string, SectionVar *MenuModel) {
 
-	xMenuPrependSection(x.GoPointer(), core.NullableStringToPtr(LabelVar), SectionVar.GoPointer())
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	xMenuPrependSection(x.GoPointer(), LabelVarPtr, SectionVar.GoPointer())
+
+	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -209,7 +255,11 @@ var xMenuPrependSubmenu func(uintptr, uintptr, uintptr)
 // a more flexible alternative.
 func (x *Menu) PrependSubmenu(LabelVar *string, SubmenuVar *MenuModel) {
 
-	xMenuPrependSubmenu(x.GoPointer(), core.NullableStringToPtr(LabelVar), SubmenuVar.GoPointer())
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	xMenuPrependSubmenu(x.GoPointer(), LabelVarPtr, SubmenuVar.GoPointer())
+
+	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -282,7 +332,15 @@ var xNewMenuItem func(uintptr, uintptr) uintptr
 func NewMenuItem(LabelVar *string, DetailedActionVar *string) *MenuItem {
 	var cls *MenuItem
 
-	cret := xNewMenuItem(core.NullableStringToPtr(LabelVar), core.NullableStringToPtr(DetailedActionVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	DetailedActionVarPtr, DetailedActionVarBytes := core.NullableStringToPtr(DetailedActionVar)
+
+	cret := xNewMenuItem(LabelVarPtr, DetailedActionVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
+
+	runtime.KeepAlive(DetailedActionVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -381,7 +439,11 @@ var xNewMenuItemSection func(uintptr, uintptr) uintptr
 func NewMenuItemSection(LabelVar *string, SectionVar *MenuModel) *MenuItem {
 	var cls *MenuItem
 
-	cret := xNewMenuItemSection(core.NullableStringToPtr(LabelVar), SectionVar.GoPointer())
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	cret := xNewMenuItemSection(LabelVarPtr, SectionVar.GoPointer())
+
+	runtime.KeepAlive(LabelVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -400,7 +462,11 @@ var xNewMenuItemSubmenu func(uintptr, uintptr) uintptr
 func NewMenuItemSubmenu(LabelVar *string, SubmenuVar *MenuModel) *MenuItem {
 	var cls *MenuItem
 
-	cret := xNewMenuItemSubmenu(core.NullableStringToPtr(LabelVar), SubmenuVar.GoPointer())
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	cret := xNewMenuItemSubmenu(LabelVarPtr, SubmenuVar.GoPointer())
+
+	runtime.KeepAlive(LabelVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -424,6 +490,7 @@ var xMenuItemGetAttribute func(uintptr, string, string, ...interface{}) bool
 func (x *MenuItem) GetAttribute(AttributeVar string, FormatStringVar string, varArgs ...interface{}) bool {
 
 	cret := xMenuItemGetAttribute(x.GoPointer(), AttributeVar, FormatStringVar, varArgs...)
+
 	return cret
 }
 
@@ -437,6 +504,7 @@ var xMenuItemGetAttributeValue func(uintptr, string, *glib.VariantType) *glib.Va
 func (x *MenuItem) GetAttributeValue(AttributeVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
 
 	cret := xMenuItemGetAttributeValue(x.GoPointer(), AttributeVar, ExpectedTypeVar)
+
 	return cret
 }
 
@@ -479,7 +547,15 @@ var xMenuItemSetActionAndTarget func(uintptr, uintptr, uintptr, ...interface{})
 // description of the semantics of the action and target attributes.
 func (x *MenuItem) SetActionAndTarget(ActionVar *string, FormatStringVar *string, varArgs ...interface{}) {
 
-	xMenuItemSetActionAndTarget(x.GoPointer(), core.NullableStringToPtr(ActionVar), core.NullableStringToPtr(FormatStringVar), varArgs...)
+	ActionVarPtr, ActionVarBytes := core.NullableStringToPtr(ActionVar)
+
+	FormatStringVarPtr, FormatStringVarBytes := core.NullableStringToPtr(FormatStringVar)
+
+	xMenuItemSetActionAndTarget(x.GoPointer(), ActionVarPtr, FormatStringVarPtr, varArgs...)
+
+	runtime.KeepAlive(ActionVarBytes)
+
+	runtime.KeepAlive(FormatStringVarBytes)
 
 }
 
@@ -523,7 +599,11 @@ var xMenuItemSetActionAndTargetValue func(uintptr, uintptr, *glib.Variant)
 // probably more convenient for most uses.
 func (x *MenuItem) SetActionAndTargetValue(ActionVar *string, TargetValueVar *glib.Variant) {
 
-	xMenuItemSetActionAndTargetValue(x.GoPointer(), core.NullableStringToPtr(ActionVar), TargetValueVar)
+	ActionVarPtr, ActionVarBytes := core.NullableStringToPtr(ActionVar)
+
+	xMenuItemSetActionAndTargetValue(x.GoPointer(), ActionVarPtr, TargetValueVar)
+
+	runtime.KeepAlive(ActionVarBytes)
 
 }
 
@@ -548,7 +628,11 @@ var xMenuItemSetAttribute func(uintptr, string, uintptr, ...interface{})
 // that directly accepts a #GVariant.
 func (x *MenuItem) SetAttribute(AttributeVar string, FormatStringVar *string, varArgs ...interface{}) {
 
-	xMenuItemSetAttribute(x.GoPointer(), AttributeVar, core.NullableStringToPtr(FormatStringVar), varArgs...)
+	FormatStringVarPtr, FormatStringVarBytes := core.NullableStringToPtr(FormatStringVar)
+
+	xMenuItemSetAttribute(x.GoPointer(), AttributeVar, FormatStringVarPtr, varArgs...)
+
+	runtime.KeepAlive(FormatStringVarBytes)
 
 }
 
@@ -626,7 +710,11 @@ var xMenuItemSetLabel func(uintptr, uintptr)
 // it is %NULL then the label attribute is unset.
 func (x *MenuItem) SetLabel(LabelVar *string) {
 
-	xMenuItemSetLabel(x.GoPointer(), core.NullableStringToPtr(LabelVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	xMenuItemSetLabel(x.GoPointer(), LabelVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
 
 }
 

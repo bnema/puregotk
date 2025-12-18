@@ -2,6 +2,7 @@
 package glib
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -40,6 +41,7 @@ var xIConvGIconv func(uintptr, string, uint, string, uint) uint
 func (x *IConv) GIconv(InbufVar string, InbytesLeftVar uint, OutbufVar string, OutbytesLeftVar uint) uint {
 
 	cret := xIConvGIconv(x.GoPointer(), InbufVar, InbytesLeftVar, OutbufVar, OutbytesLeftVar)
+
 	return cret
 }
 
@@ -56,6 +58,7 @@ var xIConvClose func(uintptr) int
 func (x *IConv) Close() int {
 
 	cret := xIConvClose(x.GoPointer())
+
 	return cret
 }
 
@@ -107,6 +110,7 @@ func Convert(StrVar []byte, LenVar int, ToCodesetVar string, FromCodesetVar stri
 	var cerr *Error
 
 	cret := xConvert(StrVar, LenVar, ToCodesetVar, FromCodesetVar, BytesReadVar, BytesWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -137,6 +141,7 @@ func ConvertWithFallback(StrVar []byte, LenVar int, ToCodesetVar string, FromCod
 	var cerr *Error
 
 	cret := xConvertWithFallback(StrVar, LenVar, ToCodesetVar, FromCodesetVar, FallbackVar, BytesReadVar, BytesWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -169,6 +174,7 @@ func ConvertWithIconv(StrVar []byte, LenVar int, ConverterVar uintptr, BytesRead
 	var cerr *Error
 
 	cret := xConvertWithIconv(StrVar, LenVar, ConverterVar, BytesReadVar, BytesWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -197,6 +203,7 @@ var xFilenameDisplayBasename func(string) string
 func FilenameDisplayBasename(FilenameVar string) string {
 
 	cret := xFilenameDisplayBasename(FilenameVar)
+
 	return cret
 }
 
@@ -220,6 +227,7 @@ var xFilenameDisplayName func(string) string
 func FilenameDisplayName(FilenameVar string) string {
 
 	cret := xFilenameDisplayName(FilenameVar)
+
 	return cret
 }
 
@@ -236,6 +244,7 @@ func FilenameFromUri(UriVar string, HostnameVar *string) (string, error) {
 	var cerr *Error
 
 	cret := xFilenameFromUri(UriVar, HostnameVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -259,6 +268,7 @@ func FilenameFromUtf8(Utf8stringVar string, LenVar int, BytesReadVar *uint, Byte
 	var cerr *Error
 
 	cret := xFilenameFromUtf8(Utf8stringVar, LenVar, BytesReadVar, BytesWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -273,7 +283,12 @@ var xFilenameToUri func(string, uintptr, **Error) string
 func FilenameToUri(FilenameVar string, HostnameVar *string) (string, error) {
 	var cerr *Error
 
-	cret := xFilenameToUri(FilenameVar, core.NullableStringToPtr(HostnameVar), &cerr)
+	HostnameVarPtr, HostnameVarBytes := core.NullableStringToPtr(HostnameVar)
+
+	cret := xFilenameToUri(FilenameVar, HostnameVarPtr, &cerr)
+
+	runtime.KeepAlive(HostnameVarBytes)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -299,6 +314,7 @@ func FilenameToUtf8(OpsysstringVar string, LenVar int, BytesReadVar *uint, Bytes
 	var cerr *Error
 
 	cret := xFilenameToUtf8(OpsysstringVar, LenVar, BytesReadVar, BytesWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -335,6 +351,7 @@ var xGetFilenameCharsets func(*[]string) bool
 func GetFilenameCharsets(FilenameCharsetsVar *[]string) bool {
 
 	cret := xGetFilenameCharsets(FilenameCharsetsVar)
+
 	return cret
 }
 
@@ -359,6 +376,7 @@ var xIconv func(uintptr, string, uint, string, uint) uint
 func Iconv(ConverterVar uintptr, InbufVar string, InbytesLeftVar uint, OutbufVar string, OutbytesLeftVar uint) uint {
 
 	cret := xIconv(ConverterVar, InbufVar, InbytesLeftVar, OutbufVar, OutbytesLeftVar)
+
 	return cret
 }
 
@@ -373,6 +391,7 @@ var xIconvOpen func(string, string) uintptr
 func IconvOpen(ToCodesetVar string, FromCodesetVar string) uintptr {
 
 	cret := xIconvOpen(ToCodesetVar, FromCodesetVar)
+
 	return cret
 }
 
@@ -391,6 +410,7 @@ func LocaleFromUtf8(Utf8stringVar string, LenVar int, BytesReadVar *uint, BytesW
 	var cerr *Error
 
 	cret := xLocaleFromUtf8(Utf8stringVar, LenVar, BytesReadVar, BytesWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -415,6 +435,7 @@ func LocaleToUtf8(OpsysstringVar []byte, LenVar int, BytesReadVar *uint, BytesWr
 	var cerr *Error
 
 	cret := xLocaleToUtf8(OpsysstringVar, LenVar, BytesReadVar, BytesWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -430,6 +451,7 @@ var xUriListExtractUris func(string) []string
 func UriListExtractUris(UriListVar string) []string {
 
 	cret := xUriListExtractUris(UriListVar)
+
 	return cret
 }
 

@@ -67,6 +67,7 @@ var xListHeaderGetEnd func(uintptr) uint
 func (x *ListHeader) GetEnd() uint {
 
 	cret := xListHeaderGetEnd(x.GoPointer())
+
 	return cret
 }
 
@@ -99,6 +100,7 @@ var xListHeaderGetNItems func(uintptr) uint
 func (x *ListHeader) GetNItems() uint {
 
 	cret := xListHeaderGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -111,6 +113,7 @@ var xListHeaderGetStart func(uintptr) uint
 func (x *ListHeader) GetStart() uint {
 
 	cret := xListHeaderGetStart(x.GoPointer())
+
 	return cret
 }
 

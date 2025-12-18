@@ -193,6 +193,7 @@ var xTextChildAnchorGetDeleted func(uintptr) bool
 func (x *TextChildAnchor) GetDeleted() bool {
 
 	cret := xTextChildAnchorGetDeleted(x.GoPointer())
+
 	return cret
 }
 
@@ -204,6 +205,7 @@ var xTextChildAnchorGetWidgets func(uintptr, *uint) uintptr
 func (x *TextChildAnchor) GetWidgets(OutLenVar *uint) uintptr {
 
 	cret := xTextChildAnchorGetWidgets(x.GoPointer(), OutLenVar)
+
 	return cret
 }
 

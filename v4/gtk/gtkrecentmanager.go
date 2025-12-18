@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -63,7 +64,11 @@ func (x *RecentInfo) CreateAppInfo(AppNameVar *string) (*gio.AppInfoBase, error)
 	var cls *gio.AppInfoBase
 	var cerr *glib.Error
 
-	cret := xRecentInfoCreateAppInfo(x.GoPointer(), core.NullableStringToPtr(AppNameVar), &cerr)
+	AppNameVarPtr, AppNameVarBytes := core.NullableStringToPtr(AppNameVar)
+
+	cret := xRecentInfoCreateAppInfo(x.GoPointer(), AppNameVarPtr, &cerr)
+
+	runtime.KeepAlive(AppNameVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -85,6 +90,7 @@ var xRecentInfoExists func(uintptr) bool
 func (x *RecentInfo) Exists() bool {
 
 	cret := xRecentInfoExists(x.GoPointer())
+
 	return cret
 }
 
@@ -95,6 +101,7 @@ var xRecentInfoGetAdded func(uintptr) *glib.DateTime
 func (x *RecentInfo) GetAdded() *glib.DateTime {
 
 	cret := xRecentInfoGetAdded(x.GoPointer())
+
 	return cret
 }
 
@@ -105,6 +112,7 @@ var xRecentInfoGetAge func(uintptr) int
 func (x *RecentInfo) GetAge() int {
 
 	cret := xRecentInfoGetAge(x.GoPointer())
+
 	return cret
 }
 
@@ -118,6 +126,7 @@ var xRecentInfoGetApplicationInfo func(uintptr, string, *string, *uint, **glib.D
 func (x *RecentInfo) GetApplicationInfo(AppNameVar string, AppExecVar *string, CountVar *uint, StampVar **glib.DateTime) bool {
 
 	cret := xRecentInfoGetApplicationInfo(x.GoPointer(), AppNameVar, AppExecVar, CountVar, StampVar)
+
 	return cret
 }
 
@@ -127,6 +136,7 @@ var xRecentInfoGetApplications func(uintptr, *uint) []string
 func (x *RecentInfo) GetApplications(LengthVar *uint) []string {
 
 	cret := xRecentInfoGetApplications(x.GoPointer(), LengthVar)
+
 	return cret
 }
 
@@ -136,6 +146,7 @@ var xRecentInfoGetDescription func(uintptr) string
 func (x *RecentInfo) GetDescription() string {
 
 	cret := xRecentInfoGetDescription(x.GoPointer())
+
 	return cret
 }
 
@@ -148,6 +159,7 @@ var xRecentInfoGetDisplayName func(uintptr) string
 func (x *RecentInfo) GetDisplayName() string {
 
 	cret := xRecentInfoGetDisplayName(x.GoPointer())
+
 	return cret
 }
 
@@ -176,6 +188,7 @@ var xRecentInfoGetGroups func(uintptr, *uint) []string
 func (x *RecentInfo) GetGroups(LengthVar *uint) []string {
 
 	cret := xRecentInfoGetGroups(x.GoPointer(), LengthVar)
+
 	return cret
 }
 
@@ -185,6 +198,7 @@ var xRecentInfoGetMimeType func(uintptr) string
 func (x *RecentInfo) GetMimeType() string {
 
 	cret := xRecentInfoGetMimeType(x.GoPointer())
+
 	return cret
 }
 
@@ -195,6 +209,7 @@ var xRecentInfoGetModified func(uintptr) *glib.DateTime
 func (x *RecentInfo) GetModified() *glib.DateTime {
 
 	cret := xRecentInfoGetModified(x.GoPointer())
+
 	return cret
 }
 
@@ -208,6 +223,7 @@ var xRecentInfoGetPrivateHint func(uintptr) bool
 func (x *RecentInfo) GetPrivateHint() bool {
 
 	cret := xRecentInfoGetPrivateHint(x.GoPointer())
+
 	return cret
 }
 
@@ -221,6 +237,7 @@ var xRecentInfoGetShortName func(uintptr) string
 func (x *RecentInfo) GetShortName() string {
 
 	cret := xRecentInfoGetShortName(x.GoPointer())
+
 	return cret
 }
 
@@ -230,6 +247,7 @@ var xRecentInfoGetUri func(uintptr) string
 func (x *RecentInfo) GetUri() string {
 
 	cret := xRecentInfoGetUri(x.GoPointer())
+
 	return cret
 }
 
@@ -243,6 +261,7 @@ var xRecentInfoGetUriDisplay func(uintptr) string
 func (x *RecentInfo) GetUriDisplay() string {
 
 	cret := xRecentInfoGetUriDisplay(x.GoPointer())
+
 	return cret
 }
 
@@ -253,6 +272,7 @@ var xRecentInfoGetVisited func(uintptr) *glib.DateTime
 func (x *RecentInfo) GetVisited() *glib.DateTime {
 
 	cret := xRecentInfoGetVisited(x.GoPointer())
+
 	return cret
 }
 
@@ -262,6 +282,7 @@ var xRecentInfoHasApplication func(uintptr, string) bool
 func (x *RecentInfo) HasApplication(AppNameVar string) bool {
 
 	cret := xRecentInfoHasApplication(x.GoPointer(), AppNameVar)
+
 	return cret
 }
 
@@ -272,6 +293,7 @@ var xRecentInfoHasGroup func(uintptr, string) bool
 func (x *RecentInfo) HasGroup(GroupNameVar string) bool {
 
 	cret := xRecentInfoHasGroup(x.GoPointer(), GroupNameVar)
+
 	return cret
 }
 
@@ -282,6 +304,7 @@ var xRecentInfoIsLocal func(uintptr) bool
 func (x *RecentInfo) IsLocal() bool {
 
 	cret := xRecentInfoIsLocal(x.GoPointer())
+
 	return cret
 }
 
@@ -292,6 +315,7 @@ var xRecentInfoLastApplication func(uintptr) string
 func (x *RecentInfo) LastApplication() string {
 
 	cret := xRecentInfoLastApplication(x.GoPointer())
+
 	return cret
 }
 
@@ -301,6 +325,7 @@ var xRecentInfoMatch func(uintptr, *RecentInfo) bool
 func (x *RecentInfo) Match(InfoBVar *RecentInfo) bool {
 
 	cret := xRecentInfoMatch(x.GoPointer(), InfoBVar)
+
 	return cret
 }
 
@@ -310,6 +335,7 @@ var xRecentInfoRef func(uintptr) *RecentInfo
 func (x *RecentInfo) Ref() *RecentInfo {
 
 	cret := xRecentInfoRef(x.GoPointer())
+
 	return cret
 }
 
@@ -507,6 +533,7 @@ var xRecentManagerErrorQuark func() glib.Quark
 func RecentManagerErrorQuark() glib.Quark {
 
 	cret := xRecentManagerErrorQuark()
+
 	return cret
 }
 
@@ -635,6 +662,7 @@ var xRecentManagerAddFull func(uintptr, string, *RecentData) bool
 func (x *RecentManager) AddFull(UriVar string, RecentDataVar *RecentData) bool {
 
 	cret := xRecentManagerAddFull(x.GoPointer(), UriVar, RecentDataVar)
+
 	return cret
 }
 
@@ -652,6 +680,7 @@ var xRecentManagerAddItem func(uintptr, string) bool
 func (x *RecentManager) AddItem(UriVar string) bool {
 
 	cret := xRecentManagerAddItem(x.GoPointer(), UriVar)
+
 	return cret
 }
 
@@ -661,6 +690,7 @@ var xRecentManagerGetItems func(uintptr) *glib.List
 func (x *RecentManager) GetItems() *glib.List {
 
 	cret := xRecentManagerGetItems(x.GoPointer())
+
 	return cret
 }
 
@@ -671,6 +701,7 @@ var xRecentManagerHasItem func(uintptr, string) bool
 func (x *RecentManager) HasItem(UriVar string) bool {
 
 	cret := xRecentManagerHasItem(x.GoPointer(), UriVar)
+
 	return cret
 }
 
@@ -683,6 +714,7 @@ func (x *RecentManager) LookupItem(UriVar string) (*RecentInfo, error) {
 	var cerr *glib.Error
 
 	cret := xRecentManagerLookupItem(x.GoPointer(), UriVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -699,7 +731,12 @@ var xRecentManagerMoveItem func(uintptr, string, uintptr, **glib.Error) bool
 func (x *RecentManager) MoveItem(UriVar string, NewUriVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xRecentManagerMoveItem(x.GoPointer(), UriVar, core.NullableStringToPtr(NewUriVar), &cerr)
+	NewUriVarPtr, NewUriVarBytes := core.NullableStringToPtr(NewUriVar)
+
+	cret := xRecentManagerMoveItem(x.GoPointer(), UriVar, NewUriVarPtr, &cerr)
+
+	runtime.KeepAlive(NewUriVarBytes)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -714,6 +751,7 @@ func (x *RecentManager) PurgeItems() (int, error) {
 	var cerr *glib.Error
 
 	cret := xRecentManagerPurgeItems(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -729,6 +767,7 @@ func (x *RecentManager) RemoveItem(UriVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xRecentManagerRemoveItem(x.GoPointer(), UriVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

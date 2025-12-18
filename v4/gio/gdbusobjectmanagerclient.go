@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -320,7 +321,11 @@ func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBus
 		}
 	}
 
-	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, core.NullableStringToPtr(NameVar), ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), &cerr)
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	cret := xNewDBusObjectManagerClientSync(ConnectionVar.GoPointer(), FlagsVar, NameVarPtr, ObjectPathVar, GetProxyTypeFuncVarRef, GetProxyTypeUserDataVar, GetProxyTypeDestroyNotifyVarRef, CancellableVar.GoPointer(), &cerr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -357,6 +362,7 @@ var xDBusObjectManagerClientGetFlags func(uintptr) DBusObjectManagerClientFlags
 func (x *DBusObjectManagerClient) GetFlags() DBusObjectManagerClientFlags {
 
 	cret := xDBusObjectManagerClientGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -367,6 +373,7 @@ var xDBusObjectManagerClientGetName func(uintptr) string
 func (x *DBusObjectManagerClient) GetName() string {
 
 	cret := xDBusObjectManagerClientGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -379,6 +386,7 @@ var xDBusObjectManagerClientGetNameOwner func(uintptr) string
 func (x *DBusObjectManagerClient) GetNameOwner() string {
 
 	cret := xDBusObjectManagerClientGetNameOwner(x.GoPointer())
+
 	return cret
 }
 
@@ -595,6 +603,7 @@ func (x *DBusObjectManagerClient) InitFinish(ResVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGAsyncInitableInitFinish(x.GoPointer(), ResVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -655,6 +664,7 @@ func (x *DBusObjectManagerClient) GetObject(ObjectPathVar string) *DBusObjectBas
 func (x *DBusObjectManagerClient) GetObjectPath() string {
 
 	cret := XGDbusObjectManagerGetObjectPath(x.GoPointer())
+
 	return cret
 }
 
@@ -662,6 +672,7 @@ func (x *DBusObjectManagerClient) GetObjectPath() string {
 func (x *DBusObjectManagerClient) GetObjects() *glib.List {
 
 	cret := XGDbusObjectManagerGetObjects(x.GoPointer())
+
 	return cret
 }
 
@@ -707,6 +718,7 @@ func (x *DBusObjectManagerClient) Init(CancellableVar *Cancellable) (bool, error
 	var cerr *glib.Error
 
 	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

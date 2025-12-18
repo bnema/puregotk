@@ -64,6 +64,7 @@ var xComponentTransferNodeGetTransfer func(uintptr, uint) *ComponentTransfer
 func (x *ComponentTransferNode) GetTransfer(ComponentVar uint) *ComponentTransfer {
 
 	cret := xComponentTransferNodeGetTransfer(x.GoPointer(), ComponentVar)
+
 	return cret
 }
 

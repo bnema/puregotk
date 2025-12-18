@@ -78,6 +78,7 @@ var xMonitorGetConnector func(uintptr) string
 func (x *Monitor) GetConnector() string {
 
 	cret := xMonitorGetConnector(x.GoPointer())
+
 	return cret
 }
 
@@ -89,6 +90,7 @@ var xMonitorGetDescription func(uintptr) string
 func (x *Monitor) GetDescription() string {
 
 	cret := xMonitorGetDescription(x.GoPointer())
+
 	return cret
 }
 
@@ -128,6 +130,7 @@ var xMonitorGetHeightMm func(uintptr) int
 func (x *Monitor) GetHeightMm() int {
 
 	cret := xMonitorGetHeightMm(x.GoPointer())
+
 	return cret
 }
 
@@ -143,6 +146,7 @@ var xMonitorGetManufacturer func(uintptr) string
 func (x *Monitor) GetManufacturer() string {
 
 	cret := xMonitorGetManufacturer(x.GoPointer())
+
 	return cret
 }
 
@@ -152,6 +156,7 @@ var xMonitorGetModel func(uintptr) string
 func (x *Monitor) GetModel() string {
 
 	cret := xMonitorGetModel(x.GoPointer())
+
 	return cret
 }
 
@@ -164,6 +169,7 @@ var xMonitorGetRefreshRate func(uintptr) int
 func (x *Monitor) GetRefreshRate() int {
 
 	cret := xMonitorGetRefreshRate(x.GoPointer())
+
 	return cret
 }
 
@@ -178,6 +184,7 @@ var xMonitorGetScale func(uintptr) float64
 func (x *Monitor) GetScale() float64 {
 
 	cret := xMonitorGetScale(x.GoPointer())
+
 	return cret
 }
 
@@ -195,6 +202,7 @@ var xMonitorGetScaleFactor func(uintptr) int
 func (x *Monitor) GetScaleFactor() int {
 
 	cret := xMonitorGetScaleFactor(x.GoPointer())
+
 	return cret
 }
 
@@ -205,6 +213,7 @@ var xMonitorGetSubpixelLayout func(uintptr) SubpixelLayout
 func (x *Monitor) GetSubpixelLayout() SubpixelLayout {
 
 	cret := xMonitorGetSubpixelLayout(x.GoPointer())
+
 	return cret
 }
 
@@ -214,6 +223,7 @@ var xMonitorGetWidthMm func(uintptr) int
 func (x *Monitor) GetWidthMm() int {
 
 	cret := xMonitorGetWidthMm(x.GoPointer())
+
 	return cret
 }
 
@@ -227,6 +237,7 @@ var xMonitorIsValid func(uintptr) bool
 func (x *Monitor) IsValid() bool {
 
 	cret := xMonitorIsValid(x.GoPointer())
+
 	return cret
 }
 

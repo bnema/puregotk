@@ -128,6 +128,7 @@ var xFixedLayoutChildGetTransform func(uintptr) *gsk.Transform
 func (x *FixedLayoutChild) GetTransform() *gsk.Transform {
 
 	cret := xFixedLayoutChildGetTransform(x.GoPointer())
+
 	return cret
 }
 

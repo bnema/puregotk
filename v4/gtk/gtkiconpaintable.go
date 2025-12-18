@@ -93,6 +93,7 @@ var xIconPaintableGetIconName func(uintptr) string
 func (x *IconPaintable) GetIconName() string {
 
 	cret := xIconPaintableGetIconName(x.GoPointer())
+
 	return cret
 }
 
@@ -105,6 +106,7 @@ var xIconPaintableIsSymbolic func(uintptr) bool
 func (x *IconPaintable) IsSymbolic() bool {
 
 	cret := xIconPaintableIsSymbolic(x.GoPointer())
+
 	return cret
 }
 
@@ -226,6 +228,7 @@ func (x *IconPaintable) GetCurrentImage() *gdk.PaintableBase {
 func (x *IconPaintable) GetFlags() gdk.PaintableFlags {
 
 	cret := gdk.XGdkPaintableGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -249,6 +252,7 @@ func (x *IconPaintable) GetFlags() gdk.PaintableFlags {
 func (x *IconPaintable) GetIntrinsicAspectRatio() float64 {
 
 	cret := gdk.XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
+
 	return cret
 }
 
@@ -265,6 +269,7 @@ func (x *IconPaintable) GetIntrinsicAspectRatio() float64 {
 func (x *IconPaintable) GetIntrinsicHeight() int {
 
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -281,6 +286,7 @@ func (x *IconPaintable) GetIntrinsicHeight() int {
 func (x *IconPaintable) GetIntrinsicWidth() int {
 
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
+
 	return cret
 }
 

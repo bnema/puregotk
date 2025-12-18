@@ -14,6 +14,7 @@ var xColorStateGetOklab func() *ColorState
 func ColorStateGetOklab() *ColorState {
 
 	cret := xColorStateGetOklab()
+
 	return cret
 }
 
@@ -26,6 +27,7 @@ var xColorStateGetOklch func() *ColorState
 func ColorStateGetOklch() *ColorState {
 
 	cret := xColorStateGetOklch()
+
 	return cret
 }
 
@@ -43,6 +45,7 @@ var xColorStateGetRec2100Linear func() *ColorState
 func ColorStateGetRec2100Linear() *ColorState {
 
 	cret := xColorStateGetRec2100Linear()
+
 	return cret
 }
 
@@ -60,6 +63,7 @@ var xColorStateGetRec2100Pq func() *ColorState
 func ColorStateGetRec2100Pq() *ColorState {
 
 	cret := xColorStateGetRec2100Pq()
+
 	return cret
 }
 
@@ -77,6 +81,7 @@ var xColorStateGetSrgb func() *ColorState
 func ColorStateGetSrgb() *ColorState {
 
 	cret := xColorStateGetSrgb()
+
 	return cret
 }
 
@@ -93,6 +98,7 @@ var xColorStateGetSrgbLinear func() *ColorState
 func ColorStateGetSrgbLinear() *ColorState {
 
 	cret := xColorStateGetSrgbLinear()
+
 	return cret
 }
 

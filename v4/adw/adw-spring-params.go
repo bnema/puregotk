@@ -74,6 +74,7 @@ var xNewSpringParams func(float64, float64, float64) *SpringParams
 func NewSpringParams(DampingRatioVar float64, MassVar float64, StiffnessVar float64) *SpringParams {
 
 	cret := xNewSpringParams(DampingRatioVar, MassVar, StiffnessVar)
+
 	return cret
 }
 
@@ -86,6 +87,7 @@ var xNewSpringParamsFull func(float64, float64, float64) *SpringParams
 func NewSpringParamsFull(DampingVar float64, MassVar float64, StiffnessVar float64) *SpringParams {
 
 	cret := xNewSpringParamsFull(DampingVar, MassVar, StiffnessVar)
+
 	return cret
 }
 
@@ -95,6 +97,7 @@ var xSpringParamsGetDamping func(uintptr) float64
 func (x *SpringParams) GetDamping() float64 {
 
 	cret := xSpringParamsGetDamping(x.GoPointer())
+
 	return cret
 }
 
@@ -104,6 +107,7 @@ var xSpringParamsGetDampingRatio func(uintptr) float64
 func (x *SpringParams) GetDampingRatio() float64 {
 
 	cret := xSpringParamsGetDampingRatio(x.GoPointer())
+
 	return cret
 }
 
@@ -113,6 +117,7 @@ var xSpringParamsGetMass func(uintptr) float64
 func (x *SpringParams) GetMass() float64 {
 
 	cret := xSpringParamsGetMass(x.GoPointer())
+
 	return cret
 }
 
@@ -122,6 +127,7 @@ var xSpringParamsGetStiffness func(uintptr) float64
 func (x *SpringParams) GetStiffness() float64 {
 
 	cret := xSpringParamsGetStiffness(x.GoPointer())
+
 	return cret
 }
 
@@ -131,6 +137,7 @@ var xSpringParamsRef func(uintptr) *SpringParams
 func (x *SpringParams) Ref() *SpringParams {
 
 	cret := xSpringParamsRef(x.GoPointer())
+
 	return cret
 }
 

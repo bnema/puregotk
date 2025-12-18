@@ -14,6 +14,7 @@ var xDbusEscapeObjectPath func(string) string
 func DbusEscapeObjectPath(SVar string) string {
 
 	cret := xDbusEscapeObjectPath(SVar)
+
 	return cret
 }
 
@@ -38,6 +39,7 @@ var xDbusEscapeObjectPathBytestring func([]byte) string
 func DbusEscapeObjectPathBytestring(BytesVar []byte) string {
 
 	cret := xDbusEscapeObjectPathBytestring(BytesVar)
+
 	return cret
 }
 
@@ -57,6 +59,7 @@ var xDbusGenerateGuid func() string
 func DbusGenerateGuid() string {
 
 	cret := xDbusGenerateGuid()
+
 	return cret
 }
 
@@ -93,6 +96,7 @@ var xDbusGvalueToGvariant func(*gobject.Value, *glib.VariantType) *glib.Variant
 func DbusGvalueToGvariant(GvalueVar *gobject.Value, TypeVar *glib.VariantType) *glib.Variant {
 
 	cret := xDbusGvalueToGvariant(GvalueVar, TypeVar)
+
 	return cret
 }
 
@@ -125,6 +129,7 @@ var xDbusIsErrorName func(string) bool
 func DbusIsErrorName(StringVar string) bool {
 
 	cret := xDbusIsErrorName(StringVar)
+
 	return cret
 }
 
@@ -137,6 +142,7 @@ var xDbusIsGuid func(string) bool
 func DbusIsGuid(StringVar string) bool {
 
 	cret := xDbusIsGuid(StringVar)
+
 	return cret
 }
 
@@ -146,6 +152,7 @@ var xDbusIsInterfaceName func(string) bool
 func DbusIsInterfaceName(StringVar string) bool {
 
 	cret := xDbusIsInterfaceName(StringVar)
+
 	return cret
 }
 
@@ -155,6 +162,7 @@ var xDbusIsMemberName func(string) bool
 func DbusIsMemberName(StringVar string) bool {
 
 	cret := xDbusIsMemberName(StringVar)
+
 	return cret
 }
 
@@ -164,6 +172,7 @@ var xDbusIsName func(string) bool
 func DbusIsName(StringVar string) bool {
 
 	cret := xDbusIsName(StringVar)
+
 	return cret
 }
 
@@ -173,6 +182,7 @@ var xDbusIsUniqueName func(string) bool
 func DbusIsUniqueName(StringVar string) bool {
 
 	cret := xDbusIsUniqueName(StringVar)
+
 	return cret
 }
 
@@ -189,6 +199,7 @@ var xDbusUnescapeObjectPath func(string) uintptr
 func DbusUnescapeObjectPath(SVar string) uintptr {
 
 	cret := xDbusUnescapeObjectPath(SVar)
+
 	return cret
 }
 

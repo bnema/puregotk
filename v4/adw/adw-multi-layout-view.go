@@ -205,6 +205,7 @@ var xMultiLayoutViewGetLayoutName func(uintptr) string
 func (x *MultiLayoutView) GetLayoutName() string {
 
 	cret := xMultiLayoutViewGetLayoutName(x.GoPointer())
+
 	return cret
 }
 
@@ -315,6 +316,7 @@ func (x *MultiLayoutView) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *MultiLayoutView) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -340,6 +342,7 @@ func (x *MultiLayoutView) GetAtContext() *gtk.ATContext {
 func (x *MultiLayoutView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -379,6 +382,7 @@ func (x *MultiLayoutView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *MultiLayoutView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -555,6 +559,7 @@ func (x *MultiLayoutView) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acces
 func (x *MultiLayoutView) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

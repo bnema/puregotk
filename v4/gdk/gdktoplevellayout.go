@@ -46,6 +46,7 @@ var xNewToplevelLayout func() *ToplevelLayout
 func NewToplevelLayout() *ToplevelLayout {
 
 	cret := xNewToplevelLayout()
+
 	return cret
 }
 
@@ -55,6 +56,7 @@ var xToplevelLayoutCopy func(uintptr) *ToplevelLayout
 func (x *ToplevelLayout) Copy() *ToplevelLayout {
 
 	cret := xToplevelLayoutCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -64,6 +66,7 @@ var xToplevelLayoutEqual func(uintptr, *ToplevelLayout) bool
 func (x *ToplevelLayout) Equal(OtherVar *ToplevelLayout) bool {
 
 	cret := xToplevelLayoutEqual(x.GoPointer(), OtherVar)
+
 	return cret
 }
 
@@ -75,6 +78,7 @@ var xToplevelLayoutGetFullscreen func(uintptr, *bool) bool
 func (x *ToplevelLayout) GetFullscreen(FullscreenVar *bool) bool {
 
 	cret := xToplevelLayoutGetFullscreen(x.GoPointer(), FullscreenVar)
+
 	return cret
 }
 
@@ -104,6 +108,7 @@ var xToplevelLayoutGetMaximized func(uintptr, *bool) bool
 func (x *ToplevelLayout) GetMaximized(MaximizedVar *bool) bool {
 
 	cret := xToplevelLayoutGetMaximized(x.GoPointer(), MaximizedVar)
+
 	return cret
 }
 
@@ -114,6 +119,7 @@ var xToplevelLayoutGetResizable func(uintptr) bool
 func (x *ToplevelLayout) GetResizable() bool {
 
 	cret := xToplevelLayoutGetResizable(x.GoPointer())
+
 	return cret
 }
 
@@ -123,6 +129,7 @@ var xToplevelLayoutRef func(uintptr) *ToplevelLayout
 func (x *ToplevelLayout) Ref() *ToplevelLayout {
 
 	cret := xToplevelLayoutRef(x.GoPointer())
+
 	return cret
 }
 

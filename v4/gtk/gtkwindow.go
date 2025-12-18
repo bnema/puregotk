@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -448,6 +449,7 @@ var xWindowGetDecorated func(uintptr) bool
 func (x *Window) GetDecorated() bool {
 
 	cret := xWindowGetDecorated(x.GoPointer())
+
 	return cret
 }
 
@@ -490,6 +492,7 @@ var xWindowGetDeletable func(uintptr) bool
 func (x *Window) GetDeletable() bool {
 
 	cret := xWindowGetDeletable(x.GoPointer())
+
 	return cret
 }
 
@@ -499,6 +502,7 @@ var xWindowGetDestroyWithParent func(uintptr) bool
 func (x *Window) GetDestroyWithParent() bool {
 
 	cret := xWindowGetDestroyWithParent(x.GoPointer())
+
 	return cret
 }
 
@@ -530,6 +534,7 @@ var xWindowGetFocusVisible func(uintptr) bool
 func (x *Window) GetFocusVisible() bool {
 
 	cret := xWindowGetFocusVisible(x.GoPointer())
+
 	return cret
 }
 
@@ -539,6 +544,7 @@ var xWindowGetGravity func(uintptr) WindowGravity
 func (x *Window) GetGravity() WindowGravity {
 
 	cret := xWindowGetGravity(x.GoPointer())
+
 	return cret
 }
 
@@ -568,6 +574,7 @@ var xWindowGetHandleMenubarAccel func(uintptr) bool
 func (x *Window) GetHandleMenubarAccel() bool {
 
 	cret := xWindowGetHandleMenubarAccel(x.GoPointer())
+
 	return cret
 }
 
@@ -578,6 +585,7 @@ var xWindowGetHideOnClose func(uintptr) bool
 func (x *Window) GetHideOnClose() bool {
 
 	cret := xWindowGetHideOnClose(x.GoPointer())
+
 	return cret
 }
 
@@ -587,6 +595,7 @@ var xWindowGetIconName func(uintptr) string
 func (x *Window) GetIconName() string {
 
 	cret := xWindowGetIconName(x.GoPointer())
+
 	return cret
 }
 
@@ -596,6 +605,7 @@ var xWindowGetMnemonicsVisible func(uintptr) bool
 func (x *Window) GetMnemonicsVisible() bool {
 
 	cret := xWindowGetMnemonicsVisible(x.GoPointer())
+
 	return cret
 }
 
@@ -605,6 +615,7 @@ var xWindowGetModal func(uintptr) bool
 func (x *Window) GetModal() bool {
 
 	cret := xWindowGetModal(x.GoPointer())
+
 	return cret
 }
 
@@ -614,6 +625,7 @@ var xWindowGetResizable func(uintptr) bool
 func (x *Window) GetResizable() bool {
 
 	cret := xWindowGetResizable(x.GoPointer())
+
 	return cret
 }
 
@@ -623,6 +635,7 @@ var xWindowGetTitle func(uintptr) string
 func (x *Window) GetTitle() string {
 
 	cret := xWindowGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -667,6 +680,7 @@ var xWindowHasGroup func(uintptr) bool
 func (x *Window) HasGroup() bool {
 
 	cret := xWindowHasGroup(x.GoPointer())
+
 	return cret
 }
 
@@ -682,6 +696,7 @@ var xWindowIsActive func(uintptr) bool
 func (x *Window) IsActive() bool {
 
 	cret := xWindowIsActive(x.GoPointer())
+
 	return cret
 }
 
@@ -700,6 +715,7 @@ var xWindowIsFullscreen func(uintptr) bool
 func (x *Window) IsFullscreen() bool {
 
 	cret := xWindowIsFullscreen(x.GoPointer())
+
 	return cret
 }
 
@@ -718,6 +734,7 @@ var xWindowIsMaximized func(uintptr) bool
 func (x *Window) IsMaximized() bool {
 
 	cret := xWindowIsMaximized(x.GoPointer())
+
 	return cret
 }
 
@@ -731,6 +748,7 @@ var xWindowIsSuspended func(uintptr) bool
 func (x *Window) IsSuspended() bool {
 
 	cret := xWindowIsSuspended(x.GoPointer())
+
 	return cret
 }
 
@@ -1028,7 +1046,11 @@ var xWindowSetIconName func(uintptr, uintptr)
 // property which is mentioned in the ICCCM.
 func (x *Window) SetIconName(NameVar *string) {
 
-	xWindowSetIconName(x.GoPointer(), core.NullableStringToPtr(NameVar))
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xWindowSetIconName(x.GoPointer(), NameVarPtr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -1107,7 +1129,11 @@ var xWindowSetTitle func(uintptr, uintptr)
 // Passing `NULL` does the same as setting the title to an empty string.
 func (x *Window) SetTitle(TitleVar *string) {
 
-	xWindowSetTitle(x.GoPointer(), core.NullableStringToPtr(TitleVar))
+	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+
+	xWindowSetTitle(x.GoPointer(), TitleVarPtr)
+
+	runtime.KeepAlive(TitleVarBytes)
 
 }
 
@@ -1708,6 +1734,7 @@ func (x *Window) GetAccessibleParent() *AccessibleBase {
 func (x *Window) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -1733,6 +1760,7 @@ func (x *Window) GetAtContext() *ATContext {
 func (x *Window) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1772,6 +1800,7 @@ func (x *Window) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Window) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1948,6 +1977,7 @@ func (x *Window) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, V
 func (x *Window) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -2034,6 +2064,7 @@ var xWindowGetDefaultIconName func() string
 func WindowGetDefaultIconName() string {
 
 	cret := xWindowGetDefaultIconName()
+
 	return cret
 }
 
@@ -2070,6 +2101,7 @@ var xWindowListToplevels func() *glib.List
 func WindowListToplevels() *glib.List {
 
 	cret := xWindowListToplevels()
+
 	return cret
 }
 

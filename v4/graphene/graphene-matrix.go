@@ -36,6 +36,7 @@ var xMatrixAlloc func() *Matrix
 func MatrixAlloc() *Matrix {
 
 	cret := xMatrixAlloc()
+
 	return cret
 }
 
@@ -51,6 +52,7 @@ var xMatrixDecompose func(uintptr, *Vec3, *Vec3, *Quaternion, *Vec3, *Vec4) bool
 func (x *Matrix) Decompose(TranslateVar *Vec3, ScaleVar *Vec3, RotateVar *Quaternion, ShearVar *Vec3, PerspectiveVar *Vec4) bool {
 
 	cret := xMatrixDecompose(x.GoPointer(), TranslateVar, ScaleVar, RotateVar, ShearVar, PerspectiveVar)
+
 	return cret
 }
 
@@ -60,6 +62,7 @@ var xMatrixDeterminant func(uintptr) float32
 func (x *Matrix) Determinant() float32 {
 
 	cret := xMatrixDeterminant(x.GoPointer())
+
 	return cret
 }
 
@@ -69,6 +72,7 @@ var xMatrixEqual func(uintptr, *Matrix) bool
 func (x *Matrix) Equal(BVar *Matrix) bool {
 
 	cret := xMatrixEqual(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -102,6 +106,7 @@ var xMatrixEqualFast func(uintptr, *Matrix) bool
 func (x *Matrix) EqualFast(BVar *Matrix) bool {
 
 	cret := xMatrixEqualFast(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -129,6 +134,7 @@ var xMatrixGetValue func(uintptr, uint, uint) float32
 func (x *Matrix) GetValue(RowVar uint, ColVar uint) float32 {
 
 	cret := xMatrixGetValue(x.GoPointer(), RowVar, ColVar)
+
 	return cret
 }
 
@@ -138,6 +144,7 @@ var xMatrixGetXScale func(uintptr) float32
 func (x *Matrix) GetXScale() float32 {
 
 	cret := xMatrixGetXScale(x.GoPointer())
+
 	return cret
 }
 
@@ -147,6 +154,7 @@ var xMatrixGetXTranslation func(uintptr) float32
 func (x *Matrix) GetXTranslation() float32 {
 
 	cret := xMatrixGetXTranslation(x.GoPointer())
+
 	return cret
 }
 
@@ -156,6 +164,7 @@ var xMatrixGetYScale func(uintptr) float32
 func (x *Matrix) GetYScale() float32 {
 
 	cret := xMatrixGetYScale(x.GoPointer())
+
 	return cret
 }
 
@@ -165,6 +174,7 @@ var xMatrixGetYTranslation func(uintptr) float32
 func (x *Matrix) GetYTranslation() float32 {
 
 	cret := xMatrixGetYTranslation(x.GoPointer())
+
 	return cret
 }
 
@@ -174,6 +184,7 @@ var xMatrixGetZScale func(uintptr) float32
 func (x *Matrix) GetZScale() float32 {
 
 	cret := xMatrixGetZScale(x.GoPointer())
+
 	return cret
 }
 
@@ -183,6 +194,7 @@ var xMatrixGetZTranslation func(uintptr) float32
 func (x *Matrix) GetZTranslation() float32 {
 
 	cret := xMatrixGetZTranslation(x.GoPointer())
+
 	return cret
 }
 
@@ -206,6 +218,7 @@ var xMatrixInitFrom2d func(uintptr, float64, float64, float64, float64, float64,
 func (x *Matrix) InitFrom2d(XxVar float64, YxVar float64, XyVar float64, YyVar float64, X0Var float64, Y0Var float64) *Matrix {
 
 	cret := xMatrixInitFrom2d(x.GoPointer(), XxVar, YxVar, XyVar, YyVar, X0Var, Y0Var)
+
 	return cret
 }
 
@@ -216,6 +229,7 @@ var xMatrixInitFromFloat func(uintptr, [16]float32) *Matrix
 func (x *Matrix) InitFromFloat(VVar [16]float32) *Matrix {
 
 	cret := xMatrixInitFromFloat(x.GoPointer(), VVar)
+
 	return cret
 }
 
@@ -226,6 +240,7 @@ var xMatrixInitFromMatrix func(uintptr, *Matrix) *Matrix
 func (x *Matrix) InitFromMatrix(SrcVar *Matrix) *Matrix {
 
 	cret := xMatrixInitFromMatrix(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -236,6 +251,7 @@ var xMatrixInitFromVec4 func(uintptr, *Vec4, *Vec4, *Vec4, *Vec4) *Matrix
 func (x *Matrix) InitFromVec4(V0Var *Vec4, V1Var *Vec4, V2Var *Vec4, V3Var *Vec4) *Matrix {
 
 	cret := xMatrixInitFromVec4(x.GoPointer(), V0Var, V1Var, V2Var, V3Var)
+
 	return cret
 }
 
@@ -247,6 +263,7 @@ var xMatrixInitFrustum func(uintptr, float32, float32, float32, float32, float32
 func (x *Matrix) InitFrustum(LeftVar float32, RightVar float32, BottomVar float32, TopVar float32, ZNearVar float32, ZFarVar float32) *Matrix {
 
 	cret := xMatrixInitFrustum(x.GoPointer(), LeftVar, RightVar, BottomVar, TopVar, ZNearVar, ZFarVar)
+
 	return cret
 }
 
@@ -256,6 +273,7 @@ var xMatrixInitIdentity func(uintptr) *Matrix
 func (x *Matrix) InitIdentity() *Matrix {
 
 	cret := xMatrixInitIdentity(x.GoPointer())
+
 	return cret
 }
 
@@ -280,6 +298,7 @@ var xMatrixInitLookAt func(uintptr, *Vec3, *Vec3, *Vec3) *Matrix
 func (x *Matrix) InitLookAt(EyeVar *Vec3, CenterVar *Vec3, UpVar *Vec3) *Matrix {
 
 	cret := xMatrixInitLookAt(x.GoPointer(), EyeVar, CenterVar, UpVar)
+
 	return cret
 }
 
@@ -289,6 +308,7 @@ var xMatrixInitOrtho func(uintptr, float32, float32, float32, float32, float32, 
 func (x *Matrix) InitOrtho(LeftVar float32, RightVar float32, TopVar float32, BottomVar float32, ZNearVar float32, ZFarVar float32) *Matrix {
 
 	cret := xMatrixInitOrtho(x.GoPointer(), LeftVar, RightVar, TopVar, BottomVar, ZNearVar, ZFarVar)
+
 	return cret
 }
 
@@ -298,6 +318,7 @@ var xMatrixInitPerspective func(uintptr, float32, float32, float32, float32) *Ma
 func (x *Matrix) InitPerspective(FovyVar float32, AspectVar float32, ZNearVar float32, ZFarVar float32) *Matrix {
 
 	cret := xMatrixInitPerspective(x.GoPointer(), FovyVar, AspectVar, ZNearVar, ZFarVar)
+
 	return cret
 }
 
@@ -308,6 +329,7 @@ var xMatrixInitRotate func(uintptr, float32, *Vec3) *Matrix
 func (x *Matrix) InitRotate(AngleVar float32, AxisVar *Vec3) *Matrix {
 
 	cret := xMatrixInitRotate(x.GoPointer(), AngleVar, AxisVar)
+
 	return cret
 }
 
@@ -317,6 +339,7 @@ var xMatrixInitScale func(uintptr, float32, float32, float32) *Matrix
 func (x *Matrix) InitScale(XVar float32, YVar float32, ZVar float32) *Matrix {
 
 	cret := xMatrixInitScale(x.GoPointer(), XVar, YVar, ZVar)
+
 	return cret
 }
 
@@ -327,6 +350,7 @@ var xMatrixInitSkew func(uintptr, float32, float32) *Matrix
 func (x *Matrix) InitSkew(XSkewVar float32, YSkewVar float32) *Matrix {
 
 	cret := xMatrixInitSkew(x.GoPointer(), XSkewVar, YSkewVar)
+
 	return cret
 }
 
@@ -337,6 +361,7 @@ var xMatrixInitTranslate func(uintptr, *Point3D) *Matrix
 func (x *Matrix) InitTranslate(PVar *Point3D) *Matrix {
 
 	cret := xMatrixInitTranslate(x.GoPointer(), PVar)
+
 	return cret
 }
 
@@ -360,6 +385,7 @@ var xMatrixInverse func(uintptr, *Matrix) bool
 func (x *Matrix) Inverse(ResVar *Matrix) bool {
 
 	cret := xMatrixInverse(x.GoPointer(), ResVar)
+
 	return cret
 }
 
@@ -370,6 +396,7 @@ var xMatrixIs2d func(uintptr) bool
 func (x *Matrix) Is2d() bool {
 
 	cret := xMatrixIs2d(x.GoPointer())
+
 	return cret
 }
 
@@ -379,6 +406,7 @@ var xMatrixIsBackfaceVisible func(uintptr) bool
 func (x *Matrix) IsBackfaceVisible() bool {
 
 	cret := xMatrixIsBackfaceVisible(x.GoPointer())
+
 	return cret
 }
 
@@ -388,6 +416,7 @@ var xMatrixIsIdentity func(uintptr) bool
 func (x *Matrix) IsIdentity() bool {
 
 	cret := xMatrixIsIdentity(x.GoPointer())
+
 	return cret
 }
 
@@ -397,6 +426,7 @@ var xMatrixIsSingular func(uintptr) bool
 func (x *Matrix) IsSingular() bool {
 
 	cret := xMatrixIsSingular(x.GoPointer())
+
 	return cret
 }
 
@@ -420,6 +450,7 @@ var xMatrixNear func(uintptr, *Matrix, float32) bool
 func (x *Matrix) Near(BVar *Matrix, EpsilonVar float32) bool {
 
 	cret := xMatrixNear(x.GoPointer(), BVar, EpsilonVar)
+
 	return cret
 }
 
@@ -617,6 +648,7 @@ var xMatrixTo2d func(uintptr, *float64, *float64, *float64, *float64, *float64, 
 func (x *Matrix) To2d(XxVar *float64, YxVar *float64, XyVar *float64, YyVar *float64, X0Var *float64, Y0Var *float64) bool {
 
 	cret := xMatrixTo2d(x.GoPointer(), XxVar, YxVar, XyVar, YyVar, X0Var, Y0Var)
+
 	return cret
 }
 
@@ -793,6 +825,7 @@ var xMatrixUntransformPoint func(uintptr, *Point, *Rect, *Point) bool
 func (x *Matrix) UntransformPoint(PVar *Point, BoundsVar *Rect, ResVar *Point) bool {
 
 	cret := xMatrixUntransformPoint(x.GoPointer(), PVar, BoundsVar, ResVar)
+
 	return cret
 }
 

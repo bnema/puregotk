@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -230,6 +231,7 @@ var xEntryGetActivatesDefault func(uintptr) bool
 func (x *Entry) GetActivatesDefault() bool {
 
 	cret := xEntryGetActivatesDefault(x.GoPointer())
+
 	return cret
 }
 
@@ -241,6 +243,7 @@ var xEntryGetAlignment func(uintptr) float32
 func (x *Entry) GetAlignment() float32 {
 
 	cret := xEntryGetAlignment(x.GoPointer())
+
 	return cret
 }
 
@@ -252,6 +255,7 @@ var xEntryGetAttributes func(uintptr) *pango.AttrList
 func (x *Entry) GetAttributes() *pango.AttrList {
 
 	cret := xEntryGetAttributes(x.GoPointer())
+
 	return cret
 }
 
@@ -298,6 +302,7 @@ var xEntryGetCurrentIconDragSource func(uintptr) int
 func (x *Entry) GetCurrentIconDragSource() int {
 
 	cret := xEntryGetCurrentIconDragSource(x.GoPointer())
+
 	return cret
 }
 
@@ -324,6 +329,7 @@ var xEntryGetHasFrame func(uintptr) bool
 func (x *Entry) GetHasFrame() bool {
 
 	cret := xEntryGetHasFrame(x.GoPointer())
+
 	return cret
 }
 
@@ -333,6 +339,7 @@ var xEntryGetIconActivatable func(uintptr, EntryIconPosition) bool
 func (x *Entry) GetIconActivatable(IconPosVar EntryIconPosition) bool {
 
 	cret := xEntryGetIconActivatable(x.GoPointer(), IconPosVar)
+
 	return cret
 }
 
@@ -364,6 +371,7 @@ var xEntryGetIconAtPos func(uintptr, int, int) int
 func (x *Entry) GetIconAtPos(XVar int, YVar int) int {
 
 	cret := xEntryGetIconAtPos(x.GoPointer(), XVar, YVar)
+
 	return cret
 }
 
@@ -396,6 +404,7 @@ var xEntryGetIconName func(uintptr, EntryIconPosition) string
 func (x *Entry) GetIconName(IconPosVar EntryIconPosition) string {
 
 	cret := xEntryGetIconName(x.GoPointer(), IconPosVar)
+
 	return cret
 }
 
@@ -424,6 +433,7 @@ var xEntryGetIconSensitive func(uintptr, EntryIconPosition) bool
 func (x *Entry) GetIconSensitive(IconPosVar EntryIconPosition) bool {
 
 	cret := xEntryGetIconSensitive(x.GoPointer(), IconPosVar)
+
 	return cret
 }
 
@@ -437,6 +447,7 @@ var xEntryGetIconStorageType func(uintptr, EntryIconPosition) ImageType
 func (x *Entry) GetIconStorageType(IconPosVar EntryIconPosition) ImageType {
 
 	cret := xEntryGetIconStorageType(x.GoPointer(), IconPosVar)
+
 	return cret
 }
 
@@ -447,6 +458,7 @@ var xEntryGetIconTooltipMarkup func(uintptr, EntryIconPosition) string
 func (x *Entry) GetIconTooltipMarkup(IconPosVar EntryIconPosition) string {
 
 	cret := xEntryGetIconTooltipMarkup(x.GoPointer(), IconPosVar)
+
 	return cret
 }
 
@@ -457,6 +469,7 @@ var xEntryGetIconTooltipText func(uintptr, EntryIconPosition) string
 func (x *Entry) GetIconTooltipText(IconPosVar EntryIconPosition) string {
 
 	cret := xEntryGetIconTooltipText(x.GoPointer(), IconPosVar)
+
 	return cret
 }
 
@@ -466,6 +479,7 @@ var xEntryGetInputHints func(uintptr) InputHints
 func (x *Entry) GetInputHints() InputHints {
 
 	cret := xEntryGetInputHints(x.GoPointer())
+
 	return cret
 }
 
@@ -475,6 +489,7 @@ var xEntryGetInputPurpose func(uintptr) InputPurpose
 func (x *Entry) GetInputPurpose() InputPurpose {
 
 	cret := xEntryGetInputPurpose(x.GoPointer())
+
 	return cret
 }
 
@@ -485,6 +500,7 @@ var xEntryGetInvisibleChar func(uintptr) uint32
 func (x *Entry) GetInvisibleChar() uint32 {
 
 	cret := xEntryGetInvisibleChar(x.GoPointer())
+
 	return cret
 }
 
@@ -496,6 +512,7 @@ var xEntryGetMaxLength func(uintptr) int
 func (x *Entry) GetMaxLength() int {
 
 	cret := xEntryGetMaxLength(x.GoPointer())
+
 	return cret
 }
 
@@ -510,6 +527,7 @@ var xEntryGetMenuEntryIconText func(uintptr, EntryIconPosition) string
 func (x *Entry) GetMenuEntryIconText(IconPosVar EntryIconPosition) string {
 
 	cret := xEntryGetMenuEntryIconText(x.GoPointer(), IconPosVar)
+
 	return cret
 }
 
@@ -519,6 +537,7 @@ var xEntryGetOverwriteMode func(uintptr) bool
 func (x *Entry) GetOverwriteMode() bool {
 
 	cret := xEntryGetOverwriteMode(x.GoPointer())
+
 	return cret
 }
 
@@ -529,6 +548,7 @@ var xEntryGetPlaceholderText func(uintptr) string
 func (x *Entry) GetPlaceholderText() string {
 
 	cret := xEntryGetPlaceholderText(x.GoPointer())
+
 	return cret
 }
 
@@ -540,6 +560,7 @@ var xEntryGetProgressFraction func(uintptr) float64
 func (x *Entry) GetProgressFraction() float64 {
 
 	cret := xEntryGetProgressFraction(x.GoPointer())
+
 	return cret
 }
 
@@ -550,6 +571,7 @@ var xEntryGetProgressPulseStep func(uintptr) float64
 func (x *Entry) GetProgressPulseStep() float64 {
 
 	cret := xEntryGetProgressPulseStep(x.GoPointer())
+
 	return cret
 }
 
@@ -561,6 +583,7 @@ var xEntryGetTabs func(uintptr) *pango.TabArray
 func (x *Entry) GetTabs() *pango.TabArray {
 
 	cret := xEntryGetTabs(x.GoPointer())
+
 	return cret
 }
 
@@ -573,6 +596,7 @@ var xEntryGetTextLength func(uintptr) uint16
 func (x *Entry) GetTextLength() uint16 {
 
 	cret := xEntryGetTextLength(x.GoPointer())
+
 	return cret
 }
 
@@ -584,6 +608,7 @@ var xEntryGetVisibility func(uintptr) bool
 func (x *Entry) GetVisibility() bool {
 
 	cret := xEntryGetVisibility(x.GoPointer())
+
 	return cret
 }
 
@@ -598,6 +623,7 @@ var xEntryGrabFocusWithoutSelecting func(uintptr) bool
 func (x *Entry) GrabFocusWithoutSelecting() bool {
 
 	cret := xEntryGrabFocusWithoutSelecting(x.GoPointer())
+
 	return cret
 }
 
@@ -763,7 +789,11 @@ var xEntrySetIconFromIconName func(uintptr, EntryIconPosition, uintptr)
 // specified position.
 func (x *Entry) SetIconFromIconName(IconPosVar EntryIconPosition, IconNameVar *string) {
 
-	xEntrySetIconFromIconName(x.GoPointer(), IconPosVar, core.NullableStringToPtr(IconNameVar))
+	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+
+	xEntrySetIconFromIconName(x.GoPointer(), IconPosVar, IconNameVarPtr)
+
+	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -800,7 +830,11 @@ var xEntrySetIconTooltipMarkup func(uintptr, EntryIconPosition, uintptr)
 // [method@Gtk.Entry.set_icon_tooltip_text].
 func (x *Entry) SetIconTooltipMarkup(IconPosVar EntryIconPosition, TooltipVar *string) {
 
-	xEntrySetIconTooltipMarkup(x.GoPointer(), IconPosVar, core.NullableStringToPtr(TooltipVar))
+	TooltipVarPtr, TooltipVarBytes := core.NullableStringToPtr(TooltipVar)
+
+	xEntrySetIconTooltipMarkup(x.GoPointer(), IconPosVar, TooltipVarPtr)
+
+	runtime.KeepAlive(TooltipVarBytes)
 
 }
 
@@ -825,7 +859,11 @@ var xEntrySetIconTooltipText func(uintptr, EntryIconPosition, uintptr)
 // achieves the same result.
 func (x *Entry) SetIconTooltipText(IconPosVar EntryIconPosition, TooltipVar *string) {
 
-	xEntrySetIconTooltipText(x.GoPointer(), IconPosVar, core.NullableStringToPtr(TooltipVar))
+	TooltipVarPtr, TooltipVarBytes := core.NullableStringToPtr(TooltipVar)
+
+	xEntrySetIconTooltipText(x.GoPointer(), IconPosVar, TooltipVarPtr)
+
+	runtime.KeepAlive(TooltipVarBytes)
 
 }
 
@@ -913,7 +951,11 @@ var xEntrySetPlaceholderText func(uintptr, uintptr)
 // contents of the `GtkEntry`.
 func (x *Entry) SetPlaceholderText(TextVar *string) {
 
-	xEntrySetPlaceholderText(x.GoPointer(), core.NullableStringToPtr(TextVar))
+	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+
+	xEntrySetPlaceholderText(x.GoPointer(), TextVarPtr)
+
+	runtime.KeepAlive(TextVarBytes)
 
 }
 
@@ -1738,6 +1780,7 @@ func (x *Entry) GetAccessibleParent() *AccessibleBase {
 func (x *Entry) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -1763,6 +1806,7 @@ func (x *Entry) GetAtContext() *ATContext {
 func (x *Entry) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1802,6 +1846,7 @@ func (x *Entry) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Entry) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1978,6 +2023,7 @@ func (x *Entry) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 func (x *Entry) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -2050,6 +2096,7 @@ func (x *Entry) StartEditing(EventVar *gdk.Event) {
 func (x *Entry) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -2097,6 +2144,7 @@ func (x *Entry) FinishDelegate() {
 func (x *Entry) GetChars(StartPosVar int, EndPosVar int) string {
 
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -2122,6 +2170,7 @@ func (x *Entry) GetDelegate() *EditableBase {
 func (x *Entry) GetEditable() bool {
 
 	cret := XGtkEditableGetEditable(x.GoPointer())
+
 	return cret
 }
 
@@ -2129,6 +2178,7 @@ func (x *Entry) GetEditable() bool {
 func (x *Entry) GetEnableUndo() bool {
 
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
+
 	return cret
 }
 
@@ -2136,6 +2186,7 @@ func (x *Entry) GetEnableUndo() bool {
 func (x *Entry) GetMaxWidthChars() int {
 
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
+
 	return cret
 }
 
@@ -2146,6 +2197,7 @@ func (x *Entry) GetMaxWidthChars() int {
 func (x *Entry) GetPosition() int {
 
 	cret := XGtkEditableGetPosition(x.GoPointer())
+
 	return cret
 }
 
@@ -2159,6 +2211,7 @@ func (x *Entry) GetPosition() int {
 func (x *Entry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -2168,6 +2221,7 @@ func (x *Entry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 func (x *Entry) GetText() string {
 
 	cret := XGtkEditableGetText(x.GoPointer())
+
 	return cret
 }
 
@@ -2176,6 +2230,7 @@ func (x *Entry) GetText() string {
 func (x *Entry) GetWidthChars() int {
 
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
+
 	return cret
 }
 

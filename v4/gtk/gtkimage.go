@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
@@ -176,7 +178,11 @@ var xNewImageFromIconName func(uintptr) uintptr
 func NewImageFromIconName(IconNameVar *string) *Image {
 	var cls *Image
 
-	cret := xNewImageFromIconName(core.NullableStringToPtr(IconNameVar))
+	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+
+	cret := xNewImageFromIconName(IconNameVarPtr)
+
+	runtime.KeepAlive(IconNameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -317,6 +323,7 @@ var xImageGetIconName func(uintptr) string
 func (x *Image) GetIconName() string {
 
 	cret := xImageGetIconName(x.GoPointer())
+
 	return cret
 }
 
@@ -326,6 +333,7 @@ var xImageGetIconSize func(uintptr) IconSize
 func (x *Image) GetIconSize() IconSize {
 
 	cret := xImageGetIconSize(x.GoPointer())
+
 	return cret
 }
 
@@ -357,6 +365,7 @@ var xImageGetPixelSize func(uintptr) int
 func (x *Image) GetPixelSize() int {
 
 	cret := xImageGetPixelSize(x.GoPointer())
+
 	return cret
 }
 
@@ -370,6 +379,7 @@ var xImageGetStorageType func(uintptr) ImageType
 func (x *Image) GetStorageType() ImageType {
 
 	cret := xImageGetStorageType(x.GoPointer())
+
 	return cret
 }
 
@@ -387,7 +397,11 @@ var xImageSetFromFile func(uintptr, uintptr)
 //	[method@Gtk.Image.set_from_paintable].
 func (x *Image) SetFromFile(FilenameVar *string) {
 
-	xImageSetFromFile(x.GoPointer(), core.NullableStringToPtr(FilenameVar))
+	FilenameVarPtr, FilenameVarBytes := core.NullableStringToPtr(FilenameVar)
+
+	xImageSetFromFile(x.GoPointer(), FilenameVarPtr)
+
+	runtime.KeepAlive(FilenameVarBytes)
 
 }
 
@@ -409,7 +423,11 @@ var xImageSetFromIconName func(uintptr, uintptr)
 // See [ctor@Gtk.Image.new_from_icon_name] for details.
 func (x *Image) SetFromIconName(IconNameVar *string) {
 
-	xImageSetFromIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
+	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+
+	xImageSetFromIconName(x.GoPointer(), IconNameVarPtr)
+
+	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -446,7 +464,11 @@ var xImageSetFromResource func(uintptr, uintptr)
 // See [ctor@Gtk.Image.new_from_resource] for details.
 func (x *Image) SetFromResource(ResourcePathVar *string) {
 
-	xImageSetFromResource(x.GoPointer(), core.NullableStringToPtr(ResourcePathVar))
+	ResourcePathVarPtr, ResourcePathVarBytes := core.NullableStringToPtr(ResourcePathVar)
+
+	xImageSetFromResource(x.GoPointer(), ResourcePathVarPtr)
+
+	runtime.KeepAlive(ResourcePathVarBytes)
 
 }
 
@@ -622,6 +644,7 @@ func (x *Image) GetAccessibleParent() *AccessibleBase {
 func (x *Image) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -647,6 +670,7 @@ func (x *Image) GetAtContext() *ATContext {
 func (x *Image) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -686,6 +710,7 @@ func (x *Image) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Image) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -862,6 +887,7 @@ func (x *Image) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 func (x *Image) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

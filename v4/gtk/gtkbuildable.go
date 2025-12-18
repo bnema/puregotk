@@ -415,6 +415,7 @@ var xBuildableParseContextGetElement func(uintptr) string
 func (x *BuildableParseContext) GetElement() string {
 
 	cret := xBuildableParseContextGetElement(x.GoPointer())
+
 	return cret
 }
 
@@ -434,6 +435,7 @@ var xBuildableParseContextGetElementStack func(uintptr) []string
 func (x *BuildableParseContext) GetElementStack() []string {
 
 	cret := xBuildableParseContextGetElementStack(x.GoPointer())
+
 	return cret
 }
 
@@ -467,6 +469,7 @@ var xBuildableParseContextPop func(uintptr) uintptr
 func (x *BuildableParseContext) Pop() uintptr {
 
 	cret := xBuildableParseContextPop(x.GoPointer())
+
 	return cret
 }
 
@@ -672,6 +675,7 @@ func (x *BuildableBase) SetGoPointer(ptr uintptr) {
 func (x *BuildableBase) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

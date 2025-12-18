@@ -150,6 +150,7 @@ var xPanedGetPosition func(uintptr) int
 func (x *Paned) GetPosition() int {
 
 	cret := xPanedGetPosition(x.GoPointer())
+
 	return cret
 }
 
@@ -159,6 +160,7 @@ var xPanedGetResizeEndChild func(uintptr) bool
 func (x *Paned) GetResizeEndChild() bool {
 
 	cret := xPanedGetResizeEndChild(x.GoPointer())
+
 	return cret
 }
 
@@ -168,6 +170,7 @@ var xPanedGetResizeStartChild func(uintptr) bool
 func (x *Paned) GetResizeStartChild() bool {
 
 	cret := xPanedGetResizeStartChild(x.GoPointer())
+
 	return cret
 }
 
@@ -177,6 +180,7 @@ var xPanedGetShrinkEndChild func(uintptr) bool
 func (x *Paned) GetShrinkEndChild() bool {
 
 	cret := xPanedGetShrinkEndChild(x.GoPointer())
+
 	return cret
 }
 
@@ -186,6 +190,7 @@ var xPanedGetShrinkStartChild func(uintptr) bool
 func (x *Paned) GetShrinkStartChild() bool {
 
 	cret := xPanedGetShrinkStartChild(x.GoPointer())
+
 	return cret
 }
 
@@ -212,6 +217,7 @@ var xPanedGetWideHandle func(uintptr) bool
 func (x *Paned) GetWideHandle() bool {
 
 	cret := xPanedGetWideHandle(x.GoPointer())
+
 	return cret
 }
 
@@ -651,6 +657,7 @@ func (x *Paned) GetAccessibleParent() *AccessibleBase {
 func (x *Paned) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -676,6 +683,7 @@ func (x *Paned) GetAtContext() *ATContext {
 func (x *Paned) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -715,6 +723,7 @@ func (x *Paned) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Paned) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -891,6 +900,7 @@ func (x *Paned) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 func (x *Paned) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -898,6 +908,7 @@ func (x *Paned) GetBuildableId() string {
 func (x *Paned) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

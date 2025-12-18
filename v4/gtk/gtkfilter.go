@@ -411,6 +411,7 @@ var xFilterGetStrictness func(uintptr) FilterMatch
 func (x *Filter) GetStrictness() FilterMatch {
 
 	cret := xFilterGetStrictness(x.GoPointer())
+
 	return cret
 }
 
@@ -420,6 +421,7 @@ var xFilterMatch func(uintptr, uintptr) bool
 func (x *Filter) Match(ItemVar *gobject.Object) bool {
 
 	cret := xFilterMatch(x.GoPointer(), ItemVar.GoPointer())
+
 	return cret
 }
 

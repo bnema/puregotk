@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -132,7 +133,11 @@ var xNewExpander func(uintptr) uintptr
 func NewExpander(LabelVar *string) *Expander {
 	var cls *Expander
 
-	cret := xNewExpander(core.NullableStringToPtr(LabelVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	cret := xNewExpander(LabelVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -156,7 +161,11 @@ var xNewExpanderWithMnemonic func(uintptr) uintptr
 func NewExpanderWithMnemonic(LabelVar *string) *Expander {
 	var cls *Expander
 
-	cret := xNewExpanderWithMnemonic(core.NullableStringToPtr(LabelVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	cret := xNewExpanderWithMnemonic(LabelVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -192,6 +201,7 @@ var xExpanderGetExpanded func(uintptr) bool
 func (x *Expander) GetExpanded() bool {
 
 	cret := xExpanderGetExpanded(x.GoPointer())
+
 	return cret
 }
 
@@ -207,6 +217,7 @@ var xExpanderGetLabel func(uintptr) string
 func (x *Expander) GetLabel() string {
 
 	cret := xExpanderGetLabel(x.GoPointer())
+
 	return cret
 }
 
@@ -234,6 +245,7 @@ var xExpanderGetResizeToplevel func(uintptr) bool
 func (x *Expander) GetResizeToplevel() bool {
 
 	cret := xExpanderGetResizeToplevel(x.GoPointer())
+
 	return cret
 }
 
@@ -243,6 +255,7 @@ var xExpanderGetUseMarkup func(uintptr) bool
 func (x *Expander) GetUseMarkup() bool {
 
 	cret := xExpanderGetUseMarkup(x.GoPointer())
+
 	return cret
 }
 
@@ -252,6 +265,7 @@ var xExpanderGetUseUnderline func(uintptr) bool
 func (x *Expander) GetUseUnderline() bool {
 
 	cret := xExpanderGetUseUnderline(x.GoPointer())
+
 	return cret
 }
 
@@ -283,7 +297,11 @@ var xExpanderSetLabel func(uintptr, uintptr)
 // This will also clear any previously set labels.
 func (x *Expander) SetLabel(LabelVar *string) {
 
-	xExpanderSetLabel(x.GoPointer(), core.NullableStringToPtr(LabelVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	xExpanderSetLabel(x.GoPointer(), LabelVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -480,6 +498,7 @@ func (x *Expander) GetAccessibleParent() *AccessibleBase {
 func (x *Expander) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -505,6 +524,7 @@ func (x *Expander) GetAtContext() *ATContext {
 func (x *Expander) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -544,6 +564,7 @@ func (x *Expander) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Expander) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -720,6 +741,7 @@ func (x *Expander) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *Expander) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

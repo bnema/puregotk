@@ -211,6 +211,7 @@ var xPopoverMenuAddChild func(uintptr, uintptr, string) bool
 func (x *PopoverMenu) AddChild(ChildVar *Widget, IdVar string) bool {
 
 	cret := xPopoverMenuAddChild(x.GoPointer(), ChildVar.GoPointer(), IdVar)
+
 	return cret
 }
 
@@ -220,6 +221,7 @@ var xPopoverMenuGetFlags func(uintptr) PopoverMenuFlags
 func (x *PopoverMenu) GetFlags() PopoverMenuFlags {
 
 	cret := xPopoverMenuGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -247,6 +249,7 @@ var xPopoverMenuRemoveChild func(uintptr, uintptr) bool
 func (x *PopoverMenu) RemoveChild(ChildVar *Widget) bool {
 
 	cret := xPopoverMenuRemoveChild(x.GoPointer(), ChildVar.GoPointer())
+
 	return cret
 }
 
@@ -338,6 +341,7 @@ func (x *PopoverMenu) GetAccessibleParent() *AccessibleBase {
 func (x *PopoverMenu) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -363,6 +367,7 @@ func (x *PopoverMenu) GetAtContext() *ATContext {
 func (x *PopoverMenu) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -402,6 +407,7 @@ func (x *PopoverMenu) GetNextAccessibleSibling() *AccessibleBase {
 func (x *PopoverMenu) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -578,6 +584,7 @@ func (x *PopoverMenu) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 func (x *PopoverMenu) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

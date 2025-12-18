@@ -112,6 +112,7 @@ var xGLTextureBuilderGetColorState func(uintptr) *ColorState
 func (x *GLTextureBuilder) GetColorState() *ColorState {
 
 	cret := xGLTextureBuilderGetColorState(x.GoPointer())
+
 	return cret
 }
 
@@ -139,6 +140,7 @@ var xGLTextureBuilderGetFormat func(uintptr) MemoryFormat
 func (x *GLTextureBuilder) GetFormat() MemoryFormat {
 
 	cret := xGLTextureBuilderGetFormat(x.GoPointer())
+
 	return cret
 }
 
@@ -148,6 +150,7 @@ var xGLTextureBuilderGetHasMipmap func(uintptr) bool
 func (x *GLTextureBuilder) GetHasMipmap() bool {
 
 	cret := xGLTextureBuilderGetHasMipmap(x.GoPointer())
+
 	return cret
 }
 
@@ -158,6 +161,7 @@ var xGLTextureBuilderGetHeight func(uintptr) int
 func (x *GLTextureBuilder) GetHeight() int {
 
 	cret := xGLTextureBuilderGetHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -168,6 +172,7 @@ var xGLTextureBuilderGetId func(uintptr) uint
 func (x *GLTextureBuilder) GetId() uint {
 
 	cret := xGLTextureBuilderGetId(x.GoPointer())
+
 	return cret
 }
 
@@ -177,6 +182,7 @@ var xGLTextureBuilderGetSync func(uintptr) uintptr
 func (x *GLTextureBuilder) GetSync() uintptr {
 
 	cret := xGLTextureBuilderGetSync(x.GoPointer())
+
 	return cret
 }
 
@@ -187,6 +193,7 @@ var xGLTextureBuilderGetUpdateRegion func(uintptr) *cairo.Region
 func (x *GLTextureBuilder) GetUpdateRegion() *cairo.Region {
 
 	cret := xGLTextureBuilderGetUpdateRegion(x.GoPointer())
+
 	return cret
 }
 
@@ -215,6 +222,7 @@ var xGLTextureBuilderGetWidth func(uintptr) int
 func (x *GLTextureBuilder) GetWidth() int {
 
 	cret := xGLTextureBuilderGetWidth(x.GoPointer())
+
 	return cret
 }
 

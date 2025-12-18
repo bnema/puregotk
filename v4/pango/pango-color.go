@@ -43,6 +43,7 @@ var xColorCopy func(uintptr) *Color
 func (x *Color) Copy() *Color {
 
 	cret := xColorCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -69,6 +70,7 @@ var xColorParse func(uintptr, string) bool
 func (x *Color) Parse(SpecVar string) bool {
 
 	cret := xColorParse(x.GoPointer(), SpecVar)
+
 	return cret
 }
 
@@ -92,6 +94,7 @@ var xColorParseWithAlpha func(uintptr, *uint16, string) bool
 func (x *Color) ParseWithAlpha(AlphaVar *uint16, SpecVar string) bool {
 
 	cret := xColorParseWithAlpha(x.GoPointer(), AlphaVar, SpecVar)
+
 	return cret
 }
 
@@ -105,6 +108,7 @@ var xColorToString func(uintptr) string
 func (x *Color) ToString() string {
 
 	cret := xColorToString(x.GoPointer())
+
 	return cret
 }
 

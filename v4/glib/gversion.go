@@ -26,6 +26,7 @@ var xCheckVersion func(uint, uint, uint) string
 func CheckVersion(RequiredMajorVar uint, RequiredMinorVar uint, RequiredMicroVar uint) string {
 
 	cret := xCheckVersion(RequiredMajorVar, RequiredMinorVar, RequiredMicroVar)
+
 	return cret
 }
 

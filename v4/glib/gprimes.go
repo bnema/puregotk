@@ -17,6 +17,7 @@ var xSpacedPrimesClosest func(uint) uint
 func SpacedPrimesClosest(NumVar uint) uint {
 
 	cret := xSpacedPrimesClosest(NumVar)
+
 	return cret
 }
 

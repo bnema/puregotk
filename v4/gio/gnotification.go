@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -118,7 +120,11 @@ var xNotificationAddButtonWithTarget func(uintptr, string, string, uintptr, ...i
 // parameter.
 func (x *Notification) AddButtonWithTarget(LabelVar string, ActionVar string, TargetFormatVar *string, varArgs ...interface{}) {
 
-	xNotificationAddButtonWithTarget(x.GoPointer(), LabelVar, ActionVar, core.NullableStringToPtr(TargetFormatVar), varArgs...)
+	TargetFormatVarPtr, TargetFormatVarBytes := core.NullableStringToPtr(TargetFormatVar)
+
+	xNotificationAddButtonWithTarget(x.GoPointer(), LabelVar, ActionVar, TargetFormatVarPtr, varArgs...)
+
+	runtime.KeepAlive(TargetFormatVarBytes)
 
 }
 
@@ -140,7 +146,11 @@ var xNotificationSetBody func(uintptr, uintptr)
 // Sets the body of @notification to @body.
 func (x *Notification) SetBody(BodyVar *string) {
 
-	xNotificationSetBody(x.GoPointer(), core.NullableStringToPtr(BodyVar))
+	BodyVarPtr, BodyVarBytes := core.NullableStringToPtr(BodyVar)
+
+	xNotificationSetBody(x.GoPointer(), BodyVarPtr)
+
+	runtime.KeepAlive(BodyVarBytes)
 
 }
 
@@ -154,7 +164,11 @@ var xNotificationSetCategory func(uintptr, uintptr)
 // Standard categories are [listed in the specification](https://specifications.freedesktop.org/notification-spec/latest/ar01s06.html).
 func (x *Notification) SetCategory(CategoryVar *string) {
 
-	xNotificationSetCategory(x.GoPointer(), core.NullableStringToPtr(CategoryVar))
+	CategoryVarPtr, CategoryVarBytes := core.NullableStringToPtr(CategoryVar)
+
+	xNotificationSetCategory(x.GoPointer(), CategoryVarPtr)
+
+	runtime.KeepAlive(CategoryVarBytes)
 
 }
 
@@ -192,7 +206,11 @@ var xNotificationSetDefaultActionAndTarget func(uintptr, string, uintptr, ...int
 // was sent on is activated.
 func (x *Notification) SetDefaultActionAndTarget(ActionVar string, TargetFormatVar *string, varArgs ...interface{}) {
 
-	xNotificationSetDefaultActionAndTarget(x.GoPointer(), ActionVar, core.NullableStringToPtr(TargetFormatVar), varArgs...)
+	TargetFormatVarPtr, TargetFormatVarBytes := core.NullableStringToPtr(TargetFormatVar)
+
+	xNotificationSetDefaultActionAndTarget(x.GoPointer(), ActionVar, TargetFormatVarPtr, varArgs...)
+
+	runtime.KeepAlive(TargetFormatVarBytes)
 
 }
 

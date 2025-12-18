@@ -2,6 +2,8 @@
 package glib
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
@@ -46,7 +48,12 @@ var xInternStaticString func(uintptr) string
 // variables in C++.
 func InternStaticString(StringVar *string) string {
 
-	cret := xInternStaticString(core.NullableStringToPtr(StringVar))
+	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+
+	cret := xInternStaticString(StringVarPtr)
+
+	runtime.KeepAlive(StringVarBytes)
+
 	return cret
 }
 
@@ -61,7 +68,12 @@ var xInternString func(uintptr) string
 // variables in C++.
 func InternString(StringVar *string) string {
 
-	cret := xInternString(core.NullableStringToPtr(StringVar))
+	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+
+	cret := xInternString(StringVarPtr)
+
+	runtime.KeepAlive(StringVarBytes)
+
 	return cret
 }
 
@@ -85,7 +97,12 @@ var xQuarkFromStaticString func(uintptr) Quark
 // variables in C++.
 func QuarkFromStaticString(StringVar *string) Quark {
 
-	cret := xQuarkFromStaticString(core.NullableStringToPtr(StringVar))
+	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+
+	cret := xQuarkFromStaticString(StringVarPtr)
+
+	runtime.KeepAlive(StringVarBytes)
+
 	return cret
 }
 
@@ -100,7 +117,12 @@ var xQuarkFromString func(uintptr) Quark
 // variables in C++.
 func QuarkFromString(StringVar *string) Quark {
 
-	cret := xQuarkFromString(core.NullableStringToPtr(StringVar))
+	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+
+	cret := xQuarkFromString(StringVarPtr)
+
+	runtime.KeepAlive(StringVarBytes)
+
 	return cret
 }
 
@@ -110,6 +132,7 @@ var xQuarkToString func(Quark) string
 func QuarkToString(QuarkVar Quark) string {
 
 	cret := xQuarkToString(QuarkVar)
+
 	return cret
 }
 
@@ -125,7 +148,12 @@ var xQuarkTryString func(uintptr) Quark
 // running.
 func QuarkTryString(StringVar *string) Quark {
 
-	cret := xQuarkTryString(core.NullableStringToPtr(StringVar))
+	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+
+	cret := xQuarkTryString(StringVarPtr)
+
+	runtime.KeepAlive(StringVarBytes)
+
 	return cret
 }
 

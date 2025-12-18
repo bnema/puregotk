@@ -150,6 +150,7 @@ var xViewSwitcherGetPolicy func(uintptr) ViewSwitcherPolicy
 func (x *ViewSwitcher) GetPolicy() ViewSwitcherPolicy {
 
 	cret := xViewSwitcherGetPolicy(x.GoPointer())
+
 	return cret
 }
 
@@ -234,6 +235,7 @@ func (x *ViewSwitcher) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ViewSwitcher) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -259,6 +261,7 @@ func (x *ViewSwitcher) GetAtContext() *gtk.ATContext {
 func (x *ViewSwitcher) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -298,6 +301,7 @@ func (x *ViewSwitcher) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ViewSwitcher) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -474,6 +478,7 @@ func (x *ViewSwitcher) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessib
 func (x *ViewSwitcher) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

@@ -76,6 +76,7 @@ var xWindowTitleGetSubtitle func(uintptr) string
 func (x *WindowTitle) GetSubtitle() string {
 
 	cret := xWindowTitleGetSubtitle(x.GoPointer())
+
 	return cret
 }
 
@@ -85,6 +86,7 @@ var xWindowTitleGetTitle func(uintptr) string
 func (x *WindowTitle) GetTitle() string {
 
 	cret := xWindowTitleGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -201,6 +203,7 @@ func (x *WindowTitle) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *WindowTitle) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -226,6 +229,7 @@ func (x *WindowTitle) GetAtContext() *gtk.ATContext {
 func (x *WindowTitle) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -265,6 +269,7 @@ func (x *WindowTitle) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *WindowTitle) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -441,6 +446,7 @@ func (x *WindowTitle) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 func (x *WindowTitle) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

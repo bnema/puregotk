@@ -390,6 +390,7 @@ func (x *DtlsConnectionBase) Close(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGDtlsConnectionClose(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -411,6 +412,7 @@ func (x *DtlsConnectionBase) CloseFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGDtlsConnectionCloseFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -423,6 +425,7 @@ func (x *DtlsConnectionBase) CloseFinish(ResultVar AsyncResult) (bool, error) {
 func (x *DtlsConnectionBase) EmitAcceptCertificate(PeerCertVar *TlsCertificate, ErrorsVar TlsCertificateFlags) bool {
 
 	cret := XGDtlsConnectionEmitAcceptCertificate(x.GoPointer(), PeerCertVar.GoPointer(), ErrorsVar)
+
 	return cret
 }
 
@@ -459,6 +462,7 @@ func (x *DtlsConnectionBase) GetChannelBindingData(TypeVar TlsChannelBindingType
 	var cerr *glib.Error
 
 	cret := XGDtlsConnectionGetChannelBindingData(x.GoPointer(), TypeVar, DataVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -477,6 +481,7 @@ func (x *DtlsConnectionBase) GetChannelBindingData(TypeVar TlsChannelBindingType
 func (x *DtlsConnectionBase) GetCiphersuiteName() string {
 
 	cret := XGDtlsConnectionGetCiphersuiteName(x.GoPointer())
+
 	return cret
 }
 
@@ -523,6 +528,7 @@ func (x *DtlsConnectionBase) GetInteraction() *TlsInteraction {
 func (x *DtlsConnectionBase) GetNegotiatedProtocol() string {
 
 	cret := XGDtlsConnectionGetNegotiatedProtocol(x.GoPointer())
+
 	return cret
 }
 
@@ -549,6 +555,7 @@ func (x *DtlsConnectionBase) GetPeerCertificate() *TlsCertificate {
 func (x *DtlsConnectionBase) GetPeerCertificateErrors() TlsCertificateFlags {
 
 	cret := XGDtlsConnectionGetPeerCertificateErrors(x.GoPointer())
+
 	return cret
 }
 
@@ -559,6 +566,7 @@ func (x *DtlsConnectionBase) GetPeerCertificateErrors() TlsCertificateFlags {
 func (x *DtlsConnectionBase) GetProtocolVersion() TlsProtocolVersion {
 
 	cret := XGDtlsConnectionGetProtocolVersion(x.GoPointer())
+
 	return cret
 }
 
@@ -567,6 +575,7 @@ func (x *DtlsConnectionBase) GetProtocolVersion() TlsProtocolVersion {
 func (x *DtlsConnectionBase) GetRehandshakeMode() TlsRehandshakeMode {
 
 	cret := XGDtlsConnectionGetRehandshakeMode(x.GoPointer())
+
 	return cret
 }
 
@@ -576,6 +585,7 @@ func (x *DtlsConnectionBase) GetRehandshakeMode() TlsRehandshakeMode {
 func (x *DtlsConnectionBase) GetRequireCloseNotify() bool {
 
 	cret := XGDtlsConnectionGetRequireCloseNotify(x.GoPointer())
+
 	return cret
 }
 
@@ -609,6 +619,7 @@ func (x *DtlsConnectionBase) Handshake(CancellableVar *Cancellable) (bool, error
 	var cerr *glib.Error
 
 	cret := XGDtlsConnectionHandshake(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -630,6 +641,7 @@ func (x *DtlsConnectionBase) HandshakeFinish(ResultVar AsyncResult) (bool, error
 	var cerr *glib.Error
 
 	cret := XGDtlsConnectionHandshakeFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -767,6 +779,7 @@ func (x *DtlsConnectionBase) Shutdown(ShutdownReadVar bool, ShutdownWriteVar boo
 	var cerr *glib.Error
 
 	cret := XGDtlsConnectionShutdown(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -788,6 +801,7 @@ func (x *DtlsConnectionBase) ShutdownFinish(ResultVar AsyncResult) (bool, error)
 	var cerr *glib.Error
 
 	cret := XGDtlsConnectionShutdownFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

@@ -820,6 +820,7 @@ var xIMContextActivateOsk func(uintptr, uintptr) bool
 func (x *IMContext) ActivateOsk(EventVar *gdk.Event) bool {
 
 	cret := xIMContextActivateOsk(x.GoPointer(), EventVar.GoPointer())
+
 	return cret
 }
 
@@ -845,6 +846,7 @@ var xIMContextDeleteSurrounding func(uintptr, int, int) bool
 func (x *IMContext) DeleteSurrounding(OffsetVar int, NCharsVar int) bool {
 
 	cret := xIMContextDeleteSurrounding(x.GoPointer(), OffsetVar, NCharsVar)
+
 	return cret
 }
 
@@ -856,6 +858,7 @@ var xIMContextFilterKey func(uintptr, bool, uintptr, uintptr, uint32, uint, gdk.
 func (x *IMContext) FilterKey(PressVar bool, SurfaceVar *gdk.Surface, DeviceVar *gdk.Device, TimeVar uint32, KeycodeVar uint, StateVar gdk.ModifierType, GroupVar int) bool {
 
 	cret := xIMContextFilterKey(x.GoPointer(), PressVar, SurfaceVar.GoPointer(), DeviceVar.GoPointer(), TimeVar, KeycodeVar, StateVar, GroupVar)
+
 	return cret
 }
 
@@ -869,6 +872,7 @@ var xIMContextFilterKeypress func(uintptr, uintptr) bool
 func (x *IMContext) FilterKeypress(EventVar *gdk.Event) bool {
 
 	cret := xIMContextFilterKeypress(x.GoPointer(), EventVar.GoPointer())
+
 	return cret
 }
 
@@ -930,6 +934,7 @@ var xIMContextGetSurrounding func(uintptr, *string, *int) bool
 func (x *IMContext) GetSurrounding(TextVar *string, CursorIndexVar *int) bool {
 
 	cret := xIMContextGetSurrounding(x.GoPointer(), TextVar, CursorIndexVar)
+
 	return cret
 }
 
@@ -953,6 +958,7 @@ var xIMContextGetSurroundingWithSelection func(uintptr, *string, *int, *int) boo
 func (x *IMContext) GetSurroundingWithSelection(TextVar *string, CursorIndexVar *int, AnchorIndexVar *int) bool {
 
 	cret := xIMContextGetSurroundingWithSelection(x.GoPointer(), TextVar, CursorIndexVar, AnchorIndexVar)
+
 	return cret
 }
 

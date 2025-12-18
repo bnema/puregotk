@@ -343,6 +343,7 @@ var xSocketControlMessageGetLevel func(uintptr) int
 func (x *SocketControlMessage) GetLevel() int {
 
 	cret := xSocketControlMessageGetLevel(x.GoPointer())
+
 	return cret
 }
 
@@ -353,6 +354,7 @@ var xSocketControlMessageGetMsgType func(uintptr) int
 func (x *SocketControlMessage) GetMsgType() int {
 
 	cret := xSocketControlMessageGetMsgType(x.GoPointer())
+
 	return cret
 }
 
@@ -363,6 +365,7 @@ var xSocketControlMessageGetSize func(uintptr) uint
 func (x *SocketControlMessage) GetSize() uint {
 
 	cret := xSocketControlMessageGetSize(x.GoPointer())
+
 	return cret
 }
 

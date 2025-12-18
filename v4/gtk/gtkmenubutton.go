@@ -132,6 +132,7 @@ var xMenuButtonGetActive func(uintptr) bool
 func (x *MenuButton) GetActive() bool {
 
 	cret := xMenuButtonGetActive(x.GoPointer())
+
 	return cret
 }
 
@@ -142,6 +143,7 @@ var xMenuButtonGetAlwaysShowArrow func(uintptr) bool
 func (x *MenuButton) GetAlwaysShowArrow() bool {
 
 	cret := xMenuButtonGetAlwaysShowArrow(x.GoPointer())
+
 	return cret
 }
 
@@ -152,6 +154,7 @@ var xMenuButtonGetCanShrink func(uintptr) bool
 func (x *MenuButton) GetCanShrink() bool {
 
 	cret := xMenuButtonGetCanShrink(x.GoPointer())
+
 	return cret
 }
 
@@ -178,6 +181,7 @@ var xMenuButtonGetDirection func(uintptr) ArrowType
 func (x *MenuButton) GetDirection() ArrowType {
 
 	cret := xMenuButtonGetDirection(x.GoPointer())
+
 	return cret
 }
 
@@ -187,6 +191,7 @@ var xMenuButtonGetHasFrame func(uintptr) bool
 func (x *MenuButton) GetHasFrame() bool {
 
 	cret := xMenuButtonGetHasFrame(x.GoPointer())
+
 	return cret
 }
 
@@ -196,6 +201,7 @@ var xMenuButtonGetIconName func(uintptr) string
 func (x *MenuButton) GetIconName() string {
 
 	cret := xMenuButtonGetIconName(x.GoPointer())
+
 	return cret
 }
 
@@ -205,6 +211,7 @@ var xMenuButtonGetLabel func(uintptr) string
 func (x *MenuButton) GetLabel() string {
 
 	cret := xMenuButtonGetLabel(x.GoPointer())
+
 	return cret
 }
 
@@ -251,6 +258,7 @@ var xMenuButtonGetPrimary func(uintptr) bool
 func (x *MenuButton) GetPrimary() bool {
 
 	cret := xMenuButtonGetPrimary(x.GoPointer())
+
 	return cret
 }
 
@@ -261,6 +269,7 @@ var xMenuButtonGetUseUnderline func(uintptr) bool
 func (x *MenuButton) GetUseUnderline() bool {
 
 	cret := xMenuButtonGetUseUnderline(x.GoPointer())
+
 	return cret
 }
 
@@ -702,6 +711,7 @@ func (x *MenuButton) GetAccessibleParent() *AccessibleBase {
 func (x *MenuButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -727,6 +737,7 @@ func (x *MenuButton) GetAtContext() *ATContext {
 func (x *MenuButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -766,6 +777,7 @@ func (x *MenuButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *MenuButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -942,6 +954,7 @@ func (x *MenuButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 func (x *MenuButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

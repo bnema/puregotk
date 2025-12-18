@@ -58,6 +58,7 @@ var xNewChecksum func(ChecksumType) *Checksum
 func NewChecksum(ChecksumTypeVar ChecksumType) *Checksum {
 
 	cret := xNewChecksum(ChecksumTypeVar)
+
 	return cret
 }
 
@@ -69,6 +70,7 @@ var xChecksumCopy func(uintptr) *Checksum
 func (x *Checksum) Copy() *Checksum {
 
 	cret := xChecksumCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -105,6 +107,7 @@ var xChecksumGetString func(uintptr) string
 func (x *Checksum) GetString() string {
 
 	cret := xChecksumGetString(x.GoPointer())
+
 	return cret
 }
 
@@ -155,6 +158,7 @@ var xChecksumTypeGetLength func(ChecksumType) int
 func ChecksumTypeGetLength(ChecksumTypeVar ChecksumType) int {
 
 	cret := xChecksumTypeGetLength(ChecksumTypeVar)
+
 	return cret
 }
 
@@ -168,6 +172,7 @@ var xComputeChecksumForBytes func(ChecksumType, *Bytes) string
 func ComputeChecksumForBytes(ChecksumTypeVar ChecksumType, DataVar *Bytes) string {
 
 	cret := xComputeChecksumForBytes(ChecksumTypeVar, DataVar)
+
 	return cret
 }
 
@@ -181,6 +186,7 @@ var xComputeChecksumForData func(ChecksumType, []byte, uint) string
 func ComputeChecksumForData(ChecksumTypeVar ChecksumType, DataVar []byte, LengthVar uint) string {
 
 	cret := xComputeChecksumForData(ChecksumTypeVar, DataVar, LengthVar)
+
 	return cret
 }
 
@@ -192,6 +198,7 @@ var xComputeChecksumForString func(ChecksumType, string, int) string
 func ComputeChecksumForString(ChecksumTypeVar ChecksumType, StrVar string, LengthVar int) string {
 
 	cret := xComputeChecksumForString(ChecksumTypeVar, StrVar, LengthVar)
+
 	return cret
 }
 

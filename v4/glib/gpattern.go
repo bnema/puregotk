@@ -2,6 +2,7 @@
 package glib
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -46,6 +47,7 @@ var xNewPatternSpec func(string) *PatternSpec
 func NewPatternSpec(PatternVar string) *PatternSpec {
 
 	cret := xNewPatternSpec(PatternVar)
+
 	return cret
 }
 
@@ -55,6 +57,7 @@ var xPatternSpecCopy func(uintptr) *PatternSpec
 func (x *PatternSpec) Copy() *PatternSpec {
 
 	cret := xPatternSpecCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -65,6 +68,7 @@ var xPatternSpecEqual func(uintptr, *PatternSpec) bool
 func (x *PatternSpec) Equal(Pspec2Var *PatternSpec) bool {
 
 	cret := xPatternSpecEqual(x.GoPointer(), Pspec2Var)
+
 	return cret
 }
 
@@ -100,7 +104,12 @@ var xPatternSpecMatch func(uintptr, uint, string, uintptr) bool
 // [func@GLib.utf8_strreverse] function to reverse UTF-8 encoded strings.
 func (x *PatternSpec) Match(StringLengthVar uint, StringVar string, StringReversedVar *string) bool {
 
-	cret := xPatternSpecMatch(x.GoPointer(), StringLengthVar, StringVar, core.NullableStringToPtr(StringReversedVar))
+	StringReversedVarPtr, StringReversedVarBytes := core.NullableStringToPtr(StringReversedVar)
+
+	cret := xPatternSpecMatch(x.GoPointer(), StringLengthVar, StringVar, StringReversedVarPtr)
+
+	runtime.KeepAlive(StringReversedVarBytes)
+
 	return cret
 }
 
@@ -114,6 +123,7 @@ var xPatternSpecMatchString func(uintptr, string) bool
 func (x *PatternSpec) MatchString(StringVar string) bool {
 
 	cret := xPatternSpecMatchString(x.GoPointer(), StringVar)
+
 	return cret
 }
 
@@ -140,7 +150,12 @@ var xPatternMatch func(*PatternSpec, uint, string, uintptr) bool
 // [func@GLib.utf8_strreverse] function to reverse UTF-8 encoded strings.
 func PatternMatch(PspecVar *PatternSpec, StringLengthVar uint, StringVar string, StringReversedVar *string) bool {
 
-	cret := xPatternMatch(PspecVar, StringLengthVar, StringVar, core.NullableStringToPtr(StringReversedVar))
+	StringReversedVarPtr, StringReversedVarBytes := core.NullableStringToPtr(StringReversedVar)
+
+	cret := xPatternMatch(PspecVar, StringLengthVar, StringVar, StringReversedVarPtr)
+
+	runtime.KeepAlive(StringReversedVarBytes)
+
 	return cret
 }
 
@@ -155,6 +170,7 @@ var xPatternMatchSimple func(string, string) bool
 func PatternMatchSimple(PatternVar string, StringVar string) bool {
 
 	cret := xPatternMatchSimple(PatternVar, StringVar)
+
 	return cret
 }
 
@@ -168,6 +184,7 @@ var xPatternMatchString func(*PatternSpec, string) bool
 func PatternMatchString(PspecVar *PatternSpec, StringVar string) bool {
 
 	cret := xPatternMatchString(PspecVar, StringVar)
+
 	return cret
 }
 

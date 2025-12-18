@@ -13,6 +13,7 @@ var xPixbufErrorQuark func() glib.Quark
 func PixbufErrorQuark() glib.Quark {
 
 	cret := xPixbufErrorQuark()
+
 	return cret
 }
 

@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -114,6 +115,7 @@ var xStringFilterGetIgnoreCase func(uintptr) bool
 func (x *StringFilter) GetIgnoreCase() bool {
 
 	cret := xStringFilterGetIgnoreCase(x.GoPointer())
+
 	return cret
 }
 
@@ -123,6 +125,7 @@ var xStringFilterGetMatchMode func(uintptr) StringFilterMatchMode
 func (x *StringFilter) GetMatchMode() StringFilterMatchMode {
 
 	cret := xStringFilterGetMatchMode(x.GoPointer())
+
 	return cret
 }
 
@@ -132,6 +135,7 @@ var xStringFilterGetSearch func(uintptr) string
 func (x *StringFilter) GetSearch() string {
 
 	cret := xStringFilterGetSearch(x.GoPointer())
+
 	return cret
 }
 
@@ -170,7 +174,11 @@ var xStringFilterSetSearch func(uintptr, uintptr)
 // Sets the string to search for.
 func (x *StringFilter) SetSearch(SearchVar *string) {
 
-	xStringFilterSetSearch(x.GoPointer(), core.NullableStringToPtr(SearchVar))
+	SearchVarPtr, SearchVarBytes := core.NullableStringToPtr(SearchVar)
+
+	xStringFilterSetSearch(x.GoPointer(), SearchVarPtr)
+
+	runtime.KeepAlive(SearchVarBytes)
 
 }
 

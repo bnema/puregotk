@@ -96,6 +96,7 @@ var xRendererIsRealized func(uintptr) bool
 func (x *Renderer) IsRealized() bool {
 
 	cret := xRendererIsRealized(x.GoPointer())
+
 	return cret
 }
 
@@ -114,6 +115,7 @@ func (x *Renderer) Realize(SurfaceVar *gdk.Surface) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xRendererRealize(x.GoPointer(), SurfaceVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -131,6 +133,7 @@ func (x *Renderer) RealizeForDisplay(DisplayVar *gdk.Display) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xRendererRealizeForDisplay(x.GoPointer(), DisplayVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

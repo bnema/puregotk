@@ -90,6 +90,7 @@ var xDBusMethodInvocationGetInterfaceName func(uintptr) string
 func (x *DBusMethodInvocation) GetInterfaceName() string {
 
 	cret := xDBusMethodInvocationGetInterfaceName(x.GoPointer())
+
 	return cret
 }
 
@@ -129,6 +130,7 @@ var xDBusMethodInvocationGetMethodInfo func(uintptr) *DBusMethodInfo
 func (x *DBusMethodInvocation) GetMethodInfo() *DBusMethodInfo {
 
 	cret := xDBusMethodInvocationGetMethodInfo(x.GoPointer())
+
 	return cret
 }
 
@@ -138,6 +140,7 @@ var xDBusMethodInvocationGetMethodName func(uintptr) string
 func (x *DBusMethodInvocation) GetMethodName() string {
 
 	cret := xDBusMethodInvocationGetMethodName(x.GoPointer())
+
 	return cret
 }
 
@@ -147,6 +150,7 @@ var xDBusMethodInvocationGetObjectPath func(uintptr) string
 func (x *DBusMethodInvocation) GetObjectPath() string {
 
 	cret := xDBusMethodInvocationGetObjectPath(x.GoPointer())
+
 	return cret
 }
 
@@ -157,6 +161,7 @@ var xDBusMethodInvocationGetParameters func(uintptr) *glib.Variant
 func (x *DBusMethodInvocation) GetParameters() *glib.Variant {
 
 	cret := xDBusMethodInvocationGetParameters(x.GoPointer())
+
 	return cret
 }
 
@@ -176,6 +181,7 @@ var xDBusMethodInvocationGetPropertyInfo func(uintptr) *DBusPropertyInfo
 func (x *DBusMethodInvocation) GetPropertyInfo() *DBusPropertyInfo {
 
 	cret := xDBusMethodInvocationGetPropertyInfo(x.GoPointer())
+
 	return cret
 }
 
@@ -188,6 +194,7 @@ var xDBusMethodInvocationGetSender func(uintptr) string
 func (x *DBusMethodInvocation) GetSender() string {
 
 	cret := xDBusMethodInvocationGetSender(x.GoPointer())
+
 	return cret
 }
 
@@ -197,6 +204,7 @@ var xDBusMethodInvocationGetUserData func(uintptr) uintptr
 func (x *DBusMethodInvocation) GetUserData() uintptr {
 
 	cret := xDBusMethodInvocationGetUserData(x.GoPointer())
+
 	return cret
 }
 

@@ -136,6 +136,7 @@ func (x *MediaControls) GetAccessibleParent() *AccessibleBase {
 func (x *MediaControls) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -161,6 +162,7 @@ func (x *MediaControls) GetAtContext() *ATContext {
 func (x *MediaControls) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -200,6 +202,7 @@ func (x *MediaControls) GetNextAccessibleSibling() *AccessibleBase {
 func (x *MediaControls) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -376,6 +379,7 @@ func (x *MediaControls) UpdateStateValue(NStatesVar int, StatesVar []AccessibleS
 func (x *MediaControls) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

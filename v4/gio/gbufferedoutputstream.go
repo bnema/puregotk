@@ -147,6 +147,7 @@ var xBufferedOutputStreamGetAutoGrow func(uintptr) bool
 func (x *BufferedOutputStream) GetAutoGrow() bool {
 
 	cret := xBufferedOutputStreamGetAutoGrow(x.GoPointer())
+
 	return cret
 }
 
@@ -156,6 +157,7 @@ var xBufferedOutputStreamGetBufferSize func(uintptr) uint
 func (x *BufferedOutputStream) GetBufferSize() uint {
 
 	cret := xBufferedOutputStreamGetBufferSize(x.GoPointer())
+
 	return cret
 }
 
@@ -229,6 +231,7 @@ func (x *BufferedOutputStream) GetPropertyBufferSize() uint {
 func (x *BufferedOutputStream) CanSeek() bool {
 
 	cret := XGSeekableCanSeek(x.GoPointer())
+
 	return cret
 }
 
@@ -237,6 +240,7 @@ func (x *BufferedOutputStream) CanSeek() bool {
 func (x *BufferedOutputStream) CanTruncate() bool {
 
 	cret := XGSeekableCanTruncate(x.GoPointer())
+
 	return cret
 }
 
@@ -258,6 +262,7 @@ func (x *BufferedOutputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Canc
 	var cerr *glib.Error
 
 	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -269,6 +274,7 @@ func (x *BufferedOutputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Canc
 func (x *BufferedOutputStream) Tell() int64 {
 
 	cret := XGSeekableTell(x.GoPointer())
+
 	return cret
 }
 
@@ -285,6 +291,7 @@ func (x *BufferedOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancell
 	var cerr *glib.Error
 
 	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

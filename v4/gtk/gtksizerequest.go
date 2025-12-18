@@ -38,6 +38,7 @@ var xDistributeNaturalAllocation func(int, uint, []RequestedSize) int
 func DistributeNaturalAllocation(ExtraSpaceVar int, NRequestedSizesVar uint, SizesVar []RequestedSize) int {
 
 	cret := xDistributeNaturalAllocation(ExtraSpaceVar, NRequestedSizesVar, SizesVar)
+
 	return cret
 }
 

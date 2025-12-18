@@ -598,6 +598,7 @@ var xSocketClientGetEnableProxy func(uintptr) bool
 func (x *SocketClient) GetEnableProxy() bool {
 
 	cret := xSocketClientGetEnableProxy(x.GoPointer())
+
 	return cret
 }
 
@@ -609,6 +610,7 @@ var xSocketClientGetFamily func(uintptr) SocketFamily
 func (x *SocketClient) GetFamily() SocketFamily {
 
 	cret := xSocketClientGetFamily(x.GoPointer())
+
 	return cret
 }
 
@@ -639,6 +641,7 @@ var xSocketClientGetProtocol func(uintptr) SocketProtocol
 func (x *SocketClient) GetProtocol() SocketProtocol {
 
 	cret := xSocketClientGetProtocol(x.GoPointer())
+
 	return cret
 }
 
@@ -669,6 +672,7 @@ var xSocketClientGetSocketType func(uintptr) SocketType
 func (x *SocketClient) GetSocketType() SocketType {
 
 	cret := xSocketClientGetSocketType(x.GoPointer())
+
 	return cret
 }
 
@@ -680,6 +684,7 @@ var xSocketClientGetTimeout func(uintptr) uint
 func (x *SocketClient) GetTimeout() uint {
 
 	cret := xSocketClientGetTimeout(x.GoPointer())
+
 	return cret
 }
 
@@ -690,6 +695,7 @@ var xSocketClientGetTls func(uintptr) bool
 func (x *SocketClient) GetTls() bool {
 
 	cret := xSocketClientGetTls(x.GoPointer())
+
 	return cret
 }
 
@@ -704,6 +710,7 @@ var xSocketClientGetTlsValidationFlags func(uintptr) TlsCertificateFlags
 func (x *SocketClient) GetTlsValidationFlags() TlsCertificateFlags {
 
 	cret := xSocketClientGetTlsValidationFlags(x.GoPointer())
+
 	return cret
 }
 

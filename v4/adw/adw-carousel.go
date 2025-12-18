@@ -90,6 +90,7 @@ var xCarouselGetAllowLongSwipes func(uintptr) bool
 func (x *Carousel) GetAllowLongSwipes() bool {
 
 	cret := xCarouselGetAllowLongSwipes(x.GoPointer())
+
 	return cret
 }
 
@@ -99,6 +100,7 @@ var xCarouselGetAllowMouseDrag func(uintptr) bool
 func (x *Carousel) GetAllowMouseDrag() bool {
 
 	cret := xCarouselGetAllowMouseDrag(x.GoPointer())
+
 	return cret
 }
 
@@ -108,6 +110,7 @@ var xCarouselGetAllowScrollWheel func(uintptr) bool
 func (x *Carousel) GetAllowScrollWheel() bool {
 
 	cret := xCarouselGetAllowScrollWheel(x.GoPointer())
+
 	return cret
 }
 
@@ -117,6 +120,7 @@ var xCarouselGetInteractive func(uintptr) bool
 func (x *Carousel) GetInteractive() bool {
 
 	cret := xCarouselGetInteractive(x.GoPointer())
+
 	return cret
 }
 
@@ -126,6 +130,7 @@ var xCarouselGetNPages func(uintptr) uint
 func (x *Carousel) GetNPages() uint {
 
 	cret := xCarouselGetNPages(x.GoPointer())
+
 	return cret
 }
 
@@ -154,6 +159,7 @@ var xCarouselGetPosition func(uintptr) float64
 func (x *Carousel) GetPosition() float64 {
 
 	cret := xCarouselGetPosition(x.GoPointer())
+
 	return cret
 }
 
@@ -163,6 +169,7 @@ var xCarouselGetRevealDuration func(uintptr) uint
 func (x *Carousel) GetRevealDuration() uint {
 
 	cret := xCarouselGetRevealDuration(x.GoPointer())
+
 	return cret
 }
 
@@ -172,6 +179,7 @@ var xCarouselGetScrollParams func(uintptr) *SpringParams
 func (x *Carousel) GetScrollParams() *SpringParams {
 
 	cret := xCarouselGetScrollParams(x.GoPointer())
+
 	return cret
 }
 
@@ -181,6 +189,7 @@ var xCarouselGetSpacing func(uintptr) uint
 func (x *Carousel) GetSpacing() uint {
 
 	cret := xCarouselGetSpacing(x.GoPointer())
+
 	return cret
 }
 
@@ -531,6 +540,7 @@ func (x *Carousel) ConnectPageChanged(cb *func(Carousel, uint)) uint32 {
 func (x *Carousel) GetCancelProgress() float64 {
 
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
+
 	return cret
 }
 
@@ -540,6 +550,7 @@ func (x *Carousel) GetCancelProgress() float64 {
 func (x *Carousel) GetDistance() float64 {
 
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
+
 	return cret
 }
 
@@ -547,6 +558,7 @@ func (x *Carousel) GetDistance() float64 {
 func (x *Carousel) GetProgress() float64 {
 
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
+
 	return cret
 }
 
@@ -557,6 +569,7 @@ func (x *Carousel) GetProgress() float64 {
 func (x *Carousel) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
+
 	return cret
 }
 
@@ -610,6 +623,7 @@ func (x *Carousel) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *Carousel) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -635,6 +649,7 @@ func (x *Carousel) GetAtContext() *gtk.ATContext {
 func (x *Carousel) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -674,6 +689,7 @@ func (x *Carousel) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *Carousel) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -850,6 +866,7 @@ func (x *Carousel) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSt
 func (x *Carousel) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -857,6 +874,7 @@ func (x *Carousel) GetBuildableId() string {
 func (x *Carousel) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

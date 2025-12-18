@@ -12,6 +12,7 @@ var xStrvGetType func() types.GType
 func StrvGetType() types.GType {
 
 	cret := xStrvGetType()
+
 	return cret
 }
 
@@ -20,6 +21,7 @@ var xVariantGetGtype func() types.GType
 func VariantGetGtype() types.GType {
 
 	cret := xVariantGetGtype()
+
 	return cret
 }
 

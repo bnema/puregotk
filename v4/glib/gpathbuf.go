@@ -2,6 +2,7 @@
 package glib
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -72,6 +73,7 @@ var xPathBufClearToPath func(uintptr) string
 func (x *PathBuf) ClearToPath() string {
 
 	cret := xPathBufClearToPath(x.GoPointer())
+
 	return cret
 }
 
@@ -81,6 +83,7 @@ var xPathBufCopy func(uintptr) *PathBuf
 func (x *PathBuf) Copy() *PathBuf {
 
 	cret := xPathBufCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -104,6 +107,7 @@ var xPathBufFreeToPath func(uintptr) string
 func (x *PathBuf) FreeToPath() string {
 
 	cret := xPathBufFreeToPath(x.GoPointer())
+
 	return cret
 }
 
@@ -113,6 +117,7 @@ var xPathBufInit func(uintptr) *PathBuf
 func (x *PathBuf) Init() *PathBuf {
 
 	cret := xPathBufInit(x.GoPointer())
+
 	return cret
 }
 
@@ -121,7 +126,12 @@ var xPathBufInitFromPath func(uintptr, uintptr) *PathBuf
 // Initializes a `GPathBuf` instance with the given path.
 func (x *PathBuf) InitFromPath(PathVar *string) *PathBuf {
 
-	cret := xPathBufInitFromPath(x.GoPointer(), core.NullableStringToPtr(PathVar))
+	PathVarPtr, PathVarBytes := core.NullableStringToPtr(PathVar)
+
+	cret := xPathBufInitFromPath(x.GoPointer(), PathVarPtr)
+
+	runtime.KeepAlive(PathVarBytes)
+
 	return cret
 }
 
@@ -153,6 +163,7 @@ var xPathBufPop func(uintptr) bool
 func (x *PathBuf) Pop() bool {
 
 	cret := xPathBufPop(x.GoPointer())
+
 	return cret
 }
 
@@ -188,6 +199,7 @@ var xPathBufPush func(uintptr, string) *PathBuf
 func (x *PathBuf) Push(PathVar string) *PathBuf {
 
 	cret := xPathBufPush(x.GoPointer(), PathVar)
+
 	return cret
 }
 
@@ -201,7 +213,12 @@ var xPathBufSetExtension func(uintptr, uintptr) bool
 // `FALSE` and leaves the path buffer unmodified.
 func (x *PathBuf) SetExtension(ExtensionVar *string) bool {
 
-	cret := xPathBufSetExtension(x.GoPointer(), core.NullableStringToPtr(ExtensionVar))
+	ExtensionVarPtr, ExtensionVarBytes := core.NullableStringToPtr(ExtensionVar)
+
+	cret := xPathBufSetExtension(x.GoPointer(), ExtensionVarPtr)
+
+	runtime.KeepAlive(ExtensionVarBytes)
+
 	return cret
 }
 
@@ -240,6 +257,7 @@ var xPathBufSetFilename func(uintptr, string) bool
 func (x *PathBuf) SetFilename(FileNameVar string) bool {
 
 	cret := xPathBufSetFilename(x.GoPointer(), FileNameVar)
+
 	return cret
 }
 
@@ -254,6 +272,7 @@ var xPathBufToPath func(uintptr) string
 func (x *PathBuf) ToPath() string {
 
 	cret := xPathBufToPath(x.GoPointer())
+
 	return cret
 }
 
@@ -271,6 +290,7 @@ var xPathBufEqual func(uintptr, uintptr) bool
 func PathBufEqual(V1Var uintptr, V2Var uintptr) bool {
 
 	cret := xPathBufEqual(V1Var, V2Var)
+
 	return cret
 }
 

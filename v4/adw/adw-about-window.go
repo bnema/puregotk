@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -42,7 +43,11 @@ var xShowAboutWindowFromAppdata func(uintptr, string, uintptr, string, ...interf
 // See [ctor@AboutWindow.new_from_appdata] for details.
 func ShowAboutWindowFromAppdata(ParentVar *gtk.Window, ResourcePathVar string, ReleaseNotesVersionVar *string, FirstPropertyNameVar string, varArgs ...interface{}) {
 
-	xShowAboutWindowFromAppdata(ParentVar.GoPointer(), ResourcePathVar, core.NullableStringToPtr(ReleaseNotesVersionVar), FirstPropertyNameVar, varArgs...)
+	ReleaseNotesVersionVarPtr, ReleaseNotesVersionVarBytes := core.NullableStringToPtr(ReleaseNotesVersionVar)
+
+	xShowAboutWindowFromAppdata(ParentVar.GoPointer(), ResourcePathVar, ReleaseNotesVersionVarPtr, FirstPropertyNameVar, varArgs...)
+
+	runtime.KeepAlive(ReleaseNotesVersionVarBytes)
 
 }
 
@@ -276,7 +281,11 @@ var xNewAboutWindowFromAppdata func(string, uintptr) uintptr
 func NewAboutWindowFromAppdata(ResourcePathVar string, ReleaseNotesVersionVar *string) *AboutWindow {
 	var cls *AboutWindow
 
-	cret := xNewAboutWindowFromAppdata(ResourcePathVar, core.NullableStringToPtr(ReleaseNotesVersionVar))
+	ReleaseNotesVersionVarPtr, ReleaseNotesVersionVarBytes := core.NullableStringToPtr(ReleaseNotesVersionVar)
+
+	cret := xNewAboutWindowFromAppdata(ResourcePathVar, ReleaseNotesVersionVarPtr)
+
+	runtime.KeepAlive(ReleaseNotesVersionVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -308,7 +317,11 @@ var xAboutWindowAddAcknowledgementSection func(uintptr, uintptr, []string)
 // * [method@AboutWindow.add_credit_section]
 func (x *AboutWindow) AddAcknowledgementSection(NameVar *string, PeopleVar []string) {
 
-	xAboutWindowAddAcknowledgementSection(x.GoPointer(), core.NullableStringToPtr(NameVar), PeopleVar)
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xAboutWindowAddAcknowledgementSection(x.GoPointer(), NameVarPtr, PeopleVar)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -331,7 +344,11 @@ var xAboutWindowAddCreditSection func(uintptr, uintptr, []string)
 // * [method@AboutWindow.add_acknowledgement_section]
 func (x *AboutWindow) AddCreditSection(NameVar *string, PeopleVar []string) {
 
-	xAboutWindowAddCreditSection(x.GoPointer(), core.NullableStringToPtr(NameVar), PeopleVar)
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xAboutWindowAddCreditSection(x.GoPointer(), NameVarPtr, PeopleVar)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -384,7 +401,15 @@ var xAboutWindowAddLegalSection func(uintptr, string, uintptr, gtk.License, uint
 // ```
 func (x *AboutWindow) AddLegalSection(TitleVar string, CopyrightVar *string, LicenseTypeVar gtk.License, LicenseVar *string) {
 
-	xAboutWindowAddLegalSection(x.GoPointer(), TitleVar, core.NullableStringToPtr(CopyrightVar), LicenseTypeVar, core.NullableStringToPtr(LicenseVar))
+	CopyrightVarPtr, CopyrightVarBytes := core.NullableStringToPtr(CopyrightVar)
+
+	LicenseVarPtr, LicenseVarBytes := core.NullableStringToPtr(LicenseVar)
+
+	xAboutWindowAddLegalSection(x.GoPointer(), TitleVar, CopyrightVarPtr, LicenseTypeVar, LicenseVarPtr)
+
+	runtime.KeepAlive(CopyrightVarBytes)
+
+	runtime.KeepAlive(LicenseVarBytes)
 
 }
 
@@ -409,6 +434,7 @@ var xAboutWindowGetApplicationIcon func(uintptr) string
 func (x *AboutWindow) GetApplicationIcon() string {
 
 	cret := xAboutWindowGetApplicationIcon(x.GoPointer())
+
 	return cret
 }
 
@@ -418,6 +444,7 @@ var xAboutWindowGetApplicationName func(uintptr) string
 func (x *AboutWindow) GetApplicationName() string {
 
 	cret := xAboutWindowGetApplicationName(x.GoPointer())
+
 	return cret
 }
 
@@ -427,6 +454,7 @@ var xAboutWindowGetArtists func(uintptr) []string
 func (x *AboutWindow) GetArtists() []string {
 
 	cret := xAboutWindowGetArtists(x.GoPointer())
+
 	return cret
 }
 
@@ -436,6 +464,7 @@ var xAboutWindowGetComments func(uintptr) string
 func (x *AboutWindow) GetComments() string {
 
 	cret := xAboutWindowGetComments(x.GoPointer())
+
 	return cret
 }
 
@@ -445,6 +474,7 @@ var xAboutWindowGetCopyright func(uintptr) string
 func (x *AboutWindow) GetCopyright() string {
 
 	cret := xAboutWindowGetCopyright(x.GoPointer())
+
 	return cret
 }
 
@@ -454,6 +484,7 @@ var xAboutWindowGetDebugInfo func(uintptr) string
 func (x *AboutWindow) GetDebugInfo() string {
 
 	cret := xAboutWindowGetDebugInfo(x.GoPointer())
+
 	return cret
 }
 
@@ -463,6 +494,7 @@ var xAboutWindowGetDebugInfoFilename func(uintptr) string
 func (x *AboutWindow) GetDebugInfoFilename() string {
 
 	cret := xAboutWindowGetDebugInfoFilename(x.GoPointer())
+
 	return cret
 }
 
@@ -472,6 +504,7 @@ var xAboutWindowGetDesigners func(uintptr) []string
 func (x *AboutWindow) GetDesigners() []string {
 
 	cret := xAboutWindowGetDesigners(x.GoPointer())
+
 	return cret
 }
 
@@ -481,6 +514,7 @@ var xAboutWindowGetDeveloperName func(uintptr) string
 func (x *AboutWindow) GetDeveloperName() string {
 
 	cret := xAboutWindowGetDeveloperName(x.GoPointer())
+
 	return cret
 }
 
@@ -490,6 +524,7 @@ var xAboutWindowGetDevelopers func(uintptr) []string
 func (x *AboutWindow) GetDevelopers() []string {
 
 	cret := xAboutWindowGetDevelopers(x.GoPointer())
+
 	return cret
 }
 
@@ -499,6 +534,7 @@ var xAboutWindowGetDocumenters func(uintptr) []string
 func (x *AboutWindow) GetDocumenters() []string {
 
 	cret := xAboutWindowGetDocumenters(x.GoPointer())
+
 	return cret
 }
 
@@ -508,6 +544,7 @@ var xAboutWindowGetIssueUrl func(uintptr) string
 func (x *AboutWindow) GetIssueUrl() string {
 
 	cret := xAboutWindowGetIssueUrl(x.GoPointer())
+
 	return cret
 }
 
@@ -517,6 +554,7 @@ var xAboutWindowGetLicense func(uintptr) string
 func (x *AboutWindow) GetLicense() string {
 
 	cret := xAboutWindowGetLicense(x.GoPointer())
+
 	return cret
 }
 
@@ -526,6 +564,7 @@ var xAboutWindowGetLicenseType func(uintptr) gtk.License
 func (x *AboutWindow) GetLicenseType() gtk.License {
 
 	cret := xAboutWindowGetLicenseType(x.GoPointer())
+
 	return cret
 }
 
@@ -535,6 +574,7 @@ var xAboutWindowGetReleaseNotes func(uintptr) string
 func (x *AboutWindow) GetReleaseNotes() string {
 
 	cret := xAboutWindowGetReleaseNotes(x.GoPointer())
+
 	return cret
 }
 
@@ -544,6 +584,7 @@ var xAboutWindowGetReleaseNotesVersion func(uintptr) string
 func (x *AboutWindow) GetReleaseNotesVersion() string {
 
 	cret := xAboutWindowGetReleaseNotesVersion(x.GoPointer())
+
 	return cret
 }
 
@@ -553,6 +594,7 @@ var xAboutWindowGetSupportUrl func(uintptr) string
 func (x *AboutWindow) GetSupportUrl() string {
 
 	cret := xAboutWindowGetSupportUrl(x.GoPointer())
+
 	return cret
 }
 
@@ -562,6 +604,7 @@ var xAboutWindowGetTranslatorCredits func(uintptr) string
 func (x *AboutWindow) GetTranslatorCredits() string {
 
 	cret := xAboutWindowGetTranslatorCredits(x.GoPointer())
+
 	return cret
 }
 
@@ -571,6 +614,7 @@ var xAboutWindowGetVersion func(uintptr) string
 func (x *AboutWindow) GetVersion() string {
 
 	cret := xAboutWindowGetVersion(x.GoPointer())
+
 	return cret
 }
 
@@ -580,6 +624,7 @@ var xAboutWindowGetWebsite func(uintptr) string
 func (x *AboutWindow) GetWebsite() string {
 
 	cret := xAboutWindowGetWebsite(x.GoPointer())
+
 	return cret
 }
 
@@ -1700,6 +1745,7 @@ func (x *AboutWindow) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *AboutWindow) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -1725,6 +1771,7 @@ func (x *AboutWindow) GetAtContext() *gtk.ATContext {
 func (x *AboutWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1764,6 +1811,7 @@ func (x *AboutWindow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *AboutWindow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1940,6 +1988,7 @@ func (x *AboutWindow) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 func (x *AboutWindow) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

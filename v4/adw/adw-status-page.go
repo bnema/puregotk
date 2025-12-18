@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -112,6 +113,7 @@ var xStatusPageGetDescription func(uintptr) string
 func (x *StatusPage) GetDescription() string {
 
 	cret := xStatusPageGetDescription(x.GoPointer())
+
 	return cret
 }
 
@@ -121,6 +123,7 @@ var xStatusPageGetIconName func(uintptr) string
 func (x *StatusPage) GetIconName() string {
 
 	cret := xStatusPageGetIconName(x.GoPointer())
+
 	return cret
 }
 
@@ -147,6 +150,7 @@ var xStatusPageGetTitle func(uintptr) string
 func (x *StatusPage) GetTitle() string {
 
 	cret := xStatusPageGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -166,7 +170,11 @@ var xStatusPageSetDescription func(uintptr, uintptr)
 // The description is displayed below the title. It is parsed as Pango markup.
 func (x *StatusPage) SetDescription(DescriptionVar *string) {
 
-	xStatusPageSetDescription(x.GoPointer(), core.NullableStringToPtr(DescriptionVar))
+	DescriptionVarPtr, DescriptionVarBytes := core.NullableStringToPtr(DescriptionVar)
+
+	xStatusPageSetDescription(x.GoPointer(), DescriptionVarPtr)
+
+	runtime.KeepAlive(DescriptionVarBytes)
 
 }
 
@@ -177,7 +185,11 @@ var xStatusPageSetIconName func(uintptr, uintptr)
 // Changing this will set [property@StatusPage:paintable] to `NULL`.
 func (x *StatusPage) SetIconName(IconNameVar *string) {
 
-	xStatusPageSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
+	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+
+	xStatusPageSetIconName(x.GoPointer(), IconNameVarPtr)
+
+	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -308,6 +320,7 @@ func (x *StatusPage) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *StatusPage) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -333,6 +346,7 @@ func (x *StatusPage) GetAtContext() *gtk.ATContext {
 func (x *StatusPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -372,6 +386,7 @@ func (x *StatusPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *StatusPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -548,6 +563,7 @@ func (x *StatusPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessible
 func (x *StatusPage) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

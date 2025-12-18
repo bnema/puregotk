@@ -2,6 +2,8 @@
 package gdk
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gio"
@@ -111,7 +113,11 @@ var xAppLaunchContextSetIconName func(uintptr, uintptr)
 // for the launched application itself.
 func (x *AppLaunchContext) SetIconName(IconNameVar *string) {
 
-	xAppLaunchContextSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
+	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+
+	xAppLaunchContextSetIconName(x.GoPointer(), IconNameVarPtr)
+
+	runtime.KeepAlive(IconNameVarBytes)
 
 }
 

@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -81,6 +82,7 @@ var xBuilderErrorQuark func() glib.Quark
 func BuilderErrorQuark() glib.Quark {
 
 	cret := xBuilderErrorQuark()
+
 	return cret
 }
 
@@ -585,6 +587,7 @@ func (x *Builder) AddFromFile(FilenameVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xBuilderAddFromFile(x.GoPointer(), FilenameVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -613,6 +616,7 @@ func (x *Builder) AddFromResource(ResourcePathVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xBuilderAddFromResource(x.GoPointer(), ResourcePathVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -641,6 +645,7 @@ func (x *Builder) AddFromString(BufferVar string, LengthVar int) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xBuilderAddFromString(x.GoPointer(), BufferVar, LengthVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -665,6 +670,7 @@ func (x *Builder) AddObjectsFromFile(FilenameVar string, ObjectIdsVar []string) 
 	var cerr *glib.Error
 
 	cret := xBuilderAddObjectsFromFile(x.GoPointer(), FilenameVar, ObjectIdsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -689,6 +695,7 @@ func (x *Builder) AddObjectsFromResource(ResourcePathVar string, ObjectIdsVar []
 	var cerr *glib.Error
 
 	cret := xBuilderAddObjectsFromResource(x.GoPointer(), ResourcePathVar, ObjectIdsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -712,6 +719,7 @@ func (x *Builder) AddObjectsFromString(BufferVar string, LengthVar int, ObjectId
 	var cerr *glib.Error
 
 	cret := xBuilderAddObjectsFromString(x.GoPointer(), BufferVar, LengthVar, ObjectIdsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -732,6 +740,7 @@ func (x *Builder) CreateClosure(FunctionNameVar string, FlagsVar BuilderClosureF
 	var cerr *glib.Error
 
 	cret := xBuilderCreateClosure(x.GoPointer(), FunctionNameVar, FlagsVar, ObjectVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -765,6 +774,7 @@ func (x *Builder) ExtendWithTemplate(ObjectVar *gobject.Object, TemplateTypeVar 
 	var cerr *glib.Error
 
 	cret := xBuilderExtendWithTemplate(x.GoPointer(), ObjectVar.GoPointer(), TemplateTypeVar, BufferVar, LengthVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -818,6 +828,7 @@ var xBuilderGetObjects func(uintptr) *glib.SList
 func (x *Builder) GetObjects() *glib.SList {
 
 	cret := xBuilderGetObjects(x.GoPointer())
+
 	return cret
 }
 
@@ -844,6 +855,7 @@ var xBuilderGetTranslationDomain func(uintptr) string
 func (x *Builder) GetTranslationDomain() string {
 
 	cret := xBuilderGetTranslationDomain(x.GoPointer())
+
 	return cret
 }
 
@@ -857,6 +869,7 @@ var xBuilderGetTypeFromName func(uintptr, string) types.GType
 func (x *Builder) GetTypeFromName(TypeNameVar string) types.GType {
 
 	cret := xBuilderGetTypeFromName(x.GoPointer(), TypeNameVar)
+
 	return cret
 }
 
@@ -893,7 +906,11 @@ var xBuilderSetTranslationDomain func(uintptr, uintptr)
 // Sets the translation domain of @builder.
 func (x *Builder) SetTranslationDomain(DomainVar *string) {
 
-	xBuilderSetTranslationDomain(x.GoPointer(), core.NullableStringToPtr(DomainVar))
+	DomainVarPtr, DomainVarBytes := core.NullableStringToPtr(DomainVar)
+
+	xBuilderSetTranslationDomain(x.GoPointer(), DomainVarPtr)
+
+	runtime.KeepAlive(DomainVarBytes)
 
 }
 
@@ -914,6 +931,7 @@ func (x *Builder) ValueFromString(PspecVar *gobject.ParamSpec, StringVar string,
 	var cerr *glib.Error
 
 	cret := xBuilderValueFromString(x.GoPointer(), PspecVar.GoPointer(), StringVar, ValueVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -937,6 +955,7 @@ func (x *Builder) ValueFromStringType(TypeVar types.GType, StringVar string, Val
 	var cerr *glib.Error
 
 	cret := xBuilderValueFromStringType(x.GoPointer(), TypeVar, StringVar, ValueVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

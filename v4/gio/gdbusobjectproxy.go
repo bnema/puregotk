@@ -134,6 +134,7 @@ func (x *DBusObjectProxy) GetInterface(InterfaceNameVar string) *DBusInterfaceBa
 func (x *DBusObjectProxy) GetInterfaces() *glib.List {
 
 	cret := XGDbusObjectGetInterfaces(x.GoPointer())
+
 	return cret
 }
 
@@ -141,6 +142,7 @@ func (x *DBusObjectProxy) GetInterfaces() *glib.List {
 func (x *DBusObjectProxy) GetObjectPath() string {
 
 	cret := XGDbusObjectGetObjectPath(x.GoPointer())
+
 	return cret
 }
 

@@ -54,6 +54,7 @@ var xTreeIterCopy func(uintptr) *TreeIter
 func (x *TreeIter) Copy() *TreeIter {
 
 	cret := xTreeIterCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -664,6 +665,7 @@ var xNewTreePath func() *TreePath
 func NewTreePath() *TreePath {
 
 	cret := xNewTreePath()
+
 	return cret
 }
 
@@ -675,6 +677,7 @@ var xNewTreePathFirst func() *TreePath
 func NewTreePathFirst() *TreePath {
 
 	cret := xNewTreePathFirst()
+
 	return cret
 }
 
@@ -684,6 +687,7 @@ var xNewTreePathFromIndices func(int, ...interface{}) *TreePath
 func NewTreePathFromIndices(FirstIndexVar int, varArgs ...interface{}) *TreePath {
 
 	cret := xNewTreePathFromIndices(FirstIndexVar, varArgs...)
+
 	return cret
 }
 
@@ -693,6 +697,7 @@ var xNewTreePathFromIndicesv func([]int, uint) *TreePath
 func NewTreePathFromIndicesv(IndicesVar []int, LengthVar uint) *TreePath {
 
 	cret := xNewTreePathFromIndicesv(IndicesVar, LengthVar)
+
 	return cret
 }
 
@@ -708,6 +713,7 @@ var xNewTreePathFromString func(string) *TreePath
 func NewTreePathFromString(PathVar string) *TreePath {
 
 	cret := xNewTreePathFromString(PathVar)
+
 	return cret
 }
 
@@ -732,6 +738,7 @@ var xTreePathCompare func(uintptr, *TreePath) int
 func (x *TreePath) Compare(BVar *TreePath) int {
 
 	cret := xTreePathCompare(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -741,6 +748,7 @@ var xTreePathCopy func(uintptr) *TreePath
 func (x *TreePath) Copy() *TreePath {
 
 	cret := xTreePathCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -768,6 +776,7 @@ var xTreePathGetDepth func(uintptr) int
 func (x *TreePath) GetDepth() int {
 
 	cret := xTreePathGetDepth(x.GoPointer())
+
 	return cret
 }
 
@@ -782,6 +791,7 @@ var xTreePathGetIndices func(uintptr) int
 func (x *TreePath) GetIndices() int {
 
 	cret := xTreePathGetIndices(x.GoPointer())
+
 	return cret
 }
 
@@ -795,6 +805,7 @@ var xTreePathGetIndicesWithDepth func(uintptr, *int) uintptr
 func (x *TreePath) GetIndicesWithDepth(DepthVar *int) uintptr {
 
 	cret := xTreePathGetIndicesWithDepth(x.GoPointer(), DepthVar)
+
 	return cret
 }
 
@@ -804,6 +815,7 @@ var xTreePathIsAncestor func(uintptr, *TreePath) bool
 func (x *TreePath) IsAncestor(DescendantVar *TreePath) bool {
 
 	cret := xTreePathIsAncestor(x.GoPointer(), DescendantVar)
+
 	return cret
 }
 
@@ -813,6 +825,7 @@ var xTreePathIsDescendant func(uintptr, *TreePath) bool
 func (x *TreePath) IsDescendant(AncestorVar *TreePath) bool {
 
 	cret := xTreePathIsDescendant(x.GoPointer(), AncestorVar)
+
 	return cret
 }
 
@@ -843,6 +856,7 @@ var xTreePathPrev func(uintptr) bool
 func (x *TreePath) Prev() bool {
 
 	cret := xTreePathPrev(x.GoPointer())
+
 	return cret
 }
 
@@ -857,6 +871,7 @@ var xTreePathToString func(uintptr) string
 func (x *TreePath) ToString() string {
 
 	cret := xTreePathToString(x.GoPointer())
+
 	return cret
 }
 
@@ -866,6 +881,7 @@ var xTreePathUp func(uintptr) bool
 func (x *TreePath) Up() bool {
 
 	cret := xTreePathUp(x.GoPointer())
+
 	return cret
 }
 
@@ -897,6 +913,7 @@ var xNewTreeRowReference func(uintptr, *TreePath) *TreeRowReference
 func NewTreeRowReference(ModelVar TreeModel, PathVar *TreePath) *TreeRowReference {
 
 	cret := xNewTreeRowReference(ModelVar.GoPointer(), PathVar)
+
 	return cret
 }
 
@@ -929,6 +946,7 @@ var xNewTreeRowReferenceProxy func(uintptr, uintptr, *TreePath) *TreeRowReferenc
 func NewTreeRowReferenceProxy(ProxyVar *gobject.Object, ModelVar TreeModel, PathVar *TreePath) *TreeRowReference {
 
 	cret := xNewTreeRowReferenceProxy(ProxyVar.GoPointer(), ModelVar.GoPointer(), PathVar)
+
 	return cret
 }
 
@@ -938,6 +956,7 @@ var xTreeRowReferenceCopy func(uintptr) *TreeRowReference
 func (x *TreeRowReference) Copy() *TreeRowReference {
 
 	cret := xTreeRowReferenceCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -974,6 +993,7 @@ var xTreeRowReferenceGetPath func(uintptr) *TreePath
 func (x *TreeRowReference) GetPath() *TreePath {
 
 	cret := xTreeRowReferenceGetPath(x.GoPointer())
+
 	return cret
 }
 
@@ -984,6 +1004,7 @@ var xTreeRowReferenceValid func(uintptr) bool
 func (x *TreeRowReference) Valid() bool {
 
 	cret := xTreeRowReferenceValid(x.GoPointer())
+
 	return cret
 }
 
@@ -1298,6 +1319,7 @@ func (x *TreeModelBase) Get(IterVar *TreeIter, varArgs ...interface{}) {
 func (x *TreeModelBase) GetColumnType(IndexVar int) types.GType {
 
 	cret := XGtkTreeModelGetColumnType(x.GoPointer(), IndexVar)
+
 	return cret
 }
 
@@ -1309,6 +1331,7 @@ func (x *TreeModelBase) GetColumnType(IndexVar int) types.GType {
 func (x *TreeModelBase) GetFlags() TreeModelFlags {
 
 	cret := XGtkTreeModelGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -1319,6 +1342,7 @@ func (x *TreeModelBase) GetFlags() TreeModelFlags {
 func (x *TreeModelBase) GetIter(IterVar *TreeIter, PathVar *TreePath) bool {
 
 	cret := XGtkTreeModelGetIter(x.GoPointer(), IterVar, PathVar)
+
 	return cret
 }
 
@@ -1329,6 +1353,7 @@ func (x *TreeModelBase) GetIter(IterVar *TreeIter, PathVar *TreePath) bool {
 func (x *TreeModelBase) GetIterFirst(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelGetIterFirst(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -1339,6 +1364,7 @@ func (x *TreeModelBase) GetIterFirst(IterVar *TreeIter) bool {
 func (x *TreeModelBase) GetIterFromString(IterVar *TreeIter, PathStringVar string) bool {
 
 	cret := XGtkTreeModelGetIterFromString(x.GoPointer(), IterVar, PathStringVar)
+
 	return cret
 }
 
@@ -1346,6 +1372,7 @@ func (x *TreeModelBase) GetIterFromString(IterVar *TreeIter, PathStringVar strin
 func (x *TreeModelBase) GetNColumns() int {
 
 	cret := XGtkTreeModelGetNColumns(x.GoPointer())
+
 	return cret
 }
 
@@ -1355,6 +1382,7 @@ func (x *TreeModelBase) GetNColumns() int {
 func (x *TreeModelBase) GetPath(IterVar *TreeIter) *TreePath {
 
 	cret := XGtkTreeModelGetPath(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -1366,6 +1394,7 @@ func (x *TreeModelBase) GetPath(IterVar *TreeIter) *TreePath {
 func (x *TreeModelBase) GetStringFromIter(IterVar *TreeIter) string {
 
 	cret := XGtkTreeModelGetStringFromIter(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -1400,6 +1429,7 @@ func (x *TreeModelBase) GetValue(IterVar *TreeIter, ColumnVar int, ValueVar *gob
 func (x *TreeModelBase) IterChildren(IterVar *TreeIter, ParentVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterChildren(x.GoPointer(), IterVar, ParentVar)
+
 	return cret
 }
 
@@ -1407,6 +1437,7 @@ func (x *TreeModelBase) IterChildren(IterVar *TreeIter, ParentVar *TreeIter) boo
 func (x *TreeModelBase) IterHasChild(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterHasChild(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -1417,6 +1448,7 @@ func (x *TreeModelBase) IterHasChild(IterVar *TreeIter) bool {
 func (x *TreeModelBase) IterNChildren(IterVar *TreeIter) int {
 
 	cret := XGtkTreeModelIterNChildren(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -1427,6 +1459,7 @@ func (x *TreeModelBase) IterNChildren(IterVar *TreeIter) int {
 func (x *TreeModelBase) IterNext(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterNext(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -1440,6 +1473,7 @@ func (x *TreeModelBase) IterNext(IterVar *TreeIter) bool {
 func (x *TreeModelBase) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int) bool {
 
 	cret := XGtkTreeModelIterNthChild(x.GoPointer(), IterVar, ParentVar, NVar)
+
 	return cret
 }
 
@@ -1455,6 +1489,7 @@ func (x *TreeModelBase) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVa
 func (x *TreeModelBase) IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterParent(x.GoPointer(), IterVar, ChildVar)
+
 	return cret
 }
 
@@ -1465,6 +1500,7 @@ func (x *TreeModelBase) IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool {
 func (x *TreeModelBase) IterPrevious(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterPrevious(x.GoPointer(), IterVar)
+
 	return cret
 }
 

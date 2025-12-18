@@ -314,6 +314,7 @@ var xNamedActionGetActionName func(uintptr) string
 func (x *NamedAction) GetActionName() string {
 
 	cret := xNamedActionGetActionName(x.GoPointer())
+
 	return cret
 }
 
@@ -474,6 +475,7 @@ var xShortcutActionActivate func(uintptr, ShortcutActionFlags, uintptr, *glib.Va
 func (x *ShortcutAction) Activate(FlagsVar ShortcutActionFlags, WidgetVar *Widget, ArgsVar *glib.Variant) bool {
 
 	cret := xShortcutActionActivate(x.GoPointer(), FlagsVar, WidgetVar.GoPointer(), ArgsVar)
+
 	return cret
 }
 
@@ -500,6 +502,7 @@ var xShortcutActionToString func(uintptr) string
 func (x *ShortcutAction) ToString() string {
 
 	cret := xShortcutActionToString(x.GoPointer())
+
 	return cret
 }
 
@@ -559,6 +562,7 @@ var xSignalActionGetSignalName func(uintptr) string
 func (x *SignalAction) GetSignalName() string {
 
 	cret := xSignalActionGetSignalName(x.GoPointer())
+
 	return cret
 }
 

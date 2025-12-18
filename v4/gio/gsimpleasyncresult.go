@@ -457,6 +457,7 @@ var xSimpleAsyncResultGetOpResGboolean func(uintptr) bool
 func (x *SimpleAsyncResult) GetOpResGboolean() bool {
 
 	cret := xSimpleAsyncResultGetOpResGboolean(x.GoPointer())
+
 	return cret
 }
 
@@ -466,6 +467,7 @@ var xSimpleAsyncResultGetOpResGpointer func(uintptr) uintptr
 func (x *SimpleAsyncResult) GetOpResGpointer() uintptr {
 
 	cret := xSimpleAsyncResultGetOpResGpointer(x.GoPointer())
+
 	return cret
 }
 
@@ -475,6 +477,7 @@ var xSimpleAsyncResultGetOpResGssize func(uintptr) int
 func (x *SimpleAsyncResult) GetOpResGssize() int {
 
 	cret := xSimpleAsyncResultGetOpResGssize(x.GoPointer())
+
 	return cret
 }
 
@@ -484,6 +487,7 @@ var xSimpleAsyncResultGetSourceTag func(uintptr) uintptr
 func (x *SimpleAsyncResult) GetSourceTag() uintptr {
 
 	cret := xSimpleAsyncResultGetSourceTag(x.GoPointer())
+
 	return cret
 }
 
@@ -499,6 +503,7 @@ func (x *SimpleAsyncResult) PropagateError() (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSimpleAsyncResultPropagateError(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -681,6 +686,7 @@ func (x *SimpleAsyncResult) GetSourceObject() *gobject.Object {
 func (x *SimpleAsyncResult) GetUserData() uintptr {
 
 	cret := XGAsyncResultGetUserData(x.GoPointer())
+
 	return cret
 }
 
@@ -689,6 +695,7 @@ func (x *SimpleAsyncResult) GetUserData() uintptr {
 func (x *SimpleAsyncResult) IsTagged(SourceTagVar uintptr) bool {
 
 	cret := XGAsyncResultIsTagged(x.GoPointer(), SourceTagVar)
+
 	return cret
 }
 
@@ -706,6 +713,7 @@ func (x *SimpleAsyncResult) LegacyPropagateError() (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGAsyncResultLegacyPropagateError(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -730,6 +738,7 @@ var xSimpleAsyncResultIsValid func(uintptr, uintptr, uintptr) bool
 func SimpleAsyncResultIsValid(ResultVar AsyncResult, SourceVar *gobject.Object, SourceTagVar uintptr) bool {
 
 	cret := xSimpleAsyncResultIsValid(ResultVar.GoPointer(), SourceVar.GoPointer(), SourceTagVar)
+
 	return cret
 }
 

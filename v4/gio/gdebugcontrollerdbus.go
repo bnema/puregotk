@@ -286,6 +286,7 @@ func (x *DebugControllerDBus) ConnectAuthorize(cb *func(DebugControllerDBus, uin
 func (x *DebugControllerDBus) GetDebugEnabled() bool {
 
 	cret := XGDebugControllerGetDebugEnabled(x.GoPointer())
+
 	return cret
 }
 
@@ -338,6 +339,7 @@ func (x *DebugControllerDBus) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

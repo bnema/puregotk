@@ -37,6 +37,7 @@ var xPoint3DAlloc func() *Point3D
 func Point3DAlloc() *Point3D {
 
 	cret := xPoint3DAlloc()
+
 	return cret
 }
 
@@ -55,6 +56,7 @@ var xPoint3DDistance func(uintptr, *Point3D, *Vec3) float32
 func (x *Point3D) Distance(BVar *Point3D, DeltaVar *Vec3) float32 {
 
 	cret := xPoint3DDistance(x.GoPointer(), BVar, DeltaVar)
+
 	return cret
 }
 
@@ -64,6 +66,7 @@ var xPoint3DDot func(uintptr, *Point3D) float32
 func (x *Point3D) Dot(BVar *Point3D) float32 {
 
 	cret := xPoint3DDot(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -73,6 +76,7 @@ var xPoint3DEqual func(uintptr, *Point3D) bool
 func (x *Point3D) Equal(BVar *Point3D) bool {
 
 	cret := xPoint3DEqual(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -91,6 +95,7 @@ var xPoint3DInit func(uintptr, float32, float32, float32) *Point3D
 func (x *Point3D) Init(XVar float32, YVar float32, ZVar float32) *Point3D {
 
 	cret := xPoint3DInit(x.GoPointer(), XVar, YVar, ZVar)
+
 	return cret
 }
 
@@ -101,6 +106,7 @@ var xPoint3DInitFromPoint func(uintptr, *Point3D) *Point3D
 func (x *Point3D) InitFromPoint(SrcVar *Point3D) *Point3D {
 
 	cret := xPoint3DInitFromPoint(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -111,6 +117,7 @@ var xPoint3DInitFromVec3 func(uintptr, *Vec3) *Point3D
 func (x *Point3D) InitFromVec3(VVar *Vec3) *Point3D {
 
 	cret := xPoint3DInitFromVec3(x.GoPointer(), VVar)
+
 	return cret
 }
 
@@ -131,6 +138,7 @@ var xPoint3DLength func(uintptr) float32
 func (x *Point3D) Length() float32 {
 
 	cret := xPoint3DLength(x.GoPointer())
+
 	return cret
 }
 
@@ -141,6 +149,7 @@ var xPoint3DNear func(uintptr, *Point3D, float32) bool
 func (x *Point3D) Near(BVar *Point3D, EpsilonVar float32) bool {
 
 	cret := xPoint3DNear(x.GoPointer(), BVar, EpsilonVar)
+
 	return cret
 }
 
@@ -193,6 +202,7 @@ var xPoint3dZero func() *Point3D
 func Point3dZero() *Point3D {
 
 	cret := xPoint3dZero()
+
 	return cret
 }
 

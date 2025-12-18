@@ -292,6 +292,7 @@ func (c *MemoryInputStream) SetGoPointer(ptr uintptr) {
 func (x *MemoryInputStream) CanPoll() bool {
 
 	cret := XGPollableInputStreamCanPoll(x.GoPointer())
+
 	return cret
 }
 
@@ -309,6 +310,7 @@ func (x *MemoryInputStream) CanPoll() bool {
 func (x *MemoryInputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 
 	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
+
 	return cret
 }
 
@@ -326,6 +328,7 @@ func (x *MemoryInputStream) CreateSource(CancellableVar *Cancellable) *glib.Sour
 func (x *MemoryInputStream) IsReadable() bool {
 
 	cret := XGPollableInputStreamIsReadable(x.GoPointer())
+
 	return cret
 }
 
@@ -347,6 +350,7 @@ func (x *MemoryInputStream) ReadNonblocking(BufferVar *[]byte, CountVar uint, Ca
 	var cerr *glib.Error
 
 	cret := XGPollableInputStreamReadNonblocking(x.GoPointer(), BufferVar, CountVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -358,6 +362,7 @@ func (x *MemoryInputStream) ReadNonblocking(BufferVar *[]byte, CountVar uint, Ca
 func (x *MemoryInputStream) CanSeek() bool {
 
 	cret := XGSeekableCanSeek(x.GoPointer())
+
 	return cret
 }
 
@@ -366,6 +371,7 @@ func (x *MemoryInputStream) CanSeek() bool {
 func (x *MemoryInputStream) CanTruncate() bool {
 
 	cret := XGSeekableCanTruncate(x.GoPointer())
+
 	return cret
 }
 
@@ -387,6 +393,7 @@ func (x *MemoryInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancell
 	var cerr *glib.Error
 
 	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -398,6 +405,7 @@ func (x *MemoryInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancell
 func (x *MemoryInputStream) Tell() int64 {
 
 	cret := XGSeekableTell(x.GoPointer())
+
 	return cret
 }
 
@@ -414,6 +422,7 @@ func (x *MemoryInputStream) Truncate(OffsetVar int64, CancellableVar *Cancellabl
 	var cerr *glib.Error
 
 	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

@@ -2,6 +2,7 @@
 package pango
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -269,6 +270,7 @@ var xNewFontDescription func() *FontDescription
 func NewFontDescription() *FontDescription {
 
 	cret := xNewFontDescription()
+
 	return cret
 }
 
@@ -288,6 +290,7 @@ var xFontDescriptionBetterMatch func(uintptr, *FontDescription, *FontDescription
 func (x *FontDescription) BetterMatch(OldMatchVar *FontDescription, NewMatchVar *FontDescription) bool {
 
 	cret := xFontDescriptionBetterMatch(x.GoPointer(), OldMatchVar, NewMatchVar)
+
 	return cret
 }
 
@@ -297,6 +300,7 @@ var xFontDescriptionCopy func(uintptr) *FontDescription
 func (x *FontDescription) Copy() *FontDescription {
 
 	cret := xFontDescriptionCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -312,6 +316,7 @@ var xFontDescriptionCopyStatic func(uintptr) *FontDescription
 func (x *FontDescription) CopyStatic() *FontDescription {
 
 	cret := xFontDescriptionCopyStatic(x.GoPointer())
+
 	return cret
 }
 
@@ -326,6 +331,7 @@ var xFontDescriptionEqual func(uintptr, *FontDescription) bool
 func (x *FontDescription) Equal(Desc2Var *FontDescription) bool {
 
 	cret := xFontDescriptionEqual(x.GoPointer(), Desc2Var)
+
 	return cret
 }
 
@@ -347,6 +353,7 @@ var xFontDescriptionGetColor func(uintptr) FontColor
 func (x *FontDescription) GetColor() FontColor {
 
 	cret := xFontDescriptionGetColor(x.GoPointer())
+
 	return cret
 }
 
@@ -358,6 +365,7 @@ var xFontDescriptionGetFamily func(uintptr) string
 func (x *FontDescription) GetFamily() string {
 
 	cret := xFontDescriptionGetFamily(x.GoPointer())
+
 	return cret
 }
 
@@ -369,6 +377,7 @@ var xFontDescriptionGetFeatures func(uintptr) string
 func (x *FontDescription) GetFeatures() string {
 
 	cret := xFontDescriptionGetFeatures(x.GoPointer())
+
 	return cret
 }
 
@@ -380,6 +389,7 @@ var xFontDescriptionGetGravity func(uintptr) Gravity
 func (x *FontDescription) GetGravity() Gravity {
 
 	cret := xFontDescriptionGetGravity(x.GoPointer())
+
 	return cret
 }
 
@@ -389,6 +399,7 @@ var xFontDescriptionGetSetFields func(uintptr) FontMask
 func (x *FontDescription) GetSetFields() FontMask {
 
 	cret := xFontDescriptionGetSetFields(x.GoPointer())
+
 	return cret
 }
 
@@ -400,6 +411,7 @@ var xFontDescriptionGetSize func(uintptr) int
 func (x *FontDescription) GetSize() int {
 
 	cret := xFontDescriptionGetSize(x.GoPointer())
+
 	return cret
 }
 
@@ -413,6 +425,7 @@ var xFontDescriptionGetSizeIsAbsolute func(uintptr) bool
 func (x *FontDescription) GetSizeIsAbsolute() bool {
 
 	cret := xFontDescriptionGetSizeIsAbsolute(x.GoPointer())
+
 	return cret
 }
 
@@ -424,6 +437,7 @@ var xFontDescriptionGetStretch func(uintptr) Stretch
 func (x *FontDescription) GetStretch() Stretch {
 
 	cret := xFontDescriptionGetStretch(x.GoPointer())
+
 	return cret
 }
 
@@ -435,6 +449,7 @@ var xFontDescriptionGetStyle func(uintptr) Style
 func (x *FontDescription) GetStyle() Style {
 
 	cret := xFontDescriptionGetStyle(x.GoPointer())
+
 	return cret
 }
 
@@ -446,6 +461,7 @@ var xFontDescriptionGetVariant func(uintptr) Variant
 func (x *FontDescription) GetVariant() Variant {
 
 	cret := xFontDescriptionGetVariant(x.GoPointer())
+
 	return cret
 }
 
@@ -457,6 +473,7 @@ var xFontDescriptionGetVariations func(uintptr) string
 func (x *FontDescription) GetVariations() string {
 
 	cret := xFontDescriptionGetVariations(x.GoPointer())
+
 	return cret
 }
 
@@ -468,6 +485,7 @@ var xFontDescriptionGetWeight func(uintptr) Weight
 func (x *FontDescription) GetWeight() Weight {
 
 	cret := xFontDescriptionGetWeight(x.GoPointer())
+
 	return cret
 }
 
@@ -480,6 +498,7 @@ var xFontDescriptionHash func(uintptr) uint
 func (x *FontDescription) Hash() uint {
 
 	cret := xFontDescriptionHash(x.GoPointer())
+
 	return cret
 }
 
@@ -596,7 +615,11 @@ var xFontDescriptionSetFeatures func(uintptr, uintptr)
 // Features that are not supported by the font are silently ignored.
 func (x *FontDescription) SetFeatures(FeaturesVar *string) {
 
-	xFontDescriptionSetFeatures(x.GoPointer(), core.NullableStringToPtr(FeaturesVar))
+	FeaturesVarPtr, FeaturesVarBytes := core.NullableStringToPtr(FeaturesVar)
+
+	xFontDescriptionSetFeatures(x.GoPointer(), FeaturesVarPtr)
+
+	runtime.KeepAlive(FeaturesVarBytes)
 
 }
 
@@ -707,7 +730,11 @@ var xFontDescriptionSetVariations func(uintptr, uintptr)
 // for example [hb_ot_var_get_axis_infos](https://harfbuzz.github.io/harfbuzz-hb-ot-var.html#hb-ot-var-get-axis-infos).
 func (x *FontDescription) SetVariations(VariationsVar *string) {
 
-	xFontDescriptionSetVariations(x.GoPointer(), core.NullableStringToPtr(VariationsVar))
+	VariationsVarPtr, VariationsVarBytes := core.NullableStringToPtr(VariationsVar)
+
+	xFontDescriptionSetVariations(x.GoPointer(), VariationsVarPtr)
+
+	runtime.KeepAlive(VariationsVarBytes)
 
 }
 
@@ -752,6 +779,7 @@ var xFontDescriptionToFilename func(uintptr) string
 func (x *FontDescription) ToFilename() string {
 
 	cret := xFontDescriptionToFilename(x.GoPointer())
+
 	return cret
 }
 
@@ -766,6 +794,7 @@ var xFontDescriptionToString func(uintptr) string
 func (x *FontDescription) ToString() string {
 
 	cret := xFontDescriptionToString(x.GoPointer())
+
 	return cret
 }
 
@@ -1205,6 +1234,7 @@ var xFontMetricsGetApproximateCharWidth func(uintptr) int
 func (x *FontMetrics) GetApproximateCharWidth() int {
 
 	cret := xFontMetricsGetApproximateCharWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -1220,6 +1250,7 @@ var xFontMetricsGetApproximateDigitWidth func(uintptr) int
 func (x *FontMetrics) GetApproximateDigitWidth() int {
 
 	cret := xFontMetricsGetApproximateDigitWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -1234,6 +1265,7 @@ var xFontMetricsGetAscent func(uintptr) int
 func (x *FontMetrics) GetAscent() int {
 
 	cret := xFontMetricsGetAscent(x.GoPointer())
+
 	return cret
 }
 
@@ -1248,6 +1280,7 @@ var xFontMetricsGetDescent func(uintptr) int
 func (x *FontMetrics) GetDescent() int {
 
 	cret := xFontMetricsGetDescent(x.GoPointer())
+
 	return cret
 }
 
@@ -1262,6 +1295,7 @@ var xFontMetricsGetHeight func(uintptr) int
 func (x *FontMetrics) GetHeight() int {
 
 	cret := xFontMetricsGetHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -1274,6 +1308,7 @@ var xFontMetricsGetStrikethroughPosition func(uintptr) int
 func (x *FontMetrics) GetStrikethroughPosition() int {
 
 	cret := xFontMetricsGetStrikethroughPosition(x.GoPointer())
+
 	return cret
 }
 
@@ -1283,6 +1318,7 @@ var xFontMetricsGetStrikethroughThickness func(uintptr) int
 func (x *FontMetrics) GetStrikethroughThickness() int {
 
 	cret := xFontMetricsGetStrikethroughThickness(x.GoPointer())
+
 	return cret
 }
 
@@ -1296,6 +1332,7 @@ var xFontMetricsGetUnderlinePosition func(uintptr) int
 func (x *FontMetrics) GetUnderlinePosition() int {
 
 	cret := xFontMetricsGetUnderlinePosition(x.GoPointer())
+
 	return cret
 }
 
@@ -1305,6 +1342,7 @@ var xFontMetricsGetUnderlineThickness func(uintptr) int
 func (x *FontMetrics) GetUnderlineThickness() int {
 
 	cret := xFontMetricsGetUnderlineThickness(x.GoPointer())
+
 	return cret
 }
 
@@ -1314,6 +1352,7 @@ var xFontMetricsRef func(uintptr) *FontMetrics
 func (x *FontMetrics) Ref() *FontMetrics {
 
 	cret := xFontMetricsRef(x.GoPointer())
+
 	return cret
 }
 
@@ -1585,6 +1624,7 @@ var xFontDescriptionFromString func(string) *FontDescription
 func FontDescriptionFromString(StrVar string) *FontDescription {
 
 	cret := xFontDescriptionFromString(StrVar)
+
 	return cret
 }
 
@@ -1615,6 +1655,7 @@ var xFontDescribe func(uintptr) *FontDescription
 func (x *Font) Describe() *FontDescription {
 
 	cret := xFontDescribe(x.GoPointer())
+
 	return cret
 }
 
@@ -1627,6 +1668,7 @@ var xFontDescribeWithAbsoluteSize func(uintptr) *FontDescription
 func (x *Font) DescribeWithAbsoluteSize() *FontDescription {
 
 	cret := xFontDescribeWithAbsoluteSize(x.GoPointer())
+
 	return cret
 }
 
@@ -1737,6 +1779,7 @@ var xFontGetHbFont func(uintptr) uintptr
 func (x *Font) GetHbFont() uintptr {
 
 	cret := xFontGetHbFont(x.GoPointer())
+
 	return cret
 }
 
@@ -1753,6 +1796,7 @@ var xFontGetLanguages func(uintptr) uintptr
 func (x *Font) GetLanguages() uintptr {
 
 	cret := xFontGetLanguages(x.GoPointer())
+
 	return cret
 }
 
@@ -1769,6 +1813,7 @@ var xFontGetMetrics func(uintptr, *Language) *FontMetrics
 func (x *Font) GetMetrics(LanguageVar *Language) *FontMetrics {
 
 	cret := xFontGetMetrics(x.GoPointer(), LanguageVar)
+
 	return cret
 }
 
@@ -1778,6 +1823,7 @@ var xFontHasChar func(uintptr, uint32) bool
 func (x *Font) HasChar(WcVar uint32) bool {
 
 	cret := xFontHasChar(x.GoPointer(), WcVar)
+
 	return cret
 }
 
@@ -1795,6 +1841,7 @@ var xFontSerialize func(uintptr) *glib.Bytes
 func (x *Font) Serialize() *glib.Bytes {
 
 	cret := xFontSerialize(x.GoPointer())
+
 	return cret
 }
 
@@ -1873,6 +1920,7 @@ var xFontFaceDescribe func(uintptr) *FontDescription
 func (x *FontFace) Describe() *FontDescription {
 
 	cret := xFontFaceDescribe(x.GoPointer())
+
 	return cret
 }
 
@@ -1886,6 +1934,7 @@ var xFontFaceGetFaceName func(uintptr) string
 func (x *FontFace) GetFaceName() string {
 
 	cret := xFontFaceGetFaceName(x.GoPointer())
+
 	return cret
 }
 
@@ -1916,6 +1965,7 @@ var xFontFaceIsSynthesized func(uintptr) bool
 func (x *FontFace) IsSynthesized() bool {
 
 	cret := xFontFaceIsSynthesized(x.GoPointer())
+
 	return cret
 }
 
@@ -1971,7 +2021,11 @@ var xFontFamilyGetFace func(uintptr, uintptr) uintptr
 func (x *FontFamily) GetFace(NameVar *string) *FontFace {
 	var cls *FontFace
 
-	cret := xFontFamilyGetFace(x.GoPointer(), core.NullableStringToPtr(NameVar))
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	cret := xFontFamilyGetFace(x.GoPointer(), NameVarPtr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -1992,6 +2046,7 @@ var xFontFamilyGetName func(uintptr) string
 func (x *FontFamily) GetName() string {
 
 	cret := xFontFamilyGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -2014,6 +2069,7 @@ var xFontFamilyIsMonospace func(uintptr) bool
 func (x *FontFamily) IsMonospace() bool {
 
 	cret := xFontFamilyIsMonospace(x.GoPointer())
+
 	return cret
 }
 
@@ -2027,6 +2083,7 @@ var xFontFamilyIsVariable func(uintptr) bool
 func (x *FontFamily) IsVariable() bool {
 
 	cret := xFontFamilyIsVariable(x.GoPointer())
+
 	return cret
 }
 
@@ -2103,6 +2160,7 @@ func (x *FontFamily) GetPropertyName() string {
 func (x *FontFamily) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -2117,6 +2175,7 @@ func (x *FontFamily) GetItem(PositionVar uint) uintptr {
 func (x *FontFamily) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -2128,6 +2187,7 @@ func (x *FontFamily) GetItemType() types.GType {
 func (x *FontFamily) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 

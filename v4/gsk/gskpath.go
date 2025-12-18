@@ -102,6 +102,7 @@ var xPathParse func(string) *Path
 func PathParse(StringVar string) *Path {
 
 	cret := xPathParse(StringVar)
+
 	return cret
 }
 

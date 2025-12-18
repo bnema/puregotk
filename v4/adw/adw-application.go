@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -98,7 +99,11 @@ var xNewApplication func(uintptr, gio.ApplicationFlags) uintptr
 func NewApplication(ApplicationIdVar *string, FlagsVar gio.ApplicationFlags) *Application {
 	var cls *Application
 
-	cret := xNewApplication(core.NullableStringToPtr(ApplicationIdVar), FlagsVar)
+	ApplicationIdVarPtr, ApplicationIdVarBytes := core.NullableStringToPtr(ApplicationIdVar)
+
+	cret := xNewApplication(ApplicationIdVarPtr, FlagsVar)
+
+	runtime.KeepAlive(ApplicationIdVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -238,6 +243,7 @@ func (x *Application) ChangeActionState(ActionNameVar string, ValueVar *glib.Var
 func (x *Application) GetActionEnabled(ActionNameVar string) bool {
 
 	cret := gio.XGActionGroupGetActionEnabled(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -257,6 +263,7 @@ func (x *Application) GetActionEnabled(ActionNameVar string) bool {
 func (x *Application) GetActionParameterType(ActionNameVar string) *glib.VariantType {
 
 	cret := gio.XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -271,6 +278,7 @@ func (x *Application) GetActionParameterType(ActionNameVar string) *glib.Variant
 func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 
 	cret := gio.XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -295,6 +303,7 @@ func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 
 	cret := gio.XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -317,6 +326,7 @@ func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 func (x *Application) GetActionStateType(ActionNameVar string) *glib.VariantType {
 
 	cret := gio.XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -324,6 +334,7 @@ func (x *Application) GetActionStateType(ActionNameVar string) *glib.VariantType
 func (x *Application) HasAction(ActionNameVar string) bool {
 
 	cret := gio.XGActionGroupHasAction(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -334,6 +345,7 @@ func (x *Application) HasAction(ActionNameVar string) bool {
 func (x *Application) ListActions() []string {
 
 	cret := gio.XGActionGroupListActions(x.GoPointer())
+
 	return cret
 }
 
@@ -367,6 +379,7 @@ func (x *Application) ListActions() []string {
 func (x *Application) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := gio.XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
+
 	return cret
 }
 

@@ -69,6 +69,7 @@ var xPixbufSimpleAnimGetLoop func(uintptr) bool
 func (x *PixbufSimpleAnim) GetLoop() bool {
 
 	cret := xPixbufSimpleAnimGetLoop(x.GoPointer())
+
 	return cret
 }
 

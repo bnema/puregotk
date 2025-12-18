@@ -242,6 +242,7 @@ var xNewAccessibleListFromArray func(uintptr, uint) *AccessibleList
 func NewAccessibleListFromArray(AccessiblesVar uintptr, NAccessiblesVar uint) *AccessibleList {
 
 	cret := xNewAccessibleListFromArray(AccessiblesVar, NAccessiblesVar)
+
 	return cret
 }
 
@@ -252,6 +253,7 @@ var xNewAccessibleListFromList func(*glib.List) *AccessibleList
 func NewAccessibleListFromList(ListVar *glib.List) *AccessibleList {
 
 	cret := xNewAccessibleListFromList(ListVar)
+
 	return cret
 }
 
@@ -261,6 +263,7 @@ var xAccessibleListGetObjects func(uintptr) *glib.List
 func (x *AccessibleList) GetObjects() *glib.List {
 
 	cret := xAccessibleListGetObjects(x.GoPointer())
+
 	return cret
 }
 
@@ -375,6 +378,7 @@ func (x *AccessibleBase) GetAccessibleParent() *AccessibleBase {
 func (x *AccessibleBase) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -400,6 +404,7 @@ func (x *AccessibleBase) GetAtContext() *ATContext {
 func (x *AccessibleBase) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -439,6 +444,7 @@ func (x *AccessibleBase) GetNextAccessibleSibling() *AccessibleBase {
 func (x *AccessibleBase) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 

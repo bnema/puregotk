@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -658,6 +659,7 @@ func (x *TextBuffer) AddCommitNotify(FlagsVar TextBufferNotifyFlags, CommitNotif
 	}
 
 	cret := xTextBufferAddCommitNotify(x.GoPointer(), FlagsVar, CommitNotifyVarRef, UserDataVar, DestroyVarRef)
+
 	return cret
 }
 
@@ -732,6 +734,7 @@ var xTextBufferBackspace func(uintptr, *TextIter, bool, bool) bool
 func (x *TextBuffer) Backspace(IterVar *TextIter, InteractiveVar bool, DefaultEditableVar bool) bool {
 
 	cret := xTextBufferBackspace(x.GoPointer(), IterVar, InteractiveVar, DefaultEditableVar)
+
 	return cret
 }
 
@@ -837,7 +840,11 @@ var xTextBufferCreateMark func(uintptr, uintptr, *TextIter, bool) uintptr
 func (x *TextBuffer) CreateMark(MarkNameVar *string, WhereVar *TextIter, LeftGravityVar bool) *TextMark {
 	var cls *TextMark
 
-	cret := xTextBufferCreateMark(x.GoPointer(), core.NullableStringToPtr(MarkNameVar), WhereVar, LeftGravityVar)
+	MarkNameVarPtr, MarkNameVarBytes := core.NullableStringToPtr(MarkNameVar)
+
+	cret := xTextBufferCreateMark(x.GoPointer(), MarkNameVarPtr, WhereVar, LeftGravityVar)
+
+	runtime.KeepAlive(MarkNameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -866,7 +873,15 @@ var xTextBufferCreateTag func(uintptr, uintptr, uintptr, ...interface{}) uintptr
 func (x *TextBuffer) CreateTag(TagNameVar *string, FirstPropertyNameVar *string, varArgs ...interface{}) *TextTag {
 	var cls *TextTag
 
-	cret := xTextBufferCreateTag(x.GoPointer(), core.NullableStringToPtr(TagNameVar), core.NullableStringToPtr(FirstPropertyNameVar), varArgs...)
+	TagNameVarPtr, TagNameVarBytes := core.NullableStringToPtr(TagNameVar)
+
+	FirstPropertyNameVarPtr, FirstPropertyNameVarBytes := core.NullableStringToPtr(FirstPropertyNameVar)
+
+	cret := xTextBufferCreateTag(x.GoPointer(), TagNameVarPtr, FirstPropertyNameVarPtr, varArgs...)
+
+	runtime.KeepAlive(TagNameVarBytes)
+
+	runtime.KeepAlive(FirstPropertyNameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -916,6 +931,7 @@ var xTextBufferDeleteInteractive func(uintptr, *TextIter, *TextIter, bool) bool
 func (x *TextBuffer) DeleteInteractive(StartIterVar *TextIter, EndIterVar *TextIter, DefaultEditableVar bool) bool {
 
 	cret := xTextBufferDeleteInteractive(x.GoPointer(), StartIterVar, EndIterVar, DefaultEditableVar)
+
 	return cret
 }
 
@@ -960,6 +976,7 @@ var xTextBufferDeleteSelection func(uintptr, bool, bool) bool
 func (x *TextBuffer) DeleteSelection(InteractiveVar bool, DefaultEditableVar bool) bool {
 
 	cret := xTextBufferDeleteSelection(x.GoPointer(), InteractiveVar, DefaultEditableVar)
+
 	return cret
 }
 
@@ -1011,6 +1028,7 @@ var xTextBufferGetCanRedo func(uintptr) bool
 func (x *TextBuffer) GetCanRedo() bool {
 
 	cret := xTextBufferGetCanRedo(x.GoPointer())
+
 	return cret
 }
 
@@ -1020,6 +1038,7 @@ var xTextBufferGetCanUndo func(uintptr) bool
 func (x *TextBuffer) GetCanUndo() bool {
 
 	cret := xTextBufferGetCanUndo(x.GoPointer())
+
 	return cret
 }
 
@@ -1035,6 +1054,7 @@ var xTextBufferGetCharCount func(uintptr) int
 func (x *TextBuffer) GetCharCount() int {
 
 	cret := xTextBufferGetCharCount(x.GoPointer())
+
 	return cret
 }
 
@@ -1049,6 +1069,7 @@ var xTextBufferGetEnableUndo func(uintptr) bool
 func (x *TextBuffer) GetEnableUndo() bool {
 
 	cret := xTextBufferGetEnableUndo(x.GoPointer())
+
 	return cret
 }
 
@@ -1074,6 +1095,7 @@ var xTextBufferGetHasSelection func(uintptr) bool
 func (x *TextBuffer) GetHasSelection() bool {
 
 	cret := xTextBufferGetHasSelection(x.GoPointer())
+
 	return cret
 }
 
@@ -1116,6 +1138,7 @@ var xTextBufferGetIterAtLine func(uintptr, *TextIter, int) bool
 func (x *TextBuffer) GetIterAtLine(IterVar *TextIter, LineNumberVar int) bool {
 
 	cret := xTextBufferGetIterAtLine(x.GoPointer(), IterVar, LineNumberVar)
+
 	return cret
 }
 
@@ -1132,6 +1155,7 @@ var xTextBufferGetIterAtLineIndex func(uintptr, *TextIter, int, int) bool
 func (x *TextBuffer) GetIterAtLineIndex(IterVar *TextIter, LineNumberVar int, ByteIndexVar int) bool {
 
 	cret := xTextBufferGetIterAtLineIndex(x.GoPointer(), IterVar, LineNumberVar, ByteIndexVar)
+
 	return cret
 }
 
@@ -1148,6 +1172,7 @@ var xTextBufferGetIterAtLineOffset func(uintptr, *TextIter, int, int) bool
 func (x *TextBuffer) GetIterAtLineOffset(IterVar *TextIter, LineNumberVar int, CharOffsetVar int) bool {
 
 	cret := xTextBufferGetIterAtLineOffset(x.GoPointer(), IterVar, LineNumberVar, CharOffsetVar)
+
 	return cret
 }
 
@@ -1182,6 +1207,7 @@ var xTextBufferGetLineCount func(uintptr) int
 func (x *TextBuffer) GetLineCount() int {
 
 	cret := xTextBufferGetLineCount(x.GoPointer())
+
 	return cret
 }
 
@@ -1213,6 +1239,7 @@ var xTextBufferGetMaxUndoLevels func(uintptr) uint
 func (x *TextBuffer) GetMaxUndoLevels() uint {
 
 	cret := xTextBufferGetMaxUndoLevels(x.GoPointer())
+
 	return cret
 }
 
@@ -1226,6 +1253,7 @@ var xTextBufferGetModified func(uintptr) bool
 func (x *TextBuffer) GetModified() bool {
 
 	cret := xTextBufferGetModified(x.GoPointer())
+
 	return cret
 }
 
@@ -1269,6 +1297,7 @@ var xTextBufferGetSelectionBounds func(uintptr, *TextIter, *TextIter) bool
 func (x *TextBuffer) GetSelectionBounds(StartVar *TextIter, EndVar *TextIter) bool {
 
 	cret := xTextBufferGetSelectionBounds(x.GoPointer(), StartVar, EndVar)
+
 	return cret
 }
 
@@ -1306,6 +1335,7 @@ var xTextBufferGetSlice func(uintptr, *TextIter, *TextIter, bool) string
 func (x *TextBuffer) GetSlice(StartVar *TextIter, EndVar *TextIter, IncludeHiddenCharsVar bool) string {
 
 	cret := xTextBufferGetSlice(x.GoPointer(), StartVar, EndVar, IncludeHiddenCharsVar)
+
 	return cret
 }
 
@@ -1351,6 +1381,7 @@ var xTextBufferGetText func(uintptr, *TextIter, *TextIter, bool) string
 func (x *TextBuffer) GetText(StartVar *TextIter, EndVar *TextIter, IncludeHiddenCharsVar bool) string {
 
 	cret := xTextBufferGetText(x.GoPointer(), StartVar, EndVar, IncludeHiddenCharsVar)
+
 	return cret
 }
 
@@ -1418,6 +1449,7 @@ var xTextBufferInsertInteractive func(uintptr, *TextIter, string, int, bool) boo
 func (x *TextBuffer) InsertInteractive(IterVar *TextIter, TextVar string, LenVar int, DefaultEditableVar bool) bool {
 
 	cret := xTextBufferInsertInteractive(x.GoPointer(), IterVar, TextVar, LenVar, DefaultEditableVar)
+
 	return cret
 }
 
@@ -1434,6 +1466,7 @@ var xTextBufferInsertInteractiveAtCursor func(uintptr, string, int, bool) bool
 func (x *TextBuffer) InsertInteractiveAtCursor(TextVar string, LenVar int, DefaultEditableVar bool) bool {
 
 	cret := xTextBufferInsertInteractiveAtCursor(x.GoPointer(), TextVar, LenVar, DefaultEditableVar)
+
 	return cret
 }
 
@@ -1500,6 +1533,7 @@ var xTextBufferInsertRangeInteractive func(uintptr, *TextIter, *TextIter, *TextI
 func (x *TextBuffer) InsertRangeInteractive(IterVar *TextIter, StartVar *TextIter, EndVar *TextIter, DefaultEditableVar bool) bool {
 
 	cret := xTextBufferInsertRangeInteractive(x.GoPointer(), IterVar, StartVar, EndVar, DefaultEditableVar)
+
 	return cret
 }
 

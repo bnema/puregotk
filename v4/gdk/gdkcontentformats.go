@@ -35,6 +35,7 @@ var xNewContentFormatsBuilder func() *ContentFormatsBuilder
 func NewContentFormatsBuilder() *ContentFormatsBuilder {
 
 	cret := xNewContentFormatsBuilder()
+
 	return cret
 }
 
@@ -73,6 +74,7 @@ var xContentFormatsBuilderFreeToFormats func(uintptr) *ContentFormats
 func (x *ContentFormatsBuilder) FreeToFormats() *ContentFormats {
 
 	cret := xContentFormatsBuilderFreeToFormats(x.GoPointer())
+
 	return cret
 }
 
@@ -85,6 +87,7 @@ var xContentFormatsBuilderRef func(uintptr) *ContentFormatsBuilder
 func (x *ContentFormatsBuilder) Ref() *ContentFormatsBuilder {
 
 	cret := xContentFormatsBuilderRef(x.GoPointer())
+
 	return cret
 }
 
@@ -100,6 +103,7 @@ var xContentFormatsBuilderToFormats func(uintptr) *ContentFormats
 func (x *ContentFormatsBuilder) ToFormats() *ContentFormats {
 
 	cret := xContentFormatsBuilderToFormats(x.GoPointer())
+
 	return cret
 }
 
@@ -135,6 +139,7 @@ var xNewFileListFromArray func(uintptr, uint) *FileList
 func NewFileListFromArray(FilesVar uintptr, NFilesVar uint) *FileList {
 
 	cret := xNewFileListFromArray(FilesVar, NFilesVar)
+
 	return cret
 }
 
@@ -147,6 +152,7 @@ var xNewFileListFromList func(*glib.SList) *FileList
 func NewFileListFromList(FilesVar *glib.SList) *FileList {
 
 	cret := xNewFileListFromList(FilesVar)
+
 	return cret
 }
 
@@ -158,6 +164,7 @@ var xFileListGetFiles func(uintptr) *glib.SList
 func (x *FileList) GetFiles() *glib.SList {
 
 	cret := xFileListGetFiles(x.GoPointer())
+
 	return cret
 }
 
@@ -174,6 +181,7 @@ var xContentFormatsParse func(string) *ContentFormats
 func ContentFormatsParse(StringVar string) *ContentFormats {
 
 	cret := xContentFormatsParse(StringVar)
+
 	return cret
 }
 
@@ -186,6 +194,7 @@ var xInternMimeType func(string) string
 func InternMimeType(StringVar string) string {
 
 	cret := xInternMimeType(StringVar)
+
 	return cret
 }
 

@@ -237,6 +237,7 @@ func (x *TreeDragDestBase) SetGoPointer(ptr uintptr) {
 func (x *TreeDragDestBase) DragDataReceived(DestVar *TreePath, ValueVar *gobject.Value) bool {
 
 	cret := XGtkTreeDragDestDragDataReceived(x.GoPointer(), DestVar, ValueVar)
+
 	return cret
 }
 
@@ -248,6 +249,7 @@ func (x *TreeDragDestBase) DragDataReceived(DestVar *TreePath, ValueVar *gobject
 func (x *TreeDragDestBase) RowDropPossible(DestPathVar *TreePath, ValueVar *gobject.Value) bool {
 
 	cret := XGtkTreeDragDestRowDropPossible(x.GoPointer(), DestPathVar, ValueVar)
+
 	return cret
 }
 
@@ -292,6 +294,7 @@ func (x *TreeDragSourceBase) SetGoPointer(ptr uintptr) {
 func (x *TreeDragSourceBase) DragDataDelete(PathVar *TreePath) bool {
 
 	cret := XGtkTreeDragSourceDragDataDelete(x.GoPointer(), PathVar)
+
 	return cret
 }
 
@@ -317,6 +320,7 @@ func (x *TreeDragSourceBase) DragDataGet(PathVar *TreePath) *gdk.ContentProvider
 func (x *TreeDragSourceBase) RowDraggable(PathVar *TreePath) bool {
 
 	cret := XGtkTreeDragSourceRowDraggable(x.GoPointer(), PathVar)
+
 	return cret
 }
 
@@ -349,6 +353,7 @@ var xTreeGetRowDragData func(*gobject.Value, **TreeModel, **TreePath) bool
 func TreeGetRowDragData(ValueVar *gobject.Value, TreeModelVar **TreeModel, PathVar **TreePath) bool {
 
 	cret := xTreeGetRowDragData(ValueVar, TreeModelVar, PathVar)
+
 	return cret
 }
 

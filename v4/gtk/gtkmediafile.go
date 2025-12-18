@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -359,7 +360,11 @@ var xMediaFileSetFilename func(uintptr, uintptr)
 // to a `GFile` and calls [method@Gtk.MediaFile.set_file].
 func (x *MediaFile) SetFilename(FilenameVar *string) {
 
-	xMediaFileSetFilename(x.GoPointer(), core.NullableStringToPtr(FilenameVar))
+	FilenameVarPtr, FilenameVarBytes := core.NullableStringToPtr(FilenameVar)
+
+	xMediaFileSetFilename(x.GoPointer(), FilenameVarPtr)
+
+	runtime.KeepAlive(FilenameVarBytes)
 
 }
 
@@ -385,7 +390,11 @@ var xMediaFileSetResource func(uintptr, uintptr)
 // to a `GFile` and calls [method@Gtk.MediaFile.set_file].
 func (x *MediaFile) SetResource(ResourcePathVar *string) {
 
-	xMediaFileSetResource(x.GoPointer(), core.NullableStringToPtr(ResourcePathVar))
+	ResourcePathVarPtr, ResourcePathVarBytes := core.NullableStringToPtr(ResourcePathVar)
+
+	xMediaFileSetResource(x.GoPointer(), ResourcePathVarPtr)
+
+	runtime.KeepAlive(ResourcePathVarBytes)
 
 }
 
@@ -443,6 +452,7 @@ func (x *MediaFile) GetCurrentImage() *gdk.PaintableBase {
 func (x *MediaFile) GetFlags() gdk.PaintableFlags {
 
 	cret := gdk.XGdkPaintableGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -466,6 +476,7 @@ func (x *MediaFile) GetFlags() gdk.PaintableFlags {
 func (x *MediaFile) GetIntrinsicAspectRatio() float64 {
 
 	cret := gdk.XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
+
 	return cret
 }
 
@@ -482,6 +493,7 @@ func (x *MediaFile) GetIntrinsicAspectRatio() float64 {
 func (x *MediaFile) GetIntrinsicHeight() int {
 
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -498,6 +510,7 @@ func (x *MediaFile) GetIntrinsicHeight() int {
 func (x *MediaFile) GetIntrinsicWidth() int {
 
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
+
 	return cret
 }
 

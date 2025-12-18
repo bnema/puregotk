@@ -73,6 +73,7 @@ var xSerializationErrorQuark func() glib.Quark
 func SerializationErrorQuark() glib.Quark {
 
 	cret := xSerializationErrorQuark()
+
 	return cret
 }
 
@@ -195,6 +196,7 @@ var xRenderNodeGetNodeType func(uintptr) RenderNodeType
 func (x *RenderNode) GetNodeType() RenderNodeType {
 
 	cret := xRenderNodeGetNodeType(x.GoPointer())
+
 	return cret
 }
 
@@ -211,6 +213,7 @@ var xRenderNodeGetOpaqueRect func(uintptr, *graphene.Rect) bool
 func (x *RenderNode) GetOpaqueRect(OutOpaqueVar *graphene.Rect) bool {
 
 	cret := xRenderNodeGetOpaqueRect(x.GoPointer(), OutOpaqueVar)
+
 	return cret
 }
 
@@ -244,6 +247,7 @@ var xRenderNodeSerialize func(uintptr) *glib.Bytes
 func (x *RenderNode) Serialize() *glib.Bytes {
 
 	cret := xRenderNodeSerialize(x.GoPointer())
+
 	return cret
 }
 
@@ -272,6 +276,7 @@ func (x *RenderNode) WriteToFile(FilenameVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xRenderNodeWriteToFile(x.GoPointer(), FilenameVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

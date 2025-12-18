@@ -79,6 +79,7 @@ var xNetworkServiceGetDomain func(uintptr) string
 func (x *NetworkService) GetDomain() string {
 
 	cret := xNetworkServiceGetDomain(x.GoPointer())
+
 	return cret
 }
 
@@ -88,6 +89,7 @@ var xNetworkServiceGetProtocol func(uintptr) string
 func (x *NetworkService) GetProtocol() string {
 
 	cret := xNetworkServiceGetProtocol(x.GoPointer())
+
 	return cret
 }
 
@@ -98,6 +100,7 @@ var xNetworkServiceGetScheme func(uintptr) string
 func (x *NetworkService) GetScheme() string {
 
 	cret := xNetworkServiceGetScheme(x.GoPointer())
+
 	return cret
 }
 
@@ -107,6 +110,7 @@ var xNetworkServiceGetService func(uintptr) string
 func (x *NetworkService) GetService() string {
 
 	cret := xNetworkServiceGetService(x.GoPointer())
+
 	return cret
 }
 
@@ -243,6 +247,7 @@ func (x *NetworkService) ProxyEnumerate() *SocketAddressEnumerator {
 func (x *NetworkService) ToString() string {
 
 	cret := XGSocketConnectableToString(x.GoPointer())
+
 	return cret
 }
 

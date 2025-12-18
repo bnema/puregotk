@@ -66,6 +66,7 @@ var xCenterLayoutGetBaselinePosition func(uintptr) BaselinePosition
 func (x *CenterLayout) GetBaselinePosition() BaselinePosition {
 
 	cret := xCenterLayoutGetBaselinePosition(x.GoPointer())
+
 	return cret
 }
 
@@ -109,6 +110,7 @@ var xCenterLayoutGetOrientation func(uintptr) Orientation
 func (x *CenterLayout) GetOrientation() Orientation {
 
 	cret := xCenterLayoutGetOrientation(x.GoPointer())
+
 	return cret
 }
 
@@ -118,6 +120,7 @@ var xCenterLayoutGetShrinkCenterLast func(uintptr) bool
 func (x *CenterLayout) GetShrinkCenterLast() bool {
 
 	cret := xCenterLayoutGetShrinkCenterLast(x.GoPointer())
+
 	return cret
 }
 

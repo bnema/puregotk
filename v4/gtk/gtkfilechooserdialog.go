@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
@@ -216,7 +218,15 @@ var xNewFileChooserDialog func(uintptr, uintptr, FileChooserAction, uintptr, ...
 func NewFileChooserDialog(TitleVar *string, ParentVar *Window, ActionVar FileChooserAction, FirstButtonTextVar *string, varArgs ...interface{}) *FileChooserDialog {
 	var cls *FileChooserDialog
 
-	cret := xNewFileChooserDialog(core.NullableStringToPtr(TitleVar), ParentVar.GoPointer(), ActionVar, core.NullableStringToPtr(FirstButtonTextVar), varArgs...)
+	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+
+	FirstButtonTextVarPtr, FirstButtonTextVarBytes := core.NullableStringToPtr(FirstButtonTextVar)
+
+	cret := xNewFileChooserDialog(TitleVarPtr, ParentVar.GoPointer(), ActionVar, FirstButtonTextVarPtr, varArgs...)
+
+	runtime.KeepAlive(TitleVarBytes)
+
+	runtime.KeepAlive(FirstButtonTextVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -273,6 +283,7 @@ func (x *FileChooserDialog) GetAccessibleParent() *AccessibleBase {
 func (x *FileChooserDialog) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -298,6 +309,7 @@ func (x *FileChooserDialog) GetAtContext() *ATContext {
 func (x *FileChooserDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -337,6 +349,7 @@ func (x *FileChooserDialog) GetNextAccessibleSibling() *AccessibleBase {
 func (x *FileChooserDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -513,6 +526,7 @@ func (x *FileChooserDialog) UpdateStateValue(NStatesVar int, StatesVar []Accessi
 func (x *FileChooserDialog) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -549,6 +563,7 @@ func (x *FileChooserDialog) AddShortcutFolder(FolderVar gio.File) (bool, error) 
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserAddShortcutFolder(x.GoPointer(), FolderVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -560,6 +575,7 @@ func (x *FileChooserDialog) AddShortcutFolder(FolderVar gio.File) (bool, error) 
 func (x *FileChooserDialog) GetAction() FileChooserAction {
 
 	cret := XGtkFileChooserGetAction(x.GoPointer())
+
 	return cret
 }
 
@@ -567,6 +583,7 @@ func (x *FileChooserDialog) GetAction() FileChooserAction {
 func (x *FileChooserDialog) GetChoice(IdVar string) string {
 
 	cret := XGtkFileChooserGetChoice(x.GoPointer(), IdVar)
+
 	return cret
 }
 
@@ -574,6 +591,7 @@ func (x *FileChooserDialog) GetChoice(IdVar string) string {
 func (x *FileChooserDialog) GetCreateFolders() bool {
 
 	cret := XGtkFileChooserGetCreateFolders(x.GoPointer())
+
 	return cret
 }
 
@@ -598,6 +616,7 @@ func (x *FileChooserDialog) GetCurrentFolder() *gio.FileBase {
 func (x *FileChooserDialog) GetCurrentName() string {
 
 	cret := XGtkFileChooserGetCurrentName(x.GoPointer())
+
 	return cret
 }
 
@@ -677,6 +696,7 @@ func (x *FileChooserDialog) GetFilters() *gio.ListModelBase {
 func (x *FileChooserDialog) GetSelectMultiple() bool {
 
 	cret := XGtkFileChooserGetSelectMultiple(x.GoPointer())
+
 	return cret
 }
 
@@ -716,6 +736,7 @@ func (x *FileChooserDialog) RemoveShortcutFolder(FolderVar gio.File) (bool, erro
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserRemoveShortcutFolder(x.GoPointer(), FolderVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -761,6 +782,7 @@ func (x *FileChooserDialog) SetCurrentFolder(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -836,6 +858,7 @@ func (x *FileChooserDialog) SetFile(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserSetFile(x.GoPointer(), FileVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

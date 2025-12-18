@@ -2,6 +2,7 @@
 package glib
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -175,7 +176,11 @@ var xLog func(uintptr, LogLevelFlags, string, ...interface{})
 // output via the structured log writer function (see [func@GLib.log_set_writer_func]).
 func Log(LogDomainVar *string, LogLevelVar LogLevelFlags, FormatVar string, varArgs ...interface{}) {
 
-	xLog(core.NullableStringToPtr(LogDomainVar), LogLevelVar, FormatVar, varArgs...)
+	LogDomainVarPtr, LogDomainVarBytes := core.NullableStringToPtr(LogDomainVar)
+
+	xLog(LogDomainVarPtr, LogLevelVar, FormatVar, varArgs...)
+
+	runtime.KeepAlive(LogDomainVarBytes)
 
 }
 
@@ -214,7 +219,15 @@ var xLogDefaultHandler func(uintptr, LogLevelFlags, uintptr, uintptr)
 // [Using Structured Logging](logging.html#using-structured-logging).
 func LogDefaultHandler(LogDomainVar *string, LogLevelVar LogLevelFlags, MessageVar *string, UnusedDataVar uintptr) {
 
-	xLogDefaultHandler(core.NullableStringToPtr(LogDomainVar), LogLevelVar, core.NullableStringToPtr(MessageVar), UnusedDataVar)
+	LogDomainVarPtr, LogDomainVarBytes := core.NullableStringToPtr(LogDomainVar)
+
+	MessageVarPtr, MessageVarBytes := core.NullableStringToPtr(MessageVar)
+
+	xLogDefaultHandler(LogDomainVarPtr, LogLevelVar, MessageVarPtr, UnusedDataVar)
+
+	runtime.KeepAlive(LogDomainVarBytes)
+
+	runtime.KeepAlive(MessageVarBytes)
 
 }
 
@@ -254,6 +267,7 @@ var xLogGetAlwaysFatal func() LogLevelFlags
 func LogGetAlwaysFatal() LogLevelFlags {
 
 	cret := xLogGetAlwaysFatal()
+
 	return cret
 }
 
@@ -271,6 +285,7 @@ var xLogGetDebugEnabled func() bool
 func LogGetDebugEnabled() bool {
 
 	cret := xLogGetDebugEnabled()
+
 	return cret
 }
 
@@ -308,6 +323,7 @@ var xLogSetAlwaysFatal func(LogLevelFlags) LogLevelFlags
 func LogSetAlwaysFatal(FatalMaskVar LogLevelFlags) LogLevelFlags {
 
 	cret := xLogSetAlwaysFatal(FatalMaskVar)
+
 	return cret
 }
 
@@ -355,6 +371,7 @@ func LogSetDefaultHandler(LogFuncVar *LogFunc, UserDataVar uintptr) uintptr {
 	}
 
 	cret := xLogSetDefaultHandler(LogFuncVarRef, UserDataVar)
+
 	return cret
 }
 
@@ -377,6 +394,7 @@ var xLogSetFatalMask func(string, LogLevelFlags) LogLevelFlags
 func LogSetFatalMask(LogDomainVar string, FatalMaskVar LogLevelFlags) LogLevelFlags {
 
 	cret := xLogSetFatalMask(LogDomainVar, FatalMaskVar)
+
 	return cret
 }
 
@@ -442,7 +460,12 @@ func LogSetHandler(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFuncVar 
 		}
 	}
 
-	cret := xLogSetHandler(core.NullableStringToPtr(LogDomainVar), LogLevelsVar, LogFuncVarRef, UserDataVar)
+	LogDomainVarPtr, LogDomainVarBytes := core.NullableStringToPtr(LogDomainVar)
+
+	cret := xLogSetHandler(LogDomainVarPtr, LogLevelsVar, LogFuncVarRef, UserDataVar)
+
+	runtime.KeepAlive(LogDomainVarBytes)
+
 	return cret
 }
 
@@ -487,7 +510,12 @@ func LogSetHandlerFull(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFunc
 		}
 	}
 
-	cret := xLogSetHandlerFull(core.NullableStringToPtr(LogDomainVar), LogLevelsVar, LogFuncVarRef, UserDataVar, DestroyVarRef)
+	LogDomainVarPtr, LogDomainVarBytes := core.NullableStringToPtr(LogDomainVar)
+
+	cret := xLogSetHandlerFull(LogDomainVarPtr, LogLevelsVar, LogFuncVarRef, UserDataVar, DestroyVarRef)
+
+	runtime.KeepAlive(LogDomainVarBytes)
+
 	return cret
 }
 
@@ -687,7 +715,11 @@ var xLogVariant func(uintptr, LogLevelFlags, *Variant)
 // For more details on its usage and about the parameters, see [func@GLib.log_structured].
 func LogVariant(LogDomainVar *string, LogLevelVar LogLevelFlags, FieldsVar *Variant) {
 
-	xLogVariant(core.NullableStringToPtr(LogDomainVar), LogLevelVar, FieldsVar)
+	LogDomainVarPtr, LogDomainVarBytes := core.NullableStringToPtr(LogDomainVar)
+
+	xLogVariant(LogDomainVarPtr, LogLevelVar, FieldsVar)
+
+	runtime.KeepAlive(LogDomainVarBytes)
 
 }
 
@@ -718,6 +750,7 @@ var xLogWriterDefault func(LogLevelFlags, []LogField, uint, uintptr) LogWriterOu
 func LogWriterDefault(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 
 	cret := xLogWriterDefault(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
+
 	return cret
 }
 
@@ -729,7 +762,11 @@ var xLogWriterDefaultSetDebugDomains func(uintptr)
 // This function is thread-safe.
 func LogWriterDefaultSetDebugDomains(DomainsVar *string) {
 
-	xLogWriterDefaultSetDebugDomains(core.NullableStringToPtr(DomainsVar))
+	DomainsVarPtr, DomainsVarBytes := core.NullableStringToPtr(DomainsVar)
+
+	xLogWriterDefaultSetDebugDomains(DomainsVarPtr)
+
+	runtime.KeepAlive(DomainsVarBytes)
 
 }
 
@@ -791,7 +828,12 @@ var xLogWriterDefaultWouldDrop func(LogLevelFlags, uintptr) bool
 // ```
 func LogWriterDefaultWouldDrop(LogLevelVar LogLevelFlags, LogDomainVar *string) bool {
 
-	cret := xLogWriterDefaultWouldDrop(LogLevelVar, core.NullableStringToPtr(LogDomainVar))
+	LogDomainVarPtr, LogDomainVarBytes := core.NullableStringToPtr(LogDomainVar)
+
+	cret := xLogWriterDefaultWouldDrop(LogLevelVar, LogDomainVarPtr)
+
+	runtime.KeepAlive(LogDomainVarBytes)
+
 	return cret
 }
 
@@ -811,6 +853,7 @@ var xLogWriterFormatFields func(LogLevelFlags, []LogField, uint, bool) string
 func LogWriterFormatFields(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UseColorVar bool) string {
 
 	cret := xLogWriterFormatFields(LogLevelVar, FieldsVar, NFieldsVar, UseColorVar)
+
 	return cret
 }
 
@@ -828,6 +871,7 @@ var xLogWriterIsJournald func(int) bool
 func LogWriterIsJournald(OutputFdVar int) bool {
 
 	cret := xLogWriterIsJournald(OutputFdVar)
+
 	return cret
 }
 
@@ -847,6 +891,7 @@ var xLogWriterJournald func(LogLevelFlags, []LogField, uint, uintptr) LogWriterO
 func LogWriterJournald(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 
 	cret := xLogWriterJournald(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
+
 	return cret
 }
 
@@ -872,6 +917,7 @@ var xLogWriterStandardStreams func(LogLevelFlags, []LogField, uint, uintptr) Log
 func LogWriterStandardStreams(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 
 	cret := xLogWriterStandardStreams(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
+
 	return cret
 }
 
@@ -884,6 +930,7 @@ var xLogWriterSupportsColor func(int) bool
 func LogWriterSupportsColor(OutputFdVar int) bool {
 
 	cret := xLogWriterSupportsColor(OutputFdVar)
+
 	return cret
 }
 
@@ -904,6 +951,7 @@ var xLogWriterSyslog func(LogLevelFlags, []LogField, uint, uintptr) LogWriterOut
 func LogWriterSyslog(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 
 	cret := xLogWriterSyslog(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
+
 	return cret
 }
 
@@ -926,7 +974,11 @@ var xLogv func(uintptr, LogLevelFlags, string, []interface{})
 // application domain.
 func Logv(LogDomainVar *string, LogLevelVar LogLevelFlags, FormatVar string, ArgsVar []interface{}) {
 
-	xLogv(core.NullableStringToPtr(LogDomainVar), LogLevelVar, FormatVar, ArgsVar)
+	LogDomainVarPtr, LogDomainVarBytes := core.NullableStringToPtr(LogDomainVar)
+
+	xLogv(LogDomainVarPtr, LogLevelVar, FormatVar, ArgsVar)
+
+	runtime.KeepAlive(LogDomainVarBytes)
 
 }
 
@@ -981,6 +1033,7 @@ var xPrintfStringUpperBound func(string, []interface{}) uint
 func PrintfStringUpperBound(FormatVar string, ArgsVar []interface{}) uint {
 
 	cret := xPrintfStringUpperBound(FormatVar, ArgsVar)
+
 	return cret
 }
 
@@ -990,7 +1043,15 @@ var xReturnIfFailWarning func(uintptr, string, uintptr)
 // and [func@GLib.return_val_if_fail] macros.
 func ReturnIfFailWarning(LogDomainVar *string, PrettyFunctionVar string, ExpressionVar *string) {
 
-	xReturnIfFailWarning(core.NullableStringToPtr(LogDomainVar), PrettyFunctionVar, core.NullableStringToPtr(ExpressionVar))
+	LogDomainVarPtr, LogDomainVarBytes := core.NullableStringToPtr(LogDomainVar)
+
+	ExpressionVarPtr, ExpressionVarBytes := core.NullableStringToPtr(ExpressionVar)
+
+	xReturnIfFailWarning(LogDomainVarPtr, PrettyFunctionVar, ExpressionVarPtr)
+
+	runtime.KeepAlive(LogDomainVarBytes)
+
+	runtime.KeepAlive(ExpressionVarBytes)
 
 }
 
@@ -1029,6 +1090,7 @@ func SetPrintHandler(FuncVar *PrintFunc) uintptr {
 	}
 
 	cret := xSetPrintHandler(FuncVarRef)
+
 	return cret
 }
 
@@ -1067,6 +1129,7 @@ func SetPrinterrHandler(FuncVar *PrintFunc) uintptr {
 	}
 
 	cret := xSetPrinterrHandler(FuncVarRef)
+
 	return cret
 }
 
@@ -1076,7 +1139,15 @@ var xWarnMessage func(uintptr, string, int, string, uintptr)
 // and [func@GLib.warn_if_fail] macros.
 func WarnMessage(DomainVar *string, FileVar string, LineVar int, FuncVar string, WarnexprVar *string) {
 
-	xWarnMessage(core.NullableStringToPtr(DomainVar), FileVar, LineVar, FuncVar, core.NullableStringToPtr(WarnexprVar))
+	DomainVarPtr, DomainVarBytes := core.NullableStringToPtr(DomainVar)
+
+	WarnexprVarPtr, WarnexprVarBytes := core.NullableStringToPtr(WarnexprVar)
+
+	xWarnMessage(DomainVarPtr, FileVar, LineVar, FuncVar, WarnexprVarPtr)
+
+	runtime.KeepAlive(DomainVarBytes)
+
+	runtime.KeepAlive(WarnexprVarBytes)
 
 }
 

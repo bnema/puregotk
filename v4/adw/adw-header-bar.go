@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -176,6 +177,7 @@ var xHeaderBarGetCenteringPolicy func(uintptr) CenteringPolicy
 func (x *HeaderBar) GetCenteringPolicy() CenteringPolicy {
 
 	cret := xHeaderBarGetCenteringPolicy(x.GoPointer())
+
 	return cret
 }
 
@@ -185,6 +187,7 @@ var xHeaderBarGetDecorationLayout func(uintptr) string
 func (x *HeaderBar) GetDecorationLayout() string {
 
 	cret := xHeaderBarGetDecorationLayout(x.GoPointer())
+
 	return cret
 }
 
@@ -194,6 +197,7 @@ var xHeaderBarGetShowBackButton func(uintptr) bool
 func (x *HeaderBar) GetShowBackButton() bool {
 
 	cret := xHeaderBarGetShowBackButton(x.GoPointer())
+
 	return cret
 }
 
@@ -203,6 +207,7 @@ var xHeaderBarGetShowEndTitleButtons func(uintptr) bool
 func (x *HeaderBar) GetShowEndTitleButtons() bool {
 
 	cret := xHeaderBarGetShowEndTitleButtons(x.GoPointer())
+
 	return cret
 }
 
@@ -212,6 +217,7 @@ var xHeaderBarGetShowStartTitleButtons func(uintptr) bool
 func (x *HeaderBar) GetShowStartTitleButtons() bool {
 
 	cret := xHeaderBarGetShowStartTitleButtons(x.GoPointer())
+
 	return cret
 }
 
@@ -221,6 +227,7 @@ var xHeaderBarGetShowTitle func(uintptr) bool
 func (x *HeaderBar) GetShowTitle() bool {
 
 	cret := xHeaderBarGetShowTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -296,7 +303,11 @@ var xHeaderBarSetDecorationLayout func(uintptr, uintptr)
 // and minimize, maximize and close buttons at the end.
 func (x *HeaderBar) SetDecorationLayout(LayoutVar *string) {
 
-	xHeaderBarSetDecorationLayout(x.GoPointer(), core.NullableStringToPtr(LayoutVar))
+	LayoutVarPtr, LayoutVarBytes := core.NullableStringToPtr(LayoutVar)
+
+	xHeaderBarSetDecorationLayout(x.GoPointer(), LayoutVarPtr)
+
+	runtime.KeepAlive(LayoutVarBytes)
 
 }
 
@@ -564,6 +575,7 @@ func (x *HeaderBar) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *HeaderBar) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -589,6 +601,7 @@ func (x *HeaderBar) GetAtContext() *gtk.ATContext {
 func (x *HeaderBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -628,6 +641,7 @@ func (x *HeaderBar) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *HeaderBar) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -804,6 +818,7 @@ func (x *HeaderBar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleS
 func (x *HeaderBar) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

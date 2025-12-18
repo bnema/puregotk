@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
@@ -58,7 +60,11 @@ var xNewFontChooserDialog func(uintptr, uintptr) uintptr
 func NewFontChooserDialog(TitleVar *string, ParentVar *Window) *FontChooserDialog {
 	var cls *FontChooserDialog
 
-	cret := xNewFontChooserDialog(core.NullableStringToPtr(TitleVar), ParentVar.GoPointer())
+	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+
+	cret := xNewFontChooserDialog(TitleVarPtr, ParentVar.GoPointer())
+
+	runtime.KeepAlive(TitleVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -115,6 +121,7 @@ func (x *FontChooserDialog) GetAccessibleParent() *AccessibleBase {
 func (x *FontChooserDialog) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -140,6 +147,7 @@ func (x *FontChooserDialog) GetAtContext() *ATContext {
 func (x *FontChooserDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -179,6 +187,7 @@ func (x *FontChooserDialog) GetNextAccessibleSibling() *AccessibleBase {
 func (x *FontChooserDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -355,6 +364,7 @@ func (x *FontChooserDialog) UpdateStateValue(NStatesVar int, StatesVar []Accessi
 func (x *FontChooserDialog) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -371,6 +381,7 @@ func (x *FontChooserDialog) GetBuildableId() string {
 func (x *FontChooserDialog) GetFont() string {
 
 	cret := XGtkFontChooserGetFont(x.GoPointer())
+
 	return cret
 }
 
@@ -387,6 +398,7 @@ func (x *FontChooserDialog) GetFont() string {
 func (x *FontChooserDialog) GetFontDesc() *pango.FontDescription {
 
 	cret := XGtkFontChooserGetFontDesc(x.GoPointer())
+
 	return cret
 }
 
@@ -435,6 +447,7 @@ func (x *FontChooserDialog) GetFontFamily() *pango.FontFamily {
 func (x *FontChooserDialog) GetFontFeatures() string {
 
 	cret := XGtkFontChooserGetFontFeatures(x.GoPointer())
+
 	return cret
 }
 
@@ -457,6 +470,7 @@ func (x *FontChooserDialog) GetFontMap() *pango.FontMap {
 func (x *FontChooserDialog) GetFontSize() int {
 
 	cret := XGtkFontChooserGetFontSize(x.GoPointer())
+
 	return cret
 }
 
@@ -464,6 +478,7 @@ func (x *FontChooserDialog) GetFontSize() int {
 func (x *FontChooserDialog) GetLanguage() string {
 
 	cret := XGtkFontChooserGetLanguage(x.GoPointer())
+
 	return cret
 }
 
@@ -471,6 +486,7 @@ func (x *FontChooserDialog) GetLanguage() string {
 func (x *FontChooserDialog) GetLevel() FontChooserLevel {
 
 	cret := XGtkFontChooserGetLevel(x.GoPointer())
+
 	return cret
 }
 
@@ -478,6 +494,7 @@ func (x *FontChooserDialog) GetLevel() FontChooserLevel {
 func (x *FontChooserDialog) GetPreviewText() string {
 
 	cret := XGtkFontChooserGetPreviewText(x.GoPointer())
+
 	return cret
 }
 
@@ -485,6 +502,7 @@ func (x *FontChooserDialog) GetPreviewText() string {
 func (x *FontChooserDialog) GetShowPreviewEntry() bool {
 
 	cret := XGtkFontChooserGetShowPreviewEntry(x.GoPointer())
+
 	return cret
 }
 

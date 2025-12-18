@@ -37,6 +37,7 @@ var xNewScriptIter func(string, int) *ScriptIter
 func NewScriptIter(TextVar string, LengthVar int) *ScriptIter {
 
 	cret := xNewScriptIter(TextVar, LengthVar)
+
 	return cret
 }
 
@@ -75,6 +76,7 @@ var xScriptIterNext func(uintptr) bool
 func (x *ScriptIter) Next() bool {
 
 	cret := xScriptIterNext(x.GoPointer())
+
 	return cret
 }
 
@@ -354,6 +356,7 @@ var xScriptForUnichar func(uint32) Script
 func ScriptForUnichar(ChVar uint32) Script {
 
 	cret := xScriptForUnichar(ChVar)
+
 	return cret
 }
 
@@ -391,6 +394,7 @@ var xScriptGetSampleLanguage func(Script) *Language
 func ScriptGetSampleLanguage(ScriptVar Script) *Language {
 
 	cret := xScriptGetSampleLanguage(ScriptVar)
+
 	return cret
 }
 

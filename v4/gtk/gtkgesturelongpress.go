@@ -73,6 +73,7 @@ var xGestureLongPressGetDelayFactor func(uintptr) float64
 func (x *GestureLongPress) GetDelayFactor() float64 {
 
 	cret := xGestureLongPressGetDelayFactor(x.GoPointer())
+
 	return cret
 }
 

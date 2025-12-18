@@ -72,6 +72,7 @@ var xSwipeTrackerGetAllowLongSwipes func(uintptr) bool
 func (x *SwipeTracker) GetAllowLongSwipes() bool {
 
 	cret := xSwipeTrackerGetAllowLongSwipes(x.GoPointer())
+
 	return cret
 }
 
@@ -81,6 +82,7 @@ var xSwipeTrackerGetAllowMouseDrag func(uintptr) bool
 func (x *SwipeTracker) GetAllowMouseDrag() bool {
 
 	cret := xSwipeTrackerGetAllowMouseDrag(x.GoPointer())
+
 	return cret
 }
 
@@ -90,6 +92,7 @@ var xSwipeTrackerGetAllowWindowHandle func(uintptr) bool
 func (x *SwipeTracker) GetAllowWindowHandle() bool {
 
 	cret := xSwipeTrackerGetAllowWindowHandle(x.GoPointer())
+
 	return cret
 }
 
@@ -99,6 +102,7 @@ var xSwipeTrackerGetEnabled func(uintptr) bool
 func (x *SwipeTracker) GetEnabled() bool {
 
 	cret := xSwipeTrackerGetEnabled(x.GoPointer())
+
 	return cret
 }
 
@@ -108,6 +112,7 @@ var xSwipeTrackerGetLowerOvershoot func(uintptr) bool
 func (x *SwipeTracker) GetLowerOvershoot() bool {
 
 	cret := xSwipeTrackerGetLowerOvershoot(x.GoPointer())
+
 	return cret
 }
 
@@ -117,6 +122,7 @@ var xSwipeTrackerGetReversed func(uintptr) bool
 func (x *SwipeTracker) GetReversed() bool {
 
 	cret := xSwipeTrackerGetReversed(x.GoPointer())
+
 	return cret
 }
 
@@ -143,6 +149,7 @@ var xSwipeTrackerGetUpperOvershoot func(uintptr) bool
 func (x *SwipeTracker) GetUpperOvershoot() bool {
 
 	cret := xSwipeTrackerGetUpperOvershoot(x.GoPointer())
+
 	return cret
 }
 
@@ -477,6 +484,7 @@ func (x *SwipeTracker) ConnectUpdateSwipe(cb *func(SwipeTracker, float64)) uint3
 func (x *SwipeTracker) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

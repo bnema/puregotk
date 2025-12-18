@@ -332,6 +332,7 @@ var xEventsGetAngle func(uintptr, uintptr, *float64) bool
 func EventsGetAngle(Event1Var *Event, Event2Var *Event, AngleVar *float64) bool {
 
 	cret := xEventsGetAngle(Event1Var.GoPointer(), Event2Var.GoPointer(), AngleVar)
+
 	return cret
 }
 
@@ -344,6 +345,7 @@ var xEventsGetCenter func(uintptr, uintptr, *float64, *float64) bool
 func EventsGetCenter(Event1Var *Event, Event2Var *Event, XVar *float64, YVar *float64) bool {
 
 	cret := xEventsGetCenter(Event1Var.GoPointer(), Event2Var.GoPointer(), XVar, YVar)
+
 	return cret
 }
 
@@ -356,6 +358,7 @@ var xEventsGetDistance func(uintptr, uintptr, *float64) bool
 func EventsGetDistance(Event1Var *Event, Event2Var *Event, DistanceVar *float64) bool {
 
 	cret := xEventsGetDistance(Event1Var.GoPointer(), Event2Var.GoPointer(), DistanceVar)
+
 	return cret
 }
 
@@ -382,6 +385,7 @@ var xButtonEventGetButton func(uintptr) uint
 func (x *ButtonEvent) GetButton() uint {
 
 	cret := xButtonEventGetButton(x.GoPointer())
+
 	return cret
 }
 
@@ -419,6 +423,7 @@ var xCrossingEventGetDetail func(uintptr) NotifyType
 func (x *CrossingEvent) GetDetail() NotifyType {
 
 	cret := xCrossingEventGetDetail(x.GoPointer())
+
 	return cret
 }
 
@@ -428,6 +433,7 @@ var xCrossingEventGetFocus func(uintptr) bool
 func (x *CrossingEvent) GetFocus() bool {
 
 	cret := xCrossingEventGetFocus(x.GoPointer())
+
 	return cret
 }
 
@@ -437,6 +443,7 @@ var xCrossingEventGetMode func(uintptr) CrossingMode
 func (x *CrossingEvent) GetMode() CrossingMode {
 
 	cret := xCrossingEventGetMode(x.GoPointer())
+
 	return cret
 }
 
@@ -560,6 +567,7 @@ var xEventGetAngle func(uintptr, uintptr, *float64) bool
 func (x *Event) GetAngle(Event2Var *Event, AngleVar *float64) bool {
 
 	cret := xEventGetAngle(x.GoPointer(), Event2Var.GoPointer(), AngleVar)
+
 	return cret
 }
 
@@ -572,6 +580,7 @@ var xEventGetCenter func(uintptr, uintptr, *float64, *float64) bool
 func (x *Event) GetCenter(Event2Var *Event, XVar *float64, YVar *float64) bool {
 
 	cret := xEventGetCenter(x.GoPointer(), Event2Var.GoPointer(), XVar, YVar)
+
 	return cret
 }
 
@@ -584,6 +593,7 @@ var xEventGetDistance func(uintptr, uintptr, *float64) bool
 func (x *Event) GetDistance(Event2Var *Event, DistanceVar *float64) bool {
 
 	cret := xEventGetDistance(x.GoPointer(), Event2Var.GoPointer(), DistanceVar)
+
 	return cret
 }
 
@@ -596,6 +606,7 @@ var xEventGetAxes func(uintptr, *[]float64, *uint) bool
 func (x *Event) GetAxes(AxesVar *[]float64, NAxesVar *uint) bool {
 
 	cret := xEventGetAxes(x.GoPointer(), AxesVar, NAxesVar)
+
 	return cret
 }
 
@@ -609,6 +620,7 @@ var xEventGetAxis func(uintptr, AxisUse, *float64) bool
 func (x *Event) GetAxis(AxisUseVar AxisUse, ValueVar *float64) bool {
 
 	cret := xEventGetAxis(x.GoPointer(), AxisUseVar, ValueVar)
+
 	return cret
 }
 
@@ -681,6 +693,7 @@ var xEventGetEventSequence func(uintptr) *EventSequence
 func (x *Event) GetEventSequence() *EventSequence {
 
 	cret := xEventGetEventSequence(x.GoPointer())
+
 	return cret
 }
 
@@ -690,6 +703,7 @@ var xEventGetEventType func(uintptr) EventType
 func (x *Event) GetEventType() EventType {
 
 	cret := xEventGetEventType(x.GoPointer())
+
 	return cret
 }
 
@@ -707,6 +721,7 @@ var xEventGetHistory func(uintptr, *uint) uintptr
 func (x *Event) GetHistory(OutNCoordsVar *uint) uintptr {
 
 	cret := xEventGetHistory(x.GoPointer(), OutNCoordsVar)
+
 	return cret
 }
 
@@ -716,6 +731,7 @@ var xEventGetModifierState func(uintptr) ModifierType
 func (x *Event) GetModifierState() ModifierType {
 
 	cret := xEventGetModifierState(x.GoPointer())
+
 	return cret
 }
 
@@ -727,6 +743,7 @@ var xEventGetPointerEmulated func(uintptr) bool
 func (x *Event) GetPointerEmulated() bool {
 
 	cret := xEventGetPointerEmulated(x.GoPointer())
+
 	return cret
 }
 
@@ -738,6 +755,7 @@ var xEventGetPosition func(uintptr, *float64, *float64) bool
 func (x *Event) GetPosition(XVar *float64, YVar *float64) bool {
 
 	cret := xEventGetPosition(x.GoPointer(), XVar, YVar)
+
 	return cret
 }
 
@@ -784,6 +802,7 @@ var xEventGetTime func(uintptr) uint32
 func (x *Event) GetTime() uint32 {
 
 	cret := xEventGetTime(x.GoPointer())
+
 	return cret
 }
 
@@ -819,6 +838,7 @@ var xEventTriggersContextMenu func(uintptr) bool
 func (x *Event) TriggersContextMenu() bool {
 
 	cret := xEventTriggersContextMenu(x.GoPointer())
+
 	return cret
 }
 
@@ -868,6 +888,7 @@ var xFocusEventGetIn func(uintptr) bool
 func (x *FocusEvent) GetIn() bool {
 
 	cret := xFocusEventGetIn(x.GoPointer())
+
 	return cret
 }
 
@@ -922,6 +943,7 @@ var xGrabBrokenEventGetImplicit func(uintptr) bool
 func (x *GrabBrokenEvent) GetImplicit() bool {
 
 	cret := xGrabBrokenEventGetImplicit(x.GoPointer())
+
 	return cret
 }
 
@@ -959,6 +981,7 @@ var xKeyEventGetConsumedModifiers func(uintptr) ModifierType
 func (x *KeyEvent) GetConsumedModifiers() ModifierType {
 
 	cret := xKeyEventGetConsumedModifiers(x.GoPointer())
+
 	return cret
 }
 
@@ -968,6 +991,7 @@ var xKeyEventGetKeycode func(uintptr) uint
 func (x *KeyEvent) GetKeycode() uint {
 
 	cret := xKeyEventGetKeycode(x.GoPointer())
+
 	return cret
 }
 
@@ -977,6 +1001,7 @@ var xKeyEventGetKeyval func(uintptr) uint
 func (x *KeyEvent) GetKeyval() uint {
 
 	cret := xKeyEventGetKeyval(x.GoPointer())
+
 	return cret
 }
 
@@ -986,6 +1011,7 @@ var xKeyEventGetLayout func(uintptr) uint
 func (x *KeyEvent) GetLayout() uint {
 
 	cret := xKeyEventGetLayout(x.GoPointer())
+
 	return cret
 }
 
@@ -995,6 +1021,7 @@ var xKeyEventGetLevel func(uintptr) uint
 func (x *KeyEvent) GetLevel() uint {
 
 	cret := xKeyEventGetLevel(x.GoPointer())
+
 	return cret
 }
 
@@ -1007,6 +1034,7 @@ var xKeyEventGetMatch func(uintptr, *uint, *ModifierType) bool
 func (x *KeyEvent) GetMatch(KeyvalVar *uint, ModifiersVar *ModifierType) bool {
 
 	cret := xKeyEventGetMatch(x.GoPointer(), KeyvalVar, ModifiersVar)
+
 	return cret
 }
 
@@ -1016,6 +1044,7 @@ var xKeyEventIsModifier func(uintptr) bool
 func (x *KeyEvent) IsModifier() bool {
 
 	cret := xKeyEventIsModifier(x.GoPointer())
+
 	return cret
 }
 
@@ -1032,6 +1061,7 @@ var xKeyEventMatches func(uintptr, uint, ModifierType) KeyMatch
 func (x *KeyEvent) Matches(KeyvalVar uint, ModifiersVar ModifierType) KeyMatch {
 
 	cret := xKeyEventMatches(x.GoPointer(), KeyvalVar, ModifiersVar)
+
 	return cret
 }
 
@@ -1107,6 +1137,7 @@ var xPadEventGetButton func(uintptr) uint
 func (x *PadEvent) GetButton() uint {
 
 	cret := xPadEventGetButton(x.GoPointer())
+
 	return cret
 }
 
@@ -1196,6 +1227,7 @@ var xScrollEventGetDirection func(uintptr) ScrollDirection
 func (x *ScrollEvent) GetDirection() ScrollDirection {
 
 	cret := xScrollEventGetDirection(x.GoPointer())
+
 	return cret
 }
 
@@ -1208,6 +1240,7 @@ var xScrollEventGetUnit func(uintptr) ScrollUnit
 func (x *ScrollEvent) GetUnit() ScrollUnit {
 
 	cret := xScrollEventGetUnit(x.GoPointer())
+
 	return cret
 }
 
@@ -1225,6 +1258,7 @@ var xScrollEventIsStop func(uintptr) bool
 func (x *ScrollEvent) IsStop() bool {
 
 	cret := xScrollEventIsStop(x.GoPointer())
+
 	return cret
 }
 
@@ -1244,6 +1278,7 @@ var xScrollEventGetRelativeDirection func(uintptr) ScrollRelativeDirection
 func ScrollEventGetRelativeDirection(EventVar *Event) ScrollRelativeDirection {
 
 	cret := xScrollEventGetRelativeDirection(EventVar.GoPointer())
+
 	return cret
 }
 
@@ -1270,6 +1305,7 @@ var xTouchEventGetEmulatingPointer func(uintptr) bool
 func (x *TouchEvent) GetEmulatingPointer() bool {
 
 	cret := xTouchEventGetEmulatingPointer(x.GoPointer())
+
 	return cret
 }
 
@@ -1321,6 +1357,7 @@ var xTouchpadEventGetGesturePhase func(uintptr) TouchpadGesturePhase
 func (x *TouchpadEvent) GetGesturePhase() TouchpadGesturePhase {
 
 	cret := xTouchpadEventGetGesturePhase(x.GoPointer())
+
 	return cret
 }
 
@@ -1330,6 +1367,7 @@ var xTouchpadEventGetNFingers func(uintptr) uint
 func (x *TouchpadEvent) GetNFingers() uint {
 
 	cret := xTouchpadEventGetNFingers(x.GoPointer())
+
 	return cret
 }
 
@@ -1339,6 +1377,7 @@ var xTouchpadEventGetPinchAngleDelta func(uintptr) float64
 func (x *TouchpadEvent) GetPinchAngleDelta() float64 {
 
 	cret := xTouchpadEventGetPinchAngleDelta(x.GoPointer())
+
 	return cret
 }
 
@@ -1348,6 +1387,7 @@ var xTouchpadEventGetPinchScale func(uintptr) float64
 func (x *TouchpadEvent) GetPinchScale() float64 {
 
 	cret := xTouchpadEventGetPinchScale(x.GoPointer())
+
 	return cret
 }
 

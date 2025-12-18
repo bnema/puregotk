@@ -114,6 +114,7 @@ var xStringListFind func(uintptr, string) uint
 func (x *StringList) Find(StringVar string) uint {
 
 	cret := xStringListFind(x.GoPointer(), StringVar)
+
 	return cret
 }
 
@@ -128,6 +129,7 @@ var xStringListGetString func(uintptr, uint) string
 func (x *StringList) GetString(PositionVar uint) string {
 
 	cret := xStringListGetString(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -220,6 +222,7 @@ func (x *StringList) SetPropertyStrings(value []string) {
 func (x *StringList) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -234,6 +237,7 @@ func (x *StringList) GetItem(PositionVar uint) uintptr {
 func (x *StringList) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -245,6 +249,7 @@ func (x *StringList) GetItemType() types.GType {
 func (x *StringList) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -306,6 +311,7 @@ func (x *StringList) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar ui
 func (x *StringList) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -352,6 +358,7 @@ var xStringObjectGetString func(uintptr) string
 func (x *StringObject) GetString() string {
 
 	cret := xStringObjectGetString(x.GoPointer())
+
 	return cret
 }
 

@@ -13,6 +13,7 @@ var xSrvTargetListSort func(*glib.List) *glib.List
 func SrvTargetListSort(TargetsVar *glib.List) *glib.List {
 
 	cret := xSrvTargetListSort(TargetsVar)
+
 	return cret
 }
 

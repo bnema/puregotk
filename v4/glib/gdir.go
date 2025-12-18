@@ -34,6 +34,7 @@ func DirOpen(PathVar string, FlagsVar uint) (*Dir, error) {
 	var cerr *Error
 
 	cret := xDirOpen(PathVar, FlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -75,6 +76,7 @@ var xDirReadName func(uintptr) string
 func (x *Dir) ReadName() string {
 
 	cret := xDirReadName(x.GoPointer())
+
 	return cret
 }
 
@@ -84,6 +86,7 @@ var xDirRef func(uintptr) *Dir
 func (x *Dir) Ref() *Dir {
 
 	cret := xDirRef(x.GoPointer())
+
 	return cret
 }
 

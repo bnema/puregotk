@@ -395,6 +395,7 @@ func (x *SelectionModelBase) SetGoPointer(ptr uintptr) {
 func (x *SelectionModelBase) GetSelection() *Bitset {
 
 	cret := XGtkSelectionModelGetSelection(x.GoPointer())
+
 	return cret
 }
 
@@ -408,6 +409,7 @@ func (x *SelectionModelBase) GetSelection() *Bitset {
 func (x *SelectionModelBase) GetSelectionInRange(PositionVar uint, NItemsVar uint) *Bitset {
 
 	cret := XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
+
 	return cret
 }
 
@@ -415,6 +417,7 @@ func (x *SelectionModelBase) GetSelectionInRange(PositionVar uint, NItemsVar uin
 func (x *SelectionModelBase) IsSelected(PositionVar uint) bool {
 
 	cret := XGtkSelectionModelIsSelected(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -422,6 +425,7 @@ func (x *SelectionModelBase) IsSelected(PositionVar uint) bool {
 func (x *SelectionModelBase) SelectAll() bool {
 
 	cret := XGtkSelectionModelSelectAll(x.GoPointer())
+
 	return cret
 }
 
@@ -429,6 +433,7 @@ func (x *SelectionModelBase) SelectAll() bool {
 func (x *SelectionModelBase) SelectItem(PositionVar uint, UnselectRestVar bool) bool {
 
 	cret := XGtkSelectionModelSelectItem(x.GoPointer(), PositionVar, UnselectRestVar)
+
 	return cret
 }
 
@@ -436,6 +441,7 @@ func (x *SelectionModelBase) SelectItem(PositionVar uint, UnselectRestVar bool) 
 func (x *SelectionModelBase) SelectRange(PositionVar uint, NItemsVar uint, UnselectRestVar bool) bool {
 
 	cret := XGtkSelectionModelSelectRange(x.GoPointer(), PositionVar, NItemsVar, UnselectRestVar)
+
 	return cret
 }
 
@@ -488,6 +494,7 @@ func (x *SelectionModelBase) SelectionChanged(PositionVar uint, NItemsVar uint) 
 func (x *SelectionModelBase) SetSelection(SelectedVar *Bitset, MaskVar *Bitset) bool {
 
 	cret := XGtkSelectionModelSetSelection(x.GoPointer(), SelectedVar, MaskVar)
+
 	return cret
 }
 
@@ -495,6 +502,7 @@ func (x *SelectionModelBase) SetSelection(SelectedVar *Bitset, MaskVar *Bitset) 
 func (x *SelectionModelBase) UnselectAll() bool {
 
 	cret := XGtkSelectionModelUnselectAll(x.GoPointer())
+
 	return cret
 }
 
@@ -502,6 +510,7 @@ func (x *SelectionModelBase) UnselectAll() bool {
 func (x *SelectionModelBase) UnselectItem(PositionVar uint) bool {
 
 	cret := XGtkSelectionModelUnselectItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -509,6 +518,7 @@ func (x *SelectionModelBase) UnselectItem(PositionVar uint) bool {
 func (x *SelectionModelBase) UnselectRange(PositionVar uint, NItemsVar uint) bool {
 
 	cret := XGtkSelectionModelUnselectRange(x.GoPointer(), PositionVar, NItemsVar)
+
 	return cret
 }
 

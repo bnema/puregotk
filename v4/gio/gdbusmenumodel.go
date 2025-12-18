@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
@@ -50,7 +52,11 @@ var xDBusMenuModelGet func(uintptr, uintptr, string) uintptr
 func DBusMenuModelGet(ConnectionVar *DBusConnection, BusNameVar *string, ObjectPathVar string) *DBusMenuModel {
 	var cls *DBusMenuModel
 
-	cret := xDBusMenuModelGet(ConnectionVar.GoPointer(), core.NullableStringToPtr(BusNameVar), ObjectPathVar)
+	BusNameVarPtr, BusNameVarBytes := core.NullableStringToPtr(BusNameVar)
+
+	cret := xDBusMenuModelGet(ConnectionVar.GoPointer(), BusNameVarPtr, ObjectPathVar)
+
+	runtime.KeepAlive(BusNameVarBytes)
 
 	if cret == 0 {
 		return nil

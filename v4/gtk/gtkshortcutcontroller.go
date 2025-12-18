@@ -134,6 +134,7 @@ var xShortcutControllerGetMnemonicsModifiers func(uintptr) gdk.ModifierType
 func (x *ShortcutController) GetMnemonicsModifiers() gdk.ModifierType {
 
 	cret := xShortcutControllerGetMnemonicsModifiers(x.GoPointer())
+
 	return cret
 }
 
@@ -145,6 +146,7 @@ var xShortcutControllerGetScope func(uintptr) ShortcutScope
 func (x *ShortcutController) GetScope() ShortcutScope {
 
 	cret := xShortcutControllerGetScope(x.GoPointer())
+
 	return cret
 }
 
@@ -229,6 +231,7 @@ func (x *ShortcutController) GetPropertyNItems() uint {
 func (x *ShortcutController) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -243,6 +246,7 @@ func (x *ShortcutController) GetItem(PositionVar uint) uintptr {
 func (x *ShortcutController) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -254,6 +258,7 @@ func (x *ShortcutController) GetItemType() types.GType {
 func (x *ShortcutController) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -315,6 +320,7 @@ func (x *ShortcutController) ItemsChanged(PositionVar uint, RemovedVar uint, Add
 func (x *ShortcutController) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

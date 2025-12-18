@@ -203,6 +203,7 @@ var xSignalAccumulatorFirstWins func(*SignalInvocationHint, *Value, *Value, uint
 func SignalAccumulatorFirstWins(IhintVar *SignalInvocationHint, ReturnAccuVar *Value, HandlerReturnVar *Value, DummyVar uintptr) bool {
 
 	cret := xSignalAccumulatorFirstWins(IhintVar, ReturnAccuVar, HandlerReturnVar, DummyVar)
+
 	return cret
 }
 
@@ -218,6 +219,7 @@ var xSignalAccumulatorTrueHandled func(*SignalInvocationHint, *Value, *Value, ui
 func SignalAccumulatorTrueHandled(IhintVar *SignalInvocationHint, ReturnAccuVar *Value, HandlerReturnVar *Value, DummyVar uintptr) bool {
 
 	cret := xSignalAccumulatorTrueHandled(IhintVar, ReturnAccuVar, HandlerReturnVar, DummyVar)
+
 	return cret
 }
 
@@ -259,6 +261,7 @@ func SignalAddEmissionHook(SignalIdVar uint, DetailVar glib.Quark, HookFuncVar *
 	}
 
 	cret := xSignalAddEmissionHook(SignalIdVar, DetailVar, HookFuncVarRef, HookDataVar, DataDestroyVarRef)
+
 	return cret
 }
 
@@ -303,6 +306,7 @@ var xSignalConnectClosure func(uintptr, string, *Closure, bool) uint32
 func SignalConnectClosure(InstanceVar *Object, DetailedSignalVar string, ClosureVar *Closure, AfterVar bool) uint32 {
 
 	cret := xSignalConnectClosure(InstanceVar.GoPointer(), DetailedSignalVar, ClosureVar, AfterVar)
+
 	return cret
 }
 
@@ -323,6 +327,7 @@ var xSignalConnectClosureById func(uintptr, uint, glib.Quark, *Closure, bool) ui
 func SignalConnectClosureById(InstanceVar *Object, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, AfterVar bool) uint32 {
 
 	cret := xSignalConnectClosureById(InstanceVar.GoPointer(), SignalIdVar, DetailVar, ClosureVar, AfterVar)
+
 	return cret
 }
 
@@ -374,6 +379,7 @@ func SignalConnectData(InstanceVar *Object, DetailedSignalVar string, CHandlerVa
 	}
 
 	cret := xSignalConnectData(InstanceVar.GoPointer(), DetailedSignalVar, CHandlerVarRef, DataVar, DestroyDataVarRef, ConnectFlagsVar)
+
 	return cret
 }
 
@@ -435,6 +441,7 @@ var xSignalGetInvocationHint func(uintptr) *SignalInvocationHint
 func SignalGetInvocationHint(InstanceVar *Object) *SignalInvocationHint {
 
 	cret := xSignalGetInvocationHint(InstanceVar.GoPointer())
+
 	return cret
 }
 
@@ -478,6 +485,7 @@ var xSignalHandlerFind func(uintptr, SignalMatchType, uint, glib.Quark, *Closure
 func SignalHandlerFind(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint32 {
 
 	cret := xSignalHandlerFind(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
+
 	return cret
 }
 
@@ -487,6 +495,7 @@ var xSignalHandlerIsConnected func(uintptr, uint32) bool
 func SignalHandlerIsConnected(InstanceVar *Object, HandlerIdVar uint32) bool {
 
 	cret := xSignalHandlerIsConnected(InstanceVar.GoPointer(), HandlerIdVar)
+
 	return cret
 }
 
@@ -529,6 +538,7 @@ var xSignalHandlersBlockMatched func(uintptr, SignalMatchType, uint, glib.Quark,
 func SignalHandlersBlockMatched(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
 
 	cret := xSignalHandlersBlockMatched(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
+
 	return cret
 }
 
@@ -562,6 +572,7 @@ var xSignalHandlersDisconnectMatched func(uintptr, SignalMatchType, uint, glib.Q
 func SignalHandlersDisconnectMatched(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
 
 	cret := xSignalHandlersDisconnectMatched(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
+
 	return cret
 }
 
@@ -585,6 +596,7 @@ var xSignalHandlersUnblockMatched func(uintptr, SignalMatchType, uint, glib.Quar
 func SignalHandlersUnblockMatched(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
 
 	cret := xSignalHandlersUnblockMatched(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
+
 	return cret
 }
 
@@ -609,6 +621,7 @@ var xSignalHasHandlerPending func(uintptr, uint, glib.Quark, bool) bool
 func SignalHasHandlerPending(InstanceVar *Object, SignalIdVar uint, DetailVar glib.Quark, MayBeBlockedVar bool) bool {
 
 	cret := xSignalHasHandlerPending(InstanceVar.GoPointer(), SignalIdVar, DetailVar, MayBeBlockedVar)
+
 	return cret
 }
 
@@ -622,6 +635,7 @@ var xSignalIsValidName func(string) bool
 func SignalIsValidName(NameVar string) bool {
 
 	cret := xSignalIsValidName(NameVar)
+
 	return cret
 }
 
@@ -633,6 +647,7 @@ var xSignalListIds func(types.GType, *uint) uintptr
 func SignalListIds(ItypeVar types.GType, NIdsVar *uint) uintptr {
 
 	cret := xSignalListIds(ItypeVar, NIdsVar)
+
 	return cret
 }
 
@@ -652,6 +667,7 @@ var xSignalLookup func(string, types.GType) uint
 func SignalLookup(NameVar string, ItypeVar types.GType) uint {
 
 	cret := xSignalLookup(NameVar, ItypeVar)
+
 	return cret
 }
 
@@ -663,6 +679,7 @@ var xSignalName func(uint) string
 func SignalName(SignalIdVar uint) string {
 
 	cret := xSignalName(SignalIdVar)
+
 	return cret
 }
 
@@ -710,6 +727,7 @@ func SignalNew(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar Signal
 	}
 
 	cret := xSignalNew(SignalNameVar, ItypeVar, SignalFlagsVar, ClassOffsetVar, AccumulatorVarRef, AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, varArgs...)
+
 	return cret
 }
 
@@ -764,6 +782,7 @@ func SignalNewClassHandler(SignalNameVar string, ItypeVar types.GType, SignalFla
 	}
 
 	cret := xSignalNewClassHandler(SignalNameVar, ItypeVar, SignalFlagsVar, ClassHandlerVarRef, AccumulatorVarRef, AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, varArgs...)
+
 	return cret
 }
 
@@ -793,6 +812,7 @@ func SignalNewValist(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar 
 	}
 
 	cret := xSignalNewValist(SignalNameVar, ItypeVar, SignalFlagsVar, ClassClosureVar, AccumulatorVarRef, AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, ArgsVar)
+
 	return cret
 }
 
@@ -822,6 +842,7 @@ func SignalNewv(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar Signa
 	}
 
 	cret := xSignalNewv(SignalNameVar, ItypeVar, SignalFlagsVar, ClassClosureVar, AccumulatorVarRef, AccuDataVar, glib.NewCallbackNullable(CMarshallerVar), ReturnTypeVar, NParamsVar, ParamTypesVar)
+
 	return cret
 }
 
@@ -878,6 +899,7 @@ var xSignalParseName func(string, types.GType, *uint, *glib.Quark, bool) bool
 func SignalParseName(DetailedSignalVar string, ItypeVar types.GType, SignalIdPVar *uint, DetailPVar *glib.Quark, ForceDetailQuarkVar bool) bool {
 
 	cret := xSignalParseName(DetailedSignalVar, ItypeVar, SignalIdPVar, DetailPVar, ForceDetailQuarkVar)
+
 	return cret
 }
 

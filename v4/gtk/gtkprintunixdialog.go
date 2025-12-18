@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
@@ -95,7 +97,11 @@ var xNewPrintUnixDialog func(uintptr, uintptr) uintptr
 func NewPrintUnixDialog(TitleVar *string, ParentVar *Window) *PrintUnixDialog {
 	var cls *PrintUnixDialog
 
-	cret := xNewPrintUnixDialog(core.NullableStringToPtr(TitleVar), ParentVar.GoPointer())
+	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+
+	cret := xNewPrintUnixDialog(TitleVarPtr, ParentVar.GoPointer())
+
+	runtime.KeepAlive(TitleVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -121,6 +127,7 @@ var xPrintUnixDialogGetCurrentPage func(uintptr) int
 func (x *PrintUnixDialog) GetCurrentPage() int {
 
 	cret := xPrintUnixDialogGetCurrentPage(x.GoPointer())
+
 	return cret
 }
 
@@ -130,6 +137,7 @@ var xPrintUnixDialogGetEmbedPageSetup func(uintptr) bool
 func (x *PrintUnixDialog) GetEmbedPageSetup() bool {
 
 	cret := xPrintUnixDialogGetEmbedPageSetup(x.GoPointer())
+
 	return cret
 }
 
@@ -139,6 +147,7 @@ var xPrintUnixDialogGetHasSelection func(uintptr) bool
 func (x *PrintUnixDialog) GetHasSelection() bool {
 
 	cret := xPrintUnixDialogGetHasSelection(x.GoPointer())
+
 	return cret
 }
 
@@ -148,6 +157,7 @@ var xPrintUnixDialogGetManualCapabilities func(uintptr) PrintCapabilities
 func (x *PrintUnixDialog) GetManualCapabilities() PrintCapabilities {
 
 	cret := xPrintUnixDialogGetManualCapabilities(x.GoPointer())
+
 	return cret
 }
 
@@ -174,6 +184,7 @@ var xPrintUnixDialogGetPageSetupSet func(uintptr) bool
 func (x *PrintUnixDialog) GetPageSetupSet() bool {
 
 	cret := xPrintUnixDialogGetPageSetupSet(x.GoPointer())
+
 	return cret
 }
 
@@ -220,6 +231,7 @@ var xPrintUnixDialogGetSupportSelection func(uintptr) bool
 func (x *PrintUnixDialog) GetSupportSelection() bool {
 
 	cret := xPrintUnixDialogGetSupportSelection(x.GoPointer())
+
 	return cret
 }
 
@@ -413,6 +425,7 @@ func (x *PrintUnixDialog) GetAccessibleParent() *AccessibleBase {
 func (x *PrintUnixDialog) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -438,6 +451,7 @@ func (x *PrintUnixDialog) GetAtContext() *ATContext {
 func (x *PrintUnixDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -477,6 +491,7 @@ func (x *PrintUnixDialog) GetNextAccessibleSibling() *AccessibleBase {
 func (x *PrintUnixDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -653,6 +668,7 @@ func (x *PrintUnixDialog) UpdateStateValue(NStatesVar int, StatesVar []Accessibl
 func (x *PrintUnixDialog) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

@@ -12,6 +12,7 @@ var xStrokeEqual func(uintptr, uintptr) bool
 func StrokeEqual(Stroke1Var uintptr, Stroke2Var uintptr) bool {
 
 	cret := xStrokeEqual(Stroke1Var, Stroke2Var)
+
 	return cret
 }
 

@@ -241,6 +241,7 @@ func (x *IconBase) SetGoPointer(ptr uintptr) {
 func (x *IconBase) Equal(Icon2Var Icon) bool {
 
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+
 	return cret
 }
 
@@ -248,6 +249,7 @@ func (x *IconBase) Equal(Icon2Var Icon) bool {
 func (x *IconBase) Hash() uint {
 
 	cret := XGIconHash(x.GoPointer())
+
 	return cret
 }
 
@@ -259,6 +261,7 @@ func (x *IconBase) Hash() uint {
 func (x *IconBase) Serialize() *glib.Variant {
 
 	cret := XGIconSerialize(x.GoPointer())
+
 	return cret
 }
 
@@ -281,6 +284,7 @@ func (x *IconBase) Serialize() *glib.Variant {
 func (x *IconBase) ToString() string {
 
 	cret := XGIconToString(x.GoPointer())
+
 	return cret
 }
 

@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -96,6 +97,7 @@ var xSwitchRowGetActive func(uintptr) bool
 func (x *SwitchRow) GetActive() bool {
 
 	cret := xSwitchRowGetActive(x.GoPointer())
+
 	return cret
 }
 
@@ -171,6 +173,7 @@ func (x *SwitchRow) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *SwitchRow) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -196,6 +199,7 @@ func (x *SwitchRow) GetAtContext() *gtk.ATContext {
 func (x *SwitchRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -235,6 +239,7 @@ func (x *SwitchRow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *SwitchRow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -408,6 +413,7 @@ func (x *SwitchRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleS
 func (x *SwitchRow) GetActionName() string {
 
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
+
 	return cret
 }
 
@@ -415,6 +421,7 @@ func (x *SwitchRow) GetActionName() string {
 func (x *SwitchRow) GetActionTargetValue() *glib.Variant {
 
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
+
 	return cret
 }
 
@@ -433,7 +440,11 @@ func (x *SwitchRow) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *SwitchRow) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
+	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
+
+	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -494,6 +505,7 @@ func (x *SwitchRow) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *SwitchRow) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

@@ -130,6 +130,7 @@ func (x *TlsClientConnectionBase) CopySessionState(SourceVar TlsClientConnection
 func (x *TlsClientConnectionBase) GetAcceptedCas() *glib.List {
 
 	cret := XGTlsClientConnectionGetAcceptedCas(x.GoPointer())
+
 	return cret
 }
 
@@ -153,6 +154,7 @@ func (x *TlsClientConnectionBase) GetServerIdentity() *SocketConnectableBase {
 func (x *TlsClientConnectionBase) GetUseSsl3() bool {
 
 	cret := XGTlsClientConnectionGetUseSsl3(x.GoPointer())
+
 	return cret
 }
 
@@ -164,6 +166,7 @@ func (x *TlsClientConnectionBase) GetUseSsl3() bool {
 func (x *TlsClientConnectionBase) GetValidationFlags() TlsCertificateFlags {
 
 	cret := XGTlsClientConnectionGetValidationFlags(x.GoPointer())
+
 	return cret
 }
 

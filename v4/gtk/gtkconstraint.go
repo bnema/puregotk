@@ -133,6 +133,7 @@ var xConstraintGetConstant func(uintptr) float64
 func (x *Constraint) GetConstant() float64 {
 
 	cret := xConstraintGetConstant(x.GoPointer())
+
 	return cret
 }
 
@@ -143,6 +144,7 @@ var xConstraintGetMultiplier func(uintptr) float64
 func (x *Constraint) GetMultiplier() float64 {
 
 	cret := xConstraintGetMultiplier(x.GoPointer())
+
 	return cret
 }
 
@@ -152,6 +154,7 @@ var xConstraintGetRelation func(uintptr) ConstraintRelation
 func (x *Constraint) GetRelation() ConstraintRelation {
 
 	cret := xConstraintGetRelation(x.GoPointer())
+
 	return cret
 }
 
@@ -182,6 +185,7 @@ var xConstraintGetSourceAttribute func(uintptr) ConstraintAttribute
 func (x *Constraint) GetSourceAttribute() ConstraintAttribute {
 
 	cret := xConstraintGetSourceAttribute(x.GoPointer())
+
 	return cret
 }
 
@@ -191,6 +195,7 @@ var xConstraintGetStrength func(uintptr) int
 func (x *Constraint) GetStrength() int {
 
 	cret := xConstraintGetStrength(x.GoPointer())
+
 	return cret
 }
 
@@ -221,6 +226,7 @@ var xConstraintGetTargetAttribute func(uintptr) ConstraintAttribute
 func (x *Constraint) GetTargetAttribute() ConstraintAttribute {
 
 	cret := xConstraintGetTargetAttribute(x.GoPointer())
+
 	return cret
 }
 
@@ -231,6 +237,7 @@ var xConstraintIsAttached func(uintptr) bool
 func (x *Constraint) IsAttached() bool {
 
 	cret := xConstraintIsAttached(x.GoPointer())
+
 	return cret
 }
 
@@ -241,6 +248,7 @@ var xConstraintIsConstant func(uintptr) bool
 func (x *Constraint) IsConstant() bool {
 
 	cret := xConstraintIsConstant(x.GoPointer())
+
 	return cret
 }
 
@@ -251,6 +259,7 @@ var xConstraintIsRequired func(uintptr) bool
 func (x *Constraint) IsRequired() bool {
 
 	cret := xConstraintIsRequired(x.GoPointer())
+
 	return cret
 }
 

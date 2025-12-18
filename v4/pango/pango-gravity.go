@@ -78,6 +78,7 @@ var xGravityGetForMatrix func(*Matrix) Gravity
 func GravityGetForMatrix(MatrixVar *Matrix) Gravity {
 
 	cret := xGravityGetForMatrix(MatrixVar)
+
 	return cret
 }
 
@@ -93,6 +94,7 @@ var xGravityGetForScript func(Script, Gravity, GravityHint) Gravity
 func GravityGetForScript(ScriptVar Script, BaseGravityVar Gravity, HintVar GravityHint) Gravity {
 
 	cret := xGravityGetForScript(ScriptVar, BaseGravityVar, HintVar)
+
 	return cret
 }
 
@@ -116,6 +118,7 @@ var xGravityGetForScriptAndWidth func(Script, bool, Gravity, GravityHint) Gravit
 func GravityGetForScriptAndWidth(ScriptVar Script, WideVar bool, BaseGravityVar Gravity, HintVar GravityHint) Gravity {
 
 	cret := xGravityGetForScriptAndWidth(ScriptVar, WideVar, BaseGravityVar, HintVar)
+
 	return cret
 }
 
@@ -129,6 +132,7 @@ var xGravityToRotation func(Gravity) float64
 func GravityToRotation(GravityVar Gravity) float64 {
 
 	cret := xGravityToRotation(GravityVar)
+
 	return cret
 }
 

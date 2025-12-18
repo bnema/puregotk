@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -108,6 +109,7 @@ var xPreferencesPageGetDescription func(uintptr) string
 func (x *PreferencesPage) GetDescription() string {
 
 	cret := xPreferencesPageGetDescription(x.GoPointer())
+
 	return cret
 }
 
@@ -117,6 +119,7 @@ var xPreferencesPageGetDescriptionCentered func(uintptr) bool
 func (x *PreferencesPage) GetDescriptionCentered() bool {
 
 	cret := xPreferencesPageGetDescriptionCentered(x.GoPointer())
+
 	return cret
 }
 
@@ -145,6 +148,7 @@ var xPreferencesPageGetIconName func(uintptr) string
 func (x *PreferencesPage) GetIconName() string {
 
 	cret := xPreferencesPageGetIconName(x.GoPointer())
+
 	return cret
 }
 
@@ -154,6 +158,7 @@ var xPreferencesPageGetName func(uintptr) string
 func (x *PreferencesPage) GetName() string {
 
 	cret := xPreferencesPageGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -163,6 +168,7 @@ var xPreferencesPageGetTitle func(uintptr) string
 func (x *PreferencesPage) GetTitle() string {
 
 	cret := xPreferencesPageGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -172,6 +178,7 @@ var xPreferencesPageGetUseUnderline func(uintptr) bool
 func (x *PreferencesPage) GetUseUnderline() bool {
 
 	cret := xPreferencesPageGetUseUnderline(x.GoPointer())
+
 	return cret
 }
 
@@ -239,7 +246,11 @@ var xPreferencesPageSetIconName func(uintptr, uintptr)
 // Sets the icon name for @self.
 func (x *PreferencesPage) SetIconName(IconNameVar *string) {
 
-	xPreferencesPageSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
+	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+
+	xPreferencesPageSetIconName(x.GoPointer(), IconNameVarPtr)
+
+	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -248,7 +259,11 @@ var xPreferencesPageSetName func(uintptr, uintptr)
 // Sets the name of @self.
 func (x *PreferencesPage) SetName(NameVar *string) {
 
-	xPreferencesPageSetName(x.GoPointer(), core.NullableStringToPtr(NameVar))
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xPreferencesPageSetName(x.GoPointer(), NameVarPtr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -418,6 +433,7 @@ func (x *PreferencesPage) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *PreferencesPage) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -443,6 +459,7 @@ func (x *PreferencesPage) GetAtContext() *gtk.ATContext {
 func (x *PreferencesPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -482,6 +499,7 @@ func (x *PreferencesPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *PreferencesPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -658,6 +676,7 @@ func (x *PreferencesPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acces
 func (x *PreferencesPage) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

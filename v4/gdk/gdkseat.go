@@ -63,6 +63,7 @@ var xSeatGetCapabilities func(uintptr) SeatCapabilities
 func (x *Seat) GetCapabilities() SeatCapabilities {
 
 	cret := xSeatGetCapabilities(x.GoPointer())
+
 	return cret
 }
 
@@ -72,6 +73,7 @@ var xSeatGetDevices func(uintptr, SeatCapabilities) *glib.List
 func (x *Seat) GetDevices(CapabilitiesVar SeatCapabilities) *glib.List {
 
 	cret := xSeatGetDevices(x.GoPointer(), CapabilitiesVar)
+
 	return cret
 }
 
@@ -132,6 +134,7 @@ var xSeatGetTools func(uintptr) *glib.List
 func (x *Seat) GetTools() *glib.List {
 
 	cret := xSeatGetTools(x.GoPointer())
+
 	return cret
 }
 

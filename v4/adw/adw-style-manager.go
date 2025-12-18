@@ -83,6 +83,7 @@ var xStyleManagerGetAccentColor func(uintptr) AccentColor
 func (x *StyleManager) GetAccentColor() AccentColor {
 
 	cret := xStyleManagerGetAccentColor(x.GoPointer())
+
 	return cret
 }
 
@@ -97,6 +98,7 @@ var xStyleManagerGetAccentColorRgba func(uintptr) *gdk.RGBA
 func (x *StyleManager) GetAccentColorRgba() *gdk.RGBA {
 
 	cret := xStyleManagerGetAccentColorRgba(x.GoPointer())
+
 	return cret
 }
 
@@ -106,6 +108,7 @@ var xStyleManagerGetColorScheme func(uintptr) ColorScheme
 func (x *StyleManager) GetColorScheme() ColorScheme {
 
 	cret := xStyleManagerGetColorScheme(x.GoPointer())
+
 	return cret
 }
 
@@ -118,6 +121,7 @@ var xStyleManagerGetDark func(uintptr) bool
 func (x *StyleManager) GetDark() bool {
 
 	cret := xStyleManagerGetDark(x.GoPointer())
+
 	return cret
 }
 
@@ -152,6 +156,7 @@ var xStyleManagerGetDocumentFontName func(uintptr) string
 func (x *StyleManager) GetDocumentFontName() string {
 
 	cret := xStyleManagerGetDocumentFontName(x.GoPointer())
+
 	return cret
 }
 
@@ -163,6 +168,7 @@ var xStyleManagerGetHighContrast func(uintptr) bool
 func (x *StyleManager) GetHighContrast() bool {
 
 	cret := xStyleManagerGetHighContrast(x.GoPointer())
+
 	return cret
 }
 
@@ -177,6 +183,7 @@ var xStyleManagerGetMonospaceFontName func(uintptr) string
 func (x *StyleManager) GetMonospaceFontName() string {
 
 	cret := xStyleManagerGetMonospaceFontName(x.GoPointer())
+
 	return cret
 }
 
@@ -192,6 +199,7 @@ var xStyleManagerGetSystemSupportsAccentColors func(uintptr) bool
 func (x *StyleManager) GetSystemSupportsAccentColors() bool {
 
 	cret := xStyleManagerGetSystemSupportsAccentColors(x.GoPointer())
+
 	return cret
 }
 
@@ -205,6 +213,7 @@ var xStyleManagerGetSystemSupportsColorSchemes func(uintptr) bool
 func (x *StyleManager) GetSystemSupportsColorSchemes() bool {
 
 	cret := xStyleManagerGetSystemSupportsColorSchemes(x.GoPointer())
+
 	return cret
 }
 

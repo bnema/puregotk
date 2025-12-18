@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -123,6 +124,7 @@ func (x *PasswordEntryRow) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *PasswordEntryRow) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -148,6 +150,7 @@ func (x *PasswordEntryRow) GetAtContext() *gtk.ATContext {
 func (x *PasswordEntryRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -187,6 +190,7 @@ func (x *PasswordEntryRow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *PasswordEntryRow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -360,6 +364,7 @@ func (x *PasswordEntryRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acce
 func (x *PasswordEntryRow) GetActionName() string {
 
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
+
 	return cret
 }
 
@@ -367,6 +372,7 @@ func (x *PasswordEntryRow) GetActionName() string {
 func (x *PasswordEntryRow) GetActionTargetValue() *glib.Variant {
 
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
+
 	return cret
 }
 
@@ -385,7 +391,11 @@ func (x *PasswordEntryRow) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *PasswordEntryRow) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
+	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
+
+	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -446,6 +456,7 @@ func (x *PasswordEntryRow) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *PasswordEntryRow) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -488,6 +499,7 @@ func (x *PasswordEntryRow) GetBuildableId() string {
 func (x *PasswordEntryRow) DelegateGetAccessiblePlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -528,6 +540,7 @@ func (x *PasswordEntryRow) FinishDelegate() {
 func (x *PasswordEntryRow) GetAlignment() float32 {
 
 	cret := gtk.XGtkEditableGetAlignment(x.GoPointer())
+
 	return cret
 }
 
@@ -542,6 +555,7 @@ func (x *PasswordEntryRow) GetAlignment() float32 {
 func (x *PasswordEntryRow) GetChars(StartPosVar int, EndPosVar int) string {
 
 	cret := gtk.XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -567,6 +581,7 @@ func (x *PasswordEntryRow) GetDelegate() *gtk.EditableBase {
 func (x *PasswordEntryRow) GetEditable() bool {
 
 	cret := gtk.XGtkEditableGetEditable(x.GoPointer())
+
 	return cret
 }
 
@@ -574,6 +589,7 @@ func (x *PasswordEntryRow) GetEditable() bool {
 func (x *PasswordEntryRow) GetEnableUndo() bool {
 
 	cret := gtk.XGtkEditableGetEnableUndo(x.GoPointer())
+
 	return cret
 }
 
@@ -581,6 +597,7 @@ func (x *PasswordEntryRow) GetEnableUndo() bool {
 func (x *PasswordEntryRow) GetMaxWidthChars() int {
 
 	cret := gtk.XGtkEditableGetMaxWidthChars(x.GoPointer())
+
 	return cret
 }
 
@@ -591,6 +608,7 @@ func (x *PasswordEntryRow) GetMaxWidthChars() int {
 func (x *PasswordEntryRow) GetPosition() int {
 
 	cret := gtk.XGtkEditableGetPosition(x.GoPointer())
+
 	return cret
 }
 
@@ -604,6 +622,7 @@ func (x *PasswordEntryRow) GetPosition() int {
 func (x *PasswordEntryRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := gtk.XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -613,6 +632,7 @@ func (x *PasswordEntryRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) 
 func (x *PasswordEntryRow) GetText() string {
 
 	cret := gtk.XGtkEditableGetText(x.GoPointer())
+
 	return cret
 }
 
@@ -621,6 +641,7 @@ func (x *PasswordEntryRow) GetText() string {
 func (x *PasswordEntryRow) GetWidthChars() int {
 
 	cret := gtk.XGtkEditableGetWidthChars(x.GoPointer())
+
 	return cret
 }
 

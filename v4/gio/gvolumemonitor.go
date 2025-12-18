@@ -719,6 +719,7 @@ var xVolumeMonitorGetConnectedDrives func(uintptr) *glib.List
 func (x *VolumeMonitor) GetConnectedDrives() *glib.List {
 
 	cret := xVolumeMonitorGetConnectedDrives(x.GoPointer())
+
 	return cret
 }
 
@@ -747,6 +748,7 @@ var xVolumeMonitorGetMounts func(uintptr) *glib.List
 func (x *VolumeMonitor) GetMounts() *glib.List {
 
 	cret := xVolumeMonitorGetMounts(x.GoPointer())
+
 	return cret
 }
 
@@ -775,6 +777,7 @@ var xVolumeMonitorGetVolumes func(uintptr) *glib.List
 func (x *VolumeMonitor) GetVolumes() *glib.List {
 
 	cret := xVolumeMonitorGetVolumes(x.GoPointer())
+
 	return cret
 }
 

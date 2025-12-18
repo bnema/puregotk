@@ -92,6 +92,7 @@ var xDropTargetAsyncGetActions func(uintptr) gdk.DragAction
 func (x *DropTargetAsync) GetActions() gdk.DragAction {
 
 	cret := xDropTargetAsyncGetActions(x.GoPointer())
+
 	return cret
 }
 
@@ -103,6 +104,7 @@ var xDropTargetAsyncGetFormats func(uintptr) *gdk.ContentFormats
 func (x *DropTargetAsync) GetFormats() *gdk.ContentFormats {
 
 	cret := xDropTargetAsyncGetFormats(x.GoPointer())
+
 	return cret
 }
 

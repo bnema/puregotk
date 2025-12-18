@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -120,7 +121,11 @@ var xNewFrame func(uintptr) uintptr
 func NewFrame(LabelVar *string) *Frame {
 	var cls *Frame
 
-	cret := xNewFrame(core.NullableStringToPtr(LabelVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	cret := xNewFrame(LabelVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -157,6 +162,7 @@ var xFrameGetLabel func(uintptr) string
 func (x *Frame) GetLabel() string {
 
 	cret := xFrameGetLabel(x.GoPointer())
+
 	return cret
 }
 
@@ -166,6 +172,7 @@ var xFrameGetLabelAlign func(uintptr) float32
 func (x *Frame) GetLabelAlign() float32 {
 
 	cret := xFrameGetLabelAlign(x.GoPointer())
+
 	return cret
 }
 
@@ -201,7 +208,11 @@ var xFrameSetLabel func(uintptr, uintptr)
 // label widget.
 func (x *Frame) SetLabel(LabelVar *string) {
 
-	xFrameSetLabel(x.GoPointer(), core.NullableStringToPtr(LabelVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	xFrameSetLabel(x.GoPointer(), LabelVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -308,6 +319,7 @@ func (x *Frame) GetAccessibleParent() *AccessibleBase {
 func (x *Frame) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -333,6 +345,7 @@ func (x *Frame) GetAtContext() *ATContext {
 func (x *Frame) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -372,6 +385,7 @@ func (x *Frame) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Frame) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -548,6 +562,7 @@ func (x *Frame) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 func (x *Frame) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

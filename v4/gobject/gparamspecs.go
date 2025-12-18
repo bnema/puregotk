@@ -2,6 +2,8 @@
 package gobject
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -20,7 +22,15 @@ var xNewParamSpecBoolean func(string, uintptr, uintptr, bool, ParamFlags) uintpt
 func NewParamSpecBoolean(NameVar string, NickVar *string, BlurbVar *string, DefaultValueVar bool, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecBoolean(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecBoolean(NameVar, NickVarPtr, BlurbVarPtr, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -39,7 +49,15 @@ var xNewParamSpecBoxed func(string, uintptr, uintptr, types.GType, ParamFlags) u
 func NewParamSpecBoxed(NameVar string, NickVar *string, BlurbVar *string, BoxedTypeVar types.GType, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecBoxed(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), BoxedTypeVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecBoxed(NameVar, NickVarPtr, BlurbVarPtr, BoxedTypeVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -55,7 +73,15 @@ var xNewParamSpecChar func(string, uintptr, uintptr, int8, int8, int8, ParamFlag
 func NewParamSpecChar(NameVar string, NickVar *string, BlurbVar *string, MinimumVar int8, MaximumVar int8, DefaultValueVar int8, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecChar(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecChar(NameVar, NickVarPtr, BlurbVarPtr, MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -74,7 +100,15 @@ var xNewParamSpecDouble func(string, uintptr, uintptr, float64, float64, float64
 func NewParamSpecDouble(NameVar string, NickVar *string, BlurbVar *string, MinimumVar float64, MaximumVar float64, DefaultValueVar float64, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecDouble(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecDouble(NameVar, NickVarPtr, BlurbVarPtr, MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -93,7 +127,15 @@ var xNewParamSpecEnum func(string, uintptr, uintptr, types.GType, int, ParamFlag
 func NewParamSpecEnum(NameVar string, NickVar *string, BlurbVar *string, EnumTypeVar types.GType, DefaultValueVar int, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecEnum(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), EnumTypeVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecEnum(NameVar, NickVarPtr, BlurbVarPtr, EnumTypeVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -112,7 +154,15 @@ var xNewParamSpecFlags func(string, uintptr, uintptr, types.GType, uint, ParamFl
 func NewParamSpecFlags(NameVar string, NickVar *string, BlurbVar *string, FlagsTypeVar types.GType, DefaultValueVar uint, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecFlags(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), FlagsTypeVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecFlags(NameVar, NickVarPtr, BlurbVarPtr, FlagsTypeVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -130,7 +180,15 @@ var xNewParamSpecFloat func(string, uintptr, uintptr, float32, float32, float32,
 func NewParamSpecFloat(NameVar string, NickVar *string, BlurbVar *string, MinimumVar float32, MaximumVar float32, DefaultValueVar float32, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecFloat(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecFloat(NameVar, NickVarPtr, BlurbVarPtr, MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -149,7 +207,15 @@ var xParamSpecGtype func(string, uintptr, uintptr, types.GType, ParamFlags) uint
 func ParamSpecGtype(NameVar string, NickVar *string, BlurbVar *string, IsATypeVar types.GType, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xParamSpecGtype(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), IsATypeVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xParamSpecGtype(NameVar, NickVarPtr, BlurbVarPtr, IsATypeVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -167,7 +233,15 @@ var xNewParamSpecInt func(string, uintptr, uintptr, int, int, int, ParamFlags) u
 func NewParamSpecInt(NameVar string, NickVar *string, BlurbVar *string, MinimumVar int, MaximumVar int, DefaultValueVar int, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecInt(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecInt(NameVar, NickVarPtr, BlurbVarPtr, MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -185,7 +259,15 @@ var xNewParamSpecInt64 func(string, uintptr, uintptr, int64, int64, int64, Param
 func NewParamSpecInt64(NameVar string, NickVar *string, BlurbVar *string, MinimumVar int64, MaximumVar int64, DefaultValueVar int64, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecInt64(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecInt64(NameVar, NickVarPtr, BlurbVarPtr, MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -203,7 +285,15 @@ var xNewParamSpecLong func(string, uintptr, uintptr, int32, int32, int32, ParamF
 func NewParamSpecLong(NameVar string, NickVar *string, BlurbVar *string, MinimumVar int32, MaximumVar int32, DefaultValueVar int32, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecLong(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecLong(NameVar, NickVarPtr, BlurbVarPtr, MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -222,7 +312,15 @@ var xNewParamSpecObject func(string, uintptr, uintptr, types.GType, ParamFlags) 
 func NewParamSpecObject(NameVar string, NickVar *string, BlurbVar *string, ObjectTypeVar types.GType, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecObject(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), ObjectTypeVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecObject(NameVar, NickVarPtr, BlurbVarPtr, ObjectTypeVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -259,7 +357,15 @@ var xNewParamSpecParam func(string, uintptr, uintptr, types.GType, ParamFlags) u
 func NewParamSpecParam(NameVar string, NickVar *string, BlurbVar *string, ParamTypeVar types.GType, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecParam(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), ParamTypeVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecParam(NameVar, NickVarPtr, BlurbVarPtr, ParamTypeVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -279,7 +385,15 @@ var xNewParamSpecPointer func(string, uintptr, uintptr, ParamFlags) uintptr
 func NewParamSpecPointer(NameVar string, NickVar *string, BlurbVar *string, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecPointer(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecPointer(NameVar, NickVarPtr, BlurbVarPtr, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -297,7 +411,19 @@ var xNewParamSpecString func(string, uintptr, uintptr, uintptr, ParamFlags) uint
 func NewParamSpecString(NameVar string, NickVar *string, BlurbVar *string, DefaultValueVar *string, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecString(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), core.NullableStringToPtr(DefaultValueVar), FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	DefaultValueVarPtr, DefaultValueVarBytes := core.NullableStringToPtr(DefaultValueVar)
+
+	cret := xNewParamSpecString(NameVar, NickVarPtr, BlurbVarPtr, DefaultValueVarPtr, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
+
+	runtime.KeepAlive(DefaultValueVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -313,7 +439,15 @@ var xParamSpecUchar func(string, uintptr, uintptr, byte, byte, byte, ParamFlags)
 func ParamSpecUchar(NameVar string, NickVar *string, BlurbVar *string, MinimumVar byte, MaximumVar byte, DefaultValueVar byte, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xParamSpecUchar(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xParamSpecUchar(NameVar, NickVarPtr, BlurbVarPtr, MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -331,7 +465,15 @@ var xParamSpecUint func(string, uintptr, uintptr, uint, uint, uint, ParamFlags) 
 func ParamSpecUint(NameVar string, NickVar *string, BlurbVar *string, MinimumVar uint, MaximumVar uint, DefaultValueVar uint, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xParamSpecUint(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xParamSpecUint(NameVar, NickVarPtr, BlurbVarPtr, MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -350,7 +492,15 @@ var xParamSpecUint64 func(string, uintptr, uintptr, uint64, uint64, uint64, Para
 func ParamSpecUint64(NameVar string, NickVar *string, BlurbVar *string, MinimumVar uint64, MaximumVar uint64, DefaultValueVar uint64, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xParamSpecUint64(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xParamSpecUint64(NameVar, NickVarPtr, BlurbVarPtr, MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -369,7 +519,15 @@ var xParamSpecUlong func(string, uintptr, uintptr, uint32, uint32, uint32, Param
 func ParamSpecUlong(NameVar string, NickVar *string, BlurbVar *string, MinimumVar uint32, MaximumVar uint32, DefaultValueVar uint32, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xParamSpecUlong(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xParamSpecUlong(NameVar, NickVarPtr, BlurbVarPtr, MinimumVar, MaximumVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -389,7 +547,15 @@ var xNewParamSpecUnichar func(string, uintptr, uintptr, uint32, ParamFlags) uint
 func NewParamSpecUnichar(NameVar string, NickVar *string, BlurbVar *string, DefaultValueVar uint32, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecUnichar(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecUnichar(NameVar, NickVarPtr, BlurbVarPtr, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -410,7 +576,15 @@ var xNewParamSpecValueArray func(string, uintptr, uintptr, uintptr, ParamFlags) 
 func NewParamSpecValueArray(NameVar string, NickVar *string, BlurbVar *string, ElementSpecVar *ParamSpec, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecValueArray(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), ElementSpecVar.GoPointer(), FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecValueArray(NameVar, NickVarPtr, BlurbVarPtr, ElementSpecVar.GoPointer(), FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -431,7 +605,15 @@ var xNewParamSpecVariant func(string, uintptr, uintptr, *glib.VariantType, *glib
 func NewParamSpecVariant(NameVar string, NickVar *string, BlurbVar *string, TypeVar *glib.VariantType, DefaultValueVar *glib.Variant, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	cret := xNewParamSpecVariant(NameVar, core.NullableStringToPtr(NickVar), core.NullableStringToPtr(BlurbVar), TypeVar, DefaultValueVar, FlagsVar)
+	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+
+	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+
+	cret := xNewParamSpecVariant(NameVar, NickVarPtr, BlurbVarPtr, TypeVar, DefaultValueVar, FlagsVar)
+
+	runtime.KeepAlive(NickVarBytes)
+
+	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil

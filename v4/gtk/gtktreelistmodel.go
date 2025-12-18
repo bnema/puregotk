@@ -116,6 +116,7 @@ var xTreeListModelGetAutoexpand func(uintptr) bool
 func (x *TreeListModel) GetAutoexpand() bool {
 
 	cret := xTreeListModelGetAutoexpand(x.GoPointer())
+
 	return cret
 }
 
@@ -173,6 +174,7 @@ var xTreeListModelGetPassthrough func(uintptr) bool
 func (x *TreeListModel) GetPassthrough() bool {
 
 	cret := xTreeListModelGetPassthrough(x.GoPointer())
+
 	return cret
 }
 
@@ -294,6 +296,7 @@ func (x *TreeListModel) GetPropertyPassthrough() bool {
 func (x *TreeListModel) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -308,6 +311,7 @@ func (x *TreeListModel) GetItem(PositionVar uint) uintptr {
 func (x *TreeListModel) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -319,6 +323,7 @@ func (x *TreeListModel) GetItemType() types.GType {
 func (x *TreeListModel) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -452,6 +457,7 @@ var xTreeListRowGetDepth func(uintptr) uint
 func (x *TreeListRow) GetDepth() uint {
 
 	cret := xTreeListRowGetDepth(x.GoPointer())
+
 	return cret
 }
 
@@ -461,6 +467,7 @@ var xTreeListRowGetExpanded func(uintptr) bool
 func (x *TreeListRow) GetExpanded() bool {
 
 	cret := xTreeListRowGetExpanded(x.GoPointer())
+
 	return cret
 }
 
@@ -513,6 +520,7 @@ var xTreeListRowGetPosition func(uintptr) uint
 func (x *TreeListRow) GetPosition() uint {
 
 	cret := xTreeListRowGetPosition(x.GoPointer())
+
 	return cret
 }
 
@@ -528,6 +536,7 @@ var xTreeListRowIsExpandable func(uintptr) bool
 func (x *TreeListRow) IsExpandable() bool {
 
 	cret := xTreeListRowIsExpandable(x.GoPointer())
+
 	return cret
 }
 

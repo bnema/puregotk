@@ -2,6 +2,7 @@
 package glib
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -179,6 +180,7 @@ var xCondTimedWait func(uintptr, *Mutex, *TimeVal) bool
 func (x *Cond) TimedWait(MutexVar *Mutex, AbsTimeVar *TimeVal) bool {
 
 	cret := xCondTimedWait(x.GoPointer(), MutexVar, AbsTimeVar)
+
 	return cret
 }
 
@@ -259,6 +261,7 @@ var xCondWaitUntil func(uintptr, *Mutex, int64) bool
 func (x *Cond) WaitUntil(MutexVar *Mutex, EndTimeVar int64) bool {
 
 	cret := xCondWaitUntil(x.GoPointer(), MutexVar, EndTimeVar)
+
 	return cret
 }
 
@@ -297,6 +300,7 @@ func (x *Once) Impl(FuncVar *ThreadFunc, ArgVar uintptr) uintptr {
 	}
 
 	cret := xOnceImpl(x.GoPointer(), FuncVarRef, ArgVar)
+
 	return cret
 }
 
@@ -341,6 +345,7 @@ var xPrivateGet func(uintptr) uintptr
 func (x *Private) Get() uintptr {
 
 	cret := xPrivateGet(x.GoPointer())
+
 	return cret
 }
 
@@ -527,6 +532,7 @@ var xRWLockReaderTrylock func(uintptr) bool
 func (x *RWLock) ReaderTrylock() bool {
 
 	cret := xRWLockReaderTrylock(x.GoPointer())
+
 	return cret
 }
 
@@ -565,6 +571,7 @@ var xRWLockWriterTrylock func(uintptr) bool
 func (x *RWLock) WriterTrylock() bool {
 
 	cret := xRWLockWriterTrylock(x.GoPointer())
+
 	return cret
 }
 
@@ -677,6 +684,7 @@ var xRecMutexTrylock func(uintptr) bool
 func (x *RecMutex) Trylock() bool {
 
 	cret := xRecMutexTrylock(x.GoPointer())
+
 	return cret
 }
 
@@ -774,6 +782,7 @@ var xStaticMutexGetMutexImpl func(uintptr) *Mutex
 func (x *StaticMutex) GetMutexImpl() *Mutex {
 
 	cret := xStaticMutexGetMutexImpl(x.GoPointer())
+
 	return cret
 }
 
@@ -846,6 +855,7 @@ var xStaticPrivateGet func(uintptr) uintptr
 func (x *StaticPrivate) Get() uintptr {
 
 	cret := xStaticPrivateGet(x.GoPointer())
+
 	return cret
 }
 
@@ -1043,6 +1053,7 @@ var xStaticRWLockReaderTrylock func(uintptr) bool
 func (x *StaticRWLock) ReaderTrylock() bool {
 
 	cret := xStaticRWLockReaderTrylock(x.GoPointer())
+
 	return cret
 }
 
@@ -1081,6 +1092,7 @@ var xStaticRWLockWriterTrylock func(uintptr) bool
 func (x *StaticRWLock) WriterTrylock() bool {
 
 	cret := xStaticRWLockWriterTrylock(x.GoPointer())
+
 	return cret
 }
 
@@ -1183,6 +1195,7 @@ var xStaticRecMutexTrylock func(uintptr) bool
 func (x *StaticRecMutex) Trylock() bool {
 
 	cret := xStaticRecMutexTrylock(x.GoPointer())
+
 	return cret
 }
 
@@ -1211,6 +1224,7 @@ var xStaticRecMutexUnlockFull func(uintptr) uint
 func (x *StaticRecMutex) UnlockFull() uint {
 
 	cret := xStaticRecMutexUnlockFull(x.GoPointer())
+
 	return cret
 }
 
@@ -1295,7 +1309,12 @@ func NewThread(NameVar *string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
 		}
 	}
 
-	cret := xNewThread(core.NullableStringToPtr(NameVar), FuncVarRef, DataVar)
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	cret := xNewThread(NameVarPtr, FuncVarRef, DataVar)
+
+	runtime.KeepAlive(NameVarBytes)
+
 	return cret
 }
 
@@ -1324,7 +1343,12 @@ func ThreadTryNew(NameVar *string, FuncVar *ThreadFunc, DataVar uintptr) (*Threa
 		}
 	}
 
-	cret := xThreadTryNew(core.NullableStringToPtr(NameVar), FuncVarRef, DataVar, &cerr)
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	cret := xThreadTryNew(NameVarPtr, FuncVarRef, DataVar, &cerr)
+
+	runtime.KeepAlive(NameVarBytes)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1340,6 +1364,7 @@ var xThreadGetName func(uintptr) string
 func (x *Thread) GetName() string {
 
 	cret := xThreadGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -1364,6 +1389,7 @@ var xThreadJoin func(uintptr) uintptr
 func (x *Thread) Join() uintptr {
 
 	cret := xThreadJoin(x.GoPointer())
+
 	return cret
 }
 
@@ -1373,6 +1399,7 @@ var xThreadRef func(uintptr) *Thread
 func (x *Thread) Ref() *Thread {
 
 	cret := xThreadRef(x.GoPointer())
+
 	return cret
 }
 
@@ -2091,6 +2118,7 @@ var xCondNew func() *Cond
 func CondNew() *Cond {
 
 	cret := xCondNew()
+
 	return cret
 }
 
@@ -2103,6 +2131,7 @@ var xGetNumProcessors func() uint
 func GetNumProcessors() uint {
 
 	cret := xGetNumProcessors()
+
 	return cret
 }
 
@@ -2112,6 +2141,7 @@ var xMutexNew func() *Mutex
 func MutexNew() *Mutex {
 
 	cret := xMutexNew()
+
 	return cret
 }
 
@@ -2147,6 +2177,7 @@ var xOnceInitEnter func(uintptr) bool
 func OnceInitEnter(LocationVar uintptr) bool {
 
 	cret := xOnceInitEnter(LocationVar)
+
 	return cret
 }
 
@@ -2155,6 +2186,7 @@ var xOnceInitEnterImpl func(uint) bool
 func OnceInitEnterImpl(LocationVar uint) bool {
 
 	cret := xOnceInitEnterImpl(LocationVar)
+
 	return cret
 }
 
@@ -2180,6 +2212,7 @@ var xOnceInitEnterPointer func(uintptr) bool
 func OnceInitEnterPointer(LocationVar uintptr) bool {
 
 	cret := xOnceInitEnterPointer(LocationVar)
+
 	return cret
 }
 
@@ -2236,6 +2269,7 @@ func PrivateNew(NotifyVar *DestroyNotify) *Private {
 	}
 
 	cret := xPrivateNew(NotifyVarRef)
+
 	return cret
 }
 
@@ -2272,6 +2306,7 @@ func ThreadCreate(FuncVar *ThreadFunc, DataVar uintptr, JoinableVar bool) (*Thre
 	}
 
 	cret := xThreadCreate(FuncVarRef, DataVar, JoinableVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2301,6 +2336,7 @@ func ThreadCreateFull(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint32,
 	}
 
 	cret := xThreadCreateFull(FuncVarRef, DataVar, StackSizeVar, JoinableVar, BoundVar, PriorityVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2369,6 +2405,7 @@ var xThreadGetInitialized func() bool
 func ThreadGetInitialized() bool {
 
 	cret := xThreadGetInitialized()
+
 	return cret
 }
 
@@ -2424,6 +2461,7 @@ var xThreadSelf func() *Thread
 func ThreadSelf() *Thread {
 
 	cret := xThreadSelf()
+
 	return cret
 }
 

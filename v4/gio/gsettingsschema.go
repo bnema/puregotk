@@ -128,6 +128,7 @@ var xSettingsSchemaGetId func(uintptr) string
 func (x *SettingsSchema) GetId() string {
 
 	cret := xSettingsSchemaGetId(x.GoPointer())
+
 	return cret
 }
 
@@ -140,6 +141,7 @@ var xSettingsSchemaGetKey func(uintptr, string) *SettingsSchemaKey
 func (x *SettingsSchema) GetKey(NameVar string) *SettingsSchemaKey {
 
 	cret := xSettingsSchemaGetKey(x.GoPointer(), NameVar)
+
 	return cret
 }
 
@@ -157,6 +159,7 @@ var xSettingsSchemaGetPath func(uintptr) string
 func (x *SettingsSchema) GetPath() string {
 
 	cret := xSettingsSchemaGetPath(x.GoPointer())
+
 	return cret
 }
 
@@ -166,6 +169,7 @@ var xSettingsSchemaHasKey func(uintptr, string) bool
 func (x *SettingsSchema) HasKey(NameVar string) bool {
 
 	cret := xSettingsSchemaHasKey(x.GoPointer(), NameVar)
+
 	return cret
 }
 
@@ -178,6 +182,7 @@ var xSettingsSchemaListChildren func(uintptr) []string
 func (x *SettingsSchema) ListChildren() []string {
 
 	cret := xSettingsSchemaListChildren(x.GoPointer())
+
 	return cret
 }
 
@@ -191,6 +196,7 @@ var xSettingsSchemaListKeys func(uintptr) []string
 func (x *SettingsSchema) ListKeys() []string {
 
 	cret := xSettingsSchemaListKeys(x.GoPointer())
+
 	return cret
 }
 
@@ -200,6 +206,7 @@ var xSettingsSchemaRef func(uintptr) *SettingsSchema
 func (x *SettingsSchema) Ref() *SettingsSchema {
 
 	cret := xSettingsSchemaRef(x.GoPointer())
+
 	return cret
 }
 
@@ -237,6 +244,7 @@ var xSettingsSchemaKeyGetDefaultValue func(uintptr) *glib.Variant
 func (x *SettingsSchemaKey) GetDefaultValue() *glib.Variant {
 
 	cret := xSettingsSchemaKeyGetDefaultValue(x.GoPointer())
+
 	return cret
 }
 
@@ -259,6 +267,7 @@ var xSettingsSchemaKeyGetDescription func(uintptr) string
 func (x *SettingsSchemaKey) GetDescription() string {
 
 	cret := xSettingsSchemaKeyGetDescription(x.GoPointer())
+
 	return cret
 }
 
@@ -268,6 +277,7 @@ var xSettingsSchemaKeyGetName func(uintptr) string
 func (x *SettingsSchemaKey) GetName() string {
 
 	cret := xSettingsSchemaKeyGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -312,6 +322,7 @@ var xSettingsSchemaKeyGetRange func(uintptr) *glib.Variant
 func (x *SettingsSchemaKey) GetRange() *glib.Variant {
 
 	cret := xSettingsSchemaKeyGetRange(x.GoPointer())
+
 	return cret
 }
 
@@ -333,6 +344,7 @@ var xSettingsSchemaKeyGetSummary func(uintptr) string
 func (x *SettingsSchemaKey) GetSummary() string {
 
 	cret := xSettingsSchemaKeyGetSummary(x.GoPointer())
+
 	return cret
 }
 
@@ -342,6 +354,7 @@ var xSettingsSchemaKeyGetValueType func(uintptr) *glib.VariantType
 func (x *SettingsSchemaKey) GetValueType() *glib.VariantType {
 
 	cret := xSettingsSchemaKeyGetValueType(x.GoPointer())
+
 	return cret
 }
 
@@ -355,6 +368,7 @@ var xSettingsSchemaKeyRangeCheck func(uintptr, *glib.Variant) bool
 func (x *SettingsSchemaKey) RangeCheck(ValueVar *glib.Variant) bool {
 
 	cret := xSettingsSchemaKeyRangeCheck(x.GoPointer(), ValueVar)
+
 	return cret
 }
 
@@ -364,6 +378,7 @@ var xSettingsSchemaKeyRef func(uintptr) *SettingsSchemaKey
 func (x *SettingsSchemaKey) Ref() *SettingsSchemaKey {
 
 	cret := xSettingsSchemaKeyRef(x.GoPointer())
+
 	return cret
 }
 
@@ -428,6 +443,7 @@ func NewSettingsSchemaSourceFromDirectory(DirectoryVar string, ParentVar *Settin
 	var cerr *glib.Error
 
 	cret := xNewSettingsSchemaSourceFromDirectory(DirectoryVar, ParentVar, TrustedVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -470,6 +486,7 @@ var xSettingsSchemaSourceLookup func(uintptr, string, bool) *SettingsSchema
 func (x *SettingsSchemaSource) Lookup(SchemaIdVar string, RecursiveVar bool) *SettingsSchema {
 
 	cret := xSettingsSchemaSourceLookup(x.GoPointer(), SchemaIdVar, RecursiveVar)
+
 	return cret
 }
 
@@ -479,6 +496,7 @@ var xSettingsSchemaSourceRef func(uintptr) *SettingsSchemaSource
 func (x *SettingsSchemaSource) Ref() *SettingsSchemaSource {
 
 	cret := xSettingsSchemaSourceRef(x.GoPointer())
+
 	return cret
 }
 
@@ -509,6 +527,7 @@ var xSettingsSchemaSourceGetDefault func() *SettingsSchemaSource
 func SettingsSchemaSourceGetDefault() *SettingsSchemaSource {
 
 	cret := xSettingsSchemaSourceGetDefault()
+
 	return cret
 }
 

@@ -200,6 +200,7 @@ func (x *DBusInterfaceSkeleton) Export(ConnectionVar *DBusConnection, ObjectPath
 	var cerr *glib.Error
 
 	cret := xDBusInterfaceSkeletonExport(x.GoPointer(), ConnectionVar.GoPointer(), ObjectPathVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -246,6 +247,7 @@ var xDBusInterfaceSkeletonGetConnections func(uintptr) *glib.List
 func (x *DBusInterfaceSkeleton) GetConnections() *glib.List {
 
 	cret := xDBusInterfaceSkeletonGetConnections(x.GoPointer())
+
 	return cret
 }
 
@@ -256,6 +258,7 @@ var xDBusInterfaceSkeletonGetFlags func(uintptr) DBusInterfaceSkeletonFlags
 func (x *DBusInterfaceSkeleton) GetFlags() DBusInterfaceSkeletonFlags {
 
 	cret := xDBusInterfaceSkeletonGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -266,6 +269,7 @@ var xDBusInterfaceSkeletonGetInfo func(uintptr) *DBusInterfaceInfo
 func (x *DBusInterfaceSkeleton) GetInfo() *DBusInterfaceInfo {
 
 	cret := xDBusInterfaceSkeletonGetInfo(x.GoPointer())
+
 	return cret
 }
 
@@ -275,6 +279,7 @@ var xDBusInterfaceSkeletonGetObjectPath func(uintptr) string
 func (x *DBusInterfaceSkeleton) GetObjectPath() string {
 
 	cret := xDBusInterfaceSkeletonGetObjectPath(x.GoPointer())
+
 	return cret
 }
 
@@ -284,6 +289,7 @@ var xDBusInterfaceSkeletonGetProperties func(uintptr) *glib.Variant
 func (x *DBusInterfaceSkeleton) GetProperties() *glib.Variant {
 
 	cret := xDBusInterfaceSkeletonGetProperties(x.GoPointer())
+
 	return cret
 }
 
@@ -295,6 +301,7 @@ var xDBusInterfaceSkeletonGetVtable func(uintptr) *DBusInterfaceVTable
 func (x *DBusInterfaceSkeleton) GetVtable() *DBusInterfaceVTable {
 
 	cret := xDBusInterfaceSkeletonGetVtable(x.GoPointer())
+
 	return cret
 }
 
@@ -304,6 +311,7 @@ var xDBusInterfaceSkeletonHasConnection func(uintptr, uintptr) bool
 func (x *DBusInterfaceSkeleton) HasConnection(ConnectionVar *DBusConnection) bool {
 
 	cret := xDBusInterfaceSkeletonHasConnection(x.GoPointer(), ConnectionVar.GoPointer())
+
 	return cret
 }
 

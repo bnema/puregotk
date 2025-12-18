@@ -166,6 +166,7 @@ var xTreeViewColumnCellGetPosition func(uintptr, uintptr, *int, *int) bool
 func (x *TreeViewColumn) CellGetPosition(CellRendererVar *CellRenderer, XOffsetVar *int, WidthVar *int) bool {
 
 	cret := xTreeViewColumnCellGetPosition(x.GoPointer(), CellRendererVar.GoPointer(), XOffsetVar, WidthVar)
+
 	return cret
 }
 
@@ -187,6 +188,7 @@ var xTreeViewColumnCellIsVisible func(uintptr) bool
 func (x *TreeViewColumn) CellIsVisible() bool {
 
 	cret := xTreeViewColumnCellIsVisible(x.GoPointer())
+
 	return cret
 }
 
@@ -248,6 +250,7 @@ var xTreeViewColumnGetAlignment func(uintptr) float32
 func (x *TreeViewColumn) GetAlignment() float32 {
 
 	cret := xTreeViewColumnGetAlignment(x.GoPointer())
+
 	return cret
 }
 
@@ -274,6 +277,7 @@ var xTreeViewColumnGetClickable func(uintptr) bool
 func (x *TreeViewColumn) GetClickable() bool {
 
 	cret := xTreeViewColumnGetClickable(x.GoPointer())
+
 	return cret
 }
 
@@ -283,6 +287,7 @@ var xTreeViewColumnGetExpand func(uintptr) bool
 func (x *TreeViewColumn) GetExpand() bool {
 
 	cret := xTreeViewColumnGetExpand(x.GoPointer())
+
 	return cret
 }
 
@@ -293,6 +298,7 @@ var xTreeViewColumnGetFixedWidth func(uintptr) int
 func (x *TreeViewColumn) GetFixedWidth() int {
 
 	cret := xTreeViewColumnGetFixedWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -303,6 +309,7 @@ var xTreeViewColumnGetMaxWidth func(uintptr) int
 func (x *TreeViewColumn) GetMaxWidth() int {
 
 	cret := xTreeViewColumnGetMaxWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -313,6 +320,7 @@ var xTreeViewColumnGetMinWidth func(uintptr) int
 func (x *TreeViewColumn) GetMinWidth() int {
 
 	cret := xTreeViewColumnGetMinWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -322,6 +330,7 @@ var xTreeViewColumnGetReorderable func(uintptr) bool
 func (x *TreeViewColumn) GetReorderable() bool {
 
 	cret := xTreeViewColumnGetReorderable(x.GoPointer())
+
 	return cret
 }
 
@@ -331,6 +340,7 @@ var xTreeViewColumnGetResizable func(uintptr) bool
 func (x *TreeViewColumn) GetResizable() bool {
 
 	cret := xTreeViewColumnGetResizable(x.GoPointer())
+
 	return cret
 }
 
@@ -340,6 +350,7 @@ var xTreeViewColumnGetSizing func(uintptr) TreeViewColumnSizing
 func (x *TreeViewColumn) GetSizing() TreeViewColumnSizing {
 
 	cret := xTreeViewColumnGetSizing(x.GoPointer())
+
 	return cret
 }
 
@@ -352,6 +363,7 @@ var xTreeViewColumnGetSortColumnId func(uintptr) int
 func (x *TreeViewColumn) GetSortColumnId() int {
 
 	cret := xTreeViewColumnGetSortColumnId(x.GoPointer())
+
 	return cret
 }
 
@@ -361,6 +373,7 @@ var xTreeViewColumnGetSortIndicator func(uintptr) bool
 func (x *TreeViewColumn) GetSortIndicator() bool {
 
 	cret := xTreeViewColumnGetSortIndicator(x.GoPointer())
+
 	return cret
 }
 
@@ -370,6 +383,7 @@ var xTreeViewColumnGetSortOrder func(uintptr) SortType
 func (x *TreeViewColumn) GetSortOrder() SortType {
 
 	cret := xTreeViewColumnGetSortOrder(x.GoPointer())
+
 	return cret
 }
 
@@ -379,6 +393,7 @@ var xTreeViewColumnGetSpacing func(uintptr) int
 func (x *TreeViewColumn) GetSpacing() int {
 
 	cret := xTreeViewColumnGetSpacing(x.GoPointer())
+
 	return cret
 }
 
@@ -388,6 +403,7 @@ var xTreeViewColumnGetTitle func(uintptr) string
 func (x *TreeViewColumn) GetTitle() string {
 
 	cret := xTreeViewColumnGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -416,6 +432,7 @@ var xTreeViewColumnGetVisible func(uintptr) bool
 func (x *TreeViewColumn) GetVisible() bool {
 
 	cret := xTreeViewColumnGetVisible(x.GoPointer())
+
 	return cret
 }
 
@@ -444,6 +461,7 @@ var xTreeViewColumnGetWidth func(uintptr) int
 func (x *TreeViewColumn) GetWidth() int {
 
 	cret := xTreeViewColumnGetWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -453,6 +471,7 @@ var xTreeViewColumnGetXOffset func(uintptr) int
 func (x *TreeViewColumn) GetXOffset() int {
 
 	cret := xTreeViewColumnGetXOffset(x.GoPointer())
+
 	return cret
 }
 
@@ -987,6 +1006,7 @@ func (x *TreeViewColumn) ConnectClicked(cb *func(TreeViewColumn)) uint32 {
 func (x *TreeViewColumn) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -1011,6 +1031,7 @@ func (x *TreeViewColumn) GetArea() *CellArea {
 func (x *TreeViewColumn) GetCells() *glib.List {
 
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
+
 	return cret
 }
 

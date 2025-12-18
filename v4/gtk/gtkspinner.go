@@ -71,6 +71,7 @@ var xSpinnerGetSpinning func(uintptr) bool
 func (x *Spinner) GetSpinning() bool {
 
 	cret := xSpinnerGetSpinning(x.GoPointer())
+
 	return cret
 }
 
@@ -164,6 +165,7 @@ func (x *Spinner) GetAccessibleParent() *AccessibleBase {
 func (x *Spinner) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -189,6 +191,7 @@ func (x *Spinner) GetAtContext() *ATContext {
 func (x *Spinner) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -228,6 +231,7 @@ func (x *Spinner) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Spinner) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -404,6 +408,7 @@ func (x *Spinner) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, 
 func (x *Spinner) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

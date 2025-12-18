@@ -112,6 +112,7 @@ var xDrawContextGetFrameRegion func(uintptr) *cairo.Region
 func (x *DrawContext) GetFrameRegion() *cairo.Region {
 
 	cret := xDrawContextGetFrameRegion(x.GoPointer())
+
 	return cret
 }
 
@@ -142,6 +143,7 @@ var xDrawContextIsInFrame func(uintptr) bool
 func (x *DrawContext) IsInFrame() bool {
 
 	cret := xDrawContextIsInFrame(x.GoPointer())
+
 	return cret
 }
 

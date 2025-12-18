@@ -205,6 +205,7 @@ var xFlapGetFlapPosition func(uintptr) gtk.PackType
 func (x *Flap) GetFlapPosition() gtk.PackType {
 
 	cret := xFlapGetFlapPosition(x.GoPointer())
+
 	return cret
 }
 
@@ -214,6 +215,7 @@ var xFlapGetFoldDuration func(uintptr) uint
 func (x *Flap) GetFoldDuration() uint {
 
 	cret := xFlapGetFoldDuration(x.GoPointer())
+
 	return cret
 }
 
@@ -223,6 +225,7 @@ var xFlapGetFoldPolicy func(uintptr) FlapFoldPolicy
 func (x *Flap) GetFoldPolicy() FlapFoldPolicy {
 
 	cret := xFlapGetFoldPolicy(x.GoPointer())
+
 	return cret
 }
 
@@ -232,6 +235,7 @@ var xFlapGetFoldThresholdPolicy func(uintptr) FoldThresholdPolicy
 func (x *Flap) GetFoldThresholdPolicy() FoldThresholdPolicy {
 
 	cret := xFlapGetFoldThresholdPolicy(x.GoPointer())
+
 	return cret
 }
 
@@ -243,6 +247,7 @@ var xFlapGetFolded func(uintptr) bool
 func (x *Flap) GetFolded() bool {
 
 	cret := xFlapGetFolded(x.GoPointer())
+
 	return cret
 }
 
@@ -252,6 +257,7 @@ var xFlapGetLocked func(uintptr) bool
 func (x *Flap) GetLocked() bool {
 
 	cret := xFlapGetLocked(x.GoPointer())
+
 	return cret
 }
 
@@ -261,6 +267,7 @@ var xFlapGetModal func(uintptr) bool
 func (x *Flap) GetModal() bool {
 
 	cret := xFlapGetModal(x.GoPointer())
+
 	return cret
 }
 
@@ -270,6 +277,7 @@ var xFlapGetRevealFlap func(uintptr) bool
 func (x *Flap) GetRevealFlap() bool {
 
 	cret := xFlapGetRevealFlap(x.GoPointer())
+
 	return cret
 }
 
@@ -279,6 +287,7 @@ var xFlapGetRevealParams func(uintptr) *SpringParams
 func (x *Flap) GetRevealParams() *SpringParams {
 
 	cret := xFlapGetRevealParams(x.GoPointer())
+
 	return cret
 }
 
@@ -292,6 +301,7 @@ var xFlapGetRevealProgress func(uintptr) float64
 func (x *Flap) GetRevealProgress() float64 {
 
 	cret := xFlapGetRevealProgress(x.GoPointer())
+
 	return cret
 }
 
@@ -318,6 +328,7 @@ var xFlapGetSwipeToClose func(uintptr) bool
 func (x *Flap) GetSwipeToClose() bool {
 
 	cret := xFlapGetSwipeToClose(x.GoPointer())
+
 	return cret
 }
 
@@ -327,6 +338,7 @@ var xFlapGetSwipeToOpen func(uintptr) bool
 func (x *Flap) GetSwipeToOpen() bool {
 
 	cret := xFlapGetSwipeToOpen(x.GoPointer())
+
 	return cret
 }
 
@@ -336,6 +348,7 @@ var xFlapGetTransitionType func(uintptr) FlapTransitionType
 func (x *Flap) GetTransitionType() FlapTransitionType {
 
 	cret := xFlapGetTransitionType(x.GoPointer())
+
 	return cret
 }
 
@@ -704,6 +717,7 @@ func (x *Flap) GetPropertySwipeToOpen() bool {
 func (x *Flap) GetCancelProgress() float64 {
 
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
+
 	return cret
 }
 
@@ -713,6 +727,7 @@ func (x *Flap) GetCancelProgress() float64 {
 func (x *Flap) GetDistance() float64 {
 
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
+
 	return cret
 }
 
@@ -720,6 +735,7 @@ func (x *Flap) GetDistance() float64 {
 func (x *Flap) GetProgress() float64 {
 
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
+
 	return cret
 }
 
@@ -730,6 +746,7 @@ func (x *Flap) GetProgress() float64 {
 func (x *Flap) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
+
 	return cret
 }
 
@@ -783,6 +800,7 @@ func (x *Flap) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *Flap) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -808,6 +826,7 @@ func (x *Flap) GetAtContext() *gtk.ATContext {
 func (x *Flap) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -847,6 +866,7 @@ func (x *Flap) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *Flap) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1023,6 +1043,7 @@ func (x *Flap) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState,
 func (x *Flap) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -1030,6 +1051,7 @@ func (x *Flap) GetBuildableId() string {
 func (x *Flap) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

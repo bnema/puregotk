@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -165,7 +166,11 @@ var xCssProviderLoadNamed func(uintptr, string, uintptr)
 // mechanism to load the theme that GTK uses for loading its own theme.
 func (x *CssProvider) LoadNamed(NameVar string, VariantVar *string) {
 
-	xCssProviderLoadNamed(x.GoPointer(), NameVar, core.NullableStringToPtr(VariantVar))
+	VariantVarPtr, VariantVarBytes := core.NullableStringToPtr(VariantVar)
+
+	xCssProviderLoadNamed(x.GoPointer(), NameVar, VariantVarPtr)
+
+	runtime.KeepAlive(VariantVarBytes)
 
 }
 
@@ -181,6 +186,7 @@ var xCssProviderToString func(uintptr) string
 func (x *CssProvider) ToString() string {
 
 	cret := xCssProviderToString(x.GoPointer())
+
 	return cret
 }
 

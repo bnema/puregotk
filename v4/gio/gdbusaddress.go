@@ -21,6 +21,7 @@ var xDbusAddressEscapeValue func(string) string
 func DbusAddressEscapeValue(StringVar string) string {
 
 	cret := xDbusAddressEscapeValue(StringVar)
+
 	return cret
 }
 
@@ -36,6 +37,7 @@ func DbusAddressGetForBusSync(BusTypeVar BusType, CancellableVar *Cancellable) (
 	var cerr *glib.Error
 
 	cret := xDbusAddressGetForBusSync(BusTypeVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -142,6 +144,7 @@ var xDbusIsAddress func(string) bool
 func DbusIsAddress(StringVar string) bool {
 
 	cret := xDbusIsAddress(StringVar)
+
 	return cret
 }
 
@@ -155,6 +158,7 @@ func DbusIsSupportedAddress(StringVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xDbusIsSupportedAddress(StringVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

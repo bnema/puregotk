@@ -131,6 +131,7 @@ var xInlineViewSwitcherGetCanShrink func(uintptr) bool
 func (x *InlineViewSwitcher) GetCanShrink() bool {
 
 	cret := xInlineViewSwitcherGetCanShrink(x.GoPointer())
+
 	return cret
 }
 
@@ -140,6 +141,7 @@ var xInlineViewSwitcherGetDisplayMode func(uintptr) InlineViewSwitcherDisplayMod
 func (x *InlineViewSwitcher) GetDisplayMode() InlineViewSwitcherDisplayMode {
 
 	cret := xInlineViewSwitcherGetDisplayMode(x.GoPointer())
+
 	return cret
 }
 
@@ -149,6 +151,7 @@ var xInlineViewSwitcherGetHomogeneous func(uintptr) bool
 func (x *InlineViewSwitcher) GetHomogeneous() bool {
 
 	cret := xInlineViewSwitcherGetHomogeneous(x.GoPointer())
+
 	return cret
 }
 
@@ -307,6 +310,7 @@ func (x *InlineViewSwitcher) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *InlineViewSwitcher) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -332,6 +336,7 @@ func (x *InlineViewSwitcher) GetAtContext() *gtk.ATContext {
 func (x *InlineViewSwitcher) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -371,6 +376,7 @@ func (x *InlineViewSwitcher) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *InlineViewSwitcher) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -547,6 +553,7 @@ func (x *InlineViewSwitcher) UpdateStateValue(NStatesVar int, StatesVar []gtk.Ac
 func (x *InlineViewSwitcher) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -554,6 +561,7 @@ func (x *InlineViewSwitcher) GetBuildableId() string {
 func (x *InlineViewSwitcher) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

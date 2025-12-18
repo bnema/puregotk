@@ -63,6 +63,7 @@ func (x *PopupBase) SetGoPointer(ptr uintptr) {
 func (x *PopupBase) GetAutohide() bool {
 
 	cret := XGdkPopupGetAutohide(x.GoPointer())
+
 	return cret
 }
 
@@ -85,6 +86,7 @@ func (x *PopupBase) GetParent() *Surface {
 func (x *PopupBase) GetPositionX() int {
 
 	cret := XGdkPopupGetPositionX(x.GoPointer())
+
 	return cret
 }
 
@@ -92,6 +94,7 @@ func (x *PopupBase) GetPositionX() int {
 func (x *PopupBase) GetPositionY() int {
 
 	cret := XGdkPopupGetPositionY(x.GoPointer())
+
 	return cret
 }
 
@@ -102,6 +105,7 @@ func (x *PopupBase) GetPositionY() int {
 func (x *PopupBase) GetRectAnchor() Gravity {
 
 	cret := XGdkPopupGetRectAnchor(x.GoPointer())
+
 	return cret
 }
 
@@ -112,6 +116,7 @@ func (x *PopupBase) GetRectAnchor() Gravity {
 func (x *PopupBase) GetSurfaceAnchor() Gravity {
 
 	cret := XGdkPopupGetSurfaceAnchor(x.GoPointer())
+
 	return cret
 }
 
@@ -133,6 +138,7 @@ func (x *PopupBase) GetSurfaceAnchor() Gravity {
 func (x *PopupBase) Present(WidthVar int, HeightVar int, LayoutVar *PopupLayout) bool {
 
 	cret := XGdkPopupPresent(x.GoPointer(), WidthVar, HeightVar, LayoutVar)
+
 	return cret
 }
 

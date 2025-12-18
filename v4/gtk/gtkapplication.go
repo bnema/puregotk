@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -222,7 +223,11 @@ var xNewApplication func(uintptr, gio.ApplicationFlags) uintptr
 func NewApplication(ApplicationIdVar *string, FlagsVar gio.ApplicationFlags) *Application {
 	var cls *Application
 
-	cret := xNewApplication(core.NullableStringToPtr(ApplicationIdVar), FlagsVar)
+	ApplicationIdVarPtr, ApplicationIdVarBytes := core.NullableStringToPtr(ApplicationIdVar)
+
+	cret := xNewApplication(ApplicationIdVarPtr, FlagsVar)
+
+	runtime.KeepAlive(ApplicationIdVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -261,6 +266,7 @@ var xApplicationGetAccelsForAction func(uintptr, string) []string
 func (x *Application) GetAccelsForAction(DetailedActionNameVar string) []string {
 
 	cret := xApplicationGetAccelsForAction(x.GoPointer(), DetailedActionNameVar)
+
 	return cret
 }
 
@@ -286,6 +292,7 @@ var xApplicationGetActionsForAccel func(uintptr, string) []string
 func (x *Application) GetActionsForAccel(AccelVar string) []string {
 
 	cret := xApplicationGetActionsForAccel(x.GoPointer(), AccelVar)
+
 	return cret
 }
 
@@ -382,6 +389,7 @@ var xApplicationGetWindows func(uintptr) *glib.List
 func (x *Application) GetWindows() *glib.List {
 
 	cret := xApplicationGetWindows(x.GoPointer())
+
 	return cret
 }
 
@@ -416,7 +424,12 @@ var xApplicationInhibit func(uintptr, uintptr, ApplicationInhibitFlags, uintptr)
 // the request.
 func (x *Application) Inhibit(WindowVar *Window, FlagsVar ApplicationInhibitFlags, ReasonVar *string) uint {
 
-	cret := xApplicationInhibit(x.GoPointer(), WindowVar.GoPointer(), FlagsVar, core.NullableStringToPtr(ReasonVar))
+	ReasonVarPtr, ReasonVarBytes := core.NullableStringToPtr(ReasonVar)
+
+	cret := xApplicationInhibit(x.GoPointer(), WindowVar.GoPointer(), FlagsVar, ReasonVarPtr)
+
+	runtime.KeepAlive(ReasonVarBytes)
+
 	return cret
 }
 
@@ -428,6 +441,7 @@ var xApplicationListActionDescriptions func(uintptr) []string
 func (x *Application) ListActionDescriptions() []string {
 
 	cret := xApplicationListActionDescriptions(x.GoPointer())
+
 	return cret
 }
 
@@ -719,6 +733,7 @@ func (x *Application) ChangeActionState(ActionNameVar string, ValueVar *glib.Var
 func (x *Application) GetActionEnabled(ActionNameVar string) bool {
 
 	cret := gio.XGActionGroupGetActionEnabled(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -738,6 +753,7 @@ func (x *Application) GetActionEnabled(ActionNameVar string) bool {
 func (x *Application) GetActionParameterType(ActionNameVar string) *glib.VariantType {
 
 	cret := gio.XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -752,6 +768,7 @@ func (x *Application) GetActionParameterType(ActionNameVar string) *glib.Variant
 func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 
 	cret := gio.XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -776,6 +793,7 @@ func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 
 	cret := gio.XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -798,6 +816,7 @@ func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 func (x *Application) GetActionStateType(ActionNameVar string) *glib.VariantType {
 
 	cret := gio.XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -805,6 +824,7 @@ func (x *Application) GetActionStateType(ActionNameVar string) *glib.VariantType
 func (x *Application) HasAction(ActionNameVar string) bool {
 
 	cret := gio.XGActionGroupHasAction(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -815,6 +835,7 @@ func (x *Application) HasAction(ActionNameVar string) bool {
 func (x *Application) ListActions() []string {
 
 	cret := gio.XGActionGroupListActions(x.GoPointer())
+
 	return cret
 }
 
@@ -848,6 +869,7 @@ func (x *Application) ListActions() []string {
 func (x *Application) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := gio.XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
+
 	return cret
 }
 

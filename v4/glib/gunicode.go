@@ -2,6 +2,8 @@
 package glib
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject/types"
@@ -622,6 +624,7 @@ func Ucs4ToUtf16(StrVar []uint32, LenVar int32, ItemsReadVar *int32, ItemsWritte
 	var cerr *Error
 
 	cret := xUcs4ToUtf16(StrVar, LenVar, ItemsReadVar, ItemsWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -639,6 +642,7 @@ func Ucs4ToUtf8(StrVar []uint32, LenVar int32, ItemsReadVar *int32, ItemsWritten
 	var cerr *Error
 
 	cret := xUcs4ToUtf8(StrVar, LenVar, ItemsReadVar, ItemsWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -657,6 +661,7 @@ var xUnicharBreakType func(uint32) UnicodeBreakType
 func UnicharBreakType(CVar uint32) UnicodeBreakType {
 
 	cret := xUnicharBreakType(CVar)
+
 	return cret
 }
 
@@ -666,6 +671,7 @@ var xUnicharCombiningClass func(uint32) int
 func UnicharCombiningClass(UcVar uint32) int {
 
 	cret := xUnicharCombiningClass(UcVar)
+
 	return cret
 }
 
@@ -690,6 +696,7 @@ var xUnicharCompose func(uint32, uint32, *uint32) bool
 func UnicharCompose(AVar uint32, BVar uint32, ChVar *uint32) bool {
 
 	cret := xUnicharCompose(AVar, BVar, ChVar)
+
 	return cret
 }
 
@@ -721,6 +728,7 @@ var xUnicharDecompose func(uint32, *uint32, *uint32) bool
 func UnicharDecompose(ChVar uint32, AVar *uint32, BVar *uint32) bool {
 
 	cret := xUnicharDecompose(ChVar, AVar, BVar)
+
 	return cret
 }
 
@@ -731,6 +739,7 @@ var xUnicharDigitValue func(uint32) int
 func UnicharDigitValue(CVar uint32) int {
 
 	cret := xUnicharDigitValue(CVar)
+
 	return cret
 }
 
@@ -758,6 +767,7 @@ var xUnicharFullyDecompose func(uint32, bool, *uint32, uint) uint
 func UnicharFullyDecompose(ChVar uint32, CompatVar bool, ResultVar *uint32, ResultLenVar uint) uint {
 
 	cret := xUnicharFullyDecompose(ChVar, CompatVar, ResultVar, ResultLenVar)
+
 	return cret
 }
 
@@ -775,6 +785,7 @@ var xUnicharGetMirrorChar func(uint32, *uint32) bool
 func UnicharGetMirrorChar(ChVar uint32, MirroredChVar *uint32) bool {
 
 	cret := xUnicharGetMirrorChar(ChVar, MirroredChVar)
+
 	return cret
 }
 
@@ -790,6 +801,7 @@ var xUnicharGetScript func(uint32) UnicodeScript
 func UnicharGetScript(ChVar uint32) UnicodeScript {
 
 	cret := xUnicharGetScript(ChVar)
+
 	return cret
 }
 
@@ -801,6 +813,7 @@ var xUnicharIsalnum func(uint32) bool
 func UnicharIsalnum(CVar uint32) bool {
 
 	cret := xUnicharIsalnum(CVar)
+
 	return cret
 }
 
@@ -812,6 +825,7 @@ var xUnicharIsalpha func(uint32) bool
 func UnicharIsalpha(CVar uint32) bool {
 
 	cret := xUnicharIsalpha(CVar)
+
 	return cret
 }
 
@@ -823,6 +837,7 @@ var xUnicharIscntrl func(uint32) bool
 func UnicharIscntrl(CVar uint32) bool {
 
 	cret := xUnicharIscntrl(CVar)
+
 	return cret
 }
 
@@ -833,6 +848,7 @@ var xUnicharIsdefined func(uint32) bool
 func UnicharIsdefined(CVar uint32) bool {
 
 	cret := xUnicharIsdefined(CVar)
+
 	return cret
 }
 
@@ -844,6 +860,7 @@ var xUnicharIsdigit func(uint32) bool
 func UnicharIsdigit(CVar uint32) bool {
 
 	cret := xUnicharIsdigit(CVar)
+
 	return cret
 }
 
@@ -857,6 +874,7 @@ var xUnicharIsgraph func(uint32) bool
 func UnicharIsgraph(CVar uint32) bool {
 
 	cret := xUnicharIsgraph(CVar)
+
 	return cret
 }
 
@@ -868,6 +886,7 @@ var xUnicharIslower func(uint32) bool
 func UnicharIslower(CVar uint32) bool {
 
 	cret := xUnicharIslower(CVar)
+
 	return cret
 }
 
@@ -885,6 +904,7 @@ var xUnicharIsmark func(uint32) bool
 func UnicharIsmark(CVar uint32) bool {
 
 	cret := xUnicharIsmark(CVar)
+
 	return cret
 }
 
@@ -897,6 +917,7 @@ var xUnicharIsprint func(uint32) bool
 func UnicharIsprint(CVar uint32) bool {
 
 	cret := xUnicharIsprint(CVar)
+
 	return cret
 }
 
@@ -908,6 +929,7 @@ var xUnicharIspunct func(uint32) bool
 func UnicharIspunct(CVar uint32) bool {
 
 	cret := xUnicharIspunct(CVar)
+
 	return cret
 }
 
@@ -923,6 +945,7 @@ var xUnicharIsspace func(uint32) bool
 func UnicharIsspace(CVar uint32) bool {
 
 	cret := xUnicharIsspace(CVar)
+
 	return cret
 }
 
@@ -937,6 +960,7 @@ var xUnicharIstitle func(uint32) bool
 func UnicharIstitle(CVar uint32) bool {
 
 	cret := xUnicharIstitle(CVar)
+
 	return cret
 }
 
@@ -946,6 +970,7 @@ var xUnicharIsupper func(uint32) bool
 func UnicharIsupper(CVar uint32) bool {
 
 	cret := xUnicharIsupper(CVar)
+
 	return cret
 }
 
@@ -956,6 +981,7 @@ var xUnicharIswide func(uint32) bool
 func UnicharIswide(CVar uint32) bool {
 
 	cret := xUnicharIswide(CVar)
+
 	return cret
 }
 
@@ -974,6 +1000,7 @@ var xUnicharIswideCjk func(uint32) bool
 func UnicharIswideCjk(CVar uint32) bool {
 
 	cret := xUnicharIswideCjk(CVar)
+
 	return cret
 }
 
@@ -983,6 +1010,7 @@ var xUnicharIsxdigit func(uint32) bool
 func UnicharIsxdigit(CVar uint32) bool {
 
 	cret := xUnicharIsxdigit(CVar)
+
 	return cret
 }
 
@@ -1000,6 +1028,7 @@ var xUnicharIszerowidth func(uint32) bool
 func UnicharIszerowidth(CVar uint32) bool {
 
 	cret := xUnicharIszerowidth(CVar)
+
 	return cret
 }
 
@@ -1009,6 +1038,7 @@ var xUnicharToUtf8 func(uint32, *string) int
 func UnicharToUtf8(CVar uint32, OutbufVar *string) int {
 
 	cret := xUnicharToUtf8(CVar, OutbufVar)
+
 	return cret
 }
 
@@ -1018,6 +1048,7 @@ var xUnicharTolower func(uint32) uint32
 func UnicharTolower(CVar uint32) uint32 {
 
 	cret := xUnicharTolower(CVar)
+
 	return cret
 }
 
@@ -1027,6 +1058,7 @@ var xUnicharTotitle func(uint32) uint32
 func UnicharTotitle(CVar uint32) uint32 {
 
 	cret := xUnicharTotitle(CVar)
+
 	return cret
 }
 
@@ -1036,6 +1068,7 @@ var xUnicharToupper func(uint32) uint32
 func UnicharToupper(CVar uint32) uint32 {
 
 	cret := xUnicharToupper(CVar)
+
 	return cret
 }
 
@@ -1045,6 +1078,7 @@ var xUnicharType func(uint32) UnicodeType
 func UnicharType(CVar uint32) UnicodeType {
 
 	cret := xUnicharType(CVar)
+
 	return cret
 }
 
@@ -1057,6 +1091,7 @@ var xUnicharValidate func(uint32) bool
 func UnicharValidate(ChVar uint32) bool {
 
 	cret := xUnicharValidate(ChVar)
+
 	return cret
 }
 
@@ -1067,6 +1102,7 @@ var xUnicharXdigitValue func(uint32) int
 func UnicharXdigitValue(CVar uint32) int {
 
 	cret := xUnicharXdigitValue(CVar)
+
 	return cret
 }
 
@@ -1076,6 +1112,7 @@ var xUnicodeCanonicalDecomposition func(uint32, uint) uint32
 func UnicodeCanonicalDecomposition(ChVar uint32, ResultLenVar uint) uint32 {
 
 	cret := xUnicodeCanonicalDecomposition(ChVar, ResultLenVar)
+
 	return cret
 }
 
@@ -1105,6 +1142,7 @@ var xUnicodeScriptFromIso15924 func(uint32) UnicodeScript
 func UnicodeScriptFromIso15924(Iso15924Var uint32) UnicodeScript {
 
 	cret := xUnicodeScriptFromIso15924(Iso15924Var)
+
 	return cret
 }
 
@@ -1122,6 +1160,7 @@ var xUnicodeScriptToIso15924 func(UnicodeScript) uint32
 func UnicodeScriptToIso15924(ScriptVar UnicodeScript) uint32 {
 
 	cret := xUnicodeScriptToIso15924(ScriptVar)
+
 	return cret
 }
 
@@ -1134,6 +1173,7 @@ func Utf16ToUcs4(StrVar []uint16, LenVar int32, ItemsReadVar *int32, ItemsWritte
 	var cerr *Error
 
 	cret := xUtf16ToUcs4(StrVar, LenVar, ItemsReadVar, ItemsWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1161,6 +1201,7 @@ func Utf16ToUtf8(StrVar []uint16, LenVar int32, ItemsReadVar *int32, ItemsWritte
 	var cerr *Error
 
 	cret := xUtf16ToUtf8(StrVar, LenVar, ItemsReadVar, ItemsWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1184,6 +1225,7 @@ var xUtf8Casefold func(string, int) string
 func Utf8Casefold(StrVar string, LenVar int) string {
 
 	cret := xUtf8Casefold(StrVar, LenVar)
+
 	return cret
 }
 
@@ -1202,6 +1244,7 @@ var xUtf8Collate func(string, string) int
 func Utf8Collate(Str1Var string, Str2Var string) int {
 
 	cret := xUtf8Collate(Str1Var, Str2Var)
+
 	return cret
 }
 
@@ -1223,6 +1266,7 @@ var xUtf8CollateKey func(string, int) string
 func Utf8CollateKey(StrVar string, LenVar int) string {
 
 	cret := xUtf8CollateKey(StrVar, LenVar)
+
 	return cret
 }
 
@@ -1246,6 +1290,7 @@ var xUtf8CollateKeyForFilename func(string, int) string
 func Utf8CollateKeyForFilename(StrVar string, LenVar int) string {
 
 	cret := xUtf8CollateKeyForFilename(StrVar, LenVar)
+
 	return cret
 }
 
@@ -1263,7 +1308,12 @@ var xUtf8FindNextChar func(string, uintptr) string
 // is reached.
 func Utf8FindNextChar(PVar string, EndVar *string) string {
 
-	cret := xUtf8FindNextChar(PVar, core.NullableStringToPtr(EndVar))
+	EndVarPtr, EndVarBytes := core.NullableStringToPtr(EndVar)
+
+	cret := xUtf8FindNextChar(PVar, EndVarPtr)
+
+	runtime.KeepAlive(EndVarBytes)
+
 	return cret
 }
 
@@ -1279,6 +1329,7 @@ var xUtf8FindPrevChar func(string, string) string
 func Utf8FindPrevChar(StrVar string, PVar string) string {
 
 	cret := xUtf8FindPrevChar(StrVar, PVar)
+
 	return cret
 }
 
@@ -1293,6 +1344,7 @@ var xUtf8GetChar func(string) uint32
 func Utf8GetChar(PVar string) uint32 {
 
 	cret := xUtf8GetChar(PVar)
+
 	return cret
 }
 
@@ -1310,6 +1362,7 @@ var xUtf8GetCharValidated func(string, int) uint32
 func Utf8GetCharValidated(PVar string, MaxLenVar int) uint32 {
 
 	cret := xUtf8GetCharValidated(PVar, MaxLenVar)
+
 	return cret
 }
 
@@ -1327,6 +1380,7 @@ var xUtf8MakeValid func(string, int) string
 func Utf8MakeValid(StrVar string, LenVar int) string {
 
 	cret := xUtf8MakeValid(StrVar, LenVar)
+
 	return cret
 }
 
@@ -1360,6 +1414,7 @@ var xUtf8Normalize func(string, int, NormalizeMode) string
 func Utf8Normalize(StrVar string, LenVar int, ModeVar NormalizeMode) string {
 
 	cret := xUtf8Normalize(StrVar, LenVar, ModeVar)
+
 	return cret
 }
 
@@ -1381,6 +1436,7 @@ var xUtf8OffsetToPointer func(string, int32) string
 func Utf8OffsetToPointer(StrVar string, OffsetVar int32) string {
 
 	cret := xUtf8OffsetToPointer(StrVar, OffsetVar)
+
 	return cret
 }
 
@@ -1394,6 +1450,7 @@ var xUtf8PointerToOffset func(string, string) int32
 func Utf8PointerToOffset(StrVar string, PosVar string) int32 {
 
 	cret := xUtf8PointerToOffset(StrVar, PosVar)
+
 	return cret
 }
 
@@ -1409,6 +1466,7 @@ var xUtf8PrevChar func(string) string
 func Utf8PrevChar(PVar string) string {
 
 	cret := xUtf8PrevChar(PVar)
+
 	return cret
 }
 
@@ -1421,6 +1479,7 @@ var xUtf8Strchr func(string, int, uint32) string
 func Utf8Strchr(PVar string, LenVar int, CVar uint32) string {
 
 	cret := xUtf8Strchr(PVar, LenVar, CVar)
+
 	return cret
 }
 
@@ -1433,6 +1492,7 @@ var xUtf8Strdown func(string, int) string
 func Utf8Strdown(StrVar string, LenVar int) string {
 
 	cret := xUtf8Strdown(StrVar, LenVar)
+
 	return cret
 }
 
@@ -1444,6 +1504,7 @@ var xUtf8Strlen func(string, int) int32
 func Utf8Strlen(PVar string, MaxVar int) int32 {
 
 	cret := xUtf8Strlen(PVar, MaxVar)
+
 	return cret
 }
 
@@ -1461,6 +1522,7 @@ var xUtf8Strncpy func(string, string, uint) string
 func Utf8Strncpy(DestVar string, SrcVar string, NVar uint) string {
 
 	cret := xUtf8Strncpy(DestVar, SrcVar, NVar)
+
 	return cret
 }
 
@@ -1473,6 +1535,7 @@ var xUtf8Strrchr func(string, int, uint32) string
 func Utf8Strrchr(PVar string, LenVar int, CVar uint32) string {
 
 	cret := xUtf8Strrchr(PVar, LenVar, CVar)
+
 	return cret
 }
 
@@ -1495,6 +1558,7 @@ var xUtf8Strreverse func(string, int) string
 func Utf8Strreverse(StrVar string, LenVar int) string {
 
 	cret := xUtf8Strreverse(StrVar, LenVar)
+
 	return cret
 }
 
@@ -1508,6 +1572,7 @@ var xUtf8Strup func(string, int) string
 func Utf8Strup(StrVar string, LenVar int) string {
 
 	cret := xUtf8Strup(StrVar, LenVar)
+
 	return cret
 }
 
@@ -1521,6 +1586,7 @@ var xUtf8Substring func(string, int32, int32) string
 func Utf8Substring(StrVar string, StartPosVar int32, EndPosVar int32) string {
 
 	cret := xUtf8Substring(StrVar, StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -1534,6 +1600,7 @@ func Utf8ToUcs4(StrVar string, LenVar int32, ItemsReadVar *int32, ItemsWrittenVa
 	var cerr *Error
 
 	cret := xUtf8ToUcs4(StrVar, LenVar, ItemsReadVar, ItemsWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1552,6 +1619,7 @@ var xUtf8ToUcs4Fast func(string, int32, *int32) uint32
 func Utf8ToUcs4Fast(StrVar string, LenVar int32, ItemsWrittenVar *int32) uint32 {
 
 	cret := xUtf8ToUcs4Fast(StrVar, LenVar, ItemsWrittenVar)
+
 	return cret
 }
 
@@ -1564,6 +1632,7 @@ func Utf8ToUtf16(StrVar string, LenVar int32, ItemsReadVar *int32, ItemsWrittenV
 	var cerr *Error
 
 	cret := xUtf8ToUtf16(StrVar, LenVar, ItemsReadVar, ItemsWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1581,6 +1650,7 @@ var xUtf8TruncateMiddle func(string, uint) string
 func Utf8TruncateMiddle(StringVar string, TruncateLengthVar uint) string {
 
 	cret := xUtf8TruncateMiddle(StringVar, TruncateLengthVar)
+
 	return cret
 }
 
@@ -1606,6 +1676,7 @@ var xUtf8Validate func([]byte, int, *[]byte) bool
 func Utf8Validate(StrVar []byte, MaxLenVar int, EndVar *[]byte) bool {
 
 	cret := xUtf8Validate(StrVar, MaxLenVar, EndVar)
+
 	return cret
 }
 
@@ -1618,6 +1689,7 @@ var xUtf8ValidateLen func([]byte, uint, *[]byte) bool
 func Utf8ValidateLen(StrVar []byte, MaxLenVar uint, EndVar *[]byte) bool {
 
 	cret := xUtf8ValidateLen(StrVar, MaxLenVar, EndVar)
+
 	return cret
 }
 

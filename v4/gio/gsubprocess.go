@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -182,6 +183,7 @@ func (x *Subprocess) Communicate(StdinBufVar *glib.Bytes, CancellableVar *Cancel
 	var cerr *glib.Error
 
 	cret := xSubprocessCommunicate(x.GoPointer(), StdinBufVar, CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -221,6 +223,7 @@ func (x *Subprocess) CommunicateFinish(ResultVar AsyncResult, StdoutBufVar **gli
 	var cerr *glib.Error
 
 	cret := xSubprocessCommunicateFinish(x.GoPointer(), ResultVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -238,7 +241,12 @@ var xSubprocessCommunicateUtf8 func(uintptr, uintptr, uintptr, *string, *string,
 func (x *Subprocess) CommunicateUtf8(StdinBufVar *string, CancellableVar *Cancellable, StdoutBufVar *string, StderrBufVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	cret := xSubprocessCommunicateUtf8(x.GoPointer(), core.NullableStringToPtr(StdinBufVar), CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
+	StdinBufVarPtr, StdinBufVarBytes := core.NullableStringToPtr(StdinBufVar)
+
+	cret := xSubprocessCommunicateUtf8(x.GoPointer(), StdinBufVarPtr, CancellableVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
+
+	runtime.KeepAlive(StdinBufVarBytes)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -267,7 +275,11 @@ func (x *Subprocess) CommunicateUtf8Async(StdinBufVar *string, CancellableVar *C
 		}
 	}
 
-	xSubprocessCommunicateUtf8Async(x.GoPointer(), core.NullableStringToPtr(StdinBufVar), CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	StdinBufVarPtr, StdinBufVarBytes := core.NullableStringToPtr(StdinBufVar)
+
+	xSubprocessCommunicateUtf8Async(x.GoPointer(), StdinBufVarPtr, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+
+	runtime.KeepAlive(StdinBufVarBytes)
 
 }
 
@@ -278,6 +290,7 @@ func (x *Subprocess) CommunicateUtf8Finish(ResultVar AsyncResult, StdoutBufVar *
 	var cerr *glib.Error
 
 	cret := xSubprocessCommunicateUtf8Finish(x.GoPointer(), ResultVar.GoPointer(), StdoutBufVar, StderrBufVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -313,6 +326,7 @@ var xSubprocessGetExitStatus func(uintptr) int
 func (x *Subprocess) GetExitStatus() int {
 
 	cret := xSubprocessGetExitStatus(x.GoPointer())
+
 	return cret
 }
 
@@ -324,6 +338,7 @@ var xSubprocessGetIdentifier func(uintptr) string
 func (x *Subprocess) GetIdentifier() string {
 
 	cret := xSubprocessGetIdentifier(x.GoPointer())
+
 	return cret
 }
 
@@ -339,6 +354,7 @@ var xSubprocessGetIfExited func(uintptr) bool
 func (x *Subprocess) GetIfExited() bool {
 
 	cret := xSubprocessGetIfExited(x.GoPointer())
+
 	return cret
 }
 
@@ -353,6 +369,7 @@ var xSubprocessGetIfSignaled func(uintptr) bool
 func (x *Subprocess) GetIfSignaled() bool {
 
 	cret := xSubprocessGetIfSignaled(x.GoPointer())
+
 	return cret
 }
 
@@ -372,6 +389,7 @@ var xSubprocessGetStatus func(uintptr) int
 func (x *Subprocess) GetStatus() int {
 
 	cret := xSubprocessGetStatus(x.GoPointer())
+
 	return cret
 }
 
@@ -449,6 +467,7 @@ var xSubprocessGetSuccessful func(uintptr) bool
 func (x *Subprocess) GetSuccessful() bool {
 
 	cret := xSubprocessGetSuccessful(x.GoPointer())
+
 	return cret
 }
 
@@ -464,6 +483,7 @@ var xSubprocessGetTermSig func(uintptr) int
 func (x *Subprocess) GetTermSig() int {
 
 	cret := xSubprocessGetTermSig(x.GoPointer())
+
 	return cret
 }
 
@@ -499,6 +519,7 @@ func (x *Subprocess) Wait(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSubprocessWait(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -539,6 +560,7 @@ func (x *Subprocess) WaitCheck(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSubprocessWaitCheck(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -580,6 +602,7 @@ func (x *Subprocess) WaitCheckFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSubprocessWaitCheckFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -595,6 +618,7 @@ func (x *Subprocess) WaitFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSubprocessWaitFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -664,6 +688,7 @@ func (x *Subprocess) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
