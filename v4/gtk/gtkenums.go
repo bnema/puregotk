@@ -2124,6 +2124,7 @@ var xOrderingFromCmpfunc func(int) Ordering
 func OrderingFromCmpfunc(CmpfuncResultVar int) Ordering {
 
 	cret := xOrderingFromCmpfunc(CmpfuncResultVar)
+
 	return cret
 }
 

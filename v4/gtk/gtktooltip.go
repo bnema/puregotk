@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
@@ -95,7 +97,11 @@ var xTooltipSetIconFromIconName func(uintptr, uintptr)
 // by @size.  If @icon_name is %NULL, the image will be hidden.
 func (x *Tooltip) SetIconFromIconName(IconNameVar *string) {
 
-	xTooltipSetIconFromIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
+	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+
+	xTooltipSetIconFromIconName(x.GoPointer(), IconNameVarPtr)
+
+	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -107,7 +113,11 @@ var xTooltipSetMarkup func(uintptr, uintptr)
 // If @markup is %NULL, the label will be hidden.
 func (x *Tooltip) SetMarkup(MarkupVar *string) {
 
-	xTooltipSetMarkup(x.GoPointer(), core.NullableStringToPtr(MarkupVar))
+	MarkupVarPtr, MarkupVarBytes := core.NullableStringToPtr(MarkupVar)
+
+	xTooltipSetMarkup(x.GoPointer(), MarkupVarPtr)
+
+	runtime.KeepAlive(MarkupVarBytes)
 
 }
 
@@ -119,7 +129,11 @@ var xTooltipSetText func(uintptr, uintptr)
 // See also [method@Gtk.Tooltip.set_markup].
 func (x *Tooltip) SetText(TextVar *string) {
 
-	xTooltipSetText(x.GoPointer(), core.NullableStringToPtr(TextVar))
+	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+
+	xTooltipSetText(x.GoPointer(), TextVarPtr)
+
+	runtime.KeepAlive(TextVarBytes)
 
 }
 

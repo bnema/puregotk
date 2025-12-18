@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -1112,6 +1113,7 @@ func (x *AppInfoBase) AddSupportsType(ContentTypeVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGAppInfoAddSupportsType(x.GoPointer(), ContentTypeVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1124,6 +1126,7 @@ func (x *AppInfoBase) AddSupportsType(ContentTypeVar string) (bool, error) {
 func (x *AppInfoBase) CanDelete() bool {
 
 	cret := XGAppInfoCanDelete(x.GoPointer())
+
 	return cret
 }
 
@@ -1131,6 +1134,7 @@ func (x *AppInfoBase) CanDelete() bool {
 func (x *AppInfoBase) CanRemoveSupportsType() bool {
 
 	cret := XGAppInfoCanRemoveSupportsType(x.GoPointer())
+
 	return cret
 }
 
@@ -1142,6 +1146,7 @@ func (x *AppInfoBase) CanRemoveSupportsType() bool {
 func (x *AppInfoBase) Delete() bool {
 
 	cret := XGAppInfoDelete(x.GoPointer())
+
 	return cret
 }
 
@@ -1167,6 +1172,7 @@ func (x *AppInfoBase) Dup() *AppInfoBase {
 func (x *AppInfoBase) Equal(Appinfo2Var AppInfo) bool {
 
 	cret := XGAppInfoEqual(x.GoPointer(), Appinfo2Var.GoPointer())
+
 	return cret
 }
 
@@ -1175,6 +1181,7 @@ func (x *AppInfoBase) Equal(Appinfo2Var AppInfo) bool {
 func (x *AppInfoBase) GetCommandline() string {
 
 	cret := XGAppInfoGetCommandline(x.GoPointer())
+
 	return cret
 }
 
@@ -1182,6 +1189,7 @@ func (x *AppInfoBase) GetCommandline() string {
 func (x *AppInfoBase) GetDescription() string {
 
 	cret := XGAppInfoGetDescription(x.GoPointer())
+
 	return cret
 }
 
@@ -1190,6 +1198,7 @@ func (x *AppInfoBase) GetDescription() string {
 func (x *AppInfoBase) GetDisplayName() string {
 
 	cret := XGAppInfoGetDisplayName(x.GoPointer())
+
 	return cret
 }
 
@@ -1201,6 +1210,7 @@ func (x *AppInfoBase) GetDisplayName() string {
 func (x *AppInfoBase) GetExecutable() string {
 
 	cret := XGAppInfoGetExecutable(x.GoPointer())
+
 	return cret
 }
 
@@ -1228,6 +1238,7 @@ func (x *AppInfoBase) GetIcon() *IconBase {
 func (x *AppInfoBase) GetId() string {
 
 	cret := XGAppInfoGetId(x.GoPointer())
+
 	return cret
 }
 
@@ -1235,6 +1246,7 @@ func (x *AppInfoBase) GetId() string {
 func (x *AppInfoBase) GetName() string {
 
 	cret := XGAppInfoGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -1248,6 +1260,7 @@ func (x *AppInfoBase) GetName() string {
 func (x *AppInfoBase) GetSupportedTypes() []string {
 
 	cret := XGAppInfoGetSupportedTypes(x.GoPointer())
+
 	return cret
 }
 
@@ -1282,6 +1295,7 @@ func (x *AppInfoBase) Launch(FilesVar *glib.List, ContextVar *AppLaunchContext) 
 	var cerr *glib.Error
 
 	cret := XGAppInfoLaunch(x.GoPointer(), FilesVar, ContextVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1305,6 +1319,7 @@ func (x *AppInfoBase) LaunchUris(UrisVar *glib.List, ContextVar *AppLaunchContex
 	var cerr *glib.Error
 
 	cret := XGAppInfoLaunchUris(x.GoPointer(), UrisVar, ContextVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1329,6 +1344,7 @@ func (x *AppInfoBase) LaunchUrisFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGAppInfoLaunchUrisFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1341,6 +1357,7 @@ func (x *AppInfoBase) RemoveSupportsType(ContentTypeVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGAppInfoRemoveSupportsType(x.GoPointer(), ContentTypeVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1353,6 +1370,7 @@ func (x *AppInfoBase) SetAsDefaultForExtension(ExtensionVar string) (bool, error
 	var cerr *glib.Error
 
 	cret := XGAppInfoSetAsDefaultForExtension(x.GoPointer(), ExtensionVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1365,6 +1383,7 @@ func (x *AppInfoBase) SetAsDefaultForType(ContentTypeVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGAppInfoSetAsDefaultForType(x.GoPointer(), ContentTypeVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1380,6 +1399,7 @@ func (x *AppInfoBase) SetAsLastUsedForType(ContentTypeVar string) (bool, error) 
 	var cerr *glib.Error
 
 	cret := XGAppInfoSetAsLastUsedForType(x.GoPointer(), ContentTypeVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1392,6 +1412,7 @@ func (x *AppInfoBase) SetAsLastUsedForType(ContentTypeVar string) (bool, error) 
 func (x *AppInfoBase) ShouldShow() bool {
 
 	cret := XGAppInfoShouldShow(x.GoPointer())
+
 	return cret
 }
 
@@ -1399,6 +1420,7 @@ func (x *AppInfoBase) ShouldShow() bool {
 func (x *AppInfoBase) SupportsFiles() bool {
 
 	cret := XGAppInfoSupportsFiles(x.GoPointer())
+
 	return cret
 }
 
@@ -1406,6 +1428,7 @@ func (x *AppInfoBase) SupportsFiles() bool {
 func (x *AppInfoBase) SupportsUris() bool {
 
 	cret := XGAppInfoSupportsUris(x.GoPointer())
+
 	return cret
 }
 
@@ -1450,7 +1473,11 @@ func AppInfoCreateFromCommandline(CommandlineVar string, ApplicationNameVar *str
 	var cls *AppInfoBase
 	var cerr *glib.Error
 
-	cret := xAppInfoCreateFromCommandline(CommandlineVar, core.NullableStringToPtr(ApplicationNameVar), FlagsVar, &cerr)
+	ApplicationNameVarPtr, ApplicationNameVarBytes := core.NullableStringToPtr(ApplicationNameVar)
+
+	cret := xAppInfoCreateFromCommandline(CommandlineVar, ApplicationNameVarPtr, FlagsVar, &cerr)
+
+	runtime.KeepAlive(ApplicationNameVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -1482,6 +1509,7 @@ var xAppInfoGetAll func() *glib.List
 func AppInfoGetAll() *glib.List {
 
 	cret := xAppInfoGetAll()
+
 	return cret
 }
 
@@ -1494,6 +1522,7 @@ var xAppInfoGetAllForType func(string) *glib.List
 func AppInfoGetAllForType(ContentTypeVar string) *glib.List {
 
 	cret := xAppInfoGetAllForType(ContentTypeVar)
+
 	return cret
 }
 
@@ -1642,6 +1671,7 @@ var xAppInfoGetFallbackForType func(string) *glib.List
 func AppInfoGetFallbackForType(ContentTypeVar string) *glib.List {
 
 	cret := xAppInfoGetFallbackForType(ContentTypeVar)
+
 	return cret
 }
 
@@ -1657,6 +1687,7 @@ var xAppInfoGetRecommendedForType func(string) *glib.List
 func AppInfoGetRecommendedForType(ContentTypeVar string) *glib.List {
 
 	cret := xAppInfoGetRecommendedForType(ContentTypeVar)
+
 	return cret
 }
 
@@ -1673,6 +1704,7 @@ func AppInfoLaunchDefaultForUri(UriVar string, ContextVar *AppLaunchContext) (bo
 	var cerr *glib.Error
 
 	cret := xAppInfoLaunchDefaultForUri(UriVar, ContextVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1719,6 +1751,7 @@ func AppInfoLaunchDefaultForUriFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xAppInfoLaunchDefaultForUriFinish(ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1899,6 +1932,7 @@ var xAppLaunchContextGetDisplay func(uintptr, uintptr, *glib.List) string
 func (x *AppLaunchContext) GetDisplay(InfoVar AppInfo, FilesVar *glib.List) string {
 
 	cret := xAppLaunchContextGetDisplay(x.GoPointer(), InfoVar.GoPointer(), FilesVar)
+
 	return cret
 }
 
@@ -1911,6 +1945,7 @@ var xAppLaunchContextGetEnvironment func(uintptr) []string
 func (x *AppLaunchContext) GetEnvironment() []string {
 
 	cret := xAppLaunchContextGetEnvironment(x.GoPointer())
+
 	return cret
 }
 
@@ -1934,6 +1969,7 @@ var xAppLaunchContextGetStartupNotifyId func(uintptr, uintptr, *glib.List) strin
 func (x *AppLaunchContext) GetStartupNotifyId(InfoVar AppInfo, FilesVar *glib.List) string {
 
 	cret := xAppLaunchContextGetStartupNotifyId(x.GoPointer(), InfoVar.GoPointer(), FilesVar)
+
 	return cret
 }
 

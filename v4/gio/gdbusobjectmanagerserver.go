@@ -144,6 +144,7 @@ var xDBusObjectManagerServerIsExported func(uintptr, uintptr) bool
 func (x *DBusObjectManagerServer) IsExported(ObjectVar *DBusObjectSkeleton) bool {
 
 	cret := xDBusObjectManagerServerIsExported(x.GoPointer(), ObjectVar.GoPointer())
+
 	return cret
 }
 
@@ -167,6 +168,7 @@ var xDBusObjectManagerServerUnexport func(uintptr, string) bool
 func (x *DBusObjectManagerServer) Unexport(ObjectPathVar string) bool {
 
 	cret := xDBusObjectManagerServerUnexport(x.GoPointer(), ObjectPathVar)
+
 	return cret
 }
 
@@ -231,6 +233,7 @@ func (x *DBusObjectManagerServer) GetObject(ObjectPathVar string) *DBusObjectBas
 func (x *DBusObjectManagerServer) GetObjectPath() string {
 
 	cret := XGDbusObjectManagerGetObjectPath(x.GoPointer())
+
 	return cret
 }
 
@@ -238,6 +241,7 @@ func (x *DBusObjectManagerServer) GetObjectPath() string {
 func (x *DBusObjectManagerServer) GetObjects() *glib.List {
 
 	cret := XGDbusObjectManagerGetObjects(x.GoPointer())
+
 	return cret
 }
 

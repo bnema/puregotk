@@ -234,6 +234,7 @@ func (x *PropertyAction) ChangeState(ValueVar *glib.Variant) {
 func (x *PropertyAction) GetEnabled() bool {
 
 	cret := XGActionGetEnabled(x.GoPointer())
+
 	return cret
 }
 
@@ -241,6 +242,7 @@ func (x *PropertyAction) GetEnabled() bool {
 func (x *PropertyAction) GetName() string {
 
 	cret := XGActionGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -256,6 +258,7 @@ func (x *PropertyAction) GetName() string {
 func (x *PropertyAction) GetParameterType() *glib.VariantType {
 
 	cret := XGActionGetParameterType(x.GoPointer())
+
 	return cret
 }
 
@@ -270,6 +273,7 @@ func (x *PropertyAction) GetParameterType() *glib.VariantType {
 func (x *PropertyAction) GetState() *glib.Variant {
 
 	cret := XGActionGetState(x.GoPointer())
+
 	return cret
 }
 
@@ -294,6 +298,7 @@ func (x *PropertyAction) GetState() *glib.Variant {
 func (x *PropertyAction) GetStateHint() *glib.Variant {
 
 	cret := XGActionGetStateHint(x.GoPointer())
+
 	return cret
 }
 
@@ -312,6 +317,7 @@ func (x *PropertyAction) GetStateHint() *glib.Variant {
 func (x *PropertyAction) GetStateType() *glib.VariantType {
 
 	cret := XGActionGetStateType(x.GoPointer())
+
 	return cret
 }
 

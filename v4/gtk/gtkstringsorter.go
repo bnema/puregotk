@@ -94,6 +94,7 @@ var xStringSorterGetCollation func(uintptr) Collation
 func (x *StringSorter) GetCollation() Collation {
 
 	cret := xStringSorterGetCollation(x.GoPointer())
+
 	return cret
 }
 
@@ -120,6 +121,7 @@ var xStringSorterGetIgnoreCase func(uintptr) bool
 func (x *StringSorter) GetIgnoreCase() bool {
 
 	cret := xStringSorterGetIgnoreCase(x.GoPointer())
+
 	return cret
 }
 

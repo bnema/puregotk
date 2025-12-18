@@ -152,6 +152,7 @@ var xDragSourceGetActions func(uintptr) gdk.DragAction
 func (x *DragSource) GetActions() gdk.DragAction {
 
 	cret := xDragSourceGetActions(x.GoPointer())
+
 	return cret
 }
 

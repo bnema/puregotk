@@ -533,6 +533,7 @@ var xObjectClassListProperties func(uintptr, *uint) uintptr
 func (x *ObjectClass) ListProperties(NPropertiesVar *uint) uintptr {
 
 	cret := xObjectClassListProperties(x.GoPointer(), NPropertiesVar)
+
 	return cret
 }
 
@@ -948,6 +949,7 @@ func CclosureNewObject(CallbackFuncVar *Callback, ObjectVar *Object) *Closure {
 	}
 
 	cret := xCclosureNewObject(CallbackFuncVarRef, ObjectVar.GoPointer())
+
 	return cret
 }
 
@@ -976,6 +978,7 @@ func CclosureNewObjectSwap(CallbackFuncVar *Callback, ObjectVar *Object) *Closur
 	}
 
 	cret := xCclosureNewObjectSwap(CallbackFuncVarRef, ObjectVar.GoPointer())
+
 	return cret
 }
 
@@ -1033,6 +1036,7 @@ func SignalConnectObject(InstanceVar *TypeInstance, DetailedSignalVar string, CH
 	}
 
 	cret := xSignalConnectObject(InstanceVar, DetailedSignalVar, CHandlerVarRef, GobjectVar.GoPointer(), ConnectFlagsVar)
+
 	return cret
 }
 
@@ -1529,6 +1533,7 @@ func (x *Object) DupData(KeyVar string, DupFuncVar *glib.DuplicateFunc, UserData
 	}
 
 	cret := xObjectDupData(x.GoPointer(), KeyVar, DupFuncVarRef, UserDataVar)
+
 	return cret
 }
 
@@ -1566,6 +1571,7 @@ func (x *Object) DupQdata(QuarkVar glib.Quark, DupFuncVar *glib.DuplicateFunc, U
 	}
 
 	cret := xObjectDupQdata(x.GoPointer(), QuarkVar, DupFuncVarRef, UserDataVar)
+
 	return cret
 }
 
@@ -1640,6 +1646,7 @@ var xObjectGetData func(uintptr, string) uintptr
 func (x *Object) GetData(KeyVar string) uintptr {
 
 	cret := xObjectGetData(x.GoPointer(), KeyVar)
+
 	return cret
 }
 
@@ -1674,6 +1681,7 @@ var xObjectGetQdata func(uintptr, glib.Quark) uintptr
 func (x *Object) GetQdata(QuarkVar glib.Quark) uintptr {
 
 	cret := xObjectGetQdata(x.GoPointer(), QuarkVar)
+
 	return cret
 }
 
@@ -1710,6 +1718,7 @@ var xObjectIsFloating func(uintptr) bool
 func (x *Object) IsFloating() bool {
 
 	cret := xObjectIsFloating(x.GoPointer())
+
 	return cret
 }
 
@@ -1905,6 +1914,7 @@ func (x *Object) ReplaceData(KeyVar string, OldvalVar uintptr, NewvalVar uintptr
 	}
 
 	cret := xObjectReplaceData(x.GoPointer(), KeyVar, OldvalVar, NewvalVar, DestroyVarRef, OldDestroyVar)
+
 	return cret
 }
 
@@ -1941,6 +1951,7 @@ func (x *Object) ReplaceQdata(QuarkVar glib.Quark, OldvalVar uintptr, NewvalVar 
 	}
 
 	cret := xObjectReplaceQdata(x.GoPointer(), QuarkVar, OldvalVar, NewvalVar, DestroyVarRef, OldDestroyVar)
+
 	return cret
 }
 
@@ -2101,6 +2112,7 @@ var xObjectStealData func(uintptr, string) uintptr
 func (x *Object) StealData(KeyVar string) uintptr {
 
 	cret := xObjectStealData(x.GoPointer(), KeyVar)
+
 	return cret
 }
 
@@ -2149,6 +2161,7 @@ var xObjectStealQdata func(uintptr, glib.Quark) uintptr
 func (x *Object) StealQdata(QuarkVar glib.Quark) uintptr {
 
 	cret := xObjectStealQdata(x.GoPointer(), QuarkVar)
+
 	return cret
 }
 
@@ -2392,6 +2405,7 @@ var xObjectCompatControl func(uint, uintptr) uint
 func ObjectCompatControl(WhatVar uint, DataVar uintptr) uint {
 
 	cret := xObjectCompatControl(WhatVar, DataVar)
+
 	return cret
 }
 
@@ -2449,6 +2463,7 @@ var xObjectInterfaceListProperties func(*TypeInterface, *uint) uintptr
 func ObjectInterfaceListProperties(GIfaceVar *TypeInterface, NPropertiesPVar *uint) uintptr {
 
 	cret := xObjectInterfaceListProperties(GIfaceVar, NPropertiesPVar)
+
 	return cret
 }
 

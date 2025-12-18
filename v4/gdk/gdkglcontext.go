@@ -15,6 +15,7 @@ var xGlErrorQuark func() glib.Quark
 func GlErrorQuark() glib.Quark {
 
 	cret := xGlErrorQuark()
+
 	return cret
 }
 
@@ -88,6 +89,7 @@ var xGLContextGetAllowedApis func(uintptr) GLAPI
 func (x *GLContext) GetAllowedApis() GLAPI {
 
 	cret := xGLContextGetAllowedApis(x.GoPointer())
+
 	return cret
 }
 
@@ -99,6 +101,7 @@ var xGLContextGetApi func(uintptr) GLAPI
 func (x *GLContext) GetApi() GLAPI {
 
 	cret := xGLContextGetApi(x.GoPointer())
+
 	return cret
 }
 
@@ -110,6 +113,7 @@ var xGLContextGetDebugEnabled func(uintptr) bool
 func (x *GLContext) GetDebugEnabled() bool {
 
 	cret := xGLContextGetDebugEnabled(x.GoPointer())
+
 	return cret
 }
 
@@ -138,6 +142,7 @@ var xGLContextGetForwardCompatible func(uintptr) bool
 func (x *GLContext) GetForwardCompatible() bool {
 
 	cret := xGLContextGetForwardCompatible(x.GoPointer())
+
 	return cret
 }
 
@@ -198,6 +203,7 @@ var xGLContextGetUseEs func(uintptr) bool
 func (x *GLContext) GetUseEs() bool {
 
 	cret := xGLContextGetUseEs(x.GoPointer())
+
 	return cret
 }
 
@@ -233,6 +239,7 @@ var xGLContextIsLegacy func(uintptr) bool
 func (x *GLContext) IsLegacy() bool {
 
 	cret := xGLContextIsLegacy(x.GoPointer())
+
 	return cret
 }
 
@@ -253,6 +260,7 @@ var xGLContextIsShared func(uintptr, uintptr) bool
 func (x *GLContext) IsShared(OtherVar *GLContext) bool {
 
 	cret := xGLContextIsShared(x.GoPointer(), OtherVar.GoPointer())
+
 	return cret
 }
 
@@ -274,6 +282,7 @@ func (x *GLContext) Realize() (bool, error) {
 	var cerr *glib.Error
 
 	cret := xGLContextRealize(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}

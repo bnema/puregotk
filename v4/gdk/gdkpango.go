@@ -23,6 +23,7 @@ var xPangoLayoutGetClipRegion func(uintptr, int, int, int, int) *cairo.Region
 func PangoLayoutGetClipRegion(LayoutVar *pango.Layout, XOriginVar int, YOriginVar int, IndexRangesVar int, NRangesVar int) *cairo.Region {
 
 	cret := xPangoLayoutGetClipRegion(LayoutVar.GoPointer(), XOriginVar, YOriginVar, IndexRangesVar, NRangesVar)
+
 	return cret
 }
 
@@ -46,6 +47,7 @@ var xPangoLayoutLineGetClipRegion func(*pango.LayoutLine, int, int, []int, int) 
 func PangoLayoutLineGetClipRegion(LineVar *pango.LayoutLine, XOriginVar int, YOriginVar int, IndexRangesVar []int, NRangesVar int) *cairo.Region {
 
 	cret := xPangoLayoutLineGetClipRegion(LineVar, XOriginVar, YOriginVar, IndexRangesVar, NRangesVar)
+
 	return cret
 }
 

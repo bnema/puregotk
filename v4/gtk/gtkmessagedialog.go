@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -148,7 +149,11 @@ var xNewMessageDialog func(uintptr, DialogFlags, MessageType, ButtonsType, uintp
 func NewMessageDialog(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar *string, varArgs ...interface{}) *MessageDialog {
 	var cls *MessageDialog
 
-	cret := xNewMessageDialog(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, core.NullableStringToPtr(MessageFormatVar), varArgs...)
+	MessageFormatVarPtr, MessageFormatVarBytes := core.NullableStringToPtr(MessageFormatVar)
+
+	cret := xNewMessageDialog(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, MessageFormatVarPtr, varArgs...)
+
+	runtime.KeepAlive(MessageFormatVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -196,7 +201,11 @@ var xNewMessageDialogWithMarkup func(uintptr, DialogFlags, MessageType, ButtonsT
 func NewMessageDialogWithMarkup(ParentVar *Window, FlagsVar DialogFlags, TypeVar MessageType, ButtonsVar ButtonsType, MessageFormatVar *string, varArgs ...interface{}) *MessageDialog {
 	var cls *MessageDialog
 
-	cret := xNewMessageDialogWithMarkup(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, core.NullableStringToPtr(MessageFormatVar), varArgs...)
+	MessageFormatVarPtr, MessageFormatVarBytes := core.NullableStringToPtr(MessageFormatVar)
+
+	cret := xNewMessageDialogWithMarkup(ParentVar.GoPointer(), FlagsVar, TypeVar, ButtonsVar, MessageFormatVarPtr, varArgs...)
+
+	runtime.KeepAlive(MessageFormatVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -239,7 +248,11 @@ var xMessageDialogFormatSecondaryText func(uintptr, uintptr, ...interface{})
 // Sets the secondary text of the message dialog.
 func (x *MessageDialog) FormatSecondaryText(MessageFormatVar *string, varArgs ...interface{}) {
 
-	xMessageDialogFormatSecondaryText(x.GoPointer(), core.NullableStringToPtr(MessageFormatVar), varArgs...)
+	MessageFormatVarPtr, MessageFormatVarBytes := core.NullableStringToPtr(MessageFormatVar)
+
+	xMessageDialogFormatSecondaryText(x.GoPointer(), MessageFormatVarPtr, varArgs...)
+
+	runtime.KeepAlive(MessageFormatVarBytes)
 
 }
 
@@ -400,6 +413,7 @@ func (x *MessageDialog) GetAccessibleParent() *AccessibleBase {
 func (x *MessageDialog) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -425,6 +439,7 @@ func (x *MessageDialog) GetAtContext() *ATContext {
 func (x *MessageDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -464,6 +479,7 @@ func (x *MessageDialog) GetNextAccessibleSibling() *AccessibleBase {
 func (x *MessageDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -640,6 +656,7 @@ func (x *MessageDialog) UpdateStateValue(NStatesVar int, StatesVar []AccessibleS
 func (x *MessageDialog) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

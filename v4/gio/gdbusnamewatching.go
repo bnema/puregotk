@@ -115,6 +115,7 @@ func BusWatchName(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFla
 	}
 
 	cret := xBusWatchName(BusTypeVar, NameVar, FlagsVar, NameAppearedHandlerVarRef, NameVanishedHandlerVarRef, UserDataVar, UserDataFreeFuncVarRef)
+
 	return cret
 }
 
@@ -170,6 +171,7 @@ func BusWatchNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Fla
 	}
 
 	cret := xBusWatchNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, NameAppearedHandlerVarRef, NameVanishedHandlerVarRef, UserDataVar, UserDataFreeFuncVarRef)
+
 	return cret
 }
 
@@ -180,6 +182,7 @@ var xBusWatchNameOnConnectionWithClosures func(uintptr, string, BusNameWatcherFl
 func BusWatchNameOnConnectionWithClosures(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedClosureVar *gobject.Closure, NameVanishedClosureVar *gobject.Closure) uint {
 
 	cret := xBusWatchNameOnConnectionWithClosures(ConnectionVar.GoPointer(), NameVar, FlagsVar, NameAppearedClosureVar, NameVanishedClosureVar)
+
 	return cret
 }
 
@@ -190,6 +193,7 @@ var xBusWatchNameWithClosures func(BusType, string, BusNameWatcherFlags, *gobjec
 func BusWatchNameWithClosures(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFlags, NameAppearedClosureVar *gobject.Closure, NameVanishedClosureVar *gobject.Closure) uint {
 
 	cret := xBusWatchNameWithClosures(BusTypeVar, NameVar, FlagsVar, NameAppearedClosureVar, NameVanishedClosureVar)
+
 	return cret
 }
 

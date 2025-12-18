@@ -66,6 +66,7 @@ var xNewValueArray func(uint) *ValueArray
 func NewValueArray(NPreallocedVar uint) *ValueArray {
 
 	cret := xNewValueArray(NPreallocedVar)
+
 	return cret
 }
 
@@ -76,6 +77,7 @@ var xValueArrayAppend func(uintptr, *Value) *ValueArray
 func (x *ValueArray) Append(ValueVar *Value) *ValueArray {
 
 	cret := xValueArrayAppend(x.GoPointer(), ValueVar)
+
 	return cret
 }
 
@@ -86,6 +88,7 @@ var xValueArrayCopy func(uintptr) *ValueArray
 func (x *ValueArray) Copy() *ValueArray {
 
 	cret := xValueArrayCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -104,6 +107,7 @@ var xValueArrayGetNth func(uintptr, uint) *Value
 func (x *ValueArray) GetNth(IndexVar uint) *Value {
 
 	cret := xValueArrayGetNth(x.GoPointer(), IndexVar)
+
 	return cret
 }
 
@@ -114,6 +118,7 @@ var xValueArrayInsert func(uintptr, uint, *Value) *ValueArray
 func (x *ValueArray) Insert(IndexVar uint, ValueVar *Value) *ValueArray {
 
 	cret := xValueArrayInsert(x.GoPointer(), IndexVar, ValueVar)
+
 	return cret
 }
 
@@ -124,6 +129,7 @@ var xValueArrayPrepend func(uintptr, *Value) *ValueArray
 func (x *ValueArray) Prepend(ValueVar *Value) *ValueArray {
 
 	cret := xValueArrayPrepend(x.GoPointer(), ValueVar)
+
 	return cret
 }
 
@@ -133,6 +139,7 @@ var xValueArrayRemove func(uintptr, uint) *ValueArray
 func (x *ValueArray) Remove(IndexVar uint) *ValueArray {
 
 	cret := xValueArrayRemove(x.GoPointer(), IndexVar)
+
 	return cret
 }
 
@@ -161,6 +168,7 @@ func (x *ValueArray) Sort(CompareFuncVar *glib.CompareFunc) *ValueArray {
 	}
 
 	cret := xValueArraySort(x.GoPointer(), CompareFuncVarRef)
+
 	return cret
 }
 
@@ -189,6 +197,7 @@ func (x *ValueArray) SortWithData(CompareFuncVar *glib.CompareDataFunc, UserData
 	}
 
 	cret := xValueArraySortWithData(x.GoPointer(), CompareFuncVarRef, UserDataVar)
+
 	return cret
 }
 

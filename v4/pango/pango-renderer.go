@@ -2,6 +2,7 @@
 package pango
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -553,7 +554,11 @@ var xRendererDrawGlyphItem func(uintptr, uintptr, *GlyphItem, int, int)
 // [method@Pango.Renderer.draw_glyphs].
 func (x *Renderer) DrawGlyphItem(TextVar *string, GlyphItemVar *GlyphItem, XVar int, YVar int) {
 
-	xRendererDrawGlyphItem(x.GoPointer(), core.NullableStringToPtr(TextVar), GlyphItemVar, XVar, YVar)
+	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+
+	xRendererDrawGlyphItem(x.GoPointer(), TextVarPtr, GlyphItemVar, XVar, YVar)
+
+	runtime.KeepAlive(TextVarBytes)
 
 }
 
@@ -620,6 +625,7 @@ var xRendererGetAlpha func(uintptr, RenderPart) uint16
 func (x *Renderer) GetAlpha(PartVar RenderPart) uint16 {
 
 	cret := xRendererGetAlpha(x.GoPointer(), PartVar)
+
 	return cret
 }
 
@@ -629,6 +635,7 @@ var xRendererGetColor func(uintptr, RenderPart) *Color
 func (x *Renderer) GetColor(PartVar RenderPart) *Color {
 
 	cret := xRendererGetColor(x.GoPointer(), PartVar)
+
 	return cret
 }
 
@@ -667,6 +674,7 @@ var xRendererGetLayoutLine func(uintptr) *LayoutLine
 func (x *Renderer) GetLayoutLine() *LayoutLine {
 
 	cret := xRendererGetLayoutLine(x.GoPointer())
+
 	return cret
 }
 
@@ -679,6 +687,7 @@ var xRendererGetMatrix func(uintptr) *Matrix
 func (x *Renderer) GetMatrix() *Matrix {
 
 	cret := xRendererGetMatrix(x.GoPointer())
+
 	return cret
 }
 

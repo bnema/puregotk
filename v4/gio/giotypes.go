@@ -141,6 +141,7 @@ var xNewFileAttributeMatcher func(string) *FileAttributeMatcher
 func NewFileAttributeMatcher(AttributesVar string) *FileAttributeMatcher {
 
 	cret := xNewFileAttributeMatcher(AttributesVar)
+
 	return cret
 }
 
@@ -155,6 +156,7 @@ var xFileAttributeMatcherEnumerateNamespace func(uintptr, string) bool
 func (x *FileAttributeMatcher) EnumerateNamespace(NsVar string) bool {
 
 	cret := xFileAttributeMatcherEnumerateNamespace(x.GoPointer(), NsVar)
+
 	return cret
 }
 
@@ -164,6 +166,7 @@ var xFileAttributeMatcherEnumerateNext func(uintptr) string
 func (x *FileAttributeMatcher) EnumerateNext() string {
 
 	cret := xFileAttributeMatcherEnumerateNext(x.GoPointer())
+
 	return cret
 }
 
@@ -175,6 +178,7 @@ var xFileAttributeMatcherMatches func(uintptr, string) bool
 func (x *FileAttributeMatcher) Matches(AttributeVar string) bool {
 
 	cret := xFileAttributeMatcherMatches(x.GoPointer(), AttributeVar)
+
 	return cret
 }
 
@@ -185,6 +189,7 @@ var xFileAttributeMatcherMatchesOnly func(uintptr, string) bool
 func (x *FileAttributeMatcher) MatchesOnly(AttributeVar string) bool {
 
 	cret := xFileAttributeMatcherMatchesOnly(x.GoPointer(), AttributeVar)
+
 	return cret
 }
 
@@ -194,6 +199,7 @@ var xFileAttributeMatcherRef func(uintptr) *FileAttributeMatcher
 func (x *FileAttributeMatcher) Ref() *FileAttributeMatcher {
 
 	cret := xFileAttributeMatcherRef(x.GoPointer())
+
 	return cret
 }
 
@@ -210,6 +216,7 @@ var xFileAttributeMatcherSubtract func(uintptr, *FileAttributeMatcher) *FileAttr
 func (x *FileAttributeMatcher) Subtract(SubtractVar *FileAttributeMatcher) *FileAttributeMatcher {
 
 	cret := xFileAttributeMatcherSubtract(x.GoPointer(), SubtractVar)
+
 	return cret
 }
 
@@ -222,6 +229,7 @@ var xFileAttributeMatcherToString func(uintptr) string
 func (x *FileAttributeMatcher) ToString() string {
 
 	cret := xFileAttributeMatcherToString(x.GoPointer())
+
 	return cret
 }
 
@@ -254,6 +262,7 @@ var xIOExtensionGetName func(uintptr) string
 func (x *IOExtension) GetName() string {
 
 	cret := xIOExtensionGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -263,6 +272,7 @@ var xIOExtensionGetPriority func(uintptr) int
 func (x *IOExtension) GetPriority() int {
 
 	cret := xIOExtensionGetPriority(x.GoPointer())
+
 	return cret
 }
 
@@ -272,6 +282,7 @@ var xIOExtensionGetType func(uintptr) types.GType
 func (x *IOExtension) GetType() types.GType {
 
 	cret := xIOExtensionGetType(x.GoPointer())
+
 	return cret
 }
 
@@ -282,6 +293,7 @@ var xIOExtensionRefClass func(uintptr) *gobject.TypeClass
 func (x *IOExtension) RefClass() *gobject.TypeClass {
 
 	cret := xIOExtensionRefClass(x.GoPointer())
+
 	return cret
 }
 
@@ -352,6 +364,7 @@ var xIOExtensionPointGetExtensionByName func(uintptr, string) *IOExtension
 func (x *IOExtensionPoint) GetExtensionByName(NameVar string) *IOExtension {
 
 	cret := xIOExtensionPointGetExtensionByName(x.GoPointer(), NameVar)
+
 	return cret
 }
 
@@ -362,6 +375,7 @@ var xIOExtensionPointGetExtensions func(uintptr) *glib.List
 func (x *IOExtensionPoint) GetExtensions() *glib.List {
 
 	cret := xIOExtensionPointGetExtensions(x.GoPointer())
+
 	return cret
 }
 
@@ -371,6 +385,7 @@ var xIOExtensionPointGetRequiredType func(uintptr) types.GType
 func (x *IOExtensionPoint) GetRequiredType() types.GType {
 
 	cret := xIOExtensionPointGetRequiredType(x.GoPointer())
+
 	return cret
 }
 
@@ -431,6 +446,7 @@ func (x *IOSchedulerJob) SendToMainloop(FuncVar *glib.SourceFunc, UserDataVar ui
 	}
 
 	cret := xIOSchedulerJobSendToMainloop(x.GoPointer(), FuncVarRef, UserDataVar, NotifyVarRef)
+
 	return cret
 }
 
@@ -785,6 +801,7 @@ func NewResourceFromData(DataVar *glib.Bytes) (*Resource, error) {
 	var cerr *glib.Error
 
 	cret := xNewResourceFromData(DataVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -829,6 +846,7 @@ func (x *Resource) EnumerateChildren(PathVar string, LookupFlagsVar ResourceLook
 	var cerr *glib.Error
 
 	cret := xResourceEnumerateChildren(x.GoPointer(), PathVar, LookupFlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -849,6 +867,7 @@ func (x *Resource) GetInfo(PathVar string, LookupFlagsVar ResourceLookupFlags, S
 	var cerr *glib.Error
 
 	cret := xResourceGetInfo(x.GoPointer(), PathVar, LookupFlagsVar, SizeVar, FlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -863,6 +882,7 @@ var xResourceHasChildren func(uintptr, string) bool
 func (x *Resource) HasChildren(PathVar string) bool {
 
 	cret := xResourceHasChildren(x.GoPointer(), PathVar)
+
 	return cret
 }
 
@@ -890,6 +910,7 @@ func (x *Resource) LookupData(PathVar string, LookupFlagsVar ResourceLookupFlags
 	var cerr *glib.Error
 
 	cret := xResourceLookupData(x.GoPointer(), PathVar, LookupFlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -932,6 +953,7 @@ var xResourceRef func(uintptr) *Resource
 func (x *Resource) Ref() *Resource {
 
 	cret := xResourceRef(x.GoPointer())
+
 	return cret
 }
 
@@ -987,6 +1009,7 @@ var xNewSrvTarget func(string, uint16, uint16, uint16) *SrvTarget
 func NewSrvTarget(HostnameVar string, PortVar uint16, PriorityVar uint16, WeightVar uint16) *SrvTarget {
 
 	cret := xNewSrvTarget(HostnameVar, PortVar, PriorityVar, WeightVar)
+
 	return cret
 }
 
@@ -996,6 +1019,7 @@ var xSrvTargetCopy func(uintptr) *SrvTarget
 func (x *SrvTarget) Copy() *SrvTarget {
 
 	cret := xSrvTargetCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -1017,6 +1041,7 @@ var xSrvTargetGetHostname func(uintptr) string
 func (x *SrvTarget) GetHostname() string {
 
 	cret := xSrvTargetGetHostname(x.GoPointer())
+
 	return cret
 }
 
@@ -1026,6 +1051,7 @@ var xSrvTargetGetPort func(uintptr) uint16
 func (x *SrvTarget) GetPort() uint16 {
 
 	cret := xSrvTargetGetPort(x.GoPointer())
+
 	return cret
 }
 
@@ -1037,6 +1063,7 @@ var xSrvTargetGetPriority func(uintptr) uint16
 func (x *SrvTarget) GetPriority() uint16 {
 
 	cret := xSrvTargetGetPriority(x.GoPointer())
+
 	return cret
 }
 
@@ -1048,6 +1075,7 @@ var xSrvTargetGetWeight func(uintptr) uint16
 func (x *SrvTarget) GetWeight() uint16 {
 
 	cret := xSrvTargetGetWeight(x.GoPointer())
+
 	return cret
 }
 

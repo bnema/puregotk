@@ -111,6 +111,7 @@ var xGridViewGetEnableRubberband func(uintptr) bool
 func (x *GridView) GetEnableRubberband() bool {
 
 	cret := xGridViewGetEnableRubberband(x.GoPointer())
+
 	return cret
 }
 
@@ -137,6 +138,7 @@ var xGridViewGetMaxColumns func(uintptr) uint
 func (x *GridView) GetMaxColumns() uint {
 
 	cret := xGridViewGetMaxColumns(x.GoPointer())
+
 	return cret
 }
 
@@ -146,6 +148,7 @@ var xGridViewGetMinColumns func(uintptr) uint
 func (x *GridView) GetMinColumns() uint {
 
 	cret := xGridViewGetMinColumns(x.GoPointer())
+
 	return cret
 }
 
@@ -173,6 +176,7 @@ var xGridViewGetSingleClickActivate func(uintptr) bool
 func (x *GridView) GetSingleClickActivate() bool {
 
 	cret := xGridViewGetSingleClickActivate(x.GoPointer())
+
 	return cret
 }
 
@@ -182,6 +186,7 @@ var xGridViewGetTabBehavior func(uintptr) ListTabBehavior
 func (x *GridView) GetTabBehavior() ListTabBehavior {
 
 	cret := xGridViewGetTabBehavior(x.GoPointer())
+
 	return cret
 }
 
@@ -419,6 +424,7 @@ func (x *GridView) GetAccessibleParent() *AccessibleBase {
 func (x *GridView) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -444,6 +450,7 @@ func (x *GridView) GetAtContext() *ATContext {
 func (x *GridView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -483,6 +490,7 @@ func (x *GridView) GetNextAccessibleSibling() *AccessibleBase {
 func (x *GridView) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -659,6 +667,7 @@ func (x *GridView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *GridView) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -666,6 +675,7 @@ func (x *GridView) GetBuildableId() string {
 func (x *GridView) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 
@@ -685,6 +695,7 @@ func (x *GridView) SetOrientation(OrientationVar Orientation) {
 func (x *GridView) GetBorder(BorderVar *Border) bool {
 
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
+
 	return cret
 }
 
@@ -707,6 +718,7 @@ func (x *GridView) GetHadjustment() *Adjustment {
 func (x *GridView) GetHscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
+
 	return cret
 }
 
@@ -729,6 +741,7 @@ func (x *GridView) GetVadjustment() *Adjustment {
 func (x *GridView) GetVscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
+
 	return cret
 }
 

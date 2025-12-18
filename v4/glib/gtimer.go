@@ -53,6 +53,7 @@ var xTimerElapsed func(uintptr, uint32) float64
 func (x *Timer) Elapsed(MicrosecondsVar uint32) float64 {
 
 	cret := xTimerElapsed(x.GoPointer(), MicrosecondsVar)
+
 	return cret
 }
 
@@ -62,6 +63,7 @@ var xTimerIsActive func(uintptr) bool
 func (x *Timer) IsActive() bool {
 
 	cret := xTimerIsActive(x.GoPointer())
+
 	return cret
 }
 
@@ -126,6 +128,7 @@ var xTimeValFromIso8601 func(string, *TimeVal) bool
 func TimeValFromIso8601(IsoDateVar string, TimeVar *TimeVal) bool {
 
 	cret := xTimeValFromIso8601(IsoDateVar, TimeVar)
+
 	return cret
 }
 

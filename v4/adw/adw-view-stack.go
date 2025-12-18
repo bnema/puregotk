@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -159,7 +160,11 @@ var xViewStackAddNamed func(uintptr, uintptr, uintptr) uintptr
 func (x *ViewStack) AddNamed(ChildVar *gtk.Widget, NameVar *string) *ViewStackPage {
 	var cls *ViewStackPage
 
-	cret := xViewStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), core.NullableStringToPtr(NameVar))
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	cret := xViewStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), NameVarPtr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -179,7 +184,11 @@ var xViewStackAddTitled func(uintptr, uintptr, uintptr, string) uintptr
 func (x *ViewStack) AddTitled(ChildVar *gtk.Widget, NameVar *string, TitleVar string) *ViewStackPage {
 	var cls *ViewStackPage
 
-	cret := xViewStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), core.NullableStringToPtr(NameVar), TitleVar)
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	cret := xViewStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), NameVarPtr, TitleVar)
+
+	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -199,7 +208,11 @@ var xViewStackAddTitledWithIcon func(uintptr, uintptr, uintptr, string, string) 
 func (x *ViewStack) AddTitledWithIcon(ChildVar *gtk.Widget, NameVar *string, TitleVar string, IconNameVar string) *ViewStackPage {
 	var cls *ViewStackPage
 
-	cret := xViewStackAddTitledWithIcon(x.GoPointer(), ChildVar.GoPointer(), core.NullableStringToPtr(NameVar), TitleVar, IconNameVar)
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	cret := xViewStackAddTitledWithIcon(x.GoPointer(), ChildVar.GoPointer(), NameVarPtr, TitleVar, IconNameVar)
+
+	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -237,6 +250,7 @@ var xViewStackGetEnableTransitions func(uintptr) bool
 func (x *ViewStack) GetEnableTransitions() bool {
 
 	cret := xViewStackGetEnableTransitions(x.GoPointer())
+
 	return cret
 }
 
@@ -246,6 +260,7 @@ var xViewStackGetHhomogeneous func(uintptr) bool
 func (x *ViewStack) GetHhomogeneous() bool {
 
 	cret := xViewStackGetHhomogeneous(x.GoPointer())
+
 	return cret
 }
 
@@ -292,6 +307,7 @@ var xViewStackGetTransitionDuration func(uintptr) uint
 func (x *ViewStack) GetTransitionDuration() uint {
 
 	cret := xViewStackGetTransitionDuration(x.GoPointer())
+
 	return cret
 }
 
@@ -305,6 +321,7 @@ var xViewStackGetTransitionRunning func(uintptr) bool
 func (x *ViewStack) GetTransitionRunning() bool {
 
 	cret := xViewStackGetTransitionRunning(x.GoPointer())
+
 	return cret
 }
 
@@ -314,6 +331,7 @@ var xViewStackGetVhomogeneous func(uintptr) bool
 func (x *ViewStack) GetVhomogeneous() bool {
 
 	cret := xViewStackGetVhomogeneous(x.GoPointer())
+
 	return cret
 }
 
@@ -340,6 +358,7 @@ var xViewStackGetVisibleChildName func(uintptr) string
 func (x *ViewStack) GetVisibleChildName() string {
 
 	cret := xViewStackGetVisibleChildName(x.GoPointer())
+
 	return cret
 }
 
@@ -605,6 +624,7 @@ func (x *ViewStack) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ViewStack) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -630,6 +650,7 @@ func (x *ViewStack) GetAtContext() *gtk.ATContext {
 func (x *ViewStack) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -669,6 +690,7 @@ func (x *ViewStack) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ViewStack) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -845,6 +867,7 @@ func (x *ViewStack) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleS
 func (x *ViewStack) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -871,6 +894,7 @@ var xViewStackPageGetBadgeNumber func(uintptr) uint
 func (x *ViewStackPage) GetBadgeNumber() uint {
 
 	cret := xViewStackPageGetBadgeNumber(x.GoPointer())
+
 	return cret
 }
 
@@ -897,6 +921,7 @@ var xViewStackPageGetIconName func(uintptr) string
 func (x *ViewStackPage) GetIconName() string {
 
 	cret := xViewStackPageGetIconName(x.GoPointer())
+
 	return cret
 }
 
@@ -906,6 +931,7 @@ var xViewStackPageGetName func(uintptr) string
 func (x *ViewStackPage) GetName() string {
 
 	cret := xViewStackPageGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -915,6 +941,7 @@ var xViewStackPageGetNeedsAttention func(uintptr) bool
 func (x *ViewStackPage) GetNeedsAttention() bool {
 
 	cret := xViewStackPageGetNeedsAttention(x.GoPointer())
+
 	return cret
 }
 
@@ -924,6 +951,7 @@ var xViewStackPageGetTitle func(uintptr) string
 func (x *ViewStackPage) GetTitle() string {
 
 	cret := xViewStackPageGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -933,6 +961,7 @@ var xViewStackPageGetUseUnderline func(uintptr) bool
 func (x *ViewStackPage) GetUseUnderline() bool {
 
 	cret := xViewStackPageGetUseUnderline(x.GoPointer())
+
 	return cret
 }
 
@@ -945,6 +974,7 @@ var xViewStackPageGetVisible func(uintptr) bool
 func (x *ViewStackPage) GetVisible() bool {
 
 	cret := xViewStackPageGetVisible(x.GoPointer())
+
 	return cret
 }
 
@@ -967,7 +997,11 @@ var xViewStackPageSetIconName func(uintptr, uintptr)
 // Sets the icon name of the page.
 func (x *ViewStackPage) SetIconName(IconNameVar *string) {
 
-	xViewStackPageSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
+	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+
+	xViewStackPageSetIconName(x.GoPointer(), IconNameVarPtr)
+
+	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -976,7 +1010,11 @@ var xViewStackPageSetName func(uintptr, uintptr)
 // Sets the name of the page.
 func (x *ViewStackPage) SetName(NameVar *string) {
 
-	xViewStackPageSetName(x.GoPointer(), core.NullableStringToPtr(NameVar))
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xViewStackPageSetName(x.GoPointer(), NameVarPtr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -996,7 +1034,11 @@ var xViewStackPageSetTitle func(uintptr, uintptr)
 // Sets the page title.
 func (x *ViewStackPage) SetTitle(TitleVar *string) {
 
-	xViewStackPageSetTitle(x.GoPointer(), core.NullableStringToPtr(TitleVar))
+	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+
+	xViewStackPageSetTitle(x.GoPointer(), TitleVarPtr)
+
+	runtime.KeepAlive(TitleVarBytes)
 
 }
 
@@ -1206,6 +1248,7 @@ func (x *ViewStackPage) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ViewStackPage) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -1231,6 +1274,7 @@ func (x *ViewStackPage) GetAtContext() *gtk.ATContext {
 func (x *ViewStackPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1270,6 +1314,7 @@ func (x *ViewStackPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ViewStackPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1513,6 +1558,7 @@ func (c *ViewStackPages) SetGoPointer(ptr uintptr) {
 func (x *ViewStackPages) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -1527,6 +1573,7 @@ func (x *ViewStackPages) GetItem(PositionVar uint) uintptr {
 func (x *ViewStackPages) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -1538,6 +1585,7 @@ func (x *ViewStackPages) GetItemType() types.GType {
 func (x *ViewStackPages) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -1600,6 +1648,7 @@ func (x *ViewStackPages) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVa
 func (x *ViewStackPages) GetSelection() *gtk.Bitset {
 
 	cret := gtk.XGtkSelectionModelGetSelection(x.GoPointer())
+
 	return cret
 }
 
@@ -1613,6 +1662,7 @@ func (x *ViewStackPages) GetSelection() *gtk.Bitset {
 func (x *ViewStackPages) GetSelectionInRange(PositionVar uint, NItemsVar uint) *gtk.Bitset {
 
 	cret := gtk.XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
+
 	return cret
 }
 
@@ -1620,6 +1670,7 @@ func (x *ViewStackPages) GetSelectionInRange(PositionVar uint, NItemsVar uint) *
 func (x *ViewStackPages) IsSelected(PositionVar uint) bool {
 
 	cret := gtk.XGtkSelectionModelIsSelected(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -1627,6 +1678,7 @@ func (x *ViewStackPages) IsSelected(PositionVar uint) bool {
 func (x *ViewStackPages) SelectAll() bool {
 
 	cret := gtk.XGtkSelectionModelSelectAll(x.GoPointer())
+
 	return cret
 }
 
@@ -1634,6 +1686,7 @@ func (x *ViewStackPages) SelectAll() bool {
 func (x *ViewStackPages) SelectItem(PositionVar uint, UnselectRestVar bool) bool {
 
 	cret := gtk.XGtkSelectionModelSelectItem(x.GoPointer(), PositionVar, UnselectRestVar)
+
 	return cret
 }
 
@@ -1641,6 +1694,7 @@ func (x *ViewStackPages) SelectItem(PositionVar uint, UnselectRestVar bool) bool
 func (x *ViewStackPages) SelectRange(PositionVar uint, NItemsVar uint, UnselectRestVar bool) bool {
 
 	cret := gtk.XGtkSelectionModelSelectRange(x.GoPointer(), PositionVar, NItemsVar, UnselectRestVar)
+
 	return cret
 }
 
@@ -1693,6 +1747,7 @@ func (x *ViewStackPages) SelectionChanged(PositionVar uint, NItemsVar uint) {
 func (x *ViewStackPages) SetSelection(SelectedVar *gtk.Bitset, MaskVar *gtk.Bitset) bool {
 
 	cret := gtk.XGtkSelectionModelSetSelection(x.GoPointer(), SelectedVar, MaskVar)
+
 	return cret
 }
 
@@ -1700,6 +1755,7 @@ func (x *ViewStackPages) SetSelection(SelectedVar *gtk.Bitset, MaskVar *gtk.Bits
 func (x *ViewStackPages) UnselectAll() bool {
 
 	cret := gtk.XGtkSelectionModelUnselectAll(x.GoPointer())
+
 	return cret
 }
 
@@ -1707,6 +1763,7 @@ func (x *ViewStackPages) UnselectAll() bool {
 func (x *ViewStackPages) UnselectItem(PositionVar uint) bool {
 
 	cret := gtk.XGtkSelectionModelUnselectItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -1714,6 +1771,7 @@ func (x *ViewStackPages) UnselectItem(PositionVar uint) bool {
 func (x *ViewStackPages) UnselectRange(PositionVar uint, NItemsVar uint) bool {
 
 	cret := gtk.XGtkSelectionModelUnselectRange(x.GoPointer(), PositionVar, NItemsVar)
+
 	return cret
 }
 

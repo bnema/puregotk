@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -60,6 +61,7 @@ var xIconThemeErrorQuark func() glib.Quark
 func IconThemeErrorQuark() glib.Quark {
 
 	cret := xIconThemeErrorQuark()
+
 	return cret
 }
 
@@ -184,6 +186,7 @@ var xIconThemeGetIconNames func(uintptr) []string
 func (x *IconTheme) GetIconNames() []string {
 
 	cret := xIconThemeGetIconNames(x.GoPointer())
+
 	return cret
 }
 
@@ -197,6 +200,7 @@ var xIconThemeGetIconSizes func(uintptr, string) uintptr
 func (x *IconTheme) GetIconSizes(IconNameVar string) uintptr {
 
 	cret := xIconThemeGetIconSizes(x.GoPointer(), IconNameVar)
+
 	return cret
 }
 
@@ -208,6 +212,7 @@ var xIconThemeGetResourcePath func(uintptr) []string
 func (x *IconTheme) GetResourcePath() []string {
 
 	cret := xIconThemeGetResourcePath(x.GoPointer())
+
 	return cret
 }
 
@@ -219,6 +224,7 @@ var xIconThemeGetSearchPath func(uintptr) []string
 func (x *IconTheme) GetSearchPath() []string {
 
 	cret := xIconThemeGetSearchPath(x.GoPointer())
+
 	return cret
 }
 
@@ -228,6 +234,7 @@ var xIconThemeGetThemeName func(uintptr) string
 func (x *IconTheme) GetThemeName() string {
 
 	cret := xIconThemeGetThemeName(x.GoPointer())
+
 	return cret
 }
 
@@ -238,6 +245,7 @@ var xIconThemeHasGicon func(uintptr, uintptr) bool
 func (x *IconTheme) HasGicon(GiconVar gio.Icon) bool {
 
 	cret := xIconThemeHasGicon(x.GoPointer(), GiconVar.GoPointer())
+
 	return cret
 }
 
@@ -248,6 +256,7 @@ var xIconThemeHasIcon func(uintptr, string) bool
 func (x *IconTheme) HasIcon(IconNameVar string) bool {
 
 	cret := xIconThemeHasIcon(x.GoPointer(), IconNameVar)
+
 	return cret
 }
 
@@ -352,7 +361,11 @@ var xIconThemeSetThemeName func(uintptr, uintptr)
 // from [func@Gtk.IconTheme.get_for_display].
 func (x *IconTheme) SetThemeName(ThemeNameVar *string) {
 
-	xIconThemeSetThemeName(x.GoPointer(), core.NullableStringToPtr(ThemeNameVar))
+	ThemeNameVarPtr, ThemeNameVarBytes := core.NullableStringToPtr(ThemeNameVar)
+
+	xIconThemeSetThemeName(x.GoPointer(), ThemeNameVarPtr)
+
+	runtime.KeepAlive(ThemeNameVarBytes)
 
 }
 

@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gio"
@@ -257,6 +259,7 @@ func (x *LockButton) GetAccessibleParent() *AccessibleBase {
 func (x *LockButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -282,6 +285,7 @@ func (x *LockButton) GetAtContext() *ATContext {
 func (x *LockButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -321,6 +325,7 @@ func (x *LockButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *LockButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -494,6 +499,7 @@ func (x *LockButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 func (x *LockButton) GetActionName() string {
 
 	cret := XGtkActionableGetActionName(x.GoPointer())
+
 	return cret
 }
 
@@ -501,6 +507,7 @@ func (x *LockButton) GetActionName() string {
 func (x *LockButton) GetActionTargetValue() *glib.Variant {
 
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
+
 	return cret
 }
 
@@ -519,7 +526,11 @@ func (x *LockButton) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *LockButton) SetActionName(ActionNameVar *string) {
 
-	XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
+	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+
+	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
+
+	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -580,6 +591,7 @@ func (x *LockButton) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *LockButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

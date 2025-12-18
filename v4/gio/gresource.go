@@ -55,6 +55,7 @@ var xStaticResourceGetResource func(uintptr) *Resource
 func (x *StaticResource) GetResource() *Resource {
 
 	cret := xStaticResourceGetResource(x.GoPointer())
+
 	return cret
 }
 
@@ -78,6 +79,7 @@ var xResourceErrorQuark func() glib.Quark
 func ResourceErrorQuark() glib.Quark {
 
 	cret := xResourceErrorQuark()
+
 	return cret
 }
 
@@ -97,6 +99,7 @@ func ResourceLoad(FilenameVar string) (*Resource, error) {
 	var cerr *glib.Error
 
 	cret := xResourceLoad(FilenameVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -117,6 +120,7 @@ func ResourcesEnumerateChildren(PathVar string, LookupFlagsVar ResourceLookupFla
 	var cerr *glib.Error
 
 	cret := xResourcesEnumerateChildren(PathVar, LookupFlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -134,6 +138,7 @@ func ResourcesGetInfo(PathVar string, LookupFlagsVar ResourceLookupFlags, SizeVa
 	var cerr *glib.Error
 
 	cret := xResourcesGetInfo(PathVar, LookupFlagsVar, SizeVar, FlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -148,6 +153,7 @@ var xResourcesHasChildren func(string) bool
 func ResourcesHasChildren(PathVar string) bool {
 
 	cret := xResourcesHasChildren(PathVar)
+
 	return cret
 }
 
@@ -171,6 +177,7 @@ func ResourcesLookupData(PathVar string, LookupFlagsVar ResourceLookupFlags) (*g
 	var cerr *glib.Error
 
 	cret := xResourcesLookupData(PathVar, LookupFlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

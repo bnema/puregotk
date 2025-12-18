@@ -117,6 +117,7 @@ var xPasswordEntryGetShowPeekIcon func(uintptr) bool
 func (x *PasswordEntry) GetShowPeekIcon() bool {
 
 	cret := xPasswordEntryGetShowPeekIcon(x.GoPointer())
+
 	return cret
 }
 
@@ -263,6 +264,7 @@ func (x *PasswordEntry) GetAccessibleParent() *AccessibleBase {
 func (x *PasswordEntry) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -288,6 +290,7 @@ func (x *PasswordEntry) GetAtContext() *ATContext {
 func (x *PasswordEntry) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -327,6 +330,7 @@ func (x *PasswordEntry) GetNextAccessibleSibling() *AccessibleBase {
 func (x *PasswordEntry) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -503,6 +507,7 @@ func (x *PasswordEntry) UpdateStateValue(NStatesVar int, StatesVar []AccessibleS
 func (x *PasswordEntry) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -545,6 +550,7 @@ func (x *PasswordEntry) GetBuildableId() string {
 func (x *PasswordEntry) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -585,6 +591,7 @@ func (x *PasswordEntry) FinishDelegate() {
 func (x *PasswordEntry) GetAlignment() float32 {
 
 	cret := XGtkEditableGetAlignment(x.GoPointer())
+
 	return cret
 }
 
@@ -599,6 +606,7 @@ func (x *PasswordEntry) GetAlignment() float32 {
 func (x *PasswordEntry) GetChars(StartPosVar int, EndPosVar int) string {
 
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -624,6 +632,7 @@ func (x *PasswordEntry) GetDelegate() *EditableBase {
 func (x *PasswordEntry) GetEditable() bool {
 
 	cret := XGtkEditableGetEditable(x.GoPointer())
+
 	return cret
 }
 
@@ -631,6 +640,7 @@ func (x *PasswordEntry) GetEditable() bool {
 func (x *PasswordEntry) GetEnableUndo() bool {
 
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
+
 	return cret
 }
 
@@ -638,6 +648,7 @@ func (x *PasswordEntry) GetEnableUndo() bool {
 func (x *PasswordEntry) GetMaxWidthChars() int {
 
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
+
 	return cret
 }
 
@@ -648,6 +659,7 @@ func (x *PasswordEntry) GetMaxWidthChars() int {
 func (x *PasswordEntry) GetPosition() int {
 
 	cret := XGtkEditableGetPosition(x.GoPointer())
+
 	return cret
 }
 
@@ -661,6 +673,7 @@ func (x *PasswordEntry) GetPosition() int {
 func (x *PasswordEntry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -670,6 +683,7 @@ func (x *PasswordEntry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) boo
 func (x *PasswordEntry) GetText() string {
 
 	cret := XGtkEditableGetText(x.GoPointer())
+
 	return cret
 }
 
@@ -678,6 +692,7 @@ func (x *PasswordEntry) GetText() string {
 func (x *PasswordEntry) GetWidthChars() int {
 
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
+
 	return cret
 }
 

@@ -2,6 +2,7 @@
 package gdk
 
 import (
+	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -97,6 +98,7 @@ var xDisplayDeviceIsGrabbed func(uintptr, uintptr) bool
 func (x *Display) DeviceIsGrabbed(DeviceVar *Device) bool {
 
 	cret := xDisplayDeviceIsGrabbed(x.GoPointer(), DeviceVar.GoPointer())
+
 	return cret
 }
 
@@ -188,6 +190,7 @@ var xDisplayGetDmabufFormats func(uintptr) *DmabufFormats
 func (x *Display) GetDmabufFormats() *DmabufFormats {
 
 	cret := xDisplayGetDmabufFormats(x.GoPointer())
+
 	return cret
 }
 
@@ -238,6 +241,7 @@ var xDisplayGetName func(uintptr) string
 func (x *Display) GetName() string {
 
 	cret := xDisplayGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -268,6 +272,7 @@ var xDisplayGetSetting func(uintptr, string, *gobject.Value) bool
 func (x *Display) GetSetting(NameVar string, ValueVar *gobject.Value) bool {
 
 	cret := xDisplayGetSetting(x.GoPointer(), NameVar, ValueVar)
+
 	return cret
 }
 
@@ -278,6 +283,7 @@ var xDisplayGetStartupNotificationId func(uintptr) string
 func (x *Display) GetStartupNotificationId() string {
 
 	cret := xDisplayGetStartupNotificationId(x.GoPointer())
+
 	return cret
 }
 
@@ -287,6 +293,7 @@ var xDisplayIsClosed func(uintptr) bool
 func (x *Display) IsClosed() bool {
 
 	cret := xDisplayIsClosed(x.GoPointer())
+
 	return cret
 }
 
@@ -305,6 +312,7 @@ var xDisplayIsComposited func(uintptr) bool
 func (x *Display) IsComposited() bool {
 
 	cret := xDisplayIsComposited(x.GoPointer())
+
 	return cret
 }
 
@@ -324,6 +332,7 @@ var xDisplayIsRgba func(uintptr) bool
 func (x *Display) IsRgba() bool {
 
 	cret := xDisplayIsRgba(x.GoPointer())
+
 	return cret
 }
 
@@ -333,6 +342,7 @@ var xDisplayListSeats func(uintptr) *glib.List
 func (x *Display) ListSeats() *glib.List {
 
 	cret := xDisplayListSeats(x.GoPointer())
+
 	return cret
 }
 
@@ -350,6 +360,7 @@ var xDisplayMapKeycode func(uintptr, uint, *uintptr, *[]uint, *int) bool
 func (x *Display) MapKeycode(KeycodeVar uint, KeysVar *uintptr, KeyvalsVar *[]uint, NEntriesVar *int) bool {
 
 	cret := xDisplayMapKeycode(x.GoPointer(), KeycodeVar, KeysVar, KeyvalsVar, NEntriesVar)
+
 	return cret
 }
 
@@ -373,6 +384,7 @@ var xDisplayMapKeyval func(uintptr, uint, *uintptr, *int) bool
 func (x *Display) MapKeyval(KeyvalVar uint, KeysVar *uintptr, NKeysVar *int) bool {
 
 	cret := xDisplayMapKeyval(x.GoPointer(), KeyvalVar, KeysVar, NKeysVar)
+
 	return cret
 }
 
@@ -411,6 +423,7 @@ func (x *Display) PrepareGl() (bool, error) {
 	var cerr *glib.Error
 
 	cret := xDisplayPrepareGl(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -438,6 +451,7 @@ var xDisplaySupportsInputShapes func(uintptr) bool
 func (x *Display) SupportsInputShapes() bool {
 
 	cret := xDisplaySupportsInputShapes(x.GoPointer())
+
 	return cret
 }
 
@@ -450,6 +464,7 @@ var xDisplaySupportsShadowWidth func(uintptr) bool
 func (x *Display) SupportsShadowWidth() bool {
 
 	cret := xDisplaySupportsShadowWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -495,6 +510,7 @@ var xDisplayTranslateKey func(uintptr, uint, ModifierType, int, *uint, *int, *in
 func (x *Display) TranslateKey(KeycodeVar uint, StateVar ModifierType, GroupVar int, KeyvalVar *uint, EffectiveGroupVar *int, LevelVar *int, ConsumedVar *ModifierType) bool {
 
 	cret := xDisplayTranslateKey(x.GoPointer(), KeycodeVar, StateVar, GroupVar, KeyvalVar, EffectiveGroupVar, LevelVar, ConsumedVar)
+
 	return cret
 }
 
@@ -678,7 +694,11 @@ var xDisplayOpen func(uintptr) uintptr
 func DisplayOpen(DisplayNameVar *string) *Display {
 	var cls *Display
 
-	cret := xDisplayOpen(core.NullableStringToPtr(DisplayNameVar))
+	DisplayNameVarPtr, DisplayNameVarBytes := core.NullableStringToPtr(DisplayNameVar)
+
+	cret := xDisplayOpen(DisplayNameVarPtr)
+
+	runtime.KeepAlive(DisplayNameVarBytes)
 
 	if cret == 0 {
 		return nil

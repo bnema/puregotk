@@ -110,6 +110,7 @@ var xBuilderListItemFactoryGetBytes func(uintptr) *glib.Bytes
 func (x *BuilderListItemFactory) GetBytes() *glib.Bytes {
 
 	cret := xBuilderListItemFactoryGetBytes(x.GoPointer())
+
 	return cret
 }
 
@@ -119,6 +120,7 @@ var xBuilderListItemFactoryGetResource func(uintptr) string
 func (x *BuilderListItemFactory) GetResource() string {
 
 	cret := xBuilderListItemFactoryGetResource(x.GoPointer())
+
 	return cret
 }
 

@@ -525,6 +525,7 @@ var xTlsDatabaseCreateCertificateHandle func(uintptr, uintptr) string
 func (x *TlsDatabase) CreateCertificateHandle(CertificateVar *TlsCertificate) string {
 
 	cret := xTlsDatabaseCreateCertificateHandle(x.GoPointer(), CertificateVar.GoPointer())
+
 	return cret
 }
 
@@ -707,6 +708,7 @@ func (x *TlsDatabase) LookupCertificatesIssuedBy(IssuerRawDnVar []byte, Interact
 	var cerr *glib.Error
 
 	cret := xTlsDatabaseLookupCertificatesIssuedBy(x.GoPointer(), IssuerRawDnVar, InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -751,6 +753,7 @@ func (x *TlsDatabase) LookupCertificatesIssuedByFinish(ResultVar AsyncResult) (*
 	var cerr *glib.Error
 
 	cret := xTlsDatabaseLookupCertificatesIssuedByFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -824,6 +827,7 @@ func (x *TlsDatabase) VerifyChain(ChainVar *TlsCertificate, PurposeVar string, I
 	var cerr *glib.Error
 
 	cret := xTlsDatabaseVerifyChain(x.GoPointer(), ChainVar.GoPointer(), PurposeVar, IdentityVar.GoPointer(), InteractionVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -874,6 +878,7 @@ func (x *TlsDatabase) VerifyChainFinish(ResultVar AsyncResult) (TlsCertificateFl
 	var cerr *glib.Error
 
 	cret := xTlsDatabaseVerifyChainFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

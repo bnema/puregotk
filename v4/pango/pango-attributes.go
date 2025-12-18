@@ -222,6 +222,7 @@ var xAttrIteratorCopy func(uintptr) *AttrIterator
 func (x *AttrIterator) Copy() *AttrIterator {
 
 	cret := xAttrIteratorCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -245,6 +246,7 @@ var xAttrIteratorGet func(uintptr, AttrType) *Attribute
 func (x *AttrIterator) Get(TypeVar AttrType) *Attribute {
 
 	cret := xAttrIteratorGet(x.GoPointer(), TypeVar)
+
 	return cret
 }
 
@@ -255,6 +257,7 @@ var xAttrIteratorGetAttrs func(uintptr) *glib.SList
 func (x *AttrIterator) GetAttrs() *glib.SList {
 
 	cret := xAttrIteratorGetAttrs(x.GoPointer())
+
 	return cret
 }
 
@@ -274,6 +277,7 @@ var xAttrIteratorNext func(uintptr) bool
 func (x *AttrIterator) Next() bool {
 
 	cret := xAttrIteratorNext(x.GoPointer())
+
 	return cret
 }
 
@@ -337,6 +341,7 @@ var xNewAttrList func() *AttrList
 func NewAttrList() *AttrList {
 
 	cret := xNewAttrList()
+
 	return cret
 }
 
@@ -366,6 +371,7 @@ var xAttrListCopy func(uintptr) *AttrList
 func (x *AttrList) Copy() *AttrList {
 
 	cret := xAttrListCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -380,6 +386,7 @@ var xAttrListEqual func(uintptr, *AttrList) bool
 func (x *AttrList) Equal(OtherListVar *AttrList) bool {
 
 	cret := xAttrListEqual(x.GoPointer(), OtherListVar)
+
 	return cret
 }
 
@@ -406,6 +413,7 @@ func (x *AttrList) Filter(FuncVar *AttrFilterFunc, DataVar uintptr) *AttrList {
 	}
 
 	cret := xAttrListFilter(x.GoPointer(), FuncVarRef, DataVar)
+
 	return cret
 }
 
@@ -415,6 +423,7 @@ var xAttrListGetAttributes func(uintptr) *glib.SList
 func (x *AttrList) GetAttributes() *glib.SList {
 
 	cret := xAttrListGetAttributes(x.GoPointer())
+
 	return cret
 }
 
@@ -426,6 +435,7 @@ var xAttrListGetIterator func(uintptr) *AttrIterator
 func (x *AttrList) GetIterator() *AttrIterator {
 
 	cret := xAttrListGetIterator(x.GoPointer())
+
 	return cret
 }
 
@@ -460,6 +470,7 @@ var xAttrListRef func(uintptr) *AttrList
 func (x *AttrList) Ref() *AttrList {
 
 	cret := xAttrListRef(x.GoPointer())
+
 	return cret
 }
 
@@ -528,6 +539,7 @@ var xAttrListToString func(uintptr) string
 func (x *AttrList) ToString() string {
 
 	cret := xAttrListToString(x.GoPointer())
+
 	return cret
 }
 
@@ -654,6 +666,7 @@ var xAttributeAsColor func(uintptr) *AttrColor
 func (x *Attribute) AsColor() *AttrColor {
 
 	cret := xAttributeAsColor(x.GoPointer())
+
 	return cret
 }
 
@@ -665,6 +678,7 @@ var xAttributeAsFloat func(uintptr) *AttrFloat
 func (x *Attribute) AsFloat() *AttrFloat {
 
 	cret := xAttributeAsFloat(x.GoPointer())
+
 	return cret
 }
 
@@ -676,6 +690,7 @@ var xAttributeAsFontDesc func(uintptr) *AttrFontDesc
 func (x *Attribute) AsFontDesc() *AttrFontDesc {
 
 	cret := xAttributeAsFontDesc(x.GoPointer())
+
 	return cret
 }
 
@@ -687,6 +702,7 @@ var xAttributeAsFontFeatures func(uintptr) *AttrFontFeatures
 func (x *Attribute) AsFontFeatures() *AttrFontFeatures {
 
 	cret := xAttributeAsFontFeatures(x.GoPointer())
+
 	return cret
 }
 
@@ -698,6 +714,7 @@ var xAttributeAsInt func(uintptr) *AttrInt
 func (x *Attribute) AsInt() *AttrInt {
 
 	cret := xAttributeAsInt(x.GoPointer())
+
 	return cret
 }
 
@@ -709,6 +726,7 @@ var xAttributeAsLanguage func(uintptr) *AttrLanguage
 func (x *Attribute) AsLanguage() *AttrLanguage {
 
 	cret := xAttributeAsLanguage(x.GoPointer())
+
 	return cret
 }
 
@@ -720,6 +738,7 @@ var xAttributeAsShape func(uintptr) *AttrShape
 func (x *Attribute) AsShape() *AttrShape {
 
 	cret := xAttributeAsShape(x.GoPointer())
+
 	return cret
 }
 
@@ -731,6 +750,7 @@ var xAttributeAsSize func(uintptr) *AttrSize
 func (x *Attribute) AsSize() *AttrSize {
 
 	cret := xAttributeAsSize(x.GoPointer())
+
 	return cret
 }
 
@@ -742,6 +762,7 @@ var xAttributeAsString func(uintptr) *AttrString
 func (x *Attribute) AsString() *AttrString {
 
 	cret := xAttributeAsString(x.GoPointer())
+
 	return cret
 }
 
@@ -751,6 +772,7 @@ var xAttributeCopy func(uintptr) *Attribute
 func (x *Attribute) Copy() *Attribute {
 
 	cret := xAttributeCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -773,6 +795,7 @@ var xAttributeEqual func(uintptr, *Attribute) bool
 func (x *Attribute) Equal(Attr2Var *Attribute) bool {
 
 	cret := xAttributeEqual(x.GoPointer(), Attr2Var)
+
 	return cret
 }
 
@@ -1055,6 +1078,7 @@ var xAttrAllowBreaksNew func(bool) *Attribute
 func AttrAllowBreaksNew(AllowBreaksVar bool) *Attribute {
 
 	cret := xAttrAllowBreaksNew(AllowBreaksVar)
+
 	return cret
 }
 
@@ -1064,6 +1088,7 @@ var xAttrBackgroundAlphaNew func(uint16) *Attribute
 func AttrBackgroundAlphaNew(AlphaVar uint16) *Attribute {
 
 	cret := xAttrBackgroundAlphaNew(AlphaVar)
+
 	return cret
 }
 
@@ -1073,6 +1098,7 @@ var xAttrBackgroundNew func(uint16, uint16, uint16) *Attribute
 func AttrBackgroundNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribute {
 
 	cret := xAttrBackgroundNew(RedVar, GreenVar, BlueVar)
+
 	return cret
 }
 
@@ -1092,6 +1118,7 @@ var xAttrBaselineShiftNew func(int) *Attribute
 func AttrBaselineShiftNew(ShiftVar int) *Attribute {
 
 	cret := xAttrBaselineShiftNew(ShiftVar)
+
 	return cret
 }
 
@@ -1106,6 +1133,7 @@ var xAttrFallbackNew func(bool) *Attribute
 func AttrFallbackNew(EnableFallbackVar bool) *Attribute {
 
 	cret := xAttrFallbackNew(EnableFallbackVar)
+
 	return cret
 }
 
@@ -1115,6 +1143,7 @@ var xAttrFamilyNew func(string) *Attribute
 func AttrFamilyNew(FamilyVar string) *Attribute {
 
 	cret := xAttrFamilyNew(FamilyVar)
+
 	return cret
 }
 
@@ -1127,6 +1156,7 @@ var xAttrFontDescNew func(*FontDescription) *Attribute
 func AttrFontDescNew(DescVar *FontDescription) *Attribute {
 
 	cret := xAttrFontDescNew(DescVar)
+
 	return cret
 }
 
@@ -1139,6 +1169,7 @@ var xAttrFontFeaturesNew func(string) *Attribute
 func AttrFontFeaturesNew(FeaturesVar string) *Attribute {
 
 	cret := xAttrFontFeaturesNew(FeaturesVar)
+
 	return cret
 }
 
@@ -1151,6 +1182,7 @@ var xAttrFontScaleNew func(FontScale) *Attribute
 func AttrFontScaleNew(ScaleVar FontScale) *Attribute {
 
 	cret := xAttrFontScaleNew(ScaleVar)
+
 	return cret
 }
 
@@ -1160,6 +1192,7 @@ var xAttrForegroundAlphaNew func(uint16) *Attribute
 func AttrForegroundAlphaNew(AlphaVar uint16) *Attribute {
 
 	cret := xAttrForegroundAlphaNew(AlphaVar)
+
 	return cret
 }
 
@@ -1169,6 +1202,7 @@ var xAttrForegroundNew func(uint16, uint16, uint16) *Attribute
 func AttrForegroundNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribute {
 
 	cret := xAttrForegroundNew(RedVar, GreenVar, BlueVar)
+
 	return cret
 }
 
@@ -1178,6 +1212,7 @@ var xAttrGravityHintNew func(GravityHint) *Attribute
 func AttrGravityHintNew(HintVar GravityHint) *Attribute {
 
 	cret := xAttrGravityHintNew(HintVar)
+
 	return cret
 }
 
@@ -1187,6 +1222,7 @@ var xAttrGravityNew func(Gravity) *Attribute
 func AttrGravityNew(GravityVar Gravity) *Attribute {
 
 	cret := xAttrGravityNew(GravityVar)
+
 	return cret
 }
 
@@ -1200,6 +1236,7 @@ var xAttrInsertHyphensNew func(bool) *Attribute
 func AttrInsertHyphensNew(InsertHyphensVar bool) *Attribute {
 
 	cret := xAttrInsertHyphensNew(InsertHyphensVar)
+
 	return cret
 }
 
@@ -1209,6 +1246,7 @@ var xAttrLanguageNew func(*Language) *Attribute
 func AttrLanguageNew(LanguageVar *Language) *Attribute {
 
 	cret := xAttrLanguageNew(LanguageVar)
+
 	return cret
 }
 
@@ -1218,6 +1256,7 @@ var xAttrLetterSpacingNew func(int) *Attribute
 func AttrLetterSpacingNew(LetterSpacingVar int) *Attribute {
 
 	cret := xAttrLetterSpacingNew(LetterSpacingVar)
+
 	return cret
 }
 
@@ -1232,6 +1271,7 @@ var xAttrLineHeightNew func(float64) *Attribute
 func AttrLineHeightNew(FactorVar float64) *Attribute {
 
 	cret := xAttrLineHeightNew(FactorVar)
+
 	return cret
 }
 
@@ -1246,6 +1286,7 @@ var xAttrLineHeightNewAbsolute func(int) *Attribute
 func AttrLineHeightNewAbsolute(HeightVar int) *Attribute {
 
 	cret := xAttrLineHeightNewAbsolute(HeightVar)
+
 	return cret
 }
 
@@ -1258,6 +1299,7 @@ var xAttrListFromString func(string) *AttrList
 func AttrListFromString(TextVar string) *AttrList {
 
 	cret := xAttrListFromString(TextVar)
+
 	return cret
 }
 
@@ -1270,6 +1312,7 @@ var xAttrOverlineColorNew func(uint16, uint16, uint16) *Attribute
 func AttrOverlineColorNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribute {
 
 	cret := xAttrOverlineColorNew(RedVar, GreenVar, BlueVar)
+
 	return cret
 }
 
@@ -1279,6 +1322,7 @@ var xAttrOverlineNew func(Overline) *Attribute
 func AttrOverlineNew(OverlineVar Overline) *Attribute {
 
 	cret := xAttrOverlineNew(OverlineVar)
+
 	return cret
 }
 
@@ -1288,6 +1332,7 @@ var xAttrRiseNew func(int) *Attribute
 func AttrRiseNew(RiseVar int) *Attribute {
 
 	cret := xAttrRiseNew(RiseVar)
+
 	return cret
 }
 
@@ -1300,6 +1345,7 @@ var xAttrScaleNew func(float64) *Attribute
 func AttrScaleNew(ScaleFactorVar float64) *Attribute {
 
 	cret := xAttrScaleNew(ScaleFactorVar)
+
 	return cret
 }
 
@@ -1312,6 +1358,7 @@ var xAttrSentenceNew func() *Attribute
 func AttrSentenceNew() *Attribute {
 
 	cret := xAttrSentenceNew()
+
 	return cret
 }
 
@@ -1326,6 +1373,7 @@ var xAttrShapeNew func(*Rectangle, *Rectangle) *Attribute
 func AttrShapeNew(InkRectVar *Rectangle, LogicalRectVar *Rectangle) *Attribute {
 
 	cret := xAttrShapeNew(InkRectVar, LogicalRectVar)
+
 	return cret
 }
 
@@ -1369,6 +1417,7 @@ func AttrShapeNewWithData(InkRectVar *Rectangle, LogicalRectVar *Rectangle, Data
 	}
 
 	cret := xAttrShapeNewWithData(InkRectVar, LogicalRectVar, DataVar, CopyFuncVarRef, DestroyFuncVarRef)
+
 	return cret
 }
 
@@ -1379,6 +1428,7 @@ var xAttrShowNew func(ShowFlags) *Attribute
 func AttrShowNew(FlagsVar ShowFlags) *Attribute {
 
 	cret := xAttrShowNew(FlagsVar)
+
 	return cret
 }
 
@@ -1388,6 +1438,7 @@ var xAttrSizeNew func(int) *Attribute
 func AttrSizeNew(SizeVar int) *Attribute {
 
 	cret := xAttrSizeNew(SizeVar)
+
 	return cret
 }
 
@@ -1397,6 +1448,7 @@ var xAttrSizeNewAbsolute func(int) *Attribute
 func AttrSizeNewAbsolute(SizeVar int) *Attribute {
 
 	cret := xAttrSizeNewAbsolute(SizeVar)
+
 	return cret
 }
 
@@ -1406,6 +1458,7 @@ var xAttrStretchNew func(Stretch) *Attribute
 func AttrStretchNew(StretchVar Stretch) *Attribute {
 
 	cret := xAttrStretchNew(StretchVar)
+
 	return cret
 }
 
@@ -1418,6 +1471,7 @@ var xAttrStrikethroughColorNew func(uint16, uint16, uint16) *Attribute
 func AttrStrikethroughColorNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribute {
 
 	cret := xAttrStrikethroughColorNew(RedVar, GreenVar, BlueVar)
+
 	return cret
 }
 
@@ -1427,6 +1481,7 @@ var xAttrStrikethroughNew func(bool) *Attribute
 func AttrStrikethroughNew(StrikethroughVar bool) *Attribute {
 
 	cret := xAttrStrikethroughNew(StrikethroughVar)
+
 	return cret
 }
 
@@ -1436,6 +1491,7 @@ var xAttrStyleNew func(Style) *Attribute
 func AttrStyleNew(StyleVar Style) *Attribute {
 
 	cret := xAttrStyleNew(StyleVar)
+
 	return cret
 }
 
@@ -1446,6 +1502,7 @@ var xAttrTextTransformNew func(TextTransform) *Attribute
 func AttrTextTransformNew(TransformVar TextTransform) *Attribute {
 
 	cret := xAttrTextTransformNew(TransformVar)
+
 	return cret
 }
 
@@ -1463,6 +1520,7 @@ var xAttrTypeGetName func(AttrType) string
 func AttrTypeGetName(TypeVar AttrType) string {
 
 	cret := xAttrTypeGetName(TypeVar)
+
 	return cret
 }
 
@@ -1475,6 +1533,7 @@ var xAttrTypeRegister func(string) AttrType
 func AttrTypeRegister(NameVar string) AttrType {
 
 	cret := xAttrTypeRegister(NameVar)
+
 	return cret
 }
 
@@ -1487,6 +1546,7 @@ var xAttrUnderlineColorNew func(uint16, uint16, uint16) *Attribute
 func AttrUnderlineColorNew(RedVar uint16, GreenVar uint16, BlueVar uint16) *Attribute {
 
 	cret := xAttrUnderlineColorNew(RedVar, GreenVar, BlueVar)
+
 	return cret
 }
 
@@ -1496,6 +1556,7 @@ var xAttrUnderlineNew func(Underline) *Attribute
 func AttrUnderlineNew(UnderlineVar Underline) *Attribute {
 
 	cret := xAttrUnderlineNew(UnderlineVar)
+
 	return cret
 }
 
@@ -1505,6 +1566,7 @@ var xAttrVariantNew func(Variant) *Attribute
 func AttrVariantNew(VariantVar Variant) *Attribute {
 
 	cret := xAttrVariantNew(VariantVar)
+
 	return cret
 }
 
@@ -1514,6 +1576,7 @@ var xAttrWeightNew func(Weight) *Attribute
 func AttrWeightNew(WeightVar Weight) *Attribute {
 
 	cret := xAttrWeightNew(WeightVar)
+
 	return cret
 }
 
@@ -1526,6 +1589,7 @@ var xAttrWordNew func() *Attribute
 func AttrWordNew() *Attribute {
 
 	cret := xAttrWordNew()
+
 	return cret
 }
 

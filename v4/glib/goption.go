@@ -2,6 +2,7 @@
 package glib
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -48,7 +49,11 @@ var xOptionContextAddMainEntries func(uintptr, []OptionEntry, uintptr)
 // exist, adds the @entries to it and sets the translation domain.
 func (x *OptionContext) AddMainEntries(EntriesVar []OptionEntry, TranslationDomainVar *string) {
 
-	xOptionContextAddMainEntries(x.GoPointer(), EntriesVar, core.NullableStringToPtr(TranslationDomainVar))
+	TranslationDomainVarPtr, TranslationDomainVarBytes := core.NullableStringToPtr(TranslationDomainVar)
+
+	xOptionContextAddMainEntries(x.GoPointer(), EntriesVar, TranslationDomainVarPtr)
+
+	runtime.KeepAlive(TranslationDomainVarBytes)
 
 }
 
@@ -71,6 +76,7 @@ var xOptionContextGetDescription func(uintptr) string
 func (x *OptionContext) GetDescription() string {
 
 	cret := xOptionContextGetDescription(x.GoPointer())
+
 	return cret
 }
 
@@ -86,6 +92,7 @@ var xOptionContextGetHelp func(uintptr, bool, *OptionGroup) string
 func (x *OptionContext) GetHelp(MainHelpVar bool, GroupVar *OptionGroup) string {
 
 	cret := xOptionContextGetHelp(x.GoPointer(), MainHelpVar, GroupVar)
+
 	return cret
 }
 
@@ -96,6 +103,7 @@ var xOptionContextGetHelpEnabled func(uintptr) bool
 func (x *OptionContext) GetHelpEnabled() bool {
 
 	cret := xOptionContextGetHelpEnabled(x.GoPointer())
+
 	return cret
 }
 
@@ -106,6 +114,7 @@ var xOptionContextGetIgnoreUnknownOptions func(uintptr) bool
 func (x *OptionContext) GetIgnoreUnknownOptions() bool {
 
 	cret := xOptionContextGetIgnoreUnknownOptions(x.GoPointer())
+
 	return cret
 }
 
@@ -115,6 +124,7 @@ var xOptionContextGetMainGroup func(uintptr) *OptionGroup
 func (x *OptionContext) GetMainGroup() *OptionGroup {
 
 	cret := xOptionContextGetMainGroup(x.GoPointer())
+
 	return cret
 }
 
@@ -126,6 +136,7 @@ var xOptionContextGetStrictPosix func(uintptr) bool
 func (x *OptionContext) GetStrictPosix() bool {
 
 	cret := xOptionContextGetStrictPosix(x.GoPointer())
+
 	return cret
 }
 
@@ -135,6 +146,7 @@ var xOptionContextGetSummary func(uintptr) string
 func (x *OptionContext) GetSummary() string {
 
 	cret := xOptionContextGetSummary(x.GoPointer())
+
 	return cret
 }
 
@@ -165,6 +177,7 @@ func (x *OptionContext) Parse(ArgcVar int, ArgvVar []string) (bool, error) {
 	var cerr *Error
 
 	cret := xOptionContextParse(x.GoPointer(), ArgcVar, ArgvVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -194,6 +207,7 @@ func (x *OptionContext) ParseStrv(ArgumentsVar []string) (bool, error) {
 	var cerr *Error
 
 	cret := xOptionContextParseStrv(x.GoPointer(), ArgumentsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -210,7 +224,11 @@ var xOptionContextSetDescription func(uintptr, uintptr)
 // g_option_context_set_translate_func()).
 func (x *OptionContext) SetDescription(DescriptionVar *string) {
 
-	xOptionContextSetDescription(x.GoPointer(), core.NullableStringToPtr(DescriptionVar))
+	DescriptionVarPtr, DescriptionVarBytes := core.NullableStringToPtr(DescriptionVar)
+
+	xOptionContextSetDescription(x.GoPointer(), DescriptionVarPtr)
+
+	runtime.KeepAlive(DescriptionVarBytes)
 
 }
 
@@ -295,7 +313,11 @@ var xOptionContextSetSummary func(uintptr, uintptr)
 // g_option_context_set_translation_domain()).
 func (x *OptionContext) SetSummary(SummaryVar *string) {
 
-	xOptionContextSetSummary(x.GoPointer(), core.NullableStringToPtr(SummaryVar))
+	SummaryVarPtr, SummaryVarBytes := core.NullableStringToPtr(SummaryVar)
+
+	xOptionContextSetSummary(x.GoPointer(), SummaryVarPtr)
+
+	runtime.KeepAlive(SummaryVarBytes)
 
 }
 
@@ -450,6 +472,7 @@ func NewOptionGroup(NameVar string, DescriptionVar string, HelpDescriptionVar st
 	}
 
 	cret := xNewOptionGroup(NameVar, DescriptionVar, HelpDescriptionVar, UserDataVar, DestroyVarRef)
+
 	return cret
 }
 
@@ -478,6 +501,7 @@ var xOptionGroupRef func(uintptr) *OptionGroup
 func (x *OptionGroup) Ref() *OptionGroup {
 
 	cret := xOptionGroupRef(x.GoPointer())
+
 	return cret
 }
 

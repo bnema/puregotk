@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
@@ -127,6 +129,7 @@ var xHeaderBarGetDecorationLayout func(uintptr) string
 func (x *HeaderBar) GetDecorationLayout() string {
 
 	cret := xHeaderBarGetDecorationLayout(x.GoPointer())
+
 	return cret
 }
 
@@ -137,6 +140,7 @@ var xHeaderBarGetShowTitleButtons func(uintptr) bool
 func (x *HeaderBar) GetShowTitleButtons() bool {
 
 	cret := xHeaderBarGetShowTitleButtons(x.GoPointer())
+
 	return cret
 }
 
@@ -166,6 +170,7 @@ var xHeaderBarGetUseNativeControls func(uintptr) bool
 func (x *HeaderBar) GetUseNativeControls() bool {
 
 	cret := xHeaderBarGetUseNativeControls(x.GoPointer())
+
 	return cret
 }
 
@@ -222,7 +227,11 @@ var xHeaderBarSetDecorationLayout func(uintptr, uintptr)
 // on the left, and minimize, maximize and close buttons on the right.
 func (x *HeaderBar) SetDecorationLayout(LayoutVar *string) {
 
-	xHeaderBarSetDecorationLayout(x.GoPointer(), core.NullableStringToPtr(LayoutVar))
+	LayoutVarPtr, LayoutVarBytes := core.NullableStringToPtr(LayoutVar)
+
+	xHeaderBarSetDecorationLayout(x.GoPointer(), LayoutVarPtr)
+
+	runtime.KeepAlive(LayoutVarBytes)
 
 }
 
@@ -396,6 +405,7 @@ func (x *HeaderBar) GetAccessibleParent() *AccessibleBase {
 func (x *HeaderBar) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -421,6 +431,7 @@ func (x *HeaderBar) GetAtContext() *ATContext {
 func (x *HeaderBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -460,6 +471,7 @@ func (x *HeaderBar) GetNextAccessibleSibling() *AccessibleBase {
 func (x *HeaderBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -636,6 +648,7 @@ func (x *HeaderBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 func (x *HeaderBar) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

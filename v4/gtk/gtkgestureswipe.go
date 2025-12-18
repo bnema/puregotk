@@ -74,6 +74,7 @@ var xGestureSwipeGetVelocity func(uintptr, *float64, *float64) bool
 func (x *GestureSwipe) GetVelocity(VelocityXVar *float64, VelocityYVar *float64) bool {
 
 	cret := xGestureSwipeGetVelocity(x.GoPointer(), VelocityXVar, VelocityYVar)
+
 	return cret
 }
 

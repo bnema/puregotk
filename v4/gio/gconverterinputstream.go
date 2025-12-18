@@ -230,6 +230,7 @@ func (c *ConverterInputStream) SetGoPointer(ptr uintptr) {
 func (x *ConverterInputStream) CanPoll() bool {
 
 	cret := XGPollableInputStreamCanPoll(x.GoPointer())
+
 	return cret
 }
 
@@ -247,6 +248,7 @@ func (x *ConverterInputStream) CanPoll() bool {
 func (x *ConverterInputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 
 	cret := XGPollableInputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
+
 	return cret
 }
 
@@ -264,6 +266,7 @@ func (x *ConverterInputStream) CreateSource(CancellableVar *Cancellable) *glib.S
 func (x *ConverterInputStream) IsReadable() bool {
 
 	cret := XGPollableInputStreamIsReadable(x.GoPointer())
+
 	return cret
 }
 
@@ -285,6 +288,7 @@ func (x *ConverterInputStream) ReadNonblocking(BufferVar *[]byte, CountVar uint,
 	var cerr *glib.Error
 
 	cret := XGPollableInputStreamReadNonblocking(x.GoPointer(), BufferVar, CountVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

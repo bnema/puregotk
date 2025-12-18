@@ -206,6 +206,7 @@ func (x *SeekableBase) SetGoPointer(ptr uintptr) {
 func (x *SeekableBase) CanSeek() bool {
 
 	cret := XGSeekableCanSeek(x.GoPointer())
+
 	return cret
 }
 
@@ -214,6 +215,7 @@ func (x *SeekableBase) CanSeek() bool {
 func (x *SeekableBase) CanTruncate() bool {
 
 	cret := XGSeekableCanTruncate(x.GoPointer())
+
 	return cret
 }
 
@@ -235,6 +237,7 @@ func (x *SeekableBase) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableV
 	var cerr *glib.Error
 
 	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -246,6 +249,7 @@ func (x *SeekableBase) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableV
 func (x *SeekableBase) Tell() int64 {
 
 	cret := XGSeekableTell(x.GoPointer())
+
 	return cret
 }
 
@@ -262,6 +266,7 @@ func (x *SeekableBase) Truncate(OffsetVar int64, CancellableVar *Cancellable) (b
 	var cerr *glib.Error
 
 	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

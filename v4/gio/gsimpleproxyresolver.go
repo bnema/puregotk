@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -190,7 +191,11 @@ var xSimpleProxyResolverSetDefaultProxy func(uintptr, uintptr)
 // the socks5, socks4a, and socks4 proxy types.
 func (x *SimpleProxyResolver) SetDefaultProxy(DefaultProxyVar *string) {
 
-	xSimpleProxyResolverSetDefaultProxy(x.GoPointer(), core.NullableStringToPtr(DefaultProxyVar))
+	DefaultProxyVarPtr, DefaultProxyVarBytes := core.NullableStringToPtr(DefaultProxyVar)
+
+	xSimpleProxyResolverSetDefaultProxy(x.GoPointer(), DefaultProxyVarPtr)
+
+	runtime.KeepAlive(DefaultProxyVarBytes)
 
 }
 
@@ -351,6 +356,7 @@ func (x *SimpleProxyResolver) GetPropertyIgnoreHosts() []string {
 func (x *SimpleProxyResolver) IsSupported() bool {
 
 	cret := XGProxyResolverIsSupported(x.GoPointer())
+
 	return cret
 }
 
@@ -373,6 +379,7 @@ func (x *SimpleProxyResolver) Lookup(UriVar string, CancellableVar *Cancellable)
 	var cerr *glib.Error
 
 	cret := XGProxyResolverLookup(x.GoPointer(), UriVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -395,6 +402,7 @@ func (x *SimpleProxyResolver) LookupFinish(ResultVar AsyncResult) ([]string, err
 	var cerr *glib.Error
 
 	cret := XGProxyResolverLookupFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -411,7 +419,11 @@ var xSimpleProxyResolverNew func(uintptr, []string) uintptr
 func SimpleProxyResolverNew(DefaultProxyVar *string, IgnoreHostsVar []string) *ProxyResolverBase {
 	var cls *ProxyResolverBase
 
-	cret := xSimpleProxyResolverNew(core.NullableStringToPtr(DefaultProxyVar), IgnoreHostsVar)
+	DefaultProxyVarPtr, DefaultProxyVarBytes := core.NullableStringToPtr(DefaultProxyVar)
+
+	cret := xSimpleProxyResolverNew(DefaultProxyVarPtr, IgnoreHostsVar)
+
+	runtime.KeepAlive(DefaultProxyVarBytes)
 
 	if cret == 0 {
 		return nil

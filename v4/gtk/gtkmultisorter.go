@@ -118,6 +118,7 @@ func (x *MultiSorter) GetPropertyNItems() uint {
 func (x *MultiSorter) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -132,6 +133,7 @@ func (x *MultiSorter) GetItem(PositionVar uint) uintptr {
 func (x *MultiSorter) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -143,6 +145,7 @@ func (x *MultiSorter) GetItemType() types.GType {
 func (x *MultiSorter) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -204,6 +207,7 @@ func (x *MultiSorter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar u
 func (x *MultiSorter) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

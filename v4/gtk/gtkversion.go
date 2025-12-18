@@ -57,6 +57,7 @@ var xCheckVersion func(uint, uint, uint) string
 func CheckVersion(RequiredMajorVar uint, RequiredMinorVar uint, RequiredMicroVar uint) string {
 
 	cret := xCheckVersion(RequiredMajorVar, RequiredMinorVar, RequiredMicroVar)
+
 	return cret
 }
 
@@ -68,6 +69,7 @@ var xGetBinaryAge func() uint
 func GetBinaryAge() uint {
 
 	cret := xGetBinaryAge()
+
 	return cret
 }
 
@@ -79,6 +81,7 @@ var xGetInterfaceAge func() uint
 func GetInterfaceAge() uint {
 
 	cret := xGetInterfaceAge()
+
 	return cret
 }
 
@@ -95,6 +98,7 @@ var xGetMajorVersion func() uint
 func GetMajorVersion() uint {
 
 	cret := xGetMajorVersion()
+
 	return cret
 }
 
@@ -111,6 +115,7 @@ var xGetMicroVersion func() uint
 func GetMicroVersion() uint {
 
 	cret := xGetMicroVersion()
+
 	return cret
 }
 
@@ -127,6 +132,7 @@ var xGetMinorVersion func() uint
 func GetMinorVersion() uint {
 
 	cret := xGetMinorVersion()
+
 	return cret
 }
 

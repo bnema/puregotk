@@ -40,6 +40,7 @@ var xDragActionIsUnique func(DragAction) bool
 func DragActionIsUnique(ActionVar DragAction) bool {
 
 	cret := xDragActionIsUnique(ActionVar)
+
 	return cret
 }
 
@@ -94,6 +95,7 @@ var xDragGetActions func(uintptr) DragAction
 func (x *Drag) GetActions() DragAction {
 
 	cret := xDragGetActions(x.GoPointer())
+
 	return cret
 }
 
@@ -177,6 +179,7 @@ var xDragGetFormats func(uintptr) *ContentFormats
 func (x *Drag) GetFormats() *ContentFormats {
 
 	cret := xDragGetFormats(x.GoPointer())
+
 	return cret
 }
 
@@ -186,6 +189,7 @@ var xDragGetSelectedAction func(uintptr) DragAction
 func (x *Drag) GetSelectedAction() DragAction {
 
 	cret := xDragGetSelectedAction(x.GoPointer())
+
 	return cret
 }
 

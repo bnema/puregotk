@@ -262,6 +262,7 @@ var xToolbarViewGetBottomBarHeight func(uintptr) int
 func (x *ToolbarView) GetBottomBarHeight() int {
 
 	cret := xToolbarViewGetBottomBarHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -271,6 +272,7 @@ var xToolbarViewGetBottomBarStyle func(uintptr) ToolbarStyle
 func (x *ToolbarView) GetBottomBarStyle() ToolbarStyle {
 
 	cret := xToolbarViewGetBottomBarStyle(x.GoPointer())
+
 	return cret
 }
 
@@ -297,6 +299,7 @@ var xToolbarViewGetExtendContentToBottomEdge func(uintptr) bool
 func (x *ToolbarView) GetExtendContentToBottomEdge() bool {
 
 	cret := xToolbarViewGetExtendContentToBottomEdge(x.GoPointer())
+
 	return cret
 }
 
@@ -306,6 +309,7 @@ var xToolbarViewGetExtendContentToTopEdge func(uintptr) bool
 func (x *ToolbarView) GetExtendContentToTopEdge() bool {
 
 	cret := xToolbarViewGetExtendContentToTopEdge(x.GoPointer())
+
 	return cret
 }
 
@@ -315,6 +319,7 @@ var xToolbarViewGetRevealBottomBars func(uintptr) bool
 func (x *ToolbarView) GetRevealBottomBars() bool {
 
 	cret := xToolbarViewGetRevealBottomBars(x.GoPointer())
+
 	return cret
 }
 
@@ -324,6 +329,7 @@ var xToolbarViewGetRevealTopBars func(uintptr) bool
 func (x *ToolbarView) GetRevealTopBars() bool {
 
 	cret := xToolbarViewGetRevealTopBars(x.GoPointer())
+
 	return cret
 }
 
@@ -338,6 +344,7 @@ var xToolbarViewGetTopBarHeight func(uintptr) int
 func (x *ToolbarView) GetTopBarHeight() int {
 
 	cret := xToolbarViewGetTopBarHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -347,6 +354,7 @@ var xToolbarViewGetTopBarStyle func(uintptr) ToolbarStyle
 func (x *ToolbarView) GetTopBarStyle() ToolbarStyle {
 
 	cret := xToolbarViewGetTopBarStyle(x.GoPointer())
+
 	return cret
 }
 
@@ -688,6 +696,7 @@ func (x *ToolbarView) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ToolbarView) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -713,6 +722,7 @@ func (x *ToolbarView) GetAtContext() *gtk.ATContext {
 func (x *ToolbarView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -752,6 +762,7 @@ func (x *ToolbarView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ToolbarView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -928,6 +939,7 @@ func (x *ToolbarView) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 func (x *ToolbarView) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

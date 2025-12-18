@@ -142,6 +142,7 @@ func (x *WindowHandle) GetAccessibleParent() *AccessibleBase {
 func (x *WindowHandle) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -167,6 +168,7 @@ func (x *WindowHandle) GetAtContext() *ATContext {
 func (x *WindowHandle) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -206,6 +208,7 @@ func (x *WindowHandle) GetNextAccessibleSibling() *AccessibleBase {
 func (x *WindowHandle) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -382,6 +385,7 @@ func (x *WindowHandle) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSt
 func (x *WindowHandle) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

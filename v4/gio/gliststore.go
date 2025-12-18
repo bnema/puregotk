@@ -85,6 +85,7 @@ var xListStoreFind func(uintptr, uintptr, *uint) bool
 func (x *ListStore) Find(ItemVar *gobject.Object, PositionVar *uint) bool {
 
 	cret := xListStoreFind(x.GoPointer(), ItemVar.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -116,6 +117,7 @@ func (x *ListStore) FindWithEqualFunc(ItemVar *gobject.Object, EqualFuncVar *gli
 	}
 
 	cret := xListStoreFindWithEqualFunc(x.GoPointer(), ItemVar.GoPointer(), EqualFuncVarRef, PositionVar)
+
 	return cret
 }
 
@@ -145,6 +147,7 @@ func (x *ListStore) FindWithEqualFuncFull(ItemVar *gobject.Object, EqualFuncVar 
 	}
 
 	cret := xListStoreFindWithEqualFuncFull(x.GoPointer(), ItemVar.GoPointer(), EqualFuncVarRef, UserDataVar, PositionVar)
+
 	return cret
 }
 
@@ -192,6 +195,7 @@ func (x *ListStore) InsertSorted(ItemVar *gobject.Object, CompareFuncVar *glib.C
 	}
 
 	cret := xListStoreInsertSorted(x.GoPointer(), ItemVar.GoPointer(), CompareFuncVarRef, UserDataVar)
+
 	return cret
 }
 
@@ -293,6 +297,7 @@ func (x *ListStore) GetPropertyNItems() uint {
 func (x *ListStore) GetItem(PositionVar uint) uintptr {
 
 	cret := XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -307,6 +312,7 @@ func (x *ListStore) GetItem(PositionVar uint) uintptr {
 func (x *ListStore) GetItemType() types.GType {
 
 	cret := XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -318,6 +324,7 @@ func (x *ListStore) GetItemType() types.GType {
 func (x *ListStore) GetNItems() uint {
 
 	cret := XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 

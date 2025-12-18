@@ -118,6 +118,7 @@ func (x *SelectionFilterModel) GetPropertyNItems() uint {
 func (x *SelectionFilterModel) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -132,6 +133,7 @@ func (x *SelectionFilterModel) GetItem(PositionVar uint) uintptr {
 func (x *SelectionFilterModel) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -143,6 +145,7 @@ func (x *SelectionFilterModel) GetItemType() types.GType {
 func (x *SelectionFilterModel) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 

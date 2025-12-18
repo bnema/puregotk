@@ -90,6 +90,7 @@ var xSortListModelGetIncremental func(uintptr) bool
 func (x *SortListModel) GetIncremental() bool {
 
 	cret := xSortListModelGetIncremental(x.GoPointer())
+
 	return cret
 }
 
@@ -132,6 +133,7 @@ var xSortListModelGetPending func(uintptr) uint
 func (x *SortListModel) GetPending() uint {
 
 	cret := xSortListModelGetPending(x.GoPointer())
+
 	return cret
 }
 
@@ -279,6 +281,7 @@ func (x *SortListModel) GetPropertyPending() uint {
 func (x *SortListModel) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -293,6 +296,7 @@ func (x *SortListModel) GetItem(PositionVar uint) uintptr {
 func (x *SortListModel) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -304,6 +308,7 @@ func (x *SortListModel) GetItemType() types.GType {
 func (x *SortListModel) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 

@@ -117,6 +117,7 @@ var xEnumGetValue func(*EnumClass, int) *EnumValue
 func EnumGetValue(EnumClassVar *EnumClass, ValueVar int) *EnumValue {
 
 	cret := xEnumGetValue(EnumClassVar, ValueVar)
+
 	return cret
 }
 
@@ -126,6 +127,7 @@ var xEnumGetValueByName func(*EnumClass, string) *EnumValue
 func EnumGetValueByName(EnumClassVar *EnumClass, NameVar string) *EnumValue {
 
 	cret := xEnumGetValueByName(EnumClassVar, NameVar)
+
 	return cret
 }
 
@@ -135,6 +137,7 @@ var xEnumGetValueByNick func(*EnumClass, string) *EnumValue
 func EnumGetValueByNick(EnumClassVar *EnumClass, NickVar string) *EnumValue {
 
 	cret := xEnumGetValueByNick(EnumClassVar, NickVar)
+
 	return cret
 }
 
@@ -148,6 +151,7 @@ var xEnumRegisterStatic func(string, []EnumValue) types.GType
 func EnumRegisterStatic(NameVar string, ConstStaticValuesVar []EnumValue) types.GType {
 
 	cret := xEnumRegisterStatic(NameVar, ConstStaticValuesVar)
+
 	return cret
 }
 
@@ -160,6 +164,7 @@ var xEnumToString func(types.GType, int) string
 func EnumToString(GEnumTypeVar types.GType, ValueVar int) string {
 
 	cret := xEnumToString(GEnumTypeVar, ValueVar)
+
 	return cret
 }
 
@@ -180,6 +185,7 @@ var xFlagsGetFirstValue func(*FlagsClass, uint) *FlagsValue
 func FlagsGetFirstValue(FlagsClassVar *FlagsClass, ValueVar uint) *FlagsValue {
 
 	cret := xFlagsGetFirstValue(FlagsClassVar, ValueVar)
+
 	return cret
 }
 
@@ -189,6 +195,7 @@ var xFlagsGetValueByName func(*FlagsClass, string) *FlagsValue
 func FlagsGetValueByName(FlagsClassVar *FlagsClass, NameVar string) *FlagsValue {
 
 	cret := xFlagsGetValueByName(FlagsClassVar, NameVar)
+
 	return cret
 }
 
@@ -198,6 +205,7 @@ var xFlagsGetValueByNick func(*FlagsClass, string) *FlagsValue
 func FlagsGetValueByNick(FlagsClassVar *FlagsClass, NickVar string) *FlagsValue {
 
 	cret := xFlagsGetValueByNick(FlagsClassVar, NickVar)
+
 	return cret
 }
 
@@ -211,6 +219,7 @@ var xFlagsRegisterStatic func(string, []FlagsValue) types.GType
 func FlagsRegisterStatic(NameVar string, ConstStaticValuesVar []FlagsValue) types.GType {
 
 	cret := xFlagsRegisterStatic(NameVar, ConstStaticValuesVar)
+
 	return cret
 }
 
@@ -224,6 +233,7 @@ var xFlagsToString func(types.GType, uint) string
 func FlagsToString(FlagsTypeVar types.GType, ValueVar uint) string {
 
 	cret := xFlagsToString(FlagsTypeVar, ValueVar)
+
 	return cret
 }
 

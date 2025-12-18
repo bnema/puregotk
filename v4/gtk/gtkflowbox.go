@@ -238,6 +238,7 @@ var xFlowBoxGetActivateOnSingleClick func(uintptr) bool
 func (x *FlowBox) GetActivateOnSingleClick() bool {
 
 	cret := xFlowBoxGetActivateOnSingleClick(x.GoPointer())
+
 	return cret
 }
 
@@ -283,6 +284,7 @@ var xFlowBoxGetColumnSpacing func(uintptr) uint
 func (x *FlowBox) GetColumnSpacing() uint {
 
 	cret := xFlowBoxGetColumnSpacing(x.GoPointer())
+
 	return cret
 }
 
@@ -292,6 +294,7 @@ var xFlowBoxGetHomogeneous func(uintptr) bool
 func (x *FlowBox) GetHomogeneous() bool {
 
 	cret := xFlowBoxGetHomogeneous(x.GoPointer())
+
 	return cret
 }
 
@@ -301,6 +304,7 @@ var xFlowBoxGetMaxChildrenPerLine func(uintptr) uint
 func (x *FlowBox) GetMaxChildrenPerLine() uint {
 
 	cret := xFlowBoxGetMaxChildrenPerLine(x.GoPointer())
+
 	return cret
 }
 
@@ -310,6 +314,7 @@ var xFlowBoxGetMinChildrenPerLine func(uintptr) uint
 func (x *FlowBox) GetMinChildrenPerLine() uint {
 
 	cret := xFlowBoxGetMinChildrenPerLine(x.GoPointer())
+
 	return cret
 }
 
@@ -319,6 +324,7 @@ var xFlowBoxGetRowSpacing func(uintptr) uint
 func (x *FlowBox) GetRowSpacing() uint {
 
 	cret := xFlowBoxGetRowSpacing(x.GoPointer())
+
 	return cret
 }
 
@@ -328,6 +334,7 @@ var xFlowBoxGetSelectedChildren func(uintptr) *glib.List
 func (x *FlowBox) GetSelectedChildren() *glib.List {
 
 	cret := xFlowBoxGetSelectedChildren(x.GoPointer())
+
 	return cret
 }
 
@@ -337,6 +344,7 @@ var xFlowBoxGetSelectionMode func(uintptr) SelectionMode
 func (x *FlowBox) GetSelectionMode() SelectionMode {
 
 	cret := xFlowBoxGetSelectionMode(x.GoPointer())
+
 	return cret
 }
 
@@ -1048,6 +1056,7 @@ func (x *FlowBox) GetAccessibleParent() *AccessibleBase {
 func (x *FlowBox) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -1073,6 +1082,7 @@ func (x *FlowBox) GetAtContext() *ATContext {
 func (x *FlowBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1112,6 +1122,7 @@ func (x *FlowBox) GetNextAccessibleSibling() *AccessibleBase {
 func (x *FlowBox) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1288,6 +1299,7 @@ func (x *FlowBox) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, 
 func (x *FlowBox) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -1295,6 +1307,7 @@ func (x *FlowBox) GetBuildableId() string {
 func (x *FlowBox) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 
@@ -1394,6 +1407,7 @@ var xFlowBoxChildGetIndex func(uintptr) int
 func (x *FlowBoxChild) GetIndex() int {
 
 	cret := xFlowBoxChildGetIndex(x.GoPointer())
+
 	return cret
 }
 
@@ -1404,6 +1418,7 @@ var xFlowBoxChildIsSelected func(uintptr) bool
 func (x *FlowBoxChild) IsSelected() bool {
 
 	cret := xFlowBoxChildIsSelected(x.GoPointer())
+
 	return cret
 }
 
@@ -1490,6 +1505,7 @@ func (x *FlowBoxChild) GetAccessibleParent() *AccessibleBase {
 func (x *FlowBoxChild) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -1515,6 +1531,7 @@ func (x *FlowBoxChild) GetAtContext() *ATContext {
 func (x *FlowBoxChild) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1554,6 +1571,7 @@ func (x *FlowBoxChild) GetNextAccessibleSibling() *AccessibleBase {
 func (x *FlowBoxChild) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1730,6 +1748,7 @@ func (x *FlowBoxChild) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSt
 func (x *FlowBoxChild) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

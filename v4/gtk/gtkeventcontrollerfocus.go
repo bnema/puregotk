@@ -66,6 +66,7 @@ var xEventControllerFocusContainsFocus func(uintptr) bool
 func (x *EventControllerFocus) ContainsFocus() bool {
 
 	cret := xEventControllerFocusContainsFocus(x.GoPointer())
+
 	return cret
 }
 
@@ -75,6 +76,7 @@ var xEventControllerFocusIsFocus func(uintptr) bool
 func (x *EventControllerFocus) IsFocus() bool {
 
 	cret := xEventControllerFocusIsFocus(x.GoPointer())
+
 	return cret
 }
 

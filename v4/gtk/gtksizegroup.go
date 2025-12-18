@@ -173,6 +173,7 @@ var xSizeGroupGetMode func(uintptr) SizeGroupMode
 func (x *SizeGroup) GetMode() SizeGroupMode {
 
 	cret := xSizeGroupGetMode(x.GoPointer())
+
 	return cret
 }
 
@@ -182,6 +183,7 @@ var xSizeGroupGetWidgets func(uintptr) *glib.SList
 func (x *SizeGroup) GetWidgets() *glib.SList {
 
 	cret := xSizeGroupGetWidgets(x.GoPointer())
+
 	return cret
 }
 
@@ -227,6 +229,7 @@ func (c *SizeGroup) SetGoPointer(ptr uintptr) {
 func (x *SizeGroup) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

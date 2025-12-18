@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -3456,6 +3457,7 @@ func (x *FileBase) BuildAttributeListForCopy(FlagsVar FileCopyFlags, Cancellable
 	var cerr *glib.Error
 
 	cret := XGFileBuildAttributeListForCopy(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3507,6 +3509,7 @@ func (x *FileBase) Copy(DestinationVar File, FlagsVar FileCopyFlags, Cancellable
 	var cerr *glib.Error
 
 	cret := XGFileCopy(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3550,6 +3553,7 @@ func (x *FileBase) CopyAttributes(DestinationVar File, FlagsVar FileCopyFlags, C
 	var cerr *glib.Error
 
 	cret := XGFileCopyAttributes(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3562,6 +3566,7 @@ func (x *FileBase) CopyFinish(ResVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileCopyFinish(x.GoPointer(), ResVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3744,6 +3749,7 @@ func (x *FileBase) Delete(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileDelete(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3765,6 +3771,7 @@ func (x *FileBase) DeleteFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileDeleteFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3815,6 +3822,7 @@ func (x *FileBase) EjectMountableFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileEjectMountableFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3842,6 +3850,7 @@ func (x *FileBase) EjectMountableWithOperationFinish(ResultVar AsyncResult) (boo
 	var cerr *glib.Error
 
 	cret := XGFileEjectMountableWithOperationFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -3938,6 +3947,7 @@ func (x *FileBase) EnumerateChildrenFinish(ResVar AsyncResult) (*FileEnumerator,
 func (x *FileBase) Equal(File2Var File) bool {
 
 	cret := XGFileEqual(x.GoPointer(), File2Var.GoPointer())
+
 	return cret
 }
 
@@ -4018,6 +4028,7 @@ func (x *FileBase) FindEnclosingMountFinish(ResVar AsyncResult) (*MountBase, err
 func (x *FileBase) GetBasename() string {
 
 	cret := XGFileGetBasename(x.GoPointer())
+
 	return cret
 }
 
@@ -4102,6 +4113,7 @@ func (x *FileBase) GetParent() *FileBase {
 func (x *FileBase) GetParseName() string {
 
 	cret := XGFileGetParseName(x.GoPointer())
+
 	return cret
 }
 
@@ -4112,6 +4124,7 @@ func (x *FileBase) GetParseName() string {
 func (x *FileBase) GetPath() string {
 
 	cret := XGFileGetPath(x.GoPointer())
+
 	return cret
 }
 
@@ -4121,6 +4134,7 @@ func (x *FileBase) GetPath() string {
 func (x *FileBase) GetRelativePath(DescendantVar File) string {
 
 	cret := XGFileGetRelativePath(x.GoPointer(), DescendantVar.GoPointer())
+
 	return cret
 }
 
@@ -4130,6 +4144,7 @@ func (x *FileBase) GetRelativePath(DescendantVar File) string {
 func (x *FileBase) GetUri() string {
 
 	cret := XGFileGetUri(x.GoPointer())
+
 	return cret
 }
 
@@ -4147,6 +4162,7 @@ func (x *FileBase) GetUri() string {
 func (x *FileBase) GetUriScheme() string {
 
 	cret := XGFileGetUriScheme(x.GoPointer())
+
 	return cret
 }
 
@@ -4158,6 +4174,7 @@ func (x *FileBase) GetUriScheme() string {
 func (x *FileBase) HasParent(ParentVar File) bool {
 
 	cret := XGFileHasParent(x.GoPointer(), ParentVar.GoPointer())
+
 	return cret
 }
 
@@ -4178,6 +4195,7 @@ func (x *FileBase) HasParent(ParentVar File) bool {
 func (x *FileBase) HasPrefix(PrefixVar File) bool {
 
 	cret := XGFileHasPrefix(x.GoPointer(), PrefixVar.GoPointer())
+
 	return cret
 }
 
@@ -4187,6 +4205,7 @@ func (x *FileBase) HasPrefix(PrefixVar File) bool {
 func (x *FileBase) HasUriScheme(UriSchemeVar string) bool {
 
 	cret := XGFileHasUriScheme(x.GoPointer(), UriSchemeVar)
+
 	return cret
 }
 
@@ -4196,6 +4215,7 @@ func (x *FileBase) HasUriScheme(UriSchemeVar string) bool {
 func (x *FileBase) Hash() uint {
 
 	cret := XGFileHash(x.GoPointer())
+
 	return cret
 }
 
@@ -4213,6 +4233,7 @@ func (x *FileBase) Hash() uint {
 func (x *FileBase) IsNative() bool {
 
 	cret := XGFileIsNative(x.GoPointer())
+
 	return cret
 }
 
@@ -4231,6 +4252,7 @@ func (x *FileBase) LoadBytes(CancellableVar *Cancellable, EtagOutVar *string) (*
 	var cerr *glib.Error
 
 	cret := XGFileLoadBytes(x.GoPointer(), CancellableVar.GoPointer(), EtagOutVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4267,6 +4289,7 @@ func (x *FileBase) LoadBytesFinish(ResultVar AsyncResult, EtagOutVar *string) (*
 	var cerr *glib.Error
 
 	cret := XGFileLoadBytesFinish(x.GoPointer(), ResultVar.GoPointer(), EtagOutVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4286,6 +4309,7 @@ func (x *FileBase) LoadContents(CancellableVar *Cancellable, ContentsVar *[]stri
 	var cerr *glib.Error
 
 	cret := XGFileLoadContents(x.GoPointer(), CancellableVar.GoPointer(), ContentsVar, LengthVar, EtagOutVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4321,6 +4345,7 @@ func (x *FileBase) LoadContentsFinish(ResVar AsyncResult, ContentsVar *[]string,
 	var cerr *glib.Error
 
 	cret := XGFileLoadContentsFinish(x.GoPointer(), ResVar.GoPointer(), ContentsVar, LengthVar, EtagOutVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4354,6 +4379,7 @@ func (x *FileBase) LoadPartialContentsFinish(ResVar AsyncResult, ContentsVar *[]
 	var cerr *glib.Error
 
 	cret := XGFileLoadPartialContentsFinish(x.GoPointer(), ResVar.GoPointer(), ContentsVar, LengthVar, EtagOutVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4383,6 +4409,7 @@ func (x *FileBase) MakeDirectory(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileMakeDirectory(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4403,6 +4430,7 @@ func (x *FileBase) MakeDirectoryFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileMakeDirectoryFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4427,6 +4455,7 @@ func (x *FileBase) MakeDirectoryWithParents(CancellableVar *Cancellable) (bool, 
 	var cerr *glib.Error
 
 	cret := XGFileMakeDirectoryWithParents(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4444,6 +4473,7 @@ func (x *FileBase) MakeSymbolicLink(SymlinkValueVar string, CancellableVar *Canc
 	var cerr *glib.Error
 
 	cret := XGFileMakeSymbolicLink(x.GoPointer(), SymlinkValueVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4465,6 +4495,7 @@ func (x *FileBase) MakeSymbolicLinkFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileMakeSymbolicLinkFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4494,6 +4525,7 @@ func (x *FileBase) MeasureDiskUsage(FlagsVar FileMeasureFlags, CancellableVar *C
 	var cerr *glib.Error
 
 	cret := XGFileMeasureDiskUsage(x.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressDataVar, DiskUsageVar, NumDirsVar, NumFilesVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4518,6 +4550,7 @@ func (x *FileBase) MeasureDiskUsageFinish(ResultVar AsyncResult, DiskUsageVar *u
 	var cerr *glib.Error
 
 	cret := XGFileMeasureDiskUsageFinish(x.GoPointer(), ResultVar.GoPointer(), DiskUsageVar, NumDirsVar, NumFilesVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4632,6 +4665,7 @@ func (x *FileBase) MountEnclosingVolumeFinish(ResultVar AsyncResult) (bool, erro
 	var cerr *glib.Error
 
 	cret := XGFileMountEnclosingVolumeFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4715,6 +4749,7 @@ func (x *FileBase) Move(DestinationVar File, FlagsVar FileCopyFlags, Cancellable
 	var cerr *glib.Error
 
 	cret := XGFileMove(x.GoPointer(), DestinationVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(ProgressCallbackVar), ProgressCallbackDataVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4751,6 +4786,7 @@ func (x *FileBase) MoveFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileMoveFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4836,6 +4872,7 @@ func (x *FileBase) OpenReadwriteFinish(ResVar AsyncResult) (*FileIOStream, error
 func (x *FileBase) PeekPath() string {
 
 	cret := XGFilePeekPath(x.GoPointer())
+
 	return cret
 }
 
@@ -4862,6 +4899,7 @@ func (x *FileBase) PollMountableFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFilePollMountableFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -4947,6 +4985,7 @@ func (x *FileBase) QueryDefaultHandlerFinish(ResultVar AsyncResult) (*AppInfoBas
 func (x *FileBase) QueryExists(CancellableVar *Cancellable) bool {
 
 	cret := XGFileQueryExists(x.GoPointer(), CancellableVar.GoPointer())
+
 	return cret
 }
 
@@ -4958,6 +4997,7 @@ func (x *FileBase) QueryExists(CancellableVar *Cancellable) bool {
 func (x *FileBase) QueryFileType(FlagsVar FileQueryInfoFlags, CancellableVar *Cancellable) FileType {
 
 	cret := XGFileQueryFileType(x.GoPointer(), FlagsVar, CancellableVar.GoPointer())
+
 	return cret
 }
 
@@ -5151,6 +5191,7 @@ func (x *FileBase) QuerySettableAttributes(CancellableVar *Cancellable) (*FileAt
 	var cerr *glib.Error
 
 	cret := XGFileQuerySettableAttributes(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5169,6 +5210,7 @@ func (x *FileBase) QueryWritableNamespaces(CancellableVar *Cancellable) (*FileAt
 	var cerr *glib.Error
 
 	cret := XGFileQueryWritableNamespaces(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5284,7 +5326,11 @@ func (x *FileBase) Replace(EtagVar *string, MakeBackupVar bool, FlagsVar FileCre
 	var cls *FileOutputStream
 	var cerr *glib.Error
 
-	cret := XGFileReplace(x.GoPointer(), core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+	EtagVarPtr, EtagVarBytes := core.NullableStringToPtr(EtagVar)
+
+	cret := XGFileReplace(x.GoPointer(), EtagVarPtr, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+
+	runtime.KeepAlive(EtagVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5309,7 +5355,11 @@ func (x *FileBase) Replace(EtagVar *string, MakeBackupVar bool, FlagsVar FileCre
 // of the operation.
 func (x *FileBase) ReplaceAsync(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGFileReplaceAsync(x.GoPointer(), core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	EtagVarPtr, EtagVarBytes := core.NullableStringToPtr(EtagVar)
+
+	XGFileReplaceAsync(x.GoPointer(), EtagVarPtr, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+
+	runtime.KeepAlive(EtagVarBytes)
 
 }
 
@@ -5332,7 +5382,12 @@ func (x *FileBase) ReplaceAsync(EtagVar *string, MakeBackupVar bool, FlagsVar Fi
 func (x *FileBase) ReplaceContents(ContentsVar string, LengthVar uint, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, NewEtagVar *string, CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
-	cret := XGFileReplaceContents(x.GoPointer(), ContentsVar, LengthVar, core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, NewEtagVar, CancellableVar.GoPointer(), &cerr)
+	EtagVarPtr, EtagVarBytes := core.NullableStringToPtr(EtagVar)
+
+	cret := XGFileReplaceContents(x.GoPointer(), ContentsVar, LengthVar, EtagVarPtr, MakeBackupVar, FlagsVar, NewEtagVar, CancellableVar.GoPointer(), &cerr)
+
+	runtime.KeepAlive(EtagVarBytes)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5361,7 +5416,11 @@ func (x *FileBase) ReplaceContents(ContentsVar string, LengthVar uint, EtagVar *
 // contents (without copying) for the duration of the call.
 func (x *FileBase) ReplaceContentsAsync(ContentsVar string, LengthVar uint, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGFileReplaceContentsAsync(x.GoPointer(), ContentsVar, LengthVar, core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	EtagVarPtr, EtagVarBytes := core.NullableStringToPtr(EtagVar)
+
+	XGFileReplaceContentsAsync(x.GoPointer(), ContentsVar, LengthVar, EtagVarPtr, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+
+	runtime.KeepAlive(EtagVarBytes)
 
 }
 
@@ -5375,7 +5434,11 @@ func (x *FileBase) ReplaceContentsAsync(ContentsVar string, LengthVar uint, Etag
 // g_file_replace_contents_finish().
 func (x *FileBase) ReplaceContentsBytesAsync(ContentsVar *glib.Bytes, EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGFileReplaceContentsBytesAsync(x.GoPointer(), ContentsVar, core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	EtagVarPtr, EtagVarBytes := core.NullableStringToPtr(EtagVar)
+
+	XGFileReplaceContentsBytesAsync(x.GoPointer(), ContentsVar, EtagVarPtr, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+
+	runtime.KeepAlive(EtagVarBytes)
 
 }
 
@@ -5386,6 +5449,7 @@ func (x *FileBase) ReplaceContentsFinish(ResVar AsyncResult, NewEtagVar *string)
 	var cerr *glib.Error
 
 	cret := XGFileReplaceContentsFinish(x.GoPointer(), ResVar.GoPointer(), NewEtagVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5427,7 +5491,11 @@ func (x *FileBase) ReplaceReadwrite(EtagVar *string, MakeBackupVar bool, FlagsVa
 	var cls *FileIOStream
 	var cerr *glib.Error
 
-	cret := XGFileReplaceReadwrite(x.GoPointer(), core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+	EtagVarPtr, EtagVarBytes := core.NullableStringToPtr(EtagVar)
+
+	cret := XGFileReplaceReadwrite(x.GoPointer(), EtagVarPtr, MakeBackupVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+
+	runtime.KeepAlive(EtagVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -5453,7 +5521,11 @@ func (x *FileBase) ReplaceReadwrite(EtagVar *string, MakeBackupVar bool, FlagsVa
 // the result of the operation.
 func (x *FileBase) ReplaceReadwriteAsync(EtagVar *string, MakeBackupVar bool, FlagsVar FileCreateFlags, IoPriorityVar int, CancellableVar *Cancellable, CallbackVar *AsyncReadyCallback, UserDataVar uintptr) {
 
-	XGFileReplaceReadwriteAsync(x.GoPointer(), core.NullableStringToPtr(EtagVar), MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+	EtagVarPtr, EtagVarBytes := core.NullableStringToPtr(EtagVar)
+
+	XGFileReplaceReadwriteAsync(x.GoPointer(), EtagVarPtr, MakeBackupVar, FlagsVar, IoPriorityVar, CancellableVar.GoPointer(), glib.NewCallbackNullable(CallbackVar), UserDataVar)
+
+	runtime.KeepAlive(EtagVarBytes)
 
 }
 
@@ -5508,6 +5580,7 @@ func (x *FileBase) SetAttribute(AttributeVar string, TypeVar FileAttributeType, 
 	var cerr *glib.Error
 
 	cret := XGFileSetAttribute(x.GoPointer(), AttributeVar, TypeVar, ValuePVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5526,6 +5599,7 @@ func (x *FileBase) SetAttributeByteString(AttributeVar string, ValueVar string, 
 	var cerr *glib.Error
 
 	cret := XGFileSetAttributeByteString(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5543,6 +5617,7 @@ func (x *FileBase) SetAttributeInt32(AttributeVar string, ValueVar int32, FlagsV
 	var cerr *glib.Error
 
 	cret := XGFileSetAttributeInt32(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5560,6 +5635,7 @@ func (x *FileBase) SetAttributeInt64(AttributeVar string, ValueVar int64, FlagsV
 	var cerr *glib.Error
 
 	cret := XGFileSetAttributeInt64(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5577,6 +5653,7 @@ func (x *FileBase) SetAttributeString(AttributeVar string, ValueVar string, Flag
 	var cerr *glib.Error
 
 	cret := XGFileSetAttributeString(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5594,6 +5671,7 @@ func (x *FileBase) SetAttributeUint32(AttributeVar string, ValueVar uint32, Flag
 	var cerr *glib.Error
 
 	cret := XGFileSetAttributeUint32(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5611,6 +5689,7 @@ func (x *FileBase) SetAttributeUint64(AttributeVar string, ValueVar uint64, Flag
 	var cerr *glib.Error
 
 	cret := XGFileSetAttributeUint64(x.GoPointer(), AttributeVar, ValueVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5637,6 +5716,7 @@ func (x *FileBase) SetAttributesFinish(ResultVar AsyncResult, InfoVar **FileInfo
 	var cerr *glib.Error
 
 	cret := XGFileSetAttributesFinish(x.GoPointer(), ResultVar.GoPointer(), InfoVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5660,6 +5740,7 @@ func (x *FileBase) SetAttributesFromInfo(InfoVar *FileInfo, FlagsVar FileQueryIn
 	var cerr *glib.Error
 
 	cret := XGFileSetAttributesFromInfo(x.GoPointer(), InfoVar.GoPointer(), FlagsVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5759,6 +5840,7 @@ func (x *FileBase) StartMountableFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileStartMountableFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5789,6 +5871,7 @@ func (x *FileBase) StopMountableFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileStopMountableFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5803,6 +5886,7 @@ func (x *FileBase) StopMountableFinish(ResultVar AsyncResult) (bool, error) {
 func (x *FileBase) SupportsThreadContexts() bool {
 
 	cret := XGFileSupportsThreadContexts(x.GoPointer())
+
 	return cret
 }
 
@@ -5823,6 +5907,7 @@ func (x *FileBase) Trash(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileTrash(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5843,6 +5928,7 @@ func (x *FileBase) TrashFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileTrashFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5873,6 +5959,7 @@ func (x *FileBase) UnmountMountableFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGFileUnmountMountableFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -5904,6 +5991,7 @@ func (x *FileBase) UnmountMountableWithOperationFinish(ResultVar AsyncResult) (b
 	var cerr *glib.Error
 
 	cret := XGFileUnmountMountableWithOperationFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -6171,7 +6259,11 @@ func FileNewTmp(TmplVar *string, IostreamVar **FileIOStream) (*FileBase, error) 
 	var cls *FileBase
 	var cerr *glib.Error
 
-	cret := xFileNewTmp(core.NullableStringToPtr(TmplVar), IostreamVar, &cerr)
+	TmplVarPtr, TmplVarBytes := core.NullableStringToPtr(TmplVar)
+
+	cret := xFileNewTmp(TmplVarPtr, IostreamVar, &cerr)
+
+	runtime.KeepAlive(TmplVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -6211,7 +6303,11 @@ func FileNewTmpAsync(TmplVar *string, IoPriorityVar int, CancellableVar *Cancell
 		}
 	}
 
-	xFileNewTmpAsync(core.NullableStringToPtr(TmplVar), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	TmplVarPtr, TmplVarBytes := core.NullableStringToPtr(TmplVar)
+
+	xFileNewTmpAsync(TmplVarPtr, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+
+	runtime.KeepAlive(TmplVarBytes)
 
 }
 
@@ -6240,7 +6336,11 @@ func FileNewTmpDirAsync(TmplVar *string, IoPriorityVar int, CancellableVar *Canc
 		}
 	}
 
-	xFileNewTmpDirAsync(core.NullableStringToPtr(TmplVar), IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+	TmplVarPtr, TmplVarBytes := core.NullableStringToPtr(TmplVar)
+
+	xFileNewTmpDirAsync(TmplVarPtr, IoPriorityVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
+
+	runtime.KeepAlive(TmplVarBytes)
 
 }
 

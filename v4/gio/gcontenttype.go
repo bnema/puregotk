@@ -2,6 +2,8 @@
 package gio
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -14,6 +16,7 @@ var xContentTypeCanBeExecutable func(string) bool
 func ContentTypeCanBeExecutable(TypeVar string) bool {
 
 	cret := xContentTypeCanBeExecutable(TypeVar)
+
 	return cret
 }
 
@@ -23,6 +26,7 @@ var xContentTypeEquals func(string, string) bool
 func ContentTypeEquals(Type1Var string, Type2Var string) bool {
 
 	cret := xContentTypeEquals(Type1Var, Type2Var)
+
 	return cret
 }
 
@@ -32,6 +36,7 @@ var xContentTypeFromMimeType func(string) string
 func ContentTypeFromMimeType(MimeTypeVar string) string {
 
 	cret := xContentTypeFromMimeType(MimeTypeVar)
+
 	return cret
 }
 
@@ -41,6 +46,7 @@ var xContentTypeGetDescription func(string) string
 func ContentTypeGetDescription(TypeVar string) string {
 
 	cret := xContentTypeGetDescription(TypeVar)
+
 	return cret
 }
 
@@ -54,6 +60,7 @@ var xContentTypeGetGenericIconName func(string) string
 func ContentTypeGetGenericIconName(TypeVar string) string {
 
 	cret := xContentTypeGetGenericIconName(TypeVar)
+
 	return cret
 }
 
@@ -80,6 +87,7 @@ var xContentTypeGetMimeDirs func() []string
 func ContentTypeGetMimeDirs() []string {
 
 	cret := xContentTypeGetMimeDirs()
+
 	return cret
 }
 
@@ -89,6 +97,7 @@ var xContentTypeGetMimeType func(string) string
 func ContentTypeGetMimeType(TypeVar string) string {
 
 	cret := xContentTypeGetMimeType(TypeVar)
+
 	return cret
 }
 
@@ -116,7 +125,12 @@ var xContentTypeGuess func(uintptr, []byte, uint, *bool) string
 // on the other argument.
 func ContentTypeGuess(FilenameVar *string, DataVar []byte, DataSizeVar uint, ResultUncertainVar *bool) string {
 
-	cret := xContentTypeGuess(core.NullableStringToPtr(FilenameVar), DataVar, DataSizeVar, ResultUncertainVar)
+	FilenameVarPtr, FilenameVarBytes := core.NullableStringToPtr(FilenameVar)
+
+	cret := xContentTypeGuess(FilenameVarPtr, DataVar, DataSizeVar, ResultUncertainVar)
+
+	runtime.KeepAlive(FilenameVarBytes)
+
 	return cret
 }
 
@@ -137,6 +151,7 @@ var xContentTypeGuessForTree func(uintptr) []string
 func ContentTypeGuessForTree(RootVar File) []string {
 
 	cret := xContentTypeGuessForTree(RootVar.GoPointer())
+
 	return cret
 }
 
@@ -146,6 +161,7 @@ var xContentTypeIsA func(string, string) bool
 func ContentTypeIsA(TypeVar string, SupertypeVar string) bool {
 
 	cret := xContentTypeIsA(TypeVar, SupertypeVar)
+
 	return cret
 }
 
@@ -156,6 +172,7 @@ var xContentTypeIsMimeType func(string, string) bool
 func ContentTypeIsMimeType(TypeVar string, MimeTypeVar string) bool {
 
 	cret := xContentTypeIsMimeType(TypeVar, MimeTypeVar)
+
 	return cret
 }
 
@@ -168,6 +185,7 @@ var xContentTypeIsUnknown func(string) bool
 func ContentTypeIsUnknown(TypeVar string) bool {
 
 	cret := xContentTypeIsUnknown(TypeVar)
+
 	return cret
 }
 
@@ -212,6 +230,7 @@ var xContentTypesGetRegistered func() *glib.List
 func ContentTypesGetRegistered() *glib.List {
 
 	cret := xContentTypesGetRegistered()
+
 	return cret
 }
 

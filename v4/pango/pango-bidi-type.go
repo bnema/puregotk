@@ -80,6 +80,7 @@ var xBidiTypeForUnichar func(uint32) BidiType
 func BidiTypeForUnichar(ChVar uint32) BidiType {
 
 	cret := xBidiTypeForUnichar(ChVar)
+
 	return cret
 }
 
@@ -90,6 +91,7 @@ var xFindBaseDir func(string, int) Direction
 func FindBaseDir(TextVar string, LengthVar int) Direction {
 
 	cret := xFindBaseDir(TextVar, LengthVar)
+
 	return cret
 }
 
@@ -101,6 +103,7 @@ var xGetMirrorChar func(uint32, *uint32) bool
 func GetMirrorChar(ChVar uint32, MirroredChVar *uint32) bool {
 
 	cret := xGetMirrorChar(ChVar, MirroredChVar)
+
 	return cret
 }
 
@@ -118,6 +121,7 @@ var xUnicharDirection func(uint32) Direction
 func UnicharDirection(ChVar uint32) Direction {
 
 	cret := xUnicharDirection(ChVar)
+
 	return cret
 }
 

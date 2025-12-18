@@ -160,6 +160,7 @@ var xWindowGetAdaptivePreview func(uintptr) bool
 func (x *Window) GetAdaptivePreview() bool {
 
 	cret := xWindowGetAdaptivePreview(x.GoPointer())
+
 	return cret
 }
 
@@ -341,6 +342,7 @@ func (x *Window) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *Window) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -366,6 +368,7 @@ func (x *Window) GetAtContext() *gtk.ATContext {
 func (x *Window) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -405,6 +408,7 @@ func (x *Window) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *Window) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -581,6 +585,7 @@ func (x *Window) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleStat
 func (x *Window) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

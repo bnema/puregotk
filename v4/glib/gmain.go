@@ -118,6 +118,7 @@ var xNewMainContext func() *MainContext
 func NewMainContext() *MainContext {
 
 	cret := xNewMainContext()
+
 	return cret
 }
 
@@ -127,6 +128,7 @@ var xNewMainContextWithFlags func(MainContextFlags) *MainContext
 func NewMainContextWithFlags(FlagsVar MainContextFlags) *MainContext {
 
 	cret := xNewMainContextWithFlags(FlagsVar)
+
 	return cret
 }
 
@@ -150,6 +152,7 @@ var xMainContextAcquire func(uintptr) bool
 func (x *MainContext) Acquire() bool {
 
 	cret := xMainContextAcquire(x.GoPointer())
+
 	return cret
 }
 
@@ -183,6 +186,7 @@ var xMainContextCheck func(uintptr, int, []PollFD, int) bool
 func (x *MainContext) Check(MaxPriorityVar int, FdsVar []PollFD, NFdsVar int) bool {
 
 	cret := xMainContextCheck(x.GoPointer(), MaxPriorityVar, FdsVar, NFdsVar)
+
 	return cret
 }
 
@@ -210,6 +214,7 @@ var xMainContextFindSourceByFuncsUserData func(uintptr, *SourceFuncs, uintptr) *
 func (x *MainContext) FindSourceByFuncsUserData(FuncsVar *SourceFuncs, UserDataVar uintptr) *Source {
 
 	cret := xMainContextFindSourceByFuncsUserData(x.GoPointer(), FuncsVar, UserDataVar)
+
 	return cret
 }
 
@@ -230,6 +235,7 @@ var xMainContextFindSourceById func(uintptr, uint) *Source
 func (x *MainContext) FindSourceById(SourceIdVar uint) *Source {
 
 	cret := xMainContextFindSourceById(x.GoPointer(), SourceIdVar)
+
 	return cret
 }
 
@@ -242,6 +248,7 @@ var xMainContextFindSourceByUserData func(uintptr, uintptr) *Source
 func (x *MainContext) FindSourceByUserData(UserDataVar uintptr) *Source {
 
 	cret := xMainContextFindSourceByUserData(x.GoPointer(), UserDataVar)
+
 	return cret
 }
 
@@ -251,6 +258,7 @@ var xMainContextGetPollFunc func(uintptr) uintptr
 func (x *MainContext) GetPollFunc() uintptr {
 
 	cret := xMainContextGetPollFunc(x.GoPointer())
+
 	return cret
 }
 
@@ -357,6 +365,7 @@ var xMainContextIsOwner func(uintptr) bool
 func (x *MainContext) IsOwner() bool {
 
 	cret := xMainContextIsOwner(x.GoPointer())
+
 	return cret
 }
 
@@ -378,6 +387,7 @@ var xMainContextIteration func(uintptr, bool) bool
 func (x *MainContext) Iteration(MayBlockVar bool) bool {
 
 	cret := xMainContextIteration(x.GoPointer(), MayBlockVar)
+
 	return cret
 }
 
@@ -387,6 +397,7 @@ var xMainContextPending func(uintptr) bool
 func (x *MainContext) Pending() bool {
 
 	cret := xMainContextPending(x.GoPointer())
+
 	return cret
 }
 
@@ -412,6 +423,7 @@ var xMainContextPrepare func(uintptr, *int) bool
 func (x *MainContext) Prepare(PriorityVar *int) bool {
 
 	cret := xMainContextPrepare(x.GoPointer(), PriorityVar)
+
 	return cret
 }
 
@@ -507,6 +519,7 @@ var xMainContextPusherNew func(uintptr) *MainContextPusher
 func (x *MainContext) PusherNew() *MainContextPusher {
 
 	cret := xMainContextPusherNew(x.GoPointer())
+
 	return cret
 }
 
@@ -524,6 +537,7 @@ var xMainContextQuery func(uintptr, int, *int, *[]PollFD, int) int
 func (x *MainContext) Query(MaxPriorityVar int, TimeoutVar *int, FdsVar *[]PollFD, NFdsVar int) int {
 
 	cret := xMainContextQuery(x.GoPointer(), MaxPriorityVar, TimeoutVar, FdsVar, NFdsVar)
+
 	return cret
 }
 
@@ -533,6 +547,7 @@ var xMainContextRef func(uintptr) *MainContext
 func (x *MainContext) Ref() *MainContext {
 
 	cret := xMainContextRef(x.GoPointer())
+
 	return cret
 }
 
@@ -617,6 +632,7 @@ var xMainContextWait func(uintptr, *Cond, *Mutex) bool
 func (x *MainContext) Wait(CondVar *Cond, MutexVar *Mutex) bool {
 
 	cret := xMainContextWait(x.GoPointer(), CondVar, MutexVar)
+
 	return cret
 }
 
@@ -685,6 +701,7 @@ var xNewMainLoop func(*MainContext, bool) *MainLoop
 func NewMainLoop(ContextVar *MainContext, IsRunningVar bool) *MainLoop {
 
 	cret := xNewMainLoop(ContextVar, IsRunningVar)
+
 	return cret
 }
 
@@ -694,6 +711,7 @@ var xMainLoopGetContext func(uintptr) *MainContext
 func (x *MainLoop) GetContext() *MainContext {
 
 	cret := xMainLoopGetContext(x.GoPointer())
+
 	return cret
 }
 
@@ -704,6 +722,7 @@ var xMainLoopIsRunning func(uintptr) bool
 func (x *MainLoop) IsRunning() bool {
 
 	cret := xMainLoopIsRunning(x.GoPointer())
+
 	return cret
 }
 
@@ -726,6 +745,7 @@ var xMainLoopRef func(uintptr) *MainLoop
 func (x *MainLoop) Ref() *MainLoop {
 
 	cret := xMainLoopRef(x.GoPointer())
+
 	return cret
 }
 
@@ -810,6 +830,7 @@ var xNewSource func(*SourceFuncs, uint) *Source
 func NewSource(SourceFuncsVar *SourceFuncs, StructSizeVar uint) *Source {
 
 	cret := xNewSource(SourceFuncsVar, StructSizeVar)
+
 	return cret
 }
 
@@ -880,6 +901,7 @@ var xSourceAddUnixFd func(uintptr, int, IOCondition) uintptr
 func (x *Source) AddUnixFd(FdVar int, EventsVar IOCondition) uintptr {
 
 	cret := xSourceAddUnixFd(x.GoPointer(), FdVar, EventsVar)
+
 	return cret
 }
 
@@ -895,6 +917,7 @@ var xSourceAttach func(uintptr, *MainContext) uint
 func (x *Source) Attach(ContextVar *MainContext) uint {
 
 	cret := xSourceAttach(x.GoPointer(), ContextVar)
+
 	return cret
 }
 
@@ -934,6 +957,7 @@ var xSourceDupContext func(uintptr) *MainContext
 func (x *Source) DupContext() *MainContext {
 
 	cret := xSourceDupContext(x.GoPointer())
+
 	return cret
 }
 
@@ -945,6 +969,7 @@ var xSourceGetCanRecurse func(uintptr) bool
 func (x *Source) GetCanRecurse() bool {
 
 	cret := xSourceGetCanRecurse(x.GoPointer())
+
 	return cret
 }
 
@@ -965,6 +990,7 @@ var xSourceGetContext func(uintptr) *MainContext
 func (x *Source) GetContext() *MainContext {
 
 	cret := xSourceGetContext(x.GoPointer())
+
 	return cret
 }
 
@@ -995,6 +1021,7 @@ var xSourceGetId func(uintptr) uint
 func (x *Source) GetId() uint {
 
 	cret := xSourceGetId(x.GoPointer())
+
 	return cret
 }
 
@@ -1007,6 +1034,7 @@ var xSourceGetName func(uintptr) string
 func (x *Source) GetName() string {
 
 	cret := xSourceGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -1016,6 +1044,7 @@ var xSourceGetPriority func(uintptr) int
 func (x *Source) GetPriority() int {
 
 	cret := xSourceGetPriority(x.GoPointer())
+
 	return cret
 }
 
@@ -1029,6 +1058,7 @@ var xSourceGetReadyTime func(uintptr) int64
 func (x *Source) GetReadyTime() int64 {
 
 	cret := xSourceGetReadyTime(x.GoPointer())
+
 	return cret
 }
 
@@ -1046,6 +1076,7 @@ var xSourceGetTime func(uintptr) int64
 func (x *Source) GetTime() int64 {
 
 	cret := xSourceGetTime(x.GoPointer())
+
 	return cret
 }
 
@@ -1139,6 +1170,7 @@ var xSourceIsDestroyed func(uintptr) bool
 func (x *Source) IsDestroyed() bool {
 
 	cret := xSourceIsDestroyed(x.GoPointer())
+
 	return cret
 }
 
@@ -1176,6 +1208,7 @@ var xSourceQueryUnixFd func(uintptr, uintptr) IOCondition
 func (x *Source) QueryUnixFd(TagVar uintptr) IOCondition {
 
 	cret := xSourceQueryUnixFd(x.GoPointer(), TagVar)
+
 	return cret
 }
 
@@ -1185,6 +1218,7 @@ var xSourceRef func(uintptr) *Source
 func (x *Source) Ref() *Source {
 
 	cret := xSourceRef(x.GoPointer())
+
 	return cret
 }
 
@@ -1716,6 +1750,7 @@ func ChildWatchAdd(PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr) uin
 	}
 
 	cret := xChildWatchAdd(PidVar, FunctionVarRef, DataVar)
+
 	return cret
 }
 
@@ -1779,6 +1814,7 @@ func ChildWatchAddFull(PriorityVar int, PidVar Pid, FunctionVar *ChildWatchFunc,
 	}
 
 	cret := xChildWatchAddFull(PriorityVar, PidVar, FunctionVarRef, DataVar, NotifyVarRef)
+
 	return cret
 }
 
@@ -1827,6 +1863,7 @@ var xChildWatchSourceNew func(Pid) *Source
 func ChildWatchSourceNew(PidVar Pid) *Source {
 
 	cret := xChildWatchSourceNew(PidVar)
+
 	return cret
 }
 
@@ -1893,6 +1930,7 @@ var xGetMonotonicTime func() int64
 func GetMonotonicTime() int64 {
 
 	cret := xGetMonotonicTime()
+
 	return cret
 }
 
@@ -1909,6 +1947,7 @@ var xGetRealTime func() int64
 func GetRealTime() int64 {
 
 	cret := xGetRealTime()
+
 	return cret
 }
 
@@ -1948,6 +1987,7 @@ func IdleAdd(FunctionVar *SourceFunc, DataVar uintptr) uint {
 	}
 
 	cret := xIdleAdd(FunctionVarRef, DataVar)
+
 	return cret
 }
 
@@ -2000,6 +2040,7 @@ func IdleAddFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, Noti
 	}
 
 	cret := xIdleAddFull(PriorityVar, FunctionVarRef, DataVar, NotifyVarRef)
+
 	return cret
 }
 
@@ -2033,6 +2074,7 @@ func IdleAddOnce(FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
 	}
 
 	cret := xIdleAddOnce(FunctionVarRef, DataVar)
+
 	return cret
 }
 
@@ -2042,6 +2084,7 @@ var xIdleRemoveByData func(uintptr) bool
 func IdleRemoveByData(DataVar uintptr) bool {
 
 	cret := xIdleRemoveByData(DataVar)
+
 	return cret
 }
 
@@ -2058,6 +2101,7 @@ var xIdleSourceNew func() *Source
 func IdleSourceNew() *Source {
 
 	cret := xIdleSourceNew()
+
 	return cret
 }
 
@@ -2072,6 +2116,7 @@ var xMainContextDefault func() *MainContext
 func MainContextDefault() *MainContext {
 
 	cret := xMainContextDefault()
+
 	return cret
 }
 
@@ -2092,6 +2137,7 @@ var xMainContextGetThreadDefault func() *MainContext
 func MainContextGetThreadDefault() *MainContext {
 
 	cret := xMainContextGetThreadDefault()
+
 	return cret
 }
 
@@ -2110,6 +2156,7 @@ var xMainContextRefThreadDefault func() *MainContext
 func MainContextRefThreadDefault() *MainContext {
 
 	cret := xMainContextRefThreadDefault()
+
 	return cret
 }
 
@@ -2119,6 +2166,7 @@ var xMainCurrentSource func() *Source
 func MainCurrentSource() *Source {
 
 	cret := xMainCurrentSource()
+
 	return cret
 }
 
@@ -2236,6 +2284,7 @@ var xMainDepth func() int
 func MainDepth() int {
 
 	cret := xMainDepth()
+
 	return cret
 }
 
@@ -2266,6 +2315,7 @@ var xSourceRemove func(uint) bool
 func SourceRemove(TagVar uint) bool {
 
 	cret := xSourceRemove(TagVar)
+
 	return cret
 }
 
@@ -2279,6 +2329,7 @@ var xSourceRemoveByFuncsUserData func(*SourceFuncs, uintptr) bool
 func SourceRemoveByFuncsUserData(FuncsVar *SourceFuncs, UserDataVar uintptr) bool {
 
 	cret := xSourceRemoveByFuncsUserData(FuncsVar, UserDataVar)
+
 	return cret
 }
 
@@ -2291,6 +2342,7 @@ var xSourceRemoveByUserData func(uintptr) bool
 func SourceRemoveByUserData(UserDataVar uintptr) bool {
 
 	cret := xSourceRemoveByUserData(UserDataVar)
+
 	return cret
 }
 
@@ -2371,6 +2423,7 @@ func TimeoutAdd(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint
 	}
 
 	cret := xTimeoutAdd(IntervalVar, FunctionVarRef, DataVar)
+
 	return cret
 }
 
@@ -2437,6 +2490,7 @@ func TimeoutAddFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, 
 	}
 
 	cret := xTimeoutAddFull(PriorityVar, IntervalVar, FunctionVarRef, DataVar, NotifyVarRef)
+
 	return cret
 }
 
@@ -2467,6 +2521,7 @@ func TimeoutAddOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintp
 	}
 
 	cret := xTimeoutAddOnce(IntervalVar, FunctionVarRef, DataVar)
+
 	return cret
 }
 
@@ -2513,6 +2568,7 @@ func TimeoutAddSeconds(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintpt
 	}
 
 	cret := xTimeoutAddSeconds(IntervalVar, FunctionVarRef, DataVar)
+
 	return cret
 }
 
@@ -2591,6 +2647,7 @@ func TimeoutAddSecondsFull(PriorityVar int, IntervalVar uint, FunctionVar *Sourc
 	}
 
 	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, FunctionVarRef, DataVar, NotifyVarRef)
+
 	return cret
 }
 
@@ -2616,6 +2673,7 @@ func TimeoutAddSecondsOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVa
 	}
 
 	cret := xTimeoutAddSecondsOnce(IntervalVar, FunctionVarRef, DataVar)
+
 	return cret
 }
 
@@ -2632,6 +2690,7 @@ var xTimeoutSourceNew func(uint) *Source
 func TimeoutSourceNew(IntervalVar uint) *Source {
 
 	cret := xTimeoutSourceNew(IntervalVar)
+
 	return cret
 }
 
@@ -2651,6 +2710,7 @@ var xTimeoutSourceNewSeconds func(uint) *Source
 func TimeoutSourceNewSeconds(IntervalVar uint) *Source {
 
 	cret := xTimeoutSourceNewSeconds(IntervalVar)
+
 	return cret
 }
 

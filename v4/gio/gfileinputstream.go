@@ -444,6 +444,7 @@ func (c *FileInputStream) SetGoPointer(ptr uintptr) {
 func (x *FileInputStream) CanSeek() bool {
 
 	cret := XGSeekableCanSeek(x.GoPointer())
+
 	return cret
 }
 
@@ -452,6 +453,7 @@ func (x *FileInputStream) CanSeek() bool {
 func (x *FileInputStream) CanTruncate() bool {
 
 	cret := XGSeekableCanTruncate(x.GoPointer())
+
 	return cret
 }
 
@@ -473,6 +475,7 @@ func (x *FileInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancellab
 	var cerr *glib.Error
 
 	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -484,6 +487,7 @@ func (x *FileInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancellab
 func (x *FileInputStream) Tell() int64 {
 
 	cret := XGSeekableTell(x.GoPointer())
+
 	return cret
 }
 
@@ -500,6 +504,7 @@ func (x *FileInputStream) Truncate(OffsetVar int64, CancellableVar *Cancellable)
 	var cerr *glib.Error
 
 	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

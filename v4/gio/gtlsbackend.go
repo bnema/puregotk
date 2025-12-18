@@ -318,6 +318,7 @@ func (x *TlsBackendBase) SetGoPointer(ptr uintptr) {
 func (x *TlsBackendBase) GetCertificateType() types.GType {
 
 	cret := XGTlsBackendGetCertificateType(x.GoPointer())
+
 	return cret
 }
 
@@ -325,6 +326,7 @@ func (x *TlsBackendBase) GetCertificateType() types.GType {
 func (x *TlsBackendBase) GetClientConnectionType() types.GType {
 
 	cret := XGTlsBackendGetClientConnectionType(x.GoPointer())
+
 	return cret
 }
 
@@ -346,6 +348,7 @@ func (x *TlsBackendBase) GetDefaultDatabase() *TlsDatabase {
 func (x *TlsBackendBase) GetDtlsClientConnectionType() types.GType {
 
 	cret := XGTlsBackendGetDtlsClientConnectionType(x.GoPointer())
+
 	return cret
 }
 
@@ -353,6 +356,7 @@ func (x *TlsBackendBase) GetDtlsClientConnectionType() types.GType {
 func (x *TlsBackendBase) GetDtlsServerConnectionType() types.GType {
 
 	cret := XGTlsBackendGetDtlsServerConnectionType(x.GoPointer())
+
 	return cret
 }
 
@@ -360,6 +364,7 @@ func (x *TlsBackendBase) GetDtlsServerConnectionType() types.GType {
 func (x *TlsBackendBase) GetFileDatabaseType() types.GType {
 
 	cret := XGTlsBackendGetFileDatabaseType(x.GoPointer())
+
 	return cret
 }
 
@@ -367,6 +372,7 @@ func (x *TlsBackendBase) GetFileDatabaseType() types.GType {
 func (x *TlsBackendBase) GetServerConnectionType() types.GType {
 
 	cret := XGTlsBackendGetServerConnectionType(x.GoPointer())
+
 	return cret
 }
 
@@ -389,6 +395,7 @@ func (x *TlsBackendBase) SetDefaultDatabase(DatabaseVar *TlsDatabase) {
 func (x *TlsBackendBase) SupportsDtls() bool {
 
 	cret := XGTlsBackendSupportsDtls(x.GoPointer())
+
 	return cret
 }
 
@@ -397,6 +404,7 @@ func (x *TlsBackendBase) SupportsDtls() bool {
 func (x *TlsBackendBase) SupportsTls() bool {
 
 	cret := XGTlsBackendSupportsTls(x.GoPointer())
+
 	return cret
 }
 

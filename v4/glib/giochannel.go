@@ -2,6 +2,7 @@
 package glib
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -116,6 +117,7 @@ func NewIOChannelFile(FilenameVar string, ModeVar string) (*IOChannel, error) {
 	var cerr *Error
 
 	cret := xNewIOChannelFile(FilenameVar, ModeVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -150,6 +152,7 @@ var xIOChannelUnixNew func(int) *IOChannel
 func IOChannelUnixNew(FdVar int) *IOChannel {
 
 	cret := xIOChannelUnixNew(FdVar)
+
 	return cret
 }
 
@@ -171,6 +174,7 @@ func (x *IOChannel) Flush() (IOStatus, error) {
 	var cerr *Error
 
 	cret := xIOChannelFlush(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -186,6 +190,7 @@ var xIOChannelGetBufferCondition func(uintptr) IOCondition
 func (x *IOChannel) GetBufferCondition() IOCondition {
 
 	cret := xIOChannelGetBufferCondition(x.GoPointer())
+
 	return cret
 }
 
@@ -195,6 +200,7 @@ var xIOChannelGetBufferSize func(uintptr) uint
 func (x *IOChannel) GetBufferSize() uint {
 
 	cret := xIOChannelGetBufferSize(x.GoPointer())
+
 	return cret
 }
 
@@ -204,6 +210,7 @@ var xIOChannelGetBuffered func(uintptr) bool
 func (x *IOChannel) GetBuffered() bool {
 
 	cret := xIOChannelGetBuffered(x.GoPointer())
+
 	return cret
 }
 
@@ -216,6 +223,7 @@ var xIOChannelGetCloseOnUnref func(uintptr) bool
 func (x *IOChannel) GetCloseOnUnref() bool {
 
 	cret := xIOChannelGetCloseOnUnref(x.GoPointer())
+
 	return cret
 }
 
@@ -227,6 +235,7 @@ var xIOChannelGetEncoding func(uintptr) string
 func (x *IOChannel) GetEncoding() string {
 
 	cret := xIOChannelGetEncoding(x.GoPointer())
+
 	return cret
 }
 
@@ -244,6 +253,7 @@ var xIOChannelGetFlags func(uintptr) IOFlags
 func (x *IOChannel) GetFlags() IOFlags {
 
 	cret := xIOChannelGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -256,6 +266,7 @@ var xIOChannelGetLineTerm func(uintptr, *int) string
 func (x *IOChannel) GetLineTerm(LengthVar *int) string {
 
 	cret := xIOChannelGetLineTerm(x.GoPointer(), LengthVar)
+
 	return cret
 }
 
@@ -278,6 +289,7 @@ var xIOChannelRead func(uintptr, string, uint, uint) IOError
 func (x *IOChannel) Read(BufVar string, CountVar uint, BytesReadVar uint) IOError {
 
 	cret := xIOChannelRead(x.GoPointer(), BufVar, CountVar, BytesReadVar)
+
 	return cret
 }
 
@@ -288,6 +300,7 @@ func (x *IOChannel) ReadChars(BufVar *[]byte, CountVar uint, BytesReadVar *uint)
 	var cerr *Error
 
 	cret := xIOChannelReadChars(x.GoPointer(), BufVar, CountVar, BytesReadVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -305,6 +318,7 @@ func (x *IOChannel) ReadLine(StrReturnVar *string, LengthVar *uint, TerminatorPo
 	var cerr *Error
 
 	cret := xIOChannelReadLine(x.GoPointer(), StrReturnVar, LengthVar, TerminatorPosVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -319,6 +333,7 @@ func (x *IOChannel) ReadLineString(BufferVar *String, TerminatorPosVar uint) (IO
 	var cerr *Error
 
 	cret := xIOChannelReadLineString(x.GoPointer(), BufferVar, TerminatorPosVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -333,6 +348,7 @@ func (x *IOChannel) ReadToEnd(StrReturnVar *[]byte, LengthVar *uint) (IOStatus, 
 	var cerr *Error
 
 	cret := xIOChannelReadToEnd(x.GoPointer(), StrReturnVar, LengthVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -348,6 +364,7 @@ func (x *IOChannel) ReadUnichar(ThecharVar *uint32) (IOStatus, error) {
 	var cerr *Error
 
 	cret := xIOChannelReadUnichar(x.GoPointer(), ThecharVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -361,6 +378,7 @@ var xIOChannelRef func(uintptr) *IOChannel
 func (x *IOChannel) Ref() *IOChannel {
 
 	cret := xIOChannelRef(x.GoPointer())
+
 	return cret
 }
 
@@ -371,6 +389,7 @@ var xIOChannelSeek func(uintptr, int64, SeekType) IOError
 func (x *IOChannel) Seek(OffsetVar int64, TypeVar SeekType) IOError {
 
 	cret := xIOChannelSeek(x.GoPointer(), OffsetVar, TypeVar)
+
 	return cret
 }
 
@@ -381,6 +400,7 @@ func (x *IOChannel) SeekPosition(OffsetVar int64, TypeVar SeekType) (IOStatus, e
 	var cerr *Error
 
 	cret := xIOChannelSeekPosition(x.GoPointer(), OffsetVar, TypeVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -477,7 +497,12 @@ var xIOChannelSetEncoding func(uintptr, uintptr, **Error) IOStatus
 func (x *IOChannel) SetEncoding(EncodingVar *string) (IOStatus, error) {
 	var cerr *Error
 
-	cret := xIOChannelSetEncoding(x.GoPointer(), core.NullableStringToPtr(EncodingVar), &cerr)
+	EncodingVarPtr, EncodingVarBytes := core.NullableStringToPtr(EncodingVar)
+
+	cret := xIOChannelSetEncoding(x.GoPointer(), EncodingVarPtr, &cerr)
+
+	runtime.KeepAlive(EncodingVarBytes)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -492,6 +517,7 @@ func (x *IOChannel) SetFlags(FlagsVar IOFlags) (IOStatus, error) {
 	var cerr *Error
 
 	cret := xIOChannelSetFlags(x.GoPointer(), FlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -505,7 +531,11 @@ var xIOChannelSetLineTerm func(uintptr, uintptr, int)
 // where in the file a line break occurs.
 func (x *IOChannel) SetLineTerm(LineTermVar *string, LengthVar int) {
 
-	xIOChannelSetLineTerm(x.GoPointer(), core.NullableStringToPtr(LineTermVar), LengthVar)
+	LineTermVarPtr, LineTermVarBytes := core.NullableStringToPtr(LineTermVar)
+
+	xIOChannelSetLineTerm(x.GoPointer(), LineTermVarPtr, LengthVar)
+
+	runtime.KeepAlive(LineTermVarBytes)
 
 }
 
@@ -518,6 +548,7 @@ func (x *IOChannel) Shutdown(FlushVar bool) (IOStatus, error) {
 	var cerr *Error
 
 	cret := xIOChannelShutdown(x.GoPointer(), FlushVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -534,6 +565,7 @@ var xIOChannelUnixGetFd func(uintptr) int
 func (x *IOChannel) UnixGetFd() int {
 
 	cret := xIOChannelUnixGetFd(x.GoPointer())
+
 	return cret
 }
 
@@ -552,6 +584,7 @@ var xIOChannelWrite func(uintptr, string, uint, uint) IOError
 func (x *IOChannel) Write(BufVar string, CountVar uint, BytesWrittenVar uint) IOError {
 
 	cret := xIOChannelWrite(x.GoPointer(), BufVar, CountVar, BytesWrittenVar)
+
 	return cret
 }
 
@@ -567,6 +600,7 @@ func (x *IOChannel) WriteChars(BufVar []byte, CountVar int, BytesWrittenVar *uin
 	var cerr *Error
 
 	cret := xIOChannelWriteChars(x.GoPointer(), BufVar, CountVar, BytesWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -582,6 +616,7 @@ func (x *IOChannel) WriteUnichar(ThecharVar uint32) (IOStatus, error) {
 	var cerr *Error
 
 	cret := xIOChannelWriteUnichar(x.GoPointer(), ThecharVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1034,6 +1069,7 @@ func IoAddWatch(ChannelVar *IOChannel, ConditionVar IOCondition, FuncVar *IOFunc
 	}
 
 	cret := xIoAddWatch(ChannelVar, ConditionVar, FuncVarRef, UserDataVar)
+
 	return cret
 }
 
@@ -1078,6 +1114,7 @@ func IoAddWatchFull(ChannelVar *IOChannel, PriorityVar int, ConditionVar IOCondi
 	}
 
 	cret := xIoAddWatchFull(ChannelVar, PriorityVar, ConditionVar, FuncVarRef, UserDataVar, NotifyVarRef)
+
 	return cret
 }
 
@@ -1087,6 +1124,7 @@ var xIoChannelErrorFromErrno func(int) IOChannelError
 func IoChannelErrorFromErrno(EnVar int) IOChannelError {
 
 	cret := xIoChannelErrorFromErrno(EnVar)
+
 	return cret
 }
 
@@ -1109,6 +1147,7 @@ var xIoCreateWatch func(*IOChannel, IOCondition) *Source
 func IoCreateWatch(ChannelVar *IOChannel, ConditionVar IOCondition) *Source {
 
 	cret := xIoCreateWatch(ChannelVar, ConditionVar)
+
 	return cret
 }
 

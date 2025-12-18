@@ -118,6 +118,7 @@ var xScaleButtonGetActive func(uintptr) bool
 func (x *ScaleButton) GetActive() bool {
 
 	cret := xScaleButtonGetActive(x.GoPointer())
+
 	return cret
 }
 
@@ -146,6 +147,7 @@ var xScaleButtonGetHasFrame func(uintptr) bool
 func (x *ScaleButton) GetHasFrame() bool {
 
 	cret := xScaleButtonGetHasFrame(x.GoPointer())
+
 	return cret
 }
 
@@ -206,6 +208,7 @@ var xScaleButtonGetValue func(uintptr) float64
 func (x *ScaleButton) GetValue() float64 {
 
 	cret := xScaleButtonGetValue(x.GoPointer())
+
 	return cret
 }
 
@@ -458,6 +461,7 @@ func (x *ScaleButton) GetAccessibleParent() *AccessibleBase {
 func (x *ScaleButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -483,6 +487,7 @@ func (x *ScaleButton) GetAtContext() *ATContext {
 func (x *ScaleButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -522,6 +527,7 @@ func (x *ScaleButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ScaleButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -698,6 +704,7 @@ func (x *ScaleButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 func (x *ScaleButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -705,6 +712,7 @@ func (x *ScaleButton) GetBuildableId() string {
 func (x *ScaleButton) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

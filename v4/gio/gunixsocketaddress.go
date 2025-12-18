@@ -153,6 +153,7 @@ var xUnixSocketAddressGetAddressType func(uintptr) UnixSocketAddressType
 func (x *UnixSocketAddress) GetAddressType() UnixSocketAddressType {
 
 	cret := xUnixSocketAddressGetAddressType(x.GoPointer())
+
 	return cret
 }
 
@@ -162,6 +163,7 @@ var xUnixSocketAddressGetIsAbstract func(uintptr) bool
 func (x *UnixSocketAddress) GetIsAbstract() bool {
 
 	cret := xUnixSocketAddressGetIsAbstract(x.GoPointer())
+
 	return cret
 }
 
@@ -176,6 +178,7 @@ var xUnixSocketAddressGetPath func(uintptr) string
 func (x *UnixSocketAddress) GetPath() string {
 
 	cret := xUnixSocketAddressGetPath(x.GoPointer())
+
 	return cret
 }
 
@@ -187,6 +190,7 @@ var xUnixSocketAddressGetPathLen func(uintptr) uint
 func (x *UnixSocketAddress) GetPathLen() uint {
 
 	cret := xUnixSocketAddressGetPathLen(x.GoPointer())
+
 	return cret
 }
 
@@ -300,6 +304,7 @@ func (x *UnixSocketAddress) ProxyEnumerate() *SocketAddressEnumerator {
 func (x *UnixSocketAddress) ToString() string {
 
 	cret := XGSocketConnectableToString(x.GoPointer())
+
 	return cret
 }
 
@@ -309,6 +314,7 @@ var xUnixSocketAddressAbstractNamesSupported func() bool
 func UnixSocketAddressAbstractNamesSupported() bool {
 
 	cret := xUnixSocketAddressAbstractNamesSupported()
+
 	return cret
 }
 

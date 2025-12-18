@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -115,6 +116,7 @@ var xBannerGetButtonLabel func(uintptr) string
 func (x *Banner) GetButtonLabel() string {
 
 	cret := xBannerGetButtonLabel(x.GoPointer())
+
 	return cret
 }
 
@@ -124,6 +126,7 @@ var xBannerGetButtonStyle func(uintptr) BannerButtonStyle
 func (x *Banner) GetButtonStyle() BannerButtonStyle {
 
 	cret := xBannerGetButtonStyle(x.GoPointer())
+
 	return cret
 }
 
@@ -133,6 +136,7 @@ var xBannerGetRevealed func(uintptr) bool
 func (x *Banner) GetRevealed() bool {
 
 	cret := xBannerGetRevealed(x.GoPointer())
+
 	return cret
 }
 
@@ -142,6 +146,7 @@ var xBannerGetTitle func(uintptr) string
 func (x *Banner) GetTitle() string {
 
 	cret := xBannerGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -151,6 +156,7 @@ var xBannerGetUseMarkup func(uintptr) bool
 func (x *Banner) GetUseMarkup() bool {
 
 	cret := xBannerGetUseMarkup(x.GoPointer())
+
 	return cret
 }
 
@@ -164,7 +170,11 @@ var xBannerSetButtonLabel func(uintptr, uintptr)
 // [signal@Banner::button-clicked] signal.
 func (x *Banner) SetButtonLabel(LabelVar *string) {
 
-	xBannerSetButtonLabel(x.GoPointer(), core.NullableStringToPtr(LabelVar))
+	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+
+	xBannerSetButtonLabel(x.GoPointer(), LabelVarPtr)
+
+	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -372,6 +382,7 @@ func (x *Banner) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *Banner) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -397,6 +408,7 @@ func (x *Banner) GetAtContext() *gtk.ATContext {
 func (x *Banner) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -436,6 +448,7 @@ func (x *Banner) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *Banner) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -609,6 +622,7 @@ func (x *Banner) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleStat
 func (x *Banner) GetActionName() string {
 
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
+
 	return cret
 }
 
@@ -616,6 +630,7 @@ func (x *Banner) GetActionName() string {
 func (x *Banner) GetActionTargetValue() *glib.Variant {
 
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
+
 	return cret
 }
 
@@ -634,7 +649,11 @@ func (x *Banner) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *Banner) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
+	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
+
+	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -695,6 +714,7 @@ func (x *Banner) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *Banner) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

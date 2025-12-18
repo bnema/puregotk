@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -56,7 +57,11 @@ var xNewShortcutsSection func(uintptr) uintptr
 func NewShortcutsSection(TitleVar *string) *ShortcutsSection {
 	var cls *ShortcutsSection
 
-	cret := xNewShortcutsSection(core.NullableStringToPtr(TitleVar))
+	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+
+	cret := xNewShortcutsSection(TitleVarPtr)
+
+	runtime.KeepAlive(TitleVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -81,6 +86,7 @@ var xShortcutsSectionGetTitle func(uintptr) string
 func (x *ShortcutsSection) GetTitle() string {
 
 	cret := xShortcutsSectionGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -89,7 +95,11 @@ var xShortcutsSectionSetTitle func(uintptr, uintptr)
 // Sets the title of @self.
 func (x *ShortcutsSection) SetTitle(TitleVar *string) {
 
-	xShortcutsSectionSetTitle(x.GoPointer(), core.NullableStringToPtr(TitleVar))
+	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+
+	xShortcutsSectionSetTitle(x.GoPointer(), TitleVarPtr)
+
+	runtime.KeepAlive(TitleVarBytes)
 
 }
 
@@ -133,6 +143,7 @@ func (x *ShortcutsSection) GetPropertyTitle() string {
 func (x *ShortcutsSection) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -147,6 +158,7 @@ func (x *ShortcutsSection) GetItem(PositionVar uint) uintptr {
 func (x *ShortcutsSection) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -158,6 +170,7 @@ func (x *ShortcutsSection) GetItemType() types.GType {
 func (x *ShortcutsSection) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -219,6 +232,7 @@ func (x *ShortcutsSection) ItemsChanged(PositionVar uint, RemovedVar uint, Added
 func (x *ShortcutsSection) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

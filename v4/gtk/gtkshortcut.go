@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -77,7 +78,11 @@ var xNewShortcutWithArguments func(uintptr, uintptr, uintptr, ...interface{}) ui
 func NewShortcutWithArguments(TriggerVar *ShortcutTrigger, ActionVar *ShortcutAction, FormatStringVar *string, varArgs ...interface{}) *Shortcut {
 	var cls *Shortcut
 
-	cret := xNewShortcutWithArguments(TriggerVar.GoPointer(), ActionVar.GoPointer(), core.NullableStringToPtr(FormatStringVar), varArgs...)
+	FormatStringVarPtr, FormatStringVarBytes := core.NullableStringToPtr(FormatStringVar)
+
+	cret := xNewShortcutWithArguments(TriggerVar.GoPointer(), ActionVar.GoPointer(), FormatStringVarPtr, varArgs...)
+
+	runtime.KeepAlive(FormatStringVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -110,6 +115,7 @@ var xShortcutGetArguments func(uintptr) *glib.Variant
 func (x *Shortcut) GetArguments() *glib.Variant {
 
 	cret := xShortcutGetArguments(x.GoPointer())
+
 	return cret
 }
 

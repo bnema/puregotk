@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -59,6 +60,7 @@ var xNewRequisition func() *Requisition
 func NewRequisition() *Requisition {
 
 	cret := xNewRequisition()
+
 	return cret
 }
 
@@ -68,6 +70,7 @@ var xRequisitionCopy func(uintptr) *Requisition
 func (x *Requisition) Copy() *Requisition {
 
 	cret := xRequisitionCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -174,7 +177,11 @@ func (x *WidgetClass) AddBinding(KeyvalVar uint, ModsVar gdk.ModifierType, Callb
 		}
 	}
 
-	xWidgetClassAddBinding(x.GoPointer(), KeyvalVar, ModsVar, CallbackVarRef, core.NullableStringToPtr(FormatStringVar), varArgs...)
+	FormatStringVarPtr, FormatStringVarBytes := core.NullableStringToPtr(FormatStringVar)
+
+	xWidgetClassAddBinding(x.GoPointer(), KeyvalVar, ModsVar, CallbackVarRef, FormatStringVarPtr, varArgs...)
+
+	runtime.KeepAlive(FormatStringVarBytes)
 
 }
 
@@ -191,7 +198,11 @@ var xWidgetClassAddBindingAction func(uintptr, uint, gdk.ModifierType, string, u
 // initialization.
 func (x *WidgetClass) AddBindingAction(KeyvalVar uint, ModsVar gdk.ModifierType, ActionNameVar string, FormatStringVar *string, varArgs ...interface{}) {
 
-	xWidgetClassAddBindingAction(x.GoPointer(), KeyvalVar, ModsVar, ActionNameVar, core.NullableStringToPtr(FormatStringVar), varArgs...)
+	FormatStringVarPtr, FormatStringVarBytes := core.NullableStringToPtr(FormatStringVar)
+
+	xWidgetClassAddBindingAction(x.GoPointer(), KeyvalVar, ModsVar, ActionNameVar, FormatStringVarPtr, varArgs...)
+
+	runtime.KeepAlive(FormatStringVarBytes)
 
 }
 
@@ -208,7 +219,11 @@ var xWidgetClassAddBindingSignal func(uintptr, uint, gdk.ModifierType, string, u
 // initialization.
 func (x *WidgetClass) AddBindingSignal(KeyvalVar uint, ModsVar gdk.ModifierType, SignalVar string, FormatStringVar *string, varArgs ...interface{}) {
 
-	xWidgetClassAddBindingSignal(x.GoPointer(), KeyvalVar, ModsVar, SignalVar, core.NullableStringToPtr(FormatStringVar), varArgs...)
+	FormatStringVarPtr, FormatStringVarBytes := core.NullableStringToPtr(FormatStringVar)
+
+	xWidgetClassAddBindingSignal(x.GoPointer(), KeyvalVar, ModsVar, SignalVar, FormatStringVarPtr, varArgs...)
+
+	runtime.KeepAlive(FormatStringVarBytes)
 
 }
 
@@ -309,6 +324,7 @@ var xWidgetClassGetAccessibleRole func(uintptr) AccessibleRole
 func (x *WidgetClass) GetAccessibleRole() AccessibleRole {
 
 	cret := xWidgetClassGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -321,6 +337,7 @@ var xWidgetClassGetActivateSignal func(uintptr) uint
 func (x *WidgetClass) GetActivateSignal() uint {
 
 	cret := xWidgetClassGetActivateSignal(x.GoPointer())
+
 	return cret
 }
 
@@ -332,6 +349,7 @@ var xWidgetClassGetCssName func(uintptr) string
 func (x *WidgetClass) GetCssName() string {
 
 	cret := xWidgetClassGetCssName(x.GoPointer())
+
 	return cret
 }
 
@@ -344,6 +362,7 @@ var xWidgetClassGetLayoutManagerType func(uintptr) types.GType
 func (x *WidgetClass) GetLayoutManagerType() types.GType {
 
 	cret := xWidgetClassGetLayoutManagerType(x.GoPointer())
+
 	return cret
 }
 
@@ -373,7 +392,11 @@ func (x *WidgetClass) InstallAction(ActionNameVar string, ParameterTypeVar *stri
 		}
 	}
 
-	xWidgetClassInstallAction(x.GoPointer(), ActionNameVar, core.NullableStringToPtr(ParameterTypeVar), ActivateVarRef)
+	ParameterTypeVarPtr, ParameterTypeVarBytes := core.NullableStringToPtr(ParameterTypeVar)
+
+	xWidgetClassInstallAction(x.GoPointer(), ActionNameVar, ParameterTypeVarPtr, ActivateVarRef)
+
+	runtime.KeepAlive(ParameterTypeVarBytes)
 
 }
 
@@ -414,6 +437,7 @@ var xWidgetClassQueryAction func(uintptr, uint, *types.GType, *string, **glib.Va
 func (x *WidgetClass) QueryAction(IndexVar uint, OwnerVar *types.GType, ActionNameVar *string, ParameterTypeVar **glib.VariantType, PropertyNameVar *string) bool {
 
 	cret := xWidgetClassQueryAction(x.GoPointer(), IndexVar, OwnerVar, ActionNameVar, ParameterTypeVar, PropertyNameVar)
+
 	return cret
 }
 
@@ -1752,6 +1776,7 @@ var xWidgetActivate func(uintptr) bool
 func (x *Widget) Activate() bool {
 
 	cret := xWidgetActivate(x.GoPointer())
+
 	return cret
 }
 
@@ -1766,7 +1791,12 @@ var xWidgetActivateAction func(uintptr, string, uintptr, ...interface{}) bool
 // that constructs the @args variant according to @format_string.
 func (x *Widget) ActivateAction(NameVar string, FormatStringVar *string, varArgs ...interface{}) bool {
 
-	cret := xWidgetActivateAction(x.GoPointer(), NameVar, core.NullableStringToPtr(FormatStringVar), varArgs...)
+	FormatStringVarPtr, FormatStringVarBytes := core.NullableStringToPtr(FormatStringVar)
+
+	cret := xWidgetActivateAction(x.GoPointer(), NameVar, FormatStringVarPtr, varArgs...)
+
+	runtime.KeepAlive(FormatStringVarBytes)
+
 	return cret
 }
 
@@ -1787,6 +1817,7 @@ var xWidgetActivateActionVariant func(uintptr, string, *glib.Variant) bool
 func (x *Widget) ActivateActionVariant(NameVar string, ArgsVar *glib.Variant) bool {
 
 	cret := xWidgetActivateActionVariant(x.GoPointer(), NameVar, ArgsVar)
+
 	return cret
 }
 
@@ -1908,6 +1939,7 @@ func (x *Widget) AddTickCallback(CallbackVar *TickCallback, UserDataVar uintptr,
 	}
 
 	cret := xWidgetAddTickCallback(x.GoPointer(), CallbackVarRef, UserDataVar, NotifyVarRef)
+
 	return cret
 }
 
@@ -1955,6 +1987,7 @@ var xWidgetChildFocus func(uintptr, DirectionType) bool
 func (x *Widget) ChildFocus(DirectionVar DirectionType) bool {
 
 	cret := xWidgetChildFocus(x.GoPointer(), DirectionVar)
+
 	return cret
 }
 
@@ -1975,6 +2008,7 @@ var xWidgetComputeBounds func(uintptr, uintptr, *graphene.Rect) bool
 func (x *Widget) ComputeBounds(TargetVar *Widget, OutBoundsVar *graphene.Rect) bool {
 
 	cret := xWidgetComputeBounds(x.GoPointer(), TargetVar.GoPointer(), OutBoundsVar)
+
 	return cret
 }
 
@@ -1996,6 +2030,7 @@ var xWidgetComputeExpand func(uintptr, Orientation) bool
 func (x *Widget) ComputeExpand(OrientationVar Orientation) bool {
 
 	cret := xWidgetComputeExpand(x.GoPointer(), OrientationVar)
+
 	return cret
 }
 
@@ -2010,6 +2045,7 @@ var xWidgetComputePoint func(uintptr, uintptr, *graphene.Point, *graphene.Point)
 func (x *Widget) ComputePoint(TargetVar *Widget, PointVar *graphene.Point, OutPointVar *graphene.Point) bool {
 
 	cret := xWidgetComputePoint(x.GoPointer(), TargetVar.GoPointer(), PointVar, OutPointVar)
+
 	return cret
 }
 
@@ -2027,6 +2063,7 @@ var xWidgetComputeTransform func(uintptr, uintptr, *graphene.Matrix) bool
 func (x *Widget) ComputeTransform(TargetVar *Widget, OutTransformVar *graphene.Matrix) bool {
 
 	cret := xWidgetComputeTransform(x.GoPointer(), TargetVar.GoPointer(), OutTransformVar)
+
 	return cret
 }
 
@@ -2039,6 +2076,7 @@ var xWidgetContains func(uintptr, float64, float64) bool
 func (x *Widget) Contains(XVar float64, YVar float64) bool {
 
 	cret := xWidgetContains(x.GoPointer(), XVar, YVar)
+
 	return cret
 }
 
@@ -2077,7 +2115,11 @@ var xWidgetCreatePangoLayout func(uintptr, uintptr) uintptr
 func (x *Widget) CreatePangoLayout(TextVar *string) *pango.Layout {
 	var cls *pango.Layout
 
-	cret := xWidgetCreatePangoLayout(x.GoPointer(), core.NullableStringToPtr(TextVar))
+	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+
+	cret := xWidgetCreatePangoLayout(x.GoPointer(), TextVarPtr)
+
+	runtime.KeepAlive(TextVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -2128,6 +2170,7 @@ var xWidgetDragCheckThreshold func(uintptr, int, int, int, int) bool
 func (x *Widget) DragCheckThreshold(StartXVar int, StartYVar int, CurrentXVar int, CurrentYVar int) bool {
 
 	cret := xWidgetDragCheckThreshold(x.GoPointer(), StartXVar, StartYVar, CurrentXVar, CurrentYVar)
+
 	return cret
 }
 
@@ -2157,6 +2200,7 @@ var xWidgetGetAllocatedBaseline func(uintptr) int
 func (x *Widget) GetAllocatedBaseline() int {
 
 	cret := xWidgetGetAllocatedBaseline(x.GoPointer())
+
 	return cret
 }
 
@@ -2169,6 +2213,7 @@ var xWidgetGetAllocatedHeight func(uintptr) int
 func (x *Widget) GetAllocatedHeight() int {
 
 	cret := xWidgetGetAllocatedHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -2181,6 +2226,7 @@ var xWidgetGetAllocatedWidth func(uintptr) int
 func (x *Widget) GetAllocatedWidth() int {
 
 	cret := xWidgetGetAllocatedWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -2242,6 +2288,7 @@ var xWidgetGetBaseline func(uintptr) int
 func (x *Widget) GetBaseline() int {
 
 	cret := xWidgetGetBaseline(x.GoPointer())
+
 	return cret
 }
 
@@ -2254,6 +2301,7 @@ var xWidgetGetCanFocus func(uintptr) bool
 func (x *Widget) GetCanFocus() bool {
 
 	cret := xWidgetGetCanFocus(x.GoPointer())
+
 	return cret
 }
 
@@ -2263,6 +2311,7 @@ var xWidgetGetCanTarget func(uintptr) bool
 func (x *Widget) GetCanTarget() bool {
 
 	cret := xWidgetGetCanTarget(x.GoPointer())
+
 	return cret
 }
 
@@ -2278,6 +2327,7 @@ var xWidgetGetChildVisible func(uintptr) bool
 func (x *Widget) GetChildVisible() bool {
 
 	cret := xWidgetGetChildVisible(x.GoPointer())
+
 	return cret
 }
 
@@ -2323,6 +2373,7 @@ var xWidgetGetCssClasses func(uintptr) []string
 func (x *Widget) GetCssClasses() []string {
 
 	cret := xWidgetGetCssClasses(x.GoPointer())
+
 	return cret
 }
 
@@ -2332,6 +2383,7 @@ var xWidgetGetCssName func(uintptr) string
 func (x *Widget) GetCssName() string {
 
 	cret := xWidgetGetCssName(x.GoPointer())
+
 	return cret
 }
 
@@ -2362,6 +2414,7 @@ var xWidgetGetDirection func(uintptr) TextDirection
 func (x *Widget) GetDirection() TextDirection {
 
 	cret := xWidgetGetDirection(x.GoPointer())
+
 	return cret
 }
 
@@ -2434,6 +2487,7 @@ var xWidgetGetFocusOnClick func(uintptr) bool
 func (x *Widget) GetFocusOnClick() bool {
 
 	cret := xWidgetGetFocusOnClick(x.GoPointer())
+
 	return cret
 }
 
@@ -2445,6 +2499,7 @@ var xWidgetGetFocusable func(uintptr) bool
 func (x *Widget) GetFocusable() bool {
 
 	cret := xWidgetGetFocusable(x.GoPointer())
+
 	return cret
 }
 
@@ -2475,6 +2530,7 @@ var xWidgetGetFontOptions func(uintptr) *cairo.FontOptions
 func (x *Widget) GetFontOptions() *cairo.FontOptions {
 
 	cret := xWidgetGetFontOptions(x.GoPointer())
+
 	return cret
 }
 
@@ -2528,6 +2584,7 @@ var xWidgetGetHalign func(uintptr) Align
 func (x *Widget) GetHalign() Align {
 
 	cret := xWidgetGetHalign(x.GoPointer())
+
 	return cret
 }
 
@@ -2537,6 +2594,7 @@ var xWidgetGetHasTooltip func(uintptr) bool
 func (x *Widget) GetHasTooltip() bool {
 
 	cret := xWidgetGetHasTooltip(x.GoPointer())
+
 	return cret
 }
 
@@ -2555,6 +2613,7 @@ var xWidgetGetHeight func(uintptr) int
 func (x *Widget) GetHeight() int {
 
 	cret := xWidgetGetHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -2578,6 +2637,7 @@ var xWidgetGetHexpand func(uintptr) bool
 func (x *Widget) GetHexpand() bool {
 
 	cret := xWidgetGetHexpand(x.GoPointer())
+
 	return cret
 }
 
@@ -2595,6 +2655,7 @@ var xWidgetGetHexpandSet func(uintptr) bool
 func (x *Widget) GetHexpandSet() bool {
 
 	cret := xWidgetGetHexpandSet(x.GoPointer())
+
 	return cret
 }
 
@@ -2642,6 +2703,7 @@ var xWidgetGetLimitEvents func(uintptr) bool
 func (x *Widget) GetLimitEvents() bool {
 
 	cret := xWidgetGetLimitEvents(x.GoPointer())
+
 	return cret
 }
 
@@ -2651,6 +2713,7 @@ var xWidgetGetMapped func(uintptr) bool
 func (x *Widget) GetMapped() bool {
 
 	cret := xWidgetGetMapped(x.GoPointer())
+
 	return cret
 }
 
@@ -2660,6 +2723,7 @@ var xWidgetGetMarginBottom func(uintptr) int
 func (x *Widget) GetMarginBottom() int {
 
 	cret := xWidgetGetMarginBottom(x.GoPointer())
+
 	return cret
 }
 
@@ -2669,6 +2733,7 @@ var xWidgetGetMarginEnd func(uintptr) int
 func (x *Widget) GetMarginEnd() int {
 
 	cret := xWidgetGetMarginEnd(x.GoPointer())
+
 	return cret
 }
 
@@ -2678,6 +2743,7 @@ var xWidgetGetMarginStart func(uintptr) int
 func (x *Widget) GetMarginStart() int {
 
 	cret := xWidgetGetMarginStart(x.GoPointer())
+
 	return cret
 }
 
@@ -2687,6 +2753,7 @@ var xWidgetGetMarginTop func(uintptr) int
 func (x *Widget) GetMarginTop() int {
 
 	cret := xWidgetGetMarginTop(x.GoPointer())
+
 	return cret
 }
 
@@ -2698,6 +2765,7 @@ var xWidgetGetName func(uintptr) string
 func (x *Widget) GetName() string {
 
 	cret := xWidgetGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -2750,6 +2818,7 @@ var xWidgetGetOpacity func(uintptr) float64
 func (x *Widget) GetOpacity() float64 {
 
 	cret := xWidgetGetOpacity(x.GoPointer())
+
 	return cret
 }
 
@@ -2759,6 +2828,7 @@ var xWidgetGetOverflow func(uintptr) Overflow
 func (x *Widget) GetOverflow() Overflow {
 
 	cret := xWidgetGetOverflow(x.GoPointer())
+
 	return cret
 }
 
@@ -2876,6 +2946,7 @@ var xWidgetGetRealized func(uintptr) bool
 func (x *Widget) GetRealized() bool {
 
 	cret := xWidgetGetRealized(x.GoPointer())
+
 	return cret
 }
 
@@ -2889,6 +2960,7 @@ var xWidgetGetReceivesDefault func(uintptr) bool
 func (x *Widget) GetReceivesDefault() bool {
 
 	cret := xWidgetGetReceivesDefault(x.GoPointer())
+
 	return cret
 }
 
@@ -2904,6 +2976,7 @@ var xWidgetGetRequestMode func(uintptr) SizeRequestMode
 func (x *Widget) GetRequestMode() SizeRequestMode {
 
 	cret := xWidgetGetRequestMode(x.GoPointer())
+
 	return cret
 }
 
@@ -2947,6 +3020,7 @@ var xWidgetGetScaleFactor func(uintptr) int
 func (x *Widget) GetScaleFactor() int {
 
 	cret := xWidgetGetScaleFactor(x.GoPointer())
+
 	return cret
 }
 
@@ -2963,6 +3037,7 @@ var xWidgetGetSensitive func(uintptr) bool
 func (x *Widget) GetSensitive() bool {
 
 	cret := xWidgetGetSensitive(x.GoPointer())
+
 	return cret
 }
 
@@ -3005,6 +3080,7 @@ var xWidgetGetSize func(uintptr, Orientation) int
 func (x *Widget) GetSize(OrientationVar Orientation) int {
 
 	cret := xWidgetGetSize(x.GoPointer(), OrientationVar)
+
 	return cret
 }
 
@@ -3040,6 +3116,7 @@ var xWidgetGetStateFlags func(uintptr) StateFlags
 func (x *Widget) GetStateFlags() StateFlags {
 
 	cret := xWidgetGetStateFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -3099,6 +3176,7 @@ var xWidgetGetTooltipMarkup func(uintptr) string
 func (x *Widget) GetTooltipMarkup() string {
 
 	cret := xWidgetGetTooltipMarkup(x.GoPointer())
+
 	return cret
 }
 
@@ -3112,6 +3190,7 @@ var xWidgetGetTooltipText func(uintptr) string
 func (x *Widget) GetTooltipText() string {
 
 	cret := xWidgetGetTooltipText(x.GoPointer())
+
 	return cret
 }
 
@@ -3121,6 +3200,7 @@ var xWidgetGetValign func(uintptr) Align
 func (x *Widget) GetValign() Align {
 
 	cret := xWidgetGetValign(x.GoPointer())
+
 	return cret
 }
 
@@ -3133,6 +3213,7 @@ var xWidgetGetVexpand func(uintptr) bool
 func (x *Widget) GetVexpand() bool {
 
 	cret := xWidgetGetVexpand(x.GoPointer())
+
 	return cret
 }
 
@@ -3144,6 +3225,7 @@ var xWidgetGetVexpandSet func(uintptr) bool
 func (x *Widget) GetVexpandSet() bool {
 
 	cret := xWidgetGetVexpandSet(x.GoPointer())
+
 	return cret
 }
 
@@ -3162,6 +3244,7 @@ var xWidgetGetVisible func(uintptr) bool
 func (x *Widget) GetVisible() bool {
 
 	cret := xWidgetGetVisible(x.GoPointer())
+
 	return cret
 }
 
@@ -3180,6 +3263,7 @@ var xWidgetGetWidth func(uintptr) int
 func (x *Widget) GetWidth() int {
 
 	cret := xWidgetGetWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -3197,6 +3281,7 @@ var xWidgetGrabFocus func(uintptr) bool
 func (x *Widget) GrabFocus() bool {
 
 	cret := xWidgetGrabFocus(x.GoPointer())
+
 	return cret
 }
 
@@ -3206,6 +3291,7 @@ var xWidgetHasCssClass func(uintptr, string) bool
 func (x *Widget) HasCssClass(CssClassVar string) bool {
 
 	cret := xWidgetHasCssClass(x.GoPointer(), CssClassVar)
+
 	return cret
 }
 
@@ -3216,6 +3302,7 @@ var xWidgetHasDefault func(uintptr) bool
 func (x *Widget) HasDefault() bool {
 
 	cret := xWidgetHasDefault(x.GoPointer())
+
 	return cret
 }
 
@@ -3229,6 +3316,7 @@ var xWidgetHasFocus func(uintptr) bool
 func (x *Widget) HasFocus() bool {
 
 	cret := xWidgetHasFocus(x.GoPointer())
+
 	return cret
 }
 
@@ -3247,6 +3335,7 @@ var xWidgetHasVisibleFocus func(uintptr) bool
 func (x *Widget) HasVisibleFocus() bool {
 
 	cret := xWidgetHasVisibleFocus(x.GoPointer())
+
 	return cret
 }
 
@@ -3270,6 +3359,7 @@ var xWidgetInDestruction func(uintptr) bool
 func (x *Widget) InDestruction() bool {
 
 	cret := xWidgetInDestruction(x.GoPointer())
+
 	return cret
 }
 
@@ -3379,6 +3469,7 @@ var xWidgetIsAncestor func(uintptr, uintptr) bool
 func (x *Widget) IsAncestor(AncestorVar *Widget) bool {
 
 	cret := xWidgetIsAncestor(x.GoPointer(), AncestorVar.GoPointer())
+
 	return cret
 }
 
@@ -3390,6 +3481,7 @@ var xWidgetIsDrawable func(uintptr) bool
 func (x *Widget) IsDrawable() bool {
 
 	cret := xWidgetIsDrawable(x.GoPointer())
+
 	return cret
 }
 
@@ -3405,6 +3497,7 @@ var xWidgetIsFocus func(uintptr) bool
 func (x *Widget) IsFocus() bool {
 
 	cret := xWidgetIsFocus(x.GoPointer())
+
 	return cret
 }
 
@@ -3417,6 +3510,7 @@ var xWidgetIsSensitive func(uintptr) bool
 func (x *Widget) IsSensitive() bool {
 
 	cret := xWidgetIsSensitive(x.GoPointer())
+
 	return cret
 }
 
@@ -3432,6 +3526,7 @@ var xWidgetIsVisible func(uintptr) bool
 func (x *Widget) IsVisible() bool {
 
 	cret := xWidgetIsVisible(x.GoPointer())
+
 	return cret
 }
 
@@ -3468,6 +3563,7 @@ var xWidgetKeynavFailed func(uintptr, DirectionType) bool
 func (x *Widget) KeynavFailed(DirectionVar DirectionType) bool {
 
 	cret := xWidgetKeynavFailed(x.GoPointer(), DirectionVar)
+
 	return cret
 }
 
@@ -3487,6 +3583,7 @@ var xWidgetListMnemonicLabels func(uintptr) *glib.List
 func (x *Widget) ListMnemonicLabels() *glib.List {
 
 	cret := xWidgetListMnemonicLabels(x.GoPointer())
+
 	return cret
 }
 
@@ -3523,6 +3620,7 @@ var xWidgetMnemonicActivate func(uintptr, bool) bool
 func (x *Widget) MnemonicActivate(GroupCyclingVar bool) bool {
 
 	cret := xWidgetMnemonicActivate(x.GoPointer(), GroupCyclingVar)
+
 	return cret
 }
 
@@ -3822,7 +3920,11 @@ var xWidgetSetCursorFromName func(uintptr, uintptr)
 // with a `NULL` cursor.
 func (x *Widget) SetCursorFromName(NameVar *string) {
 
-	xWidgetSetCursorFromName(x.GoPointer(), core.NullableStringToPtr(NameVar))
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xWidgetSetCursorFromName(x.GoPointer(), NameVarPtr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -4236,7 +4338,11 @@ var xWidgetSetTooltipMarkup func(uintptr, uintptr)
 // See also [method@Gtk.Tooltip.set_markup].
 func (x *Widget) SetTooltipMarkup(MarkupVar *string) {
 
-	xWidgetSetTooltipMarkup(x.GoPointer(), core.NullableStringToPtr(MarkupVar))
+	MarkupVarPtr, MarkupVarBytes := core.NullableStringToPtr(MarkupVar)
+
+	xWidgetSetTooltipMarkup(x.GoPointer(), MarkupVarPtr)
+
+	runtime.KeepAlive(MarkupVarBytes)
 
 }
 
@@ -4254,7 +4360,11 @@ var xWidgetSetTooltipText func(uintptr, uintptr)
 // See also [method@Gtk.Tooltip.set_text].
 func (x *Widget) SetTooltipText(TextVar *string) {
 
-	xWidgetSetTooltipText(x.GoPointer(), core.NullableStringToPtr(TextVar))
+	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+
+	xWidgetSetTooltipText(x.GoPointer(), TextVarPtr)
+
+	runtime.KeepAlive(TextVarBytes)
 
 }
 
@@ -4313,6 +4423,7 @@ var xWidgetShouldLayout func(uintptr) bool
 func (x *Widget) ShouldLayout() bool {
 
 	cret := xWidgetShouldLayout(x.GoPointer())
+
 	return cret
 }
 
@@ -4379,6 +4490,7 @@ var xWidgetTranslateCoordinates func(uintptr, uintptr, float64, float64, *float6
 func (x *Widget) TranslateCoordinates(DestWidgetVar *Widget, SrcXVar float64, SrcYVar float64, DestXVar *float64, DestYVar *float64) bool {
 
 	cret := xWidgetTranslateCoordinates(x.GoPointer(), DestWidgetVar.GoPointer(), SrcXVar, SrcYVar, DestXVar, DestYVar)
+
 	return cret
 }
 
@@ -5380,6 +5492,7 @@ func (x *Widget) GetAccessibleParent() *AccessibleBase {
 func (x *Widget) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -5405,6 +5518,7 @@ func (x *Widget) GetAtContext() *ATContext {
 func (x *Widget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -5444,6 +5558,7 @@ func (x *Widget) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Widget) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -5620,6 +5735,7 @@ func (x *Widget) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, V
 func (x *Widget) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -5631,6 +5747,7 @@ var xWidgetGetDefaultDirection func() TextDirection
 func WidgetGetDefaultDirection() TextDirection {
 
 	cret := xWidgetGetDefaultDirection()
+
 	return cret
 }
 

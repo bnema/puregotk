@@ -40,6 +40,7 @@ var xVec3Alloc func() *Vec3
 func Vec3Alloc() *Vec3 {
 
 	cret := xVec3Alloc()
+
 	return cret
 }
 
@@ -78,6 +79,7 @@ var xVec3Dot func(uintptr, *Vec3) float32
 func (x *Vec3) Dot(BVar *Vec3) float32 {
 
 	cret := xVec3Dot(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -87,6 +89,7 @@ var xVec3Equal func(uintptr, *Vec3) bool
 func (x *Vec3) Equal(V2Var *Vec3) bool {
 
 	cret := xVec3Equal(x.GoPointer(), V2Var)
+
 	return cret
 }
 
@@ -105,6 +108,7 @@ var xVec3GetX func(uintptr) float32
 func (x *Vec3) GetX() float32 {
 
 	cret := xVec3GetX(x.GoPointer())
+
 	return cret
 }
 
@@ -164,6 +168,7 @@ var xVec3GetY func(uintptr) float32
 func (x *Vec3) GetY() float32 {
 
 	cret := xVec3GetY(x.GoPointer())
+
 	return cret
 }
 
@@ -173,6 +178,7 @@ var xVec3GetZ func(uintptr) float32
 func (x *Vec3) GetZ() float32 {
 
 	cret := xVec3GetZ(x.GoPointer())
+
 	return cret
 }
 
@@ -184,6 +190,7 @@ var xVec3Init func(uintptr, float32, float32, float32) *Vec3
 func (x *Vec3) Init(XVar float32, YVar float32, ZVar float32) *Vec3 {
 
 	cret := xVec3Init(x.GoPointer(), XVar, YVar, ZVar)
+
 	return cret
 }
 
@@ -193,6 +200,7 @@ var xVec3InitFromFloat func(uintptr, [3]float32) *Vec3
 func (x *Vec3) InitFromFloat(SrcVar [3]float32) *Vec3 {
 
 	cret := xVec3InitFromFloat(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -203,6 +211,7 @@ var xVec3InitFromVec3 func(uintptr, *Vec3) *Vec3
 func (x *Vec3) InitFromVec3(SrcVar *Vec3) *Vec3 {
 
 	cret := xVec3InitFromVec3(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -221,6 +230,7 @@ var xVec3Length func(uintptr) float32
 func (x *Vec3) Length() float32 {
 
 	cret := xVec3Length(x.GoPointer())
+
 	return cret
 }
 
@@ -260,6 +270,7 @@ var xVec3Near func(uintptr, *Vec3, float32) bool
 func (x *Vec3) Near(V2Var *Vec3, EpsilonVar float32) bool {
 
 	cret := xVec3Near(x.GoPointer(), V2Var, EpsilonVar)
+
 	return cret
 }
 
@@ -317,6 +328,7 @@ var xVec3One func() *Vec3
 func Vec3One() *Vec3 {
 
 	cret := xVec3One()
+
 	return cret
 }
 
@@ -327,6 +339,7 @@ var xVec3XAxis func() *Vec3
 func Vec3XAxis() *Vec3 {
 
 	cret := xVec3XAxis()
+
 	return cret
 }
 
@@ -337,6 +350,7 @@ var xVec3YAxis func() *Vec3
 func Vec3YAxis() *Vec3 {
 
 	cret := xVec3YAxis()
+
 	return cret
 }
 
@@ -347,6 +361,7 @@ var xVec3ZAxis func() *Vec3
 func Vec3ZAxis() *Vec3 {
 
 	cret := xVec3ZAxis()
+
 	return cret
 }
 
@@ -357,6 +372,7 @@ var xVec3Zero func() *Vec3
 func Vec3Zero() *Vec3 {
 
 	cret := xVec3Zero()
+
 	return cret
 }
 

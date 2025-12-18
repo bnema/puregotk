@@ -66,6 +66,7 @@ var xEventControllerMotionContainsPointer func(uintptr) bool
 func (x *EventControllerMotion) ContainsPointer() bool {
 
 	cret := xEventControllerMotionContainsPointer(x.GoPointer())
+
 	return cret
 }
 
@@ -75,6 +76,7 @@ var xEventControllerMotionIsPointer func(uintptr) bool
 func (x *EventControllerMotion) IsPointer() bool {
 
 	cret := xEventControllerMotionIsPointer(x.GoPointer())
+
 	return cret
 }
 

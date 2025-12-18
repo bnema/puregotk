@@ -419,6 +419,7 @@ func (x *FileEnumerator) Close(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xFileEnumeratorClose(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -471,6 +472,7 @@ func (x *FileEnumerator) CloseFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xFileEnumeratorCloseFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -531,6 +533,7 @@ var xFileEnumeratorHasPending func(uintptr) bool
 func (x *FileEnumerator) HasPending() bool {
 
 	cret := xFileEnumeratorHasPending(x.GoPointer())
+
 	return cret
 }
 
@@ -540,6 +543,7 @@ var xFileEnumeratorIsClosed func(uintptr) bool
 func (x *FileEnumerator) IsClosed() bool {
 
 	cret := xFileEnumeratorIsClosed(x.GoPointer())
+
 	return cret
 }
 
@@ -590,6 +594,7 @@ func (x *FileEnumerator) Iterate(OutInfoVar **FileInfo, OutChildVar **File, Canc
 	var cerr *glib.Error
 
 	cret := xFileEnumeratorIterate(x.GoPointer(), OutInfoVar, OutChildVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -729,6 +734,7 @@ func (x *FileEnumerator) NextFilesFinish(ResultVar AsyncResult) (*glib.List, err
 	var cerr *glib.Error
 
 	cret := xFileEnumeratorNextFilesFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

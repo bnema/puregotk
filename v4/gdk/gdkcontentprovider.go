@@ -360,6 +360,7 @@ func (x *ContentProvider) GetValue(ValueVar *gobject.Value) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xContentProviderGetValue(x.GoPointer(), ValueVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -373,6 +374,7 @@ var xContentProviderRefFormats func(uintptr) *ContentFormats
 func (x *ContentProvider) RefFormats() *ContentFormats {
 
 	cret := xContentProviderRefFormats(x.GoPointer())
+
 	return cret
 }
 
@@ -387,6 +389,7 @@ var xContentProviderRefStorableFormats func(uintptr) *ContentFormats
 func (x *ContentProvider) RefStorableFormats() *ContentFormats {
 
 	cret := xContentProviderRefStorableFormats(x.GoPointer())
+
 	return cret
 }
 
@@ -430,6 +433,7 @@ func (x *ContentProvider) WriteMimeTypeFinish(ResultVar gio.AsyncResult) (bool, 
 	var cerr *glib.Error
 
 	cret := xContentProviderWriteMimeTypeFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

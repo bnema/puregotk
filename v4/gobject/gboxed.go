@@ -24,6 +24,7 @@ var xBoxedCopy func(types.GType, uintptr) uintptr
 func BoxedCopy(BoxedTypeVar types.GType, SrcBoxedVar uintptr) uintptr {
 
 	cret := xBoxedCopy(BoxedTypeVar, SrcBoxedVar)
+
 	return cret
 }
 
@@ -80,6 +81,7 @@ func BoxedTypeRegisterStatic(NameVar string, BoxedCopyVar *BoxedCopyFunc, BoxedF
 	}
 
 	cret := xBoxedTypeRegisterStatic(NameVar, BoxedCopyVarRef, BoxedFreeVarRef)
+
 	return cret
 }
 

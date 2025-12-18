@@ -51,6 +51,7 @@ var xNewFileAttributeInfoList func() *FileAttributeInfoList
 func NewFileAttributeInfoList() *FileAttributeInfoList {
 
 	cret := xNewFileAttributeInfoList()
+
 	return cret
 }
 
@@ -70,6 +71,7 @@ var xFileAttributeInfoListDup func(uintptr) *FileAttributeInfoList
 func (x *FileAttributeInfoList) Dup() *FileAttributeInfoList {
 
 	cret := xFileAttributeInfoListDup(x.GoPointer())
+
 	return cret
 }
 
@@ -79,6 +81,7 @@ var xFileAttributeInfoListLookup func(uintptr, string) *FileAttributeInfo
 func (x *FileAttributeInfoList) Lookup(NameVar string) *FileAttributeInfo {
 
 	cret := xFileAttributeInfoListLookup(x.GoPointer(), NameVar)
+
 	return cret
 }
 
@@ -88,6 +91,7 @@ var xFileAttributeInfoListRef func(uintptr) *FileAttributeInfoList
 func (x *FileAttributeInfoList) Ref() *FileAttributeInfoList {
 
 	cret := xFileAttributeInfoListRef(x.GoPointer())
+
 	return cret
 }
 

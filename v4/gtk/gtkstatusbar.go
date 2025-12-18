@@ -94,6 +94,7 @@ var xStatusbarGetContextId func(uintptr, string) uint
 func (x *Statusbar) GetContextId(ContextDescriptionVar string) uint {
 
 	cret := xStatusbarGetContextId(x.GoPointer(), ContextDescriptionVar)
+
 	return cret
 }
 
@@ -117,6 +118,7 @@ var xStatusbarPush func(uintptr, uint, string) uint
 func (x *Statusbar) Push(ContextIdVar uint, TextVar string) uint {
 
 	cret := xStatusbarPush(x.GoPointer(), ContextIdVar, TextVar)
+
 	return cret
 }
 
@@ -226,6 +228,7 @@ func (x *Statusbar) GetAccessibleParent() *AccessibleBase {
 func (x *Statusbar) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -251,6 +254,7 @@ func (x *Statusbar) GetAtContext() *ATContext {
 func (x *Statusbar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -290,6 +294,7 @@ func (x *Statusbar) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Statusbar) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -466,6 +471,7 @@ func (x *Statusbar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 func (x *Statusbar) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

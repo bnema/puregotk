@@ -300,6 +300,7 @@ func (x *FontChooserBase) SetGoPointer(ptr uintptr) {
 func (x *FontChooserBase) GetFont() string {
 
 	cret := XGtkFontChooserGetFont(x.GoPointer())
+
 	return cret
 }
 
@@ -316,6 +317,7 @@ func (x *FontChooserBase) GetFont() string {
 func (x *FontChooserBase) GetFontDesc() *pango.FontDescription {
 
 	cret := XGtkFontChooserGetFontDesc(x.GoPointer())
+
 	return cret
 }
 
@@ -364,6 +366,7 @@ func (x *FontChooserBase) GetFontFamily() *pango.FontFamily {
 func (x *FontChooserBase) GetFontFeatures() string {
 
 	cret := XGtkFontChooserGetFontFeatures(x.GoPointer())
+
 	return cret
 }
 
@@ -386,6 +389,7 @@ func (x *FontChooserBase) GetFontMap() *pango.FontMap {
 func (x *FontChooserBase) GetFontSize() int {
 
 	cret := XGtkFontChooserGetFontSize(x.GoPointer())
+
 	return cret
 }
 
@@ -393,6 +397,7 @@ func (x *FontChooserBase) GetFontSize() int {
 func (x *FontChooserBase) GetLanguage() string {
 
 	cret := XGtkFontChooserGetLanguage(x.GoPointer())
+
 	return cret
 }
 
@@ -400,6 +405,7 @@ func (x *FontChooserBase) GetLanguage() string {
 func (x *FontChooserBase) GetLevel() FontChooserLevel {
 
 	cret := XGtkFontChooserGetLevel(x.GoPointer())
+
 	return cret
 }
 
@@ -407,6 +413,7 @@ func (x *FontChooserBase) GetLevel() FontChooserLevel {
 func (x *FontChooserBase) GetPreviewText() string {
 
 	cret := XGtkFontChooserGetPreviewText(x.GoPointer())
+
 	return cret
 }
 
@@ -414,6 +421,7 @@ func (x *FontChooserBase) GetPreviewText() string {
 func (x *FontChooserBase) GetShowPreviewEntry() bool {
 
 	cret := XGtkFontChooserGetShowPreviewEntry(x.GoPointer())
+
 	return cret
 }
 

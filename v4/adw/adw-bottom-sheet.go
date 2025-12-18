@@ -137,6 +137,7 @@ var xBottomSheetGetAlign func(uintptr) float32
 func (x *BottomSheet) GetAlign() float32 {
 
 	cret := xBottomSheetGetAlign(x.GoPointer())
+
 	return cret
 }
 
@@ -166,6 +167,7 @@ var xBottomSheetGetBottomBarHeight func(uintptr) int
 func (x *BottomSheet) GetBottomBarHeight() int {
 
 	cret := xBottomSheetGetBottomBarHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -175,6 +177,7 @@ var xBottomSheetGetCanClose func(uintptr) bool
 func (x *BottomSheet) GetCanClose() bool {
 
 	cret := xBottomSheetGetCanClose(x.GoPointer())
+
 	return cret
 }
 
@@ -184,6 +187,7 @@ var xBottomSheetGetCanOpen func(uintptr) bool
 func (x *BottomSheet) GetCanOpen() bool {
 
 	cret := xBottomSheetGetCanOpen(x.GoPointer())
+
 	return cret
 }
 
@@ -210,6 +214,7 @@ var xBottomSheetGetFullWidth func(uintptr) bool
 func (x *BottomSheet) GetFullWidth() bool {
 
 	cret := xBottomSheetGetFullWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -219,6 +224,7 @@ var xBottomSheetGetModal func(uintptr) bool
 func (x *BottomSheet) GetModal() bool {
 
 	cret := xBottomSheetGetModal(x.GoPointer())
+
 	return cret
 }
 
@@ -228,6 +234,7 @@ var xBottomSheetGetOpen func(uintptr) bool
 func (x *BottomSheet) GetOpen() bool {
 
 	cret := xBottomSheetGetOpen(x.GoPointer())
+
 	return cret
 }
 
@@ -237,6 +244,7 @@ var xBottomSheetGetRevealBottomBar func(uintptr) bool
 func (x *BottomSheet) GetRevealBottomBar() bool {
 
 	cret := xBottomSheetGetRevealBottomBar(x.GoPointer())
+
 	return cret
 }
 
@@ -265,6 +273,7 @@ var xBottomSheetGetSheetHeight func(uintptr) int
 func (x *BottomSheet) GetSheetHeight() int {
 
 	cret := xBottomSheetGetSheetHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -274,6 +283,7 @@ var xBottomSheetGetShowDragHandle func(uintptr) bool
 func (x *BottomSheet) GetShowDragHandle() bool {
 
 	cret := xBottomSheetGetShowDragHandle(x.GoPointer())
+
 	return cret
 }
 
@@ -690,6 +700,7 @@ func (x *BottomSheet) ConnectCloseAttempt(cb *func(BottomSheet)) uint32 {
 func (x *BottomSheet) GetCancelProgress() float64 {
 
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
+
 	return cret
 }
 
@@ -699,6 +710,7 @@ func (x *BottomSheet) GetCancelProgress() float64 {
 func (x *BottomSheet) GetDistance() float64 {
 
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
+
 	return cret
 }
 
@@ -706,6 +718,7 @@ func (x *BottomSheet) GetDistance() float64 {
 func (x *BottomSheet) GetProgress() float64 {
 
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
+
 	return cret
 }
 
@@ -716,6 +729,7 @@ func (x *BottomSheet) GetProgress() float64 {
 func (x *BottomSheet) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
+
 	return cret
 }
 
@@ -769,6 +783,7 @@ func (x *BottomSheet) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *BottomSheet) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -794,6 +809,7 @@ func (x *BottomSheet) GetAtContext() *gtk.ATContext {
 func (x *BottomSheet) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -833,6 +849,7 @@ func (x *BottomSheet) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *BottomSheet) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1009,6 +1026,7 @@ func (x *BottomSheet) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 func (x *BottomSheet) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

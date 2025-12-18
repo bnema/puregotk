@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -121,6 +122,7 @@ var xComboRowGetEnableSearch func(uintptr) bool
 func (x *ComboRow) GetEnableSearch() bool {
 
 	cret := xComboRowGetEnableSearch(x.GoPointer())
+
 	return cret
 }
 
@@ -215,6 +217,7 @@ var xComboRowGetSearchMatchMode func(uintptr) gtk.StringFilterMatchMode
 func (x *ComboRow) GetSearchMatchMode() gtk.StringFilterMatchMode {
 
 	cret := xComboRowGetSearchMatchMode(x.GoPointer())
+
 	return cret
 }
 
@@ -224,6 +227,7 @@ var xComboRowGetSelected func(uintptr) uint
 func (x *ComboRow) GetSelected() uint {
 
 	cret := xComboRowGetSelected(x.GoPointer())
+
 	return cret
 }
 
@@ -250,6 +254,7 @@ var xComboRowGetUseSubtitle func(uintptr) bool
 func (x *ComboRow) GetUseSubtitle() bool {
 
 	cret := xComboRowGetUseSubtitle(x.GoPointer())
+
 	return cret
 }
 
@@ -487,6 +492,7 @@ func (x *ComboRow) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ComboRow) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -512,6 +518,7 @@ func (x *ComboRow) GetAtContext() *gtk.ATContext {
 func (x *ComboRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -551,6 +558,7 @@ func (x *ComboRow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ComboRow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -724,6 +732,7 @@ func (x *ComboRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSt
 func (x *ComboRow) GetActionName() string {
 
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
+
 	return cret
 }
 
@@ -731,6 +740,7 @@ func (x *ComboRow) GetActionName() string {
 func (x *ComboRow) GetActionTargetValue() *glib.Variant {
 
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
+
 	return cret
 }
 
@@ -749,7 +759,11 @@ func (x *ComboRow) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *ComboRow) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
+	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
+
+	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -810,6 +824,7 @@ func (x *ComboRow) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *ComboRow) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

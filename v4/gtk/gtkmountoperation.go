@@ -218,6 +218,7 @@ var xMountOperationIsShowing func(uintptr) bool
 func (x *MountOperation) IsShowing() bool {
 
 	cret := xMountOperationIsShowing(x.GoPointer())
+
 	return cret
 }
 

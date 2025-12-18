@@ -40,6 +40,7 @@ var xVec2Alloc func() *Vec2
 func Vec2Alloc() *Vec2 {
 
 	cret := xVec2Alloc()
+
 	return cret
 }
 
@@ -70,6 +71,7 @@ var xVec2Dot func(uintptr, *Vec2) float32
 func (x *Vec2) Dot(BVar *Vec2) float32 {
 
 	cret := xVec2Dot(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -79,6 +81,7 @@ var xVec2Equal func(uintptr, *Vec2) bool
 func (x *Vec2) Equal(V2Var *Vec2) bool {
 
 	cret := xVec2Equal(x.GoPointer(), V2Var)
+
 	return cret
 }
 
@@ -97,6 +100,7 @@ var xVec2GetX func(uintptr) float32
 func (x *Vec2) GetX() float32 {
 
 	cret := xVec2GetX(x.GoPointer())
+
 	return cret
 }
 
@@ -106,6 +110,7 @@ var xVec2GetY func(uintptr) float32
 func (x *Vec2) GetY() float32 {
 
 	cret := xVec2GetY(x.GoPointer())
+
 	return cret
 }
 
@@ -117,6 +122,7 @@ var xVec2Init func(uintptr, float32, float32) *Vec2
 func (x *Vec2) Init(XVar float32, YVar float32) *Vec2 {
 
 	cret := xVec2Init(x.GoPointer(), XVar, YVar)
+
 	return cret
 }
 
@@ -126,6 +132,7 @@ var xVec2InitFromFloat func(uintptr, [2]float32) *Vec2
 func (x *Vec2) InitFromFloat(SrcVar [2]float32) *Vec2 {
 
 	cret := xVec2InitFromFloat(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -135,6 +142,7 @@ var xVec2InitFromVec2 func(uintptr, *Vec2) *Vec2
 func (x *Vec2) InitFromVec2(SrcVar *Vec2) *Vec2 {
 
 	cret := xVec2InitFromVec2(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -153,6 +161,7 @@ var xVec2Length func(uintptr) float32
 func (x *Vec2) Length() float32 {
 
 	cret := xVec2Length(x.GoPointer())
+
 	return cret
 }
 
@@ -193,6 +202,7 @@ var xVec2Near func(uintptr, *Vec2, float32) bool
 func (x *Vec2) Near(V2Var *Vec2, EpsilonVar float32) bool {
 
 	cret := xVec2Near(x.GoPointer(), V2Var, EpsilonVar)
+
 	return cret
 }
 
@@ -249,6 +259,7 @@ var xVec2One func() *Vec2
 func Vec2One() *Vec2 {
 
 	cret := xVec2One()
+
 	return cret
 }
 
@@ -258,6 +269,7 @@ var xVec2XAxis func() *Vec2
 func Vec2XAxis() *Vec2 {
 
 	cret := xVec2XAxis()
+
 	return cret
 }
 
@@ -267,6 +279,7 @@ var xVec2YAxis func() *Vec2
 func Vec2YAxis() *Vec2 {
 
 	cret := xVec2YAxis()
+
 	return cret
 }
 
@@ -276,6 +289,7 @@ var xVec2Zero func() *Vec2
 func Vec2Zero() *Vec2 {
 
 	cret := xVec2Zero()
+
 	return cret
 }
 

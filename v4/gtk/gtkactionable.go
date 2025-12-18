@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -179,6 +180,7 @@ func (x *ActionableBase) SetGoPointer(ptr uintptr) {
 func (x *ActionableBase) GetActionName() string {
 
 	cret := XGtkActionableGetActionName(x.GoPointer())
+
 	return cret
 }
 
@@ -186,6 +188,7 @@ func (x *ActionableBase) GetActionName() string {
 func (x *ActionableBase) GetActionTargetValue() *glib.Variant {
 
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
+
 	return cret
 }
 
@@ -204,7 +207,11 @@ func (x *ActionableBase) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *ActionableBase) SetActionName(ActionNameVar *string) {
 
-	XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
+	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+
+	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
+
+	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 

@@ -97,6 +97,7 @@ var xDBusServerGetClientAddress func(uintptr) string
 func (x *DBusServer) GetClientAddress() string {
 
 	cret := xDBusServerGetClientAddress(x.GoPointer())
+
 	return cret
 }
 
@@ -106,6 +107,7 @@ var xDBusServerGetFlags func(uintptr) DBusServerFlags
 func (x *DBusServer) GetFlags() DBusServerFlags {
 
 	cret := xDBusServerGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -115,6 +117,7 @@ var xDBusServerGetGuid func(uintptr) string
 func (x *DBusServer) GetGuid() string {
 
 	cret := xDBusServerGetGuid(x.GoPointer())
+
 	return cret
 }
 
@@ -124,6 +127,7 @@ var xDBusServerIsActive func(uintptr) bool
 func (x *DBusServer) IsActive() bool {
 
 	cret := xDBusServerIsActive(x.GoPointer())
+
 	return cret
 }
 
@@ -292,6 +296,7 @@ func (x *DBusServer) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

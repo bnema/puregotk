@@ -92,6 +92,7 @@ var xPrintSetupRef func(uintptr) *PrintSetup
 func (x *PrintSetup) Ref() *PrintSetup {
 
 	cret := xPrintSetupRef(x.GoPointer())
+
 	return cret
 }
 
@@ -158,6 +159,7 @@ var xPrintDialogGetAcceptLabel func(uintptr) string
 func (x *PrintDialog) GetAcceptLabel() string {
 
 	cret := xPrintDialogGetAcceptLabel(x.GoPointer())
+
 	return cret
 }
 
@@ -169,6 +171,7 @@ var xPrintDialogGetModal func(uintptr) bool
 func (x *PrintDialog) GetModal() bool {
 
 	cret := xPrintDialogGetModal(x.GoPointer())
+
 	return cret
 }
 
@@ -213,6 +216,7 @@ var xPrintDialogGetTitle func(uintptr) string
 func (x *PrintDialog) GetTitle() string {
 
 	cret := xPrintDialogGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -283,6 +287,7 @@ func (x *PrintDialog) PrintFileFinish(ResultVar gio.AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPrintDialogPrintFileFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -422,6 +427,7 @@ func (x *PrintDialog) SetupFinish(ResultVar gio.AsyncResult) (*PrintSetup, error
 	var cerr *glib.Error
 
 	cret := xPrintDialogSetupFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

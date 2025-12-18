@@ -126,6 +126,7 @@ var xThemedIconGetNames func(uintptr) []string
 func (x *ThemedIcon) GetNames() []string {
 
 	cret := xThemedIconGetNames(x.GoPointer())
+
 	return cret
 }
 
@@ -231,6 +232,7 @@ func (x *ThemedIcon) GetPropertyUseDefaultFallbacks() bool {
 func (x *ThemedIcon) Equal(Icon2Var Icon) bool {
 
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+
 	return cret
 }
 
@@ -238,6 +240,7 @@ func (x *ThemedIcon) Equal(Icon2Var Icon) bool {
 func (x *ThemedIcon) Hash() uint {
 
 	cret := XGIconHash(x.GoPointer())
+
 	return cret
 }
 
@@ -249,6 +252,7 @@ func (x *ThemedIcon) Hash() uint {
 func (x *ThemedIcon) Serialize() *glib.Variant {
 
 	cret := XGIconSerialize(x.GoPointer())
+
 	return cret
 }
 
@@ -271,6 +275,7 @@ func (x *ThemedIcon) Serialize() *glib.Variant {
 func (x *ThemedIcon) ToString() string {
 
 	cret := XGIconToString(x.GoPointer())
+
 	return cret
 }
 

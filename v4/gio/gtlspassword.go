@@ -158,6 +158,7 @@ var xTlsPasswordGetDescription func(uintptr) string
 func (x *TlsPassword) GetDescription() string {
 
 	cret := xTlsPasswordGetDescription(x.GoPointer())
+
 	return cret
 }
 
@@ -167,6 +168,7 @@ var xTlsPasswordGetFlags func(uintptr) TlsPasswordFlags
 func (x *TlsPassword) GetFlags() TlsPasswordFlags {
 
 	cret := xTlsPasswordGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -180,6 +182,7 @@ var xTlsPasswordGetValue func(uintptr, *uint) uintptr
 func (x *TlsPassword) GetValue(LengthVar *uint) uintptr {
 
 	cret := xTlsPasswordGetValue(x.GoPointer(), LengthVar)
+
 	return cret
 }
 
@@ -191,6 +194,7 @@ var xTlsPasswordGetWarning func(uintptr) string
 func (x *TlsPassword) GetWarning() string {
 
 	cret := xTlsPasswordGetWarning(x.GoPointer())
+
 	return cret
 }
 

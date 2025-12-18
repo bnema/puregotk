@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -40,7 +41,11 @@ var xShowAboutDialogFromAppdata func(uintptr, string, uintptr, string, ...interf
 // See [ctor@AboutDialog.new_from_appdata] for details.
 func ShowAboutDialogFromAppdata(ParentVar *gtk.Widget, ResourcePathVar string, ReleaseNotesVersionVar *string, FirstPropertyNameVar string, varArgs ...interface{}) {
 
-	xShowAboutDialogFromAppdata(ParentVar.GoPointer(), ResourcePathVar, core.NullableStringToPtr(ReleaseNotesVersionVar), FirstPropertyNameVar, varArgs...)
+	ReleaseNotesVersionVarPtr, ReleaseNotesVersionVarBytes := core.NullableStringToPtr(ReleaseNotesVersionVar)
+
+	xShowAboutDialogFromAppdata(ParentVar.GoPointer(), ResourcePathVar, ReleaseNotesVersionVarPtr, FirstPropertyNameVar, varArgs...)
+
+	runtime.KeepAlive(ReleaseNotesVersionVarBytes)
 
 }
 
@@ -279,7 +284,11 @@ var xNewAboutDialogFromAppdata func(string, uintptr) uintptr
 func NewAboutDialogFromAppdata(ResourcePathVar string, ReleaseNotesVersionVar *string) *AboutDialog {
 	var cls *AboutDialog
 
-	cret := xNewAboutDialogFromAppdata(ResourcePathVar, core.NullableStringToPtr(ReleaseNotesVersionVar))
+	ReleaseNotesVersionVarPtr, ReleaseNotesVersionVarBytes := core.NullableStringToPtr(ReleaseNotesVersionVar)
+
+	cret := xNewAboutDialogFromAppdata(ResourcePathVar, ReleaseNotesVersionVarPtr)
+
+	runtime.KeepAlive(ReleaseNotesVersionVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -311,7 +320,11 @@ var xAboutDialogAddAcknowledgementSection func(uintptr, uintptr, []string)
 // * [method@AboutDialog.add_credit_section]
 func (x *AboutDialog) AddAcknowledgementSection(NameVar *string, PeopleVar []string) {
 
-	xAboutDialogAddAcknowledgementSection(x.GoPointer(), core.NullableStringToPtr(NameVar), PeopleVar)
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xAboutDialogAddAcknowledgementSection(x.GoPointer(), NameVarPtr, PeopleVar)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -334,7 +347,11 @@ var xAboutDialogAddCreditSection func(uintptr, uintptr, []string)
 // * [method@AboutDialog.add_acknowledgement_section]
 func (x *AboutDialog) AddCreditSection(NameVar *string, PeopleVar []string) {
 
-	xAboutDialogAddCreditSection(x.GoPointer(), core.NullableStringToPtr(NameVar), PeopleVar)
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xAboutDialogAddCreditSection(x.GoPointer(), NameVarPtr, PeopleVar)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -387,7 +404,15 @@ var xAboutDialogAddLegalSection func(uintptr, string, uintptr, gtk.License, uint
 // ```
 func (x *AboutDialog) AddLegalSection(TitleVar string, CopyrightVar *string, LicenseTypeVar gtk.License, LicenseVar *string) {
 
-	xAboutDialogAddLegalSection(x.GoPointer(), TitleVar, core.NullableStringToPtr(CopyrightVar), LicenseTypeVar, core.NullableStringToPtr(LicenseVar))
+	CopyrightVarPtr, CopyrightVarBytes := core.NullableStringToPtr(CopyrightVar)
+
+	LicenseVarPtr, LicenseVarBytes := core.NullableStringToPtr(LicenseVar)
+
+	xAboutDialogAddLegalSection(x.GoPointer(), TitleVar, CopyrightVarPtr, LicenseTypeVar, LicenseVarPtr)
+
+	runtime.KeepAlive(CopyrightVarBytes)
+
+	runtime.KeepAlive(LicenseVarBytes)
 
 }
 
@@ -439,6 +464,7 @@ var xAboutDialogGetApplicationIcon func(uintptr) string
 func (x *AboutDialog) GetApplicationIcon() string {
 
 	cret := xAboutDialogGetApplicationIcon(x.GoPointer())
+
 	return cret
 }
 
@@ -448,6 +474,7 @@ var xAboutDialogGetApplicationName func(uintptr) string
 func (x *AboutDialog) GetApplicationName() string {
 
 	cret := xAboutDialogGetApplicationName(x.GoPointer())
+
 	return cret
 }
 
@@ -457,6 +484,7 @@ var xAboutDialogGetArtists func(uintptr) []string
 func (x *AboutDialog) GetArtists() []string {
 
 	cret := xAboutDialogGetArtists(x.GoPointer())
+
 	return cret
 }
 
@@ -466,6 +494,7 @@ var xAboutDialogGetComments func(uintptr) string
 func (x *AboutDialog) GetComments() string {
 
 	cret := xAboutDialogGetComments(x.GoPointer())
+
 	return cret
 }
 
@@ -475,6 +504,7 @@ var xAboutDialogGetCopyright func(uintptr) string
 func (x *AboutDialog) GetCopyright() string {
 
 	cret := xAboutDialogGetCopyright(x.GoPointer())
+
 	return cret
 }
 
@@ -484,6 +514,7 @@ var xAboutDialogGetDebugInfo func(uintptr) string
 func (x *AboutDialog) GetDebugInfo() string {
 
 	cret := xAboutDialogGetDebugInfo(x.GoPointer())
+
 	return cret
 }
 
@@ -493,6 +524,7 @@ var xAboutDialogGetDebugInfoFilename func(uintptr) string
 func (x *AboutDialog) GetDebugInfoFilename() string {
 
 	cret := xAboutDialogGetDebugInfoFilename(x.GoPointer())
+
 	return cret
 }
 
@@ -502,6 +534,7 @@ var xAboutDialogGetDesigners func(uintptr) []string
 func (x *AboutDialog) GetDesigners() []string {
 
 	cret := xAboutDialogGetDesigners(x.GoPointer())
+
 	return cret
 }
 
@@ -511,6 +544,7 @@ var xAboutDialogGetDeveloperName func(uintptr) string
 func (x *AboutDialog) GetDeveloperName() string {
 
 	cret := xAboutDialogGetDeveloperName(x.GoPointer())
+
 	return cret
 }
 
@@ -520,6 +554,7 @@ var xAboutDialogGetDevelopers func(uintptr) []string
 func (x *AboutDialog) GetDevelopers() []string {
 
 	cret := xAboutDialogGetDevelopers(x.GoPointer())
+
 	return cret
 }
 
@@ -529,6 +564,7 @@ var xAboutDialogGetDocumenters func(uintptr) []string
 func (x *AboutDialog) GetDocumenters() []string {
 
 	cret := xAboutDialogGetDocumenters(x.GoPointer())
+
 	return cret
 }
 
@@ -538,6 +574,7 @@ var xAboutDialogGetIssueUrl func(uintptr) string
 func (x *AboutDialog) GetIssueUrl() string {
 
 	cret := xAboutDialogGetIssueUrl(x.GoPointer())
+
 	return cret
 }
 
@@ -547,6 +584,7 @@ var xAboutDialogGetLicense func(uintptr) string
 func (x *AboutDialog) GetLicense() string {
 
 	cret := xAboutDialogGetLicense(x.GoPointer())
+
 	return cret
 }
 
@@ -556,6 +594,7 @@ var xAboutDialogGetLicenseType func(uintptr) gtk.License
 func (x *AboutDialog) GetLicenseType() gtk.License {
 
 	cret := xAboutDialogGetLicenseType(x.GoPointer())
+
 	return cret
 }
 
@@ -565,6 +604,7 @@ var xAboutDialogGetReleaseNotes func(uintptr) string
 func (x *AboutDialog) GetReleaseNotes() string {
 
 	cret := xAboutDialogGetReleaseNotes(x.GoPointer())
+
 	return cret
 }
 
@@ -574,6 +614,7 @@ var xAboutDialogGetReleaseNotesVersion func(uintptr) string
 func (x *AboutDialog) GetReleaseNotesVersion() string {
 
 	cret := xAboutDialogGetReleaseNotesVersion(x.GoPointer())
+
 	return cret
 }
 
@@ -583,6 +624,7 @@ var xAboutDialogGetSupportUrl func(uintptr) string
 func (x *AboutDialog) GetSupportUrl() string {
 
 	cret := xAboutDialogGetSupportUrl(x.GoPointer())
+
 	return cret
 }
 
@@ -592,6 +634,7 @@ var xAboutDialogGetTranslatorCredits func(uintptr) string
 func (x *AboutDialog) GetTranslatorCredits() string {
 
 	cret := xAboutDialogGetTranslatorCredits(x.GoPointer())
+
 	return cret
 }
 
@@ -601,6 +644,7 @@ var xAboutDialogGetVersion func(uintptr) string
 func (x *AboutDialog) GetVersion() string {
 
 	cret := xAboutDialogGetVersion(x.GoPointer())
+
 	return cret
 }
 
@@ -610,6 +654,7 @@ var xAboutDialogGetWebsite func(uintptr) string
 func (x *AboutDialog) GetWebsite() string {
 
 	cret := xAboutDialogGetWebsite(x.GoPointer())
+
 	return cret
 }
 
@@ -1730,6 +1775,7 @@ func (x *AboutDialog) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *AboutDialog) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -1755,6 +1801,7 @@ func (x *AboutDialog) GetAtContext() *gtk.ATContext {
 func (x *AboutDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1794,6 +1841,7 @@ func (x *AboutDialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *AboutDialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1970,6 +2018,7 @@ func (x *AboutDialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 func (x *AboutDialog) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

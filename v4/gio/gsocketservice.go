@@ -281,6 +281,7 @@ var xSocketServiceIsActive func(uintptr) bool
 func (x *SocketService) IsActive() bool {
 
 	cret := xSocketServiceIsActive(x.GoPointer())
+
 	return cret
 }
 

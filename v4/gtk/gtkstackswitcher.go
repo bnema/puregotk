@@ -150,6 +150,7 @@ func (x *StackSwitcher) GetAccessibleParent() *AccessibleBase {
 func (x *StackSwitcher) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -175,6 +176,7 @@ func (x *StackSwitcher) GetAtContext() *ATContext {
 func (x *StackSwitcher) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -214,6 +216,7 @@ func (x *StackSwitcher) GetNextAccessibleSibling() *AccessibleBase {
 func (x *StackSwitcher) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -390,6 +393,7 @@ func (x *StackSwitcher) UpdateStateValue(NStatesVar int, StatesVar []AccessibleS
 func (x *StackSwitcher) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -397,6 +401,7 @@ func (x *StackSwitcher) GetBuildableId() string {
 func (x *StackSwitcher) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

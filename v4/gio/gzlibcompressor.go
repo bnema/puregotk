@@ -79,6 +79,7 @@ var xZlibCompressorGetOs func(uintptr) int
 func (x *ZlibCompressor) GetOs() int {
 
 	cret := xZlibCompressorGetOs(x.GoPointer())
+
 	return cret
 }
 
@@ -263,6 +264,7 @@ func (x *ZlibCompressor) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar [
 	var cerr *glib.Error
 
 	cret := XGConverterConvert(x.GoPointer(), InbufVar, InbufSizeVar, OutbufVar, OutbufSizeVar, FlagsVar, BytesReadVar, BytesWrittenVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -275,6 +277,7 @@ func (x *ZlibCompressor) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error)
 	var cerr *glib.Error
 
 	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

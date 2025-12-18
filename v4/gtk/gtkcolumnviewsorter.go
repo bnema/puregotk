@@ -83,6 +83,7 @@ var xColumnViewSorterGetNSortColumns func(uintptr) uint
 func (x *ColumnViewSorter) GetNSortColumns() uint {
 
 	cret := xColumnViewSorterGetNSortColumns(x.GoPointer())
+
 	return cret
 }
 
@@ -139,6 +140,7 @@ var xColumnViewSorterGetPrimarySortOrder func(uintptr) SortType
 func (x *ColumnViewSorter) GetPrimarySortOrder() SortType {
 
 	cret := xColumnViewSorterGetPrimarySortOrder(x.GoPointer())
+
 	return cret
 }
 

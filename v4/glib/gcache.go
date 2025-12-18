@@ -67,6 +67,7 @@ var xCacheInsert func(uintptr, uintptr) uintptr
 func (x *Cache) Insert(KeyVar uintptr) uintptr {
 
 	cret := xCacheInsert(x.GoPointer(), KeyVar)
+
 	return cret
 }
 

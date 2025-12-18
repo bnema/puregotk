@@ -40,6 +40,7 @@ var xVec4Alloc func() *Vec4
 func Vec4Alloc() *Vec4 {
 
 	cret := xVec4Alloc()
+
 	return cret
 }
 
@@ -69,6 +70,7 @@ var xVec4Dot func(uintptr, *Vec4) float32
 func (x *Vec4) Dot(BVar *Vec4) float32 {
 
 	cret := xVec4Dot(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -78,6 +80,7 @@ var xVec4Equal func(uintptr, *Vec4) bool
 func (x *Vec4) Equal(V2Var *Vec4) bool {
 
 	cret := xVec4Equal(x.GoPointer(), V2Var)
+
 	return cret
 }
 
@@ -96,6 +99,7 @@ var xVec4GetW func(uintptr) float32
 func (x *Vec4) GetW() float32 {
 
 	cret := xVec4GetW(x.GoPointer())
+
 	return cret
 }
 
@@ -105,6 +109,7 @@ var xVec4GetX func(uintptr) float32
 func (x *Vec4) GetX() float32 {
 
 	cret := xVec4GetX(x.GoPointer())
+
 	return cret
 }
 
@@ -134,6 +139,7 @@ var xVec4GetY func(uintptr) float32
 func (x *Vec4) GetY() float32 {
 
 	cret := xVec4GetY(x.GoPointer())
+
 	return cret
 }
 
@@ -143,6 +149,7 @@ var xVec4GetZ func(uintptr) float32
 func (x *Vec4) GetZ() float32 {
 
 	cret := xVec4GetZ(x.GoPointer())
+
 	return cret
 }
 
@@ -154,6 +161,7 @@ var xVec4Init func(uintptr, float32, float32, float32, float32) *Vec4
 func (x *Vec4) Init(XVar float32, YVar float32, ZVar float32, WVar float32) *Vec4 {
 
 	cret := xVec4Init(x.GoPointer(), XVar, YVar, ZVar, WVar)
+
 	return cret
 }
 
@@ -163,6 +171,7 @@ var xVec4InitFromFloat func(uintptr, [4]float32) *Vec4
 func (x *Vec4) InitFromFloat(SrcVar [4]float32) *Vec4 {
 
 	cret := xVec4InitFromFloat(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -173,6 +182,7 @@ var xVec4InitFromVec2 func(uintptr, *Vec2, float32, float32) *Vec4
 func (x *Vec4) InitFromVec2(SrcVar *Vec2, ZVar float32, WVar float32) *Vec4 {
 
 	cret := xVec4InitFromVec2(x.GoPointer(), SrcVar, ZVar, WVar)
+
 	return cret
 }
 
@@ -183,6 +193,7 @@ var xVec4InitFromVec3 func(uintptr, *Vec3, float32) *Vec4
 func (x *Vec4) InitFromVec3(SrcVar *Vec3, WVar float32) *Vec4 {
 
 	cret := xVec4InitFromVec3(x.GoPointer(), SrcVar, WVar)
+
 	return cret
 }
 
@@ -193,6 +204,7 @@ var xVec4InitFromVec4 func(uintptr, *Vec4) *Vec4
 func (x *Vec4) InitFromVec4(SrcVar *Vec4) *Vec4 {
 
 	cret := xVec4InitFromVec4(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -211,6 +223,7 @@ var xVec4Length func(uintptr) float32
 func (x *Vec4) Length() float32 {
 
 	cret := xVec4Length(x.GoPointer())
+
 	return cret
 }
 
@@ -250,6 +263,7 @@ var xVec4Near func(uintptr, *Vec4, float32) bool
 func (x *Vec4) Near(V2Var *Vec4, EpsilonVar float32) bool {
 
 	cret := xVec4Near(x.GoPointer(), V2Var, EpsilonVar)
+
 	return cret
 }
 
@@ -308,6 +322,7 @@ var xVec4One func() *Vec4
 func Vec4One() *Vec4 {
 
 	cret := xVec4One()
+
 	return cret
 }
 
@@ -318,6 +333,7 @@ var xVec4WAxis func() *Vec4
 func Vec4WAxis() *Vec4 {
 
 	cret := xVec4WAxis()
+
 	return cret
 }
 
@@ -328,6 +344,7 @@ var xVec4XAxis func() *Vec4
 func Vec4XAxis() *Vec4 {
 
 	cret := xVec4XAxis()
+
 	return cret
 }
 
@@ -338,6 +355,7 @@ var xVec4YAxis func() *Vec4
 func Vec4YAxis() *Vec4 {
 
 	cret := xVec4YAxis()
+
 	return cret
 }
 
@@ -348,6 +366,7 @@ var xVec4ZAxis func() *Vec4
 func Vec4ZAxis() *Vec4 {
 
 	cret := xVec4ZAxis()
+
 	return cret
 }
 
@@ -358,6 +377,7 @@ var xVec4Zero func() *Vec4
 func Vec4Zero() *Vec4 {
 
 	cret := xVec4Zero()
+
 	return cret
 }
 

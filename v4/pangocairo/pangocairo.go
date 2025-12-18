@@ -55,6 +55,7 @@ func (x *FontBase) SetGoPointer(ptr uintptr) {
 func (x *FontBase) GetScaledFont() *cairo.ScaledFont {
 
 	cret := XPangoCairoFontGetScaledFont(x.GoPointer())
+
 	return cret
 }
 
@@ -114,6 +115,7 @@ func (x *FontMapBase) CreateContext() *pango.Context {
 func (x *FontMapBase) GetFontType() cairo.FontType {
 
 	cret := XPangoCairoFontMapGetFontType(x.GoPointer())
+
 	return cret
 }
 
@@ -123,6 +125,7 @@ func (x *FontMapBase) GetFontType() cairo.FontType {
 func (x *FontMapBase) GetResolution() float64 {
 
 	cret := XPangoCairoFontMapGetResolution(x.GoPointer())
+
 	return cret
 }
 
@@ -175,6 +178,7 @@ var xContextGetFontOptions func(uintptr) *cairo.FontOptions
 func ContextGetFontOptions(ContextVar *pango.Context) *cairo.FontOptions {
 
 	cret := xContextGetFontOptions(ContextVar.GoPointer())
+
 	return cret
 }
 
@@ -186,6 +190,7 @@ var xContextGetResolution func(uintptr) float64
 func ContextGetResolution(ContextVar *pango.Context) float64 {
 
 	cret := xContextGetResolution(ContextVar.GoPointer())
+
 	return cret
 }
 
@@ -202,6 +207,7 @@ var xContextGetShapeRenderer func(uintptr, uintptr) uintptr
 func ContextGetShapeRenderer(ContextVar *pango.Context, DataVar uintptr) uintptr {
 
 	cret := xContextGetShapeRenderer(ContextVar.GoPointer(), DataVar)
+
 	return cret
 }
 

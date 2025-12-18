@@ -124,6 +124,7 @@ var xAnimationGetFollowEnableAnimationsSetting func(uintptr) bool
 func (x *Animation) GetFollowEnableAnimationsSetting() bool {
 
 	cret := xAnimationGetFollowEnableAnimationsSetting(x.GoPointer())
+
 	return cret
 }
 
@@ -136,6 +137,7 @@ var xAnimationGetState func(uintptr) AnimationState
 func (x *Animation) GetState() AnimationState {
 
 	cret := xAnimationGetState(x.GoPointer())
+
 	return cret
 }
 
@@ -162,6 +164,7 @@ var xAnimationGetValue func(uintptr) float64
 func (x *Animation) GetValue() float64 {
 
 	cret := xAnimationGetValue(x.GoPointer())
+
 	return cret
 }
 

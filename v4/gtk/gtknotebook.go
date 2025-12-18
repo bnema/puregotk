@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -193,6 +194,7 @@ var xNotebookAppendPage func(uintptr, uintptr, uintptr) int
 func (x *Notebook) AppendPage(ChildVar *Widget, TabLabelVar *Widget) int {
 
 	cret := xNotebookAppendPage(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer())
+
 	return cret
 }
 
@@ -203,6 +205,7 @@ var xNotebookAppendPageMenu func(uintptr, uintptr, uintptr, uintptr) int
 func (x *Notebook) AppendPageMenu(ChildVar *Widget, TabLabelVar *Widget, MenuLabelVar *Widget) int {
 
 	cret := xNotebookAppendPageMenu(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer(), MenuLabelVar.GoPointer())
+
 	return cret
 }
 
@@ -245,6 +248,7 @@ var xNotebookGetCurrentPage func(uintptr) int
 func (x *Notebook) GetCurrentPage() int {
 
 	cret := xNotebookGetCurrentPage(x.GoPointer())
+
 	return cret
 }
 
@@ -254,6 +258,7 @@ var xNotebookGetGroupName func(uintptr) string
 func (x *Notebook) GetGroupName() string {
 
 	cret := xNotebookGetGroupName(x.GoPointer())
+
 	return cret
 }
 
@@ -281,6 +286,7 @@ var xNotebookGetMenuLabelText func(uintptr, uintptr) string
 func (x *Notebook) GetMenuLabelText(ChildVar *Widget) string {
 
 	cret := xNotebookGetMenuLabelText(x.GoPointer(), ChildVar.GoPointer())
+
 	return cret
 }
 
@@ -290,6 +296,7 @@ var xNotebookGetNPages func(uintptr) int
 func (x *Notebook) GetNPages() int {
 
 	cret := xNotebookGetNPages(x.GoPointer())
+
 	return cret
 }
 
@@ -353,6 +360,7 @@ var xNotebookGetScrollable func(uintptr) bool
 func (x *Notebook) GetScrollable() bool {
 
 	cret := xNotebookGetScrollable(x.GoPointer())
+
 	return cret
 }
 
@@ -362,6 +370,7 @@ var xNotebookGetShowBorder func(uintptr) bool
 func (x *Notebook) GetShowBorder() bool {
 
 	cret := xNotebookGetShowBorder(x.GoPointer())
+
 	return cret
 }
 
@@ -371,6 +380,7 @@ var xNotebookGetShowTabs func(uintptr) bool
 func (x *Notebook) GetShowTabs() bool {
 
 	cret := xNotebookGetShowTabs(x.GoPointer())
+
 	return cret
 }
 
@@ -380,6 +390,7 @@ var xNotebookGetTabDetachable func(uintptr, uintptr) bool
 func (x *Notebook) GetTabDetachable(ChildVar *Widget) bool {
 
 	cret := xNotebookGetTabDetachable(x.GoPointer(), ChildVar.GoPointer())
+
 	return cret
 }
 
@@ -410,6 +421,7 @@ var xNotebookGetTabLabelText func(uintptr, uintptr) string
 func (x *Notebook) GetTabLabelText(ChildVar *Widget) string {
 
 	cret := xNotebookGetTabLabelText(x.GoPointer(), ChildVar.GoPointer())
+
 	return cret
 }
 
@@ -419,6 +431,7 @@ var xNotebookGetTabPos func(uintptr) PositionType
 func (x *Notebook) GetTabPos() PositionType {
 
 	cret := xNotebookGetTabPos(x.GoPointer())
+
 	return cret
 }
 
@@ -428,6 +441,7 @@ var xNotebookGetTabReorderable func(uintptr, uintptr) bool
 func (x *Notebook) GetTabReorderable(ChildVar *Widget) bool {
 
 	cret := xNotebookGetTabReorderable(x.GoPointer(), ChildVar.GoPointer())
+
 	return cret
 }
 
@@ -437,6 +451,7 @@ var xNotebookInsertPage func(uintptr, uintptr, uintptr, int) int
 func (x *Notebook) InsertPage(ChildVar *Widget, TabLabelVar *Widget, PositionVar int) int {
 
 	cret := xNotebookInsertPage(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -447,6 +462,7 @@ var xNotebookInsertPageMenu func(uintptr, uintptr, uintptr, uintptr, int) int
 func (x *Notebook) InsertPageMenu(ChildVar *Widget, TabLabelVar *Widget, MenuLabelVar *Widget, PositionVar int) int {
 
 	cret := xNotebookInsertPageMenu(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer(), MenuLabelVar.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -468,6 +484,7 @@ var xNotebookPageNum func(uintptr, uintptr) int
 func (x *Notebook) PageNum(ChildVar *Widget) int {
 
 	cret := xNotebookPageNum(x.GoPointer(), ChildVar.GoPointer())
+
 	return cret
 }
 
@@ -498,6 +515,7 @@ var xNotebookPrependPage func(uintptr, uintptr, uintptr) int
 func (x *Notebook) PrependPage(ChildVar *Widget, TabLabelVar *Widget) int {
 
 	cret := xNotebookPrependPage(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer())
+
 	return cret
 }
 
@@ -508,6 +526,7 @@ var xNotebookPrependPageMenu func(uintptr, uintptr, uintptr, uintptr) int
 func (x *Notebook) PrependPageMenu(ChildVar *Widget, TabLabelVar *Widget, MenuLabelVar *Widget) int {
 
 	cret := xNotebookPrependPageMenu(x.GoPointer(), ChildVar.GoPointer(), TabLabelVar.GoPointer(), MenuLabelVar.GoPointer())
+
 	return cret
 }
 
@@ -581,7 +600,11 @@ var xNotebookSetGroupName func(uintptr, uintptr)
 // not be able to exchange tabs with any other notebook.
 func (x *Notebook) SetGroupName(GroupNameVar *string) {
 
-	xNotebookSetGroupName(x.GoPointer(), core.NullableStringToPtr(GroupNameVar))
+	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+
+	xNotebookSetGroupName(x.GoPointer(), GroupNameVarPtr)
+
+	runtime.KeepAlive(GroupNameVarBytes)
 
 }
 
@@ -1108,6 +1131,7 @@ func (x *Notebook) GetAccessibleParent() *AccessibleBase {
 func (x *Notebook) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -1133,6 +1157,7 @@ func (x *Notebook) GetAtContext() *ATContext {
 func (x *Notebook) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1172,6 +1197,7 @@ func (x *Notebook) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Notebook) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1348,6 +1374,7 @@ func (x *Notebook) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *Notebook) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

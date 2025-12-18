@@ -114,6 +114,7 @@ var xGraphicsOffloadGetBlackBackground func(uintptr) bool
 func (x *GraphicsOffload) GetBlackBackground() bool {
 
 	cret := xGraphicsOffloadGetBlackBackground(x.GoPointer())
+
 	return cret
 }
 
@@ -140,6 +141,7 @@ var xGraphicsOffloadGetEnabled func(uintptr) GraphicsOffloadEnabled
 func (x *GraphicsOffload) GetEnabled() GraphicsOffloadEnabled {
 
 	cret := xGraphicsOffloadGetEnabled(x.GoPointer())
+
 	return cret
 }
 
@@ -247,6 +249,7 @@ func (x *GraphicsOffload) GetAccessibleParent() *AccessibleBase {
 func (x *GraphicsOffload) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -272,6 +275,7 @@ func (x *GraphicsOffload) GetAtContext() *ATContext {
 func (x *GraphicsOffload) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -311,6 +315,7 @@ func (x *GraphicsOffload) GetNextAccessibleSibling() *AccessibleBase {
 func (x *GraphicsOffload) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -487,6 +492,7 @@ func (x *GraphicsOffload) UpdateStateValue(NStatesVar int, StatesVar []Accessibl
 func (x *GraphicsOffload) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

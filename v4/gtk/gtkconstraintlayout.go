@@ -38,6 +38,7 @@ var xConstraintVflParserErrorQuark func() glib.Quark
 func ConstraintVflParserErrorQuark() glib.Quark {
 
 	cret := xConstraintVflParserErrorQuark()
+
 	return cret
 }
 
@@ -281,6 +282,7 @@ var xConstraintLayoutAddConstraintsFromDescription func(uintptr, []string, uint,
 func (x *ConstraintLayout) AddConstraintsFromDescription(LinesVar []string, NLinesVar uint, HspacingVar int, VspacingVar int, ErrorVar **glib.Error, FirstViewVar string, varArgs ...interface{}) *glib.List {
 
 	cret := xConstraintLayoutAddConstraintsFromDescription(x.GoPointer(), LinesVar, NLinesVar, HspacingVar, VspacingVar, ErrorVar, FirstViewVar, varArgs...)
+
 	return cret
 }
 
@@ -371,6 +373,7 @@ func (x *ConstraintLayout) AddConstraintsFromDescriptionv(LinesVar []string, NLi
 	var cerr *glib.Error
 
 	cret := xConstraintLayoutAddConstraintsFromDescriptionv(x.GoPointer(), LinesVar, NLinesVar, HspacingVar, VspacingVar, ViewsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -488,6 +491,7 @@ func (c *ConstraintLayout) SetGoPointer(ptr uintptr) {
 func (x *ConstraintLayout) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

@@ -39,6 +39,7 @@ var xTriangleAlloc func() *Triangle
 func TriangleAlloc() *Triangle {
 
 	cret := xTriangleAlloc()
+
 	return cret
 }
 
@@ -48,6 +49,7 @@ var xTriangleContainsPoint func(uintptr, *Point3D) bool
 func (x *Triangle) ContainsPoint(PVar *Point3D) bool {
 
 	cret := xTriangleContainsPoint(x.GoPointer(), PVar)
+
 	return cret
 }
 
@@ -57,6 +59,7 @@ var xTriangleEqual func(uintptr, *Triangle) bool
 func (x *Triangle) Equal(BVar *Triangle) bool {
 
 	cret := xTriangleEqual(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -75,6 +78,7 @@ var xTriangleGetArea func(uintptr) float32
 func (x *Triangle) GetArea() float32 {
 
 	cret := xTriangleGetArea(x.GoPointer())
+
 	return cret
 }
 
@@ -99,6 +103,7 @@ var xTriangleGetBarycoords func(uintptr, *Point3D, *Vec2) bool
 func (x *Triangle) GetBarycoords(PVar *Point3D, ResVar *Vec2) bool {
 
 	cret := xTriangleGetBarycoords(x.GoPointer(), PVar, ResVar)
+
 	return cret
 }
 
@@ -168,6 +173,7 @@ var xTriangleGetUv func(uintptr, *Point3D, *Vec2, *Vec2, *Vec2, *Vec2) bool
 func (x *Triangle) GetUv(PVar *Point3D, UvAVar *Vec2, UvBVar *Vec2, UvCVar *Vec2, ResVar *Vec2) bool {
 
 	cret := xTriangleGetUv(x.GoPointer(), PVar, UvAVar, UvBVar, UvCVar, ResVar)
+
 	return cret
 }
 
@@ -188,6 +194,7 @@ var xTriangleInitFromFloat func(uintptr, [3]float32, [3]float32, [3]float32) *Tr
 func (x *Triangle) InitFromFloat(AVar [3]float32, BVar [3]float32, CVar [3]float32) *Triangle {
 
 	cret := xTriangleInitFromFloat(x.GoPointer(), AVar, BVar, CVar)
+
 	return cret
 }
 
@@ -197,6 +204,7 @@ var xTriangleInitFromPoint3d func(uintptr, *Point3D, *Point3D, *Point3D) *Triang
 func (x *Triangle) InitFromPoint3d(AVar *Point3D, BVar *Point3D, CVar *Point3D) *Triangle {
 
 	cret := xTriangleInitFromPoint3d(x.GoPointer(), AVar, BVar, CVar)
+
 	return cret
 }
 
@@ -206,6 +214,7 @@ var xTriangleInitFromVec3 func(uintptr, *Vec3, *Vec3, *Vec3) *Triangle
 func (x *Triangle) InitFromVec3(AVar *Vec3, BVar *Vec3, CVar *Vec3) *Triangle {
 
 	cret := xTriangleInitFromVec3(x.GoPointer(), AVar, BVar, CVar)
+
 	return cret
 }
 

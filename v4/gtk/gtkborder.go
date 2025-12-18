@@ -41,6 +41,7 @@ var xNewBorder func() *Border
 func NewBorder() *Border {
 
 	cret := xNewBorder()
+
 	return cret
 }
 
@@ -50,6 +51,7 @@ var xBorderCopy func(uintptr) *Border
 func (x *Border) Copy() *Border {
 
 	cret := xBorderCopy(x.GoPointer())
+
 	return cret
 }
 

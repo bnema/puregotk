@@ -118,6 +118,7 @@ func (x *ScrollableBase) SetGoPointer(ptr uintptr) {
 func (x *ScrollableBase) GetBorder(BorderVar *Border) bool {
 
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
+
 	return cret
 }
 
@@ -140,6 +141,7 @@ func (x *ScrollableBase) GetHadjustment() *Adjustment {
 func (x *ScrollableBase) GetHscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
+
 	return cret
 }
 
@@ -162,6 +164,7 @@ func (x *ScrollableBase) GetVadjustment() *Adjustment {
 func (x *ScrollableBase) GetVscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
+
 	return cret
 }
 

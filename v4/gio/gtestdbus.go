@@ -152,6 +152,7 @@ var xTestDBusGetBusAddress func(uintptr) string
 func (x *TestDBus) GetBusAddress() string {
 
 	cret := xTestDBusGetBusAddress(x.GoPointer())
+
 	return cret
 }
 
@@ -161,6 +162,7 @@ var xTestDBusGetFlags func(uintptr) TestDBusFlags
 func (x *TestDBus) GetFlags() TestDBusFlags {
 
 	cret := xTestDBusGetFlags(x.GoPointer())
+
 	return cret
 }
 

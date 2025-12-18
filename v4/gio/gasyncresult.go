@@ -253,6 +253,7 @@ func (x *AsyncResultBase) GetSourceObject() *gobject.Object {
 func (x *AsyncResultBase) GetUserData() uintptr {
 
 	cret := XGAsyncResultGetUserData(x.GoPointer())
+
 	return cret
 }
 
@@ -261,6 +262,7 @@ func (x *AsyncResultBase) GetUserData() uintptr {
 func (x *AsyncResultBase) IsTagged(SourceTagVar uintptr) bool {
 
 	cret := XGAsyncResultIsTagged(x.GoPointer(), SourceTagVar)
+
 	return cret
 }
 
@@ -278,6 +280,7 @@ func (x *AsyncResultBase) LegacyPropagateError() (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGAsyncResultLegacyPropagateError(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}

@@ -75,6 +75,7 @@ var xColumnViewCellGetFocusable func(uintptr) bool
 func (x *ColumnViewCell) GetFocusable() bool {
 
 	cret := xColumnViewCellGetFocusable(x.GoPointer())
+
 	return cret
 }
 
@@ -105,6 +106,7 @@ var xColumnViewCellGetPosition func(uintptr) uint
 func (x *ColumnViewCell) GetPosition() uint {
 
 	cret := xColumnViewCellGetPosition(x.GoPointer())
+
 	return cret
 }
 
@@ -117,6 +119,7 @@ var xColumnViewCellGetSelected func(uintptr) bool
 func (x *ColumnViewCell) GetSelected() bool {
 
 	cret := xColumnViewCellGetSelected(x.GoPointer())
+
 	return cret
 }
 

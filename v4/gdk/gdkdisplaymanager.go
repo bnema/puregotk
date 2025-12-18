@@ -2,6 +2,7 @@
 package gdk
 
 import (
+	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -140,6 +141,7 @@ var xDisplayManagerListDisplays func(uintptr) *glib.SList
 func (x *DisplayManager) ListDisplays() *glib.SList {
 
 	cret := xDisplayManagerListDisplays(x.GoPointer())
+
 	return cret
 }
 
@@ -149,7 +151,11 @@ var xDisplayManagerOpenDisplay func(uintptr, uintptr) uintptr
 func (x *DisplayManager) OpenDisplay(NameVar *string) *Display {
 	var cls *Display
 
-	cret := xDisplayManagerOpenDisplay(x.GoPointer(), core.NullableStringToPtr(NameVar))
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	cret := xDisplayManagerOpenDisplay(x.GoPointer(), NameVarPtr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil

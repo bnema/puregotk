@@ -298,6 +298,7 @@ var xGLAreaGetAllowedApis func(uintptr) gdk.GLAPI
 func (x *GLArea) GetAllowedApis() gdk.GLAPI {
 
 	cret := xGLAreaGetAllowedApis(x.GoPointer())
+
 	return cret
 }
 
@@ -309,6 +310,7 @@ var xGLAreaGetApi func(uintptr) gdk.GLAPI
 func (x *GLArea) GetApi() gdk.GLAPI {
 
 	cret := xGLAreaGetApi(x.GoPointer())
+
 	return cret
 }
 
@@ -318,6 +320,7 @@ var xGLAreaGetAutoRender func(uintptr) bool
 func (x *GLArea) GetAutoRender() bool {
 
 	cret := xGLAreaGetAutoRender(x.GoPointer())
+
 	return cret
 }
 
@@ -344,6 +347,7 @@ var xGLAreaGetError func(uintptr) *glib.Error
 func (x *GLArea) GetError() *glib.Error {
 
 	cret := xGLAreaGetError(x.GoPointer())
+
 	return cret
 }
 
@@ -353,6 +357,7 @@ var xGLAreaGetHasDepthBuffer func(uintptr) bool
 func (x *GLArea) GetHasDepthBuffer() bool {
 
 	cret := xGLAreaGetHasDepthBuffer(x.GoPointer())
+
 	return cret
 }
 
@@ -362,6 +367,7 @@ var xGLAreaGetHasStencilBuffer func(uintptr) bool
 func (x *GLArea) GetHasStencilBuffer() bool {
 
 	cret := xGLAreaGetHasStencilBuffer(x.GoPointer())
+
 	return cret
 }
 
@@ -384,6 +390,7 @@ var xGLAreaGetUseEs func(uintptr) bool
 func (x *GLArea) GetUseEs() bool {
 
 	cret := xGLAreaGetUseEs(x.GoPointer())
+
 	return cret
 }
 
@@ -742,6 +749,7 @@ func (x *GLArea) GetAccessibleParent() *AccessibleBase {
 func (x *GLArea) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -767,6 +775,7 @@ func (x *GLArea) GetAtContext() *ATContext {
 func (x *GLArea) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -806,6 +815,7 @@ func (x *GLArea) GetNextAccessibleSibling() *AccessibleBase {
 func (x *GLArea) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -982,6 +992,7 @@ func (x *GLArea) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, V
 func (x *GLArea) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

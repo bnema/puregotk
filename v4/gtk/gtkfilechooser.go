@@ -134,6 +134,7 @@ func (x *FileChooserBase) AddShortcutFolder(FolderVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserAddShortcutFolder(x.GoPointer(), FolderVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -145,6 +146,7 @@ func (x *FileChooserBase) AddShortcutFolder(FolderVar gio.File) (bool, error) {
 func (x *FileChooserBase) GetAction() FileChooserAction {
 
 	cret := XGtkFileChooserGetAction(x.GoPointer())
+
 	return cret
 }
 
@@ -152,6 +154,7 @@ func (x *FileChooserBase) GetAction() FileChooserAction {
 func (x *FileChooserBase) GetChoice(IdVar string) string {
 
 	cret := XGtkFileChooserGetChoice(x.GoPointer(), IdVar)
+
 	return cret
 }
 
@@ -159,6 +162,7 @@ func (x *FileChooserBase) GetChoice(IdVar string) string {
 func (x *FileChooserBase) GetCreateFolders() bool {
 
 	cret := XGtkFileChooserGetCreateFolders(x.GoPointer())
+
 	return cret
 }
 
@@ -183,6 +187,7 @@ func (x *FileChooserBase) GetCurrentFolder() *gio.FileBase {
 func (x *FileChooserBase) GetCurrentName() string {
 
 	cret := XGtkFileChooserGetCurrentName(x.GoPointer())
+
 	return cret
 }
 
@@ -262,6 +267,7 @@ func (x *FileChooserBase) GetFilters() *gio.ListModelBase {
 func (x *FileChooserBase) GetSelectMultiple() bool {
 
 	cret := XGtkFileChooserGetSelectMultiple(x.GoPointer())
+
 	return cret
 }
 
@@ -301,6 +307,7 @@ func (x *FileChooserBase) RemoveShortcutFolder(FolderVar gio.File) (bool, error)
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserRemoveShortcutFolder(x.GoPointer(), FolderVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -346,6 +353,7 @@ func (x *FileChooserBase) SetCurrentFolder(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -421,6 +429,7 @@ func (x *FileChooserBase) SetFile(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserSetFile(x.GoPointer(), FileVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -579,6 +588,7 @@ var xFileChooserErrorQuark func() glib.Quark
 func FileChooserErrorQuark() glib.Quark {
 
 	cret := xFileChooserErrorQuark()
+
 	return cret
 }
 

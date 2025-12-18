@@ -403,6 +403,7 @@ var xSorterCompare func(uintptr, uintptr, uintptr) Ordering
 func (x *Sorter) Compare(Item1Var *gobject.Object, Item2Var *gobject.Object) Ordering {
 
 	cret := xSorterCompare(x.GoPointer(), Item1Var.GoPointer(), Item2Var.GoPointer())
+
 	return cret
 }
 
@@ -417,6 +418,7 @@ var xSorterGetOrder func(uintptr) SorterOrder
 func (x *Sorter) GetOrder() SorterOrder {
 
 	cret := xSorterGetOrder(x.GoPointer())
+
 	return cret
 }
 

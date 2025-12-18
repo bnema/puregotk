@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -224,7 +225,11 @@ var xScaleAddMark func(uintptr, float64, PositionType, uintptr)
 // To remove marks from a scale, use [method@Gtk.Scale.clear_marks].
 func (x *Scale) AddMark(ValueVar float64, PositionVar PositionType, MarkupVar *string) {
 
-	xScaleAddMark(x.GoPointer(), ValueVar, PositionVar, core.NullableStringToPtr(MarkupVar))
+	MarkupVarPtr, MarkupVarBytes := core.NullableStringToPtr(MarkupVar)
+
+	xScaleAddMark(x.GoPointer(), ValueVar, PositionVar, MarkupVarPtr)
+
+	runtime.KeepAlive(MarkupVarBytes)
 
 }
 
@@ -243,6 +248,7 @@ var xScaleGetDigits func(uintptr) int
 func (x *Scale) GetDigits() int {
 
 	cret := xScaleGetDigits(x.GoPointer())
+
 	return cret
 }
 
@@ -253,6 +259,7 @@ var xScaleGetDrawValue func(uintptr) bool
 func (x *Scale) GetDrawValue() bool {
 
 	cret := xScaleGetDrawValue(x.GoPointer())
+
 	return cret
 }
 
@@ -262,6 +269,7 @@ var xScaleGetHasOrigin func(uintptr) bool
 func (x *Scale) GetHasOrigin() bool {
 
 	cret := xScaleGetHasOrigin(x.GoPointer())
+
 	return cret
 }
 
@@ -307,6 +315,7 @@ var xScaleGetValuePos func(uintptr) PositionType
 func (x *Scale) GetValuePos() PositionType {
 
 	cret := xScaleGetValuePos(x.GoPointer())
+
 	return cret
 }
 
@@ -505,6 +514,7 @@ func (x *Scale) GetAccessibleParent() *AccessibleBase {
 func (x *Scale) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -530,6 +540,7 @@ func (x *Scale) GetAtContext() *ATContext {
 func (x *Scale) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -569,6 +580,7 @@ func (x *Scale) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Scale) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -745,6 +757,7 @@ func (x *Scale) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 func (x *Scale) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -752,6 +765,7 @@ func (x *Scale) GetBuildableId() string {
 func (x *Scale) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

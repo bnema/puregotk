@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -236,7 +237,11 @@ func NewTlsCertificateFromPkcs11Uris(Pkcs11UriVar string, PrivateKeyPkcs11UriVar
 	var cls *TlsCertificate
 	var cerr *glib.Error
 
-	cret := xNewTlsCertificateFromPkcs11Uris(Pkcs11UriVar, core.NullableStringToPtr(PrivateKeyPkcs11UriVar), &cerr)
+	PrivateKeyPkcs11UriVarPtr, PrivateKeyPkcs11UriVarBytes := core.NullableStringToPtr(PrivateKeyPkcs11UriVar)
+
+	cret := xNewTlsCertificateFromPkcs11Uris(Pkcs11UriVar, PrivateKeyPkcs11UriVarPtr, &cerr)
+
+	runtime.KeepAlive(PrivateKeyPkcs11UriVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -273,7 +278,11 @@ func NewTlsCertificateFromPkcs12(DataVar []byte, LengthVar uint, PasswordVar *st
 	var cls *TlsCertificate
 	var cerr *glib.Error
 
-	cret := xNewTlsCertificateFromPkcs12(DataVar, LengthVar, core.NullableStringToPtr(PasswordVar), &cerr)
+	PasswordVarPtr, PasswordVarBytes := core.NullableStringToPtr(PasswordVar)
+
+	cret := xNewTlsCertificateFromPkcs12(DataVar, LengthVar, PasswordVarPtr, &cerr)
+
+	runtime.KeepAlive(PasswordVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -293,6 +302,7 @@ var xTlsCertificateGetDnsNames func(uintptr) uintptr
 func (x *TlsCertificate) GetDnsNames() uintptr {
 
 	cret := xTlsCertificateGetDnsNames(x.GoPointer())
+
 	return cret
 }
 
@@ -302,6 +312,7 @@ var xTlsCertificateGetIpAddresses func(uintptr) uintptr
 func (x *TlsCertificate) GetIpAddresses() uintptr {
 
 	cret := xTlsCertificateGetIpAddresses(x.GoPointer())
+
 	return cret
 }
 
@@ -328,6 +339,7 @@ var xTlsCertificateGetIssuerName func(uintptr) string
 func (x *TlsCertificate) GetIssuerName() string {
 
 	cret := xTlsCertificateGetIssuerName(x.GoPointer())
+
 	return cret
 }
 
@@ -337,6 +349,7 @@ var xTlsCertificateGetNotValidAfter func(uintptr) *glib.DateTime
 func (x *TlsCertificate) GetNotValidAfter() *glib.DateTime {
 
 	cret := xTlsCertificateGetNotValidAfter(x.GoPointer())
+
 	return cret
 }
 
@@ -346,6 +359,7 @@ var xTlsCertificateGetNotValidBefore func(uintptr) *glib.DateTime
 func (x *TlsCertificate) GetNotValidBefore() *glib.DateTime {
 
 	cret := xTlsCertificateGetNotValidBefore(x.GoPointer())
+
 	return cret
 }
 
@@ -355,6 +369,7 @@ var xTlsCertificateGetSubjectName func(uintptr) string
 func (x *TlsCertificate) GetSubjectName() string {
 
 	cret := xTlsCertificateGetSubjectName(x.GoPointer())
+
 	return cret
 }
 
@@ -368,6 +383,7 @@ var xTlsCertificateIsSame func(uintptr, uintptr) bool
 func (x *TlsCertificate) IsSame(CertTwoVar *TlsCertificate) bool {
 
 	cret := xTlsCertificateIsSame(x.GoPointer(), CertTwoVar.GoPointer())
+
 	return cret
 }
 
@@ -409,6 +425,7 @@ var xTlsCertificateVerify func(uintptr, uintptr, uintptr) TlsCertificateFlags
 func (x *TlsCertificate) Verify(IdentityVar SocketConnectable, TrustedCaVar *TlsCertificate) TlsCertificateFlags {
 
 	cret := xTlsCertificateVerify(x.GoPointer(), IdentityVar.GoPointer(), TrustedCaVar.GoPointer())
+
 	return cret
 }
 
@@ -710,6 +727,7 @@ func TlsCertificateListNewFromFile(FileVar string) (*glib.List, error) {
 	var cerr *glib.Error
 
 	cret := xTlsCertificateListNewFromFile(FileVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

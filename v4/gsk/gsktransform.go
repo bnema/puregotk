@@ -18,6 +18,7 @@ var xTransformParse func(string, **Transform) bool
 func TransformParse(StringVar string, OutTransformVar **Transform) bool {
 
 	cret := xTransformParse(StringVar, OutTransformVar)
+
 	return cret
 }
 

@@ -79,6 +79,7 @@ var xAspectFrameGetObeyChild func(uintptr) bool
 func (x *AspectFrame) GetObeyChild() bool {
 
 	cret := xAspectFrameGetObeyChild(x.GoPointer())
+
 	return cret
 }
 
@@ -88,6 +89,7 @@ var xAspectFrameGetRatio func(uintptr) float32
 func (x *AspectFrame) GetRatio() float32 {
 
 	cret := xAspectFrameGetRatio(x.GoPointer())
+
 	return cret
 }
 
@@ -98,6 +100,7 @@ var xAspectFrameGetXalign func(uintptr) float32
 func (x *AspectFrame) GetXalign() float32 {
 
 	cret := xAspectFrameGetXalign(x.GoPointer())
+
 	return cret
 }
 
@@ -108,6 +111,7 @@ var xAspectFrameGetYalign func(uintptr) float32
 func (x *AspectFrame) GetYalign() float32 {
 
 	cret := xAspectFrameGetYalign(x.GoPointer())
+
 	return cret
 }
 
@@ -280,6 +284,7 @@ func (x *AspectFrame) GetAccessibleParent() *AccessibleBase {
 func (x *AspectFrame) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -305,6 +310,7 @@ func (x *AspectFrame) GetAtContext() *ATContext {
 func (x *AspectFrame) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -344,6 +350,7 @@ func (x *AspectFrame) GetNextAccessibleSibling() *AccessibleBase {
 func (x *AspectFrame) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -520,6 +527,7 @@ func (x *AspectFrame) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 func (x *AspectFrame) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

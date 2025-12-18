@@ -258,6 +258,7 @@ var xNativeDialogGetModal func(uintptr) bool
 func (x *NativeDialog) GetModal() bool {
 
 	cret := xNativeDialogGetModal(x.GoPointer())
+
 	return cret
 }
 
@@ -267,6 +268,7 @@ var xNativeDialogGetTitle func(uintptr) string
 func (x *NativeDialog) GetTitle() string {
 
 	cret := xNativeDialogGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -293,6 +295,7 @@ var xNativeDialogGetVisible func(uintptr) bool
 func (x *NativeDialog) GetVisible() bool {
 
 	cret := xNativeDialogGetVisible(x.GoPointer())
+
 	return cret
 }
 

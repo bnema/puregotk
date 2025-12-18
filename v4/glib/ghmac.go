@@ -60,6 +60,7 @@ var xNewHmac func(ChecksumType, []byte, uint) *Hmac
 func NewHmac(DigestTypeVar ChecksumType, KeyVar []byte, KeyLenVar uint) *Hmac {
 
 	cret := xNewHmac(DigestTypeVar, KeyVar, KeyLenVar)
+
 	return cret
 }
 
@@ -71,6 +72,7 @@ var xHmacCopy func(uintptr) *Hmac
 func (x *Hmac) Copy() *Hmac {
 
 	cret := xHmacCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -98,6 +100,7 @@ var xHmacGetString func(uintptr) string
 func (x *Hmac) GetString() string {
 
 	cret := xHmacGetString(x.GoPointer())
+
 	return cret
 }
 
@@ -109,6 +112,7 @@ var xHmacRef func(uintptr) *Hmac
 func (x *Hmac) Ref() *Hmac {
 
 	cret := xHmacRef(x.GoPointer())
+
 	return cret
 }
 
@@ -148,6 +152,7 @@ var xComputeHmacForBytes func(ChecksumType, *Bytes, *Bytes) string
 func ComputeHmacForBytes(DigestTypeVar ChecksumType, KeyVar *Bytes, DataVar *Bytes) string {
 
 	cret := xComputeHmacForBytes(DigestTypeVar, KeyVar, DataVar)
+
 	return cret
 }
 
@@ -161,6 +166,7 @@ var xComputeHmacForData func(ChecksumType, []byte, uint, []byte, uint) string
 func ComputeHmacForData(DigestTypeVar ChecksumType, KeyVar []byte, KeyLenVar uint, DataVar []byte, LengthVar uint) string {
 
 	cret := xComputeHmacForData(DigestTypeVar, KeyVar, KeyLenVar, DataVar, LengthVar)
+
 	return cret
 }
 
@@ -172,6 +178,7 @@ var xComputeHmacForString func(ChecksumType, []byte, uint, string, int) string
 func ComputeHmacForString(DigestTypeVar ChecksumType, KeyVar []byte, KeyLenVar uint, StrVar string, LengthVar int) string {
 
 	cret := xComputeHmacForString(DigestTypeVar, KeyVar, KeyLenVar, StrVar, LengthVar)
+
 	return cret
 }
 

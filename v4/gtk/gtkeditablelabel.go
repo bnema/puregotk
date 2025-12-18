@@ -108,6 +108,7 @@ var xEditableLabelGetEditing func(uintptr) bool
 func (x *EditableLabel) GetEditing() bool {
 
 	cret := xEditableLabelGetEditing(x.GoPointer())
+
 	return cret
 }
 
@@ -197,6 +198,7 @@ func (x *EditableLabel) GetAccessibleParent() *AccessibleBase {
 func (x *EditableLabel) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -222,6 +224,7 @@ func (x *EditableLabel) GetAtContext() *ATContext {
 func (x *EditableLabel) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -261,6 +264,7 @@ func (x *EditableLabel) GetNextAccessibleSibling() *AccessibleBase {
 func (x *EditableLabel) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -437,6 +441,7 @@ func (x *EditableLabel) UpdateStateValue(NStatesVar int, StatesVar []AccessibleS
 func (x *EditableLabel) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -479,6 +484,7 @@ func (x *EditableLabel) GetBuildableId() string {
 func (x *EditableLabel) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -519,6 +525,7 @@ func (x *EditableLabel) FinishDelegate() {
 func (x *EditableLabel) GetAlignment() float32 {
 
 	cret := XGtkEditableGetAlignment(x.GoPointer())
+
 	return cret
 }
 
@@ -533,6 +540,7 @@ func (x *EditableLabel) GetAlignment() float32 {
 func (x *EditableLabel) GetChars(StartPosVar int, EndPosVar int) string {
 
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -558,6 +566,7 @@ func (x *EditableLabel) GetDelegate() *EditableBase {
 func (x *EditableLabel) GetEditable() bool {
 
 	cret := XGtkEditableGetEditable(x.GoPointer())
+
 	return cret
 }
 
@@ -565,6 +574,7 @@ func (x *EditableLabel) GetEditable() bool {
 func (x *EditableLabel) GetEnableUndo() bool {
 
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
+
 	return cret
 }
 
@@ -572,6 +582,7 @@ func (x *EditableLabel) GetEnableUndo() bool {
 func (x *EditableLabel) GetMaxWidthChars() int {
 
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
+
 	return cret
 }
 
@@ -582,6 +593,7 @@ func (x *EditableLabel) GetMaxWidthChars() int {
 func (x *EditableLabel) GetPosition() int {
 
 	cret := XGtkEditableGetPosition(x.GoPointer())
+
 	return cret
 }
 
@@ -595,6 +607,7 @@ func (x *EditableLabel) GetPosition() int {
 func (x *EditableLabel) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -604,6 +617,7 @@ func (x *EditableLabel) GetSelectionBounds(StartPosVar *int, EndPosVar *int) boo
 func (x *EditableLabel) GetText() string {
 
 	cret := XGtkEditableGetText(x.GoPointer())
+
 	return cret
 }
 
@@ -612,6 +626,7 @@ func (x *EditableLabel) GetText() string {
 func (x *EditableLabel) GetWidthChars() int {
 
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
+
 	return cret
 }
 

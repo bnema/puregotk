@@ -66,6 +66,7 @@ var xHookCompareIds func(uintptr, *Hook) int
 func (x *Hook) CompareIds(SiblingVar *Hook) int {
 
 	cret := xHookCompareIds(x.GoPointer(), SiblingVar)
+
 	return cret
 }
 
@@ -207,6 +208,7 @@ var xHookDestroy func(*HookList, uint32) bool
 func HookDestroy(HookListVar *HookList, HookIdVar uint32) bool {
 
 	cret := xHookDestroy(HookListVar, HookIdVar)
+
 	return cret
 }
 

@@ -361,6 +361,7 @@ func (x *PaintableBase) GetCurrentImage() *PaintableBase {
 func (x *PaintableBase) GetFlags() PaintableFlags {
 
 	cret := XGdkPaintableGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -384,6 +385,7 @@ func (x *PaintableBase) GetFlags() PaintableFlags {
 func (x *PaintableBase) GetIntrinsicAspectRatio() float64 {
 
 	cret := XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
+
 	return cret
 }
 
@@ -400,6 +402,7 @@ func (x *PaintableBase) GetIntrinsicAspectRatio() float64 {
 func (x *PaintableBase) GetIntrinsicHeight() int {
 
 	cret := XGdkPaintableGetIntrinsicHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -416,6 +419,7 @@ func (x *PaintableBase) GetIntrinsicHeight() int {
 func (x *PaintableBase) GetIntrinsicWidth() int {
 
 	cret := XGdkPaintableGetIntrinsicWidth(x.GoPointer())
+
 	return cret
 }
 

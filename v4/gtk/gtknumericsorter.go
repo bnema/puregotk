@@ -83,6 +83,7 @@ var xNumericSorterGetSortOrder func(uintptr) SortType
 func (x *NumericSorter) GetSortOrder() SortType {
 
 	cret := xNumericSorterGetSortOrder(x.GoPointer())
+
 	return cret
 }
 

@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -69,6 +70,7 @@ var xFileDialogGetAcceptLabel func(uintptr) string
 func (x *FileDialog) GetAcceptLabel() string {
 
 	cret := xFileDialogGetAcceptLabel(x.GoPointer())
+
 	return cret
 }
 
@@ -150,6 +152,7 @@ var xFileDialogGetInitialName func(uintptr) string
 func (x *FileDialog) GetInitialName() string {
 
 	cret := xFileDialogGetInitialName(x.GoPointer())
+
 	return cret
 }
 
@@ -160,6 +163,7 @@ var xFileDialogGetModal func(uintptr) bool
 func (x *FileDialog) GetModal() bool {
 
 	cret := xFileDialogGetModal(x.GoPointer())
+
 	return cret
 }
 
@@ -169,6 +173,7 @@ var xFileDialogGetTitle func(uintptr) string
 func (x *FileDialog) GetTitle() string {
 
 	cret := xFileDialogGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -634,7 +639,11 @@ var xFileDialogSetAcceptLabel func(uintptr, uintptr)
 // to launch the file dialog.
 func (x *FileDialog) SetAcceptLabel(AcceptLabelVar *string) {
 
-	xFileDialogSetAcceptLabel(x.GoPointer(), core.NullableStringToPtr(AcceptLabelVar))
+	AcceptLabelVarPtr, AcceptLabelVarBytes := core.NullableStringToPtr(AcceptLabelVar)
+
+	xFileDialogSetAcceptLabel(x.GoPointer(), AcceptLabelVarPtr)
+
+	runtime.KeepAlive(AcceptLabelVarBytes)
 
 }
 
@@ -699,7 +708,11 @@ var xFileDialogSetInitialName func(uintptr, uintptr)
 // preselect it.
 func (x *FileDialog) SetInitialName(NameVar *string) {
 
-	xFileDialogSetInitialName(x.GoPointer(), core.NullableStringToPtr(NameVar))
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xFileDialogSetInitialName(x.GoPointer(), NameVarPtr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 

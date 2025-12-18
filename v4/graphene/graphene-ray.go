@@ -40,6 +40,7 @@ var xRayAlloc func() *Ray
 func RayAlloc() *Ray {
 
 	cret := xRayAlloc()
+
 	return cret
 }
 
@@ -49,6 +50,7 @@ var xRayEqual func(uintptr, *Ray) bool
 func (x *Ray) Equal(BVar *Ray) bool {
 
 	cret := xRayEqual(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -89,6 +91,7 @@ var xRayGetDistanceToPlane func(uintptr, *Plane) float32
 func (x *Ray) GetDistanceToPlane(PVar *Plane) float32 {
 
 	cret := xRayGetDistanceToPlane(x.GoPointer(), PVar)
+
 	return cret
 }
 
@@ -103,6 +106,7 @@ var xRayGetDistanceToPoint func(uintptr, *Point3D) float32
 func (x *Ray) GetDistanceToPoint(PVar *Point3D) float32 {
 
 	cret := xRayGetDistanceToPoint(x.GoPointer(), PVar)
+
 	return cret
 }
 
@@ -132,6 +136,7 @@ var xRayInit func(uintptr, *Point3D, *Vec3) *Ray
 func (x *Ray) Init(OriginVar *Point3D, DirectionVar *Vec3) *Ray {
 
 	cret := xRayInit(x.GoPointer(), OriginVar, DirectionVar)
+
 	return cret
 }
 
@@ -142,6 +147,7 @@ var xRayInitFromRay func(uintptr, *Ray) *Ray
 func (x *Ray) InitFromRay(SrcVar *Ray) *Ray {
 
 	cret := xRayInitFromRay(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -151,6 +157,7 @@ var xRayInitFromVec3 func(uintptr, *Vec3, *Vec3) *Ray
 func (x *Ray) InitFromVec3(OriginVar *Vec3, DirectionVar *Vec3) *Ray {
 
 	cret := xRayInitFromVec3(x.GoPointer(), OriginVar, DirectionVar)
+
 	return cret
 }
 
@@ -161,6 +168,7 @@ var xRayIntersectBox func(uintptr, *Box, *float32) RayIntersectionKind
 func (x *Ray) IntersectBox(BVar *Box, TOutVar *float32) RayIntersectionKind {
 
 	cret := xRayIntersectBox(x.GoPointer(), BVar, TOutVar)
+
 	return cret
 }
 
@@ -171,6 +179,7 @@ var xRayIntersectSphere func(uintptr, *Sphere, *float32) RayIntersectionKind
 func (x *Ray) IntersectSphere(SVar *Sphere, TOutVar *float32) RayIntersectionKind {
 
 	cret := xRayIntersectSphere(x.GoPointer(), SVar, TOutVar)
+
 	return cret
 }
 
@@ -181,6 +190,7 @@ var xRayIntersectTriangle func(uintptr, *Triangle, *float32) RayIntersectionKind
 func (x *Ray) IntersectTriangle(TVar *Triangle, TOutVar *float32) RayIntersectionKind {
 
 	cret := xRayIntersectTriangle(x.GoPointer(), TVar, TOutVar)
+
 	return cret
 }
 
@@ -193,6 +203,7 @@ var xRayIntersectsBox func(uintptr, *Box) bool
 func (x *Ray) IntersectsBox(BVar *Box) bool {
 
 	cret := xRayIntersectsBox(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -205,6 +216,7 @@ var xRayIntersectsSphere func(uintptr, *Sphere) bool
 func (x *Ray) IntersectsSphere(SVar *Sphere) bool {
 
 	cret := xRayIntersectsSphere(x.GoPointer(), SVar)
+
 	return cret
 }
 
@@ -217,6 +229,7 @@ var xRayIntersectsTriangle func(uintptr, *Triangle) bool
 func (x *Ray) IntersectsTriangle(TVar *Triangle) bool {
 
 	cret := xRayIntersectsTriangle(x.GoPointer(), TVar)
+
 	return cret
 }
 

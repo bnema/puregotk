@@ -55,6 +55,7 @@ func (x *MatchInfo) ExpandReferences(StringToExpandVar string) (string, error) {
 	var cerr *Error
 
 	cret := xMatchInfoExpandReferences(x.GoPointer(), StringToExpandVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -83,6 +84,7 @@ var xMatchInfoFetch func(uintptr, int) string
 func (x *MatchInfo) Fetch(MatchNumVar int) string {
 
 	cret := xMatchInfoFetch(x.GoPointer(), MatchNumVar)
+
 	return cret
 }
 
@@ -107,6 +109,7 @@ var xMatchInfoFetchAll func(uintptr) []string
 func (x *MatchInfo) FetchAll() []string {
 
 	cret := xMatchInfoFetchAll(x.GoPointer())
+
 	return cret
 }
 
@@ -123,6 +126,7 @@ var xMatchInfoFetchNamed func(uintptr, string) string
 func (x *MatchInfo) FetchNamed(NameVar string) string {
 
 	cret := xMatchInfoFetchNamed(x.GoPointer(), NameVar)
+
 	return cret
 }
 
@@ -139,6 +143,7 @@ var xMatchInfoFetchNamedPos func(uintptr, string, *int, *int) bool
 func (x *MatchInfo) FetchNamedPos(NameVar string, StartPosVar *int, EndPosVar *int) bool {
 
 	cret := xMatchInfoFetchNamedPos(x.GoPointer(), NameVar, StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -354,6 +359,7 @@ var xMatchInfoFetchPos func(uintptr, int, *int, *int) bool
 func (x *MatchInfo) FetchPos(MatchNumVar int, StartPosVar *int, EndPosVar *int) bool {
 
 	cret := xMatchInfoFetchPos(x.GoPointer(), MatchNumVar, StartPosVar, EndPosVar)
+
 	return cret
 }
 
@@ -380,6 +386,7 @@ var xMatchInfoGetMatchCount func(uintptr) int
 func (x *MatchInfo) GetMatchCount() int {
 
 	cret := xMatchInfoGetMatchCount(x.GoPointer())
+
 	return cret
 }
 
@@ -391,6 +398,7 @@ var xMatchInfoGetRegex func(uintptr) *Regex
 func (x *MatchInfo) GetRegex() *Regex {
 
 	cret := xMatchInfoGetRegex(x.GoPointer())
+
 	return cret
 }
 
@@ -402,6 +410,7 @@ var xMatchInfoGetString func(uintptr) string
 func (x *MatchInfo) GetString() string {
 
 	cret := xMatchInfoGetString(x.GoPointer())
+
 	return cret
 }
 
@@ -443,6 +452,7 @@ var xMatchInfoIsPartialMatch func(uintptr) bool
 func (x *MatchInfo) IsPartialMatch() bool {
 
 	cret := xMatchInfoIsPartialMatch(x.GoPointer())
+
 	return cret
 }
 
@@ -452,6 +462,7 @@ var xMatchInfoMatches func(uintptr) bool
 func (x *MatchInfo) Matches() bool {
 
 	cret := xMatchInfoMatches(x.GoPointer())
+
 	return cret
 }
 
@@ -467,6 +478,7 @@ func (x *MatchInfo) Next() (bool, error) {
 	var cerr *Error
 
 	cret := xMatchInfoNext(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -480,6 +492,7 @@ var xMatchInfoRef func(uintptr) *MatchInfo
 func (x *MatchInfo) Ref() *MatchInfo {
 
 	cret := xMatchInfoRef(x.GoPointer())
+
 	return cret
 }
 
@@ -651,6 +664,7 @@ func NewRegex(PatternVar string, CompileOptionsVar RegexCompileFlags, MatchOptio
 	var cerr *Error
 
 	cret := xNewRegex(PatternVar, CompileOptionsVar, MatchOptionsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -664,6 +678,7 @@ var xRegexGetCaptureCount func(uintptr) int
 func (x *Regex) GetCaptureCount() int {
 
 	cret := xRegexGetCaptureCount(x.GoPointer())
+
 	return cret
 }
 
@@ -677,6 +692,7 @@ var xRegexGetCompileFlags func(uintptr) RegexCompileFlags
 func (x *Regex) GetCompileFlags() RegexCompileFlags {
 
 	cret := xRegexGetCompileFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -686,6 +702,7 @@ var xRegexGetHasCrOrLf func(uintptr) bool
 func (x *Regex) GetHasCrOrLf() bool {
 
 	cret := xRegexGetHasCrOrLf(x.GoPointer())
+
 	return cret
 }
 
@@ -695,6 +712,7 @@ var xRegexGetMatchFlags func(uintptr) RegexMatchFlags
 func (x *Regex) GetMatchFlags() RegexMatchFlags {
 
 	cret := xRegexGetMatchFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -706,6 +724,7 @@ var xRegexGetMaxBackref func(uintptr) int
 func (x *Regex) GetMaxBackref() int {
 
 	cret := xRegexGetMaxBackref(x.GoPointer())
+
 	return cret
 }
 
@@ -717,6 +736,7 @@ var xRegexGetMaxLookbehind func(uintptr) int
 func (x *Regex) GetMaxLookbehind() int {
 
 	cret := xRegexGetMaxLookbehind(x.GoPointer())
+
 	return cret
 }
 
@@ -727,6 +747,7 @@ var xRegexGetPattern func(uintptr) string
 func (x *Regex) GetPattern() string {
 
 	cret := xRegexGetPattern(x.GoPointer())
+
 	return cret
 }
 
@@ -736,6 +757,7 @@ var xRegexGetStringNumber func(uintptr, string) int
 func (x *Regex) GetStringNumber(NameVar string) int {
 
 	cret := xRegexGetStringNumber(x.GoPointer(), NameVar)
+
 	return cret
 }
 
@@ -786,6 +808,7 @@ var xRegexMatch func(uintptr, string, RegexMatchFlags, **MatchInfo) bool
 func (x *Regex) Match(StringVar string, MatchOptionsVar RegexMatchFlags, MatchInfoVar **MatchInfo) bool {
 
 	cret := xRegexMatch(x.GoPointer(), StringVar, MatchOptionsVar, MatchInfoVar)
+
 	return cret
 }
 
@@ -808,6 +831,7 @@ var xRegexMatchAll func(uintptr, string, RegexMatchFlags, **MatchInfo) bool
 func (x *Regex) MatchAll(StringVar string, MatchOptionsVar RegexMatchFlags, MatchInfoVar **MatchInfo) bool {
 
 	cret := xRegexMatchAll(x.GoPointer(), StringVar, MatchOptionsVar, MatchInfoVar)
+
 	return cret
 }
 
@@ -855,6 +879,7 @@ func (x *Regex) MatchAllFull(StringVar []string, StringLenVar int, StartPosition
 	var cerr *Error
 
 	cret := xRegexMatchAllFull(x.GoPointer(), StringVar, StringLenVar, StartPositionVar, MatchOptionsVar, MatchInfoVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -921,6 +946,7 @@ func (x *Regex) MatchFull(StringVar []string, StringLenVar int, StartPositionVar
 	var cerr *Error
 
 	cret := xRegexMatchFull(x.GoPointer(), StringVar, StringLenVar, StartPositionVar, MatchOptionsVar, MatchInfoVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -934,6 +960,7 @@ var xRegexRef func(uintptr) *Regex
 func (x *Regex) Ref() *Regex {
 
 	cret := xRegexRef(x.GoPointer())
+
 	return cret
 }
 
@@ -969,6 +996,7 @@ func (x *Regex) Replace(StringVar []string, StringLenVar int, StartPositionVar i
 	var cerr *Error
 
 	cret := xRegexReplace(x.GoPointer(), StringVar, StringLenVar, StartPositionVar, ReplacementVar, MatchOptionsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1044,6 +1072,7 @@ func (x *Regex) ReplaceEval(StringVar []string, StringLenVar int, StartPositionV
 	}
 
 	cret := xRegexReplaceEval(x.GoPointer(), StringVar, StringLenVar, StartPositionVar, MatchOptionsVar, EvalVarRef, UserDataVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1065,6 +1094,7 @@ func (x *Regex) ReplaceLiteral(StringVar []string, StringLenVar int, StartPositi
 	var cerr *Error
 
 	cret := xRegexReplaceLiteral(x.GoPointer(), StringVar, StringLenVar, StartPositionVar, ReplacementVar, MatchOptionsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1094,6 +1124,7 @@ var xRegexSplit func(uintptr, string, RegexMatchFlags) []string
 func (x *Regex) Split(StringVar string, MatchOptionsVar RegexMatchFlags) []string {
 
 	cret := xRegexSplit(x.GoPointer(), StringVar, MatchOptionsVar)
+
 	return cret
 }
 
@@ -1124,6 +1155,7 @@ func (x *Regex) SplitFull(StringVar []string, StringLenVar int, StartPositionVar
 	var cerr *Error
 
 	cret := xRegexSplitFull(x.GoPointer(), StringVar, StringLenVar, StartPositionVar, MatchOptionsVar, MaxTokensVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1504,6 +1536,7 @@ func RegexCheckReplacement(ReplacementVar string, HasReferencesVar *bool) (bool,
 	var cerr *Error
 
 	cret := xRegexCheckReplacement(ReplacementVar, HasReferencesVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1521,6 +1554,7 @@ var xRegexEscapeNul func(string, int) string
 func RegexEscapeNul(StringVar string, LengthVar int) string {
 
 	cret := xRegexEscapeNul(StringVar, LengthVar)
+
 	return cret
 }
 
@@ -1536,6 +1570,7 @@ var xRegexEscapeString func(string, int) string
 func RegexEscapeString(StringVar string, LengthVar int) string {
 
 	cret := xRegexEscapeString(StringVar, LengthVar)
+
 	return cret
 }
 
@@ -1554,6 +1589,7 @@ var xRegexMatchSimple func(string, string, RegexCompileFlags, RegexMatchFlags) b
 func RegexMatchSimple(PatternVar string, StringVar string, CompileOptionsVar RegexCompileFlags, MatchOptionsVar RegexMatchFlags) bool {
 
 	cret := xRegexMatchSimple(PatternVar, StringVar, CompileOptionsVar, MatchOptionsVar)
+
 	return cret
 }
 
@@ -1589,6 +1625,7 @@ var xRegexSplitSimple func(string, string, RegexCompileFlags, RegexMatchFlags) [
 func RegexSplitSimple(PatternVar string, StringVar string, CompileOptionsVar RegexCompileFlags, MatchOptionsVar RegexMatchFlags) []string {
 
 	cret := xRegexSplitSimple(PatternVar, StringVar, CompileOptionsVar, MatchOptionsVar)
+
 	return cret
 }
 

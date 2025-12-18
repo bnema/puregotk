@@ -155,6 +155,7 @@ var xSearchBarGetSearchMode func(uintptr) bool
 func (x *SearchBar) GetSearchMode() bool {
 
 	cret := xSearchBarGetSearchMode(x.GoPointer())
+
 	return cret
 }
 
@@ -164,6 +165,7 @@ var xSearchBarGetShowCloseButton func(uintptr) bool
 func (x *SearchBar) GetShowCloseButton() bool {
 
 	cret := xSearchBarGetShowCloseButton(x.GoPointer())
+
 	return cret
 }
 
@@ -298,6 +300,7 @@ func (x *SearchBar) GetAccessibleParent() *AccessibleBase {
 func (x *SearchBar) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -323,6 +326,7 @@ func (x *SearchBar) GetAtContext() *ATContext {
 func (x *SearchBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -362,6 +366,7 @@ func (x *SearchBar) GetNextAccessibleSibling() *AccessibleBase {
 func (x *SearchBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -538,6 +543,7 @@ func (x *SearchBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 func (x *SearchBar) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

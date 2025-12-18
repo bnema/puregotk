@@ -95,6 +95,7 @@ var xDeviceGetActiveLayoutIndex func(uintptr) int
 func (x *Device) GetActiveLayoutIndex() int {
 
 	cret := xDeviceGetActiveLayoutIndex(x.GoPointer())
+
 	return cret
 }
 
@@ -106,6 +107,7 @@ var xDeviceGetCapsLockState func(uintptr) bool
 func (x *Device) GetCapsLockState() bool {
 
 	cret := xDeviceGetCapsLockState(x.GoPointer())
+
 	return cret
 }
 
@@ -137,6 +139,7 @@ var xDeviceGetDirection func(uintptr) pango.Direction
 func (x *Device) GetDirection() pango.Direction {
 
 	cret := xDeviceGetDirection(x.GoPointer())
+
 	return cret
 }
 
@@ -166,6 +169,7 @@ var xDeviceGetHasCursor func(uintptr) bool
 func (x *Device) GetHasCursor() bool {
 
 	cret := xDeviceGetHasCursor(x.GoPointer())
+
 	return cret
 }
 
@@ -177,6 +181,7 @@ var xDeviceGetLayoutNames func(uintptr) []string
 func (x *Device) GetLayoutNames() []string {
 
 	cret := xDeviceGetLayoutNames(x.GoPointer())
+
 	return cret
 }
 
@@ -188,6 +193,7 @@ var xDeviceGetModifierState func(uintptr) ModifierType
 func (x *Device) GetModifierState() ModifierType {
 
 	cret := xDeviceGetModifierState(x.GoPointer())
+
 	return cret
 }
 
@@ -197,6 +203,7 @@ var xDeviceGetName func(uintptr) string
 func (x *Device) GetName() string {
 
 	cret := xDeviceGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -208,6 +215,7 @@ var xDeviceGetNumLockState func(uintptr) bool
 func (x *Device) GetNumLockState() bool {
 
 	cret := xDeviceGetNumLockState(x.GoPointer())
+
 	return cret
 }
 
@@ -217,6 +225,7 @@ var xDeviceGetNumTouches func(uintptr) uint
 func (x *Device) GetNumTouches() uint {
 
 	cret := xDeviceGetNumTouches(x.GoPointer())
+
 	return cret
 }
 
@@ -229,6 +238,7 @@ var xDeviceGetProductId func(uintptr) string
 func (x *Device) GetProductId() string {
 
 	cret := xDeviceGetProductId(x.GoPointer())
+
 	return cret
 }
 
@@ -240,6 +250,7 @@ var xDeviceGetScrollLockState func(uintptr) bool
 func (x *Device) GetScrollLockState() bool {
 
 	cret := xDeviceGetScrollLockState(x.GoPointer())
+
 	return cret
 }
 
@@ -266,6 +277,7 @@ var xDeviceGetSource func(uintptr) InputSource
 func (x *Device) GetSource() InputSource {
 
 	cret := xDeviceGetSource(x.GoPointer())
+
 	return cret
 }
 
@@ -301,6 +313,7 @@ var xDeviceGetTimestamp func(uintptr) uint32
 func (x *Device) GetTimestamp() uint32 {
 
 	cret := xDeviceGetTimestamp(x.GoPointer())
+
 	return cret
 }
 
@@ -338,6 +351,7 @@ var xDeviceGetVendorId func(uintptr) string
 func (x *Device) GetVendorId() string {
 
 	cret := xDeviceGetVendorId(x.GoPointer())
+
 	return cret
 }
 
@@ -350,6 +364,7 @@ var xDeviceHasBidiLayouts func(uintptr) bool
 func (x *Device) HasBidiLayouts() bool {
 
 	cret := xDeviceHasBidiLayouts(x.GoPointer())
+
 	return cret
 }
 

@@ -85,6 +85,7 @@ var xCompletionComplete func(uintptr, string, string) *List
 func (x *Completion) Complete(PrefixVar string, NewPrefixVar string) *List {
 
 	cret := xCompletionComplete(x.GoPointer(), PrefixVar, NewPrefixVar)
+
 	return cret
 }
 
@@ -100,6 +101,7 @@ var xCompletionCompleteUtf8 func(uintptr, string, string) *List
 func (x *Completion) CompleteUtf8(PrefixVar string, NewPrefixVar string) *List {
 
 	cret := xCompletionCompleteUtf8(x.GoPointer(), PrefixVar, NewPrefixVar)
+
 	return cret
 }
 

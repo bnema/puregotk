@@ -125,6 +125,7 @@ var xEasingEase func(Easing, float64) float64
 func EasingEase(SelfVar Easing, ValueVar float64) float64 {
 
 	cret := xEasingEase(SelfVar, ValueVar)
+
 	return cret
 }
 

@@ -123,6 +123,7 @@ func (x *VolumeButton) GetAccessibleParent() *AccessibleBase {
 func (x *VolumeButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -148,6 +149,7 @@ func (x *VolumeButton) GetAtContext() *ATContext {
 func (x *VolumeButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -187,6 +189,7 @@ func (x *VolumeButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *VolumeButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -363,6 +366,7 @@ func (x *VolumeButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSt
 func (x *VolumeButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -370,6 +374,7 @@ func (x *VolumeButton) GetBuildableId() string {
 func (x *VolumeButton) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

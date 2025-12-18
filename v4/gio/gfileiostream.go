@@ -442,6 +442,7 @@ var xFileIOStreamGetEtag func(uintptr) string
 func (x *FileIOStream) GetEtag() string {
 
 	cret := xFileIOStreamGetEtag(x.GoPointer())
+
 	return cret
 }
 
@@ -548,6 +549,7 @@ func (c *FileIOStream) SetGoPointer(ptr uintptr) {
 func (x *FileIOStream) CanSeek() bool {
 
 	cret := XGSeekableCanSeek(x.GoPointer())
+
 	return cret
 }
 
@@ -556,6 +558,7 @@ func (x *FileIOStream) CanSeek() bool {
 func (x *FileIOStream) CanTruncate() bool {
 
 	cret := XGSeekableCanTruncate(x.GoPointer())
+
 	return cret
 }
 
@@ -577,6 +580,7 @@ func (x *FileIOStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableV
 	var cerr *glib.Error
 
 	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -588,6 +592,7 @@ func (x *FileIOStream) Seek(OffsetVar int64, TypeVar glib.SeekType, CancellableV
 func (x *FileIOStream) Tell() int64 {
 
 	cret := XGSeekableTell(x.GoPointer())
+
 	return cret
 }
 
@@ -604,6 +609,7 @@ func (x *FileIOStream) Truncate(OffsetVar int64, CancellableVar *Cancellable) (b
 	var cerr *glib.Error
 
 	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

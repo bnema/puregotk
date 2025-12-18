@@ -2,6 +2,8 @@
 package pango
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -41,6 +43,7 @@ var xIsZeroWidth func(uint32) bool
 func IsZeroWidth(ChVar uint32) bool {
 
 	cret := xIsZeroWidth(ChVar)
+
 	return cret
 }
 
@@ -56,6 +59,7 @@ var xLog2visGetEmbeddingLevels func(string, int, *Direction) uintptr
 func Log2visGetEmbeddingLevels(TextVar string, LengthVar int, PbaseDirVar *Direction) uintptr {
 
 	cret := xLog2visGetEmbeddingLevels(TextVar, LengthVar, PbaseDirVar)
+
 	return cret
 }
 
@@ -73,7 +77,12 @@ var xParseEnum func(types.GType, uintptr, *int, bool, *string) bool
 // be freed using g_free().
 func ParseEnum(TypeVar types.GType, StrVar *string, ValueVar *int, WarnVar bool, PossibleValuesVar *string) bool {
 
-	cret := xParseEnum(TypeVar, core.NullableStringToPtr(StrVar), ValueVar, WarnVar, PossibleValuesVar)
+	StrVarPtr, StrVarBytes := core.NullableStringToPtr(StrVar)
+
+	cret := xParseEnum(TypeVar, StrVarPtr, ValueVar, WarnVar, PossibleValuesVar)
+
+	runtime.KeepAlive(StrVarBytes)
+
 	return cret
 }
 
@@ -89,6 +98,7 @@ var xParseStretch func(string, *Stretch, bool) bool
 func ParseStretch(StrVar string, StretchVar *Stretch, WarnVar bool) bool {
 
 	cret := xParseStretch(StrVar, StretchVar, WarnVar)
+
 	return cret
 }
 
@@ -102,6 +112,7 @@ var xParseStyle func(string, *Style, bool) bool
 func ParseStyle(StrVar string, StyleVar *Style, WarnVar bool) bool {
 
 	cret := xParseStyle(StrVar, StyleVar, WarnVar)
+
 	return cret
 }
 
@@ -115,6 +126,7 @@ var xParseVariant func(string, *Variant, bool) bool
 func ParseVariant(StrVar string, VariantVar *Variant, WarnVar bool) bool {
 
 	cret := xParseVariant(StrVar, VariantVar, WarnVar)
+
 	return cret
 }
 
@@ -128,6 +140,7 @@ var xParseWeight func(string, *Weight, bool) bool
 func ParseWeight(StrVar string, WeightVar *Weight, WarnVar bool) bool {
 
 	cret := xParseWeight(StrVar, WeightVar, WarnVar)
+
 	return cret
 }
 
@@ -160,6 +173,7 @@ var xReadLine func(uintptr, *glib.String) int
 func ReadLine(StreamVar uintptr, StrVar *glib.String) int {
 
 	cret := xReadLine(StreamVar, StrVar)
+
 	return cret
 }
 
@@ -171,6 +185,7 @@ var xScanInt func(string, *int) bool
 func ScanInt(PosVar string, OutVar *int) bool {
 
 	cret := xScanInt(PosVar, OutVar)
+
 	return cret
 }
 
@@ -184,6 +199,7 @@ var xScanString func(string, *glib.String) bool
 func ScanString(PosVar string, OutVar *glib.String) bool {
 
 	cret := xScanString(PosVar, OutVar)
+
 	return cret
 }
 
@@ -196,6 +212,7 @@ var xScanWord func(string, *glib.String) bool
 func ScanWord(PosVar string, OutVar *glib.String) bool {
 
 	cret := xScanWord(PosVar, OutVar)
+
 	return cret
 }
 
@@ -205,6 +222,7 @@ var xSkipSpace func(string) bool
 func SkipSpace(PosVar string) bool {
 
 	cret := xSkipSpace(PosVar)
+
 	return cret
 }
 
@@ -215,6 +233,7 @@ var xSplitFileList func(string) []string
 func SplitFileList(StrVar string) []string {
 
 	cret := xSplitFileList(StrVar)
+
 	return cret
 }
 
@@ -224,6 +243,7 @@ var xTrimString func(string) string
 func TrimString(StrVar string) string {
 
 	cret := xTrimString(StrVar)
+
 	return cret
 }
 
@@ -237,6 +257,7 @@ var xVersion func() int
 func Version() int {
 
 	cret := xVersion()
+
 	return cret
 }
 
@@ -262,6 +283,7 @@ var xVersionCheck func(int, int, int) string
 func VersionCheck(RequiredMajorVar int, RequiredMinorVar int, RequiredMicroVar int) string {
 
 	cret := xVersionCheck(RequiredMajorVar, RequiredMinorVar, RequiredMicroVar)
+
 	return cret
 }
 
@@ -274,6 +296,7 @@ var xVersionString func() string
 func VersionString() string {
 
 	cret := xVersionString()
+
 	return cret
 }
 

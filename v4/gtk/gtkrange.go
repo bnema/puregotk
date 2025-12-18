@@ -203,6 +203,7 @@ var xRangeGetFillLevel func(uintptr) float64
 func (x *Range) GetFillLevel() float64 {
 
 	cret := xRangeGetFillLevel(x.GoPointer())
+
 	return cret
 }
 
@@ -214,6 +215,7 @@ var xRangeGetFlippable func(uintptr) bool
 func (x *Range) GetFlippable() bool {
 
 	cret := xRangeGetFlippable(x.GoPointer())
+
 	return cret
 }
 
@@ -225,6 +227,7 @@ var xRangeGetInverted func(uintptr) bool
 func (x *Range) GetInverted() bool {
 
 	cret := xRangeGetInverted(x.GoPointer())
+
 	return cret
 }
 
@@ -246,6 +249,7 @@ var xRangeGetRestrictToFillLevel func(uintptr) bool
 func (x *Range) GetRestrictToFillLevel() bool {
 
 	cret := xRangeGetRestrictToFillLevel(x.GoPointer())
+
 	return cret
 }
 
@@ -258,6 +262,7 @@ var xRangeGetRoundDigits func(uintptr) int
 func (x *Range) GetRoundDigits() int {
 
 	cret := xRangeGetRoundDigits(x.GoPointer())
+
 	return cret
 }
 
@@ -267,6 +272,7 @@ var xRangeGetShowFillLevel func(uintptr) bool
 func (x *Range) GetShowFillLevel() bool {
 
 	cret := xRangeGetShowFillLevel(x.GoPointer())
+
 	return cret
 }
 
@@ -290,6 +296,7 @@ var xRangeGetSliderSizeFixed func(uintptr) bool
 func (x *Range) GetSliderSizeFixed() bool {
 
 	cret := xRangeGetSliderSizeFixed(x.GoPointer())
+
 	return cret
 }
 
@@ -299,6 +306,7 @@ var xRangeGetValue func(uintptr) float64
 func (x *Range) GetValue() float64 {
 
 	cret := xRangeGetValue(x.GoPointer())
+
 	return cret
 }
 
@@ -694,6 +702,7 @@ func (x *Range) GetAccessibleParent() *AccessibleBase {
 func (x *Range) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -719,6 +728,7 @@ func (x *Range) GetAtContext() *ATContext {
 func (x *Range) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -758,6 +768,7 @@ func (x *Range) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Range) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -934,6 +945,7 @@ func (x *Range) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 func (x *Range) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -941,6 +953,7 @@ func (x *Range) GetBuildableId() string {
 func (x *Range) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

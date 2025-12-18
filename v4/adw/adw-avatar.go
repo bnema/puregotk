@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -74,7 +75,11 @@ var xNewAvatar func(int, uintptr, bool) uintptr
 func NewAvatar(SizeVar int, TextVar *string, ShowInitialsVar bool) *Avatar {
 	var cls *Avatar
 
-	cret := xNewAvatar(SizeVar, core.NullableStringToPtr(TextVar), ShowInitialsVar)
+	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+
+	cret := xNewAvatar(SizeVar, TextVarPtr, ShowInitialsVar)
+
+	runtime.KeepAlive(TextVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -126,6 +131,7 @@ var xAvatarGetIconName func(uintptr) string
 func (x *Avatar) GetIconName() string {
 
 	cret := xAvatarGetIconName(x.GoPointer())
+
 	return cret
 }
 
@@ -135,6 +141,7 @@ var xAvatarGetShowInitials func(uintptr) bool
 func (x *Avatar) GetShowInitials() bool {
 
 	cret := xAvatarGetShowInitials(x.GoPointer())
+
 	return cret
 }
 
@@ -144,6 +151,7 @@ var xAvatarGetSize func(uintptr) int
 func (x *Avatar) GetSize() int {
 
 	cret := xAvatarGetSize(x.GoPointer())
+
 	return cret
 }
 
@@ -153,6 +161,7 @@ var xAvatarGetText func(uintptr) string
 func (x *Avatar) GetText() string {
 
 	cret := xAvatarGetText(x.GoPointer())
+
 	return cret
 }
 
@@ -174,7 +183,11 @@ var xAvatarSetIconName func(uintptr, uintptr)
 // If no name is set, `avatar-default-symbolic` will be used.
 func (x *Avatar) SetIconName(IconNameVar *string) {
 
-	xAvatarSetIconName(x.GoPointer(), core.NullableStringToPtr(IconNameVar))
+	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+
+	xAvatarSetIconName(x.GoPointer(), IconNameVarPtr)
+
+	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -206,7 +219,11 @@ var xAvatarSetText func(uintptr, uintptr)
 // `FALSE`.
 func (x *Avatar) SetText(TextVar *string) {
 
-	xAvatarSetText(x.GoPointer(), core.NullableStringToPtr(TextVar))
+	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+
+	xAvatarSetText(x.GoPointer(), TextVarPtr)
+
+	runtime.KeepAlive(TextVarBytes)
 
 }
 
@@ -338,6 +355,7 @@ func (x *Avatar) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *Avatar) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -363,6 +381,7 @@ func (x *Avatar) GetAtContext() *gtk.ATContext {
 func (x *Avatar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -402,6 +421,7 @@ func (x *Avatar) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *Avatar) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -578,6 +598,7 @@ func (x *Avatar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleStat
 func (x *Avatar) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

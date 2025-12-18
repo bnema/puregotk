@@ -182,6 +182,7 @@ var xDrawingAreaGetContentHeight func(uintptr) int
 func (x *DrawingArea) GetContentHeight() int {
 
 	cret := xDrawingAreaGetContentHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -191,6 +192,7 @@ var xDrawingAreaGetContentWidth func(uintptr) int
 func (x *DrawingArea) GetContentWidth() int {
 
 	cret := xDrawingAreaGetContentWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -382,6 +384,7 @@ func (x *DrawingArea) GetAccessibleParent() *AccessibleBase {
 func (x *DrawingArea) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -407,6 +410,7 @@ func (x *DrawingArea) GetAtContext() *ATContext {
 func (x *DrawingArea) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -446,6 +450,7 @@ func (x *DrawingArea) GetNextAccessibleSibling() *AccessibleBase {
 func (x *DrawingArea) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -622,6 +627,7 @@ func (x *DrawingArea) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 func (x *DrawingArea) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

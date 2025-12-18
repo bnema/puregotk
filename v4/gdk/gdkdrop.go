@@ -73,6 +73,7 @@ var xDropGetActions func(uintptr) DragAction
 func (x *Drop) GetActions() DragAction {
 
 	cret := xDropGetActions(x.GoPointer())
+
 	return cret
 }
 
@@ -137,6 +138,7 @@ var xDropGetFormats func(uintptr) *ContentFormats
 func (x *Drop) GetFormats() *ContentFormats {
 
 	cret := xDropGetFormats(x.GoPointer())
+
 	return cret
 }
 
@@ -248,6 +250,7 @@ func (x *Drop) ReadValueFinish(ResultVar gio.AsyncResult) (*gobject.Value, error
 	var cerr *glib.Error
 
 	cret := xDropReadValueFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

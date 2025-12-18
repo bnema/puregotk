@@ -100,6 +100,7 @@ var xCredentialsGetNative func(uintptr, CredentialsType) uintptr
 func (x *Credentials) GetNative(NativeTypeVar CredentialsType) uintptr {
 
 	cret := xCredentialsGetNative(x.GoPointer(), NativeTypeVar)
+
 	return cret
 }
 
@@ -115,6 +116,7 @@ func (x *Credentials) GetUnixPid() (int, error) {
 	var cerr *glib.Error
 
 	cret := xCredentialsGetUnixPid(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -134,6 +136,7 @@ func (x *Credentials) GetUnixUser() (uint, error) {
 	var cerr *glib.Error
 
 	cret := xCredentialsGetUnixUser(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -151,6 +154,7 @@ func (x *Credentials) IsSameUser(OtherCredentialsVar *Credentials) (bool, error)
 	var cerr *glib.Error
 
 	cret := xCredentialsIsSameUser(x.GoPointer(), OtherCredentialsVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -185,6 +189,7 @@ func (x *Credentials) SetUnixUser(UidVar uint) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xCredentialsSetUnixUser(x.GoPointer(), UidVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -200,6 +205,7 @@ var xCredentialsToString func(uintptr) string
 func (x *Credentials) ToString() string {
 
 	cret := xCredentialsToString(x.GoPointer())
+
 	return cret
 }
 

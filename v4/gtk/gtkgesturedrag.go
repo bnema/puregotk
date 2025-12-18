@@ -71,6 +71,7 @@ var xGestureDragGetOffset func(uintptr, *float64, *float64) bool
 func (x *GestureDrag) GetOffset(XVar *float64, YVar *float64) bool {
 
 	cret := xGestureDragGetOffset(x.GoPointer(), XVar, YVar)
+
 	return cret
 }
 
@@ -84,6 +85,7 @@ var xGestureDragGetStartPoint func(uintptr, *float64, *float64) bool
 func (x *GestureDrag) GetStartPoint(XVar *float64, YVar *float64) bool {
 
 	cret := xGestureDragGetStartPoint(x.GoPointer(), XVar, YVar)
+
 	return cret
 }
 

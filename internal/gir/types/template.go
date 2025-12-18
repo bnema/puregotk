@@ -38,6 +38,14 @@ type CallbackParam struct {
 	Nullable bool
 }
 
+// NullableStringParam holds metadata for nullable string parameters that need
+// runtime.KeepAlive to prevent GC from collecting the backing memory before
+// the C function returns.
+type NullableStringParam struct {
+	// Name is the parameter name (e.g., "DataDirectoryVar")
+	Name string
+}
+
 type funcArgsTemplate struct {
 	// Pure are the arguments as passed directly to PureGo
 	// The pure Call is a special case that contains the arguments for a callback call
@@ -48,6 +56,9 @@ type funcArgsTemplate struct {
 
 	// Callbacks tracks callback parameters for proper closure generation
 	Callbacks []CallbackParam
+
+	// NullableStrings tracks nullable string parameters that need runtime.KeepAlive
+	NullableStrings []NullableStringParam
 
 	// UsesNullableHelper indicates nullable string handling that needs core import.
 	UsesNullableHelper bool
@@ -153,11 +164,14 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 	} else {
 		// Nullable strings differ based on direction. For Go->C we need a *string API type
 		// and pass a pointer (or nil) to C. For C->Go we keep the string as-is.
+		// We track these parameters for runtime.KeepAlive to prevent GC issues.
 		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
 			f.UsesNullableHelper = true
 			t = "*string"
-			c = fmt.Sprintf("core.NullableStringToPtr(%s)", n)
+			c = fmt.Sprintf("%sPtr", n)
 			cRef = c
+			// Track this parameter for keepalive generation
+			f.NullableStrings = append(f.NullableStrings, NullableStringParam{Name: n})
 		}
 
 		switch k {
@@ -227,7 +241,8 @@ func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool, nulla
 		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
 			f.UsesNullableHelper = true
 			t = "uintptr"
-			c = fmt.Sprintf("core.NullableStringToPtr(%s)", strings.TrimSuffix(n, "p"))
+			// Use the pointer variable that will be set up by the template
+			c = fmt.Sprintf("%sPtr", strings.TrimSuffix(n, "p"))
 		}
 
 		switch k {

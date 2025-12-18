@@ -180,6 +180,7 @@ var xListViewGetEnableRubberband func(uintptr) bool
 func (x *ListView) GetEnableRubberband() bool {
 
 	cret := xListViewGetEnableRubberband(x.GoPointer())
+
 	return cret
 }
 
@@ -241,6 +242,7 @@ var xListViewGetShowSeparators func(uintptr) bool
 func (x *ListView) GetShowSeparators() bool {
 
 	cret := xListViewGetShowSeparators(x.GoPointer())
+
 	return cret
 }
 
@@ -251,6 +253,7 @@ var xListViewGetSingleClickActivate func(uintptr) bool
 func (x *ListView) GetSingleClickActivate() bool {
 
 	cret := xListViewGetSingleClickActivate(x.GoPointer())
+
 	return cret
 }
 
@@ -260,6 +263,7 @@ var xListViewGetTabBehavior func(uintptr) ListTabBehavior
 func (x *ListView) GetTabBehavior() ListTabBehavior {
 
 	cret := xListViewGetTabBehavior(x.GoPointer())
+
 	return cret
 }
 
@@ -475,6 +479,7 @@ func (x *ListView) GetAccessibleParent() *AccessibleBase {
 func (x *ListView) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -500,6 +505,7 @@ func (x *ListView) GetAtContext() *ATContext {
 func (x *ListView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -539,6 +545,7 @@ func (x *ListView) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ListView) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -715,6 +722,7 @@ func (x *ListView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *ListView) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -722,6 +730,7 @@ func (x *ListView) GetBuildableId() string {
 func (x *ListView) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 
@@ -741,6 +750,7 @@ func (x *ListView) SetOrientation(OrientationVar Orientation) {
 func (x *ListView) GetBorder(BorderVar *Border) bool {
 
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
+
 	return cret
 }
 
@@ -763,6 +773,7 @@ func (x *ListView) GetHadjustment() *Adjustment {
 func (x *ListView) GetHscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
+
 	return cret
 }
 
@@ -785,6 +796,7 @@ func (x *ListView) GetVadjustment() *Adjustment {
 func (x *ListView) GetVscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
+
 	return cret
 }
 

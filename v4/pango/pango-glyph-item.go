@@ -63,6 +63,7 @@ var xGlyphItemApplyAttrs func(uintptr, string, *AttrList) *glib.SList
 func (x *GlyphItem) ApplyAttrs(TextVar string, ListVar *AttrList) *glib.SList {
 
 	cret := xGlyphItemApplyAttrs(x.GoPointer(), TextVar, ListVar)
+
 	return cret
 }
 
@@ -72,6 +73,7 @@ var xGlyphItemCopy func(uintptr) *GlyphItem
 func (x *GlyphItem) Copy() *GlyphItem {
 
 	cret := xGlyphItemCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -125,6 +127,7 @@ var xGlyphItemSplit func(uintptr, string, int) *GlyphItem
 func (x *GlyphItem) Split(TextVar string, SplitIndexVar int) *GlyphItem {
 
 	cret := xGlyphItemSplit(x.GoPointer(), TextVar, SplitIndexVar)
+
 	return cret
 }
 
@@ -207,6 +210,7 @@ var xGlyphItemIterCopy func(uintptr) *GlyphItemIter
 func (x *GlyphItemIter) Copy() *GlyphItemIter {
 
 	cret := xGlyphItemIterCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -228,6 +232,7 @@ var xGlyphItemIterInitEnd func(uintptr, *GlyphItem, string) bool
 func (x *GlyphItemIter) InitEnd(GlyphItemVar *GlyphItem, TextVar string) bool {
 
 	cret := xGlyphItemIterInitEnd(x.GoPointer(), GlyphItemVar, TextVar)
+
 	return cret
 }
 
@@ -240,6 +245,7 @@ var xGlyphItemIterInitStart func(uintptr, *GlyphItem, string) bool
 func (x *GlyphItemIter) InitStart(GlyphItemVar *GlyphItem, TextVar string) bool {
 
 	cret := xGlyphItemIterInitStart(x.GoPointer(), GlyphItemVar, TextVar)
+
 	return cret
 }
 
@@ -251,6 +257,7 @@ var xGlyphItemIterNextCluster func(uintptr) bool
 func (x *GlyphItemIter) NextCluster() bool {
 
 	cret := xGlyphItemIterNextCluster(x.GoPointer())
+
 	return cret
 }
 
@@ -261,6 +268,7 @@ var xGlyphItemIterPrevCluster func(uintptr) bool
 func (x *GlyphItemIter) PrevCluster() bool {
 
 	cret := xGlyphItemIterPrevCluster(x.GoPointer())
+
 	return cret
 }
 

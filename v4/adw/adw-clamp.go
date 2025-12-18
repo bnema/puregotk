@@ -109,6 +109,7 @@ var xClampGetMaximumSize func(uintptr) int
 func (x *Clamp) GetMaximumSize() int {
 
 	cret := xClampGetMaximumSize(x.GoPointer())
+
 	return cret
 }
 
@@ -118,6 +119,7 @@ var xClampGetTighteningThreshold func(uintptr) int
 func (x *Clamp) GetTighteningThreshold() int {
 
 	cret := xClampGetTighteningThreshold(x.GoPointer())
+
 	return cret
 }
 
@@ -127,6 +129,7 @@ var xClampGetUnit func(uintptr) LengthUnit
 func (x *Clamp) GetUnit() LengthUnit {
 
 	cret := xClampGetUnit(x.GoPointer())
+
 	return cret
 }
 
@@ -293,6 +296,7 @@ func (x *Clamp) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *Clamp) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -318,6 +322,7 @@ func (x *Clamp) GetAtContext() *gtk.ATContext {
 func (x *Clamp) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -357,6 +362,7 @@ func (x *Clamp) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *Clamp) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -533,6 +539,7 @@ func (x *Clamp) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleState
 func (x *Clamp) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -540,6 +547,7 @@ func (x *Clamp) GetBuildableId() string {
 func (x *Clamp) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

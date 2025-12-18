@@ -44,6 +44,7 @@ var xQuaternionAlloc func() *Quaternion
 func QuaternionAlloc() *Quaternion {
 
 	cret := xQuaternionAlloc()
+
 	return cret
 }
 
@@ -62,6 +63,7 @@ var xQuaternionDot func(uintptr, *Quaternion) float32
 func (x *Quaternion) Dot(BVar *Quaternion) float32 {
 
 	cret := xQuaternionDot(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -71,6 +73,7 @@ var xQuaternionEqual func(uintptr, *Quaternion) bool
 func (x *Quaternion) Equal(BVar *Quaternion) bool {
 
 	cret := xQuaternionEqual(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -89,6 +92,7 @@ var xQuaternionInit func(uintptr, float32, float32, float32, float32) *Quaternio
 func (x *Quaternion) Init(XVar float32, YVar float32, ZVar float32, WVar float32) *Quaternion {
 
 	cret := xQuaternionInit(x.GoPointer(), XVar, YVar, ZVar, WVar)
+
 	return cret
 }
 
@@ -99,6 +103,7 @@ var xQuaternionInitFromAngleVec3 func(uintptr, float32, *Vec3) *Quaternion
 func (x *Quaternion) InitFromAngleVec3(AngleVar float32, AxisVar *Vec3) *Quaternion {
 
 	cret := xQuaternionInitFromAngleVec3(x.GoPointer(), AngleVar, AxisVar)
+
 	return cret
 }
 
@@ -112,6 +117,7 @@ var xQuaternionInitFromAngles func(uintptr, float32, float32, float32) *Quaterni
 func (x *Quaternion) InitFromAngles(DegXVar float32, DegYVar float32, DegZVar float32) *Quaternion {
 
 	cret := xQuaternionInitFromAngles(x.GoPointer(), DegXVar, DegYVar, DegZVar)
+
 	return cret
 }
 
@@ -121,6 +127,7 @@ var xQuaternionInitFromEuler func(uintptr, *Euler) *Quaternion
 func (x *Quaternion) InitFromEuler(EVar *Euler) *Quaternion {
 
 	cret := xQuaternionInitFromEuler(x.GoPointer(), EVar)
+
 	return cret
 }
 
@@ -131,6 +138,7 @@ var xQuaternionInitFromMatrix func(uintptr, *Matrix) *Quaternion
 func (x *Quaternion) InitFromMatrix(MVar *Matrix) *Quaternion {
 
 	cret := xQuaternionInitFromMatrix(x.GoPointer(), MVar)
+
 	return cret
 }
 
@@ -140,6 +148,7 @@ var xQuaternionInitFromQuaternion func(uintptr, *Quaternion) *Quaternion
 func (x *Quaternion) InitFromQuaternion(SrcVar *Quaternion) *Quaternion {
 
 	cret := xQuaternionInitFromQuaternion(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -153,6 +162,7 @@ var xQuaternionInitFromRadians func(uintptr, float32, float32, float32) *Quatern
 func (x *Quaternion) InitFromRadians(RadXVar float32, RadYVar float32, RadZVar float32) *Quaternion {
 
 	cret := xQuaternionInitFromRadians(x.GoPointer(), RadXVar, RadYVar, RadZVar)
+
 	return cret
 }
 
@@ -162,6 +172,7 @@ var xQuaternionInitFromVec4 func(uintptr, *Vec4) *Quaternion
 func (x *Quaternion) InitFromVec4(SrcVar *Vec4) *Quaternion {
 
 	cret := xQuaternionInitFromVec4(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -172,6 +183,7 @@ var xQuaternionInitIdentity func(uintptr) *Quaternion
 func (x *Quaternion) InitIdentity() *Quaternion {
 
 	cret := xQuaternionInitIdentity(x.GoPointer())
+
 	return cret
 }
 

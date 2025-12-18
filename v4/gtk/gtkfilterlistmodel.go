@@ -90,6 +90,7 @@ var xFilterListModelGetIncremental func(uintptr) bool
 func (x *FilterListModel) GetIncremental() bool {
 
 	cret := xFilterListModelGetIncremental(x.GoPointer())
+
 	return cret
 }
 
@@ -131,6 +132,7 @@ var xFilterListModelGetPending func(uintptr) uint
 func (x *FilterListModel) GetPending() uint {
 
 	cret := xFilterListModelGetPending(x.GoPointer())
+
 	return cret
 }
 
@@ -142,6 +144,7 @@ var xFilterListModelGetWatchItems func(uintptr) bool
 func (x *FilterListModel) GetWatchItems() bool {
 
 	cret := xFilterListModelGetWatchItems(x.GoPointer())
+
 	return cret
 }
 
@@ -280,6 +283,7 @@ func (x *FilterListModel) GetPropertyWatchItems() bool {
 func (x *FilterListModel) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -294,6 +298,7 @@ func (x *FilterListModel) GetItem(PositionVar uint) uintptr {
 func (x *FilterListModel) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -305,6 +310,7 @@ func (x *FilterListModel) GetItemType() types.GType {
 func (x *FilterListModel) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 

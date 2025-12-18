@@ -231,6 +231,7 @@ func (x *SimpleActionGroup) ChangeActionState(ActionNameVar string, ValueVar *gl
 func (x *SimpleActionGroup) GetActionEnabled(ActionNameVar string) bool {
 
 	cret := XGActionGroupGetActionEnabled(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -250,6 +251,7 @@ func (x *SimpleActionGroup) GetActionEnabled(ActionNameVar string) bool {
 func (x *SimpleActionGroup) GetActionParameterType(ActionNameVar string) *glib.VariantType {
 
 	cret := XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -264,6 +266,7 @@ func (x *SimpleActionGroup) GetActionParameterType(ActionNameVar string) *glib.V
 func (x *SimpleActionGroup) GetActionState(ActionNameVar string) *glib.Variant {
 
 	cret := XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -288,6 +291,7 @@ func (x *SimpleActionGroup) GetActionState(ActionNameVar string) *glib.Variant {
 func (x *SimpleActionGroup) GetActionStateHint(ActionNameVar string) *glib.Variant {
 
 	cret := XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -310,6 +314,7 @@ func (x *SimpleActionGroup) GetActionStateHint(ActionNameVar string) *glib.Varia
 func (x *SimpleActionGroup) GetActionStateType(ActionNameVar string) *glib.VariantType {
 
 	cret := XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -317,6 +322,7 @@ func (x *SimpleActionGroup) GetActionStateType(ActionNameVar string) *glib.Varia
 func (x *SimpleActionGroup) HasAction(ActionNameVar string) bool {
 
 	cret := XGActionGroupHasAction(x.GoPointer(), ActionNameVar)
+
 	return cret
 }
 
@@ -327,6 +333,7 @@ func (x *SimpleActionGroup) HasAction(ActionNameVar string) bool {
 func (x *SimpleActionGroup) ListActions() []string {
 
 	cret := XGActionGroupListActions(x.GoPointer())
+
 	return cret
 }
 
@@ -360,6 +367,7 @@ func (x *SimpleActionGroup) ListActions() []string {
 func (x *SimpleActionGroup) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
+
 	return cret
 }
 

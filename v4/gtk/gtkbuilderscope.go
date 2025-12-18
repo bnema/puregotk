@@ -327,6 +327,7 @@ var xBuilderCScopeLookupCallbackSymbol func(uintptr, string) uintptr
 func (x *BuilderCScope) LookupCallbackSymbol(CallbackNameVar string) uintptr {
 
 	cret := xBuilderCScopeLookupCallbackSymbol(x.GoPointer(), CallbackNameVar)
+
 	return cret
 }
 

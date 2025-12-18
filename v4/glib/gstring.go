@@ -2,6 +2,7 @@
 package glib
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -45,7 +46,12 @@ var xNewString func(uintptr) *String
 // Creates a new #GString, initialized with the given string.
 func NewString(InitVar *string) *String {
 
-	cret := xNewString(core.NullableStringToPtr(InitVar))
+	InitVarPtr, InitVarBytes := core.NullableStringToPtr(InitVar)
+
+	cret := xNewString(InitVarPtr)
+
+	runtime.KeepAlive(InitVarBytes)
+
 	return cret
 }
 
@@ -61,6 +67,7 @@ var xNewStringLen func(string, int) *String
 func NewStringLen(InitVar string, LenVar int) *String {
 
 	cret := xNewStringLen(InitVar, LenVar)
+
 	return cret
 }
 
@@ -73,7 +80,12 @@ var xNewStringTake func(uintptr) *String
 // allocated and will eventually be freed with g_free().
 func NewStringTake(InitVar *string) *String {
 
-	cret := xNewStringTake(core.NullableStringToPtr(InitVar))
+	InitVarPtr, InitVarBytes := core.NullableStringToPtr(InitVar)
+
+	cret := xNewStringTake(InitVarPtr)
+
+	runtime.KeepAlive(InitVarBytes)
+
 	return cret
 }
 
@@ -86,6 +98,7 @@ var xStringSizedNew func(uint) *String
 func StringSizedNew(DflSizeVar uint) *String {
 
 	cret := xStringSizedNew(DflSizeVar)
+
 	return cret
 }
 
@@ -96,6 +109,7 @@ var xStringAppend func(uintptr, string) *String
 func (x *String) Append(ValVar string) *String {
 
 	cret := xStringAppend(x.GoPointer(), ValVar)
+
 	return cret
 }
 
@@ -106,6 +120,7 @@ var xStringAppendC func(uintptr, byte) *String
 func (x *String) AppendC(CVar byte) *String {
 
 	cret := xStringAppendC(x.GoPointer(), CVar)
+
 	return cret
 }
 
@@ -123,6 +138,7 @@ var xStringAppendLen func(uintptr, string, int) *String
 func (x *String) AppendLen(ValVar string, LenVar int) *String {
 
 	cret := xStringAppendLen(x.GoPointer(), ValVar, LenVar)
+
 	return cret
 }
 
@@ -144,6 +160,7 @@ var xStringAppendUnichar func(uintptr, uint32) *String
 func (x *String) AppendUnichar(WcVar uint32) *String {
 
 	cret := xStringAppendUnichar(x.GoPointer(), WcVar)
+
 	return cret
 }
 
@@ -154,6 +171,7 @@ var xStringAppendUriEscaped func(uintptr, string, string, bool) *String
 func (x *String) AppendUriEscaped(UnescapedVar string, ReservedCharsAllowedVar string, AllowUtf8Var bool) *String {
 
 	cret := xStringAppendUriEscaped(x.GoPointer(), UnescapedVar, ReservedCharsAllowedVar, AllowUtf8Var)
+
 	return cret
 }
 
@@ -175,6 +193,7 @@ var xStringAsciiDown func(uintptr) *String
 func (x *String) AsciiDown() *String {
 
 	cret := xStringAsciiDown(x.GoPointer())
+
 	return cret
 }
 
@@ -184,6 +203,7 @@ var xStringAsciiUp func(uintptr) *String
 func (x *String) AsciiUp() *String {
 
 	cret := xStringAsciiUp(x.GoPointer())
+
 	return cret
 }
 
@@ -196,6 +216,7 @@ var xStringAssign func(uintptr, string) *String
 func (x *String) Assign(RvalVar string) *String {
 
 	cret := xStringAssign(x.GoPointer(), RvalVar)
+
 	return cret
 }
 
@@ -208,6 +229,7 @@ var xStringCopy func(uintptr) *String
 func (x *String) Copy() *String {
 
 	cret := xStringCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -217,6 +239,7 @@ var xStringDown func(uintptr) *String
 func (x *String) Down() *String {
 
 	cret := xStringDown(x.GoPointer())
+
 	return cret
 }
 
@@ -227,6 +250,7 @@ var xStringEqual func(uintptr, *String) bool
 func (x *String) Equal(V2Var *String) bool {
 
 	cret := xStringEqual(x.GoPointer(), V2Var)
+
 	return cret
 }
 
@@ -237,6 +261,7 @@ var xStringErase func(uintptr, int, int) *String
 func (x *String) Erase(PosVar int, LenVar int) *String {
 
 	cret := xStringErase(x.GoPointer(), PosVar, LenVar)
+
 	return cret
 }
 
@@ -252,6 +277,7 @@ var xStringFree func(uintptr, bool) string
 func (x *String) Free(FreeSegmentVar bool) string {
 
 	cret := xStringFree(x.GoPointer(), FreeSegmentVar)
+
 	return cret
 }
 
@@ -264,6 +290,7 @@ var xStringFreeAndSteal func(uintptr) string
 func (x *String) FreeAndSteal() string {
 
 	cret := xStringFreeAndSteal(x.GoPointer())
+
 	return cret
 }
 
@@ -280,6 +307,7 @@ var xStringFreeToBytes func(uintptr) *Bytes
 func (x *String) FreeToBytes() *Bytes {
 
 	cret := xStringFreeToBytes(x.GoPointer())
+
 	return cret
 }
 
@@ -289,6 +317,7 @@ var xStringHash func(uintptr) uint
 func (x *String) Hash() uint {
 
 	cret := xStringHash(x.GoPointer())
+
 	return cret
 }
 
@@ -299,6 +328,7 @@ var xStringInsert func(uintptr, int, string) *String
 func (x *String) Insert(PosVar int, ValVar string) *String {
 
 	cret := xStringInsert(x.GoPointer(), PosVar, ValVar)
+
 	return cret
 }
 
@@ -308,6 +338,7 @@ var xStringInsertC func(uintptr, int, byte) *String
 func (x *String) InsertC(PosVar int, CVar byte) *String {
 
 	cret := xStringInsertC(x.GoPointer(), PosVar, CVar)
+
 	return cret
 }
 
@@ -326,6 +357,7 @@ var xStringInsertLen func(uintptr, int, string, int) *String
 func (x *String) InsertLen(PosVar int, ValVar string, LenVar int) *String {
 
 	cret := xStringInsertLen(x.GoPointer(), PosVar, ValVar, LenVar)
+
 	return cret
 }
 
@@ -336,6 +368,7 @@ var xStringInsertUnichar func(uintptr, int, uint32) *String
 func (x *String) InsertUnichar(PosVar int, WcVar uint32) *String {
 
 	cret := xStringInsertUnichar(x.GoPointer(), PosVar, WcVar)
+
 	return cret
 }
 
@@ -345,6 +378,7 @@ var xStringOverwrite func(uintptr, uint, string) *String
 func (x *String) Overwrite(PosVar uint, ValVar string) *String {
 
 	cret := xStringOverwrite(x.GoPointer(), PosVar, ValVar)
+
 	return cret
 }
 
@@ -355,6 +389,7 @@ var xStringOverwriteLen func(uintptr, uint, string, int) *String
 func (x *String) OverwriteLen(PosVar uint, ValVar string, LenVar int) *String {
 
 	cret := xStringOverwriteLen(x.GoPointer(), PosVar, ValVar, LenVar)
+
 	return cret
 }
 
@@ -365,6 +400,7 @@ var xStringPrepend func(uintptr, string) *String
 func (x *String) Prepend(ValVar string) *String {
 
 	cret := xStringPrepend(x.GoPointer(), ValVar)
+
 	return cret
 }
 
@@ -375,6 +411,7 @@ var xStringPrependC func(uintptr, byte) *String
 func (x *String) PrependC(CVar byte) *String {
 
 	cret := xStringPrependC(x.GoPointer(), CVar)
+
 	return cret
 }
 
@@ -392,6 +429,7 @@ var xStringPrependLen func(uintptr, string, int) *String
 func (x *String) PrependLen(ValVar string, LenVar int) *String {
 
 	cret := xStringPrependLen(x.GoPointer(), ValVar, LenVar)
+
 	return cret
 }
 
@@ -402,6 +440,7 @@ var xStringPrependUnichar func(uintptr, uint32) *String
 func (x *String) PrependUnichar(WcVar uint32) *String {
 
 	cret := xStringPrependUnichar(x.GoPointer(), WcVar)
+
 	return cret
 }
 
@@ -432,6 +471,7 @@ var xStringReplace func(uintptr, string, string, uint) uint
 func (x *String) Replace(FindVar string, ReplaceVar string, LimitVar uint) uint {
 
 	cret := xStringReplace(x.GoPointer(), FindVar, ReplaceVar, LimitVar)
+
 	return cret
 }
 
@@ -445,6 +485,7 @@ var xStringSetSize func(uintptr, uint) *String
 func (x *String) SetSize(LenVar uint) *String {
 
 	cret := xStringSetSize(x.GoPointer(), LenVar)
+
 	return cret
 }
 
@@ -454,6 +495,7 @@ var xStringTruncate func(uintptr, uint) *String
 func (x *String) Truncate(LenVar uint) *String {
 
 	cret := xStringTruncate(x.GoPointer(), LenVar)
+
 	return cret
 }
 
@@ -463,6 +505,7 @@ var xStringUp func(uintptr) *String
 func (x *String) Up() *String {
 
 	cret := xStringUp(x.GoPointer())
+
 	return cret
 }
 

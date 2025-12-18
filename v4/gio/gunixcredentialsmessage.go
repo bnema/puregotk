@@ -181,6 +181,7 @@ var xUnixCredentialsMessageIsSupported func() bool
 func UnixCredentialsMessageIsSupported() bool {
 
 	cret := xUnixCredentialsMessageIsSupported()
+
 	return cret
 }
 

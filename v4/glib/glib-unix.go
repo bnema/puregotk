@@ -57,6 +57,7 @@ var xClosefrom func(int) int
 func Closefrom(LowfdVar int) int {
 
 	cret := xClosefrom(LowfdVar)
+
 	return cret
 }
 
@@ -79,6 +80,7 @@ var xFdwalkSetCloexec func(int) int
 func FdwalkSetCloexec(LowfdVar int) int {
 
 	cret := xFdwalkSetCloexec(LowfdVar)
+
 	return cret
 }
 
@@ -115,6 +117,7 @@ func UnixFdAdd(FdVar int, ConditionVar IOCondition, FunctionVar *UnixFDSourceFun
 	}
 
 	cret := xUnixFdAdd(FdVar, ConditionVar, FunctionVarRef, UserDataVar)
+
 	return cret
 }
 
@@ -159,6 +162,7 @@ func UnixFdAddFull(PriorityVar int, FdVar int, ConditionVar IOCondition, Functio
 	}
 
 	cret := xUnixFdAddFull(PriorityVar, FdVar, ConditionVar, FunctionVarRef, UserDataVar, NotifyVarRef)
+
 	return cret
 }
 
@@ -174,6 +178,7 @@ var xUnixFdSourceNew func(int, IOCondition) *Source
 func UnixFdSourceNew(FdVar int, ConditionVar IOCondition) *Source {
 
 	cret := xUnixFdSourceNew(FdVar, ConditionVar)
+
 	return cret
 }
 
@@ -194,6 +199,7 @@ func UnixGetPasswdEntry(UserNameVar string) (uintptr, error) {
 	var cerr *Error
 
 	cret := xUnixGetPasswdEntry(UserNameVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -226,6 +232,7 @@ func UnixOpenPipe(FdsVar [2]int, FlagsVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xUnixOpenPipe(FdsVar, FlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -242,6 +249,7 @@ func UnixSetFdNonblocking(FdVar int, NonblockVar bool) (bool, error) {
 	var cerr *Error
 
 	cret := xUnixSetFdNonblocking(FdVar, NonblockVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -272,6 +280,7 @@ func UnixSignalAdd(SignumVar int, HandlerVar *SourceFunc, UserDataVar uintptr) u
 	}
 
 	cret := xUnixSignalAdd(SignumVar, HandlerVarRef, UserDataVar)
+
 	return cret
 }
 
@@ -313,6 +322,7 @@ func UnixSignalAddFull(PriorityVar int, SignumVar int, HandlerVar *SourceFunc, U
 	}
 
 	cret := xUnixSignalAddFull(PriorityVar, SignumVar, HandlerVarRef, UserDataVar, NotifyVarRef)
+
 	return cret
 }
 
@@ -344,6 +354,7 @@ var xUnixSignalSourceNew func(int) *Source
 func UnixSignalSourceNew(SignumVar int) *Source {
 
 	cret := xUnixSignalSourceNew(SignumVar)
+
 	return cret
 }
 

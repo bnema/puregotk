@@ -166,6 +166,7 @@ var xFilenameCompleterGetCompletionSuffix func(uintptr, string) string
 func (x *FilenameCompleter) GetCompletionSuffix(InitialTextVar string) string {
 
 	cret := xFilenameCompleterGetCompletionSuffix(x.GoPointer(), InitialTextVar)
+
 	return cret
 }
 
@@ -175,6 +176,7 @@ var xFilenameCompleterGetCompletions func(uintptr, string) []string
 func (x *FilenameCompleter) GetCompletions(InitialTextVar string) []string {
 
 	cret := xFilenameCompleterGetCompletions(x.GoPointer(), InitialTextVar)
+
 	return cret
 }
 

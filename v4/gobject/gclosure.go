@@ -139,6 +139,7 @@ var xNewClosureObject func(uint, uintptr) *Closure
 func NewClosureObject(SizeofClosureVar uint, ObjectVar *Object) *Closure {
 
 	cret := xNewClosureObject(SizeofClosureVar, ObjectVar.GoPointer())
+
 	return cret
 }
 
@@ -189,6 +190,7 @@ var xNewClosureSimple func(uint, uintptr) *Closure
 func NewClosureSimple(SizeofClosureVar uint, DataVar uintptr) *Closure {
 
 	cret := xNewClosureSimple(SizeofClosureVar, DataVar)
+
 	return cret
 }
 
@@ -333,6 +335,7 @@ var xClosureRef func(uintptr) *Closure
 func (x *Closure) Ref() *Closure {
 
 	cret := xClosureRef(x.GoPointer())
+
 	return cret
 }
 
@@ -618,6 +621,7 @@ func CclosureNew(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar 
 	}
 
 	cret := xCclosureNew(CallbackFuncVarRef, UserDataVar, DestroyDataVarRef)
+
 	return cret
 }
 
@@ -660,6 +664,7 @@ func CclosureNewSwap(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyData
 	}
 
 	cret := xCclosureNewSwap(CallbackFuncVarRef, UserDataVar, DestroyDataVarRef)
+
 	return cret
 }
 
@@ -671,6 +676,7 @@ var xSignalTypeCclosureNew func(types.GType, uint) *Closure
 func SignalTypeCclosureNew(ItypeVar types.GType, StructOffsetVar uint) *Closure {
 
 	cret := xSignalTypeCclosureNew(ItypeVar, StructOffsetVar)
+
 	return cret
 }
 

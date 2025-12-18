@@ -2,6 +2,7 @@
 package glib
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -149,6 +150,7 @@ var xBitNthLsf func(uint32, int) int
 func BitNthLsf(MaskVar uint32, NthBitVar int) int {
 
 	cret := xBitNthLsf(MaskVar, NthBitVar)
+
 	return cret
 }
 
@@ -162,6 +164,7 @@ var xBitNthMsf func(uint32, int) int
 func BitNthMsf(MaskVar uint32, NthBitVar int) int {
 
 	cret := xBitNthMsf(MaskVar, NthBitVar)
+
 	return cret
 }
 
@@ -172,6 +175,7 @@ var xBitStorage func(uint32) uint
 func BitStorage(NumberVar uint32) uint {
 
 	cret := xBitStorage(NumberVar)
+
 	return cret
 }
 
@@ -197,6 +201,7 @@ var xFindProgramInPath func(string) string
 func FindProgramInPath(ProgramVar string) string {
 
 	cret := xFindProgramInPath(ProgramVar)
+
 	return cret
 }
 
@@ -218,6 +223,7 @@ var xFormatSize func(uint64) string
 func FormatSize(SizeVar uint64) string {
 
 	cret := xFormatSize(SizeVar)
+
 	return cret
 }
 
@@ -235,6 +241,7 @@ var xFormatSizeForDisplay func(int64) string
 func FormatSizeForDisplay(SizeVar int64) string {
 
 	cret := xFormatSizeForDisplay(SizeVar)
+
 	return cret
 }
 
@@ -247,6 +254,7 @@ var xFormatSizeFull func(uint64, FormatSizeFlags) string
 func FormatSizeFull(SizeVar uint64, FlagsVar FormatSizeFlags) string {
 
 	cret := xFormatSizeFull(SizeVar, FlagsVar)
+
 	return cret
 }
 
@@ -262,6 +270,7 @@ var xGetApplicationName func() string
 func GetApplicationName() string {
 
 	cret := xGetApplicationName()
+
 	return cret
 }
 
@@ -290,6 +299,7 @@ var xGetHomeDir func() string
 func GetHomeDir() string {
 
 	cret := xGetHomeDir()
+
 	return cret
 }
 
@@ -312,6 +322,7 @@ var xGetHostName func() string
 func GetHostName() string {
 
 	cret := xGetHostName()
+
 	return cret
 }
 
@@ -328,6 +339,7 @@ var xGetOsInfo func(string) string
 func GetOsInfo(KeyNameVar string) string {
 
 	cret := xGetOsInfo(KeyNameVar)
+
 	return cret
 }
 
@@ -344,6 +356,7 @@ var xGetPrgname func() string
 func GetPrgname() string {
 
 	cret := xGetPrgname()
+
 	return cret
 }
 
@@ -357,6 +370,7 @@ var xGetRealName func() string
 func GetRealName() string {
 
 	cret := xGetRealName()
+
 	return cret
 }
 
@@ -385,6 +399,7 @@ var xGetSystemConfigDirs func() []string
 func GetSystemConfigDirs() []string {
 
 	cret := xGetSystemConfigDirs()
+
 	return cret
 }
 
@@ -427,6 +442,7 @@ var xGetSystemDataDirs func() []string
 func GetSystemDataDirs() []string {
 
 	cret := xGetSystemDataDirs()
+
 	return cret
 }
 
@@ -449,6 +465,7 @@ var xGetTmpDir func() string
 func GetTmpDir() string {
 
 	cret := xGetTmpDir()
+
 	return cret
 }
 
@@ -473,6 +490,7 @@ var xGetUserCacheDir func() string
 func GetUserCacheDir() string {
 
 	cret := xGetUserCacheDir()
+
 	return cret
 }
 
@@ -498,6 +516,7 @@ var xGetUserConfigDir func() string
 func GetUserConfigDir() string {
 
 	cret := xGetUserConfigDir()
+
 	return cret
 }
 
@@ -523,6 +542,7 @@ var xGetUserDataDir func() string
 func GetUserDataDir() string {
 
 	cret := xGetUserDataDir()
+
 	return cret
 }
 
@@ -535,6 +555,7 @@ var xGetUserName func() string
 func GetUserName() string {
 
 	cret := xGetUserName()
+
 	return cret
 }
 
@@ -556,6 +577,7 @@ var xGetUserRuntimeDir func() string
 func GetUserRuntimeDir() string {
 
 	cret := xGetUserRuntimeDir()
+
 	return cret
 }
 
@@ -574,6 +596,7 @@ var xGetUserSpecialDir func(UserDirectory) string
 func GetUserSpecialDir(DirectoryVar UserDirectory) string {
 
 	cret := xGetUserSpecialDir(DirectoryVar)
+
 	return cret
 }
 
@@ -599,6 +622,7 @@ var xGetUserStateDir func() string
 func GetUserStateDir() string {
 
 	cret := xGetUserStateDir()
+
 	return cret
 }
 
@@ -627,7 +651,12 @@ var xParseDebugString func(uintptr, []DebugKey, uint) uint
 // are printed out to standard error.
 func ParseDebugString(StringVar *string, KeysVar []DebugKey, NkeysVar uint) uint {
 
-	cret := xParseDebugString(core.NullableStringToPtr(StringVar), KeysVar, NkeysVar)
+	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+
+	cret := xParseDebugString(StringVarPtr, KeysVar, NkeysVar)
+
+	runtime.KeepAlive(StringVarBytes)
+
 	return cret
 }
 
@@ -711,6 +740,7 @@ var xSnprintf func(string, uint32, string, ...interface{}) int
 func Snprintf(StringVar string, NVar uint32, FormatVar string, varArgs ...interface{}) int {
 
 	cret := xSnprintf(StringVar, NVar, FormatVar, varArgs...)
+
 	return cret
 }
 
@@ -736,6 +766,7 @@ var xVsnprintf func(string, uint32, string, []interface{}) int
 func Vsnprintf(StringVar string, NVar uint32, FormatVar string, ArgsVar []interface{}) int {
 
 	cret := xVsnprintf(StringVar, NVar, FormatVar, ArgsVar)
+
 	return cret
 }
 

@@ -107,6 +107,7 @@ func (x *CicpParams) BuildColorState() (*ColorState, error) {
 	var cerr *glib.Error
 
 	cret := xCicpParamsBuildColorState(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -121,6 +122,7 @@ var xCicpParamsGetColorPrimaries func(uintptr) uint
 func (x *CicpParams) GetColorPrimaries() uint {
 
 	cret := xCicpParamsGetColorPrimaries(x.GoPointer())
+
 	return cret
 }
 
@@ -130,6 +132,7 @@ var xCicpParamsGetMatrixCoefficients func(uintptr) uint
 func (x *CicpParams) GetMatrixCoefficients() uint {
 
 	cret := xCicpParamsGetMatrixCoefficients(x.GoPointer())
+
 	return cret
 }
 
@@ -139,6 +142,7 @@ var xCicpParamsGetRange func(uintptr) CicpRange
 func (x *CicpParams) GetRange() CicpRange {
 
 	cret := xCicpParamsGetRange(x.GoPointer())
+
 	return cret
 }
 
@@ -148,6 +152,7 @@ var xCicpParamsGetTransferFunction func(uintptr) uint
 func (x *CicpParams) GetTransferFunction() uint {
 
 	cret := xCicpParamsGetTransferFunction(x.GoPointer())
+
 	return cret
 }
 

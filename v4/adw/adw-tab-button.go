@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -203,6 +204,7 @@ func (x *TabButton) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *TabButton) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -228,6 +230,7 @@ func (x *TabButton) GetAtContext() *gtk.ATContext {
 func (x *TabButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -267,6 +270,7 @@ func (x *TabButton) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *TabButton) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -440,6 +444,7 @@ func (x *TabButton) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleS
 func (x *TabButton) GetActionName() string {
 
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
+
 	return cret
 }
 
@@ -447,6 +452,7 @@ func (x *TabButton) GetActionName() string {
 func (x *TabButton) GetActionTargetValue() *glib.Variant {
 
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
+
 	return cret
 }
 
@@ -465,7 +471,11 @@ func (x *TabButton) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *TabButton) SetActionName(ActionNameVar *string) {
 
-	gtk.XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
+	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+
+	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
+
+	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -526,6 +536,7 @@ func (x *TabButton) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *TabButton) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

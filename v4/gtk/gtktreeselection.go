@@ -70,6 +70,7 @@ var xTreeSelectionCountSelectedRows func(uintptr) int
 func (x *TreeSelection) CountSelectedRows() int {
 
 	cret := xTreeSelectionCountSelectedRows(x.GoPointer())
+
 	return cret
 }
 
@@ -80,6 +81,7 @@ var xTreeSelectionGetMode func(uintptr) SelectionMode
 func (x *TreeSelection) GetMode() SelectionMode {
 
 	cret := xTreeSelectionGetMode(x.GoPointer())
+
 	return cret
 }
 
@@ -89,6 +91,7 @@ var xTreeSelectionGetSelectFunction func(uintptr) uintptr
 func (x *TreeSelection) GetSelectFunction() uintptr {
 
 	cret := xTreeSelectionGetSelectFunction(x.GoPointer())
+
 	return cret
 }
 
@@ -102,6 +105,7 @@ var xTreeSelectionGetSelected func(uintptr, **TreeModel, *TreeIter) bool
 func (x *TreeSelection) GetSelected(ModelVar **TreeModel, IterVar *TreeIter) bool {
 
 	cret := xTreeSelectionGetSelected(x.GoPointer(), ModelVar, IterVar)
+
 	return cret
 }
 
@@ -120,6 +124,7 @@ var xTreeSelectionGetSelectedRows func(uintptr, **TreeModel) *glib.List
 func (x *TreeSelection) GetSelectedRows(ModelVar **TreeModel) *glib.List {
 
 	cret := xTreeSelectionGetSelectedRows(x.GoPointer(), ModelVar)
+
 	return cret
 }
 
@@ -146,6 +151,7 @@ var xTreeSelectionGetUserData func(uintptr) uintptr
 func (x *TreeSelection) GetUserData() uintptr {
 
 	cret := xTreeSelectionGetUserData(x.GoPointer())
+
 	return cret
 }
 
@@ -155,6 +161,7 @@ var xTreeSelectionIterIsSelected func(uintptr, *TreeIter) bool
 func (x *TreeSelection) IterIsSelected(IterVar *TreeIter) bool {
 
 	cret := xTreeSelectionIterIsSelected(x.GoPointer(), IterVar)
+
 	return cret
 }
 
@@ -165,6 +172,7 @@ var xTreeSelectionPathIsSelected func(uintptr, *TreePath) bool
 func (x *TreeSelection) PathIsSelected(PathVar *TreePath) bool {
 
 	cret := xTreeSelectionPathIsSelected(x.GoPointer(), PathVar)
+
 	return cret
 }
 

@@ -100,6 +100,7 @@ func (c *AnyFilter) SetGoPointer(ptr uintptr) {
 func (x *AnyFilter) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -114,6 +115,7 @@ func (x *AnyFilter) GetItem(PositionVar uint) uintptr {
 func (x *AnyFilter) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -125,6 +127,7 @@ func (x *AnyFilter) GetItemType() types.GType {
 func (x *AnyFilter) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -186,6 +189,7 @@ func (x *AnyFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar uin
 func (x *AnyFilter) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -253,6 +257,7 @@ func (c *EveryFilter) SetGoPointer(ptr uintptr) {
 func (x *EveryFilter) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -267,6 +272,7 @@ func (x *EveryFilter) GetItem(PositionVar uint) uintptr {
 func (x *EveryFilter) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -278,6 +284,7 @@ func (x *EveryFilter) GetItemType() types.GType {
 func (x *EveryFilter) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -339,6 +346,7 @@ func (x *EveryFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar u
 func (x *EveryFilter) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -413,6 +421,7 @@ func (x *MultiFilter) GetPropertyNItems() uint {
 func (x *MultiFilter) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -427,6 +436,7 @@ func (x *MultiFilter) GetItem(PositionVar uint) uintptr {
 func (x *MultiFilter) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -438,6 +448,7 @@ func (x *MultiFilter) GetItemType() types.GType {
 func (x *MultiFilter) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -499,6 +510,7 @@ func (x *MultiFilter) ItemsChanged(PositionVar uint, RemovedVar uint, AddedVar u
 func (x *MultiFilter) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

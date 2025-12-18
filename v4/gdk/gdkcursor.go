@@ -235,6 +235,7 @@ var xCursorGetHotspotX func(uintptr) int
 func (x *Cursor) GetHotspotX() int {
 
 	cret := xCursorGetHotspotX(x.GoPointer())
+
 	return cret
 }
 
@@ -250,6 +251,7 @@ var xCursorGetHotspotY func(uintptr) int
 func (x *Cursor) GetHotspotY() int {
 
 	cret := xCursorGetHotspotY(x.GoPointer())
+
 	return cret
 }
 
@@ -261,6 +263,7 @@ var xCursorGetName func(uintptr) string
 func (x *Cursor) GetName() string {
 
 	cret := xCursorGetName(x.GoPointer())
+
 	return cret
 }
 

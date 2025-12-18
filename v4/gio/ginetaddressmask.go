@@ -102,6 +102,7 @@ var xInetAddressMaskEqual func(uintptr, uintptr) bool
 func (x *InetAddressMask) Equal(Mask2Var *InetAddressMask) bool {
 
 	cret := xInetAddressMaskEqual(x.GoPointer(), Mask2Var.GoPointer())
+
 	return cret
 }
 
@@ -128,6 +129,7 @@ var xInetAddressMaskGetFamily func(uintptr) SocketFamily
 func (x *InetAddressMask) GetFamily() SocketFamily {
 
 	cret := xInetAddressMaskGetFamily(x.GoPointer())
+
 	return cret
 }
 
@@ -137,6 +139,7 @@ var xInetAddressMaskGetLength func(uintptr) uint
 func (x *InetAddressMask) GetLength() uint {
 
 	cret := xInetAddressMaskGetLength(x.GoPointer())
+
 	return cret
 }
 
@@ -146,6 +149,7 @@ var xInetAddressMaskMatches func(uintptr, uintptr) bool
 func (x *InetAddressMask) Matches(AddressVar *InetAddress) bool {
 
 	cret := xInetAddressMaskMatches(x.GoPointer(), AddressVar.GoPointer())
+
 	return cret
 }
 
@@ -155,6 +159,7 @@ var xInetAddressMaskToString func(uintptr) string
 func (x *InetAddressMask) ToString() string {
 
 	cret := xInetAddressMaskToString(x.GoPointer())
+
 	return cret
 }
 
@@ -228,6 +233,7 @@ func (x *InetAddressMask) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

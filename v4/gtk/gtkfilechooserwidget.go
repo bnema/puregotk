@@ -494,6 +494,7 @@ func (x *FileChooserWidget) GetAccessibleParent() *AccessibleBase {
 func (x *FileChooserWidget) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -519,6 +520,7 @@ func (x *FileChooserWidget) GetAtContext() *ATContext {
 func (x *FileChooserWidget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -558,6 +560,7 @@ func (x *FileChooserWidget) GetNextAccessibleSibling() *AccessibleBase {
 func (x *FileChooserWidget) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -734,6 +737,7 @@ func (x *FileChooserWidget) UpdateStateValue(NStatesVar int, StatesVar []Accessi
 func (x *FileChooserWidget) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -770,6 +774,7 @@ func (x *FileChooserWidget) AddShortcutFolder(FolderVar gio.File) (bool, error) 
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserAddShortcutFolder(x.GoPointer(), FolderVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -781,6 +786,7 @@ func (x *FileChooserWidget) AddShortcutFolder(FolderVar gio.File) (bool, error) 
 func (x *FileChooserWidget) GetAction() FileChooserAction {
 
 	cret := XGtkFileChooserGetAction(x.GoPointer())
+
 	return cret
 }
 
@@ -788,6 +794,7 @@ func (x *FileChooserWidget) GetAction() FileChooserAction {
 func (x *FileChooserWidget) GetChoice(IdVar string) string {
 
 	cret := XGtkFileChooserGetChoice(x.GoPointer(), IdVar)
+
 	return cret
 }
 
@@ -795,6 +802,7 @@ func (x *FileChooserWidget) GetChoice(IdVar string) string {
 func (x *FileChooserWidget) GetCreateFolders() bool {
 
 	cret := XGtkFileChooserGetCreateFolders(x.GoPointer())
+
 	return cret
 }
 
@@ -819,6 +827,7 @@ func (x *FileChooserWidget) GetCurrentFolder() *gio.FileBase {
 func (x *FileChooserWidget) GetCurrentName() string {
 
 	cret := XGtkFileChooserGetCurrentName(x.GoPointer())
+
 	return cret
 }
 
@@ -898,6 +907,7 @@ func (x *FileChooserWidget) GetFilters() *gio.ListModelBase {
 func (x *FileChooserWidget) GetSelectMultiple() bool {
 
 	cret := XGtkFileChooserGetSelectMultiple(x.GoPointer())
+
 	return cret
 }
 
@@ -937,6 +947,7 @@ func (x *FileChooserWidget) RemoveShortcutFolder(FolderVar gio.File) (bool, erro
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserRemoveShortcutFolder(x.GoPointer(), FolderVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -982,6 +993,7 @@ func (x *FileChooserWidget) SetCurrentFolder(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1057,6 +1069,7 @@ func (x *FileChooserWidget) SetFile(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserSetFile(x.GoPointer(), FileVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

@@ -111,6 +111,7 @@ var xColorDialogButtonGetRgba func(uintptr) *gdk.RGBA
 func (x *ColorDialogButton) GetRgba() *gdk.RGBA {
 
 	cret := xColorDialogButtonGetRgba(x.GoPointer())
+
 	return cret
 }
 
@@ -234,6 +235,7 @@ func (x *ColorDialogButton) GetAccessibleParent() *AccessibleBase {
 func (x *ColorDialogButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -259,6 +261,7 @@ func (x *ColorDialogButton) GetAtContext() *ATContext {
 func (x *ColorDialogButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -298,6 +301,7 @@ func (x *ColorDialogButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ColorDialogButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -474,6 +478,7 @@ func (x *ColorDialogButton) UpdateStateValue(NStatesVar int, StatesVar []Accessi
 func (x *ColorDialogButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

@@ -196,6 +196,7 @@ func (x *CellRendererProgress) GetPropertyValue() int {
 func (x *CellRendererProgress) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

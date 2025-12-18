@@ -67,6 +67,7 @@ var xGestureRotateGetAngleDelta func(uintptr) float64
 func (x *GestureRotate) GetAngleDelta() float64 {
 
 	cret := xGestureRotateGetAngleDelta(x.GoPointer())
+
 	return cret
 }
 

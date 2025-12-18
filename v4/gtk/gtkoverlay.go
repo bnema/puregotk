@@ -119,6 +119,7 @@ var xOverlayGetClipOverlay func(uintptr, uintptr) bool
 func (x *Overlay) GetClipOverlay(WidgetVar *Widget) bool {
 
 	cret := xOverlayGetClipOverlay(x.GoPointer(), WidgetVar.GoPointer())
+
 	return cret
 }
 
@@ -129,6 +130,7 @@ var xOverlayGetMeasureOverlay func(uintptr, uintptr) bool
 func (x *Overlay) GetMeasureOverlay(WidgetVar *Widget) bool {
 
 	cret := xOverlayGetMeasureOverlay(x.GoPointer(), WidgetVar.GoPointer())
+
 	return cret
 }
 
@@ -251,6 +253,7 @@ func (x *Overlay) GetAccessibleParent() *AccessibleBase {
 func (x *Overlay) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -276,6 +279,7 @@ func (x *Overlay) GetAtContext() *ATContext {
 func (x *Overlay) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -315,6 +319,7 @@ func (x *Overlay) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Overlay) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -491,6 +496,7 @@ func (x *Overlay) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, 
 func (x *Overlay) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

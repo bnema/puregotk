@@ -53,6 +53,7 @@ var xBlendNodeGetBlendMode func(uintptr) BlendMode
 func (x *BlendNode) GetBlendMode() BlendMode {
 
 	cret := xBlendNodeGetBlendMode(x.GoPointer())
+
 	return cret
 }
 
@@ -157,6 +158,7 @@ var xBlurNodeGetRadius func(uintptr) float32
 func (x *BlurNode) GetRadius() float32 {
 
 	cret := xBlurNodeGetRadius(x.GoPointer())
+
 	return cret
 }
 
@@ -213,6 +215,7 @@ var xBorderNodeGetColors func(uintptr) uintptr
 func (x *BorderNode) GetColors() uintptr {
 
 	cret := xBorderNodeGetColors(x.GoPointer())
+
 	return cret
 }
 
@@ -222,6 +225,7 @@ var xBorderNodeGetOutline func(uintptr) *RoundedRect
 func (x *BorderNode) GetOutline() *RoundedRect {
 
 	cret := xBorderNodeGetOutline(x.GoPointer())
+
 	return cret
 }
 
@@ -231,6 +235,7 @@ var xBorderNodeGetWidths func(uintptr) uintptr
 func (x *BorderNode) GetWidths() uintptr {
 
 	cret := xBorderNodeGetWidths(x.GoPointer())
+
 	return cret
 }
 
@@ -291,6 +296,7 @@ var xCairoNodeGetDrawContext func(uintptr) *cairo.Context
 func (x *CairoNode) GetDrawContext() *cairo.Context {
 
 	cret := xCairoNodeGetDrawContext(x.GoPointer())
+
 	return cret
 }
 
@@ -300,6 +306,7 @@ var xCairoNodeGetSurface func(uintptr) *cairo.Surface
 func (x *CairoNode) GetSurface() *cairo.Surface {
 
 	cret := xCairoNodeGetSurface(x.GoPointer())
+
 	return cret
 }
 
@@ -371,6 +378,7 @@ var xClipNodeGetClip func(uintptr) *graphene.Rect
 func (x *ClipNode) GetClip() *graphene.Rect {
 
 	cret := xClipNodeGetClip(x.GoPointer())
+
 	return cret
 }
 
@@ -449,6 +457,7 @@ var xColorMatrixNodeGetColorMatrix func(uintptr) *graphene.Matrix
 func (x *ColorMatrixNode) GetColorMatrix() *graphene.Matrix {
 
 	cret := xColorMatrixNodeGetColorMatrix(x.GoPointer())
+
 	return cret
 }
 
@@ -458,6 +467,7 @@ var xColorMatrixNodeGetColorOffset func(uintptr) *graphene.Vec4
 func (x *ColorMatrixNode) GetColorOffset() *graphene.Vec4 {
 
 	cret := xColorMatrixNodeGetColorOffset(x.GoPointer())
+
 	return cret
 }
 
@@ -515,6 +525,7 @@ var xColorNodeGetColor func(uintptr) *gdk.RGBA
 func (x *ColorNode) GetColor() *gdk.RGBA {
 
 	cret := xColorNodeGetColor(x.GoPointer())
+
 	return cret
 }
 
@@ -577,6 +588,7 @@ var xConicGradientNodeGetAngle func(uintptr) float32
 func (x *ConicGradientNode) GetAngle() float32 {
 
 	cret := xConicGradientNodeGetAngle(x.GoPointer())
+
 	return cret
 }
 
@@ -586,6 +598,7 @@ var xConicGradientNodeGetCenter func(uintptr) *graphene.Point
 func (x *ConicGradientNode) GetCenter() *graphene.Point {
 
 	cret := xConicGradientNodeGetCenter(x.GoPointer())
+
 	return cret
 }
 
@@ -595,6 +608,7 @@ var xConicGradientNodeGetColorStops func(uintptr, *uint) uintptr
 func (x *ConicGradientNode) GetColorStops(NStopsVar *uint) uintptr {
 
 	cret := xConicGradientNodeGetColorStops(x.GoPointer(), NStopsVar)
+
 	return cret
 }
 
@@ -604,6 +618,7 @@ var xConicGradientNodeGetNColorStops func(uintptr) uint
 func (x *ConicGradientNode) GetNColorStops() uint {
 
 	cret := xConicGradientNodeGetNColorStops(x.GoPointer())
+
 	return cret
 }
 
@@ -613,6 +628,7 @@ var xConicGradientNodeGetRotation func(uintptr) float32
 func (x *ConicGradientNode) GetRotation() float32 {
 
 	cret := xConicGradientNodeGetRotation(x.GoPointer())
+
 	return cret
 }
 
@@ -685,6 +701,7 @@ var xContainerNodeGetNChildren func(uintptr) uint
 func (x *ContainerNode) GetNChildren() uint {
 
 	cret := xContainerNodeGetNChildren(x.GoPointer())
+
 	return cret
 }
 
@@ -755,6 +772,7 @@ var xCrossFadeNodeGetProgress func(uintptr) float32
 func (x *CrossFadeNode) GetProgress() float32 {
 
 	cret := xCrossFadeNodeGetProgress(x.GoPointer())
+
 	return cret
 }
 
@@ -846,6 +864,7 @@ var xDebugNodeGetMessage func(uintptr) string
 func (x *DebugNode) GetMessage() string {
 
 	cret := xDebugNodeGetMessage(x.GoPointer())
+
 	return cret
 }
 
@@ -919,6 +938,7 @@ var xFillNodeGetFillRule func(uintptr) FillRule
 func (x *FillNode) GetFillRule() FillRule {
 
 	cret := xFillNodeGetFillRule(x.GoPointer())
+
 	return cret
 }
 
@@ -929,6 +949,7 @@ var xFillNodeGetPath func(uintptr) *Path
 func (x *FillNode) GetPath() *Path {
 
 	cret := xFillNodeGetPath(x.GoPointer())
+
 	return cret
 }
 
@@ -998,6 +1019,7 @@ var xGLShaderNodeGetArgs func(uintptr) *glib.Bytes
 func (x *GLShaderNode) GetArgs() *glib.Bytes {
 
 	cret := xGLShaderNodeGetArgs(x.GoPointer())
+
 	return cret
 }
 
@@ -1024,6 +1046,7 @@ var xGLShaderNodeGetNChildren func(uintptr) uint
 func (x *GLShaderNode) GetNChildren() uint {
 
 	cret := xGLShaderNodeGetNChildren(x.GoPointer())
+
 	return cret
 }
 
@@ -1095,6 +1118,7 @@ var xInsetShadowNodeGetBlurRadius func(uintptr) float32
 func (x *InsetShadowNode) GetBlurRadius() float32 {
 
 	cret := xInsetShadowNodeGetBlurRadius(x.GoPointer())
+
 	return cret
 }
 
@@ -1107,6 +1131,7 @@ var xInsetShadowNodeGetColor func(uintptr) *gdk.RGBA
 func (x *InsetShadowNode) GetColor() *gdk.RGBA {
 
 	cret := xInsetShadowNodeGetColor(x.GoPointer())
+
 	return cret
 }
 
@@ -1116,6 +1141,7 @@ var xInsetShadowNodeGetDx func(uintptr) float32
 func (x *InsetShadowNode) GetDx() float32 {
 
 	cret := xInsetShadowNodeGetDx(x.GoPointer())
+
 	return cret
 }
 
@@ -1125,6 +1151,7 @@ var xInsetShadowNodeGetDy func(uintptr) float32
 func (x *InsetShadowNode) GetDy() float32 {
 
 	cret := xInsetShadowNodeGetDy(x.GoPointer())
+
 	return cret
 }
 
@@ -1134,6 +1161,7 @@ var xInsetShadowNodeGetOutline func(uintptr) *RoundedRect
 func (x *InsetShadowNode) GetOutline() *RoundedRect {
 
 	cret := xInsetShadowNodeGetOutline(x.GoPointer())
+
 	return cret
 }
 
@@ -1143,6 +1171,7 @@ var xInsetShadowNodeGetSpread func(uintptr) float32
 func (x *InsetShadowNode) GetSpread() float32 {
 
 	cret := xInsetShadowNodeGetSpread(x.GoPointer())
+
 	return cret
 }
 
@@ -1197,6 +1226,7 @@ var xLinearGradientNodeGetColorStops func(uintptr, *uint) uintptr
 func (x *LinearGradientNode) GetColorStops(NStopsVar *uint) uintptr {
 
 	cret := xLinearGradientNodeGetColorStops(x.GoPointer(), NStopsVar)
+
 	return cret
 }
 
@@ -1206,6 +1236,7 @@ var xLinearGradientNodeGetEnd func(uintptr) *graphene.Point
 func (x *LinearGradientNode) GetEnd() *graphene.Point {
 
 	cret := xLinearGradientNodeGetEnd(x.GoPointer())
+
 	return cret
 }
 
@@ -1215,6 +1246,7 @@ var xLinearGradientNodeGetNColorStops func(uintptr) uint
 func (x *LinearGradientNode) GetNColorStops() uint {
 
 	cret := xLinearGradientNodeGetNColorStops(x.GoPointer())
+
 	return cret
 }
 
@@ -1224,6 +1256,7 @@ var xLinearGradientNodeGetStart func(uintptr) *graphene.Point
 func (x *LinearGradientNode) GetStart() *graphene.Point {
 
 	cret := xLinearGradientNodeGetStart(x.GoPointer())
+
 	return cret
 }
 
@@ -1298,6 +1331,7 @@ var xMaskNodeGetMaskMode func(uintptr) MaskMode
 func (x *MaskNode) GetMaskMode() MaskMode {
 
 	cret := xMaskNodeGetMaskMode(x.GoPointer())
+
 	return cret
 }
 
@@ -1386,6 +1420,7 @@ var xOpacityNodeGetOpacity func(uintptr) float32
 func (x *OpacityNode) GetOpacity() float32 {
 
 	cret := xOpacityNodeGetOpacity(x.GoPointer())
+
 	return cret
 }
 
@@ -1440,6 +1475,7 @@ var xOutsetShadowNodeGetBlurRadius func(uintptr) float32
 func (x *OutsetShadowNode) GetBlurRadius() float32 {
 
 	cret := xOutsetShadowNodeGetBlurRadius(x.GoPointer())
+
 	return cret
 }
 
@@ -1452,6 +1488,7 @@ var xOutsetShadowNodeGetColor func(uintptr) *gdk.RGBA
 func (x *OutsetShadowNode) GetColor() *gdk.RGBA {
 
 	cret := xOutsetShadowNodeGetColor(x.GoPointer())
+
 	return cret
 }
 
@@ -1461,6 +1498,7 @@ var xOutsetShadowNodeGetDx func(uintptr) float32
 func (x *OutsetShadowNode) GetDx() float32 {
 
 	cret := xOutsetShadowNodeGetDx(x.GoPointer())
+
 	return cret
 }
 
@@ -1470,6 +1508,7 @@ var xOutsetShadowNodeGetDy func(uintptr) float32
 func (x *OutsetShadowNode) GetDy() float32 {
 
 	cret := xOutsetShadowNodeGetDy(x.GoPointer())
+
 	return cret
 }
 
@@ -1479,6 +1518,7 @@ var xOutsetShadowNodeGetOutline func(uintptr) *RoundedRect
 func (x *OutsetShadowNode) GetOutline() *RoundedRect {
 
 	cret := xOutsetShadowNodeGetOutline(x.GoPointer())
+
 	return cret
 }
 
@@ -1488,6 +1528,7 @@ var xOutsetShadowNodeGetSpread func(uintptr) float32
 func (x *OutsetShadowNode) GetSpread() float32 {
 
 	cret := xOutsetShadowNodeGetSpread(x.GoPointer())
+
 	return cret
 }
 
@@ -1545,6 +1586,7 @@ var xRadialGradientNodeGetCenter func(uintptr) *graphene.Point
 func (x *RadialGradientNode) GetCenter() *graphene.Point {
 
 	cret := xRadialGradientNodeGetCenter(x.GoPointer())
+
 	return cret
 }
 
@@ -1554,6 +1596,7 @@ var xRadialGradientNodeGetColorStops func(uintptr, *uint) uintptr
 func (x *RadialGradientNode) GetColorStops(NStopsVar *uint) uintptr {
 
 	cret := xRadialGradientNodeGetColorStops(x.GoPointer(), NStopsVar)
+
 	return cret
 }
 
@@ -1563,6 +1606,7 @@ var xRadialGradientNodeGetEnd func(uintptr) float32
 func (x *RadialGradientNode) GetEnd() float32 {
 
 	cret := xRadialGradientNodeGetEnd(x.GoPointer())
+
 	return cret
 }
 
@@ -1572,6 +1616,7 @@ var xRadialGradientNodeGetHradius func(uintptr) float32
 func (x *RadialGradientNode) GetHradius() float32 {
 
 	cret := xRadialGradientNodeGetHradius(x.GoPointer())
+
 	return cret
 }
 
@@ -1581,6 +1626,7 @@ var xRadialGradientNodeGetNColorStops func(uintptr) uint
 func (x *RadialGradientNode) GetNColorStops() uint {
 
 	cret := xRadialGradientNodeGetNColorStops(x.GoPointer())
+
 	return cret
 }
 
@@ -1590,6 +1636,7 @@ var xRadialGradientNodeGetStart func(uintptr) float32
 func (x *RadialGradientNode) GetStart() float32 {
 
 	cret := xRadialGradientNodeGetStart(x.GoPointer())
+
 	return cret
 }
 
@@ -1599,6 +1646,7 @@ var xRadialGradientNodeGetVradius func(uintptr) float32
 func (x *RadialGradientNode) GetVradius() float32 {
 
 	cret := xRadialGradientNodeGetVradius(x.GoPointer())
+
 	return cret
 }
 
@@ -1670,6 +1718,7 @@ var xRepeatNodeGetChildBounds func(uintptr) *graphene.Rect
 func (x *RepeatNode) GetChildBounds() *graphene.Rect {
 
 	cret := xRepeatNodeGetChildBounds(x.GoPointer())
+
 	return cret
 }
 
@@ -1835,6 +1884,7 @@ var xRoundedClipNodeGetClip func(uintptr) *RoundedRect
 func (x *RoundedClipNode) GetClip() *RoundedRect {
 
 	cret := xRoundedClipNodeGetClip(x.GoPointer())
+
 	return cret
 }
 
@@ -1906,6 +1956,7 @@ var xShadowNodeGetNShadows func(uintptr) uint
 func (x *ShadowNode) GetNShadows() uint {
 
 	cret := xShadowNodeGetNShadows(x.GoPointer())
+
 	return cret
 }
 
@@ -1915,6 +1966,7 @@ var xShadowNodeGetShadow func(uintptr, uint) *Shadow
 func (x *ShadowNode) GetShadow(IVar uint) *Shadow {
 
 	cret := xShadowNodeGetShadow(x.GoPointer(), IVar)
+
 	return cret
 }
 
@@ -1991,6 +2043,7 @@ var xStrokeNodeGetPath func(uintptr) *Path
 func (x *StrokeNode) GetPath() *Path {
 
 	cret := xStrokeNodeGetPath(x.GoPointer())
+
 	return cret
 }
 
@@ -2000,6 +2053,7 @@ var xStrokeNodeGetStroke func(uintptr) *Stroke
 func (x *StrokeNode) GetStroke() *Stroke {
 
 	cret := xStrokeNodeGetStroke(x.GoPointer())
+
 	return cret
 }
 
@@ -2086,6 +2140,7 @@ var xSubsurfaceNodeGetSubsurface func(uintptr) uintptr
 func SubsurfaceNodeGetSubsurface(NodeVar *DebugNode) uintptr {
 
 	cret := xSubsurfaceNodeGetSubsurface(NodeVar.GoPointer())
+
 	return cret
 }
 
@@ -2134,6 +2189,7 @@ var xTextNodeGetColor func(uintptr) *gdk.RGBA
 func (x *TextNode) GetColor() *gdk.RGBA {
 
 	cret := xTextNodeGetColor(x.GoPointer())
+
 	return cret
 }
 
@@ -2160,6 +2216,7 @@ var xTextNodeGetGlyphs func(uintptr, *uint) uintptr
 func (x *TextNode) GetGlyphs(NGlyphsVar *uint) uintptr {
 
 	cret := xTextNodeGetGlyphs(x.GoPointer(), NGlyphsVar)
+
 	return cret
 }
 
@@ -2169,6 +2226,7 @@ var xTextNodeGetNumGlyphs func(uintptr) uint
 func (x *TextNode) GetNumGlyphs() uint {
 
 	cret := xTextNodeGetNumGlyphs(x.GoPointer())
+
 	return cret
 }
 
@@ -2178,6 +2236,7 @@ var xTextNodeGetOffset func(uintptr) *graphene.Point
 func (x *TextNode) GetOffset() *graphene.Point {
 
 	cret := xTextNodeGetOffset(x.GoPointer())
+
 	return cret
 }
 
@@ -2187,6 +2246,7 @@ var xTextNodeHasColorGlyphs func(uintptr) bool
 func (x *TextNode) HasColorGlyphs() bool {
 
 	cret := xTextNodeHasColorGlyphs(x.GoPointer())
+
 	return cret
 }
 
@@ -2317,6 +2377,7 @@ var xTextureScaleNodeGetFilter func(uintptr) ScalingFilter
 func (x *TextureScaleNode) GetFilter() ScalingFilter {
 
 	cret := xTextureScaleNodeGetFilter(x.GoPointer())
+
 	return cret
 }
 
@@ -2405,6 +2466,7 @@ var xTransformNodeGetTransform func(uintptr) *Transform
 func (x *TransformNode) GetTransform() *Transform {
 
 	cret := xTransformNodeGetTransform(x.GoPointer())
+
 	return cret
 }
 

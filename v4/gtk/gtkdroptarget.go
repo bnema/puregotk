@@ -138,6 +138,7 @@ var xDropTargetGetActions func(uintptr) gdk.DragAction
 func (x *DropTarget) GetActions() gdk.DragAction {
 
 	cret := xDropTargetGetActions(x.GoPointer())
+
 	return cret
 }
 
@@ -187,6 +188,7 @@ var xDropTargetGetFormats func(uintptr) *gdk.ContentFormats
 func (x *DropTarget) GetFormats() *gdk.ContentFormats {
 
 	cret := xDropTargetGetFormats(x.GoPointer())
+
 	return cret
 }
 
@@ -198,6 +200,7 @@ var xDropTargetGetGtypes func(uintptr, *uint) uintptr
 func (x *DropTarget) GetGtypes(NTypesVar *uint) uintptr {
 
 	cret := xDropTargetGetGtypes(x.GoPointer(), NTypesVar)
+
 	return cret
 }
 
@@ -207,6 +210,7 @@ var xDropTargetGetPreload func(uintptr) bool
 func (x *DropTarget) GetPreload() bool {
 
 	cret := xDropTargetGetPreload(x.GoPointer())
+
 	return cret
 }
 
@@ -216,6 +220,7 @@ var xDropTargetGetValue func(uintptr) *gobject.Value
 func (x *DropTarget) GetValue() *gobject.Value {
 
 	cret := xDropTargetGetValue(x.GoPointer())
+
 	return cret
 }
 

@@ -63,6 +63,7 @@ var xCellRendererToggleGetActivatable func(uintptr) bool
 func (x *CellRendererToggle) GetActivatable() bool {
 
 	cret := xCellRendererToggleGetActivatable(x.GoPointer())
+
 	return cret
 }
 
@@ -73,6 +74,7 @@ var xCellRendererToggleGetActive func(uintptr) bool
 func (x *CellRendererToggle) GetActive() bool {
 
 	cret := xCellRendererToggleGetActive(x.GoPointer())
+
 	return cret
 }
 
@@ -82,6 +84,7 @@ var xCellRendererToggleGetRadio func(uintptr) bool
 func (x *CellRendererToggle) GetRadio() bool {
 
 	cret := xCellRendererToggleGetRadio(x.GoPointer())
+
 	return cret
 }
 

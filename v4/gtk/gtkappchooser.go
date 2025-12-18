@@ -76,6 +76,7 @@ func (x *AppChooserBase) GetAppInfo() *gio.AppInfoBase {
 func (x *AppChooserBase) GetContentType() string {
 
 	cret := XGtkAppChooserGetContentType(x.GoPointer())
+
 	return cret
 }
 

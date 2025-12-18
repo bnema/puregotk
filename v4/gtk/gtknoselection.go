@@ -119,6 +119,7 @@ func (x *NoSelection) GetPropertyNItems() uint {
 func (x *NoSelection) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -133,6 +134,7 @@ func (x *NoSelection) GetItem(PositionVar uint) uintptr {
 func (x *NoSelection) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -144,6 +146,7 @@ func (x *NoSelection) GetItemType() types.GType {
 func (x *NoSelection) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 
@@ -238,6 +241,7 @@ func (x *NoSelection) SectionsChanged(PositionVar uint, NItemsVar uint) {
 func (x *NoSelection) GetSelection() *Bitset {
 
 	cret := XGtkSelectionModelGetSelection(x.GoPointer())
+
 	return cret
 }
 
@@ -251,6 +255,7 @@ func (x *NoSelection) GetSelection() *Bitset {
 func (x *NoSelection) GetSelectionInRange(PositionVar uint, NItemsVar uint) *Bitset {
 
 	cret := XGtkSelectionModelGetSelectionInRange(x.GoPointer(), PositionVar, NItemsVar)
+
 	return cret
 }
 
@@ -258,6 +263,7 @@ func (x *NoSelection) GetSelectionInRange(PositionVar uint, NItemsVar uint) *Bit
 func (x *NoSelection) IsSelected(PositionVar uint) bool {
 
 	cret := XGtkSelectionModelIsSelected(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -265,6 +271,7 @@ func (x *NoSelection) IsSelected(PositionVar uint) bool {
 func (x *NoSelection) SelectAll() bool {
 
 	cret := XGtkSelectionModelSelectAll(x.GoPointer())
+
 	return cret
 }
 
@@ -272,6 +279,7 @@ func (x *NoSelection) SelectAll() bool {
 func (x *NoSelection) SelectItem(PositionVar uint, UnselectRestVar bool) bool {
 
 	cret := XGtkSelectionModelSelectItem(x.GoPointer(), PositionVar, UnselectRestVar)
+
 	return cret
 }
 
@@ -279,6 +287,7 @@ func (x *NoSelection) SelectItem(PositionVar uint, UnselectRestVar bool) bool {
 func (x *NoSelection) SelectRange(PositionVar uint, NItemsVar uint, UnselectRestVar bool) bool {
 
 	cret := XGtkSelectionModelSelectRange(x.GoPointer(), PositionVar, NItemsVar, UnselectRestVar)
+
 	return cret
 }
 
@@ -331,6 +340,7 @@ func (x *NoSelection) SelectionChanged(PositionVar uint, NItemsVar uint) {
 func (x *NoSelection) SetSelection(SelectedVar *Bitset, MaskVar *Bitset) bool {
 
 	cret := XGtkSelectionModelSetSelection(x.GoPointer(), SelectedVar, MaskVar)
+
 	return cret
 }
 
@@ -338,6 +348,7 @@ func (x *NoSelection) SetSelection(SelectedVar *Bitset, MaskVar *Bitset) bool {
 func (x *NoSelection) UnselectAll() bool {
 
 	cret := XGtkSelectionModelUnselectAll(x.GoPointer())
+
 	return cret
 }
 
@@ -345,6 +356,7 @@ func (x *NoSelection) UnselectAll() bool {
 func (x *NoSelection) UnselectItem(PositionVar uint) bool {
 
 	cret := XGtkSelectionModelUnselectItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -352,6 +364,7 @@ func (x *NoSelection) UnselectItem(PositionVar uint) bool {
 func (x *NoSelection) UnselectRange(PositionVar uint, NItemsVar uint) bool {
 
 	cret := XGtkSelectionModelUnselectRange(x.GoPointer(), PositionVar, NItemsVar)
+
 	return cret
 }
 

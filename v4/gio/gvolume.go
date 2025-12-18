@@ -755,6 +755,7 @@ func (x *VolumeBase) SetGoPointer(ptr uintptr) {
 func (x *VolumeBase) CanEject() bool {
 
 	cret := XGVolumeCanEject(x.GoPointer())
+
 	return cret
 }
 
@@ -762,6 +763,7 @@ func (x *VolumeBase) CanEject() bool {
 func (x *VolumeBase) CanMount() bool {
 
 	cret := XGVolumeCanMount(x.GoPointer())
+
 	return cret
 }
 
@@ -780,6 +782,7 @@ func (x *VolumeBase) EjectFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGVolumeEjectFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -802,6 +805,7 @@ func (x *VolumeBase) EjectWithOperationFinish(ResultVar AsyncResult) (bool, erro
 	var cerr *glib.Error
 
 	cret := XGVolumeEjectWithOperationFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -814,6 +818,7 @@ func (x *VolumeBase) EjectWithOperationFinish(ResultVar AsyncResult) (bool, erro
 func (x *VolumeBase) EnumerateIdentifiers() []string {
 
 	cret := XGVolumeEnumerateIdentifiers(x.GoPointer())
+
 	return cret
 }
 
@@ -894,6 +899,7 @@ func (x *VolumeBase) GetIcon() *IconBase {
 func (x *VolumeBase) GetIdentifier(KindVar string) string {
 
 	cret := XGVolumeGetIdentifier(x.GoPointer(), KindVar)
+
 	return cret
 }
 
@@ -915,6 +921,7 @@ func (x *VolumeBase) GetMount() *MountBase {
 func (x *VolumeBase) GetName() string {
 
 	cret := XGVolumeGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -922,6 +929,7 @@ func (x *VolumeBase) GetName() string {
 func (x *VolumeBase) GetSortKey() string {
 
 	cret := XGVolumeGetSortKey(x.GoPointer())
+
 	return cret
 }
 
@@ -946,6 +954,7 @@ func (x *VolumeBase) GetSymbolicIcon() *IconBase {
 func (x *VolumeBase) GetUuid() string {
 
 	cret := XGVolumeGetUuid(x.GoPointer())
+
 	return cret
 }
 
@@ -969,6 +978,7 @@ func (x *VolumeBase) MountFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGVolumeMountFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -980,6 +990,7 @@ func (x *VolumeBase) MountFinish(ResultVar AsyncResult) (bool, error) {
 func (x *VolumeBase) ShouldAutomount() bool {
 
 	cret := XGVolumeShouldAutomount(x.GoPointer())
+
 	return cret
 }
 

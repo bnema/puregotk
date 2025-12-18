@@ -40,6 +40,7 @@ var xPlaneAlloc func() *Plane
 func PlaneAlloc() *Plane {
 
 	cret := xPlaneAlloc()
+
 	return cret
 }
 
@@ -49,6 +50,7 @@ var xPlaneDistance func(uintptr, *Point3D) float32
 func (x *Plane) Distance(PointVar *Point3D) float32 {
 
 	cret := xPlaneDistance(x.GoPointer(), PointVar)
+
 	return cret
 }
 
@@ -58,6 +60,7 @@ var xPlaneEqual func(uintptr, *Plane) bool
 func (x *Plane) Equal(BVar *Plane) bool {
 
 	cret := xPlaneEqual(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -77,6 +80,7 @@ var xPlaneGetConstant func(uintptr) float32
 func (x *Plane) GetConstant() float32 {
 
 	cret := xPlaneGetConstant(x.GoPointer())
+
 	return cret
 }
 
@@ -97,6 +101,7 @@ var xPlaneInit func(uintptr, *Vec3, float32) *Plane
 func (x *Plane) Init(NormalVar *Vec3, ConstantVar float32) *Plane {
 
 	cret := xPlaneInit(x.GoPointer(), NormalVar, ConstantVar)
+
 	return cret
 }
 
@@ -107,6 +112,7 @@ var xPlaneInitFromPlane func(uintptr, *Plane) *Plane
 func (x *Plane) InitFromPlane(SrcVar *Plane) *Plane {
 
 	cret := xPlaneInitFromPlane(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -117,6 +123,7 @@ var xPlaneInitFromPoint func(uintptr, *Vec3, *Point3D) *Plane
 func (x *Plane) InitFromPoint(NormalVar *Vec3, PointVar *Point3D) *Plane {
 
 	cret := xPlaneInitFromPoint(x.GoPointer(), NormalVar, PointVar)
+
 	return cret
 }
 
@@ -130,6 +137,7 @@ var xPlaneInitFromPoints func(uintptr, *Point3D, *Point3D, *Point3D) *Plane
 func (x *Plane) InitFromPoints(AVar *Point3D, BVar *Point3D, CVar *Point3D) *Plane {
 
 	cret := xPlaneInitFromPoints(x.GoPointer(), AVar, BVar, CVar)
+
 	return cret
 }
 
@@ -140,6 +148,7 @@ var xPlaneInitFromVec4 func(uintptr, *Vec4) *Plane
 func (x *Plane) InitFromVec4(SrcVar *Vec4) *Plane {
 
 	cret := xPlaneInitFromVec4(x.GoPointer(), SrcVar)
+
 	return cret
 }
 

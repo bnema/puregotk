@@ -2,6 +2,8 @@
 package gtk
 
 import (
+	"runtime"
+
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
@@ -56,7 +58,11 @@ var xNewColorChooserDialog func(uintptr, uintptr) uintptr
 func NewColorChooserDialog(TitleVar *string, ParentVar *Window) *ColorChooserDialog {
 	var cls *ColorChooserDialog
 
-	cret := xNewColorChooserDialog(core.NullableStringToPtr(TitleVar), ParentVar.GoPointer())
+	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+
+	cret := xNewColorChooserDialog(TitleVarPtr, ParentVar.GoPointer())
+
+	runtime.KeepAlive(TitleVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -134,6 +140,7 @@ func (x *ColorChooserDialog) GetAccessibleParent() *AccessibleBase {
 func (x *ColorChooserDialog) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -159,6 +166,7 @@ func (x *ColorChooserDialog) GetAtContext() *ATContext {
 func (x *ColorChooserDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -198,6 +206,7 @@ func (x *ColorChooserDialog) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ColorChooserDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -374,6 +383,7 @@ func (x *ColorChooserDialog) UpdateStateValue(NStatesVar int, StatesVar []Access
 func (x *ColorChooserDialog) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -411,6 +421,7 @@ func (x *ColorChooserDialog) GetRgba(ColorVar *gdk.RGBA) {
 func (x *ColorChooserDialog) GetUseAlpha() bool {
 
 	cret := XGtkColorChooserGetUseAlpha(x.GoPointer())
+
 	return cret
 }
 

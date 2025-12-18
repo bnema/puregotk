@@ -105,6 +105,7 @@ var xPreferencesDialogGetSearchEnabled func(uintptr) bool
 func (x *PreferencesDialog) GetSearchEnabled() bool {
 
 	cret := xPreferencesDialogGetSearchEnabled(x.GoPointer())
+
 	return cret
 }
 
@@ -131,6 +132,7 @@ var xPreferencesDialogGetVisiblePageName func(uintptr) string
 func (x *PreferencesDialog) GetVisiblePageName() string {
 
 	cret := xPreferencesDialogGetVisiblePageName(x.GoPointer())
+
 	return cret
 }
 
@@ -140,6 +142,7 @@ var xPreferencesDialogPopSubpage func(uintptr) bool
 func (x *PreferencesDialog) PopSubpage() bool {
 
 	cret := xPreferencesDialogPopSubpage(x.GoPointer())
+
 	return cret
 }
 
@@ -276,6 +279,7 @@ func (x *PreferencesDialog) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *PreferencesDialog) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -301,6 +305,7 @@ func (x *PreferencesDialog) GetAtContext() *gtk.ATContext {
 func (x *PreferencesDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -340,6 +345,7 @@ func (x *PreferencesDialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *PreferencesDialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -516,6 +522,7 @@ func (x *PreferencesDialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acc
 func (x *PreferencesDialog) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

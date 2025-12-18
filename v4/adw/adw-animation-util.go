@@ -16,6 +16,7 @@ var xGetEnableAnimations func(uintptr) bool
 func GetEnableAnimations(WidgetVar *gtk.Widget) bool {
 
 	cret := xGetEnableAnimations(WidgetVar.GoPointer())
+
 	return cret
 }
 
@@ -25,6 +26,7 @@ var xLerp func(float64, float64, float64) float64
 func Lerp(AVar float64, BVar float64, TVar float64) float64 {
 
 	cret := xLerp(AVar, BVar, TVar)
+
 	return cret
 }
 

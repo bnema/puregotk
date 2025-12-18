@@ -149,6 +149,7 @@ var xMapListModelHasMap func(uintptr) bool
 func (x *MapListModel) HasMap() bool {
 
 	cret := xMapListModelHasMap(x.GoPointer())
+
 	return cret
 }
 
@@ -253,6 +254,7 @@ func (x *MapListModel) GetPropertyNItems() uint {
 func (x *MapListModel) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
+
 	return cret
 }
 
@@ -267,6 +269,7 @@ func (x *MapListModel) GetItem(PositionVar uint) uintptr {
 func (x *MapListModel) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
+
 	return cret
 }
 
@@ -278,6 +281,7 @@ func (x *MapListModel) GetItemType() types.GType {
 func (x *MapListModel) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
+
 	return cret
 }
 

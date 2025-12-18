@@ -53,6 +53,7 @@ var xLanguageGetSampleString func(uintptr) string
 func (x *Language) GetSampleString() string {
 
 	cret := xLanguageGetSampleString(x.GoPointer())
+
 	return cret
 }
 
@@ -84,6 +85,7 @@ var xLanguageGetScripts func(uintptr, *int) uintptr
 func (x *Language) GetScripts(NumScriptsVar *int) uintptr {
 
 	cret := xLanguageGetScripts(x.GoPointer(), NumScriptsVar)
+
 	return cret
 }
 
@@ -105,6 +107,7 @@ var xLanguageIncludesScript func(uintptr, Script) bool
 func (x *Language) IncludesScript(ScriptVar Script) bool {
 
 	cret := xLanguageIncludesScript(x.GoPointer(), ScriptVar)
+
 	return cret
 }
 
@@ -119,6 +122,7 @@ var xLanguageMatches func(uintptr, string) bool
 func (x *Language) Matches(RangeListVar string) bool {
 
 	cret := xLanguageMatches(x.GoPointer(), RangeListVar)
+
 	return cret
 }
 
@@ -130,6 +134,7 @@ var xLanguageToString func(uintptr) string
 func (x *Language) ToString() string {
 
 	cret := xLanguageToString(x.GoPointer())
+
 	return cret
 }
 
@@ -203,6 +208,7 @@ var xUnitsFromDouble func(float64) int
 func UnitsFromDouble(DVar float64) int {
 
 	cret := xUnitsFromDouble(DVar)
+
 	return cret
 }
 
@@ -214,6 +220,7 @@ var xUnitsToDouble func(int) float64
 func UnitsToDouble(IVar int) float64 {
 
 	cret := xUnitsToDouble(IVar)
+
 	return cret
 }
 

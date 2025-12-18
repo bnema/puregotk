@@ -38,6 +38,7 @@ var xQuadAlloc func() *Quad
 func QuadAlloc() *Quad {
 
 	cret := xQuadAlloc()
+
 	return cret
 }
 
@@ -56,6 +57,7 @@ var xQuadContains func(uintptr, *Point) bool
 func (x *Quad) Contains(PVar *Point) bool {
 
 	cret := xQuadContains(x.GoPointer(), PVar)
+
 	return cret
 }
 
@@ -74,6 +76,7 @@ var xQuadGetPoint func(uintptr, uint) *Point
 func (x *Quad) GetPoint(IndexVar uint) *Point {
 
 	cret := xQuadGetPoint(x.GoPointer(), IndexVar)
+
 	return cret
 }
 
@@ -83,6 +86,7 @@ var xQuadInit func(uintptr, *Point, *Point, *Point, *Point) *Quad
 func (x *Quad) Init(P1Var *Point, P2Var *Point, P3Var *Point, P4Var *Point) *Quad {
 
 	cret := xQuadInit(x.GoPointer(), P1Var, P2Var, P3Var, P4Var)
+
 	return cret
 }
 
@@ -92,6 +96,7 @@ var xQuadInitFromPoints func(uintptr, [4]Point) *Quad
 func (x *Quad) InitFromPoints(PointsVar [4]Point) *Quad {
 
 	cret := xQuadInitFromPoints(x.GoPointer(), PointsVar)
+
 	return cret
 }
 
@@ -102,6 +107,7 @@ var xQuadInitFromRect func(uintptr, *Rect) *Quad
 func (x *Quad) InitFromRect(RVar *Rect) *Quad {
 
 	cret := xQuadInitFromRect(x.GoPointer(), RVar)
+
 	return cret
 }
 

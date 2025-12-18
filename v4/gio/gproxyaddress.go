@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -58,7 +59,15 @@ var xNewProxyAddress func(uintptr, uint16, string, string, uint16, uintptr, uint
 func NewProxyAddress(InetaddrVar *InetAddress, PortVar uint16, ProtocolVar string, DestHostnameVar string, DestPortVar uint16, UsernameVar *string, PasswordVar *string) *ProxyAddress {
 	var cls *ProxyAddress
 
-	cret := xNewProxyAddress(InetaddrVar.GoPointer(), PortVar, ProtocolVar, DestHostnameVar, DestPortVar, core.NullableStringToPtr(UsernameVar), core.NullableStringToPtr(PasswordVar))
+	UsernameVarPtr, UsernameVarBytes := core.NullableStringToPtr(UsernameVar)
+
+	PasswordVarPtr, PasswordVarBytes := core.NullableStringToPtr(PasswordVar)
+
+	cret := xNewProxyAddress(InetaddrVar.GoPointer(), PortVar, ProtocolVar, DestHostnameVar, DestPortVar, UsernameVarPtr, PasswordVarPtr)
+
+	runtime.KeepAlive(UsernameVarBytes)
+
+	runtime.KeepAlive(PasswordVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -76,6 +85,7 @@ var xProxyAddressGetDestinationHostname func(uintptr) string
 func (x *ProxyAddress) GetDestinationHostname() string {
 
 	cret := xProxyAddressGetDestinationHostname(x.GoPointer())
+
 	return cret
 }
 
@@ -87,6 +97,7 @@ var xProxyAddressGetDestinationPort func(uintptr) uint16
 func (x *ProxyAddress) GetDestinationPort() uint16 {
 
 	cret := xProxyAddressGetDestinationPort(x.GoPointer())
+
 	return cret
 }
 
@@ -97,6 +108,7 @@ var xProxyAddressGetDestinationProtocol func(uintptr) string
 func (x *ProxyAddress) GetDestinationProtocol() string {
 
 	cret := xProxyAddressGetDestinationProtocol(x.GoPointer())
+
 	return cret
 }
 
@@ -106,6 +118,7 @@ var xProxyAddressGetPassword func(uintptr) string
 func (x *ProxyAddress) GetPassword() string {
 
 	cret := xProxyAddressGetPassword(x.GoPointer())
+
 	return cret
 }
 
@@ -115,6 +128,7 @@ var xProxyAddressGetProtocol func(uintptr) string
 func (x *ProxyAddress) GetProtocol() string {
 
 	cret := xProxyAddressGetProtocol(x.GoPointer())
+
 	return cret
 }
 
@@ -124,6 +138,7 @@ var xProxyAddressGetUri func(uintptr) string
 func (x *ProxyAddress) GetUri() string {
 
 	cret := xProxyAddressGetUri(x.GoPointer())
+
 	return cret
 }
 
@@ -133,6 +148,7 @@ var xProxyAddressGetUsername func(uintptr) string
 func (x *ProxyAddress) GetUsername() string {
 
 	cret := xProxyAddressGetUsername(x.GoPointer())
+
 	return cret
 }
 
@@ -314,6 +330,7 @@ func (x *ProxyAddress) ProxyEnumerate() *SocketAddressEnumerator {
 func (x *ProxyAddress) ToString() string {
 
 	cret := XGSocketConnectableToString(x.GoPointer())
+
 	return cret
 }
 

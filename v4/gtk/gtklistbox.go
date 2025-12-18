@@ -2,6 +2,7 @@
 package gtk
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -276,6 +277,7 @@ var xListBoxGetActivateOnSingleClick func(uintptr) bool
 func (x *ListBox) GetActivateOnSingleClick() bool {
 
 	cret := xListBoxGetActivateOnSingleClick(x.GoPointer())
+
 	return cret
 }
 
@@ -361,6 +363,7 @@ var xListBoxGetSelectedRows func(uintptr) *glib.List
 func (x *ListBox) GetSelectedRows() *glib.List {
 
 	cret := xListBoxGetSelectedRows(x.GoPointer())
+
 	return cret
 }
 
@@ -370,6 +373,7 @@ var xListBoxGetSelectionMode func(uintptr) SelectionMode
 func (x *ListBox) GetSelectionMode() SelectionMode {
 
 	cret := xListBoxGetSelectionMode(x.GoPointer())
+
 	return cret
 }
 
@@ -380,6 +384,7 @@ var xListBoxGetShowSeparators func(uintptr) bool
 func (x *ListBox) GetShowSeparators() bool {
 
 	cret := xListBoxGetShowSeparators(x.GoPointer())
+
 	return cret
 }
 
@@ -389,6 +394,7 @@ var xListBoxGetTabBehavior func(uintptr) ListTabBehavior
 func (x *ListBox) GetTabBehavior() ListTabBehavior {
 
 	cret := xListBoxGetTabBehavior(x.GoPointer())
+
 	return cret
 }
 
@@ -1059,6 +1065,7 @@ func (x *ListBox) GetAccessibleParent() *AccessibleBase {
 func (x *ListBox) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -1084,6 +1091,7 @@ func (x *ListBox) GetAtContext() *ATContext {
 func (x *ListBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1123,6 +1131,7 @@ func (x *ListBox) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ListBox) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1299,6 +1308,7 @@ func (x *ListBox) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, 
 func (x *ListBox) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -1371,6 +1381,7 @@ var xListBoxRowGetActivatable func(uintptr) bool
 func (x *ListBoxRow) GetActivatable() bool {
 
 	cret := xListBoxRowGetActivatable(x.GoPointer())
+
 	return cret
 }
 
@@ -1419,6 +1430,7 @@ var xListBoxRowGetIndex func(uintptr) int
 func (x *ListBoxRow) GetIndex() int {
 
 	cret := xListBoxRowGetIndex(x.GoPointer())
+
 	return cret
 }
 
@@ -1428,6 +1440,7 @@ var xListBoxRowGetSelectable func(uintptr) bool
 func (x *ListBoxRow) GetSelectable() bool {
 
 	cret := xListBoxRowGetSelectable(x.GoPointer())
+
 	return cret
 }
 
@@ -1438,6 +1451,7 @@ var xListBoxRowIsSelected func(uintptr) bool
 func (x *ListBoxRow) IsSelected() bool {
 
 	cret := xListBoxRowIsSelected(x.GoPointer())
+
 	return cret
 }
 
@@ -1588,6 +1602,7 @@ func (x *ListBoxRow) GetAccessibleParent() *AccessibleBase {
 func (x *ListBoxRow) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -1613,6 +1628,7 @@ func (x *ListBoxRow) GetAtContext() *ATContext {
 func (x *ListBoxRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -1652,6 +1668,7 @@ func (x *ListBoxRow) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ListBoxRow) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -1825,6 +1842,7 @@ func (x *ListBoxRow) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 func (x *ListBoxRow) GetActionName() string {
 
 	cret := XGtkActionableGetActionName(x.GoPointer())
+
 	return cret
 }
 
@@ -1832,6 +1850,7 @@ func (x *ListBoxRow) GetActionName() string {
 func (x *ListBoxRow) GetActionTargetValue() *glib.Variant {
 
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
+
 	return cret
 }
 
@@ -1850,7 +1869,11 @@ func (x *ListBoxRow) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *ListBoxRow) SetActionName(ActionNameVar *string) {
 
-	XGtkActionableSetActionName(x.GoPointer(), core.NullableStringToPtr(ActionNameVar))
+	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+
+	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
+
+	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -1911,6 +1934,7 @@ func (x *ListBoxRow) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *ListBoxRow) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

@@ -2,6 +2,7 @@
 package gio
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -716,6 +717,7 @@ var xTaskGetCheckCancellable func(uintptr) bool
 func (x *Task) GetCheckCancellable() bool {
 
 	cret := xTaskGetCheckCancellable(x.GoPointer())
+
 	return cret
 }
 
@@ -727,6 +729,7 @@ var xTaskGetCompleted func(uintptr) bool
 func (x *Task) GetCompleted() bool {
 
 	cret := xTaskGetCompleted(x.GoPointer())
+
 	return cret
 }
 
@@ -742,6 +745,7 @@ var xTaskGetContext func(uintptr) *glib.MainContext
 func (x *Task) GetContext() *glib.MainContext {
 
 	cret := xTaskGetContext(x.GoPointer())
+
 	return cret
 }
 
@@ -751,6 +755,7 @@ var xTaskGetName func(uintptr) string
 func (x *Task) GetName() string {
 
 	cret := xTaskGetName(x.GoPointer())
+
 	return cret
 }
 
@@ -760,6 +765,7 @@ var xTaskGetPriority func(uintptr) int
 func (x *Task) GetPriority() int {
 
 	cret := xTaskGetPriority(x.GoPointer())
+
 	return cret
 }
 
@@ -770,6 +776,7 @@ var xTaskGetReturnOnCancel func(uintptr) bool
 func (x *Task) GetReturnOnCancel() bool {
 
 	cret := xTaskGetReturnOnCancel(x.GoPointer())
+
 	return cret
 }
 
@@ -797,6 +804,7 @@ var xTaskGetSourceTag func(uintptr) uintptr
 func (x *Task) GetSourceTag() uintptr {
 
 	cret := xTaskGetSourceTag(x.GoPointer())
+
 	return cret
 }
 
@@ -806,6 +814,7 @@ var xTaskGetTaskData func(uintptr) uintptr
 func (x *Task) GetTaskData() uintptr {
 
 	cret := xTaskGetTaskData(x.GoPointer())
+
 	return cret
 }
 
@@ -815,6 +824,7 @@ var xTaskHadError func(uintptr) bool
 func (x *Task) HadError() bool {
 
 	cret := xTaskHadError(x.GoPointer())
+
 	return cret
 }
 
@@ -831,6 +841,7 @@ func (x *Task) PropagateBoolean() (bool, error) {
 	var cerr *glib.Error
 
 	cret := xTaskPropagateBoolean(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -851,6 +862,7 @@ func (x *Task) PropagateInt() (int, error) {
 	var cerr *glib.Error
 
 	cret := xTaskPropagateInt(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -872,6 +884,7 @@ func (x *Task) PropagatePointer() (uintptr, error) {
 	var cerr *glib.Error
 
 	cret := xTaskPropagatePointer(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -895,6 +908,7 @@ func (x *Task) PropagateValue(ValueVar *gobject.Value) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xTaskPropagateValue(x.GoPointer(), ValueVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -942,6 +956,7 @@ var xTaskReturnErrorIfCancelled func(uintptr) bool
 func (x *Task) ReturnErrorIfCancelled() bool {
 
 	cret := xTaskReturnErrorIfCancelled(x.GoPointer())
+
 	return cret
 }
 
@@ -1178,7 +1193,11 @@ var xTaskSetName func(uintptr, uintptr)
 // other than the one it was constructed in.
 func (x *Task) SetName(NameVar *string) {
 
-	xTaskSetName(x.GoPointer(), core.NullableStringToPtr(NameVar))
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xTaskSetName(x.GoPointer(), NameVarPtr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -1230,6 +1249,7 @@ var xTaskSetReturnOnCancel func(uintptr, bool) bool
 func (x *Task) SetReturnOnCancel(ReturnOnCancelVar bool) bool {
 
 	cret := xTaskSetReturnOnCancel(x.GoPointer(), ReturnOnCancelVar)
+
 	return cret
 }
 
@@ -1263,7 +1283,11 @@ var xTaskSetStaticName func(uintptr, uintptr)
 // unless a name is set.
 func (x *Task) SetStaticName(NameVar *string) {
 
-	xTaskSetStaticName(x.GoPointer(), core.NullableStringToPtr(NameVar))
+	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+
+	xTaskSetStaticName(x.GoPointer(), NameVarPtr)
+
+	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -1331,6 +1355,7 @@ func (x *Task) GetPropertyCompleted() bool {
 func (x *Task) GetUserData() uintptr {
 
 	cret := XGAsyncResultGetUserData(x.GoPointer())
+
 	return cret
 }
 
@@ -1339,6 +1364,7 @@ func (x *Task) GetUserData() uintptr {
 func (x *Task) IsTagged(SourceTagVar uintptr) bool {
 
 	cret := XGAsyncResultIsTagged(x.GoPointer(), SourceTagVar)
+
 	return cret
 }
 
@@ -1356,6 +1382,7 @@ func (x *Task) LegacyPropagateError() (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGAsyncResultLegacyPropagateError(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1371,6 +1398,7 @@ var xTaskIsValid func(uintptr, uintptr) bool
 func TaskIsValid(ResultVar AsyncResult, SourceObjectVar *gobject.Object) bool {
 
 	cret := xTaskIsValid(ResultVar.GoPointer(), SourceObjectVar.GoPointer())
+
 	return cret
 }
 

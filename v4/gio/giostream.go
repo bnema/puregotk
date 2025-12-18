@@ -537,6 +537,7 @@ func (x *IOStream) Close(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xIOStreamClose(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -584,6 +585,7 @@ func (x *IOStream) CloseFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xIOStreamCloseFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -633,6 +635,7 @@ var xIOStreamHasPending func(uintptr) bool
 func (x *IOStream) HasPending() bool {
 
 	cret := xIOStreamHasPending(x.GoPointer())
+
 	return cret
 }
 
@@ -642,6 +645,7 @@ var xIOStreamIsClosed func(uintptr) bool
 func (x *IOStream) IsClosed() bool {
 
 	cret := xIOStreamIsClosed(x.GoPointer())
+
 	return cret
 }
 
@@ -654,6 +658,7 @@ func (x *IOStream) SetPending() (bool, error) {
 	var cerr *glib.Error
 
 	cret := xIOStreamSetPending(x.GoPointer())
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -717,6 +722,7 @@ func IOStreamSpliceFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xIOStreamSpliceFinish(ResultVar.GoPointer(), &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

@@ -120,6 +120,7 @@ var xEventControllerScrollGetFlags func(uintptr) EventControllerScrollFlags
 func (x *EventControllerScroll) GetFlags() EventControllerScrollFlags {
 
 	cret := xEventControllerScrollGetFlags(x.GoPointer())
+
 	return cret
 }
 
@@ -133,6 +134,7 @@ var xEventControllerScrollGetUnit func(uintptr) gdk.ScrollUnit
 func (x *EventControllerScroll) GetUnit() gdk.ScrollUnit {
 
 	cret := xEventControllerScrollGetUnit(x.GoPointer())
+
 	return cret
 }
 

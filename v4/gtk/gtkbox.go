@@ -110,6 +110,7 @@ var xBoxGetBaselineChild func(uintptr) int
 func (x *Box) GetBaselineChild() int {
 
 	cret := xBoxGetBaselineChild(x.GoPointer())
+
 	return cret
 }
 
@@ -119,6 +120,7 @@ var xBoxGetBaselinePosition func(uintptr) BaselinePosition
 func (x *Box) GetBaselinePosition() BaselinePosition {
 
 	cret := xBoxGetBaselinePosition(x.GoPointer())
+
 	return cret
 }
 
@@ -130,6 +132,7 @@ var xBoxGetHomogeneous func(uintptr) bool
 func (x *Box) GetHomogeneous() bool {
 
 	cret := xBoxGetHomogeneous(x.GoPointer())
+
 	return cret
 }
 
@@ -139,6 +142,7 @@ var xBoxGetSpacing func(uintptr) int
 func (x *Box) GetSpacing() int {
 
 	cret := xBoxGetSpacing(x.GoPointer())
+
 	return cret
 }
 
@@ -337,6 +341,7 @@ func (x *Box) GetAccessibleParent() *AccessibleBase {
 func (x *Box) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -362,6 +367,7 @@ func (x *Box) GetAtContext() *ATContext {
 func (x *Box) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -401,6 +407,7 @@ func (x *Box) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Box) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -577,6 +584,7 @@ func (x *Box) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Valu
 func (x *Box) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -584,6 +592,7 @@ func (x *Box) GetBuildableId() string {
 func (x *Box) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
+
 	return cret
 }
 

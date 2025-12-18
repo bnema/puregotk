@@ -155,6 +155,7 @@ var xSurfaceCreateSimilarSurface func(uintptr, cairo.Content, int, int) *cairo.S
 func (x *Surface) CreateSimilarSurface(ContentVar cairo.Content, WidthVar int, HeightVar int) *cairo.Surface {
 
 	cret := xSurfaceCreateSimilarSurface(x.GoPointer(), ContentVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -251,6 +252,7 @@ var xSurfaceGetDevicePosition func(uintptr, uintptr, *float64, *float64, *Modifi
 func (x *Surface) GetDevicePosition(DeviceVar *Device, XVar *float64, YVar *float64, MaskVar *ModifierType) bool {
 
 	cret := xSurfaceGetDevicePosition(x.GoPointer(), DeviceVar.GoPointer(), XVar, YVar, MaskVar)
+
 	return cret
 }
 
@@ -300,6 +302,7 @@ var xSurfaceGetHeight func(uintptr) int
 func (x *Surface) GetHeight() int {
 
 	cret := xSurfaceGetHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -312,6 +315,7 @@ var xSurfaceGetMapped func(uintptr) bool
 func (x *Surface) GetMapped() bool {
 
 	cret := xSurfaceGetMapped(x.GoPointer())
+
 	return cret
 }
 
@@ -331,6 +335,7 @@ var xSurfaceGetScale func(uintptr) float64
 func (x *Surface) GetScale() float64 {
 
 	cret := xSurfaceGetScale(x.GoPointer())
+
 	return cret
 }
 
@@ -350,6 +355,7 @@ var xSurfaceGetScaleFactor func(uintptr) int
 func (x *Surface) GetScaleFactor() int {
 
 	cret := xSurfaceGetScaleFactor(x.GoPointer())
+
 	return cret
 }
 
@@ -362,6 +368,7 @@ var xSurfaceGetWidth func(uintptr) int
 func (x *Surface) GetWidth() int {
 
 	cret := xSurfaceGetWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -385,6 +392,7 @@ var xSurfaceIsDestroyed func(uintptr) bool
 func (x *Surface) IsDestroyed() bool {
 
 	cret := xSurfaceIsDestroyed(x.GoPointer())
+
 	return cret
 }
 
@@ -497,6 +505,7 @@ var xSurfaceTranslateCoordinates func(uintptr, uintptr, float64, float64) bool
 func (x *Surface) TranslateCoordinates(ToVar *Surface, XVar float64, YVar float64) bool {
 
 	cret := xSurfaceTranslateCoordinates(x.GoPointer(), ToVar.GoPointer(), XVar, YVar)
+
 	return cret
 }
 

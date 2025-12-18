@@ -67,6 +67,7 @@ var xLayoutSlotGetSlotId func(uintptr) string
 func (x *LayoutSlot) GetSlotId() string {
 
 	cret := xLayoutSlotGetSlotId(x.GoPointer())
+
 	return cret
 }
 
@@ -137,6 +138,7 @@ func (x *LayoutSlot) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *LayoutSlot) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -162,6 +164,7 @@ func (x *LayoutSlot) GetAtContext() *gtk.ATContext {
 func (x *LayoutSlot) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -201,6 +204,7 @@ func (x *LayoutSlot) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *LayoutSlot) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -377,6 +381,7 @@ func (x *LayoutSlot) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessible
 func (x *LayoutSlot) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

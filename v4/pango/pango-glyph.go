@@ -2,6 +2,7 @@
 package pango
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -88,6 +89,7 @@ var xNewGlyphString func() *GlyphString
 func NewGlyphString() *GlyphString {
 
 	cret := xNewGlyphString()
+
 	return cret
 }
 
@@ -97,6 +99,7 @@ var xGlyphStringCopy func(uintptr) *GlyphString
 func (x *GlyphString) Copy() *GlyphString {
 
 	cret := xGlyphStringCopy(x.GoPointer())
+
 	return cret
 }
 
@@ -164,6 +167,7 @@ var xGlyphStringGetWidth func(uintptr) int
 func (x *GlyphString) GetWidth() int {
 
 	cret := xGlyphStringGetWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -332,7 +336,11 @@ var xShapeFull func(string, int, uintptr, int, *Analysis, *GlyphString)
 // [func@Pango.shape_full].
 func ShapeFull(ItemTextVar string, ItemLengthVar int, ParagraphTextVar *string, ParagraphLengthVar int, AnalysisVar *Analysis, GlyphsVar *GlyphString) {
 
-	xShapeFull(ItemTextVar, ItemLengthVar, core.NullableStringToPtr(ParagraphTextVar), ParagraphLengthVar, AnalysisVar, GlyphsVar)
+	ParagraphTextVarPtr, ParagraphTextVarBytes := core.NullableStringToPtr(ParagraphTextVar)
+
+	xShapeFull(ItemTextVar, ItemLengthVar, ParagraphTextVarPtr, ParagraphLengthVar, AnalysisVar, GlyphsVar)
+
+	runtime.KeepAlive(ParagraphTextVarBytes)
 
 }
 
@@ -353,7 +361,11 @@ var xShapeItem func(*Item, uintptr, int, *LogAttr, *GlyphString, ShapeFlags)
 // [func@Pango.shape_with_flags].
 func ShapeItem(ItemVar *Item, ParagraphTextVar *string, ParagraphLengthVar int, LogAttrsVar *LogAttr, GlyphsVar *GlyphString, FlagsVar ShapeFlags) {
 
-	xShapeItem(ItemVar, core.NullableStringToPtr(ParagraphTextVar), ParagraphLengthVar, LogAttrsVar, GlyphsVar, FlagsVar)
+	ParagraphTextVarPtr, ParagraphTextVarBytes := core.NullableStringToPtr(ParagraphTextVar)
+
+	xShapeItem(ItemVar, ParagraphTextVarPtr, ParagraphLengthVar, LogAttrsVar, GlyphsVar, FlagsVar)
+
+	runtime.KeepAlive(ParagraphTextVarBytes)
 
 }
 
@@ -379,7 +391,11 @@ var xShapeWithFlags func(string, int, uintptr, int, *Analysis, *GlyphString, Sha
 // [func@Pango.shape_with_flags].
 func ShapeWithFlags(ItemTextVar string, ItemLengthVar int, ParagraphTextVar *string, ParagraphLengthVar int, AnalysisVar *Analysis, GlyphsVar *GlyphString, FlagsVar ShapeFlags) {
 
-	xShapeWithFlags(ItemTextVar, ItemLengthVar, core.NullableStringToPtr(ParagraphTextVar), ParagraphLengthVar, AnalysisVar, GlyphsVar, FlagsVar)
+	ParagraphTextVarPtr, ParagraphTextVarBytes := core.NullableStringToPtr(ParagraphTextVar)
+
+	xShapeWithFlags(ItemTextVar, ItemLengthVar, ParagraphTextVarPtr, ParagraphLengthVar, AnalysisVar, GlyphsVar, FlagsVar)
+
+	runtime.KeepAlive(ParagraphTextVarBytes)
 
 }
 

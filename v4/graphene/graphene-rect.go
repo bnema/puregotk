@@ -46,6 +46,7 @@ var xRectContainsPoint func(uintptr, *Point) bool
 func (x *Rect) ContainsPoint(PVar *Point) bool {
 
 	cret := xRectContainsPoint(x.GoPointer(), PVar)
+
 	return cret
 }
 
@@ -56,6 +57,7 @@ var xRectContainsRect func(uintptr, *Rect) bool
 func (x *Rect) ContainsRect(BVar *Rect) bool {
 
 	cret := xRectContainsRect(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -65,6 +67,7 @@ var xRectEqual func(uintptr, *Rect) bool
 func (x *Rect) Equal(BVar *Rect) bool {
 
 	cret := xRectEqual(x.GoPointer(), BVar)
+
 	return cret
 }
 
@@ -92,6 +95,7 @@ var xRectGetArea func(uintptr) float32
 func (x *Rect) GetArea() float32 {
 
 	cret := xRectGetArea(x.GoPointer())
+
 	return cret
 }
 
@@ -128,6 +132,7 @@ var xRectGetHeight func(uintptr) float32
 func (x *Rect) GetHeight() float32 {
 
 	cret := xRectGetHeight(x.GoPointer())
+
 	return cret
 }
 
@@ -164,6 +169,7 @@ var xRectGetWidth func(uintptr) float32
 func (x *Rect) GetWidth() float32 {
 
 	cret := xRectGetWidth(x.GoPointer())
+
 	return cret
 }
 
@@ -174,6 +180,7 @@ var xRectGetX func(uintptr) float32
 func (x *Rect) GetX() float32 {
 
 	cret := xRectGetX(x.GoPointer())
+
 	return cret
 }
 
@@ -184,6 +191,7 @@ var xRectGetY func(uintptr) float32
 func (x *Rect) GetY() float32 {
 
 	cret := xRectGetY(x.GoPointer())
+
 	return cret
 }
 
@@ -196,6 +204,7 @@ var xRectInit func(uintptr, float32, float32, float32, float32) *Rect
 func (x *Rect) Init(XVar float32, YVar float32, WidthVar float32, HeightVar float32) *Rect {
 
 	cret := xRectInit(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -208,6 +217,7 @@ var xRectInitFromRect func(uintptr, *Rect) *Rect
 func (x *Rect) InitFromRect(SrcVar *Rect) *Rect {
 
 	cret := xRectInitFromRect(x.GoPointer(), SrcVar)
+
 	return cret
 }
 
@@ -230,6 +240,7 @@ var xRectInset func(uintptr, float32, float32) *Rect
 func (x *Rect) Inset(DXVar float32, DYVar float32) *Rect {
 
 	cret := xRectInset(x.GoPointer(), DXVar, DYVar)
+
 	return cret
 }
 
@@ -278,6 +289,7 @@ var xRectIntersection func(uintptr, *Rect, *Rect) bool
 func (x *Rect) Intersection(BVar *Rect, ResVar *Rect) bool {
 
 	cret := xRectIntersection(x.GoPointer(), BVar, ResVar)
+
 	return cret
 }
 
@@ -291,6 +303,7 @@ var xRectNormalize func(uintptr) *Rect
 func (x *Rect) Normalize() *Rect {
 
 	cret := xRectNormalize(x.GoPointer())
+
 	return cret
 }
 
@@ -315,6 +328,7 @@ var xRectOffset func(uintptr, float32, float32) *Rect
 func (x *Rect) Offset(DXVar float32, DYVar float32) *Rect {
 
 	cret := xRectOffset(x.GoPointer(), DXVar, DYVar)
+
 	return cret
 }
 
@@ -383,6 +397,7 @@ var xRectRoundToPixel func(uintptr) *Rect
 func (x *Rect) RoundToPixel() *Rect {
 
 	cret := xRectRoundToPixel(x.GoPointer())
+
 	return cret
 }
 
@@ -417,6 +432,7 @@ var xRectAlloc func() *Rect
 func RectAlloc() *Rect {
 
 	cret := xRectAlloc()
+
 	return cret
 }
 
@@ -427,6 +443,7 @@ var xRectZero func() *Rect
 func RectZero() *Rect {
 
 	cret := xRectZero()
+
 	return cret
 }
 

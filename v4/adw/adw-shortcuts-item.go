@@ -92,6 +92,7 @@ var xShortcutsItemGetAccelerator func(uintptr) string
 func (x *ShortcutsItem) GetAccelerator() string {
 
 	cret := xShortcutsItemGetAccelerator(x.GoPointer())
+
 	return cret
 }
 
@@ -101,6 +102,7 @@ var xShortcutsItemGetActionName func(uintptr) string
 func (x *ShortcutsItem) GetActionName() string {
 
 	cret := xShortcutsItemGetActionName(x.GoPointer())
+
 	return cret
 }
 
@@ -110,6 +112,7 @@ var xShortcutsItemGetDirection func(uintptr) gtk.TextDirection
 func (x *ShortcutsItem) GetDirection() gtk.TextDirection {
 
 	cret := xShortcutsItemGetDirection(x.GoPointer())
+
 	return cret
 }
 
@@ -119,6 +122,7 @@ var xShortcutsItemGetSubtitle func(uintptr) string
 func (x *ShortcutsItem) GetSubtitle() string {
 
 	cret := xShortcutsItemGetSubtitle(x.GoPointer())
+
 	return cret
 }
 
@@ -128,6 +132,7 @@ var xShortcutsItemGetTitle func(uintptr) string
 func (x *ShortcutsItem) GetTitle() string {
 
 	cret := xShortcutsItemGetTitle(x.GoPointer())
+
 	return cret
 }
 

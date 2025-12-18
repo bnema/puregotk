@@ -188,6 +188,7 @@ var xKeyvalTriggerGetKeyval func(uintptr) uint
 func (x *KeyvalTrigger) GetKeyval() uint {
 
 	cret := xKeyvalTriggerGetKeyval(x.GoPointer())
+
 	return cret
 }
 
@@ -198,6 +199,7 @@ var xKeyvalTriggerGetModifiers func(uintptr) gdk.ModifierType
 func (x *KeyvalTrigger) GetModifiers() gdk.ModifierType {
 
 	cret := xKeyvalTriggerGetModifiers(x.GoPointer())
+
 	return cret
 }
 
@@ -275,6 +277,7 @@ var xMnemonicTriggerGetKeyval func(uintptr) uint
 func (x *MnemonicTrigger) GetKeyval() uint {
 
 	cret := xMnemonicTriggerGetKeyval(x.GoPointer())
+
 	return cret
 }
 
@@ -422,6 +425,7 @@ var xShortcutTriggerCompare func(uintptr, uintptr) int
 func (x *ShortcutTrigger) Compare(Trigger2Var uintptr) int {
 
 	cret := xShortcutTriggerCompare(x.GoPointer(), Trigger2Var)
+
 	return cret
 }
 
@@ -434,6 +438,7 @@ var xShortcutTriggerEqual func(uintptr, uintptr) bool
 func (x *ShortcutTrigger) Equal(Trigger2Var uintptr) bool {
 
 	cret := xShortcutTriggerEqual(x.GoPointer(), Trigger2Var)
+
 	return cret
 }
 
@@ -451,6 +456,7 @@ var xShortcutTriggerHash func(uintptr) uint
 func (x *ShortcutTrigger) Hash() uint {
 
 	cret := xShortcutTriggerHash(x.GoPointer())
+
 	return cret
 }
 
@@ -483,6 +489,7 @@ var xShortcutTriggerPrintLabel func(uintptr, uintptr, *glib.String) bool
 func (x *ShortcutTrigger) PrintLabel(DisplayVar *gdk.Display, StringVar *glib.String) bool {
 
 	cret := xShortcutTriggerPrintLabel(x.GoPointer(), DisplayVar.GoPointer(), StringVar)
+
 	return cret
 }
 
@@ -503,6 +510,7 @@ var xShortcutTriggerToLabel func(uintptr, uintptr) string
 func (x *ShortcutTrigger) ToLabel(DisplayVar *gdk.Display) string {
 
 	cret := xShortcutTriggerToLabel(x.GoPointer(), DisplayVar.GoPointer())
+
 	return cret
 }
 
@@ -515,6 +523,7 @@ var xShortcutTriggerToString func(uintptr) string
 func (x *ShortcutTrigger) ToString() string {
 
 	cret := xShortcutTriggerToString(x.GoPointer())
+
 	return cret
 }
 
@@ -524,6 +533,7 @@ var xShortcutTriggerTrigger func(uintptr, uintptr, bool) gdk.KeyMatch
 func (x *ShortcutTrigger) Trigger(EventVar *gdk.Event, EnableMnemonicsVar bool) gdk.KeyMatch {
 
 	cret := xShortcutTriggerTrigger(x.GoPointer(), EventVar.GoPointer(), EnableMnemonicsVar)
+
 	return cret
 }
 

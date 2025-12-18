@@ -106,6 +106,7 @@ func (x *FontChooserWidget) GetAccessibleParent() *AccessibleBase {
 func (x *FontChooserWidget) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -131,6 +132,7 @@ func (x *FontChooserWidget) GetAtContext() *ATContext {
 func (x *FontChooserWidget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -170,6 +172,7 @@ func (x *FontChooserWidget) GetNextAccessibleSibling() *AccessibleBase {
 func (x *FontChooserWidget) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -346,6 +349,7 @@ func (x *FontChooserWidget) UpdateStateValue(NStatesVar int, StatesVar []Accessi
 func (x *FontChooserWidget) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 
@@ -362,6 +366,7 @@ func (x *FontChooserWidget) GetBuildableId() string {
 func (x *FontChooserWidget) GetFont() string {
 
 	cret := XGtkFontChooserGetFont(x.GoPointer())
+
 	return cret
 }
 
@@ -378,6 +383,7 @@ func (x *FontChooserWidget) GetFont() string {
 func (x *FontChooserWidget) GetFontDesc() *pango.FontDescription {
 
 	cret := XGtkFontChooserGetFontDesc(x.GoPointer())
+
 	return cret
 }
 
@@ -426,6 +432,7 @@ func (x *FontChooserWidget) GetFontFamily() *pango.FontFamily {
 func (x *FontChooserWidget) GetFontFeatures() string {
 
 	cret := XGtkFontChooserGetFontFeatures(x.GoPointer())
+
 	return cret
 }
 
@@ -448,6 +455,7 @@ func (x *FontChooserWidget) GetFontMap() *pango.FontMap {
 func (x *FontChooserWidget) GetFontSize() int {
 
 	cret := XGtkFontChooserGetFontSize(x.GoPointer())
+
 	return cret
 }
 
@@ -455,6 +463,7 @@ func (x *FontChooserWidget) GetFontSize() int {
 func (x *FontChooserWidget) GetLanguage() string {
 
 	cret := XGtkFontChooserGetLanguage(x.GoPointer())
+
 	return cret
 }
 
@@ -462,6 +471,7 @@ func (x *FontChooserWidget) GetLanguage() string {
 func (x *FontChooserWidget) GetLevel() FontChooserLevel {
 
 	cret := XGtkFontChooserGetLevel(x.GoPointer())
+
 	return cret
 }
 
@@ -469,6 +479,7 @@ func (x *FontChooserWidget) GetLevel() FontChooserLevel {
 func (x *FontChooserWidget) GetPreviewText() string {
 
 	cret := XGtkFontChooserGetPreviewText(x.GoPointer())
+
 	return cret
 }
 
@@ -476,6 +487,7 @@ func (x *FontChooserWidget) GetPreviewText() string {
 func (x *FontChooserWidget) GetShowPreviewEntry() bool {
 
 	cret := XGtkFontChooserGetShowPreviewEntry(x.GoPointer())
+
 	return cret
 }
 

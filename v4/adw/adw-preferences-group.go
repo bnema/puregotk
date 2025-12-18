@@ -2,6 +2,7 @@
 package adw
 
 import (
+	"runtime"
 	"structs"
 	"unsafe"
 
@@ -153,6 +154,7 @@ var xPreferencesGroupGetDescription func(uintptr) string
 func (x *PreferencesGroup) GetDescription() string {
 
 	cret := xPreferencesGroupGetDescription(x.GoPointer())
+
 	return cret
 }
 
@@ -198,6 +200,7 @@ var xPreferencesGroupGetSeparateRows func(uintptr) bool
 func (x *PreferencesGroup) GetSeparateRows() bool {
 
 	cret := xPreferencesGroupGetSeparateRows(x.GoPointer())
+
 	return cret
 }
 
@@ -207,6 +210,7 @@ var xPreferencesGroupGetTitle func(uintptr) string
 func (x *PreferencesGroup) GetTitle() string {
 
 	cret := xPreferencesGroupGetTitle(x.GoPointer())
+
 	return cret
 }
 
@@ -224,7 +228,11 @@ var xPreferencesGroupSetDescription func(uintptr, uintptr)
 // Sets the description for @self.
 func (x *PreferencesGroup) SetDescription(DescriptionVar *string) {
 
-	xPreferencesGroupSetDescription(x.GoPointer(), core.NullableStringToPtr(DescriptionVar))
+	DescriptionVarPtr, DescriptionVarBytes := core.NullableStringToPtr(DescriptionVar)
+
+	xPreferencesGroupSetDescription(x.GoPointer(), DescriptionVarPtr)
+
+	runtime.KeepAlive(DescriptionVarBytes)
 
 }
 
@@ -368,6 +376,7 @@ func (x *PreferencesGroup) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *PreferencesGroup) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
+
 	return cret
 }
 
@@ -393,6 +402,7 @@ func (x *PreferencesGroup) GetAtContext() *gtk.ATContext {
 func (x *PreferencesGroup) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
+
 	return cret
 }
 
@@ -432,6 +442,7 @@ func (x *PreferencesGroup) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *PreferencesGroup) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
+
 	return cret
 }
 
@@ -608,6 +619,7 @@ func (x *PreferencesGroup) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acce
 func (x *PreferencesGroup) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
+
 	return cret
 }
 

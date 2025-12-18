@@ -328,6 +328,7 @@ func (x *DBusObjectManagerBase) GetObject(ObjectPathVar string) *DBusObjectBase 
 func (x *DBusObjectManagerBase) GetObjectPath() string {
 
 	cret := XGDbusObjectManagerGetObjectPath(x.GoPointer())
+
 	return cret
 }
 
@@ -335,6 +336,7 @@ func (x *DBusObjectManagerBase) GetObjectPath() string {
 func (x *DBusObjectManagerBase) GetObjects() *glib.List {
 
 	cret := XGDbusObjectManagerGetObjects(x.GoPointer())
+
 	return cret
 }
 

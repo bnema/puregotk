@@ -88,6 +88,7 @@ func (c *FileIcon) SetGoPointer(ptr uintptr) {
 func (x *FileIcon) Equal(Icon2Var Icon) bool {
 
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
+
 	return cret
 }
 
@@ -95,6 +96,7 @@ func (x *FileIcon) Equal(Icon2Var Icon) bool {
 func (x *FileIcon) Hash() uint {
 
 	cret := XGIconHash(x.GoPointer())
+
 	return cret
 }
 
@@ -106,6 +108,7 @@ func (x *FileIcon) Hash() uint {
 func (x *FileIcon) Serialize() *glib.Variant {
 
 	cret := XGIconSerialize(x.GoPointer())
+
 	return cret
 }
 
@@ -128,6 +131,7 @@ func (x *FileIcon) Serialize() *glib.Variant {
 func (x *FileIcon) ToString() string {
 
 	cret := XGIconToString(x.GoPointer())
+
 	return cret
 }
 
