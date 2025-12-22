@@ -261,7 +261,7 @@ func (x *Permission) AcquireAsync(CancellableVar *Cancellable, CallbackVar *Asyn
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -385,7 +385,7 @@ func (x *Permission) ReleaseAsync(CancellableVar *Cancellable, CallbackVar *Asyn
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 

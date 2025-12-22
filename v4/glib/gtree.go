@@ -55,7 +55,7 @@ func NewTree(KeyCompareFuncVar *CompareFunc) *Tree {
 				return cbFn(arg0, arg1)
 			}
 			KeyCompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(KeyCompareFuncVarPtr, KeyCompareFuncVarRef)
+			SaveCallbackWithClosure(KeyCompareFuncVarPtr, KeyCompareFuncVarRef, KeyCompareFuncVar)
 		}
 	}
 
@@ -82,7 +82,7 @@ func NewTreeFull(KeyCompareFuncVar *CompareDataFunc, KeyCompareDataVar uintptr, 
 				return cbFn(arg0, arg1, arg2)
 			}
 			KeyCompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(KeyCompareFuncVarPtr, KeyCompareFuncVarRef)
+			SaveCallbackWithClosure(KeyCompareFuncVarPtr, KeyCompareFuncVarRef, KeyCompareFuncVar)
 		}
 	}
 
@@ -97,7 +97,7 @@ func NewTreeFull(KeyCompareFuncVar *CompareDataFunc, KeyCompareDataVar uintptr, 
 				cbFn(arg0)
 			}
 			KeyDestroyFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(KeyDestroyFuncVarPtr, KeyDestroyFuncVarRef)
+			SaveCallbackWithClosure(KeyDestroyFuncVarPtr, KeyDestroyFuncVarRef, KeyDestroyFuncVar)
 		}
 	}
 
@@ -112,7 +112,7 @@ func NewTreeFull(KeyCompareFuncVar *CompareDataFunc, KeyCompareDataVar uintptr, 
 				cbFn(arg0)
 			}
 			ValueDestroyFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ValueDestroyFuncVarPtr, ValueDestroyFuncVarRef)
+			SaveCallbackWithClosure(ValueDestroyFuncVarPtr, ValueDestroyFuncVarRef, ValueDestroyFuncVar)
 		}
 	}
 
@@ -138,7 +138,7 @@ func NewTreeWithData(KeyCompareFuncVar *CompareDataFunc, KeyCompareDataVar uintp
 				return cbFn(arg0, arg1, arg2)
 			}
 			KeyCompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(KeyCompareFuncVarPtr, KeyCompareFuncVarRef)
+			SaveCallbackWithClosure(KeyCompareFuncVarPtr, KeyCompareFuncVarRef, KeyCompareFuncVar)
 		}
 	}
 
@@ -184,7 +184,7 @@ func (x *Tree) Foreach(FuncVar *TraverseFunc, UserDataVar uintptr) {
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -215,7 +215,7 @@ func (x *Tree) ForeachNode(FuncVar *TraverseNodeFunc, UserDataVar uintptr) {
 				return cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -448,7 +448,7 @@ func (x *Tree) Search(SearchFuncVar *CompareFunc, UserDataVar uintptr) uintptr {
 				return cbFn(arg0, arg1)
 			}
 			SearchFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(SearchFuncVarPtr, SearchFuncVarRef)
+			SaveCallbackWithClosure(SearchFuncVarPtr, SearchFuncVarRef, SearchFuncVar)
 		}
 	}
 
@@ -481,7 +481,7 @@ func (x *Tree) SearchNode(SearchFuncVar *CompareFunc, UserDataVar uintptr) *Tree
 				return cbFn(arg0, arg1)
 			}
 			SearchFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(SearchFuncVarPtr, SearchFuncVarRef)
+			SaveCallbackWithClosure(SearchFuncVarPtr, SearchFuncVarRef, SearchFuncVar)
 		}
 	}
 
@@ -519,7 +519,7 @@ func (x *Tree) Traverse(TraverseFuncVar *TraverseFunc, TraverseTypeVar TraverseT
 				return cbFn(arg0, arg1, arg2)
 			}
 			TraverseFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(TraverseFuncVarPtr, TraverseFuncVarRef)
+			SaveCallbackWithClosure(TraverseFuncVarPtr, TraverseFuncVarRef, TraverseFuncVar)
 		}
 	}
 

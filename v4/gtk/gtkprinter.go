@@ -86,7 +86,7 @@ func EnumeratePrinters(FuncVar *PrinterFunc, DataVar uintptr, DestroyVar *glib.D
 				return cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -101,7 +101,7 @@ func EnumeratePrinters(FuncVar *PrinterFunc, DataVar uintptr, DestroyVar *glib.D
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -564,7 +564,7 @@ func (x *Printer) ConnectDetailsAcquired(cb *func(Printer, bool)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "details-acquired", cbRefPtr)
 }
 

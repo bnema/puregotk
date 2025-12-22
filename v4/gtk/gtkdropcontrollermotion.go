@@ -158,7 +158,7 @@ func (x *DropControllerMotion) ConnectEnter(cb *func(DropControllerMotion, float
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
 }
 
@@ -178,7 +178,7 @@ func (x *DropControllerMotion) ConnectLeave(cb *func(DropControllerMotion)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)
 }
 
@@ -198,7 +198,7 @@ func (x *DropControllerMotion) ConnectMotion(cb *func(DropControllerMotion, floa
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "motion", cbRefPtr)
 }
 

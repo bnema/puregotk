@@ -176,7 +176,7 @@ func (x *Drop) ReadAsync(MimeTypesVar []string, IoPriorityVar int, CancellableVa
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -233,7 +233,7 @@ func (x *Drop) ReadValueAsync(TypeVar types.GType, IoPriorityVar int, Cancellabl
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 

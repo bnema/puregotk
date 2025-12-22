@@ -1351,7 +1351,7 @@ func (x *Label) ConnectActivateCurrentLink(cb *func(Label)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate-current-link", cbRefPtr)
 }
 
@@ -1374,7 +1374,7 @@ func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
 }
 
@@ -1398,7 +1398,7 @@ func (x *Label) ConnectCopyClipboard(cb *func(Label)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
 }
 
@@ -1436,7 +1436,7 @@ func (x *Label) ConnectMoveCursor(cb *func(Label, MovementStep, int, bool)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
 }
 

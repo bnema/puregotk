@@ -241,7 +241,7 @@ func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
@@ -296,7 +296,7 @@ func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint3
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
 }
 

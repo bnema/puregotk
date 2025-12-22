@@ -1316,7 +1316,7 @@ func (x *CellArea) Foreach(CallbackVar *CellCallback, CallbackDataVar uintptr) {
 				return cbFn(arg0, arg1)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1341,7 +1341,7 @@ func (x *CellArea) ForeachAlloc(ContextVar *CellAreaContext, WidgetVar *Widget, 
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1705,7 +1705,7 @@ func (x *CellArea) ConnectAddEditable(cb *func(CellArea, uintptr, uintptr, uintp
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "add-editable", cbRefPtr)
 }
 
@@ -1725,7 +1725,7 @@ func (x *CellArea) ConnectApplyAttributes(cb *func(CellArea, uintptr, uintptr, b
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "apply-attributes", cbRefPtr)
 }
 
@@ -1752,7 +1752,7 @@ func (x *CellArea) ConnectFocusChanged(cb *func(CellArea, uintptr, string)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "focus-changed", cbRefPtr)
 }
 
@@ -1773,7 +1773,7 @@ func (x *CellArea) ConnectRemoveEditable(cb *func(CellArea, uintptr, uintptr)) u
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "remove-editable", cbRefPtr)
 }
 

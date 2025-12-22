@@ -107,7 +107,7 @@ func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) ui
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
 }
 

@@ -1073,7 +1073,7 @@ func (x *IMContext) ConnectCommit(cb *func(IMContext, string)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "commit", cbRefPtr)
 }
 
@@ -1094,7 +1094,7 @@ func (x *IMContext) ConnectDeleteSurrounding(cb *func(IMContext, int, int) bool)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "delete-surrounding", cbRefPtr)
 }
 
@@ -1118,7 +1118,7 @@ func (x *IMContext) ConnectPreeditChanged(cb *func(IMContext)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "preedit-changed", cbRefPtr)
 }
 
@@ -1139,7 +1139,7 @@ func (x *IMContext) ConnectPreeditEnd(cb *func(IMContext)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "preedit-end", cbRefPtr)
 }
 
@@ -1160,7 +1160,7 @@ func (x *IMContext) ConnectPreeditStart(cb *func(IMContext)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "preedit-start", cbRefPtr)
 }
 
@@ -1184,7 +1184,7 @@ func (x *IMContext) ConnectRetrieveSurrounding(cb *func(IMContext) bool) uint32 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "retrieve-surrounding", cbRefPtr)
 }
 

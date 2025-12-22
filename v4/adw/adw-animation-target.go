@@ -103,7 +103,7 @@ func NewCallbackAnimationTarget(CallbackVar *AnimationTargetFunc, UserDataVar ui
 				cbFn(arg0, arg1)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -118,7 +118,7 @@ func NewCallbackAnimationTarget(CallbackVar *AnimationTargetFunc, UserDataVar ui
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 

@@ -1064,7 +1064,7 @@ func IoAddWatch(ChannelVar *IOChannel, ConditionVar IOCondition, FuncVar *IOFunc
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1094,7 +1094,7 @@ func IoAddWatchFull(ChannelVar *IOChannel, PriorityVar int, ConditionVar IOCondi
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1109,7 +1109,7 @@ func IoAddWatchFull(ChannelVar *IOChannel, PriorityVar int, ConditionVar IOCondi
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 

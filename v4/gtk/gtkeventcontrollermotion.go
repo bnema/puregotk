@@ -136,7 +136,7 @@ func (x *EventControllerMotion) ConnectEnter(cb *func(EventControllerMotion, flo
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
 }
 
@@ -156,7 +156,7 @@ func (x *EventControllerMotion) ConnectLeave(cb *func(EventControllerMotion)) ui
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)
 }
 
@@ -176,7 +176,7 @@ func (x *EventControllerMotion) ConnectMotion(cb *func(EventControllerMotion, fl
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "motion", cbRefPtr)
 }
 

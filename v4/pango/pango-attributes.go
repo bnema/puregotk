@@ -408,7 +408,7 @@ func (x *AttrList) Filter(FuncVar *AttrFilterFunc, DataVar uintptr) *AttrList {
 				return cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1397,7 +1397,7 @@ func AttrShapeNewWithData(InkRectVar *Rectangle, LogicalRectVar *Rectangle, Data
 				return cbFn(arg0)
 			}
 			CopyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CopyFuncVarPtr, CopyFuncVarRef)
+			glib.SaveCallbackWithClosure(CopyFuncVarPtr, CopyFuncVarRef, CopyFuncVar)
 		}
 	}
 
@@ -1412,7 +1412,7 @@ func AttrShapeNewWithData(InkRectVar *Rectangle, LogicalRectVar *Rectangle, Data
 				cbFn(arg0)
 			}
 			DestroyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyFuncVarPtr, DestroyFuncVarRef)
+			glib.SaveCallbackWithClosure(DestroyFuncVarPtr, DestroyFuncVarRef, DestroyFuncVar)
 		}
 	}
 

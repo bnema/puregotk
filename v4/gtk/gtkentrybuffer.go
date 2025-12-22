@@ -621,7 +621,7 @@ func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint, uint)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "deleted-text", cbRefPtr)
 }
 
@@ -641,7 +641,7 @@ func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint, string, ui
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "inserted-text", cbRefPtr)
 }
 

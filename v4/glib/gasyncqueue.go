@@ -159,7 +159,7 @@ func (x *AsyncQueue) PushSorted(DataVar uintptr, FuncVar *CompareDataFunc, UserD
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -197,7 +197,7 @@ func (x *AsyncQueue) PushSortedUnlocked(DataVar uintptr, FuncVar *CompareDataFun
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -299,7 +299,7 @@ func (x *AsyncQueue) Sort(FuncVar *CompareDataFunc, UserDataVar uintptr) {
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -331,7 +331,7 @@ func (x *AsyncQueue) SortUnlocked(FuncVar *CompareDataFunc, UserDataVar uintptr)
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -492,7 +492,7 @@ func AsyncQueueNewFull(ItemFreeFuncVar *DestroyNotify) *AsyncQueue {
 				cbFn(arg0)
 			}
 			ItemFreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ItemFreeFuncVarPtr, ItemFreeFuncVarRef)
+			SaveCallbackWithClosure(ItemFreeFuncVarPtr, ItemFreeFuncVarRef, ItemFreeFuncVar)
 		}
 	}
 

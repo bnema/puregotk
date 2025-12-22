@@ -147,7 +147,7 @@ func (x *HookList) Marshal(MayRecurseVar bool, MarshallerVar *HookMarshaller, Ma
 				cbFn(arg0, arg1)
 			}
 			MarshallerVarRef = purego.NewCallback(fcb)
-			SaveCallback(MarshallerVarPtr, MarshallerVarRef)
+			SaveCallbackWithClosure(MarshallerVarPtr, MarshallerVarRef, MarshallerVar)
 		}
 	}
 
@@ -172,7 +172,7 @@ func (x *HookList) MarshalCheck(MayRecurseVar bool, MarshallerVar *HookCheckMars
 				return cbFn(arg0, arg1)
 			}
 			MarshallerVarRef = purego.NewCallback(fcb)
-			SaveCallback(MarshallerVarPtr, MarshallerVarRef)
+			SaveCallbackWithClosure(MarshallerVarPtr, MarshallerVarRef, MarshallerVar)
 		}
 	}
 
@@ -257,7 +257,7 @@ func HookInsertSorted(HookListVar *HookList, HookVar *Hook, FuncVar *HookCompare
 				return cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 

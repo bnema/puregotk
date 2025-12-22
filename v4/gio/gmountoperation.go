@@ -840,7 +840,7 @@ func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
 }
 
@@ -864,7 +864,7 @@ func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, str
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
 }
 
@@ -889,7 +889,7 @@ func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []s
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
 }
 
@@ -909,7 +909,7 @@ func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationRes
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
 }
 
@@ -940,7 +940,7 @@ func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, [
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
 }
 
@@ -975,7 +975,7 @@ func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, str
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
 }
 

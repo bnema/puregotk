@@ -406,7 +406,7 @@ func (x *InfoBar) ConnectClose(cb *func(InfoBar)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
 }
 
@@ -430,7 +430,7 @@ func (x *InfoBar) ConnectResponse(cb *func(InfoBar, int)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
 }
 

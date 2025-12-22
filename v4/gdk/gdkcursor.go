@@ -95,7 +95,7 @@ func NewCursorFromCallback(CallbackVar *CursorGetTextureCallback, DataVar uintpt
 				return cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -110,7 +110,7 @@ func NewCursorFromCallback(CallbackVar *CursorGetTextureCallback, DataVar uintpt
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 

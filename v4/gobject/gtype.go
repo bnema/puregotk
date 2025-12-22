@@ -826,7 +826,7 @@ func TypeAddClassCacheFunc(CacheDataVar uintptr, CacheFuncVar *TypeClassCacheFun
 				return cbFn(arg0, arg1)
 			}
 			CacheFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CacheFuncVarPtr, CacheFuncVarRef)
+			glib.SaveCallbackWithClosure(CacheFuncVarPtr, CacheFuncVarRef, CacheFuncVar)
 		}
 	}
 
@@ -885,7 +885,7 @@ func TypeAddInterfaceCheck(CheckDataVar uintptr, CheckFuncVar *TypeInterfaceChec
 				cbFn(arg0, arg1)
 			}
 			CheckFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CheckFuncVarPtr, CheckFuncVarRef)
+			glib.SaveCallbackWithClosure(CheckFuncVarPtr, CheckFuncVarRef, CheckFuncVar)
 		}
 	}
 
@@ -1559,7 +1559,7 @@ func TypeRegisterStaticSimple(ParentTypeVar types.GType, TypeNameVar string, Cla
 				cbFn(arg0, arg1)
 			}
 			ClassInitVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(ClassInitVarPtr, ClassInitVarRef)
+			glib.SaveCallbackWithClosure(ClassInitVarPtr, ClassInitVarRef, ClassInitVar)
 		}
 	}
 
@@ -1574,7 +1574,7 @@ func TypeRegisterStaticSimple(ParentTypeVar types.GType, TypeNameVar string, Cla
 				cbFn(arg0, arg1)
 			}
 			InstanceInitVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(InstanceInitVarPtr, InstanceInitVarRef)
+			glib.SaveCallbackWithClosure(InstanceInitVarPtr, InstanceInitVarRef, InstanceInitVar)
 		}
 	}
 
@@ -1601,7 +1601,7 @@ func TypeRemoveClassCacheFunc(CacheDataVar uintptr, CacheFuncVar *TypeClassCache
 				return cbFn(arg0, arg1)
 			}
 			CacheFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CacheFuncVarPtr, CacheFuncVarRef)
+			glib.SaveCallbackWithClosure(CacheFuncVarPtr, CacheFuncVarRef, CacheFuncVar)
 		}
 	}
 
@@ -1626,7 +1626,7 @@ func TypeRemoveInterfaceCheck(CheckDataVar uintptr, CheckFuncVar *TypeInterfaceC
 				cbFn(arg0, arg1)
 			}
 			CheckFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CheckFuncVarPtr, CheckFuncVarRef)
+			glib.SaveCallbackWithClosure(CheckFuncVarPtr, CheckFuncVarRef, CheckFuncVar)
 		}
 	}
 

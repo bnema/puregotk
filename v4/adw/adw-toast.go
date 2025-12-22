@@ -671,7 +671,7 @@ func (x *Toast) ConnectButtonClicked(cb *func(Toast)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
 }
 
@@ -691,7 +691,7 @@ func (x *Toast) ConnectDismissed(cb *func(Toast)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "dismissed", cbRefPtr)
 }
 

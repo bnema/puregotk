@@ -214,7 +214,7 @@ func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) b
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
 }
 

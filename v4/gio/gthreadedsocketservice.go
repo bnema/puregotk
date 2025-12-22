@@ -276,7 +276,7 @@ func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, uintp
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)
 }
 

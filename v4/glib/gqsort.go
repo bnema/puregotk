@@ -28,7 +28,7 @@ func QsortWithData(PbaseVar uintptr, TotalElemsVar int, SizeVar uint, CompareFun
 				return cbFn(arg0, arg1, arg2)
 			}
 			CompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+			SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
 		}
 	}
 
@@ -56,7 +56,7 @@ func SortArray(ArrayVar []uintptr, NElementsVar uint, ElementSizeVar uint, Compa
 				return cbFn(arg0, arg1, arg2)
 			}
 			CompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+			SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
 		}
 	}
 

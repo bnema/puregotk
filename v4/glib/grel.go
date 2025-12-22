@@ -118,7 +118,7 @@ func (x *Relation) Index(FieldVar int, HashFuncVar *HashFunc, KeyEqualFuncVar *E
 				return cbFn(arg0)
 			}
 			HashFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(HashFuncVarPtr, HashFuncVarRef)
+			SaveCallbackWithClosure(HashFuncVarPtr, HashFuncVarRef, HashFuncVar)
 		}
 	}
 
@@ -133,7 +133,7 @@ func (x *Relation) Index(FieldVar int, HashFuncVar *HashFunc, KeyEqualFuncVar *E
 				return cbFn(arg0, arg1)
 			}
 			KeyEqualFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(KeyEqualFuncVarPtr, KeyEqualFuncVarRef)
+			SaveCallbackWithClosure(KeyEqualFuncVarPtr, KeyEqualFuncVarRef, KeyEqualFuncVar)
 		}
 	}
 

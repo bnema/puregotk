@@ -627,7 +627,7 @@ func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc,
 				return cbFn(arg0, arg1, arg2)
 			}
 			UriFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UriFuncVarPtr, UriFuncVarRef)
+			glib.SaveCallbackWithClosure(UriFuncVarPtr, UriFuncVarRef, UriFuncVar)
 		}
 	}
 
@@ -642,7 +642,7 @@ func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc,
 				cbFn(arg0)
 			}
 			UriDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UriDestroyVarPtr, UriDestroyVarRef)
+			glib.SaveCallbackWithClosure(UriDestroyVarPtr, UriDestroyVarRef, UriDestroyVar)
 		}
 	}
 
@@ -657,7 +657,7 @@ func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc,
 				return cbFn(arg0, arg1, arg2)
 			}
 			ParseNameFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(ParseNameFuncVarPtr, ParseNameFuncVarRef)
+			glib.SaveCallbackWithClosure(ParseNameFuncVarPtr, ParseNameFuncVarRef, ParseNameFuncVar)
 		}
 	}
 
@@ -672,7 +672,7 @@ func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc,
 				cbFn(arg0)
 			}
 			ParseNameDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(ParseNameDestroyVarPtr, ParseNameDestroyVarRef)
+			glib.SaveCallbackWithClosure(ParseNameDestroyVarPtr, ParseNameDestroyVarRef, ParseNameDestroyVar)
 		}
 	}
 

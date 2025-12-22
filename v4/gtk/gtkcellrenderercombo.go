@@ -151,7 +151,7 @@ func (x *CellRendererCombo) ConnectChanged(cb *func(CellRendererCombo, string, u
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
 }
 

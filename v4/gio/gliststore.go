@@ -112,7 +112,7 @@ func (x *ListStore) FindWithEqualFunc(ItemVar *gobject.Object, EqualFuncVar *gli
 				return cbFn(arg0, arg1)
 			}
 			EqualFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(EqualFuncVarPtr, EqualFuncVarRef)
+			glib.SaveCallbackWithClosure(EqualFuncVarPtr, EqualFuncVarRef, EqualFuncVar)
 		}
 	}
 
@@ -142,7 +142,7 @@ func (x *ListStore) FindWithEqualFuncFull(ItemVar *gobject.Object, EqualFuncVar 
 				return cbFn(arg0, arg1, arg2)
 			}
 			EqualFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(EqualFuncVarPtr, EqualFuncVarRef)
+			glib.SaveCallbackWithClosure(EqualFuncVarPtr, EqualFuncVarRef, EqualFuncVar)
 		}
 	}
 
@@ -190,7 +190,7 @@ func (x *ListStore) InsertSorted(ItemVar *gobject.Object, CompareFuncVar *glib.C
 				return cbFn(arg0, arg1, arg2)
 			}
 			CompareFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+			glib.SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
 		}
 	}
 
@@ -237,7 +237,7 @@ func (x *ListStore) Sort(CompareFuncVar *glib.CompareDataFunc, UserDataVar uintp
 				return cbFn(arg0, arg1, arg2)
 			}
 			CompareFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+			glib.SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
 		}
 	}
 

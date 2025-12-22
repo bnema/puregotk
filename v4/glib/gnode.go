@@ -80,7 +80,7 @@ func (x *Node) ChildrenForeach(FlagsVar TraverseFlags, FuncVar *NodeForeachFunc,
 				cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -115,7 +115,7 @@ func (x *Node) CopyDeep(CopyFuncVar *CopyFunc, DataVar uintptr) *Node {
 				return cbFn(arg0, arg1)
 			}
 			CopyFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CopyFuncVarPtr, CopyFuncVarRef)
+			SaveCallbackWithClosure(CopyFuncVarPtr, CopyFuncVarRef, CopyFuncVar)
 		}
 	}
 
@@ -336,7 +336,7 @@ func (x *Node) Traverse(OrderVar TraverseType, FlagsVar TraverseFlags, MaxDepthV
 				return cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 

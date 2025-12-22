@@ -1559,7 +1559,7 @@ func AppInfoGetDefaultForTypeAsync(ContentTypeVar string, MustSupportUrisVar boo
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1630,7 +1630,7 @@ func AppInfoGetDefaultForUriSchemeAsync(UriSchemeVar string, CancellableVar *Can
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1736,7 +1736,7 @@ func AppInfoLaunchDefaultForUriAsync(UriVar string, ContextVar *AppLaunchContext
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1855,7 +1855,7 @@ func (x *AppInfoMonitor) ConnectChanged(cb *func(AppInfoMonitor)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
 }
 
@@ -2037,7 +2037,7 @@ func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "launch-failed", cbRefPtr)
 }
 
@@ -2075,7 +2075,7 @@ func (x *AppLaunchContext) ConnectLaunchStarted(cb *func(AppLaunchContext, uintp
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "launch-started", cbRefPtr)
 }
 
@@ -2115,7 +2115,7 @@ func (x *AppLaunchContext) ConnectLaunched(cb *func(AppLaunchContext, uintptr, u
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "launched", cbRefPtr)
 }
 

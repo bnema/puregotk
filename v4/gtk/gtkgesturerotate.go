@@ -98,7 +98,7 @@ func (x *GestureRotate) ConnectAngleChanged(cb *func(GestureRotate, float64, flo
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "angle-changed", cbRefPtr)
 }
 

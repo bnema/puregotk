@@ -49,7 +49,7 @@ func NewMarkupParseContext(ParserVar *MarkupParser, FlagsVar MarkupParseFlags, U
 				cbFn(arg0)
 			}
 			UserDataDnotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(UserDataDnotifyVarPtr, UserDataDnotifyVarRef)
+			SaveCallbackWithClosure(UserDataDnotifyVarPtr, UserDataDnotifyVarRef, UserDataDnotifyVar)
 		}
 	}
 

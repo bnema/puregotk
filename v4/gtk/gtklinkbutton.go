@@ -229,7 +229,7 @@ func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
 }
 

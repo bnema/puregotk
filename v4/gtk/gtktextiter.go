@@ -151,7 +151,7 @@ func (x *TextIter) BackwardFindChar(PredVar *TextCharPredicate, UserDataVar uint
 				return cbFn(arg0, arg1)
 			}
 			PredVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(PredVarPtr, PredVarRef)
+			glib.SaveCallbackWithClosure(PredVarPtr, PredVarRef, PredVar)
 		}
 	}
 
@@ -609,7 +609,7 @@ func (x *TextIter) ForwardFindChar(PredVar *TextCharPredicate, UserDataVar uintp
 				return cbFn(arg0, arg1)
 			}
 			PredVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(PredVarPtr, PredVarRef)
+			glib.SaveCallbackWithClosure(PredVarPtr, PredVarRef, PredVar)
 		}
 	}
 

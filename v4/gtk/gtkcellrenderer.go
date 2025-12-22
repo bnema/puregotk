@@ -964,7 +964,7 @@ func (x *CellRenderer) ConnectEditingCanceled(cb *func(CellRenderer)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "editing-canceled", cbRefPtr)
 }
 
@@ -1016,7 +1016,7 @@ func (x *CellRenderer) ConnectEditingStarted(cb *func(CellRenderer, uintptr, str
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "editing-started", cbRefPtr)
 }
 

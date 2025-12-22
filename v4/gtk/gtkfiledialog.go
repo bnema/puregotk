@@ -197,7 +197,7 @@ func (x *FileDialog) Open(ParentVar *Window, CancellableVar *gio.Cancellable, Ca
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -252,7 +252,7 @@ func (x *FileDialog) OpenMultiple(ParentVar *Window, CancellableVar *gio.Cancell
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -310,7 +310,7 @@ func (x *FileDialog) OpenMultipleTextFiles(ParentVar *Window, CancellableVar *gi
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -364,7 +364,7 @@ func (x *FileDialog) OpenTextFile(ParentVar *Window, CancellableVar *gio.Cancell
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -422,7 +422,7 @@ func (x *FileDialog) Save(ParentVar *Window, CancellableVar *gio.Cancellable, Ca
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -477,7 +477,7 @@ func (x *FileDialog) SaveTextFile(ParentVar *Window, CancellableVar *gio.Cancell
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -542,7 +542,7 @@ func (x *FileDialog) SelectFolder(ParentVar *Window, CancellableVar *gio.Cancell
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -598,7 +598,7 @@ func (x *FileDialog) SelectMultipleFolders(ParentVar *Window, CancellableVar *gi
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 

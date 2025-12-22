@@ -112,7 +112,7 @@ func (x *GesturePan) ConnectPan(cb *func(GesturePan, PanDirection, float64)) uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "pan", cbRefPtr)
 }
 

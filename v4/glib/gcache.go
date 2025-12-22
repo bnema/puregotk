@@ -92,7 +92,7 @@ func (x *Cache) KeyForeach(FuncVar *HFunc, UserDataVar uintptr) {
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -127,7 +127,7 @@ func (x *Cache) ValueForeach(FuncVar *HFunc, UserDataVar uintptr) {
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 

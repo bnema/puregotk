@@ -239,7 +239,7 @@ func NewMemoryOutputStream(DataVar uintptr, SizeVar uint, ReallocFunctionVar *Re
 				return cbFn(arg0, arg1)
 			}
 			ReallocFunctionVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(ReallocFunctionVarPtr, ReallocFunctionVarRef)
+			glib.SaveCallbackWithClosure(ReallocFunctionVarPtr, ReallocFunctionVarRef, ReallocFunctionVar)
 		}
 	}
 
@@ -254,7 +254,7 @@ func NewMemoryOutputStream(DataVar uintptr, SizeVar uint, ReallocFunctionVar *Re
 				cbFn(arg0)
 			}
 			DestroyFunctionVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyFunctionVarPtr, DestroyFunctionVarRef)
+			glib.SaveCallbackWithClosure(DestroyFunctionVarPtr, DestroyFunctionVarRef, DestroyFunctionVar)
 		}
 	}
 

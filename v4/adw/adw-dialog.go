@@ -642,7 +642,7 @@ func (x *Dialog) ConnectCloseAttempt(cb *func(Dialog)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
 }
 
@@ -662,7 +662,7 @@ func (x *Dialog) ConnectClosed(cb *func(Dialog)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
 }
 

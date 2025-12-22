@@ -87,7 +87,7 @@ func (x *GestureClick) ConnectPressed(cb *func(GestureClick, int, float64, float
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
 }
 
@@ -112,7 +112,7 @@ func (x *GestureClick) ConnectReleased(cb *func(GestureClick, int, float64, floa
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "released", cbRefPtr)
 }
 
@@ -132,7 +132,7 @@ func (x *GestureClick) ConnectStopped(cb *func(GestureClick)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "stopped", cbRefPtr)
 }
 
@@ -157,7 +157,7 @@ func (x *GestureClick) ConnectUnpairedRelease(cb *func(GestureClick, float64, fl
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "unpaired-release", cbRefPtr)
 }
 

@@ -208,7 +208,7 @@ func (x *Subprocess) CommunicateAsync(StdinBufVar *glib.Bytes, CancellableVar *C
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -271,7 +271,7 @@ func (x *Subprocess) CommunicateUtf8Async(StdinBufVar *string, CancellableVar *C
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -545,7 +545,7 @@ func (x *Subprocess) WaitAsync(CancellableVar *Cancellable, CallbackVar *AsyncRe
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -586,7 +586,7 @@ func (x *Subprocess) WaitCheckAsync(CancellableVar *Cancellable, CallbackVar *As
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 

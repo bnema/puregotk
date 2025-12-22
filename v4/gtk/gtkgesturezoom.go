@@ -100,7 +100,7 @@ func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint32
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "scale-changed", cbRefPtr)
 }
 

@@ -52,7 +52,7 @@ func (x *Queue) ClearFull(FreeFuncVar *DestroyNotify) {
 				cbFn(arg0)
 			}
 			FreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FreeFuncVarPtr, FreeFuncVarRef)
+			SaveCallbackWithClosure(FreeFuncVarPtr, FreeFuncVarRef, FreeFuncVar)
 		}
 	}
 
@@ -113,7 +113,7 @@ func (x *Queue) FindCustom(DataVar uintptr, FuncVar *CompareFunc) *List {
 				return cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -142,7 +142,7 @@ func (x *Queue) Foreach(FuncVar *Func, UserDataVar uintptr) {
 				cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -184,7 +184,7 @@ func (x *Queue) FreeFull(FreeFuncVar *DestroyNotify) {
 				cbFn(arg0)
 			}
 			FreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FreeFuncVarPtr, FreeFuncVarRef)
+			SaveCallbackWithClosure(FreeFuncVarPtr, FreeFuncVarRef, FreeFuncVar)
 		}
 	}
 
@@ -286,7 +286,7 @@ func (x *Queue) InsertSorted(DataVar uintptr, FuncVar *CompareDataFunc, UserData
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -533,7 +533,7 @@ func (x *Queue) Sort(CompareFuncVar *CompareDataFunc, UserDataVar uintptr) {
 				return cbFn(arg0, arg1, arg2)
 			}
 			CompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+			SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
 		}
 	}
 

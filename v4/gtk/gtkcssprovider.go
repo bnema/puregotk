@@ -235,7 +235,7 @@ func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, uintptr
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "parsing-error", cbRefPtr)
 }
 

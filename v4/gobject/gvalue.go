@@ -908,7 +908,7 @@ func ValueRegisterTransformFunc(SrcTypeVar types.GType, DestTypeVar types.GType,
 				cbFn(arg0, arg1)
 			}
 			TransformFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(TransformFuncVarPtr, TransformFuncVarRef)
+			glib.SaveCallbackWithClosure(TransformFuncVarPtr, TransformFuncVarRef, TransformFuncVar)
 		}
 	}
 

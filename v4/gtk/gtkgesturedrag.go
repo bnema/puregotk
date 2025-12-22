@@ -116,7 +116,7 @@ func (x *GestureDrag) ConnectDragBegin(cb *func(GestureDrag, float64, float64)) 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
 }
 
@@ -136,7 +136,7 @@ func (x *GestureDrag) ConnectDragEnd(cb *func(GestureDrag, float64, float64)) ui
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
 }
 
@@ -156,7 +156,7 @@ func (x *GestureDrag) ConnectDragUpdate(cb *func(GestureDrag, float64, float64))
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "drag-update", cbRefPtr)
 }
 

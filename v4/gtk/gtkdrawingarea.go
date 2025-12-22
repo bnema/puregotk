@@ -257,7 +257,7 @@ func (x *DrawingArea) SetDrawFunc(DrawFuncVar *DrawingAreaDrawFunc, UserDataVar 
 				cbFn(arg0, arg1, arg2, arg3, arg4)
 			}
 			DrawFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DrawFuncVarPtr, DrawFuncVarRef)
+			glib.SaveCallbackWithClosure(DrawFuncVarPtr, DrawFuncVarRef, DrawFuncVar)
 		}
 	}
 
@@ -272,7 +272,7 @@ func (x *DrawingArea) SetDrawFunc(DrawFuncVar *DrawingAreaDrawFunc, UserDataVar 
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -345,7 +345,7 @@ func (x *DrawingArea) ConnectResize(cb *func(DrawingArea, int, int)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
 }
 

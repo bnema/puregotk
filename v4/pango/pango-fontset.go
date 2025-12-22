@@ -300,7 +300,7 @@ func (x *Fontset) Foreach(FuncVar *FontsetForeachFunc, DataVar uintptr) {
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 

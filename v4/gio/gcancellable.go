@@ -301,7 +301,7 @@ func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, Da
 				cbFn()
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -316,7 +316,7 @@ func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, Da
 				cbFn(arg0)
 			}
 			DataDestroyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DataDestroyFuncVarPtr, DataDestroyFuncVarRef)
+			glib.SaveCallbackWithClosure(DataDestroyFuncVarPtr, DataDestroyFuncVarRef, DataDestroyFuncVar)
 		}
 	}
 
@@ -596,7 +596,7 @@ func (x *Cancellable) ConnectCancelled(cb *func(Cancellable)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
 }
 

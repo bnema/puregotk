@@ -97,7 +97,7 @@ func NewMapListModel(ModelVar gio.ListModel, MapFuncVar *MapListModelMapFunc, Us
 				return cbFn(arg0, arg1)
 			}
 			MapFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(MapFuncVarPtr, MapFuncVarRef)
+			glib.SaveCallbackWithClosure(MapFuncVarPtr, MapFuncVarRef, MapFuncVar)
 		}
 	}
 
@@ -112,7 +112,7 @@ func NewMapListModel(ModelVar gio.ListModel, MapFuncVar *MapListModelMapFunc, Us
 				cbFn(arg0)
 			}
 			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
 		}
 	}
 
@@ -179,7 +179,7 @@ func (x *MapListModel) SetMapFunc(MapFuncVar *MapListModelMapFunc, UserDataVar u
 				return cbFn(arg0, arg1)
 			}
 			MapFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(MapFuncVarPtr, MapFuncVarRef)
+			glib.SaveCallbackWithClosure(MapFuncVarPtr, MapFuncVarRef, MapFuncVar)
 		}
 	}
 
@@ -194,7 +194,7 @@ func (x *MapListModel) SetMapFunc(MapFuncVar *MapListModelMapFunc, UserDataVar u
 				cbFn(arg0)
 			}
 			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
 		}
 	}
 

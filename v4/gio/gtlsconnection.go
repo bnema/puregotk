@@ -506,7 +506,7 @@ func (x *TlsConnection) HandshakeAsync(IoPriorityVar int, CancellableVar *Cancel
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -815,7 +815,7 @@ func (x *TlsConnection) ConnectAcceptCertificate(cb *func(TlsConnection, uintptr
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "accept-certificate", cbRefPtr)
 }
 

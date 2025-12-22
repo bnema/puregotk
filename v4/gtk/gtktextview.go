@@ -2018,7 +2018,7 @@ func (x *TextView) ConnectBackspace(cb *func(TextView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "backspace", cbRefPtr)
 }
 
@@ -2044,7 +2044,7 @@ func (x *TextView) ConnectCopyClipboard(cb *func(TextView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
 }
 
@@ -2070,7 +2070,7 @@ func (x *TextView) ConnectCutClipboard(cb *func(TextView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cut-clipboard", cbRefPtr)
 }
 
@@ -2101,7 +2101,7 @@ func (x *TextView) ConnectDeleteFromCursor(cb *func(TextView, DeleteType, int)) 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "delete-from-cursor", cbRefPtr)
 }
 
@@ -2121,7 +2121,7 @@ func (x *TextView) ConnectExtendSelection(cb *func(TextView, TextExtendSelection
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "extend-selection", cbRefPtr)
 }
 
@@ -2146,7 +2146,7 @@ func (x *TextView) ConnectInsertAtCursor(cb *func(TextView, string)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "insert-at-cursor", cbRefPtr)
 }
 
@@ -2172,7 +2172,7 @@ func (x *TextView) ConnectInsertEmoji(cb *func(TextView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "insert-emoji", cbRefPtr)
 }
 
@@ -2213,7 +2213,7 @@ func (x *TextView) ConnectMoveCursor(cb *func(TextView, MovementStep, int, bool)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
 }
 
@@ -2240,7 +2240,7 @@ func (x *TextView) ConnectMoveViewport(cb *func(TextView, ScrollStep, int)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-viewport", cbRefPtr)
 }
 
@@ -2267,7 +2267,7 @@ func (x *TextView) ConnectPasteClipboard(cb *func(TextView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "paste-clipboard", cbRefPtr)
 }
 
@@ -2294,7 +2294,7 @@ func (x *TextView) ConnectPreeditChanged(cb *func(TextView, string)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "preedit-changed", cbRefPtr)
 }
 
@@ -2322,7 +2322,7 @@ func (x *TextView) ConnectSelectAll(cb *func(TextView, bool)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
 }
 
@@ -2349,7 +2349,7 @@ func (x *TextView) ConnectSetAnchor(cb *func(TextView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "set-anchor", cbRefPtr)
 }
 
@@ -2374,7 +2374,7 @@ func (x *TextView) ConnectToggleCursorVisible(cb *func(TextView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-visible", cbRefPtr)
 }
 
@@ -2398,7 +2398,7 @@ func (x *TextView) ConnectToggleOverwrite(cb *func(TextView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "toggle-overwrite", cbRefPtr)
 }
 

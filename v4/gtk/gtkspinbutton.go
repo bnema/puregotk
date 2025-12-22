@@ -704,7 +704,7 @@ func (x *SpinButton) ConnectActivate(cb *func(SpinButton)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
@@ -732,7 +732,7 @@ func (x *SpinButton) ConnectChangeValue(cb *func(SpinButton, ScrollType)) uint32
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
 }
 
@@ -758,7 +758,7 @@ func (x *SpinButton) ConnectInput(cb *func(SpinButton, *float64) int) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
 }
 
@@ -799,7 +799,7 @@ func (x *SpinButton) ConnectOutput(cb *func(SpinButton) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
 }
 
@@ -821,7 +821,7 @@ func (x *SpinButton) ConnectValueChanged(cb *func(SpinButton)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
 }
 
@@ -842,7 +842,7 @@ func (x *SpinButton) ConnectWrapped(cb *func(SpinButton)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
 }
 

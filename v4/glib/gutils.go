@@ -133,7 +133,7 @@ func Atexit(FuncVar *VoidFunc) {
 				cbFn()
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 

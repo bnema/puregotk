@@ -1232,7 +1232,7 @@ func (x *TreeView) InsertColumnWithDataFunc(PositionVar int, TitleVar string, Ce
 				cbFn(arg0, arg1, arg2, arg3, arg4)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1247,7 +1247,7 @@ func (x *TreeView) InsertColumnWithDataFunc(PositionVar int, TitleVar string, Ce
 				cbFn(arg0)
 			}
 			DnotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DnotifyVarPtr, DnotifyVarRef)
+			glib.SaveCallbackWithClosure(DnotifyVarPtr, DnotifyVarRef, DnotifyVar)
 		}
 	}
 
@@ -1309,7 +1309,7 @@ func (x *TreeView) MapExpandedRows(FuncVar *TreeViewMappingFunc, DataVar uintptr
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1429,7 +1429,7 @@ func (x *TreeView) SetColumnDragFunction(FuncVar *TreeViewColumnDropFunc, UserDa
 				return cbFn(arg0, arg1, arg2, arg3, arg4)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1444,7 +1444,7 @@ func (x *TreeView) SetColumnDragFunction(FuncVar *TreeViewColumnDropFunc, UserDa
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -1667,7 +1667,7 @@ func (x *TreeView) SetRowSeparatorFunc(FuncVar *TreeViewRowSeparatorFunc, DataVa
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1682,7 +1682,7 @@ func (x *TreeView) SetRowSeparatorFunc(FuncVar *TreeViewRowSeparatorFunc, DataVa
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -1749,7 +1749,7 @@ func (x *TreeView) SetSearchEqualFunc(SearchEqualFuncVar *TreeViewSearchEqualFun
 				return cbFn(arg0, arg1, arg2, arg3, arg4)
 			}
 			SearchEqualFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(SearchEqualFuncVarPtr, SearchEqualFuncVarRef)
+			glib.SaveCallbackWithClosure(SearchEqualFuncVarPtr, SearchEqualFuncVarRef, SearchEqualFuncVar)
 		}
 	}
 
@@ -1764,7 +1764,7 @@ func (x *TreeView) SetSearchEqualFunc(SearchEqualFuncVar *TreeViewSearchEqualFun
 				cbFn(arg0)
 			}
 			SearchDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(SearchDestroyVarPtr, SearchDestroyVarRef)
+			glib.SaveCallbackWithClosure(SearchDestroyVarPtr, SearchDestroyVarRef, SearchDestroyVar)
 		}
 	}
 
@@ -2138,7 +2138,7 @@ func (x *TreeView) ConnectColumnsChanged(cb *func(TreeView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "columns-changed", cbRefPtr)
 }
 
@@ -2158,7 +2158,7 @@ func (x *TreeView) ConnectCursorChanged(cb *func(TreeView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cursor-changed", cbRefPtr)
 }
 
@@ -2177,7 +2177,7 @@ func (x *TreeView) ConnectExpandCollapseCursorRow(cb *func(TreeView, bool, bool,
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "expand-collapse-cursor-row", cbRefPtr)
 }
 
@@ -2205,7 +2205,7 @@ func (x *TreeView) ConnectMoveCursor(cb *func(TreeView, MovementStep, int, bool,
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
 }
 
@@ -2238,7 +2238,7 @@ func (x *TreeView) ConnectRowActivated(cb *func(TreeView, uintptr, uintptr)) uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "row-activated", cbRefPtr)
 }
 
@@ -2258,7 +2258,7 @@ func (x *TreeView) ConnectRowCollapsed(cb *func(TreeView, uintptr, uintptr)) uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "row-collapsed", cbRefPtr)
 }
 
@@ -2278,7 +2278,7 @@ func (x *TreeView) ConnectRowExpanded(cb *func(TreeView, uintptr, uintptr)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "row-expanded", cbRefPtr)
 }
 
@@ -2297,7 +2297,7 @@ func (x *TreeView) ConnectSelectAll(cb *func(TreeView) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
 }
 
@@ -2316,7 +2316,7 @@ func (x *TreeView) ConnectSelectCursorParent(cb *func(TreeView) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "select-cursor-parent", cbRefPtr)
 }
 
@@ -2335,7 +2335,7 @@ func (x *TreeView) ConnectSelectCursorRow(cb *func(TreeView, bool) bool) uint32 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "select-cursor-row", cbRefPtr)
 }
 
@@ -2354,7 +2354,7 @@ func (x *TreeView) ConnectStartInteractiveSearch(cb *func(TreeView) bool) uint32
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "start-interactive-search", cbRefPtr)
 }
 
@@ -2375,7 +2375,7 @@ func (x *TreeView) ConnectTestCollapseRow(cb *func(TreeView, uintptr, uintptr) b
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "test-collapse-row", cbRefPtr)
 }
 
@@ -2396,7 +2396,7 @@ func (x *TreeView) ConnectTestExpandRow(cb *func(TreeView, uintptr, uintptr) boo
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "test-expand-row", cbRefPtr)
 }
 
@@ -2415,7 +2415,7 @@ func (x *TreeView) ConnectToggleCursorRow(cb *func(TreeView) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-row", cbRefPtr)
 }
 
@@ -2434,7 +2434,7 @@ func (x *TreeView) ConnectUnselectAll(cb *func(TreeView) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
 }
 

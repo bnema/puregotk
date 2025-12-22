@@ -262,7 +262,7 @@ func (x *FontButton) ConnectActivate(cb *func(FontButton)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
@@ -289,7 +289,7 @@ func (x *FontButton) ConnectFontSet(cb *func(FontButton)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "font-set", cbRefPtr)
 }
 

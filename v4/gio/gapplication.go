@@ -1586,7 +1586,7 @@ func (x *Application) ConnectActivate(cb *func(Application)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
@@ -1608,7 +1608,7 @@ func (x *Application) ConnectCommandLine(cb *func(Application, uintptr) int) uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "command-line", cbRefPtr)
 }
 
@@ -1668,7 +1668,7 @@ func (x *Application) ConnectHandleLocalOptions(cb *func(Application, uintptr) i
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "handle-local-options", cbRefPtr)
 }
 
@@ -1692,7 +1692,7 @@ func (x *Application) ConnectNameLost(cb *func(Application) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "name-lost", cbRefPtr)
 }
 
@@ -1713,7 +1713,7 @@ func (x *Application) ConnectOpen(cb *func(Application, uintptr, int, string)) u
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "open", cbRefPtr)
 }
 
@@ -1734,7 +1734,7 @@ func (x *Application) ConnectShutdown(cb *func(Application)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "shutdown", cbRefPtr)
 }
 
@@ -1755,7 +1755,7 @@ func (x *Application) ConnectStartup(cb *func(Application)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "startup", cbRefPtr)
 }
 

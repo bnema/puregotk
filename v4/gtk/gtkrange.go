@@ -590,7 +590,7 @@ func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "adjust-bounds", cbRefPtr)
 }
 
@@ -621,7 +621,7 @@ func (x *Range) ConnectChangeValue(cb *func(Range, ScrollType, float64) bool) ui
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
 }
 
@@ -643,7 +643,7 @@ func (x *Range) ConnectMoveSlider(cb *func(Range, ScrollType)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-slider", cbRefPtr)
 }
 
@@ -663,7 +663,7 @@ func (x *Range) ConnectValueChanged(cb *func(Range)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
 }
 

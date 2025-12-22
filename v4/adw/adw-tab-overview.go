@@ -596,7 +596,7 @@ func (x *TabOverview) ConnectCreateTab(cb *func(TabOverview) TabPage) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "create-tab", cbRefPtr)
 }
 
@@ -621,7 +621,7 @@ func (x *TabOverview) ConnectExtraDragDrop(cb *func(TabOverview, uintptr, uintpt
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
 }
 
@@ -649,7 +649,7 @@ func (x *TabOverview) ConnectExtraDragValue(cb *func(TabOverview, uintptr, uintp
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
 }
 

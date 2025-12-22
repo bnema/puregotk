@@ -83,7 +83,7 @@ func (x *ColorDialog) ChooseRgba(ParentVar *Window, InitialColorVar *gdk.RGBA, C
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 

@@ -211,7 +211,7 @@ func (x *Switch) ConnectActivate(cb *func(Switch)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
@@ -241,7 +241,7 @@ func (x *Switch) ConnectStateSet(cb *func(Switch, bool) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "state-set", cbRefPtr)
 }
 

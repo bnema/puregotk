@@ -1867,7 +1867,7 @@ func (x *TabView) ConnectClosePage(cb *func(TabView, uintptr) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "close-page", cbRefPtr)
 }
 
@@ -1893,7 +1893,7 @@ func (x *TabView) ConnectCreateWindow(cb *func(TabView) TabView) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
 }
 
@@ -1916,7 +1916,7 @@ func (x *TabView) ConnectIndicatorActivated(cb *func(TabView, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "indicator-activated", cbRefPtr)
 }
 
@@ -1939,7 +1939,7 @@ func (x *TabView) ConnectPageAttached(cb *func(TabView, uintptr, int)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "page-attached", cbRefPtr)
 }
 
@@ -1967,7 +1967,7 @@ func (x *TabView) ConnectPageDetached(cb *func(TabView, uintptr, int)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "page-detached", cbRefPtr)
 }
 
@@ -1987,7 +1987,7 @@ func (x *TabView) ConnectPageReordered(cb *func(TabView, uintptr, int)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
 }
 
@@ -2012,7 +2012,7 @@ func (x *TabView) ConnectSetupMenu(cb *func(TabView, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "setup-menu", cbRefPtr)
 }
 

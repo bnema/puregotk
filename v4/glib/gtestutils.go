@@ -450,7 +450,7 @@ func TestAddDataFunc(TestpathVar string, TestDataVar uintptr, TestFuncVar *TestD
 				cbFn(arg0)
 			}
 			TestFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(TestFuncVarPtr, TestFuncVarRef)
+			SaveCallbackWithClosure(TestFuncVarPtr, TestFuncVarRef, TestFuncVar)
 		}
 	}
 
@@ -477,7 +477,7 @@ func TestAddDataFuncFull(TestpathVar string, TestDataVar uintptr, TestFuncVar *T
 				cbFn(arg0)
 			}
 			TestFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(TestFuncVarPtr, TestFuncVarRef)
+			SaveCallbackWithClosure(TestFuncVarPtr, TestFuncVarRef, TestFuncVar)
 		}
 	}
 
@@ -492,7 +492,7 @@ func TestAddDataFuncFull(TestpathVar string, TestDataVar uintptr, TestFuncVar *T
 				cbFn(arg0)
 			}
 			DataFreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(DataFreeFuncVarPtr, DataFreeFuncVarRef)
+			SaveCallbackWithClosure(DataFreeFuncVarPtr, DataFreeFuncVarRef, DataFreeFuncVar)
 		}
 	}
 
@@ -529,7 +529,7 @@ func TestAddFunc(TestpathVar string, TestFuncVar *TestFunc) {
 				cbFn()
 			}
 			TestFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(TestFuncVarPtr, TestFuncVarRef)
+			SaveCallbackWithClosure(TestFuncVarPtr, TestFuncVarRef, TestFuncVar)
 		}
 	}
 
@@ -552,7 +552,7 @@ func TestAddVtable(TestpathVar string, DataSizeVar uint, TestDataVar uintptr, Da
 				cbFn(arg0, arg1)
 			}
 			DataSetupVarRef = purego.NewCallback(fcb)
-			SaveCallback(DataSetupVarPtr, DataSetupVarRef)
+			SaveCallbackWithClosure(DataSetupVarPtr, DataSetupVarRef, DataSetupVar)
 		}
 	}
 
@@ -567,7 +567,7 @@ func TestAddVtable(TestpathVar string, DataSizeVar uint, TestDataVar uintptr, Da
 				cbFn(arg0, arg1)
 			}
 			DataTestVarRef = purego.NewCallback(fcb)
-			SaveCallback(DataTestVarPtr, DataTestVarRef)
+			SaveCallbackWithClosure(DataTestVarPtr, DataTestVarRef, DataTestVar)
 		}
 	}
 
@@ -582,7 +582,7 @@ func TestAddVtable(TestpathVar string, DataSizeVar uint, TestDataVar uintptr, Da
 				cbFn(arg0, arg1)
 			}
 			DataTeardownVarRef = purego.NewCallback(fcb)
-			SaveCallback(DataTeardownVarPtr, DataTeardownVarRef)
+			SaveCallbackWithClosure(DataTeardownVarPtr, DataTeardownVarRef, DataTeardownVar)
 		}
 	}
 
@@ -702,7 +702,7 @@ func TestCreateCase(TestNameVar string, DataSizeVar uint, TestDataVar uintptr, D
 				cbFn(arg0, arg1)
 			}
 			DataSetupVarRef = purego.NewCallback(fcb)
-			SaveCallback(DataSetupVarPtr, DataSetupVarRef)
+			SaveCallbackWithClosure(DataSetupVarPtr, DataSetupVarRef, DataSetupVar)
 		}
 	}
 
@@ -717,7 +717,7 @@ func TestCreateCase(TestNameVar string, DataSizeVar uint, TestDataVar uintptr, D
 				cbFn(arg0, arg1)
 			}
 			DataTestVarRef = purego.NewCallback(fcb)
-			SaveCallback(DataTestVarPtr, DataTestVarRef)
+			SaveCallbackWithClosure(DataTestVarPtr, DataTestVarRef, DataTestVar)
 		}
 	}
 
@@ -732,7 +732,7 @@ func TestCreateCase(TestNameVar string, DataSizeVar uint, TestDataVar uintptr, D
 				cbFn(arg0, arg1)
 			}
 			DataTeardownVarRef = purego.NewCallback(fcb)
-			SaveCallback(DataTeardownVarPtr, DataTeardownVarRef)
+			SaveCallbackWithClosure(DataTeardownVarPtr, DataTeardownVarRef, DataTeardownVar)
 		}
 	}
 
@@ -1075,7 +1075,7 @@ func TestLogSetFatalHandler(LogFuncVar *TestLogFatalFunc, UserDataVar uintptr) {
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			LogFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
+			SaveCallbackWithClosure(LogFuncVarPtr, LogFuncVarRef, LogFuncVar)
 		}
 	}
 
@@ -1151,7 +1151,7 @@ func TestQueueDestroy(DestroyFuncVar *DestroyNotify, DestroyDataVar uintptr) {
 				cbFn(arg0)
 			}
 			DestroyFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(DestroyFuncVarPtr, DestroyFuncVarRef)
+			SaveCallbackWithClosure(DestroyFuncVarPtr, DestroyFuncVarRef, DestroyFuncVar)
 		}
 	}
 

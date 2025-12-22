@@ -314,7 +314,7 @@ func RenderNodeDeserialize(BytesVar *glib.Bytes, ErrorFuncVar *ParseErrorFunc, U
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			ErrorFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(ErrorFuncVarPtr, ErrorFuncVarRef)
+			glib.SaveCallbackWithClosure(ErrorFuncVarPtr, ErrorFuncVarRef, ErrorFuncVar)
 		}
 	}
 

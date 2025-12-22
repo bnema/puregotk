@@ -138,7 +138,7 @@ func (x *EventControllerKey) ConnectImUpdate(cb *func(EventControllerKey)) uint3
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "im-update", cbRefPtr)
 }
 
@@ -158,7 +158,7 @@ func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "key-pressed", cbRefPtr)
 }
 
@@ -178,7 +178,7 @@ func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "key-released", cbRefPtr)
 }
 
@@ -198,7 +198,7 @@ func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.M
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "modifiers", cbRefPtr)
 }
 

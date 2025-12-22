@@ -360,7 +360,7 @@ func (x *AppChooserWidget) ConnectApplicationActivated(cb *func(AppChooserWidget
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "application-activated", cbRefPtr)
 }
 
@@ -380,7 +380,7 @@ func (x *AppChooserWidget) ConnectApplicationSelected(cb *func(AppChooserWidget,
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "application-selected", cbRefPtr)
 }
 

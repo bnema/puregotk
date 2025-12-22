@@ -1700,7 +1700,7 @@ func (x *Entry) ConnectActivate(cb *func(Entry)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
@@ -1720,7 +1720,7 @@ func (x *Entry) ConnectIconPress(cb *func(Entry, EntryIconPosition)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "icon-press", cbRefPtr)
 }
 
@@ -1741,7 +1741,7 @@ func (x *Entry) ConnectIconRelease(cb *func(Entry, EntryIconPosition)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "icon-release", cbRefPtr)
 }
 

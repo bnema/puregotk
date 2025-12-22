@@ -209,7 +209,7 @@ func (x *FlowBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *FlowBox
 				return cbFn(arg0, arg1)
 			}
 			CreateWidgetFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CreateWidgetFuncVarPtr, CreateWidgetFuncVarRef)
+			glib.SaveCallbackWithClosure(CreateWidgetFuncVarPtr, CreateWidgetFuncVarRef, CreateWidgetFuncVar)
 		}
 	}
 
@@ -224,7 +224,7 @@ func (x *FlowBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *FlowBox
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 
@@ -463,7 +463,7 @@ func (x *FlowBox) SelectedForeach(FuncVar *FlowBoxForeachFunc, DataVar uintptr) 
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -518,7 +518,7 @@ func (x *FlowBox) SetFilterFunc(FilterFuncVar *FlowBoxFilterFunc, UserDataVar ui
 				return cbFn(arg0, arg1)
 			}
 			FilterFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FilterFuncVarPtr, FilterFuncVarRef)
+			glib.SaveCallbackWithClosure(FilterFuncVarPtr, FilterFuncVarRef, FilterFuncVar)
 		}
 	}
 
@@ -533,7 +533,7 @@ func (x *FlowBox) SetFilterFunc(FilterFuncVar *FlowBoxFilterFunc, UserDataVar ui
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -638,7 +638,7 @@ func (x *FlowBox) SetSortFunc(SortFuncVar *FlowBoxSortFunc, UserDataVar uintptr,
 				return cbFn(arg0, arg1, arg2)
 			}
 			SortFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(SortFuncVarPtr, SortFuncVarRef)
+			glib.SaveCallbackWithClosure(SortFuncVarPtr, SortFuncVarRef, SortFuncVar)
 		}
 	}
 
@@ -653,7 +653,7 @@ func (x *FlowBox) SetSortFunc(SortFuncVar *FlowBoxSortFunc, UserDataVar uintptr,
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -864,7 +864,7 @@ func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate-cursor-child", cbRefPtr)
 }
 
@@ -884,7 +884,7 @@ func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "child-activated", cbRefPtr)
 }
 
@@ -919,7 +919,7 @@ func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int, bool, b
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
 }
 
@@ -944,7 +944,7 @@ func (x *FlowBox) ConnectSelectAll(cb *func(FlowBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
 }
 
@@ -968,7 +968,7 @@ func (x *FlowBox) ConnectSelectedChildrenChanged(cb *func(FlowBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "selected-children-changed", cbRefPtr)
 }
 
@@ -992,7 +992,7 @@ func (x *FlowBox) ConnectToggleCursorChild(cb *func(FlowBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-child", cbRefPtr)
 }
 
@@ -1017,7 +1017,7 @@ func (x *FlowBox) ConnectUnselectAll(cb *func(FlowBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
 }
 
@@ -1466,7 +1466,7 @@ func (x *FlowBoxChild) ConnectActivate(cb *func(FlowBoxChild)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 

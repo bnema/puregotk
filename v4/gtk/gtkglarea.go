@@ -657,7 +657,7 @@ func (x *GLArea) ConnectCreateContext(cb *func(GLArea) gdk.GLContext) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "create-context", cbRefPtr)
 }
 
@@ -680,7 +680,7 @@ func (x *GLArea) ConnectRender(cb *func(GLArea, uintptr) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)
 }
 
@@ -710,7 +710,7 @@ func (x *GLArea) ConnectResize(cb *func(GLArea, int, int)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "resize", cbRefPtr)
 }
 

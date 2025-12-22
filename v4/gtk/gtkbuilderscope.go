@@ -285,7 +285,7 @@ func (x *BuilderCScope) AddCallbackSymbol(CallbackNameVar string, CallbackSymbol
 				cbFn()
 			}
 			CallbackSymbolVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackSymbolVarPtr, CallbackSymbolVarRef)
+			glib.SaveCallbackWithClosure(CallbackSymbolVarPtr, CallbackSymbolVarRef, CallbackSymbolVar)
 		}
 	}
 
@@ -312,7 +312,7 @@ func (x *BuilderCScope) AddCallbackSymbols(FirstCallbackNameVar string, FirstCal
 				cbFn()
 			}
 			FirstCallbackSymbolVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FirstCallbackSymbolVarPtr, FirstCallbackSymbolVarRef)
+			glib.SaveCallbackWithClosure(FirstCallbackSymbolVarPtr, FirstCallbackSymbolVarRef, FirstCallbackSymbolVar)
 		}
 	}
 

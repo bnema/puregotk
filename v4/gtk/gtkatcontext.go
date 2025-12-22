@@ -117,7 +117,7 @@ func (x *ATContext) ConnectStateChange(cb *func(ATContext)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "state-change", cbRefPtr)
 }
 

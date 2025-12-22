@@ -232,7 +232,7 @@ func NewPixbufFromData(DataVar []byte, ColorspaceVar Colorspace, HasAlphaVar boo
 				cbFn(arg0, arg1)
 			}
 			DestroyFnVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyFnVarPtr, DestroyFnVarRef)
+			glib.SaveCallbackWithClosure(DestroyFnVarPtr, DestroyFnVarRef, DestroyFnVar)
 		}
 	}
 
@@ -1191,7 +1191,7 @@ func (x *Pixbuf) SaveToCallback(SaveFuncVar *PixbufSaveFunc, UserDataVar uintptr
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			SaveFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(SaveFuncVarPtr, SaveFuncVarRef)
+			glib.SaveCallbackWithClosure(SaveFuncVarPtr, SaveFuncVarRef, SaveFuncVar)
 		}
 	}
 
@@ -1224,7 +1224,7 @@ func (x *Pixbuf) SaveToCallbackv(SaveFuncVar *PixbufSaveFunc, UserDataVar uintpt
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			SaveFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(SaveFuncVarPtr, SaveFuncVarRef)
+			glib.SaveCallbackWithClosure(SaveFuncVarPtr, SaveFuncVarRef, SaveFuncVar)
 		}
 	}
 
@@ -1281,7 +1281,7 @@ func (x *Pixbuf) SaveToStreamAsync(StreamVar *gio.OutputStream, TypeVar string, 
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1333,7 +1333,7 @@ func (x *Pixbuf) SaveToStreamvAsync(StreamVar *gio.OutputStream, TypeVar string,
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1746,7 +1746,7 @@ func PixbufGetFileInfoAsync(FilenameVar string, CancellableVar *gio.Cancellable,
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1831,7 +1831,7 @@ func PixbufNewFromStreamAsync(StreamVar *gio.InputStream, CancellableVar *gio.Ca
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1861,7 +1861,7 @@ func PixbufNewFromStreamAtScaleAsync(StreamVar *gio.InputStream, WidthVar int, H
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 

@@ -467,7 +467,7 @@ func (x *Calendar) ConnectDaySelected(cb *func(Calendar)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "day-selected", cbRefPtr)
 }
 
@@ -487,7 +487,7 @@ func (x *Calendar) ConnectNextMonth(cb *func(Calendar)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "next-month", cbRefPtr)
 }
 
@@ -507,7 +507,7 @@ func (x *Calendar) ConnectNextYear(cb *func(Calendar)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "next-year", cbRefPtr)
 }
 
@@ -527,7 +527,7 @@ func (x *Calendar) ConnectPrevMonth(cb *func(Calendar)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "prev-month", cbRefPtr)
 }
 
@@ -547,7 +547,7 @@ func (x *Calendar) ConnectPrevYear(cb *func(Calendar)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "prev-year", cbRefPtr)
 }
 

@@ -591,7 +591,7 @@ func (x *ComboBox) SetRowSeparatorFunc(FuncVar *TreeViewRowSeparatorFunc, DataVa
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -606,7 +606,7 @@ func (x *ComboBox) SetRowSeparatorFunc(FuncVar *TreeViewRowSeparatorFunc, DataVa
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -794,7 +794,7 @@ func (x *ComboBox) ConnectActivate(cb *func(ComboBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
@@ -818,7 +818,7 @@ func (x *ComboBox) ConnectChanged(cb *func(ComboBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
 }
 
@@ -871,7 +871,7 @@ func (x *ComboBox) ConnectFormatEntryText(cb *func(ComboBox, string) string) uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "format-entry-text", cbRefPtr)
 }
 
@@ -893,7 +893,7 @@ func (x *ComboBox) ConnectMoveActive(cb *func(ComboBox, ScrollType)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-active", cbRefPtr)
 }
 
@@ -917,7 +917,7 @@ func (x *ComboBox) ConnectPopdown(cb *func(ComboBox) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "popdown", cbRefPtr)
 }
 
@@ -941,7 +941,7 @@ func (x *ComboBox) ConnectPopup(cb *func(ComboBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "popup", cbRefPtr)
 }
 

@@ -74,7 +74,7 @@ func DatalistForeach(DatalistVar **Data, FuncVar *DataForeachFunc, UserDataVar u
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -132,7 +132,7 @@ func DatalistIdDupData(DatalistVar **Data, KeyIdVar Quark, DupFuncVar *Duplicate
 				return cbFn(arg0, arg1)
 			}
 			DupFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(DupFuncVarPtr, DupFuncVarRef)
+			SaveCallbackWithClosure(DupFuncVarPtr, DupFuncVarRef, DupFuncVar)
 		}
 	}
 
@@ -205,7 +205,7 @@ func DatalistIdReplaceData(DatalistVar **Data, KeyIdVar Quark, OldvalVar uintptr
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			SaveCallback(DestroyVarPtr, DestroyVarRef)
+			SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -233,7 +233,7 @@ func DatalistIdSetDataFull(DatalistVar **Data, KeyIdVar Quark, DataVar uintptr, 
 				cbFn(arg0)
 			}
 			DestroyFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(DestroyFuncVarPtr, DestroyFuncVarRef)
+			SaveCallbackWithClosure(DestroyFuncVarPtr, DestroyFuncVarRef, DestroyFuncVar)
 		}
 	}
 
@@ -307,7 +307,7 @@ func DatasetForeach(DatasetLocationVar uintptr, FuncVar *DataForeachFunc, UserDa
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -355,7 +355,7 @@ func DatasetIdSetDataFull(DatasetLocationVar uintptr, KeyIdVar Quark, DataVar ui
 				cbFn(arg0)
 			}
 			DestroyFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(DestroyFuncVarPtr, DestroyFuncVarRef)
+			SaveCallbackWithClosure(DestroyFuncVarPtr, DestroyFuncVarRef, DestroyFuncVar)
 		}
 	}
 

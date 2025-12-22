@@ -363,7 +363,7 @@ func (x *Animation) ConnectDone(cb *func(Animation)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)
 }
 

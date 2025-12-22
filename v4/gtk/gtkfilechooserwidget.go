@@ -146,7 +146,7 @@ func (x *FileChooserWidget) ConnectDesktopFolder(cb *func(FileChooserWidget)) ui
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "desktop-folder", cbRefPtr)
 }
 
@@ -177,7 +177,7 @@ func (x *FileChooserWidget) ConnectDownFolder(cb *func(FileChooserWidget)) uint3
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "down-folder", cbRefPtr)
 }
 
@@ -204,7 +204,7 @@ func (x *FileChooserWidget) ConnectHomeFolder(cb *func(FileChooserWidget)) uint3
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "home-folder", cbRefPtr)
 }
 
@@ -236,7 +236,7 @@ func (x *FileChooserWidget) ConnectLocationPopup(cb *func(FileChooserWidget, str
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "location-popup", cbRefPtr)
 }
 
@@ -263,7 +263,7 @@ func (x *FileChooserWidget) ConnectLocationPopupOnPaste(cb *func(FileChooserWidg
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "location-popup-on-paste", cbRefPtr)
 }
 
@@ -291,7 +291,7 @@ func (x *FileChooserWidget) ConnectLocationTogglePopup(cb *func(FileChooserWidge
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "location-toggle-popup", cbRefPtr)
 }
 
@@ -317,7 +317,7 @@ func (x *FileChooserWidget) ConnectPlacesShortcut(cb *func(FileChooserWidget)) u
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "places-shortcut", cbRefPtr)
 }
 
@@ -350,7 +350,7 @@ func (x *FileChooserWidget) ConnectQuickBookmark(cb *func(FileChooserWidget, int
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "quick-bookmark", cbRefPtr)
 }
 
@@ -376,7 +376,7 @@ func (x *FileChooserWidget) ConnectRecentShortcut(cb *func(FileChooserWidget)) u
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "recent-shortcut", cbRefPtr)
 }
 
@@ -402,7 +402,7 @@ func (x *FileChooserWidget) ConnectSearchShortcut(cb *func(FileChooserWidget)) u
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "search-shortcut", cbRefPtr)
 }
 
@@ -428,7 +428,7 @@ func (x *FileChooserWidget) ConnectShowHidden(cb *func(FileChooserWidget)) uint3
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "show-hidden", cbRefPtr)
 }
 
@@ -455,7 +455,7 @@ func (x *FileChooserWidget) ConnectUpFolder(cb *func(FileChooserWidget)) uint32 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "up-folder", cbRefPtr)
 }
 

@@ -265,7 +265,7 @@ func (x *Path) Foreach(FlagsVar PathForeachFlags, FuncVar *PathForeachFunc, User
 				return cbFn(arg0, arg1, arg2, arg3, arg4)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -304,7 +304,7 @@ func (x *Path) ForeachIntersection(Path2Var *Path, FuncVar *PathIntersectionFunc
 				return cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 

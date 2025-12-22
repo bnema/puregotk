@@ -165,7 +165,7 @@ func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "device-added", cbRefPtr)
 }
 
@@ -185,7 +185,7 @@ func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "device-removed", cbRefPtr)
 }
 
@@ -211,7 +211,7 @@ func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "tool-added", cbRefPtr)
 }
 
@@ -231,7 +231,7 @@ func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "tool-removed", cbRefPtr)
 }
 

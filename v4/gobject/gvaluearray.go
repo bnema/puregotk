@@ -163,7 +163,7 @@ func (x *ValueArray) Sort(CompareFuncVar *glib.CompareFunc) *ValueArray {
 				return cbFn(arg0, arg1)
 			}
 			CompareFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+			glib.SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
 		}
 	}
 
@@ -192,7 +192,7 @@ func (x *ValueArray) SortWithData(CompareFuncVar *glib.CompareDataFunc, UserData
 				return cbFn(arg0, arg1, arg2)
 			}
 			CompareFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+			glib.SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
 		}
 	}
 

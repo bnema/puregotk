@@ -887,7 +887,7 @@ func (x *Notebook) ConnectChangeCurrentPage(cb *func(Notebook, int) bool) uint32
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
 }
 
@@ -915,7 +915,7 @@ func (x *Notebook) ConnectCreateWindow(cb *func(Notebook, uintptr) Notebook) uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "create-window", cbRefPtr)
 }
 
@@ -935,7 +935,7 @@ func (x *Notebook) ConnectFocusTab(cb *func(Notebook, NotebookTab) bool) uint32 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "focus-tab", cbRefPtr)
 }
 
@@ -961,7 +961,7 @@ func (x *Notebook) ConnectMoveFocusOut(cb *func(Notebook, DirectionType)) uint32
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
 }
 
@@ -982,7 +982,7 @@ func (x *Notebook) ConnectPageAdded(cb *func(Notebook, uintptr, uint)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "page-added", cbRefPtr)
 }
 
@@ -1003,7 +1003,7 @@ func (x *Notebook) ConnectPageRemoved(cb *func(Notebook, uintptr, uint)) uint32 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "page-removed", cbRefPtr)
 }
 
@@ -1024,7 +1024,7 @@ func (x *Notebook) ConnectPageReordered(cb *func(Notebook, uintptr, uint)) uint3
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "page-reordered", cbRefPtr)
 }
 
@@ -1050,7 +1050,7 @@ func (x *Notebook) ConnectReorderTab(cb *func(Notebook, DirectionType, bool) boo
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "reorder-tab", cbRefPtr)
 }
 
@@ -1072,7 +1072,7 @@ func (x *Notebook) ConnectSelectPage(cb *func(Notebook, bool) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "select-page", cbRefPtr)
 }
 
@@ -1092,7 +1092,7 @@ func (x *Notebook) ConnectSwitchPage(cb *func(Notebook, uintptr, uint)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "switch-page", cbRefPtr)
 }
 

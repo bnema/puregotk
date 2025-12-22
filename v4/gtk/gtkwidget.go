@@ -173,7 +173,7 @@ func (x *WidgetClass) AddBinding(KeyvalVar uint, ModsVar gdk.ModifierType, Callb
 				return cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -269,7 +269,7 @@ func (x *WidgetClass) BindTemplateCallbackFull(CallbackNameVar string, CallbackS
 				cbFn()
 			}
 			CallbackSymbolVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackSymbolVarPtr, CallbackSymbolVarRef)
+			glib.SaveCallbackWithClosure(CallbackSymbolVarPtr, CallbackSymbolVarRef, CallbackSymbolVar)
 		}
 	}
 
@@ -388,7 +388,7 @@ func (x *WidgetClass) InstallAction(ActionNameVar string, ParameterTypeVar *stri
 				cbFn(arg0, arg1, arg2)
 			}
 			ActivateVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(ActivateVarPtr, ActivateVarRef)
+			glib.SaveCallbackWithClosure(ActivateVarPtr, ActivateVarRef, ActivateVar)
 		}
 	}
 
@@ -1919,7 +1919,7 @@ func (x *Widget) AddTickCallback(CallbackVar *TickCallback, UserDataVar uintptr,
 				return cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1934,7 +1934,7 @@ func (x *Widget) AddTickCallback(CallbackVar *TickCallback, UserDataVar uintptr,
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -5169,7 +5169,7 @@ func (x *Widget) ConnectDestroy(cb *func(Widget)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "destroy", cbRefPtr)
 }
 
@@ -5189,7 +5189,7 @@ func (x *Widget) ConnectDirectionChanged(cb *func(Widget, TextDirection)) uint32
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "direction-changed", cbRefPtr)
 }
 
@@ -5209,7 +5209,7 @@ func (x *Widget) ConnectHide(cb *func(Widget)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "hide", cbRefPtr)
 }
 
@@ -5231,7 +5231,7 @@ func (x *Widget) ConnectKeynavFailed(cb *func(Widget, DirectionType) bool) uint3
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "keynav-failed", cbRefPtr)
 }
 
@@ -5259,7 +5259,7 @@ func (x *Widget) ConnectMap(cb *func(Widget)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "map", cbRefPtr)
 }
 
@@ -5282,7 +5282,7 @@ func (x *Widget) ConnectMnemonicActivate(cb *func(Widget, bool) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "mnemonic-activate", cbRefPtr)
 }
 
@@ -5307,7 +5307,7 @@ func (x *Widget) ConnectMoveFocus(cb *func(Widget, DirectionType)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-focus", cbRefPtr)
 }
 
@@ -5339,7 +5339,7 @@ func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, uintptr) b
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "query-tooltip", cbRefPtr)
 }
 
@@ -5362,7 +5362,7 @@ func (x *Widget) ConnectRealize(cb *func(Widget)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "realize", cbRefPtr)
 }
 
@@ -5382,7 +5382,7 @@ func (x *Widget) ConnectShow(cb *func(Widget)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "show", cbRefPtr)
 }
 
@@ -5404,7 +5404,7 @@ func (x *Widget) ConnectStateFlagsChanged(cb *func(Widget, StateFlags)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "state-flags-changed", cbRefPtr)
 }
 
@@ -5430,7 +5430,7 @@ func (x *Widget) ConnectUnmap(cb *func(Widget)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "unmap", cbRefPtr)
 }
 
@@ -5453,7 +5453,7 @@ func (x *Widget) ConnectUnrealize(cb *func(Widget)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "unrealize", cbRefPtr)
 }
 

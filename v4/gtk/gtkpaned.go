@@ -487,7 +487,7 @@ func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "accept-position", cbRefPtr)
 }
 
@@ -515,7 +515,7 @@ func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cancel-position", cbRefPtr)
 }
 
@@ -539,7 +539,7 @@ func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cycle-child-focus", cbRefPtr)
 }
 
@@ -564,7 +564,7 @@ func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cycle-handle-focus", cbRefPtr)
 }
 
@@ -593,7 +593,7 @@ func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-handle", cbRefPtr)
 }
 
@@ -618,7 +618,7 @@ func (x *Paned) ConnectToggleHandleFocus(cb *func(Paned) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "toggle-handle-focus", cbRefPtr)
 }
 

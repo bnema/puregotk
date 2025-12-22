@@ -366,7 +366,7 @@ func LogSetDefaultHandler(LogFuncVar *LogFunc, UserDataVar uintptr) uintptr {
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			LogFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
+			SaveCallbackWithClosure(LogFuncVarPtr, LogFuncVarRef, LogFuncVar)
 		}
 	}
 
@@ -456,7 +456,7 @@ func LogSetHandler(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFuncVar 
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			LogFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
+			SaveCallbackWithClosure(LogFuncVarPtr, LogFuncVarRef, LogFuncVar)
 		}
 	}
 
@@ -491,7 +491,7 @@ func LogSetHandlerFull(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFunc
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			LogFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(LogFuncVarPtr, LogFuncVarRef)
+			SaveCallbackWithClosure(LogFuncVarPtr, LogFuncVarRef, LogFuncVar)
 		}
 	}
 
@@ -506,7 +506,7 @@ func LogSetHandlerFull(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFunc
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			SaveCallback(DestroyVarPtr, DestroyVarRef)
+			SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -545,7 +545,7 @@ func LogSetWriterFunc(FuncVar *LogWriterFunc, UserDataVar uintptr, UserDataFreeV
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -560,7 +560,7 @@ func LogSetWriterFunc(FuncVar *LogWriterFunc, UserDataVar uintptr, UserDataFreeV
 				cbFn(arg0)
 			}
 			UserDataFreeVarRef = purego.NewCallback(fcb)
-			SaveCallback(UserDataFreeVarPtr, UserDataFreeVarRef)
+			SaveCallbackWithClosure(UserDataFreeVarPtr, UserDataFreeVarRef, UserDataFreeVar)
 		}
 	}
 
@@ -1085,7 +1085,7 @@ func SetPrintHandler(FuncVar *PrintFunc) uintptr {
 				cbFn(arg0)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1124,7 +1124,7 @@ func SetPrinterrHandler(FuncVar *PrintFunc) uintptr {
 				cbFn(arg0)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 

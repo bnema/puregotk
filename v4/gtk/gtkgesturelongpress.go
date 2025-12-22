@@ -134,7 +134,7 @@ func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
 }
 
@@ -155,7 +155,7 @@ func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, fl
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
 }
 

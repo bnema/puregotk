@@ -194,7 +194,7 @@ func NewCClosureExpression(ValueTypeVar types.GType, MarshalVar *gobject.Closure
 				cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
 			}
 			MarshalVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(MarshalVarPtr, MarshalVarRef)
+			glib.SaveCallbackWithClosure(MarshalVarPtr, MarshalVarRef, MarshalVar)
 		}
 	}
 
@@ -209,7 +209,7 @@ func NewCClosureExpression(ValueTypeVar types.GType, MarshalVar *gobject.Closure
 				cbFn()
 			}
 			CallbackFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
+			glib.SaveCallbackWithClosure(CallbackFuncVarPtr, CallbackFuncVarRef, CallbackFuncVar)
 		}
 	}
 
@@ -224,7 +224,7 @@ func NewCClosureExpression(ValueTypeVar types.GType, MarshalVar *gobject.Closure
 				cbFn(arg0, arg1)
 			}
 			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
 		}
 	}
 
@@ -692,7 +692,7 @@ func (x *Expression) Watch(ThisVar *gobject.Object, NotifyVar *ExpressionNotify,
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -707,7 +707,7 @@ func (x *Expression) Watch(ThisVar *gobject.Object, NotifyVar *ExpressionNotify,
 				cbFn(arg0)
 			}
 			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
 		}
 	}
 

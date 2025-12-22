@@ -84,7 +84,7 @@ func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, 
 				cbFn(arg0, arg1, arg2)
 			}
 			BusAcquiredHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(BusAcquiredHandlerVarPtr, BusAcquiredHandlerVarRef)
+			glib.SaveCallbackWithClosure(BusAcquiredHandlerVarPtr, BusAcquiredHandlerVarRef, BusAcquiredHandlerVar)
 		}
 	}
 
@@ -99,7 +99,7 @@ func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, 
 				cbFn(arg0, arg1, arg2)
 			}
 			NameAcquiredHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NameAcquiredHandlerVarPtr, NameAcquiredHandlerVarRef)
+			glib.SaveCallbackWithClosure(NameAcquiredHandlerVarPtr, NameAcquiredHandlerVarRef, NameAcquiredHandlerVar)
 		}
 	}
 
@@ -114,7 +114,7 @@ func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, 
 				cbFn(arg0, arg1, arg2)
 			}
 			NameLostHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NameLostHandlerVarPtr, NameLostHandlerVarRef)
+			glib.SaveCallbackWithClosure(NameLostHandlerVarPtr, NameLostHandlerVarRef, NameLostHandlerVar)
 		}
 	}
 
@@ -129,7 +129,7 @@ func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, 
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 
@@ -155,7 +155,7 @@ func BusOwnNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Flags
 				cbFn(arg0, arg1, arg2)
 			}
 			NameAcquiredHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NameAcquiredHandlerVarPtr, NameAcquiredHandlerVarRef)
+			glib.SaveCallbackWithClosure(NameAcquiredHandlerVarPtr, NameAcquiredHandlerVarRef, NameAcquiredHandlerVar)
 		}
 	}
 
@@ -170,7 +170,7 @@ func BusOwnNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Flags
 				cbFn(arg0, arg1, arg2)
 			}
 			NameLostHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NameLostHandlerVarPtr, NameLostHandlerVarRef)
+			glib.SaveCallbackWithClosure(NameLostHandlerVarPtr, NameLostHandlerVarRef, NameLostHandlerVar)
 		}
 	}
 
@@ -185,7 +185,7 @@ func BusOwnNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Flags
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 

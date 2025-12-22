@@ -132,7 +132,7 @@ func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, stri
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "accel-cleared", cbRefPtr)
 }
 
@@ -152,7 +152,7 @@ func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, strin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "accel-edited", cbRefPtr)
 }
 

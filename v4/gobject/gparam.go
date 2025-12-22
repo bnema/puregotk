@@ -796,7 +796,7 @@ func (x *ParamSpec) SetQdataFull(QuarkVar glib.Quark, DataVar uintptr, DestroyVa
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 

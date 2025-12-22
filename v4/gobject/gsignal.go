@@ -241,7 +241,7 @@ func SignalAddEmissionHook(SignalIdVar uint, DetailVar glib.Quark, HookFuncVar *
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			HookFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(HookFuncVarPtr, HookFuncVarRef)
+			glib.SaveCallbackWithClosure(HookFuncVarPtr, HookFuncVarRef, HookFuncVar)
 		}
 	}
 
@@ -256,7 +256,7 @@ func SignalAddEmissionHook(SignalIdVar uint, DetailVar glib.Quark, HookFuncVar *
 				cbFn(arg0)
 			}
 			DataDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DataDestroyVarPtr, DataDestroyVarRef)
+			glib.SaveCallbackWithClosure(DataDestroyVarPtr, DataDestroyVarRef, DataDestroyVar)
 		}
 	}
 
@@ -359,7 +359,7 @@ func SignalConnectData(InstanceVar *Object, DetailedSignalVar string, CHandlerVa
 				cbFn()
 			}
 			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
+			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
 		}
 	}
 
@@ -374,7 +374,7 @@ func SignalConnectData(InstanceVar *Object, DetailedSignalVar string, CHandlerVa
 				cbFn(arg0, arg1)
 			}
 			DestroyDataVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyDataVarPtr, DestroyDataVarRef)
+			glib.SaveCallbackWithClosure(DestroyDataVarPtr, DestroyDataVarRef, DestroyDataVar)
 		}
 	}
 
@@ -722,7 +722,7 @@ func SignalNew(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar Signal
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			AccumulatorVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(AccumulatorVarPtr, AccumulatorVarRef)
+			glib.SaveCallbackWithClosure(AccumulatorVarPtr, AccumulatorVarRef, AccumulatorVar)
 		}
 	}
 
@@ -762,7 +762,7 @@ func SignalNewClassHandler(SignalNameVar string, ItypeVar types.GType, SignalFla
 				cbFn()
 			}
 			ClassHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(ClassHandlerVarPtr, ClassHandlerVarRef)
+			glib.SaveCallbackWithClosure(ClassHandlerVarPtr, ClassHandlerVarRef, ClassHandlerVar)
 		}
 	}
 
@@ -777,7 +777,7 @@ func SignalNewClassHandler(SignalNameVar string, ItypeVar types.GType, SignalFla
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			AccumulatorVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(AccumulatorVarPtr, AccumulatorVarRef)
+			glib.SaveCallbackWithClosure(AccumulatorVarPtr, AccumulatorVarRef, AccumulatorVar)
 		}
 	}
 
@@ -807,7 +807,7 @@ func SignalNewValist(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar 
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			AccumulatorVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(AccumulatorVarPtr, AccumulatorVarRef)
+			glib.SaveCallbackWithClosure(AccumulatorVarPtr, AccumulatorVarRef, AccumulatorVar)
 		}
 	}
 
@@ -837,7 +837,7 @@ func SignalNewv(SignalNameVar string, ItypeVar types.GType, SignalFlagsVar Signa
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			AccumulatorVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(AccumulatorVarPtr, AccumulatorVarRef)
+			glib.SaveCallbackWithClosure(AccumulatorVarPtr, AccumulatorVarRef, AccumulatorVar)
 		}
 	}
 
@@ -884,7 +884,7 @@ func SignalOverrideClassHandler(SignalNameVar string, InstanceTypeVar types.GTyp
 				cbFn()
 			}
 			ClassHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(ClassHandlerVarPtr, ClassHandlerVarRef)
+			glib.SaveCallbackWithClosure(ClassHandlerVarPtr, ClassHandlerVarRef, ClassHandlerVar)
 		}
 	}
 

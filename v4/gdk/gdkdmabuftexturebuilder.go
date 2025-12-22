@@ -142,7 +142,7 @@ func (x *DmabufTextureBuilder) Build(DestroyVar *glib.DestroyNotify, DataVar uin
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 

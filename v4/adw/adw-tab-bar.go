@@ -459,7 +459,7 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) u
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
 }
 
@@ -487,7 +487,7 @@ func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, uintptr, uintptr) gdk.Dr
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
 }
 

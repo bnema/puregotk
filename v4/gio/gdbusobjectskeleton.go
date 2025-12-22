@@ -204,7 +204,7 @@ func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton,
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "authorize-method", cbRefPtr)
 }
 

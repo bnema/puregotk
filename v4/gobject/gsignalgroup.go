@@ -93,7 +93,7 @@ func (x *SignalGroup) Connect(DetailedSignalVar string, CHandlerVar *Callback, D
 				cbFn()
 			}
 			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
+			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
 		}
 	}
 
@@ -122,7 +122,7 @@ func (x *SignalGroup) ConnectAfter(DetailedSignalVar string, CHandlerVar *Callba
 				cbFn()
 			}
 			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
+			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
 		}
 	}
 
@@ -160,7 +160,7 @@ func (x *SignalGroup) ConnectData(DetailedSignalVar string, CHandlerVar *Callbac
 				cbFn()
 			}
 			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
+			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
 		}
 	}
 
@@ -175,7 +175,7 @@ func (x *SignalGroup) ConnectData(DetailedSignalVar string, CHandlerVar *Callbac
 				cbFn(arg0, arg1)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -205,7 +205,7 @@ func (x *SignalGroup) ConnectObject(DetailedSignalVar string, CHandlerVar *Callb
 				cbFn()
 			}
 			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
+			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
 		}
 	}
 
@@ -235,7 +235,7 @@ func (x *SignalGroup) ConnectSwapped(DetailedSignalVar string, CHandlerVar *Call
 				cbFn()
 			}
 			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
+			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
 		}
 	}
 
@@ -315,7 +315,7 @@ func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return SignalConnect(x.GoPointer(), "bind", cbRefPtr)
 }
 
@@ -339,7 +339,7 @@ func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
 }
 

@@ -202,7 +202,7 @@ func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, uintptr))
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "display-opened", cbRefPtr)
 }
 

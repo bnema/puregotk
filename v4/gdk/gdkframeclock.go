@@ -276,7 +276,7 @@ func (x *FrameClock) ConnectAfterPaint(cb *func(FrameClock)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "after-paint", cbRefPtr)
 }
 
@@ -298,7 +298,7 @@ func (x *FrameClock) ConnectBeforePaint(cb *func(FrameClock)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "before-paint", cbRefPtr)
 }
 
@@ -321,7 +321,7 @@ func (x *FrameClock) ConnectFlushEvents(cb *func(FrameClock)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "flush-events", cbRefPtr)
 }
 
@@ -345,7 +345,7 @@ func (x *FrameClock) ConnectLayout(cb *func(FrameClock)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "layout", cbRefPtr)
 }
 
@@ -371,7 +371,7 @@ func (x *FrameClock) ConnectPaint(cb *func(FrameClock)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "paint", cbRefPtr)
 }
 
@@ -394,7 +394,7 @@ func (x *FrameClock) ConnectResumeEvents(cb *func(FrameClock)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "resume-events", cbRefPtr)
 }
 
@@ -420,7 +420,7 @@ func (x *FrameClock) ConnectUpdate(cb *func(FrameClock)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
 }
 

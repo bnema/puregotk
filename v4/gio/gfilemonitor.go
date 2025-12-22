@@ -358,7 +358,7 @@ func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, Fil
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
 }
 

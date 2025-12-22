@@ -379,7 +379,7 @@ func (x *Assistant) SetForwardPageFunc(PageFuncVar *AssistantPageFunc, DataVar u
 				return cbFn(arg0, arg1)
 			}
 			PageFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(PageFuncVarPtr, PageFuncVarRef)
+			glib.SaveCallbackWithClosure(PageFuncVarPtr, PageFuncVarRef, PageFuncVar)
 		}
 	}
 
@@ -394,7 +394,7 @@ func (x *Assistant) SetForwardPageFunc(PageFuncVar *AssistantPageFunc, DataVar u
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -516,7 +516,7 @@ func (x *Assistant) ConnectApply(cb *func(Assistant)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
 }
 
@@ -536,7 +536,7 @@ func (x *Assistant) ConnectCancel(cb *func(Assistant)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
 }
 
@@ -558,7 +558,7 @@ func (x *Assistant) ConnectClose(cb *func(Assistant)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
 }
 
@@ -578,7 +578,7 @@ func (x *Assistant) ConnectEscape(cb *func(Assistant)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "escape", cbRefPtr)
 }
 
@@ -602,7 +602,7 @@ func (x *Assistant) ConnectPrepare(cb *func(Assistant, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
 }
 

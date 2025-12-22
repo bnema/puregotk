@@ -112,7 +112,7 @@ func UnixFdAdd(FdVar int, ConditionVar IOCondition, FunctionVar *UnixFDSourceFun
 				return cbFn(arg0, arg1, arg2)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -142,7 +142,7 @@ func UnixFdAddFull(PriorityVar int, FdVar int, ConditionVar IOCondition, Functio
 				return cbFn(arg0, arg1, arg2)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -157,7 +157,7 @@ func UnixFdAddFull(PriorityVar int, FdVar int, ConditionVar IOCondition, Functio
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -275,7 +275,7 @@ func UnixSignalAdd(SignumVar int, HandlerVar *SourceFunc, UserDataVar uintptr) u
 				return cbFn(arg0)
 			}
 			HandlerVarRef = purego.NewCallback(fcb)
-			SaveCallback(HandlerVarPtr, HandlerVarRef)
+			SaveCallbackWithClosure(HandlerVarPtr, HandlerVarRef, HandlerVar)
 		}
 	}
 
@@ -302,7 +302,7 @@ func UnixSignalAddFull(PriorityVar int, SignumVar int, HandlerVar *SourceFunc, U
 				return cbFn(arg0)
 			}
 			HandlerVarRef = purego.NewCallback(fcb)
-			SaveCallback(HandlerVarPtr, HandlerVarRef)
+			SaveCallbackWithClosure(HandlerVarPtr, HandlerVarRef, HandlerVar)
 		}
 	}
 
@@ -317,7 +317,7 @@ func UnixSignalAddFull(PriorityVar int, SignumVar int, HandlerVar *SourceFunc, U
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 

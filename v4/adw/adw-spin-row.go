@@ -454,7 +454,7 @@ func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
 }
 
@@ -476,7 +476,7 @@ func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
 }
 
@@ -498,7 +498,7 @@ func (x *SpinRow) ConnectWrapped(cb *func(SpinRow)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
 }
 

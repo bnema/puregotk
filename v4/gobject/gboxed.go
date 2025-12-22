@@ -61,7 +61,7 @@ func BoxedTypeRegisterStatic(NameVar string, BoxedCopyVar *BoxedCopyFunc, BoxedF
 				return cbFn(arg0)
 			}
 			BoxedCopyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(BoxedCopyVarPtr, BoxedCopyVarRef)
+			glib.SaveCallbackWithClosure(BoxedCopyVarPtr, BoxedCopyVarRef, BoxedCopyVar)
 		}
 	}
 
@@ -76,7 +76,7 @@ func BoxedTypeRegisterStatic(NameVar string, BoxedCopyVar *BoxedCopyFunc, BoxedF
 				cbFn(arg0)
 			}
 			BoxedFreeVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(BoxedFreeVarPtr, BoxedFreeVarRef)
+			glib.SaveCallbackWithClosure(BoxedFreeVarPtr, BoxedFreeVarRef, BoxedFreeVar)
 		}
 	}
 

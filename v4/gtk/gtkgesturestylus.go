@@ -200,7 +200,7 @@ func (x *GestureStylus) ConnectDown(cb *func(GestureStylus, float64, float64)) u
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "down", cbRefPtr)
 }
 
@@ -220,7 +220,7 @@ func (x *GestureStylus) ConnectMotion(cb *func(GestureStylus, float64, float64))
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "motion", cbRefPtr)
 }
 
@@ -240,7 +240,7 @@ func (x *GestureStylus) ConnectProximity(cb *func(GestureStylus, float64, float6
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "proximity", cbRefPtr)
 }
 
@@ -260,7 +260,7 @@ func (x *GestureStylus) ConnectUp(cb *func(GestureStylus, float64, float64)) uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "up", cbRefPtr)
 }
 

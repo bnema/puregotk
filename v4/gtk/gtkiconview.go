@@ -573,7 +573,7 @@ func (x *IconView) SelectedForeach(FuncVar *IconViewForeachFunc, DataVar uintptr
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1154,7 +1154,7 @@ func (x *IconView) ConnectActivateCursorItem(cb *func(IconView) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate-cursor-item", cbRefPtr)
 }
 
@@ -1180,7 +1180,7 @@ func (x *IconView) ConnectItemActivated(cb *func(IconView, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "item-activated", cbRefPtr)
 }
 
@@ -1213,7 +1213,7 @@ func (x *IconView) ConnectMoveCursor(cb *func(IconView, MovementStep, int, bool,
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
 }
 
@@ -1240,7 +1240,7 @@ func (x *IconView) ConnectSelectAll(cb *func(IconView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
 }
 
@@ -1268,7 +1268,7 @@ func (x *IconView) ConnectSelectCursorItem(cb *func(IconView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "select-cursor-item", cbRefPtr)
 }
 
@@ -1289,7 +1289,7 @@ func (x *IconView) ConnectSelectionChanged(cb *func(IconView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "selection-changed", cbRefPtr)
 }
 
@@ -1318,7 +1318,7 @@ func (x *IconView) ConnectToggleCursorItem(cb *func(IconView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-item", cbRefPtr)
 }
 
@@ -1345,7 +1345,7 @@ func (x *IconView) ConnectUnselectAll(cb *func(IconView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
 }
 

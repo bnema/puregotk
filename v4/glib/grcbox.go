@@ -113,7 +113,7 @@ func AtomicRcBoxReleaseFull(MemBlockVar uintptr, ClearFuncVar *DestroyNotify) {
 				cbFn(arg0)
 			}
 			ClearFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ClearFuncVarPtr, ClearFuncVarRef)
+			SaveCallbackWithClosure(ClearFuncVarPtr, ClearFuncVarRef, ClearFuncVar)
 		}
 	}
 
@@ -221,7 +221,7 @@ func RcBoxReleaseFull(MemBlockVar uintptr, ClearFuncVar *DestroyNotify) {
 				cbFn(arg0)
 			}
 			ClearFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ClearFuncVarPtr, ClearFuncVarRef)
+			SaveCallbackWithClosure(ClearFuncVarPtr, ClearFuncVarRef, ClearFuncVar)
 		}
 	}
 

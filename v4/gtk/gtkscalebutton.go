@@ -377,7 +377,7 @@ func (x *ScaleButton) ConnectPopdown(cb *func(ScaleButton)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "popdown", cbRefPtr)
 }
 
@@ -402,7 +402,7 @@ func (x *ScaleButton) ConnectPopup(cb *func(ScaleButton)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "popup", cbRefPtr)
 }
 
@@ -422,7 +422,7 @@ func (x *ScaleButton) ConnectValueChanged(cb *func(ScaleButton, float64)) uint32
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
 }
 

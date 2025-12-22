@@ -273,7 +273,7 @@ func (x *DragSource) ConnectDragBegin(cb *func(DragSource, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "drag-begin", cbRefPtr)
 }
 
@@ -297,7 +297,7 @@ func (x *DragSource) ConnectDragCancel(cb *func(DragSource, uintptr, gdk.DragCan
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "drag-cancel", cbRefPtr)
 }
 
@@ -321,7 +321,7 @@ func (x *DragSource) ConnectDragEnd(cb *func(DragSource, uintptr, bool)) uint32 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "drag-end", cbRefPtr)
 }
 
@@ -347,7 +347,7 @@ func (x *DragSource) ConnectPrepare(cb *func(DragSource, float64, float64) gdk.C
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
 }
 

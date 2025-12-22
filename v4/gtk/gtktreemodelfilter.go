@@ -305,7 +305,7 @@ func (x *TreeModelFilter) SetModifyFunc(NColumnsVar int, TypesVar []types.GType,
 				cbFn(arg0, arg1, arg2, arg3, arg4)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -320,7 +320,7 @@ func (x *TreeModelFilter) SetModifyFunc(NColumnsVar int, TypesVar []types.GType,
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -397,7 +397,7 @@ func (x *TreeModelFilter) SetVisibleFunc(FuncVar *TreeModelFilterVisibleFunc, Da
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -412,7 +412,7 @@ func (x *TreeModelFilter) SetVisibleFunc(FuncVar *TreeModelFilterVisibleFunc, Da
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 

@@ -434,7 +434,7 @@ func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
 }
 
@@ -456,7 +456,7 @@ func (x *LevelBar) ConnectOffsetChangedWithDetail(detail string, cb *func(LevelB
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 

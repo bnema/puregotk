@@ -66,7 +66,7 @@ func NewCustomFilter(MatchFuncVar *CustomFilterFunc, UserDataVar uintptr, UserDe
 				return cbFn(arg0, arg1)
 			}
 			MatchFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(MatchFuncVarPtr, MatchFuncVarRef)
+			glib.SaveCallbackWithClosure(MatchFuncVarPtr, MatchFuncVarRef, MatchFuncVar)
 		}
 	}
 
@@ -81,7 +81,7 @@ func NewCustomFilter(MatchFuncVar *CustomFilterFunc, UserDataVar uintptr, UserDe
 				cbFn(arg0)
 			}
 			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
 		}
 	}
 
@@ -119,7 +119,7 @@ func (x *CustomFilter) SetFilterFunc(MatchFuncVar *CustomFilterFunc, UserDataVar
 				return cbFn(arg0, arg1)
 			}
 			MatchFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(MatchFuncVarPtr, MatchFuncVarRef)
+			glib.SaveCallbackWithClosure(MatchFuncVarPtr, MatchFuncVarRef, MatchFuncVar)
 		}
 	}
 
@@ -134,7 +134,7 @@ func (x *CustomFilter) SetFilterFunc(MatchFuncVar *CustomFilterFunc, UserDataVar
 				cbFn(arg0)
 			}
 			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
 		}
 	}
 

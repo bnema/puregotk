@@ -214,7 +214,7 @@ func (x *ButtonRow) ConnectActivated(cb *func(ButtonRow)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activated", cbRefPtr)
 }
 

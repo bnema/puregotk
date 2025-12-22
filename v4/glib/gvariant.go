@@ -488,7 +488,7 @@ func NewVariantFromData(TypeVar *VariantType, DataVar []byte, SizeVar uint, Trus
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 

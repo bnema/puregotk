@@ -347,7 +347,7 @@ func (x *OptionContext) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr
 				return cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -362,7 +362,7 @@ func (x *OptionContext) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr
 				cbFn(arg0)
 			}
 			DestroyNotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+			SaveCallbackWithClosure(DestroyNotifyVarPtr, DestroyNotifyVarRef, DestroyNotifyVar)
 		}
 	}
 
@@ -467,7 +467,7 @@ func NewOptionGroup(NameVar string, DescriptionVar string, HelpDescriptionVar st
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			SaveCallback(DestroyVarPtr, DestroyVarRef)
+			SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -525,7 +525,7 @@ func (x *OptionGroup) SetErrorHook(ErrorFuncVar *OptionErrorFunc) {
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			ErrorFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ErrorFuncVarPtr, ErrorFuncVarRef)
+			SaveCallbackWithClosure(ErrorFuncVarPtr, ErrorFuncVarRef, ErrorFuncVar)
 		}
 	}
 
@@ -555,7 +555,7 @@ func (x *OptionGroup) SetParseHooks(PreParseFuncVar *OptionParseFunc, PostParseF
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			PreParseFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(PreParseFuncVarPtr, PreParseFuncVarRef)
+			SaveCallbackWithClosure(PreParseFuncVarPtr, PreParseFuncVarRef, PreParseFuncVar)
 		}
 	}
 
@@ -570,7 +570,7 @@ func (x *OptionGroup) SetParseHooks(PreParseFuncVar *OptionParseFunc, PostParseF
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			PostParseFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(PostParseFuncVarPtr, PostParseFuncVarRef)
+			SaveCallbackWithClosure(PostParseFuncVarPtr, PostParseFuncVarRef, PostParseFuncVar)
 		}
 	}
 
@@ -599,7 +599,7 @@ func (x *OptionGroup) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr, 
 				return cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -614,7 +614,7 @@ func (x *OptionGroup) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr, 
 				cbFn(arg0)
 			}
 			DestroyNotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+			SaveCallbackWithClosure(DestroyNotifyVarPtr, DestroyNotifyVarRef, DestroyNotifyVar)
 		}
 	}
 

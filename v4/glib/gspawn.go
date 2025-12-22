@@ -170,7 +170,7 @@ func SpawnAsync(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []string,
 				cbFn(arg0)
 			}
 			ChildSetupVarRef = purego.NewCallback(fcb)
-			SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+			SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
 		}
 	}
 
@@ -207,7 +207,7 @@ func SpawnAsyncWithFds(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []
 				cbFn(arg0)
 			}
 			ChildSetupVarRef = purego.NewCallback(fcb)
-			SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+			SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
 		}
 	}
 
@@ -242,7 +242,7 @@ func SpawnAsyncWithPipes(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar 
 				cbFn(arg0)
 			}
 			ChildSetupVarRef = purego.NewCallback(fcb)
-			SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+			SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
 		}
 	}
 
@@ -469,7 +469,7 @@ func SpawnAsyncWithPipesAndFds(WorkingDirectoryVar *string, ArgvVar []string, En
 				cbFn(arg0)
 			}
 			ChildSetupVarRef = purego.NewCallback(fcb)
-			SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+			SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
 		}
 	}
 
@@ -679,7 +679,7 @@ func SpawnSync(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []string, 
 				cbFn(arg0)
 			}
 			ChildSetupVarRef = purego.NewCallback(fcb)
-			SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+			SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
 		}
 	}
 

@@ -441,7 +441,7 @@ func (x *PixbufLoader) ConnectAreaPrepared(cb *func(PixbufLoader)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "area-prepared", cbRefPtr)
 }
 
@@ -468,7 +468,7 @@ func (x *PixbufLoader) ConnectAreaUpdated(cb *func(PixbufLoader, int, int, int, 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "area-updated", cbRefPtr)
 }
 
@@ -492,7 +492,7 @@ func (x *PixbufLoader) ConnectClosed(cb *func(PixbufLoader)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
 }
 
@@ -518,7 +518,7 @@ func (x *PixbufLoader) ConnectSizePrepared(cb *func(PixbufLoader, int, int)) uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "size-prepared", cbRefPtr)
 }
 

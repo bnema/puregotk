@@ -44,7 +44,7 @@ func IoSchedulerPushJob(JobFuncVar *IOSchedulerJobFunc, UserDataVar uintptr, Not
 				return cbFn(arg0, arg1, arg2)
 			}
 			JobFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(JobFuncVarPtr, JobFuncVarRef)
+			glib.SaveCallbackWithClosure(JobFuncVarPtr, JobFuncVarRef, JobFuncVar)
 		}
 	}
 
@@ -59,7 +59,7 @@ func IoSchedulerPushJob(JobFuncVar *IOSchedulerJobFunc, UserDataVar uintptr, Not
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 

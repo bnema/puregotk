@@ -38,7 +38,7 @@ func SimpleAsyncReportErrorInIdle(ObjectVar *gobject.Object, CallbackVar *AsyncR
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -64,7 +64,7 @@ func SimpleAsyncReportGerrorInIdle(ObjectVar *gobject.Object, CallbackVar *Async
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -90,7 +90,7 @@ func SimpleAsyncReportTakeGerrorInIdle(ObjectVar *gobject.Object, CallbackVar *A
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -313,7 +313,7 @@ func NewSimpleAsyncResult(SourceObjectVar *gobject.Object, CallbackVar *AsyncRea
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -344,7 +344,7 @@ func NewSimpleAsyncResultError(SourceObjectVar *gobject.Object, CallbackVar *Asy
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -375,7 +375,7 @@ func NewSimpleAsyncResultFromError(SourceObjectVar *gobject.Object, CallbackVar 
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -407,7 +407,7 @@ func NewSimpleAsyncResultTakeError(SourceObjectVar *gobject.Object, CallbackVar 
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -532,7 +532,7 @@ func (x *SimpleAsyncResult) RunInThread(FuncVar *SimpleAsyncThreadFunc, IoPriori
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -629,7 +629,7 @@ func (x *SimpleAsyncResult) SetOpResGpointer(OpResVar uintptr, DestroyOpResVar *
 				cbFn(arg0)
 			}
 			DestroyOpResVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyOpResVarPtr, DestroyOpResVarRef)
+			glib.SaveCallbackWithClosure(DestroyOpResVarPtr, DestroyOpResVarRef, DestroyOpResVar)
 		}
 	}
 

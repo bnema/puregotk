@@ -255,7 +255,7 @@ func ContextSetShapeRenderer(ContextVar *pango.Context, FuncVar *ShapeRendererFu
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -270,7 +270,7 @@ func ContextSetShapeRenderer(ContextVar *pango.Context, FuncVar *ShapeRendererFu
 				cbFn(arg0)
 			}
 			DnotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DnotifyVarPtr, DnotifyVarRef)
+			glib.SaveCallbackWithClosure(DnotifyVarPtr, DnotifyVarRef, DnotifyVar)
 		}
 	}
 

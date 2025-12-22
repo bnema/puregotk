@@ -310,7 +310,7 @@ func (x *SearchEntry) ConnectActivate(cb *func(SearchEntry)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
@@ -338,7 +338,7 @@ func (x *SearchEntry) ConnectNextMatch(cb *func(SearchEntry)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "next-match", cbRefPtr)
 }
 
@@ -367,7 +367,7 @@ func (x *SearchEntry) ConnectPreviousMatch(cb *func(SearchEntry)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "previous-match", cbRefPtr)
 }
 
@@ -389,7 +389,7 @@ func (x *SearchEntry) ConnectSearchChanged(cb *func(SearchEntry)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "search-changed", cbRefPtr)
 }
 
@@ -409,7 +409,7 @@ func (x *SearchEntry) ConnectSearchStarted(cb *func(SearchEntry)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "search-started", cbRefPtr)
 }
 
@@ -436,7 +436,7 @@ func (x *SearchEntry) ConnectStopSearch(cb *func(SearchEntry)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "stop-search", cbRefPtr)
 }
 

@@ -639,7 +639,7 @@ func (x *TextBuffer) AddCommitNotify(FlagsVar TextBufferNotifyFlags, CommitNotif
 				cbFn(arg0, arg1, arg2, arg3, arg4)
 			}
 			CommitNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CommitNotifyVarPtr, CommitNotifyVarRef)
+			glib.SaveCallbackWithClosure(CommitNotifyVarPtr, CommitNotifyVarRef, CommitNotifyVar)
 		}
 	}
 
@@ -654,7 +654,7 @@ func (x *TextBuffer) AddCommitNotify(FlagsVar TextBufferNotifyFlags, CommitNotif
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -1897,7 +1897,7 @@ func (x *TextBuffer) ConnectApplyTag(cb *func(TextBuffer, uintptr, uintptr, uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "apply-tag", cbRefPtr)
 }
 
@@ -1926,7 +1926,7 @@ func (x *TextBuffer) ConnectBeginUserAction(cb *func(TextBuffer)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "begin-user-action", cbRefPtr)
 }
 
@@ -1946,7 +1946,7 @@ func (x *TextBuffer) ConnectChanged(cb *func(TextBuffer)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
 }
 
@@ -1976,7 +1976,7 @@ func (x *TextBuffer) ConnectDeleteRange(cb *func(TextBuffer, uintptr, uintptr)) 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "delete-range", cbRefPtr)
 }
 
@@ -2006,7 +2006,7 @@ func (x *TextBuffer) ConnectEndUserAction(cb *func(TextBuffer)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "end-user-action", cbRefPtr)
 }
 
@@ -2035,7 +2035,7 @@ func (x *TextBuffer) ConnectInsertChildAnchor(cb *func(TextBuffer, uintptr, uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "insert-child-anchor", cbRefPtr)
 }
 
@@ -2064,7 +2064,7 @@ func (x *TextBuffer) ConnectInsertPaintable(cb *func(TextBuffer, uintptr, uintpt
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "insert-paintable", cbRefPtr)
 }
 
@@ -2094,7 +2094,7 @@ func (x *TextBuffer) ConnectInsertText(cb *func(TextBuffer, uintptr, string, int
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "insert-text", cbRefPtr)
 }
 
@@ -2116,7 +2116,7 @@ func (x *TextBuffer) ConnectMarkDeleted(cb *func(TextBuffer, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "mark-deleted", cbRefPtr)
 }
 
@@ -2140,7 +2140,7 @@ func (x *TextBuffer) ConnectMarkSet(cb *func(TextBuffer, uintptr, uintptr)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "mark-set", cbRefPtr)
 }
 
@@ -2162,7 +2162,7 @@ func (x *TextBuffer) ConnectModifiedChanged(cb *func(TextBuffer)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "modified-changed", cbRefPtr)
 }
 
@@ -2186,7 +2186,7 @@ func (x *TextBuffer) ConnectPasteDone(cb *func(TextBuffer, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "paste-done", cbRefPtr)
 }
 
@@ -2207,7 +2207,7 @@ func (x *TextBuffer) ConnectRedo(cb *func(TextBuffer)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "redo", cbRefPtr)
 }
 
@@ -2236,7 +2236,7 @@ func (x *TextBuffer) ConnectRemoveTag(cb *func(TextBuffer, uintptr, uintptr, uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "remove-tag", cbRefPtr)
 }
 
@@ -2258,7 +2258,7 @@ func (x *TextBuffer) ConnectUndo(cb *func(TextBuffer)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "undo", cbRefPtr)
 }
 

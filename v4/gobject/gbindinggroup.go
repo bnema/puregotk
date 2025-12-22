@@ -84,7 +84,7 @@ func (x *BindingGroup) BindFull(SourcePropertyVar string, TargetVar *Object, Tar
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			TransformToVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(TransformToVarPtr, TransformToVarRef)
+			glib.SaveCallbackWithClosure(TransformToVarPtr, TransformToVarRef, TransformToVar)
 		}
 	}
 
@@ -99,7 +99,7 @@ func (x *BindingGroup) BindFull(SourcePropertyVar string, TargetVar *Object, Tar
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			TransformFromVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(TransformFromVarPtr, TransformFromVarRef)
+			glib.SaveCallbackWithClosure(TransformFromVarPtr, TransformFromVarRef, TransformFromVar)
 		}
 	}
 
@@ -114,7 +114,7 @@ func (x *BindingGroup) BindFull(SourcePropertyVar string, TargetVar *Object, Tar
 				cbFn(arg0)
 			}
 			UserDataDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataDestroyVarPtr, UserDataDestroyVarRef)
+			glib.SaveCallbackWithClosure(UserDataDestroyVarPtr, UserDataDestroyVarRef, UserDataDestroyVar)
 		}
 	}
 

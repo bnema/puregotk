@@ -504,7 +504,7 @@ func (x *Gesture) ConnectBegin(cb *func(Gesture, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "begin", cbRefPtr)
 }
 
@@ -533,7 +533,7 @@ func (x *Gesture) ConnectCancel(cb *func(Gesture, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
 }
 
@@ -561,7 +561,7 @@ func (x *Gesture) ConnectEnd(cb *func(Gesture, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "end", cbRefPtr)
 }
 
@@ -584,7 +584,7 @@ func (x *Gesture) ConnectSequenceStateChanged(cb *func(Gesture, uintptr, EventSe
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "sequence-state-changed", cbRefPtr)
 }
 
@@ -606,7 +606,7 @@ func (x *Gesture) ConnectUpdate(cb *func(Gesture, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "update", cbRefPtr)
 }
 

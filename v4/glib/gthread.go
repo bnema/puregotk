@@ -295,7 +295,7 @@ func (x *Once) Impl(FuncVar *ThreadFunc, ArgVar uintptr) uintptr {
 				return cbFn(arg0)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -895,7 +895,7 @@ func (x *StaticPrivate) Set(DataVar uintptr, NotifyVar *DestroyNotify) {
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -1305,7 +1305,7 @@ func NewThread(NameVar *string, FuncVar *ThreadFunc, DataVar uintptr) *Thread {
 				return cbFn(arg0)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1339,7 +1339,7 @@ func ThreadTryNew(NameVar *string, FuncVar *ThreadFunc, DataVar uintptr) (*Threa
 				return cbFn(arg0)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -2264,7 +2264,7 @@ func PrivateNew(NotifyVar *DestroyNotify) *Private {
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -2301,7 +2301,7 @@ func ThreadCreate(FuncVar *ThreadFunc, DataVar uintptr, JoinableVar bool) (*Thre
 				return cbFn(arg0)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -2331,7 +2331,7 @@ func ThreadCreateFull(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint32,
 				return cbFn(arg0)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -2391,7 +2391,7 @@ func ThreadForeach(ThreadFuncVar *Func, UserDataVar uintptr) {
 				cbFn(arg0, arg1)
 			}
 			ThreadFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ThreadFuncVarPtr, ThreadFuncVarRef)
+			SaveCallbackWithClosure(ThreadFuncVarPtr, ThreadFuncVarRef, ThreadFuncVar)
 		}
 	}
 

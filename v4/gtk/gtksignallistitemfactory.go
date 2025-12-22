@@ -130,7 +130,7 @@ func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "bind", cbRefPtr)
 }
 
@@ -158,7 +158,7 @@ func (x *SignalListItemFactory) ConnectSetup(cb *func(SignalListItemFactory, uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "setup", cbRefPtr)
 }
 
@@ -183,7 +183,7 @@ func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "teardown", cbRefPtr)
 }
 
@@ -210,7 +210,7 @@ func (x *SignalListItemFactory) ConnectUnbind(cb *func(SignalListItemFactory, ui
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
 }
 

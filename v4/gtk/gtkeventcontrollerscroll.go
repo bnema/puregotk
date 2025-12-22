@@ -179,7 +179,7 @@ func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "decelerate", cbRefPtr)
 }
 
@@ -203,7 +203,7 @@ func (x *EventControllerScroll) ConnectScroll(cb *func(EventControllerScroll, fl
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "scroll", cbRefPtr)
 }
 
@@ -225,7 +225,7 @@ func (x *EventControllerScroll) ConnectScrollBegin(cb *func(EventControllerScrol
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "scroll-begin", cbRefPtr)
 }
 
@@ -247,7 +247,7 @@ func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "scroll-end", cbRefPtr)
 }
 

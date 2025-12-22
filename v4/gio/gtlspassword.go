@@ -255,7 +255,7 @@ func (x *TlsPassword) SetValueFull(ValueVar []byte, LengthVar int, DestroyVar *g
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 

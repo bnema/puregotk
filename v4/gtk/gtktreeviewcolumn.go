@@ -553,7 +553,7 @@ func (x *TreeViewColumn) SetCellDataFunc(CellRendererVar *CellRenderer, FuncVar 
 				cbFn(arg0, arg1, arg2, arg3, arg4)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -568,7 +568,7 @@ func (x *TreeViewColumn) SetCellDataFunc(CellRendererVar *CellRenderer, FuncVar 
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -995,7 +995,7 @@ func (x *TreeViewColumn) ConnectClicked(cb *func(TreeViewColumn)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
 }
 

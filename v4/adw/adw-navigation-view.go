@@ -446,7 +446,7 @@ func (x *NavigationPage) ConnectHidden(cb *func(NavigationPage)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "hidden", cbRefPtr)
 }
 
@@ -470,7 +470,7 @@ func (x *NavigationPage) ConnectHiding(cb *func(NavigationPage)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "hiding", cbRefPtr)
 }
 
@@ -494,7 +494,7 @@ func (x *NavigationPage) ConnectShowing(cb *func(NavigationPage)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "showing", cbRefPtr)
 }
 
@@ -518,7 +518,7 @@ func (x *NavigationPage) ConnectShown(cb *func(NavigationPage)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "shown", cbRefPtr)
 }
 
@@ -1496,7 +1496,7 @@ func (x *NavigationView) ConnectGetNextPage(cb *func(NavigationView) NavigationP
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "get-next-page", cbRefPtr)
 }
 
@@ -1522,7 +1522,7 @@ func (x *NavigationView) ConnectPopped(cb *func(NavigationView, uintptr)) uint32
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "popped", cbRefPtr)
 }
 
@@ -1544,7 +1544,7 @@ func (x *NavigationView) ConnectPushed(cb *func(NavigationView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "pushed", cbRefPtr)
 }
 
@@ -1566,7 +1566,7 @@ func (x *NavigationView) ConnectReplaced(cb *func(NavigationView)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "replaced", cbRefPtr)
 }
 

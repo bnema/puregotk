@@ -58,7 +58,7 @@ func NewCustomSorter(SortFuncVar *glib.CompareDataFunc, UserDataVar uintptr, Use
 				return cbFn(arg0, arg1, arg2)
 			}
 			SortFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(SortFuncVarPtr, SortFuncVarRef)
+			glib.SaveCallbackWithClosure(SortFuncVarPtr, SortFuncVarRef, SortFuncVar)
 		}
 	}
 
@@ -73,7 +73,7 @@ func NewCustomSorter(SortFuncVar *glib.CompareDataFunc, UserDataVar uintptr, Use
 				cbFn(arg0)
 			}
 			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
 		}
 	}
 
@@ -111,7 +111,7 @@ func (x *CustomSorter) SetSortFunc(SortFuncVar *glib.CompareDataFunc, UserDataVa
 				return cbFn(arg0, arg1, arg2)
 			}
 			SortFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(SortFuncVarPtr, SortFuncVarRef)
+			glib.SaveCallbackWithClosure(SortFuncVarPtr, SortFuncVarRef, SortFuncVar)
 		}
 	}
 
@@ -126,7 +126,7 @@ func (x *CustomSorter) SetSortFunc(SortFuncVar *glib.CompareDataFunc, UserDataVa
 				cbFn(arg0)
 			}
 			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
 		}
 	}
 

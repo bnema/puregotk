@@ -645,7 +645,7 @@ func NewTask(SourceObjectVar *gobject.Object, CancellableVar *Cancellable, Callb
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -685,7 +685,7 @@ func (x *Task) AttachSource(SourceVar *glib.Source, CallbackVar *glib.SourceFunc
 				return cbFn(arg0)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1033,7 +1033,7 @@ func (x *Task) ReturnPointer(ResultVar uintptr, ResultDestroyVar *glib.DestroyNo
 				cbFn(arg0)
 			}
 			ResultDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(ResultDestroyVarPtr, ResultDestroyVarRef)
+			glib.SaveCallbackWithClosure(ResultDestroyVarPtr, ResultDestroyVarRef, ResultDestroyVar)
 		}
 	}
 
@@ -1111,7 +1111,7 @@ func (x *Task) RunInThread(TaskFuncVar *TaskThreadFunc) {
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			TaskFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(TaskFuncVarPtr, TaskFuncVarRef)
+			glib.SaveCallbackWithClosure(TaskFuncVarPtr, TaskFuncVarRef, TaskFuncVar)
 		}
 	}
 
@@ -1150,7 +1150,7 @@ func (x *Task) RunInThreadSync(TaskFuncVar *TaskThreadFunc) {
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			TaskFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(TaskFuncVarPtr, TaskFuncVarRef)
+			glib.SaveCallbackWithClosure(TaskFuncVarPtr, TaskFuncVarRef, TaskFuncVar)
 		}
 	}
 
@@ -1307,7 +1307,7 @@ func (x *Task) SetTaskData(TaskDataVar uintptr, TaskDataDestroyVar *glib.Destroy
 				cbFn(arg0)
 			}
 			TaskDataDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(TaskDataDestroyVarPtr, TaskDataDestroyVarRef)
+			glib.SaveCallbackWithClosure(TaskDataDestroyVarPtr, TaskDataDestroyVarRef, TaskDataDestroyVar)
 		}
 	}
 
@@ -1425,7 +1425,7 @@ func TaskReportError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReadyCal
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1457,7 +1457,7 @@ func TaskReportNewError(SourceObjectVar *gobject.Object, CallbackVar *AsyncReady
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 

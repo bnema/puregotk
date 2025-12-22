@@ -911,7 +911,7 @@ func (x *MenuModel) ConnectItemsChanged(cb *func(MenuModel, int, int, int)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "items-changed", cbRefPtr)
 }
 

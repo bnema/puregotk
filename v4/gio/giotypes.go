@@ -426,7 +426,7 @@ func (x *IOSchedulerJob) SendToMainloop(FuncVar *glib.SourceFunc, UserDataVar ui
 				return cbFn(arg0)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -441,7 +441,7 @@ func (x *IOSchedulerJob) SendToMainloop(FuncVar *glib.SourceFunc, UserDataVar ui
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -474,7 +474,7 @@ func (x *IOSchedulerJob) SendToMainloopAsync(FuncVar *glib.SourceFunc, UserDataV
 				return cbFn(arg0)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -489,7 +489,7 @@ func (x *IOSchedulerJob) SendToMainloopAsync(FuncVar *glib.SourceFunc, UserDataV
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 

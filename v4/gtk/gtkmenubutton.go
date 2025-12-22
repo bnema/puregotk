@@ -367,7 +367,7 @@ func (x *MenuButton) SetCreatePopupFunc(FuncVar *MenuButtonCreatePopupFunc, User
 				cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -382,7 +382,7 @@ func (x *MenuButton) SetCreatePopupFunc(FuncVar *MenuButtonCreatePopupFunc, User
 				cbFn(arg0)
 			}
 			DestroyNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+			glib.SaveCallbackWithClosure(DestroyNotifyVarPtr, DestroyNotifyVarRef, DestroyNotifyVar)
 		}
 	}
 
@@ -672,7 +672,7 @@ func (x *MenuButton) ConnectActivate(cb *func(MenuButton)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 

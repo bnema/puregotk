@@ -161,7 +161,7 @@ func NewBytesWithFreeFunc(DataVar []byte, SizeVar uint, FreeFuncVar *DestroyNoti
 				cbFn(arg0)
 			}
 			FreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FreeFuncVarPtr, FreeFuncVarRef)
+			SaveCallbackWithClosure(FreeFuncVarPtr, FreeFuncVarRef, FreeFuncVar)
 		}
 	}
 
@@ -607,7 +607,7 @@ func ByteArraySort(ArrayVar []byte, CompareFuncVar *CompareFunc) {
 				return cbFn(arg0, arg1)
 			}
 			CompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+			SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
 		}
 	}
 
@@ -632,7 +632,7 @@ func ByteArraySortWithData(ArrayVar []byte, CompareFuncVar *CompareDataFunc, Use
 				return cbFn(arg0, arg1, arg2)
 			}
 			CompareFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CompareFuncVarPtr, CompareFuncVarRef)
+			SaveCallbackWithClosure(CompareFuncVarPtr, CompareFuncVarRef, CompareFuncVar)
 		}
 	}
 
@@ -705,7 +705,7 @@ func PtrArrayFindWithEqualFunc(HaystackVar []uintptr, NeedleVar uintptr, EqualFu
 				return cbFn(arg0, arg1)
 			}
 			EqualFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(EqualFuncVarPtr, EqualFuncVarRef)
+			SaveCallbackWithClosure(EqualFuncVarPtr, EqualFuncVarRef, EqualFuncVar)
 		}
 	}
 
@@ -746,7 +746,7 @@ func PtrArrayNewFromArray(DataVar []uintptr, LenVar uint, CopyFuncVar *CopyFunc,
 				return cbFn(arg0, arg1)
 			}
 			CopyFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CopyFuncVarPtr, CopyFuncVarRef)
+			SaveCallbackWithClosure(CopyFuncVarPtr, CopyFuncVarRef, CopyFuncVar)
 		}
 	}
 
@@ -761,7 +761,7 @@ func PtrArrayNewFromArray(DataVar []uintptr, LenVar uint, CopyFuncVar *CopyFunc,
 				cbFn(arg0)
 			}
 			ElementFreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ElementFreeFuncVarPtr, ElementFreeFuncVarRef)
+			SaveCallbackWithClosure(ElementFreeFuncVarPtr, ElementFreeFuncVarRef, ElementFreeFuncVar)
 		}
 	}
 
@@ -798,7 +798,7 @@ func PtrArrayNewFromNullTerminatedArray(DataVar []uintptr, CopyFuncVar *CopyFunc
 				return cbFn(arg0, arg1)
 			}
 			CopyFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CopyFuncVarPtr, CopyFuncVarRef)
+			SaveCallbackWithClosure(CopyFuncVarPtr, CopyFuncVarRef, CopyFuncVar)
 		}
 	}
 
@@ -813,7 +813,7 @@ func PtrArrayNewFromNullTerminatedArray(DataVar []uintptr, CopyFuncVar *CopyFunc
 				cbFn(arg0)
 			}
 			ElementFreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ElementFreeFuncVarPtr, ElementFreeFuncVarRef)
+			SaveCallbackWithClosure(ElementFreeFuncVarPtr, ElementFreeFuncVarRef, ElementFreeFuncVar)
 		}
 	}
 
@@ -853,7 +853,7 @@ func PtrArrayNewTake(DataVar []uintptr, LenVar uint, ElementFreeFuncVar *Destroy
 				cbFn(arg0)
 			}
 			ElementFreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ElementFreeFuncVarPtr, ElementFreeFuncVarRef)
+			SaveCallbackWithClosure(ElementFreeFuncVarPtr, ElementFreeFuncVarRef, ElementFreeFuncVar)
 		}
 	}
 
@@ -896,7 +896,7 @@ func PtrArrayNewTakeNullTerminated(DataVar []uintptr, ElementFreeFuncVar *Destro
 				cbFn(arg0)
 			}
 			ElementFreeFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ElementFreeFuncVarPtr, ElementFreeFuncVarRef)
+			SaveCallbackWithClosure(ElementFreeFuncVarPtr, ElementFreeFuncVarRef, ElementFreeFuncVar)
 		}
 	}
 

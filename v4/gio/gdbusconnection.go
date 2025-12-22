@@ -237,7 +237,7 @@ func BusGet(BusTypeVar BusType, CancellableVar *Cancellable, CallbackVar *AsyncR
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -543,7 +543,7 @@ func (x *DBusConnection) AddFilter(FilterFunctionVar *DBusMessageFilterFunction,
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			FilterFunctionVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FilterFunctionVarPtr, FilterFunctionVarRef)
+			glib.SaveCallbackWithClosure(FilterFunctionVarPtr, FilterFunctionVarRef, FilterFunctionVar)
 		}
 	}
 
@@ -558,7 +558,7 @@ func (x *DBusConnection) AddFilter(FilterFunctionVar *DBusMessageFilterFunction,
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 
@@ -629,7 +629,7 @@ func (x *DBusConnection) Call(BusNameVar *string, ObjectPathVar string, Interfac
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -742,7 +742,7 @@ func (x *DBusConnection) CallWithUnixFdList(BusNameVar *string, ObjectPathVar st
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -842,7 +842,7 @@ func (x *DBusConnection) Close(CancellableVar *Cancellable, CallbackVar *AsyncRe
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1002,7 +1002,7 @@ func (x *DBusConnection) Flush(CancellableVar *Cancellable, CallbackVar *AsyncRe
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1223,7 +1223,7 @@ func (x *DBusConnection) RegisterObject(ObjectPathVar string, InterfaceInfoVar *
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 
@@ -1333,7 +1333,7 @@ func (x *DBusConnection) RegisterSubtree(ObjectPathVar string, VtableVar *DBusSu
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 
@@ -1443,7 +1443,7 @@ func (x *DBusConnection) SendMessageWithReply(MessageVar *DBusMessage, FlagsVar 
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1615,7 +1615,7 @@ func (x *DBusConnection) SignalSubscribe(SenderVar *string, InterfaceNameVar *st
 				cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -1630,7 +1630,7 @@ func (x *DBusConnection) SignalSubscribe(SenderVar *string, InterfaceNameVar *st
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 
@@ -1894,7 +1894,7 @@ func (x *DBusConnection) ConnectClosed(cb *func(DBusConnection, bool, uintptr)) 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
 }
 
@@ -2059,7 +2059,7 @@ func DBusConnectionNew(StreamVar *IOStream, GuidVar *string, FlagsVar DBusConnec
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -2108,7 +2108,7 @@ func DBusConnectionNewForAddress(AddressVar string, FlagsVar DBusConnectionFlags
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 

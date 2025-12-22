@@ -51,7 +51,7 @@ func (x *Sequence) Foreach(FuncVar *Func, UserDataVar uintptr) {
 				cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -140,7 +140,7 @@ func (x *Sequence) InsertSorted(DataVar uintptr, CmpFuncVar *CompareDataFunc, Cm
 				return cbFn(arg0, arg1, arg2)
 			}
 			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
+			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
 		}
 	}
 
@@ -176,7 +176,7 @@ func (x *Sequence) InsertSortedIter(DataVar uintptr, IterCmpVar *SequenceIterCom
 				return cbFn(arg0, arg1, arg2)
 			}
 			IterCmpVarRef = purego.NewCallback(fcb)
-			SaveCallback(IterCmpVarPtr, IterCmpVarRef)
+			SaveCallbackWithClosure(IterCmpVarPtr, IterCmpVarRef, IterCmpVar)
 		}
 	}
 
@@ -227,7 +227,7 @@ func (x *Sequence) Lookup(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataV
 				return cbFn(arg0, arg1, arg2)
 			}
 			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
+			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
 		}
 	}
 
@@ -261,7 +261,7 @@ func (x *Sequence) LookupIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFu
 				return cbFn(arg0, arg1, arg2)
 			}
 			IterCmpVarRef = purego.NewCallback(fcb)
-			SaveCallback(IterCmpVarPtr, IterCmpVarRef)
+			SaveCallbackWithClosure(IterCmpVarPtr, IterCmpVarRef, IterCmpVar)
 		}
 	}
 
@@ -308,7 +308,7 @@ func (x *Sequence) Search(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataV
 				return cbFn(arg0, arg1, arg2)
 			}
 			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
+			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
 		}
 	}
 
@@ -345,7 +345,7 @@ func (x *Sequence) SearchIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFu
 				return cbFn(arg0, arg1, arg2)
 			}
 			IterCmpVarRef = purego.NewCallback(fcb)
-			SaveCallback(IterCmpVarPtr, IterCmpVarRef)
+			SaveCallbackWithClosure(IterCmpVarPtr, IterCmpVarRef, IterCmpVar)
 		}
 	}
 
@@ -375,7 +375,7 @@ func (x *Sequence) Sort(CmpFuncVar *CompareDataFunc, CmpDataVar uintptr) {
 				return cbFn(arg0, arg1, arg2)
 			}
 			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
+			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
 		}
 	}
 
@@ -405,7 +405,7 @@ func (x *Sequence) SortIter(CmpFuncVar *SequenceIterCompareFunc, CmpDataVar uint
 				return cbFn(arg0, arg1, arg2)
 			}
 			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
+			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
 		}
 	}
 
@@ -529,7 +529,7 @@ func SequenceForeachRange(BeginVar *SequenceIter, EndVar *SequenceIter, FuncVar 
 				cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -661,7 +661,7 @@ func SequenceSortChanged(IterVar *SequenceIter, CmpFuncVar *CompareDataFunc, Cmp
 				return cbFn(arg0, arg1, arg2)
 			}
 			CmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(CmpFuncVarPtr, CmpFuncVarRef)
+			SaveCallbackWithClosure(CmpFuncVarPtr, CmpFuncVarRef, CmpFuncVar)
 		}
 	}
 
@@ -693,7 +693,7 @@ func SequenceSortChangedIter(IterVar *SequenceIter, IterCmpVar *SequenceIterComp
 				return cbFn(arg0, arg1, arg2)
 			}
 			IterCmpVarRef = purego.NewCallback(fcb)
-			SaveCallback(IterCmpVarPtr, IterCmpVarRef)
+			SaveCallbackWithClosure(IterCmpVarPtr, IterCmpVarRef, IterCmpVar)
 		}
 	}
 

@@ -77,7 +77,7 @@ func NewTreeListModel(RootVar gio.ListModel, PassthroughVar bool, AutoexpandVar 
 				return cbFn(arg0, arg1)
 			}
 			CreateFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CreateFuncVarPtr, CreateFuncVarRef)
+			glib.SaveCallbackWithClosure(CreateFuncVarPtr, CreateFuncVarRef, CreateFuncVar)
 		}
 	}
 
@@ -92,7 +92,7 @@ func NewTreeListModel(RootVar gio.ListModel, PassthroughVar bool, AutoexpandVar 
 				cbFn(arg0)
 			}
 			UserDestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDestroyVarPtr, UserDestroyVarRef)
+			glib.SaveCallbackWithClosure(UserDestroyVarPtr, UserDestroyVarRef, UserDestroyVar)
 		}
 	}
 

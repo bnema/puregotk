@@ -80,7 +80,7 @@ func BusWatchName(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFla
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			NameAppearedHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NameAppearedHandlerVarPtr, NameAppearedHandlerVarRef)
+			glib.SaveCallbackWithClosure(NameAppearedHandlerVarPtr, NameAppearedHandlerVarRef, NameAppearedHandlerVar)
 		}
 	}
 
@@ -95,7 +95,7 @@ func BusWatchName(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFla
 				cbFn(arg0, arg1, arg2)
 			}
 			NameVanishedHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NameVanishedHandlerVarPtr, NameVanishedHandlerVarRef)
+			glib.SaveCallbackWithClosure(NameVanishedHandlerVarPtr, NameVanishedHandlerVarRef, NameVanishedHandlerVar)
 		}
 	}
 
@@ -110,7 +110,7 @@ func BusWatchName(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFla
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 
@@ -136,7 +136,7 @@ func BusWatchNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Fla
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			NameAppearedHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NameAppearedHandlerVarPtr, NameAppearedHandlerVarRef)
+			glib.SaveCallbackWithClosure(NameAppearedHandlerVarPtr, NameAppearedHandlerVarRef, NameAppearedHandlerVar)
 		}
 	}
 
@@ -151,7 +151,7 @@ func BusWatchNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Fla
 				cbFn(arg0, arg1, arg2)
 			}
 			NameVanishedHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NameVanishedHandlerVarPtr, NameVanishedHandlerVarRef)
+			glib.SaveCallbackWithClosure(NameVanishedHandlerVarPtr, NameVanishedHandlerVarRef, NameVanishedHandlerVar)
 		}
 	}
 
@@ -166,7 +166,7 @@ func BusWatchNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Fla
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 

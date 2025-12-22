@@ -572,7 +572,7 @@ func (x *Popover) ConnectActivateDefault(cb *func(Popover)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
 }
 
@@ -592,7 +592,7 @@ func (x *Popover) ConnectClosed(cb *func(Popover)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
 }
 

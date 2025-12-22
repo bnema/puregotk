@@ -372,7 +372,7 @@ func (x *Scale) SetFormatValueFunc(FuncVar *ScaleFormatValueFunc, UserDataVar ui
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -387,7 +387,7 @@ func (x *Scale) SetFormatValueFunc(FuncVar *ScaleFormatValueFunc, UserDataVar ui
 				cbFn(arg0)
 			}
 			DestroyNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+			glib.SaveCallbackWithClosure(DestroyNotifyVarPtr, DestroyNotifyVarRef, DestroyNotifyVar)
 		}
 	}
 

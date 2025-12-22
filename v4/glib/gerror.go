@@ -166,7 +166,7 @@ func ErrorDomainRegister(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, 
 				cbFn(arg0)
 			}
 			ErrorTypeInitVarRef = purego.NewCallback(fcb)
-			SaveCallback(ErrorTypeInitVarPtr, ErrorTypeInitVarRef)
+			SaveCallbackWithClosure(ErrorTypeInitVarPtr, ErrorTypeInitVarRef, ErrorTypeInitVar)
 		}
 	}
 
@@ -181,7 +181,7 @@ func ErrorDomainRegister(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, 
 				cbFn(arg0, arg1)
 			}
 			ErrorTypeCopyVarRef = purego.NewCallback(fcb)
-			SaveCallback(ErrorTypeCopyVarPtr, ErrorTypeCopyVarRef)
+			SaveCallbackWithClosure(ErrorTypeCopyVarPtr, ErrorTypeCopyVarRef, ErrorTypeCopyVar)
 		}
 	}
 
@@ -196,7 +196,7 @@ func ErrorDomainRegister(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, 
 				cbFn(arg0)
 			}
 			ErrorTypeClearVarRef = purego.NewCallback(fcb)
-			SaveCallback(ErrorTypeClearVarPtr, ErrorTypeClearVarRef)
+			SaveCallbackWithClosure(ErrorTypeClearVarPtr, ErrorTypeClearVarRef, ErrorTypeClearVar)
 		}
 	}
 
@@ -237,7 +237,7 @@ func ErrorDomainRegisterStatic(ErrorTypeNameVar string, ErrorTypePrivateSizeVar 
 				cbFn(arg0)
 			}
 			ErrorTypeInitVarRef = purego.NewCallback(fcb)
-			SaveCallback(ErrorTypeInitVarPtr, ErrorTypeInitVarRef)
+			SaveCallbackWithClosure(ErrorTypeInitVarPtr, ErrorTypeInitVarRef, ErrorTypeInitVar)
 		}
 	}
 
@@ -252,7 +252,7 @@ func ErrorDomainRegisterStatic(ErrorTypeNameVar string, ErrorTypePrivateSizeVar 
 				cbFn(arg0, arg1)
 			}
 			ErrorTypeCopyVarRef = purego.NewCallback(fcb)
-			SaveCallback(ErrorTypeCopyVarPtr, ErrorTypeCopyVarRef)
+			SaveCallbackWithClosure(ErrorTypeCopyVarPtr, ErrorTypeCopyVarRef, ErrorTypeCopyVar)
 		}
 	}
 
@@ -267,7 +267,7 @@ func ErrorDomainRegisterStatic(ErrorTypeNameVar string, ErrorTypePrivateSizeVar 
 				cbFn(arg0)
 			}
 			ErrorTypeClearVarRef = purego.NewCallback(fcb)
-			SaveCallback(ErrorTypeClearVarPtr, ErrorTypeClearVarRef)
+			SaveCallbackWithClosure(ErrorTypeClearVarPtr, ErrorTypeClearVarRef, ErrorTypeClearVar)
 		}
 	}
 

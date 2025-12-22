@@ -443,7 +443,7 @@ func (x *EntryRow) ConnectApply(cb *func(EntryRow)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
 }
 
@@ -463,7 +463,7 @@ func (x *EntryRow) ConnectEntryActivated(cb *func(EntryRow)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "entry-activated", cbRefPtr)
 }
 

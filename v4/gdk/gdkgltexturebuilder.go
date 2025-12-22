@@ -92,7 +92,7 @@ func (x *GLTextureBuilder) Build(DestroyVar *glib.DestroyNotify, DataVar uintptr
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 

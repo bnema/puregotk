@@ -220,7 +220,7 @@ func (x *FilenameCompleter) ConnectGotCompletionData(cb *func(FilenameCompleter)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "got-completion-data", cbRefPtr)
 }
 

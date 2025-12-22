@@ -188,7 +188,7 @@ func (x *ThreadPool) SetSortFunction(FuncVar *CompareDataFunc, UserDataVar uintp
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 

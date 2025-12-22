@@ -305,7 +305,7 @@ func HashTableFind(HashTableVar *HashTable, PredicateVar *HRFunc, UserDataVar ui
 				return cbFn(arg0, arg1, arg2)
 			}
 			PredicateVarRef = purego.NewCallback(fcb)
-			SaveCallback(PredicateVarPtr, PredicateVarRef)
+			SaveCallbackWithClosure(PredicateVarPtr, PredicateVarRef, PredicateVar)
 		}
 	}
 
@@ -341,7 +341,7 @@ func HashTableForeach(HashTableVar *HashTable, FuncVar *HFunc, UserDataVar uintp
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -372,7 +372,7 @@ func HashTableForeachRemove(HashTableVar *HashTable, FuncVar *HRFunc, UserDataVa
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -403,7 +403,7 @@ func HashTableForeachSteal(HashTableVar *HashTable, FuncVar *HRFunc, UserDataVar
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 

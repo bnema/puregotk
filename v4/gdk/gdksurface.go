@@ -579,7 +579,7 @@ func (x *Surface) ConnectEnterMonitor(cb *func(Surface, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "enter-monitor", cbRefPtr)
 }
 
@@ -599,7 +599,7 @@ func (x *Surface) ConnectEvent(cb *func(Surface, *Event) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
 }
 
@@ -623,7 +623,7 @@ func (x *Surface) ConnectLayout(cb *func(Surface, int, int)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "layout", cbRefPtr)
 }
 
@@ -643,7 +643,7 @@ func (x *Surface) ConnectLeaveMonitor(cb *func(Surface, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "leave-monitor", cbRefPtr)
 }
 
@@ -663,7 +663,7 @@ func (x *Surface) ConnectRender(cb *func(Surface, uintptr) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "render", cbRefPtr)
 }
 

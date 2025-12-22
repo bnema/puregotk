@@ -144,7 +144,7 @@ func (x *Completion) SetCompare(StrncmpFuncVar *CompletionStrncmpFunc) {
 				return cbFn(arg0, arg1, arg2)
 			}
 			StrncmpFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(StrncmpFuncVarPtr, StrncmpFuncVarRef)
+			SaveCallbackWithClosure(StrncmpFuncVarPtr, StrncmpFuncVarRef, StrncmpFuncVar)
 		}
 	}
 

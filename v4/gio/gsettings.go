@@ -810,7 +810,7 @@ func (x *Settings) BindWithMapping(KeyVar string, ObjectVar *gobject.Object, Pro
 				return cbFn(arg0, arg1, arg2)
 			}
 			GetMappingVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(GetMappingVarPtr, GetMappingVarRef)
+			glib.SaveCallbackWithClosure(GetMappingVarPtr, GetMappingVarRef, GetMappingVar)
 		}
 	}
 
@@ -825,7 +825,7 @@ func (x *Settings) BindWithMapping(KeyVar string, ObjectVar *gobject.Object, Pro
 				return cbFn(arg0, arg1, arg2)
 			}
 			SetMappingVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(SetMappingVarPtr, SetMappingVarRef)
+			glib.SaveCallbackWithClosure(SetMappingVarPtr, SetMappingVarRef, SetMappingVar)
 		}
 	}
 
@@ -840,7 +840,7 @@ func (x *Settings) BindWithMapping(KeyVar string, ObjectVar *gobject.Object, Pro
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -1155,7 +1155,7 @@ func (x *Settings) GetMapped(KeyVar string, MappingVar *SettingsGetMapping, User
 				return cbFn(arg0, arg1, arg2)
 			}
 			MappingVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(MappingVarPtr, MappingVarRef)
+			glib.SaveCallbackWithClosure(MappingVarPtr, MappingVarRef, MappingVar)
 		}
 	}
 
@@ -1716,7 +1716,7 @@ func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int) bool) uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "change-event", cbRefPtr)
 }
 
@@ -1746,7 +1746,7 @@ func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
 }
 
@@ -1768,7 +1768,7 @@ func (x *Settings) ConnectChangedWithDetail(detail string, cb *func(Settings, st
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 
@@ -1806,7 +1806,7 @@ func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint) bool) uin
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "writable-change-event", cbRefPtr)
 }
 
@@ -1833,7 +1833,7 @@ func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "writable-changed", cbRefPtr)
 }
 
@@ -1855,7 +1855,7 @@ func (x *Settings) ConnectWritableChangedWithDetail(detail string, cb *func(Sett
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 

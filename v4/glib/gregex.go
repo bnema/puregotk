@@ -1067,7 +1067,7 @@ func (x *Regex) ReplaceEval(StringVar []string, StringLenVar int, StartPositionV
 				return cbFn(arg0, arg1, arg2)
 			}
 			EvalVarRef = purego.NewCallback(fcb)
-			SaveCallback(EvalVarPtr, EvalVarRef)
+			SaveCallbackWithClosure(EvalVarPtr, EvalVarRef, EvalVar)
 		}
 	}
 

@@ -212,7 +212,7 @@ func (x *CellRendererToggle) ConnectToggled(cb *func(CellRendererToggle, string)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
 }
 

@@ -393,7 +393,7 @@ func (x *DropTarget) ConnectAccept(cb *func(DropTarget, uintptr) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "accept", cbRefPtr)
 }
 
@@ -421,7 +421,7 @@ func (x *DropTarget) ConnectDrop(cb *func(DropTarget, uintptr, float64, float64)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
 }
 
@@ -443,7 +443,7 @@ func (x *DropTarget) ConnectEnter(cb *func(DropTarget, float64, float64) gdk.Dra
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
 }
 
@@ -466,7 +466,7 @@ func (x *DropTarget) ConnectLeave(cb *func(DropTarget)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)
 }
 
@@ -486,7 +486,7 @@ func (x *DropTarget) ConnectMotion(cb *func(DropTarget, float64, float64) gdk.Dr
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "motion", cbRefPtr)
 }
 

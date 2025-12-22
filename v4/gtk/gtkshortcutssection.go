@@ -216,7 +216,7 @@ func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, i
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
 }
 

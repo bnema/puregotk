@@ -1706,7 +1706,7 @@ func (x *AboutWindow) ConnectActivateLink(cb *func(AboutWindow, string) bool) ui
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
 }
 

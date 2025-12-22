@@ -216,7 +216,7 @@ func (x *Closure) AddFinalizeNotifier(NotifyDataVar uintptr, NotifyFuncVar *Clos
 				cbFn(arg0, arg1)
 			}
 			NotifyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyFuncVarPtr, NotifyFuncVarRef)
+			glib.SaveCallbackWithClosure(NotifyFuncVarPtr, NotifyFuncVarRef, NotifyFuncVar)
 		}
 	}
 
@@ -244,7 +244,7 @@ func (x *Closure) AddInvalidateNotifier(NotifyDataVar uintptr, NotifyFuncVar *Cl
 				cbFn(arg0, arg1)
 			}
 			NotifyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyFuncVarPtr, NotifyFuncVarRef)
+			glib.SaveCallbackWithClosure(NotifyFuncVarPtr, NotifyFuncVarRef, NotifyFuncVar)
 		}
 	}
 
@@ -273,7 +273,7 @@ func (x *Closure) AddMarshalGuards(PreMarshalDataVar uintptr, PreMarshalNotifyVa
 				cbFn(arg0, arg1)
 			}
 			PreMarshalNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(PreMarshalNotifyVarPtr, PreMarshalNotifyVarRef)
+			glib.SaveCallbackWithClosure(PreMarshalNotifyVarPtr, PreMarshalNotifyVarRef, PreMarshalNotifyVar)
 		}
 	}
 
@@ -288,7 +288,7 @@ func (x *Closure) AddMarshalGuards(PreMarshalDataVar uintptr, PreMarshalNotifyVa
 				cbFn(arg0, arg1)
 			}
 			PostMarshalNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(PostMarshalNotifyVarPtr, PostMarshalNotifyVarRef)
+			glib.SaveCallbackWithClosure(PostMarshalNotifyVarPtr, PostMarshalNotifyVarRef, PostMarshalNotifyVar)
 		}
 	}
 
@@ -357,7 +357,7 @@ func (x *Closure) RemoveFinalizeNotifier(NotifyDataVar uintptr, NotifyFuncVar *C
 				cbFn(arg0, arg1)
 			}
 			NotifyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyFuncVarPtr, NotifyFuncVarRef)
+			glib.SaveCallbackWithClosure(NotifyFuncVarPtr, NotifyFuncVarRef, NotifyFuncVar)
 		}
 	}
 
@@ -383,7 +383,7 @@ func (x *Closure) RemoveInvalidateNotifier(NotifyDataVar uintptr, NotifyFuncVar 
 				cbFn(arg0, arg1)
 			}
 			NotifyFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyFuncVarPtr, NotifyFuncVarRef)
+			glib.SaveCallbackWithClosure(NotifyFuncVarPtr, NotifyFuncVarRef, NotifyFuncVar)
 		}
 	}
 
@@ -416,7 +416,7 @@ func (x *Closure) SetMarshal(MarshalVar *ClosureMarshal) {
 				cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
 			}
 			MarshalVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(MarshalVarPtr, MarshalVarRef)
+			glib.SaveCallbackWithClosure(MarshalVarPtr, MarshalVarRef, MarshalVar)
 		}
 	}
 
@@ -456,7 +456,7 @@ func (x *Closure) SetMetaMarshal(MarshalDataVar uintptr, MetaMarshalVar *Closure
 				cbFn(arg0, arg1, arg2, arg3, arg4, arg5)
 			}
 			MetaMarshalVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(MetaMarshalVarPtr, MetaMarshalVarRef)
+			glib.SaveCallbackWithClosure(MetaMarshalVarPtr, MetaMarshalVarRef, MetaMarshalVar)
 		}
 	}
 
@@ -601,7 +601,7 @@ func CclosureNew(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar 
 				cbFn()
 			}
 			CallbackFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
+			glib.SaveCallbackWithClosure(CallbackFuncVarPtr, CallbackFuncVarRef, CallbackFuncVar)
 		}
 	}
 
@@ -616,7 +616,7 @@ func CclosureNew(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyDataVar 
 				cbFn(arg0, arg1)
 			}
 			DestroyDataVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyDataVarPtr, DestroyDataVarRef)
+			glib.SaveCallbackWithClosure(DestroyDataVarPtr, DestroyDataVarRef, DestroyDataVar)
 		}
 	}
 
@@ -644,7 +644,7 @@ func CclosureNewSwap(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyData
 				cbFn()
 			}
 			CallbackFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
+			glib.SaveCallbackWithClosure(CallbackFuncVarPtr, CallbackFuncVarRef, CallbackFuncVar)
 		}
 	}
 
@@ -659,7 +659,7 @@ func CclosureNewSwap(CallbackFuncVar *Callback, UserDataVar uintptr, DestroyData
 				cbFn(arg0, arg1)
 			}
 			DestroyDataVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyDataVarPtr, DestroyDataVarRef)
+			glib.SaveCallbackWithClosure(DestroyDataVarPtr, DestroyDataVarRef, DestroyDataVar)
 		}
 	}
 

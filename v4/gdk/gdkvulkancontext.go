@@ -75,7 +75,7 @@ func (x *VulkanContext) ConnectImagesUpdated(cb *func(VulkanContext)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "images-updated", cbRefPtr)
 }
 

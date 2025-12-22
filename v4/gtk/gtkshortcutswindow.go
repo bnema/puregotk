@@ -200,7 +200,7 @@ func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
 }
 
@@ -224,7 +224,7 @@ func (x *ShortcutsWindow) ConnectSearch(cb *func(ShortcutsWindow)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "search", cbRefPtr)
 }
 

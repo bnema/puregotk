@@ -474,7 +474,7 @@ func (x *Breakpoint) ConnectApply(cb *func(Breakpoint)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
 }
 
@@ -496,7 +496,7 @@ func (x *Breakpoint) ConnectUnapply(cb *func(Breakpoint)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "unapply", cbRefPtr)
 }
 

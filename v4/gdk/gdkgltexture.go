@@ -58,7 +58,7 @@ func NewGLTexture(ContextVar *GLContext, IdVar uint, WidthVar int, HeightVar int
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 

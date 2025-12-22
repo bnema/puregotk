@@ -541,7 +541,7 @@ func PrintRunPageSetupDialogAsync(ParentVar *Window, PageSetupVar *PageSetup, Se
 				cbFn(arg0, arg1)
 			}
 			DoneCbVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DoneCbVarPtr, DoneCbVarRef)
+			glib.SaveCallbackWithClosure(DoneCbVarPtr, DoneCbVarRef, DoneCbVar)
 		}
 	}
 
@@ -1516,7 +1516,7 @@ func (x *PrintOperation) ConnectBeginPrint(cb *func(PrintOperation, uintptr)) ui
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "begin-print", cbRefPtr)
 }
 
@@ -1547,7 +1547,7 @@ func (x *PrintOperation) ConnectCreateCustomWidget(cb *func(PrintOperation) gobj
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "create-custom-widget", cbRefPtr)
 }
 
@@ -1572,7 +1572,7 @@ func (x *PrintOperation) ConnectCustomWidgetApply(cb *func(PrintOperation, uintp
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "custom-widget-apply", cbRefPtr)
 }
 
@@ -1601,7 +1601,7 @@ func (x *PrintOperation) ConnectDone(cb *func(PrintOperation, PrintOperationResu
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)
 }
 
@@ -1674,7 +1674,7 @@ func (x *PrintOperation) ConnectDrawPage(cb *func(PrintOperation, uintptr, int))
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "draw-page", cbRefPtr)
 }
 
@@ -1697,7 +1697,7 @@ func (x *PrintOperation) ConnectEndPrint(cb *func(PrintOperation, uintptr)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "end-print", cbRefPtr)
 }
 
@@ -1730,7 +1730,7 @@ func (x *PrintOperation) ConnectPaginate(cb *func(PrintOperation, uintptr) bool)
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "paginate", cbRefPtr)
 }
 
@@ -1766,7 +1766,7 @@ func (x *PrintOperation) ConnectPreview(cb *func(PrintOperation, uintptr, uintpt
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "preview", cbRefPtr)
 }
 
@@ -1790,7 +1790,7 @@ func (x *PrintOperation) ConnectRequestPageSetup(cb *func(PrintOperation, uintpt
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "request-page-setup", cbRefPtr)
 }
 
@@ -1814,7 +1814,7 @@ func (x *PrintOperation) ConnectStatusChanged(cb *func(PrintOperation)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)
 }
 
@@ -1837,7 +1837,7 @@ func (x *PrintOperation) ConnectUpdateCustomWidget(cb *func(PrintOperation, uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "update-custom-widget", cbRefPtr)
 }
 

@@ -416,7 +416,7 @@ func (x *ContentProvider) WriteMimeTypeAsync(MimeTypeVar string, StreamVar *gio.
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -484,7 +484,7 @@ func (x *ContentProvider) ConnectContentChanged(cb *func(ContentProvider)) uint3
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "content-changed", cbRefPtr)
 }
 

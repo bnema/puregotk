@@ -408,7 +408,7 @@ func (x *SwipeTracker) ConnectBeginSwipe(cb *func(SwipeTracker)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "begin-swipe", cbRefPtr)
 }
 
@@ -433,7 +433,7 @@ func (x *SwipeTracker) ConnectEndSwipe(cb *func(SwipeTracker, float64, float64))
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "end-swipe", cbRefPtr)
 }
 
@@ -456,7 +456,7 @@ func (x *SwipeTracker) ConnectPrepare(cb *func(SwipeTracker, NavigationDirection
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "prepare", cbRefPtr)
 }
 
@@ -476,7 +476,7 @@ func (x *SwipeTracker) ConnectUpdateSwipe(cb *func(SwipeTracker, float64)) uint3
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "update-swipe", cbRefPtr)
 }
 

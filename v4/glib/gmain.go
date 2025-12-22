@@ -298,7 +298,7 @@ func (x *MainContext) Invoke(FunctionVar *SourceFunc, DataVar uintptr) {
 				return cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -331,7 +331,7 @@ func (x *MainContext) InvokeFull(PriorityVar int, FunctionVar *SourceFunc, DataV
 				return cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -346,7 +346,7 @@ func (x *MainContext) InvokeFull(PriorityVar int, FunctionVar *SourceFunc, DataV
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -601,7 +601,7 @@ func (x *MainContext) SetPollFunc(FuncVar *PollFunc) {
 				return cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1301,7 +1301,7 @@ func (x *Source) SetCallback(FuncVar *SourceFunc, DataVar uintptr, NotifyVar *De
 				return cbFn(arg0)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -1316,7 +1316,7 @@ func (x *Source) SetCallback(FuncVar *SourceFunc, DataVar uintptr, NotifyVar *De
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -1392,7 +1392,7 @@ func (x *Source) SetDisposeFunction(DisposeVar *SourceDisposeFunc) {
 				cbFn(arg0)
 			}
 			DisposeVarRef = purego.NewCallback(fcb)
-			SaveCallback(DisposeVarPtr, DisposeVarRef)
+			SaveCallbackWithClosure(DisposeVarPtr, DisposeVarRef, DisposeVar)
 		}
 	}
 
@@ -1745,7 +1745,7 @@ func ChildWatchAdd(PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr) uin
 				cbFn(arg0, arg1, arg2)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -1794,7 +1794,7 @@ func ChildWatchAddFull(PriorityVar int, PidVar Pid, FunctionVar *ChildWatchFunc,
 				cbFn(arg0, arg1, arg2)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -1809,7 +1809,7 @@ func ChildWatchAddFull(PriorityVar int, PidVar Pid, FunctionVar *ChildWatchFunc,
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -1892,7 +1892,7 @@ func ClearHandleId(TagPtrVar uint, ClearFuncVar *ClearHandleFunc) {
 				cbFn(arg0)
 			}
 			ClearFuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(ClearFuncVarPtr, ClearFuncVarRef)
+			SaveCallbackWithClosure(ClearFuncVarPtr, ClearFuncVarRef, ClearFuncVar)
 		}
 	}
 
@@ -1982,7 +1982,7 @@ func IdleAdd(FunctionVar *SourceFunc, DataVar uintptr) uint {
 				return cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -2020,7 +2020,7 @@ func IdleAddFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, Noti
 				return cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -2035,7 +2035,7 @@ func IdleAddFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, Noti
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -2069,7 +2069,7 @@ func IdleAddOnce(FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
 				cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -2418,7 +2418,7 @@ func TimeoutAdd(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint
 				return cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -2470,7 +2470,7 @@ func TimeoutAddFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, 
 				return cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -2485,7 +2485,7 @@ func TimeoutAddFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, 
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -2516,7 +2516,7 @@ func TimeoutAddOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintp
 				cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -2563,7 +2563,7 @@ func TimeoutAddSeconds(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintpt
 				return cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -2627,7 +2627,7 @@ func TimeoutAddSecondsFull(PriorityVar int, IntervalVar uint, FunctionVar *Sourc
 				return cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 
@@ -2642,7 +2642,7 @@ func TimeoutAddSecondsFull(PriorityVar int, IntervalVar uint, FunctionVar *Sourc
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			SaveCallback(NotifyVarPtr, NotifyVarRef)
+			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -2668,7 +2668,7 @@ func TimeoutAddSecondsOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVa
 				cbFn(arg0)
 			}
 			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallback(FunctionVarPtr, FunctionVarRef)
+			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
 		}
 	}
 

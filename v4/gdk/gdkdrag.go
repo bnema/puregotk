@@ -266,7 +266,7 @@ func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
 }
 
@@ -288,7 +288,7 @@ func (x *Drag) ConnectDndFinished(cb *func(Drag)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "dnd-finished", cbRefPtr)
 }
 
@@ -308,7 +308,7 @@ func (x *Drag) ConnectDropPerformed(cb *func(Drag)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "drop-performed", cbRefPtr)
 }
 

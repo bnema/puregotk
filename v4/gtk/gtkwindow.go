@@ -1599,7 +1599,7 @@ func (x *Window) ConnectActivateDefault(cb *func(Window)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
 }
 
@@ -1624,7 +1624,7 @@ func (x *Window) ConnectActivateFocus(cb *func(Window)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate-focus", cbRefPtr)
 }
 
@@ -1644,7 +1644,7 @@ func (x *Window) ConnectCloseRequest(cb *func(Window) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "close-request", cbRefPtr)
 }
 
@@ -1674,7 +1674,7 @@ func (x *Window) ConnectEnableDebugging(cb *func(Window, bool) bool) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "enable-debugging", cbRefPtr)
 }
 
@@ -1695,7 +1695,7 @@ func (x *Window) ConnectKeysChanged(cb *func(Window)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "keys-changed", cbRefPtr)
 }
 

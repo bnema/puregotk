@@ -250,7 +250,7 @@ func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) ui
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
 }
 

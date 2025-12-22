@@ -73,7 +73,7 @@ func NewCustomLayout(RequestModeVar *CustomRequestModeFunc, MeasureVar *CustomMe
 				return cbFn(arg0)
 			}
 			RequestModeVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(RequestModeVarPtr, RequestModeVarRef)
+			glib.SaveCallbackWithClosure(RequestModeVarPtr, RequestModeVarRef, RequestModeVar)
 		}
 	}
 
@@ -88,7 +88,7 @@ func NewCustomLayout(RequestModeVar *CustomRequestModeFunc, MeasureVar *CustomMe
 				cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 			}
 			MeasureVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(MeasureVarPtr, MeasureVarRef)
+			glib.SaveCallbackWithClosure(MeasureVarPtr, MeasureVarRef, MeasureVar)
 		}
 	}
 
@@ -103,7 +103,7 @@ func NewCustomLayout(RequestModeVar *CustomRequestModeFunc, MeasureVar *CustomMe
 				cbFn(arg0, arg1, arg2, arg3)
 			}
 			AllocateVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(AllocateVarPtr, AllocateVarRef)
+			glib.SaveCallbackWithClosure(AllocateVarPtr, AllocateVarRef, AllocateVar)
 		}
 	}
 

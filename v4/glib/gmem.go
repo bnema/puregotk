@@ -292,7 +292,7 @@ func ClearPointer(PpVar uintptr, DestroyVar *DestroyNotify) {
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			SaveCallback(DestroyVarPtr, DestroyVarRef)
+			SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 

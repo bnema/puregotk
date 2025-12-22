@@ -305,7 +305,7 @@ func (x *EntryCompletion) SetMatchFunc(FuncVar *EntryCompletionMatchFunc, FuncDa
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -320,7 +320,7 @@ func (x *EntryCompletion) SetMatchFunc(FuncVar *EntryCompletionMatchFunc, FuncDa
 				cbFn(arg0)
 			}
 			FuncNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncNotifyVarPtr, FuncNotifyVarRef)
+			glib.SaveCallbackWithClosure(FuncNotifyVarPtr, FuncNotifyVarRef, FuncNotifyVar)
 		}
 	}
 
@@ -585,7 +585,7 @@ func (x *EntryCompletion) ConnectCursorOnMatch(cb *func(EntryCompletion, uintptr
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "cursor-on-match", cbRefPtr)
 }
 
@@ -613,7 +613,7 @@ func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "insert-prefix", cbRefPtr)
 }
 
@@ -640,7 +640,7 @@ func (x *EntryCompletion) ConnectMatchSelected(cb *func(EntryCompletion, uintptr
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "match-selected", cbRefPtr)
 }
 
@@ -663,7 +663,7 @@ func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "no-matches", cbRefPtr)
 }
 

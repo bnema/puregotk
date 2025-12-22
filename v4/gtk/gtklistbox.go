@@ -221,7 +221,7 @@ func (x *ListBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *ListBox
 				return cbFn(arg0, arg1)
 			}
 			CreateWidgetFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CreateWidgetFuncVarPtr, CreateWidgetFuncVarRef)
+			glib.SaveCallbackWithClosure(CreateWidgetFuncVarPtr, CreateWidgetFuncVarRef, CreateWidgetFuncVar)
 		}
 	}
 
@@ -236,7 +236,7 @@ func (x *ListBox) BindModel(ModelVar gio.ListModel, CreateWidgetFuncVar *ListBox
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 
@@ -522,7 +522,7 @@ func (x *ListBox) SelectedForeach(FuncVar *ListBoxForeachFunc, DataVar uintptr) 
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -586,7 +586,7 @@ func (x *ListBox) SetFilterFunc(FilterFuncVar *ListBoxFilterFunc, UserDataVar ui
 				return cbFn(arg0, arg1)
 			}
 			FilterFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FilterFuncVarPtr, FilterFuncVarRef)
+			glib.SaveCallbackWithClosure(FilterFuncVarPtr, FilterFuncVarRef, FilterFuncVar)
 		}
 	}
 
@@ -601,7 +601,7 @@ func (x *ListBox) SetFilterFunc(FilterFuncVar *ListBoxFilterFunc, UserDataVar ui
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -649,7 +649,7 @@ func (x *ListBox) SetHeaderFunc(UpdateHeaderVar *ListBoxUpdateHeaderFunc, UserDa
 				cbFn(arg0, arg1, arg2)
 			}
 			UpdateHeaderVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UpdateHeaderVarPtr, UpdateHeaderVarRef)
+			glib.SaveCallbackWithClosure(UpdateHeaderVarPtr, UpdateHeaderVarRef, UpdateHeaderVar)
 		}
 	}
 
@@ -664,7 +664,7 @@ func (x *ListBox) SetHeaderFunc(UpdateHeaderVar *ListBoxUpdateHeaderFunc, UserDa
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -728,7 +728,7 @@ func (x *ListBox) SetSortFunc(SortFuncVar *ListBoxSortFunc, UserDataVar uintptr,
 				return cbFn(arg0, arg1, arg2)
 			}
 			SortFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(SortFuncVarPtr, SortFuncVarRef)
+			glib.SaveCallbackWithClosure(SortFuncVarPtr, SortFuncVarRef, SortFuncVar)
 		}
 	}
 
@@ -743,7 +743,7 @@ func (x *ListBox) SetSortFunc(SortFuncVar *ListBoxSortFunc, UserDataVar uintptr,
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -858,7 +858,7 @@ func (x *ListBox) ConnectActivateCursorRow(cb *func(ListBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate-cursor-row", cbRefPtr)
 }
 
@@ -888,7 +888,7 @@ func (x *ListBox) ConnectMoveCursor(cb *func(ListBox, MovementStep, int, bool, b
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
 }
 
@@ -908,7 +908,7 @@ func (x *ListBox) ConnectRowActivated(cb *func(ListBox, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "row-activated", cbRefPtr)
 }
 
@@ -933,7 +933,7 @@ func (x *ListBox) ConnectRowSelected(cb *func(ListBox, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "row-selected", cbRefPtr)
 }
 
@@ -958,7 +958,7 @@ func (x *ListBox) ConnectSelectAll(cb *func(ListBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
 }
 
@@ -978,7 +978,7 @@ func (x *ListBox) ConnectSelectedRowsChanged(cb *func(ListBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "selected-rows-changed", cbRefPtr)
 }
 
@@ -1000,7 +1000,7 @@ func (x *ListBox) ConnectToggleCursorRow(cb *func(ListBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-row", cbRefPtr)
 }
 
@@ -1026,7 +1026,7 @@ func (x *ListBox) ConnectUnselectAll(cb *func(ListBox)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
 }
 
@@ -1563,7 +1563,7 @@ func (x *ListBoxRow) ConnectActivate(cb *func(ListBoxRow)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 

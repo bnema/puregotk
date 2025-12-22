@@ -257,7 +257,7 @@ func (x *PrintJob) Send(CallbackVar *PrintJobCompleteFunc, UserDataVar uintptr, 
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -272,7 +272,7 @@ func (x *PrintJob) Send(CallbackVar *PrintJobCompleteFunc, UserDataVar uintptr, 
 				cbFn(arg0)
 			}
 			DnotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DnotifyVarPtr, DnotifyVarRef)
+			glib.SaveCallbackWithClosure(DnotifyVarPtr, DnotifyVarRef, DnotifyVar)
 		}
 	}
 
@@ -500,7 +500,7 @@ func (x *PrintJob) ConnectStatusChanged(cb *func(PrintJob)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)
 }
 

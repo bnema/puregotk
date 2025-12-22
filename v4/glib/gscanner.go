@@ -242,7 +242,7 @@ func (x *Scanner) ScopeForeachSymbol(ScopeIdVar uint, FuncVar *HFunc, UserDataVa
 				cbFn(arg0, arg1, arg2)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			SaveCallback(FuncVarPtr, FuncVarRef)
+			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 

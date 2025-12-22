@@ -581,7 +581,7 @@ func (x *Display) ConnectClosed(cb *func(Display, bool)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
 }
 
@@ -601,7 +601,7 @@ func (x *Display) ConnectOpened(cb *func(Display)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "opened", cbRefPtr)
 }
 
@@ -621,7 +621,7 @@ func (x *Display) ConnectSeatAdded(cb *func(Display, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "seat-added", cbRefPtr)
 }
 
@@ -641,7 +641,7 @@ func (x *Display) ConnectSeatRemoved(cb *func(Display, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "seat-removed", cbRefPtr)
 }
 
@@ -661,7 +661,7 @@ func (x *Display) ConnectSettingChanged(cb *func(Display, string)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "setting-changed", cbRefPtr)
 }
 

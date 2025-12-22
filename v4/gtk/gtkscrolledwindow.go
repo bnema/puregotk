@@ -799,7 +799,7 @@ func (x *ScrolledWindow) ConnectEdgeOvershot(cb *func(ScrolledWindow, PositionTy
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "edge-overshot", cbRefPtr)
 }
 
@@ -827,7 +827,7 @@ func (x *ScrolledWindow) ConnectEdgeReached(cb *func(ScrolledWindow, PositionTyp
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "edge-reached", cbRefPtr)
 }
 
@@ -854,7 +854,7 @@ func (x *ScrolledWindow) ConnectMoveFocusOut(cb *func(ScrolledWindow, DirectionT
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "move-focus-out", cbRefPtr)
 }
 
@@ -879,7 +879,7 @@ func (x *ScrolledWindow) ConnectScrollChild(cb *func(ScrolledWindow, ScrollType,
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "scroll-child", cbRefPtr)
 }
 

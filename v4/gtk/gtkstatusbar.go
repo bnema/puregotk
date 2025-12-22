@@ -169,7 +169,7 @@ func (x *Statusbar) ConnectTextPopped(cb *func(Statusbar, uint, string)) uint32 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "text-popped", cbRefPtr)
 }
 
@@ -189,7 +189,7 @@ func (x *Statusbar) ConnectTextPushed(cb *func(Statusbar, uint, string)) uint32 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "text-pushed", cbRefPtr)
 }
 

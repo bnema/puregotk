@@ -116,7 +116,7 @@ func (x *SubprocessLauncher) SetChildSetup(ChildSetupVar *glib.SpawnChildSetupFu
 				cbFn(arg0)
 			}
 			ChildSetupVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(ChildSetupVarPtr, ChildSetupVarRef)
+			glib.SaveCallbackWithClosure(ChildSetupVarPtr, ChildSetupVarRef, ChildSetupVar)
 		}
 	}
 
@@ -131,7 +131,7 @@ func (x *SubprocessLauncher) SetChildSetup(ChildSetupVar *glib.SpawnChildSetupFu
 				cbFn(arg0)
 			}
 			DestroyNotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyNotifyVarPtr, DestroyNotifyVarRef)
+			glib.SaveCallbackWithClosure(DestroyNotifyVarPtr, DestroyNotifyVarRef, DestroyNotifyVar)
 		}
 	}
 

@@ -585,7 +585,7 @@ func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
 }
 
@@ -607,7 +607,7 @@ func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint32 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
 }
 
@@ -630,7 +630,7 @@ func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint3
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
 }
 

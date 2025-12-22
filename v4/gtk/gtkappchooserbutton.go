@@ -310,7 +310,7 @@ func (x *AppChooserButton) ConnectActivate(cb *func(AppChooserButton)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
 }
 
@@ -330,7 +330,7 @@ func (x *AppChooserButton) ConnectChanged(cb *func(AppChooserButton)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
 }
 
@@ -353,7 +353,7 @@ func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton,
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "custom-item-activated", cbRefPtr)
 }
 
@@ -375,7 +375,7 @@ func (x *AppChooserButton) ConnectCustomItemActivatedWithDetail(detail string, c
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 

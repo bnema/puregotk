@@ -39,7 +39,7 @@ func ContentRegisterSerializer(TypeVar types.GType, MimeTypeVar string, Serializ
 				cbFn(arg0)
 			}
 			SerializeVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(SerializeVarPtr, SerializeVarRef)
+			glib.SaveCallbackWithClosure(SerializeVarPtr, SerializeVarRef, SerializeVar)
 		}
 	}
 
@@ -54,7 +54,7 @@ func ContentRegisterSerializer(TypeVar types.GType, MimeTypeVar string, Serializ
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -81,7 +81,7 @@ func ContentSerializeAsync(StreamVar *gio.OutputStream, MimeTypeVar string, Valu
 				cbFn(arg0, arg1, arg2)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackVarPtr, CallbackVarRef)
+			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)
 		}
 	}
 
@@ -269,7 +269,7 @@ func (x *ContentSerializer) SetTaskData(DataVar uintptr, NotifyVar *glib.Destroy
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 

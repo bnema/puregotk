@@ -106,7 +106,7 @@ func (x *TextTagTable) Foreach(FuncVar *TextTagTableForeach, DataVar uintptr) {
 				cbFn(arg0, arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(FuncVarPtr, FuncVarRef)
+			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
 		}
 	}
 
@@ -182,7 +182,7 @@ func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "tag-added", cbRefPtr)
 }
 
@@ -202,7 +202,7 @@ func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) 
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "tag-changed", cbRefPtr)
 }
 
@@ -225,7 +225,7 @@ func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint32
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "tag-removed", cbRefPtr)
 }
 

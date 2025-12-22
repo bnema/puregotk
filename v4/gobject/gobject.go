@@ -944,7 +944,7 @@ func CclosureNewObject(CallbackFuncVar *Callback, ObjectVar *Object) *Closure {
 				cbFn()
 			}
 			CallbackFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
+			glib.SaveCallbackWithClosure(CallbackFuncVarPtr, CallbackFuncVarRef, CallbackFuncVar)
 		}
 	}
 
@@ -973,7 +973,7 @@ func CclosureNewObjectSwap(CallbackFuncVar *Callback, ObjectVar *Object) *Closur
 				cbFn()
 			}
 			CallbackFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CallbackFuncVarPtr, CallbackFuncVarRef)
+			glib.SaveCallbackWithClosure(CallbackFuncVarPtr, CallbackFuncVarRef, CallbackFuncVar)
 		}
 	}
 
@@ -1031,7 +1031,7 @@ func SignalConnectObject(InstanceVar *TypeInstance, DetailedSignalVar string, CH
 				cbFn()
 			}
 			CHandlerVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CHandlerVarPtr, CHandlerVarRef)
+			glib.SaveCallbackWithClosure(CHandlerVarPtr, CHandlerVarRef, CHandlerVar)
 		}
 	}
 
@@ -1259,7 +1259,7 @@ func (x *Object) AddToggleRef(NotifyVar *ToggleNotify, DataVar uintptr) {
 				cbFn(arg0, arg1, arg2)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -1374,7 +1374,7 @@ func (x *Object) BindPropertyFull(SourcePropertyVar string, TargetVar *Object, T
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			TransformToVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(TransformToVarPtr, TransformToVarRef)
+			glib.SaveCallbackWithClosure(TransformToVarPtr, TransformToVarRef, TransformToVar)
 		}
 	}
 
@@ -1389,7 +1389,7 @@ func (x *Object) BindPropertyFull(SourcePropertyVar string, TargetVar *Object, T
 				return cbFn(arg0, arg1, arg2, arg3)
 			}
 			TransformFromVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(TransformFromVarPtr, TransformFromVarRef)
+			glib.SaveCallbackWithClosure(TransformFromVarPtr, TransformFromVarRef, TransformFromVar)
 		}
 	}
 
@@ -1404,7 +1404,7 @@ func (x *Object) BindPropertyFull(SourcePropertyVar string, TargetVar *Object, T
 				cbFn(arg0)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -1528,7 +1528,7 @@ func (x *Object) DupData(KeyVar string, DupFuncVar *glib.DuplicateFunc, UserData
 				return cbFn(arg0, arg1)
 			}
 			DupFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DupFuncVarPtr, DupFuncVarRef)
+			glib.SaveCallbackWithClosure(DupFuncVarPtr, DupFuncVarRef, DupFuncVar)
 		}
 	}
 
@@ -1566,7 +1566,7 @@ func (x *Object) DupQdata(QuarkVar glib.Quark, DupFuncVar *glib.DuplicateFunc, U
 				return cbFn(arg0, arg1)
 			}
 			DupFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DupFuncVarPtr, DupFuncVarRef)
+			glib.SaveCallbackWithClosure(DupFuncVarPtr, DupFuncVarRef, DupFuncVar)
 		}
 	}
 
@@ -1859,7 +1859,7 @@ func (x *Object) RemoveToggleRef(NotifyVar *ToggleNotify, DataVar uintptr) {
 				cbFn(arg0, arg1, arg2)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -1909,7 +1909,7 @@ func (x *Object) ReplaceData(KeyVar string, OldvalVar uintptr, NewvalVar uintptr
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -1946,7 +1946,7 @@ func (x *Object) ReplaceQdata(QuarkVar glib.Quark, OldvalVar uintptr, NewvalVar 
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -2023,7 +2023,7 @@ func (x *Object) SetDataFull(KeyVar string, DataVar uintptr, DestroyVar *glib.De
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -2076,7 +2076,7 @@ func (x *Object) SetQdataFull(QuarkVar glib.Quark, DataVar uintptr, DestroyVar *
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(DestroyVarPtr, DestroyVarRef)
+			glib.SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
@@ -2289,7 +2289,7 @@ func (x *Object) WeakRef(NotifyVar *WeakNotify, DataVar uintptr) {
 				cbFn(arg0, arg1)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -2313,7 +2313,7 @@ func (x *Object) WeakUnref(NotifyVar *WeakNotify, DataVar uintptr) {
 				cbFn(arg0, arg1)
 			}
 			NotifyVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(NotifyVarPtr, NotifyVarRef)
+			glib.SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
 
@@ -2374,7 +2374,7 @@ func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint32 {
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return SignalConnect(x.GoPointer(), "notify", cbRefPtr)
 }
 
@@ -2396,7 +2396,7 @@ func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, uintptr
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return SignalConnect(x.GoPointer(), signalName, cbRefPtr)
 }
 

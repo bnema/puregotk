@@ -11,9 +11,11 @@ import (
 
 var callbacks = struct {
 	sync.RWMutex
-	refs map[uintptr]uintptr
+	refs     map[uintptr]uintptr
+	closures map[uintptr]interface{}
 }{
-	refs: make(map[uintptr]uintptr),
+	refs:     make(map[uintptr]uintptr),
+	closures: make(map[uintptr]interface{}),
 }
 
 // GetCallback retrives a callback reference by value.
@@ -30,6 +32,26 @@ func GetCallback(cbPtr uintptr) (uintptr, bool) {
 func SaveCallback(cbPtr uintptr, refPtr uintptr) {
 	callbacks.Lock()
 	callbacks.refs[cbPtr] = refPtr
+	callbacks.Unlock()
+}
+
+// SaveCallbackWithClosure saves a reference to the callback value and retains the
+// provided closure to prevent it from being garbage collected.
+// Users should not need to call this.
+func SaveCallbackWithClosure(cbPtr uintptr, refPtr uintptr, closure interface{}) {
+	callbacks.Lock()
+	callbacks.refs[cbPtr] = refPtr
+	callbacks.closures[cbPtr] = closure
+	callbacks.Unlock()
+}
+
+// RemoveCallback removes a callback from the registry, allowing it to be garbage
+// collected.
+// Users should not need to call this.
+func RemoveCallback(cbPtr uintptr) {
+	callbacks.Lock()
+	delete(callbacks.refs, cbPtr)
+	delete(callbacks.closures, cbPtr)
 	callbacks.Unlock()
 }
 

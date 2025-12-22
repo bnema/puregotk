@@ -125,7 +125,7 @@ func (x *PreferencesGroup) BindModel(ModelVar gio.ListModel, CreateRowFuncVar *g
 				return cbFn(arg0, arg1)
 			}
 			CreateRowFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(CreateRowFuncVarPtr, CreateRowFuncVarRef)
+			glib.SaveCallbackWithClosure(CreateRowFuncVarPtr, CreateRowFuncVarRef, CreateRowFuncVar)
 		}
 	}
 
@@ -140,7 +140,7 @@ func (x *PreferencesGroup) BindModel(ModelVar gio.ListModel, CreateRowFuncVar *g
 				cbFn(arg0)
 			}
 			UserDataFreeFuncVarRef = purego.NewCallback(fcb)
-			glib.SaveCallback(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef)
+			glib.SaveCallbackWithClosure(UserDataFreeFuncVarPtr, UserDataFreeFuncVarRef, UserDataFreeFuncVar)
 		}
 	}
 

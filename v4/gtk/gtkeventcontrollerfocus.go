@@ -146,7 +146,7 @@ func (x *EventControllerFocus) ConnectEnter(cb *func(EventControllerFocus)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "enter", cbRefPtr)
 }
 
@@ -174,7 +174,7 @@ func (x *EventControllerFocus) ConnectLeave(cb *func(EventControllerFocus)) uint
 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
-	glib.SaveCallback(cbPtr, cbRefPtr)
+	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
 	return gobject.SignalConnect(x.GoPointer(), "leave", cbRefPtr)
 }
 

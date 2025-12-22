@@ -42,7 +42,7 @@ func ClearList(ListPtrVar **List, DestroyVar *DestroyNotify) {
 				cbFn(arg0)
 			}
 			DestroyVarRef = purego.NewCallback(fcb)
-			SaveCallback(DestroyVarPtr, DestroyVarRef)
+			SaveCallbackWithClosure(DestroyVarPtr, DestroyVarRef, DestroyVar)
 		}
 	}
 
