@@ -11,11 +11,13 @@ import (
 
 var callbacks = struct {
 	sync.RWMutex
-	refs     map[uintptr]uintptr
-	closures map[uintptr]interface{}
+	refs              map[uintptr]uintptr
+	closures          map[uintptr]interface{}
+	handlerToCallback map[uint]uintptr
 }{
-	refs:     make(map[uintptr]uintptr),
-	closures: make(map[uintptr]interface{}),
+	refs:              make(map[uintptr]uintptr),
+	closures:          make(map[uintptr]interface{}),
+	handlerToCallback: make(map[uint]uintptr),
 }
 
 // GetCallback retrives a callback reference by value.
@@ -52,6 +54,25 @@ func RemoveCallback(cbPtr uintptr) {
 	callbacks.Lock()
 	delete(callbacks.refs, cbPtr)
 	delete(callbacks.closures, cbPtr)
+	callbacks.Unlock()
+}
+
+// SaveHandlerMapping records a signal handler ID → callback pointer mapping
+// so that DisconnectSignal can clean up the callback registry.
+func SaveHandlerMapping(handlerID uint, cbPtr uintptr) {
+	callbacks.Lock()
+	callbacks.handlerToCallback[handlerID] = cbPtr
+	callbacks.Unlock()
+}
+
+// RemoveCallbackByHandler removes a callback from the registry using a signal handler ID.
+func RemoveCallbackByHandler(handlerID uint) {
+	callbacks.Lock()
+	if cbPtr, ok := callbacks.handlerToCallback[handlerID]; ok {
+		delete(callbacks.refs, cbPtr)
+		delete(callbacks.closures, cbPtr)
+		delete(callbacks.handlerToCallback, handlerID)
+	}
 	callbacks.Unlock()
 }
 

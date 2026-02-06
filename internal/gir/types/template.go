@@ -62,6 +62,9 @@ type funcArgsTemplate struct {
 
 	// UsesNullableHelper indicates nullable string handling that needs core import.
 	UsesNullableHelper bool
+
+	// UsesGStrdup indicates transfer-full string handling that needs core import.
+	UsesGStrdup bool
 }
 
 // ArgContext indicates where the arguments are flowing so we can handle
@@ -84,7 +87,7 @@ func isStringType(t string) bool {
 
 // NeedsCore reports whether this argument set requires core helpers.
 func (f funcArgsTemplate) NeedsCore() bool {
-	return f.UsesNullableHelper
+	return f.UsesNullableHelper || f.UsesGStrdup
 }
 
 func qualifyCallbackType(t string, callbackNS string, currentNS string) string {
@@ -140,7 +143,7 @@ func qualifyCallbackTypes(types []string, callbackNS string, currentNS string) [
 	return qualified
 }
 
-func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool, ctx ArgContext) {
+func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullable bool, isOut bool, ctx ArgContext, transferFull bool) {
 	c := n
 	cRef := n // For CallWithRefs, defaults to same as Call
 	stars := strings.Count(t, "*")
@@ -162,10 +165,23 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 		c = n
 		cRef = n
 	} else {
-		// Nullable strings differ based on direction. For Go->C we need a *string API type
-		// and pass a pointer (or nil) to C. For C->Go we keep the string as-is.
-		// We track these parameters for runtime.KeepAlive to prevent GC issues.
-		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
+		// For transfer-full strings, use g_strdup so GTK can safely g_free() the copy.
+		// This must be checked before nullable handling to avoid conflicting conversions.
+		if ctx == ArgsFromGoToC && transferFull && isStringType(t) {
+			f.UsesGStrdup = true
+			if nullable {
+				// Nullable transfer-full: API type is *string, call uses GStrdupNullable
+				t = "*string"
+				c = fmt.Sprintf("core.GStrdupNullable(%s)", n)
+				cRef = c
+			} else {
+				c = fmt.Sprintf("core.GStrdup(%s)", n)
+				cRef = c
+			}
+		} else if ctx == ArgsFromGoToC && nullable && isStringType(t) {
+			// Nullable strings differ based on direction. For Go->C we need a *string API type
+			// and pass a pointer (or nil) to C. For C->Go we keep the string as-is.
+			// We track these parameters for runtime.KeepAlive to prevent GC issues.
 			f.UsesNullableHelper = true
 			t = "*string"
 			c = fmt.Sprintf("%sPtr", n)
@@ -225,7 +241,7 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 	f.API.Full = append(f.API.Full, n+" "+t)
 }
 
-func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool, nullable bool, ctx ArgContext) {
+func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool, nullable bool, ctx ArgContext, transferFull bool) {
 	n += "p"
 	c := n
 	stars := strings.Count(t, "*")
@@ -238,7 +254,11 @@ func (f *funcArgsTemplate) AddPure(t string, n string, k Kind, isOut bool, nulla
 		}
 		c = n
 	} else {
-		if ctx == ArgsFromGoToC && nullable && isStringType(t) {
+		// For transfer-full strings, the pure type must be uintptr to accept
+		// the g_strdup'd pointer from the API call
+		if ctx == ArgsFromGoToC && transferFull && isStringType(t) {
+			t = "uintptr"
+		} else if ctx == ArgsFromGoToC && nullable && isStringType(t) {
 			f.UsesNullableHelper = true
 			t = "uintptr"
 			// Use the pointer variable that will be set up by the template
@@ -313,8 +333,9 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 
 	isOut := p.Direction == "out"
 
-	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, ctx)
-	f.AddPure(goType, varName, kind, isOut, p.Nullable, ctx)
+	transferFull := p.TransferOwnership.TransferOwnership == "full"
+	f.AddAPI(goType, varName, kind, ns, p.Nullable, isOut, ctx, transferFull)
+	f.AddPure(goType, varName, kind, isOut, p.Nullable, ctx, transferFull)
 
 	// For callback parameters (not out parameters), populate callback metadata
 	// This enables the template to generate proper closure wrapping

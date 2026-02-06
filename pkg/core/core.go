@@ -7,6 +7,8 @@ var (
 	ByteSlice           = core.ByteSlice
 	GoStringSlice       = core.GoStringSlice
 	GoString            = core.GoString
+	GStrdup             = core.GStrdup
+	GStrdupNullable     = core.GStrdupNullable
 	NullableStringToPtr = core.NullableStringToPtr
 	PtrToNullableString = core.PtrToNullableString
 	SetPackageName      = core.SetPackageName

@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -225,6 +226,38 @@ func GoString(c uintptr) string {
 		length++
 	}
 	return string(unsafe.Slice((*byte)(ptr), length))
+}
+
+var (
+	xGStrdup    func(string) uintptr
+	gstrdupOnce sync.Once
+)
+
+// GStrdup allocates a C-owned copy of a Go string using g_strdup.
+// The returned pointer must be freed with g_free (typically by the callee
+// when transfer-ownership="full").
+func GStrdup(s string) uintptr {
+	gstrdupOnce.Do(func() {
+		var libs []uintptr
+		for _, libPath := range GetPaths("GLIB") {
+			lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+			if err != nil {
+				continue
+			}
+			libs = append(libs, lib)
+		}
+		PuregoSafeRegister(&xGStrdup, libs, "g_strdup")
+	})
+	return xGStrdup(s)
+}
+
+// GStrdupNullable is like GStrdup but accepts a nullable *string.
+// Returns 0 for nil, or a g_strdup'd copy for non-nil.
+func GStrdupNullable(s *string) uintptr {
+	if s == nil {
+		return 0
+	}
+	return GStrdup(*s)
 }
 
 // NullableStringToPtr converts a nullable Go string to a uintptr suitable for C calls.

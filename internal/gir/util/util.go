@@ -296,13 +296,25 @@ func PropertyVectorGet(goType string) string {
 	if ptr == 0 {
 		return nil
 	}
-	return unsafe.Slice((*byte)(unsafe.Pointer(ptr)), 0)[:0]`
+	// GByteArray layout: { guint8 *data; guint len; }
+	dataPtr := *(*uintptr)(unsafe.Pointer(ptr))
+	length := *(*uint32)(unsafe.Pointer(ptr + unsafe.Sizeof(uintptr(0))))
+	if length == 0 || dataPtr == 0 {
+		return nil
+	}
+	return unsafe.Slice((*byte)(unsafe.Pointer(dataPtr)), length)`
 	case "[]uintptr":
 		return `ptr := v.GetBoxed()
 	if ptr == 0 {
 		return nil
 	}
-	return unsafe.Slice((*uintptr)(unsafe.Pointer(ptr)), 0)[:0]`
+	// GPtrArray layout: { gpointer *pdata; guint len; }
+	dataPtr := *(*uintptr)(unsafe.Pointer(ptr))
+	length := *(*uint32)(unsafe.Pointer(ptr + unsafe.Sizeof(uintptr(0))))
+	if length == 0 || dataPtr == 0 {
+		return nil
+	}
+	return unsafe.Slice((*uintptr)(unsafe.Pointer(dataPtr)), length)`
 	default:
 		return `return core.GoStringSlice(v.GetBoxed())`
 	}

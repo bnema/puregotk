@@ -28,7 +28,7 @@ func IncreaseRef(a uintptr) {
 	xObjectRefSink(a)
 }
 
-func SignalConnect(a uintptr, b string, c uintptr) uint32 {
+func SignalConnect(a uintptr, b string, c uintptr) uint {
 	return xSignalConnectData(a, b, c, 0, 0, 0)
 }
 
@@ -36,12 +36,13 @@ func (o Object) Cast(v Ptr) {
 	v.SetGoPointer(o.GoPointer())
 }
 
-func (o Object) ConnectSignal(signal string, cb *func()) uint32 {
+func (o Object) ConnectSignal(signal string, cb *func()) uint {
 	return SignalConnect(o.GoPointer(), signal, glib.NewCallback(cb))
 }
 
-func (o Object) DisconnectSignal(handler uint32) {
+func (o Object) DisconnectSignal(handler uint) {
 	SignalHandlerDisconnect(&o, handler)
+	glib.RemoveCallbackByHandler(handler)
 }
 
 // types
