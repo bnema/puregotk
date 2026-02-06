@@ -825,10 +825,12 @@ func (x *MountOperation) GetPropertyUsername() string {
 //
 // Implementations of GMountOperation should handle this signal
 // by dismissing open password dialogs.
-func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint32 {
+func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -841,7 +843,9 @@ func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "aborted", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a mount operation asks the user for a password.
@@ -849,10 +853,12 @@ func (x *MountOperation) ConnectAborted(cb *func(MountOperation)) uint32 {
 // If the message contains a line break, the first line should be
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
-func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, string, string, AskPasswordFlags)) uint32 {
+func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, string, string, AskPasswordFlags)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp string, DefaultUserVarp string, DefaultDomainVarp string, FlagsVarp AskPasswordFlags) {
@@ -865,7 +871,9 @@ func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, str
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "ask-password", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when asking the user a question and gives a list of
@@ -874,10 +882,12 @@ func (x *MountOperation) ConnectAskPassword(cb *func(MountOperation, string, str
 // If the message contains a line break, the first line should be
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
-func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []string)) uint32 {
+func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp string, ChoicesVarp []string) {
@@ -890,14 +900,18 @@ func (x *MountOperation) ConnectAskQuestion(cb *func(MountOperation, string, []s
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "ask-question", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user has replied to the mount operation.
-func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationResult)) uint32 {
+func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationResult)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ResultVarp MountOperationResult) {
@@ -910,7 +924,9 @@ func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationRes
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "reply", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when one or more processes are blocking an operation
@@ -925,10 +941,12 @@ func (x *MountOperation) ConnectReply(cb *func(MountOperation, MountOperationRes
 // If the message contains a line break, the first line should be
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
-func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, []glib.Pid, []string)) uint32 {
+func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, []glib.Pid, []string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp string, ProcessesVarp []glib.Pid, ChoicesVarp []string) {
@@ -941,7 +959,9 @@ func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, [
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "show-processes", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an unmount operation has been busy for more than some time
@@ -960,10 +980,12 @@ func (x *MountOperation) ConnectShowProcesses(cb *func(MountOperation, string, [
 // If the message contains a line break, the first line should be
 // presented as a heading. For example, it may be used as the
 // primary text in a #GtkMessageDialog.
-func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, string, int64, int64)) uint32 {
+func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, string, int64, int64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MessageVarp string, TimeLeftVarp int64, BytesLeftVarp int64) {
@@ -976,7 +998,9 @@ func (x *MountOperation) ConnectShowUnmountProgress(cb *func(MountOperation, str
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "show-unmount-progress", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

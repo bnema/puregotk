@@ -1000,7 +1000,7 @@ func ClearObject(ObjectPtrVar **Object) {
 
 }
 
-var xSignalConnectObject func(*TypeInstance, string, uintptr, uintptr, ConnectFlags) uint32
+var xSignalConnectObject func(*TypeInstance, string, uintptr, uintptr, ConnectFlags) uint
 
 // This is similar to g_signal_connect_data(), but uses a closure which
 // ensures that the @gobject stays alive during the call to @c_handler
@@ -1018,7 +1018,7 @@ var xSignalConnectObject func(*TypeInstance, string, uintptr, uintptr, ConnectFl
 //
 // Refer to the [signals documentation](signals.html) for more
 // details.
-func SignalConnectObject(InstanceVar *TypeInstance, DetailedSignalVar string, CHandlerVar *Callback, GobjectVar *Object, ConnectFlagsVar ConnectFlags) uint32 {
+func SignalConnectObject(InstanceVar *TypeInstance, DetailedSignalVar string, CHandlerVar *Callback, GobjectVar *Object, ConnectFlagsVar ConnectFlags) uint {
 
 	var CHandlerVarRef uintptr
 	if CHandlerVar != nil {
@@ -2359,10 +2359,12 @@ func (c *Object) SetGoPointer(ptr uintptr) {
 // It is important to note that you must use
 // [canonical parameter names][class@GObject.ParamSpec#parameter-names] as
 // detail strings for the notify signal.
-func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint32 {
+func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return SignalConnect(x.GoPointer(), "notify", cbRefPtr)
+		handlerID := SignalConnect(x.GoPointer(), "notify", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PspecVarp uintptr) {
@@ -2375,16 +2377,20 @@ func (x *Object) ConnectNotify(cb *func(Object, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return SignalConnect(x.GoPointer(), "notify", cbRefPtr)
+	handlerID := SignalConnect(x.GoPointer(), "notify", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // ConnectNotifyWithDetail connects to the "notify" signal with a detail string.
 // The detail is appended as "notify::<detail>".
-func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, uintptr)) uint32 {
+func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	signalName := fmt.Sprintf("notify::%s", detail)
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		handlerID := SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PspecVarp uintptr) {
@@ -2397,7 +2403,9 @@ func (x *Object) ConnectNotifyWithDetail(detail string, cb *func(Object, uintptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	handlerID := SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xObjectCompatControl func(uint, uintptr) uint

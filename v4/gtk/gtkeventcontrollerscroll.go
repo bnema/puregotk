@@ -164,10 +164,12 @@ func (c *EventControllerScroll) SetGoPointer(ptr uintptr) {
 // @vel_x and @vel_y express the initial velocity that was
 // imprinted by the scroll events. @vel_x and @vel_y are expressed in
 // pixels/ms.
-func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll, float64, float64)) uint32 {
+func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "decelerate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "decelerate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, VelXVarp float64, VelYVarp float64) {
@@ -180,7 +182,9 @@ func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "decelerate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "decelerate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Signals that the widget should scroll by the
@@ -188,10 +192,12 @@ func (x *EventControllerScroll) ConnectDecelerate(cb *func(EventControllerScroll
 //
 // For the representation unit of the deltas, see
 // [method@Gtk.EventControllerScroll.get_unit].
-func (x *EventControllerScroll) ConnectScroll(cb *func(EventControllerScroll, float64, float64) bool) uint32 {
+func (x *EventControllerScroll) ConnectScroll(cb *func(EventControllerScroll, float64, float64) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "scroll", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "scroll", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DxVarp float64, DyVarp float64) bool {
@@ -204,16 +210,20 @@ func (x *EventControllerScroll) ConnectScroll(cb *func(EventControllerScroll, fl
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "scroll", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "scroll", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Signals that a new scrolling operation has begun.
 //
 // It will only be emitted on devices capable of it.
-func (x *EventControllerScroll) ConnectScrollBegin(cb *func(EventControllerScroll)) uint32 {
+func (x *EventControllerScroll) ConnectScrollBegin(cb *func(EventControllerScroll)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "scroll-begin", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "scroll-begin", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -226,16 +236,20 @@ func (x *EventControllerScroll) ConnectScrollBegin(cb *func(EventControllerScrol
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "scroll-begin", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "scroll-begin", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Signals that a scrolling operation has finished.
 //
 // It will only be emitted on devices capable of it.
-func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)) uint32 {
+func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "scroll-end", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "scroll-end", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -248,7 +262,9 @@ func (x *EventControllerScroll) ConnectScrollEnd(cb *func(EventControllerScroll)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "scroll-end", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "scroll-end", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

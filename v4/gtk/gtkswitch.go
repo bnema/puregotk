@@ -196,10 +196,12 @@ func (x *Switch) GetPropertyState() bool {
 //
 // Applications should never connect to this signal,
 // but use the [property@Gtk.Switch:active] property.
-func (x *Switch) ConnectActivate(cb *func(Switch)) uint32 {
+func (x *Switch) ConnectActivate(cb *func(Switch)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -212,7 +214,9 @@ func (x *Switch) ConnectActivate(cb *func(Switch)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to change the underlying state.
@@ -226,10 +230,12 @@ func (x *Switch) ConnectActivate(cb *func(Switch)) uint32 {
 // [method@Gtk.Switch.set_state] when the underlying state change is
 // complete. The signal handler should return %TRUE to prevent the
 // default handler from running.
-func (x *Switch) ConnectStateSet(cb *func(Switch, bool) bool) uint32 {
+func (x *Switch) ConnectStateSet(cb *func(Switch, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "state-set", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "state-set", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StateVarp bool) bool {
@@ -242,7 +248,9 @@ func (x *Switch) ConnectStateSet(cb *func(Switch, bool) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "state-set", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "state-set", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

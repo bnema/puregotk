@@ -1701,10 +1701,12 @@ func (x *Settings) GetPropertySettingsSchema() uintptr {
 // The default handler for this signal invokes the [signal@Gio.Settings::changed] signal
 // for each affected key.  If any other connected handler returns
 // true then this default functionality will be suppressed.
-func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int) bool) uint32 {
+func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "change-event", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "change-event", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, KeysVarp uintptr, NKeysVarp int) bool {
@@ -1717,7 +1719,9 @@ func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int) bool) uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "change-event", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "change-event", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a key has potentially changed.
@@ -1731,10 +1735,12 @@ func (x *Settings) ConnectChangeEvent(cb *func(Settings, uintptr, int) bool) uin
 //
 // Note that @settings only emits this signal if you have read @key at
 // least once while a signal handler was already connected for @key.
-func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint32 {
+func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, KeyVarp string) {
@@ -1747,16 +1753,20 @@ func (x *Settings) ConnectChanged(cb *func(Settings, string)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // ConnectChangedWithDetail connects to the "changed" signal with a detail string.
 // The detail is appended as "changed::<detail>".
-func (x *Settings) ConnectChangedWithDetail(detail string, cb *func(Settings, string)) uint32 {
+func (x *Settings) ConnectChangedWithDetail(detail string, cb *func(Settings, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	signalName := fmt.Sprintf("changed::%s", detail)
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, KeyVarp string) {
@@ -1769,7 +1779,9 @@ func (x *Settings) ConnectChangedWithDetail(detail string, cb *func(Settings, st
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted once per writability change event that affects this settings object.
@@ -1791,10 +1803,12 @@ func (x *Settings) ConnectChangedWithDetail(detail string, cb *func(Settings, st
 // example, a new mandatory setting is introduced).  If any other
 // connected handler returns true then this default functionality
 // will be suppressed.
-func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint) bool) uint32 {
+func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "writable-change-event", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "writable-change-event", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, KeyVarp uint) bool {
@@ -1807,7 +1821,9 @@ func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint) bool) uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "writable-change-event", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "writable-change-event", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the writability of a key has potentially changed.
@@ -1818,10 +1834,12 @@ func (x *Settings) ConnectWritableChangeEvent(cb *func(Settings, uint) bool) uin
 // This signal supports detailed connections.  You can connect to the
 // detailed signal `writable-changed::x` in order to only receive
 // callbacks when the writability of `x` changes.
-func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint32 {
+func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "writable-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "writable-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, KeyVarp string) {
@@ -1834,16 +1852,20 @@ func (x *Settings) ConnectWritableChanged(cb *func(Settings, string)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "writable-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "writable-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // ConnectWritableChangedWithDetail connects to the "writable-changed" signal with a detail string.
 // The detail is appended as "writable-changed::<detail>".
-func (x *Settings) ConnectWritableChangedWithDetail(detail string, cb *func(Settings, string)) uint32 {
+func (x *Settings) ConnectWritableChangedWithDetail(detail string, cb *func(Settings, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	signalName := fmt.Sprintf("writable-changed::%s", detail)
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, KeyVarp string) {
@@ -1856,7 +1878,9 @@ func (x *Settings) ConnectWritableChangedWithDetail(detail string, cb *func(Sett
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xSettingsListRelocatableSchemas func() []string

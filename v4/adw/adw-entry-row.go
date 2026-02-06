@@ -428,10 +428,12 @@ func (x *EntryRow) GetPropertyTextLength() uint {
 // Emitted when the apply button is pressed.
 //
 // See [property@EntryRow:show-apply-button].
-func (x *EntryRow) ConnectApply(cb *func(EntryRow)) uint32 {
+func (x *EntryRow) ConnectApply(cb *func(EntryRow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -444,14 +446,18 @@ func (x *EntryRow) ConnectApply(cb *func(EntryRow)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the embedded entry is activated.
-func (x *EntryRow) ConnectEntryActivated(cb *func(EntryRow)) uint32 {
+func (x *EntryRow) ConnectEntryActivated(cb *func(EntryRow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "entry-activated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "entry-activated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -464,7 +470,9 @@ func (x *EntryRow) ConnectEntryActivated(cb *func(EntryRow)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "entry-activated", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "entry-activated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

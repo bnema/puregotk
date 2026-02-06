@@ -261,10 +261,12 @@ func (x *ThreadedSocketService) GetPropertyMaxThreads() int {
 // incoming connection. This thread is dedicated to handling
 // @connection and may perform blocking IO. The signal handler need
 // not return until the connection is closed.
-func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, uintptr, uintptr) bool) uint32 {
+func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ConnectionVarp uintptr, SourceObjectVarp uintptr) bool {
@@ -277,7 +279,9 @@ func (x *ThreadedSocketService) ConnectRun(cb *func(ThreadedSocketService, uintp
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "run", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

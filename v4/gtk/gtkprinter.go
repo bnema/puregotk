@@ -549,10 +549,12 @@ func (x *Printer) GetPropertyStateMessage() string {
 //
 // The @success parameter indicates if the information was
 // actually obtained.
-func (x *Printer) ConnectDetailsAcquired(cb *func(Printer, bool)) uint32 {
+func (x *Printer) ConnectDetailsAcquired(cb *func(Printer, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "details-acquired", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "details-acquired", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, SuccessVarp bool) {
@@ -565,7 +567,9 @@ func (x *Printer) ConnectDetailsAcquired(cb *func(Printer, bool)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "details-acquired", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "details-acquired", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

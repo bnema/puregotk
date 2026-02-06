@@ -1830,11 +1830,11 @@ func (x *ThreadFunctions) GetPrivateSet() func(*Private, uintptr) {
 
 // OverrideThreadCreate sets the "thread_create" callback function.
 // virtual function pointer for g_thread_create()
-func (x *ThreadFunctions) OverrideThreadCreate(cb func(*ThreadFunc, uintptr, uint32, bool, bool, ThreadPriority, uintptr)) {
+func (x *ThreadFunctions) OverrideThreadCreate(cb func(*ThreadFunc, uintptr, uint, bool, bool, ThreadPriority, uintptr)) {
 	if cb == nil {
 		x.xThreadCreate = 0
 	} else {
-		x.xThreadCreate = purego.NewCallback(func(FuncVarp uintptr, DataVarp uintptr, StackSizeVarp uint32, JoinableVarp bool, BoundVarp bool, PriorityVarp ThreadPriority, ThreadVarp uintptr) {
+		x.xThreadCreate = purego.NewCallback(func(FuncVarp uintptr, DataVarp uintptr, StackSizeVarp uint, JoinableVarp bool, BoundVarp bool, PriorityVarp ThreadPriority, ThreadVarp uintptr) {
 			cb((*ThreadFunc)(unsafe.Pointer(FuncVarp)), DataVarp, StackSizeVarp, JoinableVarp, BoundVarp, PriorityVarp, ThreadVarp)
 		})
 	}
@@ -1842,13 +1842,13 @@ func (x *ThreadFunctions) OverrideThreadCreate(cb func(*ThreadFunc, uintptr, uin
 
 // GetThreadCreate gets the "thread_create" callback function.
 // virtual function pointer for g_thread_create()
-func (x *ThreadFunctions) GetThreadCreate() func(*ThreadFunc, uintptr, uint32, bool, bool, ThreadPriority, uintptr) {
+func (x *ThreadFunctions) GetThreadCreate() func(*ThreadFunc, uintptr, uint, bool, bool, ThreadPriority, uintptr) {
 	if x.xThreadCreate == 0 {
 		return nil
 	}
-	var rawCallback func(FuncVarp uintptr, DataVarp uintptr, StackSizeVarp uint32, JoinableVarp bool, BoundVarp bool, PriorityVarp ThreadPriority, ThreadVarp uintptr)
+	var rawCallback func(FuncVarp uintptr, DataVarp uintptr, StackSizeVarp uint, JoinableVarp bool, BoundVarp bool, PriorityVarp ThreadPriority, ThreadVarp uintptr)
 	purego.RegisterFunc(&rawCallback, x.xThreadCreate)
-	return func(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint32, JoinableVar bool, BoundVar bool, PriorityVar ThreadPriority, ThreadVar uintptr) {
+	return func(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint, JoinableVar bool, BoundVar bool, PriorityVar ThreadPriority, ThreadVar uintptr) {
 		rawCallback(NewCallback(FuncVar), DataVar, StackSizeVar, JoinableVar, BoundVar, PriorityVar, ThreadVar)
 	}
 }
@@ -2314,10 +2314,10 @@ func ThreadCreate(FuncVar *ThreadFunc, DataVar uintptr, JoinableVar bool) (*Thre
 
 }
 
-var xThreadCreateFull func(uintptr, uintptr, uint32, bool, bool, ThreadPriority, **Error) *Thread
+var xThreadCreateFull func(uintptr, uintptr, uint, bool, bool, ThreadPriority, **Error) *Thread
 
 // This function creates a new thread.
-func ThreadCreateFull(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint32, JoinableVar bool, BoundVar bool, PriorityVar ThreadPriority) (*Thread, error) {
+func ThreadCreateFull(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint, JoinableVar bool, BoundVar bool, PriorityVar ThreadPriority) (*Thread, error) {
 	var cerr *Error
 
 	var FuncVarRef uintptr

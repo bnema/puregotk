@@ -570,10 +570,12 @@ func (x *Application) GetPropertyScreensaverActive() bool {
 // Applications can connect to this signal and call
 // [method@Gtk.Application.inhibit] with [flags@Gtk.ApplicationInhibitFlags.logout]
 // to delay the end of the session until state has been saved.
-func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {
+func (x *Application) ConnectQueryEnd(cb *func(Application)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -586,16 +588,20 @@ func (x *Application) ConnectQueryEnd(cb *func(Application)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "query-end", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a window is added to an application.
 //
 // See [method@Gtk.Application.add_window].
-func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint32 {
+func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WindowVarp uintptr) {
@@ -608,17 +614,21 @@ func (x *Application) ConnectWindowAdded(cb *func(Application, uintptr)) uint32 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "window-added", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a window is removed from an application.
 //
 // This can happen as a side-effect of the window being destroyed
 // or explicitly through [method@Gtk.Application.remove_window].
-func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint32 {
+func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WindowVarp uintptr) {
@@ -631,7 +641,9 @@ func (x *Application) ConnectWindowRemoved(cb *func(Application, uintptr)) uint3
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "window-removed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emits the [signal@Gio.ActionGroup::action-added] signal on @action_group.

@@ -627,10 +627,12 @@ func (x *Dialog) GetPropertyTitle() string {
 // Emitted when the close button or shortcut is used, or
 // [method@Dialog.close] is called while [property@Dialog:can-close] is set to
 // `FALSE`.
-func (x *Dialog) ConnectCloseAttempt(cb *func(Dialog)) uint32 {
+func (x *Dialog) ConnectCloseAttempt(cb *func(Dialog)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -643,14 +645,18 @@ func (x *Dialog) ConnectCloseAttempt(cb *func(Dialog)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the dialog is successfully closed.
-func (x *Dialog) ConnectClosed(cb *func(Dialog)) uint32 {
+func (x *Dialog) ConnectClosed(cb *func(Dialog)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -663,7 +669,9 @@ func (x *Dialog) ConnectClosed(cb *func(Dialog)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

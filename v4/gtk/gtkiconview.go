@@ -1139,10 +1139,12 @@ func (x *IconView) GetPropertyTooltipColumn() int {
 // programmatically.
 //
 // The default bindings for this signal are Space, Return and Enter.
-func (x *IconView) ConnectActivateCursorItem(cb *func(IconView) bool) uint32 {
+func (x *IconView) ConnectActivateCursorItem(cb *func(IconView) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-cursor-item", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-cursor-item", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -1155,7 +1157,9 @@ func (x *IconView) ConnectActivateCursorItem(cb *func(IconView) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate-cursor-item", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-cursor-item", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::item-activated signal is emitted when the method
@@ -1165,10 +1169,12 @@ func (x *IconView) ConnectActivateCursorItem(cb *func(IconView) bool) uint32 {
 // "activate-on-single-click" property set to %TRUE. It is also
 // emitted when a non-editable item is selected and one of the keys:
 // Space, Return or Enter is pressed.
-func (x *IconView) ConnectItemActivated(cb *func(IconView, uintptr)) uint32 {
+func (x *IconView) ConnectItemActivated(cb *func(IconView, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "item-activated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "item-activated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PathVarp uintptr) {
@@ -1181,7 +1187,9 @@ func (x *IconView) ConnectItemActivated(cb *func(IconView, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "item-activated", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "item-activated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::move-cursor signal is a
@@ -1198,10 +1206,12 @@ func (x *IconView) ConnectItemActivated(cb *func(IconView, uintptr)) uint32 {
 // - PageUp/PageDown which move by "pages"
 // All of these will extend the selection when combined with
 // the Shift modifier.
-func (x *IconView) ConnectMoveCursor(cb *func(IconView, MovementStep, int, bool, bool) bool) uint32 {
+func (x *IconView) ConnectMoveCursor(cb *func(IconView, MovementStep, int, bool, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int, ExtendVarp bool, ModifyVarp bool) bool {
@@ -1214,7 +1224,9 @@ func (x *IconView) ConnectMoveCursor(cb *func(IconView, MovementStep, int, bool,
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // A [keybinding signal][class@Gtk.SignalAction]
@@ -1225,10 +1237,12 @@ func (x *IconView) ConnectMoveCursor(cb *func(IconView, MovementStep, int, bool,
 // programmatically.
 //
 // The default binding for this signal is Ctrl-a.
-func (x *IconView) ConnectSelectAll(cb *func(IconView)) uint32 {
+func (x *IconView) ConnectSelectAll(cb *func(IconView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1241,7 +1255,9 @@ func (x *IconView) ConnectSelectAll(cb *func(IconView)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // A [keybinding signal][class@Gtk.SignalAction]
@@ -1253,10 +1269,12 @@ func (x *IconView) ConnectSelectAll(cb *func(IconView)) uint32 {
 // programmatically.
 //
 // There is no default binding for this signal.
-func (x *IconView) ConnectSelectCursorItem(cb *func(IconView)) uint32 {
+func (x *IconView) ConnectSelectCursorItem(cb *func(IconView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "select-cursor-item", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "select-cursor-item", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1269,15 +1287,19 @@ func (x *IconView) ConnectSelectCursorItem(cb *func(IconView)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "select-cursor-item", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "select-cursor-item", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The ::selection-changed signal is emitted when the selection
 // (i.e. the set of selected items) changes.
-func (x *IconView) ConnectSelectionChanged(cb *func(IconView)) uint32 {
+func (x *IconView) ConnectSelectionChanged(cb *func(IconView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "selection-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "selection-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1290,7 +1312,9 @@ func (x *IconView) ConnectSelectionChanged(cb *func(IconView)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "selection-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "selection-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // A [keybinding signal][class@Gtk.SignalAction]
@@ -1303,10 +1327,12 @@ func (x *IconView) ConnectSelectionChanged(cb *func(IconView)) uint32 {
 // programmatically.
 //
 // There is no default binding for this signal is Ctrl-Space.
-func (x *IconView) ConnectToggleCursorItem(cb *func(IconView)) uint32 {
+func (x *IconView) ConnectToggleCursorItem(cb *func(IconView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-item", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-cursor-item", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1319,7 +1345,9 @@ func (x *IconView) ConnectToggleCursorItem(cb *func(IconView)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-item", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-cursor-item", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // A [keybinding signal][class@Gtk.SignalAction]
@@ -1330,10 +1358,12 @@ func (x *IconView) ConnectToggleCursorItem(cb *func(IconView)) uint32 {
 // programmatically.
 //
 // The default binding for this signal is Ctrl-Shift-a.
-func (x *IconView) ConnectUnselectAll(cb *func(IconView)) uint32 {
+func (x *IconView) ConnectUnselectAll(cb *func(IconView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1346,7 +1376,9 @@ func (x *IconView) ConnectUnselectAll(cb *func(IconView)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

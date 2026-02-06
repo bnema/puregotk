@@ -586,10 +586,12 @@ func (x *Dialog) GetPropertyUseHeaderBar() int {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is the Escape key.
-func (x *Dialog) ConnectClose(cb *func(Dialog)) uint32 {
+func (x *Dialog) ConnectClose(cb *func(Dialog)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -602,7 +604,9 @@ func (x *Dialog) ConnectClose(cb *func(Dialog)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an action widget is clicked.
@@ -611,10 +615,12 @@ func (x *Dialog) ConnectClose(cb *func(Dialog)) uint32 {
 // delete event, and when [method@Gtk.Dialog.response] is called.
 // On a delete event, the response ID is %GTK_RESPONSE_DELETE_EVENT.
 // Otherwise, it depends on which action widget was clicked.
-func (x *Dialog) ConnectResponse(cb *func(Dialog, int)) uint32 {
+func (x *Dialog) ConnectResponse(cb *func(Dialog, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ResponseIdVarp int) {
@@ -627,7 +633,9 @@ func (x *Dialog) ConnectResponse(cb *func(Dialog, int)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

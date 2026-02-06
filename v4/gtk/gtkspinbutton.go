@@ -689,10 +689,12 @@ func (x *SpinButton) GetPropertyWrap() bool {
 // If the &lt;kbd&gt;Enter&lt;/kbd&gt; key results in the value being committed to the
 // spin button, then activation does not occur until &lt;kbd&gt;Enter&lt;/kbd&gt; is
 // pressed again.
-func (x *SpinButton) ConnectActivate(cb *func(SpinButton)) uint32 {
+func (x *SpinButton) ConnectActivate(cb *func(SpinButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -705,7 +707,9 @@ func (x *SpinButton) ConnectActivate(cb *func(SpinButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user initiates a value change.
@@ -717,10 +721,12 @@ func (x *SpinButton) ConnectActivate(cb *func(SpinButton)) uint32 {
 // programmatically.
 //
 // The default bindings for this signal are Up/Down and PageUp/PageDown.
-func (x *SpinButton) ConnectChangeValue(cb *func(SpinButton, ScrollType)) uint32 {
+func (x *SpinButton) ConnectChangeValue(cb *func(SpinButton, ScrollType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ScrollVarp ScrollType) {
@@ -733,7 +739,9 @@ func (x *SpinButton) ConnectChangeValue(cb *func(SpinButton, ScrollType)) uint32
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to convert the users input into a double value.
@@ -743,10 +751,12 @@ func (x *SpinButton) ConnectChangeValue(cb *func(SpinButton, ScrollType)) uint32
 // new value.
 //
 // The default conversion uses g_strtod().
-func (x *SpinButton) ConnectInput(cb *func(SpinButton, *float64) int) uint32 {
+func (x *SpinButton) ConnectInput(cb *func(SpinButton, *float64) int) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, NewValueVarp *float64) int {
@@ -759,7 +769,9 @@ func (x *SpinButton) ConnectInput(cb *func(SpinButton, *float64) int) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to tweak the formatting of the value for display.
@@ -784,10 +796,12 @@ func (x *SpinButton) ConnectInput(cb *func(SpinButton, *float64) int) uint32 {
 //	}
 //
 // ```
-func (x *SpinButton) ConnectOutput(cb *func(SpinButton) bool) uint32 {
+func (x *SpinButton) ConnectOutput(cb *func(SpinButton) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -800,16 +814,20 @@ func (x *SpinButton) ConnectOutput(cb *func(SpinButton) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the value is changed.
 //
 // Also see the [signal@Gtk.SpinButton::output] signal.
-func (x *SpinButton) ConnectValueChanged(cb *func(SpinButton)) uint32 {
+func (x *SpinButton) ConnectValueChanged(cb *func(SpinButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -822,15 +840,19 @@ func (x *SpinButton) ConnectValueChanged(cb *func(SpinButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted right after the spinbutton wraps from its maximum
 // to its minimum value or vice-versa.
-func (x *SpinButton) ConnectWrapped(cb *func(SpinButton)) uint32 {
+func (x *SpinButton) ConnectWrapped(cb *func(SpinButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -843,7 +865,9 @@ func (x *SpinButton) ConnectWrapped(cb *func(SpinButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

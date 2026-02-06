@@ -439,10 +439,12 @@ func (x *SpinRow) GetPropertyWrap() bool {
 // The default conversion uses [func@GLib.strtod].
 //
 // See [signal@Gtk.SpinButton::input].
-func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int) uint32 {
+func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, NewValueVarp *float64) int {
@@ -455,16 +457,20 @@ func (x *SpinRow) ConnectInput(cb *func(SpinRow, *float64) int) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "input", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to tweak the formatting of the value for display.
 //
 // See [signal@Gtk.SpinButton::output].
-func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint32 {
+func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -477,16 +483,20 @@ func (x *SpinRow) ConnectOutput(cb *func(SpinRow) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "output", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted right after the spinbutton wraps.
 //
 // See [signal@Gtk.SpinButton::wrapped].
-func (x *SpinRow) ConnectWrapped(cb *func(SpinRow)) uint32 {
+func (x *SpinRow) ConnectWrapped(cb *func(SpinRow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -499,7 +509,9 @@ func (x *SpinRow) ConnectWrapped(cb *func(SpinRow)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "wrapped", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

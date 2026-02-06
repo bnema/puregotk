@@ -185,10 +185,12 @@ func (x *ShortcutsWindow) GetPropertyViewName() string {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is the &lt;kbd&gt;Escape&lt;/kbd&gt; key.
-func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint32 {
+func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -201,7 +203,9 @@ func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "close", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user uses a keybinding to start a search.
@@ -209,10 +213,12 @@ func (x *ShortcutsWindow) ConnectClose(cb *func(ShortcutsWindow)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Control&lt;/kbd&gt;+&lt;kbd&gt;F&lt;/kbd&gt;.
-func (x *ShortcutsWindow) ConnectSearch(cb *func(ShortcutsWindow)) uint32 {
+func (x *ShortcutsWindow) ConnectSearch(cb *func(ShortcutsWindow)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "search", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "search", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -225,7 +231,9 @@ func (x *ShortcutsWindow) ConnectSearch(cb *func(ShortcutsWindow)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "search", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "search", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

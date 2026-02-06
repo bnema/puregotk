@@ -472,10 +472,12 @@ func (x *Paned) GetPropertyWideHandle() bool {
 //
 // The default binding for this signal is &lt;kbd&gt;Return&lt;/kbd&gt; or
 // &lt;kbd&gt;Space&lt;/kbd&gt;.
-func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint32 {
+func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "accept-position", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "accept-position", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -488,7 +490,9 @@ func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "accept-position", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "accept-position", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to cancel moving the position of the handle using key
@@ -500,10 +504,12 @@ func (x *Paned) ConnectAcceptPosition(cb *func(Paned) bool) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Escape&lt;/kbd&gt;.
-func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint32 {
+func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cancel-position", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cancel-position", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -516,7 +522,9 @@ func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "cancel-position", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cancel-position", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to cycle the focus between the children of the paned.
@@ -524,10 +532,12 @@ func (x *Paned) ConnectCancelPosition(cb *func(Paned) bool) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding is &lt;kbd&gt;F6&lt;/kbd&gt;.
-func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint32 {
+func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cycle-child-focus", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cycle-child-focus", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ReversedVarp bool) bool {
@@ -540,7 +550,9 @@ func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "cycle-child-focus", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cycle-child-focus", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to cycle whether the paned should grab focus to allow
@@ -549,10 +561,12 @@ func (x *Paned) ConnectCycleChildFocus(cb *func(Paned, bool) bool) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;F8&lt;/kbd&gt;.
-func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint32 {
+func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cycle-handle-focus", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cycle-handle-focus", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ReversedVarp bool) bool {
@@ -565,7 +579,9 @@ func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "cycle-handle-focus", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cycle-handle-focus", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to move the handle with key bindings.
@@ -578,10 +594,12 @@ func (x *Paned) ConnectCycleHandleFocus(cb *func(Paned, bool) bool) uint32 {
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;↑&lt;/kbd&gt;, &lt;kbd&gt;↑&lt;/kbd&gt;,
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;↓&lt;/kbd&gt;, &lt;kbd&gt;↓&lt;/kbd&gt;,
 // &lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;PgDn&lt;/kbd&gt;, &lt;kbd&gt;Home&lt;/kbd&gt;, &lt;kbd&gt;End&lt;/kbd&gt;.
-func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint32 {
+func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-handle", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-handle", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ScrollTypeVarp ScrollType) bool {
@@ -594,7 +612,9 @@ func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "move-handle", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-handle", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to accept the current position of the handle and then
@@ -603,10 +623,12 @@ func (x *Paned) ConnectMoveHandle(cb *func(Paned, ScrollType) bool) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding is &lt;kbd&gt;Tab&lt;/kbd&gt;.
-func (x *Paned) ConnectToggleHandleFocus(cb *func(Paned) bool) uint32 {
+func (x *Paned) ConnectToggleHandleFocus(cb *func(Paned) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "toggle-handle-focus", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-handle-focus", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -619,7 +641,9 @@ func (x *Paned) ConnectToggleHandleFocus(cb *func(Paned) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "toggle-handle-focus", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-handle-focus", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

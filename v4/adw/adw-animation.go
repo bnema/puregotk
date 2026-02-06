@@ -348,10 +348,12 @@ func (x *Animation) GetPropertyValue() float64 {
 
 // This signal is emitted when the animation has been completed, either on its
 // own or via calling [method@Animation.skip].
-func (x *Animation) ConnectDone(cb *func(Animation)) uint32 {
+func (x *Animation) ConnectDone(cb *func(Animation)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -364,7 +366,9 @@ func (x *Animation) ConnectDone(cb *func(Animation)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "done", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

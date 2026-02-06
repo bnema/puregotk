@@ -345,10 +345,12 @@ func (x *AppChooserWidget) GetPropertyShowRecommended() bool {
 // This usually happens when the user double clicks an item, or an item
 // is selected and the user presses one of the keys Space, Shift+Space,
 // Return or Enter.
-func (x *AppChooserWidget) ConnectApplicationActivated(cb *func(AppChooserWidget, uintptr)) uint32 {
+func (x *AppChooserWidget) ConnectApplicationActivated(cb *func(AppChooserWidget, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "application-activated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "application-activated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ApplicationVarp uintptr) {
@@ -361,14 +363,18 @@ func (x *AppChooserWidget) ConnectApplicationActivated(cb *func(AppChooserWidget
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "application-activated", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "application-activated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an application item is selected from the widget's list.
-func (x *AppChooserWidget) ConnectApplicationSelected(cb *func(AppChooserWidget, uintptr)) uint32 {
+func (x *AppChooserWidget) ConnectApplicationSelected(cb *func(AppChooserWidget, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "application-selected", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "application-selected", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ApplicationVarp uintptr) {
@@ -381,7 +387,9 @@ func (x *AppChooserWidget) ConnectApplicationSelected(cb *func(AppChooserWidget,
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "application-selected", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "application-selected", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

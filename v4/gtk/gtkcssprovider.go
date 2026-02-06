@@ -220,10 +220,12 @@ func (c *CssProvider) SetGoPointer(ptr uintptr) {
 // Note that this signal may be emitted at any time as the css provider
 // may opt to defer parsing parts or all of the input to a later time
 // than when a loading function was called.
-func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, uintptr)) uint32 {
+func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "parsing-error", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "parsing-error", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, SectionVarp uintptr, ErrorVarp uintptr) {
@@ -236,7 +238,9 @@ func (x *CssProvider) ConnectParsingError(cb *func(CssProvider, uintptr, uintptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "parsing-error", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "parsing-error", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

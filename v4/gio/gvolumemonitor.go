@@ -793,10 +793,12 @@ func (c *VolumeMonitor) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when a drive changes.
-func (x *VolumeMonitor) ConnectDriveChanged(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectDriveChanged(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drive-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drive-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DriveVarp uintptr) {
@@ -809,14 +811,18 @@ func (x *VolumeMonitor) ConnectDriveChanged(cb *func(VolumeMonitor, uintptr)) ui
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "drive-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drive-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a drive is connected to the system.
-func (x *VolumeMonitor) ConnectDriveConnected(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectDriveConnected(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drive-connected", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drive-connected", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DriveVarp uintptr) {
@@ -829,14 +835,18 @@ func (x *VolumeMonitor) ConnectDriveConnected(cb *func(VolumeMonitor, uintptr)) 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "drive-connected", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drive-connected", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a drive is disconnected from the system.
-func (x *VolumeMonitor) ConnectDriveDisconnected(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectDriveDisconnected(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drive-disconnected", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drive-disconnected", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DriveVarp uintptr) {
@@ -849,14 +859,18 @@ func (x *VolumeMonitor) ConnectDriveDisconnected(cb *func(VolumeMonitor, uintptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "drive-disconnected", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drive-disconnected", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the eject button is pressed on @drive.
-func (x *VolumeMonitor) ConnectDriveEjectButton(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectDriveEjectButton(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drive-eject-button", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drive-eject-button", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DriveVarp uintptr) {
@@ -869,14 +883,18 @@ func (x *VolumeMonitor) ConnectDriveEjectButton(cb *func(VolumeMonitor, uintptr)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "drive-eject-button", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drive-eject-button", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the stop button is pressed on @drive.
-func (x *VolumeMonitor) ConnectDriveStopButton(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectDriveStopButton(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drive-stop-button", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drive-stop-button", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DriveVarp uintptr) {
@@ -889,14 +907,18 @@ func (x *VolumeMonitor) ConnectDriveStopButton(cb *func(VolumeMonitor, uintptr))
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "drive-stop-button", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drive-stop-button", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a mount is added.
-func (x *VolumeMonitor) ConnectMountAdded(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectMountAdded(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "mount-added", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "mount-added", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MountVarp uintptr) {
@@ -909,14 +931,18 @@ func (x *VolumeMonitor) ConnectMountAdded(cb *func(VolumeMonitor, uintptr)) uint
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "mount-added", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "mount-added", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a mount changes.
-func (x *VolumeMonitor) ConnectMountChanged(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectMountChanged(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "mount-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "mount-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MountVarp uintptr) {
@@ -929,17 +955,21 @@ func (x *VolumeMonitor) ConnectMountChanged(cb *func(VolumeMonitor, uintptr)) ui
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "mount-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "mount-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // May be emitted when a mount is about to be removed.
 //
 // This signal depends on the backend and is only emitted if
 // GIO was used to unmount.
-func (x *VolumeMonitor) ConnectMountPreUnmount(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectMountPreUnmount(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "mount-pre-unmount", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "mount-pre-unmount", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MountVarp uintptr) {
@@ -952,14 +982,18 @@ func (x *VolumeMonitor) ConnectMountPreUnmount(cb *func(VolumeMonitor, uintptr))
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "mount-pre-unmount", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "mount-pre-unmount", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a mount is removed.
-func (x *VolumeMonitor) ConnectMountRemoved(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectMountRemoved(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "mount-removed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "mount-removed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MountVarp uintptr) {
@@ -972,14 +1006,18 @@ func (x *VolumeMonitor) ConnectMountRemoved(cb *func(VolumeMonitor, uintptr)) ui
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "mount-removed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "mount-removed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a mountable volume is added to the system.
-func (x *VolumeMonitor) ConnectVolumeAdded(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectVolumeAdded(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "volume-added", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "volume-added", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, VolumeVarp uintptr) {
@@ -992,14 +1030,18 @@ func (x *VolumeMonitor) ConnectVolumeAdded(cb *func(VolumeMonitor, uintptr)) uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "volume-added", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "volume-added", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when mountable volume is changed.
-func (x *VolumeMonitor) ConnectVolumeChanged(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectVolumeChanged(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "volume-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "volume-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, VolumeVarp uintptr) {
@@ -1012,14 +1054,18 @@ func (x *VolumeMonitor) ConnectVolumeChanged(cb *func(VolumeMonitor, uintptr)) u
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "volume-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "volume-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a mountable volume is removed from the system.
-func (x *VolumeMonitor) ConnectVolumeRemoved(cb *func(VolumeMonitor, uintptr)) uint32 {
+func (x *VolumeMonitor) ConnectVolumeRemoved(cb *func(VolumeMonitor, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "volume-removed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "volume-removed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, VolumeVarp uintptr) {
@@ -1032,7 +1078,9 @@ func (x *VolumeMonitor) ConnectVolumeRemoved(cb *func(VolumeMonitor, uintptr)) u
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "volume-removed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "volume-removed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xVolumeMonitorAdoptOrphanMount func(uintptr) uintptr

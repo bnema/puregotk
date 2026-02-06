@@ -358,10 +358,12 @@ func (x *SocketService) GetPropertyActive() bool {
 //
 // @connection will be unreffed once the signal handler returns,
 // so you need to ref it yourself if you are planning to use it.
-func (x *SocketService) ConnectIncoming(cb *func(SocketService, uintptr, uintptr) bool) uint32 {
+func (x *SocketService) ConnectIncoming(cb *func(SocketService, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "incoming", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "incoming", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ConnectionVarp uintptr, SourceObjectVarp uintptr) bool {
@@ -374,7 +376,9 @@ func (x *SocketService) ConnectIncoming(cb *func(SocketService, uintptr, uintptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "incoming", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "incoming", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

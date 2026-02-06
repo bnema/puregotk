@@ -543,10 +543,12 @@ func (x *Adjustment) GetPropertyValue() float64 {
 //
 // Note that the [property@Gtk.Adjustment:value] property is
 // covered by the [signal@Gtk.Adjustment::value-changed] signal.
-func (x *Adjustment) ConnectChanged(cb *func(Adjustment)) uint32 {
+func (x *Adjustment) ConnectChanged(cb *func(Adjustment)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -559,14 +561,18 @@ func (x *Adjustment) ConnectChanged(cb *func(Adjustment)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the value has been changed.
-func (x *Adjustment) ConnectValueChanged(cb *func(Adjustment)) uint32 {
+func (x *Adjustment) ConnectValueChanged(cb *func(Adjustment)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -579,7 +585,9 @@ func (x *Adjustment) ConnectValueChanged(cb *func(Adjustment)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

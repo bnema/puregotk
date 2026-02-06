@@ -248,10 +248,10 @@ func (x *Value) GetInt64() int64 {
 	return cret
 }
 
-var xValueGetLong func(uintptr) int32
+var xValueGetLong func(uintptr) int
 
 // Get the contents of a %G_TYPE_LONG #GValue.
-func (x *Value) GetLong() int32 {
+func (x *Value) GetLong() int {
 
 	cret := xValueGetLong(x.GoPointer())
 
@@ -352,10 +352,10 @@ func (x *Value) GetUint64() uint64 {
 	return cret
 }
 
-var xValueGetUlong func(uintptr) uint32
+var xValueGetUlong func(uintptr) uint
 
 // Get the contents of a %G_TYPE_ULONG #GValue.
-func (x *Value) GetUlong() uint32 {
+func (x *Value) GetUlong() uint {
 
 	cret := xValueGetUlong(x.GoPointer())
 
@@ -566,10 +566,10 @@ func (x *Value) SetInternedString(VStringVar *string) {
 
 }
 
-var xValueSetLong func(uintptr, int32)
+var xValueSetLong func(uintptr, int)
 
 // Set the contents of a %G_TYPE_LONG #GValue to @v_long.
-func (x *Value) SetLong(VLongVar int32) {
+func (x *Value) SetLong(VLongVar int) {
 
 	xValueSetLong(x.GoPointer(), VLongVar)
 
@@ -722,10 +722,10 @@ func (x *Value) SetUint64(VUint64Var uint64) {
 
 }
 
-var xValueSetUlong func(uintptr, uint32)
+var xValueSetUlong func(uintptr, uint)
 
 // Set the contents of a %G_TYPE_ULONG #GValue to @v_ulong.
-func (x *Value) SetUlong(VUlongVar uint32) {
+func (x *Value) SetUlong(VUlongVar uint) {
 
 	xValueSetUlong(x.GoPointer(), VUlongVar)
 
@@ -801,11 +801,7 @@ var xValueTakeString func(uintptr, uintptr)
 // Sets the contents of a %G_TYPE_STRING #GValue to @v_string.
 func (x *Value) TakeString(VStringVar *string) {
 
-	VStringVarPtr, VStringVarBytes := core.NullableStringToPtr(VStringVar)
-
-	xValueTakeString(x.GoPointer(), VStringVarPtr)
-
-	runtime.KeepAlive(VStringVarBytes)
+	xValueTakeString(x.GoPointer(), core.GStrdupNullable(VStringVar))
 
 }
 

@@ -726,10 +726,12 @@ func (x *CellRendererText) GetPropertyWrapWidth() int {
 //
 // It is the responsibility of the application to update the model
 // and store @new_text at the position indicated by @path.
-func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, string)) uint32 {
+func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PathVarp string, NewTextVarp string) {
@@ -742,7 +744,9 @@ func (x *CellRendererText) ConnectEdited(cb *func(CellRendererText, string, stri
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "edited", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

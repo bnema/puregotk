@@ -80,11 +80,7 @@ var xNewStringTake func(uintptr) *String
 // allocated and will eventually be freed with g_free().
 func NewStringTake(InitVar *string) *String {
 
-	InitVarPtr, InitVarBytes := core.NullableStringToPtr(InitVar)
-
-	cret := xNewStringTake(InitVarPtr)
-
-	runtime.KeepAlive(InitVarBytes)
+	cret := xNewStringTake(core.GStrdupNullable(InitVar))
 
 	return cret
 }

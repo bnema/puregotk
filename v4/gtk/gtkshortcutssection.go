@@ -201,10 +201,12 @@ func (x *ShortcutsSection) GetPropertyViewName() string {
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;PgUp&lt;/kbd&gt;,
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;PgDn&lt;/kbd&gt;, &lt;kbd&gt;PgDn&lt;/kbd&gt;.
-func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, int) bool) uint32 {
+func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, int) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, OffsetVarp int) bool {
@@ -217,7 +219,9 @@ func (x *ShortcutsSection) ConnectChangeCurrentPage(cb *func(ShortcutsSection, i
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "change-current-page", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

@@ -144,10 +144,12 @@ func (c *DBusAuthObserver) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted to check if @mechanism is allowed to be used.
-func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, string) bool) uint32 {
+func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, string) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "allow-mechanism", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "allow-mechanism", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MechanismVarp string) bool {
@@ -160,15 +162,19 @@ func (x *DBusAuthObserver) ConnectAllowMechanism(cb *func(DBusAuthObserver, stri
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "allow-mechanism", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "allow-mechanism", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to check if a peer that is successfully authenticated
 // is authorized.
-func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthObserver, uintptr, uintptr) bool) uint32 {
+func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthObserver, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "authorize-authenticated-peer", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-authenticated-peer", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StreamVarp uintptr, CredentialsVarp uintptr) bool {
@@ -181,7 +187,9 @@ func (x *DBusAuthObserver) ConnectAuthorizeAuthenticatedPeer(cb *func(DBusAuthOb
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "authorize-authenticated-peer", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-authenticated-peer", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

@@ -150,10 +150,12 @@ func (c *Seat) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when a new input device is related to this seat.
-func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint32 {
+func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "device-added", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "device-added", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DeviceVarp uintptr) {
@@ -166,14 +168,18 @@ func (x *Seat) ConnectDeviceAdded(cb *func(Seat, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "device-added", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "device-added", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an input device is removed (e.g. unplugged).
-func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint32 {
+func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "device-removed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "device-removed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DeviceVarp uintptr) {
@@ -186,7 +192,9 @@ func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "device-removed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "device-removed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever a new tool is made known to the seat.
@@ -196,10 +204,12 @@ func (x *Seat) ConnectDeviceRemoved(cb *func(Seat, uintptr)) uint32 {
 // [signal@Gdk.Device::tool-changed] signal accordingly.
 //
 // A same tool may be used by several devices.
-func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint32 {
+func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "tool-added", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-added", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ToolVarp uintptr) {
@@ -212,14 +222,18 @@ func (x *Seat) ConnectToolAdded(cb *func(Seat, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "tool-added", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "tool-added", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever a tool is no longer known to this @seat.
-func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint32 {
+func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "tool-removed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-removed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ToolVarp uintptr) {
@@ -232,7 +246,9 @@ func (x *Seat) ConnectToolRemoved(cb *func(Seat, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "tool-removed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "tool-removed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

@@ -555,10 +555,12 @@ func (x *Device) GetPropertyVendorId() string {
 // example, user switches from the USB mouse to a tablet); in
 // that case the logical device will change to reflect the axes
 // and keys on the new physical device.
-func (x *Device) ConnectChanged(cb *func(Device)) uint32 {
+func (x *Device) ConnectChanged(cb *func(Device)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -571,14 +573,18 @@ func (x *Device) ConnectChanged(cb *func(Device)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted on pen/eraser devices whenever tools enter or leave proximity.
-func (x *Device) ConnectToolChanged(cb *func(Device, uintptr)) uint32 {
+func (x *Device) ConnectToolChanged(cb *func(Device, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "tool-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "tool-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ToolVarp uintptr) {
@@ -591,7 +597,9 @@ func (x *Device) ConnectToolChanged(cb *func(Device, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "tool-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "tool-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

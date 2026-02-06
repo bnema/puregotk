@@ -409,10 +409,12 @@ func (x *FontDialogButton) GetPropertyUseSize() bool {
 //
 // The `::activate` signal on `GtkFontDialogButton` is an action signal
 // and emitting it causes the button to pop up its dialog.
-func (x *FontDialogButton) ConnectActivate(cb *func(FontDialogButton)) uint32 {
+func (x *FontDialogButton) ConnectActivate(cb *func(FontDialogButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -425,7 +427,9 @@ func (x *FontDialogButton) ConnectActivate(cb *func(FontDialogButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

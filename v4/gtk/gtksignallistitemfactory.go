@@ -115,10 +115,12 @@ func (c *SignalListItemFactory) SetGoPointer(ptr uintptr) {
 // The [signal@Gtk.SignalListItemFactory::unbind] signal is the
 // opposite of this signal and can be used to undo everything done
 // in this signal.
-func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uintptr)) uint32 {
+func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectVarp uintptr) {
@@ -131,7 +133,9 @@ func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uint
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a newly created listitem needs to be prepared for use.
@@ -143,10 +147,12 @@ func (x *SignalListItemFactory) ConnectBind(cb *func(SignalListItemFactory, uint
 //
 // The [signal@Gtk.SignalListItemFactory::teardown] signal is the opposite
 // of this signal and can be used to undo everything done in this signal.
-func (x *SignalListItemFactory) ConnectSetup(cb *func(SignalListItemFactory, uintptr)) uint32 {
+func (x *SignalListItemFactory) ConnectSetup(cb *func(SignalListItemFactory, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "setup", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "setup", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectVarp uintptr) {
@@ -159,7 +165,9 @@ func (x *SignalListItemFactory) ConnectSetup(cb *func(SignalListItemFactory, uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "setup", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "setup", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an object is about to be destroyed.
@@ -168,10 +176,12 @@ func (x *SignalListItemFactory) ConnectSetup(cb *func(SignalListItemFactory, uin
 //
 // This signal is the opposite of the [signal@Gtk.SignalListItemFactory::setup]
 // signal and should be used to undo everything done in that signal.
-func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, uintptr)) uint32 {
+func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "teardown", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "teardown", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectVarp uintptr) {
@@ -184,7 +194,9 @@ func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "teardown", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "teardown", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an object has been unbound from its item.
@@ -195,10 +207,12 @@ func (x *SignalListItemFactory) ConnectTeardown(cb *func(SignalListItemFactory, 
 //
 // This signal is the opposite of the [signal@Gtk.SignalListItemFactory::bind]
 // signal and should be used to undo everything done in that signal.
-func (x *SignalListItemFactory) ConnectUnbind(cb *func(SignalListItemFactory, uintptr)) uint32 {
+func (x *SignalListItemFactory) ConnectUnbind(cb *func(SignalListItemFactory, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectVarp uintptr) {
@@ -211,7 +225,9 @@ func (x *SignalListItemFactory) ConnectUnbind(cb *func(SignalListItemFactory, ui
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

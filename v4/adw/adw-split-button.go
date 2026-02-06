@@ -488,10 +488,12 @@ func (x *SplitButton) GetPropertyUseUnderline() bool {
 //
 // This is an action signal. Applications should never connect to this signal,
 // but use the [signal@SplitButton::clicked] signal.
-func (x *SplitButton) ConnectActivate(cb *func(SplitButton)) uint32 {
+func (x *SplitButton) ConnectActivate(cb *func(SplitButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -504,14 +506,18 @@ func (x *SplitButton) ConnectActivate(cb *func(SplitButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the button has been activated (pressed and released).
-func (x *SplitButton) ConnectClicked(cb *func(SplitButton)) uint32 {
+func (x *SplitButton) ConnectClicked(cb *func(SplitButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -524,7 +530,9 @@ func (x *SplitButton) ConnectClicked(cb *func(SplitButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

@@ -478,10 +478,12 @@ func (x *IconTheme) GetPropertyThemeName() string {
 // This can happen because current icon theme is switched or
 // because GTK detects that a change has occurred in the
 // contents of the current icon theme.
-func (x *IconTheme) ConnectChanged(cb *func(IconTheme)) uint32 {
+func (x *IconTheme) ConnectChanged(cb *func(IconTheme)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -494,7 +496,9 @@ func (x *IconTheme) ConnectChanged(cb *func(IconTheme)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xIconThemeGetForDisplay func(uintptr) uintptr

@@ -606,10 +606,12 @@ func (x *EntryBuffer) GetPropertyText() string {
 //
 // If you want access to the text after the text has been modified,
 // use %G_CONNECT_AFTER.
-func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint, uint)) uint32 {
+func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "deleted-text", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "deleted-text", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PositionVarp uint, NCharsVarp uint) {
@@ -622,14 +624,18 @@ func (x *EntryBuffer) ConnectDeletedText(cb *func(EntryBuffer, uint, uint)) uint
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "deleted-text", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "deleted-text", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted after text is inserted into the buffer.
-func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint, string, uint)) uint32 {
+func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint, string, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "inserted-text", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "inserted-text", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PositionVarp uint, CharsVarp string, NCharsVarp uint) {
@@ -642,7 +648,9 @@ func (x *EntryBuffer) ConnectInsertedText(cb *func(EntryBuffer, uint, string, ui
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "inserted-text", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "inserted-text", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

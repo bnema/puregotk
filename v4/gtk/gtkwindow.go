@@ -1584,10 +1584,12 @@ func (x *Window) GetPropertyTitle() string {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The keybindings for this signal are all forms of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
-func (x *Window) ConnectActivateDefault(cb *func(Window)) uint32 {
+func (x *Window) ConnectActivateDefault(cb *func(Window)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1600,7 +1602,9 @@ func (x *Window) ConnectActivateDefault(cb *func(Window)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user activates the currently focused
@@ -1609,10 +1613,12 @@ func (x *Window) ConnectActivateDefault(cb *func(Window)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;␣&lt;/kbd&gt;.
-func (x *Window) ConnectActivateFocus(cb *func(Window)) uint32 {
+func (x *Window) ConnectActivateFocus(cb *func(Window)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-focus", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-focus", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1625,14 +1631,18 @@ func (x *Window) ConnectActivateFocus(cb *func(Window)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate-focus", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-focus", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user clicks on the close button of the window.
-func (x *Window) ConnectCloseRequest(cb *func(Window) bool) uint32 {
+func (x *Window) ConnectCloseRequest(cb *func(Window) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "close-request", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "close-request", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -1645,7 +1655,9 @@ func (x *Window) ConnectCloseRequest(cb *func(Window) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "close-request", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "close-request", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user enables or disables interactive debugging.
@@ -1659,10 +1671,12 @@ func (x *Window) ConnectCloseRequest(cb *func(Window) bool) uint32 {
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;I&lt;/kbd&gt; and
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;D&lt;/kbd&gt;.
-func (x *Window) ConnectEnableDebugging(cb *func(Window, bool) bool) uint32 {
+func (x *Window) ConnectEnableDebugging(cb *func(Window, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "enable-debugging", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "enable-debugging", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ToggleVarp bool) bool {
@@ -1675,15 +1689,19 @@ func (x *Window) ConnectEnableDebugging(cb *func(Window, bool) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "enable-debugging", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "enable-debugging", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the set of accelerators or mnemonics that
 // are associated with the window changes.
-func (x *Window) ConnectKeysChanged(cb *func(Window)) uint32 {
+func (x *Window) ConnectKeysChanged(cb *func(Window)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "keys-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "keys-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1696,7 +1714,9 @@ func (x *Window) ConnectKeysChanged(cb *func(Window)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "keys-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "keys-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

@@ -1685,10 +1685,12 @@ func (x *Entry) GetPropertyVisibility() bool {
 // Emitted when the entry is activated.
 //
 // The keybindings for this signal are all forms of the Enter key.
-func (x *Entry) ConnectActivate(cb *func(Entry)) uint32 {
+func (x *Entry) ConnectActivate(cb *func(Entry)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1701,14 +1703,18 @@ func (x *Entry) ConnectActivate(cb *func(Entry)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when an activatable icon is clicked.
-func (x *Entry) ConnectIconPress(cb *func(Entry, EntryIconPosition)) uint32 {
+func (x *Entry) ConnectIconPress(cb *func(Entry, EntryIconPosition)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "icon-press", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "icon-press", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IconPosVarp EntryIconPosition) {
@@ -1721,15 +1727,19 @@ func (x *Entry) ConnectIconPress(cb *func(Entry, EntryIconPosition)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "icon-press", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "icon-press", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted on the button release from a mouse click
 // over an activatable icon.
-func (x *Entry) ConnectIconRelease(cb *func(Entry, EntryIconPosition)) uint32 {
+func (x *Entry) ConnectIconRelease(cb *func(Entry, EntryIconPosition)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "icon-release", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "icon-release", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IconPosVarp EntryIconPosition) {
@@ -1742,7 +1752,9 @@ func (x *Entry) ConnectIconRelease(cb *func(Entry, EntryIconPosition)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "icon-release", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "icon-release", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

@@ -822,7 +822,7 @@ func DebugNodeNewFromInternalPtr(ptr uintptr) *DebugNode {
 	return cls
 }
 
-var xNewDebugNode func(uintptr, string) uintptr
+var xNewDebugNode func(uintptr, uintptr) uintptr
 
 // Creates a `GskRenderNode` that will add debug information about
 // the given @child.
@@ -831,7 +831,7 @@ var xNewDebugNode func(uintptr, string) uintptr
 func NewDebugNode(ChildVar *RenderNode, MessageVar string) *DebugNode {
 	var cls *DebugNode
 
-	cret := xNewDebugNode(ChildVar.GoPointer(), MessageVar)
+	cret := xNewDebugNode(ChildVar.GoPointer(), core.GStrdup(MessageVar))
 
 	if cret == 0 {
 		return nil

@@ -5154,10 +5154,12 @@ func (x *Widget) GetPropertyWidthRequest() int {
 // May result in finalization of the widget if all references are released.
 //
 // This signal is not suitable for saving widget state.
-func (x *Widget) ConnectDestroy(cb *func(Widget)) uint32 {
+func (x *Widget) ConnectDestroy(cb *func(Widget)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "destroy", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "destroy", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -5170,14 +5172,18 @@ func (x *Widget) ConnectDestroy(cb *func(Widget)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "destroy", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "destroy", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the text direction of a widget changes.
-func (x *Widget) ConnectDirectionChanged(cb *func(Widget, TextDirection)) uint32 {
+func (x *Widget) ConnectDirectionChanged(cb *func(Widget, TextDirection)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "direction-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "direction-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PreviousDirectionVarp TextDirection) {
@@ -5190,14 +5196,18 @@ func (x *Widget) ConnectDirectionChanged(cb *func(Widget, TextDirection)) uint32
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "direction-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "direction-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when @widget is hidden.
-func (x *Widget) ConnectHide(cb *func(Widget)) uint32 {
+func (x *Widget) ConnectHide(cb *func(Widget)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "hide", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "hide", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -5210,16 +5220,20 @@ func (x *Widget) ConnectHide(cb *func(Widget)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "hide", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "hide", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted if keyboard navigation fails.
 //
 // See [method@Gtk.Widget.keynav_failed] for details.
-func (x *Widget) ConnectKeynavFailed(cb *func(Widget, DirectionType) bool) uint32 {
+func (x *Widget) ConnectKeynavFailed(cb *func(Widget, DirectionType) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "keynav-failed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "keynav-failed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DirectionVarp DirectionType) bool {
@@ -5232,7 +5246,9 @@ func (x *Widget) ConnectKeynavFailed(cb *func(Widget, DirectionType) bool) uint3
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "keynav-failed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "keynav-failed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when @widget is going to be mapped.
@@ -5244,10 +5260,12 @@ func (x *Widget) ConnectKeynavFailed(cb *func(Widget, DirectionType) bool) uint3
 // The `::map` signal can be used to determine whether a widget will be drawn,
 // for instance it can resume an animation that was stopped during the
 // emission of [signal@Gtk.Widget::unmap].
-func (x *Widget) ConnectMap(cb *func(Widget)) uint32 {
+func (x *Widget) ConnectMap(cb *func(Widget)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "map", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "map", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -5260,17 +5278,21 @@ func (x *Widget) ConnectMap(cb *func(Widget)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "map", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "map", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a widget is activated via a mnemonic.
 //
 // The default handler for this signal activates @widget if @group_cycling
 // is false, or just makes @widget grab focus if @group_cycling is true.
-func (x *Widget) ConnectMnemonicActivate(cb *func(Widget, bool) bool) uint32 {
+func (x *Widget) ConnectMnemonicActivate(cb *func(Widget, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "mnemonic-activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "mnemonic-activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, GroupCyclingVarp bool) bool {
@@ -5283,7 +5305,9 @@ func (x *Widget) ConnectMnemonicActivate(cb *func(Widget, bool) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "mnemonic-activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "mnemonic-activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the focus is moved.
@@ -5292,10 +5316,12 @@ func (x *Widget) ConnectMnemonicActivate(cb *func(Widget, bool) bool) uint32 {
 //
 // The default bindings for this signal are &lt;kbd&gt;Tab&lt;/kbd&gt; to move forward,
 // and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; to move backward.
-func (x *Widget) ConnectMoveFocus(cb *func(Widget, DirectionType)) uint32 {
+func (x *Widget) ConnectMoveFocus(cb *func(Widget, DirectionType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-focus", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-focus", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DirectionVarp DirectionType) {
@@ -5308,7 +5334,9 @@ func (x *Widget) ConnectMoveFocus(cb *func(Widget, DirectionType)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "move-focus", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-focus", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the widget’s tooltip is about to be shown.
@@ -5324,10 +5352,12 @@ func (x *Widget) ConnectMoveFocus(cb *func(Widget, DirectionType)) uint32 {
 //
 // The signal handler is free to manipulate @tooltip with the therefore
 // destined function calls.
-func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, uintptr) bool) uint32 {
+func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "query-tooltip", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "query-tooltip", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, XVarp int, YVarp int, KeyboardModeVarp bool, TooltipVarp uintptr) bool {
@@ -5340,17 +5370,21 @@ func (x *Widget) ConnectQueryTooltip(cb *func(Widget, int, int, bool, uintptr) b
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "query-tooltip", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "query-tooltip", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when @widget is associated with a `GdkSurface`.
 //
 // This means that [method@Gtk.Widget.realize] has been called
 // or the widget has been mapped (that is, it is going to be drawn).
-func (x *Widget) ConnectRealize(cb *func(Widget)) uint32 {
+func (x *Widget) ConnectRealize(cb *func(Widget)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "realize", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "realize", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -5363,14 +5397,18 @@ func (x *Widget) ConnectRealize(cb *func(Widget)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "realize", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "realize", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when @widget is shown.
-func (x *Widget) ConnectShow(cb *func(Widget)) uint32 {
+func (x *Widget) ConnectShow(cb *func(Widget)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "show", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "show", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -5383,16 +5421,20 @@ func (x *Widget) ConnectShow(cb *func(Widget)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "show", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "show", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the widget state changes.
 //
 // See [method@Gtk.Widget.get_state_flags].
-func (x *Widget) ConnectStateFlagsChanged(cb *func(Widget, StateFlags)) uint32 {
+func (x *Widget) ConnectStateFlagsChanged(cb *func(Widget, StateFlags)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "state-flags-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "state-flags-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, FlagsVarp StateFlags) {
@@ -5405,7 +5447,9 @@ func (x *Widget) ConnectStateFlagsChanged(cb *func(Widget, StateFlags)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "state-flags-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "state-flags-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when @widget is going to be unmapped.
@@ -5415,10 +5459,12 @@ func (x *Widget) ConnectStateFlagsChanged(cb *func(Widget, StateFlags)) uint32 {
 //
 // As `::unmap` indicates that a widget will not be shown any longer,
 // it can be used to, for example, stop an animation on the widget.
-func (x *Widget) ConnectUnmap(cb *func(Widget)) uint32 {
+func (x *Widget) ConnectUnmap(cb *func(Widget)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "unmap", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "unmap", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -5431,17 +5477,21 @@ func (x *Widget) ConnectUnmap(cb *func(Widget)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "unmap", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "unmap", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the `GdkSurface` associated with @widget is destroyed.
 //
 // This means that [method@Gtk.Widget.unrealize] has been called
 // or the widget has been unmapped (that is, it is going to be hidden).
-func (x *Widget) ConnectUnrealize(cb *func(Widget)) uint32 {
+func (x *Widget) ConnectUnrealize(cb *func(Widget)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "unrealize", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "unrealize", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -5454,7 +5504,9 @@ func (x *Widget) ConnectUnrealize(cb *func(Widget)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "unrealize", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "unrealize", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

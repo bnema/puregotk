@@ -980,10 +980,12 @@ func (x *TreeViewColumn) GetPropertyXOffset() int {
 }
 
 // Emitted when the column's header has been clicked.
-func (x *TreeViewColumn) ConnectClicked(cb *func(TreeViewColumn)) uint32 {
+func (x *TreeViewColumn) ConnectClicked(cb *func(TreeViewColumn)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -996,7 +998,9 @@ func (x *TreeViewColumn) ConnectClicked(cb *func(TreeViewColumn)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "clicked", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets the ID of the @buildable object.

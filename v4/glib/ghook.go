@@ -46,7 +46,7 @@ type Hook struct {
 
 	RefCount uint
 
-	HookId uint32
+	HookId uint
 
 	Flags uint
 
@@ -74,7 +74,7 @@ func (x *Hook) CompareIds(SiblingVar *Hook) int {
 type HookList struct {
 	_ structs.HostLayout
 
-	SeqId uint32
+	SeqId uint
 
 	HookSize uint
 
@@ -202,10 +202,10 @@ const (
 	GHookFlagMaskValue HookFlagMask = 15
 )
 
-var xHookDestroy func(*HookList, uint32) bool
+var xHookDestroy func(*HookList, uint) bool
 
 // Destroys a #GHook, given its ID.
-func HookDestroy(HookListVar *HookList, HookIdVar uint32) bool {
+func HookDestroy(HookListVar *HookList, HookIdVar uint) bool {
 
 	cret := xHookDestroy(HookListVar, HookIdVar)
 

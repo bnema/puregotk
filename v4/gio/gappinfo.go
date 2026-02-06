@@ -1840,10 +1840,12 @@ func (c *AppInfoMonitor) SetGoPointer(ptr uintptr) {
 
 // Signal emitted when the app info database changes, when applications are
 // installed or removed.
-func (x *AppInfoMonitor) ConnectChanged(cb *func(AppInfoMonitor)) uint32 {
+func (x *AppInfoMonitor) ConnectChanged(cb *func(AppInfoMonitor)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1856,7 +1858,9 @@ func (x *AppInfoMonitor) ConnectChanged(cb *func(AppInfoMonitor)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xAppInfoMonitorGet func() uintptr
@@ -2022,10 +2026,12 @@ func (c *AppLaunchContext) SetGoPointer(ptr uintptr) {
 // Because a launch operation may involve spawning multiple instances of the
 // target application, you should expect this signal to be emitted multiple
 // times, one for each spawned instance.
-func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string)) uint32 {
+func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "launch-failed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "launch-failed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StartupNotifyIdVarp string) {
@@ -2038,7 +2044,9 @@ func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "launch-failed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "launch-failed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The [signal@Gio.AppLaunchContext::launch-started] signal is emitted when a
@@ -2060,10 +2068,12 @@ func (x *AppLaunchContext) ConnectLaunchFailed(cb *func(AppLaunchContext, string
 // Because a launch operation may involve spawning multiple instances of the
 // target application, you should expect this signal to be emitted multiple
 // times, one for each spawned instance.
-func (x *AppLaunchContext) ConnectLaunchStarted(cb *func(AppLaunchContext, uintptr, uintptr)) uint32 {
+func (x *AppLaunchContext) ConnectLaunchStarted(cb *func(AppLaunchContext, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "launch-started", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "launch-started", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, InfoVarp uintptr, PlatformDataVarp uintptr) {
@@ -2076,7 +2086,9 @@ func (x *AppLaunchContext) ConnectLaunchStarted(cb *func(AppLaunchContext, uintp
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "launch-started", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "launch-started", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The [signal@Gio.AppLaunchContext::launched] signal is emitted when a
@@ -2100,10 +2112,12 @@ func (x *AppLaunchContext) ConnectLaunchStarted(cb *func(AppLaunchContext, uintp
 // is emitted, GLib will call [func@GLib.spawn_close_pid]. If you need to
 // keep the [alias@GLib.Pid] after the signal has been emitted, then you can
 // duplicate `pid` using `DuplicateHandle()`.
-func (x *AppLaunchContext) ConnectLaunched(cb *func(AppLaunchContext, uintptr, uintptr)) uint32 {
+func (x *AppLaunchContext) ConnectLaunched(cb *func(AppLaunchContext, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "launched", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "launched", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, InfoVarp uintptr, PlatformDataVarp uintptr) {
@@ -2116,7 +2130,9 @@ func (x *AppLaunchContext) ConnectLaunched(cb *func(AppLaunchContext, uintptr, u
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "launched", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "launched", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {
