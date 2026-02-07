@@ -1882,10 +1882,12 @@ func (x *TextBuffer) GetPropertyText() string {
 // [method@Gtk.TextBuffer.apply_tag],
 // [method@Gtk.TextBuffer.insert_with_tags],
 // [method@Gtk.TextBuffer.insert_range].
-func (x *TextBuffer) ConnectApplyTag(cb *func(TextBuffer, uintptr, uintptr, uintptr)) uint32 {
+func (x *TextBuffer) ConnectApplyTag(cb *func(TextBuffer, uintptr, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "apply-tag", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "apply-tag", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TagVarp uintptr, StartVarp uintptr, EndVarp uintptr) {
@@ -1898,7 +1900,9 @@ func (x *TextBuffer) ConnectApplyTag(cb *func(TextBuffer, uintptr, uintptr, uint
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "apply-tag", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "apply-tag", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted at the beginning of a single user-visible
@@ -1911,10 +1915,12 @@ func (x *TextBuffer) ConnectApplyTag(cb *func(TextBuffer, uintptr, uintptr, uint
 // [method@Gtk.TextBuffer.delete_interactive],
 // [method@Gtk.TextBuffer.backspace],
 // [method@Gtk.TextBuffer.delete_selection].
-func (x *TextBuffer) ConnectBeginUserAction(cb *func(TextBuffer)) uint32 {
+func (x *TextBuffer) ConnectBeginUserAction(cb *func(TextBuffer)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "begin-user-action", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "begin-user-action", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1927,14 +1933,18 @@ func (x *TextBuffer) ConnectBeginUserAction(cb *func(TextBuffer)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "begin-user-action", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "begin-user-action", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the content of a `GtkTextBuffer` has changed.
-func (x *TextBuffer) ConnectChanged(cb *func(TextBuffer)) uint32 {
+func (x *TextBuffer) ConnectChanged(cb *func(TextBuffer)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1947,7 +1957,9 @@ func (x *TextBuffer) ConnectChanged(cb *func(TextBuffer)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to delete a range from a `GtkTextBuffer`.
@@ -1961,10 +1973,12 @@ func (x *TextBuffer) ConnectChanged(cb *func(TextBuffer)) uint32 {
 // the deleted text.
 //
 // See also: [method@Gtk.TextBuffer.delete].
-func (x *TextBuffer) ConnectDeleteRange(cb *func(TextBuffer, uintptr, uintptr)) uint32 {
+func (x *TextBuffer) ConnectDeleteRange(cb *func(TextBuffer, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "delete-range", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "delete-range", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StartVarp uintptr, EndVarp uintptr) {
@@ -1977,7 +1991,9 @@ func (x *TextBuffer) ConnectDeleteRange(cb *func(TextBuffer, uintptr, uintptr)) 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "delete-range", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "delete-range", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted at the end of a single user-visible
@@ -1991,10 +2007,12 @@ func (x *TextBuffer) ConnectDeleteRange(cb *func(TextBuffer, uintptr, uintptr)) 
 // [method@Gtk.TextBuffer.backspace],
 // [method@Gtk.TextBuffer.delete_selection],
 // [method@Gtk.TextBuffer.backspace].
-func (x *TextBuffer) ConnectEndUserAction(cb *func(TextBuffer)) uint32 {
+func (x *TextBuffer) ConnectEndUserAction(cb *func(TextBuffer)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "end-user-action", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "end-user-action", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -2007,7 +2025,9 @@ func (x *TextBuffer) ConnectEndUserAction(cb *func(TextBuffer)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "end-user-action", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "end-user-action", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to insert a `GtkTextChildAnchor` in a `GtkTextBuffer`.
@@ -2020,10 +2040,12 @@ func (x *TextBuffer) ConnectEndUserAction(cb *func(TextBuffer)) uint32 {
 // it to be placed after the inserted @anchor.
 //
 // See also: [method@Gtk.TextBuffer.insert_child_anchor].
-func (x *TextBuffer) ConnectInsertChildAnchor(cb *func(TextBuffer, uintptr, uintptr)) uint32 {
+func (x *TextBuffer) ConnectInsertChildAnchor(cb *func(TextBuffer, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "insert-child-anchor", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "insert-child-anchor", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, LocationVarp uintptr, AnchorVarp uintptr) {
@@ -2036,7 +2058,9 @@ func (x *TextBuffer) ConnectInsertChildAnchor(cb *func(TextBuffer, uintptr, uint
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "insert-child-anchor", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "insert-child-anchor", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to insert a `GdkPaintable` in a `GtkTextBuffer`.
@@ -2049,10 +2073,12 @@ func (x *TextBuffer) ConnectInsertChildAnchor(cb *func(TextBuffer, uintptr, uint
 // it to be placed after the inserted @paintable.
 //
 // See also: [method@Gtk.TextBuffer.insert_paintable].
-func (x *TextBuffer) ConnectInsertPaintable(cb *func(TextBuffer, uintptr, uintptr)) uint32 {
+func (x *TextBuffer) ConnectInsertPaintable(cb *func(TextBuffer, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "insert-paintable", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "insert-paintable", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, LocationVarp uintptr, PaintableVarp uintptr) {
@@ -2065,7 +2091,9 @@ func (x *TextBuffer) ConnectInsertPaintable(cb *func(TextBuffer, uintptr, uintpt
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "insert-paintable", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "insert-paintable", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to insert text in a `GtkTextBuffer`.
@@ -2079,10 +2107,12 @@ func (x *TextBuffer) ConnectInsertPaintable(cb *func(TextBuffer, uintptr, uintpt
 //
 // See also: [method@Gtk.TextBuffer.insert],
 // [method@Gtk.TextBuffer.insert_range].
-func (x *TextBuffer) ConnectInsertText(cb *func(TextBuffer, uintptr, string, int)) uint32 {
+func (x *TextBuffer) ConnectInsertText(cb *func(TextBuffer, uintptr, string, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "insert-text", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "insert-text", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, LocationVarp uintptr, TextVarp string, LenVarp int) {
@@ -2095,16 +2125,20 @@ func (x *TextBuffer) ConnectInsertText(cb *func(TextBuffer, uintptr, string, int
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "insert-text", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "insert-text", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted as notification after a `GtkTextMark` is deleted.
 //
 // See also: [method@Gtk.TextBuffer.delete_mark].
-func (x *TextBuffer) ConnectMarkDeleted(cb *func(TextBuffer, uintptr)) uint32 {
+func (x *TextBuffer) ConnectMarkDeleted(cb *func(TextBuffer, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "mark-deleted", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "mark-deleted", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, MarkVarp uintptr) {
@@ -2117,7 +2151,9 @@ func (x *TextBuffer) ConnectMarkDeleted(cb *func(TextBuffer, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "mark-deleted", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "mark-deleted", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted as notification after a `GtkTextMark` is set.
@@ -2125,10 +2161,12 @@ func (x *TextBuffer) ConnectMarkDeleted(cb *func(TextBuffer, uintptr)) uint32 {
 // See also:
 // [method@Gtk.TextBuffer.create_mark],
 // [method@Gtk.TextBuffer.move_mark].
-func (x *TextBuffer) ConnectMarkSet(cb *func(TextBuffer, uintptr, uintptr)) uint32 {
+func (x *TextBuffer) ConnectMarkSet(cb *func(TextBuffer, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "mark-set", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "mark-set", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, LocationVarp uintptr, MarkVarp uintptr) {
@@ -2141,16 +2179,20 @@ func (x *TextBuffer) ConnectMarkSet(cb *func(TextBuffer, uintptr, uintptr)) uint
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "mark-set", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "mark-set", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the modified bit of a `GtkTextBuffer` flips.
 //
 // See also: [method@Gtk.TextBuffer.set_modified].
-func (x *TextBuffer) ConnectModifiedChanged(cb *func(TextBuffer)) uint32 {
+func (x *TextBuffer) ConnectModifiedChanged(cb *func(TextBuffer)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "modified-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "modified-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -2163,7 +2205,9 @@ func (x *TextBuffer) ConnectModifiedChanged(cb *func(TextBuffer)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "modified-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "modified-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted after paste operation has been completed.
@@ -2171,10 +2215,12 @@ func (x *TextBuffer) ConnectModifiedChanged(cb *func(TextBuffer)) uint32 {
 // This is useful to properly scroll the view to the end
 // of the pasted text. See [method@Gtk.TextBuffer.paste_clipboard]
 // for more details.
-func (x *TextBuffer) ConnectPasteDone(cb *func(TextBuffer, uintptr)) uint32 {
+func (x *TextBuffer) ConnectPasteDone(cb *func(TextBuffer, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "paste-done", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "paste-done", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ClipboardVarp uintptr) {
@@ -2187,15 +2233,19 @@ func (x *TextBuffer) ConnectPasteDone(cb *func(TextBuffer, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "paste-done", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "paste-done", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a request has been made to redo the
 // previously undone operation.
-func (x *TextBuffer) ConnectRedo(cb *func(TextBuffer)) uint32 {
+func (x *TextBuffer) ConnectRedo(cb *func(TextBuffer)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "redo", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "redo", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -2208,7 +2258,9 @@ func (x *TextBuffer) ConnectRedo(cb *func(TextBuffer)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "redo", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "redo", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to remove all occurrences of @tag from a range
@@ -2221,10 +2273,12 @@ func (x *TextBuffer) ConnectRedo(cb *func(TextBuffer)) uint32 {
 // to revalidate them).
 //
 // See also: [method@Gtk.TextBuffer.remove_tag].
-func (x *TextBuffer) ConnectRemoveTag(cb *func(TextBuffer, uintptr, uintptr, uintptr)) uint32 {
+func (x *TextBuffer) ConnectRemoveTag(cb *func(TextBuffer, uintptr, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "remove-tag", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "remove-tag", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TagVarp uintptr, StartVarp uintptr, EndVarp uintptr) {
@@ -2237,16 +2291,20 @@ func (x *TextBuffer) ConnectRemoveTag(cb *func(TextBuffer, uintptr, uintptr, uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "remove-tag", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "remove-tag", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a request has been made to undo the
 // previous operation or set of operations that have
 // been grouped together.
-func (x *TextBuffer) ConnectUndo(cb *func(TextBuffer)) uint32 {
+func (x *TextBuffer) ConnectUndo(cb *func(TextBuffer)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "undo", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "undo", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -2259,7 +2317,9 @@ func (x *TextBuffer) ConnectUndo(cb *func(TextBuffer)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "undo", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "undo", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

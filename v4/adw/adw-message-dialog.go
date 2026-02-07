@@ -840,10 +840,12 @@ func (x *MessageDialog) GetPropertyHeadingUseMarkup() bool {
 // if the dialog was closed by pressing &lt;kbd&gt;Escape&lt;/kbd&gt; or with a system
 // action, @response will be set to the value of
 // [property@MessageDialog:close-response].
-func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint32 {
+func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ResponseVarp string) {
@@ -856,16 +858,20 @@ func (x *MessageDialog) ConnectResponse(cb *func(MessageDialog, string)) uint32 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "response", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // ConnectResponseWithDetail connects to the "response" signal with a detail string.
 // The detail is appended as "response::<detail>".
-func (x *MessageDialog) ConnectResponseWithDetail(detail string, cb *func(MessageDialog, string)) uint32 {
+func (x *MessageDialog) ConnectResponseWithDetail(detail string, cb *func(MessageDialog, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	signalName := fmt.Sprintf("response::%s", detail)
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ResponseVarp string) {
@@ -878,7 +884,9 @@ func (x *MessageDialog) ConnectResponseWithDetail(detail string, cb *func(Messag
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

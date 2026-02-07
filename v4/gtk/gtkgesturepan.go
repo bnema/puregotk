@@ -97,10 +97,12 @@ func (c *GesturePan) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted once a panning gesture along the expected axis is detected.
-func (x *GesturePan) ConnectPan(cb *func(GesturePan, PanDirection, float64)) uint32 {
+func (x *GesturePan) ConnectPan(cb *func(GesturePan, PanDirection, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "pan", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "pan", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DirectionVarp PanDirection, OffsetVarp float64) {
@@ -113,7 +115,9 @@ func (x *GesturePan) ConnectPan(cb *func(GesturePan, PanDirection, float64)) uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "pan", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "pan", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

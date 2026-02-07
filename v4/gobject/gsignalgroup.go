@@ -300,10 +300,12 @@ func (c *SignalGroup) SetGoPointer(ptr uintptr) {
 // other than %NULL. It is similar to #GObject::notify on `target` except it
 // will not emit when #GSignalGroup:target is %NULL and also allows for
 // receiving the #GObject without a data-race.
-func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint32 {
+func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+		handlerID := SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, InstanceVarp uintptr) {
@@ -316,7 +318,9 @@ func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+	handlerID := SignalConnect(x.GoPointer(), "bind", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when the target instance of @self is set to a
@@ -324,10 +328,12 @@ func (x *SignalGroup) ConnectBind(cb *func(SignalGroup, uintptr)) uint32 {
 //
 // This signal will only be emitted if the previous target of @self is
 // non-%NULL.
-func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint32 {
+func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+		handlerID := SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -340,7 +346,9 @@ func (x *SignalGroup) ConnectUnbind(cb *func(SignalGroup)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+	handlerID := SignalConnect(x.GoPointer(), "unbind", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

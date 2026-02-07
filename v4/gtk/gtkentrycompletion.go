@@ -570,10 +570,12 @@ func (x *EntryCompletion) GetPropertyTextColumn() int {
 //
 // Note that @model is the model that was passed to
 // [method@Gtk.EntryCompletion.set_model].
-func (x *EntryCompletion) ConnectCursorOnMatch(cb *func(EntryCompletion, uintptr, uintptr) bool) uint32 {
+func (x *EntryCompletion) ConnectCursorOnMatch(cb *func(EntryCompletion, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cursor-on-match", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cursor-on-match", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ModelVarp uintptr, IterVarp uintptr) bool {
@@ -586,7 +588,9 @@ func (x *EntryCompletion) ConnectCursorOnMatch(cb *func(EntryCompletion, uintptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "cursor-on-match", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cursor-on-match", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the inline autocompletion is triggered.
@@ -598,10 +602,12 @@ func (x *EntryCompletion) ConnectCursorOnMatch(cb *func(EntryCompletion, uintptr
 // smaller part of the @prefix into the entry - e.g. the entry used in
 // the `GtkFileChooser` inserts only the part of the prefix up to the
 // next '/'.
-func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) bool) uint32 {
+func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "insert-prefix", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "insert-prefix", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PrefixVarp string) bool {
@@ -614,7 +620,9 @@ func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "insert-prefix", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "insert-prefix", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a match from the list is selected.
@@ -625,10 +633,12 @@ func (x *EntryCompletion) ConnectInsertPrefix(cb *func(EntryCompletion, string) 
 //
 // Note that @model is the model that was passed to
 // [method@Gtk.EntryCompletion.set_model].
-func (x *EntryCompletion) ConnectMatchSelected(cb *func(EntryCompletion, uintptr, uintptr) bool) uint32 {
+func (x *EntryCompletion) ConnectMatchSelected(cb *func(EntryCompletion, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "match-selected", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "match-selected", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ModelVarp uintptr, IterVarp uintptr) bool {
@@ -641,17 +651,21 @@ func (x *EntryCompletion) ConnectMatchSelected(cb *func(EntryCompletion, uintptr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "match-selected", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "match-selected", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the filter model has zero
 // number of rows in completion_complete method.
 //
 // In other words when `GtkEntryCompletion` is out of suggestions.
-func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint32 {
+func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "no-matches", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "no-matches", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -664,7 +678,9 @@ func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "no-matches", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "no-matches", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets the ID of the @buildable object.

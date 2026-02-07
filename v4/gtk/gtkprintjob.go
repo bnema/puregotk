@@ -485,10 +485,12 @@ func (x *PrintJob) GetPropertyTrackPrintStatus() bool {
 //
 // The signal handler can use [method@Gtk.PrintJob.get_status]
 // to obtain the new status.
-func (x *PrintJob) ConnectStatusChanged(cb *func(PrintJob)) uint32 {
+func (x *PrintJob) ConnectStatusChanged(cb *func(PrintJob)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -501,7 +503,9 @@ func (x *PrintJob) ConnectStatusChanged(cb *func(PrintJob)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "status-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

@@ -347,10 +347,12 @@ func (c *TreeSelection) SetGoPointer(ptr uintptr) {
 // this signal is mostly a hint.  It may only be emitted once when a range
 // of rows are selected, and it may occasionally be emitted when nothing
 // has happened.
-func (x *TreeSelection) ConnectChanged(cb *func(TreeSelection)) uint32 {
+func (x *TreeSelection) ConnectChanged(cb *func(TreeSelection)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -363,7 +365,9 @@ func (x *TreeSelection) ConnectChanged(cb *func(TreeSelection)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

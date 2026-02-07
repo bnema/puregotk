@@ -328,10 +328,12 @@ func (x *Banner) GetPropertyUseMarkup() bool {
 // This signal is emitted after the action button has been clicked.
 //
 // It can be used as an alternative to setting an action.
-func (x *Banner) ConnectButtonClicked(cb *func(Banner)) uint32 {
+func (x *Banner) ConnectButtonClicked(cb *func(Banner)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -344,7 +346,9 @@ func (x *Banner) ConnectButtonClicked(cb *func(Banner)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

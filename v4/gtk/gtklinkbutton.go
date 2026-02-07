@@ -214,10 +214,12 @@ func (x *LinkButton) GetPropertyVisited() bool {
 // To override the default behavior, you can connect to the
 // ::activate-link signal and stop the propagation of the signal
 // by returning %TRUE from your handler.
-func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint32 {
+func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -230,7 +232,9 @@ func (x *LinkButton) ConnectActivateLink(cb *func(LinkButton) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

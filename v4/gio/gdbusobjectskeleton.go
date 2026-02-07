@@ -189,10 +189,12 @@ func (x *DBusObjectSkeleton) GetPropertyGObjectPath() string {
 // except that it is for the enclosing object.
 //
 // The default class handler just returns %TRUE.
-func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton, uintptr, uintptr) bool) uint32 {
+func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "authorize-method", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-method", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, InterfaceVarp uintptr, InvocationVarp uintptr) bool {
@@ -205,7 +207,9 @@ func (x *DBusObjectSkeleton) ConnectAuthorizeMethod(cb *func(DBusObjectSkeleton,
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "authorize-method", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "authorize-method", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets the D-Bus interface with name @interface_name associated with

@@ -42,7 +42,7 @@ func (x *Timer) Destroy() {
 
 }
 
-var xTimerElapsed func(uintptr, uint32) float64
+var xTimerElapsed func(uintptr, uint) float64
 
 // If @timer has been started but not stopped, obtains the time since
 // the timer was started. If @timer has been stopped, obtains the
@@ -50,7 +50,7 @@ var xTimerElapsed func(uintptr, uint32) float64
 // stopped. The return value is the number of seconds elapsed,
 // including any fractional part. The @microseconds out parameter is
 // essentially useless.
-func (x *Timer) Elapsed(MicrosecondsVar uint32) float64 {
+func (x *Timer) Elapsed(MicrosecondsVar uint) float64 {
 
 	cret := xTimerElapsed(x.GoPointer(), MicrosecondsVar)
 
@@ -132,7 +132,7 @@ func TimeValFromIso8601(IsoDateVar string, TimeVar *TimeVal) bool {
 	return cret
 }
 
-var xUsleep func(uint32)
+var xUsleep func(uint)
 
 // Pauses the current thread for the given number of microseconds.
 //
@@ -140,7 +140,7 @@ var xUsleep func(uint32)
 // %G_USEC_PER_SEC macro). g_usleep() may have limited precision,
 // depending on hardware and operating system; don't rely on the exact
 // length of the sleep.
-func Usleep(MicrosecondsVar uint32) {
+func Usleep(MicrosecondsVar uint) {
 
 	xUsleep(MicrosecondsVar)
 

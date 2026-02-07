@@ -656,10 +656,12 @@ func (x *Toast) GetPropertyUseMarkup() bool {
 // Emitted after the button has been clicked.
 //
 // It can be used as an alternative to setting an action.
-func (x *Toast) ConnectButtonClicked(cb *func(Toast)) uint32 {
+func (x *Toast) ConnectButtonClicked(cb *func(Toast)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -672,14 +674,18 @@ func (x *Toast) ConnectButtonClicked(cb *func(Toast)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "button-clicked", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the toast has been dismissed.
-func (x *Toast) ConnectDismissed(cb *func(Toast)) uint32 {
+func (x *Toast) ConnectDismissed(cb *func(Toast)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "dismissed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "dismissed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -692,7 +698,9 @@ func (x *Toast) ConnectDismissed(cb *func(Toast)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "dismissed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "dismissed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

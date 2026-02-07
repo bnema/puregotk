@@ -557,10 +557,12 @@ func (x *Popover) GetPropertyPointingTo() uintptr {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Enter&lt;/kbd&gt;.
-func (x *Popover) ConnectActivateDefault(cb *func(Popover)) uint32 {
+func (x *Popover) ConnectActivateDefault(cb *func(Popover)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -573,14 +575,18 @@ func (x *Popover) ConnectActivateDefault(cb *func(Popover)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-default", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the popover is closed.
-func (x *Popover) ConnectClosed(cb *func(Popover)) uint32 {
+func (x *Popover) ConnectClosed(cb *func(Popover)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -593,7 +599,9 @@ func (x *Popover) ConnectClosed(cb *func(Popover)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "closed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

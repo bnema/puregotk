@@ -967,10 +967,12 @@ func (x *SocketClient) GetPropertyTls() bool {
 //
 // Note that there may be additional #GSocketClientEvent values in
 // the future; unrecognized @event values should be ignored.
-func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, uintptr, uintptr)) uint32 {
+func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, EventVarp SocketClientEvent, ConnectableVarp uintptr, ConnectionVarp uintptr) {
@@ -983,7 +985,9 @@ func (x *SocketClient) ConnectEvent(cb *func(SocketClient, SocketClientEvent, ui
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

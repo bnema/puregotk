@@ -117,10 +117,12 @@ func (x *CellRendererAccel) GetPropertyKeycode() uint {
 }
 
 // Gets emitted when the user has removed the accelerator.
-func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, string)) uint32 {
+func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "accel-cleared", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "accel-cleared", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PathStringVarp string) {
@@ -133,14 +135,18 @@ func (x *CellRendererAccel) ConnectAccelCleared(cb *func(CellRendererAccel, stri
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "accel-cleared", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "accel-cleared", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets emitted when the user has selected a new accelerator.
-func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, string, uint, gdk.ModifierType, uint)) uint32 {
+func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, string, uint, gdk.ModifierType, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "accel-edited", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "accel-edited", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PathStringVarp string, AccelKeyVarp uint, AccelModsVarp gdk.ModifierType, HardwareKeycodeVarp uint) {
@@ -153,7 +159,9 @@ func (x *CellRendererAccel) ConnectAccelEdited(cb *func(CellRendererAccel, strin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "accel-edited", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "accel-edited", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

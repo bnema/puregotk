@@ -114,10 +114,12 @@ func (c *EmojiChooser) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when the user selects an Emoji.
-func (x *EmojiChooser) ConnectEmojiPicked(cb *func(EmojiChooser, string)) uint32 {
+func (x *EmojiChooser) ConnectEmojiPicked(cb *func(EmojiChooser, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "emoji-picked", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "emoji-picked", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TextVarp string) {
@@ -130,7 +132,9 @@ func (x *EmojiChooser) ConnectEmojiPicked(cb *func(EmojiChooser, string)) uint32
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "emoji-picked", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "emoji-picked", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

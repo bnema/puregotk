@@ -182,10 +182,12 @@ func (x *DropTargetAsync) GetPropertyFormats() uintptr {
 // further processing, such as inspecting the data, this function should
 // return %TRUE and proceed as is @drop was accepted and if it decides to
 // reject the drop later, it should call [method@Gtk.DropTargetAsync.reject_drop].
-func (x *DropTargetAsync) ConnectAccept(cb *func(DropTargetAsync, uintptr) bool) uint32 {
+func (x *DropTargetAsync) ConnectAccept(cb *func(DropTargetAsync, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "accept", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "accept", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DropVarp uintptr) bool {
@@ -198,16 +200,20 @@ func (x *DropTargetAsync) ConnectAccept(cb *func(DropTargetAsync, uintptr) bool)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "accept", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "accept", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted on the drop site when the pointer enters the widget.
 //
 // It can be used to set up custom highlighting.
-func (x *DropTargetAsync) ConnectDragEnter(cb *func(DropTargetAsync, uintptr, float64, float64) gdk.DragAction) uint32 {
+func (x *DropTargetAsync) ConnectDragEnter(cb *func(DropTargetAsync, uintptr, float64, float64) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drag-enter", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-enter", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DropVarp uintptr, XVarp float64, YVarp float64) gdk.DragAction {
@@ -220,17 +226,21 @@ func (x *DropTargetAsync) ConnectDragEnter(cb *func(DropTargetAsync, uintptr, fl
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "drag-enter", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-enter", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted on the drop site when the pointer leaves the widget.
 //
 // Its main purpose it to undo things done in
 // `GtkDropTargetAsync`::drag-enter.
-func (x *DropTargetAsync) ConnectDragLeave(cb *func(DropTargetAsync, uintptr)) uint32 {
+func (x *DropTargetAsync) ConnectDragLeave(cb *func(DropTargetAsync, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drag-leave", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-leave", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DropVarp uintptr) {
@@ -243,14 +253,18 @@ func (x *DropTargetAsync) ConnectDragLeave(cb *func(DropTargetAsync, uintptr)) u
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "drag-leave", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-leave", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted while the pointer is moving over the drop target.
-func (x *DropTargetAsync) ConnectDragMotion(cb *func(DropTargetAsync, uintptr, float64, float64) gdk.DragAction) uint32 {
+func (x *DropTargetAsync) ConnectDragMotion(cb *func(DropTargetAsync, uintptr, float64, float64) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drag-motion", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drag-motion", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DropVarp uintptr, XVarp float64, YVarp float64) gdk.DragAction {
@@ -263,7 +277,9 @@ func (x *DropTargetAsync) ConnectDragMotion(cb *func(DropTargetAsync, uintptr, f
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "drag-motion", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drag-motion", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted on the drop site when the user drops the data onto the widget.
@@ -280,10 +296,12 @@ func (x *DropTargetAsync) ConnectDragMotion(cb *func(DropTargetAsync, uintptr, f
 // To receive the data, use one of the read functions provided by
 // [class@Gdk.Drop] such as [method@Gdk.Drop.read_async] or
 // [method@Gdk.Drop.read_value_async].
-func (x *DropTargetAsync) ConnectDrop(cb *func(DropTargetAsync, uintptr, float64, float64) bool) uint32 {
+func (x *DropTargetAsync) ConnectDrop(cb *func(DropTargetAsync, uintptr, float64, float64) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DropVarp uintptr, XVarp float64, YVarp float64) bool {
@@ -296,7 +314,9 @@ func (x *DropTargetAsync) ConnectDrop(cb *func(DropTargetAsync, uintptr, float64
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drop", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

@@ -459,10 +459,12 @@ func (x *Breakpoint) GetPropertyCondition() uintptr {
 // Emitted when the breakpoint is applied.
 //
 // This signal is emitted after the setters have been applied.
-func (x *Breakpoint) ConnectApply(cb *func(Breakpoint)) uint32 {
+func (x *Breakpoint) ConnectApply(cb *func(Breakpoint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -475,16 +477,20 @@ func (x *Breakpoint) ConnectApply(cb *func(Breakpoint)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "apply", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the breakpoint is unapplied.
 //
 // This signal is emitted before resetting the setter values.
-func (x *Breakpoint) ConnectUnapply(cb *func(Breakpoint)) uint32 {
+func (x *Breakpoint) ConnectUnapply(cb *func(Breakpoint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "unapply", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "unapply", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -497,7 +503,9 @@ func (x *Breakpoint) ConnectUnapply(cb *func(Breakpoint)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "unapply", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "unapply", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets the ID of the @buildable object.

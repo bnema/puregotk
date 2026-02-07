@@ -167,10 +167,12 @@ func (c *TextTagTable) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted every time a new tag is added in the `GtkTextTagTable`.
-func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint32 {
+func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "tag-added", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-added", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TagVarp uintptr) {
@@ -183,14 +185,18 @@ func (x *TextTagTable) ConnectTagAdded(cb *func(TextTagTable, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "tag-added", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "tag-added", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted every time a tag in the `GtkTextTagTable` changes.
-func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) uint32 {
+func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "tag-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TagVarp uintptr, SizeChangedVarp bool) {
@@ -203,17 +209,21 @@ func (x *TextTagTable) ConnectTagChanged(cb *func(TextTagTable, uintptr, bool)) 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "tag-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "tag-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted every time a tag is removed from the `GtkTextTagTable`.
 //
 // The @tag is still valid by the time the signal is emitted, but
 // it is not associated with a tag table any more.
-func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint32 {
+func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "tag-removed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "tag-removed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TagVarp uintptr) {
@@ -226,7 +236,9 @@ func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint32
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "tag-removed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "tag-removed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets the ID of the @buildable object.

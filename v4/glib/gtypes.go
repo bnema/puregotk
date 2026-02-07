@@ -106,20 +106,20 @@ type TranslateFunc func(string, uintptr) string
 type TimeVal struct {
 	_ structs.HostLayout
 
-	TvSec int32
+	TvSec int
 
-	TvUsec int32
+	TvUsec int
 }
 
 func (x *TimeVal) GoPointer() uintptr {
 	return uintptr(unsafe.Pointer(x))
 }
 
-var xTimeValAdd func(uintptr, int32)
+var xTimeValAdd func(uintptr, int)
 
 // Adds the given number of microseconds to @time_. @microseconds can
 // also be negative to decrease the value of @time_.
-func (x *TimeVal) Add(MicrosecondsVar int32) {
+func (x *TimeVal) Add(MicrosecondsVar int) {
 
 	xTimeValAdd(x.GoPointer(), MicrosecondsVar)
 

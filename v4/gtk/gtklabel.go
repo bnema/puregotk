@@ -1336,10 +1336,12 @@ func (x *Label) GetPropertyYalign() float32 {
 // if they need to control activation of URIs programmatically.
 //
 // The default bindings for this signal are all forms of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
-func (x *Label) ConnectActivateCurrentLink(cb *func(Label)) uint32 {
+func (x *Label) ConnectActivateCurrentLink(cb *func(Label)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-current-link", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-current-link", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1352,17 +1354,21 @@ func (x *Label) ConnectActivateCurrentLink(cb *func(Label)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate-current-link", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-current-link", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets emitted to activate a URI.
 //
 // Applications may connect to it to override the default behaviour,
 // which is to call [method@Gtk.FileLauncher.launch].
-func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint32 {
+func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, UriVarp string) bool {
@@ -1375,7 +1381,9 @@ func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets emitted to copy the selection to the clipboard.
@@ -1383,10 +1391,12 @@ func (x *Label) ConnectActivateLink(cb *func(Label, string) bool) uint32 {
 // The `::copy-clipboard` signal is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;c&lt;/kbd&gt;.
-func (x *Label) ConnectCopyClipboard(cb *func(Label)) uint32 {
+func (x *Label) ConnectCopyClipboard(cb *func(Label)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1399,7 +1409,9 @@ func (x *Label) ConnectCopyClipboard(cb *func(Label)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets emitted when the user initiates a cursor movement.
@@ -1421,10 +1433,12 @@ func (x *Label) ConnectCopyClipboard(cb *func(Label)) uint32 {
 //     move by individual characters/lines
 //   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt;, etc. move by words/paragraphs
 //   - &lt;kbd&gt;Home&lt;/kbd&gt; and &lt;kbd&gt;End&lt;/kbd&gt; move to the ends of the buffer
-func (x *Label) ConnectMoveCursor(cb *func(Label, MovementStep, int, bool)) uint32 {
+func (x *Label) ConnectMoveCursor(cb *func(Label, MovementStep, int, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int, ExtendSelectionVarp bool) {
@@ -1437,7 +1451,9 @@ func (x *Label) ConnectMoveCursor(cb *func(Label, MovementStep, int, bool)) uint
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

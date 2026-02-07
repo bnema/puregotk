@@ -210,10 +210,12 @@ func (x *PasswordEntry) GetPropertyShowPeekIcon() bool {
 // Emitted when the entry is activated.
 //
 // The keybindings for this signal are all forms of the Enter key.
-func (x *PasswordEntry) ConnectActivate(cb *func(PasswordEntry)) uint32 {
+func (x *PasswordEntry) ConnectActivate(cb *func(PasswordEntry)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -226,7 +228,9 @@ func (x *PasswordEntry) ConnectActivate(cb *func(PasswordEntry)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

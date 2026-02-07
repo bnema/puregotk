@@ -70,7 +70,7 @@ func Dgettext(DomainVar *string, MsgidVar string) string {
 	return cret
 }
 
-var xDngettext func(uintptr, string, string, uint32) string
+var xDngettext func(uintptr, string, string, uint) string
 
 // This function is a wrapper of dngettext() which does not translate
 // the message if the default domain as set with textdomain() has no
@@ -78,7 +78,7 @@ var xDngettext func(uintptr, string, string, uint32) string
 //
 // See g_dgettext() for details of how this differs from dngettext()
 // proper.
-func Dngettext(DomainVar *string, MsgidVar string, MsgidPluralVar string, NVar uint32) string {
+func Dngettext(DomainVar *string, MsgidVar string, MsgidPluralVar string, NVar uint) string {
 
 	DomainVarPtr, DomainVarBytes := core.NullableStringToPtr(DomainVar)
 

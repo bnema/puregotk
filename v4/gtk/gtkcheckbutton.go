@@ -472,10 +472,12 @@ func (x *CheckButton) GetPropertyUseUnderline() bool {
 //
 // The default bindings for this signal are all forms of the
 // &lt;kbd&gt;␣&lt;/kbd&gt; and &lt;kbd&gt;Enter&lt;/kbd&gt; keys.
-func (x *CheckButton) ConnectActivate(cb *func(CheckButton)) uint32 {
+func (x *CheckButton) ConnectActivate(cb *func(CheckButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -488,15 +490,19 @@ func (x *CheckButton) ConnectActivate(cb *func(CheckButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the buttons's [property@Gtk.CheckButton:active]
 // property changes.
-func (x *CheckButton) ConnectToggled(cb *func(CheckButton)) uint32 {
+func (x *CheckButton) ConnectToggled(cb *func(CheckButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -509,7 +515,9 @@ func (x *CheckButton) ConnectToggled(cb *func(CheckButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

@@ -419,10 +419,12 @@ func (x *LevelBar) GetPropertyValue() float64 {
 // The signal supports detailed connections; you can connect to the
 // detailed signal "changed::x" in order to only receive callbacks when
 // the value of offset "x" changes.
-func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint32 {
+func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, NameVarp string) {
@@ -435,16 +437,20 @@ func (x *LevelBar) ConnectOffsetChanged(cb *func(LevelBar, string)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "offset-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // ConnectOffsetChangedWithDetail connects to the "offset-changed" signal with a detail string.
 // The detail is appended as "offset-changed::<detail>".
-func (x *LevelBar) ConnectOffsetChangedWithDetail(detail string, cb *func(LevelBar, string)) uint32 {
+func (x *LevelBar) ConnectOffsetChangedWithDetail(detail string, cb *func(LevelBar, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	signalName := fmt.Sprintf("offset-changed::%s", detail)
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, NameVarp string) {
@@ -457,7 +463,9 @@ func (x *LevelBar) ConnectOffsetChangedWithDetail(detail string, cb *func(LevelB
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

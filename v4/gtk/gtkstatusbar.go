@@ -154,10 +154,12 @@ func (c *Statusbar) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted whenever a new message is popped off a statusbar's stack.
-func (x *Statusbar) ConnectTextPopped(cb *func(Statusbar, uint, string)) uint32 {
+func (x *Statusbar) ConnectTextPopped(cb *func(Statusbar, uint, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "text-popped", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "text-popped", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextIdVarp uint, TextVarp string) {
@@ -170,14 +172,18 @@ func (x *Statusbar) ConnectTextPopped(cb *func(Statusbar, uint, string)) uint32 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "text-popped", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "text-popped", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever a new message gets pushed onto a statusbar's stack.
-func (x *Statusbar) ConnectTextPushed(cb *func(Statusbar, uint, string)) uint32 {
+func (x *Statusbar) ConnectTextPushed(cb *func(Statusbar, uint, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "text-pushed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "text-pushed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ContextIdVarp uint, TextVarp string) {
@@ -190,7 +196,9 @@ func (x *Statusbar) ConnectTextPushed(cb *func(Statusbar, uint, string)) uint32 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "text-pushed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "text-pushed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

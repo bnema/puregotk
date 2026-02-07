@@ -257,7 +257,13 @@ func (x *UnixSocketAddress) GetPropertyPathAsArray() []byte {
 	if ptr == 0 {
 		return nil
 	}
-	return unsafe.Slice((*byte)(unsafe.Pointer(ptr)), 0)[:0]
+	// GByteArray layout: { guint8 *data; guint len; }
+	dataPtr := *(*uintptr)(unsafe.Pointer(ptr))
+	length := *(*uint32)(unsafe.Pointer(ptr + unsafe.Sizeof(uintptr(0))))
+	if length == 0 || dataPtr == 0 {
+		return nil
+	}
+	return unsafe.Slice((*byte)(unsafe.Pointer(dataPtr)), length)
 }
 
 // Creates a #GSocketAddressEnumerator for @connectable.

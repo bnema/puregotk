@@ -141,38 +141,38 @@ func Atexit(FuncVar *VoidFunc) {
 
 }
 
-var xBitNthLsf func(uint32, int) int
+var xBitNthLsf func(uint, int) int
 
 // Find the position of the first bit set in @mask, searching
 // from (but not including) @nth_bit upwards. Bits are numbered
 // from 0 (least significant) to sizeof(#gulong) * 8 - 1 (31 or 63,
 // usually). To start searching from the 0th bit, set @nth_bit to -1.
-func BitNthLsf(MaskVar uint32, NthBitVar int) int {
+func BitNthLsf(MaskVar uint, NthBitVar int) int {
 
 	cret := xBitNthLsf(MaskVar, NthBitVar)
 
 	return cret
 }
 
-var xBitNthMsf func(uint32, int) int
+var xBitNthMsf func(uint, int) int
 
 // Find the position of the first bit set in @mask, searching
 // from (but not including) @nth_bit downwards. Bits are numbered
 // from 0 (least significant) to sizeof(#gulong) * 8 - 1 (31 or 63,
 // usually). To start searching from the last bit, set @nth_bit to
 // -1 or GLIB_SIZEOF_LONG * 8.
-func BitNthMsf(MaskVar uint32, NthBitVar int) int {
+func BitNthMsf(MaskVar uint, NthBitVar int) int {
 
 	cret := xBitNthMsf(MaskVar, NthBitVar)
 
 	return cret
 }
 
-var xBitStorage func(uint32) uint
+var xBitStorage func(uint) uint
 
 // Gets the number of bits used to hold @number,
 // e.g. if @number is 4, 3 bits are needed.
-func BitStorage(NumberVar uint32) uint {
+func BitStorage(NumberVar uint) uint {
 
 	cret := xBitStorage(NumberVar)
 
@@ -718,7 +718,7 @@ func SetPrgname(PrgnameVar string) {
 
 }
 
-var xSnprintf func(string, uint32, string, ...interface{}) int
+var xSnprintf func(string, uint, string, ...interface{}) int
 
 // A safer form of the standard sprintf() function. The output is guaranteed
 // to not exceed @n characters (including the terminating nul character), so
@@ -737,14 +737,14 @@ var xSnprintf func(string, uint32, string, ...interface{}) int
 //
 // The format string may contain positional parameters, as specified in
 // the Single Unix Specification.
-func Snprintf(StringVar string, NVar uint32, FormatVar string, varArgs ...interface{}) int {
+func Snprintf(StringVar string, NVar uint, FormatVar string, varArgs ...interface{}) int {
 
 	cret := xSnprintf(StringVar, NVar, FormatVar, varArgs...)
 
 	return cret
 }
 
-var xVsnprintf func(string, uint32, string, []interface{}) int
+var xVsnprintf func(string, uint, string, []interface{}) int
 
 // A safer form of the standard `vsprintf()` function. The output is guaranteed
 // to not exceed @n characters (including the terminating nul character), so
@@ -763,7 +763,7 @@ var xVsnprintf func(string, uint32, string, []interface{}) int
 //
 // The format string may contain positional parameters, as specified in
 // the Single Unix Specification.
-func Vsnprintf(StringVar string, NVar uint32, FormatVar string, ArgsVar []interface{}) int {
+func Vsnprintf(StringVar string, NVar uint, FormatVar string, ArgsVar []interface{}) int {
 
 	cret := xVsnprintf(StringVar, NVar, FormatVar, ArgsVar)
 

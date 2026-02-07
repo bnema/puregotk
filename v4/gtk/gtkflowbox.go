@@ -849,10 +849,12 @@ func (x *FlowBox) GetPropertyRowSpacing() uint {
 // Emitted when the user activates the @box.
 //
 // This is a [keybinding signal](class.SignalAction.html).
-func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint32 {
+func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-cursor-child", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-cursor-child", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -865,14 +867,18 @@ func (x *FlowBox) ConnectActivateCursorChild(cb *func(FlowBox)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate-cursor-child", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-cursor-child", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a child has been activated by the user.
-func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint32 {
+func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "child-activated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "child-activated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ChildVarp uintptr) {
@@ -885,7 +891,9 @@ func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "child-activated", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "child-activated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user initiates a cursor movement.
@@ -904,10 +912,12 @@ func (x *FlowBox) ConnectChildActivated(cb *func(FlowBox, uintptr)) uint32 {
 //     move by individual children
 //   - &lt;kbd&gt;Home&lt;/kbd&gt;, &lt;kbd&gt;End&lt;/kbd&gt; move to the ends of the box
 //   - &lt;kbd&gt;PgUp&lt;/kbd&gt;, &lt;kbd&gt;PgDn&lt;/kbd&gt; move vertically by pages
-func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int, bool, bool) bool) uint32 {
+func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int, bool, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int, ExtendVarp bool, ModifyVarp bool) bool {
@@ -920,7 +930,9 @@ func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int, bool, b
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to select all children of the box,
@@ -929,10 +941,12 @@ func (x *FlowBox) ConnectMoveCursor(cb *func(FlowBox, MovementStep, int, bool, b
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;a&lt;/kbd&gt;.
-func (x *FlowBox) ConnectSelectAll(cb *func(FlowBox)) uint32 {
+func (x *FlowBox) ConnectSelectAll(cb *func(FlowBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -945,7 +959,9 @@ func (x *FlowBox) ConnectSelectAll(cb *func(FlowBox)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the set of selected children changes.
@@ -953,10 +969,12 @@ func (x *FlowBox) ConnectSelectAll(cb *func(FlowBox)) uint32 {
 // Use [method@Gtk.FlowBox.selected_foreach] or
 // [method@Gtk.FlowBox.get_selected_children] to obtain the
 // selected children.
-func (x *FlowBox) ConnectSelectedChildrenChanged(cb *func(FlowBox)) uint32 {
+func (x *FlowBox) ConnectSelectedChildrenChanged(cb *func(FlowBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "selected-children-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "selected-children-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -969,7 +987,9 @@ func (x *FlowBox) ConnectSelectedChildrenChanged(cb *func(FlowBox)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "selected-children-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "selected-children-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to toggle the selection of the child that has the focus.
@@ -977,10 +997,12 @@ func (x *FlowBox) ConnectSelectedChildrenChanged(cb *func(FlowBox)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;Space&lt;/kbd&gt;.
-func (x *FlowBox) ConnectToggleCursorChild(cb *func(FlowBox)) uint32 {
+func (x *FlowBox) ConnectToggleCursorChild(cb *func(FlowBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-child", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-cursor-child", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -993,7 +1015,9 @@ func (x *FlowBox) ConnectToggleCursorChild(cb *func(FlowBox)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-child", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-cursor-child", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to unselect all children of the box,
@@ -1002,10 +1026,12 @@ func (x *FlowBox) ConnectToggleCursorChild(cb *func(FlowBox)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;-&lt;kbd&gt;Shift&lt;/kbd&gt;-&lt;kbd&gt;a&lt;/kbd&gt;.
-func (x *FlowBox) ConnectUnselectAll(cb *func(FlowBox)) uint32 {
+func (x *FlowBox) ConnectUnselectAll(cb *func(FlowBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1018,7 +1044,9 @@ func (x *FlowBox) ConnectUnselectAll(cb *func(FlowBox)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.
@@ -1451,10 +1479,12 @@ func (c *FlowBoxChild) SetGoPointer(ptr uintptr) {
 // but it can be used by applications for their own purposes.
 //
 // The default bindings are &lt;kbd&gt;Space&lt;/kbd&gt; and &lt;kbd&gt;Enter&lt;/kbd&gt;.
-func (x *FlowBoxChild) ConnectActivate(cb *func(FlowBoxChild)) uint32 {
+func (x *FlowBoxChild) ConnectActivate(cb *func(FlowBoxChild)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1467,7 +1497,9 @@ func (x *FlowBoxChild) ConnectActivate(cb *func(FlowBoxChild)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

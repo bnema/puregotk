@@ -172,7 +172,7 @@ const (
 	GSignalMatchUnblockedValue SignalMatchType = 32
 )
 
-var xClearSignalHandler func(uint32, uintptr)
+var xClearSignalHandler func(uint, uintptr)
 
 // Disconnects a handler from @instance so it will not be called during
 // any future or currently ongoing emissions of the signal it has been
@@ -182,7 +182,7 @@ var xClearSignalHandler func(uint32, uintptr)
 //
 // There is also a macro version of this function so that the code
 // will be inlined.
-func ClearSignalHandler(HandlerIdPtrVar uint32, InstanceVar *Object) {
+func ClearSignalHandler(HandlerIdPtrVar uint, InstanceVar *Object) {
 
 	xClearSignalHandler(HandlerIdPtrVar, InstanceVar.GoPointer())
 
@@ -223,12 +223,12 @@ func SignalAccumulatorTrueHandled(IhintVar *SignalInvocationHint, ReturnAccuVar 
 	return cret
 }
 
-var xSignalAddEmissionHook func(uint, glib.Quark, uintptr, uintptr, uintptr) uint32
+var xSignalAddEmissionHook func(uint, glib.Quark, uintptr, uintptr, uintptr) uint
 
 // Adds an emission hook for a signal, which will get called for any emission
 // of that signal, independent of the instance. This is possible only
 // for signals which don't have %G_SIGNAL_NO_HOOKS flag set.
-func SignalAddEmissionHook(SignalIdVar uint, DetailVar glib.Quark, HookFuncVar *SignalEmissionHook, HookDataVar uintptr, DataDestroyVar *glib.DestroyNotify) uint32 {
+func SignalAddEmissionHook(SignalIdVar uint, DetailVar glib.Quark, HookFuncVar *SignalEmissionHook, HookDataVar uintptr, DataDestroyVar *glib.DestroyNotify) uint {
 
 	var HookFuncVarRef uintptr
 	if HookFuncVar != nil {
@@ -289,7 +289,7 @@ func SignalChainFromOverriddenHandler(InstanceVar *TypeInstance, varArgs ...inte
 
 }
 
-var xSignalConnectClosure func(uintptr, string, *Closure, bool) uint32
+var xSignalConnectClosure func(uintptr, string, *Closure, bool) uint
 
 // Connects a closure to a signal for a particular object.
 //
@@ -303,14 +303,14 @@ var xSignalConnectClosure func(uintptr, string, *Closure, bool) uint32
 //
 // Refer to the [signals documentation](signals.html) for more
 // details.
-func SignalConnectClosure(InstanceVar *Object, DetailedSignalVar string, ClosureVar *Closure, AfterVar bool) uint32 {
+func SignalConnectClosure(InstanceVar *Object, DetailedSignalVar string, ClosureVar *Closure, AfterVar bool) uint {
 
 	cret := xSignalConnectClosure(InstanceVar.GoPointer(), DetailedSignalVar, ClosureVar, AfterVar)
 
 	return cret
 }
 
-var xSignalConnectClosureById func(uintptr, uint, glib.Quark, *Closure, bool) uint32
+var xSignalConnectClosureById func(uintptr, uint, glib.Quark, *Closure, bool) uint
 
 // Connects a closure to a signal for a particular object.
 //
@@ -324,14 +324,14 @@ var xSignalConnectClosureById func(uintptr, uint, glib.Quark, *Closure, bool) ui
 //
 // Refer to the [signals documentation](signals.html) for more
 // details.
-func SignalConnectClosureById(InstanceVar *Object, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, AfterVar bool) uint32 {
+func SignalConnectClosureById(InstanceVar *Object, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, AfterVar bool) uint {
 
 	cret := xSignalConnectClosureById(InstanceVar.GoPointer(), SignalIdVar, DetailVar, ClosureVar, AfterVar)
 
 	return cret
 }
 
-var xSignalConnectData func(uintptr, string, uintptr, uintptr, uintptr, ConnectFlags) uint32
+var xSignalConnectData func(uintptr, string, uintptr, uintptr, uintptr, ConnectFlags) uint
 
 // Connects a #GCallback function to a signal for a particular object. Similar
 // to g_signal_connect(), but allows to provide a #GClosureNotify for the data
@@ -346,7 +346,7 @@ var xSignalConnectData func(uintptr, string, uintptr, uintptr, uintptr, ConnectF
 //
 // Refer to the [signals documentation](signals.html) for more
 // details.
-func SignalConnectData(InstanceVar *Object, DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr, DestroyDataVar *ClosureNotify, ConnectFlagsVar ConnectFlags) uint32 {
+func SignalConnectData(InstanceVar *Object, DetailedSignalVar string, CHandlerVar *Callback, DataVar uintptr, DestroyDataVar *ClosureNotify, ConnectFlagsVar ConnectFlags) uint {
 
 	var CHandlerVarRef uintptr
 	if CHandlerVar != nil {
@@ -445,7 +445,7 @@ func SignalGetInvocationHint(InstanceVar *Object) *SignalInvocationHint {
 	return cret
 }
 
-var xSignalHandlerBlock func(uintptr, uint32)
+var xSignalHandlerBlock func(uintptr, uint)
 
 // Blocks a handler of an instance so it will not be called during any
 // signal emissions unless it is unblocked again. Thus "blocking" a
@@ -455,13 +455,13 @@ var xSignalHandlerBlock func(uintptr, uint32)
 //
 // The @handler_id has to be a valid signal handler id, connected to a
 // signal of @instance.
-func SignalHandlerBlock(InstanceVar *Object, HandlerIdVar uint32) {
+func SignalHandlerBlock(InstanceVar *Object, HandlerIdVar uint) {
 
 	xSignalHandlerBlock(InstanceVar.GoPointer(), HandlerIdVar)
 
 }
 
-var xSignalHandlerDisconnect func(uintptr, uint32)
+var xSignalHandlerDisconnect func(uintptr, uint)
 
 // Disconnects a handler from an instance so it will not be called during
 // any future or currently ongoing emissions of the signal it has been
@@ -469,37 +469,37 @@ var xSignalHandlerDisconnect func(uintptr, uint32)
 //
 // The @handler_id has to be a valid signal handler id, connected to a
 // signal of @instance.
-func SignalHandlerDisconnect(InstanceVar *Object, HandlerIdVar uint32) {
+func SignalHandlerDisconnect(InstanceVar *Object, HandlerIdVar uint) {
 
 	xSignalHandlerDisconnect(InstanceVar.GoPointer(), HandlerIdVar)
 
 }
 
-var xSignalHandlerFind func(uintptr, SignalMatchType, uint, glib.Quark, *Closure, uintptr, uintptr) uint32
+var xSignalHandlerFind func(uintptr, SignalMatchType, uint, glib.Quark, *Closure, uintptr, uintptr) uint
 
 // Finds the first signal handler that matches certain selection criteria.
 // The criteria mask is passed as an OR-ed combination of #GSignalMatchType
 // flags, and the criteria values are passed as arguments.
 // The match @mask has to be non-0 for successful matches.
 // If no handler was found, 0 is returned.
-func SignalHandlerFind(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint32 {
+func SignalHandlerFind(InstanceVar *Object, MaskVar SignalMatchType, SignalIdVar uint, DetailVar glib.Quark, ClosureVar *Closure, FuncVar uintptr, DataVar uintptr) uint {
 
 	cret := xSignalHandlerFind(InstanceVar.GoPointer(), MaskVar, SignalIdVar, DetailVar, ClosureVar, FuncVar, DataVar)
 
 	return cret
 }
 
-var xSignalHandlerIsConnected func(uintptr, uint32) bool
+var xSignalHandlerIsConnected func(uintptr, uint) bool
 
 // Returns whether @handler_id is the ID of a handler connected to @instance.
-func SignalHandlerIsConnected(InstanceVar *Object, HandlerIdVar uint32) bool {
+func SignalHandlerIsConnected(InstanceVar *Object, HandlerIdVar uint) bool {
 
 	cret := xSignalHandlerIsConnected(InstanceVar.GoPointer(), HandlerIdVar)
 
 	return cret
 }
 
-var xSignalHandlerUnblock func(uintptr, uint32)
+var xSignalHandlerUnblock func(uintptr, uint)
 
 // Undoes the effect of a previous g_signal_handler_block() call.  A
 // blocked handler is skipped during signal emissions and will not be
@@ -514,7 +514,7 @@ var xSignalHandlerUnblock func(uintptr, uint32)
 //
 // The @handler_id has to be a valid id of a signal handler that is
 // connected to a signal of @instance and is currently blocked.
-func SignalHandlerUnblock(InstanceVar *Object, HandlerIdVar uint32) {
+func SignalHandlerUnblock(InstanceVar *Object, HandlerIdVar uint) {
 
 	xSignalHandlerUnblock(InstanceVar.GoPointer(), HandlerIdVar)
 
@@ -917,10 +917,10 @@ func NewSignalQuery(SignalIdVar uint, QueryVar *SignalQuery) {
 
 }
 
-var xSignalRemoveEmissionHook func(uint, uint32)
+var xSignalRemoveEmissionHook func(uint, uint)
 
 // Deletes an emission hook.
-func SignalRemoveEmissionHook(SignalIdVar uint, HookIdVar uint32) {
+func SignalRemoveEmissionHook(SignalIdVar uint, HookIdVar uint) {
 
 	xSignalRemoveEmissionHook(SignalIdVar, HookIdVar)
 

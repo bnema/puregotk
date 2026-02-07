@@ -119,10 +119,12 @@ func (x *GestureLongPress) GetPropertyDelayFactor() float64 {
 
 // Emitted whenever a press moved too far, or was released
 // before [signal@Gtk.GestureLongPress::pressed] happened.
-func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint32 {
+func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -135,15 +137,19 @@ func (x *GestureLongPress) ConnectCancelled(cb *func(GestureLongPress)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever a press goes unmoved/unreleased longer than
 // what the GTK defaults tell.
-func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, float64)) uint32 {
+func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, XVarp float64, YVarp float64) {
@@ -156,7 +162,9 @@ func (x *GestureLongPress) ConnectPressed(cb *func(GestureLongPress, float64, fl
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "pressed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

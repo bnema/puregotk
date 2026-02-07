@@ -517,10 +517,12 @@ func (x *Carousel) GetPropertySpacing() uint {
 // ::: note
 //
 //	An empty carousel is indicated by `(int)index == -1`.
-func (x *Carousel) ConnectPageChanged(cb *func(Carousel, uint)) uint32 {
+func (x *Carousel) ConnectPageChanged(cb *func(Carousel, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "page-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "page-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IndexVarp uint) {
@@ -533,7 +535,9 @@ func (x *Carousel) ConnectPageChanged(cb *func(Carousel, uint)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "page-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "page-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets the progress @self will snap back to after the gesture is canceled.

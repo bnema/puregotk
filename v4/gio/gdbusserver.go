@@ -235,10 +235,12 @@ func (x *DBusServer) GetPropertyGuid() string {
 // before incoming messages on @connection are processed. This means
 // that it's suitable to call g_dbus_connection_register_object() or
 // similar from the signal handler.
-func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) uint32 {
+func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ConnectionVarp uintptr) bool {
@@ -251,7 +253,9 @@ func (x *DBusServer) ConnectNewConnection(cb *func(DBusServer, uintptr) bool) ui
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "new-connection", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Initializes the object implementing the interface.

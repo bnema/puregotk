@@ -251,10 +251,12 @@ func (x *Drag) GetPropertyFormats() uintptr {
 }
 
 // Emitted when the drag operation is cancelled.
-func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint32 {
+func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ReasonVarp DragCancelReason) {
@@ -267,16 +269,20 @@ func (x *Drag) ConnectCancel(cb *func(Drag, DragCancelReason)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cancel", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the destination side has finished reading all data.
 //
 // The drag object can now free all miscellaneous data.
-func (x *Drag) ConnectDndFinished(cb *func(Drag)) uint32 {
+func (x *Drag) ConnectDndFinished(cb *func(Drag)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "dnd-finished", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "dnd-finished", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -289,14 +295,18 @@ func (x *Drag) ConnectDndFinished(cb *func(Drag)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "dnd-finished", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "dnd-finished", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the drop operation is performed on an accepting client.
-func (x *Drag) ConnectDropPerformed(cb *func(Drag)) uint32 {
+func (x *Drag) ConnectDropPerformed(cb *func(Drag)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "drop-performed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "drop-performed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -309,7 +319,9 @@ func (x *Drag) ConnectDropPerformed(cb *func(Drag)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "drop-performed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "drop-performed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xDragBegin func(uintptr, uintptr, uintptr, DragAction, float64, float64) uintptr

@@ -607,10 +607,12 @@ func (x *SocketListener) GetPropertyListenBacklog() int {
 // Note that when @listener is used to listen on both IPv4 and
 // IPv6, a separate set of signals will be emitted for each, and
 // the order they happen in is undefined.
-func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEvent, uintptr)) uint32 {
+func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEvent, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, EventVarp SocketListenerEvent, SocketVarp uintptr) {
@@ -623,7 +625,9 @@ func (x *SocketListener) ConnectEvent(cb *func(SocketListener, SocketListenerEve
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "event", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

@@ -575,10 +575,12 @@ func (x *Range) GetPropertyShowFillLevel() bool {
 
 // Emitted before clamping a value, to give the application a
 // chance to adjust the bounds.
-func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint32 {
+func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "adjust-bounds", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "adjust-bounds", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ValueVarp float64) {
@@ -591,7 +593,9 @@ func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "adjust-bounds", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "adjust-bounds", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a scroll action is performed on a range.
@@ -606,10 +610,12 @@ func (x *Range) ConnectAdjustBounds(cb *func(Range, float64)) uint32 {
 // the ::change-value signal is responsible for clamping the value
 // to the desired number of decimal digits; the default GTK
 // handler clamps the value based on [property@Gtk.Range:round-digits].
-func (x *Range) ConnectChangeValue(cb *func(Range, ScrollType, float64) bool) uint32 {
+func (x *Range) ConnectChangeValue(cb *func(Range, ScrollType, float64) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ScrollVarp ScrollType, ValueVarp float64) bool {
@@ -622,16 +628,20 @@ func (x *Range) ConnectChangeValue(cb *func(Range, ScrollType, float64) bool) ui
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "change-value", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Virtual function that moves the slider.
 //
 // Used for keybindings.
-func (x *Range) ConnectMoveSlider(cb *func(Range, ScrollType)) uint32 {
+func (x *Range) ConnectMoveSlider(cb *func(Range, ScrollType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-slider", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-slider", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StepVarp ScrollType) {
@@ -644,14 +654,18 @@ func (x *Range) ConnectMoveSlider(cb *func(Range, ScrollType)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "move-slider", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-slider", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the range value changes.
-func (x *Range) ConnectValueChanged(cb *func(Range)) uint32 {
+func (x *Range) ConnectValueChanged(cb *func(Range)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -664,7 +678,9 @@ func (x *Range) ConnectValueChanged(cb *func(Range)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

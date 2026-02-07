@@ -452,10 +452,12 @@ func (x *Calendar) GetPropertyYear() int {
 }
 
 // Emitted when the user selects a day.
-func (x *Calendar) ConnectDaySelected(cb *func(Calendar)) uint32 {
+func (x *Calendar) ConnectDaySelected(cb *func(Calendar)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "day-selected", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "day-selected", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -468,14 +470,18 @@ func (x *Calendar) ConnectDaySelected(cb *func(Calendar)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "day-selected", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "day-selected", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user switches to the next month.
-func (x *Calendar) ConnectNextMonth(cb *func(Calendar)) uint32 {
+func (x *Calendar) ConnectNextMonth(cb *func(Calendar)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "next-month", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "next-month", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -488,14 +494,18 @@ func (x *Calendar) ConnectNextMonth(cb *func(Calendar)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "next-month", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "next-month", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when user switches to the next year.
-func (x *Calendar) ConnectNextYear(cb *func(Calendar)) uint32 {
+func (x *Calendar) ConnectNextYear(cb *func(Calendar)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "next-year", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "next-year", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -508,14 +518,18 @@ func (x *Calendar) ConnectNextYear(cb *func(Calendar)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "next-year", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "next-year", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user switches to the previous month.
-func (x *Calendar) ConnectPrevMonth(cb *func(Calendar)) uint32 {
+func (x *Calendar) ConnectPrevMonth(cb *func(Calendar)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "prev-month", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "prev-month", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -528,14 +542,18 @@ func (x *Calendar) ConnectPrevMonth(cb *func(Calendar)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "prev-month", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "prev-month", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when user switches to the previous year.
-func (x *Calendar) ConnectPrevYear(cb *func(Calendar)) uint32 {
+func (x *Calendar) ConnectPrevYear(cb *func(Calendar)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "prev-year", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "prev-year", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -548,7 +566,9 @@ func (x *Calendar) ConnectPrevYear(cb *func(Calendar)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "prev-year", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "prev-year", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

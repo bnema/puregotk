@@ -199,10 +199,12 @@ func (c *Overlay) SetGoPointer(ptr uintptr) {
 // be full-width/height). If the main child is a
 // `GtkScrolledWindow`, the overlays are placed relative
 // to its contents.
-func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) bool) uint32 {
+func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, WidgetVarp uintptr, AllocationVarp *uintptr) bool {
@@ -215,7 +217,9 @@ func (x *Overlay) ConnectGetChildPosition(cb *func(Overlay, uintptr, *uintptr) b
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "get-child-position", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

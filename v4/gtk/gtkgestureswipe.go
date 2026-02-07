@@ -92,10 +92,12 @@ func (c *GestureSwipe) SetGoPointer(ptr uintptr) {
 // Emitted when the recognized gesture is finished.
 //
 // Velocity and direction are a product of previously recorded events.
-func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) uint32 {
+func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, VelocityXVarp float64, VelocityYVarp float64) {
@@ -108,7 +110,9 @@ func (x *GestureSwipe) ConnectSwipe(cb *func(GestureSwipe, float64, float64)) ui
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "swipe", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

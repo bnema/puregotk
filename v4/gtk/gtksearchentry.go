@@ -295,10 +295,12 @@ func (x *SearchEntry) GetPropertySearchDelay() uint {
 // Emitted when the entry is activated.
 //
 // The keybindings for this signal are all forms of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
-func (x *SearchEntry) ConnectActivate(cb *func(SearchEntry)) uint32 {
+func (x *SearchEntry) ConnectActivate(cb *func(SearchEntry)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -311,7 +313,9 @@ func (x *SearchEntry) ConnectActivate(cb *func(SearchEntry)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user initiates a move to the next match
@@ -323,10 +327,12 @@ func (x *SearchEntry) ConnectActivate(cb *func(SearchEntry)) uint32 {
 // between matches.
 //
 // The default bindings for this signal is &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;g&lt;/kbd&gt;.
-func (x *SearchEntry) ConnectNextMatch(cb *func(SearchEntry)) uint32 {
+func (x *SearchEntry) ConnectNextMatch(cb *func(SearchEntry)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "next-match", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "next-match", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -339,7 +345,9 @@ func (x *SearchEntry) ConnectNextMatch(cb *func(SearchEntry)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "next-match", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "next-match", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user initiates a move to the previous match
@@ -352,10 +360,12 @@ func (x *SearchEntry) ConnectNextMatch(cb *func(SearchEntry)) uint32 {
 //
 // The default bindings for this signal is
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;g&lt;/kbd&gt;.
-func (x *SearchEntry) ConnectPreviousMatch(cb *func(SearchEntry)) uint32 {
+func (x *SearchEntry) ConnectPreviousMatch(cb *func(SearchEntry)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "previous-match", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "previous-match", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -368,16 +378,20 @@ func (x *SearchEntry) ConnectPreviousMatch(cb *func(SearchEntry)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "previous-match", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "previous-match", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted with a delay. The length of the delay can be
 // changed with the [property@Gtk.SearchEntry:search-delay]
 // property.
-func (x *SearchEntry) ConnectSearchChanged(cb *func(SearchEntry)) uint32 {
+func (x *SearchEntry) ConnectSearchChanged(cb *func(SearchEntry)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "search-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "search-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -390,14 +404,18 @@ func (x *SearchEntry) ConnectSearchChanged(cb *func(SearchEntry)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "search-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "search-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user initiated a search on the entry.
-func (x *SearchEntry) ConnectSearchStarted(cb *func(SearchEntry)) uint32 {
+func (x *SearchEntry) ConnectSearchStarted(cb *func(SearchEntry)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "search-started", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "search-started", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -410,7 +428,9 @@ func (x *SearchEntry) ConnectSearchStarted(cb *func(SearchEntry)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "search-started", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "search-started", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user stops a search via keyboard input.
@@ -421,10 +441,12 @@ func (x *SearchEntry) ConnectSearchStarted(cb *func(SearchEntry)) uint32 {
 // the search entry in this case.
 //
 // The default bindings for this signal is &lt;kbd&gt;Escape&lt;/kbd&gt;.
-func (x *SearchEntry) ConnectStopSearch(cb *func(SearchEntry)) uint32 {
+func (x *SearchEntry) ConnectStopSearch(cb *func(SearchEntry)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "stop-search", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "stop-search", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -437,7 +459,9 @@ func (x *SearchEntry) ConnectStopSearch(cb *func(SearchEntry)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "stop-search", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "stop-search", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

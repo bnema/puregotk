@@ -251,7 +251,7 @@ func (x *Cancellable) Cancel() {
 
 }
 
-var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint32
+var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint
 
 // Convenience function to connect to the #GCancellable::cancelled
 // signal. Also handles the race condition that may happen
@@ -288,7 +288,7 @@ var xCancellableConnect func(uintptr, uintptr, uintptr, uintptr) uint32
 //   - [method@Gio.Cancellable.reset]
 //   - [method@Gio.Cancellable.make_pollfd]
 //   - [method@Gio.Cancellable.release_fd]
-func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, DataDestroyFuncVar *glib.DestroyNotify) uint32 {
+func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, DataDestroyFuncVar *glib.DestroyNotify) uint {
 
 	var CallbackVarRef uintptr
 	if CallbackVar != nil {
@@ -325,7 +325,7 @@ func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, Da
 	return cret
 }
 
-var xCancellableDisconnect func(uintptr, uint32)
+var xCancellableDisconnect func(uintptr, uint)
 
 // Disconnects a handler from a cancellable instance similar to
 // g_signal_handler_disconnect().  Additionally, in the event that a
@@ -341,7 +341,7 @@ var xCancellableDisconnect func(uintptr, uint32)
 //
 // If @cancellable is %NULL or @handler_id is `0` this function does
 // nothing.
-func (x *Cancellable) Disconnect(HandlerIdVar uint32) {
+func (x *Cancellable) Disconnect(HandlerIdVar uint) {
 
 	xCancellableDisconnect(x.GoPointer(), HandlerIdVar)
 
@@ -581,10 +581,12 @@ func (c *Cancellable) SetGoPointer(ptr uintptr) {
 // Note that the cancelled signal is emitted in the thread that
 // the user cancelled from, which may be the main thread. So, the
 // cancellable signal should not do something that can block.
-func (x *Cancellable) ConnectCancelled(cb *func(Cancellable)) uint32 {
+func (x *Cancellable) ConnectCancelled(cb *func(Cancellable)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -597,7 +599,9 @@ func (x *Cancellable) ConnectCancelled(cb *func(Cancellable)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cancelled", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xCancellableGetCurrent func() uintptr

@@ -657,10 +657,12 @@ func (x *MenuButton) GetPropertyUseUnderline() bool {
 //
 // The `::activate` signal on `GtkMenuButton` is an action signal and
 // emitting it causes the button to pop up its menu.
-func (x *MenuButton) ConnectActivate(cb *func(MenuButton)) uint32 {
+func (x *MenuButton) ConnectActivate(cb *func(MenuButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -673,7 +675,9 @@ func (x *MenuButton) ConnectActivate(cb *func(MenuButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

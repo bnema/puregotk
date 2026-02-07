@@ -123,10 +123,12 @@ func (c *EventControllerKey) SetGoPointer(ptr uintptr) {
 //
 // See [method@Gtk.EventControllerKey.set_im_context] and
 // [method@Gtk.IMContext.filter_keypress].
-func (x *EventControllerKey) ConnectImUpdate(cb *func(EventControllerKey)) uint32 {
+func (x *EventControllerKey) ConnectImUpdate(cb *func(EventControllerKey)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "im-update", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "im-update", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -139,14 +141,18 @@ func (x *EventControllerKey) ConnectImUpdate(cb *func(EventControllerKey)) uint3
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "im-update", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "im-update", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever a key is pressed.
-func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint, uint, gdk.ModifierType) bool) uint32 {
+func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint, uint, gdk.ModifierType) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "key-pressed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "key-pressed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, KeyvalVarp uint, KeycodeVarp uint, StateVarp gdk.ModifierType) bool {
@@ -159,14 +165,18 @@ func (x *EventControllerKey) ConnectKeyPressed(cb *func(EventControllerKey, uint
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "key-pressed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "key-pressed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever a key is released.
-func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uint, uint, gdk.ModifierType)) uint32 {
+func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uint, uint, gdk.ModifierType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "key-released", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "key-released", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, KeyvalVarp uint, KeycodeVarp uint, StateVarp gdk.ModifierType) {
@@ -179,14 +189,18 @@ func (x *EventControllerKey) ConnectKeyReleased(cb *func(EventControllerKey, uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "key-released", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "key-released", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted whenever the state of modifier keys and pointer buttons change.
-func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.ModifierType) bool) uint32 {
+func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.ModifierType) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "modifiers", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "modifiers", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StateVarp gdk.ModifierType) bool {
@@ -199,7 +213,9 @@ func (x *EventControllerKey) ConnectModifiers(cb *func(EventControllerKey, gdk.M
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "modifiers", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "modifiers", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

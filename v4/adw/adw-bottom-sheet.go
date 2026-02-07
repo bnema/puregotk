@@ -677,10 +677,12 @@ func (x *BottomSheet) GetPropertyShowDragHandle() bool {
 
 // Emitted when the close button or shortcut is used while
 // [property@Dialog:can-close] is set to `FALSE`.
-func (x *BottomSheet) ConnectCloseAttempt(cb *func(BottomSheet)) uint32 {
+func (x *BottomSheet) ConnectCloseAttempt(cb *func(BottomSheet)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -693,7 +695,9 @@ func (x *BottomSheet) ConnectCloseAttempt(cb *func(BottomSheet)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "close-attempt", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Gets the progress @self will snap back to after the gesture is canceled.

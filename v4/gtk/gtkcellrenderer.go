@@ -949,10 +949,12 @@ func (x *CellRenderer) GetPropertyYpad() uint {
 // editing when the user presses Escape.
 //
 // See also: gtk_cell_renderer_stop_editing().
-func (x *CellRenderer) ConnectEditingCanceled(cb *func(CellRenderer)) uint32 {
+func (x *CellRenderer) ConnectEditingCanceled(cb *func(CellRenderer)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "editing-canceled", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "editing-canceled", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -965,7 +967,9 @@ func (x *CellRenderer) ConnectEditingCanceled(cb *func(CellRenderer)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "editing-canceled", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "editing-canceled", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal gets emitted when a cell starts to be edited.
@@ -1001,10 +1005,12 @@ func (x *CellRenderer) ConnectEditingCanceled(cb *func(CellRenderer)) uint32 {
 //	}
 //
 // ```
-func (x *CellRenderer) ConnectEditingStarted(cb *func(CellRenderer, uintptr, string)) uint32 {
+func (x *CellRenderer) ConnectEditingStarted(cb *func(CellRenderer, uintptr, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "editing-started", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "editing-started", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, EditableVarp uintptr, PathVarp string) {
@@ -1017,7 +1023,9 @@ func (x *CellRenderer) ConnectEditingStarted(cb *func(CellRenderer, uintptr, str
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "editing-started", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "editing-started", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

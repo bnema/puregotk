@@ -444,10 +444,12 @@ func (x *TabBar) GetPropertyTabsRevealed() bool {
 // [method@TabBar.setup_extra_drop_target].
 //
 // See [signal@Gtk.DropTarget::drop].
-func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) uint32 {
+func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr) bool {
@@ -460,7 +462,9 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) u
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-drop", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // This signal is emitted when the dropped content is preloaded.
@@ -472,10 +476,12 @@ func (x *TabBar) ConnectExtraDragDrop(cb *func(TabBar, uintptr, uintptr) bool) u
 // [method@TabBar.setup_extra_drop_target].
 //
 // See [property@Gtk.DropTarget:value].
-func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, uintptr, uintptr) gdk.DragAction) uint32 {
+func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, uintptr, uintptr) gdk.DragAction) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PageVarp uintptr, ValueVarp uintptr) gdk.DragAction {
@@ -488,7 +494,9 @@ func (x *TabBar) ConnectExtraDragValue(cb *func(TabBar, uintptr, uintptr) gdk.Dr
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "extra-drag-value", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

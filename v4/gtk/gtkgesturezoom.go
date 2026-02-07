@@ -85,10 +85,12 @@ func (c *GestureZoom) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted whenever the distance between both tracked sequences changes.
-func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint32 {
+func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "scale-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "scale-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ScaleVarp float64) {
@@ -101,7 +103,9 @@ func (x *GestureZoom) ConnectScaleChanged(cb *func(GestureZoom, float64)) uint32
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "scale-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "scale-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

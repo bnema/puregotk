@@ -277,12 +277,12 @@ func NewParamSpecInt64(NameVar string, NickVar *string, BlurbVar *string, Minimu
 	return cls
 }
 
-var xNewParamSpecLong func(string, uintptr, uintptr, int32, int32, int32, ParamFlags) uintptr
+var xNewParamSpecLong func(string, uintptr, uintptr, int, int, int, ParamFlags) uintptr
 
 // Creates a new #GParamSpecLong instance specifying a %G_TYPE_LONG property.
 //
 // See g_param_spec_internal() for details on property names.
-func NewParamSpecLong(NameVar string, NickVar *string, BlurbVar *string, MinimumVar int32, MaximumVar int32, DefaultValueVar int32, FlagsVar ParamFlags) *ParamSpec {
+func NewParamSpecLong(NameVar string, NickVar *string, BlurbVar *string, MinimumVar int, MaximumVar int, DefaultValueVar int, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
 	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
@@ -510,13 +510,13 @@ func ParamSpecUint64(NameVar string, NickVar *string, BlurbVar *string, MinimumV
 	return cls
 }
 
-var xParamSpecUlong func(string, uintptr, uintptr, uint32, uint32, uint32, ParamFlags) uintptr
+var xParamSpecUlong func(string, uintptr, uintptr, uint, uint, uint, ParamFlags) uintptr
 
 // Creates a new #GParamSpecULong instance specifying a %G_TYPE_ULONG
 // property.
 //
 // See g_param_spec_internal() for details on property names.
-func ParamSpecUlong(NameVar string, NickVar *string, BlurbVar *string, MinimumVar uint32, MaximumVar uint32, DefaultValueVar uint32, FlagsVar ParamFlags) *ParamSpec {
+func ParamSpecUlong(NameVar string, NickVar *string, BlurbVar *string, MinimumVar uint, MaximumVar uint, DefaultValueVar uint, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
 	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)

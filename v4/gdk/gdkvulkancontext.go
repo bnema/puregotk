@@ -60,10 +60,12 @@ func (c *VulkanContext) SetGoPointer(ptr uintptr) {
 //
 // Usually this means that the swapchain had to be recreated,
 // for example in response to a change of the surface size.
-func (x *VulkanContext) ConnectImagesUpdated(cb *func(VulkanContext)) uint32 {
+func (x *VulkanContext) ConnectImagesUpdated(cb *func(VulkanContext)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "images-updated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "images-updated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -76,7 +78,9 @@ func (x *VulkanContext) ConnectImagesUpdated(cb *func(VulkanContext)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "images-updated", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "images-updated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

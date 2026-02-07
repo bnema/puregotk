@@ -425,10 +425,12 @@ func (x *ListView) GetPropertySingleClickActivate() bool {
 // This allows for a convenient way to handle activation in a listview.
 // See [method@Gtk.ListItem.set_activatable] for details on how to use
 // this signal.
-func (x *ListView) ConnectActivate(cb *func(ListView, uint)) uint32 {
+func (x *ListView) ConnectActivate(cb *func(ListView, uint)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PositionVarp uint) {
@@ -441,7 +443,9 @@ func (x *ListView) ConnectActivate(cb *func(ListView, uint)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

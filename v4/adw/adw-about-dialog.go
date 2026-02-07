@@ -1721,10 +1721,12 @@ func (x *AboutDialog) GetPropertyWebsite() string {
 //
 // Applications may connect to it to override the default behavior, which is
 // to call [func@Gtk.show_uri].
-func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) uint32 {
+func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, UriVarp string) bool {
@@ -1737,7 +1739,9 @@ func (x *AboutDialog) ConnectActivateLink(cb *func(AboutDialog, string) bool) ui
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate-link", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

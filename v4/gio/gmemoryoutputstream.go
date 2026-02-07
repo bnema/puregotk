@@ -389,10 +389,10 @@ func (x *MemoryOutputStream) GetPropertyData() uintptr {
 
 // GetPropertyDataSize gets the "data-size" property.
 // Size of data written to the buffer.
-func (x *MemoryOutputStream) GetPropertyDataSize() uint32 {
+func (x *MemoryOutputStream) GetPropertyDataSize() uint {
 	var v gobject.Value
 	x.GetProperty("data-size", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // SetPropertyDestroyFunction sets the "destroy-function" property.
@@ -431,19 +431,19 @@ func (x *MemoryOutputStream) GetPropertyReallocFunction() uintptr {
 
 // SetPropertySize sets the "size" property.
 // Current size of the data buffer.
-func (x *MemoryOutputStream) SetPropertySize(value uint32) {
+func (x *MemoryOutputStream) SetPropertySize(value uint) {
 	var v gobject.Value
-	v.Init(gobject.TypeUlongVal)
-	v.SetUlong(value)
+	v.Init(gobject.TypeUintVal)
+	v.SetUint(value)
 	x.SetProperty("size", &v)
 }
 
 // GetPropertySize gets the "size" property.
 // Current size of the data buffer.
-func (x *MemoryOutputStream) GetPropertySize() uint32 {
+func (x *MemoryOutputStream) GetPropertySize() uint {
 	var v gobject.Value
 	x.GetProperty("size", &v)
-	return v.GetUlong()
+	return v.GetUint()
 }
 
 // Checks if @stream is actually pollable. Some classes may implement

@@ -187,10 +187,12 @@ func (c *DisplayManager) SetGoPointer(ptr uintptr) {
 }
 
 // Emitted when a display is opened.
-func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, uintptr)) uint32 {
+func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "display-opened", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "display-opened", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, DisplayVarp uintptr) {
@@ -203,7 +205,9 @@ func (x *DisplayManager) ConnectDisplayOpened(cb *func(DisplayManager, uintptr))
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "display-opened", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "display-opened", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xDisplayManagerGet func() uintptr

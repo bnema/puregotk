@@ -226,10 +226,12 @@ func (x *SimpleAction) GetPropertyStateType() uintptr {
 // type, the default is to forward them directly to
 // #GSimpleAction::change-state.  This should allow almost all users
 // of #GSimpleAction to connect only one handler or the other.
-func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint32 {
+func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ParameterVarp uintptr) {
@@ -242,7 +244,9 @@ func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Indicates that the action just received a request to change its
@@ -281,10 +285,12 @@ func (x *SimpleAction) ConnectActivate(cb *func(SimpleAction, uintptr)) uint32 {
 //
 // The handler need not set the state to the requested value.
 // It could set it to any value at all, or take some other action.
-func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint32 {
+func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ValueVarp uintptr) {
@@ -297,7 +303,9 @@ func (x *SimpleAction) ConnectChangeState(cb *func(SimpleAction, uintptr)) uint3
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "change-state", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Activates the action.

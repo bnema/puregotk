@@ -106,7 +106,7 @@ func (x *StrvBuilder) Ref() *StrvBuilder {
 	return cret
 }
 
-var xStrvBuilderTake func(uintptr, string)
+var xStrvBuilderTake func(uintptr, uintptr)
 
 // Add a string to the end of the array. After @value belongs to the
 // #GStrvBuilder and may no longer be modified by the caller.
@@ -114,7 +114,7 @@ var xStrvBuilderTake func(uintptr, string)
 // Since 2.80
 func (x *StrvBuilder) Take(ValueVar string) {
 
-	xStrvBuilderTake(x.GoPointer(), ValueVar)
+	xStrvBuilderTake(x.GoPointer(), core.GStrdup(ValueVar))
 
 }
 

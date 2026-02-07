@@ -295,10 +295,12 @@ func (x *AppChooserButton) GetPropertyShowDialogItem() bool {
 //
 // The `::activate` signal on `GtkAppChooserButton` is an action signal and
 // emitting it causes the button to pop up its dialog.
-func (x *AppChooserButton) ConnectActivate(cb *func(AppChooserButton)) uint32 {
+func (x *AppChooserButton) ConnectActivate(cb *func(AppChooserButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -311,14 +313,18 @@ func (x *AppChooserButton) ConnectActivate(cb *func(AppChooserButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the active application changes.
-func (x *AppChooserButton) ConnectChanged(cb *func(AppChooserButton)) uint32 {
+func (x *AppChooserButton) ConnectChanged(cb *func(AppChooserButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -331,17 +337,21 @@ func (x *AppChooserButton) ConnectChanged(cb *func(AppChooserButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a custom item is activated.
 //
 // Use [method@Gtk.AppChooserButton.append_custom_item],
 // to add custom items.
-func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton, string)) uint32 {
+func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "custom-item-activated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "custom-item-activated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ItemNameVarp string) {
@@ -354,16 +364,20 @@ func (x *AppChooserButton) ConnectCustomItemActivated(cb *func(AppChooserButton,
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "custom-item-activated", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "custom-item-activated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // ConnectCustomItemActivatedWithDetail connects to the "custom-item-activated" signal with a detail string.
 // The detail is appended as "custom-item-activated::<detail>".
-func (x *AppChooserButton) ConnectCustomItemActivatedWithDetail(detail string, cb *func(AppChooserButton, string)) uint32 {
+func (x *AppChooserButton) ConnectCustomItemActivatedWithDetail(detail string, cb *func(AppChooserButton, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	signalName := fmt.Sprintf("custom-item-activated::%s", detail)
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ItemNameVarp string) {
@@ -376,7 +390,9 @@ func (x *AppChooserButton) ConnectCustomItemActivatedWithDetail(detail string, c
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), signalName, cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

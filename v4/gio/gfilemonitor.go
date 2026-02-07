@@ -343,10 +343,12 @@ func (x *FileMonitor) GetPropertyRateLimit() int {
 // old path, and @other_file will be set to a #GFile containing the new path.
 //
 // In all the other cases, @other_file will be set to #NULL.
-func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, FileMonitorEvent)) uint32 {
+func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, FileMonitorEvent)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, FileVarp uintptr, OtherFileVarp uintptr, EventTypeVarp FileMonitorEvent) {
@@ -359,7 +361,9 @@ func (x *FileMonitor) ConnectChanged(cb *func(FileMonitor, uintptr, uintptr, Fil
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

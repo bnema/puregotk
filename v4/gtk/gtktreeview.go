@@ -2123,10 +2123,12 @@ func (x *TreeView) GetPropertyTooltipColumn() int {
 }
 
 // The number of columns of the treeview has changed.
-func (x *TreeView) ConnectColumnsChanged(cb *func(TreeView)) uint32 {
+func (x *TreeView) ConnectColumnsChanged(cb *func(TreeView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "columns-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "columns-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -2139,14 +2141,18 @@ func (x *TreeView) ConnectColumnsChanged(cb *func(TreeView)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "columns-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "columns-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The position of the cursor (focused cell) has changed.
-func (x *TreeView) ConnectCursorChanged(cb *func(TreeView)) uint32 {
+func (x *TreeView) ConnectCursorChanged(cb *func(TreeView)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cursor-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cursor-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -2159,13 +2165,17 @@ func (x *TreeView) ConnectCursorChanged(cb *func(TreeView)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "cursor-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cursor-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
-func (x *TreeView) ConnectExpandCollapseCursorRow(cb *func(TreeView, bool, bool, bool) bool) uint32 {
+func (x *TreeView) ConnectExpandCollapseCursorRow(cb *func(TreeView, bool, bool, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "expand-collapse-cursor-row", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "expand-collapse-cursor-row", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectVarp bool, P0Varp bool, P1Varp bool) bool {
@@ -2178,7 +2188,9 @@ func (x *TreeView) ConnectExpandCollapseCursorRow(cb *func(TreeView, bool, bool,
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "expand-collapse-cursor-row", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "expand-collapse-cursor-row", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The `GtkTreeView`::move-cursor signal is a [keybinding
@@ -2190,10 +2202,12 @@ func (x *TreeView) ConnectExpandCollapseCursorRow(cb *func(TreeView, bool, bool,
 // programmatically. In contrast to gtk_tree_view_set_cursor() and
 // gtk_tree_view_set_cursor_on_cell() when moving horizontally
 // `GtkTreeView`::move-cursor does not reset the current selection.
-func (x *TreeView) ConnectMoveCursor(cb *func(TreeView, MovementStep, int, bool, bool) bool) uint32 {
+func (x *TreeView) ConnectMoveCursor(cb *func(TreeView, MovementStep, int, bool, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StepVarp MovementStep, DirectionVarp int, ExtendVarp bool, ModifyVarp bool) bool {
@@ -2206,7 +2220,9 @@ func (x *TreeView) ConnectMoveCursor(cb *func(TreeView, MovementStep, int, bool,
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The "row-activated" signal is emitted when the method
@@ -2223,10 +2239,12 @@ func (x *TreeView) ConnectMoveCursor(cb *func(TreeView, MovementStep, int, bool,
 // For selection handling refer to the
 // [tree widget conceptual overview](section-tree-widget.html)
 // as well as `GtkTreeSelection`.
-func (x *TreeView) ConnectRowActivated(cb *func(TreeView, uintptr, uintptr)) uint32 {
+func (x *TreeView) ConnectRowActivated(cb *func(TreeView, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "row-activated", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "row-activated", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PathVarp uintptr, ColumnVarp uintptr) {
@@ -2239,14 +2257,18 @@ func (x *TreeView) ConnectRowActivated(cb *func(TreeView, uintptr, uintptr)) uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "row-activated", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "row-activated", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The given row has been collapsed (child nodes are hidden).
-func (x *TreeView) ConnectRowCollapsed(cb *func(TreeView, uintptr, uintptr)) uint32 {
+func (x *TreeView) ConnectRowCollapsed(cb *func(TreeView, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "row-collapsed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "row-collapsed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IterVarp uintptr, PathVarp uintptr) {
@@ -2259,14 +2281,18 @@ func (x *TreeView) ConnectRowCollapsed(cb *func(TreeView, uintptr, uintptr)) uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "row-collapsed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "row-collapsed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The given row has been expanded (child nodes are shown).
-func (x *TreeView) ConnectRowExpanded(cb *func(TreeView, uintptr, uintptr)) uint32 {
+func (x *TreeView) ConnectRowExpanded(cb *func(TreeView, uintptr, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "row-expanded", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "row-expanded", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IterVarp uintptr, PathVarp uintptr) {
@@ -2279,13 +2305,17 @@ func (x *TreeView) ConnectRowExpanded(cb *func(TreeView, uintptr, uintptr)) uint
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "row-expanded", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "row-expanded", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
-func (x *TreeView) ConnectSelectAll(cb *func(TreeView) bool) uint32 {
+func (x *TreeView) ConnectSelectAll(cb *func(TreeView) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -2298,13 +2328,17 @@ func (x *TreeView) ConnectSelectAll(cb *func(TreeView) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "select-all", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
-func (x *TreeView) ConnectSelectCursorParent(cb *func(TreeView) bool) uint32 {
+func (x *TreeView) ConnectSelectCursorParent(cb *func(TreeView) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "select-cursor-parent", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "select-cursor-parent", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -2317,13 +2351,17 @@ func (x *TreeView) ConnectSelectCursorParent(cb *func(TreeView) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "select-cursor-parent", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "select-cursor-parent", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
-func (x *TreeView) ConnectSelectCursorRow(cb *func(TreeView, bool) bool) uint32 {
+func (x *TreeView) ConnectSelectCursorRow(cb *func(TreeView, bool) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "select-cursor-row", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "select-cursor-row", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectVarp bool) bool {
@@ -2336,13 +2374,17 @@ func (x *TreeView) ConnectSelectCursorRow(cb *func(TreeView, bool) bool) uint32 
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "select-cursor-row", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "select-cursor-row", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
-func (x *TreeView) ConnectStartInteractiveSearch(cb *func(TreeView) bool) uint32 {
+func (x *TreeView) ConnectStartInteractiveSearch(cb *func(TreeView) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "start-interactive-search", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "start-interactive-search", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -2355,15 +2397,19 @@ func (x *TreeView) ConnectStartInteractiveSearch(cb *func(TreeView) bool) uint32
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "start-interactive-search", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "start-interactive-search", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The given row is about to be collapsed (hide its children nodes). Use this
 // signal if you need to control the collapsibility of individual rows.
-func (x *TreeView) ConnectTestCollapseRow(cb *func(TreeView, uintptr, uintptr) bool) uint32 {
+func (x *TreeView) ConnectTestCollapseRow(cb *func(TreeView, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "test-collapse-row", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "test-collapse-row", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IterVarp uintptr, PathVarp uintptr) bool {
@@ -2376,15 +2422,19 @@ func (x *TreeView) ConnectTestCollapseRow(cb *func(TreeView, uintptr, uintptr) b
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "test-collapse-row", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "test-collapse-row", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // The given row is about to be expanded (show its children nodes). Use this
 // signal if you need to control the expandability of individual rows.
-func (x *TreeView) ConnectTestExpandRow(cb *func(TreeView, uintptr, uintptr) bool) uint32 {
+func (x *TreeView) ConnectTestExpandRow(cb *func(TreeView, uintptr, uintptr) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "test-expand-row", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "test-expand-row", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, IterVarp uintptr, PathVarp uintptr) bool {
@@ -2397,13 +2447,17 @@ func (x *TreeView) ConnectTestExpandRow(cb *func(TreeView, uintptr, uintptr) boo
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "test-expand-row", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "test-expand-row", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
-func (x *TreeView) ConnectToggleCursorRow(cb *func(TreeView) bool) uint32 {
+func (x *TreeView) ConnectToggleCursorRow(cb *func(TreeView) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-row", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-cursor-row", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -2416,13 +2470,17 @@ func (x *TreeView) ConnectToggleCursorRow(cb *func(TreeView) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "toggle-cursor-row", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-cursor-row", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
-func (x *TreeView) ConnectUnselectAll(cb *func(TreeView) bool) uint32 {
+func (x *TreeView) ConnectUnselectAll(cb *func(TreeView) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -2435,7 +2493,9 @@ func (x *TreeView) ConnectUnselectAll(cb *func(TreeView) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "unselect-all", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

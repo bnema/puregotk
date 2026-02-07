@@ -362,10 +362,12 @@ func (x *ScaleButton) GetPropertyValue() float64 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is &lt;kbd&gt;Escape&lt;/kbd&gt;.
-func (x *ScaleButton) ConnectPopdown(cb *func(ScaleButton)) uint32 {
+func (x *ScaleButton) ConnectPopdown(cb *func(ScaleButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "popdown", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "popdown", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -378,7 +380,9 @@ func (x *ScaleButton) ConnectPopdown(cb *func(ScaleButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "popdown", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "popdown", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to popup the scale widget.
@@ -387,10 +391,12 @@ func (x *ScaleButton) ConnectPopdown(cb *func(ScaleButton)) uint32 {
 //
 // The default bindings for this signal are &lt;kbd&gt;Space&lt;/kbd&gt;,
 // &lt;kbd&gt;Enter&lt;/kbd&gt; and &lt;kbd&gt;Return&lt;/kbd&gt;.
-func (x *ScaleButton) ConnectPopup(cb *func(ScaleButton)) uint32 {
+func (x *ScaleButton) ConnectPopup(cb *func(ScaleButton)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "popup", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "popup", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -403,14 +409,18 @@ func (x *ScaleButton) ConnectPopup(cb *func(ScaleButton)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "popup", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "popup", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the value field has changed.
-func (x *ScaleButton) ConnectValueChanged(cb *func(ScaleButton, float64)) uint32 {
+func (x *ScaleButton) ConnectValueChanged(cb *func(ScaleButton, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ValueVarp float64) {
@@ -423,7 +433,9 @@ func (x *ScaleButton) ConnectValueChanged(cb *func(ScaleButton, float64)) uint32
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "value-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

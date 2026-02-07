@@ -197,10 +197,12 @@ func (x *CellRendererToggle) GetPropertyRadio() bool {
 // It is the responsibility of the application to update the model
 // with the correct value to store at @path.  Often this is simply the
 // opposite of the value currently stored at @path.
-func (x *CellRendererToggle) ConnectToggled(cb *func(CellRendererToggle, string)) uint32 {
+func (x *CellRendererToggle) ConnectToggled(cb *func(CellRendererToggle, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PathVarp string) {
@@ -213,7 +215,9 @@ func (x *CellRendererToggle) ConnectToggled(cb *func(CellRendererToggle, string)
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "toggled", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

@@ -779,10 +779,12 @@ func (x *ComboBox) GetPropertyPopupShown() bool {
 //
 // The `::activate` signal on `GtkComboBox` is an action signal and
 // emitting it causes the combo box to pop up its dropdown.
-func (x *ComboBox) ConnectActivate(cb *func(ComboBox)) uint32 {
+func (x *ComboBox) ConnectActivate(cb *func(ComboBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -795,7 +797,9 @@ func (x *ComboBox) ConnectActivate(cb *func(ComboBox)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the active item is changed.
@@ -803,10 +807,12 @@ func (x *ComboBox) ConnectActivate(cb *func(ComboBox)) uint32 {
 // The can be due to the user selecting a different item from the list,
 // or due to a call to [method@Gtk.ComboBox.set_active_iter]. It will
 // also be emitted while typing into the entry of a combo box with an entry.
-func (x *ComboBox) ConnectChanged(cb *func(ComboBox)) uint32 {
+func (x *ComboBox) ConnectChanged(cb *func(ComboBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -819,7 +825,9 @@ func (x *ComboBox) ConnectChanged(cb *func(ComboBox)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to allow changing how the text in a combo box's entry is displayed.
@@ -856,10 +864,12 @@ func (x *ComboBox) ConnectChanged(cb *func(ComboBox)) uint32 {
 //	}
 //
 // ```
-func (x *ComboBox) ConnectFormatEntryText(cb *func(ComboBox, string) string) uint32 {
+func (x *ComboBox) ConnectFormatEntryText(cb *func(ComboBox, string) string) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "format-entry-text", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "format-entry-text", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PathVarp string) string {
@@ -872,16 +882,20 @@ func (x *ComboBox) ConnectFormatEntryText(cb *func(ComboBox, string) string) uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "format-entry-text", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "format-entry-text", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to move the active selection.
 //
 // This is an [keybinding signal](class.SignalAction.html).
-func (x *ComboBox) ConnectMoveActive(cb *func(ComboBox, ScrollType)) uint32 {
+func (x *ComboBox) ConnectMoveActive(cb *func(ComboBox, ScrollType)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-active", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-active", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ScrollTypeVarp ScrollType) {
@@ -894,7 +908,9 @@ func (x *ComboBox) ConnectMoveActive(cb *func(ComboBox, ScrollType)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "move-active", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-active", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to popdown the combo box list.
@@ -902,10 +918,12 @@ func (x *ComboBox) ConnectMoveActive(cb *func(ComboBox, ScrollType)) uint32 {
 // This is an [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal are Alt+Up and Escape.
-func (x *ComboBox) ConnectPopdown(cb *func(ComboBox) bool) uint32 {
+func (x *ComboBox) ConnectPopdown(cb *func(ComboBox) bool) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "popdown", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "popdown", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) bool {
@@ -918,7 +936,9 @@ func (x *ComboBox) ConnectPopdown(cb *func(ComboBox) bool) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "popdown", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "popdown", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to popup the combo box list.
@@ -926,10 +946,12 @@ func (x *ComboBox) ConnectPopdown(cb *func(ComboBox) bool) uint32 {
 // This is an [keybinding signal](class.SignalAction.html).
 //
 // The default binding for this signal is Alt+Down.
-func (x *ComboBox) ConnectPopup(cb *func(ComboBox)) uint32 {
+func (x *ComboBox) ConnectPopup(cb *func(ComboBox)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "popup", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "popup", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -942,7 +964,9 @@ func (x *ComboBox) ConnectPopup(cb *func(ComboBox)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "popup", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "popup", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

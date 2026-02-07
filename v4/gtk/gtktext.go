@@ -875,10 +875,12 @@ func (x *Text) GetPropertyVisibility() bool {
 //
 // The default bindings for this signal are all forms
 // of the &lt;kbd&gt;Enter&lt;/kbd&gt; key.
-func (x *Text) ConnectActivate(cb *func(Text)) uint32 {
+func (x *Text) ConnectActivate(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -891,7 +893,9 @@ func (x *Text) ConnectActivate(cb *func(Text)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "activate", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user asks for it.
@@ -900,10 +904,12 @@ func (x *Text) ConnectActivate(cb *func(Text)) uint32 {
 //
 // The default bindings for this signal are
 // &lt;kbd&gt;Backspace&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Backspace&lt;/kbd&gt;.
-func (x *Text) ConnectBackspace(cb *func(Text)) uint32 {
+func (x *Text) ConnectBackspace(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "backspace", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "backspace", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -916,7 +922,9 @@ func (x *Text) ConnectBackspace(cb *func(Text)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "backspace", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "backspace", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to copy the selection to the clipboard.
@@ -926,10 +934,12 @@ func (x *Text) ConnectBackspace(cb *func(Text)) uint32 {
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;c&lt;/kbd&gt; and
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Insert&lt;/kbd&gt;.
-func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint32 {
+func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -942,7 +952,9 @@ func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "copy-clipboard", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to cut the selection to the clipboard.
@@ -952,10 +964,12 @@ func (x *Text) ConnectCopyClipboard(cb *func(Text)) uint32 {
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;x&lt;/kbd&gt; and
 // &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Delete&lt;/kbd&gt;.
-func (x *Text) ConnectCutClipboard(cb *func(Text)) uint32 {
+func (x *Text) ConnectCutClipboard(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "cut-clipboard", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "cut-clipboard", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -968,7 +982,9 @@ func (x *Text) ConnectCutClipboard(cb *func(Text)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "cut-clipboard", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "cut-clipboard", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user initiates a text deletion.
@@ -982,10 +998,12 @@ func (x *Text) ConnectCutClipboard(cb *func(Text)) uint32 {
 // The default bindings for this signal are &lt;kbd&gt;Delete&lt;/kbd&gt;
 // for deleting a character and &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Delete&lt;/kbd&gt;
 // for deleting a word.
-func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int)) uint32 {
+func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "delete-from-cursor", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "delete-from-cursor", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, TypeVarp DeleteType, CountVarp int) {
@@ -998,7 +1016,9 @@ func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "delete-from-cursor", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "delete-from-cursor", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user initiates the insertion of a
@@ -1007,10 +1027,12 @@ func (x *Text) ConnectDeleteFromCursor(cb *func(Text, DeleteType, int)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // This signal has no default bindings.
-func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint32 {
+func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "insert-at-cursor", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "insert-at-cursor", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StringVarp string) {
@@ -1023,7 +1045,9 @@ func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "insert-at-cursor", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "insert-at-cursor", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to present the Emoji chooser.
@@ -1033,10 +1057,12 @@ func (x *Text) ConnectInsertAtCursor(cb *func(Text, string)) uint32 {
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;.&lt;/kbd&gt; and
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;;&lt;/kbd&gt;
-func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint32 {
+func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "insert-emoji", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "insert-emoji", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1049,7 +1075,9 @@ func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "insert-emoji", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "insert-emoji", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the user initiates a cursor movement.
@@ -1072,10 +1100,12 @@ func (x *Text) ConnectInsertEmoji(cb *func(Text)) uint32 {
 //     move by individual characters/lines
 //   - &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;←&lt;/kbd&gt;, etc. move by words/paragraphs
 //   - &lt;kbd&gt;Home&lt;/kbd&gt; and &lt;kbd&gt;End&lt;/kbd&gt; move to the ends of the buffer
-func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int, bool)) uint32 {
+func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int, bool)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, StepVarp MovementStep, CountVarp int, ExtendVarp bool) {
@@ -1088,7 +1118,9 @@ func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int, bool)) uint32
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "move-cursor", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to paste the contents of the clipboard.
@@ -1097,10 +1129,12 @@ func (x *Text) ConnectMoveCursor(cb *func(Text, MovementStep, int, bool)) uint32
 //
 // The default bindings for this signal are
 // &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;v&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Insert&lt;/kbd&gt;.
-func (x *Text) ConnectPasteClipboard(cb *func(Text)) uint32 {
+func (x *Text) ConnectPasteClipboard(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "paste-clipboard", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "paste-clipboard", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1113,7 +1147,9 @@ func (x *Text) ConnectPasteClipboard(cb *func(Text)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "paste-clipboard", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "paste-clipboard", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the preedit text changes.
@@ -1121,10 +1157,12 @@ func (x *Text) ConnectPasteClipboard(cb *func(Text)) uint32 {
 // If an input method is used, the typed text will not immediately
 // be committed to the buffer. So if you are interested in the text,
 // connect to this signal.
-func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint32 {
+func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "preedit-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "preedit-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, PreeditVarp string) {
@@ -1137,7 +1175,9 @@ func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "preedit-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "preedit-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted to toggle the overwrite mode.
@@ -1145,10 +1185,12 @@ func (x *Text) ConnectPreeditChanged(cb *func(Text, string)) uint32 {
 // This is a [keybinding signal](class.SignalAction.html).
 //
 // The default bindings for this signal is &lt;kbd&gt;Insert&lt;/kbd&gt;.
-func (x *Text) ConnectToggleOverwrite(cb *func(Text)) uint32 {
+func (x *Text) ConnectToggleOverwrite(cb *func(Text)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "toggle-overwrite", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-overwrite", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -1161,7 +1203,9 @@ func (x *Text) ConnectToggleOverwrite(cb *func(Text)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "toggle-overwrite", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "toggle-overwrite", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Requests the user's screen reader to announce the given message.

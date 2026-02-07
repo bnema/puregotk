@@ -185,10 +185,12 @@ func (x *GestureStylus) GetPropertyStylusOnly() bool {
 }
 
 // Emitted when the stylus touches the device.
-func (x *GestureStylus) ConnectDown(cb *func(GestureStylus, float64, float64)) uint32 {
+func (x *GestureStylus) ConnectDown(cb *func(GestureStylus, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "down", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "down", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, XVarp float64, YVarp float64) {
@@ -201,14 +203,18 @@ func (x *GestureStylus) ConnectDown(cb *func(GestureStylus, float64, float64)) u
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "down", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "down", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the stylus moves while touching the device.
-func (x *GestureStylus) ConnectMotion(cb *func(GestureStylus, float64, float64)) uint32 {
+func (x *GestureStylus) ConnectMotion(cb *func(GestureStylus, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "motion", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "motion", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, XVarp float64, YVarp float64) {
@@ -221,14 +227,18 @@ func (x *GestureStylus) ConnectMotion(cb *func(GestureStylus, float64, float64))
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "motion", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "motion", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the stylus is in proximity of the device.
-func (x *GestureStylus) ConnectProximity(cb *func(GestureStylus, float64, float64)) uint32 {
+func (x *GestureStylus) ConnectProximity(cb *func(GestureStylus, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "proximity", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "proximity", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, XVarp float64, YVarp float64) {
@@ -241,14 +251,18 @@ func (x *GestureStylus) ConnectProximity(cb *func(GestureStylus, float64, float6
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "proximity", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "proximity", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when the stylus no longer touches the device.
-func (x *GestureStylus) ConnectUp(cb *func(GestureStylus, float64, float64)) uint32 {
+func (x *GestureStylus) ConnectUp(cb *func(GestureStylus, float64, float64)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "up", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "up", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, XVarp float64, YVarp float64) {
@@ -261,7 +275,9 @@ func (x *GestureStylus) ConnectUp(cb *func(GestureStylus, float64, float64)) uin
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "up", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "up", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 func init() {

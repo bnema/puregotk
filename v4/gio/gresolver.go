@@ -951,10 +951,12 @@ func (x *Resolver) GetPropertyTimeout() uint {
 
 // Emitted when the resolver notices that the system resolver
 // configuration has changed.
-func (x *Resolver) ConnectReload(cb *func(Resolver)) uint32 {
+func (x *Resolver) ConnectReload(cb *func(Resolver)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "reload", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "reload", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr) {
@@ -967,7 +969,9 @@ func (x *Resolver) ConnectReload(cb *func(Resolver)) uint32 {
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "reload", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "reload", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 var xResolverFreeAddresses func(*glib.List)

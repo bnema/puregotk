@@ -509,10 +509,12 @@ func (x *DBusObjectManagerClient) GetPropertyObjectPath() string {
 // This signal is emitted in the thread-default main context
 // (see [method@GLib.MainContext.push_thread_default])
 // that @manager was constructed in.
-func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *func(DBusObjectManagerClient, uintptr, uintptr, uintptr, []string)) uint32 {
+func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *func(DBusObjectManagerClient, uintptr, uintptr, uintptr, []string)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "interface-proxy-properties-changed", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-properties-changed", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, ChangedPropertiesVarp uintptr, InvalidatedPropertiesVarp []string) {
@@ -525,7 +527,9 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *fun
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "interface-proxy-properties-changed", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-properties-changed", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Emitted when a D-Bus signal is received on @interface_proxy.
@@ -536,10 +540,12 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxyPropertiesChanged(cb *fun
 // This signal is emitted in the thread-default main context
 // (see [method@GLib.MainContext.push_thread_default])
 // that @manager was constructed in.
-func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjectManagerClient, uintptr, uintptr, string, string, uintptr)) uint32 {
+func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjectManagerClient, uintptr, uintptr, string, string, uintptr)) uint {
 	cbPtr := uintptr(unsafe.Pointer(cb))
 	if cbRefPtr, ok := glib.GetCallback(cbPtr); ok {
-		return gobject.SignalConnect(x.GoPointer(), "interface-proxy-signal", cbRefPtr)
+		handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-signal", cbRefPtr)
+		glib.SaveHandlerMapping(handlerID, cbPtr)
+		return handlerID
 	}
 
 	fcb := func(clsPtr uintptr, ObjectProxyVarp uintptr, InterfaceProxyVarp uintptr, SenderNameVarp string, SignalNameVarp string, ParametersVarp uintptr) {
@@ -552,7 +558,9 @@ func (x *DBusObjectManagerClient) ConnectInterfaceProxySignal(cb *func(DBusObjec
 	}
 	cbRefPtr := purego.NewCallback(fcb)
 	glib.SaveCallbackWithClosure(cbPtr, cbRefPtr, cb)
-	return gobject.SignalConnect(x.GoPointer(), "interface-proxy-signal", cbRefPtr)
+	handlerID := gobject.SignalConnect(x.GoPointer(), "interface-proxy-signal", cbRefPtr)
+	glib.SaveHandlerMapping(handlerID, cbPtr)
+	return handlerID
 }
 
 // Starts asynchronous initialization of the object implementing the
