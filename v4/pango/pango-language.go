@@ -2,8 +2,6 @@
 package pango
 
 import (
-	"runtime"
-
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
@@ -24,12 +22,10 @@ var xLanguageFromString func(uintptr) *Language
 // `PangoLanguage` for the current locale of the process.
 func LanguageFromString(LanguageVar *string) *Language {
 
-	LanguageVarPtr, LanguageVarBytes := core.NullableStringToPtr(LanguageVar)
+	LanguageVarPtr := core.GStrdupNullable(LanguageVar)
+	defer core.GFreeNullable(LanguageVarPtr)
 
 	cret := xLanguageFromString(LanguageVarPtr)
-
-	runtime.KeepAlive(LanguageVarBytes)
-
 	return cret
 }
 
@@ -69,7 +65,6 @@ var xLanguageGetDefault func() *Language
 func LanguageGetDefault() *Language {
 
 	cret := xLanguageGetDefault()
-
 	return cret
 }
 
@@ -89,7 +84,6 @@ var xLanguageGetPreferred func() uintptr
 func LanguageGetPreferred() uintptr {
 
 	cret := xLanguageGetPreferred()
-
 	return cret
 }
 

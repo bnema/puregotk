@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -219,11 +218,10 @@ func NewPrintSettingsFromKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string)
 	var cls *PrintSettings
 	var cerr *glib.Error
 
-	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
 
 	cret := xNewPrintSettingsFromKeyFile(KeyFileVar, GroupNameVarPtr, &cerr)
-
-	runtime.KeepAlive(GroupNameVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -283,7 +281,6 @@ var xPrintSettingsGet func(uintptr, string) string
 func (x *PrintSettings) Get(KeyVar string) string {
 
 	cret := xPrintSettingsGet(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -297,7 +294,6 @@ var xPrintSettingsGetBool func(uintptr, string) bool
 func (x *PrintSettings) GetBool(KeyVar string) bool {
 
 	cret := xPrintSettingsGetBool(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -307,7 +303,6 @@ var xPrintSettingsGetCollate func(uintptr) bool
 func (x *PrintSettings) GetCollate() bool {
 
 	cret := xPrintSettingsGetCollate(x.GoPointer())
-
 	return cret
 }
 
@@ -317,7 +312,6 @@ var xPrintSettingsGetDefaultSource func(uintptr) string
 func (x *PrintSettings) GetDefaultSource() string {
 
 	cret := xPrintSettingsGetDefaultSource(x.GoPointer())
-
 	return cret
 }
 
@@ -327,7 +321,6 @@ var xPrintSettingsGetDither func(uintptr) string
 func (x *PrintSettings) GetDither() string {
 
 	cret := xPrintSettingsGetDither(x.GoPointer())
-
 	return cret
 }
 
@@ -337,7 +330,6 @@ var xPrintSettingsGetDouble func(uintptr, string) float64
 func (x *PrintSettings) GetDouble(KeyVar string) float64 {
 
 	cret := xPrintSettingsGetDouble(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -351,7 +343,6 @@ var xPrintSettingsGetDoubleWithDefault func(uintptr, string, float64) float64
 func (x *PrintSettings) GetDoubleWithDefault(KeyVar string, DefVar float64) float64 {
 
 	cret := xPrintSettingsGetDoubleWithDefault(x.GoPointer(), KeyVar, DefVar)
-
 	return cret
 }
 
@@ -361,7 +352,6 @@ var xPrintSettingsGetDuplex func(uintptr) PrintDuplex
 func (x *PrintSettings) GetDuplex() PrintDuplex {
 
 	cret := xPrintSettingsGetDuplex(x.GoPointer())
-
 	return cret
 }
 
@@ -371,7 +361,6 @@ var xPrintSettingsGetFinishings func(uintptr) string
 func (x *PrintSettings) GetFinishings() string {
 
 	cret := xPrintSettingsGetFinishings(x.GoPointer())
-
 	return cret
 }
 
@@ -381,7 +370,6 @@ var xPrintSettingsGetInt func(uintptr, string) int
 func (x *PrintSettings) GetInt(KeyVar string) int {
 
 	cret := xPrintSettingsGetInt(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -392,7 +380,6 @@ var xPrintSettingsGetIntWithDefault func(uintptr, string, int) int
 func (x *PrintSettings) GetIntWithDefault(KeyVar string, DefVar int) int {
 
 	cret := xPrintSettingsGetIntWithDefault(x.GoPointer(), KeyVar, DefVar)
-
 	return cret
 }
 
@@ -405,7 +392,6 @@ var xPrintSettingsGetLength func(uintptr, string, Unit) float64
 func (x *PrintSettings) GetLength(KeyVar string, UnitVar Unit) float64 {
 
 	cret := xPrintSettingsGetLength(x.GoPointer(), KeyVar, UnitVar)
-
 	return cret
 }
 
@@ -417,7 +403,6 @@ var xPrintSettingsGetMediaType func(uintptr) string
 func (x *PrintSettings) GetMediaType() string {
 
 	cret := xPrintSettingsGetMediaType(x.GoPointer())
-
 	return cret
 }
 
@@ -427,7 +412,6 @@ var xPrintSettingsGetNCopies func(uintptr) int
 func (x *PrintSettings) GetNCopies() int {
 
 	cret := xPrintSettingsGetNCopies(x.GoPointer())
-
 	return cret
 }
 
@@ -437,7 +421,6 @@ var xPrintSettingsGetNumberUp func(uintptr) int
 func (x *PrintSettings) GetNumberUp() int {
 
 	cret := xPrintSettingsGetNumberUp(x.GoPointer())
-
 	return cret
 }
 
@@ -447,7 +430,6 @@ var xPrintSettingsGetNumberUpLayout func(uintptr) NumberUpLayout
 func (x *PrintSettings) GetNumberUpLayout() NumberUpLayout {
 
 	cret := xPrintSettingsGetNumberUpLayout(x.GoPointer())
-
 	return cret
 }
 
@@ -458,7 +440,6 @@ var xPrintSettingsGetOrientation func(uintptr) PageOrientation
 func (x *PrintSettings) GetOrientation() PageOrientation {
 
 	cret := xPrintSettingsGetOrientation(x.GoPointer())
-
 	return cret
 }
 
@@ -468,7 +449,6 @@ var xPrintSettingsGetOutputBin func(uintptr) string
 func (x *PrintSettings) GetOutputBin() string {
 
 	cret := xPrintSettingsGetOutputBin(x.GoPointer())
-
 	return cret
 }
 
@@ -478,7 +458,6 @@ var xPrintSettingsGetPageRanges func(uintptr, *int) uintptr
 func (x *PrintSettings) GetPageRanges(NumRangesVar *int) uintptr {
 
 	cret := xPrintSettingsGetPageRanges(x.GoPointer(), NumRangesVar)
-
 	return cret
 }
 
@@ -488,7 +467,6 @@ var xPrintSettingsGetPageSet func(uintptr) PageSet
 func (x *PrintSettings) GetPageSet() PageSet {
 
 	cret := xPrintSettingsGetPageSet(x.GoPointer())
-
 	return cret
 }
 
@@ -499,7 +477,6 @@ var xPrintSettingsGetPaperHeight func(uintptr, Unit) float64
 func (x *PrintSettings) GetPaperHeight(UnitVar Unit) float64 {
 
 	cret := xPrintSettingsGetPaperHeight(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -510,7 +487,6 @@ var xPrintSettingsGetPaperSize func(uintptr) *PaperSize
 func (x *PrintSettings) GetPaperSize() *PaperSize {
 
 	cret := xPrintSettingsGetPaperSize(x.GoPointer())
-
 	return cret
 }
 
@@ -521,7 +497,6 @@ var xPrintSettingsGetPaperWidth func(uintptr, Unit) float64
 func (x *PrintSettings) GetPaperWidth(UnitVar Unit) float64 {
 
 	cret := xPrintSettingsGetPaperWidth(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -531,7 +506,6 @@ var xPrintSettingsGetPrintPages func(uintptr) PrintPages
 func (x *PrintSettings) GetPrintPages() PrintPages {
 
 	cret := xPrintSettingsGetPrintPages(x.GoPointer())
-
 	return cret
 }
 
@@ -542,7 +516,6 @@ var xPrintSettingsGetPrinter func(uintptr) string
 func (x *PrintSettings) GetPrinter() string {
 
 	cret := xPrintSettingsGetPrinter(x.GoPointer())
-
 	return cret
 }
 
@@ -552,7 +525,6 @@ var xPrintSettingsGetPrinterLpi func(uintptr) float64
 func (x *PrintSettings) GetPrinterLpi() float64 {
 
 	cret := xPrintSettingsGetPrinterLpi(x.GoPointer())
-
 	return cret
 }
 
@@ -562,7 +534,6 @@ var xPrintSettingsGetQuality func(uintptr) PrintQuality
 func (x *PrintSettings) GetQuality() PrintQuality {
 
 	cret := xPrintSettingsGetQuality(x.GoPointer())
-
 	return cret
 }
 
@@ -572,7 +543,6 @@ var xPrintSettingsGetResolution func(uintptr) int
 func (x *PrintSettings) GetResolution() int {
 
 	cret := xPrintSettingsGetResolution(x.GoPointer())
-
 	return cret
 }
 
@@ -582,7 +552,6 @@ var xPrintSettingsGetResolutionX func(uintptr) int
 func (x *PrintSettings) GetResolutionX() int {
 
 	cret := xPrintSettingsGetResolutionX(x.GoPointer())
-
 	return cret
 }
 
@@ -592,7 +561,6 @@ var xPrintSettingsGetResolutionY func(uintptr) int
 func (x *PrintSettings) GetResolutionY() int {
 
 	cret := xPrintSettingsGetResolutionY(x.GoPointer())
-
 	return cret
 }
 
@@ -602,7 +570,6 @@ var xPrintSettingsGetReverse func(uintptr) bool
 func (x *PrintSettings) GetReverse() bool {
 
 	cret := xPrintSettingsGetReverse(x.GoPointer())
-
 	return cret
 }
 
@@ -612,7 +579,6 @@ var xPrintSettingsGetScale func(uintptr) float64
 func (x *PrintSettings) GetScale() float64 {
 
 	cret := xPrintSettingsGetScale(x.GoPointer())
-
 	return cret
 }
 
@@ -622,7 +588,6 @@ var xPrintSettingsGetUseColor func(uintptr) bool
 func (x *PrintSettings) GetUseColor() bool {
 
 	cret := xPrintSettingsGetUseColor(x.GoPointer())
-
 	return cret
 }
 
@@ -632,7 +597,6 @@ var xPrintSettingsHasKey func(uintptr, string) bool
 func (x *PrintSettings) HasKey(KeyVar string) bool {
 
 	cret := xPrintSettingsHasKey(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -648,7 +612,6 @@ func (x *PrintSettings) LoadFile(FileNameVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPrintSettingsLoadFile(x.GoPointer(), FileNameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -665,12 +628,10 @@ var xPrintSettingsLoadKeyFile func(uintptr, *glib.KeyFile, uintptr, **glib.Error
 func (x *PrintSettings) LoadKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
 
 	cret := xPrintSettingsLoadKeyFile(x.GoPointer(), KeyFileVar, GroupNameVarPtr, &cerr)
-
-	runtime.KeepAlive(GroupNameVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -683,11 +644,10 @@ var xPrintSettingsSet func(uintptr, string, uintptr)
 // Associates @value with @key.
 func (x *PrintSettings) Set(KeyVar string, ValueVar *string) {
 
-	ValueVarPtr, ValueVarBytes := core.NullableStringToPtr(ValueVar)
+	ValueVarPtr := core.GStrdupNullable(ValueVar)
+	defer core.GFreeNullable(ValueVarPtr)
 
 	xPrintSettingsSet(x.GoPointer(), KeyVar, ValueVarPtr)
-
-	runtime.KeepAlive(ValueVarBytes)
 
 }
 
@@ -971,7 +931,6 @@ func (x *PrintSettings) ToFile(FileNameVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPrintSettingsToFile(x.GoPointer(), FileNameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -985,7 +944,6 @@ var xPrintSettingsToGvariant func(uintptr) *glib.Variant
 func (x *PrintSettings) ToGvariant() *glib.Variant {
 
 	cret := xPrintSettingsToGvariant(x.GoPointer())
-
 	return cret
 }
 
@@ -994,11 +952,10 @@ var xPrintSettingsToKeyFile func(uintptr, *glib.KeyFile, uintptr)
 // This function adds the print settings from @settings to @key_file.
 func (x *PrintSettings) ToKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) {
 
-	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
 
 	xPrintSettingsToKeyFile(x.GoPointer(), KeyFileVar, GroupNameVarPtr)
-
-	runtime.KeepAlive(GroupNameVarBytes)
 
 }
 

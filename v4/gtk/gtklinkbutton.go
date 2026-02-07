@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -95,11 +94,10 @@ var xNewLinkButtonWithLabel func(string, uintptr) uintptr
 func NewLinkButtonWithLabel(UriVar string, LabelVar *string) *LinkButton {
 	var cls *LinkButton
 
-	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
 
 	cret := xNewLinkButtonWithLabel(UriVar, LabelVarPtr)
-
-	runtime.KeepAlive(LabelVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -116,7 +114,6 @@ var xLinkButtonGetUri func(uintptr) string
 func (x *LinkButton) GetUri() string {
 
 	cret := xLinkButtonGetUri(x.GoPointer())
-
 	return cret
 }
 
@@ -131,7 +128,6 @@ var xLinkButtonGetVisited func(uintptr) bool
 func (x *LinkButton) GetVisited() bool {
 
 	cret := xLinkButtonGetVisited(x.GoPointer())
-
 	return cret
 }
 
@@ -272,7 +268,6 @@ func (x *LinkButton) GetAccessibleParent() *AccessibleBase {
 func (x *LinkButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -298,7 +293,6 @@ func (x *LinkButton) GetAtContext() *ATContext {
 func (x *LinkButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -338,7 +332,6 @@ func (x *LinkButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *LinkButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -512,7 +505,6 @@ func (x *LinkButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 func (x *LinkButton) GetActionName() string {
 
 	cret := XGtkActionableGetActionName(x.GoPointer())
-
 	return cret
 }
 
@@ -520,7 +512,6 @@ func (x *LinkButton) GetActionName() string {
 func (x *LinkButton) GetActionTargetValue() *glib.Variant {
 
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -539,11 +530,10 @@ func (x *LinkButton) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *LinkButton) SetActionName(ActionNameVar *string) {
 
-	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
 
 	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
-	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -604,7 +594,6 @@ func (x *LinkButton) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *LinkButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

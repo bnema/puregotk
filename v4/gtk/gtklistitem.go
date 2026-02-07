@@ -55,7 +55,6 @@ var xListItemGetAccessibleDescription func(uintptr) string
 func (x *ListItem) GetAccessibleDescription() string {
 
 	cret := xListItemGetAccessibleDescription(x.GoPointer())
-
 	return cret
 }
 
@@ -65,7 +64,6 @@ var xListItemGetAccessibleLabel func(uintptr) string
 func (x *ListItem) GetAccessibleLabel() string {
 
 	cret := xListItemGetAccessibleLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -76,7 +74,6 @@ var xListItemGetActivatable func(uintptr) bool
 func (x *ListItem) GetActivatable() bool {
 
 	cret := xListItemGetActivatable(x.GoPointer())
-
 	return cret
 }
 
@@ -105,7 +102,6 @@ var xListItemGetFocusable func(uintptr) bool
 func (x *ListItem) GetFocusable() bool {
 
 	cret := xListItemGetFocusable(x.GoPointer())
-
 	return cret
 }
 
@@ -136,7 +132,6 @@ var xListItemGetPosition func(uintptr) uint
 func (x *ListItem) GetPosition() uint {
 
 	cret := xListItemGetPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -149,7 +144,6 @@ var xListItemGetSelectable func(uintptr) bool
 func (x *ListItem) GetSelectable() bool {
 
 	cret := xListItemGetSelectable(x.GoPointer())
-
 	return cret
 }
 
@@ -162,7 +156,6 @@ var xListItemGetSelected func(uintptr) bool
 func (x *ListItem) GetSelected() bool {
 
 	cret := xListItemGetSelected(x.GoPointer())
-
 	return cret
 }
 

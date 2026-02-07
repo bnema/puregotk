@@ -3,7 +3,6 @@ package gtk
 
 import (
 	"fmt"
-	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -201,7 +200,6 @@ var xLevelBarGetInverted func(uintptr) bool
 func (x *LevelBar) GetInverted() bool {
 
 	cret := xLevelBarGetInverted(x.GoPointer())
-
 	return cret
 }
 
@@ -211,7 +209,6 @@ var xLevelBarGetMaxValue func(uintptr) float64
 func (x *LevelBar) GetMaxValue() float64 {
 
 	cret := xLevelBarGetMaxValue(x.GoPointer())
-
 	return cret
 }
 
@@ -221,7 +218,6 @@ var xLevelBarGetMinValue func(uintptr) float64
 func (x *LevelBar) GetMinValue() float64 {
 
 	cret := xLevelBarGetMinValue(x.GoPointer())
-
 	return cret
 }
 
@@ -231,7 +227,6 @@ var xLevelBarGetMode func(uintptr) LevelBarMode
 func (x *LevelBar) GetMode() LevelBarMode {
 
 	cret := xLevelBarGetMode(x.GoPointer())
-
 	return cret
 }
 
@@ -240,12 +235,10 @@ var xLevelBarGetOffsetValue func(uintptr, uintptr, *float64) bool
 // Fetches the value specified for the offset marker @name in @self.
 func (x *LevelBar) GetOffsetValue(NameVar *string, ValueVar *float64) bool {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	cret := xLevelBarGetOffsetValue(x.GoPointer(), NameVarPtr, ValueVar)
-
-	runtime.KeepAlive(NameVarBytes)
-
 	return cret
 }
 
@@ -255,7 +248,6 @@ var xLevelBarGetValue func(uintptr) float64
 func (x *LevelBar) GetValue() float64 {
 
 	cret := xLevelBarGetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -267,11 +259,10 @@ var xLevelBarRemoveOffsetValue func(uintptr, uintptr)
 // [method@Gtk.LevelBar.add_offset_value].
 func (x *LevelBar) RemoveOffsetValue(NameVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xLevelBarRemoveOffsetValue(x.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -503,7 +494,6 @@ func (x *LevelBar) GetAccessibleParent() *AccessibleBase {
 func (x *LevelBar) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -529,7 +519,6 @@ func (x *LevelBar) GetAtContext() *ATContext {
 func (x *LevelBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -569,7 +558,6 @@ func (x *LevelBar) GetNextAccessibleSibling() *AccessibleBase {
 func (x *LevelBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -746,7 +734,6 @@ func (x *LevelBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *LevelBar) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -754,7 +741,6 @@ func (x *LevelBar) GetBuildableId() string {
 func (x *LevelBar) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

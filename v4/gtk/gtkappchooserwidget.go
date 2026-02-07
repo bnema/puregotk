@@ -76,7 +76,6 @@ var xAppChooserWidgetGetDefaultText func(uintptr) string
 func (x *AppChooserWidget) GetDefaultText() string {
 
 	cret := xAppChooserWidgetGetDefaultText(x.GoPointer())
-
 	return cret
 }
 
@@ -87,7 +86,6 @@ var xAppChooserWidgetGetShowAll func(uintptr) bool
 func (x *AppChooserWidget) GetShowAll() bool {
 
 	cret := xAppChooserWidgetGetShowAll(x.GoPointer())
-
 	return cret
 }
 
@@ -98,7 +96,6 @@ var xAppChooserWidgetGetShowDefault func(uintptr) bool
 func (x *AppChooserWidget) GetShowDefault() bool {
 
 	cret := xAppChooserWidgetGetShowDefault(x.GoPointer())
-
 	return cret
 }
 
@@ -109,7 +106,6 @@ var xAppChooserWidgetGetShowFallback func(uintptr) bool
 func (x *AppChooserWidget) GetShowFallback() bool {
 
 	cret := xAppChooserWidgetGetShowFallback(x.GoPointer())
-
 	return cret
 }
 
@@ -120,7 +116,6 @@ var xAppChooserWidgetGetShowOther func(uintptr) bool
 func (x *AppChooserWidget) GetShowOther() bool {
 
 	cret := xAppChooserWidgetGetShowOther(x.GoPointer())
-
 	return cret
 }
 
@@ -131,7 +126,6 @@ var xAppChooserWidgetGetShowRecommended func(uintptr) bool
 func (x *AppChooserWidget) GetShowRecommended() bool {
 
 	cret := xAppChooserWidgetGetShowRecommended(x.GoPointer())
-
 	return cret
 }
 
@@ -427,7 +421,6 @@ func (x *AppChooserWidget) GetAccessibleParent() *AccessibleBase {
 func (x *AppChooserWidget) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -453,7 +446,6 @@ func (x *AppChooserWidget) GetAtContext() *ATContext {
 func (x *AppChooserWidget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -493,7 +485,6 @@ func (x *AppChooserWidget) GetNextAccessibleSibling() *AccessibleBase {
 func (x *AppChooserWidget) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -682,7 +673,6 @@ func (x *AppChooserWidget) GetAppInfo() *gio.AppInfoBase {
 func (x *AppChooserWidget) GetContentType() string {
 
 	cret := XGtkAppChooserGetContentType(x.GoPointer())
-
 	return cret
 }
 
@@ -700,7 +690,6 @@ func (x *AppChooserWidget) Refresh() {
 func (x *AppChooserWidget) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

@@ -162,7 +162,6 @@ func (x *Scrollbar) GetAccessibleParent() *AccessibleBase {
 func (x *Scrollbar) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -188,7 +187,6 @@ func (x *Scrollbar) GetAtContext() *ATContext {
 func (x *Scrollbar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -228,7 +226,6 @@ func (x *Scrollbar) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Scrollbar) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -405,7 +402,6 @@ func (x *Scrollbar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 func (x *Scrollbar) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -413,7 +409,6 @@ func (x *Scrollbar) GetBuildableId() string {
 func (x *Scrollbar) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

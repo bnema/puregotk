@@ -2,8 +2,6 @@
 package glib
 
 import (
-	"runtime"
-
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
@@ -76,7 +74,6 @@ var xAsciiDigitValue func(byte) int
 func AsciiDigitValue(CVar byte) int {
 
 	cret := xAsciiDigitValue(CVar)
-
 	return cret
 }
 
@@ -94,7 +91,6 @@ var xAsciiDtostr func(string, int, float64) string
 func AsciiDtostr(BufferVar string, BufLenVar int, DVar float64) string {
 
 	cret := xAsciiDtostr(BufferVar, BufLenVar, DVar)
-
 	return cret
 }
 
@@ -115,7 +111,6 @@ var xAsciiFormatd func(string, int, string, float64) string
 func AsciiFormatd(BufferVar string, BufLenVar int, FormatVar string, DVar float64) string {
 
 	cret := xAsciiFormatd(BufferVar, BufLenVar, FormatVar, DVar)
-
 	return cret
 }
 
@@ -139,7 +134,6 @@ var xAsciiStrcasecmp func(string, string) int
 func AsciiStrcasecmp(S1Var string, S2Var string) int {
 
 	cret := xAsciiStrcasecmp(S1Var, S2Var)
-
 	return cret
 }
 
@@ -150,7 +144,6 @@ var xAsciiStrdown func(string, int) string
 func AsciiStrdown(StrVar string, LenVar int) string {
 
 	cret := xAsciiStrdown(StrVar, LenVar)
-
 	return cret
 }
 
@@ -181,7 +174,6 @@ func AsciiStringToSigned(StrVar string, BaseVar uint, MinVar int64, MaxVar int64
 	var cerr *Error
 
 	cret := xAsciiStringToSigned(StrVar, BaseVar, MinVar, MaxVar, OutNumVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -217,7 +209,6 @@ func AsciiStringToUnsigned(StrVar string, BaseVar uint, MinVar uint64, MaxVar ui
 	var cerr *Error
 
 	cret := xAsciiStringToUnsigned(StrVar, BaseVar, MinVar, MaxVar, OutNumVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -242,7 +233,6 @@ var xAsciiStrncasecmp func(string, string, uint) int
 func AsciiStrncasecmp(S1Var string, S2Var string, NVar uint) int {
 
 	cret := xAsciiStrncasecmp(S1Var, S2Var, NVar)
-
 	return cret
 }
 
@@ -274,7 +264,6 @@ var xAsciiStrtod func(string, *string) float64
 func AsciiStrtod(NptrVar string, EndptrVar *string) float64 {
 
 	cret := xAsciiStrtod(NptrVar, EndptrVar)
-
 	return cret
 }
 
@@ -301,7 +290,6 @@ var xAsciiStrtoll func(string, *string, uint) int64
 func AsciiStrtoll(NptrVar string, EndptrVar *string, BaseVar uint) int64 {
 
 	cret := xAsciiStrtoll(NptrVar, EndptrVar, BaseVar)
-
 	return cret
 }
 
@@ -333,7 +321,6 @@ var xAsciiStrtoull func(string, *string, uint) uint64
 func AsciiStrtoull(NptrVar string, EndptrVar *string, BaseVar uint) uint64 {
 
 	cret := xAsciiStrtoull(NptrVar, EndptrVar, BaseVar)
-
 	return cret
 }
 
@@ -344,7 +331,6 @@ var xAsciiStrup func(string, int) string
 func AsciiStrup(StrVar string, LenVar int) string {
 
 	cret := xAsciiStrup(StrVar, LenVar)
-
 	return cret
 }
 
@@ -363,7 +349,6 @@ var xAsciiTolower func(byte) byte
 func AsciiTolower(CVar byte) byte {
 
 	cret := xAsciiTolower(CVar)
-
 	return cret
 }
 
@@ -382,7 +367,6 @@ var xAsciiToupper func(byte) byte
 func AsciiToupper(CVar byte) byte {
 
 	cret := xAsciiToupper(CVar)
-
 	return cret
 }
 
@@ -400,7 +384,6 @@ var xAsciiXdigitValue func(byte) int
 func AsciiXdigitValue(CVar byte) int {
 
 	cret := xAsciiXdigitValue(CVar)
-
 	return cret
 }
 
@@ -411,7 +394,6 @@ var xMemdup func(uintptr, uint) uintptr
 func Memdup(MemVar uintptr, ByteSizeVar uint) uintptr {
 
 	cret := xMemdup(MemVar, ByteSizeVar)
-
 	return cret
 }
 
@@ -425,7 +407,6 @@ var xMemdup2 func(uintptr, uint) uintptr
 func Memdup2(MemVar uintptr, ByteSizeVar uint) uintptr {
 
 	cret := xMemdup2(MemVar, ByteSizeVar)
-
 	return cret
 }
 
@@ -438,7 +419,6 @@ var xStpcpy func(string, string) string
 func Stpcpy(DestVar string, SrcVar string) string {
 
 	cret := xStpcpy(DestVar, SrcVar)
-
 	return cret
 }
 
@@ -448,7 +428,6 @@ var xStrHasPrefix func(string, string) bool
 func StrHasPrefix(StrVar string, PrefixVar string) bool {
 
 	cret := xStrHasPrefix(StrVar, PrefixVar)
-
 	return cret
 }
 
@@ -458,7 +437,6 @@ var xStrHasSuffix func(string, string) bool
 func StrHasSuffix(StrVar string, SuffixVar string) bool {
 
 	cret := xStrHasSuffix(StrVar, SuffixVar)
-
 	return cret
 }
 
@@ -469,7 +447,6 @@ var xStrIsAscii func(string) bool
 func StrIsAscii(StrVar string) bool {
 
 	cret := xStrIsAscii(StrVar)
-
 	return cret
 }
 
@@ -500,7 +477,6 @@ var xStrMatchString func(string, string, bool) bool
 func StrMatchString(SearchTermVar string, PotentialHitVar string, AcceptAlternatesVar bool) bool {
 
 	cret := xStrMatchString(SearchTermVar, PotentialHitVar, AcceptAlternatesVar)
-
 	return cret
 }
 
@@ -526,12 +502,10 @@ var xStrToAscii func(string, uintptr) string
 // @from_locale.
 func StrToAscii(StrVar string, FromLocaleVar *string) string {
 
-	FromLocaleVarPtr, FromLocaleVarBytes := core.NullableStringToPtr(FromLocaleVar)
+	FromLocaleVarPtr := core.GStrdupNullable(FromLocaleVar)
+	defer core.GFreeNullable(FromLocaleVarPtr)
 
 	cret := xStrToAscii(StrVar, FromLocaleVarPtr)
-
-	runtime.KeepAlive(FromLocaleVarBytes)
-
 	return cret
 }
 
@@ -554,12 +528,10 @@ var xStrTokenizeAndFold func(string, uintptr, *[]string) []string
 // known.
 func StrTokenizeAndFold(StringVar string, TranslitLocaleVar *string, AsciiAlternatesVar *[]string) []string {
 
-	TranslitLocaleVarPtr, TranslitLocaleVarBytes := core.NullableStringToPtr(TranslitLocaleVar)
+	TranslitLocaleVarPtr := core.GStrdupNullable(TranslitLocaleVar)
+	defer core.GFreeNullable(TranslitLocaleVarPtr)
 
 	cret := xStrTokenizeAndFold(StringVar, TranslitLocaleVarPtr, AsciiAlternatesVar)
-
-	runtime.KeepAlive(TranslitLocaleVarBytes)
-
 	return cret
 }
 
@@ -583,7 +555,6 @@ var xStrcanon func(string, string, byte) string
 func Strcanon(StringVar string, ValidCharsVar string, SubstitutorVar byte) string {
 
 	cret := xStrcanon(StringVar, ValidCharsVar, SubstitutorVar)
-
 	return cret
 }
 
@@ -594,7 +565,6 @@ var xStrcasecmp func(string, string) int
 func Strcasecmp(S1Var string, S2Var string) int {
 
 	cret := xStrcasecmp(S1Var, S2Var)
-
 	return cret
 }
 
@@ -612,7 +582,6 @@ var xStrchomp func(string) string
 func Strchomp(StringVar string) string {
 
 	cret := xStrchomp(StringVar)
-
 	return cret
 }
 
@@ -631,7 +600,6 @@ var xStrchug func(string) string
 func Strchug(StringVar string) string {
 
 	cret := xStrchug(StringVar)
-
 	return cret
 }
 
@@ -654,7 +622,6 @@ var xStrcompress func(string) string
 func Strcompress(SourceVar string) string {
 
 	cret := xStrcompress(SourceVar)
-
 	return cret
 }
 
@@ -671,7 +638,6 @@ var xStrconcat func(string, ...interface{}) string
 func Strconcat(String1Var string, varArgs ...interface{}) string {
 
 	cret := xStrconcat(String1Var, varArgs...)
-
 	return cret
 }
 
@@ -696,12 +662,10 @@ var xStrdelimit func(string, uintptr, byte) string
 // ```
 func Strdelimit(StringVar string, DelimitersVar *string, NewDelimiterVar byte) string {
 
-	DelimitersVarPtr, DelimitersVarBytes := core.NullableStringToPtr(DelimitersVar)
+	DelimitersVarPtr := core.GStrdupNullable(DelimitersVar)
+	defer core.GFreeNullable(DelimitersVarPtr)
 
 	cret := xStrdelimit(StringVar, DelimitersVarPtr, NewDelimiterVar)
-
-	runtime.KeepAlive(DelimitersVarBytes)
-
 	return cret
 }
 
@@ -711,7 +675,6 @@ var xStrdown func(string) string
 func Strdown(StringVar string) string {
 
 	cret := xStrdown(StringVar)
-
 	return cret
 }
 
@@ -720,12 +683,10 @@ var xStrdup func(uintptr) string
 // Duplicates a string. If @str is `NULL` it returns `NULL`.
 func Strdup(StrVar *string) string {
 
-	StrVarPtr, StrVarBytes := core.NullableStringToPtr(StrVar)
+	StrVarPtr := core.GStrdupNullable(StrVar)
+	defer core.GFreeNullable(StrVarPtr)
 
 	cret := xStrdup(StrVarPtr)
-
-	runtime.KeepAlive(StrVarBytes)
-
 	return cret
 }
 
@@ -741,7 +702,6 @@ var xStrdupPrintf func(string, ...interface{}) string
 func StrdupPrintf(FormatVar string, varArgs ...interface{}) string {
 
 	cret := xStrdupPrintf(FormatVar, varArgs...)
-
 	return cret
 }
 
@@ -760,7 +720,6 @@ var xStrdupVprintf func(string, []interface{}) string
 func StrdupVprintf(FormatVar string, ArgsVar []interface{}) string {
 
 	cret := xStrdupVprintf(FormatVar, ArgsVar)
-
 	return cret
 }
 
@@ -773,7 +732,6 @@ var xStrdupv func([]string) []string
 func Strdupv(StrArrayVar []string) []string {
 
 	cret := xStrdupv(StrArrayVar)
-
 	return cret
 }
 
@@ -803,7 +761,6 @@ var xStrerror func(int) string
 func Strerror(ErrnumVar int) string {
 
 	cret := xStrerror(ErrnumVar)
-
 	return cret
 }
 
@@ -830,12 +787,10 @@ var xStrescape func(string, uintptr) string
 // [func@GLib.strcompress] does the reverse conversion.
 func Strescape(SourceVar string, ExceptionsVar *string) string {
 
-	ExceptionsVarPtr, ExceptionsVarBytes := core.NullableStringToPtr(ExceptionsVar)
+	ExceptionsVarPtr := core.GStrdupNullable(ExceptionsVar)
+	defer core.GFreeNullable(ExceptionsVarPtr)
 
 	cret := xStrescape(SourceVar, ExceptionsVarPtr)
-
-	runtime.KeepAlive(ExceptionsVarBytes)
-
 	return cret
 }
 
@@ -856,12 +811,10 @@ var xStrjoin func(uintptr, ...interface{}) string
 // optional @separator inserted between each of them.
 func Strjoin(SeparatorVar *string, varArgs ...interface{}) string {
 
-	SeparatorVarPtr, SeparatorVarBytes := core.NullableStringToPtr(SeparatorVar)
+	SeparatorVarPtr := core.GStrdupNullable(SeparatorVar)
+	defer core.GFreeNullable(SeparatorVarPtr)
 
 	cret := xStrjoin(SeparatorVarPtr, varArgs...)
-
-	runtime.KeepAlive(SeparatorVarBytes)
-
 	return cret
 }
 
@@ -875,12 +828,10 @@ var xStrjoinv func(uintptr, []string) string
 // appear in the resulting string.
 func Strjoinv(SeparatorVar *string, StrArrayVar []string) string {
 
-	SeparatorVarPtr, SeparatorVarBytes := core.NullableStringToPtr(SeparatorVar)
+	SeparatorVarPtr := core.GStrdupNullable(SeparatorVar)
+	defer core.GFreeNullable(SeparatorVarPtr)
 
 	cret := xStrjoinv(SeparatorVarPtr, StrArrayVar)
-
-	runtime.KeepAlive(SeparatorVarBytes)
-
 	return cret
 }
 
@@ -902,7 +853,6 @@ var xStrlcat func(string, string, uint) uint
 func Strlcat(DestVar string, SrcVar string, DestSizeVar uint) uint {
 
 	cret := xStrlcat(DestVar, SrcVar, DestSizeVar)
-
 	return cret
 }
 
@@ -925,7 +875,6 @@ var xStrlcpy func(string, string, uint) uint
 func Strlcpy(DestVar string, SrcVar string, DestSizeVar uint) uint {
 
 	cret := xStrlcpy(DestVar, SrcVar, DestSizeVar)
-
 	return cret
 }
 
@@ -938,7 +887,6 @@ var xStrncasecmp func(string, string, uint) int
 func Strncasecmp(S1Var string, S2Var string, NVar uint) int {
 
 	cret := xStrncasecmp(S1Var, S2Var, NVar)
-
 	return cret
 }
 
@@ -953,12 +901,10 @@ var xStrndup func(uintptr, uint) string
 // use [func@GLib.utf8_strncpy] instead.
 func Strndup(StrVar *string, NVar uint) string {
 
-	StrVarPtr, StrVarBytes := core.NullableStringToPtr(StrVar)
+	StrVarPtr := core.GStrdupNullable(StrVar)
+	defer core.GFreeNullable(StrVarPtr)
 
 	cret := xStrndup(StrVarPtr, NVar)
-
-	runtime.KeepAlive(StrVarBytes)
-
 	return cret
 }
 
@@ -968,7 +914,6 @@ var xStrnfill func(uint, byte) string
 func Strnfill(LengthVar uint, FillCharVar byte) string {
 
 	cret := xStrnfill(LengthVar, FillCharVar)
-
 	return cret
 }
 
@@ -983,7 +928,6 @@ var xStrreverse func(string) string
 func Strreverse(StringVar string) string {
 
 	cret := xStrreverse(StringVar)
-
 	return cret
 }
 
@@ -997,7 +941,6 @@ var xStrrstr func(string, string) string
 func Strrstr(HaystackVar string, NeedleVar string) string {
 
 	cret := xStrrstr(HaystackVar, NeedleVar)
-
 	return cret
 }
 
@@ -1012,7 +955,6 @@ var xStrrstrLen func(string, int, string) string
 func StrrstrLen(HaystackVar string, HaystackLenVar int, NeedleVar string) string {
 
 	cret := xStrrstrLen(HaystackVar, HaystackLenVar, NeedleVar)
-
 	return cret
 }
 
@@ -1027,7 +969,6 @@ var xStrsignal func(int) string
 func Strsignal(SignumVar int) string {
 
 	cret := xStrsignal(SignumVar)
-
 	return cret
 }
 
@@ -1049,7 +990,6 @@ var xStrsplit func(string, string, int) []string
 func Strsplit(StringVar string, DelimiterVar string, MaxTokensVar int) []string {
 
 	cret := xStrsplit(StringVar, DelimiterVar, MaxTokensVar)
-
 	return cret
 }
 
@@ -1078,7 +1018,6 @@ var xStrsplitSet func(string, string, int) []string
 func StrsplitSet(StringVar string, DelimitersVar string, MaxTokensVar int) []string {
 
 	cret := xStrsplitSet(StringVar, DelimitersVar, MaxTokensVar)
-
 	return cret
 }
 
@@ -1096,7 +1035,6 @@ var xStrstrLen func(string, int, string) string
 func StrstrLen(HaystackVar string, HaystackLenVar int, NeedleVar string) string {
 
 	cret := xStrstrLen(HaystackVar, HaystackLenVar, NeedleVar)
-
 	return cret
 }
 
@@ -1117,7 +1055,6 @@ var xStrtod func(string, *string) float64
 func Strtod(NptrVar string, EndptrVar *string) float64 {
 
 	cret := xStrtod(NptrVar, EndptrVar)
-
 	return cret
 }
 
@@ -1127,7 +1064,6 @@ var xStrup func(string) string
 func Strup(StringVar string) string {
 
 	cret := xStrup(StringVar)
-
 	return cret
 }
 
@@ -1138,7 +1074,6 @@ var xStrvContains func([]string, string) bool
 func StrvContains(StrvVar []string, StrVar string) bool {
 
 	cret := xStrvContains(StrvVar, StrVar)
-
 	return cret
 }
 
@@ -1156,7 +1091,6 @@ var xStrvEqual func([]string, []string) bool
 func StrvEqual(Strv1Var []string, Strv2Var []string) bool {
 
 	cret := xStrvEqual(Strv1Var, Strv2Var)
-
 	return cret
 }
 
@@ -1166,7 +1100,6 @@ var xStrvLength func([]string) uint
 func StrvLength(StrArrayVar []string) uint {
 
 	cret := xStrvLength(StrArrayVar)
-
 	return cret
 }
 

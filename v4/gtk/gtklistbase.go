@@ -123,7 +123,6 @@ func (x *ListBase) GetAccessibleParent() *AccessibleBase {
 func (x *ListBase) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -149,7 +148,6 @@ func (x *ListBase) GetAtContext() *ATContext {
 func (x *ListBase) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -189,7 +187,6 @@ func (x *ListBase) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ListBase) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -366,7 +363,6 @@ func (x *ListBase) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *ListBase) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -374,7 +370,6 @@ func (x *ListBase) GetBuildableId() string {
 func (x *ListBase) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 
@@ -394,7 +389,6 @@ func (x *ListBase) SetOrientation(OrientationVar Orientation) {
 func (x *ListBase) GetBorder(BorderVar *Border) bool {
 
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
-
 	return cret
 }
 
@@ -417,7 +411,6 @@ func (x *ListBase) GetHadjustment() *Adjustment {
 func (x *ListBase) GetHscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
-
 	return cret
 }
 
@@ -440,7 +433,6 @@ func (x *ListBase) GetVadjustment() *Adjustment {
 func (x *ListBase) GetVscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
-
 	return cret
 }
 

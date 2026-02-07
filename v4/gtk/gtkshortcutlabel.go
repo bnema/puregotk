@@ -61,7 +61,6 @@ var xShortcutLabelGetAccelerator func(uintptr) string
 func (x *ShortcutLabel) GetAccelerator() string {
 
 	cret := xShortcutLabelGetAccelerator(x.GoPointer())
-
 	return cret
 }
 
@@ -71,7 +70,6 @@ var xShortcutLabelGetDisabledText func(uintptr) string
 func (x *ShortcutLabel) GetDisabledText() string {
 
 	cret := xShortcutLabelGetDisabledText(x.GoPointer())
-
 	return cret
 }
 
@@ -179,7 +177,6 @@ func (x *ShortcutLabel) GetAccessibleParent() *AccessibleBase {
 func (x *ShortcutLabel) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -205,7 +202,6 @@ func (x *ShortcutLabel) GetAtContext() *ATContext {
 func (x *ShortcutLabel) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -245,7 +241,6 @@ func (x *ShortcutLabel) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ShortcutLabel) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -422,7 +417,6 @@ func (x *ShortcutLabel) UpdateStateValue(NStatesVar int, StatesVar []AccessibleS
 func (x *ShortcutLabel) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

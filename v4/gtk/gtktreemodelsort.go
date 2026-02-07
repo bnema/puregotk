@@ -187,7 +187,6 @@ var xTreeModelSortConvertChildIterToIter func(uintptr, *TreeIter, *TreeIter) boo
 func (x *TreeModelSort) ConvertChildIterToIter(SortIterVar *TreeIter, ChildIterVar *TreeIter) bool {
 
 	cret := xTreeModelSortConvertChildIterToIter(x.GoPointer(), SortIterVar, ChildIterVar)
-
 	return cret
 }
 
@@ -200,7 +199,6 @@ var xTreeModelSortConvertChildPathToPath func(uintptr, *TreePath) *TreePath
 func (x *TreeModelSort) ConvertChildPathToPath(ChildPathVar *TreePath) *TreePath {
 
 	cret := xTreeModelSortConvertChildPathToPath(x.GoPointer(), ChildPathVar)
-
 	return cret
 }
 
@@ -223,7 +221,6 @@ var xTreeModelSortConvertPathToChildPath func(uintptr, *TreePath) *TreePath
 func (x *TreeModelSort) ConvertPathToChildPath(SortedPathVar *TreePath) *TreePath {
 
 	cret := xTreeModelSortConvertPathToChildPath(x.GoPointer(), SortedPathVar)
-
 	return cret
 }
 
@@ -253,7 +250,6 @@ var xTreeModelSortIterIsValid func(uintptr, *TreeIter) bool
 func (x *TreeModelSort) IterIsValid(IterVar *TreeIter) bool {
 
 	cret := xTreeModelSortIterIsValid(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -288,7 +284,6 @@ func (c *TreeModelSort) SetGoPointer(ptr uintptr) {
 func (x *TreeModelSort) DragDataDelete(PathVar *TreePath) bool {
 
 	cret := XGtkTreeDragSourceDragDataDelete(x.GoPointer(), PathVar)
-
 	return cret
 }
 
@@ -314,7 +309,6 @@ func (x *TreeModelSort) DragDataGet(PathVar *TreePath) *gdk.ContentProvider {
 func (x *TreeModelSort) RowDraggable(PathVar *TreePath) bool {
 
 	cret := XGtkTreeDragSourceRowDraggable(x.GoPointer(), PathVar)
-
 	return cret
 }
 
@@ -366,7 +360,6 @@ func (x *TreeModelSort) Get(IterVar *TreeIter, varArgs ...interface{}) {
 func (x *TreeModelSort) GetColumnType(IndexVar int) types.GType {
 
 	cret := XGtkTreeModelGetColumnType(x.GoPointer(), IndexVar)
-
 	return cret
 }
 
@@ -378,7 +371,6 @@ func (x *TreeModelSort) GetColumnType(IndexVar int) types.GType {
 func (x *TreeModelSort) GetFlags() TreeModelFlags {
 
 	cret := XGtkTreeModelGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -389,7 +381,6 @@ func (x *TreeModelSort) GetFlags() TreeModelFlags {
 func (x *TreeModelSort) GetIter(IterVar *TreeIter, PathVar *TreePath) bool {
 
 	cret := XGtkTreeModelGetIter(x.GoPointer(), IterVar, PathVar)
-
 	return cret
 }
 
@@ -400,7 +391,6 @@ func (x *TreeModelSort) GetIter(IterVar *TreeIter, PathVar *TreePath) bool {
 func (x *TreeModelSort) GetIterFirst(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelGetIterFirst(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -411,7 +401,6 @@ func (x *TreeModelSort) GetIterFirst(IterVar *TreeIter) bool {
 func (x *TreeModelSort) GetIterFromString(IterVar *TreeIter, PathStringVar string) bool {
 
 	cret := XGtkTreeModelGetIterFromString(x.GoPointer(), IterVar, PathStringVar)
-
 	return cret
 }
 
@@ -419,7 +408,6 @@ func (x *TreeModelSort) GetIterFromString(IterVar *TreeIter, PathStringVar strin
 func (x *TreeModelSort) GetNColumns() int {
 
 	cret := XGtkTreeModelGetNColumns(x.GoPointer())
-
 	return cret
 }
 
@@ -429,7 +417,6 @@ func (x *TreeModelSort) GetNColumns() int {
 func (x *TreeModelSort) GetPath(IterVar *TreeIter) *TreePath {
 
 	cret := XGtkTreeModelGetPath(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -441,7 +428,6 @@ func (x *TreeModelSort) GetPath(IterVar *TreeIter) *TreePath {
 func (x *TreeModelSort) GetStringFromIter(IterVar *TreeIter) string {
 
 	cret := XGtkTreeModelGetStringFromIter(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -476,7 +462,6 @@ func (x *TreeModelSort) GetValue(IterVar *TreeIter, ColumnVar int, ValueVar *gob
 func (x *TreeModelSort) IterChildren(IterVar *TreeIter, ParentVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterChildren(x.GoPointer(), IterVar, ParentVar)
-
 	return cret
 }
 
@@ -484,7 +469,6 @@ func (x *TreeModelSort) IterChildren(IterVar *TreeIter, ParentVar *TreeIter) boo
 func (x *TreeModelSort) IterHasChild(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterHasChild(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -495,7 +479,6 @@ func (x *TreeModelSort) IterHasChild(IterVar *TreeIter) bool {
 func (x *TreeModelSort) IterNChildren(IterVar *TreeIter) int {
 
 	cret := XGtkTreeModelIterNChildren(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -506,7 +489,6 @@ func (x *TreeModelSort) IterNChildren(IterVar *TreeIter) int {
 func (x *TreeModelSort) IterNext(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterNext(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -520,7 +502,6 @@ func (x *TreeModelSort) IterNext(IterVar *TreeIter) bool {
 func (x *TreeModelSort) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int) bool {
 
 	cret := XGtkTreeModelIterNthChild(x.GoPointer(), IterVar, ParentVar, NVar)
-
 	return cret
 }
 
@@ -536,7 +517,6 @@ func (x *TreeModelSort) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVa
 func (x *TreeModelSort) IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterParent(x.GoPointer(), IterVar, ChildVar)
-
 	return cret
 }
 
@@ -547,7 +527,6 @@ func (x *TreeModelSort) IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool {
 func (x *TreeModelSort) IterPrevious(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterPrevious(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -665,7 +644,6 @@ func (x *TreeModelSort) UnrefNode(IterVar *TreeIter) {
 func (x *TreeModelSort) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortType) bool {
 
 	cret := XGtkTreeSortableGetSortColumnId(x.GoPointer(), SortColumnIdVar, OrderVar)
-
 	return cret
 }
 
@@ -675,7 +653,6 @@ func (x *TreeModelSort) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortType
 func (x *TreeModelSort) HasDefaultSortFunc() bool {
 
 	cret := XGtkTreeSortableHasDefaultSortFunc(x.GoPointer())
-
 	return cret
 }
 

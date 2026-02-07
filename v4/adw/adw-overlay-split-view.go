@@ -203,7 +203,6 @@ var xOverlaySplitViewGetCollapsed func(uintptr) bool
 func (x *OverlaySplitView) GetCollapsed() bool {
 
 	cret := xOverlaySplitViewGetCollapsed(x.GoPointer())
-
 	return cret
 }
 
@@ -230,7 +229,6 @@ var xOverlaySplitViewGetEnableHideGesture func(uintptr) bool
 func (x *OverlaySplitView) GetEnableHideGesture() bool {
 
 	cret := xOverlaySplitViewGetEnableHideGesture(x.GoPointer())
-
 	return cret
 }
 
@@ -240,7 +238,6 @@ var xOverlaySplitViewGetEnableShowGesture func(uintptr) bool
 func (x *OverlaySplitView) GetEnableShowGesture() bool {
 
 	cret := xOverlaySplitViewGetEnableShowGesture(x.GoPointer())
-
 	return cret
 }
 
@@ -250,7 +247,6 @@ var xOverlaySplitViewGetMaxSidebarWidth func(uintptr) float64
 func (x *OverlaySplitView) GetMaxSidebarWidth() float64 {
 
 	cret := xOverlaySplitViewGetMaxSidebarWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -260,7 +256,6 @@ var xOverlaySplitViewGetMinSidebarWidth func(uintptr) float64
 func (x *OverlaySplitView) GetMinSidebarWidth() float64 {
 
 	cret := xOverlaySplitViewGetMinSidebarWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -270,7 +265,6 @@ var xOverlaySplitViewGetPinSidebar func(uintptr) bool
 func (x *OverlaySplitView) GetPinSidebar() bool {
 
 	cret := xOverlaySplitViewGetPinSidebar(x.GoPointer())
-
 	return cret
 }
 
@@ -280,7 +274,6 @@ var xOverlaySplitViewGetShowSidebar func(uintptr) bool
 func (x *OverlaySplitView) GetShowSidebar() bool {
 
 	cret := xOverlaySplitViewGetShowSidebar(x.GoPointer())
-
 	return cret
 }
 
@@ -307,7 +300,6 @@ var xOverlaySplitViewGetSidebarPosition func(uintptr) gtk.PackType
 func (x *OverlaySplitView) GetSidebarPosition() gtk.PackType {
 
 	cret := xOverlaySplitViewGetSidebarPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -317,7 +309,6 @@ var xOverlaySplitViewGetSidebarWidthFraction func(uintptr) float64
 func (x *OverlaySplitView) GetSidebarWidthFraction() float64 {
 
 	cret := xOverlaySplitViewGetSidebarWidthFraction(x.GoPointer())
-
 	return cret
 }
 
@@ -327,7 +318,6 @@ var xOverlaySplitViewGetSidebarWidthUnit func(uintptr) LengthUnit
 func (x *OverlaySplitView) GetSidebarWidthUnit() LengthUnit {
 
 	cret := xOverlaySplitViewGetSidebarWidthUnit(x.GoPointer())
-
 	return cret
 }
 
@@ -684,7 +674,6 @@ func (x *OverlaySplitView) GetPropertySidebarWidthFraction() float64 {
 func (x *OverlaySplitView) GetCancelProgress() float64 {
 
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
-
 	return cret
 }
 
@@ -694,7 +683,6 @@ func (x *OverlaySplitView) GetCancelProgress() float64 {
 func (x *OverlaySplitView) GetDistance() float64 {
 
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
-
 	return cret
 }
 
@@ -702,7 +690,6 @@ func (x *OverlaySplitView) GetDistance() float64 {
 func (x *OverlaySplitView) GetProgress() float64 {
 
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
-
 	return cret
 }
 
@@ -713,7 +700,6 @@ func (x *OverlaySplitView) GetProgress() float64 {
 func (x *OverlaySplitView) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
-
 	return cret
 }
 
@@ -767,7 +753,6 @@ func (x *OverlaySplitView) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *OverlaySplitView) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -793,7 +778,6 @@ func (x *OverlaySplitView) GetAtContext() *gtk.ATContext {
 func (x *OverlaySplitView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -833,7 +817,6 @@ func (x *OverlaySplitView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *OverlaySplitView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1010,7 +993,6 @@ func (x *OverlaySplitView) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acce
 func (x *OverlaySplitView) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

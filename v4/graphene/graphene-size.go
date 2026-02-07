@@ -37,7 +37,6 @@ var xSizeAlloc func() *Size
 func SizeAlloc() *Size {
 
 	cret := xSizeAlloc()
-
 	return cret
 }
 
@@ -47,7 +46,6 @@ var xSizeEqual func(uintptr, *Size) bool
 func (x *Size) Equal(BVar *Size) bool {
 
 	cret := xSizeEqual(x.GoPointer(), BVar)
-
 	return cret
 }
 
@@ -66,7 +64,6 @@ var xSizeInit func(uintptr, float32, float32) *Size
 func (x *Size) Init(WidthVar float32, HeightVar float32) *Size {
 
 	cret := xSizeInit(x.GoPointer(), WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -77,7 +74,6 @@ var xSizeInitFromSize func(uintptr, *Size) *Size
 func (x *Size) InitFromSize(SrcVar *Size) *Size {
 
 	cret := xSizeInitFromSize(x.GoPointer(), SrcVar)
-
 	return cret
 }
 
@@ -107,7 +103,6 @@ var xSizeZero func() *Size
 func SizeZero() *Size {
 
 	cret := xSizeZero()
-
 	return cret
 }
 

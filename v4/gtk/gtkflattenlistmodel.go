@@ -132,7 +132,6 @@ func (x *FlattenListModel) GetPropertyNItems() uint {
 func (x *FlattenListModel) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
-
 	return cret
 }
 
@@ -147,7 +146,6 @@ func (x *FlattenListModel) GetItem(PositionVar uint) uintptr {
 func (x *FlattenListModel) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
-
 	return cret
 }
 
@@ -159,7 +157,6 @@ func (x *FlattenListModel) GetItemType() types.GType {
 func (x *FlattenListModel) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
-
 	return cret
 }
 

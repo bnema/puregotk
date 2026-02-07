@@ -82,7 +82,6 @@ var xGridLayoutGetBaselineRow func(uintptr) int
 func (x *GridLayout) GetBaselineRow() int {
 
 	cret := xGridLayoutGetBaselineRow(x.GoPointer())
-
 	return cret
 }
 
@@ -92,7 +91,6 @@ var xGridLayoutGetColumnHomogeneous func(uintptr) bool
 func (x *GridLayout) GetColumnHomogeneous() bool {
 
 	cret := xGridLayoutGetColumnHomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -102,7 +100,6 @@ var xGridLayoutGetColumnSpacing func(uintptr) uint
 func (x *GridLayout) GetColumnSpacing() uint {
 
 	cret := xGridLayoutGetColumnSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -117,7 +114,6 @@ var xGridLayoutGetRowBaselinePosition func(uintptr, int) BaselinePosition
 func (x *GridLayout) GetRowBaselinePosition(RowVar int) BaselinePosition {
 
 	cret := xGridLayoutGetRowBaselinePosition(x.GoPointer(), RowVar)
-
 	return cret
 }
 
@@ -127,7 +123,6 @@ var xGridLayoutGetRowHomogeneous func(uintptr) bool
 func (x *GridLayout) GetRowHomogeneous() bool {
 
 	cret := xGridLayoutGetRowHomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -137,7 +132,6 @@ var xGridLayoutGetRowSpacing func(uintptr) uint
 func (x *GridLayout) GetRowSpacing() uint {
 
 	cret := xGridLayoutGetRowSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -321,7 +315,6 @@ var xGridLayoutChildGetColumn func(uintptr) int
 func (x *GridLayoutChild) GetColumn() int {
 
 	cret := xGridLayoutChildGetColumn(x.GoPointer())
-
 	return cret
 }
 
@@ -331,7 +324,6 @@ var xGridLayoutChildGetColumnSpan func(uintptr) int
 func (x *GridLayoutChild) GetColumnSpan() int {
 
 	cret := xGridLayoutChildGetColumnSpan(x.GoPointer())
-
 	return cret
 }
 
@@ -341,7 +333,6 @@ var xGridLayoutChildGetRow func(uintptr) int
 func (x *GridLayoutChild) GetRow() int {
 
 	cret := xGridLayoutChildGetRow(x.GoPointer())
-
 	return cret
 }
 
@@ -351,7 +342,6 @@ var xGridLayoutChildGetRowSpan func(uintptr) int
 func (x *GridLayoutChild) GetRowSpan() int {
 
 	cret := xGridLayoutChildGetRowSpan(x.GoPointer())
-
 	return cret
 }
 

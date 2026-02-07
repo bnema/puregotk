@@ -26,7 +26,6 @@ var xDmabufErrorQuark func() glib.Quark
 func DmabufErrorQuark() glib.Quark {
 
 	cret := xDmabufErrorQuark()
-
 	return cret
 }
 
@@ -106,7 +105,6 @@ func (x *DmabufTexture) GetCurrentImage() *PaintableBase {
 func (x *DmabufTexture) GetFlags() PaintableFlags {
 
 	cret := XGdkPaintableGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -130,7 +128,6 @@ func (x *DmabufTexture) GetFlags() PaintableFlags {
 func (x *DmabufTexture) GetIntrinsicAspectRatio() float64 {
 
 	cret := XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
-
 	return cret
 }
 
@@ -147,7 +144,6 @@ func (x *DmabufTexture) GetIntrinsicAspectRatio() float64 {
 func (x *DmabufTexture) GetIntrinsicHeight() int {
 
 	cret := XGdkPaintableGetIntrinsicHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -164,7 +160,6 @@ func (x *DmabufTexture) GetIntrinsicHeight() int {
 func (x *DmabufTexture) GetIntrinsicWidth() int {
 
 	cret := XGdkPaintableGetIntrinsicWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -215,7 +210,6 @@ func (x *DmabufTexture) Snapshot(SnapshotVar *Snapshot, WidthVar float64, Height
 func (x *DmabufTexture) Equal(Icon2Var gio.Icon) bool {
 
 	cret := gio.XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
-
 	return cret
 }
 
@@ -223,7 +217,6 @@ func (x *DmabufTexture) Equal(Icon2Var gio.Icon) bool {
 func (x *DmabufTexture) Hash() uint {
 
 	cret := gio.XGIconHash(x.GoPointer())
-
 	return cret
 }
 
@@ -235,7 +228,6 @@ func (x *DmabufTexture) Hash() uint {
 func (x *DmabufTexture) Serialize() *glib.Variant {
 
 	cret := gio.XGIconSerialize(x.GoPointer())
-
 	return cret
 }
 
@@ -258,7 +250,6 @@ func (x *DmabufTexture) Serialize() *glib.Variant {
 func (x *DmabufTexture) ToString() string {
 
 	cret := gio.XGIconToString(x.GoPointer())
-
 	return cret
 }
 

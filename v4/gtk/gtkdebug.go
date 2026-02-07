@@ -77,7 +77,6 @@ var xGetDebugFlags func() DebugFlags
 func GetDebugFlags() DebugFlags {
 
 	cret := xGetDebugFlags()
-
 	return cret
 }
 

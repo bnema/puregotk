@@ -228,7 +228,6 @@ var xScrolledWindowGetHasFrame func(uintptr) bool
 func (x *ScrolledWindow) GetHasFrame() bool {
 
 	cret := xScrolledWindowGetHasFrame(x.GoPointer())
-
 	return cret
 }
 
@@ -255,7 +254,6 @@ var xScrolledWindowGetKineticScrolling func(uintptr) bool
 func (x *ScrolledWindow) GetKineticScrolling() bool {
 
 	cret := xScrolledWindowGetKineticScrolling(x.GoPointer())
-
 	return cret
 }
 
@@ -265,7 +263,6 @@ var xScrolledWindowGetMaxContentHeight func(uintptr) int
 func (x *ScrolledWindow) GetMaxContentHeight() int {
 
 	cret := xScrolledWindowGetMaxContentHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -275,7 +272,6 @@ var xScrolledWindowGetMaxContentWidth func(uintptr) int
 func (x *ScrolledWindow) GetMaxContentWidth() int {
 
 	cret := xScrolledWindowGetMaxContentWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -285,7 +281,6 @@ var xScrolledWindowGetMinContentHeight func(uintptr) int
 func (x *ScrolledWindow) GetMinContentHeight() int {
 
 	cret := xScrolledWindowGetMinContentHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -295,7 +290,6 @@ var xScrolledWindowGetMinContentWidth func(uintptr) int
 func (x *ScrolledWindow) GetMinContentWidth() int {
 
 	cret := xScrolledWindowGetMinContentWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -305,7 +299,6 @@ var xScrolledWindowGetOverlayScrolling func(uintptr) bool
 func (x *ScrolledWindow) GetOverlayScrolling() bool {
 
 	cret := xScrolledWindowGetOverlayScrolling(x.GoPointer())
-
 	return cret
 }
 
@@ -315,7 +308,6 @@ var xScrolledWindowGetPlacement func(uintptr) CornerType
 func (x *ScrolledWindow) GetPlacement() CornerType {
 
 	cret := xScrolledWindowGetPlacement(x.GoPointer())
-
 	return cret
 }
 
@@ -338,7 +330,6 @@ var xScrolledWindowGetPropagateNaturalHeight func(uintptr) bool
 func (x *ScrolledWindow) GetPropagateNaturalHeight() bool {
 
 	cret := xScrolledWindowGetPropagateNaturalHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -349,7 +340,6 @@ var xScrolledWindowGetPropagateNaturalWidth func(uintptr) bool
 func (x *ScrolledWindow) GetPropagateNaturalWidth() bool {
 
 	cret := xScrolledWindowGetPropagateNaturalWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -934,7 +924,6 @@ func (x *ScrolledWindow) GetAccessibleParent() *AccessibleBase {
 func (x *ScrolledWindow) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -960,7 +949,6 @@ func (x *ScrolledWindow) GetAtContext() *ATContext {
 func (x *ScrolledWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -1000,7 +988,6 @@ func (x *ScrolledWindow) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ScrolledWindow) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1177,7 +1164,6 @@ func (x *ScrolledWindow) UpdateStateValue(NStatesVar int, StatesVar []Accessible
 func (x *ScrolledWindow) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

@@ -43,7 +43,6 @@ func ShellParseArgv(CommandLineVar string, ArgcpVar *int, ArgvpVar *[]string) (b
 	var cerr *Error
 
 	cret := xShellParseArgv(CommandLineVar, ArgcpVar, ArgvpVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -66,7 +65,6 @@ var xShellQuote func(string) string
 func ShellQuote(UnquotedStringVar string) string {
 
 	cret := xShellQuote(UnquotedStringVar)
-
 	return cret
 }
 
@@ -103,7 +101,6 @@ func ShellUnquote(QuotedStringVar string) (string, error) {
 	var cerr *Error
 
 	cret := xShellUnquote(QuotedStringVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

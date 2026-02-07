@@ -81,7 +81,6 @@ func (x *PowerProfileMonitorBase) SetGoPointer(ptr uintptr) {
 func (x *PowerProfileMonitorBase) GetPowerSaverEnabled() bool {
 
 	cret := XGPowerProfileMonitorGetPowerSaverEnabled(x.GoPointer())
-
 	return cret
 }
 

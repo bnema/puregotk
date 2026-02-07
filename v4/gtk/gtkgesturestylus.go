@@ -68,7 +68,6 @@ var xGestureStylusGetAxes func(uintptr, []gdk.AxisUse, *[]float64) bool
 func (x *GestureStylus) GetAxes(AxesVar []gdk.AxisUse, ValuesVar *[]float64) bool {
 
 	cret := xGestureStylusGetAxes(x.GoPointer(), AxesVar, ValuesVar)
-
 	return cret
 }
 
@@ -83,7 +82,6 @@ var xGestureStylusGetAxis func(uintptr, gdk.AxisUse, *float64) bool
 func (x *GestureStylus) GetAxis(AxisVar gdk.AxisUse, ValueVar *float64) bool {
 
 	cret := xGestureStylusGetAxis(x.GoPointer(), AxisVar, ValueVar)
-
 	return cret
 }
 
@@ -105,7 +103,6 @@ var xGestureStylusGetBacklog func(uintptr, *uintptr, *uint) bool
 func (x *GestureStylus) GetBacklog(BacklogVar *uintptr, NElemsVar *uint) bool {
 
 	cret := xGestureStylusGetBacklog(x.GoPointer(), BacklogVar, NElemsVar)
-
 	return cret
 }
 
@@ -140,7 +137,6 @@ var xGestureStylusGetStylusOnly func(uintptr) bool
 func (x *GestureStylus) GetStylusOnly() bool {
 
 	cret := xGestureStylusGetStylusOnly(x.GoPointer())
-
 	return cret
 }
 

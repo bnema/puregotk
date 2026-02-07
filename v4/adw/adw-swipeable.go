@@ -199,7 +199,6 @@ func (x *SwipeableBase) SetGoPointer(ptr uintptr) {
 func (x *SwipeableBase) GetCancelProgress() float64 {
 
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
-
 	return cret
 }
 
@@ -209,7 +208,6 @@ func (x *SwipeableBase) GetCancelProgress() float64 {
 func (x *SwipeableBase) GetDistance() float64 {
 
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
-
 	return cret
 }
 
@@ -217,7 +215,6 @@ func (x *SwipeableBase) GetDistance() float64 {
 func (x *SwipeableBase) GetProgress() float64 {
 
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
-
 	return cret
 }
 
@@ -228,7 +225,6 @@ func (x *SwipeableBase) GetProgress() float64 {
 func (x *SwipeableBase) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
-
 	return cret
 }
 

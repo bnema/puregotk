@@ -38,7 +38,6 @@ var xDialogErrorQuark func() glib.Quark
 func DialogErrorQuark() glib.Quark {
 
 	cret := xDialogErrorQuark()
-
 	return cret
 }
 

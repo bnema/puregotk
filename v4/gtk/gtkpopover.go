@@ -220,7 +220,6 @@ var xPopoverGetAutohide func(uintptr) bool
 func (x *Popover) GetAutohide() bool {
 
 	cret := xPopoverGetAutohide(x.GoPointer())
-
 	return cret
 }
 
@@ -230,7 +229,6 @@ var xPopoverGetCascadePopdown func(uintptr) bool
 func (x *Popover) GetCascadePopdown() bool {
 
 	cret := xPopoverGetCascadePopdown(x.GoPointer())
-
 	return cret
 }
 
@@ -258,7 +256,6 @@ var xPopoverGetHasArrow func(uintptr) bool
 func (x *Popover) GetHasArrow() bool {
 
 	cret := xPopoverGetHasArrow(x.GoPointer())
-
 	return cret
 }
 
@@ -268,7 +265,6 @@ var xPopoverGetMnemonicsVisible func(uintptr) bool
 func (x *Popover) GetMnemonicsVisible() bool {
 
 	cret := xPopoverGetMnemonicsVisible(x.GoPointer())
-
 	return cret
 }
 
@@ -292,7 +288,6 @@ var xPopoverGetPointingTo func(uintptr, *gdk.Rectangle) bool
 func (x *Popover) GetPointingTo(RectVar *gdk.Rectangle) bool {
 
 	cret := xPopoverGetPointingTo(x.GoPointer(), RectVar)
-
 	return cret
 }
 
@@ -302,7 +297,6 @@ var xPopoverGetPosition func(uintptr) PositionType
 func (x *Popover) GetPosition() PositionType {
 
 	cret := xPopoverGetPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -639,7 +633,6 @@ func (x *Popover) GetAccessibleParent() *AccessibleBase {
 func (x *Popover) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -665,7 +658,6 @@ func (x *Popover) GetAtContext() *ATContext {
 func (x *Popover) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -705,7 +697,6 @@ func (x *Popover) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Popover) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -882,7 +873,6 @@ func (x *Popover) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, 
 func (x *Popover) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

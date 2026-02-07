@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -57,11 +56,10 @@ var xNewUriLauncher func(uintptr) uintptr
 func NewUriLauncher(UriVar *string) *UriLauncher {
 	var cls *UriLauncher
 
-	UriVarPtr, UriVarBytes := core.NullableStringToPtr(UriVar)
+	UriVarPtr := core.GStrdupNullable(UriVar)
+	defer core.GFreeNullable(UriVarPtr)
 
 	cret := xNewUriLauncher(UriVarPtr)
-
-	runtime.KeepAlive(UriVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -81,7 +79,6 @@ var xUriLauncherCanLaunch func(uintptr, uintptr) bool
 func (x *UriLauncher) CanLaunch(ParentVar *Window) bool {
 
 	cret := xUriLauncherCanLaunch(x.GoPointer(), ParentVar.GoPointer())
-
 	return cret
 }
 
@@ -91,7 +88,6 @@ var xUriLauncherGetUri func(uintptr) string
 func (x *UriLauncher) GetUri() string {
 
 	cret := xUriLauncherGetUri(x.GoPointer())
-
 	return cret
 }
 
@@ -129,7 +125,6 @@ func (x *UriLauncher) LaunchFinish(ResultVar gio.AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xUriLauncherLaunchFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -142,11 +137,10 @@ var xUriLauncherSetUri func(uintptr, uintptr)
 // Sets the uri that will be opened.
 func (x *UriLauncher) SetUri(UriVar *string) {
 
-	UriVarPtr, UriVarBytes := core.NullableStringToPtr(UriVar)
+	UriVarPtr := core.GStrdupNullable(UriVar)
+	defer core.GFreeNullable(UriVarPtr)
 
 	xUriLauncherSetUri(x.GoPointer(), UriVarPtr)
-
-	runtime.KeepAlive(UriVarBytes)
 
 }
 

@@ -2,8 +2,6 @@
 package gtk
 
 import (
-	"runtime"
-
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
@@ -106,7 +104,6 @@ var xProgressBarGetEllipsize func(uintptr) pango.EllipsizeMode
 func (x *ProgressBar) GetEllipsize() pango.EllipsizeMode {
 
 	cret := xProgressBarGetEllipsize(x.GoPointer())
-
 	return cret
 }
 
@@ -116,7 +113,6 @@ var xProgressBarGetFraction func(uintptr) float64
 func (x *ProgressBar) GetFraction() float64 {
 
 	cret := xProgressBarGetFraction(x.GoPointer())
-
 	return cret
 }
 
@@ -126,7 +122,6 @@ var xProgressBarGetInverted func(uintptr) bool
 func (x *ProgressBar) GetInverted() bool {
 
 	cret := xProgressBarGetInverted(x.GoPointer())
-
 	return cret
 }
 
@@ -138,7 +133,6 @@ var xProgressBarGetPulseStep func(uintptr) float64
 func (x *ProgressBar) GetPulseStep() float64 {
 
 	cret := xProgressBarGetPulseStep(x.GoPointer())
-
 	return cret
 }
 
@@ -150,7 +144,6 @@ var xProgressBarGetShowText func(uintptr) bool
 func (x *ProgressBar) GetShowText() bool {
 
 	cret := xProgressBarGetShowText(x.GoPointer())
-
 	return cret
 }
 
@@ -163,7 +156,6 @@ var xProgressBarGetText func(uintptr) string
 func (x *ProgressBar) GetText() string {
 
 	cret := xProgressBarGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -262,11 +254,10 @@ var xProgressBarSetText func(uintptr, uintptr)
 // [property@Gtk.ProgressBar:show-text] is %TRUE.
 func (x *ProgressBar) SetText(TextVar *string) {
 
-	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
 
 	xProgressBarSetText(x.GoPointer(), TextVarPtr)
-
-	runtime.KeepAlive(TextVarBytes)
 
 }
 
@@ -419,7 +410,6 @@ func (x *ProgressBar) GetAccessibleParent() *AccessibleBase {
 func (x *ProgressBar) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -445,7 +435,6 @@ func (x *ProgressBar) GetAtContext() *ATContext {
 func (x *ProgressBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -485,7 +474,6 @@ func (x *ProgressBar) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ProgressBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -662,7 +650,6 @@ func (x *ProgressBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 func (x *ProgressBar) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -670,7 +657,6 @@ func (x *ProgressBar) GetBuildableId() string {
 func (x *ProgressBar) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

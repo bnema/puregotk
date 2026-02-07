@@ -92,7 +92,6 @@ var xFontButtonGetModal func(uintptr) bool
 func (x *FontButton) GetModal() bool {
 
 	cret := xFontButtonGetModal(x.GoPointer())
-
 	return cret
 }
 
@@ -102,7 +101,6 @@ var xFontButtonGetTitle func(uintptr) string
 func (x *FontButton) GetTitle() string {
 
 	cret := xFontButtonGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -112,7 +110,6 @@ var xFontButtonGetUseFont func(uintptr) bool
 func (x *FontButton) GetUseFont() bool {
 
 	cret := xFontButtonGetUseFont(x.GoPointer())
-
 	return cret
 }
 
@@ -122,7 +119,6 @@ var xFontButtonGetUseSize func(uintptr) bool
 func (x *FontButton) GetUseSize() bool {
 
 	cret := xFontButtonGetUseSize(x.GoPointer())
-
 	return cret
 }
 
@@ -336,7 +332,6 @@ func (x *FontButton) GetAccessibleParent() *AccessibleBase {
 func (x *FontButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -362,7 +357,6 @@ func (x *FontButton) GetAtContext() *ATContext {
 func (x *FontButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -402,7 +396,6 @@ func (x *FontButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *FontButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -579,7 +572,6 @@ func (x *FontButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 func (x *FontButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -596,7 +588,6 @@ func (x *FontButton) GetBuildableId() string {
 func (x *FontButton) GetFont() string {
 
 	cret := XGtkFontChooserGetFont(x.GoPointer())
-
 	return cret
 }
 
@@ -613,7 +604,6 @@ func (x *FontButton) GetFont() string {
 func (x *FontButton) GetFontDesc() *pango.FontDescription {
 
 	cret := XGtkFontChooserGetFontDesc(x.GoPointer())
-
 	return cret
 }
 
@@ -662,7 +652,6 @@ func (x *FontButton) GetFontFamily() *pango.FontFamily {
 func (x *FontButton) GetFontFeatures() string {
 
 	cret := XGtkFontChooserGetFontFeatures(x.GoPointer())
-
 	return cret
 }
 
@@ -685,7 +674,6 @@ func (x *FontButton) GetFontMap() *pango.FontMap {
 func (x *FontButton) GetFontSize() int {
 
 	cret := XGtkFontChooserGetFontSize(x.GoPointer())
-
 	return cret
 }
 
@@ -693,7 +681,6 @@ func (x *FontButton) GetFontSize() int {
 func (x *FontButton) GetLanguage() string {
 
 	cret := XGtkFontChooserGetLanguage(x.GoPointer())
-
 	return cret
 }
 
@@ -701,7 +688,6 @@ func (x *FontButton) GetLanguage() string {
 func (x *FontButton) GetLevel() FontChooserLevel {
 
 	cret := XGtkFontChooserGetLevel(x.GoPointer())
-
 	return cret
 }
 
@@ -709,7 +695,6 @@ func (x *FontButton) GetLevel() FontChooserLevel {
 func (x *FontButton) GetPreviewText() string {
 
 	cret := XGtkFontChooserGetPreviewText(x.GoPointer())
-
 	return cret
 }
 
@@ -717,7 +702,6 @@ func (x *FontButton) GetPreviewText() string {
 func (x *FontButton) GetShowPreviewEntry() bool {
 
 	cret := XGtkFontChooserGetShowPreviewEntry(x.GoPointer())
-
 	return cret
 }
 

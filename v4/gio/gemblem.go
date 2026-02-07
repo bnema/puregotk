@@ -97,7 +97,6 @@ var xEmblemGetOrigin func(uintptr) EmblemOrigin
 func (x *Emblem) GetOrigin() EmblemOrigin {
 
 	cret := xEmblemGetOrigin(x.GoPointer())
-
 	return cret
 }
 
@@ -116,7 +115,6 @@ func (c *Emblem) SetGoPointer(ptr uintptr) {
 func (x *Emblem) Equal(Icon2Var Icon) bool {
 
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
-
 	return cret
 }
 
@@ -124,7 +122,6 @@ func (x *Emblem) Equal(Icon2Var Icon) bool {
 func (x *Emblem) Hash() uint {
 
 	cret := XGIconHash(x.GoPointer())
-
 	return cret
 }
 
@@ -136,7 +133,6 @@ func (x *Emblem) Hash() uint {
 func (x *Emblem) Serialize() *glib.Variant {
 
 	cret := XGIconSerialize(x.GoPointer())
-
 	return cret
 }
 
@@ -159,7 +155,6 @@ func (x *Emblem) Serialize() *glib.Variant {
 func (x *Emblem) ToString() string {
 
 	cret := XGIconToString(x.GoPointer())
-
 	return cret
 }
 

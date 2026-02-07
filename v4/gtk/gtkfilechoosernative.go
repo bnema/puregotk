@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -198,19 +197,16 @@ var xNewFileChooserNative func(uintptr, uintptr, FileChooserAction, uintptr, uin
 func NewFileChooserNative(TitleVar *string, ParentVar *Window, ActionVar FileChooserAction, AcceptLabelVar *string, CancelLabelVar *string) *FileChooserNative {
 	var cls *FileChooserNative
 
-	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
 
-	AcceptLabelVarPtr, AcceptLabelVarBytes := core.NullableStringToPtr(AcceptLabelVar)
+	AcceptLabelVarPtr := core.GStrdupNullable(AcceptLabelVar)
+	defer core.GFreeNullable(AcceptLabelVarPtr)
 
-	CancelLabelVarPtr, CancelLabelVarBytes := core.NullableStringToPtr(CancelLabelVar)
+	CancelLabelVarPtr := core.GStrdupNullable(CancelLabelVar)
+	defer core.GFreeNullable(CancelLabelVarPtr)
 
 	cret := xNewFileChooserNative(TitleVarPtr, ParentVar.GoPointer(), ActionVar, AcceptLabelVarPtr, CancelLabelVarPtr)
-
-	runtime.KeepAlive(TitleVarBytes)
-
-	runtime.KeepAlive(AcceptLabelVarBytes)
-
-	runtime.KeepAlive(CancelLabelVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -226,7 +222,6 @@ var xFileChooserNativeGetAcceptLabel func(uintptr) string
 func (x *FileChooserNative) GetAcceptLabel() string {
 
 	cret := xFileChooserNativeGetAcceptLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -236,7 +231,6 @@ var xFileChooserNativeGetCancelLabel func(uintptr) string
 func (x *FileChooserNative) GetCancelLabel() string {
 
 	cret := xFileChooserNativeGetCancelLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -252,11 +246,10 @@ var xFileChooserNativeSetAcceptLabel func(uintptr, uintptr)
 // Pressing Alt and that key should activate the button.
 func (x *FileChooserNative) SetAcceptLabel(AcceptLabelVar *string) {
 
-	AcceptLabelVarPtr, AcceptLabelVarBytes := core.NullableStringToPtr(AcceptLabelVar)
+	AcceptLabelVarPtr := core.GStrdupNullable(AcceptLabelVar)
+	defer core.GFreeNullable(AcceptLabelVarPtr)
 
 	xFileChooserNativeSetAcceptLabel(x.GoPointer(), AcceptLabelVarPtr)
-
-	runtime.KeepAlive(AcceptLabelVarBytes)
 
 }
 
@@ -272,11 +265,10 @@ var xFileChooserNativeSetCancelLabel func(uintptr, uintptr)
 // Pressing Alt and that key should activate the button.
 func (x *FileChooserNative) SetCancelLabel(CancelLabelVar *string) {
 
-	CancelLabelVarPtr, CancelLabelVarBytes := core.NullableStringToPtr(CancelLabelVar)
+	CancelLabelVarPtr := core.GStrdupNullable(CancelLabelVar)
+	defer core.GFreeNullable(CancelLabelVarPtr)
 
 	xFileChooserNativeSetCancelLabel(x.GoPointer(), CancelLabelVarPtr)
-
-	runtime.KeepAlive(CancelLabelVarBytes)
 
 }
 
@@ -362,7 +354,6 @@ func (x *FileChooserNative) AddShortcutFolder(FolderVar gio.File) (bool, error) 
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserAddShortcutFolder(x.GoPointer(), FolderVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -374,7 +365,6 @@ func (x *FileChooserNative) AddShortcutFolder(FolderVar gio.File) (bool, error) 
 func (x *FileChooserNative) GetAction() FileChooserAction {
 
 	cret := XGtkFileChooserGetAction(x.GoPointer())
-
 	return cret
 }
 
@@ -382,7 +372,6 @@ func (x *FileChooserNative) GetAction() FileChooserAction {
 func (x *FileChooserNative) GetChoice(IdVar string) string {
 
 	cret := XGtkFileChooserGetChoice(x.GoPointer(), IdVar)
-
 	return cret
 }
 
@@ -390,7 +379,6 @@ func (x *FileChooserNative) GetChoice(IdVar string) string {
 func (x *FileChooserNative) GetCreateFolders() bool {
 
 	cret := XGtkFileChooserGetCreateFolders(x.GoPointer())
-
 	return cret
 }
 
@@ -415,7 +403,6 @@ func (x *FileChooserNative) GetCurrentFolder() *gio.FileBase {
 func (x *FileChooserNative) GetCurrentName() string {
 
 	cret := XGtkFileChooserGetCurrentName(x.GoPointer())
-
 	return cret
 }
 
@@ -495,7 +482,6 @@ func (x *FileChooserNative) GetFilters() *gio.ListModelBase {
 func (x *FileChooserNative) GetSelectMultiple() bool {
 
 	cret := XGtkFileChooserGetSelectMultiple(x.GoPointer())
-
 	return cret
 }
 
@@ -535,7 +521,6 @@ func (x *FileChooserNative) RemoveShortcutFolder(FolderVar gio.File) (bool, erro
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserRemoveShortcutFolder(x.GoPointer(), FolderVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -581,7 +566,6 @@ func (x *FileChooserNative) SetCurrentFolder(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserSetCurrentFolder(x.GoPointer(), FileVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -657,7 +641,6 @@ func (x *FileChooserNative) SetFile(FileVar gio.File) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGtkFileChooserSetFile(x.GoPointer(), FileVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

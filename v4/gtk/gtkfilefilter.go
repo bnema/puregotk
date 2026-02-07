@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -189,7 +188,6 @@ var xFileFilterGetAttributes func(uintptr) []string
 func (x *FileFilter) GetAttributes() []string {
 
 	cret := xFileFilterGetAttributes(x.GoPointer())
-
 	return cret
 }
 
@@ -201,7 +199,6 @@ var xFileFilterGetName func(uintptr) string
 func (x *FileFilter) GetName() string {
 
 	cret := xFileFilterGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -213,11 +210,10 @@ var xFileFilterSetName func(uintptr, uintptr)
 // if there is a selectable list of filters.
 func (x *FileFilter) SetName(NameVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xFileFilterSetName(x.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -227,7 +223,6 @@ var xFileFilterToGvariant func(uintptr) *glib.Variant
 func (x *FileFilter) ToGvariant() *glib.Variant {
 
 	cret := xFileFilterToGvariant(x.GoPointer())
-
 	return cret
 }
 
@@ -299,7 +294,6 @@ func (x *FileFilter) SetPropertySuffixes(value []string) {
 func (x *FileFilter) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

@@ -241,7 +241,6 @@ func (x *FontDialog) ChooseFontAndFeaturesFinish(ResultVar gio.AsyncResult, Font
 	var cerr *glib.Error
 
 	cret := xFontDialogChooseFontAndFeaturesFinish(x.GoPointer(), ResultVar.GoPointer(), FontDescVar, FontFeaturesVar, LanguageVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -259,7 +258,6 @@ func (x *FontDialog) ChooseFontFinish(ResultVar gio.AsyncResult) (*pango.FontDes
 	var cerr *glib.Error
 
 	cret := xFontDialogChooseFontFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -309,7 +307,6 @@ var xFontDialogGetLanguage func(uintptr) *pango.Language
 func (x *FontDialog) GetLanguage() *pango.Language {
 
 	cret := xFontDialogGetLanguage(x.GoPointer())
-
 	return cret
 }
 
@@ -320,7 +317,6 @@ var xFontDialogGetModal func(uintptr) bool
 func (x *FontDialog) GetModal() bool {
 
 	cret := xFontDialogGetModal(x.GoPointer())
-
 	return cret
 }
 
@@ -330,7 +326,6 @@ var xFontDialogGetTitle func(uintptr) string
 func (x *FontDialog) GetTitle() string {
 
 	cret := xFontDialogGetTitle(x.GoPointer())
-
 	return cret
 }
 

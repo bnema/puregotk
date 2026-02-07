@@ -204,7 +204,6 @@ func (x *DBusInterfaceBase) DupObject() *DBusObjectBase {
 func (x *DBusInterfaceBase) GetInfo() *DBusInterfaceInfo {
 
 	cret := XGDbusInterfaceGetInfo(x.GoPointer())
-
 	return cret
 }
 

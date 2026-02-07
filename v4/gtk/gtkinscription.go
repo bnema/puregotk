@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -83,11 +82,10 @@ var xNewInscription func(uintptr) uintptr
 func NewInscription(TextVar *string) *Inscription {
 	var cls *Inscription
 
-	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
 
 	cret := xNewInscription(TextVarPtr)
-
-	runtime.KeepAlive(TextVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -104,7 +102,6 @@ var xInscriptionGetAttributes func(uintptr) *pango.AttrList
 func (x *Inscription) GetAttributes() *pango.AttrList {
 
 	cret := xInscriptionGetAttributes(x.GoPointer())
-
 	return cret
 }
 
@@ -116,7 +113,6 @@ var xInscriptionGetMinChars func(uintptr) uint
 func (x *Inscription) GetMinChars() uint {
 
 	cret := xInscriptionGetMinChars(x.GoPointer())
-
 	return cret
 }
 
@@ -128,7 +124,6 @@ var xInscriptionGetMinLines func(uintptr) uint
 func (x *Inscription) GetMinLines() uint {
 
 	cret := xInscriptionGetMinLines(x.GoPointer())
-
 	return cret
 }
 
@@ -140,7 +135,6 @@ var xInscriptionGetNatChars func(uintptr) uint
 func (x *Inscription) GetNatChars() uint {
 
 	cret := xInscriptionGetNatChars(x.GoPointer())
-
 	return cret
 }
 
@@ -152,7 +146,6 @@ var xInscriptionGetNatLines func(uintptr) uint
 func (x *Inscription) GetNatLines() uint {
 
 	cret := xInscriptionGetNatLines(x.GoPointer())
-
 	return cret
 }
 
@@ -162,7 +155,6 @@ var xInscriptionGetText func(uintptr) string
 func (x *Inscription) GetText() string {
 
 	cret := xInscriptionGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -172,7 +164,6 @@ var xInscriptionGetTextOverflow func(uintptr) InscriptionOverflow
 func (x *Inscription) GetTextOverflow() InscriptionOverflow {
 
 	cret := xInscriptionGetTextOverflow(x.GoPointer())
-
 	return cret
 }
 
@@ -184,7 +175,6 @@ var xInscriptionGetWrapMode func(uintptr) pango.WrapMode
 func (x *Inscription) GetWrapMode() pango.WrapMode {
 
 	cret := xInscriptionGetWrapMode(x.GoPointer())
-
 	return cret
 }
 
@@ -196,7 +186,6 @@ var xInscriptionGetXalign func(uintptr) float32
 func (x *Inscription) GetXalign() float32 {
 
 	cret := xInscriptionGetXalign(x.GoPointer())
-
 	return cret
 }
 
@@ -208,7 +197,6 @@ var xInscriptionGetYalign func(uintptr) float32
 func (x *Inscription) GetYalign() float32 {
 
 	cret := xInscriptionGetYalign(x.GoPointer())
-
 	return cret
 }
 
@@ -230,11 +218,10 @@ var xInscriptionSetMarkup func(uintptr, uintptr)
 // See the [property@Gtk.Inscription:markup] property.
 func (x *Inscription) SetMarkup(MarkupVar *string) {
 
-	MarkupVarPtr, MarkupVarBytes := core.NullableStringToPtr(MarkupVar)
+	MarkupVarPtr := core.GStrdupNullable(MarkupVar)
+	defer core.GFreeNullable(MarkupVarPtr)
 
 	xInscriptionSetMarkup(x.GoPointer(), MarkupVarPtr)
-
-	runtime.KeepAlive(MarkupVarBytes)
 
 }
 
@@ -287,11 +274,10 @@ var xInscriptionSetText func(uintptr, uintptr)
 // Sets the text to be displayed.
 func (x *Inscription) SetText(TextVar *string) {
 
-	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
 
 	xInscriptionSetText(x.GoPointer(), TextVarPtr)
-
-	runtime.KeepAlive(TextVarBytes)
 
 }
 
@@ -610,7 +596,6 @@ func (x *Inscription) GetAccessibleParent() *AccessibleBase {
 func (x *Inscription) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -636,7 +621,6 @@ func (x *Inscription) GetAtContext() *ATContext {
 func (x *Inscription) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -676,7 +660,6 @@ func (x *Inscription) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Inscription) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -890,7 +873,6 @@ func (x *Inscription) UpdateSelectionBound() {
 func (x *Inscription) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -74,7 +73,6 @@ var xPreferencesRowGetTitle func(uintptr) string
 func (x *PreferencesRow) GetTitle() string {
 
 	cret := xPreferencesRowGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -84,7 +82,6 @@ var xPreferencesRowGetTitleSelectable func(uintptr) bool
 func (x *PreferencesRow) GetTitleSelectable() bool {
 
 	cret := xPreferencesRowGetTitleSelectable(x.GoPointer())
-
 	return cret
 }
 
@@ -94,7 +91,6 @@ var xPreferencesRowGetUseMarkup func(uintptr) bool
 func (x *PreferencesRow) GetUseMarkup() bool {
 
 	cret := xPreferencesRowGetUseMarkup(x.GoPointer())
-
 	return cret
 }
 
@@ -104,7 +100,6 @@ var xPreferencesRowGetUseUnderline func(uintptr) bool
 func (x *PreferencesRow) GetUseUnderline() bool {
 
 	cret := xPreferencesRowGetUseUnderline(x.GoPointer())
-
 	return cret
 }
 
@@ -285,7 +280,6 @@ func (x *PreferencesRow) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *PreferencesRow) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -311,7 +305,6 @@ func (x *PreferencesRow) GetAtContext() *gtk.ATContext {
 func (x *PreferencesRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -351,7 +344,6 @@ func (x *PreferencesRow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *PreferencesRow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -525,7 +517,6 @@ func (x *PreferencesRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.Access
 func (x *PreferencesRow) GetActionName() string {
 
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
-
 	return cret
 }
 
@@ -533,7 +524,6 @@ func (x *PreferencesRow) GetActionName() string {
 func (x *PreferencesRow) GetActionTargetValue() *glib.Variant {
 
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -552,11 +542,10 @@ func (x *PreferencesRow) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *PreferencesRow) SetActionName(ActionNameVar *string) {
 
-	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
 
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
-	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -617,7 +606,6 @@ func (x *PreferencesRow) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *PreferencesRow) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

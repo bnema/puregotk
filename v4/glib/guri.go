@@ -2,7 +2,6 @@
 package glib
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -198,7 +197,6 @@ var xUriGetAuthParams func(uintptr) string
 func (x *Uri) GetAuthParams() string {
 
 	cret := xUriGetAuthParams(x.GoPointer())
-
 	return cret
 }
 
@@ -208,7 +206,6 @@ var xUriGetFlags func(uintptr) UriFlags
 func (x *Uri) GetFlags() UriFlags {
 
 	cret := xUriGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -219,7 +216,6 @@ var xUriGetFragment func(uintptr) string
 func (x *Uri) GetFragment() string {
 
 	cret := xUriGetFragment(x.GoPointer())
-
 	return cret
 }
 
@@ -237,7 +233,6 @@ var xUriGetHost func(uintptr) string
 func (x *Uri) GetHost() string {
 
 	cret := xUriGetHost(x.GoPointer())
-
 	return cret
 }
 
@@ -249,7 +244,6 @@ var xUriGetPassword func(uintptr) string
 func (x *Uri) GetPassword() string {
 
 	cret := xUriGetPassword(x.GoPointer())
-
 	return cret
 }
 
@@ -260,7 +254,6 @@ var xUriGetPath func(uintptr) string
 func (x *Uri) GetPath() string {
 
 	cret := xUriGetPath(x.GoPointer())
-
 	return cret
 }
 
@@ -270,7 +263,6 @@ var xUriGetPort func(uintptr) int
 func (x *Uri) GetPort() int {
 
 	cret := xUriGetPort(x.GoPointer())
-
 	return cret
 }
 
@@ -284,7 +276,6 @@ var xUriGetQuery func(uintptr) string
 func (x *Uri) GetQuery() string {
 
 	cret := xUriGetQuery(x.GoPointer())
-
 	return cret
 }
 
@@ -295,7 +286,6 @@ var xUriGetScheme func(uintptr) string
 func (x *Uri) GetScheme() string {
 
 	cret := xUriGetScheme(x.GoPointer())
-
 	return cret
 }
 
@@ -308,7 +298,6 @@ var xUriGetUser func(uintptr) string
 func (x *Uri) GetUser() string {
 
 	cret := xUriGetUser(x.GoPointer())
-
 	return cret
 }
 
@@ -319,7 +308,6 @@ var xUriGetUserinfo func(uintptr) string
 func (x *Uri) GetUserinfo() string {
 
 	cret := xUriGetUserinfo(x.GoPointer())
-
 	return cret
 }
 
@@ -333,7 +321,6 @@ func (x *Uri) ParseRelative(UriRefVar string, FlagsVar UriFlags) (*Uri, error) {
 	var cerr *Error
 
 	cret := xUriParseRelative(x.GoPointer(), UriRefVar, FlagsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -347,7 +334,6 @@ var xUriRef func(uintptr) *Uri
 func (x *Uri) Ref() *Uri {
 
 	cret := xUriRef(x.GoPointer())
-
 	return cret
 }
 
@@ -368,7 +354,6 @@ var xUriToString func(uintptr) string
 func (x *Uri) ToString() string {
 
 	cret := xUriToString(x.GoPointer())
-
 	return cret
 }
 
@@ -379,7 +364,6 @@ var xUriToStringPartial func(uintptr, UriHideFlags) string
 func (x *Uri) ToStringPartial(FlagsVar UriHideFlags) string {
 
 	cret := xUriToStringPartial(x.GoPointer(), FlagsVar)
-
 	return cret
 }
 
@@ -480,7 +464,6 @@ func (x *UriParamsIter) Next(AttributeVar *string, ValueVar *string) (bool, erro
 	var cerr *Error
 
 	cret := xUriParamsIterNext(x.GoPointer(), AttributeVar, ValueVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -623,24 +606,19 @@ var xUriBuild func(UriFlags, string, uintptr, uintptr, int, string, uintptr, uin
 // components of the "userinfo" separately.
 func UriBuild(FlagsVar UriFlags, SchemeVar string, UserinfoVar *string, HostVar *string, PortVar int, PathVar string, QueryVar *string, FragmentVar *string) *Uri {
 
-	UserinfoVarPtr, UserinfoVarBytes := core.NullableStringToPtr(UserinfoVar)
+	UserinfoVarPtr := core.GStrdupNullable(UserinfoVar)
+	defer core.GFreeNullable(UserinfoVarPtr)
 
-	HostVarPtr, HostVarBytes := core.NullableStringToPtr(HostVar)
+	HostVarPtr := core.GStrdupNullable(HostVar)
+	defer core.GFreeNullable(HostVarPtr)
 
-	QueryVarPtr, QueryVarBytes := core.NullableStringToPtr(QueryVar)
+	QueryVarPtr := core.GStrdupNullable(QueryVar)
+	defer core.GFreeNullable(QueryVarPtr)
 
-	FragmentVarPtr, FragmentVarBytes := core.NullableStringToPtr(FragmentVar)
+	FragmentVarPtr := core.GStrdupNullable(FragmentVar)
+	defer core.GFreeNullable(FragmentVarPtr)
 
 	cret := xUriBuild(FlagsVar, SchemeVar, UserinfoVarPtr, HostVarPtr, PortVar, PathVar, QueryVarPtr, FragmentVarPtr)
-
-	runtime.KeepAlive(UserinfoVarBytes)
-
-	runtime.KeepAlive(HostVarBytes)
-
-	runtime.KeepAlive(QueryVarBytes)
-
-	runtime.KeepAlive(FragmentVarBytes)
-
 	return cret
 }
 
@@ -656,32 +634,25 @@ var xUriBuildWithUser func(UriFlags, string, uintptr, uintptr, uintptr, uintptr,
 // if either @password or @auth_params is non-%NULL.
 func UriBuildWithUser(FlagsVar UriFlags, SchemeVar string, UserVar *string, PasswordVar *string, AuthParamsVar *string, HostVar *string, PortVar int, PathVar string, QueryVar *string, FragmentVar *string) *Uri {
 
-	UserVarPtr, UserVarBytes := core.NullableStringToPtr(UserVar)
+	UserVarPtr := core.GStrdupNullable(UserVar)
+	defer core.GFreeNullable(UserVarPtr)
 
-	PasswordVarPtr, PasswordVarBytes := core.NullableStringToPtr(PasswordVar)
+	PasswordVarPtr := core.GStrdupNullable(PasswordVar)
+	defer core.GFreeNullable(PasswordVarPtr)
 
-	AuthParamsVarPtr, AuthParamsVarBytes := core.NullableStringToPtr(AuthParamsVar)
+	AuthParamsVarPtr := core.GStrdupNullable(AuthParamsVar)
+	defer core.GFreeNullable(AuthParamsVarPtr)
 
-	HostVarPtr, HostVarBytes := core.NullableStringToPtr(HostVar)
+	HostVarPtr := core.GStrdupNullable(HostVar)
+	defer core.GFreeNullable(HostVarPtr)
 
-	QueryVarPtr, QueryVarBytes := core.NullableStringToPtr(QueryVar)
+	QueryVarPtr := core.GStrdupNullable(QueryVar)
+	defer core.GFreeNullable(QueryVarPtr)
 
-	FragmentVarPtr, FragmentVarBytes := core.NullableStringToPtr(FragmentVar)
+	FragmentVarPtr := core.GStrdupNullable(FragmentVar)
+	defer core.GFreeNullable(FragmentVarPtr)
 
 	cret := xUriBuildWithUser(FlagsVar, SchemeVar, UserVarPtr, PasswordVarPtr, AuthParamsVarPtr, HostVarPtr, PortVar, PathVar, QueryVarPtr, FragmentVarPtr)
-
-	runtime.KeepAlive(UserVarBytes)
-
-	runtime.KeepAlive(PasswordVarBytes)
-
-	runtime.KeepAlive(AuthParamsVarBytes)
-
-	runtime.KeepAlive(HostVarBytes)
-
-	runtime.KeepAlive(QueryVarBytes)
-
-	runtime.KeepAlive(FragmentVarBytes)
-
 	return cret
 }
 
@@ -700,12 +671,10 @@ var xUriEscapeBytes func([]byte, uint, uintptr) string
 // bytes as `%“00`.
 func UriEscapeBytes(UnescapedVar []byte, LengthVar uint, ReservedCharsAllowedVar *string) string {
 
-	ReservedCharsAllowedVarPtr, ReservedCharsAllowedVarBytes := core.NullableStringToPtr(ReservedCharsAllowedVar)
+	ReservedCharsAllowedVarPtr := core.GStrdupNullable(ReservedCharsAllowedVar)
+	defer core.GFreeNullable(ReservedCharsAllowedVarPtr)
 
 	cret := xUriEscapeBytes(UnescapedVar, LengthVar, ReservedCharsAllowedVarPtr)
-
-	runtime.KeepAlive(ReservedCharsAllowedVarBytes)
-
 	return cret
 }
 
@@ -721,12 +690,10 @@ var xUriEscapeString func(string, uintptr, bool) string
 // portions of a URI.
 func UriEscapeString(UnescapedVar string, ReservedCharsAllowedVar *string, AllowUtf8Var bool) string {
 
-	ReservedCharsAllowedVarPtr, ReservedCharsAllowedVarBytes := core.NullableStringToPtr(ReservedCharsAllowedVar)
+	ReservedCharsAllowedVarPtr := core.GStrdupNullable(ReservedCharsAllowedVar)
+	defer core.GFreeNullable(ReservedCharsAllowedVarPtr)
 
 	cret := xUriEscapeString(UnescapedVar, ReservedCharsAllowedVarPtr, AllowUtf8Var)
-
-	runtime.KeepAlive(ReservedCharsAllowedVarBytes)
-
 	return cret
 }
 
@@ -744,7 +711,6 @@ func UriIsValid(UriStringVar string, FlagsVar UriFlags) (bool, error) {
 	var cerr *Error
 
 	cret := xUriIsValid(UriStringVar, FlagsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -770,28 +736,22 @@ var xUriJoin func(UriFlags, uintptr, uintptr, uintptr, int, string, uintptr, uin
 // in @flags.
 func UriJoin(FlagsVar UriFlags, SchemeVar *string, UserinfoVar *string, HostVar *string, PortVar int, PathVar string, QueryVar *string, FragmentVar *string) string {
 
-	SchemeVarPtr, SchemeVarBytes := core.NullableStringToPtr(SchemeVar)
+	SchemeVarPtr := core.GStrdupNullable(SchemeVar)
+	defer core.GFreeNullable(SchemeVarPtr)
 
-	UserinfoVarPtr, UserinfoVarBytes := core.NullableStringToPtr(UserinfoVar)
+	UserinfoVarPtr := core.GStrdupNullable(UserinfoVar)
+	defer core.GFreeNullable(UserinfoVarPtr)
 
-	HostVarPtr, HostVarBytes := core.NullableStringToPtr(HostVar)
+	HostVarPtr := core.GStrdupNullable(HostVar)
+	defer core.GFreeNullable(HostVarPtr)
 
-	QueryVarPtr, QueryVarBytes := core.NullableStringToPtr(QueryVar)
+	QueryVarPtr := core.GStrdupNullable(QueryVar)
+	defer core.GFreeNullable(QueryVarPtr)
 
-	FragmentVarPtr, FragmentVarBytes := core.NullableStringToPtr(FragmentVar)
+	FragmentVarPtr := core.GStrdupNullable(FragmentVar)
+	defer core.GFreeNullable(FragmentVarPtr)
 
 	cret := xUriJoin(FlagsVar, SchemeVarPtr, UserinfoVarPtr, HostVarPtr, PortVar, PathVar, QueryVarPtr, FragmentVarPtr)
-
-	runtime.KeepAlive(SchemeVarBytes)
-
-	runtime.KeepAlive(UserinfoVarBytes)
-
-	runtime.KeepAlive(HostVarBytes)
-
-	runtime.KeepAlive(QueryVarBytes)
-
-	runtime.KeepAlive(FragmentVarBytes)
-
 	return cret
 }
 
@@ -808,36 +768,28 @@ var xUriJoinWithUser func(UriFlags, uintptr, uintptr, uintptr, uintptr, uintptr,
 // in @flags.
 func UriJoinWithUser(FlagsVar UriFlags, SchemeVar *string, UserVar *string, PasswordVar *string, AuthParamsVar *string, HostVar *string, PortVar int, PathVar string, QueryVar *string, FragmentVar *string) string {
 
-	SchemeVarPtr, SchemeVarBytes := core.NullableStringToPtr(SchemeVar)
+	SchemeVarPtr := core.GStrdupNullable(SchemeVar)
+	defer core.GFreeNullable(SchemeVarPtr)
 
-	UserVarPtr, UserVarBytes := core.NullableStringToPtr(UserVar)
+	UserVarPtr := core.GStrdupNullable(UserVar)
+	defer core.GFreeNullable(UserVarPtr)
 
-	PasswordVarPtr, PasswordVarBytes := core.NullableStringToPtr(PasswordVar)
+	PasswordVarPtr := core.GStrdupNullable(PasswordVar)
+	defer core.GFreeNullable(PasswordVarPtr)
 
-	AuthParamsVarPtr, AuthParamsVarBytes := core.NullableStringToPtr(AuthParamsVar)
+	AuthParamsVarPtr := core.GStrdupNullable(AuthParamsVar)
+	defer core.GFreeNullable(AuthParamsVarPtr)
 
-	HostVarPtr, HostVarBytes := core.NullableStringToPtr(HostVar)
+	HostVarPtr := core.GStrdupNullable(HostVar)
+	defer core.GFreeNullable(HostVarPtr)
 
-	QueryVarPtr, QueryVarBytes := core.NullableStringToPtr(QueryVar)
+	QueryVarPtr := core.GStrdupNullable(QueryVar)
+	defer core.GFreeNullable(QueryVarPtr)
 
-	FragmentVarPtr, FragmentVarBytes := core.NullableStringToPtr(FragmentVar)
+	FragmentVarPtr := core.GStrdupNullable(FragmentVar)
+	defer core.GFreeNullable(FragmentVarPtr)
 
 	cret := xUriJoinWithUser(FlagsVar, SchemeVarPtr, UserVarPtr, PasswordVarPtr, AuthParamsVarPtr, HostVarPtr, PortVar, PathVar, QueryVarPtr, FragmentVarPtr)
-
-	runtime.KeepAlive(SchemeVarBytes)
-
-	runtime.KeepAlive(UserVarBytes)
-
-	runtime.KeepAlive(PasswordVarBytes)
-
-	runtime.KeepAlive(AuthParamsVarBytes)
-
-	runtime.KeepAlive(HostVarBytes)
-
-	runtime.KeepAlive(QueryVarBytes)
-
-	runtime.KeepAlive(FragmentVarBytes)
-
 	return cret
 }
 
@@ -850,7 +802,6 @@ func UriParse(UriStringVar string, FlagsVar UriFlags) (*Uri, error) {
 	var cerr *Error
 
 	cret := xUriParse(UriStringVar, FlagsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -888,7 +839,6 @@ func UriParseParams(ParamsVar string, LengthVar int, SeparatorsVar string, Flags
 	var cerr *Error
 
 	cret := xUriParseParams(ParamsVar, LengthVar, SeparatorsVar, FlagsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -908,7 +858,6 @@ var xUriParseScheme func(string) string
 func UriParseScheme(UriVar string) string {
 
 	cret := xUriParseScheme(UriVar)
-
 	return cret
 }
 
@@ -927,7 +876,6 @@ var xUriPeekScheme func(string) string
 func UriPeekScheme(UriVar string) string {
 
 	cret := xUriPeekScheme(UriVar)
-
 	return cret
 }
 
@@ -943,12 +891,10 @@ var xUriResolveRelative func(uintptr, string, UriFlags, **Error) string
 func UriResolveRelative(BaseUriStringVar *string, UriRefVar string, FlagsVar UriFlags) (string, error) {
 	var cerr *Error
 
-	BaseUriStringVarPtr, BaseUriStringVarBytes := core.NullableStringToPtr(BaseUriStringVar)
+	BaseUriStringVarPtr := core.GStrdupNullable(BaseUriStringVar)
+	defer core.GFreeNullable(BaseUriStringVarPtr)
 
 	cret := xUriResolveRelative(BaseUriStringVarPtr, UriRefVar, FlagsVar, &cerr)
-
-	runtime.KeepAlive(BaseUriStringVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -978,7 +924,6 @@ func UriSplit(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, UserinfoVa
 	var cerr *Error
 
 	cret := xUriSplit(UriRefVar, FlagsVar, SchemeVar, UserinfoVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -998,7 +943,6 @@ func UriSplitNetwork(UriStringVar string, FlagsVar UriFlags, SchemeVar *string, 
 	var cerr *Error
 
 	cret := xUriSplitNetwork(UriStringVar, FlagsVar, SchemeVar, HostVar, PortVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1023,7 +967,6 @@ func UriSplitWithUser(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, Us
 	var cerr *Error
 
 	cret := xUriSplitWithUser(UriRefVar, FlagsVar, SchemeVar, UserVar, PasswordVar, AuthParamsVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1046,12 +989,10 @@ var xUriUnescapeBytes func(string, int, uintptr, **Error) *Bytes
 func UriUnescapeBytes(EscapedStringVar string, LengthVar int, IllegalCharactersVar *string) (*Bytes, error) {
 	var cerr *Error
 
-	IllegalCharactersVarPtr, IllegalCharactersVarBytes := core.NullableStringToPtr(IllegalCharactersVar)
+	IllegalCharactersVarPtr := core.GStrdupNullable(IllegalCharactersVar)
+	defer core.GFreeNullable(IllegalCharactersVarPtr)
 
 	cret := xUriUnescapeBytes(EscapedStringVar, LengthVar, IllegalCharactersVarPtr, &cerr)
-
-	runtime.KeepAlive(IllegalCharactersVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1073,20 +1014,16 @@ var xUriUnescapeSegment func(uintptr, uintptr, uintptr) string
 // g_uri_unescape_bytes().
 func UriUnescapeSegment(EscapedStringVar *string, EscapedStringEndVar *string, IllegalCharactersVar *string) string {
 
-	EscapedStringVarPtr, EscapedStringVarBytes := core.NullableStringToPtr(EscapedStringVar)
+	EscapedStringVarPtr := core.GStrdupNullable(EscapedStringVar)
+	defer core.GFreeNullable(EscapedStringVarPtr)
 
-	EscapedStringEndVarPtr, EscapedStringEndVarBytes := core.NullableStringToPtr(EscapedStringEndVar)
+	EscapedStringEndVarPtr := core.GStrdupNullable(EscapedStringEndVar)
+	defer core.GFreeNullable(EscapedStringEndVarPtr)
 
-	IllegalCharactersVarPtr, IllegalCharactersVarBytes := core.NullableStringToPtr(IllegalCharactersVar)
+	IllegalCharactersVarPtr := core.GStrdupNullable(IllegalCharactersVar)
+	defer core.GFreeNullable(IllegalCharactersVarPtr)
 
 	cret := xUriUnescapeSegment(EscapedStringVarPtr, EscapedStringEndVarPtr, IllegalCharactersVarPtr)
-
-	runtime.KeepAlive(EscapedStringVarBytes)
-
-	runtime.KeepAlive(EscapedStringEndVarBytes)
-
-	runtime.KeepAlive(IllegalCharactersVarBytes)
-
 	return cret
 }
 
@@ -1101,12 +1038,10 @@ var xUriUnescapeString func(string, uintptr) string
 // escaped path element, which might confuse pathname handling.
 func UriUnescapeString(EscapedStringVar string, IllegalCharactersVar *string) string {
 
-	IllegalCharactersVarPtr, IllegalCharactersVarBytes := core.NullableStringToPtr(IllegalCharactersVar)
+	IllegalCharactersVarPtr := core.GStrdupNullable(IllegalCharactersVar)
+	defer core.GFreeNullable(IllegalCharactersVarPtr)
 
 	cret := xUriUnescapeString(EscapedStringVar, IllegalCharactersVarPtr)
-
-	runtime.KeepAlive(IllegalCharactersVarBytes)
-
 	return cret
 }
 

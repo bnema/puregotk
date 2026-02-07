@@ -83,7 +83,6 @@ var xTextTagTableAdd func(uintptr, uintptr) bool
 func (x *TextTagTable) Add(TagVar *TextTag) bool {
 
 	cret := xTextTagTableAdd(x.GoPointer(), TagVar.GoPointer())
-
 	return cret
 }
 
@@ -120,7 +119,6 @@ var xTextTagTableGetSize func(uintptr) int
 func (x *TextTagTable) GetSize() int {
 
 	cret := xTextTagTableGetSize(x.GoPointer())
-
 	return cret
 }
 
@@ -248,7 +246,6 @@ func (x *TextTagTable) ConnectTagRemoved(cb *func(TextTagTable, uintptr)) uint {
 func (x *TextTagTable) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

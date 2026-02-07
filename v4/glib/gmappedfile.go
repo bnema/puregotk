@@ -49,7 +49,6 @@ func NewMappedFile(FilenameVar string, WritableVar bool) (*MappedFile, error) {
 	var cerr *Error
 
 	cret := xNewMappedFile(FilenameVar, WritableVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -74,7 +73,6 @@ func NewMappedFileFromFd(FdVar int, WritableVar bool) (*MappedFile, error) {
 	var cerr *Error
 
 	cret := xNewMappedFileFromFd(FdVar, WritableVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -100,7 +98,6 @@ var xMappedFileGetBytes func(uintptr) *Bytes
 func (x *MappedFile) GetBytes() *Bytes {
 
 	cret := xMappedFileGetBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -115,7 +112,6 @@ var xMappedFileGetContents func(uintptr) string
 func (x *MappedFile) GetContents() string {
 
 	cret := xMappedFileGetContents(x.GoPointer())
-
 	return cret
 }
 
@@ -125,7 +121,6 @@ var xMappedFileGetLength func(uintptr) uint
 func (x *MappedFile) GetLength() uint {
 
 	cret := xMappedFileGetLength(x.GoPointer())
-
 	return cret
 }
 
@@ -136,7 +131,6 @@ var xMappedFileRef func(uintptr) *MappedFile
 func (x *MappedFile) Ref() *MappedFile {
 
 	cret := xMappedFileRef(x.GoPointer())
-
 	return cret
 }
 

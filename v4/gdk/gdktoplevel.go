@@ -106,7 +106,6 @@ func (x *ToplevelBase) Focus(TimestampVar uint32) {
 func (x *ToplevelBase) GetCapabilities() ToplevelCapabilities {
 
 	cret := XGdkToplevelGetCapabilities(x.GoPointer())
-
 	return cret
 }
 
@@ -115,7 +114,6 @@ func (x *ToplevelBase) GetCapabilities() ToplevelCapabilities {
 func (x *ToplevelBase) GetGravity() Gravity {
 
 	cret := XGdkToplevelGetGravity(x.GoPointer())
-
 	return cret
 }
 
@@ -124,7 +122,6 @@ func (x *ToplevelBase) GetGravity() Gravity {
 func (x *ToplevelBase) GetState() ToplevelState {
 
 	cret := XGdkToplevelGetState(x.GoPointer())
-
 	return cret
 }
 
@@ -161,7 +158,6 @@ func (x *ToplevelBase) InhibitSystemShortcuts(EventVar *Event) {
 func (x *ToplevelBase) Lower() bool {
 
 	cret := XGdkToplevelLower(x.GoPointer())
-
 	return cret
 }
 
@@ -171,7 +167,6 @@ func (x *ToplevelBase) Lower() bool {
 func (x *ToplevelBase) Minimize() bool {
 
 	cret := XGdkToplevelMinimize(x.GoPointer())
-
 	return cret
 }
 
@@ -306,7 +301,6 @@ func (x *ToplevelBase) SetTransientFor(ParentVar *Surface) {
 func (x *ToplevelBase) ShowWindowMenu(EventVar *Event) bool {
 
 	cret := XGdkToplevelShowWindowMenu(x.GoPointer(), EventVar.GoPointer())
-
 	return cret
 }
 
@@ -315,7 +309,6 @@ func (x *ToplevelBase) ShowWindowMenu(EventVar *Event) bool {
 func (x *ToplevelBase) SupportsEdgeConstraints() bool {
 
 	cret := XGdkToplevelSupportsEdgeConstraints(x.GoPointer())
-
 	return cret
 }
 
@@ -323,7 +316,6 @@ func (x *ToplevelBase) SupportsEdgeConstraints() bool {
 func (x *ToplevelBase) TitlebarGesture(GestureVar TitlebarGesture) bool {
 
 	cret := XGdkToplevelTitlebarGesture(x.GoPointer(), GestureVar)
-
 	return cret
 }
 

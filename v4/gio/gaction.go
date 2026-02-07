@@ -342,7 +342,6 @@ func (x *ActionBase) ChangeState(ValueVar *glib.Variant) {
 func (x *ActionBase) GetEnabled() bool {
 
 	cret := XGActionGetEnabled(x.GoPointer())
-
 	return cret
 }
 
@@ -350,7 +349,6 @@ func (x *ActionBase) GetEnabled() bool {
 func (x *ActionBase) GetName() string {
 
 	cret := XGActionGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -366,7 +364,6 @@ func (x *ActionBase) GetName() string {
 func (x *ActionBase) GetParameterType() *glib.VariantType {
 
 	cret := XGActionGetParameterType(x.GoPointer())
-
 	return cret
 }
 
@@ -381,7 +378,6 @@ func (x *ActionBase) GetParameterType() *glib.VariantType {
 func (x *ActionBase) GetState() *glib.Variant {
 
 	cret := XGActionGetState(x.GoPointer())
-
 	return cret
 }
 
@@ -406,7 +402,6 @@ func (x *ActionBase) GetState() *glib.Variant {
 func (x *ActionBase) GetStateHint() *glib.Variant {
 
 	cret := XGActionGetStateHint(x.GoPointer())
-
 	return cret
 }
 
@@ -425,7 +420,6 @@ func (x *ActionBase) GetStateHint() *glib.Variant {
 func (x *ActionBase) GetStateType() *glib.VariantType {
 
 	cret := XGActionGetStateType(x.GoPointer())
-
 	return cret
 }
 
@@ -507,7 +501,6 @@ var xActionNameIsValid func(string) bool
 func ActionNameIsValid(ActionNameVar string) bool {
 
 	cret := xActionNameIsValid(ActionNameVar)
-
 	return cret
 }
 
@@ -547,7 +540,6 @@ func ActionParseDetailedName(DetailedNameVar string, ActionNameVar *string, Targ
 	var cerr *glib.Error
 
 	cret := xActionParseDetailedName(DetailedNameVar, ActionNameVar, TargetValueVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -570,7 +562,6 @@ var xActionPrintDetailedName func(string, *glib.Variant) string
 func ActionPrintDetailedName(ActionNameVar string, TargetValueVar *glib.Variant) string {
 
 	cret := xActionPrintDetailedName(ActionNameVar, TargetValueVar)
-
 	return cret
 }
 

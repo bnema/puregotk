@@ -87,7 +87,6 @@ var xClipboardGetFormats func(uintptr) *ContentFormats
 func (x *Clipboard) GetFormats() *ContentFormats {
 
 	cret := xClipboardGetFormats(x.GoPointer())
-
 	return cret
 }
 
@@ -103,7 +102,6 @@ var xClipboardIsLocal func(uintptr) bool
 func (x *Clipboard) IsLocal() bool {
 
 	cret := xClipboardIsLocal(x.GoPointer())
-
 	return cret
 }
 
@@ -195,7 +193,6 @@ func (x *Clipboard) ReadTextFinish(ResultVar gio.AsyncResult) (string, error) {
 	var cerr *glib.Error
 
 	cret := xClipboardReadTextFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -292,7 +289,6 @@ func (x *Clipboard) ReadValueFinish(ResultVar gio.AsyncResult) (*gobject.Value, 
 	var cerr *glib.Error
 
 	cret := xClipboardReadValueFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -336,7 +332,6 @@ var xClipboardSetContent func(uintptr, uintptr) bool
 func (x *Clipboard) SetContent(ProviderVar *ContentProvider) bool {
 
 	cret := xClipboardSetContent(x.GoPointer(), ProviderVar.GoPointer())
-
 	return cret
 }
 
@@ -420,7 +415,6 @@ func (x *Clipboard) StoreFinish(ResultVar gio.AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xClipboardStoreFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

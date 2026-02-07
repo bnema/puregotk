@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -118,7 +117,6 @@ var xWindowControlsGetDecorationLayout func(uintptr) string
 func (x *WindowControls) GetDecorationLayout() string {
 
 	cret := xWindowControlsGetDecorationLayout(x.GoPointer())
-
 	return cret
 }
 
@@ -128,7 +126,6 @@ var xWindowControlsGetEmpty func(uintptr) bool
 func (x *WindowControls) GetEmpty() bool {
 
 	cret := xWindowControlsGetEmpty(x.GoPointer())
-
 	return cret
 }
 
@@ -138,7 +135,6 @@ var xWindowControlsGetSide func(uintptr) PackType
 func (x *WindowControls) GetSide() PackType {
 
 	cret := xWindowControlsGetSide(x.GoPointer())
-
 	return cret
 }
 
@@ -148,7 +144,6 @@ var xWindowControlsGetUseNativeControls func(uintptr) bool
 func (x *WindowControls) GetUseNativeControls() bool {
 
 	cret := xWindowControlsGetUseNativeControls(x.GoPointer())
-
 	return cret
 }
 
@@ -171,11 +166,10 @@ var xWindowControlsSetDecorationLayout func(uintptr, uintptr)
 // @self will display the part before the colon, otherwise after that.
 func (x *WindowControls) SetDecorationLayout(LayoutVar *string) {
 
-	LayoutVarPtr, LayoutVarBytes := core.NullableStringToPtr(LayoutVar)
+	LayoutVarPtr := core.GStrdupNullable(LayoutVar)
+	defer core.GFreeNullable(LayoutVarPtr)
 
 	xWindowControlsSetDecorationLayout(x.GoPointer(), LayoutVarPtr)
-
-	runtime.KeepAlive(LayoutVarBytes)
 
 }
 
@@ -313,7 +307,6 @@ func (x *WindowControls) GetAccessibleParent() *AccessibleBase {
 func (x *WindowControls) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -339,7 +332,6 @@ func (x *WindowControls) GetAtContext() *ATContext {
 func (x *WindowControls) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -379,7 +371,6 @@ func (x *WindowControls) GetNextAccessibleSibling() *AccessibleBase {
 func (x *WindowControls) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -556,7 +547,6 @@ func (x *WindowControls) UpdateStateValue(NStatesVar int, StatesVar []Accessible
 func (x *WindowControls) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

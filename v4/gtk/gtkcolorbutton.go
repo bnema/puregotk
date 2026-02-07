@@ -99,7 +99,6 @@ var xColorButtonGetModal func(uintptr) bool
 func (x *ColorButton) GetModal() bool {
 
 	cret := xColorButtonGetModal(x.GoPointer())
-
 	return cret
 }
 
@@ -109,7 +108,6 @@ var xColorButtonGetTitle func(uintptr) string
 func (x *ColorButton) GetTitle() string {
 
 	cret := xColorButtonGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -294,7 +292,6 @@ func (x *ColorButton) GetAccessibleParent() *AccessibleBase {
 func (x *ColorButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -320,7 +317,6 @@ func (x *ColorButton) GetAtContext() *ATContext {
 func (x *ColorButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -360,7 +356,6 @@ func (x *ColorButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ColorButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -537,7 +532,6 @@ func (x *ColorButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 func (x *ColorButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -575,7 +569,6 @@ func (x *ColorButton) GetRgba(ColorVar *gdk.RGBA) {
 func (x *ColorButton) GetUseAlpha() bool {
 
 	cret := XGtkColorChooserGetUseAlpha(x.GoPointer())
-
 	return cret
 }
 

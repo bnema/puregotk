@@ -2,7 +2,6 @@
 package gio
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -373,11 +372,10 @@ var xKeyfileSettingsBackendNew func(string, string, uintptr) uintptr
 func KeyfileSettingsBackendNew(FilenameVar string, RootPathVar string, RootGroupVar *string) *SettingsBackend {
 	var cls *SettingsBackend
 
-	RootGroupVarPtr, RootGroupVarBytes := core.NullableStringToPtr(RootGroupVar)
+	RootGroupVarPtr := core.GStrdupNullable(RootGroupVar)
+	defer core.GFreeNullable(RootGroupVarPtr)
 
 	cret := xKeyfileSettingsBackendNew(FilenameVar, RootPathVar, RootGroupVarPtr)
-
-	runtime.KeepAlive(RootGroupVarBytes)
 
 	if cret == 0 {
 		return nil

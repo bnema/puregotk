@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -258,11 +257,10 @@ var xNewLabel func(uintptr) uintptr
 func NewLabel(StrVar *string) *Label {
 	var cls *Label
 
-	StrVarPtr, StrVarBytes := core.NullableStringToPtr(StrVar)
+	StrVarPtr := core.GStrdupNullable(StrVar)
+	defer core.GFreeNullable(StrVarPtr)
 
 	cret := xNewLabel(StrVarPtr)
-
-	runtime.KeepAlive(StrVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -292,11 +290,10 @@ var xNewLabelWithMnemonic func(uintptr) uintptr
 func NewLabelWithMnemonic(StrVar *string) *Label {
 	var cls *Label
 
-	StrVarPtr, StrVarBytes := core.NullableStringToPtr(StrVar)
+	StrVarPtr := core.GStrdupNullable(StrVar)
+	defer core.GFreeNullable(StrVarPtr)
 
 	cret := xNewLabelWithMnemonic(StrVarPtr)
-
-	runtime.KeepAlive(StrVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -320,7 +317,6 @@ var xLabelGetAttributes func(uintptr) *pango.AttrList
 func (x *Label) GetAttributes() *pango.AttrList {
 
 	cret := xLabelGetAttributes(x.GoPointer())
-
 	return cret
 }
 
@@ -337,7 +333,6 @@ var xLabelGetCurrentUri func(uintptr) string
 func (x *Label) GetCurrentUri() string {
 
 	cret := xLabelGetCurrentUri(x.GoPointer())
-
 	return cret
 }
 
@@ -349,7 +344,6 @@ var xLabelGetEllipsize func(uintptr) pango.EllipsizeMode
 func (x *Label) GetEllipsize() pango.EllipsizeMode {
 
 	cret := xLabelGetEllipsize(x.GoPointer())
-
 	return cret
 }
 
@@ -380,7 +374,6 @@ var xLabelGetJustify func(uintptr) Justification
 func (x *Label) GetJustify() Justification {
 
 	cret := xLabelGetJustify(x.GoPointer())
-
 	return cret
 }
 
@@ -393,7 +386,6 @@ var xLabelGetLabel func(uintptr) string
 func (x *Label) GetLabel() string {
 
 	cret := xLabelGetLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -444,7 +436,6 @@ var xLabelGetLines func(uintptr) int
 func (x *Label) GetLines() int {
 
 	cret := xLabelGetLines(x.GoPointer())
-
 	return cret
 }
 
@@ -456,7 +447,6 @@ var xLabelGetMaxWidthChars func(uintptr) int
 func (x *Label) GetMaxWidthChars() int {
 
 	cret := xLabelGetMaxWidthChars(x.GoPointer())
-
 	return cret
 }
 
@@ -470,7 +460,6 @@ var xLabelGetMnemonicKeyval func(uintptr) uint
 func (x *Label) GetMnemonicKeyval() uint {
 
 	cret := xLabelGetMnemonicKeyval(x.GoPointer())
-
 	return cret
 }
 
@@ -501,7 +490,6 @@ var xLabelGetNaturalWrapMode func(uintptr) NaturalWrapMode
 func (x *Label) GetNaturalWrapMode() NaturalWrapMode {
 
 	cret := xLabelGetNaturalWrapMode(x.GoPointer())
-
 	return cret
 }
 
@@ -511,7 +499,6 @@ var xLabelGetSelectable func(uintptr) bool
 func (x *Label) GetSelectable() bool {
 
 	cret := xLabelGetSelectable(x.GoPointer())
-
 	return cret
 }
 
@@ -523,7 +510,6 @@ var xLabelGetSelectionBounds func(uintptr, *int, *int) bool
 func (x *Label) GetSelectionBounds(StartVar *int, EndVar *int) bool {
 
 	cret := xLabelGetSelectionBounds(x.GoPointer(), StartVar, EndVar)
-
 	return cret
 }
 
@@ -533,7 +519,6 @@ var xLabelGetSingleLineMode func(uintptr) bool
 func (x *Label) GetSingleLineMode() bool {
 
 	cret := xLabelGetSingleLineMode(x.GoPointer())
-
 	return cret
 }
 
@@ -545,7 +530,6 @@ var xLabelGetTabs func(uintptr) *pango.TabArray
 func (x *Label) GetTabs() *pango.TabArray {
 
 	cret := xLabelGetTabs(x.GoPointer())
-
 	return cret
 }
 
@@ -559,7 +543,6 @@ var xLabelGetText func(uintptr) string
 func (x *Label) GetText() string {
 
 	cret := xLabelGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -571,7 +554,6 @@ var xLabelGetUseMarkup func(uintptr) bool
 func (x *Label) GetUseMarkup() bool {
 
 	cret := xLabelGetUseMarkup(x.GoPointer())
-
 	return cret
 }
 
@@ -583,7 +565,6 @@ var xLabelGetUseUnderline func(uintptr) bool
 func (x *Label) GetUseUnderline() bool {
 
 	cret := xLabelGetUseUnderline(x.GoPointer())
-
 	return cret
 }
 
@@ -595,7 +576,6 @@ var xLabelGetWidthChars func(uintptr) int
 func (x *Label) GetWidthChars() int {
 
 	cret := xLabelGetWidthChars(x.GoPointer())
-
 	return cret
 }
 
@@ -607,7 +587,6 @@ var xLabelGetWrap func(uintptr) bool
 func (x *Label) GetWrap() bool {
 
 	cret := xLabelGetWrap(x.GoPointer())
-
 	return cret
 }
 
@@ -619,7 +598,6 @@ var xLabelGetWrapMode func(uintptr) pango.WrapMode
 func (x *Label) GetWrapMode() pango.WrapMode {
 
 	cret := xLabelGetWrapMode(x.GoPointer())
-
 	return cret
 }
 
@@ -631,7 +609,6 @@ var xLabelGetXalign func(uintptr) float32
 func (x *Label) GetXalign() float32 {
 
 	cret := xLabelGetXalign(x.GoPointer())
-
 	return cret
 }
 
@@ -643,7 +620,6 @@ var xLabelGetYalign func(uintptr) float32
 func (x *Label) GetYalign() float32 {
 
 	cret := xLabelGetYalign(x.GoPointer())
-
 	return cret
 }
 
@@ -1491,7 +1467,6 @@ func (x *Label) GetAccessibleParent() *AccessibleBase {
 func (x *Label) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -1517,7 +1492,6 @@ func (x *Label) GetAtContext() *ATContext {
 func (x *Label) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -1557,7 +1531,6 @@ func (x *Label) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Label) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1771,7 +1744,6 @@ func (x *Label) UpdateSelectionBound() {
 func (x *Label) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

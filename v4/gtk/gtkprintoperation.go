@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -493,7 +492,6 @@ var xPrintErrorQuark func() glib.Quark
 func PrintErrorQuark() glib.Quark {
 
 	cret := xPrintErrorQuark()
-
 	return cret
 }
 
@@ -695,7 +693,6 @@ var xPrintOperationGetEmbedPageSetup func(uintptr) bool
 func (x *PrintOperation) GetEmbedPageSetup() bool {
 
 	cret := xPrintOperationGetEmbedPageSetup(x.GoPointer())
-
 	return cret
 }
 
@@ -713,7 +710,6 @@ func (x *PrintOperation) GetError() error {
 	var cerr *glib.Error
 
 	xPrintOperationGetError(x.GoPointer())
-
 	if cerr == nil {
 		return nil
 	}
@@ -727,7 +723,6 @@ var xPrintOperationGetHasSelection func(uintptr) bool
 func (x *PrintOperation) GetHasSelection() bool {
 
 	cret := xPrintOperationGetHasSelection(x.GoPointer())
-
 	return cret
 }
 
@@ -746,7 +741,6 @@ var xPrintOperationGetNPagesToPrint func(uintptr) int
 func (x *PrintOperation) GetNPagesToPrint() int {
 
 	cret := xPrintOperationGetNPagesToPrint(x.GoPointer())
-
 	return cret
 }
 
@@ -779,7 +773,6 @@ var xPrintOperationGetStatus func(uintptr) PrintStatus
 func (x *PrintOperation) GetStatus() PrintStatus {
 
 	cret := xPrintOperationGetStatus(x.GoPointer())
-
 	return cret
 }
 
@@ -796,7 +789,6 @@ var xPrintOperationGetStatusString func(uintptr) string
 func (x *PrintOperation) GetStatusString() string {
 
 	cret := xPrintOperationGetStatusString(x.GoPointer())
-
 	return cret
 }
 
@@ -806,7 +798,6 @@ var xPrintOperationGetSupportSelection func(uintptr) bool
 func (x *PrintOperation) GetSupportSelection() bool {
 
 	cret := xPrintOperationGetSupportSelection(x.GoPointer())
-
 	return cret
 }
 
@@ -824,7 +815,6 @@ var xPrintOperationIsFinished func(uintptr) bool
 func (x *PrintOperation) IsFinished() bool {
 
 	cret := xPrintOperationIsFinished(x.GoPointer())
-
 	return cret
 }
 
@@ -901,7 +891,6 @@ func (x *PrintOperation) Run(ActionVar PrintOperationAction, ParentVar *Window) 
 	var cerr *glib.Error
 
 	cret := xPrintOperationRun(x.GoPointer(), ActionVar, ParentVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -941,11 +930,10 @@ var xPrintOperationSetCustomTabLabel func(uintptr, uintptr)
 // Sets the label for the tab holding custom widgets.
 func (x *PrintOperation) SetCustomTabLabel(LabelVar *string) {
 
-	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
 
 	xPrintOperationSetCustomTabLabel(x.GoPointer(), LabelVarPtr)
-
-	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -1899,7 +1887,6 @@ func (x *PrintOperation) EndPreview() {
 func (x *PrintOperation) IsSelected(PageNrVar int) bool {
 
 	cret := XGtkPrintOperationPreviewIsSelected(x.GoPointer(), PageNrVar)
-
 	return cret
 }
 

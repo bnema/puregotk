@@ -78,7 +78,6 @@ var xStringChunkInsert func(uintptr, string) string
 func (x *StringChunk) Insert(StringVar string) string {
 
 	cret := xStringChunkInsert(x.GoPointer(), StringVar)
-
 	return cret
 }
 
@@ -100,7 +99,6 @@ var xStringChunkInsertConst func(uintptr, string) string
 func (x *StringChunk) InsertConst(StringVar string) string {
 
 	cret := xStringChunkInsertConst(x.GoPointer(), StringVar)
-
 	return cret
 }
 
@@ -118,7 +116,6 @@ var xStringChunkInsertLen func(uintptr, string, int) string
 func (x *StringChunk) InsertLen(StringVar string, LenVar int) string {
 
 	cret := xStringChunkInsertLen(x.GoPointer(), StringVar, LenVar)
-
 	return cret
 }
 

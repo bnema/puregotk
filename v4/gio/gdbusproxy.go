@@ -3,7 +3,6 @@ package gio
 
 import (
 	"fmt"
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -245,11 +244,10 @@ func NewDBusProxySync(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, In
 	var cls *DBusProxy
 	var cerr *glib.Error
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	cret := xNewDBusProxySync(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVarPtr, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), &cerr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -337,7 +335,6 @@ func (x *DBusProxy) CallFinish(ResVar AsyncResult) (*glib.Variant, error) {
 	var cerr *glib.Error
 
 	cret := xDBusProxyCallFinish(x.GoPointer(), ResVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -387,7 +384,6 @@ func (x *DBusProxy) CallSync(MethodNameVar string, ParametersVar *glib.Variant, 
 	var cerr *glib.Error
 
 	cret := xDBusProxyCallSync(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -428,7 +424,6 @@ func (x *DBusProxy) CallWithUnixFdListFinish(OutFdListVar **UnixFDList, ResVar A
 	var cerr *glib.Error
 
 	cret := xDBusProxyCallWithUnixFdListFinish(x.GoPointer(), OutFdListVar, ResVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -445,7 +440,6 @@ func (x *DBusProxy) CallWithUnixFdListSync(MethodNameVar string, ParametersVar *
 	var cerr *glib.Error
 
 	cret := xDBusProxyCallWithUnixFdListSync(x.GoPointer(), MethodNameVar, ParametersVar, FlagsVar, TimeoutMsecVar, FdListVar.GoPointer(), OutFdListVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -464,7 +458,6 @@ var xDBusProxyGetCachedProperty func(uintptr, string) *glib.Variant
 func (x *DBusProxy) GetCachedProperty(PropertyNameVar string) *glib.Variant {
 
 	cret := xDBusProxyGetCachedProperty(x.GoPointer(), PropertyNameVar)
-
 	return cret
 }
 
@@ -474,7 +467,6 @@ var xDBusProxyGetCachedPropertyNames func(uintptr) []string
 func (x *DBusProxy) GetCachedPropertyNames() []string {
 
 	cret := xDBusProxyGetCachedPropertyNames(x.GoPointer())
-
 	return cret
 }
 
@@ -505,7 +497,6 @@ var xDBusProxyGetDefaultTimeout func(uintptr) int
 func (x *DBusProxy) GetDefaultTimeout() int {
 
 	cret := xDBusProxyGetDefaultTimeout(x.GoPointer())
-
 	return cret
 }
 
@@ -515,7 +506,6 @@ var xDBusProxyGetFlags func(uintptr) DBusProxyFlags
 func (x *DBusProxy) GetFlags() DBusProxyFlags {
 
 	cret := xDBusProxyGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -527,7 +517,6 @@ var xDBusProxyGetInterfaceInfo func(uintptr) *DBusInterfaceInfo
 func (x *DBusProxy) GetInterfaceInfo() *DBusInterfaceInfo {
 
 	cret := xDBusProxyGetInterfaceInfo(x.GoPointer())
-
 	return cret
 }
 
@@ -537,7 +526,6 @@ var xDBusProxyGetInterfaceName func(uintptr) string
 func (x *DBusProxy) GetInterfaceName() string {
 
 	cret := xDBusProxyGetInterfaceName(x.GoPointer())
-
 	return cret
 }
 
@@ -551,7 +539,6 @@ var xDBusProxyGetName func(uintptr) string
 func (x *DBusProxy) GetName() string {
 
 	cret := xDBusProxyGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -564,7 +551,6 @@ var xDBusProxyGetNameOwner func(uintptr) string
 func (x *DBusProxy) GetNameOwner() string {
 
 	cret := xDBusProxyGetNameOwner(x.GoPointer())
-
 	return cret
 }
 
@@ -574,7 +560,6 @@ var xDBusProxyGetObjectPath func(uintptr) string
 func (x *DBusProxy) GetObjectPath() string {
 
 	cret := xDBusProxyGetObjectPath(x.GoPointer())
-
 	return cret
 }
 
@@ -950,7 +935,6 @@ func (x *DBusProxy) InitFinish(ResVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGAsyncInitableInitFinish(x.GoPointer(), ResVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -997,7 +981,6 @@ func (x *DBusProxy) DupObject() *DBusObjectBase {
 func (x *DBusProxy) GetInfo() *DBusInterfaceInfo {
 
 	cret := XGDbusInterfaceGetInfo(x.GoPointer())
-
 	return cret
 }
 
@@ -1071,7 +1054,6 @@ func (x *DBusProxy) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1125,11 +1107,10 @@ func DBusProxyNew(ConnectionVar *DBusConnection, FlagsVar DBusProxyFlags, InfoVa
 		}
 	}
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xDBusProxyNew(ConnectionVar.GoPointer(), FlagsVar, InfoVar, NameVarPtr, ObjectPathVar, InterfaceNameVar, CancellableVar.GoPointer(), CallbackVarRef, UserDataVar)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 

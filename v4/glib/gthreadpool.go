@@ -77,7 +77,6 @@ var xThreadPoolGetMaxThreads func(uintptr) int
 func (x *ThreadPool) GetMaxThreads() int {
 
 	cret := xThreadPoolGetMaxThreads(x.GoPointer())
-
 	return cret
 }
 
@@ -87,7 +86,6 @@ var xThreadPoolGetNumThreads func(uintptr) uint
 func (x *ThreadPool) GetNumThreads() uint {
 
 	cret := xThreadPoolGetNumThreads(x.GoPointer())
-
 	return cret
 }
 
@@ -98,7 +96,6 @@ var xThreadPoolMoveToFront func(uintptr, uintptr) bool
 func (x *ThreadPool) MoveToFront(DataVar uintptr) bool {
 
 	cret := xThreadPoolMoveToFront(x.GoPointer(), DataVar)
-
 	return cret
 }
 
@@ -122,7 +119,6 @@ func (x *ThreadPool) Push(DataVar uintptr) (bool, error) {
 	var cerr *Error
 
 	cret := xThreadPoolPush(x.GoPointer(), DataVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -156,7 +152,6 @@ func (x *ThreadPool) SetMaxThreads(MaxThreadsVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xThreadPoolSetMaxThreads(x.GoPointer(), MaxThreadsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -202,7 +197,6 @@ var xThreadPoolUnprocessed func(uintptr) uint
 func (x *ThreadPool) Unprocessed() uint {
 
 	cret := xThreadPoolUnprocessed(x.GoPointer())
-
 	return cret
 }
 
@@ -217,7 +211,6 @@ var xThreadPoolGetMaxIdleTime func() uint
 func ThreadPoolGetMaxIdleTime() uint {
 
 	cret := xThreadPoolGetMaxIdleTime()
-
 	return cret
 }
 
@@ -227,7 +220,6 @@ var xThreadPoolGetMaxUnusedThreads func() int
 func ThreadPoolGetMaxUnusedThreads() int {
 
 	cret := xThreadPoolGetMaxUnusedThreads()
-
 	return cret
 }
 
@@ -237,7 +229,6 @@ var xThreadPoolGetNumUnusedThreads func() uint
 func ThreadPoolGetNumUnusedThreads() uint {
 
 	cret := xThreadPoolGetNumUnusedThreads()
-
 	return cret
 }
 

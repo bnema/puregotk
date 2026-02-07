@@ -27,7 +27,6 @@ var xKeyvalFromName func(string) uint
 func KeyvalFromName(KeyvalNameVar string) uint {
 
 	cret := xKeyvalFromName(KeyvalNameVar)
-
 	return cret
 }
 
@@ -37,7 +36,6 @@ var xKeyvalIsLower func(uint) bool
 func KeyvalIsLower(KeyvalVar uint) bool {
 
 	cret := xKeyvalIsLower(KeyvalVar)
-
 	return cret
 }
 
@@ -47,7 +45,6 @@ var xKeyvalIsUpper func(uint) bool
 func KeyvalIsUpper(KeyvalVar uint) bool {
 
 	cret := xKeyvalIsUpper(KeyvalVar)
-
 	return cret
 }
 
@@ -61,7 +58,6 @@ var xKeyvalName func(uint) string
 func KeyvalName(KeyvalVar uint) string {
 
 	cret := xKeyvalName(KeyvalVar)
-
 	return cret
 }
 
@@ -71,7 +67,6 @@ var xKeyvalToLower func(uint) uint
 func KeyvalToLower(KeyvalVar uint) uint {
 
 	cret := xKeyvalToLower(KeyvalVar)
-
 	return cret
 }
 
@@ -86,7 +81,6 @@ var xKeyvalToUnicode func(uint) uint32
 func KeyvalToUnicode(KeyvalVar uint) uint32 {
 
 	cret := xKeyvalToUnicode(KeyvalVar)
-
 	return cret
 }
 
@@ -96,7 +90,6 @@ var xKeyvalToUpper func(uint) uint
 func KeyvalToUpper(KeyvalVar uint) uint {
 
 	cret := xKeyvalToUpper(KeyvalVar)
-
 	return cret
 }
 
@@ -106,7 +99,6 @@ var xUnicodeToKeyval func(uint32) uint
 func UnicodeToKeyval(WcVar uint32) uint {
 
 	cret := xUnicodeToKeyval(WcVar)
-
 	return cret
 }
 

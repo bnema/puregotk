@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -251,7 +250,6 @@ var xToastGetActionName func(uintptr) string
 func (x *Toast) GetActionName() string {
 
 	cret := xToastGetActionName(x.GoPointer())
-
 	return cret
 }
 
@@ -261,7 +259,6 @@ var xToastGetActionTargetValue func(uintptr) *glib.Variant
 func (x *Toast) GetActionTargetValue() *glib.Variant {
 
 	cret := xToastGetActionTargetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -271,7 +268,6 @@ var xToastGetButtonLabel func(uintptr) string
 func (x *Toast) GetButtonLabel() string {
 
 	cret := xToastGetButtonLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -298,7 +294,6 @@ var xToastGetPriority func(uintptr) ToastPriority
 func (x *Toast) GetPriority() ToastPriority {
 
 	cret := xToastGetPriority(x.GoPointer())
-
 	return cret
 }
 
@@ -308,7 +303,6 @@ var xToastGetTimeout func(uintptr) uint
 func (x *Toast) GetTimeout() uint {
 
 	cret := xToastGetTimeout(x.GoPointer())
-
 	return cret
 }
 
@@ -321,7 +315,6 @@ var xToastGetTitle func(uintptr) string
 func (x *Toast) GetTitle() string {
 
 	cret := xToastGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -331,7 +324,6 @@ var xToastGetUseMarkup func(uintptr) bool
 func (x *Toast) GetUseMarkup() bool {
 
 	cret := xToastGetUseMarkup(x.GoPointer())
-
 	return cret
 }
 
@@ -344,11 +336,10 @@ var xToastSetActionName func(uintptr, uintptr)
 // See [property@Toast:action-target].
 func (x *Toast) SetActionName(ActionNameVar *string) {
 
-	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
 
 	xToastSetActionName(x.GoPointer(), ActionNameVarPtr)
-
-	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -365,11 +356,10 @@ var xToastSetActionTarget func(uintptr, uintptr, ...interface{})
 // [method@Toast.set_detailed_action_name].
 func (x *Toast) SetActionTarget(FormatStringVar *string, varArgs ...interface{}) {
 
-	FormatStringVarPtr, FormatStringVarBytes := core.NullableStringToPtr(FormatStringVar)
+	FormatStringVarPtr := core.GStrdupNullable(FormatStringVar)
+	defer core.GFreeNullable(FormatStringVarPtr)
 
 	xToastSetActionTarget(x.GoPointer(), FormatStringVarPtr, varArgs...)
-
-	runtime.KeepAlive(FormatStringVarBytes)
 
 }
 
@@ -396,11 +386,10 @@ var xToastSetButtonLabel func(uintptr, uintptr)
 // See [property@Toast:action-name].
 func (x *Toast) SetButtonLabel(ButtonLabelVar *string) {
 
-	ButtonLabelVarPtr, ButtonLabelVarBytes := core.NullableStringToPtr(ButtonLabelVar)
+	ButtonLabelVarPtr := core.GStrdupNullable(ButtonLabelVar)
+	defer core.GFreeNullable(ButtonLabelVarPtr)
 
 	xToastSetButtonLabel(x.GoPointer(), ButtonLabelVarPtr)
-
-	runtime.KeepAlive(ButtonLabelVarBytes)
 
 }
 
@@ -426,11 +415,10 @@ var xToastSetDetailedActionName func(uintptr, uintptr)
 // [func@Gio.Action.parse_detailed_name].
 func (x *Toast) SetDetailedActionName(DetailedActionNameVar *string) {
 
-	DetailedActionNameVarPtr, DetailedActionNameVarBytes := core.NullableStringToPtr(DetailedActionNameVar)
+	DetailedActionNameVarPtr := core.GStrdupNullable(DetailedActionNameVar)
+	defer core.GFreeNullable(DetailedActionNameVarPtr)
 
 	xToastSetDetailedActionName(x.GoPointer(), DetailedActionNameVarPtr)
-
-	runtime.KeepAlive(DetailedActionNameVarBytes)
 
 }
 

@@ -16,7 +16,6 @@ var xVariantGetGtype func() types.GType
 func VariantGetGtype() types.GType {
 
 	cret := xVariantGetGtype()
-
 	return cret
 }
 

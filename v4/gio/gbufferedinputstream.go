@@ -324,7 +324,6 @@ func (x *BufferedInputStream) Fill(CountVar int, CancellableVar *Cancellable) (i
 	var cerr *glib.Error
 
 	cret := xBufferedInputStreamFill(x.GoPointer(), CountVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -368,7 +367,6 @@ func (x *BufferedInputStream) FillFinish(ResultVar AsyncResult) (int, error) {
 	var cerr *glib.Error
 
 	cret := xBufferedInputStreamFillFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -382,7 +380,6 @@ var xBufferedInputStreamGetAvailable func(uintptr) uint
 func (x *BufferedInputStream) GetAvailable() uint {
 
 	cret := xBufferedInputStreamGetAvailable(x.GoPointer())
-
 	return cret
 }
 
@@ -392,7 +389,6 @@ var xBufferedInputStreamGetBufferSize func(uintptr) uint
 func (x *BufferedInputStream) GetBufferSize() uint {
 
 	cret := xBufferedInputStreamGetBufferSize(x.GoPointer())
-
 	return cret
 }
 
@@ -403,7 +399,6 @@ var xBufferedInputStreamPeek func(uintptr, []byte, uint, uint) uint
 func (x *BufferedInputStream) Peek(BufferVar []byte, OffsetVar uint, CountVar uint) uint {
 
 	cret := xBufferedInputStreamPeek(x.GoPointer(), BufferVar, OffsetVar, CountVar)
-
 	return cret
 }
 
@@ -415,7 +410,6 @@ var xBufferedInputStreamPeekBuffer func(uintptr, *uint) uintptr
 func (x *BufferedInputStream) PeekBuffer(CountVar *uint) uintptr {
 
 	cret := xBufferedInputStreamPeekBuffer(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -438,7 +432,6 @@ func (x *BufferedInputStream) ReadByte(CancellableVar *Cancellable) (int, error)
 	var cerr *glib.Error
 
 	cret := xBufferedInputStreamReadByte(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -489,7 +482,6 @@ func (x *BufferedInputStream) GetPropertyBufferSize() uint {
 func (x *BufferedInputStream) CanSeek() bool {
 
 	cret := XGSeekableCanSeek(x.GoPointer())
-
 	return cret
 }
 
@@ -498,7 +490,6 @@ func (x *BufferedInputStream) CanSeek() bool {
 func (x *BufferedInputStream) CanTruncate() bool {
 
 	cret := XGSeekableCanTruncate(x.GoPointer())
-
 	return cret
 }
 
@@ -520,7 +511,6 @@ func (x *BufferedInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cance
 	var cerr *glib.Error
 
 	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -532,7 +522,6 @@ func (x *BufferedInputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cance
 func (x *BufferedInputStream) Tell() int64 {
 
 	cret := XGSeekableTell(x.GoPointer())
-
 	return cret
 }
 
@@ -549,7 +538,6 @@ func (x *BufferedInputStream) Truncate(OffsetVar int64, CancellableVar *Cancella
 	var cerr *glib.Error
 
 	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

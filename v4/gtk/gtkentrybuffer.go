@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -407,11 +406,10 @@ var xNewEntryBuffer func(uintptr, int) uintptr
 func NewEntryBuffer(InitialCharsVar *string, NInitialCharsVar int) *EntryBuffer {
 	var cls *EntryBuffer
 
-	InitialCharsVarPtr, InitialCharsVarBytes := core.NullableStringToPtr(InitialCharsVar)
+	InitialCharsVarPtr := core.GStrdupNullable(InitialCharsVar)
+	defer core.GFreeNullable(InitialCharsVarPtr)
 
 	cret := xNewEntryBuffer(InitialCharsVarPtr, NInitialCharsVar)
-
-	runtime.KeepAlive(InitialCharsVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -437,7 +435,6 @@ var xEntryBufferDeleteText func(uintptr, uint, int) uint
 func (x *EntryBuffer) DeleteText(PositionVar uint, NCharsVar int) uint {
 
 	cret := xEntryBufferDeleteText(x.GoPointer(), PositionVar, NCharsVar)
-
 	return cret
 }
 
@@ -467,7 +464,6 @@ var xEntryBufferGetBytes func(uintptr) uint
 func (x *EntryBuffer) GetBytes() uint {
 
 	cret := xEntryBufferGetBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -477,7 +473,6 @@ var xEntryBufferGetLength func(uintptr) uint
 func (x *EntryBuffer) GetLength() uint {
 
 	cret := xEntryBufferGetLength(x.GoPointer())
-
 	return cret
 }
 
@@ -487,7 +482,6 @@ var xEntryBufferGetMaxLength func(uintptr) int
 func (x *EntryBuffer) GetMaxLength() int {
 
 	cret := xEntryBufferGetMaxLength(x.GoPointer())
-
 	return cret
 }
 
@@ -500,7 +494,6 @@ var xEntryBufferGetText func(uintptr) string
 func (x *EntryBuffer) GetText() string {
 
 	cret := xEntryBufferGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -518,7 +511,6 @@ var xEntryBufferInsertText func(uintptr, uint, string, int) uint
 func (x *EntryBuffer) InsertText(PositionVar uint, CharsVar string, NCharsVar int) uint {
 
 	cret := xEntryBufferInsertText(x.GoPointer(), PositionVar, CharsVar, NCharsVar)
-
 	return cret
 }
 

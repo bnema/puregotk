@@ -61,7 +61,6 @@ var xDeviceToolGetAxes func(uintptr) AxisFlags
 func (x *DeviceTool) GetAxes() AxisFlags {
 
 	cret := xDeviceToolGetAxes(x.GoPointer())
-
 	return cret
 }
 
@@ -81,7 +80,6 @@ var xDeviceToolGetHardwareId func(uintptr) uint64
 func (x *DeviceTool) GetHardwareId() uint64 {
 
 	cret := xDeviceToolGetHardwareId(x.GoPointer())
-
 	return cret
 }
 
@@ -94,7 +92,6 @@ var xDeviceToolGetSerial func(uintptr) uint64
 func (x *DeviceTool) GetSerial() uint64 {
 
 	cret := xDeviceToolGetSerial(x.GoPointer())
-
 	return cret
 }
 
@@ -104,7 +101,6 @@ var xDeviceToolGetToolType func(uintptr) DeviceToolType
 func (x *DeviceTool) GetToolType() DeviceToolType {
 
 	cret := xDeviceToolGetToolType(x.GoPointer())
-
 	return cret
 }
 

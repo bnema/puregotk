@@ -145,7 +145,6 @@ var xDropDownGetEnableSearch func(uintptr) bool
 func (x *DropDown) GetEnableSearch() bool {
 
 	cret := xDropDownGetEnableSearch(x.GoPointer())
-
 	return cret
 }
 
@@ -246,7 +245,6 @@ var xDropDownGetSearchMatchMode func(uintptr) StringFilterMatchMode
 func (x *DropDown) GetSearchMatchMode() StringFilterMatchMode {
 
 	cret := xDropDownGetSearchMatchMode(x.GoPointer())
-
 	return cret
 }
 
@@ -256,7 +254,6 @@ var xDropDownGetSelected func(uintptr) uint
 func (x *DropDown) GetSelected() uint {
 
 	cret := xDropDownGetSelected(x.GoPointer())
-
 	return cret
 }
 
@@ -283,7 +280,6 @@ var xDropDownGetShowArrow func(uintptr) bool
 func (x *DropDown) GetShowArrow() bool {
 
 	cret := xDropDownGetShowArrow(x.GoPointer())
-
 	return cret
 }
 
@@ -511,7 +507,6 @@ func (x *DropDown) GetAccessibleParent() *AccessibleBase {
 func (x *DropDown) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -537,7 +532,6 @@ func (x *DropDown) GetAtContext() *ATContext {
 func (x *DropDown) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -577,7 +571,6 @@ func (x *DropDown) GetNextAccessibleSibling() *AccessibleBase {
 func (x *DropDown) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -754,7 +747,6 @@ func (x *DropDown) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *DropDown) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

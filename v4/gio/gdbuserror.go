@@ -42,7 +42,6 @@ var xDbusErrorEncodeGerror func(*glib.Error) string
 func DbusErrorEncodeGerror(ErrorVar *glib.Error) string {
 
 	cret := xDbusErrorEncodeGerror(ErrorVar)
-
 	return cret
 }
 
@@ -57,7 +56,6 @@ var xDbusErrorGetRemoteError func(*glib.Error) string
 func DbusErrorGetRemoteError(ErrorVar *glib.Error) string {
 
 	cret := xDbusErrorGetRemoteError(ErrorVar)
-
 	return cret
 }
 
@@ -69,7 +67,6 @@ var xDbusErrorIsRemoteError func(*glib.Error) bool
 func DbusErrorIsRemoteError(ErrorVar *glib.Error) bool {
 
 	cret := xDbusErrorIsRemoteError(ErrorVar)
-
 	return cret
 }
 
@@ -107,7 +104,6 @@ var xDbusErrorNewForDbusError func(string, string) *glib.Error
 func DbusErrorNewForDbusError(DbusErrorNameVar string, DbusErrorMessageVar string) *glib.Error {
 
 	cret := xDbusErrorNewForDbusError(DbusErrorNameVar, DbusErrorMessageVar)
-
 	return cret
 }
 
@@ -121,7 +117,6 @@ var xDbusErrorRegisterError func(glib.Quark, int, string) bool
 func DbusErrorRegisterError(ErrorDomainVar glib.Quark, ErrorCodeVar int, DbusErrorNameVar string) bool {
 
 	cret := xDbusErrorRegisterError(ErrorDomainVar, ErrorCodeVar, DbusErrorNameVar)
-
 	return cret
 }
 
@@ -151,7 +146,6 @@ var xDbusErrorStripRemoteError func(*glib.Error) bool
 func DbusErrorStripRemoteError(ErrorVar *glib.Error) bool {
 
 	cret := xDbusErrorStripRemoteError(ErrorVar)
-
 	return cret
 }
 
@@ -162,7 +156,6 @@ var xDbusErrorUnregisterError func(glib.Quark, int, string) bool
 func DbusErrorUnregisterError(ErrorDomainVar glib.Quark, ErrorCodeVar int, DbusErrorNameVar string) bool {
 
 	cret := xDbusErrorUnregisterError(ErrorDomainVar, ErrorCodeVar, DbusErrorNameVar)
-
 	return cret
 }
 

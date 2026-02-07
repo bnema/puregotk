@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -108,7 +107,6 @@ var xSearchEntryGetInputHints func(uintptr) InputHints
 func (x *SearchEntry) GetInputHints() InputHints {
 
 	cret := xSearchEntryGetInputHints(x.GoPointer())
-
 	return cret
 }
 
@@ -118,7 +116,6 @@ var xSearchEntryGetInputPurpose func(uintptr) InputPurpose
 func (x *SearchEntry) GetInputPurpose() InputPurpose {
 
 	cret := xSearchEntryGetInputPurpose(x.GoPointer())
-
 	return cret
 }
 
@@ -145,7 +142,6 @@ var xSearchEntryGetPlaceholderText func(uintptr) string
 func (x *SearchEntry) GetPlaceholderText() string {
 
 	cret := xSearchEntryGetPlaceholderText(x.GoPointer())
-
 	return cret
 }
 
@@ -156,7 +152,6 @@ var xSearchEntryGetSearchDelay func(uintptr) uint
 func (x *SearchEntry) GetSearchDelay() uint {
 
 	cret := xSearchEntryGetSearchDelay(x.GoPointer())
-
 	return cret
 }
 
@@ -208,11 +203,10 @@ var xSearchEntrySetPlaceholderText func(uintptr, uintptr)
 // Sets the placeholder text associated with @entry.
 func (x *SearchEntry) SetPlaceholderText(TextVar *string) {
 
-	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
 
 	xSearchEntrySetPlaceholderText(x.GoPointer(), TextVarPtr)
-
-	runtime.KeepAlive(TextVarBytes)
 
 }
 
@@ -499,7 +493,6 @@ func (x *SearchEntry) GetAccessibleParent() *AccessibleBase {
 func (x *SearchEntry) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -525,7 +518,6 @@ func (x *SearchEntry) GetAtContext() *ATContext {
 func (x *SearchEntry) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -565,7 +557,6 @@ func (x *SearchEntry) GetNextAccessibleSibling() *AccessibleBase {
 func (x *SearchEntry) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -742,7 +733,6 @@ func (x *SearchEntry) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 func (x *SearchEntry) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -785,7 +775,6 @@ func (x *SearchEntry) GetBuildableId() string {
 func (x *SearchEntry) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -826,7 +815,6 @@ func (x *SearchEntry) FinishDelegate() {
 func (x *SearchEntry) GetAlignment() float32 {
 
 	cret := XGtkEditableGetAlignment(x.GoPointer())
-
 	return cret
 }
 
@@ -841,7 +829,6 @@ func (x *SearchEntry) GetAlignment() float32 {
 func (x *SearchEntry) GetChars(StartPosVar int, EndPosVar int) string {
 
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -867,7 +854,6 @@ func (x *SearchEntry) GetDelegate() *EditableBase {
 func (x *SearchEntry) GetEditable() bool {
 
 	cret := XGtkEditableGetEditable(x.GoPointer())
-
 	return cret
 }
 
@@ -875,7 +861,6 @@ func (x *SearchEntry) GetEditable() bool {
 func (x *SearchEntry) GetEnableUndo() bool {
 
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
-
 	return cret
 }
 
@@ -883,7 +868,6 @@ func (x *SearchEntry) GetEnableUndo() bool {
 func (x *SearchEntry) GetMaxWidthChars() int {
 
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
-
 	return cret
 }
 
@@ -894,7 +878,6 @@ func (x *SearchEntry) GetMaxWidthChars() int {
 func (x *SearchEntry) GetPosition() int {
 
 	cret := XGtkEditableGetPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -908,7 +891,6 @@ func (x *SearchEntry) GetPosition() int {
 func (x *SearchEntry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -918,7 +900,6 @@ func (x *SearchEntry) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool 
 func (x *SearchEntry) GetText() string {
 
 	cret := XGtkEditableGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -927,7 +908,6 @@ func (x *SearchEntry) GetText() string {
 func (x *SearchEntry) GetWidthChars() int {
 
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
-
 	return cret
 }
 

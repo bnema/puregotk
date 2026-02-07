@@ -138,7 +138,6 @@ func (x *StackSidebar) GetAccessibleParent() *AccessibleBase {
 func (x *StackSidebar) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -164,7 +163,6 @@ func (x *StackSidebar) GetAtContext() *ATContext {
 func (x *StackSidebar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -204,7 +202,6 @@ func (x *StackSidebar) GetNextAccessibleSibling() *AccessibleBase {
 func (x *StackSidebar) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -381,7 +378,6 @@ func (x *StackSidebar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSt
 func (x *StackSidebar) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

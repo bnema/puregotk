@@ -38,7 +38,6 @@ var xFrustumAlloc func() *Frustum
 func FrustumAlloc() *Frustum {
 
 	cret := xFrustumAlloc()
-
 	return cret
 }
 
@@ -49,7 +48,6 @@ var xFrustumContainsPoint func(uintptr, *Point3D) bool
 func (x *Frustum) ContainsPoint(PointVar *Point3D) bool {
 
 	cret := xFrustumContainsPoint(x.GoPointer(), PointVar)
-
 	return cret
 }
 
@@ -59,7 +57,6 @@ var xFrustumEqual func(uintptr, *Frustum) bool
 func (x *Frustum) Equal(BVar *Frustum) bool {
 
 	cret := xFrustumEqual(x.GoPointer(), BVar)
-
 	return cret
 }
 
@@ -88,7 +85,6 @@ var xFrustumInit func(uintptr, *Plane, *Plane, *Plane, *Plane, *Plane, *Plane) *
 func (x *Frustum) Init(P0Var *Plane, P1Var *Plane, P2Var *Plane, P3Var *Plane, P4Var *Plane, P5Var *Plane) *Frustum {
 
 	cret := xFrustumInit(x.GoPointer(), P0Var, P1Var, P2Var, P3Var, P4Var, P5Var)
-
 	return cret
 }
 
@@ -99,7 +95,6 @@ var xFrustumInitFromFrustum func(uintptr, *Frustum) *Frustum
 func (x *Frustum) InitFromFrustum(SrcVar *Frustum) *Frustum {
 
 	cret := xFrustumInitFromFrustum(x.GoPointer(), SrcVar)
-
 	return cret
 }
 
@@ -109,7 +104,6 @@ var xFrustumInitFromMatrix func(uintptr, *Matrix) *Frustum
 func (x *Frustum) InitFromMatrix(MatrixVar *Matrix) *Frustum {
 
 	cret := xFrustumInitFromMatrix(x.GoPointer(), MatrixVar)
-
 	return cret
 }
 
@@ -120,7 +114,6 @@ var xFrustumIntersectsBox func(uintptr, *Box) bool
 func (x *Frustum) IntersectsBox(BoxVar *Box) bool {
 
 	cret := xFrustumIntersectsBox(x.GoPointer(), BoxVar)
-
 	return cret
 }
 
@@ -131,7 +124,6 @@ var xFrustumIntersectsSphere func(uintptr, *Sphere) bool
 func (x *Frustum) IntersectsSphere(SphereVar *Sphere) bool {
 
 	cret := xFrustumIntersectsSphere(x.GoPointer(), SphereVar)
-
 	return cret
 }
 

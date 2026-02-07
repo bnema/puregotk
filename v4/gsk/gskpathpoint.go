@@ -44,7 +44,6 @@ var xPathPointCompare func(uintptr, *PathPoint) int
 func (x *PathPoint) Compare(Point2Var *PathPoint) int {
 
 	cret := xPathPointCompare(x.GoPointer(), Point2Var)
-
 	return cret
 }
 
@@ -54,7 +53,6 @@ var xPathPointCopy func(uintptr) *PathPoint
 func (x *PathPoint) Copy() *PathPoint {
 
 	cret := xPathPointCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -71,7 +69,6 @@ var xPathPointEqual func(uintptr, *PathPoint) bool
 func (x *PathPoint) Equal(Point2Var *PathPoint) bool {
 
 	cret := xPathPointEqual(x.GoPointer(), Point2Var)
-
 	return cret
 }
 
@@ -111,7 +108,6 @@ var xPathPointGetCurvature func(uintptr, *Path, PathDirection, *graphene.Point) 
 func (x *PathPoint) GetCurvature(PathVar *Path, DirectionVar PathDirection, CenterVar *graphene.Point) float32 {
 
 	cret := xPathPointGetCurvature(x.GoPointer(), PathVar, DirectionVar, CenterVar)
-
 	return cret
 }
 
@@ -122,7 +118,6 @@ var xPathPointGetDistance func(uintptr, *PathMeasure) float32
 func (x *PathPoint) GetDistance(MeasureVar *PathMeasure) float32 {
 
 	cret := xPathPointGetDistance(x.GoPointer(), MeasureVar)
-
 	return cret
 }
 
@@ -146,7 +141,6 @@ var xPathPointGetRotation func(uintptr, *Path, PathDirection) float32
 func (x *PathPoint) GetRotation(PathVar *Path, DirectionVar PathDirection) float32 {
 
 	cret := xPathPointGetRotation(x.GoPointer(), PathVar, DirectionVar)
-
 	return cret
 }
 

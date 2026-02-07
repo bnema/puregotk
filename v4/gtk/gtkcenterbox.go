@@ -100,7 +100,6 @@ var xCenterBoxGetBaselinePosition func(uintptr) BaselinePosition
 func (x *CenterBox) GetBaselinePosition() BaselinePosition {
 
 	cret := xCenterBoxGetBaselinePosition(x.GoPointer())
-
 	return cret
 }
 
@@ -144,7 +143,6 @@ var xCenterBoxGetShrinkCenterLast func(uintptr) bool
 func (x *CenterBox) GetShrinkCenterLast() bool {
 
 	cret := xCenterBoxGetShrinkCenterLast(x.GoPointer())
-
 	return cret
 }
 
@@ -306,7 +304,6 @@ func (x *CenterBox) GetAccessibleParent() *AccessibleBase {
 func (x *CenterBox) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -332,7 +329,6 @@ func (x *CenterBox) GetAtContext() *ATContext {
 func (x *CenterBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -372,7 +368,6 @@ func (x *CenterBox) GetNextAccessibleSibling() *AccessibleBase {
 func (x *CenterBox) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -549,7 +544,6 @@ func (x *CenterBox) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 func (x *CenterBox) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -557,7 +551,6 @@ func (x *CenterBox) GetBuildableId() string {
 func (x *CenterBox) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

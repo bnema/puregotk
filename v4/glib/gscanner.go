@@ -84,7 +84,6 @@ var xScannerCurLine func(uintptr) uint
 func (x *Scanner) CurLine() uint {
 
 	cret := xScannerCurLine(x.GoPointer())
-
 	return cret
 }
 
@@ -96,7 +95,6 @@ var xScannerCurPosition func(uintptr) uint
 func (x *Scanner) CurPosition() uint {
 
 	cret := xScannerCurPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -107,7 +105,6 @@ var xScannerCurToken func(uintptr) TokenType
 func (x *Scanner) CurToken() TokenType {
 
 	cret := xScannerCurToken(x.GoPointer())
-
 	return cret
 }
 
@@ -118,7 +115,6 @@ var xScannerCurValue func(uintptr) TokenValue
 func (x *Scanner) CurValue() TokenValue {
 
 	cret := xScannerCurValue(x.GoPointer())
-
 	return cret
 }
 
@@ -138,7 +134,6 @@ var xScannerEof func(uintptr) bool
 func (x *Scanner) Eof() bool {
 
 	cret := xScannerEof(x.GoPointer())
-
 	return cret
 }
 
@@ -160,7 +155,6 @@ var xScannerGetNextToken func(uintptr) TokenType
 func (x *Scanner) GetNextToken() TokenType {
 
 	cret := xScannerGetNextToken(x.GoPointer())
-
 	return cret
 }
 
@@ -190,7 +184,6 @@ var xScannerLookupSymbol func(uintptr, string) uintptr
 func (x *Scanner) LookupSymbol(SymbolVar string) uintptr {
 
 	cret := xScannerLookupSymbol(x.GoPointer(), SymbolVar)
-
 	return cret
 }
 
@@ -210,7 +203,6 @@ var xScannerPeekNextToken func(uintptr) TokenType
 func (x *Scanner) PeekNextToken() TokenType {
 
 	cret := xScannerPeekNextToken(x.GoPointer())
-
 	return cret
 }
 
@@ -257,7 +249,6 @@ var xScannerScopeLookupSymbol func(uintptr, uint, string) uintptr
 func (x *Scanner) ScopeLookupSymbol(ScopeIdVar uint, SymbolVar string) uintptr {
 
 	cret := xScannerScopeLookupSymbol(x.GoPointer(), ScopeIdVar, SymbolVar)
-
 	return cret
 }
 
@@ -276,7 +267,6 @@ var xScannerSetScope func(uintptr, uint) uint
 func (x *Scanner) SetScope(ScopeIdVar uint) uint {
 
 	cret := xScannerSetScope(x.GoPointer(), ScopeIdVar)
-
 	return cret
 }
 

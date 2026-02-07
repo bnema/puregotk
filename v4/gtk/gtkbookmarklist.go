@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -53,15 +52,13 @@ var xNewBookmarkList func(uintptr, uintptr) uintptr
 func NewBookmarkList(FilenameVar *string, AttributesVar *string) *BookmarkList {
 	var cls *BookmarkList
 
-	FilenameVarPtr, FilenameVarBytes := core.NullableStringToPtr(FilenameVar)
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
 
-	AttributesVarPtr, AttributesVarBytes := core.NullableStringToPtr(AttributesVar)
+	AttributesVarPtr := core.GStrdupNullable(AttributesVar)
+	defer core.GFreeNullable(AttributesVarPtr)
 
 	cret := xNewBookmarkList(FilenameVarPtr, AttributesVarPtr)
-
-	runtime.KeepAlive(FilenameVarBytes)
-
-	runtime.KeepAlive(AttributesVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -77,7 +74,6 @@ var xBookmarkListGetAttributes func(uintptr) string
 func (x *BookmarkList) GetAttributes() string {
 
 	cret := xBookmarkListGetAttributes(x.GoPointer())
-
 	return cret
 }
 
@@ -88,7 +84,6 @@ var xBookmarkListGetFilename func(uintptr) string
 func (x *BookmarkList) GetFilename() string {
 
 	cret := xBookmarkListGetFilename(x.GoPointer())
-
 	return cret
 }
 
@@ -98,7 +93,6 @@ var xBookmarkListGetIoPriority func(uintptr) int
 func (x *BookmarkList) GetIoPriority() int {
 
 	cret := xBookmarkListGetIoPriority(x.GoPointer())
-
 	return cret
 }
 
@@ -112,7 +106,6 @@ var xBookmarkListIsLoading func(uintptr) bool
 func (x *BookmarkList) IsLoading() bool {
 
 	cret := xBookmarkListIsLoading(x.GoPointer())
-
 	return cret
 }
 
@@ -124,11 +117,10 @@ var xBookmarkListSetAttributes func(uintptr, uintptr)
 // of `GFileInfo`s will still be created.
 func (x *BookmarkList) SetAttributes(AttributesVar *string) {
 
-	AttributesVarPtr, AttributesVarBytes := core.NullableStringToPtr(AttributesVar)
+	AttributesVarPtr := core.GStrdupNullable(AttributesVar)
+	defer core.GFreeNullable(AttributesVarPtr)
 
 	xBookmarkListSetAttributes(x.GoPointer(), AttributesVarPtr)
-
-	runtime.KeepAlive(AttributesVarBytes)
 
 }
 
@@ -233,7 +225,6 @@ func (x *BookmarkList) GetPropertyNItems() uint {
 func (x *BookmarkList) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
-
 	return cret
 }
 
@@ -248,7 +239,6 @@ func (x *BookmarkList) GetItem(PositionVar uint) uintptr {
 func (x *BookmarkList) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
-
 	return cret
 }
 
@@ -260,7 +250,6 @@ func (x *BookmarkList) GetItemType() types.GType {
 func (x *BookmarkList) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
-
 	return cret
 }
 

@@ -166,7 +166,6 @@ var xDmabufTextureBuilderGetColorState func(uintptr) *ColorState
 func (x *DmabufTextureBuilder) GetColorState() *ColorState {
 
 	cret := xDmabufTextureBuilderGetColorState(x.GoPointer())
-
 	return cret
 }
 
@@ -194,7 +193,6 @@ var xDmabufTextureBuilderGetFd func(uintptr, uint) int
 func (x *DmabufTextureBuilder) GetFd(PlaneVar uint) int {
 
 	cret := xDmabufTextureBuilderGetFd(x.GoPointer(), PlaneVar)
-
 	return cret
 }
 
@@ -207,7 +205,6 @@ var xDmabufTextureBuilderGetFourcc func(uintptr) uint32
 func (x *DmabufTextureBuilder) GetFourcc() uint32 {
 
 	cret := xDmabufTextureBuilderGetFourcc(x.GoPointer())
-
 	return cret
 }
 
@@ -218,7 +215,6 @@ var xDmabufTextureBuilderGetHeight func(uintptr) uint
 func (x *DmabufTextureBuilder) GetHeight() uint {
 
 	cret := xDmabufTextureBuilderGetHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -228,7 +224,6 @@ var xDmabufTextureBuilderGetModifier func(uintptr) uint64
 func (x *DmabufTextureBuilder) GetModifier() uint64 {
 
 	cret := xDmabufTextureBuilderGetModifier(x.GoPointer())
-
 	return cret
 }
 
@@ -238,7 +233,6 @@ var xDmabufTextureBuilderGetNPlanes func(uintptr) uint
 func (x *DmabufTextureBuilder) GetNPlanes() uint {
 
 	cret := xDmabufTextureBuilderGetNPlanes(x.GoPointer())
-
 	return cret
 }
 
@@ -248,7 +242,6 @@ var xDmabufTextureBuilderGetOffset func(uintptr, uint) uint
 func (x *DmabufTextureBuilder) GetOffset(PlaneVar uint) uint {
 
 	cret := xDmabufTextureBuilderGetOffset(x.GoPointer(), PlaneVar)
-
 	return cret
 }
 
@@ -258,7 +251,6 @@ var xDmabufTextureBuilderGetPremultiplied func(uintptr) bool
 func (x *DmabufTextureBuilder) GetPremultiplied() bool {
 
 	cret := xDmabufTextureBuilderGetPremultiplied(x.GoPointer())
-
 	return cret
 }
 
@@ -268,7 +260,6 @@ var xDmabufTextureBuilderGetStride func(uintptr, uint) uint
 func (x *DmabufTextureBuilder) GetStride(PlaneVar uint) uint {
 
 	cret := xDmabufTextureBuilderGetStride(x.GoPointer(), PlaneVar)
-
 	return cret
 }
 
@@ -279,7 +270,6 @@ var xDmabufTextureBuilderGetUpdateRegion func(uintptr) *cairo.Region
 func (x *DmabufTextureBuilder) GetUpdateRegion() *cairo.Region {
 
 	cret := xDmabufTextureBuilderGetUpdateRegion(x.GoPointer())
-
 	return cret
 }
 
@@ -308,7 +298,6 @@ var xDmabufTextureBuilderGetWidth func(uintptr) uint
 func (x *DmabufTextureBuilder) GetWidth() uint {
 
 	cret := xDmabufTextureBuilderGetWidth(x.GoPointer())
-
 	return cret
 }
 

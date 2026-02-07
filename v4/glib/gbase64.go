@@ -14,7 +14,6 @@ var xBase64Decode func(string, *uint) uintptr
 func Base64Decode(TextVar string, OutLenVar *uint) uintptr {
 
 	cret := xBase64Decode(TextVar, OutLenVar)
-
 	return cret
 }
 
@@ -25,7 +24,6 @@ var xBase64DecodeInplace func([]byte, uint) byte
 func Base64DecodeInplace(TextVar []byte, OutLenVar uint) byte {
 
 	cret := xBase64DecodeInplace(TextVar, OutLenVar)
-
 	return cret
 }
 
@@ -42,7 +40,6 @@ var xBase64DecodeStep func([]byte, uint, *[]byte, int, uint) uint
 func Base64DecodeStep(InVar []byte, LenVar uint, OutVar *[]byte, StateVar int, SaveVar uint) uint {
 
 	cret := xBase64DecodeStep(InVar, LenVar, OutVar, StateVar, SaveVar)
-
 	return cret
 }
 
@@ -53,7 +50,6 @@ var xBase64Encode func([]byte, uint) string
 func Base64Encode(DataVar []byte, LenVar uint) string {
 
 	cret := xBase64Encode(DataVar, LenVar)
-
 	return cret
 }
 
@@ -69,7 +65,6 @@ var xBase64EncodeClose func(bool, *[]byte, int, int) uint
 func Base64EncodeClose(BreakLinesVar bool, OutVar *[]byte, StateVar int, SaveVar int) uint {
 
 	cret := xBase64EncodeClose(BreakLinesVar, OutVar, StateVar, SaveVar)
-
 	return cret
 }
 
@@ -97,7 +92,6 @@ var xBase64EncodeStep func([]byte, uint, bool, *[]byte, int, int) uint
 func Base64EncodeStep(InVar []byte, LenVar uint, BreakLinesVar bool, OutVar *[]byte, StateVar int, SaveVar int) uint {
 
 	cret := xBase64EncodeStep(InVar, LenVar, BreakLinesVar, OutVar, StateVar, SaveVar)
-
 	return cret
 }
 

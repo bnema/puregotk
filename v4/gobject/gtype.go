@@ -508,7 +508,6 @@ var xTypeClassGetInstancePrivateOffset func(uintptr) int
 func (x *TypeClass) GetInstancePrivateOffset() int {
 
 	cret := xTypeClassGetInstancePrivateOffset(x.GoPointer())
-
 	return cret
 }
 
@@ -517,7 +516,6 @@ var xTypeClassGetPrivate func(uintptr, types.GType) uintptr
 func (x *TypeClass) GetPrivate(PrivateTypeVar types.GType) uintptr {
 
 	cret := xTypeClassGetPrivate(x.GoPointer(), PrivateTypeVar)
-
 	return cret
 }
 
@@ -536,7 +534,6 @@ var xTypeClassPeekParent func(uintptr) *TypeClass
 func (x *TypeClass) PeekParent() *TypeClass {
 
 	cret := xTypeClassPeekParent(x.GoPointer())
-
 	return cret
 }
 
@@ -632,7 +629,6 @@ var xTypeInstanceGetPrivate func(uintptr, types.GType) uintptr
 func (x *TypeInstance) GetPrivate(PrivateTypeVar types.GType) uintptr {
 
 	cret := xTypeInstanceGetPrivate(x.GoPointer(), PrivateTypeVar)
-
 	return cret
 }
 
@@ -659,7 +655,6 @@ var xTypeInterfacePeekParent func(uintptr) *TypeInterface
 func (x *TypeInterface) PeekParent() *TypeInterface {
 
 	cret := xTypeInterfacePeekParent(x.GoPointer())
-
 	return cret
 }
 
@@ -857,7 +852,6 @@ var xTypeAddInstancePrivate func(types.GType, uint) int
 func TypeAddInstancePrivate(ClassTypeVar types.GType, PrivateSizeVar uint) int {
 
 	cret := xTypeAddInstancePrivate(ClassTypeVar, PrivateSizeVar)
-
 	return cret
 }
 
@@ -920,7 +914,6 @@ var xTypeCheckClassCast func(*TypeClass, types.GType) *TypeClass
 func TypeCheckClassCast(GClassVar *TypeClass, IsATypeVar types.GType) *TypeClass {
 
 	cret := xTypeCheckClassCast(GClassVar, IsATypeVar)
-
 	return cret
 }
 
@@ -929,7 +922,6 @@ var xTypeCheckClassIsA func(*TypeClass, types.GType) bool
 func TypeCheckClassIsA(GClassVar *TypeClass, IsATypeVar types.GType) bool {
 
 	cret := xTypeCheckClassIsA(GClassVar, IsATypeVar)
-
 	return cret
 }
 
@@ -940,7 +932,6 @@ var xTypeCheckInstance func(*TypeInstance) bool
 func TypeCheckInstance(InstanceVar *TypeInstance) bool {
 
 	cret := xTypeCheckInstance(InstanceVar)
-
 	return cret
 }
 
@@ -949,7 +940,6 @@ var xTypeCheckInstanceCast func(*TypeInstance, types.GType) *TypeInstance
 func TypeCheckInstanceCast(InstanceVar *TypeInstance, IfaceTypeVar types.GType) *TypeInstance {
 
 	cret := xTypeCheckInstanceCast(InstanceVar, IfaceTypeVar)
-
 	return cret
 }
 
@@ -958,7 +948,6 @@ var xTypeCheckInstanceIsA func(*TypeInstance, types.GType) bool
 func TypeCheckInstanceIsA(InstanceVar *TypeInstance, IfaceTypeVar types.GType) bool {
 
 	cret := xTypeCheckInstanceIsA(InstanceVar, IfaceTypeVar)
-
 	return cret
 }
 
@@ -967,7 +956,6 @@ var xTypeCheckInstanceIsFundamentallyA func(*TypeInstance, types.GType) bool
 func TypeCheckInstanceIsFundamentallyA(InstanceVar *TypeInstance, FundamentalTypeVar types.GType) bool {
 
 	cret := xTypeCheckInstanceIsFundamentallyA(InstanceVar, FundamentalTypeVar)
-
 	return cret
 }
 
@@ -976,7 +964,6 @@ var xTypeCheckIsValueType func(types.GType) bool
 func TypeCheckIsValueType(TypeVar types.GType) bool {
 
 	cret := xTypeCheckIsValueType(TypeVar)
-
 	return cret
 }
 
@@ -985,7 +972,6 @@ var xTypeCheckValue func(*Value) bool
 func TypeCheckValue(ValueVar *Value) bool {
 
 	cret := xTypeCheckValue(ValueVar)
-
 	return cret
 }
 
@@ -994,7 +980,6 @@ var xTypeCheckValueHolds func(*Value, types.GType) bool
 func TypeCheckValueHolds(ValueVar *Value, TypeVar types.GType) bool {
 
 	cret := xTypeCheckValueHolds(ValueVar, TypeVar)
-
 	return cret
 }
 
@@ -1005,7 +990,6 @@ var xTypeChildren func(types.GType, *uint) uintptr
 func TypeChildren(TypeVar types.GType, NChildrenVar *uint) uintptr {
 
 	cret := xTypeChildren(TypeVar, NChildrenVar)
-
 	return cret
 }
 
@@ -1028,7 +1012,6 @@ var xTypeClassGet func(types.GType) *TypeClass
 func TypeClassGet(TypeVar types.GType) *TypeClass {
 
 	cret := xTypeClassGet(TypeVar)
-
 	return cret
 }
 
@@ -1045,7 +1028,6 @@ var xTypeClassPeek func(types.GType) *TypeClass
 func TypeClassPeek(TypeVar types.GType) *TypeClass {
 
 	cret := xTypeClassPeek(TypeVar)
-
 	return cret
 }
 
@@ -1056,7 +1038,6 @@ var xTypeClassPeekStatic func(types.GType) *TypeClass
 func TypeClassPeekStatic(TypeVar types.GType) *TypeClass {
 
 	cret := xTypeClassPeekStatic(TypeVar)
-
 	return cret
 }
 
@@ -1081,7 +1062,6 @@ var xTypeCreateInstance func(types.GType) *TypeInstance
 func TypeCreateInstance(TypeVar types.GType) *TypeInstance {
 
 	cret := xTypeCreateInstance(TypeVar)
-
 	return cret
 }
 
@@ -1103,7 +1083,6 @@ var xTypeDefaultInterfaceGet func(types.GType) *TypeInterface
 func TypeDefaultInterfaceGet(GTypeVar types.GType) *TypeInterface {
 
 	cret := xTypeDefaultInterfaceGet(GTypeVar)
-
 	return cret
 }
 
@@ -1114,7 +1093,6 @@ var xTypeDefaultInterfacePeek func(types.GType) *TypeInterface
 func TypeDefaultInterfacePeek(GTypeVar types.GType) *TypeInterface {
 
 	cret := xTypeDefaultInterfacePeek(GTypeVar)
-
 	return cret
 }
 
@@ -1133,7 +1111,6 @@ var xTypeDefaultInterfaceRef func(types.GType) *TypeInterface
 func TypeDefaultInterfaceRef(GTypeVar types.GType) *TypeInterface {
 
 	cret := xTypeDefaultInterfaceRef(GTypeVar)
-
 	return cret
 }
 
@@ -1158,7 +1135,6 @@ var xTypeDepth func(types.GType) uint
 func TypeDepth(TypeVar types.GType) uint {
 
 	cret := xTypeDepth(TypeVar)
-
 	return cret
 }
 
@@ -1204,7 +1180,6 @@ var xTypeFromName func(string) types.GType
 func TypeFromName(NameVar string) types.GType {
 
 	cret := xTypeFromName(NameVar)
-
 	return cret
 }
 
@@ -1215,7 +1190,6 @@ var xTypeFundamental func(types.GType) types.GType
 func TypeFundamental(TypeIdVar types.GType) types.GType {
 
 	cret := xTypeFundamental(TypeIdVar)
-
 	return cret
 }
 
@@ -1228,7 +1202,6 @@ var xTypeFundamentalNext func() types.GType
 func TypeFundamentalNext() types.GType {
 
 	cret := xTypeFundamentalNext()
-
 	return cret
 }
 
@@ -1241,7 +1214,6 @@ var xTypeGetInstanceCount func(types.GType) int
 func TypeGetInstanceCount(TypeVar types.GType) int {
 
 	cret := xTypeGetInstanceCount(TypeVar)
-
 	return cret
 }
 
@@ -1273,7 +1245,6 @@ var xTypeGetQdata func(types.GType, glib.Quark) uintptr
 func TypeGetQdata(TypeVar types.GType, QuarkVar glib.Quark) uintptr {
 
 	cret := xTypeGetQdata(TypeVar, QuarkVar)
-
 	return cret
 }
 
@@ -1287,7 +1258,6 @@ var xTypeGetTypeRegistrationSerial func() uint
 func TypeGetTypeRegistrationSerial() uint {
 
 	cret := xTypeGetTypeRegistrationSerial()
-
 	return cret
 }
 
@@ -1360,7 +1330,6 @@ var xTypeInterfaceInstantiatablePrerequisite func(types.GType) types.GType
 func TypeInterfaceInstantiatablePrerequisite(InterfaceTypeVar types.GType) types.GType {
 
 	cret := xTypeInterfaceInstantiatablePrerequisite(InterfaceTypeVar)
-
 	return cret
 }
 
@@ -1371,7 +1340,6 @@ var xTypeInterfacePeek func(*TypeClass, types.GType) *TypeInterface
 func TypeInterfacePeek(InstanceClassVar *TypeClass, IfaceTypeVar types.GType) *TypeInterface {
 
 	cret := xTypeInterfacePeek(InstanceClassVar, IfaceTypeVar)
-
 	return cret
 }
 
@@ -1381,7 +1349,6 @@ var xTypeInterfacePrerequisites func(types.GType, *uint) uintptr
 func TypeInterfacePrerequisites(InterfaceTypeVar types.GType, NPrerequisitesVar *uint) uintptr {
 
 	cret := xTypeInterfacePrerequisites(InterfaceTypeVar, NPrerequisitesVar)
-
 	return cret
 }
 
@@ -1392,7 +1359,6 @@ var xTypeInterfaces func(types.GType, *uint) uintptr
 func TypeInterfaces(TypeVar types.GType, NInterfacesVar *uint) uintptr {
 
 	cret := xTypeInterfaces(TypeVar, NInterfacesVar)
-
 	return cret
 }
 
@@ -1404,7 +1370,6 @@ var xTypeIsA func(types.GType, types.GType) bool
 func TypeIsA(TypeVar types.GType, IsATypeVar types.GType) bool {
 
 	cret := xTypeIsA(TypeVar, IsATypeVar)
-
 	return cret
 }
 
@@ -1419,7 +1384,6 @@ var xTypeName func(types.GType) string
 func TypeName(TypeVar types.GType) string {
 
 	cret := xTypeName(TypeVar)
-
 	return cret
 }
 
@@ -1428,7 +1392,6 @@ var xTypeNameFromClass func(*TypeClass) string
 func TypeNameFromClass(GClassVar *TypeClass) string {
 
 	cret := xTypeNameFromClass(GClassVar)
-
 	return cret
 }
 
@@ -1437,7 +1400,6 @@ var xTypeNameFromInstance func(*TypeInstance) string
 func TypeNameFromInstance(InstanceVar *TypeInstance) string {
 
 	cret := xTypeNameFromInstance(InstanceVar)
-
 	return cret
 }
 
@@ -1453,7 +1415,6 @@ var xTypeNextBase func(types.GType, types.GType) types.GType
 func TypeNextBase(LeafTypeVar types.GType, RootTypeVar types.GType) types.GType {
 
 	cret := xTypeNextBase(LeafTypeVar, RootTypeVar)
-
 	return cret
 }
 
@@ -1464,7 +1425,6 @@ var xTypeParent func(types.GType) types.GType
 func TypeParent(TypeVar types.GType) types.GType {
 
 	cret := xTypeParent(TypeVar)
-
 	return cret
 }
 
@@ -1474,7 +1434,6 @@ var xTypeQname func(types.GType) glib.Quark
 func TypeQname(TypeVar types.GType) glib.Quark {
 
 	cret := xTypeQname(TypeVar)
-
 	return cret
 }
 
@@ -1506,7 +1465,6 @@ var xTypeRegisterDynamic func(types.GType, string, uintptr, TypeFlags) types.GTy
 func TypeRegisterDynamic(ParentTypeVar types.GType, TypeNameVar string, PluginVar TypePlugin, FlagsVar TypeFlags) types.GType {
 
 	cret := xTypeRegisterDynamic(ParentTypeVar, TypeNameVar, PluginVar.GoPointer(), FlagsVar)
-
 	return cret
 }
 
@@ -1522,7 +1480,6 @@ var xTypeRegisterFundamental func(types.GType, string, *TypeInfo, *TypeFundament
 func TypeRegisterFundamental(TypeIdVar types.GType, TypeNameVar string, InfoVar *TypeInfo, FinfoVar *TypeFundamentalInfo, FlagsVar TypeFlags) types.GType {
 
 	cret := xTypeRegisterFundamental(TypeIdVar, TypeNameVar, InfoVar, FinfoVar, FlagsVar)
-
 	return cret
 }
 
@@ -1536,7 +1493,6 @@ var xTypeRegisterStatic func(types.GType, string, *TypeInfo, TypeFlags) types.GT
 func TypeRegisterStatic(ParentTypeVar types.GType, TypeNameVar string, InfoVar *TypeInfo, FlagsVar TypeFlags) types.GType {
 
 	cret := xTypeRegisterStatic(ParentTypeVar, TypeNameVar, InfoVar, FlagsVar)
-
 	return cret
 }
 
@@ -1579,7 +1535,6 @@ func TypeRegisterStaticSimple(ParentTypeVar types.GType, TypeNameVar string, Cla
 	}
 
 	cret := xTypeRegisterStaticSimple(ParentTypeVar, TypeNameVar, ClassSizeVar, ClassInitVarRef, InstanceSizeVar, InstanceInitVarRef, FlagsVar)
-
 	return cret
 }
 
@@ -1648,7 +1603,6 @@ var xTypeTestFlags func(types.GType, uint) bool
 func TypeTestFlags(TypeVar types.GType, FlagsVar uint) bool {
 
 	cret := xTypeTestFlags(TypeVar, FlagsVar)
-
 	return cret
 }
 
@@ -1662,7 +1616,6 @@ var xTypeValueTablePeek func(types.GType) *TypeValueTable
 func TypeValueTablePeek(TypeVar types.GType) *TypeValueTable {
 
 	cret := xTypeValueTablePeek(TypeVar)
-
 	return cret
 }
 

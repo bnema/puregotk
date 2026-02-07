@@ -86,7 +86,6 @@ var xSnapshotAppendCairo func(uintptr, *graphene.Rect) *cairo.Context
 func (x *Snapshot) AppendCairo(BoundsVar *graphene.Rect) *cairo.Context {
 
 	cret := xSnapshotAppendCairo(x.GoPointer(), BoundsVar)
-
 	return cret
 }
 

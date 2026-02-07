@@ -103,7 +103,6 @@ var xCoverageGet func(uintptr, int) CoverageLevel
 func (x *Coverage) Get(IndexVar int) CoverageLevel {
 
 	cret := xCoverageGet(x.GoPointer(), IndexVar)
-
 	return cret
 }
 

@@ -2,8 +2,6 @@
 package gio
 
 import (
-	"runtime"
-
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -142,7 +140,6 @@ func (x *DBusActionGroup) ChangeActionState(ActionNameVar string, ValueVar *glib
 func (x *DBusActionGroup) GetActionEnabled(ActionNameVar string) bool {
 
 	cret := XGActionGroupGetActionEnabled(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -162,7 +159,6 @@ func (x *DBusActionGroup) GetActionEnabled(ActionNameVar string) bool {
 func (x *DBusActionGroup) GetActionParameterType(ActionNameVar string) *glib.VariantType {
 
 	cret := XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -177,7 +173,6 @@ func (x *DBusActionGroup) GetActionParameterType(ActionNameVar string) *glib.Var
 func (x *DBusActionGroup) GetActionState(ActionNameVar string) *glib.Variant {
 
 	cret := XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -202,7 +197,6 @@ func (x *DBusActionGroup) GetActionState(ActionNameVar string) *glib.Variant {
 func (x *DBusActionGroup) GetActionStateHint(ActionNameVar string) *glib.Variant {
 
 	cret := XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -225,7 +219,6 @@ func (x *DBusActionGroup) GetActionStateHint(ActionNameVar string) *glib.Variant
 func (x *DBusActionGroup) GetActionStateType(ActionNameVar string) *glib.VariantType {
 
 	cret := XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -233,7 +226,6 @@ func (x *DBusActionGroup) GetActionStateType(ActionNameVar string) *glib.Variant
 func (x *DBusActionGroup) HasAction(ActionNameVar string) bool {
 
 	cret := XGActionGroupHasAction(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -244,7 +236,6 @@ func (x *DBusActionGroup) HasAction(ActionNameVar string) bool {
 func (x *DBusActionGroup) ListActions() []string {
 
 	cret := XGActionGroupListActions(x.GoPointer())
-
 	return cret
 }
 
@@ -278,7 +269,6 @@ func (x *DBusActionGroup) ListActions() []string {
 func (x *DBusActionGroup) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
-
 	return cret
 }
 
@@ -330,11 +320,10 @@ var xDBusActionGroupGet func(uintptr, uintptr, string) uintptr
 func DBusActionGroupGet(ConnectionVar *DBusConnection, BusNameVar *string, ObjectPathVar string) *DBusActionGroup {
 	var cls *DBusActionGroup
 
-	BusNameVarPtr, BusNameVarBytes := core.NullableStringToPtr(BusNameVar)
+	BusNameVarPtr := core.GStrdupNullable(BusNameVar)
+	defer core.GFreeNullable(BusNameVarPtr)
 
 	cret := xDBusActionGroupGet(ConnectionVar.GoPointer(), BusNameVarPtr, ObjectPathVar)
-
-	runtime.KeepAlive(BusNameVarBytes)
 
 	if cret == 0 {
 		return nil

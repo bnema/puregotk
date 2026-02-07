@@ -148,7 +148,6 @@ var xCellViewGetDisplayedRow func(uintptr) *TreePath
 func (x *CellView) GetDisplayedRow() *TreePath {
 
 	cret := xCellViewGetDisplayedRow(x.GoPointer())
-
 	return cret
 }
 
@@ -159,7 +158,6 @@ var xCellViewGetDrawSensitive func(uintptr) bool
 func (x *CellView) GetDrawSensitive() bool {
 
 	cret := xCellViewGetDrawSensitive(x.GoPointer())
-
 	return cret
 }
 
@@ -170,7 +168,6 @@ var xCellViewGetFitModel func(uintptr) bool
 func (x *CellView) GetFitModel() bool {
 
 	cret := xCellViewGetFitModel(x.GoPointer())
-
 	return cret
 }
 
@@ -340,7 +337,6 @@ func (x *CellView) GetAccessibleParent() *AccessibleBase {
 func (x *CellView) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -366,7 +362,6 @@ func (x *CellView) GetAtContext() *ATContext {
 func (x *CellView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -406,7 +401,6 @@ func (x *CellView) GetNextAccessibleSibling() *AccessibleBase {
 func (x *CellView) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -583,7 +577,6 @@ func (x *CellView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *CellView) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -637,7 +630,6 @@ func (x *CellView) GetArea() *CellArea {
 func (x *CellView) GetCells() *glib.List {
 
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-
 	return cret
 }
 
@@ -704,7 +696,6 @@ func (x *CellView) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDat
 func (x *CellView) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

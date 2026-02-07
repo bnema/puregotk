@@ -2,7 +2,6 @@
 package gio
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -662,11 +661,10 @@ var xNewApplication func(uintptr, ApplicationFlags) uintptr
 func NewApplication(ApplicationIdVar *string, FlagsVar ApplicationFlags) *Application {
 	var cls *Application
 
-	ApplicationIdVarPtr, ApplicationIdVarBytes := core.NullableStringToPtr(ApplicationIdVar)
+	ApplicationIdVarPtr := core.GStrdupNullable(ApplicationIdVar)
+	defer core.GFreeNullable(ApplicationIdVarPtr)
 
 	cret := xNewApplication(ApplicationIdVarPtr, FlagsVar)
-
-	runtime.KeepAlive(ApplicationIdVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -707,11 +705,10 @@ var xApplicationAddMainOption func(uintptr, string, byte, glib.OptionFlags, glib
 // See #GOptionEntry for more documentation of the arguments.
 func (x *Application) AddMainOption(LongNameVar string, ShortNameVar byte, FlagsVar glib.OptionFlags, ArgVar glib.OptionArg, DescriptionVar string, ArgDescriptionVar *string) {
 
-	ArgDescriptionVarPtr, ArgDescriptionVarBytes := core.NullableStringToPtr(ArgDescriptionVar)
+	ArgDescriptionVarPtr := core.GStrdupNullable(ArgDescriptionVar)
+	defer core.GFreeNullable(ArgDescriptionVarPtr)
 
 	xApplicationAddMainOption(x.GoPointer(), LongNameVar, ShortNameVar, FlagsVar, ArgVar, DescriptionVar, ArgDescriptionVarPtr)
-
-	runtime.KeepAlive(ArgDescriptionVarBytes)
 
 }
 
@@ -832,7 +829,6 @@ var xApplicationGetApplicationId func(uintptr) string
 func (x *Application) GetApplicationId() string {
 
 	cret := xApplicationGetApplicationId(x.GoPointer())
-
 	return cret
 }
 
@@ -884,7 +880,6 @@ var xApplicationGetDbusObjectPath func(uintptr) string
 func (x *Application) GetDbusObjectPath() string {
 
 	cret := xApplicationGetDbusObjectPath(x.GoPointer())
-
 	return cret
 }
 
@@ -896,7 +891,6 @@ var xApplicationGetFlags func(uintptr) ApplicationFlags
 func (x *Application) GetFlags() ApplicationFlags {
 
 	cret := xApplicationGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -909,7 +903,6 @@ var xApplicationGetInactivityTimeout func(uintptr) uint
 func (x *Application) GetInactivityTimeout() uint {
 
 	cret := xApplicationGetInactivityTimeout(x.GoPointer())
-
 	return cret
 }
 
@@ -920,7 +913,6 @@ var xApplicationGetIsBusy func(uintptr) bool
 func (x *Application) GetIsBusy() bool {
 
 	cret := xApplicationGetIsBusy(x.GoPointer())
-
 	return cret
 }
 
@@ -933,7 +925,6 @@ var xApplicationGetIsRegistered func(uintptr) bool
 func (x *Application) GetIsRegistered() bool {
 
 	cret := xApplicationGetIsRegistered(x.GoPointer())
-
 	return cret
 }
 
@@ -952,7 +943,6 @@ var xApplicationGetIsRemote func(uintptr) bool
 func (x *Application) GetIsRemote() bool {
 
 	cret := xApplicationGetIsRemote(x.GoPointer())
-
 	return cret
 }
 
@@ -964,7 +954,6 @@ var xApplicationGetResourceBasePath func(uintptr) string
 func (x *Application) GetResourceBasePath() string {
 
 	cret := xApplicationGetResourceBasePath(x.GoPointer())
-
 	return cret
 }
 
@@ -974,7 +963,6 @@ var xApplicationGetVersion func(uintptr) string
 func (x *Application) GetVersion() string {
 
 	cret := xApplicationGetVersion(x.GoPointer())
-
 	return cret
 }
 
@@ -1092,7 +1080,6 @@ func (x *Application) Register(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xApplicationRegister(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1194,7 +1181,6 @@ var xApplicationRun func(uintptr, int, []string) int
 func (x *Application) Run(ArgcVar int, ArgvVar []string) int {
 
 	cret := xApplicationRun(x.GoPointer(), ArgcVar, ArgvVar)
-
 	return cret
 }
 
@@ -1231,11 +1217,10 @@ var xApplicationSendNotification func(uintptr, uintptr, uintptr)
 // application ID.
 func (x *Application) SendNotification(IdVar *string, NotificationVar *Notification) {
 
-	IdVarPtr, IdVarBytes := core.NullableStringToPtr(IdVar)
+	IdVarPtr := core.GStrdupNullable(IdVar)
+	defer core.GFreeNullable(IdVarPtr)
 
 	xApplicationSendNotification(x.GoPointer(), IdVarPtr, NotificationVar.GoPointer())
-
-	runtime.KeepAlive(IdVarBytes)
 
 }
 
@@ -1260,11 +1245,10 @@ var xApplicationSetApplicationId func(uintptr, uintptr)
 // g_application_id_is_valid().
 func (x *Application) SetApplicationId(ApplicationIdVar *string) {
 
-	ApplicationIdVarPtr, ApplicationIdVarBytes := core.NullableStringToPtr(ApplicationIdVar)
+	ApplicationIdVarPtr := core.GStrdupNullable(ApplicationIdVar)
+	defer core.GFreeNullable(ApplicationIdVarPtr)
 
 	xApplicationSetApplicationId(x.GoPointer(), ApplicationIdVarPtr)
-
-	runtime.KeepAlive(ApplicationIdVarBytes)
 
 }
 
@@ -1319,11 +1303,10 @@ var xApplicationSetOptionContextDescription func(uintptr, uintptr)
 // See g_option_context_set_description() for more information.
 func (x *Application) SetOptionContextDescription(DescriptionVar *string) {
 
-	DescriptionVarPtr, DescriptionVarBytes := core.NullableStringToPtr(DescriptionVar)
+	DescriptionVarPtr := core.GStrdupNullable(DescriptionVar)
+	defer core.GFreeNullable(DescriptionVarPtr)
 
 	xApplicationSetOptionContextDescription(x.GoPointer(), DescriptionVarPtr)
-
-	runtime.KeepAlive(DescriptionVarBytes)
 
 }
 
@@ -1337,11 +1320,10 @@ var xApplicationSetOptionContextParameterString func(uintptr, uintptr)
 // See g_option_context_new() for more information about @parameter_string.
 func (x *Application) SetOptionContextParameterString(ParameterStringVar *string) {
 
-	ParameterStringVarPtr, ParameterStringVarBytes := core.NullableStringToPtr(ParameterStringVar)
+	ParameterStringVarPtr := core.GStrdupNullable(ParameterStringVar)
+	defer core.GFreeNullable(ParameterStringVarPtr)
 
 	xApplicationSetOptionContextParameterString(x.GoPointer(), ParameterStringVarPtr)
-
-	runtime.KeepAlive(ParameterStringVarBytes)
 
 }
 
@@ -1352,11 +1334,10 @@ var xApplicationSetOptionContextSummary func(uintptr, uintptr)
 // See g_option_context_set_summary() for more information.
 func (x *Application) SetOptionContextSummary(SummaryVar *string) {
 
-	SummaryVarPtr, SummaryVarBytes := core.NullableStringToPtr(SummaryVar)
+	SummaryVarPtr := core.GStrdupNullable(SummaryVar)
+	defer core.GFreeNullable(SummaryVarPtr)
 
 	xApplicationSetOptionContextSummary(x.GoPointer(), SummaryVarPtr)
-
-	runtime.KeepAlive(SummaryVarBytes)
 
 }
 
@@ -1397,11 +1378,10 @@ var xApplicationSetResourceBasePath func(uintptr, uintptr)
 // before chaining up to the parent implementation.
 func (x *Application) SetResourceBasePath(ResourcePathVar *string) {
 
-	ResourcePathVarPtr, ResourcePathVarBytes := core.NullableStringToPtr(ResourcePathVar)
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
 
 	xApplicationSetResourceBasePath(x.GoPointer(), ResourcePathVarPtr)
-
-	runtime.KeepAlive(ResourcePathVarBytes)
 
 }
 
@@ -1886,7 +1866,6 @@ func (x *Application) ChangeActionState(ActionNameVar string, ValueVar *glib.Var
 func (x *Application) GetActionEnabled(ActionNameVar string) bool {
 
 	cret := XGActionGroupGetActionEnabled(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -1906,7 +1885,6 @@ func (x *Application) GetActionEnabled(ActionNameVar string) bool {
 func (x *Application) GetActionParameterType(ActionNameVar string) *glib.VariantType {
 
 	cret := XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -1921,7 +1899,6 @@ func (x *Application) GetActionParameterType(ActionNameVar string) *glib.Variant
 func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 
 	cret := XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -1946,7 +1923,6 @@ func (x *Application) GetActionState(ActionNameVar string) *glib.Variant {
 func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 
 	cret := XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -1969,7 +1945,6 @@ func (x *Application) GetActionStateHint(ActionNameVar string) *glib.Variant {
 func (x *Application) GetActionStateType(ActionNameVar string) *glib.VariantType {
 
 	cret := XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -1977,7 +1952,6 @@ func (x *Application) GetActionStateType(ActionNameVar string) *glib.VariantType
 func (x *Application) HasAction(ActionNameVar string) bool {
 
 	cret := XGActionGroupHasAction(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -1988,7 +1962,6 @@ func (x *Application) HasAction(ActionNameVar string) bool {
 func (x *Application) ListActions() []string {
 
 	cret := XGActionGroupListActions(x.GoPointer())
-
 	return cret
 }
 
@@ -2022,7 +1995,6 @@ func (x *Application) ListActions() []string {
 func (x *Application) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
-
 	return cret
 }
 
@@ -2217,7 +2189,6 @@ var xApplicationIdIsValid func(string) bool
 func ApplicationIdIsValid(ApplicationIdVar string) bool {
 
 	cret := xApplicationIdIsValid(ApplicationIdVar)
-
 	return cret
 }
 

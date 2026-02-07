@@ -202,7 +202,6 @@ func (x *NetworkMonitorBase) CanReach(ConnectableVar SocketConnectable, Cancella
 	var cerr *glib.Error
 
 	cret := XGNetworkMonitorCanReach(x.GoPointer(), ConnectableVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -231,7 +230,6 @@ func (x *NetworkMonitorBase) CanReachFinish(ResultVar AsyncResult) (bool, error)
 	var cerr *glib.Error
 
 	cret := XGNetworkMonitorCanReachFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -261,7 +259,6 @@ func (x *NetworkMonitorBase) CanReachFinish(ResultVar AsyncResult) (bool, error)
 func (x *NetworkMonitorBase) GetConnectivity() NetworkConnectivity {
 
 	cret := XGNetworkMonitorGetConnectivity(x.GoPointer())
-
 	return cret
 }
 
@@ -272,7 +269,6 @@ func (x *NetworkMonitorBase) GetConnectivity() NetworkConnectivity {
 func (x *NetworkMonitorBase) GetNetworkAvailable() bool {
 
 	cret := XGNetworkMonitorGetNetworkAvailable(x.GoPointer())
-
 	return cret
 }
 
@@ -281,7 +277,6 @@ func (x *NetworkMonitorBase) GetNetworkAvailable() bool {
 func (x *NetworkMonitorBase) GetNetworkMetered() bool {
 
 	cret := XGNetworkMonitorGetNetworkMetered(x.GoPointer())
-
 	return cret
 }
 

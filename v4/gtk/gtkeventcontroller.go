@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -97,7 +96,6 @@ var xEventControllerGetCurrentEventState func(uintptr) gdk.ModifierType
 func (x *EventController) GetCurrentEventState() gdk.ModifierType {
 
 	cret := xEventControllerGetCurrentEventState(x.GoPointer())
-
 	return cret
 }
 
@@ -110,7 +108,6 @@ var xEventControllerGetCurrentEventTime func(uintptr) uint32
 func (x *EventController) GetCurrentEventTime() uint32 {
 
 	cret := xEventControllerGetCurrentEventTime(x.GoPointer())
-
 	return cret
 }
 
@@ -120,7 +117,6 @@ var xEventControllerGetName func(uintptr) string
 func (x *EventController) GetName() string {
 
 	cret := xEventControllerGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -130,7 +126,6 @@ var xEventControllerGetPropagationLimit func(uintptr) PropagationLimit
 func (x *EventController) GetPropagationLimit() PropagationLimit {
 
 	cret := xEventControllerGetPropagationLimit(x.GoPointer())
-
 	return cret
 }
 
@@ -140,7 +135,6 @@ var xEventControllerGetPropagationPhase func(uintptr) PropagationPhase
 func (x *EventController) GetPropagationPhase() PropagationPhase {
 
 	cret := xEventControllerGetPropagationPhase(x.GoPointer())
-
 	return cret
 }
 
@@ -175,11 +169,10 @@ var xEventControllerSetName func(uintptr, uintptr)
 // Sets a name on the controller that can be used for debugging.
 func (x *EventController) SetName(NameVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xEventControllerSetName(x.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -213,11 +206,10 @@ var xEventControllerSetStaticName func(uintptr, uintptr)
 // Sets a name on the controller that can be used for debugging.
 func (x *EventController) SetStaticName(NameVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xEventControllerSetStaticName(x.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 

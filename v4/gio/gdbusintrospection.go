@@ -41,7 +41,6 @@ var xDBusAnnotationInfoRef func(uintptr) *DBusAnnotationInfo
 func (x *DBusAnnotationInfo) Ref() *DBusAnnotationInfo {
 
 	cret := xDBusAnnotationInfoRef(x.GoPointer())
-
 	return cret
 }
 
@@ -86,7 +85,6 @@ var xDBusArgInfoRef func(uintptr) *DBusArgInfo
 func (x *DBusArgInfo) Ref() *DBusArgInfo {
 
 	cret := xDBusArgInfoRef(x.GoPointer())
-
 	return cret
 }
 
@@ -180,7 +178,6 @@ var xDBusInterfaceInfoLookupMethod func(uintptr, string) *DBusMethodInfo
 func (x *DBusInterfaceInfo) LookupMethod(NameVar string) *DBusMethodInfo {
 
 	cret := xDBusInterfaceInfoLookupMethod(x.GoPointer(), NameVar)
-
 	return cret
 }
 
@@ -193,7 +190,6 @@ var xDBusInterfaceInfoLookupProperty func(uintptr, string) *DBusPropertyInfo
 func (x *DBusInterfaceInfo) LookupProperty(NameVar string) *DBusPropertyInfo {
 
 	cret := xDBusInterfaceInfoLookupProperty(x.GoPointer(), NameVar)
-
 	return cret
 }
 
@@ -206,7 +202,6 @@ var xDBusInterfaceInfoLookupSignal func(uintptr, string) *DBusSignalInfo
 func (x *DBusInterfaceInfo) LookupSignal(NameVar string) *DBusSignalInfo {
 
 	cret := xDBusInterfaceInfoLookupSignal(x.GoPointer(), NameVar)
-
 	return cret
 }
 
@@ -217,7 +212,6 @@ var xDBusInterfaceInfoRef func(uintptr) *DBusInterfaceInfo
 func (x *DBusInterfaceInfo) Ref() *DBusInterfaceInfo {
 
 	cret := xDBusInterfaceInfoRef(x.GoPointer())
-
 	return cret
 }
 
@@ -264,7 +258,6 @@ var xDBusMethodInfoRef func(uintptr) *DBusMethodInfo
 func (x *DBusMethodInfo) Ref() *DBusMethodInfo {
 
 	cret := xDBusMethodInfoRef(x.GoPointer())
-
 	return cret
 }
 
@@ -318,7 +311,6 @@ func NewDBusNodeInfoForXml(XmlDataVar string) (*DBusNodeInfo, error) {
 	var cerr *glib.Error
 
 	cret := xNewDBusNodeInfoForXml(XmlDataVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -346,7 +338,6 @@ var xDBusNodeInfoLookupInterface func(uintptr, string) *DBusInterfaceInfo
 func (x *DBusNodeInfo) LookupInterface(NameVar string) *DBusInterfaceInfo {
 
 	cret := xDBusNodeInfoLookupInterface(x.GoPointer(), NameVar)
-
 	return cret
 }
 
@@ -357,7 +348,6 @@ var xDBusNodeInfoRef func(uintptr) *DBusNodeInfo
 func (x *DBusNodeInfo) Ref() *DBusNodeInfo {
 
 	cret := xDBusNodeInfoRef(x.GoPointer())
-
 	return cret
 }
 
@@ -404,7 +394,6 @@ var xDBusPropertyInfoRef func(uintptr) *DBusPropertyInfo
 func (x *DBusPropertyInfo) Ref() *DBusPropertyInfo {
 
 	cret := xDBusPropertyInfoRef(x.GoPointer())
-
 	return cret
 }
 
@@ -449,7 +438,6 @@ var xDBusSignalInfoRef func(uintptr) *DBusSignalInfo
 func (x *DBusSignalInfo) Ref() *DBusSignalInfo {
 
 	cret := xDBusSignalInfoRef(x.GoPointer())
-
 	return cret
 }
 
@@ -472,7 +460,6 @@ var xDbusAnnotationInfoLookup func(uintptr, string) string
 func DbusAnnotationInfoLookup(AnnotationsVar uintptr, NameVar string) string {
 
 	cret := xDbusAnnotationInfoLookup(AnnotationsVar, NameVar)
-
 	return cret
 }
 

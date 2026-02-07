@@ -114,7 +114,6 @@ var xButtonContentGetCanShrink func(uintptr) bool
 func (x *ButtonContent) GetCanShrink() bool {
 
 	cret := xButtonContentGetCanShrink(x.GoPointer())
-
 	return cret
 }
 
@@ -124,7 +123,6 @@ var xButtonContentGetIconName func(uintptr) string
 func (x *ButtonContent) GetIconName() string {
 
 	cret := xButtonContentGetIconName(x.GoPointer())
-
 	return cret
 }
 
@@ -134,7 +132,6 @@ var xButtonContentGetLabel func(uintptr) string
 func (x *ButtonContent) GetLabel() string {
 
 	cret := xButtonContentGetLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -144,7 +141,6 @@ var xButtonContentGetUseUnderline func(uintptr) bool
 func (x *ButtonContent) GetUseUnderline() bool {
 
 	cret := xButtonContentGetUseUnderline(x.GoPointer())
-
 	return cret
 }
 
@@ -328,7 +324,6 @@ func (x *ButtonContent) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ButtonContent) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -354,7 +349,6 @@ func (x *ButtonContent) GetAtContext() *gtk.ATContext {
 func (x *ButtonContent) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -394,7 +388,6 @@ func (x *ButtonContent) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ButtonContent) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -571,7 +564,6 @@ func (x *ButtonContent) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessi
 func (x *ButtonContent) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

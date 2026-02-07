@@ -112,7 +112,6 @@ var xAppChooserButtonGetHeading func(uintptr) string
 func (x *AppChooserButton) GetHeading() string {
 
 	cret := xAppChooserButtonGetHeading(x.GoPointer())
-
 	return cret
 }
 
@@ -122,7 +121,6 @@ var xAppChooserButtonGetModal func(uintptr) bool
 func (x *AppChooserButton) GetModal() bool {
 
 	cret := xAppChooserButtonGetModal(x.GoPointer())
-
 	return cret
 }
 
@@ -133,7 +131,6 @@ var xAppChooserButtonGetShowDefaultItem func(uintptr) bool
 func (x *AppChooserButton) GetShowDefaultItem() bool {
 
 	cret := xAppChooserButtonGetShowDefaultItem(x.GoPointer())
-
 	return cret
 }
 
@@ -144,7 +141,6 @@ var xAppChooserButtonGetShowDialogItem func(uintptr) bool
 func (x *AppChooserButton) GetShowDialogItem() bool {
 
 	cret := xAppChooserButtonGetShowDialogItem(x.GoPointer())
-
 	return cret
 }
 
@@ -430,7 +426,6 @@ func (x *AppChooserButton) GetAccessibleParent() *AccessibleBase {
 func (x *AppChooserButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -456,7 +451,6 @@ func (x *AppChooserButton) GetAtContext() *ATContext {
 func (x *AppChooserButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -496,7 +490,6 @@ func (x *AppChooserButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *AppChooserButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -685,7 +678,6 @@ func (x *AppChooserButton) GetAppInfo() *gio.AppInfoBase {
 func (x *AppChooserButton) GetContentType() string {
 
 	cret := XGtkAppChooserGetContentType(x.GoPointer())
-
 	return cret
 }
 
@@ -703,7 +695,6 @@ func (x *AppChooserButton) Refresh() {
 func (x *AppChooserButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

@@ -12,7 +12,6 @@ var xVariantParserGetErrorQuark func() Quark
 func VariantParserGetErrorQuark() Quark {
 
 	cret := xVariantParserGetErrorQuark()
-
 	return cret
 }
 

@@ -259,7 +259,6 @@ func (x *ShortcutsSection) GetAccessibleParent() *AccessibleBase {
 func (x *ShortcutsSection) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -285,7 +284,6 @@ func (x *ShortcutsSection) GetAtContext() *ATContext {
 func (x *ShortcutsSection) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -325,7 +323,6 @@ func (x *ShortcutsSection) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ShortcutsSection) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -502,7 +499,6 @@ func (x *ShortcutsSection) UpdateStateValue(NStatesVar int, StatesVar []Accessib
 func (x *ShortcutsSection) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -510,7 +506,6 @@ func (x *ShortcutsSection) GetBuildableId() string {
 func (x *ShortcutsSection) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

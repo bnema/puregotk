@@ -46,7 +46,6 @@ var xLayoutIterAtLastLine func(uintptr) bool
 func (x *LayoutIter) AtLastLine() bool {
 
 	cret := xLayoutIterAtLastLine(x.GoPointer())
-
 	return cret
 }
 
@@ -56,7 +55,6 @@ var xLayoutIterCopy func(uintptr) *LayoutIter
 func (x *LayoutIter) Copy() *LayoutIter {
 
 	cret := xLayoutIterCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -78,7 +76,6 @@ var xLayoutIterGetBaseline func(uintptr) int
 func (x *LayoutIter) GetBaseline() int {
 
 	cret := xLayoutIterGetBaseline(x.GoPointer())
-
 	return cret
 }
 
@@ -118,7 +115,6 @@ var xLayoutIterGetIndex func(uintptr) int
 func (x *LayoutIter) GetIndex() int {
 
 	cret := xLayoutIterGetIndex(x.GoPointer())
-
 	return cret
 }
 
@@ -158,7 +154,6 @@ var xLayoutIterGetLine func(uintptr) *LayoutLine
 func (x *LayoutIter) GetLine() *LayoutLine {
 
 	cret := xLayoutIterGetLine(x.GoPointer())
-
 	return cret
 }
 
@@ -186,7 +181,6 @@ var xLayoutIterGetLineReadonly func(uintptr) *LayoutLine
 func (x *LayoutIter) GetLineReadonly() *LayoutLine {
 
 	cret := xLayoutIterGetLineReadonly(x.GoPointer())
-
 	return cret
 }
 
@@ -223,7 +217,6 @@ var xLayoutIterGetRun func(uintptr) *LayoutRun
 func (x *LayoutIter) GetRun() *LayoutRun {
 
 	cret := xLayoutIterGetRun(x.GoPointer())
-
 	return cret
 }
 
@@ -239,7 +232,6 @@ var xLayoutIterGetRunBaseline func(uintptr) int
 func (x *LayoutIter) GetRunBaseline() int {
 
 	cret := xLayoutIterGetRunBaseline(x.GoPointer())
-
 	return cret
 }
 
@@ -269,7 +261,6 @@ var xLayoutIterGetRunReadonly func(uintptr) *LayoutRun
 func (x *LayoutIter) GetRunReadonly() *LayoutRun {
 
 	cret := xLayoutIterGetRunReadonly(x.GoPointer())
-
 	return cret
 }
 
@@ -281,7 +272,6 @@ var xLayoutIterNextChar func(uintptr) bool
 func (x *LayoutIter) NextChar() bool {
 
 	cret := xLayoutIterNextChar(x.GoPointer())
-
 	return cret
 }
 
@@ -293,7 +283,6 @@ var xLayoutIterNextCluster func(uintptr) bool
 func (x *LayoutIter) NextCluster() bool {
 
 	cret := xLayoutIterNextCluster(x.GoPointer())
-
 	return cret
 }
 
@@ -305,7 +294,6 @@ var xLayoutIterNextLine func(uintptr) bool
 func (x *LayoutIter) NextLine() bool {
 
 	cret := xLayoutIterNextLine(x.GoPointer())
-
 	return cret
 }
 
@@ -317,7 +305,6 @@ var xLayoutIterNextRun func(uintptr) bool
 func (x *LayoutIter) NextRun() bool {
 
 	cret := xLayoutIterNextRun(x.GoPointer())
-
 	return cret
 }
 
@@ -386,7 +373,6 @@ var xLayoutLineGetLength func(uintptr) int
 func (x *LayoutLine) GetLength() int {
 
 	cret := xLayoutLineGetLength(x.GoPointer())
-
 	return cret
 }
 
@@ -410,7 +396,6 @@ var xLayoutLineGetResolvedDirection func(uintptr) Direction
 func (x *LayoutLine) GetResolvedDirection() Direction {
 
 	cret := xLayoutLineGetResolvedDirection(x.GoPointer())
-
 	return cret
 }
 
@@ -421,7 +406,6 @@ var xLayoutLineGetStartIndex func(uintptr) int
 func (x *LayoutLine) GetStartIndex() int {
 
 	cret := xLayoutLineGetStartIndex(x.GoPointer())
-
 	return cret
 }
 
@@ -454,7 +438,6 @@ var xLayoutLineIsParagraphStartFn func(uintptr) bool
 func (x *LayoutLine) IsParagraphStartFn() bool {
 
 	cret := xLayoutLineIsParagraphStartFn(x.GoPointer())
-
 	return cret
 }
 
@@ -464,7 +447,6 @@ var xLayoutLineRef func(uintptr) *LayoutLine
 func (x *LayoutLine) Ref() *LayoutLine {
 
 	cret := xLayoutLineRef(x.GoPointer())
-
 	return cret
 }
 
@@ -496,7 +478,6 @@ var xLayoutLineXToIndex func(uintptr, int, *int, *int) bool
 func (x *LayoutLine) XToIndex(XPosVar int, IndexVar *int, TrailingVar *int) bool {
 
 	cret := xLayoutLineXToIndex(x.GoPointer(), XPosVar, IndexVar, TrailingVar)
-
 	return cret
 }
 
@@ -759,7 +740,6 @@ var xLayoutGetAlignment func(uintptr) Alignment
 func (x *Layout) GetAlignment() Alignment {
 
 	cret := xLayoutGetAlignment(x.GoPointer())
-
 	return cret
 }
 
@@ -769,7 +749,6 @@ var xLayoutGetAttributes func(uintptr) *AttrList
 func (x *Layout) GetAttributes() *AttrList {
 
 	cret := xLayoutGetAttributes(x.GoPointer())
-
 	return cret
 }
 
@@ -782,7 +761,6 @@ var xLayoutGetAutoDir func(uintptr) bool
 func (x *Layout) GetAutoDir() bool {
 
 	cret := xLayoutGetAutoDir(x.GoPointer())
-
 	return cret
 }
 
@@ -792,7 +770,6 @@ var xLayoutGetBaseline func(uintptr) int
 func (x *Layout) GetBaseline() int {
 
 	cret := xLayoutGetBaseline(x.GoPointer())
-
 	return cret
 }
 
@@ -824,7 +801,6 @@ var xLayoutGetCharacterCount func(uintptr) int
 func (x *Layout) GetCharacterCount() int {
 
 	cret := xLayoutGetCharacterCount(x.GoPointer())
-
 	return cret
 }
 
@@ -890,7 +866,6 @@ var xLayoutGetDirection func(uintptr, int) Direction
 func (x *Layout) GetDirection(IndexVar int) Direction {
 
 	cret := xLayoutGetDirection(x.GoPointer(), IndexVar)
-
 	return cret
 }
 
@@ -905,7 +880,6 @@ var xLayoutGetEllipsize func(uintptr) EllipsizeMode
 func (x *Layout) GetEllipsize() EllipsizeMode {
 
 	cret := xLayoutGetEllipsize(x.GoPointer())
-
 	return cret
 }
 
@@ -933,7 +907,6 @@ var xLayoutGetFontDescription func(uintptr) *FontDescription
 func (x *Layout) GetFontDescription() *FontDescription {
 
 	cret := xLayoutGetFontDescription(x.GoPointer())
-
 	return cret
 }
 
@@ -945,7 +918,6 @@ var xLayoutGetHeight func(uintptr) int
 func (x *Layout) GetHeight() int {
 
 	cret := xLayoutGetHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -957,7 +929,6 @@ var xLayoutGetIndent func(uintptr) int
 func (x *Layout) GetIndent() int {
 
 	cret := xLayoutGetIndent(x.GoPointer())
-
 	return cret
 }
 
@@ -967,7 +938,6 @@ var xLayoutGetIter func(uintptr) *LayoutIter
 func (x *Layout) GetIter() *LayoutIter {
 
 	cret := xLayoutGetIter(x.GoPointer())
-
 	return cret
 }
 
@@ -978,7 +948,6 @@ var xLayoutGetJustify func(uintptr) bool
 func (x *Layout) GetJustify() bool {
 
 	cret := xLayoutGetJustify(x.GoPointer())
-
 	return cret
 }
 
@@ -989,7 +958,6 @@ var xLayoutGetJustifyLastLine func(uintptr) bool
 func (x *Layout) GetJustifyLastLine() bool {
 
 	cret := xLayoutGetJustifyLastLine(x.GoPointer())
-
 	return cret
 }
 
@@ -1002,7 +970,6 @@ var xLayoutGetLine func(uintptr, int) *LayoutLine
 func (x *Layout) GetLine(LineVar int) *LayoutLine {
 
 	cret := xLayoutGetLine(x.GoPointer(), LineVar)
-
 	return cret
 }
 
@@ -1012,7 +979,6 @@ var xLayoutGetLineCount func(uintptr) int
 func (x *Layout) GetLineCount() int {
 
 	cret := xLayoutGetLineCount(x.GoPointer())
-
 	return cret
 }
 
@@ -1026,7 +992,6 @@ var xLayoutGetLineReadonly func(uintptr, int) *LayoutLine
 func (x *Layout) GetLineReadonly(LineVar int) *LayoutLine {
 
 	cret := xLayoutGetLineReadonly(x.GoPointer(), LineVar)
-
 	return cret
 }
 
@@ -1038,7 +1003,6 @@ var xLayoutGetLineSpacing func(uintptr) float32
 func (x *Layout) GetLineSpacing() float32 {
 
 	cret := xLayoutGetLineSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -1051,7 +1015,6 @@ var xLayoutGetLines func(uintptr) *glib.SList
 func (x *Layout) GetLines() *glib.SList {
 
 	cret := xLayoutGetLines(x.GoPointer())
-
 	return cret
 }
 
@@ -1065,7 +1028,6 @@ var xLayoutGetLinesReadonly func(uintptr) *glib.SList
 func (x *Layout) GetLinesReadonly() *glib.SList {
 
 	cret := xLayoutGetLinesReadonly(x.GoPointer())
-
 	return cret
 }
 
@@ -1095,7 +1057,6 @@ var xLayoutGetLogAttrsReadonly func(uintptr, *int) uintptr
 func (x *Layout) GetLogAttrsReadonly(NAttrsVar *int) uintptr {
 
 	cret := xLayoutGetLogAttrsReadonly(x.GoPointer(), NAttrsVar)
-
 	return cret
 }
 
@@ -1144,7 +1105,6 @@ var xLayoutGetSerial func(uintptr) uint
 func (x *Layout) GetSerial() uint {
 
 	cret := xLayoutGetSerial(x.GoPointer())
-
 	return cret
 }
 
@@ -1156,7 +1116,6 @@ var xLayoutGetSingleParagraphMode func(uintptr) bool
 func (x *Layout) GetSingleParagraphMode() bool {
 
 	cret := xLayoutGetSingleParagraphMode(x.GoPointer())
-
 	return cret
 }
 
@@ -1178,7 +1137,6 @@ var xLayoutGetSpacing func(uintptr) int
 func (x *Layout) GetSpacing() int {
 
 	cret := xLayoutGetSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -1193,7 +1151,6 @@ var xLayoutGetTabs func(uintptr) *TabArray
 func (x *Layout) GetTabs() *TabArray {
 
 	cret := xLayoutGetTabs(x.GoPointer())
-
 	return cret
 }
 
@@ -1205,7 +1162,6 @@ var xLayoutGetText func(uintptr) string
 func (x *Layout) GetText() string {
 
 	cret := xLayoutGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -1220,7 +1176,6 @@ var xLayoutGetUnknownGlyphsCount func(uintptr) int
 func (x *Layout) GetUnknownGlyphsCount() int {
 
 	cret := xLayoutGetUnknownGlyphsCount(x.GoPointer())
-
 	return cret
 }
 
@@ -1230,7 +1185,6 @@ var xLayoutGetWidth func(uintptr) int
 func (x *Layout) GetWidth() int {
 
 	cret := xLayoutGetWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -1243,7 +1197,6 @@ var xLayoutGetWrap func(uintptr) WrapMode
 func (x *Layout) GetWrap() WrapMode {
 
 	cret := xLayoutGetWrap(x.GoPointer())
-
 	return cret
 }
 
@@ -1284,7 +1237,6 @@ var xLayoutIsEllipsized func(uintptr) bool
 func (x *Layout) IsEllipsized() bool {
 
 	cret := xLayoutIsEllipsized(x.GoPointer())
-
 	return cret
 }
 
@@ -1298,7 +1250,6 @@ var xLayoutIsWrapped func(uintptr) bool
 func (x *Layout) IsWrapped() bool {
 
 	cret := xLayoutIsWrapped(x.GoPointer())
-
 	return cret
 }
 
@@ -1338,7 +1289,6 @@ var xLayoutSerialize func(uintptr, LayoutSerializeFlags) *glib.Bytes
 func (x *Layout) Serialize(FlagsVar LayoutSerializeFlags) *glib.Bytes {
 
 	cret := xLayoutSerialize(x.GoPointer(), FlagsVar)
-
 	return cret
 }
 
@@ -1697,7 +1647,6 @@ func (x *Layout) WriteToFile(FlagsVar LayoutSerializeFlags, FilenameVar string) 
 	var cerr *glib.Error
 
 	cret := xLayoutWriteToFile(x.GoPointer(), FlagsVar, FilenameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1719,7 +1668,6 @@ var xLayoutXyToIndex func(uintptr, int, int, *int, *int) bool
 func (x *Layout) XyToIndex(XVar int, YVar int, IndexVar *int, TrailingVar *int) bool {
 
 	cret := xLayoutXyToIndex(x.GoPointer(), XVar, YVar, IndexVar, TrailingVar)
-
 	return cret
 }
 

@@ -899,7 +899,6 @@ func (x *MountBase) SetGoPointer(ptr uintptr) {
 func (x *MountBase) CanEject() bool {
 
 	cret := XGMountCanEject(x.GoPointer())
-
 	return cret
 }
 
@@ -907,7 +906,6 @@ func (x *MountBase) CanEject() bool {
 func (x *MountBase) CanUnmount() bool {
 
 	cret := XGMountCanUnmount(x.GoPointer())
-
 	return cret
 }
 
@@ -926,7 +924,6 @@ func (x *MountBase) EjectFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGMountEjectFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -949,7 +946,6 @@ func (x *MountBase) EjectWithOperationFinish(ResultVar AsyncResult) (bool, error
 	var cerr *glib.Error
 
 	cret := XGMountEjectWithOperationFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1008,7 +1004,6 @@ func (x *MountBase) GetIcon() *IconBase {
 func (x *MountBase) GetName() string {
 
 	cret := XGMountGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -1030,7 +1025,6 @@ func (x *MountBase) GetRoot() *FileBase {
 func (x *MountBase) GetSortKey() string {
 
 	cret := XGMountGetSortKey(x.GoPointer())
-
 	return cret
 }
 
@@ -1055,7 +1049,6 @@ func (x *MountBase) GetSymbolicIcon() *IconBase {
 func (x *MountBase) GetUuid() string {
 
 	cret := XGMountGetUuid(x.GoPointer())
-
 	return cret
 }
 
@@ -1099,7 +1092,6 @@ func (x *MountBase) GuessContentTypeFinish(ResultVar AsyncResult) ([]string, err
 	var cerr *glib.Error
 
 	cret := XGMountGuessContentTypeFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1120,7 +1112,6 @@ func (x *MountBase) GuessContentTypeSync(ForceRescanVar bool, CancellableVar *Ca
 	var cerr *glib.Error
 
 	cret := XGMountGuessContentTypeSync(x.GoPointer(), ForceRescanVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1154,7 +1145,6 @@ func (x *MountBase) GuessContentTypeSync(ForceRescanVar bool, CancellableVar *Ca
 func (x *MountBase) IsShadowed() bool {
 
 	cret := XGMountIsShadowed(x.GoPointer())
-
 	return cret
 }
 
@@ -1179,7 +1169,6 @@ func (x *MountBase) RemountFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGMountRemountFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1212,7 +1201,6 @@ func (x *MountBase) UnmountFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGMountUnmountFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1235,7 +1223,6 @@ func (x *MountBase) UnmountWithOperationFinish(ResultVar AsyncResult) (bool, err
 	var cerr *glib.Error
 
 	cret := XGMountUnmountWithOperationFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

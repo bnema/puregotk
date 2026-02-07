@@ -508,7 +508,6 @@ func (x *CellLayoutBase) GetArea() *CellArea {
 func (x *CellLayoutBase) GetCells() *glib.List {
 
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-
 	return cret
 }
 

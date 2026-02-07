@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -67,11 +66,10 @@ var xNewColumnViewColumn func(uintptr, uintptr) uintptr
 func NewColumnViewColumn(TitleVar *string, FactoryVar *ListItemFactory) *ColumnViewColumn {
 	var cls *ColumnViewColumn
 
-	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
 
 	cret := xNewColumnViewColumn(TitleVarPtr, FactoryVar.GoPointer())
-
-	runtime.KeepAlive(TitleVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -106,7 +104,6 @@ var xColumnViewColumnGetExpand func(uintptr) bool
 func (x *ColumnViewColumn) GetExpand() bool {
 
 	cret := xColumnViewColumnGetExpand(x.GoPointer())
-
 	return cret
 }
 
@@ -134,7 +131,6 @@ var xColumnViewColumnGetFixedWidth func(uintptr) int
 func (x *ColumnViewColumn) GetFixedWidth() int {
 
 	cret := xColumnViewColumnGetFixedWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -162,7 +158,6 @@ var xColumnViewColumnGetId func(uintptr) string
 func (x *ColumnViewColumn) GetId() string {
 
 	cret := xColumnViewColumnGetId(x.GoPointer())
-
 	return cret
 }
 
@@ -172,7 +167,6 @@ var xColumnViewColumnGetResizable func(uintptr) bool
 func (x *ColumnViewColumn) GetResizable() bool {
 
 	cret := xColumnViewColumnGetResizable(x.GoPointer())
-
 	return cret
 }
 
@@ -199,7 +193,6 @@ var xColumnViewColumnGetTitle func(uintptr) string
 func (x *ColumnViewColumn) GetTitle() string {
 
 	cret := xColumnViewColumnGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -209,7 +202,6 @@ var xColumnViewColumnGetVisible func(uintptr) bool
 func (x *ColumnViewColumn) GetVisible() bool {
 
 	cret := xColumnViewColumnGetVisible(x.GoPointer())
-
 	return cret
 }
 
@@ -269,11 +261,10 @@ var xColumnViewColumnSetId func(uintptr, uintptr)
 // It is up to callers to ensure uniqueness of IDs.
 func (x *ColumnViewColumn) SetId(IdVar *string) {
 
-	IdVarPtr, IdVarBytes := core.NullableStringToPtr(IdVar)
+	IdVarPtr := core.GStrdupNullable(IdVar)
+	defer core.GFreeNullable(IdVarPtr)
 
 	xColumnViewColumnSetId(x.GoPointer(), IdVarPtr)
-
-	runtime.KeepAlive(IdVarBytes)
 
 }
 
@@ -313,11 +304,10 @@ var xColumnViewColumnSetTitle func(uintptr, uintptr)
 // be translated.
 func (x *ColumnViewColumn) SetTitle(TitleVar *string) {
 
-	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
 
 	xColumnViewColumnSetTitle(x.GoPointer(), TitleVarPtr)
-
-	runtime.KeepAlive(TitleVarBytes)
 
 }
 

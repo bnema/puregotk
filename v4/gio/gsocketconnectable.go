@@ -260,7 +260,6 @@ func (x *SocketConnectableBase) ProxyEnumerate() *SocketAddressEnumerator {
 func (x *SocketConnectableBase) ToString() string {
 
 	cret := XGSocketConnectableToString(x.GoPointer())
-
 	return cret
 }
 

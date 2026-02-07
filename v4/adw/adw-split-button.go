@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -115,7 +114,6 @@ var xSplitButtonGetCanShrink func(uintptr) bool
 func (x *SplitButton) GetCanShrink() bool {
 
 	cret := xSplitButtonGetCanShrink(x.GoPointer())
-
 	return cret
 }
 
@@ -142,7 +140,6 @@ var xSplitButtonGetDirection func(uintptr) gtk.ArrowType
 func (x *SplitButton) GetDirection() gtk.ArrowType {
 
 	cret := xSplitButtonGetDirection(x.GoPointer())
-
 	return cret
 }
 
@@ -152,7 +149,6 @@ var xSplitButtonGetDropdownTooltip func(uintptr) string
 func (x *SplitButton) GetDropdownTooltip() string {
 
 	cret := xSplitButtonGetDropdownTooltip(x.GoPointer())
-
 	return cret
 }
 
@@ -162,7 +158,6 @@ var xSplitButtonGetIconName func(uintptr) string
 func (x *SplitButton) GetIconName() string {
 
 	cret := xSplitButtonGetIconName(x.GoPointer())
-
 	return cret
 }
 
@@ -172,7 +167,6 @@ var xSplitButtonGetLabel func(uintptr) string
 func (x *SplitButton) GetLabel() string {
 
 	cret := xSplitButtonGetLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -216,7 +210,6 @@ var xSplitButtonGetUseUnderline func(uintptr) bool
 func (x *SplitButton) GetUseUnderline() bool {
 
 	cret := xSplitButtonGetUseUnderline(x.GoPointer())
-
 	return cret
 }
 
@@ -570,7 +563,6 @@ func (x *SplitButton) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *SplitButton) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -596,7 +588,6 @@ func (x *SplitButton) GetAtContext() *gtk.ATContext {
 func (x *SplitButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -636,7 +627,6 @@ func (x *SplitButton) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *SplitButton) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -810,7 +800,6 @@ func (x *SplitButton) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 func (x *SplitButton) GetActionName() string {
 
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
-
 	return cret
 }
 
@@ -818,7 +807,6 @@ func (x *SplitButton) GetActionName() string {
 func (x *SplitButton) GetActionTargetValue() *glib.Variant {
 
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -837,11 +825,10 @@ func (x *SplitButton) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *SplitButton) SetActionName(ActionNameVar *string) {
 
-	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
 
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
-	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -902,7 +889,6 @@ func (x *SplitButton) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *SplitButton) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

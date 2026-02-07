@@ -202,7 +202,6 @@ func (x *ConverterBase) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar []
 	var cerr *glib.Error
 
 	cret := XGConverterConvert(x.GoPointer(), InbufVar, InbufSizeVar, OutbufVar, OutbufSizeVar, FlagsVar, BytesReadVar, BytesWrittenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -215,7 +214,6 @@ func (x *ConverterBase) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, error) 
 	var cerr *glib.Error
 
 	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

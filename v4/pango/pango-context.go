@@ -92,7 +92,6 @@ var xContextGetBaseDir func(uintptr) Direction
 func (x *Context) GetBaseDir() Direction {
 
 	cret := xContextGetBaseDir(x.GoPointer())
-
 	return cret
 }
 
@@ -104,7 +103,6 @@ var xContextGetBaseGravity func(uintptr) Gravity
 func (x *Context) GetBaseGravity() Gravity {
 
 	cret := xContextGetBaseGravity(x.GoPointer())
-
 	return cret
 }
 
@@ -114,7 +112,6 @@ var xContextGetFontDescription func(uintptr) *FontDescription
 func (x *Context) GetFontDescription() *FontDescription {
 
 	cret := xContextGetFontDescription(x.GoPointer())
-
 	return cret
 }
 
@@ -146,7 +143,6 @@ var xContextGetGravity func(uintptr) Gravity
 func (x *Context) GetGravity() Gravity {
 
 	cret := xContextGetGravity(x.GoPointer())
-
 	return cret
 }
 
@@ -158,7 +154,6 @@ var xContextGetGravityHint func(uintptr) GravityHint
 func (x *Context) GetGravityHint() GravityHint {
 
 	cret := xContextGetGravityHint(x.GoPointer())
-
 	return cret
 }
 
@@ -168,7 +163,6 @@ var xContextGetLanguage func(uintptr) *Language
 func (x *Context) GetLanguage() *Language {
 
 	cret := xContextGetLanguage(x.GoPointer())
-
 	return cret
 }
 
@@ -181,7 +175,6 @@ var xContextGetMatrix func(uintptr) *Matrix
 func (x *Context) GetMatrix() *Matrix {
 
 	cret := xContextGetMatrix(x.GoPointer())
-
 	return cret
 }
 
@@ -201,7 +194,6 @@ var xContextGetMetrics func(uintptr, *FontDescription, *Language) *FontMetrics
 func (x *Context) GetMetrics(DescVar *FontDescription, LanguageVar *Language) *FontMetrics {
 
 	cret := xContextGetMetrics(x.GoPointer(), DescVar, LanguageVar)
-
 	return cret
 }
 
@@ -212,7 +204,6 @@ var xContextGetRoundGlyphPositions func(uintptr) bool
 func (x *Context) GetRoundGlyphPositions() bool {
 
 	cret := xContextGetRoundGlyphPositions(x.GoPointer())
-
 	return cret
 }
 
@@ -233,7 +224,6 @@ var xContextGetSerial func(uintptr) uint
 func (x *Context) GetSerial() uint {
 
 	cret := xContextGetSerial(x.GoPointer())
-
 	return cret
 }
 

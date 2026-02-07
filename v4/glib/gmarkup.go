@@ -54,7 +54,6 @@ func NewMarkupParseContext(ParserVar *MarkupParser, FlagsVar MarkupParseFlags, U
 	}
 
 	cret := xNewMarkupParseContext(ParserVar, FlagsVar, UserDataVar, UserDataDnotifyVarRef)
-
 	return cret
 }
 
@@ -69,7 +68,6 @@ func (x *MarkupParseContext) EndParse() (bool, error) {
 	var cerr *Error
 
 	cret := xMarkupParseContextEndParse(x.GoPointer())
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -99,7 +97,6 @@ var xMarkupParseContextGetElement func(uintptr) string
 func (x *MarkupParseContext) GetElement() string {
 
 	cret := xMarkupParseContextGetElement(x.GoPointer())
-
 	return cret
 }
 
@@ -119,7 +116,6 @@ var xMarkupParseContextGetElementStack func(uintptr) *SList
 func (x *MarkupParseContext) GetElementStack() *SList {
 
 	cret := xMarkupParseContextGetElementStack(x.GoPointer())
-
 	return cret
 }
 
@@ -145,7 +141,6 @@ var xMarkupParseContextGetUserData func(uintptr) uintptr
 func (x *MarkupParseContext) GetUserData() uintptr {
 
 	cret := xMarkupParseContextGetUserData(x.GoPointer())
-
 	return cret
 }
 
@@ -165,7 +160,6 @@ func (x *MarkupParseContext) Parse(TextVar string, TextLenVar int) (bool, error)
 	var cerr *Error
 
 	cret := xMarkupParseContextParse(x.GoPointer(), TextVar, TextLenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -191,7 +185,6 @@ var xMarkupParseContextPop func(uintptr) uintptr
 func (x *MarkupParseContext) Pop() uintptr {
 
 	cret := xMarkupParseContextPop(x.GoPointer())
-
 	return cret
 }
 
@@ -336,7 +329,6 @@ var xMarkupParseContextRef func(uintptr) *MarkupParseContext
 func (x *MarkupParseContext) Ref() *MarkupParseContext {
 
 	cret := xMarkupParseContextRef(x.GoPointer())
-
 	return cret
 }
 
@@ -665,7 +657,6 @@ var xMarkupCollectAttributes func(string, string, string, **Error, MarkupCollect
 func MarkupCollectAttributes(ElementNameVar string, AttributeNamesVar string, AttributeValuesVar string, ErrorVar **Error, FirstTypeVar MarkupCollectType, FirstAttrVar string, varArgs ...interface{}) bool {
 
 	cret := xMarkupCollectAttributes(ElementNameVar, AttributeNamesVar, AttributeValuesVar, ErrorVar, FirstTypeVar, FirstAttrVar, varArgs...)
-
 	return cret
 }
 
@@ -688,7 +679,6 @@ var xMarkupEscapeText func(string, int) string
 func MarkupEscapeText(TextVar string, LengthVar int) string {
 
 	cret := xMarkupEscapeText(TextVar, LengthVar)
-
 	return cret
 }
 
@@ -717,7 +707,6 @@ var xMarkupPrintfEscaped func(string, ...interface{}) string
 func MarkupPrintfEscaped(FormatVar string, varArgs ...interface{}) string {
 
 	cret := xMarkupPrintfEscaped(FormatVar, varArgs...)
-
 	return cret
 }
 
@@ -729,7 +718,6 @@ var xMarkupVprintfEscaped func(string, []interface{}) string
 func MarkupVprintfEscaped(FormatVar string, ArgsVar []interface{}) string {
 
 	cret := xMarkupVprintfEscaped(FormatVar, ArgsVar)
-
 	return cret
 }
 

@@ -265,7 +265,6 @@ func (x *AsyncInitableBase) InitFinish(ResVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGAsyncInitableInitFinish(x.GoPointer(), ResVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

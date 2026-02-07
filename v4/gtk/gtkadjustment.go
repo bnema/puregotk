@@ -254,7 +254,6 @@ var xAdjustmentGetLower func(uintptr) float64
 func (x *Adjustment) GetLower() float64 {
 
 	cret := xAdjustmentGetLower(x.GoPointer())
-
 	return cret
 }
 
@@ -264,7 +263,6 @@ var xAdjustmentGetMinimumIncrement func(uintptr) float64
 func (x *Adjustment) GetMinimumIncrement() float64 {
 
 	cret := xAdjustmentGetMinimumIncrement(x.GoPointer())
-
 	return cret
 }
 
@@ -274,7 +272,6 @@ var xAdjustmentGetPageIncrement func(uintptr) float64
 func (x *Adjustment) GetPageIncrement() float64 {
 
 	cret := xAdjustmentGetPageIncrement(x.GoPointer())
-
 	return cret
 }
 
@@ -284,7 +281,6 @@ var xAdjustmentGetPageSize func(uintptr) float64
 func (x *Adjustment) GetPageSize() float64 {
 
 	cret := xAdjustmentGetPageSize(x.GoPointer())
-
 	return cret
 }
 
@@ -294,7 +290,6 @@ var xAdjustmentGetStepIncrement func(uintptr) float64
 func (x *Adjustment) GetStepIncrement() float64 {
 
 	cret := xAdjustmentGetStepIncrement(x.GoPointer())
-
 	return cret
 }
 
@@ -304,7 +299,6 @@ var xAdjustmentGetUpper func(uintptr) float64
 func (x *Adjustment) GetUpper() float64 {
 
 	cret := xAdjustmentGetUpper(x.GoPointer())
-
 	return cret
 }
 
@@ -314,7 +308,6 @@ var xAdjustmentGetValue func(uintptr) float64
 func (x *Adjustment) GetValue() float64 {
 
 	cret := xAdjustmentGetValue(x.GoPointer())
-
 	return cret
 }
 

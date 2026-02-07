@@ -87,7 +87,6 @@ var xClampLayoutGetMaximumSize func(uintptr) int
 func (x *ClampLayout) GetMaximumSize() int {
 
 	cret := xClampLayoutGetMaximumSize(x.GoPointer())
-
 	return cret
 }
 
@@ -97,7 +96,6 @@ var xClampLayoutGetTighteningThreshold func(uintptr) int
 func (x *ClampLayout) GetTighteningThreshold() int {
 
 	cret := xClampLayoutGetTighteningThreshold(x.GoPointer())
-
 	return cret
 }
 
@@ -107,7 +105,6 @@ var xClampLayoutGetUnit func(uintptr) LengthUnit
 func (x *ClampLayout) GetUnit() LengthUnit {
 
 	cret := xClampLayoutGetUnit(x.GoPointer())
-
 	return cret
 }
 
@@ -236,7 +233,6 @@ func (x *ClampLayout) GetPropertyTighteningThreshold() int {
 func (x *ClampLayout) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

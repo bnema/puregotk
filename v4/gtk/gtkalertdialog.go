@@ -100,7 +100,6 @@ func (x *AlertDialog) ChooseFinish(ResultVar gio.AsyncResult) (int, error) {
 	var cerr *glib.Error
 
 	cret := xAlertDialogChooseFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -114,7 +113,6 @@ var xAlertDialogGetButtons func(uintptr) []string
 func (x *AlertDialog) GetButtons() []string {
 
 	cret := xAlertDialogGetButtons(x.GoPointer())
-
 	return cret
 }
 
@@ -124,7 +122,6 @@ var xAlertDialogGetCancelButton func(uintptr) int
 func (x *AlertDialog) GetCancelButton() int {
 
 	cret := xAlertDialogGetCancelButton(x.GoPointer())
-
 	return cret
 }
 
@@ -134,7 +131,6 @@ var xAlertDialogGetDefaultButton func(uintptr) int
 func (x *AlertDialog) GetDefaultButton() int {
 
 	cret := xAlertDialogGetDefaultButton(x.GoPointer())
-
 	return cret
 }
 
@@ -144,7 +140,6 @@ var xAlertDialogGetDetail func(uintptr) string
 func (x *AlertDialog) GetDetail() string {
 
 	cret := xAlertDialogGetDetail(x.GoPointer())
-
 	return cret
 }
 
@@ -154,7 +149,6 @@ var xAlertDialogGetMessage func(uintptr) string
 func (x *AlertDialog) GetMessage() string {
 
 	cret := xAlertDialogGetMessage(x.GoPointer())
-
 	return cret
 }
 
@@ -165,7 +159,6 @@ var xAlertDialogGetModal func(uintptr) bool
 func (x *AlertDialog) GetModal() bool {
 
 	cret := xAlertDialogGetModal(x.GoPointer())
-
 	return cret
 }
 

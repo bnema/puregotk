@@ -86,7 +86,6 @@ var xViewportGetScrollToFocus func(uintptr) bool
 func (x *Viewport) GetScrollToFocus() bool {
 
 	cret := xViewportGetScrollToFocus(x.GoPointer())
-
 	return cret
 }
 
@@ -192,7 +191,6 @@ func (x *Viewport) GetAccessibleParent() *AccessibleBase {
 func (x *Viewport) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -218,7 +216,6 @@ func (x *Viewport) GetAtContext() *ATContext {
 func (x *Viewport) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -258,7 +255,6 @@ func (x *Viewport) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Viewport) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -435,7 +431,6 @@ func (x *Viewport) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *Viewport) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -448,7 +443,6 @@ func (x *Viewport) GetBuildableId() string {
 func (x *Viewport) GetBorder(BorderVar *Border) bool {
 
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
-
 	return cret
 }
 
@@ -471,7 +465,6 @@ func (x *Viewport) GetHadjustment() *Adjustment {
 func (x *Viewport) GetHscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
-
 	return cret
 }
 
@@ -494,7 +487,6 @@ func (x *Viewport) GetVadjustment() *Adjustment {
 func (x *Viewport) GetVscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
-
 	return cret
 }
 

@@ -463,7 +463,6 @@ var xCellRendererActivate func(uintptr, uintptr, uintptr, string, *gdk.Rectangle
 func (x *CellRenderer) Activate(EventVar *gdk.Event, WidgetVar *Widget, PathVar string, BackgroundAreaVar *gdk.Rectangle, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState) bool {
 
 	cret := xCellRendererActivate(x.GoPointer(), EventVar.GoPointer(), WidgetVar.GoPointer(), PathVar, BackgroundAreaVar, CellAreaVar, FlagsVar)
-
 	return cret
 }
 
@@ -501,7 +500,6 @@ var xCellRendererGetIsExpanded func(uintptr) bool
 func (x *CellRenderer) GetIsExpanded() bool {
 
 	cret := xCellRendererGetIsExpanded(x.GoPointer())
-
 	return cret
 }
 
@@ -511,7 +509,6 @@ var xCellRendererGetIsExpander func(uintptr) bool
 func (x *CellRenderer) GetIsExpander() bool {
 
 	cret := xCellRendererGetIsExpander(x.GoPointer())
-
 	return cret
 }
 
@@ -579,7 +576,6 @@ var xCellRendererGetRequestMode func(uintptr) SizeRequestMode
 func (x *CellRenderer) GetRequestMode() SizeRequestMode {
 
 	cret := xCellRendererGetRequestMode(x.GoPointer())
-
 	return cret
 }
 
@@ -589,7 +585,6 @@ var xCellRendererGetSensitive func(uintptr) bool
 func (x *CellRenderer) GetSensitive() bool {
 
 	cret := xCellRendererGetSensitive(x.GoPointer())
-
 	return cret
 }
 
@@ -601,7 +596,6 @@ var xCellRendererGetState func(uintptr, uintptr, CellRendererState) StateFlags
 func (x *CellRenderer) GetState(WidgetVar *Widget, CellStateVar CellRendererState) StateFlags {
 
 	cret := xCellRendererGetState(x.GoPointer(), WidgetVar.GoPointer(), CellStateVar)
-
 	return cret
 }
 
@@ -611,7 +605,6 @@ var xCellRendererGetVisible func(uintptr) bool
 func (x *CellRenderer) GetVisible() bool {
 
 	cret := xCellRendererGetVisible(x.GoPointer())
-
 	return cret
 }
 
@@ -621,7 +614,6 @@ var xCellRendererIsActivatable func(uintptr) bool
 func (x *CellRenderer) IsActivatable() bool {
 
 	cret := xCellRendererIsActivatable(x.GoPointer())
-
 	return cret
 }
 

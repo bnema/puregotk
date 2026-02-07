@@ -740,7 +740,6 @@ var xPixbufCopyOptions func(uintptr, uintptr) bool
 func (x *Pixbuf) CopyOptions(DestPixbufVar *Pixbuf) bool {
 
 	cret := xPixbufCopyOptions(x.GoPointer(), DestPixbufVar.GoPointer())
-
 	return cret
 }
 
@@ -780,7 +779,6 @@ var xPixbufGetBitsPerSample func(uintptr) int
 func (x *Pixbuf) GetBitsPerSample() int {
 
 	cret := xPixbufGetBitsPerSample(x.GoPointer())
-
 	return cret
 }
 
@@ -790,7 +788,6 @@ var xPixbufGetByteLength func(uintptr) uint
 func (x *Pixbuf) GetByteLength() uint {
 
 	cret := xPixbufGetByteLength(x.GoPointer())
-
 	return cret
 }
 
@@ -800,7 +797,6 @@ var xPixbufGetColorspace func(uintptr) Colorspace
 func (x *Pixbuf) GetColorspace() Colorspace {
 
 	cret := xPixbufGetColorspace(x.GoPointer())
-
 	return cret
 }
 
@@ -810,7 +806,6 @@ var xPixbufGetHasAlpha func(uintptr) bool
 func (x *Pixbuf) GetHasAlpha() bool {
 
 	cret := xPixbufGetHasAlpha(x.GoPointer())
-
 	return cret
 }
 
@@ -820,7 +815,6 @@ var xPixbufGetHeight func(uintptr) int
 func (x *Pixbuf) GetHeight() int {
 
 	cret := xPixbufGetHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -830,7 +824,6 @@ var xPixbufGetNChannels func(uintptr) int
 func (x *Pixbuf) GetNChannels() int {
 
 	cret := xPixbufGetNChannels(x.GoPointer())
-
 	return cret
 }
 
@@ -854,7 +847,6 @@ var xPixbufGetOption func(uintptr, string) string
 func (x *Pixbuf) GetOption(KeyVar string) string {
 
 	cret := xPixbufGetOption(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -866,7 +858,6 @@ var xPixbufGetOptions func(uintptr) *glib.HashTable
 func (x *Pixbuf) GetOptions() *glib.HashTable {
 
 	cret := xPixbufGetOptions(x.GoPointer())
-
 	return cret
 }
 
@@ -882,7 +873,6 @@ var xPixbufGetPixels func(uintptr) uintptr
 func (x *Pixbuf) GetPixels() uintptr {
 
 	cret := xPixbufGetPixels(x.GoPointer())
-
 	return cret
 }
 
@@ -898,7 +888,6 @@ var xPixbufGetPixelsWithLength func(uintptr, *uint) uintptr
 func (x *Pixbuf) GetPixelsWithLength(LengthVar *uint) uintptr {
 
 	cret := xPixbufGetPixelsWithLength(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -909,7 +898,6 @@ var xPixbufGetRowstride func(uintptr) int
 func (x *Pixbuf) GetRowstride() int {
 
 	cret := xPixbufGetRowstride(x.GoPointer())
-
 	return cret
 }
 
@@ -919,7 +907,6 @@ var xPixbufGetWidth func(uintptr) int
 func (x *Pixbuf) GetWidth() int {
 
 	cret := xPixbufGetWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -957,7 +944,6 @@ var xPixbufReadPixelBytes func(uintptr) *glib.Bytes
 func (x *Pixbuf) ReadPixelBytes() *glib.Bytes {
 
 	cret := xPixbufReadPixelBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -970,7 +956,6 @@ var xPixbufReadPixels func(uintptr) byte
 func (x *Pixbuf) ReadPixels() byte {
 
 	cret := xPixbufReadPixels(x.GoPointer())
-
 	return cret
 }
 
@@ -996,7 +981,6 @@ var xPixbufRemoveOption func(uintptr, string) bool
 func (x *Pixbuf) RemoveOption(KeyVar string) bool {
 
 	cret := xPixbufRemoveOption(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1118,7 +1102,6 @@ var xPixbufSave func(uintptr, string, string, **glib.Error, ...interface{}) bool
 func (x *Pixbuf) Save(FilenameVar string, TypeVar string, ErrorVar **glib.Error, varArgs ...interface{}) bool {
 
 	cret := xPixbufSave(x.GoPointer(), FilenameVar, TypeVar, ErrorVar, varArgs...)
-
 	return cret
 }
 
@@ -1141,7 +1124,6 @@ var xPixbufSaveToBuffer func(uintptr, *[]byte, *uint, string, **glib.Error, ...i
 func (x *Pixbuf) SaveToBuffer(BufferVar *[]byte, BufferSizeVar *uint, TypeVar string, ErrorVar **glib.Error, varArgs ...interface{}) bool {
 
 	cret := xPixbufSaveToBuffer(x.GoPointer(), BufferVar, BufferSizeVar, TypeVar, ErrorVar, varArgs...)
-
 	return cret
 }
 
@@ -1157,7 +1139,6 @@ func (x *Pixbuf) SaveToBufferv(BufferVar *[]byte, BufferSizeVar *uint, TypeVar s
 	var cerr *glib.Error
 
 	cret := xPixbufSaveToBufferv(x.GoPointer(), BufferVar, BufferSizeVar, TypeVar, OptionKeysVar, OptionValuesVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1196,7 +1177,6 @@ func (x *Pixbuf) SaveToCallback(SaveFuncVar *PixbufSaveFunc, UserDataVar uintptr
 	}
 
 	cret := xPixbufSaveToCallback(x.GoPointer(), SaveFuncVarRef, UserDataVar, TypeVar, ErrorVar, varArgs...)
-
 	return cret
 }
 
@@ -1229,7 +1209,6 @@ func (x *Pixbuf) SaveToCallbackv(SaveFuncVar *PixbufSaveFunc, UserDataVar uintpt
 	}
 
 	cret := xPixbufSaveToCallbackv(x.GoPointer(), SaveFuncVarRef, UserDataVar, TypeVar, OptionKeysVar, OptionValuesVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1253,7 +1232,6 @@ var xPixbufSaveToStream func(uintptr, uintptr, string, uintptr, **glib.Error, ..
 func (x *Pixbuf) SaveToStream(StreamVar *gio.OutputStream, TypeVar string, CancellableVar *gio.Cancellable, ErrorVar **glib.Error, varArgs ...interface{}) bool {
 
 	cret := xPixbufSaveToStream(x.GoPointer(), StreamVar.GoPointer(), TypeVar, CancellableVar.GoPointer(), ErrorVar, varArgs...)
-
 	return cret
 }
 
@@ -1301,7 +1279,6 @@ func (x *Pixbuf) SaveToStreamv(StreamVar *gio.OutputStream, TypeVar string, Opti
 	var cerr *glib.Error
 
 	cret := xPixbufSaveToStreamv(x.GoPointer(), StreamVar.GoPointer(), TypeVar, OptionKeysVar, OptionValuesVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1354,7 +1331,6 @@ func (x *Pixbuf) Savev(FilenameVar string, TypeVar string, OptionKeysVar []strin
 	var cerr *glib.Error
 
 	cret := xPixbufSavev(x.GoPointer(), FilenameVar, TypeVar, OptionKeysVar, OptionValuesVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1425,7 +1401,6 @@ var xPixbufSetOption func(uintptr, string, string) bool
 func (x *Pixbuf) SetOption(KeyVar string, ValueVar string) bool {
 
 	cret := xPixbufSetOption(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1603,7 +1578,6 @@ func (x *Pixbuf) GetPropertyWidth() int {
 func (x *Pixbuf) Equal(Icon2Var gio.Icon) bool {
 
 	cret := gio.XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
-
 	return cret
 }
 
@@ -1611,7 +1585,6 @@ func (x *Pixbuf) Equal(Icon2Var gio.Icon) bool {
 func (x *Pixbuf) Hash() uint {
 
 	cret := gio.XGIconHash(x.GoPointer())
-
 	return cret
 }
 
@@ -1623,7 +1596,6 @@ func (x *Pixbuf) Hash() uint {
 func (x *Pixbuf) Serialize() *glib.Variant {
 
 	cret := gio.XGIconSerialize(x.GoPointer())
-
 	return cret
 }
 
@@ -1646,7 +1618,6 @@ func (x *Pixbuf) Serialize() *glib.Variant {
 func (x *Pixbuf) ToString() string {
 
 	cret := gio.XGIconToString(x.GoPointer())
-
 	return cret
 }
 
@@ -1708,7 +1679,6 @@ var xPixbufCalculateRowstride func(Colorspace, bool, int, int, int) int
 func PixbufCalculateRowstride(ColorspaceVar Colorspace, HasAlphaVar bool, BitsPerSampleVar int, WidthVar int, HeightVar int) int {
 
 	cret := xPixbufCalculateRowstride(ColorspaceVar, HasAlphaVar, BitsPerSampleVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -1718,7 +1688,6 @@ var xPixbufGetFileInfo func(string, *int, *int) *PixbufFormat
 func PixbufGetFileInfo(FilenameVar string, WidthVar *int, HeightVar *int) *PixbufFormat {
 
 	cret := xPixbufGetFileInfo(FilenameVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -1762,7 +1731,6 @@ func PixbufGetFileInfoFinish(AsyncResultVar gio.AsyncResult, WidthVar *int, Heig
 	var cerr *glib.Error
 
 	cret := xPixbufGetFileInfoFinish(AsyncResultVar.GoPointer(), WidthVar, HeightVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1777,7 +1745,6 @@ var xPixbufGetFormats func() *glib.SList
 func PixbufGetFormats() *glib.SList {
 
 	cret := xPixbufGetFormats()
-
 	return cret
 }
 
@@ -1800,7 +1767,6 @@ func PixbufInitModules(PathVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPixbufInitModules(PathVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1877,7 +1843,6 @@ func PixbufSaveToStreamFinish(AsyncResultVar gio.AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPixbufSaveToStreamFinish(AsyncResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

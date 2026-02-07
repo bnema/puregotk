@@ -141,7 +141,6 @@ func (x *ColorChooserWidget) GetAccessibleParent() *AccessibleBase {
 func (x *ColorChooserWidget) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -167,7 +166,6 @@ func (x *ColorChooserWidget) GetAtContext() *ATContext {
 func (x *ColorChooserWidget) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -207,7 +205,6 @@ func (x *ColorChooserWidget) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ColorChooserWidget) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -384,7 +381,6 @@ func (x *ColorChooserWidget) UpdateStateValue(NStatesVar int, StatesVar []Access
 func (x *ColorChooserWidget) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -422,7 +418,6 @@ func (x *ColorChooserWidget) GetRgba(ColorVar *gdk.RGBA) {
 func (x *ColorChooserWidget) GetUseAlpha() bool {
 
 	cret := XGtkColorChooserGetUseAlpha(x.GoPointer())
-
 	return cret
 }
 

@@ -76,7 +76,6 @@ var xTimedAnimationGetAlternate func(uintptr) bool
 func (x *TimedAnimation) GetAlternate() bool {
 
 	cret := xTimedAnimationGetAlternate(x.GoPointer())
-
 	return cret
 }
 
@@ -86,7 +85,6 @@ var xTimedAnimationGetDuration func(uintptr) uint
 func (x *TimedAnimation) GetDuration() uint {
 
 	cret := xTimedAnimationGetDuration(x.GoPointer())
-
 	return cret
 }
 
@@ -96,7 +94,6 @@ var xTimedAnimationGetEasing func(uintptr) Easing
 func (x *TimedAnimation) GetEasing() Easing {
 
 	cret := xTimedAnimationGetEasing(x.GoPointer())
-
 	return cret
 }
 
@@ -106,7 +103,6 @@ var xTimedAnimationGetRepeatCount func(uintptr) uint
 func (x *TimedAnimation) GetRepeatCount() uint {
 
 	cret := xTimedAnimationGetRepeatCount(x.GoPointer())
-
 	return cret
 }
 
@@ -116,7 +112,6 @@ var xTimedAnimationGetReverse func(uintptr) bool
 func (x *TimedAnimation) GetReverse() bool {
 
 	cret := xTimedAnimationGetReverse(x.GoPointer())
-
 	return cret
 }
 
@@ -126,7 +121,6 @@ var xTimedAnimationGetValueFrom func(uintptr) float64
 func (x *TimedAnimation) GetValueFrom() float64 {
 
 	cret := xTimedAnimationGetValueFrom(x.GoPointer())
-
 	return cret
 }
 
@@ -136,7 +130,6 @@ var xTimedAnimationGetValueTo func(uintptr) float64
 func (x *TimedAnimation) GetValueTo() float64 {
 
 	cret := xTimedAnimationGetValueTo(x.GoPointer())
-
 	return cret
 }
 

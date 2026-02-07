@@ -41,7 +41,6 @@ var xLengthUnitFromPx func(LengthUnit, float64, uintptr) float64
 func LengthUnitFromPx(UnitVar LengthUnit, ValueVar float64, SettingsVar *gtk.Settings) float64 {
 
 	cret := xLengthUnitFromPx(UnitVar, ValueVar, SettingsVar.GoPointer())
-
 	return cret
 }
 
@@ -51,7 +50,6 @@ var xLengthUnitToPx func(LengthUnit, float64, uintptr) float64
 func LengthUnitToPx(UnitVar LengthUnit, ValueVar float64, SettingsVar *gtk.Settings) float64 {
 
 	cret := xLengthUnitToPx(UnitVar, ValueVar, SettingsVar.GoPointer())
-
 	return cret
 }
 

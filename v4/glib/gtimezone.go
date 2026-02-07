@@ -2,7 +2,6 @@
 package glib
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -60,12 +59,10 @@ var xNewTimeZone func(uintptr) *TimeZone
 // g_time_zone_new_identifier().
 func NewTimeZone(IdentifierVar *string) *TimeZone {
 
-	IdentifierVarPtr, IdentifierVarBytes := core.NullableStringToPtr(IdentifierVar)
+	IdentifierVarPtr := core.GStrdupNullable(IdentifierVar)
+	defer core.GFreeNullable(IdentifierVarPtr)
 
 	cret := xNewTimeZone(IdentifierVarPtr)
-
-	runtime.KeepAlive(IdentifierVarBytes)
-
 	return cret
 }
 
@@ -138,12 +135,10 @@ var xNewTimeZoneIdentifier func(uintptr) *TimeZone
 // when you are done with it.
 func NewTimeZoneIdentifier(IdentifierVar *string) *TimeZone {
 
-	IdentifierVarPtr, IdentifierVarBytes := core.NullableStringToPtr(IdentifierVar)
+	IdentifierVarPtr := core.GStrdupNullable(IdentifierVar)
+	defer core.GFreeNullable(IdentifierVarPtr)
 
 	cret := xNewTimeZoneIdentifier(IdentifierVarPtr)
-
-	runtime.KeepAlive(IdentifierVarBytes)
-
 	return cret
 }
 
@@ -161,7 +156,6 @@ var xNewTimeZoneLocal func() *TimeZone
 func NewTimeZoneLocal() *TimeZone {
 
 	cret := xNewTimeZoneLocal()
-
 	return cret
 }
 
@@ -180,7 +174,6 @@ var xNewTimeZoneOffset func(int32) *TimeZone
 func NewTimeZoneOffset(SecondsVar int32) *TimeZone {
 
 	cret := xNewTimeZoneOffset(SecondsVar)
-
 	return cret
 }
 
@@ -196,7 +189,6 @@ var xNewTimeZoneUtc func() *TimeZone
 func NewTimeZoneUtc() *TimeZone {
 
 	cret := xNewTimeZoneUtc()
-
 	return cret
 }
 
@@ -221,7 +213,6 @@ var xTimeZoneAdjustTime func(uintptr, TimeType, int64) int
 func (x *TimeZone) AdjustTime(TypeVar TimeType, TimeVar int64) int {
 
 	cret := xTimeZoneAdjustTime(x.GoPointer(), TypeVar, TimeVar)
-
 	return cret
 }
 
@@ -248,7 +239,6 @@ var xTimeZoneFindInterval func(uintptr, TimeType, int64) int
 func (x *TimeZone) FindInterval(TypeVar TimeType, TimeVar int64) int {
 
 	cret := xTimeZoneFindInterval(x.GoPointer(), TypeVar, TimeVar)
-
 	return cret
 }
 
@@ -263,7 +253,6 @@ var xTimeZoneGetAbbreviation func(uintptr, int) string
 func (x *TimeZone) GetAbbreviation(IntervalVar int) string {
 
 	cret := xTimeZoneGetAbbreviation(x.GoPointer(), IntervalVar)
-
 	return cret
 }
 
@@ -280,7 +269,6 @@ var xTimeZoneGetIdentifier func(uintptr) string
 func (x *TimeZone) GetIdentifier() string {
 
 	cret := xTimeZoneGetIdentifier(x.GoPointer())
-
 	return cret
 }
 
@@ -295,7 +283,6 @@ var xTimeZoneGetOffset func(uintptr, int) int32
 func (x *TimeZone) GetOffset(IntervalVar int) int32 {
 
 	cret := xTimeZoneGetOffset(x.GoPointer(), IntervalVar)
-
 	return cret
 }
 
@@ -306,7 +293,6 @@ var xTimeZoneIsDst func(uintptr, int) bool
 func (x *TimeZone) IsDst(IntervalVar int) bool {
 
 	cret := xTimeZoneIsDst(x.GoPointer(), IntervalVar)
-
 	return cret
 }
 
@@ -316,7 +302,6 @@ var xTimeZoneRef func(uintptr) *TimeZone
 func (x *TimeZone) Ref() *TimeZone {
 
 	cret := xTimeZoneRef(x.GoPointer())
-
 	return cret
 }
 

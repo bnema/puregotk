@@ -205,7 +205,6 @@ var xNavigationSplitViewGetCollapsed func(uintptr) bool
 func (x *NavigationSplitView) GetCollapsed() bool {
 
 	cret := xNavigationSplitViewGetCollapsed(x.GoPointer())
-
 	return cret
 }
 
@@ -232,7 +231,6 @@ var xNavigationSplitViewGetMaxSidebarWidth func(uintptr) float64
 func (x *NavigationSplitView) GetMaxSidebarWidth() float64 {
 
 	cret := xNavigationSplitViewGetMaxSidebarWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -242,7 +240,6 @@ var xNavigationSplitViewGetMinSidebarWidth func(uintptr) float64
 func (x *NavigationSplitView) GetMinSidebarWidth() float64 {
 
 	cret := xNavigationSplitViewGetMinSidebarWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -252,7 +249,6 @@ var xNavigationSplitViewGetShowContent func(uintptr) bool
 func (x *NavigationSplitView) GetShowContent() bool {
 
 	cret := xNavigationSplitViewGetShowContent(x.GoPointer())
-
 	return cret
 }
 
@@ -279,7 +275,6 @@ var xNavigationSplitViewGetSidebarPosition func(uintptr) gtk.PackType
 func (x *NavigationSplitView) GetSidebarPosition() gtk.PackType {
 
 	cret := xNavigationSplitViewGetSidebarPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -289,7 +284,6 @@ var xNavigationSplitViewGetSidebarWidthFraction func(uintptr) float64
 func (x *NavigationSplitView) GetSidebarWidthFraction() float64 {
 
 	cret := xNavigationSplitViewGetSidebarWidthFraction(x.GoPointer())
-
 	return cret
 }
 
@@ -299,7 +293,6 @@ var xNavigationSplitViewGetSidebarWidthUnit func(uintptr) LengthUnit
 func (x *NavigationSplitView) GetSidebarWidthUnit() LengthUnit {
 
 	cret := xNavigationSplitViewGetSidebarWidthUnit(x.GoPointer())
-
 	return cret
 }
 
@@ -619,7 +612,6 @@ func (x *NavigationSplitView) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *NavigationSplitView) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -645,7 +637,6 @@ func (x *NavigationSplitView) GetAtContext() *gtk.ATContext {
 func (x *NavigationSplitView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -685,7 +676,6 @@ func (x *NavigationSplitView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *NavigationSplitView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -862,7 +852,6 @@ func (x *NavigationSplitView) UpdateStateValue(NStatesVar int, StatesVar []gtk.A
 func (x *NavigationSplitView) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

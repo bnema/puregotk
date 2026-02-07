@@ -111,7 +111,6 @@ var xApplicationWindowGetAdaptivePreview func(uintptr) bool
 func (x *ApplicationWindow) GetAdaptivePreview() bool {
 
 	cret := xApplicationWindowGetAdaptivePreview(x.GoPointer())
-
 	return cret
 }
 
@@ -357,7 +356,6 @@ func (x *ApplicationWindow) ChangeActionState(ActionNameVar string, ValueVar *gl
 func (x *ApplicationWindow) GetActionEnabled(ActionNameVar string) bool {
 
 	cret := gio.XGActionGroupGetActionEnabled(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -377,7 +375,6 @@ func (x *ApplicationWindow) GetActionEnabled(ActionNameVar string) bool {
 func (x *ApplicationWindow) GetActionParameterType(ActionNameVar string) *glib.VariantType {
 
 	cret := gio.XGActionGroupGetActionParameterType(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -392,7 +389,6 @@ func (x *ApplicationWindow) GetActionParameterType(ActionNameVar string) *glib.V
 func (x *ApplicationWindow) GetActionState(ActionNameVar string) *glib.Variant {
 
 	cret := gio.XGActionGroupGetActionState(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -417,7 +413,6 @@ func (x *ApplicationWindow) GetActionState(ActionNameVar string) *glib.Variant {
 func (x *ApplicationWindow) GetActionStateHint(ActionNameVar string) *glib.Variant {
 
 	cret := gio.XGActionGroupGetActionStateHint(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -440,7 +435,6 @@ func (x *ApplicationWindow) GetActionStateHint(ActionNameVar string) *glib.Varia
 func (x *ApplicationWindow) GetActionStateType(ActionNameVar string) *glib.VariantType {
 
 	cret := gio.XGActionGroupGetActionStateType(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -448,7 +442,6 @@ func (x *ApplicationWindow) GetActionStateType(ActionNameVar string) *glib.Varia
 func (x *ApplicationWindow) HasAction(ActionNameVar string) bool {
 
 	cret := gio.XGActionGroupHasAction(x.GoPointer(), ActionNameVar)
-
 	return cret
 }
 
@@ -459,7 +452,6 @@ func (x *ApplicationWindow) HasAction(ActionNameVar string) bool {
 func (x *ApplicationWindow) ListActions() []string {
 
 	cret := gio.XGActionGroupListActions(x.GoPointer())
-
 	return cret
 }
 
@@ -493,7 +485,6 @@ func (x *ApplicationWindow) ListActions() []string {
 func (x *ApplicationWindow) QueryAction(ActionNameVar string, EnabledVar *bool, ParameterTypeVar **glib.VariantType, StateTypeVar **glib.VariantType, StateHintVar **glib.Variant, StateVar **glib.Variant) bool {
 
 	cret := gio.XGActionGroupQueryAction(x.GoPointer(), ActionNameVar, EnabledVar, ParameterTypeVar, StateTypeVar, StateHintVar, StateVar)
-
 	return cret
 }
 
@@ -650,7 +641,6 @@ func (x *ApplicationWindow) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ApplicationWindow) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -676,7 +666,6 @@ func (x *ApplicationWindow) GetAtContext() *gtk.ATContext {
 func (x *ApplicationWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -716,7 +705,6 @@ func (x *ApplicationWindow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ApplicationWindow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -893,7 +881,6 @@ func (x *ApplicationWindow) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acc
 func (x *ApplicationWindow) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

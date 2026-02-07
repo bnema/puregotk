@@ -66,7 +66,6 @@ func (x *DtlsClientConnectionBase) SetGoPointer(ptr uintptr) {
 func (x *DtlsClientConnectionBase) GetAcceptedCas() *glib.List {
 
 	cret := XGDtlsClientConnectionGetAcceptedCas(x.GoPointer())
-
 	return cret
 }
 
@@ -93,7 +92,6 @@ func (x *DtlsClientConnectionBase) GetServerIdentity() *SocketConnectableBase {
 func (x *DtlsClientConnectionBase) GetValidationFlags() TlsCertificateFlags {
 
 	cret := XGDtlsClientConnectionGetValidationFlags(x.GoPointer())
-
 	return cret
 }
 

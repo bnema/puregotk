@@ -45,7 +45,6 @@ var xNewBreakpointConditionAnd func(*BreakpointCondition, *BreakpointCondition) 
 func NewBreakpointConditionAnd(Condition1Var *BreakpointCondition, Condition2Var *BreakpointCondition) *BreakpointCondition {
 
 	cret := xNewBreakpointConditionAnd(Condition1Var, Condition2Var)
-
 	return cret
 }
 
@@ -55,7 +54,6 @@ var xNewBreakpointConditionLength func(BreakpointConditionLengthType, float64, L
 func NewBreakpointConditionLength(TypeVar BreakpointConditionLengthType, ValueVar float64, UnitVar LengthUnit) *BreakpointCondition {
 
 	cret := xNewBreakpointConditionLength(TypeVar, ValueVar, UnitVar)
-
 	return cret
 }
 
@@ -66,7 +64,6 @@ var xNewBreakpointConditionOr func(*BreakpointCondition, *BreakpointCondition) *
 func NewBreakpointConditionOr(Condition1Var *BreakpointCondition, Condition2Var *BreakpointCondition) *BreakpointCondition {
 
 	cret := xNewBreakpointConditionOr(Condition1Var, Condition2Var)
-
 	return cret
 }
 
@@ -78,7 +75,6 @@ var xNewBreakpointConditionRatio func(BreakpointConditionRatioType, int, int) *B
 func NewBreakpointConditionRatio(TypeVar BreakpointConditionRatioType, WidthVar int, HeightVar int) *BreakpointCondition {
 
 	cret := xNewBreakpointConditionRatio(TypeVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -88,7 +84,6 @@ var xBreakpointConditionCopy func(uintptr) *BreakpointCondition
 func (x *BreakpointCondition) Copy() *BreakpointCondition {
 
 	cret := xBreakpointConditionCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -109,7 +104,6 @@ var xBreakpointConditionToString func(uintptr) string
 func (x *BreakpointCondition) ToString() string {
 
 	cret := xBreakpointConditionToString(x.GoPointer())
-
 	return cret
 }
 
@@ -225,7 +219,6 @@ var xBreakpointConditionParse func(string) *BreakpointCondition
 func BreakpointConditionParse(StrVar string) *BreakpointCondition {
 
 	cret := xBreakpointConditionParse(StrVar)
-
 	return cret
 }
 
@@ -415,7 +408,6 @@ var xBreakpointGetCondition func(uintptr) *BreakpointCondition
 func (x *Breakpoint) GetCondition() *BreakpointCondition {
 
 	cret := xBreakpointGetCondition(x.GoPointer())
-
 	return cret
 }
 
@@ -515,7 +507,6 @@ func (x *Breakpoint) ConnectUnapply(cb *func(Breakpoint)) uint {
 func (x *Breakpoint) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

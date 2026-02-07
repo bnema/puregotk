@@ -89,7 +89,6 @@ var xDatalistGetData func(**Data, string) uintptr
 func DatalistGetData(DatalistVar **Data, KeyVar string) uintptr {
 
 	cret := xDatalistGetData(DatalistVar, KeyVar)
-
 	return cret
 }
 
@@ -100,7 +99,6 @@ var xDatalistGetFlags func(**Data) uint
 func DatalistGetFlags(DatalistVar **Data) uint {
 
 	cret := xDatalistGetFlags(DatalistVar)
-
 	return cret
 }
 
@@ -137,7 +135,6 @@ func DatalistIdDupData(DatalistVar **Data, KeyIdVar Quark, DupFuncVar *Duplicate
 	}
 
 	cret := xDatalistIdDupData(DatalistVar, KeyIdVar, DupFuncVarRef, UserDataVar)
-
 	return cret
 }
 
@@ -147,7 +144,6 @@ var xDatalistIdGetData func(**Data, Quark) uintptr
 func DatalistIdGetData(DatalistVar **Data, KeyIdVar Quark) uintptr {
 
 	cret := xDatalistIdGetData(DatalistVar, KeyIdVar)
-
 	return cret
 }
 
@@ -173,7 +169,6 @@ var xDatalistIdRemoveNoNotify func(**Data, Quark) uintptr
 func DatalistIdRemoveNoNotify(DatalistVar **Data, KeyIdVar Quark) uintptr {
 
 	cret := xDatalistIdRemoveNoNotify(DatalistVar, KeyIdVar)
-
 	return cret
 }
 
@@ -210,7 +205,6 @@ func DatalistIdReplaceData(DatalistVar **Data, KeyIdVar Quark, OldvalVar uintptr
 	}
 
 	cret := xDatalistIdReplaceData(DatalistVar, KeyIdVar, OldvalVar, NewvalVar, DestroyVarRef, OldDestroyVar)
-
 	return cret
 }
 
@@ -321,7 +315,6 @@ var xDatasetIdGetData func(uintptr, Quark) uintptr
 func DatasetIdGetData(DatasetLocationVar uintptr, KeyIdVar Quark) uintptr {
 
 	cret := xDatasetIdGetData(DatasetLocationVar, KeyIdVar)
-
 	return cret
 }
 
@@ -332,7 +325,6 @@ var xDatasetIdRemoveNoNotify func(uintptr, Quark) uintptr
 func DatasetIdRemoveNoNotify(DatasetLocationVar uintptr, KeyIdVar Quark) uintptr {
 
 	cret := xDatasetIdRemoveNoNotify(DatasetLocationVar, KeyIdVar)
-
 	return cret
 }
 

@@ -93,7 +93,6 @@ var xMemoryTextureBuilderGetBytes func(uintptr) *glib.Bytes
 func (x *MemoryTextureBuilder) GetBytes() *glib.Bytes {
 
 	cret := xMemoryTextureBuilderGetBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -103,7 +102,6 @@ var xMemoryTextureBuilderGetColorState func(uintptr) *ColorState
 func (x *MemoryTextureBuilder) GetColorState() *ColorState {
 
 	cret := xMemoryTextureBuilderGetColorState(x.GoPointer())
-
 	return cret
 }
 
@@ -113,7 +111,6 @@ var xMemoryTextureBuilderGetFormat func(uintptr) MemoryFormat
 func (x *MemoryTextureBuilder) GetFormat() MemoryFormat {
 
 	cret := xMemoryTextureBuilderGetFormat(x.GoPointer())
-
 	return cret
 }
 
@@ -124,7 +121,6 @@ var xMemoryTextureBuilderGetHeight func(uintptr) int
 func (x *MemoryTextureBuilder) GetHeight() int {
 
 	cret := xMemoryTextureBuilderGetHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -134,7 +130,6 @@ var xMemoryTextureBuilderGetOffset func(uintptr, uint) uint
 func (x *MemoryTextureBuilder) GetOffset(PlaneVar uint) uint {
 
 	cret := xMemoryTextureBuilderGetOffset(x.GoPointer(), PlaneVar)
-
 	return cret
 }
 
@@ -144,7 +139,6 @@ var xMemoryTextureBuilderGetStride func(uintptr) uint
 func (x *MemoryTextureBuilder) GetStride() uint {
 
 	cret := xMemoryTextureBuilderGetStride(x.GoPointer())
-
 	return cret
 }
 
@@ -154,7 +148,6 @@ var xMemoryTextureBuilderGetStrideForPlane func(uintptr, uint) uint
 func (x *MemoryTextureBuilder) GetStrideForPlane(PlaneVar uint) uint {
 
 	cret := xMemoryTextureBuilderGetStrideForPlane(x.GoPointer(), PlaneVar)
-
 	return cret
 }
 
@@ -165,7 +158,6 @@ var xMemoryTextureBuilderGetUpdateRegion func(uintptr) *cairo.Region
 func (x *MemoryTextureBuilder) GetUpdateRegion() *cairo.Region {
 
 	cret := xMemoryTextureBuilderGetUpdateRegion(x.GoPointer())
-
 	return cret
 }
 
@@ -194,7 +186,6 @@ var xMemoryTextureBuilderGetWidth func(uintptr) int
 func (x *MemoryTextureBuilder) GetWidth() int {
 
 	cret := xMemoryTextureBuilderGetWidth(x.GoPointer())
-
 	return cret
 }
 

@@ -2,7 +2,6 @@
 package gio
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -807,7 +806,6 @@ var xFileInfoGetAccessDateTime func(uintptr) *glib.DateTime
 func (x *FileInfo) GetAccessDateTime() *glib.DateTime {
 
 	cret := xFileInfoGetAccessDateTime(x.GoPointer())
-
 	return cret
 }
 
@@ -836,7 +834,6 @@ var xFileInfoGetAttributeAsString func(uintptr, string) string
 func (x *FileInfo) GetAttributeAsString(AttributeVar string) string {
 
 	cret := xFileInfoGetAttributeAsString(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -847,7 +844,6 @@ var xFileInfoGetAttributeBoolean func(uintptr, string) bool
 func (x *FileInfo) GetAttributeBoolean(AttributeVar string) bool {
 
 	cret := xFileInfoGetAttributeBoolean(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -858,7 +854,6 @@ var xFileInfoGetAttributeByteString func(uintptr, string) string
 func (x *FileInfo) GetAttributeByteString(AttributeVar string) string {
 
 	cret := xFileInfoGetAttributeByteString(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -868,7 +863,6 @@ var xFileInfoGetAttributeData func(uintptr, string, *FileAttributeType, *uintptr
 func (x *FileInfo) GetAttributeData(AttributeVar string, TypeVar *FileAttributeType, ValuePpVar *uintptr, StatusVar *FileAttributeStatus) bool {
 
 	cret := xFileInfoGetAttributeData(x.GoPointer(), AttributeVar, TypeVar, ValuePpVar, StatusVar)
-
 	return cret
 }
 
@@ -883,7 +877,6 @@ var xFileInfoGetAttributeFilePath func(uintptr, string) string
 func (x *FileInfo) GetAttributeFilePath(AttributeVar string) string {
 
 	cret := xFileInfoGetAttributeFilePath(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -895,7 +888,6 @@ var xFileInfoGetAttributeInt32 func(uintptr, string) int32
 func (x *FileInfo) GetAttributeInt32(AttributeVar string) int32 {
 
 	cret := xFileInfoGetAttributeInt32(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -907,7 +899,6 @@ var xFileInfoGetAttributeInt64 func(uintptr, string) int64
 func (x *FileInfo) GetAttributeInt64(AttributeVar string) int64 {
 
 	cret := xFileInfoGetAttributeInt64(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -935,7 +926,6 @@ var xFileInfoGetAttributeStatus func(uintptr, string) FileAttributeStatus
 func (x *FileInfo) GetAttributeStatus(AttributeVar string) FileAttributeStatus {
 
 	cret := xFileInfoGetAttributeStatus(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -946,7 +936,6 @@ var xFileInfoGetAttributeString func(uintptr, string) string
 func (x *FileInfo) GetAttributeString(AttributeVar string) string {
 
 	cret := xFileInfoGetAttributeString(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -957,7 +946,6 @@ var xFileInfoGetAttributeStringv func(uintptr, string) []string
 func (x *FileInfo) GetAttributeStringv(AttributeVar string) []string {
 
 	cret := xFileInfoGetAttributeStringv(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -967,7 +955,6 @@ var xFileInfoGetAttributeType func(uintptr, string) FileAttributeType
 func (x *FileInfo) GetAttributeType(AttributeVar string) FileAttributeType {
 
 	cret := xFileInfoGetAttributeType(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -979,7 +966,6 @@ var xFileInfoGetAttributeUint32 func(uintptr, string) uint32
 func (x *FileInfo) GetAttributeUint32(AttributeVar string) uint32 {
 
 	cret := xFileInfoGetAttributeUint32(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -991,7 +977,6 @@ var xFileInfoGetAttributeUint64 func(uintptr, string) uint64
 func (x *FileInfo) GetAttributeUint64(AttributeVar string) uint64 {
 
 	cret := xFileInfoGetAttributeUint64(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -1004,7 +989,6 @@ var xFileInfoGetContentType func(uintptr) string
 func (x *FileInfo) GetContentType() string {
 
 	cret := xFileInfoGetContentType(x.GoPointer())
-
 	return cret
 }
 
@@ -1023,7 +1007,6 @@ var xFileInfoGetCreationDateTime func(uintptr) *glib.DateTime
 func (x *FileInfo) GetCreationDateTime() *glib.DateTime {
 
 	cret := xFileInfoGetCreationDateTime(x.GoPointer())
-
 	return cret
 }
 
@@ -1035,7 +1018,6 @@ var xFileInfoGetDeletionDate func(uintptr) *glib.DateTime
 func (x *FileInfo) GetDeletionDate() *glib.DateTime {
 
 	cret := xFileInfoGetDeletionDate(x.GoPointer())
-
 	return cret
 }
 
@@ -1048,7 +1030,6 @@ var xFileInfoGetDisplayName func(uintptr) string
 func (x *FileInfo) GetDisplayName() string {
 
 	cret := xFileInfoGetDisplayName(x.GoPointer())
-
 	return cret
 }
 
@@ -1061,7 +1042,6 @@ var xFileInfoGetEditName func(uintptr) string
 func (x *FileInfo) GetEditName() string {
 
 	cret := xFileInfoGetEditName(x.GoPointer())
-
 	return cret
 }
 
@@ -1075,7 +1055,6 @@ var xFileInfoGetEtag func(uintptr) string
 func (x *FileInfo) GetEtag() string {
 
 	cret := xFileInfoGetEtag(x.GoPointer())
-
 	return cret
 }
 
@@ -1089,7 +1068,6 @@ var xFileInfoGetFileType func(uintptr) FileType
 func (x *FileInfo) GetFileType() FileType {
 
 	cret := xFileInfoGetFileType(x.GoPointer())
-
 	return cret
 }
 
@@ -1122,7 +1100,6 @@ var xFileInfoGetIsBackup func(uintptr) bool
 func (x *FileInfo) GetIsBackup() bool {
 
 	cret := xFileInfoGetIsBackup(x.GoPointer())
-
 	return cret
 }
 
@@ -1135,7 +1112,6 @@ var xFileInfoGetIsHidden func(uintptr) bool
 func (x *FileInfo) GetIsHidden() bool {
 
 	cret := xFileInfoGetIsHidden(x.GoPointer())
-
 	return cret
 }
 
@@ -1148,7 +1124,6 @@ var xFileInfoGetIsSymlink func(uintptr) bool
 func (x *FileInfo) GetIsSymlink() bool {
 
 	cret := xFileInfoGetIsSymlink(x.GoPointer())
-
 	return cret
 }
 
@@ -1167,7 +1142,6 @@ var xFileInfoGetModificationDateTime func(uintptr) *glib.DateTime
 func (x *FileInfo) GetModificationDateTime() *glib.DateTime {
 
 	cret := xFileInfoGetModificationDateTime(x.GoPointer())
-
 	return cret
 }
 
@@ -1194,7 +1168,6 @@ var xFileInfoGetName func(uintptr) string
 func (x *FileInfo) GetName() string {
 
 	cret := xFileInfoGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -1209,7 +1182,6 @@ var xFileInfoGetSize func(uintptr) int64
 func (x *FileInfo) GetSize() int64 {
 
 	cret := xFileInfoGetSize(x.GoPointer())
-
 	return cret
 }
 
@@ -1223,7 +1195,6 @@ var xFileInfoGetSortOrder func(uintptr) int32
 func (x *FileInfo) GetSortOrder() int32 {
 
 	cret := xFileInfoGetSortOrder(x.GoPointer())
-
 	return cret
 }
 
@@ -1256,7 +1227,6 @@ var xFileInfoGetSymlinkTarget func(uintptr) string
 func (x *FileInfo) GetSymlinkTarget() string {
 
 	cret := xFileInfoGetSymlinkTarget(x.GoPointer())
-
 	return cret
 }
 
@@ -1266,7 +1236,6 @@ var xFileInfoHasAttribute func(uintptr, string) bool
 func (x *FileInfo) HasAttribute(AttributeVar string) bool {
 
 	cret := xFileInfoHasAttribute(x.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -1277,7 +1246,6 @@ var xFileInfoHasNamespace func(uintptr, string) bool
 func (x *FileInfo) HasNamespace(NameSpaceVar string) bool {
 
 	cret := xFileInfoHasNamespace(x.GoPointer(), NameSpaceVar)
-
 	return cret
 }
 
@@ -1286,12 +1254,10 @@ var xFileInfoListAttributes func(uintptr, uintptr) []string
 // Lists the file info structure's attributes.
 func (x *FileInfo) ListAttributes(NameSpaceVar *string) []string {
 
-	NameSpaceVarPtr, NameSpaceVarBytes := core.NullableStringToPtr(NameSpaceVar)
+	NameSpaceVarPtr := core.GStrdupNullable(NameSpaceVar)
+	defer core.GFreeNullable(NameSpaceVarPtr)
 
 	cret := xFileInfoListAttributes(x.GoPointer(), NameSpaceVarPtr)
-
-	runtime.KeepAlive(NameSpaceVarBytes)
-
 	return cret
 }
 
@@ -1410,7 +1376,6 @@ var xFileInfoSetAttributeStatus func(uintptr, string, FileAttributeStatus) bool
 func (x *FileInfo) SetAttributeStatus(AttributeVar string, StatusVar FileAttributeStatus) bool {
 
 	cret := xFileInfoSetAttributeStatus(x.GoPointer(), AttributeVar, StatusVar)
-
 	return cret
 }
 

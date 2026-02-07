@@ -234,7 +234,6 @@ func (x *Permission) Acquire(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPermissionAcquire(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -280,7 +279,6 @@ func (x *Permission) AcquireFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPermissionAcquireFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -296,7 +294,6 @@ var xPermissionGetAllowed func(uintptr) bool
 func (x *Permission) GetAllowed() bool {
 
 	cret := xPermissionGetAllowed(x.GoPointer())
-
 	return cret
 }
 
@@ -308,7 +305,6 @@ var xPermissionGetCanAcquire func(uintptr) bool
 func (x *Permission) GetCanAcquire() bool {
 
 	cret := xPermissionGetCanAcquire(x.GoPointer())
-
 	return cret
 }
 
@@ -320,7 +316,6 @@ var xPermissionGetCanRelease func(uintptr) bool
 func (x *Permission) GetCanRelease() bool {
 
 	cret := xPermissionGetCanRelease(x.GoPointer())
-
 	return cret
 }
 
@@ -358,7 +353,6 @@ func (x *Permission) Release(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPermissionRelease(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -404,7 +398,6 @@ func (x *Permission) ReleaseFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPermissionReleaseFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

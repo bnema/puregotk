@@ -55,7 +55,6 @@ var xEnumListItemGetName func(uintptr) string
 func (x *EnumListItem) GetName() string {
 
 	cret := xEnumListItemGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -65,7 +64,6 @@ var xEnumListItemGetNick func(uintptr) string
 func (x *EnumListItem) GetNick() string {
 
 	cret := xEnumListItemGetNick(x.GoPointer())
-
 	return cret
 }
 
@@ -75,7 +73,6 @@ var xEnumListItemGetValue func(uintptr) int
 func (x *EnumListItem) GetValue() int {
 
 	cret := xEnumListItemGetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -157,7 +154,6 @@ var xEnumListModelFindPosition func(uintptr, int) uint
 func (x *EnumListModel) FindPosition(ValueVar int) uint {
 
 	cret := xEnumListModelFindPosition(x.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -167,7 +163,6 @@ var xEnumListModelGetEnumType func(uintptr) types.GType
 func (x *EnumListModel) GetEnumType() types.GType {
 
 	cret := xEnumListModelGetEnumType(x.GoPointer())
-
 	return cret
 }
 
@@ -194,7 +189,6 @@ func (c *EnumListModel) SetGoPointer(ptr uintptr) {
 func (x *EnumListModel) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
-
 	return cret
 }
 
@@ -209,7 +203,6 @@ func (x *EnumListModel) GetItem(PositionVar uint) uintptr {
 func (x *EnumListModel) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
-
 	return cret
 }
 
@@ -221,7 +214,6 @@ func (x *EnumListModel) GetItemType() types.GType {
 func (x *EnumListModel) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
-
 	return cret
 }
 

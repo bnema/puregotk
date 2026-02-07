@@ -67,7 +67,6 @@ var xCellAreaBoxGetSpacing func(uintptr) int
 func (x *CellAreaBox) GetSpacing() int {
 
 	cret := xCellAreaBoxGetSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -139,7 +138,6 @@ func (x *CellAreaBox) GetPropertySpacing() int {
 func (x *CellAreaBox) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -193,7 +191,6 @@ func (x *CellAreaBox) GetArea() *CellArea {
 func (x *CellAreaBox) GetCells() *glib.List {
 
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-
 	return cret
 }
 
@@ -238,7 +235,6 @@ func (x *CellAreaBox) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayout
 func (x *CellAreaBox) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

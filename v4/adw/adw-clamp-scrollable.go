@@ -87,7 +87,6 @@ var xClampScrollableGetMaximumSize func(uintptr) int
 func (x *ClampScrollable) GetMaximumSize() int {
 
 	cret := xClampScrollableGetMaximumSize(x.GoPointer())
-
 	return cret
 }
 
@@ -97,7 +96,6 @@ var xClampScrollableGetTighteningThreshold func(uintptr) int
 func (x *ClampScrollable) GetTighteningThreshold() int {
 
 	cret := xClampScrollableGetTighteningThreshold(x.GoPointer())
-
 	return cret
 }
 
@@ -107,7 +105,6 @@ var xClampScrollableGetUnit func(uintptr) LengthUnit
 func (x *ClampScrollable) GetUnit() LengthUnit {
 
 	cret := xClampScrollableGetUnit(x.GoPointer())
-
 	return cret
 }
 
@@ -274,7 +271,6 @@ func (x *ClampScrollable) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ClampScrollable) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -300,7 +296,6 @@ func (x *ClampScrollable) GetAtContext() *gtk.ATContext {
 func (x *ClampScrollable) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -340,7 +335,6 @@ func (x *ClampScrollable) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ClampScrollable) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -517,7 +511,6 @@ func (x *ClampScrollable) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acces
 func (x *ClampScrollable) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -525,7 +518,6 @@ func (x *ClampScrollable) GetBuildableId() string {
 func (x *ClampScrollable) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 
@@ -545,7 +537,6 @@ func (x *ClampScrollable) SetOrientation(OrientationVar gtk.Orientation) {
 func (x *ClampScrollable) GetBorder(BorderVar *gtk.Border) bool {
 
 	cret := gtk.XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
-
 	return cret
 }
 
@@ -568,7 +559,6 @@ func (x *ClampScrollable) GetHadjustment() *gtk.Adjustment {
 func (x *ClampScrollable) GetHscrollPolicy() gtk.ScrollablePolicy {
 
 	cret := gtk.XGtkScrollableGetHscrollPolicy(x.GoPointer())
-
 	return cret
 }
 
@@ -591,7 +581,6 @@ func (x *ClampScrollable) GetVadjustment() *gtk.Adjustment {
 func (x *ClampScrollable) GetVscrollPolicy() gtk.ScrollablePolicy {
 
 	cret := gtk.XGtkScrollableGetVscrollPolicy(x.GoPointer())
-
 	return cret
 }
 

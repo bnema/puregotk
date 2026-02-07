@@ -2,8 +2,6 @@
 package gtk
 
 import (
-	"runtime"
-
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/glib"
@@ -142,11 +140,10 @@ func NewPageSetupFromKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) (*P
 	var cls *PageSetup
 	var cerr *glib.Error
 
-	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
 
 	cret := xNewPageSetupFromKeyFile(KeyFileVar, GroupNameVarPtr, &cerr)
-
-	runtime.KeepAlive(GroupNameVarBytes)
 
 	if cret == 0 {
 		return nil, cerr
@@ -182,7 +179,6 @@ var xPageSetupGetBottomMargin func(uintptr, Unit) float64
 func (x *PageSetup) GetBottomMargin(UnitVar Unit) float64 {
 
 	cret := xPageSetupGetBottomMargin(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -192,7 +188,6 @@ var xPageSetupGetLeftMargin func(uintptr, Unit) float64
 func (x *PageSetup) GetLeftMargin(UnitVar Unit) float64 {
 
 	cret := xPageSetupGetLeftMargin(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -202,7 +197,6 @@ var xPageSetupGetOrientation func(uintptr) PageOrientation
 func (x *PageSetup) GetOrientation() PageOrientation {
 
 	cret := xPageSetupGetOrientation(x.GoPointer())
-
 	return cret
 }
 
@@ -216,7 +210,6 @@ var xPageSetupGetPageHeight func(uintptr, Unit) float64
 func (x *PageSetup) GetPageHeight(UnitVar Unit) float64 {
 
 	cret := xPageSetupGetPageHeight(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -230,7 +223,6 @@ var xPageSetupGetPageWidth func(uintptr, Unit) float64
 func (x *PageSetup) GetPageWidth(UnitVar Unit) float64 {
 
 	cret := xPageSetupGetPageWidth(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -244,7 +236,6 @@ var xPageSetupGetPaperHeight func(uintptr, Unit) float64
 func (x *PageSetup) GetPaperHeight(UnitVar Unit) float64 {
 
 	cret := xPageSetupGetPaperHeight(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -254,7 +245,6 @@ var xPageSetupGetPaperSize func(uintptr) *PaperSize
 func (x *PageSetup) GetPaperSize() *PaperSize {
 
 	cret := xPageSetupGetPaperSize(x.GoPointer())
-
 	return cret
 }
 
@@ -268,7 +258,6 @@ var xPageSetupGetPaperWidth func(uintptr, Unit) float64
 func (x *PageSetup) GetPaperWidth(UnitVar Unit) float64 {
 
 	cret := xPageSetupGetPaperWidth(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -278,7 +267,6 @@ var xPageSetupGetRightMargin func(uintptr, Unit) float64
 func (x *PageSetup) GetRightMargin(UnitVar Unit) float64 {
 
 	cret := xPageSetupGetRightMargin(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -288,7 +276,6 @@ var xPageSetupGetTopMargin func(uintptr, Unit) float64
 func (x *PageSetup) GetTopMargin(UnitVar Unit) float64 {
 
 	cret := xPageSetupGetTopMargin(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -301,7 +288,6 @@ func (x *PageSetup) LoadFile(FileNameVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPageSetupLoadFile(x.GoPointer(), FileNameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -316,12 +302,10 @@ var xPageSetupLoadKeyFile func(uintptr, *glib.KeyFile, uintptr, **glib.Error) bo
 func (x *PageSetup) LoadKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
 
 	cret := xPageSetupLoadKeyFile(x.GoPointer(), KeyFileVar, GroupNameVarPtr, &cerr)
-
-	runtime.KeepAlive(GroupNameVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -403,7 +387,6 @@ func (x *PageSetup) ToFile(FileNameVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPageSetupToFile(x.GoPointer(), FileNameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -417,7 +400,6 @@ var xPageSetupToGvariant func(uintptr) *glib.Variant
 func (x *PageSetup) ToGvariant() *glib.Variant {
 
 	cret := xPageSetupToGvariant(x.GoPointer())
-
 	return cret
 }
 
@@ -426,11 +408,10 @@ var xPageSetupToKeyFile func(uintptr, *glib.KeyFile, uintptr)
 // This function adds the page setup from @setup to @key_file.
 func (x *PageSetup) ToKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) {
 
-	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
 
 	xPageSetupToKeyFile(x.GoPointer(), KeyFileVar, GroupNameVarPtr)
-
-	runtime.KeepAlive(GroupNameVarBytes)
 
 }
 

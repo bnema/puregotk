@@ -70,7 +70,6 @@ func (x *DevicePadBase) SetGoPointer(ptr uintptr) {
 func (x *DevicePadBase) GetFeatureGroup(FeatureVar DevicePadFeature, FeatureIdxVar int) int {
 
 	cret := XGdkDevicePadGetFeatureGroup(x.GoPointer(), FeatureVar, FeatureIdxVar)
-
 	return cret
 }
 
@@ -78,7 +77,6 @@ func (x *DevicePadBase) GetFeatureGroup(FeatureVar DevicePadFeature, FeatureIdxV
 func (x *DevicePadBase) GetGroupNModes(GroupIdxVar int) int {
 
 	cret := XGdkDevicePadGetGroupNModes(x.GoPointer(), GroupIdxVar)
-
 	return cret
 }
 
@@ -86,7 +84,6 @@ func (x *DevicePadBase) GetGroupNModes(GroupIdxVar int) int {
 func (x *DevicePadBase) GetNFeatures(FeatureVar DevicePadFeature) int {
 
 	cret := XGdkDevicePadGetNFeatures(x.GoPointer(), FeatureVar)
-
 	return cret
 }
 
@@ -98,7 +95,6 @@ func (x *DevicePadBase) GetNFeatures(FeatureVar DevicePadFeature) int {
 func (x *DevicePadBase) GetNGroups() int {
 
 	cret := XGdkDevicePadGetNGroups(x.GoPointer())
-
 	return cret
 }
 

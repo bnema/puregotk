@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -47,12 +46,10 @@ var xNewPaperSize func(uintptr) *PaperSize
 // see [func@Gtk.PaperSize.get_default].
 func NewPaperSize(NameVar *string) *PaperSize {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	cret := xNewPaperSize(NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
-
 	return cret
 }
 
@@ -63,7 +60,6 @@ var xNewPaperSizeCustom func(string, string, float64, float64, Unit) *PaperSize
 func NewPaperSizeCustom(NameVar string, DisplayNameVar string, WidthVar float64, HeightVar float64, UnitVar Unit) *PaperSize {
 
 	cret := xNewPaperSizeCustom(NameVar, DisplayNameVar, WidthVar, HeightVar, UnitVar)
-
 	return cret
 }
 
@@ -76,7 +72,6 @@ var xNewPaperSizeFromGvariant func(*glib.Variant) *PaperSize
 func NewPaperSizeFromGvariant(VariantVar *glib.Variant) *PaperSize {
 
 	cret := xNewPaperSizeFromGvariant(VariantVar)
-
 	return cret
 }
 
@@ -91,7 +86,6 @@ var xNewPaperSizeFromIpp func(string, float64, float64) *PaperSize
 func NewPaperSizeFromIpp(IppNameVar string, WidthVar float64, HeightVar float64) *PaperSize {
 
 	cret := xNewPaperSizeFromIpp(IppNameVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -102,12 +96,10 @@ var xNewPaperSizeFromKeyFile func(*glib.KeyFile, uintptr, **glib.Error) *PaperSi
 func NewPaperSizeFromKeyFile(KeyFileVar *glib.KeyFile, GroupNameVar *string) (*PaperSize, error) {
 	var cerr *glib.Error
 
-	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
 
 	cret := xNewPaperSizeFromKeyFile(KeyFileVar, GroupNameVarPtr, &cerr)
-
-	runtime.KeepAlive(GroupNameVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -126,7 +118,6 @@ var xNewPaperSizeFromPpd func(string, string, float64, float64) *PaperSize
 func NewPaperSizeFromPpd(PpdNameVar string, PpdDisplayNameVar string, WidthVar float64, HeightVar float64) *PaperSize {
 
 	cret := xNewPaperSizeFromPpd(PpdNameVar, PpdDisplayNameVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -136,7 +127,6 @@ var xPaperSizeCopy func(uintptr) *PaperSize
 func (x *PaperSize) Copy() *PaperSize {
 
 	cret := xPaperSizeCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -155,7 +145,6 @@ var xPaperSizeGetDefaultBottomMargin func(uintptr, Unit) float64
 func (x *PaperSize) GetDefaultBottomMargin(UnitVar Unit) float64 {
 
 	cret := xPaperSizeGetDefaultBottomMargin(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -165,7 +154,6 @@ var xPaperSizeGetDefaultLeftMargin func(uintptr, Unit) float64
 func (x *PaperSize) GetDefaultLeftMargin(UnitVar Unit) float64 {
 
 	cret := xPaperSizeGetDefaultLeftMargin(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -175,7 +163,6 @@ var xPaperSizeGetDefaultRightMargin func(uintptr, Unit) float64
 func (x *PaperSize) GetDefaultRightMargin(UnitVar Unit) float64 {
 
 	cret := xPaperSizeGetDefaultRightMargin(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -185,7 +172,6 @@ var xPaperSizeGetDefaultTopMargin func(uintptr, Unit) float64
 func (x *PaperSize) GetDefaultTopMargin(UnitVar Unit) float64 {
 
 	cret := xPaperSizeGetDefaultTopMargin(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -195,7 +181,6 @@ var xPaperSizeGetDisplayName func(uintptr) string
 func (x *PaperSize) GetDisplayName() string {
 
 	cret := xPaperSizeGetDisplayName(x.GoPointer())
-
 	return cret
 }
 
@@ -206,7 +191,6 @@ var xPaperSizeGetHeight func(uintptr, Unit) float64
 func (x *PaperSize) GetHeight(UnitVar Unit) float64 {
 
 	cret := xPaperSizeGetHeight(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -216,7 +200,6 @@ var xPaperSizeGetName func(uintptr) string
 func (x *PaperSize) GetName() string {
 
 	cret := xPaperSizeGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -227,7 +210,6 @@ var xPaperSizeGetPpdName func(uintptr) string
 func (x *PaperSize) GetPpdName() string {
 
 	cret := xPaperSizeGetPpdName(x.GoPointer())
-
 	return cret
 }
 
@@ -238,7 +220,6 @@ var xPaperSizeGetWidth func(uintptr, Unit) float64
 func (x *PaperSize) GetWidth(UnitVar Unit) float64 {
 
 	cret := xPaperSizeGetWidth(x.GoPointer(), UnitVar)
-
 	return cret
 }
 
@@ -248,7 +229,6 @@ var xPaperSizeIsCustom func(uintptr) bool
 func (x *PaperSize) IsCustom() bool {
 
 	cret := xPaperSizeIsCustom(x.GoPointer())
-
 	return cret
 }
 
@@ -258,7 +238,6 @@ var xPaperSizeIsEqual func(uintptr, *PaperSize) bool
 func (x *PaperSize) IsEqual(Size2Var *PaperSize) bool {
 
 	cret := xPaperSizeIsEqual(x.GoPointer(), Size2Var)
-
 	return cret
 }
 
@@ -268,7 +247,6 @@ var xPaperSizeIsIpp func(uintptr) bool
 func (x *PaperSize) IsIpp() bool {
 
 	cret := xPaperSizeIsIpp(x.GoPointer())
-
 	return cret
 }
 
@@ -287,7 +265,6 @@ var xPaperSizeToGvariant func(uintptr) *glib.Variant
 func (x *PaperSize) ToGvariant() *glib.Variant {
 
 	cret := xPaperSizeToGvariant(x.GoPointer())
-
 	return cret
 }
 
@@ -324,7 +301,6 @@ var xPaperSizeGetDefault func() string
 func PaperSizeGetDefault() string {
 
 	cret := xPaperSizeGetDefault()
-
 	return cret
 }
 
@@ -334,7 +310,6 @@ var xPaperSizeGetPaperSizes func(bool) *glib.List
 func PaperSizeGetPaperSizes(IncludeCustomVar bool) *glib.List {
 
 	cret := xPaperSizeGetPaperSizes(IncludeCustomVar)
-
 	return cret
 }
 

@@ -263,7 +263,6 @@ func (x *TreeSortableBase) SetGoPointer(ptr uintptr) {
 func (x *TreeSortableBase) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortType) bool {
 
 	cret := XGtkTreeSortableGetSortColumnId(x.GoPointer(), SortColumnIdVar, OrderVar)
-
 	return cret
 }
 
@@ -273,7 +272,6 @@ func (x *TreeSortableBase) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortT
 func (x *TreeSortableBase) HasDefaultSortFunc() bool {
 
 	cret := XGtkTreeSortableHasDefaultSortFunc(x.GoPointer())
-
 	return cret
 }
 

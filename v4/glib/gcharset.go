@@ -32,7 +32,6 @@ var xGetCharset func(*string) bool
 func GetCharset(CharsetVar *string) bool {
 
 	cret := xGetCharset(CharsetVar)
-
 	return cret
 }
 
@@ -42,7 +41,6 @@ var xGetCodeset func() string
 func GetCodeset() string {
 
 	cret := xGetCodeset()
-
 	return cret
 }
 
@@ -68,7 +66,6 @@ var xGetConsoleCharset func(*string) bool
 func GetConsoleCharset(CharsetVar *string) bool {
 
 	cret := xGetConsoleCharset(CharsetVar)
-
 	return cret
 }
 
@@ -88,7 +85,6 @@ var xGetLanguageNames func() []string
 func GetLanguageNames() []string {
 
 	cret := xGetLanguageNames()
-
 	return cret
 }
 
@@ -107,7 +103,6 @@ var xGetLanguageNamesWithCategory func(string) []string
 func GetLanguageNamesWithCategory(CategoryNameVar string) []string {
 
 	cret := xGetLanguageNamesWithCategory(CategoryNameVar)
-
 	return cret
 }
 
@@ -131,7 +126,6 @@ var xGetLocaleVariants func(string) []string
 func GetLocaleVariants(LocaleVar string) []string {
 
 	cret := xGetLocaleVariants(LocaleVar)
-
 	return cret
 }
 

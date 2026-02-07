@@ -44,7 +44,6 @@ var xExpressionWatchEvaluate func(uintptr, *gobject.Value) bool
 func (x *ExpressionWatch) Evaluate(ValueVar *gobject.Value) bool {
 
 	cret := xExpressionWatchEvaluate(x.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -54,7 +53,6 @@ var xExpressionWatchRef func(uintptr) *ExpressionWatch
 func (x *ExpressionWatch) Ref() *ExpressionWatch {
 
 	cret := xExpressionWatchRef(x.GoPointer())
-
 	return cret
 }
 
@@ -353,7 +351,6 @@ var xConstantExpressionGetValue func(uintptr) *gobject.Value
 func (x *ConstantExpression) GetValue() *gobject.Value {
 
 	cret := xConstantExpressionGetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -589,7 +586,6 @@ var xExpressionBind func(uintptr, uintptr, string, uintptr) *ExpressionWatch
 func (x *Expression) Bind(TargetVar *gobject.Object, PropertyVar string, ThisVar *gobject.Object) *ExpressionWatch {
 
 	cret := xExpressionBind(x.GoPointer(), TargetVar.GoPointer(), PropertyVar, ThisVar.GoPointer())
-
 	return cret
 }
 
@@ -608,7 +604,6 @@ var xExpressionEvaluate func(uintptr, uintptr, *gobject.Value) bool
 func (x *Expression) Evaluate(ThisVar *gobject.Object, ValueVar *gobject.Value) bool {
 
 	cret := xExpressionEvaluate(x.GoPointer(), ThisVar.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -621,7 +616,6 @@ var xExpressionGetValueType func(uintptr) types.GType
 func (x *Expression) GetValueType() types.GType {
 
 	cret := xExpressionGetValueType(x.GoPointer())
-
 	return cret
 }
 
@@ -637,7 +631,6 @@ var xExpressionIsStatic func(uintptr) bool
 func (x *Expression) IsStatic() bool {
 
 	cret := xExpressionIsStatic(x.GoPointer())
-
 	return cret
 }
 
@@ -712,7 +705,6 @@ func (x *Expression) Watch(ThisVar *gobject.Object, NotifyVar *ExpressionNotify,
 	}
 
 	cret := xExpressionWatch(x.GoPointer(), ThisVar.GoPointer(), NotifyVarRef, UserDataVar, UserDestroyVarRef)
-
 	return cret
 }
 

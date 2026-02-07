@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -98,7 +97,6 @@ var xSwitchGetActive func(uintptr) bool
 func (x *Switch) GetActive() bool {
 
 	cret := xSwitchGetActive(x.GoPointer())
-
 	return cret
 }
 
@@ -108,7 +106,6 @@ var xSwitchGetState func(uintptr) bool
 func (x *Switch) GetState() bool {
 
 	cret := xSwitchGetState(x.GoPointer())
-
 	return cret
 }
 
@@ -288,7 +285,6 @@ func (x *Switch) GetAccessibleParent() *AccessibleBase {
 func (x *Switch) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -314,7 +310,6 @@ func (x *Switch) GetAtContext() *ATContext {
 func (x *Switch) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -354,7 +349,6 @@ func (x *Switch) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Switch) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -528,7 +522,6 @@ func (x *Switch) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, V
 func (x *Switch) GetActionName() string {
 
 	cret := XGtkActionableGetActionName(x.GoPointer())
-
 	return cret
 }
 
@@ -536,7 +529,6 @@ func (x *Switch) GetActionName() string {
 func (x *Switch) GetActionTargetValue() *glib.Variant {
 
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -555,11 +547,10 @@ func (x *Switch) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *Switch) SetActionName(ActionNameVar *string) {
 
-	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
 
 	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
-	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -620,7 +611,6 @@ func (x *Switch) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *Switch) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

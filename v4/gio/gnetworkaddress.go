@@ -113,7 +113,6 @@ var xNetworkAddressGetHostname func(uintptr) string
 func (x *NetworkAddress) GetHostname() string {
 
 	cret := xNetworkAddressGetHostname(x.GoPointer())
-
 	return cret
 }
 
@@ -123,7 +122,6 @@ var xNetworkAddressGetPort func(uintptr) uint16
 func (x *NetworkAddress) GetPort() uint16 {
 
 	cret := xNetworkAddressGetPort(x.GoPointer())
-
 	return cret
 }
 
@@ -133,7 +131,6 @@ var xNetworkAddressGetScheme func(uintptr) string
 func (x *NetworkAddress) GetScheme() string {
 
 	cret := xNetworkAddressGetScheme(x.GoPointer())
-
 	return cret
 }
 
@@ -243,7 +240,6 @@ func (x *NetworkAddress) ProxyEnumerate() *SocketAddressEnumerator {
 func (x *NetworkAddress) ToString() string {
 
 	cret := XGSocketConnectableToString(x.GoPointer())
-
 	return cret
 }
 

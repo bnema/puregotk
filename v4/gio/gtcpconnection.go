@@ -54,7 +54,6 @@ var xTcpConnectionGetGracefulDisconnect func(uintptr) bool
 func (x *TcpConnection) GetGracefulDisconnect() bool {
 
 	cret := xTcpConnectionGetGracefulDisconnect(x.GoPointer())
-
 	return cret
 }
 

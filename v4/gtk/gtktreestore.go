@@ -269,7 +269,6 @@ var xTreeStoreIsAncestor func(uintptr, *TreeIter, *TreeIter) bool
 func (x *TreeStore) IsAncestor(IterVar *TreeIter, DescendantVar *TreeIter) bool {
 
 	cret := xTreeStoreIsAncestor(x.GoPointer(), IterVar, DescendantVar)
-
 	return cret
 }
 
@@ -282,7 +281,6 @@ var xTreeStoreIterDepth func(uintptr, *TreeIter) int
 func (x *TreeStore) IterDepth(IterVar *TreeIter) int {
 
 	cret := xTreeStoreIterDepth(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -295,7 +293,6 @@ var xTreeStoreIterIsValid func(uintptr, *TreeIter) bool
 func (x *TreeStore) IterIsValid(IterVar *TreeIter) bool {
 
 	cret := xTreeStoreIterIsValid(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -353,7 +350,6 @@ var xTreeStoreRemove func(uintptr, *TreeIter) bool
 func (x *TreeStore) Remove(IterVar *TreeIter) bool {
 
 	cret := xTreeStoreRemove(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -474,7 +470,6 @@ func (c *TreeStore) SetGoPointer(ptr uintptr) {
 func (x *TreeStore) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -487,7 +482,6 @@ func (x *TreeStore) GetBuildableId() string {
 func (x *TreeStore) DragDataReceived(DestVar *TreePath, ValueVar *gobject.Value) bool {
 
 	cret := XGtkTreeDragDestDragDataReceived(x.GoPointer(), DestVar, ValueVar)
-
 	return cret
 }
 
@@ -499,7 +493,6 @@ func (x *TreeStore) DragDataReceived(DestVar *TreePath, ValueVar *gobject.Value)
 func (x *TreeStore) RowDropPossible(DestPathVar *TreePath, ValueVar *gobject.Value) bool {
 
 	cret := XGtkTreeDragDestRowDropPossible(x.GoPointer(), DestPathVar, ValueVar)
-
 	return cret
 }
 
@@ -511,7 +504,6 @@ func (x *TreeStore) RowDropPossible(DestPathVar *TreePath, ValueVar *gobject.Val
 func (x *TreeStore) DragDataDelete(PathVar *TreePath) bool {
 
 	cret := XGtkTreeDragSourceDragDataDelete(x.GoPointer(), PathVar)
-
 	return cret
 }
 
@@ -537,7 +529,6 @@ func (x *TreeStore) DragDataGet(PathVar *TreePath) *gdk.ContentProvider {
 func (x *TreeStore) RowDraggable(PathVar *TreePath) bool {
 
 	cret := XGtkTreeDragSourceRowDraggable(x.GoPointer(), PathVar)
-
 	return cret
 }
 
@@ -589,7 +580,6 @@ func (x *TreeStore) Get(IterVar *TreeIter, varArgs ...interface{}) {
 func (x *TreeStore) GetColumnType(IndexVar int) types.GType {
 
 	cret := XGtkTreeModelGetColumnType(x.GoPointer(), IndexVar)
-
 	return cret
 }
 
@@ -601,7 +591,6 @@ func (x *TreeStore) GetColumnType(IndexVar int) types.GType {
 func (x *TreeStore) GetFlags() TreeModelFlags {
 
 	cret := XGtkTreeModelGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -612,7 +601,6 @@ func (x *TreeStore) GetFlags() TreeModelFlags {
 func (x *TreeStore) GetIter(IterVar *TreeIter, PathVar *TreePath) bool {
 
 	cret := XGtkTreeModelGetIter(x.GoPointer(), IterVar, PathVar)
-
 	return cret
 }
 
@@ -623,7 +611,6 @@ func (x *TreeStore) GetIter(IterVar *TreeIter, PathVar *TreePath) bool {
 func (x *TreeStore) GetIterFirst(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelGetIterFirst(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -634,7 +621,6 @@ func (x *TreeStore) GetIterFirst(IterVar *TreeIter) bool {
 func (x *TreeStore) GetIterFromString(IterVar *TreeIter, PathStringVar string) bool {
 
 	cret := XGtkTreeModelGetIterFromString(x.GoPointer(), IterVar, PathStringVar)
-
 	return cret
 }
 
@@ -642,7 +628,6 @@ func (x *TreeStore) GetIterFromString(IterVar *TreeIter, PathStringVar string) b
 func (x *TreeStore) GetNColumns() int {
 
 	cret := XGtkTreeModelGetNColumns(x.GoPointer())
-
 	return cret
 }
 
@@ -652,7 +637,6 @@ func (x *TreeStore) GetNColumns() int {
 func (x *TreeStore) GetPath(IterVar *TreeIter) *TreePath {
 
 	cret := XGtkTreeModelGetPath(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -664,7 +648,6 @@ func (x *TreeStore) GetPath(IterVar *TreeIter) *TreePath {
 func (x *TreeStore) GetStringFromIter(IterVar *TreeIter) string {
 
 	cret := XGtkTreeModelGetStringFromIter(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -699,7 +682,6 @@ func (x *TreeStore) GetValue(IterVar *TreeIter, ColumnVar int, ValueVar *gobject
 func (x *TreeStore) IterChildren(IterVar *TreeIter, ParentVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterChildren(x.GoPointer(), IterVar, ParentVar)
-
 	return cret
 }
 
@@ -707,7 +689,6 @@ func (x *TreeStore) IterChildren(IterVar *TreeIter, ParentVar *TreeIter) bool {
 func (x *TreeStore) IterHasChild(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterHasChild(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -718,7 +699,6 @@ func (x *TreeStore) IterHasChild(IterVar *TreeIter) bool {
 func (x *TreeStore) IterNChildren(IterVar *TreeIter) int {
 
 	cret := XGtkTreeModelIterNChildren(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -729,7 +709,6 @@ func (x *TreeStore) IterNChildren(IterVar *TreeIter) int {
 func (x *TreeStore) IterNext(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterNext(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -743,7 +722,6 @@ func (x *TreeStore) IterNext(IterVar *TreeIter) bool {
 func (x *TreeStore) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar int) bool {
 
 	cret := XGtkTreeModelIterNthChild(x.GoPointer(), IterVar, ParentVar, NVar)
-
 	return cret
 }
 
@@ -759,7 +737,6 @@ func (x *TreeStore) IterNthChild(IterVar *TreeIter, ParentVar *TreeIter, NVar in
 func (x *TreeStore) IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterParent(x.GoPointer(), IterVar, ChildVar)
-
 	return cret
 }
 
@@ -770,7 +747,6 @@ func (x *TreeStore) IterParent(IterVar *TreeIter, ChildVar *TreeIter) bool {
 func (x *TreeStore) IterPrevious(IterVar *TreeIter) bool {
 
 	cret := XGtkTreeModelIterPrevious(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -888,7 +864,6 @@ func (x *TreeStore) UnrefNode(IterVar *TreeIter) {
 func (x *TreeStore) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortType) bool {
 
 	cret := XGtkTreeSortableGetSortColumnId(x.GoPointer(), SortColumnIdVar, OrderVar)
-
 	return cret
 }
 
@@ -898,7 +873,6 @@ func (x *TreeStore) GetSortColumnId(SortColumnIdVar *int, OrderVar *SortType) bo
 func (x *TreeStore) HasDefaultSortFunc() bool {
 
 	cret := XGtkTreeSortableHasDefaultSortFunc(x.GoPointer())
-
 	return cret
 }
 

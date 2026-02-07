@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -136,7 +135,6 @@ var xFontDialogButtonGetFontDesc func(uintptr) *pango.FontDescription
 func (x *FontDialogButton) GetFontDesc() *pango.FontDescription {
 
 	cret := xFontDialogButtonGetFontDesc(x.GoPointer())
-
 	return cret
 }
 
@@ -154,7 +152,6 @@ var xFontDialogButtonGetFontFeatures func(uintptr) string
 func (x *FontDialogButton) GetFontFeatures() string {
 
 	cret := xFontDialogButtonGetFontFeatures(x.GoPointer())
-
 	return cret
 }
 
@@ -164,7 +161,6 @@ var xFontDialogButtonGetLanguage func(uintptr) *pango.Language
 func (x *FontDialogButton) GetLanguage() *pango.Language {
 
 	cret := xFontDialogButtonGetLanguage(x.GoPointer())
-
 	return cret
 }
 
@@ -175,7 +171,6 @@ var xFontDialogButtonGetLevel func(uintptr) FontLevel
 func (x *FontDialogButton) GetLevel() FontLevel {
 
 	cret := xFontDialogButtonGetLevel(x.GoPointer())
-
 	return cret
 }
 
@@ -185,7 +180,6 @@ var xFontDialogButtonGetUseFont func(uintptr) bool
 func (x *FontDialogButton) GetUseFont() bool {
 
 	cret := xFontDialogButtonGetUseFont(x.GoPointer())
-
 	return cret
 }
 
@@ -195,7 +189,6 @@ var xFontDialogButtonGetUseSize func(uintptr) bool
 func (x *FontDialogButton) GetUseSize() bool {
 
 	cret := xFontDialogButtonGetUseSize(x.GoPointer())
-
 	return cret
 }
 
@@ -224,11 +217,10 @@ var xFontDialogButtonSetFontFeatures func(uintptr, uintptr)
 // Sets the font features of the button.
 func (x *FontDialogButton) SetFontFeatures(FontFeaturesVar *string) {
 
-	FontFeaturesVarPtr, FontFeaturesVarBytes := core.NullableStringToPtr(FontFeaturesVar)
+	FontFeaturesVarPtr := core.GStrdupNullable(FontFeaturesVar)
+	defer core.GFreeNullable(FontFeaturesVarPtr)
 
 	xFontDialogButtonSetFontFeatures(x.GoPointer(), FontFeaturesVarPtr)
-
-	runtime.KeepAlive(FontFeaturesVarBytes)
 
 }
 
@@ -467,7 +459,6 @@ func (x *FontDialogButton) GetAccessibleParent() *AccessibleBase {
 func (x *FontDialogButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -493,7 +484,6 @@ func (x *FontDialogButton) GetAtContext() *ATContext {
 func (x *FontDialogButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -533,7 +523,6 @@ func (x *FontDialogButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *FontDialogButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -710,7 +699,6 @@ func (x *FontDialogButton) UpdateStateValue(NStatesVar int, StatesVar []Accessib
 func (x *FontDialogButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -159,7 +158,6 @@ var xSpinRowGetClimbRate func(uintptr) float64
 func (x *SpinRow) GetClimbRate() float64 {
 
 	cret := xSpinRowGetClimbRate(x.GoPointer())
-
 	return cret
 }
 
@@ -169,7 +167,6 @@ var xSpinRowGetDigits func(uintptr) uint
 func (x *SpinRow) GetDigits() uint {
 
 	cret := xSpinRowGetDigits(x.GoPointer())
-
 	return cret
 }
 
@@ -179,7 +176,6 @@ var xSpinRowGetNumeric func(uintptr) bool
 func (x *SpinRow) GetNumeric() bool {
 
 	cret := xSpinRowGetNumeric(x.GoPointer())
-
 	return cret
 }
 
@@ -189,7 +185,6 @@ var xSpinRowGetSnapToTicks func(uintptr) bool
 func (x *SpinRow) GetSnapToTicks() bool {
 
 	cret := xSpinRowGetSnapToTicks(x.GoPointer())
-
 	return cret
 }
 
@@ -199,7 +194,6 @@ var xSpinRowGetUpdatePolicy func(uintptr) gtk.SpinButtonUpdatePolicy
 func (x *SpinRow) GetUpdatePolicy() gtk.SpinButtonUpdatePolicy {
 
 	cret := xSpinRowGetUpdatePolicy(x.GoPointer())
-
 	return cret
 }
 
@@ -209,7 +203,6 @@ var xSpinRowGetValue func(uintptr) float64
 func (x *SpinRow) GetValue() float64 {
 
 	cret := xSpinRowGetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -219,7 +212,6 @@ var xSpinRowGetWrap func(uintptr) bool
 func (x *SpinRow) GetWrap() bool {
 
 	cret := xSpinRowGetWrap(x.GoPointer())
-
 	return cret
 }
 
@@ -549,7 +541,6 @@ func (x *SpinRow) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *SpinRow) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -575,7 +566,6 @@ func (x *SpinRow) GetAtContext() *gtk.ATContext {
 func (x *SpinRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -615,7 +605,6 @@ func (x *SpinRow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *SpinRow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -789,7 +778,6 @@ func (x *SpinRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSta
 func (x *SpinRow) GetActionName() string {
 
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
-
 	return cret
 }
 
@@ -797,7 +785,6 @@ func (x *SpinRow) GetActionName() string {
 func (x *SpinRow) GetActionTargetValue() *glib.Variant {
 
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -816,11 +803,10 @@ func (x *SpinRow) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *SpinRow) SetActionName(ActionNameVar *string) {
 
-	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
 
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
-	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -881,7 +867,6 @@ func (x *SpinRow) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *SpinRow) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -924,7 +909,6 @@ func (x *SpinRow) GetBuildableId() string {
 func (x *SpinRow) DelegateGetAccessiblePlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -965,7 +949,6 @@ func (x *SpinRow) FinishDelegate() {
 func (x *SpinRow) GetAlignment() float32 {
 
 	cret := gtk.XGtkEditableGetAlignment(x.GoPointer())
-
 	return cret
 }
 
@@ -980,7 +963,6 @@ func (x *SpinRow) GetAlignment() float32 {
 func (x *SpinRow) GetChars(StartPosVar int, EndPosVar int) string {
 
 	cret := gtk.XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -1006,7 +988,6 @@ func (x *SpinRow) GetDelegate() *gtk.EditableBase {
 func (x *SpinRow) GetEditable() bool {
 
 	cret := gtk.XGtkEditableGetEditable(x.GoPointer())
-
 	return cret
 }
 
@@ -1014,7 +995,6 @@ func (x *SpinRow) GetEditable() bool {
 func (x *SpinRow) GetEnableUndo() bool {
 
 	cret := gtk.XGtkEditableGetEnableUndo(x.GoPointer())
-
 	return cret
 }
 
@@ -1022,7 +1002,6 @@ func (x *SpinRow) GetEnableUndo() bool {
 func (x *SpinRow) GetMaxWidthChars() int {
 
 	cret := gtk.XGtkEditableGetMaxWidthChars(x.GoPointer())
-
 	return cret
 }
 
@@ -1033,7 +1012,6 @@ func (x *SpinRow) GetMaxWidthChars() int {
 func (x *SpinRow) GetPosition() int {
 
 	cret := gtk.XGtkEditableGetPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -1047,7 +1025,6 @@ func (x *SpinRow) GetPosition() int {
 func (x *SpinRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := gtk.XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -1057,7 +1034,6 @@ func (x *SpinRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 func (x *SpinRow) GetText() string {
 
 	cret := gtk.XGtkEditableGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -1066,7 +1042,6 @@ func (x *SpinRow) GetText() string {
 func (x *SpinRow) GetWidthChars() int {
 
 	cret := gtk.XGtkEditableGetWidthChars(x.GoPointer())
-
 	return cret
 }
 

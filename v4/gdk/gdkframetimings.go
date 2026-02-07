@@ -49,7 +49,6 @@ var xFrameTimingsGetComplete func(uintptr) bool
 func (x *FrameTimings) GetComplete() bool {
 
 	cret := xFrameTimingsGetComplete(x.GoPointer())
-
 	return cret
 }
 
@@ -60,7 +59,6 @@ var xFrameTimingsGetFrameCounter func(uintptr) int64
 func (x *FrameTimings) GetFrameCounter() int64 {
 
 	cret := xFrameTimingsGetFrameCounter(x.GoPointer())
-
 	return cret
 }
 
@@ -73,7 +71,6 @@ var xFrameTimingsGetFrameTime func(uintptr) int64
 func (x *FrameTimings) GetFrameTime() int64 {
 
 	cret := xFrameTimingsGetFrameTime(x.GoPointer())
-
 	return cret
 }
 
@@ -94,7 +91,6 @@ var xFrameTimingsGetPredictedPresentationTime func(uintptr) int64
 func (x *FrameTimings) GetPredictedPresentationTime() int64 {
 
 	cret := xFrameTimingsGetPredictedPresentationTime(x.GoPointer())
-
 	return cret
 }
 
@@ -106,7 +102,6 @@ var xFrameTimingsGetPresentationTime func(uintptr) int64
 func (x *FrameTimings) GetPresentationTime() int64 {
 
 	cret := xFrameTimingsGetPresentationTime(x.GoPointer())
-
 	return cret
 }
 
@@ -120,7 +115,6 @@ var xFrameTimingsGetRefreshInterval func(uintptr) int64
 func (x *FrameTimings) GetRefreshInterval() int64 {
 
 	cret := xFrameTimingsGetRefreshInterval(x.GoPointer())
-
 	return cret
 }
 
@@ -130,7 +124,6 @@ var xFrameTimingsRef func(uintptr) *FrameTimings
 func (x *FrameTimings) Ref() *FrameTimings {
 
 	cret := xFrameTimingsRef(x.GoPointer())
-
 	return cret
 }
 

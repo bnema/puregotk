@@ -139,7 +139,6 @@ var xTabOverviewGetEnableNewTab func(uintptr) bool
 func (x *TabOverview) GetEnableNewTab() bool {
 
 	cret := xTabOverviewGetEnableNewTab(x.GoPointer())
-
 	return cret
 }
 
@@ -149,7 +148,6 @@ var xTabOverviewGetEnableSearch func(uintptr) bool
 func (x *TabOverview) GetEnableSearch() bool {
 
 	cret := xTabOverviewGetEnableSearch(x.GoPointer())
-
 	return cret
 }
 
@@ -159,7 +157,6 @@ var xTabOverviewGetExtraDragPreferredAction func(uintptr) gdk.DragAction
 func (x *TabOverview) GetExtraDragPreferredAction() gdk.DragAction {
 
 	cret := xTabOverviewGetExtraDragPreferredAction(x.GoPointer())
-
 	return cret
 }
 
@@ -169,7 +166,6 @@ var xTabOverviewGetExtraDragPreload func(uintptr) bool
 func (x *TabOverview) GetExtraDragPreload() bool {
 
 	cret := xTabOverviewGetExtraDragPreload(x.GoPointer())
-
 	return cret
 }
 
@@ -179,7 +175,6 @@ var xTabOverviewGetInverted func(uintptr) bool
 func (x *TabOverview) GetInverted() bool {
 
 	cret := xTabOverviewGetInverted(x.GoPointer())
-
 	return cret
 }
 
@@ -189,7 +184,6 @@ var xTabOverviewGetOpen func(uintptr) bool
 func (x *TabOverview) GetOpen() bool {
 
 	cret := xTabOverviewGetOpen(x.GoPointer())
-
 	return cret
 }
 
@@ -201,7 +195,6 @@ var xTabOverviewGetSearchActive func(uintptr) bool
 func (x *TabOverview) GetSearchActive() bool {
 
 	cret := xTabOverviewGetSearchActive(x.GoPointer())
-
 	return cret
 }
 
@@ -228,7 +221,6 @@ var xTabOverviewGetShowEndTitleButtons func(uintptr) bool
 func (x *TabOverview) GetShowEndTitleButtons() bool {
 
 	cret := xTabOverviewGetShowEndTitleButtons(x.GoPointer())
-
 	return cret
 }
 
@@ -238,7 +230,6 @@ var xTabOverviewGetShowStartTitleButtons func(uintptr) bool
 func (x *TabOverview) GetShowStartTitleButtons() bool {
 
 	cret := xTabOverviewGetShowStartTitleButtons(x.GoPointer())
-
 	return cret
 }
 
@@ -700,7 +691,6 @@ func (x *TabOverview) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *TabOverview) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -726,7 +716,6 @@ func (x *TabOverview) GetAtContext() *gtk.ATContext {
 func (x *TabOverview) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -766,7 +755,6 @@ func (x *TabOverview) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *TabOverview) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -943,7 +931,6 @@ func (x *TabOverview) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 func (x *TabOverview) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

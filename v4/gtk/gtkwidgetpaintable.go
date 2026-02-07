@@ -153,7 +153,6 @@ func (x *WidgetPaintable) GetCurrentImage() *gdk.PaintableBase {
 func (x *WidgetPaintable) GetFlags() gdk.PaintableFlags {
 
 	cret := gdk.XGdkPaintableGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -177,7 +176,6 @@ func (x *WidgetPaintable) GetFlags() gdk.PaintableFlags {
 func (x *WidgetPaintable) GetIntrinsicAspectRatio() float64 {
 
 	cret := gdk.XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
-
 	return cret
 }
 
@@ -194,7 +192,6 @@ func (x *WidgetPaintable) GetIntrinsicAspectRatio() float64 {
 func (x *WidgetPaintable) GetIntrinsicHeight() int {
 
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -211,7 +208,6 @@ func (x *WidgetPaintable) GetIntrinsicHeight() int {
 func (x *WidgetPaintable) GetIntrinsicWidth() int {
 
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
-
 	return cret
 }
 

@@ -140,7 +140,6 @@ var xSocketAddressGetFamily func(uintptr) SocketFamily
 func (x *SocketAddress) GetFamily() SocketFamily {
 
 	cret := xSocketAddressGetFamily(x.GoPointer())
-
 	return cret
 }
 
@@ -152,7 +151,6 @@ var xSocketAddressGetNativeSize func(uintptr) int
 func (x *SocketAddress) GetNativeSize() int {
 
 	cret := xSocketAddressGetNativeSize(x.GoPointer())
-
 	return cret
 }
 
@@ -168,7 +166,6 @@ func (x *SocketAddress) ToNative(DestVar uintptr, DestlenVar uint) (bool, error)
 	var cerr *glib.Error
 
 	cret := xSocketAddressToNative(x.GoPointer(), DestVar, DestlenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -231,7 +228,6 @@ func (x *SocketAddress) ProxyEnumerate() *SocketAddressEnumerator {
 func (x *SocketAddress) ToString() string {
 
 	cret := XGSocketConnectableToString(x.GoPointer())
-
 	return cret
 }
 

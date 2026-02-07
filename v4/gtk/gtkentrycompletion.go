@@ -133,7 +133,6 @@ var xEntryCompletionComputePrefix func(uintptr, string) string
 func (x *EntryCompletion) ComputePrefix(KeyVar string) string {
 
 	cret := xEntryCompletionComputePrefix(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -144,7 +143,6 @@ var xEntryCompletionGetCompletionPrefix func(uintptr) string
 func (x *EntryCompletion) GetCompletionPrefix() string {
 
 	cret := xEntryCompletionGetCompletionPrefix(x.GoPointer())
-
 	return cret
 }
 
@@ -172,7 +170,6 @@ var xEntryCompletionGetInlineCompletion func(uintptr) bool
 func (x *EntryCompletion) GetInlineCompletion() bool {
 
 	cret := xEntryCompletionGetInlineCompletion(x.GoPointer())
-
 	return cret
 }
 
@@ -182,7 +179,6 @@ var xEntryCompletionGetInlineSelection func(uintptr) bool
 func (x *EntryCompletion) GetInlineSelection() bool {
 
 	cret := xEntryCompletionGetInlineSelection(x.GoPointer())
-
 	return cret
 }
 
@@ -192,7 +188,6 @@ var xEntryCompletionGetMinimumKeyLength func(uintptr) int
 func (x *EntryCompletion) GetMinimumKeyLength() int {
 
 	cret := xEntryCompletionGetMinimumKeyLength(x.GoPointer())
-
 	return cret
 }
 
@@ -221,7 +216,6 @@ var xEntryCompletionGetPopupCompletion func(uintptr) bool
 func (x *EntryCompletion) GetPopupCompletion() bool {
 
 	cret := xEntryCompletionGetPopupCompletion(x.GoPointer())
-
 	return cret
 }
 
@@ -232,7 +226,6 @@ var xEntryCompletionGetPopupSetWidth func(uintptr) bool
 func (x *EntryCompletion) GetPopupSetWidth() bool {
 
 	cret := xEntryCompletionGetPopupSetWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -243,7 +236,6 @@ var xEntryCompletionGetPopupSingleMatch func(uintptr) bool
 func (x *EntryCompletion) GetPopupSingleMatch() bool {
 
 	cret := xEntryCompletionGetPopupSingleMatch(x.GoPointer())
-
 	return cret
 }
 
@@ -253,7 +245,6 @@ var xEntryCompletionGetTextColumn func(uintptr) int
 func (x *EntryCompletion) GetTextColumn() int {
 
 	cret := xEntryCompletionGetTextColumn(x.GoPointer())
-
 	return cret
 }
 
@@ -690,7 +681,6 @@ func (x *EntryCompletion) ConnectNoMatches(cb *func(EntryCompletion)) uint {
 func (x *EntryCompletion) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -744,7 +734,6 @@ func (x *EntryCompletion) GetArea() *CellArea {
 func (x *EntryCompletion) GetCells() *glib.List {
 
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-
 	return cret
 }
 

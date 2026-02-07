@@ -134,7 +134,6 @@ func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, 
 	}
 
 	cret := xBusOwnName(BusTypeVar, NameVar, FlagsVar, BusAcquiredHandlerVarRef, NameAcquiredHandlerVarRef, NameLostHandlerVarRef, UserDataVar, UserDataFreeFuncVarRef)
-
 	return cret
 }
 
@@ -190,7 +189,6 @@ func BusOwnNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Flags
 	}
 
 	cret := xBusOwnNameOnConnection(ConnectionVar.GoPointer(), NameVar, FlagsVar, NameAcquiredHandlerVarRef, NameLostHandlerVarRef, UserDataVar, UserDataFreeFuncVarRef)
-
 	return cret
 }
 
@@ -201,7 +199,6 @@ var xBusOwnNameOnConnectionWithClosures func(uintptr, string, BusNameOwnerFlags,
 func BusOwnNameOnConnectionWithClosures(ConnectionVar *DBusConnection, NameVar string, FlagsVar BusNameOwnerFlags, NameAcquiredClosureVar *gobject.Closure, NameLostClosureVar *gobject.Closure) uint {
 
 	cret := xBusOwnNameOnConnectionWithClosures(ConnectionVar.GoPointer(), NameVar, FlagsVar, NameAcquiredClosureVar, NameLostClosureVar)
-
 	return cret
 }
 
@@ -212,7 +209,6 @@ var xBusOwnNameWithClosures func(BusType, string, BusNameOwnerFlags, *gobject.Cl
 func BusOwnNameWithClosures(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, BusAcquiredClosureVar *gobject.Closure, NameAcquiredClosureVar *gobject.Closure, NameLostClosureVar *gobject.Closure) uint {
 
 	cret := xBusOwnNameWithClosures(BusTypeVar, NameVar, FlagsVar, BusAcquiredClosureVar, NameAcquiredClosureVar, NameLostClosureVar)
-
 	return cret
 }
 

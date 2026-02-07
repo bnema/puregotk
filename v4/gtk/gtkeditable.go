@@ -487,7 +487,6 @@ func (x *EditableBase) SetGoPointer(ptr uintptr) {
 func (x *EditableBase) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -528,7 +527,6 @@ func (x *EditableBase) FinishDelegate() {
 func (x *EditableBase) GetAlignment() float32 {
 
 	cret := XGtkEditableGetAlignment(x.GoPointer())
-
 	return cret
 }
 
@@ -543,7 +541,6 @@ func (x *EditableBase) GetAlignment() float32 {
 func (x *EditableBase) GetChars(StartPosVar int, EndPosVar int) string {
 
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -569,7 +566,6 @@ func (x *EditableBase) GetDelegate() *EditableBase {
 func (x *EditableBase) GetEditable() bool {
 
 	cret := XGtkEditableGetEditable(x.GoPointer())
-
 	return cret
 }
 
@@ -577,7 +573,6 @@ func (x *EditableBase) GetEditable() bool {
 func (x *EditableBase) GetEnableUndo() bool {
 
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
-
 	return cret
 }
 
@@ -585,7 +580,6 @@ func (x *EditableBase) GetEnableUndo() bool {
 func (x *EditableBase) GetMaxWidthChars() int {
 
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
-
 	return cret
 }
 
@@ -596,7 +590,6 @@ func (x *EditableBase) GetMaxWidthChars() int {
 func (x *EditableBase) GetPosition() int {
 
 	cret := XGtkEditableGetPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -610,7 +603,6 @@ func (x *EditableBase) GetPosition() int {
 func (x *EditableBase) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -620,7 +612,6 @@ func (x *EditableBase) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool
 func (x *EditableBase) GetText() string {
 
 	cret := XGtkEditableGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -629,7 +620,6 @@ func (x *EditableBase) GetText() string {
 func (x *EditableBase) GetWidthChars() int {
 
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
-
 	return cret
 }
 
@@ -961,7 +951,6 @@ var xEditableDelegateGetProperty func(uintptr, uint, *gobject.Value, uintptr) bo
 func EditableDelegateGetProperty(ObjectVar *gobject.Object, PropIdVar uint, ValueVar *gobject.Value, PspecVar *gobject.ParamSpec) bool {
 
 	cret := xEditableDelegateGetProperty(ObjectVar.GoPointer(), PropIdVar, ValueVar, PspecVar.GoPointer())
-
 	return cret
 }
 
@@ -975,7 +964,6 @@ var xEditableDelegateSetProperty func(uintptr, uint, *gobject.Value, uintptr) bo
 func EditableDelegateSetProperty(ObjectVar *gobject.Object, PropIdVar uint, ValueVar *gobject.Value, PspecVar *gobject.ParamSpec) bool {
 
 	cret := xEditableDelegateSetProperty(ObjectVar.GoPointer(), PropIdVar, ValueVar, PspecVar.GoPointer())
-
 	return cret
 }
 
@@ -999,7 +987,6 @@ var xEditableInstallProperties func(*gobject.ObjectClass, uint) uint
 func EditableInstallProperties(ObjectClassVar *gobject.ObjectClass, FirstPropVar uint) uint {
 
 	cret := xEditableInstallProperties(ObjectClassVar, FirstPropVar)
-
 	return cret
 }
 

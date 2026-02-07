@@ -62,7 +62,6 @@ var xCairoRegionCreateFromSurface func(*cairo.Surface) *cairo.Region
 func CairoRegionCreateFromSurface(SurfaceVar *cairo.Surface) *cairo.Region {
 
 	cret := xCairoRegionCreateFromSurface(SurfaceVar)
-
 	return cret
 }
 

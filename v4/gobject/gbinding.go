@@ -194,7 +194,6 @@ var xBindingGetFlags func(uintptr) BindingFlags
 func (x *Binding) GetFlags() BindingFlags {
 
 	cret := xBindingGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -230,7 +229,6 @@ var xBindingGetSourceProperty func(uintptr) string
 func (x *Binding) GetSourceProperty() string {
 
 	cret := xBindingGetSourceProperty(x.GoPointer())
-
 	return cret
 }
 
@@ -266,7 +264,6 @@ var xBindingGetTargetProperty func(uintptr) string
 func (x *Binding) GetTargetProperty() string {
 
 	cret := xBindingGetTargetProperty(x.GoPointer())
-
 	return cret
 }
 

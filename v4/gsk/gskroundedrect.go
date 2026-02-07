@@ -41,7 +41,6 @@ var xRoundedRectContainsPoint func(uintptr, *graphene.Point) bool
 func (x *RoundedRect) ContainsPoint(PointVar *graphene.Point) bool {
 
 	cret := xRoundedRectContainsPoint(x.GoPointer(), PointVar)
-
 	return cret
 }
 
@@ -51,7 +50,6 @@ var xRoundedRectContainsRect func(uintptr, *graphene.Rect) bool
 func (x *RoundedRect) ContainsRect(RectVar *graphene.Rect) bool {
 
 	cret := xRoundedRectContainsRect(x.GoPointer(), RectVar)
-
 	return cret
 }
 
@@ -64,7 +62,6 @@ var xRoundedRectInit func(uintptr, *graphene.Rect, *graphene.Size, *graphene.Siz
 func (x *RoundedRect) Init(BoundsVar *graphene.Rect, TopLeftVar *graphene.Size, TopRightVar *graphene.Size, BottomRightVar *graphene.Size, BottomLeftVar *graphene.Size) *RoundedRect {
 
 	cret := xRoundedRectInit(x.GoPointer(), BoundsVar, TopLeftVar, TopRightVar, BottomRightVar, BottomLeftVar)
-
 	return cret
 }
 
@@ -77,7 +74,6 @@ var xRoundedRectInitCopy func(uintptr, *RoundedRect) *RoundedRect
 func (x *RoundedRect) InitCopy(SrcVar *RoundedRect) *RoundedRect {
 
 	cret := xRoundedRectInitCopy(x.GoPointer(), SrcVar)
-
 	return cret
 }
 
@@ -88,7 +84,6 @@ var xRoundedRectInitFromRect func(uintptr, *graphene.Rect, float32) *RoundedRect
 func (x *RoundedRect) InitFromRect(BoundsVar *graphene.Rect, RadiusVar float32) *RoundedRect {
 
 	cret := xRoundedRectInitFromRect(x.GoPointer(), BoundsVar, RadiusVar)
-
 	return cret
 }
 
@@ -99,7 +94,6 @@ var xRoundedRectIntersectsRect func(uintptr, *graphene.Rect) bool
 func (x *RoundedRect) IntersectsRect(RectVar *graphene.Rect) bool {
 
 	cret := xRoundedRectIntersectsRect(x.GoPointer(), RectVar)
-
 	return cret
 }
 
@@ -113,7 +107,6 @@ var xRoundedRectIsRectilinear func(uintptr) bool
 func (x *RoundedRect) IsRectilinear() bool {
 
 	cret := xRoundedRectIsRectilinear(x.GoPointer())
-
 	return cret
 }
 
@@ -127,7 +120,6 @@ var xRoundedRectNormalize func(uintptr) *RoundedRect
 func (x *RoundedRect) Normalize() *RoundedRect {
 
 	cret := xRoundedRectNormalize(x.GoPointer())
-
 	return cret
 }
 
@@ -139,7 +131,6 @@ var xRoundedRectOffset func(uintptr, float32, float32) *RoundedRect
 func (x *RoundedRect) Offset(DxVar float32, DyVar float32) *RoundedRect {
 
 	cret := xRoundedRectOffset(x.GoPointer(), DxVar, DyVar)
-
 	return cret
 }
 
@@ -156,7 +147,6 @@ var xRoundedRectShrink func(uintptr, float32, float32, float32, float32) *Rounde
 func (x *RoundedRect) Shrink(TopVar float32, RightVar float32, BottomVar float32, LeftVar float32) *RoundedRect {
 
 	cret := xRoundedRectShrink(x.GoPointer(), TopVar, RightVar, BottomVar, LeftVar)
-
 	return cret
 }
 

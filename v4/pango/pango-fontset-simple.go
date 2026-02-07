@@ -72,7 +72,6 @@ var xFontsetSimpleSize func(uintptr) int
 func (x *FontsetSimple) Size() int {
 
 	cret := xFontsetSimpleSize(x.GoPointer())
-
 	return cret
 }
 

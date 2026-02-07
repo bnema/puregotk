@@ -65,7 +65,6 @@ var xEventControllerKeyForward func(uintptr, uintptr) bool
 func (x *EventControllerKey) Forward(WidgetVar *Widget) bool {
 
 	cret := xEventControllerKeyForward(x.GoPointer(), WidgetVar.GoPointer())
-
 	return cret
 }
 
@@ -77,7 +76,6 @@ var xEventControllerKeyGetGroup func(uintptr) uint
 func (x *EventControllerKey) GetGroup() uint {
 
 	cret := xEventControllerKeyGetGroup(x.GoPointer())
-
 	return cret
 }
 

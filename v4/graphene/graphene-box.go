@@ -38,7 +38,6 @@ var xBoxAlloc func() *Box
 func BoxAlloc() *Box {
 
 	cret := xBoxAlloc()
-
 	return cret
 }
 
@@ -49,7 +48,6 @@ var xBoxContainsBox func(uintptr, *Box) bool
 func (x *Box) ContainsBox(BVar *Box) bool {
 
 	cret := xBoxContainsBox(x.GoPointer(), BVar)
-
 	return cret
 }
 
@@ -59,7 +57,6 @@ var xBoxContainsPoint func(uintptr, *Point3D) bool
 func (x *Box) ContainsPoint(PointVar *Point3D) bool {
 
 	cret := xBoxContainsPoint(x.GoPointer(), PointVar)
-
 	return cret
 }
 
@@ -69,7 +66,6 @@ var xBoxEqual func(uintptr, *Box) bool
 func (x *Box) Equal(BVar *Box) bool {
 
 	cret := xBoxEqual(x.GoPointer(), BVar)
-
 	return cret
 }
 
@@ -138,7 +134,6 @@ var xBoxGetDepth func(uintptr) float32
 func (x *Box) GetDepth() float32 {
 
 	cret := xBoxGetDepth(x.GoPointer())
-
 	return cret
 }
 
@@ -148,7 +143,6 @@ var xBoxGetHeight func(uintptr) float32
 func (x *Box) GetHeight() float32 {
 
 	cret := xBoxGetHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -197,7 +191,6 @@ var xBoxGetWidth func(uintptr) float32
 func (x *Box) GetWidth() float32 {
 
 	cret := xBoxGetWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -207,7 +200,6 @@ var xBoxInit func(uintptr, *Point3D, *Point3D) *Box
 func (x *Box) Init(MinVar *Point3D, MaxVar *Point3D) *Box {
 
 	cret := xBoxInit(x.GoPointer(), MinVar, MaxVar)
-
 	return cret
 }
 
@@ -218,7 +210,6 @@ var xBoxInitFromBox func(uintptr, *Box) *Box
 func (x *Box) InitFromBox(SrcVar *Box) *Box {
 
 	cret := xBoxInitFromBox(x.GoPointer(), SrcVar)
-
 	return cret
 }
 
@@ -232,7 +223,6 @@ var xBoxInitFromPoints func(uintptr, uint, []Point3D) *Box
 func (x *Box) InitFromPoints(NPointsVar uint, PointsVar []Point3D) *Box {
 
 	cret := xBoxInitFromPoints(x.GoPointer(), NPointsVar, PointsVar)
-
 	return cret
 }
 
@@ -243,7 +233,6 @@ var xBoxInitFromVec3 func(uintptr, *Vec3, *Vec3) *Box
 func (x *Box) InitFromVec3(MinVar *Vec3, MaxVar *Vec3) *Box {
 
 	cret := xBoxInitFromVec3(x.GoPointer(), MinVar, MaxVar)
-
 	return cret
 }
 
@@ -257,7 +246,6 @@ var xBoxInitFromVectors func(uintptr, uint, []Vec3) *Box
 func (x *Box) InitFromVectors(NVectorsVar uint, VectorsVar []Vec3) *Box {
 
 	cret := xBoxInitFromVectors(x.GoPointer(), NVectorsVar, VectorsVar)
-
 	return cret
 }
 
@@ -270,7 +258,6 @@ var xBoxIntersection func(uintptr, *Box, *Box) bool
 func (x *Box) Intersection(BVar *Box, ResVar *Box) bool {
 
 	cret := xBoxIntersection(x.GoPointer(), BVar, ResVar)
-
 	return cret
 }
 
@@ -291,7 +278,6 @@ var xBoxEmpty func() *Box
 func BoxEmpty() *Box {
 
 	cret := xBoxEmpty()
-
 	return cret
 }
 
@@ -303,7 +289,6 @@ var xBoxInfinite func() *Box
 func BoxInfinite() *Box {
 
 	cret := xBoxInfinite()
-
 	return cret
 }
 
@@ -316,7 +301,6 @@ var xBoxMinusOne func() *Box
 func BoxMinusOne() *Box {
 
 	cret := xBoxMinusOne()
-
 	return cret
 }
 
@@ -329,7 +313,6 @@ var xBoxOne func() *Box
 func BoxOne() *Box {
 
 	cret := xBoxOne()
-
 	return cret
 }
 
@@ -342,7 +325,6 @@ var xBoxOneMinusOne func() *Box
 func BoxOneMinusOne() *Box {
 
 	cret := xBoxOneMinusOne()
-
 	return cret
 }
 
@@ -354,7 +336,6 @@ var xBoxZero func() *Box
 func BoxZero() *Box {
 
 	cret := xBoxZero()
-
 	return cret
 }
 

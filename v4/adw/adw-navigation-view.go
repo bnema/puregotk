@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -220,7 +219,6 @@ var xNavigationPageGetCanPop func(uintptr) bool
 func (x *NavigationPage) GetCanPop() bool {
 
 	cret := xNavigationPageGetCanPop(x.GoPointer())
-
 	return cret
 }
 
@@ -247,7 +245,6 @@ var xNavigationPageGetTag func(uintptr) string
 func (x *NavigationPage) GetTag() string {
 
 	cret := xNavigationPageGetTag(x.GoPointer())
-
 	return cret
 }
 
@@ -257,7 +254,6 @@ var xNavigationPageGetTitle func(uintptr) string
 func (x *NavigationPage) GetTitle() string {
 
 	cret := xNavigationPageGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -302,11 +298,10 @@ var xNavigationPageSetTag func(uintptr, uintptr)
 // The tag also must be set to use the `navigation.push` action.
 func (x *NavigationPage) SetTag(TagVar *string) {
 
-	TagVarPtr, TagVarBytes := core.NullableStringToPtr(TagVar)
+	TagVarPtr := core.GStrdupNullable(TagVar)
+	defer core.GFreeNullable(TagVarPtr)
 
 	xNavigationPageSetTag(x.GoPointer(), TagVarPtr)
-
-	runtime.KeepAlive(TagVarBytes)
 
 }
 
@@ -573,7 +568,6 @@ func (x *NavigationPage) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *NavigationPage) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -599,7 +593,6 @@ func (x *NavigationPage) GetAtContext() *gtk.ATContext {
 func (x *NavigationPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -639,7 +632,6 @@ func (x *NavigationPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *NavigationPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -816,7 +808,6 @@ func (x *NavigationPage) UpdateStateValue(NStatesVar int, StatesVar []gtk.Access
 func (x *NavigationPage) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -1058,7 +1049,6 @@ var xNavigationViewGetAnimateTransitions func(uintptr) bool
 func (x *NavigationView) GetAnimateTransitions() bool {
 
 	cret := xNavigationViewGetAnimateTransitions(x.GoPointer())
-
 	return cret
 }
 
@@ -1068,7 +1058,6 @@ var xNavigationViewGetHhomogeneous func(uintptr) bool
 func (x *NavigationView) GetHhomogeneous() bool {
 
 	cret := xNavigationViewGetHhomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -1098,7 +1087,6 @@ var xNavigationViewGetPopOnEscape func(uintptr) bool
 func (x *NavigationView) GetPopOnEscape() bool {
 
 	cret := xNavigationViewGetPopOnEscape(x.GoPointer())
-
 	return cret
 }
 
@@ -1130,7 +1118,6 @@ var xNavigationViewGetVhomogeneous func(uintptr) bool
 func (x *NavigationView) GetVhomogeneous() bool {
 
 	cret := xNavigationViewGetVhomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -1157,7 +1144,6 @@ var xNavigationViewGetVisiblePageTag func(uintptr) string
 func (x *NavigationView) GetVisiblePageTag() string {
 
 	cret := xNavigationViewGetVisiblePageTag(x.GoPointer())
-
 	return cret
 }
 
@@ -1177,7 +1163,6 @@ var xNavigationViewPop func(uintptr) bool
 func (x *NavigationView) Pop() bool {
 
 	cret := xNavigationViewPop(x.GoPointer())
-
 	return cret
 }
 
@@ -1197,7 +1182,6 @@ var xNavigationViewPopToPage func(uintptr, uintptr) bool
 func (x *NavigationView) PopToPage(PageVar *NavigationPage) bool {
 
 	cret := xNavigationViewPopToPage(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -1216,7 +1200,6 @@ var xNavigationViewPopToTag func(uintptr, string) bool
 func (x *NavigationView) PopToTag(TagVar string) bool {
 
 	cret := xNavigationViewPopToTag(x.GoPointer(), TagVar)
-
 	return cret
 }
 
@@ -1606,7 +1589,6 @@ func (x *NavigationView) ConnectReplaced(cb *func(NavigationView)) uint {
 func (x *NavigationView) GetCancelProgress() float64 {
 
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
-
 	return cret
 }
 
@@ -1616,7 +1598,6 @@ func (x *NavigationView) GetCancelProgress() float64 {
 func (x *NavigationView) GetDistance() float64 {
 
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
-
 	return cret
 }
 
@@ -1624,7 +1605,6 @@ func (x *NavigationView) GetDistance() float64 {
 func (x *NavigationView) GetProgress() float64 {
 
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
-
 	return cret
 }
 
@@ -1635,7 +1615,6 @@ func (x *NavigationView) GetProgress() float64 {
 func (x *NavigationView) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
-
 	return cret
 }
 
@@ -1689,7 +1668,6 @@ func (x *NavigationView) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *NavigationView) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -1715,7 +1693,6 @@ func (x *NavigationView) GetAtContext() *gtk.ATContext {
 func (x *NavigationView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -1755,7 +1732,6 @@ func (x *NavigationView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *NavigationView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1932,7 +1908,6 @@ func (x *NavigationView) UpdateStateValue(NStatesVar int, StatesVar []gtk.Access
 func (x *NavigationView) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

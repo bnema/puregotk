@@ -560,7 +560,6 @@ var xVfsGetSupportedUriSchemes func(uintptr) []string
 func (x *Vfs) GetSupportedUriSchemes() []string {
 
 	cret := xVfsGetSupportedUriSchemes(x.GoPointer())
-
 	return cret
 }
 
@@ -570,7 +569,6 @@ var xVfsIsActive func(uintptr) bool
 func (x *Vfs) IsActive() bool {
 
 	cret := xVfsIsActive(x.GoPointer())
-
 	return cret
 }
 
@@ -677,7 +675,6 @@ func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc,
 	}
 
 	cret := xVfsRegisterUriScheme(x.GoPointer(), SchemeVar, UriFuncVarRef, UriDataVar, UriDestroyVarRef, ParseNameFuncVarRef, ParseNameDataVar, ParseNameDestroyVarRef)
-
 	return cret
 }
 
@@ -688,7 +685,6 @@ var xVfsUnregisterUriScheme func(uintptr, string) bool
 func (x *Vfs) UnregisterUriScheme(SchemeVar string) bool {
 
 	cret := xVfsUnregisterUriScheme(x.GoPointer(), SchemeVar)
-
 	return cret
 }
 

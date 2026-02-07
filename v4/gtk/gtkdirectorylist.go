@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -71,11 +70,10 @@ var xNewDirectoryList func(uintptr, uintptr) uintptr
 func NewDirectoryList(AttributesVar *string, FileVar gio.File) *DirectoryList {
 	var cls *DirectoryList
 
-	AttributesVarPtr, AttributesVarBytes := core.NullableStringToPtr(AttributesVar)
+	AttributesVarPtr := core.GStrdupNullable(AttributesVar)
+	defer core.GFreeNullable(AttributesVarPtr)
 
 	cret := xNewDirectoryList(AttributesVarPtr, FileVar.GoPointer())
-
-	runtime.KeepAlive(AttributesVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -91,7 +89,6 @@ var xDirectoryListGetAttributes func(uintptr) string
 func (x *DirectoryList) GetAttributes() string {
 
 	cret := xDirectoryListGetAttributes(x.GoPointer())
-
 	return cret
 }
 
@@ -108,7 +105,6 @@ var xDirectoryListGetError func(uintptr) *glib.Error
 func (x *DirectoryList) GetError() *glib.Error {
 
 	cret := xDirectoryListGetError(x.GoPointer())
-
 	return cret
 }
 
@@ -135,7 +131,6 @@ var xDirectoryListGetIoPriority func(uintptr) int
 func (x *DirectoryList) GetIoPriority() int {
 
 	cret := xDirectoryListGetIoPriority(x.GoPointer())
-
 	return cret
 }
 
@@ -146,7 +141,6 @@ var xDirectoryListGetMonitored func(uintptr) bool
 func (x *DirectoryList) GetMonitored() bool {
 
 	cret := xDirectoryListGetMonitored(x.GoPointer())
-
 	return cret
 }
 
@@ -161,7 +155,6 @@ var xDirectoryListIsLoading func(uintptr) bool
 func (x *DirectoryList) IsLoading() bool {
 
 	cret := xDirectoryListIsLoading(x.GoPointer())
-
 	return cret
 }
 
@@ -173,11 +166,10 @@ var xDirectoryListSetAttributes func(uintptr, uintptr)
 // not contain any extra attributes.
 func (x *DirectoryList) SetAttributes(AttributesVar *string) {
 
-	AttributesVarPtr, AttributesVarBytes := core.NullableStringToPtr(AttributesVar)
+	AttributesVarPtr := core.GStrdupNullable(AttributesVar)
+	defer core.GFreeNullable(AttributesVarPtr)
 
 	xDirectoryListSetAttributes(x.GoPointer(), AttributesVarPtr)
-
-	runtime.KeepAlive(AttributesVarBytes)
 
 }
 
@@ -325,7 +317,6 @@ func (x *DirectoryList) GetPropertyNItems() uint {
 func (x *DirectoryList) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
-
 	return cret
 }
 
@@ -340,7 +331,6 @@ func (x *DirectoryList) GetItem(PositionVar uint) uintptr {
 func (x *DirectoryList) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
-
 	return cret
 }
 
@@ -352,7 +342,6 @@ func (x *DirectoryList) GetItemType() types.GType {
 func (x *DirectoryList) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
-
 	return cret
 }
 

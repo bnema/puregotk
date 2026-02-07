@@ -12,7 +12,6 @@ var xLayoutDeserializeErrorQuark func() glib.Quark
 func LayoutDeserializeErrorQuark() glib.Quark {
 
 	cret := xLayoutDeserializeErrorQuark()
-
 	return cret
 }
 

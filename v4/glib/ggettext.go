@@ -2,8 +2,6 @@
 package glib
 
 import (
-	"runtime"
-
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
@@ -16,12 +14,10 @@ var xDcgettext func(uintptr, string, int) string
 // dcgettext() directly.
 func Dcgettext(DomainVar *string, MsgidVar string, CategoryVar int) string {
 
-	DomainVarPtr, DomainVarBytes := core.NullableStringToPtr(DomainVar)
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDcgettext(DomainVarPtr, MsgidVar, CategoryVar)
-
-	runtime.KeepAlive(DomainVarBytes)
-
 	return cret
 }
 
@@ -61,12 +57,10 @@ var xDgettext func(uintptr, string) string
 // but use the _() macro for translations.
 func Dgettext(DomainVar *string, MsgidVar string) string {
 
-	DomainVarPtr, DomainVarBytes := core.NullableStringToPtr(DomainVar)
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDgettext(DomainVarPtr, MsgidVar)
-
-	runtime.KeepAlive(DomainVarBytes)
-
 	return cret
 }
 
@@ -80,12 +74,10 @@ var xDngettext func(uintptr, string, string, uint) string
 // proper.
 func Dngettext(DomainVar *string, MsgidVar string, MsgidPluralVar string, NVar uint) string {
 
-	DomainVarPtr, DomainVarBytes := core.NullableStringToPtr(DomainVar)
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDngettext(DomainVarPtr, MsgidVar, MsgidPluralVar, NVar)
-
-	runtime.KeepAlive(DomainVarBytes)
-
 	return cret
 }
 
@@ -106,12 +98,10 @@ var xDpgettext func(uintptr, string, uint) string
 // but use the C_() macro for translations with context.
 func Dpgettext(DomainVar *string, MsgctxtidVar string, MsgidoffsetVar uint) string {
 
-	DomainVarPtr, DomainVarBytes := core.NullableStringToPtr(DomainVar)
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDpgettext(DomainVarPtr, MsgctxtidVar, MsgidoffsetVar)
-
-	runtime.KeepAlive(DomainVarBytes)
-
 	return cret
 }
 
@@ -129,12 +119,10 @@ var xDpgettext2 func(uintptr, string, string) string
 // thus you may use non-string-literals as context and msgid arguments.
 func Dpgettext2(DomainVar *string, ContextVar string, MsgidVar string) string {
 
-	DomainVarPtr, DomainVarBytes := core.NullableStringToPtr(DomainVar)
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDpgettext2(DomainVarPtr, ContextVar, MsgidVar)
-
-	runtime.KeepAlive(DomainVarBytes)
-
 	return cret
 }
 
@@ -144,7 +132,6 @@ var xStripContext func(string, string) string
 func StripContext(MsgidVar string, MsgvalVar string) string {
 
 	cret := xStripContext(MsgidVar, MsgvalVar)
-
 	return cret
 }
 

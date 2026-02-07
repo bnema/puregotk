@@ -2,7 +2,6 @@
 package gio
 
 import (
-	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -84,7 +83,6 @@ var xSubprocessLauncherGetenv func(uintptr, string) string
 func (x *SubprocessLauncher) Getenv(VariableVar string) string {
 
 	cret := xSubprocessLauncherGetenv(x.GoPointer(), VariableVar)
-
 	return cret
 }
 
@@ -217,11 +215,10 @@ var xSubprocessLauncherSetStderrFilePath func(uintptr, uintptr)
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) SetStderrFilePath(PathVar *string) {
 
-	PathVarPtr, PathVarBytes := core.NullableStringToPtr(PathVar)
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
 
 	xSubprocessLauncherSetStderrFilePath(x.GoPointer(), PathVarPtr)
-
-	runtime.KeepAlive(PathVarBytes)
 
 }
 
@@ -239,11 +236,10 @@ var xSubprocessLauncherSetStdinFilePath func(uintptr, uintptr)
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) SetStdinFilePath(PathVar *string) {
 
-	PathVarPtr, PathVarBytes := core.NullableStringToPtr(PathVar)
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
 
 	xSubprocessLauncherSetStdinFilePath(x.GoPointer(), PathVarPtr)
-
-	runtime.KeepAlive(PathVarBytes)
 
 }
 
@@ -262,11 +258,10 @@ var xSubprocessLauncherSetStdoutFilePath func(uintptr, uintptr)
 // This feature is only available on UNIX.
 func (x *SubprocessLauncher) SetStdoutFilePath(PathVar *string) {
 
-	PathVarPtr, PathVarBytes := core.NullableStringToPtr(PathVar)
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
 
 	xSubprocessLauncherSetStdoutFilePath(x.GoPointer(), PathVarPtr)
-
-	runtime.KeepAlive(PathVarBytes)
 
 }
 

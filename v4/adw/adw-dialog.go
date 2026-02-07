@@ -213,7 +213,6 @@ var xDialogClose func(uintptr) bool
 func (x *Dialog) Close() bool {
 
 	cret := xDialogClose(x.GoPointer())
-
 	return cret
 }
 
@@ -235,7 +234,6 @@ var xDialogGetCanClose func(uintptr) bool
 func (x *Dialog) GetCanClose() bool {
 
 	cret := xDialogGetCanClose(x.GoPointer())
-
 	return cret
 }
 
@@ -262,7 +260,6 @@ var xDialogGetContentHeight func(uintptr) int
 func (x *Dialog) GetContentHeight() int {
 
 	cret := xDialogGetContentHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -272,7 +269,6 @@ var xDialogGetContentWidth func(uintptr) int
 func (x *Dialog) GetContentWidth() int {
 
 	cret := xDialogGetContentWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -333,7 +329,6 @@ var xDialogGetFollowsContentSize func(uintptr) bool
 func (x *Dialog) GetFollowsContentSize() bool {
 
 	cret := xDialogGetFollowsContentSize(x.GoPointer())
-
 	return cret
 }
 
@@ -343,7 +338,6 @@ var xDialogGetPresentationMode func(uintptr) DialogPresentationMode
 func (x *Dialog) GetPresentationMode() DialogPresentationMode {
 
 	cret := xDialogGetPresentationMode(x.GoPointer())
-
 	return cret
 }
 
@@ -353,7 +347,6 @@ var xDialogGetTitle func(uintptr) string
 func (x *Dialog) GetTitle() string {
 
 	cret := xDialogGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -709,7 +702,6 @@ func (x *Dialog) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *Dialog) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -735,7 +727,6 @@ func (x *Dialog) GetAtContext() *gtk.ATContext {
 func (x *Dialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -775,7 +766,6 @@ func (x *Dialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *Dialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -952,7 +942,6 @@ func (x *Dialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleStat
 func (x *Dialog) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

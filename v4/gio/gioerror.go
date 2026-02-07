@@ -32,7 +32,6 @@ var xIoErrorFromErrno func(int) IOErrorEnum
 func IoErrorFromErrno(ErrNoVar int) IOErrorEnum {
 
 	cret := xIoErrorFromErrno(ErrNoVar)
-
 	return cret
 }
 
@@ -42,7 +41,6 @@ var xIoErrorFromFileError func(glib.FileError) IOErrorEnum
 func IoErrorFromFileError(FileErrorVar glib.FileError) IOErrorEnum {
 
 	cret := xIoErrorFromFileError(FileErrorVar)
-
 	return cret
 }
 
@@ -52,7 +50,6 @@ var xIoErrorQuark func() glib.Quark
 func IoErrorQuark() glib.Quark {
 
 	cret := xIoErrorQuark()
-
 	return cret
 }
 

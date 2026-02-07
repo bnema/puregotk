@@ -2,7 +2,6 @@
 package glib
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -304,7 +303,6 @@ var xNewVariant func(string, ...interface{}) *Variant
 func NewVariant(FormatStringVar string, varArgs ...interface{}) *Variant {
 
 	cret := xNewVariant(FormatStringVar, varArgs...)
-
 	return cret
 }
 
@@ -328,7 +326,6 @@ var xNewVariantArray func(*VariantType, uintptr, uint) *Variant
 func NewVariantArray(ChildTypeVar *VariantType, ChildrenVar uintptr, NChildrenVar uint) *Variant {
 
 	cret := xNewVariantArray(ChildTypeVar, ChildrenVar, NChildrenVar)
-
 	return cret
 }
 
@@ -338,7 +335,6 @@ var xNewVariantBoolean func(bool) *Variant
 func NewVariantBoolean(ValueVar bool) *Variant {
 
 	cret := xNewVariantBoolean(ValueVar)
-
 	return cret
 }
 
@@ -348,7 +344,6 @@ var xNewVariantByte func(byte) *Variant
 func NewVariantByte(ValueVar byte) *Variant {
 
 	cret := xNewVariantByte(ValueVar)
-
 	return cret
 }
 
@@ -363,7 +358,6 @@ var xNewVariantBytestring func([]byte) *Variant
 func NewVariantBytestring(StringVar []byte) *Variant {
 
 	cret := xNewVariantBytestring(StringVar)
-
 	return cret
 }
 
@@ -376,7 +370,6 @@ var xNewVariantBytestringArray func([]string, int) *Variant
 func NewVariantBytestringArray(StrvVar []string, LengthVar int) *Variant {
 
 	cret := xNewVariantBytestringArray(StrvVar, LengthVar)
-
 	return cret
 }
 
@@ -390,7 +383,6 @@ var xNewVariantDictEntry func(*Variant, *Variant) *Variant
 func NewVariantDictEntry(KeyVar *Variant, ValueVar *Variant) *Variant {
 
 	cret := xNewVariantDictEntry(KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -400,7 +392,6 @@ var xNewVariantDouble func(float64) *Variant
 func NewVariantDouble(ValueVar float64) *Variant {
 
 	cret := xNewVariantDouble(ValueVar)
-
 	return cret
 }
 
@@ -422,7 +413,6 @@ var xNewVariantFixedArray func(*VariantType, uintptr, uint, uint) *Variant
 func NewVariantFixedArray(ElementTypeVar *VariantType, ElementsVar uintptr, NElementsVar uint, ElementSizeVar uint) *Variant {
 
 	cret := xNewVariantFixedArray(ElementTypeVar, ElementsVar, NElementsVar, ElementSizeVar)
-
 	return cret
 }
 
@@ -440,7 +430,6 @@ var xNewVariantFromBytes func(*VariantType, *Bytes, bool) *Variant
 func NewVariantFromBytes(TypeVar *VariantType, BytesVar *Bytes, TrustedVar bool) *Variant {
 
 	cret := xNewVariantFromBytes(TypeVar, BytesVar, TrustedVar)
-
 	return cret
 }
 
@@ -493,7 +482,6 @@ func NewVariantFromData(TypeVar *VariantType, DataVar []byte, SizeVar uint, Trus
 	}
 
 	cret := xNewVariantFromData(TypeVar, DataVar, SizeVar, TrustedVar, NotifyVarRef, UserDataVar)
-
 	return cret
 }
 
@@ -507,7 +495,6 @@ var xNewVariantHandle func(int32) *Variant
 func NewVariantHandle(ValueVar int32) *Variant {
 
 	cret := xNewVariantHandle(ValueVar)
-
 	return cret
 }
 
@@ -517,7 +504,6 @@ var xNewVariantInt16 func(int16) *Variant
 func NewVariantInt16(ValueVar int16) *Variant {
 
 	cret := xNewVariantInt16(ValueVar)
-
 	return cret
 }
 
@@ -527,7 +513,6 @@ var xNewVariantInt32 func(int32) *Variant
 func NewVariantInt32(ValueVar int32) *Variant {
 
 	cret := xNewVariantInt32(ValueVar)
-
 	return cret
 }
 
@@ -537,7 +522,6 @@ var xNewVariantInt64 func(int64) *Variant
 func NewVariantInt64(ValueVar int64) *Variant {
 
 	cret := xNewVariantInt64(ValueVar)
-
 	return cret
 }
 
@@ -556,7 +540,6 @@ var xNewVariantMaybe func(*VariantType, *Variant) *Variant
 func NewVariantMaybe(ChildTypeVar *VariantType, ChildVar *Variant) *Variant {
 
 	cret := xNewVariantMaybe(ChildTypeVar, ChildVar)
-
 	return cret
 }
 
@@ -568,7 +551,6 @@ var xNewVariantObjectPath func(string) *Variant
 func NewVariantObjectPath(ObjectPathVar string) *Variant {
 
 	cret := xNewVariantObjectPath(ObjectPathVar)
-
 	return cret
 }
 
@@ -584,7 +566,6 @@ var xNewVariantObjv func([]string, int) *Variant
 func NewVariantObjv(StrvVar []string, LengthVar int) *Variant {
 
 	cret := xNewVariantObjv(StrvVar, LengthVar)
-
 	return cret
 }
 
@@ -627,7 +608,6 @@ var xNewVariantParsed func(string, ...interface{}) *Variant
 func NewVariantParsed(FormatVar string, varArgs ...interface{}) *Variant {
 
 	cret := xNewVariantParsed(FormatVar, varArgs...)
-
 	return cret
 }
 
@@ -657,7 +637,6 @@ var xNewVariantParsedVa func(string, []interface{}) *Variant
 func NewVariantParsedVa(FormatVar string, AppVar []interface{}) *Variant {
 
 	cret := xNewVariantParsedVa(FormatVar, AppVar)
-
 	return cret
 }
 
@@ -671,7 +650,6 @@ var xNewVariantPrintf func(string, ...interface{}) *Variant
 func NewVariantPrintf(FormatStringVar string, varArgs ...interface{}) *Variant {
 
 	cret := xNewVariantPrintf(FormatStringVar, varArgs...)
-
 	return cret
 }
 
@@ -683,7 +661,6 @@ var xNewVariantSignature func(string) *Variant
 func NewVariantSignature(SignatureVar string) *Variant {
 
 	cret := xNewVariantSignature(SignatureVar)
-
 	return cret
 }
 
@@ -697,7 +674,6 @@ var xNewVariantString func(string) *Variant
 func NewVariantString(StringVar string) *Variant {
 
 	cret := xNewVariantString(StringVar)
-
 	return cret
 }
 
@@ -710,7 +686,6 @@ var xNewVariantStrv func([]string, int) *Variant
 func NewVariantStrv(StrvVar []string, LengthVar int) *Variant {
 
 	cret := xNewVariantStrv(StrvVar, LengthVar)
-
 	return cret
 }
 
@@ -731,7 +706,6 @@ var xNewVariantTakeString func(string) *Variant
 func NewVariantTakeString(StringVar string) *Variant {
 
 	cret := xNewVariantTakeString(StringVar)
-
 	return cret
 }
 
@@ -748,7 +722,6 @@ var xNewVariantTuple func(uintptr, uint) *Variant
 func NewVariantTuple(ChildrenVar uintptr, NChildrenVar uint) *Variant {
 
 	cret := xNewVariantTuple(ChildrenVar, NChildrenVar)
-
 	return cret
 }
 
@@ -758,7 +731,6 @@ var xNewVariantUint16 func(uint16) *Variant
 func NewVariantUint16(ValueVar uint16) *Variant {
 
 	cret := xNewVariantUint16(ValueVar)
-
 	return cret
 }
 
@@ -768,7 +740,6 @@ var xNewVariantUint32 func(uint32) *Variant
 func NewVariantUint32(ValueVar uint32) *Variant {
 
 	cret := xNewVariantUint32(ValueVar)
-
 	return cret
 }
 
@@ -778,7 +749,6 @@ var xNewVariantUint64 func(uint64) *Variant
 func NewVariantUint64(ValueVar uint64) *Variant {
 
 	cret := xNewVariantUint64(ValueVar)
-
 	return cret
 }
 
@@ -822,12 +792,10 @@ var xNewVariantVa func(string, uintptr, []interface{}) *Variant
 // or by passing it to another g_variant_new() call.
 func NewVariantVa(FormatStringVar string, EndptrVar *string, AppVar []interface{}) *Variant {
 
-	EndptrVarPtr, EndptrVarBytes := core.NullableStringToPtr(EndptrVar)
+	EndptrVarPtr := core.GStrdupNullable(EndptrVar)
+	defer core.GFreeNullable(EndptrVarPtr)
 
 	cret := xNewVariantVa(FormatStringVar, EndptrVarPtr, AppVar)
-
-	runtime.KeepAlive(EndptrVarBytes)
-
 	return cret
 }
 
@@ -841,7 +809,6 @@ var xNewVariantVariant func(*Variant) *Variant
 func NewVariantVariant(ValueVar *Variant) *Variant {
 
 	cret := xNewVariantVariant(ValueVar)
-
 	return cret
 }
 
@@ -867,7 +834,6 @@ var xVariantByteswap func(uintptr) *Variant
 func (x *Variant) Byteswap() *Variant {
 
 	cret := xVariantByteswap(x.GoPointer())
-
 	return cret
 }
 
@@ -890,7 +856,6 @@ var xVariantCheckFormatString func(uintptr, string, bool) bool
 func (x *Variant) CheckFormatString(FormatStringVar string, CopyOnlyVar bool) bool {
 
 	cret := xVariantCheckFormatString(x.GoPointer(), FormatStringVar, CopyOnlyVar)
-
 	return cret
 }
 
@@ -900,7 +865,6 @@ var xVariantClassify func(uintptr) VariantClass
 func (x *Variant) Classify() VariantClass {
 
 	cret := xVariantClassify(x.GoPointer())
-
 	return cret
 }
 
@@ -928,7 +892,6 @@ var xVariantCompare func(uintptr, uintptr) int
 func (x *Variant) Compare(TwoVar uintptr) int {
 
 	cret := xVariantCompare(x.GoPointer(), TwoVar)
-
 	return cret
 }
 
@@ -941,7 +904,6 @@ var xVariantDupBytestring func(uintptr, *uint) uintptr
 func (x *Variant) DupBytestring(LengthVar *uint) uintptr {
 
 	cret := xVariantDupBytestring(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -960,7 +922,6 @@ var xVariantDupBytestringArray func(uintptr, *uint) []string
 func (x *Variant) DupBytestringArray(LengthVar *uint) []string {
 
 	cret := xVariantDupBytestringArray(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -979,7 +940,6 @@ var xVariantDupObjv func(uintptr, *uint) []string
 func (x *Variant) DupObjv(LengthVar *uint) []string {
 
 	cret := xVariantDupObjv(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -994,7 +954,6 @@ var xVariantDupString func(uintptr, *uint) string
 func (x *Variant) DupString(LengthVar *uint) string {
 
 	cret := xVariantDupString(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -1013,7 +972,6 @@ var xVariantDupStrv func(uintptr, *uint) []string
 func (x *Variant) DupStrv(LengthVar *uint) []string {
 
 	cret := xVariantDupStrv(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -1026,7 +984,6 @@ var xVariantEqual func(uintptr, uintptr) bool
 func (x *Variant) Equal(TwoVar uintptr) bool {
 
 	cret := xVariantEqual(x.GoPointer(), TwoVar)
-
 	return cret
 }
 
@@ -1063,7 +1020,6 @@ var xVariantGetBoolean func(uintptr) bool
 func (x *Variant) GetBoolean() bool {
 
 	cret := xVariantGetBoolean(x.GoPointer())
-
 	return cret
 }
 
@@ -1076,7 +1032,6 @@ var xVariantGetByte func(uintptr) byte
 func (x *Variant) GetByte() byte {
 
 	cret := xVariantGetByte(x.GoPointer())
-
 	return cret
 }
 
@@ -1103,7 +1058,6 @@ var xVariantGetBytestring func(uintptr) uintptr
 func (x *Variant) GetBytestring() uintptr {
 
 	cret := xVariantGetBytestring(x.GoPointer())
-
 	return cret
 }
 
@@ -1122,7 +1076,6 @@ var xVariantGetBytestringArray func(uintptr, *uint) []string
 func (x *Variant) GetBytestringArray(LengthVar *uint) []string {
 
 	cret := xVariantGetBytestringArray(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -1171,7 +1124,6 @@ var xVariantGetChildValue func(uintptr, uint) *Variant
 func (x *Variant) GetChildValue(IndexVar uint) *Variant {
 
 	cret := xVariantGetChildValue(x.GoPointer(), IndexVar)
-
 	return cret
 }
 
@@ -1205,7 +1157,6 @@ var xVariantGetData func(uintptr) uintptr
 func (x *Variant) GetData() uintptr {
 
 	cret := xVariantGetData(x.GoPointer())
-
 	return cret
 }
 
@@ -1218,7 +1169,6 @@ var xVariantGetDataAsBytes func(uintptr) *Bytes
 func (x *Variant) GetDataAsBytes() *Bytes {
 
 	cret := xVariantGetDataAsBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -1231,7 +1181,6 @@ var xVariantGetDouble func(uintptr) float64
 func (x *Variant) GetDouble() float64 {
 
 	cret := xVariantGetDouble(x.GoPointer())
-
 	return cret
 }
 
@@ -1266,7 +1215,6 @@ var xVariantGetFixedArray func(uintptr, *uint, uint) uintptr
 func (x *Variant) GetFixedArray(NElementsVar *uint, ElementSizeVar uint) uintptr {
 
 	cret := xVariantGetFixedArray(x.GoPointer(), NElementsVar, ElementSizeVar)
-
 	return cret
 }
 
@@ -1283,7 +1231,6 @@ var xVariantGetHandle func(uintptr) int32
 func (x *Variant) GetHandle() int32 {
 
 	cret := xVariantGetHandle(x.GoPointer())
-
 	return cret
 }
 
@@ -1296,7 +1243,6 @@ var xVariantGetInt16 func(uintptr) int16
 func (x *Variant) GetInt16() int16 {
 
 	cret := xVariantGetInt16(x.GoPointer())
-
 	return cret
 }
 
@@ -1309,7 +1255,6 @@ var xVariantGetInt32 func(uintptr) int32
 func (x *Variant) GetInt32() int32 {
 
 	cret := xVariantGetInt32(x.GoPointer())
-
 	return cret
 }
 
@@ -1322,7 +1267,6 @@ var xVariantGetInt64 func(uintptr) int64
 func (x *Variant) GetInt64() int64 {
 
 	cret := xVariantGetInt64(x.GoPointer())
-
 	return cret
 }
 
@@ -1333,7 +1277,6 @@ var xVariantGetMaybe func(uintptr) *Variant
 func (x *Variant) GetMaybe() *Variant {
 
 	cret := xVariantGetMaybe(x.GoPointer())
-
 	return cret
 }
 
@@ -1367,7 +1310,6 @@ var xVariantGetNormalForm func(uintptr) *Variant
 func (x *Variant) GetNormalForm() *Variant {
 
 	cret := xVariantGetNormalForm(x.GoPointer())
-
 	return cret
 }
 
@@ -1386,7 +1328,6 @@ var xVariantGetObjv func(uintptr, *uint) []string
 func (x *Variant) GetObjv(LengthVar *uint) []string {
 
 	cret := xVariantGetObjv(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -1406,7 +1347,6 @@ var xVariantGetSize func(uintptr) uint
 func (x *Variant) GetSize() uint {
 
 	cret := xVariantGetSize(x.GoPointer())
-
 	return cret
 }
 
@@ -1433,7 +1373,6 @@ var xVariantGetString func(uintptr, *uint) string
 func (x *Variant) GetString(LengthVar *uint) string {
 
 	cret := xVariantGetString(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -1452,7 +1391,6 @@ var xVariantGetStrv func(uintptr, *uint) []string
 func (x *Variant) GetStrv(LengthVar *uint) []string {
 
 	cret := xVariantGetStrv(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -1465,7 +1403,6 @@ var xVariantGetType func(uintptr) *VariantType
 func (x *Variant) GetType() *VariantType {
 
 	cret := xVariantGetType(x.GoPointer())
-
 	return cret
 }
 
@@ -1477,7 +1414,6 @@ var xVariantGetTypeString func(uintptr) string
 func (x *Variant) GetTypeString() string {
 
 	cret := xVariantGetTypeString(x.GoPointer())
-
 	return cret
 }
 
@@ -1490,7 +1426,6 @@ var xVariantGetUint16 func(uintptr) uint16
 func (x *Variant) GetUint16() uint16 {
 
 	cret := xVariantGetUint16(x.GoPointer())
-
 	return cret
 }
 
@@ -1503,7 +1438,6 @@ var xVariantGetUint32 func(uintptr) uint32
 func (x *Variant) GetUint32() uint32 {
 
 	cret := xVariantGetUint32(x.GoPointer())
-
 	return cret
 }
 
@@ -1516,7 +1450,6 @@ var xVariantGetUint64 func(uintptr) uint64
 func (x *Variant) GetUint64() uint64 {
 
 	cret := xVariantGetUint64(x.GoPointer())
-
 	return cret
 }
 
@@ -1548,11 +1481,10 @@ var xVariantGetVa func(uintptr, string, uintptr, []interface{})
 // [`GVariant` format strings](gvariant-format-strings.html#pointers).
 func (x *Variant) GetVa(FormatStringVar string, EndptrVar *string, AppVar []interface{}) {
 
-	EndptrVarPtr, EndptrVarBytes := core.NullableStringToPtr(EndptrVar)
+	EndptrVarPtr := core.GStrdupNullable(EndptrVar)
+	defer core.GFreeNullable(EndptrVarPtr)
 
 	xVariantGetVa(x.GoPointer(), FormatStringVar, EndptrVarPtr, AppVar)
-
-	runtime.KeepAlive(EndptrVarBytes)
 
 }
 
@@ -1563,7 +1495,6 @@ var xVariantGetVariant func(uintptr) *Variant
 func (x *Variant) GetVariant() *Variant {
 
 	cret := xVariantGetVariant(x.GoPointer())
-
 	return cret
 }
 
@@ -1581,7 +1512,6 @@ var xVariantHash func(uintptr) uint
 func (x *Variant) Hash() uint {
 
 	cret := xVariantHash(x.GoPointer())
-
 	return cret
 }
 
@@ -1591,7 +1521,6 @@ var xVariantIsContainer func(uintptr) bool
 func (x *Variant) IsContainer() bool {
 
 	cret := xVariantIsContainer(x.GoPointer())
-
 	return cret
 }
 
@@ -1609,7 +1538,6 @@ var xVariantIsFloating func(uintptr) bool
 func (x *Variant) IsFloating() bool {
 
 	cret := xVariantIsFloating(x.GoPointer())
-
 	return cret
 }
 
@@ -1631,7 +1559,6 @@ var xVariantIsNormalForm func(uintptr) bool
 func (x *Variant) IsNormalForm() bool {
 
 	cret := xVariantIsNormalForm(x.GoPointer())
-
 	return cret
 }
 
@@ -1641,7 +1568,6 @@ var xVariantIsOfType func(uintptr, *VariantType) bool
 func (x *Variant) IsOfType(TypeVar *VariantType) bool {
 
 	cret := xVariantIsOfType(x.GoPointer(), TypeVar)
-
 	return cret
 }
 
@@ -1658,7 +1584,6 @@ var xVariantIterNew func(uintptr) *VariantIter
 func (x *Variant) IterNew() *VariantIter {
 
 	cret := xVariantIterNew(x.GoPointer())
-
 	return cret
 }
 
@@ -1681,7 +1606,6 @@ var xVariantLookup func(uintptr, string, string, ...interface{}) bool
 func (x *Variant) Lookup(KeyVar string, FormatStringVar string, varArgs ...interface{}) bool {
 
 	cret := xVariantLookup(x.GoPointer(), KeyVar, FormatStringVar, varArgs...)
-
 	return cret
 }
 
@@ -1711,7 +1635,6 @@ var xVariantLookupValue func(uintptr, string, *VariantType) *Variant
 func (x *Variant) LookupValue(KeyVar string, ExpectedTypeVar *VariantType) *Variant {
 
 	cret := xVariantLookupValue(x.GoPointer(), KeyVar, ExpectedTypeVar)
-
 	return cret
 }
 
@@ -1731,7 +1654,6 @@ var xVariantNChildren func(uintptr) uint
 func (x *Variant) NChildren() uint {
 
 	cret := xVariantNChildren(x.GoPointer())
-
 	return cret
 }
 
@@ -1746,7 +1668,6 @@ var xVariantPrint func(uintptr, bool) string
 func (x *Variant) Print(TypeAnnotateVar bool) string {
 
 	cret := xVariantPrint(x.GoPointer(), TypeAnnotateVar)
-
 	return cret
 }
 
@@ -1759,7 +1680,6 @@ var xVariantPrintString func(uintptr, *String, bool) *String
 func (x *Variant) PrintString(StringVar *String, TypeAnnotateVar bool) *String {
 
 	cret := xVariantPrintString(x.GoPointer(), StringVar, TypeAnnotateVar)
-
 	return cret
 }
 
@@ -1769,7 +1689,6 @@ var xVariantRef func(uintptr) *Variant
 func (x *Variant) Ref() *Variant {
 
 	cret := xVariantRef(x.GoPointer())
-
 	return cret
 }
 
@@ -1800,7 +1719,6 @@ var xVariantRefSink func(uintptr) *Variant
 func (x *Variant) RefSink() *Variant {
 
 	cret := xVariantRefSink(x.GoPointer())
-
 	return cret
 }
 
@@ -1861,7 +1779,6 @@ var xVariantTakeRef func(uintptr) *Variant
 func (x *Variant) TakeRef() *Variant {
 
 	cret := xVariantTakeRef(x.GoPointer())
-
 	return cret
 }
 
@@ -1910,7 +1827,6 @@ var xNewVariantBuilder func(*VariantType) *VariantBuilder
 func NewVariantBuilder(TypeVar *VariantType) *VariantBuilder {
 
 	cret := xNewVariantBuilder(TypeVar)
-
 	return cret
 }
 
@@ -2066,7 +1982,6 @@ var xVariantBuilderEnd func(uintptr) *Variant
 func (x *VariantBuilder) End() *Variant {
 
 	cret := xVariantBuilderEnd(x.GoPointer())
-
 	return cret
 }
 
@@ -2179,7 +2094,6 @@ var xVariantBuilderRef func(uintptr) *VariantBuilder
 func (x *VariantBuilder) Ref() *VariantBuilder {
 
 	cret := xVariantBuilderRef(x.GoPointer())
-
 	return cret
 }
 
@@ -2320,7 +2234,6 @@ var xNewVariantDict func(*Variant) *VariantDict
 func NewVariantDict(FromAsvVar *Variant) *VariantDict {
 
 	cret := xNewVariantDict(FromAsvVar)
-
 	return cret
 }
 
@@ -2352,7 +2265,6 @@ var xVariantDictContains func(uintptr, string) bool
 func (x *VariantDict) Contains(KeyVar string) bool {
 
 	cret := xVariantDictContains(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -2368,7 +2280,6 @@ var xVariantDictEnd func(uintptr) *Variant
 func (x *VariantDict) End() *Variant {
 
 	cret := xVariantDictEnd(x.GoPointer())
-
 	return cret
 }
 
@@ -2435,7 +2346,6 @@ var xVariantDictLookup func(uintptr, string, string, ...interface{}) bool
 func (x *VariantDict) Lookup(KeyVar string, FormatStringVar string, varArgs ...interface{}) bool {
 
 	cret := xVariantDictLookup(x.GoPointer(), KeyVar, FormatStringVar, varArgs...)
-
 	return cret
 }
 
@@ -2455,7 +2365,6 @@ var xVariantDictLookupValue func(uintptr, string, *VariantType) *Variant
 func (x *VariantDict) LookupValue(KeyVar string, ExpectedTypeVar *VariantType) *Variant {
 
 	cret := xVariantDictLookupValue(x.GoPointer(), KeyVar, ExpectedTypeVar)
-
 	return cret
 }
 
@@ -2468,7 +2377,6 @@ var xVariantDictRef func(uintptr) *VariantDict
 func (x *VariantDict) Ref() *VariantDict {
 
 	cret := xVariantDictRef(x.GoPointer())
-
 	return cret
 }
 
@@ -2478,7 +2386,6 @@ var xVariantDictRemove func(uintptr, string) bool
 func (x *VariantDict) Remove(KeyVar string) bool {
 
 	cret := xVariantDictRemove(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -2524,7 +2431,6 @@ var xVariantIterCopy func(uintptr) *VariantIter
 func (x *VariantIter) Copy() *VariantIter {
 
 	cret := xVariantIterCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -2550,7 +2456,6 @@ var xVariantIterInit func(uintptr, *Variant) uint
 func (x *VariantIter) Init(ValueVar *Variant) uint {
 
 	cret := xVariantIterInit(x.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -2623,7 +2528,6 @@ var xVariantIterLoop func(uintptr, string, ...interface{}) bool
 func (x *VariantIter) Loop(FormatStringVar string, varArgs ...interface{}) bool {
 
 	cret := xVariantIterLoop(x.GoPointer(), FormatStringVar, varArgs...)
-
 	return cret
 }
 
@@ -2637,7 +2541,6 @@ var xVariantIterNChildren func(uintptr) uint
 func (x *VariantIter) NChildren() uint {
 
 	cret := xVariantIterNChildren(x.GoPointer())
-
 	return cret
 }
 
@@ -2689,7 +2592,6 @@ var xVariantIterNext func(uintptr, string, ...interface{}) bool
 func (x *VariantIter) Next(FormatStringVar string, varArgs ...interface{}) bool {
 
 	cret := xVariantIterNext(x.GoPointer(), FormatStringVar, varArgs...)
-
 	return cret
 }
 
@@ -2727,7 +2629,6 @@ var xVariantIterNextValue func(uintptr) *Variant
 func (x *VariantIter) NextValue() *Variant {
 
 	cret := xVariantIterNextValue(x.GoPointer())
-
 	return cret
 }
 
@@ -2834,7 +2735,6 @@ var xVariantIsObjectPath func(string) bool
 func VariantIsObjectPath(StringVar string) bool {
 
 	cret := xVariantIsObjectPath(StringVar)
-
 	return cret
 }
 
@@ -2849,7 +2749,6 @@ var xVariantIsSignature func(string) bool
 func VariantIsSignature(StringVar string) bool {
 
 	cret := xVariantIsSignature(StringVar)
-
 	return cret
 }
 
@@ -2894,16 +2793,13 @@ var xVariantParse func(*VariantType, string, uintptr, uintptr, **Error) *Variant
 func VariantParse(TypeVar *VariantType, TextVar string, LimitVar *string, EndptrVar *string) (*Variant, error) {
 	var cerr *Error
 
-	LimitVarPtr, LimitVarBytes := core.NullableStringToPtr(LimitVar)
+	LimitVarPtr := core.GStrdupNullable(LimitVar)
+	defer core.GFreeNullable(LimitVarPtr)
 
-	EndptrVarPtr, EndptrVarBytes := core.NullableStringToPtr(EndptrVar)
+	EndptrVarPtr := core.GStrdupNullable(EndptrVar)
+	defer core.GFreeNullable(EndptrVarPtr)
 
 	cret := xVariantParse(TypeVar, TextVar, LimitVarPtr, EndptrVarPtr, &cerr)
-
-	runtime.KeepAlive(LimitVarBytes)
-
-	runtime.KeepAlive(EndptrVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2949,7 +2845,6 @@ var xVariantParseErrorPrintContext func(*Error, string) string
 func VariantParseErrorPrintContext(ErrorVar *Error, SourceStrVar string) string {
 
 	cret := xVariantParseErrorPrintContext(ErrorVar, SourceStrVar)
-
 	return cret
 }
 

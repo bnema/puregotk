@@ -65,7 +65,6 @@ var xPrintJobGetCollate func(uintptr) bool
 func (x *PrintJob) GetCollate() bool {
 
 	cret := xPrintJobGetCollate(x.GoPointer())
-
 	return cret
 }
 
@@ -75,7 +74,6 @@ var xPrintJobGetNUp func(uintptr) uint
 func (x *PrintJob) GetNUp() uint {
 
 	cret := xPrintJobGetNUp(x.GoPointer())
-
 	return cret
 }
 
@@ -85,7 +83,6 @@ var xPrintJobGetNUpLayout func(uintptr) NumberUpLayout
 func (x *PrintJob) GetNUpLayout() NumberUpLayout {
 
 	cret := xPrintJobGetNUpLayout(x.GoPointer())
-
 	return cret
 }
 
@@ -95,7 +92,6 @@ var xPrintJobGetNumCopies func(uintptr) int
 func (x *PrintJob) GetNumCopies() int {
 
 	cret := xPrintJobGetNumCopies(x.GoPointer())
-
 	return cret
 }
 
@@ -105,7 +101,6 @@ var xPrintJobGetPageRanges func(uintptr, *int) uintptr
 func (x *PrintJob) GetPageRanges(NRangesVar *int) uintptr {
 
 	cret := xPrintJobGetPageRanges(x.GoPointer(), NRangesVar)
-
 	return cret
 }
 
@@ -115,7 +110,6 @@ var xPrintJobGetPageSet func(uintptr) PageSet
 func (x *PrintJob) GetPageSet() PageSet {
 
 	cret := xPrintJobGetPageSet(x.GoPointer())
-
 	return cret
 }
 
@@ -125,7 +119,6 @@ var xPrintJobGetPages func(uintptr) PrintPages
 func (x *PrintJob) GetPages() PrintPages {
 
 	cret := xPrintJobGetPages(x.GoPointer())
-
 	return cret
 }
 
@@ -152,7 +145,6 @@ var xPrintJobGetReverse func(uintptr) bool
 func (x *PrintJob) GetReverse() bool {
 
 	cret := xPrintJobGetReverse(x.GoPointer())
-
 	return cret
 }
 
@@ -162,7 +154,6 @@ var xPrintJobGetRotate func(uintptr) bool
 func (x *PrintJob) GetRotate() bool {
 
 	cret := xPrintJobGetRotate(x.GoPointer())
-
 	return cret
 }
 
@@ -172,7 +163,6 @@ var xPrintJobGetScale func(uintptr) float64
 func (x *PrintJob) GetScale() float64 {
 
 	cret := xPrintJobGetScale(x.GoPointer())
-
 	return cret
 }
 
@@ -199,7 +189,6 @@ var xPrintJobGetStatus func(uintptr) PrintStatus
 func (x *PrintJob) GetStatus() PrintStatus {
 
 	cret := xPrintJobGetStatus(x.GoPointer())
-
 	return cret
 }
 
@@ -211,7 +200,6 @@ func (x *PrintJob) GetSurface() (*cairo.Surface, error) {
 	var cerr *glib.Error
 
 	cret := xPrintJobGetSurface(x.GoPointer())
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -225,7 +213,6 @@ var xPrintJobGetTitle func(uintptr) string
 func (x *PrintJob) GetTitle() string {
 
 	cret := xPrintJobGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -237,7 +224,6 @@ var xPrintJobGetTrackPrintStatus func(uintptr) bool
 func (x *PrintJob) GetTrackPrintStatus() bool {
 
 	cret := xPrintJobGetTrackPrintStatus(x.GoPointer())
-
 	return cret
 }
 
@@ -389,7 +375,6 @@ func (x *PrintJob) SetSourceFd(FdVar int) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPrintJobSetSourceFd(x.GoPointer(), FdVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -410,7 +395,6 @@ func (x *PrintJob) SetSourceFile(FilenameVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xPrintJobSetSourceFile(x.GoPointer(), FilenameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

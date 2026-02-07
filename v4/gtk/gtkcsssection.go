@@ -39,7 +39,6 @@ var xNewCssSection func(uintptr, *CssLocation, *CssLocation) *CssSection
 func NewCssSection(FileVar gio.File, StartVar *CssLocation, EndVar *CssLocation) *CssSection {
 
 	cret := xNewCssSection(FileVar.GoPointer(), StartVar, EndVar)
-
 	return cret
 }
 
@@ -51,7 +50,6 @@ var xNewCssSectionWithBytes func(uintptr, *glib.Bytes, *CssLocation, *CssLocatio
 func NewCssSectionWithBytes(FileVar gio.File, BytesVar *glib.Bytes, StartVar *CssLocation, EndVar *CssLocation) *CssSection {
 
 	cret := xNewCssSectionWithBytes(FileVar.GoPointer(), BytesVar, StartVar, EndVar)
-
 	return cret
 }
 
@@ -61,7 +59,6 @@ var xCssSectionGetBytes func(uintptr) *glib.Bytes
 func (x *CssSection) GetBytes() *glib.Bytes {
 
 	cret := xCssSectionGetBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -71,7 +68,6 @@ var xCssSectionGetEndLocation func(uintptr) *CssLocation
 func (x *CssSection) GetEndLocation() *CssLocation {
 
 	cret := xCssSectionGetEndLocation(x.GoPointer())
-
 	return cret
 }
 
@@ -108,7 +104,6 @@ var xCssSectionGetParent func(uintptr) *CssSection
 func (x *CssSection) GetParent() *CssSection {
 
 	cret := xCssSectionGetParent(x.GoPointer())
-
 	return cret
 }
 
@@ -118,7 +113,6 @@ var xCssSectionGetStartLocation func(uintptr) *CssLocation
 func (x *CssSection) GetStartLocation() *CssLocation {
 
 	cret := xCssSectionGetStartLocation(x.GoPointer())
-
 	return cret
 }
 
@@ -140,7 +134,6 @@ var xCssSectionRef func(uintptr) *CssSection
 func (x *CssSection) Ref() *CssSection {
 
 	cret := xCssSectionRef(x.GoPointer())
-
 	return cret
 }
 
@@ -151,7 +144,6 @@ var xCssSectionToString func(uintptr) string
 func (x *CssSection) ToString() string {
 
 	cret := xCssSectionToString(x.GoPointer())
-
 	return cret
 }
 

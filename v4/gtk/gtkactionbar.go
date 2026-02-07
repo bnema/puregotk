@@ -109,7 +109,6 @@ var xActionBarGetRevealed func(uintptr) bool
 func (x *ActionBar) GetRevealed() bool {
 
 	cret := xActionBarGetRevealed(x.GoPointer())
-
 	return cret
 }
 
@@ -227,7 +226,6 @@ func (x *ActionBar) GetAccessibleParent() *AccessibleBase {
 func (x *ActionBar) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -253,7 +251,6 @@ func (x *ActionBar) GetAtContext() *ATContext {
 func (x *ActionBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -293,7 +290,6 @@ func (x *ActionBar) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ActionBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -470,7 +466,6 @@ func (x *ActionBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 func (x *ActionBar) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

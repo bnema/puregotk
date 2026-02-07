@@ -224,7 +224,6 @@ func (x *ListModelBase) SetGoPointer(ptr uintptr) {
 func (x *ListModelBase) GetItem(PositionVar uint) uintptr {
 
 	cret := XGListModelGetItem(x.GoPointer(), PositionVar)
-
 	return cret
 }
 
@@ -239,7 +238,6 @@ func (x *ListModelBase) GetItem(PositionVar uint) uintptr {
 func (x *ListModelBase) GetItemType() types.GType {
 
 	cret := XGListModelGetItemType(x.GoPointer())
-
 	return cret
 }
 
@@ -251,7 +249,6 @@ func (x *ListModelBase) GetItemType() types.GType {
 func (x *ListModelBase) GetNItems() uint {
 
 	cret := XGListModelGetNItems(x.GoPointer())
-
 	return cret
 }
 

@@ -42,7 +42,6 @@ var xBitsetIterGetValue func(uintptr) uint
 func (x *BitsetIter) GetValue() uint {
 
 	cret := xBitsetIterGetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -52,7 +51,6 @@ var xBitsetIterIsValid func(uintptr) bool
 func (x *BitsetIter) IsValid() bool {
 
 	cret := xBitsetIterIsValid(x.GoPointer())
-
 	return cret
 }
 
@@ -65,7 +63,6 @@ var xBitsetIterNext func(uintptr, *uint) bool
 func (x *BitsetIter) Next(ValueVar *uint) bool {
 
 	cret := xBitsetIterNext(x.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -78,7 +75,6 @@ var xBitsetIterPrevious func(uintptr, *uint) bool
 func (x *BitsetIter) Previous(ValueVar *uint) bool {
 
 	cret := xBitsetIterPrevious(x.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -91,7 +87,6 @@ var xBitsetIterInitAt func(*BitsetIter, *Bitset, uint, *uint) bool
 func BitsetIterInitAt(IterVar *BitsetIter, SetVar *Bitset, TargetVar uint, ValueVar *uint) bool {
 
 	cret := xBitsetIterInitAt(IterVar, SetVar, TargetVar, ValueVar)
-
 	return cret
 }
 
@@ -104,7 +99,6 @@ var xBitsetIterInitFirst func(*BitsetIter, *Bitset, *uint) bool
 func BitsetIterInitFirst(IterVar *BitsetIter, SetVar *Bitset, ValueVar *uint) bool {
 
 	cret := xBitsetIterInitFirst(IterVar, SetVar, ValueVar)
-
 	return cret
 }
 
@@ -117,7 +111,6 @@ var xBitsetIterInitLast func(*BitsetIter, *Bitset, *uint) bool
 func BitsetIterInitLast(IterVar *BitsetIter, SetVar *Bitset, ValueVar *uint) bool {
 
 	cret := xBitsetIterInitLast(IterVar, SetVar, ValueVar)
-
 	return cret
 }
 

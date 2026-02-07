@@ -143,7 +143,6 @@ var xTabPageGetIndicatorActivatable func(uintptr) bool
 func (x *TabPage) GetIndicatorActivatable() bool {
 
 	cret := xTabPageGetIndicatorActivatable(x.GoPointer())
-
 	return cret
 }
 
@@ -170,7 +169,6 @@ var xTabPageGetIndicatorTooltip func(uintptr) string
 func (x *TabPage) GetIndicatorTooltip() string {
 
 	cret := xTabPageGetIndicatorTooltip(x.GoPointer())
-
 	return cret
 }
 
@@ -180,7 +178,6 @@ var xTabPageGetKeyword func(uintptr) string
 func (x *TabPage) GetKeyword() string {
 
 	cret := xTabPageGetKeyword(x.GoPointer())
-
 	return cret
 }
 
@@ -190,7 +187,6 @@ var xTabPageGetLiveThumbnail func(uintptr) bool
 func (x *TabPage) GetLiveThumbnail() bool {
 
 	cret := xTabPageGetLiveThumbnail(x.GoPointer())
-
 	return cret
 }
 
@@ -200,7 +196,6 @@ var xTabPageGetLoading func(uintptr) bool
 func (x *TabPage) GetLoading() bool {
 
 	cret := xTabPageGetLoading(x.GoPointer())
-
 	return cret
 }
 
@@ -210,7 +205,6 @@ var xTabPageGetNeedsAttention func(uintptr) bool
 func (x *TabPage) GetNeedsAttention() bool {
 
 	cret := xTabPageGetNeedsAttention(x.GoPointer())
-
 	return cret
 }
 
@@ -241,7 +235,6 @@ var xTabPageGetPinned func(uintptr) bool
 func (x *TabPage) GetPinned() bool {
 
 	cret := xTabPageGetPinned(x.GoPointer())
-
 	return cret
 }
 
@@ -251,7 +244,6 @@ var xTabPageGetSelected func(uintptr) bool
 func (x *TabPage) GetSelected() bool {
 
 	cret := xTabPageGetSelected(x.GoPointer())
-
 	return cret
 }
 
@@ -261,7 +253,6 @@ var xTabPageGetThumbnailXalign func(uintptr) float32
 func (x *TabPage) GetThumbnailXalign() float32 {
 
 	cret := xTabPageGetThumbnailXalign(x.GoPointer())
-
 	return cret
 }
 
@@ -271,7 +262,6 @@ var xTabPageGetThumbnailYalign func(uintptr) float32
 func (x *TabPage) GetThumbnailYalign() float32 {
 
 	cret := xTabPageGetThumbnailYalign(x.GoPointer())
-
 	return cret
 }
 
@@ -281,7 +271,6 @@ var xTabPageGetTitle func(uintptr) string
 func (x *TabPage) GetTitle() string {
 
 	cret := xTabPageGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -291,7 +280,6 @@ var xTabPageGetTooltip func(uintptr) string
 func (x *TabPage) GetTooltip() string {
 
 	cret := xTabPageGetTooltip(x.GoPointer())
-
 	return cret
 }
 
@@ -879,7 +867,6 @@ func (x *TabPage) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *TabPage) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -905,7 +892,6 @@ func (x *TabPage) GetAtContext() *gtk.ATContext {
 func (x *TabPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -945,7 +931,6 @@ func (x *TabPage) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *TabPage) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1361,7 +1346,6 @@ var xTabViewGetIsTransferringPage func(uintptr) bool
 func (x *TabView) GetIsTransferringPage() bool {
 
 	cret := xTabViewGetIsTransferringPage(x.GoPointer())
-
 	return cret
 }
 
@@ -1388,7 +1372,6 @@ var xTabViewGetNPages func(uintptr) int
 func (x *TabView) GetNPages() int {
 
 	cret := xTabViewGetNPages(x.GoPointer())
-
 	return cret
 }
 
@@ -1400,7 +1383,6 @@ var xTabViewGetNPinnedPages func(uintptr) int
 func (x *TabView) GetNPinnedPages() int {
 
 	cret := xTabViewGetNPinnedPages(x.GoPointer())
-
 	return cret
 }
 
@@ -1444,7 +1426,6 @@ var xTabViewGetPagePosition func(uintptr, uintptr) int
 func (x *TabView) GetPagePosition(PageVar *TabPage) int {
 
 	cret := xTabViewGetPagePosition(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -1491,7 +1472,6 @@ var xTabViewGetShortcuts func(uintptr) TabViewShortcuts
 func (x *TabView) GetShortcuts() TabViewShortcuts {
 
 	cret := xTabViewGetShortcuts(x.GoPointer())
-
 	return cret
 }
 
@@ -1598,7 +1578,6 @@ var xTabViewReorderBackward func(uintptr, uintptr) bool
 func (x *TabView) ReorderBackward(PageVar *TabPage) bool {
 
 	cret := xTabViewReorderBackward(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -1608,7 +1587,6 @@ var xTabViewReorderFirst func(uintptr, uintptr) bool
 func (x *TabView) ReorderFirst(PageVar *TabPage) bool {
 
 	cret := xTabViewReorderFirst(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -1618,7 +1596,6 @@ var xTabViewReorderForward func(uintptr, uintptr) bool
 func (x *TabView) ReorderForward(PageVar *TabPage) bool {
 
 	cret := xTabViewReorderForward(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -1628,7 +1605,6 @@ var xTabViewReorderLast func(uintptr, uintptr) bool
 func (x *TabView) ReorderLast(PageVar *TabPage) bool {
 
 	cret := xTabViewReorderLast(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -1641,7 +1617,6 @@ var xTabViewReorderPage func(uintptr, uintptr, int) bool
 func (x *TabView) ReorderPage(PageVar *TabPage, PositionVar int) bool {
 
 	cret := xTabViewReorderPage(x.GoPointer(), PageVar.GoPointer(), PositionVar)
-
 	return cret
 }
 
@@ -1653,7 +1628,6 @@ var xTabViewSelectNextPage func(uintptr) bool
 func (x *TabView) SelectNextPage() bool {
 
 	cret := xTabViewSelectNextPage(x.GoPointer())
-
 	return cret
 }
 
@@ -1665,7 +1639,6 @@ var xTabViewSelectPreviousPage func(uintptr) bool
 func (x *TabView) SelectPreviousPage() bool {
 
 	cret := xTabViewSelectPreviousPage(x.GoPointer())
-
 	return cret
 }
 
@@ -2079,7 +2052,6 @@ func (x *TabView) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *TabView) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -2105,7 +2077,6 @@ func (x *TabView) GetAtContext() *gtk.ATContext {
 func (x *TabView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -2145,7 +2116,6 @@ func (x *TabView) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *TabView) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -2322,7 +2292,6 @@ func (x *TabView) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSta
 func (x *TabView) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

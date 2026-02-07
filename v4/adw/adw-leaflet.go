@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -170,7 +169,6 @@ var xLeafletGetCanNavigateBack func(uintptr) bool
 func (x *Leaflet) GetCanNavigateBack() bool {
 
 	cret := xLeafletGetCanNavigateBack(x.GoPointer())
-
 	return cret
 }
 
@@ -180,7 +178,6 @@ var xLeafletGetCanNavigateForward func(uintptr) bool
 func (x *Leaflet) GetCanNavigateForward() bool {
 
 	cret := xLeafletGetCanNavigateForward(x.GoPointer())
-
 	return cret
 }
 
@@ -190,7 +187,6 @@ var xLeafletGetCanUnfold func(uintptr) bool
 func (x *Leaflet) GetCanUnfold() bool {
 
 	cret := xLeafletGetCanUnfold(x.GoPointer())
-
 	return cret
 }
 
@@ -221,7 +217,6 @@ var xLeafletGetChildTransitionParams func(uintptr) *SpringParams
 func (x *Leaflet) GetChildTransitionParams() *SpringParams {
 
 	cret := xLeafletGetChildTransitionParams(x.GoPointer())
-
 	return cret
 }
 
@@ -231,7 +226,6 @@ var xLeafletGetChildTransitionRunning func(uintptr) bool
 func (x *Leaflet) GetChildTransitionRunning() bool {
 
 	cret := xLeafletGetChildTransitionRunning(x.GoPointer())
-
 	return cret
 }
 
@@ -241,7 +235,6 @@ var xLeafletGetFoldThresholdPolicy func(uintptr) FoldThresholdPolicy
 func (x *Leaflet) GetFoldThresholdPolicy() FoldThresholdPolicy {
 
 	cret := xLeafletGetFoldThresholdPolicy(x.GoPointer())
-
 	return cret
 }
 
@@ -255,7 +248,6 @@ var xLeafletGetFolded func(uintptr) bool
 func (x *Leaflet) GetFolded() bool {
 
 	cret := xLeafletGetFolded(x.GoPointer())
-
 	return cret
 }
 
@@ -265,7 +257,6 @@ var xLeafletGetHomogeneous func(uintptr) bool
 func (x *Leaflet) GetHomogeneous() bool {
 
 	cret := xLeafletGetHomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -275,7 +266,6 @@ var xLeafletGetModeTransitionDuration func(uintptr) uint
 func (x *Leaflet) GetModeTransitionDuration() uint {
 
 	cret := xLeafletGetModeTransitionDuration(x.GoPointer())
-
 	return cret
 }
 
@@ -322,7 +312,6 @@ var xLeafletGetTransitionType func(uintptr) LeafletTransitionType
 func (x *Leaflet) GetTransitionType() LeafletTransitionType {
 
 	cret := xLeafletGetTransitionType(x.GoPointer())
-
 	return cret
 }
 
@@ -349,7 +338,6 @@ var xLeafletGetVisibleChildName func(uintptr) string
 func (x *Leaflet) GetVisibleChildName() string {
 
 	cret := xLeafletGetVisibleChildName(x.GoPointer())
-
 	return cret
 }
 
@@ -384,7 +372,6 @@ var xLeafletNavigate func(uintptr, NavigationDirection) bool
 func (x *Leaflet) Navigate(DirectionVar NavigationDirection) bool {
 
 	cret := xLeafletNavigate(x.GoPointer(), DirectionVar)
-
 	return cret
 }
 
@@ -814,7 +801,6 @@ func (x *Leaflet) GetPropertyVisibleChildName() string {
 func (x *Leaflet) GetCancelProgress() float64 {
 
 	cret := XAdwSwipeableGetCancelProgress(x.GoPointer())
-
 	return cret
 }
 
@@ -824,7 +810,6 @@ func (x *Leaflet) GetCancelProgress() float64 {
 func (x *Leaflet) GetDistance() float64 {
 
 	cret := XAdwSwipeableGetDistance(x.GoPointer())
-
 	return cret
 }
 
@@ -832,7 +817,6 @@ func (x *Leaflet) GetDistance() float64 {
 func (x *Leaflet) GetProgress() float64 {
 
 	cret := XAdwSwipeableGetProgress(x.GoPointer())
-
 	return cret
 }
 
@@ -843,7 +827,6 @@ func (x *Leaflet) GetProgress() float64 {
 func (x *Leaflet) GetSnapPoints(NSnapPointsVar *int) uintptr {
 
 	cret := XAdwSwipeableGetSnapPoints(x.GoPointer(), NSnapPointsVar)
-
 	return cret
 }
 
@@ -897,7 +880,6 @@ func (x *Leaflet) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *Leaflet) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -923,7 +905,6 @@ func (x *Leaflet) GetAtContext() *gtk.ATContext {
 func (x *Leaflet) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -963,7 +944,6 @@ func (x *Leaflet) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *Leaflet) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1140,7 +1120,6 @@ func (x *Leaflet) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSta
 func (x *Leaflet) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -1148,7 +1127,6 @@ func (x *Leaflet) GetBuildableId() string {
 func (x *Leaflet) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 
@@ -1199,7 +1177,6 @@ var xLeafletPageGetName func(uintptr) string
 func (x *LeafletPage) GetName() string {
 
 	cret := xLeafletPageGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -1209,7 +1186,6 @@ var xLeafletPageGetNavigatable func(uintptr) bool
 func (x *LeafletPage) GetNavigatable() bool {
 
 	cret := xLeafletPageGetNavigatable(x.GoPointer())
-
 	return cret
 }
 
@@ -1218,11 +1194,10 @@ var xLeafletPageSetName func(uintptr, uintptr)
 // Sets the name of the @self.
 func (x *LeafletPage) SetName(NameVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xLeafletPageSetName(x.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 

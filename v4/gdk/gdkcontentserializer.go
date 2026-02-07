@@ -96,7 +96,6 @@ func ContentSerializeFinish(ResultVar gio.AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xContentSerializeFinish(ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -156,7 +155,6 @@ var xContentSerializerGetGtype func(uintptr) types.GType
 func (x *ContentSerializer) GetGtype() types.GType {
 
 	cret := xContentSerializerGetGtype(x.GoPointer())
-
 	return cret
 }
 
@@ -166,7 +164,6 @@ var xContentSerializerGetMimeType func(uintptr) string
 func (x *ContentSerializer) GetMimeType() string {
 
 	cret := xContentSerializerGetMimeType(x.GoPointer())
-
 	return cret
 }
 
@@ -197,7 +194,6 @@ var xContentSerializerGetPriority func(uintptr) int
 func (x *ContentSerializer) GetPriority() int {
 
 	cret := xContentSerializerGetPriority(x.GoPointer())
-
 	return cret
 }
 
@@ -209,7 +205,6 @@ var xContentSerializerGetTaskData func(uintptr) uintptr
 func (x *ContentSerializer) GetTaskData() uintptr {
 
 	cret := xContentSerializerGetTaskData(x.GoPointer())
-
 	return cret
 }
 
@@ -219,7 +214,6 @@ var xContentSerializerGetUserData func(uintptr) uintptr
 func (x *ContentSerializer) GetUserData() uintptr {
 
 	cret := xContentSerializerGetUserData(x.GoPointer())
-
 	return cret
 }
 
@@ -229,7 +223,6 @@ var xContentSerializerGetValue func(uintptr) *gobject.Value
 func (x *ContentSerializer) GetValue() *gobject.Value {
 
 	cret := xContentSerializerGetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -307,7 +300,6 @@ func (x *ContentSerializer) GetSourceObject() *gobject.Object {
 func (x *ContentSerializer) IsTagged(SourceTagVar uintptr) bool {
 
 	cret := gio.XGAsyncResultIsTagged(x.GoPointer(), SourceTagVar)
-
 	return cret
 }
 
@@ -325,7 +317,6 @@ func (x *ContentSerializer) LegacyPropagateError() (bool, error) {
 	var cerr *glib.Error
 
 	cret := gio.XGAsyncResultLegacyPropagateError(x.GoPointer())
-
 	if cerr == nil {
 		return cret, nil
 	}

@@ -2,7 +2,6 @@
 package gobject
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -228,7 +227,6 @@ var xParamSpecPoolList func(uintptr, types.GType, *uint) uintptr
 func (x *ParamSpecPool) List(OwnerTypeVar types.GType, NPspecsPVar *uint) uintptr {
 
 	cret := xParamSpecPoolList(x.GoPointer(), OwnerTypeVar, NPspecsPVar)
-
 	return cret
 }
 
@@ -239,7 +237,6 @@ var xParamSpecPoolListOwned func(uintptr, types.GType) *glib.List
 func (x *ParamSpecPool) ListOwned(OwnerTypeVar types.GType) *glib.List {
 
 	cret := xParamSpecPoolListOwned(x.GoPointer(), OwnerTypeVar)
-
 	return cret
 }
 
@@ -537,7 +534,6 @@ var xParamTypeRegisterStatic func(string, *ParamSpecTypeInfo) types.GType
 func ParamTypeRegisterStatic(NameVar string, PspecInfoVar *ParamSpecTypeInfo) types.GType {
 
 	cret := xParamTypeRegisterStatic(NameVar, PspecInfoVar)
-
 	return cret
 }
 
@@ -553,7 +549,6 @@ var xParamValueConvert func(uintptr, *Value, *Value, bool) bool
 func ParamValueConvert(PspecVar *ParamSpec, SrcValueVar *Value, DestValueVar *Value, StrictValidationVar bool) bool {
 
 	cret := xParamValueConvert(PspecVar.GoPointer(), SrcValueVar, DestValueVar, StrictValidationVar)
-
 	return cret
 }
 
@@ -563,7 +558,6 @@ var xParamValueDefaults func(uintptr, *Value) bool
 func ParamValueDefaults(PspecVar *ParamSpec, ValueVar *Value) bool {
 
 	cret := xParamValueDefaults(PspecVar.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -574,7 +568,6 @@ var xParamValueIsValid func(uintptr, *Value) bool
 func ParamValueIsValid(PspecVar *ParamSpec, ValueVar *Value) bool {
 
 	cret := xParamValueIsValid(PspecVar.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -598,7 +591,6 @@ var xParamValueValidate func(uintptr, *Value) bool
 func ParamValueValidate(PspecVar *ParamSpec, ValueVar *Value) bool {
 
 	cret := xParamValueValidate(PspecVar.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -610,7 +602,6 @@ var xParamValuesCmp func(uintptr, *Value, *Value) int
 func ParamValuesCmp(PspecVar *ParamSpec, Value1Var *Value, Value2Var *Value) int {
 
 	cret := xParamValuesCmp(PspecVar.GoPointer(), Value1Var, Value2Var)
-
 	return cret
 }
 
@@ -648,7 +639,6 @@ var xParamSpecGetBlurb func(uintptr) string
 func (x *ParamSpec) GetBlurb() string {
 
 	cret := xParamSpecGetBlurb(x.GoPointer())
-
 	return cret
 }
 
@@ -660,7 +650,6 @@ var xParamSpecGetDefaultValue func(uintptr) *Value
 func (x *ParamSpec) GetDefaultValue() *Value {
 
 	cret := xParamSpecGetDefaultValue(x.GoPointer())
-
 	return cret
 }
 
@@ -673,7 +662,6 @@ var xParamSpecGetName func(uintptr) string
 func (x *ParamSpec) GetName() string {
 
 	cret := xParamSpecGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -683,7 +671,6 @@ var xParamSpecGetNameQuark func(uintptr) glib.Quark
 func (x *ParamSpec) GetNameQuark() glib.Quark {
 
 	cret := xParamSpecGetNameQuark(x.GoPointer())
-
 	return cret
 }
 
@@ -693,7 +680,6 @@ var xParamSpecGetNick func(uintptr) string
 func (x *ParamSpec) GetNick() string {
 
 	cret := xParamSpecGetNick(x.GoPointer())
-
 	return cret
 }
 
@@ -703,7 +689,6 @@ var xParamSpecGetQdata func(uintptr, glib.Quark) uintptr
 func (x *ParamSpec) GetQdata(QuarkVar glib.Quark) uintptr {
 
 	cret := xParamSpecGetQdata(x.GoPointer(), QuarkVar)
-
 	return cret
 }
 
@@ -828,7 +813,6 @@ var xParamSpecStealQdata func(uintptr, glib.Quark) uintptr
 func (x *ParamSpec) StealQdata(QuarkVar glib.Quark) uintptr {
 
 	cret := xParamSpecStealQdata(x.GoPointer(), QuarkVar)
-
 	return cret
 }
 
@@ -869,15 +853,13 @@ var xParamSpecInternal func(types.GType, string, uintptr, uintptr, ParamFlags) u
 func ParamSpecInternal(ParamTypeVar types.GType, NameVar string, NickVar *string, BlurbVar *string, FlagsVar ParamFlags) *ParamSpec {
 	var cls *ParamSpec
 
-	NickVarPtr, NickVarBytes := core.NullableStringToPtr(NickVar)
+	NickVarPtr := core.GStrdupNullable(NickVar)
+	defer core.GFreeNullable(NickVarPtr)
 
-	BlurbVarPtr, BlurbVarBytes := core.NullableStringToPtr(BlurbVar)
+	BlurbVarPtr := core.GStrdupNullable(BlurbVar)
+	defer core.GFreeNullable(BlurbVarPtr)
 
 	cret := xParamSpecInternal(ParamTypeVar, NameVar, NickVarPtr, BlurbVarPtr, FlagsVar)
-
-	runtime.KeepAlive(NickVarBytes)
-
-	runtime.KeepAlive(BlurbVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -899,7 +881,6 @@ var xParamSpecIsValidName func(string) bool
 func ParamSpecIsValidName(NameVar string) bool {
 
 	cret := xParamSpecIsValidName(NameVar)
-
 	return cret
 }
 

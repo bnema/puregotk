@@ -72,7 +72,6 @@ var xBoxLayoutGetBaselineChild func(uintptr) int
 func (x *BoxLayout) GetBaselineChild() int {
 
 	cret := xBoxLayoutGetBaselineChild(x.GoPointer())
-
 	return cret
 }
 
@@ -82,7 +81,6 @@ var xBoxLayoutGetBaselinePosition func(uintptr) BaselinePosition
 func (x *BoxLayout) GetBaselinePosition() BaselinePosition {
 
 	cret := xBoxLayoutGetBaselinePosition(x.GoPointer())
-
 	return cret
 }
 
@@ -92,7 +90,6 @@ var xBoxLayoutGetHomogeneous func(uintptr) bool
 func (x *BoxLayout) GetHomogeneous() bool {
 
 	cret := xBoxLayoutGetHomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -102,7 +99,6 @@ var xBoxLayoutGetSpacing func(uintptr) uint
 func (x *BoxLayout) GetSpacing() uint {
 
 	cret := xBoxLayoutGetSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -228,7 +224,6 @@ func (x *BoxLayout) GetPropertySpacing() int {
 func (x *BoxLayout) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

@@ -45,7 +45,6 @@ var xNewShaderArgsBuilder func(uintptr, *glib.Bytes) *ShaderArgsBuilder
 func NewShaderArgsBuilder(ShaderVar *GLShader, InitialValuesVar *glib.Bytes) *ShaderArgsBuilder {
 
 	cret := xNewShaderArgsBuilder(ShaderVar.GoPointer(), InitialValuesVar)
-
 	return cret
 }
 
@@ -59,7 +58,6 @@ var xShaderArgsBuilderFreeToArgs func(uintptr) *glib.Bytes
 func (x *ShaderArgsBuilder) FreeToArgs() *glib.Bytes {
 
 	cret := xShaderArgsBuilderFreeToArgs(x.GoPointer())
-
 	return cret
 }
 
@@ -69,7 +67,6 @@ var xShaderArgsBuilderRef func(uintptr) *ShaderArgsBuilder
 func (x *ShaderArgsBuilder) Ref() *ShaderArgsBuilder {
 
 	cret := xShaderArgsBuilderRef(x.GoPointer())
-
 	return cret
 }
 
@@ -166,7 +163,6 @@ var xShaderArgsBuilderToArgs func(uintptr) *glib.Bytes
 func (x *ShaderArgsBuilder) ToArgs() *glib.Bytes {
 
 	cret := xShaderArgsBuilderToArgs(x.GoPointer())
-
 	return cret
 }
 
@@ -363,7 +359,6 @@ func (x *GLShader) Compile(RendererVar *Renderer) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xGLShaderCompile(x.GoPointer(), RendererVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -378,7 +373,6 @@ var xGLShaderFindUniformByName func(uintptr, string) int
 func (x *GLShader) FindUniformByName(NameVar string) int {
 
 	cret := xGLShaderFindUniformByName(x.GoPointer(), NameVar)
-
 	return cret
 }
 
@@ -396,7 +390,6 @@ var xGLShaderFormatArgs func(uintptr, ...interface{}) *glib.Bytes
 func (x *GLShader) FormatArgs(varArgs ...interface{}) *glib.Bytes {
 
 	cret := xGLShaderFormatArgs(x.GoPointer(), varArgs...)
-
 	return cret
 }
 
@@ -416,7 +409,6 @@ var xGLShaderFormatArgsVa func(uintptr, []interface{}) *glib.Bytes
 func (x *GLShader) FormatArgsVa(UniformsVar []interface{}) *glib.Bytes {
 
 	cret := xGLShaderFormatArgsVa(x.GoPointer(), UniformsVar)
-
 	return cret
 }
 
@@ -428,7 +420,6 @@ var xGLShaderGetArgBool func(uintptr, *glib.Bytes, int) bool
 func (x *GLShader) GetArgBool(ArgsVar *glib.Bytes, IdxVar int) bool {
 
 	cret := xGLShaderGetArgBool(x.GoPointer(), ArgsVar, IdxVar)
-
 	return cret
 }
 
@@ -440,7 +431,6 @@ var xGLShaderGetArgFloat func(uintptr, *glib.Bytes, int) float32
 func (x *GLShader) GetArgFloat(ArgsVar *glib.Bytes, IdxVar int) float32 {
 
 	cret := xGLShaderGetArgFloat(x.GoPointer(), ArgsVar, IdxVar)
-
 	return cret
 }
 
@@ -452,7 +442,6 @@ var xGLShaderGetArgInt func(uintptr, *glib.Bytes, int) int32
 func (x *GLShader) GetArgInt(ArgsVar *glib.Bytes, IdxVar int) int32 {
 
 	cret := xGLShaderGetArgInt(x.GoPointer(), ArgsVar, IdxVar)
-
 	return cret
 }
 
@@ -464,7 +453,6 @@ var xGLShaderGetArgUint func(uintptr, *glib.Bytes, int) uint32
 func (x *GLShader) GetArgUint(ArgsVar *glib.Bytes, IdxVar int) uint32 {
 
 	cret := xGLShaderGetArgUint(x.GoPointer(), ArgsVar, IdxVar)
-
 	return cret
 }
 
@@ -507,7 +495,6 @@ var xGLShaderGetArgsSize func(uintptr) uint
 func (x *GLShader) GetArgsSize() uint {
 
 	cret := xGLShaderGetArgsSize(x.GoPointer())
-
 	return cret
 }
 
@@ -521,7 +508,6 @@ var xGLShaderGetNTextures func(uintptr) int
 func (x *GLShader) GetNTextures() int {
 
 	cret := xGLShaderGetNTextures(x.GoPointer())
-
 	return cret
 }
 
@@ -531,7 +517,6 @@ var xGLShaderGetNUniforms func(uintptr) int
 func (x *GLShader) GetNUniforms() int {
 
 	cret := xGLShaderGetNUniforms(x.GoPointer())
-
 	return cret
 }
 
@@ -542,7 +527,6 @@ var xGLShaderGetResource func(uintptr) string
 func (x *GLShader) GetResource() string {
 
 	cret := xGLShaderGetResource(x.GoPointer())
-
 	return cret
 }
 
@@ -552,7 +536,6 @@ var xGLShaderGetSource func(uintptr) *glib.Bytes
 func (x *GLShader) GetSource() *glib.Bytes {
 
 	cret := xGLShaderGetSource(x.GoPointer())
-
 	return cret
 }
 
@@ -562,7 +545,6 @@ var xGLShaderGetUniformName func(uintptr, int) string
 func (x *GLShader) GetUniformName(IdxVar int) string {
 
 	cret := xGLShaderGetUniformName(x.GoPointer(), IdxVar)
-
 	return cret
 }
 
@@ -572,7 +554,6 @@ var xGLShaderGetUniformOffset func(uintptr, int) int
 func (x *GLShader) GetUniformOffset(IdxVar int) int {
 
 	cret := xGLShaderGetUniformOffset(x.GoPointer(), IdxVar)
-
 	return cret
 }
 
@@ -582,7 +563,6 @@ var xGLShaderGetUniformType func(uintptr, int) GLUniformType
 func (x *GLShader) GetUniformType(IdxVar int) GLUniformType {
 
 	cret := xGLShaderGetUniformType(x.GoPointer(), IdxVar)
-
 	return cret
 }
 

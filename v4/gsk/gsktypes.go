@@ -60,7 +60,6 @@ var xNewComponentTransferDiscrete func(uint, []float32) *ComponentTransfer
 func NewComponentTransferDiscrete(NVar uint, ValuesVar []float32) *ComponentTransfer {
 
 	cret := xNewComponentTransferDiscrete(NVar, ValuesVar)
-
 	return cret
 }
 
@@ -84,7 +83,6 @@ var xNewComponentTransferGamma func(float32, float32, float32) *ComponentTransfe
 func NewComponentTransferGamma(AmpVar float32, ExpVar float32, OfsVar float32) *ComponentTransfer {
 
 	cret := xNewComponentTransferGamma(AmpVar, ExpVar, OfsVar)
-
 	return cret
 }
 
@@ -104,7 +102,6 @@ var xNewComponentTransferIdentity func() *ComponentTransfer
 func NewComponentTransferIdentity() *ComponentTransfer {
 
 	cret := xNewComponentTransferIdentity()
-
 	return cret
 }
 
@@ -128,7 +125,6 @@ var xNewComponentTransferLevels func(float32) *ComponentTransfer
 func NewComponentTransferLevels(NVar float32) *ComponentTransfer {
 
 	cret := xNewComponentTransferLevels(NVar)
-
 	return cret
 }
 
@@ -152,7 +148,6 @@ var xNewComponentTransferLinear func(float32, float32) *ComponentTransfer
 func NewComponentTransferLinear(MVar float32, BVar float32) *ComponentTransfer {
 
 	cret := xNewComponentTransferLinear(MVar, BVar)
-
 	return cret
 }
 
@@ -180,7 +175,6 @@ var xNewComponentTransferTable func(uint, []float32) *ComponentTransfer
 func NewComponentTransferTable(NVar uint, ValuesVar []float32) *ComponentTransfer {
 
 	cret := xNewComponentTransferTable(NVar, ValuesVar)
-
 	return cret
 }
 
@@ -190,7 +184,6 @@ var xComponentTransferCopy func(uintptr) *ComponentTransfer
 func (x *ComponentTransfer) Copy() *ComponentTransfer {
 
 	cret := xComponentTransferCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -270,7 +263,6 @@ func (x *Path) Foreach(FlagsVar PathForeachFlags, FuncVar *PathForeachFunc, User
 	}
 
 	cret := xPathForeach(x.GoPointer(), FlagsVar, FuncVarRef, UserDataVar)
-
 	return cret
 }
 
@@ -309,7 +301,6 @@ func (x *Path) ForeachIntersection(Path2Var *Path, FuncVar *PathIntersectionFunc
 	}
 
 	cret := xPathForeachIntersection(x.GoPointer(), Path2Var, FuncVarRef, UserDataVar)
-
 	return cret
 }
 
@@ -332,7 +323,6 @@ var xPathGetBounds func(uintptr, *graphene.Rect) bool
 func (x *Path) GetBounds(BoundsVar *graphene.Rect) bool {
 
 	cret := xPathGetBounds(x.GoPointer(), BoundsVar)
-
 	return cret
 }
 
@@ -345,7 +335,6 @@ var xPathGetClosestPoint func(uintptr, *graphene.Point, float32, *PathPoint, *fl
 func (x *Path) GetClosestPoint(PointVar *graphene.Point, ThresholdVar float32, ResultVar *PathPoint, DistanceVar *float32) bool {
 
 	cret := xPathGetClosestPoint(x.GoPointer(), PointVar, ThresholdVar, ResultVar, DistanceVar)
-
 	return cret
 }
 
@@ -358,7 +347,6 @@ var xPathGetEndPoint func(uintptr, *PathPoint) bool
 func (x *Path) GetEndPoint(ResultVar *PathPoint) bool {
 
 	cret := xPathGetEndPoint(x.GoPointer(), ResultVar)
-
 	return cret
 }
 
@@ -371,7 +359,6 @@ var xPathGetStartPoint func(uintptr, *PathPoint) bool
 func (x *Path) GetStartPoint(ResultVar *PathPoint) bool {
 
 	cret := xPathGetStartPoint(x.GoPointer(), ResultVar)
-
 	return cret
 }
 
@@ -387,7 +374,6 @@ var xPathGetStrokeBounds func(uintptr, *Stroke, *graphene.Rect) bool
 func (x *Path) GetStrokeBounds(StrokeVar *Stroke, BoundsVar *graphene.Rect) bool {
 
 	cret := xPathGetStrokeBounds(x.GoPointer(), StrokeVar, BoundsVar)
-
 	return cret
 }
 
@@ -400,7 +386,6 @@ var xPathInFill func(uintptr, *graphene.Point, FillRule) bool
 func (x *Path) InFill(PointVar *graphene.Point, FillRuleVar FillRule) bool {
 
 	cret := xPathInFill(x.GoPointer(), PointVar, FillRuleVar)
-
 	return cret
 }
 
@@ -410,7 +395,6 @@ var xPathIsClosed func(uintptr) bool
 func (x *Path) IsClosed() bool {
 
 	cret := xPathIsClosed(x.GoPointer())
-
 	return cret
 }
 
@@ -420,7 +404,6 @@ var xPathIsEmpty func(uintptr) bool
 func (x *Path) IsEmpty() bool {
 
 	cret := xPathIsEmpty(x.GoPointer())
-
 	return cret
 }
 
@@ -443,7 +426,6 @@ var xPathRef func(uintptr) *Path
 func (x *Path) Ref() *Path {
 
 	cret := xPathRef(x.GoPointer())
-
 	return cret
 }
 
@@ -474,7 +456,6 @@ var xPathToString func(uintptr) string
 func (x *Path) ToString() string {
 
 	cret := xPathToString(x.GoPointer())
-
 	return cret
 }
 
@@ -552,7 +533,6 @@ var xNewPathBuilder func() *PathBuilder
 func NewPathBuilder() *PathBuilder {
 
 	cret := xNewPathBuilder()
-
 	return cret
 }
 
@@ -742,7 +722,6 @@ var xPathBuilderFreeToPath func(uintptr) *Path
 func (x *PathBuilder) FreeToPath() *Path {
 
 	cret := xPathBuilderFreeToPath(x.GoPointer())
-
 	return cret
 }
 
@@ -759,7 +738,6 @@ var xPathBuilderGetCurrentPoint func(uintptr) *graphene.Point
 func (x *PathBuilder) GetCurrentPoint() *graphene.Point {
 
 	cret := xPathBuilderGetCurrentPoint(x.GoPointer())
-
 	return cret
 }
 
@@ -838,7 +816,6 @@ var xPathBuilderRef func(uintptr) *PathBuilder
 func (x *PathBuilder) Ref() *PathBuilder {
 
 	cret := xPathBuilderRef(x.GoPointer())
-
 	return cret
 }
 
@@ -978,7 +955,6 @@ var xPathBuilderToPath func(uintptr) *Path
 func (x *PathBuilder) ToPath() *Path {
 
 	cret := xPathBuilderToPath(x.GoPointer())
-
 	return cret
 }
 
@@ -1021,7 +997,6 @@ var xNewPathMeasure func(*Path) *PathMeasure
 func NewPathMeasure(PathVar *Path) *PathMeasure {
 
 	cret := xNewPathMeasure(PathVar)
-
 	return cret
 }
 
@@ -1031,7 +1006,6 @@ var xNewPathMeasureWithTolerance func(*Path, float32) *PathMeasure
 func NewPathMeasureWithTolerance(PathVar *Path, ToleranceVar float32) *PathMeasure {
 
 	cret := xNewPathMeasureWithTolerance(PathVar, ToleranceVar)
-
 	return cret
 }
 
@@ -1043,7 +1017,6 @@ var xPathMeasureGetLength func(uintptr) float32
 func (x *PathMeasure) GetLength() float32 {
 
 	cret := xPathMeasureGetLength(x.GoPointer())
-
 	return cret
 }
 
@@ -1053,7 +1026,6 @@ var xPathMeasureGetPath func(uintptr) *Path
 func (x *PathMeasure) GetPath() *Path {
 
 	cret := xPathMeasureGetPath(x.GoPointer())
-
 	return cret
 }
 
@@ -1065,7 +1037,6 @@ var xPathMeasureGetPoint func(uintptr, float32, *PathPoint) bool
 func (x *PathMeasure) GetPoint(DistanceVar float32, ResultVar *PathPoint) bool {
 
 	cret := xPathMeasureGetPoint(x.GoPointer(), DistanceVar, ResultVar)
-
 	return cret
 }
 
@@ -1075,7 +1046,6 @@ var xPathMeasureGetTolerance func(uintptr) float32
 func (x *PathMeasure) GetTolerance() float32 {
 
 	cret := xPathMeasureGetTolerance(x.GoPointer())
-
 	return cret
 }
 
@@ -1085,7 +1055,6 @@ var xPathMeasureRef func(uintptr) *PathMeasure
 func (x *PathMeasure) Ref() *PathMeasure {
 
 	cret := xPathMeasureRef(x.GoPointer())
-
 	return cret
 }
 
@@ -1121,7 +1090,6 @@ var xNewStroke func(float32) *Stroke
 func NewStroke(LineWidthVar float32) *Stroke {
 
 	cret := xNewStroke(LineWidthVar)
-
 	return cret
 }
 
@@ -1131,7 +1099,6 @@ var xStrokeCopy func(uintptr) *Stroke
 func (x *Stroke) Copy() *Stroke {
 
 	cret := xStrokeCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -1150,7 +1117,6 @@ var xStrokeGetDash func(uintptr, *uint) uintptr
 func (x *Stroke) GetDash(NDashVar *uint) uintptr {
 
 	cret := xStrokeGetDash(x.GoPointer(), NDashVar)
-
 	return cret
 }
 
@@ -1160,7 +1126,6 @@ var xStrokeGetDashOffset func(uintptr) float32
 func (x *Stroke) GetDashOffset() float32 {
 
 	cret := xStrokeGetDashOffset(x.GoPointer())
-
 	return cret
 }
 
@@ -1172,7 +1137,6 @@ var xStrokeGetLineCap func(uintptr) LineCap
 func (x *Stroke) GetLineCap() LineCap {
 
 	cret := xStrokeGetLineCap(x.GoPointer())
-
 	return cret
 }
 
@@ -1184,7 +1148,6 @@ var xStrokeGetLineJoin func(uintptr) LineJoin
 func (x *Stroke) GetLineJoin() LineJoin {
 
 	cret := xStrokeGetLineJoin(x.GoPointer())
-
 	return cret
 }
 
@@ -1194,7 +1157,6 @@ var xStrokeGetLineWidth func(uintptr) float32
 func (x *Stroke) GetLineWidth() float32 {
 
 	cret := xStrokeGetLineWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -1204,7 +1166,6 @@ var xStrokeGetMiterLimit func(uintptr) float32
 func (x *Stroke) GetMiterLimit() float32 {
 
 	cret := xStrokeGetMiterLimit(x.GoPointer())
-
 	return cret
 }
 
@@ -1345,7 +1306,6 @@ var xNewTransform func() *Transform
 func NewTransform() *Transform {
 
 	cret := xNewTransform()
-
 	return cret
 }
 
@@ -1355,7 +1315,6 @@ var xTransformEqual func(uintptr, *Transform) bool
 func (x *Transform) Equal(SecondVar *Transform) bool {
 
 	cret := xTransformEqual(x.GoPointer(), SecondVar)
-
 	return cret
 }
 
@@ -1365,7 +1324,6 @@ var xTransformGetCategory func(uintptr) TransformCategory
 func (x *Transform) GetCategory() TransformCategory {
 
 	cret := xTransformGetCategory(x.GoPointer())
-
 	return cret
 }
 
@@ -1384,7 +1342,6 @@ var xTransformInvert func(uintptr) *Transform
 func (x *Transform) Invert() *Transform {
 
 	cret := xTransformInvert(x.GoPointer())
-
 	return cret
 }
 
@@ -1397,7 +1354,6 @@ var xTransformMatrix func(uintptr, *graphene.Matrix) *Transform
 func (x *Transform) Matrix(MatrixVar *graphene.Matrix) *Transform {
 
 	cret := xTransformMatrix(x.GoPointer(), MatrixVar)
-
 	return cret
 }
 
@@ -1414,7 +1370,6 @@ var xTransformMatrix2d func(uintptr, float32, float32, float32, float32, float32
 func (x *Transform) Matrix2d(XxVar float32, YxVar float32, XyVar float32, YyVar float32, DxVar float32, DyVar float32) *Transform {
 
 	cret := xTransformMatrix2d(x.GoPointer(), XxVar, YxVar, XyVar, YyVar, DxVar, DyVar)
-
 	return cret
 }
 
@@ -1432,7 +1387,6 @@ var xTransformPerspective func(uintptr, float32) *Transform
 func (x *Transform) Perspective(DepthVar float32) *Transform {
 
 	cret := xTransformPerspective(x.GoPointer(), DepthVar)
-
 	return cret
 }
 
@@ -1454,7 +1408,6 @@ var xTransformRef func(uintptr) *Transform
 func (x *Transform) Ref() *Transform {
 
 	cret := xTransformRef(x.GoPointer())
-
 	return cret
 }
 
@@ -1469,7 +1422,6 @@ var xTransformRotate func(uintptr, float32) *Transform
 func (x *Transform) Rotate(AngleVar float32) *Transform {
 
 	cret := xTransformRotate(x.GoPointer(), AngleVar)
-
 	return cret
 }
 
@@ -1484,7 +1436,6 @@ var xTransformRotate3d func(uintptr, float32, *graphene.Vec3) *Transform
 func (x *Transform) Rotate3d(AngleVar float32, AxisVar *graphene.Vec3) *Transform {
 
 	cret := xTransformRotate3d(x.GoPointer(), AngleVar, AxisVar)
-
 	return cret
 }
 
@@ -1499,7 +1450,6 @@ var xTransformScale func(uintptr, float32, float32) *Transform
 func (x *Transform) Scale(FactorXVar float32, FactorYVar float32) *Transform {
 
 	cret := xTransformScale(x.GoPointer(), FactorXVar, FactorYVar)
-
 	return cret
 }
 
@@ -1512,7 +1462,6 @@ var xTransformScale3d func(uintptr, float32, float32, float32) *Transform
 func (x *Transform) Scale3d(FactorXVar float32, FactorYVar float32, FactorZVar float32) *Transform {
 
 	cret := xTransformScale3d(x.GoPointer(), FactorXVar, FactorYVar, FactorZVar)
-
 	return cret
 }
 
@@ -1525,7 +1474,6 @@ var xTransformSkew func(uintptr, float32, float32) *Transform
 func (x *Transform) Skew(SkewXVar float32, SkewYVar float32) *Transform {
 
 	cret := xTransformSkew(x.GoPointer(), SkewXVar, SkewYVar)
-
 	return cret
 }
 
@@ -1633,7 +1581,6 @@ var xTransformToString func(uintptr) string
 func (x *Transform) ToString() string {
 
 	cret := xTransformToString(x.GoPointer())
-
 	return cret
 }
 
@@ -1662,7 +1609,6 @@ var xTransformTransform func(uintptr, *Transform) *Transform
 func (x *Transform) Transform(OtherVar *Transform) *Transform {
 
 	cret := xTransformTransform(x.GoPointer(), OtherVar)
-
 	return cret
 }
 
@@ -1695,7 +1641,6 @@ var xTransformTranslate func(uintptr, *graphene.Point) *Transform
 func (x *Transform) Translate(PointVar *graphene.Point) *Transform {
 
 	cret := xTransformTranslate(x.GoPointer(), PointVar)
-
 	return cret
 }
 
@@ -1708,7 +1653,6 @@ var xTransformTranslate3d func(uintptr, *graphene.Point3D) *Transform
 func (x *Transform) Translate3d(PointVar *graphene.Point3D) *Transform {
 
 	cret := xTransformTranslate3d(x.GoPointer(), PointVar)
-
 	return cret
 }
 

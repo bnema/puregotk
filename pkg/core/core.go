@@ -9,6 +9,8 @@ var (
 	GoString            = core.GoString
 	GStrdup             = core.GStrdup
 	GStrdupNullable     = core.GStrdupNullable
+	GFree               = core.GFree
+	GFreeNullable       = core.GFreeNullable
 	NullableStringToPtr = core.NullableStringToPtr
 	PtrToNullableString = core.PtrToNullableString
 	SetPackageName      = core.SetPackageName

@@ -219,7 +219,6 @@ func (x *SocketConnection) Connect(AddressVar *SocketAddress, CancellableVar *Ca
 	var cerr *glib.Error
 
 	cret := xSocketConnectionConnect(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -267,7 +266,6 @@ func (x *SocketConnection) ConnectFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSocketConnectionConnectFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -350,7 +348,6 @@ var xSocketConnectionIsConnected func(uintptr) bool
 func (x *SocketConnection) IsConnected() bool {
 
 	cret := xSocketConnectionIsConnected(x.GoPointer())
-
 	return cret
 }
 
@@ -374,7 +371,6 @@ var xSocketConnectionFactoryLookupType func(SocketFamily, SocketType, int) types
 func SocketConnectionFactoryLookupType(FamilyVar SocketFamily, TypeVar SocketType, ProtocolIdVar int) types.GType {
 
 	cret := xSocketConnectionFactoryLookupType(FamilyVar, TypeVar, ProtocolIdVar)
-
 	return cret
 }
 

@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -79,7 +78,6 @@ var xLayoutGetName func(uintptr) string
 func (x *Layout) GetName() string {
 
 	cret := xLayoutGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -88,11 +86,10 @@ var xLayoutSetName func(uintptr, uintptr)
 // Sets the name of the layout.
 func (x *Layout) SetName(NameVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xLayoutSetName(x.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -131,7 +128,6 @@ func (x *Layout) GetPropertyName() string {
 func (x *Layout) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

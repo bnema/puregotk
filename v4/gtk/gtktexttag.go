@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -72,11 +71,10 @@ var xNewTextTag func(uintptr) uintptr
 func NewTextTag(NameVar *string) *TextTag {
 	var cls *TextTag
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	cret := xNewTextTag(NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -105,7 +103,6 @@ var xTextTagGetPriority func(uintptr) int
 func (x *TextTag) GetPriority() int {
 
 	cret := xTextTagGetPriority(x.GoPointer())
-
 	return cret
 }
 

@@ -68,7 +68,6 @@ var xDropControllerMotionContainsPointer func(uintptr) bool
 func (x *DropControllerMotion) ContainsPointer() bool {
 
 	cret := xDropControllerMotionContainsPointer(x.GoPointer())
-
 	return cret
 }
 
@@ -97,7 +96,6 @@ var xDropControllerMotionIsPointer func(uintptr) bool
 func (x *DropControllerMotion) IsPointer() bool {
 
 	cret := xDropControllerMotionIsPointer(x.GoPointer())
-
 	return cret
 }
 

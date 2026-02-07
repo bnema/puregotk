@@ -37,7 +37,6 @@ var xSphereAlloc func() *Sphere
 func SphereAlloc() *Sphere {
 
 	cret := xSphereAlloc()
-
 	return cret
 }
 
@@ -48,7 +47,6 @@ var xSphereContainsPoint func(uintptr, *Point3D) bool
 func (x *Sphere) ContainsPoint(PointVar *Point3D) bool {
 
 	cret := xSphereContainsPoint(x.GoPointer(), PointVar)
-
 	return cret
 }
 
@@ -59,7 +57,6 @@ var xSphereDistance func(uintptr, *Point3D) float32
 func (x *Sphere) Distance(PointVar *Point3D) float32 {
 
 	cret := xSphereDistance(x.GoPointer(), PointVar)
-
 	return cret
 }
 
@@ -69,7 +66,6 @@ var xSphereEqual func(uintptr, *Sphere) bool
 func (x *Sphere) Equal(BVar *Sphere) bool {
 
 	cret := xSphereEqual(x.GoPointer(), BVar)
-
 	return cret
 }
 
@@ -107,7 +103,6 @@ var xSphereGetRadius func(uintptr) float32
 func (x *Sphere) GetRadius() float32 {
 
 	cret := xSphereGetRadius(x.GoPointer())
-
 	return cret
 }
 
@@ -117,7 +112,6 @@ var xSphereInit func(uintptr, *Point3D, float32) *Sphere
 func (x *Sphere) Init(CenterVar *Point3D, RadiusVar float32) *Sphere {
 
 	cret := xSphereInit(x.GoPointer(), CenterVar, RadiusVar)
-
 	return cret
 }
 
@@ -131,7 +125,6 @@ var xSphereInitFromPoints func(uintptr, uint, []Point3D, *Point3D) *Sphere
 func (x *Sphere) InitFromPoints(NPointsVar uint, PointsVar []Point3D, CenterVar *Point3D) *Sphere {
 
 	cret := xSphereInitFromPoints(x.GoPointer(), NPointsVar, PointsVar, CenterVar)
-
 	return cret
 }
 
@@ -145,7 +138,6 @@ var xSphereInitFromVectors func(uintptr, uint, []Vec3, *Point3D) *Sphere
 func (x *Sphere) InitFromVectors(NVectorsVar uint, VectorsVar []Vec3, CenterVar *Point3D) *Sphere {
 
 	cret := xSphereInitFromVectors(x.GoPointer(), NVectorsVar, VectorsVar, CenterVar)
-
 	return cret
 }
 
@@ -155,7 +147,6 @@ var xSphereIsEmpty func(uintptr) bool
 func (x *Sphere) IsEmpty() bool {
 
 	cret := xSphereIsEmpty(x.GoPointer())
-
 	return cret
 }
 

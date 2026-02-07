@@ -90,7 +90,6 @@ var xTextIterBackwardChar func(uintptr) bool
 func (x *TextIter) BackwardChar() bool {
 
 	cret := xTextIterBackwardChar(x.GoPointer())
-
 	return cret
 }
 
@@ -108,7 +107,6 @@ var xTextIterBackwardChars func(uintptr, int) bool
 func (x *TextIter) BackwardChars(CountVar int) bool {
 
 	cret := xTextIterBackwardChars(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -118,7 +116,6 @@ var xTextIterBackwardCursorPosition func(uintptr) bool
 func (x *TextIter) BackwardCursorPosition() bool {
 
 	cret := xTextIterBackwardCursorPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -130,7 +127,6 @@ var xTextIterBackwardCursorPositions func(uintptr, int) bool
 func (x *TextIter) BackwardCursorPositions(CountVar int) bool {
 
 	cret := xTextIterBackwardCursorPositions(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -156,7 +152,6 @@ func (x *TextIter) BackwardFindChar(PredVar *TextCharPredicate, UserDataVar uint
 	}
 
 	cret := xTextIterBackwardFindChar(x.GoPointer(), PredVarRef, UserDataVar, LimitVar)
-
 	return cret
 }
 
@@ -174,7 +169,6 @@ var xTextIterBackwardLine func(uintptr) bool
 func (x *TextIter) BackwardLine() bool {
 
 	cret := xTextIterBackwardLine(x.GoPointer())
-
 	return cret
 }
 
@@ -193,7 +187,6 @@ var xTextIterBackwardLines func(uintptr, int) bool
 func (x *TextIter) BackwardLines(CountVar int) bool {
 
 	cret := xTextIterBackwardLines(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -206,7 +199,6 @@ var xTextIterBackwardSearch func(uintptr, string, TextSearchFlags, *TextIter, *T
 func (x *TextIter) BackwardSearch(StrVar string, FlagsVar TextSearchFlags, MatchStartVar *TextIter, MatchEndVar *TextIter, LimitVar *TextIter) bool {
 
 	cret := xTextIterBackwardSearch(x.GoPointer(), StrVar, FlagsVar, MatchStartVar, MatchEndVar, LimitVar)
-
 	return cret
 }
 
@@ -222,7 +214,6 @@ var xTextIterBackwardSentenceStart func(uintptr) bool
 func (x *TextIter) BackwardSentenceStart() bool {
 
 	cret := xTextIterBackwardSentenceStart(x.GoPointer())
-
 	return cret
 }
 
@@ -234,7 +225,6 @@ var xTextIterBackwardSentenceStarts func(uintptr, int) bool
 func (x *TextIter) BackwardSentenceStarts(CountVar int) bool {
 
 	cret := xTextIterBackwardSentenceStarts(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -252,7 +242,6 @@ var xTextIterBackwardToTagToggle func(uintptr, uintptr) bool
 func (x *TextIter) BackwardToTagToggle(TagVar *TextTag) bool {
 
 	cret := xTextIterBackwardToTagToggle(x.GoPointer(), TagVar.GoPointer())
-
 	return cret
 }
 
@@ -264,7 +253,6 @@ var xTextIterBackwardVisibleCursorPosition func(uintptr) bool
 func (x *TextIter) BackwardVisibleCursorPosition() bool {
 
 	cret := xTextIterBackwardVisibleCursorPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -276,7 +264,6 @@ var xTextIterBackwardVisibleCursorPositions func(uintptr, int) bool
 func (x *TextIter) BackwardVisibleCursorPositions(CountVar int) bool {
 
 	cret := xTextIterBackwardVisibleCursorPositions(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -294,7 +281,6 @@ var xTextIterBackwardVisibleLine func(uintptr) bool
 func (x *TextIter) BackwardVisibleLine() bool {
 
 	cret := xTextIterBackwardVisibleLine(x.GoPointer())
-
 	return cret
 }
 
@@ -313,7 +299,6 @@ var xTextIterBackwardVisibleLines func(uintptr, int) bool
 func (x *TextIter) BackwardVisibleLines(CountVar int) bool {
 
 	cret := xTextIterBackwardVisibleLines(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -329,7 +314,6 @@ var xTextIterBackwardVisibleWordStart func(uintptr) bool
 func (x *TextIter) BackwardVisibleWordStart() bool {
 
 	cret := xTextIterBackwardVisibleWordStart(x.GoPointer())
-
 	return cret
 }
 
@@ -339,7 +323,6 @@ var xTextIterBackwardVisibleWordStarts func(uintptr, int) bool
 func (x *TextIter) BackwardVisibleWordStarts(CountVar int) bool {
 
 	cret := xTextIterBackwardVisibleWordStarts(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -355,7 +338,6 @@ var xTextIterBackwardWordStart func(uintptr) bool
 func (x *TextIter) BackwardWordStart() bool {
 
 	cret := xTextIterBackwardWordStart(x.GoPointer())
-
 	return cret
 }
 
@@ -365,7 +347,6 @@ var xTextIterBackwardWordStarts func(uintptr, int) bool
 func (x *TextIter) BackwardWordStarts(CountVar int) bool {
 
 	cret := xTextIterBackwardWordStarts(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -382,7 +363,6 @@ var xTextIterCanInsert func(uintptr, bool) bool
 func (x *TextIter) CanInsert(DefaultEditabilityVar bool) bool {
 
 	cret := xTextIterCanInsert(x.GoPointer(), DefaultEditabilityVar)
-
 	return cret
 }
 
@@ -396,7 +376,6 @@ var xTextIterCompare func(uintptr, *TextIter) int
 func (x *TextIter) Compare(RhsVar *TextIter) int {
 
 	cret := xTextIterCompare(x.GoPointer(), RhsVar)
-
 	return cret
 }
 
@@ -412,7 +391,6 @@ var xTextIterCopy func(uintptr) *TextIter
 func (x *TextIter) Copy() *TextIter {
 
 	cret := xTextIterCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -434,7 +412,6 @@ var xTextIterEditable func(uintptr, bool) bool
 func (x *TextIter) Editable(DefaultSettingVar bool) bool {
 
 	cret := xTextIterEditable(x.GoPointer(), DefaultSettingVar)
-
 	return cret
 }
 
@@ -454,7 +431,6 @@ var xTextIterEndsLine func(uintptr) bool
 func (x *TextIter) EndsLine() bool {
 
 	cret := xTextIterEndsLine(x.GoPointer())
-
 	return cret
 }
 
@@ -467,7 +443,6 @@ var xTextIterEndsSentence func(uintptr) bool
 func (x *TextIter) EndsSentence() bool {
 
 	cret := xTextIterEndsSentence(x.GoPointer())
-
 	return cret
 }
 
@@ -486,7 +461,6 @@ var xTextIterEndsTag func(uintptr, uintptr) bool
 func (x *TextIter) EndsTag(TagVar *TextTag) bool {
 
 	cret := xTextIterEndsTag(x.GoPointer(), TagVar.GoPointer())
-
 	return cret
 }
 
@@ -499,7 +473,6 @@ var xTextIterEndsWord func(uintptr) bool
 func (x *TextIter) EndsWord() bool {
 
 	cret := xTextIterEndsWord(x.GoPointer())
-
 	return cret
 }
 
@@ -515,7 +488,6 @@ var xTextIterEqual func(uintptr, *TextIter) bool
 func (x *TextIter) Equal(RhsVar *TextIter) bool {
 
 	cret := xTextIterEqual(x.GoPointer(), RhsVar)
-
 	return cret
 }
 
@@ -531,7 +503,6 @@ var xTextIterForwardChar func(uintptr) bool
 func (x *TextIter) ForwardChar() bool {
 
 	cret := xTextIterForwardChar(x.GoPointer())
-
 	return cret
 }
 
@@ -549,7 +520,6 @@ var xTextIterForwardChars func(uintptr, int) bool
 func (x *TextIter) ForwardChars(CountVar int) bool {
 
 	cret := xTextIterForwardChars(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -573,7 +543,6 @@ var xTextIterForwardCursorPosition func(uintptr) bool
 func (x *TextIter) ForwardCursorPosition() bool {
 
 	cret := xTextIterForwardCursorPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -585,7 +554,6 @@ var xTextIterForwardCursorPositions func(uintptr, int) bool
 func (x *TextIter) ForwardCursorPositions(CountVar int) bool {
 
 	cret := xTextIterForwardCursorPositions(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -614,7 +582,6 @@ func (x *TextIter) ForwardFindChar(PredVar *TextCharPredicate, UserDataVar uintp
 	}
 
 	cret := xTextIterForwardFindChar(x.GoPointer(), PredVarRef, UserDataVar, LimitVar)
-
 	return cret
 }
 
@@ -629,7 +596,6 @@ var xTextIterForwardLine func(uintptr) bool
 func (x *TextIter) ForwardLine() bool {
 
 	cret := xTextIterForwardLine(x.GoPointer())
-
 	return cret
 }
 
@@ -648,7 +614,6 @@ var xTextIterForwardLines func(uintptr, int) bool
 func (x *TextIter) ForwardLines(CountVar int) bool {
 
 	cret := xTextIterForwardLines(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -667,7 +632,6 @@ var xTextIterForwardSearch func(uintptr, string, TextSearchFlags, *TextIter, *Te
 func (x *TextIter) ForwardSearch(StrVar string, FlagsVar TextSearchFlags, MatchStartVar *TextIter, MatchEndVar *TextIter, LimitVar *TextIter) bool {
 
 	cret := xTextIterForwardSearch(x.GoPointer(), StrVar, FlagsVar, MatchStartVar, MatchEndVar, LimitVar)
-
 	return cret
 }
 
@@ -683,7 +647,6 @@ var xTextIterForwardSentenceEnd func(uintptr) bool
 func (x *TextIter) ForwardSentenceEnd() bool {
 
 	cret := xTextIterForwardSentenceEnd(x.GoPointer())
-
 	return cret
 }
 
@@ -695,7 +658,6 @@ var xTextIterForwardSentenceEnds func(uintptr, int) bool
 func (x *TextIter) ForwardSentenceEnds(CountVar int) bool {
 
 	cret := xTextIterForwardSentenceEnds(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -728,7 +690,6 @@ var xTextIterForwardToLineEnd func(uintptr) bool
 func (x *TextIter) ForwardToLineEnd() bool {
 
 	cret := xTextIterForwardToLineEnd(x.GoPointer())
-
 	return cret
 }
 
@@ -746,7 +707,6 @@ var xTextIterForwardToTagToggle func(uintptr, uintptr) bool
 func (x *TextIter) ForwardToTagToggle(TagVar *TextTag) bool {
 
 	cret := xTextIterForwardToTagToggle(x.GoPointer(), TagVar.GoPointer())
-
 	return cret
 }
 
@@ -758,7 +718,6 @@ var xTextIterForwardVisibleCursorPosition func(uintptr) bool
 func (x *TextIter) ForwardVisibleCursorPosition() bool {
 
 	cret := xTextIterForwardVisibleCursorPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -770,7 +729,6 @@ var xTextIterForwardVisibleCursorPositions func(uintptr, int) bool
 func (x *TextIter) ForwardVisibleCursorPositions(CountVar int) bool {
 
 	cret := xTextIterForwardVisibleCursorPositions(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -785,7 +743,6 @@ var xTextIterForwardVisibleLine func(uintptr) bool
 func (x *TextIter) ForwardVisibleLine() bool {
 
 	cret := xTextIterForwardVisibleLine(x.GoPointer())
-
 	return cret
 }
 
@@ -804,7 +761,6 @@ var xTextIterForwardVisibleLines func(uintptr, int) bool
 func (x *TextIter) ForwardVisibleLines(CountVar int) bool {
 
 	cret := xTextIterForwardVisibleLines(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -820,7 +776,6 @@ var xTextIterForwardVisibleWordEnd func(uintptr) bool
 func (x *TextIter) ForwardVisibleWordEnd() bool {
 
 	cret := xTextIterForwardVisibleWordEnd(x.GoPointer())
-
 	return cret
 }
 
@@ -830,7 +785,6 @@ var xTextIterForwardVisibleWordEnds func(uintptr, int) bool
 func (x *TextIter) ForwardVisibleWordEnds(CountVar int) bool {
 
 	cret := xTextIterForwardVisibleWordEnds(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -846,7 +800,6 @@ var xTextIterForwardWordEnd func(uintptr) bool
 func (x *TextIter) ForwardWordEnd() bool {
 
 	cret := xTextIterForwardWordEnd(x.GoPointer())
-
 	return cret
 }
 
@@ -856,7 +809,6 @@ var xTextIterForwardWordEnds func(uintptr, int) bool
 func (x *TextIter) ForwardWordEnds(CountVar int) bool {
 
 	cret := xTextIterForwardWordEnds(x.GoPointer(), CountVar)
-
 	return cret
 }
 
@@ -897,7 +849,6 @@ var xTextIterGetBytesInLine func(uintptr) int
 func (x *TextIter) GetBytesInLine() int {
 
 	cret := xTextIterGetBytesInLine(x.GoPointer())
-
 	return cret
 }
 
@@ -915,7 +866,6 @@ var xTextIterGetChar func(uintptr) uint32
 func (x *TextIter) GetChar() uint32 {
 
 	cret := xTextIterGetChar(x.GoPointer())
-
 	return cret
 }
 
@@ -926,7 +876,6 @@ var xTextIterGetCharsInLine func(uintptr) int
 func (x *TextIter) GetCharsInLine() int {
 
 	cret := xTextIterGetCharsInLine(x.GoPointer())
-
 	return cret
 }
 
@@ -959,7 +908,6 @@ var xTextIterGetLanguage func(uintptr) *pango.Language
 func (x *TextIter) GetLanguage() *pango.Language {
 
 	cret := xTextIterGetLanguage(x.GoPointer())
-
 	return cret
 }
 
@@ -972,7 +920,6 @@ var xTextIterGetLine func(uintptr) int
 func (x *TextIter) GetLine() int {
 
 	cret := xTextIterGetLine(x.GoPointer())
-
 	return cret
 }
 
@@ -987,7 +934,6 @@ var xTextIterGetLineIndex func(uintptr) int
 func (x *TextIter) GetLineIndex() int {
 
 	cret := xTextIterGetLineIndex(x.GoPointer())
-
 	return cret
 }
 
@@ -1000,7 +946,6 @@ var xTextIterGetLineOffset func(uintptr) int
 func (x *TextIter) GetLineOffset() int {
 
 	cret := xTextIterGetLineOffset(x.GoPointer())
-
 	return cret
 }
 
@@ -1016,7 +961,6 @@ var xTextIterGetMarks func(uintptr) *glib.SList
 func (x *TextIter) GetMarks() *glib.SList {
 
 	cret := xTextIterGetMarks(x.GoPointer())
-
 	return cret
 }
 
@@ -1031,7 +975,6 @@ var xTextIterGetOffset func(uintptr) int
 func (x *TextIter) GetOffset() int {
 
 	cret := xTextIterGetOffset(x.GoPointer())
-
 	return cret
 }
 
@@ -1069,7 +1012,6 @@ var xTextIterGetSlice func(uintptr, *TextIter) string
 func (x *TextIter) GetSlice(EndVar *TextIter) string {
 
 	cret := xTextIterGetSlice(x.GoPointer(), EndVar)
-
 	return cret
 }
 
@@ -1085,7 +1027,6 @@ var xTextIterGetTags func(uintptr) *glib.SList
 func (x *TextIter) GetTags() *glib.SList {
 
 	cret := xTextIterGetTags(x.GoPointer())
-
 	return cret
 }
 
@@ -1101,7 +1042,6 @@ var xTextIterGetText func(uintptr, *TextIter) string
 func (x *TextIter) GetText(EndVar *TextIter) string {
 
 	cret := xTextIterGetText(x.GoPointer(), EndVar)
-
 	return cret
 }
 
@@ -1118,7 +1058,6 @@ var xTextIterGetToggledTags func(uintptr, bool) *glib.SList
 func (x *TextIter) GetToggledTags(ToggledOnVar bool) *glib.SList {
 
 	cret := xTextIterGetToggledTags(x.GoPointer(), ToggledOnVar)
-
 	return cret
 }
 
@@ -1131,7 +1070,6 @@ var xTextIterGetVisibleLineIndex func(uintptr) int
 func (x *TextIter) GetVisibleLineIndex() int {
 
 	cret := xTextIterGetVisibleLineIndex(x.GoPointer())
-
 	return cret
 }
 
@@ -1144,7 +1082,6 @@ var xTextIterGetVisibleLineOffset func(uintptr) int
 func (x *TextIter) GetVisibleLineOffset() int {
 
 	cret := xTextIterGetVisibleLineOffset(x.GoPointer())
-
 	return cret
 }
 
@@ -1159,7 +1096,6 @@ var xTextIterGetVisibleSlice func(uintptr, *TextIter) string
 func (x *TextIter) GetVisibleSlice(EndVar *TextIter) string {
 
 	cret := xTextIterGetVisibleSlice(x.GoPointer(), EndVar)
-
 	return cret
 }
 
@@ -1174,7 +1110,6 @@ var xTextIterGetVisibleText func(uintptr, *TextIter) string
 func (x *TextIter) GetVisibleText(EndVar *TextIter) string {
 
 	cret := xTextIterGetVisibleText(x.GoPointer(), EndVar)
-
 	return cret
 }
 
@@ -1188,7 +1123,6 @@ var xTextIterHasTag func(uintptr, uintptr) bool
 func (x *TextIter) HasTag(TagVar *TextTag) bool {
 
 	cret := xTextIterHasTag(x.GoPointer(), TagVar.GoPointer())
-
 	return cret
 }
 
@@ -1200,7 +1134,6 @@ var xTextIterInRange func(uintptr, *TextIter, *TextIter) bool
 func (x *TextIter) InRange(StartVar *TextIter, EndVar *TextIter) bool {
 
 	cret := xTextIterInRange(x.GoPointer(), StartVar, EndVar)
-
 	return cret
 }
 
@@ -1215,7 +1148,6 @@ var xTextIterInsideSentence func(uintptr) bool
 func (x *TextIter) InsideSentence() bool {
 
 	cret := xTextIterInsideSentence(x.GoPointer())
-
 	return cret
 }
 
@@ -1233,7 +1165,6 @@ var xTextIterInsideWord func(uintptr) bool
 func (x *TextIter) InsideWord() bool {
 
 	cret := xTextIterInsideWord(x.GoPointer())
-
 	return cret
 }
 
@@ -1247,7 +1178,6 @@ var xTextIterIsCursorPosition func(uintptr) bool
 func (x *TextIter) IsCursorPosition() bool {
 
 	cret := xTextIterIsCursorPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -1261,7 +1191,6 @@ var xTextIterIsEnd func(uintptr) bool
 func (x *TextIter) IsEnd() bool {
 
 	cret := xTextIterIsEnd(x.GoPointer())
-
 	return cret
 }
 
@@ -1271,7 +1200,6 @@ var xTextIterIsStart func(uintptr) bool
 func (x *TextIter) IsStart() bool {
 
 	cret := xTextIterIsStart(x.GoPointer())
-
 	return cret
 }
 
@@ -1376,7 +1304,6 @@ var xTextIterStartsLine func(uintptr) bool
 func (x *TextIter) StartsLine() bool {
 
 	cret := xTextIterStartsLine(x.GoPointer())
-
 	return cret
 }
 
@@ -1389,7 +1316,6 @@ var xTextIterStartsSentence func(uintptr) bool
 func (x *TextIter) StartsSentence() bool {
 
 	cret := xTextIterStartsSentence(x.GoPointer())
-
 	return cret
 }
 
@@ -1408,7 +1334,6 @@ var xTextIterStartsTag func(uintptr, uintptr) bool
 func (x *TextIter) StartsTag(TagVar *TextTag) bool {
 
 	cret := xTextIterStartsTag(x.GoPointer(), TagVar.GoPointer())
-
 	return cret
 }
 
@@ -1421,7 +1346,6 @@ var xTextIterStartsWord func(uintptr) bool
 func (x *TextIter) StartsWord() bool {
 
 	cret := xTextIterStartsWord(x.GoPointer())
-
 	return cret
 }
 
@@ -1435,7 +1359,6 @@ var xTextIterTogglesTag func(uintptr, uintptr) bool
 func (x *TextIter) TogglesTag(TagVar *TextTag) bool {
 
 	cret := xTextIterTogglesTag(x.GoPointer(), TagVar.GoPointer())
-
 	return cret
 }
 

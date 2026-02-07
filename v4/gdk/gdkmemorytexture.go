@@ -110,7 +110,6 @@ func (x *MemoryTexture) GetCurrentImage() *PaintableBase {
 func (x *MemoryTexture) GetFlags() PaintableFlags {
 
 	cret := XGdkPaintableGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -134,7 +133,6 @@ func (x *MemoryTexture) GetFlags() PaintableFlags {
 func (x *MemoryTexture) GetIntrinsicAspectRatio() float64 {
 
 	cret := XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
-
 	return cret
 }
 
@@ -151,7 +149,6 @@ func (x *MemoryTexture) GetIntrinsicAspectRatio() float64 {
 func (x *MemoryTexture) GetIntrinsicHeight() int {
 
 	cret := XGdkPaintableGetIntrinsicHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -168,7 +165,6 @@ func (x *MemoryTexture) GetIntrinsicHeight() int {
 func (x *MemoryTexture) GetIntrinsicWidth() int {
 
 	cret := XGdkPaintableGetIntrinsicWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -219,7 +215,6 @@ func (x *MemoryTexture) Snapshot(SnapshotVar *Snapshot, WidthVar float64, Height
 func (x *MemoryTexture) Equal(Icon2Var gio.Icon) bool {
 
 	cret := gio.XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
-
 	return cret
 }
 
@@ -227,7 +222,6 @@ func (x *MemoryTexture) Equal(Icon2Var gio.Icon) bool {
 func (x *MemoryTexture) Hash() uint {
 
 	cret := gio.XGIconHash(x.GoPointer())
-
 	return cret
 }
 
@@ -239,7 +233,6 @@ func (x *MemoryTexture) Hash() uint {
 func (x *MemoryTexture) Serialize() *glib.Variant {
 
 	cret := gio.XGIconSerialize(x.GoPointer())
-
 	return cret
 }
 
@@ -262,7 +255,6 @@ func (x *MemoryTexture) Serialize() *glib.Variant {
 func (x *MemoryTexture) ToString() string {
 
 	cret := gio.XGIconToString(x.GoPointer())
-
 	return cret
 }
 

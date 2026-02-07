@@ -202,7 +202,6 @@ var xInetAddressEqual func(uintptr, uintptr) bool
 func (x *InetAddress) Equal(OtherAddressVar *InetAddress) bool {
 
 	cret := xInetAddressEqual(x.GoPointer(), OtherAddressVar.GoPointer())
-
 	return cret
 }
 
@@ -212,7 +211,6 @@ var xInetAddressGetFamily func(uintptr) SocketFamily
 func (x *InetAddress) GetFamily() SocketFamily {
 
 	cret := xInetAddressGetFamily(x.GoPointer())
-
 	return cret
 }
 
@@ -222,7 +220,6 @@ var xInetAddressGetFlowinfo func(uintptr) uint32
 func (x *InetAddress) GetFlowinfo() uint32 {
 
 	cret := xInetAddressGetFlowinfo(x.GoPointer())
-
 	return cret
 }
 
@@ -232,7 +229,6 @@ var xInetAddressGetIsAny func(uintptr) bool
 func (x *InetAddress) GetIsAny() bool {
 
 	cret := xInetAddressGetIsAny(x.GoPointer())
-
 	return cret
 }
 
@@ -244,7 +240,6 @@ var xInetAddressGetIsLinkLocal func(uintptr) bool
 func (x *InetAddress) GetIsLinkLocal() bool {
 
 	cret := xInetAddressGetIsLinkLocal(x.GoPointer())
-
 	return cret
 }
 
@@ -254,7 +249,6 @@ var xInetAddressGetIsLoopback func(uintptr) bool
 func (x *InetAddress) GetIsLoopback() bool {
 
 	cret := xInetAddressGetIsLoopback(x.GoPointer())
-
 	return cret
 }
 
@@ -264,7 +258,6 @@ var xInetAddressGetIsMcGlobal func(uintptr) bool
 func (x *InetAddress) GetIsMcGlobal() bool {
 
 	cret := xInetAddressGetIsMcGlobal(x.GoPointer())
-
 	return cret
 }
 
@@ -274,7 +267,6 @@ var xInetAddressGetIsMcLinkLocal func(uintptr) bool
 func (x *InetAddress) GetIsMcLinkLocal() bool {
 
 	cret := xInetAddressGetIsMcLinkLocal(x.GoPointer())
-
 	return cret
 }
 
@@ -284,7 +276,6 @@ var xInetAddressGetIsMcNodeLocal func(uintptr) bool
 func (x *InetAddress) GetIsMcNodeLocal() bool {
 
 	cret := xInetAddressGetIsMcNodeLocal(x.GoPointer())
-
 	return cret
 }
 
@@ -294,7 +285,6 @@ var xInetAddressGetIsMcOrgLocal func(uintptr) bool
 func (x *InetAddress) GetIsMcOrgLocal() bool {
 
 	cret := xInetAddressGetIsMcOrgLocal(x.GoPointer())
-
 	return cret
 }
 
@@ -304,7 +294,6 @@ var xInetAddressGetIsMcSiteLocal func(uintptr) bool
 func (x *InetAddress) GetIsMcSiteLocal() bool {
 
 	cret := xInetAddressGetIsMcSiteLocal(x.GoPointer())
-
 	return cret
 }
 
@@ -314,7 +303,6 @@ var xInetAddressGetIsMulticast func(uintptr) bool
 func (x *InetAddress) GetIsMulticast() bool {
 
 	cret := xInetAddressGetIsMulticast(x.GoPointer())
-
 	return cret
 }
 
@@ -327,7 +315,6 @@ var xInetAddressGetIsSiteLocal func(uintptr) bool
 func (x *InetAddress) GetIsSiteLocal() bool {
 
 	cret := xInetAddressGetIsSiteLocal(x.GoPointer())
-
 	return cret
 }
 
@@ -338,7 +325,6 @@ var xInetAddressGetNativeSize func(uintptr) uint
 func (x *InetAddress) GetNativeSize() uint {
 
 	cret := xInetAddressGetNativeSize(x.GoPointer())
-
 	return cret
 }
 
@@ -348,7 +334,6 @@ var xInetAddressGetScopeId func(uintptr) uint32
 func (x *InetAddress) GetScopeId() uint32 {
 
 	cret := xInetAddressGetScopeId(x.GoPointer())
-
 	return cret
 }
 
@@ -358,7 +343,6 @@ var xInetAddressToBytes func(uintptr) byte
 func (x *InetAddress) ToBytes() byte {
 
 	cret := xInetAddressToBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -368,7 +352,6 @@ var xInetAddressToString func(uintptr) string
 func (x *InetAddress) ToString() string {
 
 	cret := xInetAddressToString(x.GoPointer())
-
 	return cret
 }
 

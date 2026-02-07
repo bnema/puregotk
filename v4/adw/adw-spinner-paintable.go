@@ -168,7 +168,6 @@ func (x *SpinnerPaintable) GetCurrentImage() *gdk.PaintableBase {
 func (x *SpinnerPaintable) GetFlags() gdk.PaintableFlags {
 
 	cret := gdk.XGdkPaintableGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -192,7 +191,6 @@ func (x *SpinnerPaintable) GetFlags() gdk.PaintableFlags {
 func (x *SpinnerPaintable) GetIntrinsicAspectRatio() float64 {
 
 	cret := gdk.XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
-
 	return cret
 }
 
@@ -209,7 +207,6 @@ func (x *SpinnerPaintable) GetIntrinsicAspectRatio() float64 {
 func (x *SpinnerPaintable) GetIntrinsicHeight() int {
 
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -226,7 +223,6 @@ func (x *SpinnerPaintable) GetIntrinsicHeight() int {
 func (x *SpinnerPaintable) GetIntrinsicWidth() int {
 
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
-
 	return cret
 }
 

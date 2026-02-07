@@ -326,7 +326,6 @@ var xStyleContextGetScale func(uintptr) int
 func (x *StyleContext) GetScale() int {
 
 	cret := xStyleContextGetScale(x.GoPointer())
-
 	return cret
 }
 
@@ -342,7 +341,6 @@ var xStyleContextGetState func(uintptr) StateFlags
 func (x *StyleContext) GetState() StateFlags {
 
 	cret := xStyleContextGetState(x.GoPointer())
-
 	return cret
 }
 
@@ -353,7 +351,6 @@ var xStyleContextHasClass func(uintptr, string) bool
 func (x *StyleContext) HasClass(ClassNameVar string) bool {
 
 	cret := xStyleContextHasClass(x.GoPointer(), ClassNameVar)
-
 	return cret
 }
 
@@ -363,7 +360,6 @@ var xStyleContextLookupColor func(uintptr, string, *gdk.RGBA) bool
 func (x *StyleContext) LookupColor(ColorNameVar string, ColorVar *gdk.RGBA) bool {
 
 	cret := xStyleContextLookupColor(x.GoPointer(), ColorNameVar, ColorVar)
-
 	return cret
 }
 
@@ -463,7 +459,6 @@ var xStyleContextToString func(uintptr, StyleContextPrintFlags) string
 func (x *StyleContext) ToString(FlagsVar StyleContextPrintFlags) string {
 
 	cret := xStyleContextToString(x.GoPointer(), FlagsVar)
-
 	return cret
 }
 

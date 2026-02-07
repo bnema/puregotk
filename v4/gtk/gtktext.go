@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -202,7 +201,6 @@ var xTextGetActivatesDefault func(uintptr) bool
 func (x *Text) GetActivatesDefault() bool {
 
 	cret := xTextGetActivatesDefault(x.GoPointer())
-
 	return cret
 }
 
@@ -214,7 +212,6 @@ var xTextGetAttributes func(uintptr) *pango.AttrList
 func (x *Text) GetAttributes() *pango.AttrList {
 
 	cret := xTextGetAttributes(x.GoPointer())
-
 	return cret
 }
 
@@ -242,7 +239,6 @@ var xTextGetEnableEmojiCompletion func(uintptr) bool
 func (x *Text) GetEnableEmojiCompletion() bool {
 
 	cret := xTextGetEnableEmojiCompletion(x.GoPointer())
-
 	return cret
 }
 
@@ -271,7 +267,6 @@ var xTextGetInputHints func(uintptr) InputHints
 func (x *Text) GetInputHints() InputHints {
 
 	cret := xTextGetInputHints(x.GoPointer())
-
 	return cret
 }
 
@@ -281,7 +276,6 @@ var xTextGetInputPurpose func(uintptr) InputPurpose
 func (x *Text) GetInputPurpose() InputPurpose {
 
 	cret := xTextGetInputPurpose(x.GoPointer())
-
 	return cret
 }
 
@@ -295,7 +289,6 @@ var xTextGetInvisibleChar func(uintptr) uint32
 func (x *Text) GetInvisibleChar() uint32 {
 
 	cret := xTextGetInvisibleChar(x.GoPointer())
-
 	return cret
 }
 
@@ -310,7 +303,6 @@ var xTextGetMaxLength func(uintptr) int
 func (x *Text) GetMaxLength() int {
 
 	cret := xTextGetMaxLength(x.GoPointer())
-
 	return cret
 }
 
@@ -322,7 +314,6 @@ var xTextGetOverwriteMode func(uintptr) bool
 func (x *Text) GetOverwriteMode() bool {
 
 	cret := xTextGetOverwriteMode(x.GoPointer())
-
 	return cret
 }
 
@@ -335,7 +326,6 @@ var xTextGetPlaceholderText func(uintptr) string
 func (x *Text) GetPlaceholderText() string {
 
 	cret := xTextGetPlaceholderText(x.GoPointer())
-
 	return cret
 }
 
@@ -346,7 +336,6 @@ var xTextGetPropagateTextWidth func(uintptr) bool
 func (x *Text) GetPropagateTextWidth() bool {
 
 	cret := xTextGetPropagateTextWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -358,7 +347,6 @@ var xTextGetTabs func(uintptr) *pango.TabArray
 func (x *Text) GetTabs() *pango.TabArray {
 
 	cret := xTextGetTabs(x.GoPointer())
-
 	return cret
 }
 
@@ -371,7 +359,6 @@ var xTextGetTextLength func(uintptr) uint16
 func (x *Text) GetTextLength() uint16 {
 
 	cret := xTextGetTextLength(x.GoPointer())
-
 	return cret
 }
 
@@ -381,7 +368,6 @@ var xTextGetTruncateMultiline func(uintptr) bool
 func (x *Text) GetTruncateMultiline() bool {
 
 	cret := xTextGetTruncateMultiline(x.GoPointer())
-
 	return cret
 }
 
@@ -391,7 +377,6 @@ var xTextGetVisibility func(uintptr) bool
 func (x *Text) GetVisibility() bool {
 
 	cret := xTextGetVisibility(x.GoPointer())
-
 	return cret
 }
 
@@ -408,7 +393,6 @@ var xTextGrabFocusWithoutSelecting func(uintptr) bool
 func (x *Text) GrabFocusWithoutSelecting() bool {
 
 	cret := xTextGrabFocusWithoutSelecting(x.GoPointer())
-
 	return cret
 }
 
@@ -535,11 +519,10 @@ var xTextSetPlaceholderText func(uintptr, uintptr)
 // contents of the text widget.
 func (x *Text) SetPlaceholderText(TextVar *string) {
 
-	TextVarPtr, TextVarBytes := core.NullableStringToPtr(TextVar)
+	TextVarPtr := core.GStrdupNullable(TextVar)
+	defer core.GFreeNullable(TextVarPtr)
 
 	xTextSetPlaceholderText(x.GoPointer(), TextVarPtr)
-
-	runtime.KeepAlive(TextVarBytes)
 
 }
 
@@ -1243,7 +1226,6 @@ func (x *Text) GetAccessibleParent() *AccessibleBase {
 func (x *Text) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -1269,7 +1251,6 @@ func (x *Text) GetAtContext() *ATContext {
 func (x *Text) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -1309,7 +1290,6 @@ func (x *Text) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Text) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1523,7 +1503,6 @@ func (x *Text) UpdateSelectionBound() {
 func (x *Text) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -1566,7 +1545,6 @@ func (x *Text) GetBuildableId() string {
 func (x *Text) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1607,7 +1585,6 @@ func (x *Text) FinishDelegate() {
 func (x *Text) GetAlignment() float32 {
 
 	cret := XGtkEditableGetAlignment(x.GoPointer())
-
 	return cret
 }
 
@@ -1622,7 +1599,6 @@ func (x *Text) GetAlignment() float32 {
 func (x *Text) GetChars(StartPosVar int, EndPosVar int) string {
 
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -1648,7 +1624,6 @@ func (x *Text) GetDelegate() *EditableBase {
 func (x *Text) GetEditable() bool {
 
 	cret := XGtkEditableGetEditable(x.GoPointer())
-
 	return cret
 }
 
@@ -1656,7 +1631,6 @@ func (x *Text) GetEditable() bool {
 func (x *Text) GetEnableUndo() bool {
 
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
-
 	return cret
 }
 
@@ -1664,7 +1638,6 @@ func (x *Text) GetEnableUndo() bool {
 func (x *Text) GetMaxWidthChars() int {
 
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
-
 	return cret
 }
 
@@ -1675,7 +1648,6 @@ func (x *Text) GetMaxWidthChars() int {
 func (x *Text) GetPosition() int {
 
 	cret := XGtkEditableGetPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -1689,7 +1661,6 @@ func (x *Text) GetPosition() int {
 func (x *Text) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -1699,7 +1670,6 @@ func (x *Text) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 func (x *Text) GetText() string {
 
 	cret := XGtkEditableGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -1708,7 +1678,6 @@ func (x *Text) GetText() string {
 func (x *Text) GetWidthChars() int {
 
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
-
 	return cret
 }
 

@@ -3,7 +3,6 @@ package adw
 
 import (
 	"fmt"
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -231,15 +230,13 @@ var xNewMessageDialog func(uintptr, uintptr, uintptr) uintptr
 func NewMessageDialog(ParentVar *gtk.Window, HeadingVar *string, BodyVar *string) *MessageDialog {
 	var cls *MessageDialog
 
-	HeadingVarPtr, HeadingVarBytes := core.NullableStringToPtr(HeadingVar)
+	HeadingVarPtr := core.GStrdupNullable(HeadingVar)
+	defer core.GFreeNullable(HeadingVarPtr)
 
-	BodyVarPtr, BodyVarBytes := core.NullableStringToPtr(BodyVar)
+	BodyVarPtr := core.GStrdupNullable(BodyVar)
+	defer core.GFreeNullable(BodyVarPtr)
 
 	cret := xNewMessageDialog(ParentVar.GoPointer(), HeadingVarPtr, BodyVarPtr)
-
-	runtime.KeepAlive(HeadingVarBytes)
-
-	runtime.KeepAlive(BodyVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -329,7 +326,6 @@ var xMessageDialogChooseFinish func(uintptr, uintptr) string
 func (x *MessageDialog) ChooseFinish(ResultVar gio.AsyncResult) string {
 
 	cret := xMessageDialogChooseFinish(x.GoPointer(), ResultVar.GoPointer())
-
 	return cret
 }
 
@@ -395,7 +391,6 @@ var xMessageDialogGetBody func(uintptr) string
 func (x *MessageDialog) GetBody() string {
 
 	cret := xMessageDialogGetBody(x.GoPointer())
-
 	return cret
 }
 
@@ -405,7 +400,6 @@ var xMessageDialogGetBodyUseMarkup func(uintptr) bool
 func (x *MessageDialog) GetBodyUseMarkup() bool {
 
 	cret := xMessageDialogGetBodyUseMarkup(x.GoPointer())
-
 	return cret
 }
 
@@ -415,7 +409,6 @@ var xMessageDialogGetCloseResponse func(uintptr) string
 func (x *MessageDialog) GetCloseResponse() string {
 
 	cret := xMessageDialogGetCloseResponse(x.GoPointer())
-
 	return cret
 }
 
@@ -425,7 +418,6 @@ var xMessageDialogGetDefaultResponse func(uintptr) string
 func (x *MessageDialog) GetDefaultResponse() string {
 
 	cret := xMessageDialogGetDefaultResponse(x.GoPointer())
-
 	return cret
 }
 
@@ -452,7 +444,6 @@ var xMessageDialogGetHeading func(uintptr) string
 func (x *MessageDialog) GetHeading() string {
 
 	cret := xMessageDialogGetHeading(x.GoPointer())
-
 	return cret
 }
 
@@ -462,7 +453,6 @@ var xMessageDialogGetHeadingUseMarkup func(uintptr) bool
 func (x *MessageDialog) GetHeadingUseMarkup() bool {
 
 	cret := xMessageDialogGetHeadingUseMarkup(x.GoPointer())
-
 	return cret
 }
 
@@ -474,7 +464,6 @@ var xMessageDialogGetResponseAppearance func(uintptr, string) ResponseAppearance
 func (x *MessageDialog) GetResponseAppearance(ResponseVar string) ResponseAppearance {
 
 	cret := xMessageDialogGetResponseAppearance(x.GoPointer(), ResponseVar)
-
 	return cret
 }
 
@@ -486,7 +475,6 @@ var xMessageDialogGetResponseEnabled func(uintptr, string) bool
 func (x *MessageDialog) GetResponseEnabled(ResponseVar string) bool {
 
 	cret := xMessageDialogGetResponseEnabled(x.GoPointer(), ResponseVar)
-
 	return cret
 }
 
@@ -498,7 +486,6 @@ var xMessageDialogGetResponseLabel func(uintptr, string) string
 func (x *MessageDialog) GetResponseLabel(ResponseVar string) string {
 
 	cret := xMessageDialogGetResponseLabel(x.GoPointer(), ResponseVar)
-
 	return cret
 }
 
@@ -508,7 +495,6 @@ var xMessageDialogHasResponse func(uintptr, string) bool
 func (x *MessageDialog) HasResponse(ResponseVar string) bool {
 
 	cret := xMessageDialogHasResponse(x.GoPointer(), ResponseVar)
-
 	return cret
 }
 
@@ -581,11 +567,10 @@ var xMessageDialogSetDefaultResponse func(uintptr, uintptr)
 // See [property@Gtk.Window:default-widget].
 func (x *MessageDialog) SetDefaultResponse(ResponseVar *string) {
 
-	ResponseVarPtr, ResponseVarBytes := core.NullableStringToPtr(ResponseVar)
+	ResponseVarPtr := core.GStrdupNullable(ResponseVar)
+	defer core.GFreeNullable(ResponseVarPtr)
 
 	xMessageDialogSetDefaultResponse(x.GoPointer(), ResponseVarPtr)
-
-	runtime.KeepAlive(ResponseVarBytes)
 
 }
 
@@ -605,11 +590,10 @@ var xMessageDialogSetHeading func(uintptr, uintptr)
 // Sets the heading of @self.
 func (x *MessageDialog) SetHeading(HeadingVar *string) {
 
-	HeadingVarPtr, HeadingVarBytes := core.NullableStringToPtr(HeadingVar)
+	HeadingVarPtr := core.GStrdupNullable(HeadingVar)
+	defer core.GFreeNullable(HeadingVarPtr)
 
 	xMessageDialogSetHeading(x.GoPointer(), HeadingVarPtr)
-
-	runtime.KeepAlive(HeadingVarBytes)
 
 }
 
@@ -924,7 +908,6 @@ func (x *MessageDialog) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *MessageDialog) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -950,7 +933,6 @@ func (x *MessageDialog) GetAtContext() *gtk.ATContext {
 func (x *MessageDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -990,7 +972,6 @@ func (x *MessageDialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *MessageDialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1167,7 +1148,6 @@ func (x *MessageDialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessi
 func (x *MessageDialog) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

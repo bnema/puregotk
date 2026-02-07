@@ -2,8 +2,6 @@
 package glib
 
 import (
-	"runtime"
-
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
@@ -83,11 +81,10 @@ var xOnErrorStackTrace func(uintptr)
 // handle that exception (see [Running GLib Applications](running.html)).
 func OnErrorStackTrace(PrgNameVar *string) {
 
-	PrgNameVarPtr, PrgNameVarBytes := core.NullableStringToPtr(PrgNameVar)
+	PrgNameVarPtr := core.GStrdupNullable(PrgNameVar)
+	defer core.GFreeNullable(PrgNameVarPtr)
 
 	xOnErrorStackTrace(PrgNameVarPtr)
-
-	runtime.KeepAlive(PrgNameVarBytes)
 
 }
 

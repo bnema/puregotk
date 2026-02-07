@@ -72,7 +72,6 @@ var xGesturePanGetOrientation func(uintptr) Orientation
 func (x *GesturePan) GetOrientation() Orientation {
 
 	cret := xGesturePanGetOrientation(x.GoPointer())
-
 	return cret
 }
 

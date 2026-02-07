@@ -294,7 +294,6 @@ var xMemoryOutputStreamGetData func(uintptr) uintptr
 func (x *MemoryOutputStream) GetData() uintptr {
 
 	cret := xMemoryOutputStreamGetData(x.GoPointer())
-
 	return cret
 }
 
@@ -305,7 +304,6 @@ var xMemoryOutputStreamGetDataSize func(uintptr) uint
 func (x *MemoryOutputStream) GetDataSize() uint {
 
 	cret := xMemoryOutputStreamGetDataSize(x.GoPointer())
-
 	return cret
 }
 
@@ -329,7 +327,6 @@ var xMemoryOutputStreamGetSize func(uintptr) uint
 func (x *MemoryOutputStream) GetSize() uint {
 
 	cret := xMemoryOutputStreamGetSize(x.GoPointer())
-
 	return cret
 }
 
@@ -340,7 +337,6 @@ var xMemoryOutputStreamStealAsBytes func(uintptr) *glib.Bytes
 func (x *MemoryOutputStream) StealAsBytes() *glib.Bytes {
 
 	cret := xMemoryOutputStreamStealAsBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -355,7 +351,6 @@ var xMemoryOutputStreamStealData func(uintptr) uintptr
 func (x *MemoryOutputStream) StealData() uintptr {
 
 	cret := xMemoryOutputStreamStealData(x.GoPointer())
-
 	return cret
 }
 
@@ -456,7 +451,6 @@ func (x *MemoryOutputStream) GetPropertySize() uint {
 func (x *MemoryOutputStream) CanPoll() bool {
 
 	cret := XGPollableOutputStreamCanPoll(x.GoPointer())
-
 	return cret
 }
 
@@ -474,7 +468,6 @@ func (x *MemoryOutputStream) CanPoll() bool {
 func (x *MemoryOutputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 
 	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
-
 	return cret
 }
 
@@ -492,7 +485,6 @@ func (x *MemoryOutputStream) CreateSource(CancellableVar *Cancellable) *glib.Sou
 func (x *MemoryOutputStream) IsWritable() bool {
 
 	cret := XGPollableOutputStreamIsWritable(x.GoPointer())
-
 	return cret
 }
 
@@ -518,7 +510,6 @@ func (x *MemoryOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint, C
 	var cerr *glib.Error
 
 	cret := XGPollableOutputStreamWriteNonblocking(x.GoPointer(), BufferVar, CountVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -549,7 +540,6 @@ func (x *MemoryOutputStream) WritevNonblocking(VectorsVar []OutputVector, NVecto
 	var cerr *glib.Error
 
 	cret := XGPollableOutputStreamWritevNonblocking(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -561,7 +551,6 @@ func (x *MemoryOutputStream) WritevNonblocking(VectorsVar []OutputVector, NVecto
 func (x *MemoryOutputStream) CanSeek() bool {
 
 	cret := XGSeekableCanSeek(x.GoPointer())
-
 	return cret
 }
 
@@ -570,7 +559,6 @@ func (x *MemoryOutputStream) CanSeek() bool {
 func (x *MemoryOutputStream) CanTruncate() bool {
 
 	cret := XGSeekableCanTruncate(x.GoPointer())
-
 	return cret
 }
 
@@ -592,7 +580,6 @@ func (x *MemoryOutputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancel
 	var cerr *glib.Error
 
 	cret := XGSeekableSeek(x.GoPointer(), OffsetVar, TypeVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -604,7 +591,6 @@ func (x *MemoryOutputStream) Seek(OffsetVar int64, TypeVar glib.SeekType, Cancel
 func (x *MemoryOutputStream) Tell() int64 {
 
 	cret := XGSeekableTell(x.GoPointer())
-
 	return cret
 }
 
@@ -621,7 +607,6 @@ func (x *MemoryOutputStream) Truncate(OffsetVar int64, CancellableVar *Cancellab
 	var cerr *glib.Error
 
 	cret := XGSeekableTruncate(x.GoPointer(), OffsetVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

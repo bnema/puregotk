@@ -438,7 +438,6 @@ var xPixbufAnimationGetHeight func(uintptr) int
 func (x *PixbufAnimation) GetHeight() int {
 
 	cret := xPixbufAnimationGetHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -524,7 +523,6 @@ var xPixbufAnimationGetWidth func(uintptr) int
 func (x *PixbufAnimation) GetWidth() int {
 
 	cret := xPixbufAnimationGetWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -539,7 +537,6 @@ var xPixbufAnimationIsStaticImage func(uintptr) bool
 func (x *PixbufAnimation) IsStaticImage() bool {
 
 	cret := xPixbufAnimationIsStaticImage(x.GoPointer())
-
 	return cret
 }
 
@@ -654,7 +651,6 @@ var xPixbufAnimationIterAdvance func(uintptr, *glib.TimeVal) bool
 func (x *PixbufAnimationIter) Advance(CurrentTimeVar *glib.TimeVal) bool {
 
 	cret := xPixbufAnimationIterAdvance(x.GoPointer(), CurrentTimeVar)
-
 	return cret
 }
 
@@ -672,7 +668,6 @@ var xPixbufAnimationIterGetDelayTime func(uintptr) int
 func (x *PixbufAnimationIter) GetDelayTime() int {
 
 	cret := xPixbufAnimationIterGetDelayTime(x.GoPointer())
-
 	return cret
 }
 
@@ -718,7 +713,6 @@ var xPixbufAnimationIterOnCurrentlyLoadingFrame func(uintptr) bool
 func (x *PixbufAnimationIter) OnCurrentlyLoadingFrame() bool {
 
 	cret := xPixbufAnimationIterOnCurrentlyLoadingFrame(x.GoPointer())
-
 	return cret
 }
 

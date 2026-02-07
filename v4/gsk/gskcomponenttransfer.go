@@ -12,7 +12,6 @@ var xComponentTransferEqual func(uintptr, uintptr) bool
 func ComponentTransferEqual(SelfVar uintptr, OtherVar uintptr) bool {
 
 	cret := xComponentTransferEqual(SelfVar, OtherVar)
-
 	return cret
 }
 

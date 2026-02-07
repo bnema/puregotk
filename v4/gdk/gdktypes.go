@@ -65,7 +65,6 @@ var xColorStateEqual func(uintptr, *ColorState) bool
 func (x *ColorState) Equal(OtherVar *ColorState) bool {
 
 	cret := xColorStateEqual(x.GoPointer(), OtherVar)
-
 	return cret
 }
 
@@ -78,7 +77,6 @@ var xColorStateEquivalent func(uintptr, *ColorState) bool
 func (x *ColorState) Equivalent(OtherVar *ColorState) bool {
 
 	cret := xColorStateEquivalent(x.GoPointer(), OtherVar)
-
 	return cret
 }
 
@@ -88,7 +86,6 @@ var xColorStateRef func(uintptr) *ColorState
 func (x *ColorState) Ref() *ColorState {
 
 	cret := xColorStateRef(x.GoPointer())
-
 	return cret
 }
 
@@ -159,7 +156,6 @@ var xNewContentFormats func([]string, uint) *ContentFormats
 func NewContentFormats(MimeTypesVar []string, NMimeTypesVar uint) *ContentFormats {
 
 	cret := xNewContentFormats(MimeTypesVar, NMimeTypesVar)
-
 	return cret
 }
 
@@ -169,7 +165,6 @@ var xNewContentFormatsForGtype func(types.GType) *ContentFormats
 func NewContentFormatsForGtype(TypeVar types.GType) *ContentFormats {
 
 	cret := xNewContentFormatsForGtype(TypeVar)
-
 	return cret
 }
 
@@ -179,7 +174,6 @@ var xContentFormatsContainGtype func(uintptr, types.GType) bool
 func (x *ContentFormats) ContainGtype(TypeVar types.GType) bool {
 
 	cret := xContentFormatsContainGtype(x.GoPointer(), TypeVar)
-
 	return cret
 }
 
@@ -189,7 +183,6 @@ var xContentFormatsContainMimeType func(uintptr, string) bool
 func (x *ContentFormats) ContainMimeType(MimeTypeVar string) bool {
 
 	cret := xContentFormatsContainMimeType(x.GoPointer(), MimeTypeVar)
-
 	return cret
 }
 
@@ -202,7 +195,6 @@ var xContentFormatsGetGtypes func(uintptr, *uint) uintptr
 func (x *ContentFormats) GetGtypes(NGtypesVar *uint) uintptr {
 
 	cret := xContentFormatsGetGtypes(x.GoPointer(), NGtypesVar)
-
 	return cret
 }
 
@@ -215,7 +207,6 @@ var xContentFormatsGetMimeTypes func(uintptr, *uint) []string
 func (x *ContentFormats) GetMimeTypes(NMimeTypesVar *uint) []string {
 
 	cret := xContentFormatsGetMimeTypes(x.GoPointer(), NMimeTypesVar)
-
 	return cret
 }
 
@@ -225,7 +216,6 @@ var xContentFormatsIsEmpty func(uintptr) bool
 func (x *ContentFormats) IsEmpty() bool {
 
 	cret := xContentFormatsIsEmpty(x.GoPointer())
-
 	return cret
 }
 
@@ -235,7 +225,6 @@ var xContentFormatsMatch func(uintptr, *ContentFormats) bool
 func (x *ContentFormats) Match(SecondVar *ContentFormats) bool {
 
 	cret := xContentFormatsMatch(x.GoPointer(), SecondVar)
-
 	return cret
 }
 
@@ -248,7 +237,6 @@ var xContentFormatsMatchGtype func(uintptr, *ContentFormats) types.GType
 func (x *ContentFormats) MatchGtype(SecondVar *ContentFormats) types.GType {
 
 	cret := xContentFormatsMatchGtype(x.GoPointer(), SecondVar)
-
 	return cret
 }
 
@@ -261,7 +249,6 @@ var xContentFormatsMatchMimeType func(uintptr, *ContentFormats) string
 func (x *ContentFormats) MatchMimeType(SecondVar *ContentFormats) string {
 
 	cret := xContentFormatsMatchMimeType(x.GoPointer(), SecondVar)
-
 	return cret
 }
 
@@ -283,7 +270,6 @@ var xContentFormatsRef func(uintptr) *ContentFormats
 func (x *ContentFormats) Ref() *ContentFormats {
 
 	cret := xContentFormatsRef(x.GoPointer())
-
 	return cret
 }
 
@@ -298,7 +284,6 @@ var xContentFormatsToString func(uintptr) string
 func (x *ContentFormats) ToString() string {
 
 	cret := xContentFormatsToString(x.GoPointer())
-
 	return cret
 }
 
@@ -309,7 +294,6 @@ var xContentFormatsUnion func(uintptr, *ContentFormats) *ContentFormats
 func (x *ContentFormats) Union(SecondVar *ContentFormats) *ContentFormats {
 
 	cret := xContentFormatsUnion(x.GoPointer(), SecondVar)
-
 	return cret
 }
 
@@ -320,7 +304,6 @@ var xContentFormatsUnionDeserializeGtypes func(uintptr) *ContentFormats
 func (x *ContentFormats) UnionDeserializeGtypes() *ContentFormats {
 
 	cret := xContentFormatsUnionDeserializeGtypes(x.GoPointer())
-
 	return cret
 }
 
@@ -331,7 +314,6 @@ var xContentFormatsUnionDeserializeMimeTypes func(uintptr) *ContentFormats
 func (x *ContentFormats) UnionDeserializeMimeTypes() *ContentFormats {
 
 	cret := xContentFormatsUnionDeserializeMimeTypes(x.GoPointer())
-
 	return cret
 }
 
@@ -342,7 +324,6 @@ var xContentFormatsUnionSerializeGtypes func(uintptr) *ContentFormats
 func (x *ContentFormats) UnionSerializeGtypes() *ContentFormats {
 
 	cret := xContentFormatsUnionSerializeGtypes(x.GoPointer())
-
 	return cret
 }
 
@@ -353,7 +334,6 @@ var xContentFormatsUnionSerializeMimeTypes func(uintptr) *ContentFormats
 func (x *ContentFormats) UnionSerializeMimeTypes() *ContentFormats {
 
 	cret := xContentFormatsUnionSerializeMimeTypes(x.GoPointer())
-
 	return cret
 }
 
@@ -407,7 +387,6 @@ var xDmabufFormatsContains func(uintptr, uint32, uint64) bool
 func (x *DmabufFormats) Contains(FourccVar uint32, ModifierVar uint64) bool {
 
 	cret := xDmabufFormatsContains(x.GoPointer(), FourccVar, ModifierVar)
-
 	return cret
 }
 
@@ -418,7 +397,6 @@ var xDmabufFormatsEqual func(uintptr, *DmabufFormats) bool
 func (x *DmabufFormats) Equal(Formats2Var *DmabufFormats) bool {
 
 	cret := xDmabufFormatsEqual(x.GoPointer(), Formats2Var)
-
 	return cret
 }
 
@@ -443,7 +421,6 @@ var xDmabufFormatsGetNFormats func(uintptr) uint
 func (x *DmabufFormats) GetNFormats() uint {
 
 	cret := xDmabufFormatsGetNFormats(x.GoPointer())
-
 	return cret
 }
 
@@ -453,7 +430,6 @@ var xDmabufFormatsRef func(uintptr) *DmabufFormats
 func (x *DmabufFormats) Ref() *DmabufFormats {
 
 	cret := xDmabufFormatsRef(x.GoPointer())
-
 	return cret
 }
 
@@ -527,7 +503,6 @@ var xRectangleContainsPoint func(uintptr, int, int) bool
 func (x *Rectangle) ContainsPoint(XVar int, YVar int) bool {
 
 	cret := xRectangleContainsPoint(x.GoPointer(), XVar, YVar)
-
 	return cret
 }
 
@@ -537,7 +512,6 @@ var xRectangleEqual func(uintptr, *Rectangle) bool
 func (x *Rectangle) Equal(Rect2Var *Rectangle) bool {
 
 	cret := xRectangleEqual(x.GoPointer(), Rect2Var)
-
 	return cret
 }
 
@@ -553,7 +527,6 @@ var xRectangleIntersect func(uintptr, *Rectangle, *Rectangle) bool
 func (x *Rectangle) Intersect(Src2Var *Rectangle, DestVar *Rectangle) bool {
 
 	cret := xRectangleIntersect(x.GoPointer(), Src2Var, DestVar)
-
 	return cret
 }
 
@@ -605,7 +578,6 @@ var xNewTextureDownloader func(uintptr) *TextureDownloader
 func NewTextureDownloader(TextureVar *Texture) *TextureDownloader {
 
 	cret := xNewTextureDownloader(TextureVar.GoPointer())
-
 	return cret
 }
 
@@ -617,7 +589,6 @@ var xTextureDownloaderCopy func(uintptr) *TextureDownloader
 func (x *TextureDownloader) Copy() *TextureDownloader {
 
 	cret := xTextureDownloaderCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -636,7 +607,6 @@ var xTextureDownloaderDownloadBytes func(uintptr, *uint) *glib.Bytes
 func (x *TextureDownloader) DownloadBytes(OutStrideVar *uint) *glib.Bytes {
 
 	cret := xTextureDownloaderDownloadBytes(x.GoPointer(), OutStrideVar)
-
 	return cret
 }
 
@@ -650,7 +620,6 @@ var xTextureDownloaderDownloadBytesWithPlanes func(uintptr, *[4]uint, *[4]uint) 
 func (x *TextureDownloader) DownloadBytesWithPlanes(OutOffsetsVar *[4]uint, OutStridesVar *[4]uint) *glib.Bytes {
 
 	cret := xTextureDownloaderDownloadBytesWithPlanes(x.GoPointer(), OutOffsetsVar, OutStridesVar)
-
 	return cret
 }
 
@@ -680,7 +649,6 @@ var xTextureDownloaderGetColorState func(uintptr) *ColorState
 func (x *TextureDownloader) GetColorState() *ColorState {
 
 	cret := xTextureDownloaderGetColorState(x.GoPointer())
-
 	return cret
 }
 
@@ -690,7 +658,6 @@ var xTextureDownloaderGetFormat func(uintptr) MemoryFormat
 func (x *TextureDownloader) GetFormat() MemoryFormat {
 
 	cret := xTextureDownloaderGetFormat(x.GoPointer())
-
 	return cret
 }
 

@@ -2,7 +2,6 @@
 package gmodule
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -44,7 +43,6 @@ var xModuleClose func(uintptr) bool
 func (x *Module) Close() bool {
 
 	cret := xModuleClose(x.GoPointer())
-
 	return cret
 }
 
@@ -66,7 +64,6 @@ var xModuleName func(uintptr) string
 func (x *Module) Name() string {
 
 	cret := xModuleName(x.GoPointer())
-
 	return cret
 }
 
@@ -77,7 +74,6 @@ var xModuleSymbol func(uintptr, string, *uintptr) bool
 func (x *Module) Symbol(SymbolNameVar string, SymbolVar *uintptr) bool {
 
 	cret := xModuleSymbol(x.GoPointer(), SymbolNameVar, SymbolVar)
-
 	return cret
 }
 
@@ -128,12 +124,10 @@ var xModuleBuildPath func(uintptr, string) string
 // directory it will return `\Windows\mylibrary.dll`.
 func ModuleBuildPath(DirectoryVar *string, ModuleNameVar string) string {
 
-	DirectoryVarPtr, DirectoryVarBytes := core.NullableStringToPtr(DirectoryVar)
+	DirectoryVarPtr := core.GStrdupNullable(DirectoryVar)
+	defer core.GFreeNullable(DirectoryVarPtr)
 
 	cret := xModuleBuildPath(DirectoryVarPtr, ModuleNameVar)
-
-	runtime.KeepAlive(DirectoryVarBytes)
-
 	return cret
 }
 
@@ -143,7 +137,6 @@ var xNewModuleError func() string
 func NewModuleError() string {
 
 	cret := xNewModuleError()
-
 	return cret
 }
 
@@ -153,7 +146,6 @@ var xModuleSupported func() bool
 func ModuleSupported() bool {
 
 	cret := xModuleSupported()
-
 	return cret
 }
 

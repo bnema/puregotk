@@ -284,7 +284,6 @@ func (x *DatagramBasedBase) SetGoPointer(ptr uintptr) {
 func (x *DatagramBasedBase) ConditionCheck(ConditionVar glib.IOCondition) glib.IOCondition {
 
 	cret := XGDatagramBasedConditionCheck(x.GoPointer(), ConditionVar)
-
 	return cret
 }
 
@@ -298,7 +297,6 @@ func (x *DatagramBasedBase) ConditionWait(ConditionVar glib.IOCondition, Timeout
 	var cerr *glib.Error
 
 	cret := XGDatagramBasedConditionWait(x.GoPointer(), ConditionVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -323,7 +321,6 @@ func (x *DatagramBasedBase) ConditionWait(ConditionVar glib.IOCondition, Timeout
 func (x *DatagramBasedBase) CreateSource(ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
 
 	cret := XGDatagramBasedCreateSource(x.GoPointer(), ConditionVar, CancellableVar.GoPointer())
-
 	return cret
 }
 
@@ -381,7 +378,6 @@ func (x *DatagramBasedBase) ReceiveMessages(MessagesVar []InputMessage, NumMessa
 	var cerr *glib.Error
 
 	cret := XGDatagramBasedReceiveMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -434,7 +430,6 @@ func (x *DatagramBasedBase) SendMessages(MessagesVar []OutputMessage, NumMessage
 	var cerr *glib.Error
 
 	cret := XGDatagramBasedSendMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, TimeoutVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

@@ -72,7 +72,6 @@ var xHashTableIterGetHashTable func(uintptr) *HashTable
 func (x *HashTableIter) GetHashTable() *HashTable {
 
 	cret := xHashTableIterGetHashTable(x.GoPointer())
-
 	return cret
 }
 
@@ -111,7 +110,6 @@ var xHashTableIterNext func(uintptr, *uintptr, *uintptr) bool
 func (x *HashTableIter) Next(KeyVar *uintptr, ValueVar *uintptr) bool {
 
 	cret := xHashTableIterNext(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -182,7 +180,6 @@ var xDirectEqual func(uintptr, uintptr) bool
 func DirectEqual(V1Var uintptr, V2Var uintptr) bool {
 
 	cret := xDirectEqual(V1Var, V2Var)
-
 	return cret
 }
 
@@ -198,7 +195,6 @@ var xDirectHash func(uintptr) uint
 func DirectHash(VVar uintptr) uint {
 
 	cret := xDirectHash(VVar)
-
 	return cret
 }
 
@@ -212,7 +208,6 @@ var xDoubleEqual func(uintptr, uintptr) bool
 func DoubleEqual(V1Var uintptr, V2Var uintptr) bool {
 
 	cret := xDoubleEqual(V1Var, V2Var)
-
 	return cret
 }
 
@@ -225,7 +220,6 @@ var xDoubleHash func(uintptr) uint
 func DoubleHash(VVar uintptr) uint {
 
 	cret := xDoubleHash(VVar)
-
 	return cret
 }
 
@@ -249,7 +243,6 @@ var xHashTableAdd func(*HashTable, uintptr) bool
 func HashTableAdd(HashTableVar *HashTable, KeyVar uintptr) bool {
 
 	cret := xHashTableAdd(HashTableVar, KeyVar)
-
 	return cret
 }
 
@@ -259,7 +252,6 @@ var xHashTableContains func(*HashTable, uintptr) bool
 func HashTableContains(HashTableVar *HashTable, KeyVar uintptr) bool {
 
 	cret := xHashTableContains(HashTableVar, KeyVar)
-
 	return cret
 }
 
@@ -310,7 +302,6 @@ func HashTableFind(HashTableVar *HashTable, PredicateVar *HRFunc, UserDataVar ui
 	}
 
 	cret := xHashTableFind(HashTableVar, PredicateVarRef, UserDataVar)
-
 	return cret
 }
 
@@ -377,7 +368,6 @@ func HashTableForeachRemove(HashTableVar *HashTable, FuncVar *HRFunc, UserDataVa
 	}
 
 	cret := xHashTableForeachRemove(HashTableVar, FuncVarRef, UserDataVar)
-
 	return cret
 }
 
@@ -408,7 +398,6 @@ func HashTableForeachSteal(HashTableVar *HashTable, FuncVar *HRFunc, UserDataVar
 	}
 
 	cret := xHashTableForeachSteal(HashTableVar, FuncVarRef, UserDataVar)
-
 	return cret
 }
 
@@ -425,7 +414,6 @@ var xHashTableGetKeysAsPtrArray func(*HashTable) uintptr
 func HashTableGetKeysAsPtrArray(HashTableVar *HashTable) uintptr {
 
 	cret := xHashTableGetKeysAsPtrArray(HashTableVar)
-
 	return cret
 }
 
@@ -442,7 +430,6 @@ var xHashTableGetValuesAsPtrArray func(*HashTable) uintptr
 func HashTableGetValuesAsPtrArray(HashTableVar *HashTable) uintptr {
 
 	cret := xHashTableGetValuesAsPtrArray(HashTableVar)
-
 	return cret
 }
 
@@ -463,7 +450,6 @@ var xHashTableInsert func(*HashTable, uintptr, uintptr) bool
 func HashTableInsert(HashTableVar *HashTable, KeyVar uintptr, ValueVar uintptr) bool {
 
 	cret := xHashTableInsert(HashTableVar, KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -476,7 +462,6 @@ var xHashTableLookup func(*HashTable, uintptr) uintptr
 func HashTableLookup(HashTableVar *HashTable, KeyVar uintptr) uintptr {
 
 	cret := xHashTableLookup(HashTableVar, KeyVar)
-
 	return cret
 }
 
@@ -493,7 +478,6 @@ var xHashTableLookupExtended func(*HashTable, uintptr, *uintptr, *uintptr) bool
 func HashTableLookupExtended(HashTableVar *HashTable, LookupKeyVar uintptr, OrigKeyVar *uintptr, ValueVar *uintptr) bool {
 
 	cret := xHashTableLookupExtended(HashTableVar, LookupKeyVar, OrigKeyVar, ValueVar)
-
 	return cret
 }
 
@@ -510,7 +494,6 @@ var xHashTableNewSimilar func(*HashTable) *HashTable
 func HashTableNewSimilar(OtherHashTableVar *HashTable) *HashTable {
 
 	cret := xHashTableNewSimilar(OtherHashTableVar)
-
 	return cret
 }
 
@@ -521,7 +504,6 @@ var xHashTableRef func(*HashTable) *HashTable
 func HashTableRef(HashTableVar *HashTable) *HashTable {
 
 	cret := xHashTableRef(HashTableVar)
-
 	return cret
 }
 
@@ -536,7 +518,6 @@ var xHashTableRemove func(*HashTable, uintptr) bool
 func HashTableRemove(HashTableVar *HashTable, KeyVar uintptr) bool {
 
 	cret := xHashTableRemove(HashTableVar, KeyVar)
-
 	return cret
 }
 
@@ -570,7 +551,6 @@ var xHashTableReplace func(*HashTable, uintptr, uintptr) bool
 func HashTableReplace(HashTableVar *HashTable, KeyVar uintptr, ValueVar uintptr) bool {
 
 	cret := xHashTableReplace(HashTableVar, KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -580,7 +560,6 @@ var xHashTableSize func(*HashTable) uint
 func HashTableSize(HashTableVar *HashTable) uint {
 
 	cret := xHashTableSize(HashTableVar)
-
 	return cret
 }
 
@@ -591,7 +570,6 @@ var xHashTableSteal func(*HashTable, uintptr) bool
 func HashTableSteal(HashTableVar *HashTable, KeyVar uintptr) bool {
 
 	cret := xHashTableSteal(HashTableVar, KeyVar)
-
 	return cret
 }
 
@@ -614,7 +592,6 @@ var xHashTableStealAllKeys func(*HashTable) uintptr
 func HashTableStealAllKeys(HashTableVar *HashTable) uintptr {
 
 	cret := xHashTableStealAllKeys(HashTableVar)
-
 	return cret
 }
 
@@ -627,7 +604,6 @@ var xHashTableStealAllValues func(*HashTable) uintptr
 func HashTableStealAllValues(HashTableVar *HashTable) uintptr {
 
 	cret := xHashTableStealAllValues(HashTableVar)
-
 	return cret
 }
 
@@ -653,7 +629,6 @@ var xHashTableStealExtended func(*HashTable, uintptr, *uintptr, *uintptr) bool
 func HashTableStealExtended(HashTableVar *HashTable, LookupKeyVar uintptr, StolenKeyVar *uintptr, StolenValueVar *uintptr) bool {
 
 	cret := xHashTableStealExtended(HashTableVar, LookupKeyVar, StolenKeyVar, StolenValueVar)
-
 	return cret
 }
 
@@ -679,7 +654,6 @@ var xInt64Equal func(uintptr, uintptr) bool
 func Int64Equal(V1Var uintptr, V2Var uintptr) bool {
 
 	cret := xInt64Equal(V1Var, V2Var)
-
 	return cret
 }
 
@@ -693,7 +667,6 @@ var xInt64Hash func(uintptr) uint
 func Int64Hash(VVar uintptr) uint {
 
 	cret := xInt64Hash(VVar)
-
 	return cret
 }
 
@@ -711,7 +684,6 @@ var xIntEqual func(uintptr, uintptr) bool
 func IntEqual(V1Var uintptr, V2Var uintptr) bool {
 
 	cret := xIntEqual(V1Var, V2Var)
-
 	return cret
 }
 
@@ -727,7 +699,6 @@ var xIntHash func(uintptr) uint
 func IntHash(VVar uintptr) uint {
 
 	cret := xIntHash(VVar)
-
 	return cret
 }
 
@@ -744,7 +715,6 @@ var xStrEqual func(uintptr, uintptr) bool
 func StrEqual(V1Var uintptr, V2Var uintptr) bool {
 
 	cret := xStrEqual(V1Var, V2Var)
-
 	return cret
 }
 
@@ -767,7 +737,6 @@ var xStrHash func(uintptr) uint
 func StrHash(VVar uintptr) uint {
 
 	cret := xStrHash(VVar)
-
 	return cret
 }
 

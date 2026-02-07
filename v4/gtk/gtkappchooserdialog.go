@@ -93,7 +93,6 @@ var xAppChooserDialogGetHeading func(uintptr) string
 func (x *AppChooserDialog) GetHeading() string {
 
 	cret := xAppChooserDialogGetHeading(x.GoPointer())
-
 	return cret
 }
 
@@ -192,7 +191,6 @@ func (x *AppChooserDialog) GetAccessibleParent() *AccessibleBase {
 func (x *AppChooserDialog) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -218,7 +216,6 @@ func (x *AppChooserDialog) GetAtContext() *ATContext {
 func (x *AppChooserDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -258,7 +255,6 @@ func (x *AppChooserDialog) GetNextAccessibleSibling() *AccessibleBase {
 func (x *AppChooserDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -447,7 +443,6 @@ func (x *AppChooserDialog) GetAppInfo() *gio.AppInfoBase {
 func (x *AppChooserDialog) GetContentType() string {
 
 	cret := XGtkAppChooserGetContentType(x.GoPointer())
-
 	return cret
 }
 
@@ -465,7 +460,6 @@ func (x *AppChooserDialog) Refresh() {
 func (x *AppChooserDialog) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

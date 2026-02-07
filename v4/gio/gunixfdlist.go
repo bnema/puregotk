@@ -242,7 +242,6 @@ func (x *UnixFDList) Append(FdVar int) (int, error) {
 	var cerr *glib.Error
 
 	cret := xUnixFDListAppend(x.GoPointer(), FdVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -268,7 +267,6 @@ func (x *UnixFDList) Get(IndexVar int) (int, error) {
 	var cerr *glib.Error
 
 	cret := xUnixFDListGet(x.GoPointer(), IndexVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -283,7 +281,6 @@ var xUnixFDListGetLength func(uintptr) int
 func (x *UnixFDList) GetLength() int {
 
 	cret := xUnixFDListGetLength(x.GoPointer())
-
 	return cret
 }
 
@@ -305,7 +302,6 @@ var xUnixFDListPeekFds func(uintptr, *int) uintptr
 func (x *UnixFDList) PeekFds(LengthVar *int) uintptr {
 
 	cret := xUnixFDListPeekFds(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -332,7 +328,6 @@ var xUnixFDListStealFds func(uintptr, *int) uintptr
 func (x *UnixFDList) StealFds(LengthVar *int) uintptr {
 
 	cret := xUnixFDListStealFds(x.GoPointer(), LengthVar)
-
 	return cret
 }
 

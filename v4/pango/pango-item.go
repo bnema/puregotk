@@ -71,7 +71,6 @@ var xNewItem func() *Item
 func NewItem() *Item {
 
 	cret := xNewItem()
-
 	return cret
 }
 
@@ -100,7 +99,6 @@ var xItemCopy func(uintptr) *Item
 func (x *Item) Copy() *Item {
 
 	cret := xItemCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -124,7 +122,6 @@ var xItemGetCharOffset func(uintptr) int
 func (x *Item) GetCharOffset() int {
 
 	cret := xItemGetCharOffset(x.GoPointer())
-
 	return cret
 }
 
@@ -145,7 +142,6 @@ var xItemSplit func(uintptr, int, int) *Item
 func (x *Item) Split(SplitIndexVar int, SplitOffsetVar int) *Item {
 
 	cret := xItemSplit(x.GoPointer(), SplitIndexVar, SplitOffsetVar)
-
 	return cret
 }
 
@@ -177,7 +173,6 @@ var xItemize func(uintptr, string, int, int, *AttrList, *AttrIterator) *glib.Lis
 func Itemize(ContextVar *Context, TextVar string, StartIndexVar int, LengthVar int, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
 
 	cret := xItemize(ContextVar.GoPointer(), TextVar, StartIndexVar, LengthVar, AttrsVar, CachedIterVar)
-
 	return cret
 }
 
@@ -191,7 +186,6 @@ var xItemizeWithBaseDir func(uintptr, Direction, string, int, int, *AttrList, *A
 func ItemizeWithBaseDir(ContextVar *Context, BaseDirVar Direction, TextVar string, StartIndexVar int, LengthVar int, AttrsVar *AttrList, CachedIterVar *AttrIterator) *glib.List {
 
 	cret := xItemizeWithBaseDir(ContextVar.GoPointer(), BaseDirVar, TextVar, StartIndexVar, LengthVar, AttrsVar, CachedIterVar)
-
 	return cret
 }
 
@@ -209,7 +203,6 @@ var xReorderItems func(*glib.List) *glib.List
 func ReorderItems(ItemsVar *glib.List) *glib.List {
 
 	cret := xReorderItems(ItemsVar)
-
 	return cret
 }
 

@@ -154,7 +154,6 @@ var xAssistantAppendPage func(uintptr, uintptr) int
 func (x *Assistant) AppendPage(PageVar *Widget) int {
 
 	cret := xAssistantAppendPage(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -182,7 +181,6 @@ var xAssistantGetCurrentPage func(uintptr) int
 func (x *Assistant) GetCurrentPage() int {
 
 	cret := xAssistantGetCurrentPage(x.GoPointer())
-
 	return cret
 }
 
@@ -192,7 +190,6 @@ var xAssistantGetNPages func(uintptr) int
 func (x *Assistant) GetNPages() int {
 
 	cret := xAssistantGetNPages(x.GoPointer())
-
 	return cret
 }
 
@@ -236,7 +233,6 @@ var xAssistantGetPageComplete func(uintptr, uintptr) bool
 func (x *Assistant) GetPageComplete(PageVar *Widget) bool {
 
 	cret := xAssistantGetPageComplete(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -246,7 +242,6 @@ var xAssistantGetPageTitle func(uintptr, uintptr) string
 func (x *Assistant) GetPageTitle(PageVar *Widget) string {
 
 	cret := xAssistantGetPageTitle(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -256,7 +251,6 @@ var xAssistantGetPageType func(uintptr, uintptr) AssistantPageType
 func (x *Assistant) GetPageType(PageVar *Widget) AssistantPageType {
 
 	cret := xAssistantGetPageType(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -282,7 +276,6 @@ var xAssistantInsertPage func(uintptr, uintptr, int) int
 func (x *Assistant) InsertPage(PageVar *Widget, PositionVar int) int {
 
 	cret := xAssistantInsertPage(x.GoPointer(), PageVar.GoPointer(), PositionVar)
-
 	return cret
 }
 
@@ -307,7 +300,6 @@ var xAssistantPrependPage func(uintptr, uintptr) int
 func (x *Assistant) PrependPage(PageVar *Widget) int {
 
 	cret := xAssistantPrependPage(x.GoPointer(), PageVar.GoPointer())
-
 	return cret
 }
 
@@ -661,7 +653,6 @@ func (x *Assistant) GetAccessibleParent() *AccessibleBase {
 func (x *Assistant) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -687,7 +678,6 @@ func (x *Assistant) GetAtContext() *ATContext {
 func (x *Assistant) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -727,7 +717,6 @@ func (x *Assistant) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Assistant) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -904,7 +893,6 @@ func (x *Assistant) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState
 func (x *Assistant) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

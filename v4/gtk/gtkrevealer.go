@@ -122,7 +122,6 @@ var xRevealerGetChildRevealed func(uintptr) bool
 func (x *Revealer) GetChildRevealed() bool {
 
 	cret := xRevealerGetChildRevealed(x.GoPointer())
-
 	return cret
 }
 
@@ -137,7 +136,6 @@ var xRevealerGetRevealChild func(uintptr) bool
 func (x *Revealer) GetRevealChild() bool {
 
 	cret := xRevealerGetRevealChild(x.GoPointer())
-
 	return cret
 }
 
@@ -148,7 +146,6 @@ var xRevealerGetTransitionDuration func(uintptr) uint
 func (x *Revealer) GetTransitionDuration() uint {
 
 	cret := xRevealerGetTransitionDuration(x.GoPointer())
-
 	return cret
 }
 
@@ -159,7 +156,6 @@ var xRevealerGetTransitionType func(uintptr) RevealerTransitionType
 func (x *Revealer) GetTransitionType() RevealerTransitionType {
 
 	cret := xRevealerGetTransitionType(x.GoPointer())
-
 	return cret
 }
 
@@ -293,7 +289,6 @@ func (x *Revealer) GetAccessibleParent() *AccessibleBase {
 func (x *Revealer) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -319,7 +314,6 @@ func (x *Revealer) GetAtContext() *ATContext {
 func (x *Revealer) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -359,7 +353,6 @@ func (x *Revealer) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Revealer) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -536,7 +529,6 @@ func (x *Revealer) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *Revealer) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

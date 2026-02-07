@@ -141,7 +141,6 @@ var xViewSwitcherTitleGetSubtitle func(uintptr) string
 func (x *ViewSwitcherTitle) GetSubtitle() string {
 
 	cret := xViewSwitcherTitleGetSubtitle(x.GoPointer())
-
 	return cret
 }
 
@@ -151,7 +150,6 @@ var xViewSwitcherTitleGetTitle func(uintptr) string
 func (x *ViewSwitcherTitle) GetTitle() string {
 
 	cret := xViewSwitcherTitleGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -164,7 +162,6 @@ var xViewSwitcherTitleGetTitleVisible func(uintptr) bool
 func (x *ViewSwitcherTitle) GetTitleVisible() bool {
 
 	cret := xViewSwitcherTitleGetTitleVisible(x.GoPointer())
-
 	return cret
 }
 
@@ -174,7 +171,6 @@ var xViewSwitcherTitleGetViewSwitcherEnabled func(uintptr) bool
 func (x *ViewSwitcherTitle) GetViewSwitcherEnabled() bool {
 
 	cret := xViewSwitcherTitleGetViewSwitcherEnabled(x.GoPointer())
-
 	return cret
 }
 
@@ -358,7 +354,6 @@ func (x *ViewSwitcherTitle) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ViewSwitcherTitle) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -384,7 +379,6 @@ func (x *ViewSwitcherTitle) GetAtContext() *gtk.ATContext {
 func (x *ViewSwitcherTitle) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -424,7 +418,6 @@ func (x *ViewSwitcherTitle) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ViewSwitcherTitle) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -601,7 +594,6 @@ func (x *ViewSwitcherTitle) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acc
 func (x *ViewSwitcherTitle) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

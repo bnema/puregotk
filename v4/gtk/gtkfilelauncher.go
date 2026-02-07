@@ -72,7 +72,6 @@ var xFileLauncherGetAlwaysAsk func(uintptr) bool
 func (x *FileLauncher) GetAlwaysAsk() bool {
 
 	cret := xFileLauncherGetAlwaysAsk(x.GoPointer())
-
 	return cret
 }
 
@@ -99,7 +98,6 @@ var xFileLauncherGetWritable func(uintptr) bool
 func (x *FileLauncher) GetWritable() bool {
 
 	cret := xFileLauncherGetWritable(x.GoPointer())
-
 	return cret
 }
 
@@ -137,7 +135,6 @@ func (x *FileLauncher) LaunchFinish(ResultVar gio.AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xFileLauncherLaunchFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -180,7 +177,6 @@ func (x *FileLauncher) OpenContainingFolderFinish(ResultVar gio.AsyncResult) (bo
 	var cerr *glib.Error
 
 	cret := xFileLauncherOpenContainingFolderFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

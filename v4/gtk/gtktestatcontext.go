@@ -22,7 +22,6 @@ var xTestAccessibleCheckProperty func(uintptr, AccessibleProperty, ...interface{
 func TestAccessibleCheckProperty(AccessibleVar Accessible, PropertyVar AccessibleProperty, varArgs ...interface{}) string {
 
 	cret := xTestAccessibleCheckProperty(AccessibleVar.GoPointer(), PropertyVar, varArgs...)
-
 	return cret
 }
 
@@ -33,7 +32,6 @@ var xTestAccessibleCheckRelation func(uintptr, AccessibleRelation, ...interface{
 func TestAccessibleCheckRelation(AccessibleVar Accessible, RelationVar AccessibleRelation, varArgs ...interface{}) string {
 
 	cret := xTestAccessibleCheckRelation(AccessibleVar.GoPointer(), RelationVar, varArgs...)
-
 	return cret
 }
 
@@ -44,7 +42,6 @@ var xTestAccessibleCheckState func(uintptr, AccessibleState, ...interface{}) str
 func TestAccessibleCheckState(AccessibleVar Accessible, StateVar AccessibleState, varArgs ...interface{}) string {
 
 	cret := xTestAccessibleCheckState(AccessibleVar.GoPointer(), StateVar, varArgs...)
-
 	return cret
 }
 
@@ -54,7 +51,6 @@ var xTestAccessibleHasProperty func(uintptr, AccessibleProperty) bool
 func TestAccessibleHasProperty(AccessibleVar Accessible, PropertyVar AccessibleProperty) bool {
 
 	cret := xTestAccessibleHasProperty(AccessibleVar.GoPointer(), PropertyVar)
-
 	return cret
 }
 
@@ -64,7 +60,6 @@ var xTestAccessibleHasRelation func(uintptr, AccessibleRelation) bool
 func TestAccessibleHasRelation(AccessibleVar Accessible, RelationVar AccessibleRelation) bool {
 
 	cret := xTestAccessibleHasRelation(AccessibleVar.GoPointer(), RelationVar)
-
 	return cret
 }
 
@@ -75,7 +70,6 @@ var xTestAccessibleHasRole func(uintptr, AccessibleRole) bool
 func TestAccessibleHasRole(AccessibleVar Accessible, RoleVar AccessibleRole) bool {
 
 	cret := xTestAccessibleHasRole(AccessibleVar.GoPointer(), RoleVar)
-
 	return cret
 }
 
@@ -85,7 +79,6 @@ var xTestAccessibleHasState func(uintptr, AccessibleState) bool
 func TestAccessibleHasState(AccessibleVar Accessible, StateVar AccessibleState) bool {
 
 	cret := xTestAccessibleHasState(AccessibleVar.GoPointer(), StateVar)
-
 	return cret
 }
 

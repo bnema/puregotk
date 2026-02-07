@@ -23,7 +23,6 @@ var xAtomicIntAdd func(uintptr, int) int
 func AtomicIntAdd(AtomicVar uintptr, ValVar int) int {
 
 	cret := xAtomicIntAdd(AtomicVar, ValVar)
-
 	return cret
 }
 
@@ -42,7 +41,6 @@ var xAtomicIntAnd func(uintptr, uint) uint
 func AtomicIntAnd(AtomicVar uintptr, ValVar uint) uint {
 
 	cret := xAtomicIntAnd(AtomicVar, ValVar)
-
 	return cret
 }
 
@@ -63,7 +61,6 @@ var xAtomicIntCompareAndExchange func(uintptr, int, int) bool
 func AtomicIntCompareAndExchange(AtomicVar uintptr, OldvalVar int, NewvalVar int) bool {
 
 	cret := xAtomicIntCompareAndExchange(AtomicVar, OldvalVar, NewvalVar)
-
 	return cret
 }
 
@@ -84,7 +81,6 @@ var xAtomicIntCompareAndExchangeFull func(uintptr, int, int, *int) bool
 func AtomicIntCompareAndExchangeFull(AtomicVar uintptr, OldvalVar int, NewvalVar int, PrevalVar *int) bool {
 
 	cret := xAtomicIntCompareAndExchangeFull(AtomicVar, OldvalVar, NewvalVar, PrevalVar)
-
 	return cret
 }
 
@@ -102,7 +98,6 @@ var xAtomicIntDecAndTest func(uintptr) bool
 func AtomicIntDecAndTest(AtomicVar uintptr) bool {
 
 	cret := xAtomicIntDecAndTest(AtomicVar)
-
 	return cret
 }
 
@@ -119,7 +114,6 @@ var xAtomicIntExchange func(uintptr, int) int
 func AtomicIntExchange(AtomicVar uintptr, NewvalVar int) int {
 
 	cret := xAtomicIntExchange(AtomicVar, NewvalVar)
-
 	return cret
 }
 
@@ -131,7 +125,6 @@ var xAtomicIntExchangeAndAdd func(uintptr, int) int
 func AtomicIntExchangeAndAdd(AtomicVar uintptr, ValVar int) int {
 
 	cret := xAtomicIntExchangeAndAdd(AtomicVar, ValVar)
-
 	return cret
 }
 
@@ -147,7 +140,6 @@ var xAtomicIntGet func(uintptr) int
 func AtomicIntGet(AtomicVar uintptr) int {
 
 	cret := xAtomicIntGet(AtomicVar)
-
 	return cret
 }
 
@@ -182,7 +174,6 @@ var xAtomicIntOr func(uintptr, uint) uint
 func AtomicIntOr(AtomicVar uintptr, ValVar uint) uint {
 
 	cret := xAtomicIntOr(AtomicVar, ValVar)
-
 	return cret
 }
 
@@ -216,7 +207,6 @@ var xAtomicIntXor func(uintptr, uint) uint
 func AtomicIntXor(AtomicVar uintptr, ValVar uint) uint {
 
 	cret := xAtomicIntXor(AtomicVar, ValVar)
-
 	return cret
 }
 
@@ -238,7 +228,6 @@ var xAtomicPointerAdd func(uintptr, int) int
 func AtomicPointerAdd(AtomicVar uintptr, ValVar int) int {
 
 	cret := xAtomicPointerAdd(AtomicVar, ValVar)
-
 	return cret
 }
 
@@ -261,7 +250,6 @@ var xAtomicPointerAnd func(uintptr, uint) uintptr
 func AtomicPointerAnd(AtomicVar uintptr, ValVar uint) uintptr {
 
 	cret := xAtomicPointerAnd(AtomicVar, ValVar)
-
 	return cret
 }
 
@@ -282,7 +270,6 @@ var xAtomicPointerCompareAndExchange func(uintptr, uintptr, uintptr) bool
 func AtomicPointerCompareAndExchange(AtomicVar uintptr, OldvalVar uintptr, NewvalVar uintptr) bool {
 
 	cret := xAtomicPointerCompareAndExchange(AtomicVar, OldvalVar, NewvalVar)
-
 	return cret
 }
 
@@ -303,7 +290,6 @@ var xAtomicPointerCompareAndExchangeFull func(uintptr, uintptr, uintptr, *uintpt
 func AtomicPointerCompareAndExchangeFull(AtomicVar uintptr, OldvalVar uintptr, NewvalVar uintptr, PrevalVar *uintptr) bool {
 
 	cret := xAtomicPointerCompareAndExchangeFull(AtomicVar, OldvalVar, NewvalVar, PrevalVar)
-
 	return cret
 }
 
@@ -320,7 +306,6 @@ var xAtomicPointerExchange func(uintptr, uintptr) uintptr
 func AtomicPointerExchange(AtomicVar uintptr, NewvalVar uintptr) uintptr {
 
 	cret := xAtomicPointerExchange(AtomicVar, NewvalVar)
-
 	return cret
 }
 
@@ -336,7 +321,6 @@ var xAtomicPointerGet func(uintptr) uintptr
 func AtomicPointerGet(AtomicVar uintptr) uintptr {
 
 	cret := xAtomicPointerGet(AtomicVar)
-
 	return cret
 }
 
@@ -359,7 +343,6 @@ var xAtomicPointerOr func(uintptr, uint) uintptr
 func AtomicPointerOr(AtomicVar uintptr, ValVar uint) uintptr {
 
 	cret := xAtomicPointerOr(AtomicVar, ValVar)
-
 	return cret
 }
 
@@ -397,7 +380,6 @@ var xAtomicPointerXor func(uintptr, uint) uintptr
 func AtomicPointerXor(AtomicVar uintptr, ValVar uint) uintptr {
 
 	cret := xAtomicPointerXor(AtomicVar, ValVar)
-
 	return cret
 }
 

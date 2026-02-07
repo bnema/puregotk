@@ -67,7 +67,6 @@ var xCharsetConverterGetNumFallbacks func(uintptr) uint
 func (x *CharsetConverter) GetNumFallbacks() uint {
 
 	cret := xCharsetConverterGetNumFallbacks(x.GoPointer())
-
 	return cret
 }
 
@@ -77,7 +76,6 @@ var xCharsetConverterGetUseFallback func(uintptr) bool
 func (x *CharsetConverter) GetUseFallback() bool {
 
 	cret := xCharsetConverterGetUseFallback(x.GoPointer())
-
 	return cret
 }
 
@@ -238,7 +236,6 @@ func (x *CharsetConverter) Convert(InbufVar []byte, InbufSizeVar uint, OutbufVar
 	var cerr *glib.Error
 
 	cret := XGConverterConvert(x.GoPointer(), InbufVar, InbufSizeVar, OutbufVar, OutbufSizeVar, FlagsVar, BytesReadVar, BytesWrittenVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -251,7 +248,6 @@ func (x *CharsetConverter) ConvertBytes(BytesVar *glib.Bytes) (*glib.Bytes, erro
 	var cerr *glib.Error
 
 	cret := XGConverterConvertBytes(x.GoPointer(), BytesVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -310,7 +306,6 @@ func (x *CharsetConverter) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

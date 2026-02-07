@@ -101,7 +101,6 @@ func (x *ColorDialog) ChooseRgbaFinish(ResultVar gio.AsyncResult) (*gdk.RGBA, er
 	var cerr *glib.Error
 
 	cret := xColorDialogChooseRgbaFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -117,7 +116,6 @@ var xColorDialogGetModal func(uintptr) bool
 func (x *ColorDialog) GetModal() bool {
 
 	cret := xColorDialogGetModal(x.GoPointer())
-
 	return cret
 }
 
@@ -128,7 +126,6 @@ var xColorDialogGetTitle func(uintptr) string
 func (x *ColorDialog) GetTitle() string {
 
 	cret := xColorDialogGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -138,7 +135,6 @@ var xColorDialogGetWithAlpha func(uintptr) bool
 func (x *ColorDialog) GetWithAlpha() bool {
 
 	cret := xColorDialogGetWithAlpha(x.GoPointer())
-
 	return cret
 }
 

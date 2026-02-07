@@ -51,7 +51,6 @@ func (x *DragSurfaceBase) SetGoPointer(ptr uintptr) {
 func (x *DragSurfaceBase) Present(WidthVar int, HeightVar int) bool {
 
 	cret := XGdkDragSurfacePresent(x.GoPointer(), WidthVar, HeightVar)
-
 	return cret
 }
 

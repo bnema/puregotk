@@ -139,7 +139,6 @@ var xFrameClockGetCurrentTimings func(uintptr) *FrameTimings
 func (x *FrameClock) GetCurrentTimings() *FrameTimings {
 
 	cret := xFrameClockGetCurrentTimings(x.GoPointer())
-
 	return cret
 }
 
@@ -150,7 +149,6 @@ var xFrameClockGetFps func(uintptr) float64
 func (x *FrameClock) GetFps() float64 {
 
 	cret := xFrameClockGetFps(x.GoPointer())
-
 	return cret
 }
 
@@ -161,7 +159,6 @@ var xFrameClockGetFrameCounter func(uintptr) int64
 func (x *FrameClock) GetFrameCounter() int64 {
 
 	cret := xFrameClockGetFrameCounter(x.GoPointer())
-
 	return cret
 }
 
@@ -177,7 +174,6 @@ var xFrameClockGetFrameTime func(uintptr) int64
 func (x *FrameClock) GetFrameTime() int64 {
 
 	cret := xFrameClockGetFrameTime(x.GoPointer())
-
 	return cret
 }
 
@@ -194,7 +190,6 @@ var xFrameClockGetHistoryStart func(uintptr) int64
 func (x *FrameClock) GetHistoryStart() int64 {
 
 	cret := xFrameClockGetHistoryStart(x.GoPointer())
-
 	return cret
 }
 
@@ -224,7 +219,6 @@ var xFrameClockGetTimings func(uintptr, int64) *FrameTimings
 func (x *FrameClock) GetTimings(FrameCounterVar int64) *FrameTimings {
 
 	cret := xFrameClockGetTimings(x.GoPointer(), FrameCounterVar)
-
 	return cret
 }
 

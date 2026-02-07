@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -89,11 +88,10 @@ var xNewTextMark func(uintptr, bool) uintptr
 func NewTextMark(NameVar *string, LeftGravityVar bool) *TextMark {
 	var cls *TextMark
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	cret := xNewTextMark(NameVarPtr, LeftGravityVar)
-
-	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -131,7 +129,6 @@ var xTextMarkGetDeleted func(uintptr) bool
 func (x *TextMark) GetDeleted() bool {
 
 	cret := xTextMarkGetDeleted(x.GoPointer())
-
 	return cret
 }
 
@@ -141,7 +138,6 @@ var xTextMarkGetLeftGravity func(uintptr) bool
 func (x *TextMark) GetLeftGravity() bool {
 
 	cret := xTextMarkGetLeftGravity(x.GoPointer())
-
 	return cret
 }
 
@@ -153,7 +149,6 @@ var xTextMarkGetName func(uintptr) string
 func (x *TextMark) GetName() string {
 
 	cret := xTextMarkGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -165,7 +160,6 @@ var xTextMarkGetVisible func(uintptr) bool
 func (x *TextMark) GetVisible() bool {
 
 	cret := xTextMarkGetVisible(x.GoPointer())
-
 	return cret
 }
 

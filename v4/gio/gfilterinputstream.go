@@ -140,7 +140,6 @@ var xFilterInputStreamGetCloseBaseStream func(uintptr) bool
 func (x *FilterInputStream) GetCloseBaseStream() bool {
 
 	cret := xFilterInputStreamGetCloseBaseStream(x.GoPointer())
-
 	return cret
 }
 

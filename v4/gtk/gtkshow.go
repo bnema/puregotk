@@ -58,7 +58,6 @@ func ShowUriFullFinish(ParentVar *Window, ResultVar gio.AsyncResult) (bool, erro
 	var cerr *glib.Error
 
 	cret := xShowUriFullFinish(ParentVar.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

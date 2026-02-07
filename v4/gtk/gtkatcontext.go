@@ -85,7 +85,6 @@ var xATContextGetAccessibleRole func(uintptr) AccessibleRole
 func (x *ATContext) GetAccessibleRole() AccessibleRole {
 
 	cret := xATContextGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 

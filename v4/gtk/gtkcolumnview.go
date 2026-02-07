@@ -157,7 +157,6 @@ var xColumnViewGetEnableRubberband func(uintptr) bool
 func (x *ColumnView) GetEnableRubberband() bool {
 
 	cret := xColumnViewGetEnableRubberband(x.GoPointer())
-
 	return cret
 }
 
@@ -201,7 +200,6 @@ var xColumnViewGetReorderable func(uintptr) bool
 func (x *ColumnView) GetReorderable() bool {
 
 	cret := xColumnViewGetReorderable(x.GoPointer())
-
 	return cret
 }
 
@@ -228,7 +226,6 @@ var xColumnViewGetShowColumnSeparators func(uintptr) bool
 func (x *ColumnView) GetShowColumnSeparators() bool {
 
 	cret := xColumnViewGetShowColumnSeparators(x.GoPointer())
-
 	return cret
 }
 
@@ -238,7 +235,6 @@ var xColumnViewGetShowRowSeparators func(uintptr) bool
 func (x *ColumnView) GetShowRowSeparators() bool {
 
 	cret := xColumnViewGetShowRowSeparators(x.GoPointer())
-
 	return cret
 }
 
@@ -249,7 +245,6 @@ var xColumnViewGetSingleClickActivate func(uintptr) bool
 func (x *ColumnView) GetSingleClickActivate() bool {
 
 	cret := xColumnViewGetSingleClickActivate(x.GoPointer())
-
 	return cret
 }
 
@@ -294,7 +289,6 @@ var xColumnViewGetTabBehavior func(uintptr) ListTabBehavior
 func (x *ColumnView) GetTabBehavior() ListTabBehavior {
 
 	cret := xColumnViewGetTabBehavior(x.GoPointer())
-
 	return cret
 }
 
@@ -612,7 +606,6 @@ func (x *ColumnView) GetAccessibleParent() *AccessibleBase {
 func (x *ColumnView) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -638,7 +631,6 @@ func (x *ColumnView) GetAtContext() *ATContext {
 func (x *ColumnView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -678,7 +670,6 @@ func (x *ColumnView) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ColumnView) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -855,7 +846,6 @@ func (x *ColumnView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 func (x *ColumnView) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -868,7 +858,6 @@ func (x *ColumnView) GetBuildableId() string {
 func (x *ColumnView) GetBorder(BorderVar *Border) bool {
 
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
-
 	return cret
 }
 
@@ -891,7 +880,6 @@ func (x *ColumnView) GetHadjustment() *Adjustment {
 func (x *ColumnView) GetHscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
-
 	return cret
 }
 
@@ -914,7 +902,6 @@ func (x *ColumnView) GetVadjustment() *Adjustment {
 func (x *ColumnView) GetVscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
-
 	return cret
 }
 

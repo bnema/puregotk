@@ -18,7 +18,6 @@ var xPollableSourceNew func(uintptr) *glib.Source
 func PollableSourceNew(PollableStreamVar *gobject.Object) *glib.Source {
 
 	cret := xPollableSourceNew(PollableStreamVar.GoPointer())
-
 	return cret
 }
 
@@ -31,7 +30,6 @@ var xPollableSourceNewFull func(uintptr, *glib.Source, uintptr) *glib.Source
 func PollableSourceNewFull(PollableStreamVar *gobject.Object, ChildSourceVar *glib.Source, CancellableVar *Cancellable) *glib.Source {
 
 	cret := xPollableSourceNewFull(PollableStreamVar.GoPointer(), ChildSourceVar, CancellableVar.GoPointer())
-
 	return cret
 }
 
@@ -50,7 +48,6 @@ func PollableStreamRead(StreamVar *InputStream, BufferVar []byte, CountVar uint,
 	var cerr *glib.Error
 
 	cret := xPollableStreamRead(StreamVar.GoPointer(), BufferVar, CountVar, BlockingVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -74,7 +71,6 @@ func PollableStreamWrite(StreamVar *OutputStream, BufferVar []byte, CountVar uin
 	var cerr *glib.Error
 
 	cret := xPollableStreamWrite(StreamVar.GoPointer(), BufferVar, CountVar, BlockingVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -106,7 +102,6 @@ func PollableStreamWriteAll(StreamVar *OutputStream, BufferVar []byte, CountVar 
 	var cerr *glib.Error
 
 	cret := xPollableStreamWriteAll(StreamVar.GoPointer(), BufferVar, CountVar, BlockingVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

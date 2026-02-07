@@ -52,7 +52,6 @@ var xBytesIconGetBytes func(uintptr) *glib.Bytes
 func (x *BytesIcon) GetBytes() *glib.Bytes {
 
 	cret := xBytesIconGetBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -88,7 +87,6 @@ func (x *BytesIcon) GetPropertyBytes() uintptr {
 func (x *BytesIcon) Equal(Icon2Var Icon) bool {
 
 	cret := XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
-
 	return cret
 }
 
@@ -96,7 +94,6 @@ func (x *BytesIcon) Equal(Icon2Var Icon) bool {
 func (x *BytesIcon) Hash() uint {
 
 	cret := XGIconHash(x.GoPointer())
-
 	return cret
 }
 
@@ -108,7 +105,6 @@ func (x *BytesIcon) Hash() uint {
 func (x *BytesIcon) Serialize() *glib.Variant {
 
 	cret := XGIconSerialize(x.GoPointer())
-
 	return cret
 }
 
@@ -131,7 +127,6 @@ func (x *BytesIcon) Serialize() *glib.Variant {
 func (x *BytesIcon) ToString() string {
 
 	cret := XGIconToString(x.GoPointer())
-
 	return cret
 }
 

@@ -13,7 +13,6 @@ var xEnvironGetenv func([]string, string) string
 func EnvironGetenv(EnvpVar []string, VariableVar string) string {
 
 	cret := xEnvironGetenv(EnvpVar, VariableVar)
-
 	return cret
 }
 
@@ -24,7 +23,6 @@ var xEnvironSetenv func([]string, string, string, bool) []string
 func EnvironSetenv(EnvpVar []string, VariableVar string, ValueVar string, OverwriteVar bool) []string {
 
 	cret := xEnvironSetenv(EnvpVar, VariableVar, ValueVar, OverwriteVar)
-
 	return cret
 }
 
@@ -35,7 +33,6 @@ var xEnvironUnsetenv func([]string, string) []string
 func EnvironUnsetenv(EnvpVar []string, VariableVar string) []string {
 
 	cret := xEnvironUnsetenv(EnvpVar, VariableVar)
-
 	return cret
 }
 
@@ -54,7 +51,6 @@ var xGetEnviron func() []string
 func GetEnviron() []string {
 
 	cret := xGetEnviron()
-
 	return cret
 }
 
@@ -70,7 +66,6 @@ var xGetenv func(string) string
 func Getenv(VariableVar string) string {
 
 	cret := xGetenv(VariableVar)
-
 	return cret
 }
 
@@ -87,7 +82,6 @@ var xListenv func() []string
 func Listenv() []string {
 
 	cret := xListenv()
-
 	return cret
 }
 
@@ -115,7 +109,6 @@ var xSetenv func(string, string, bool) bool
 func Setenv(VariableVar string, ValueVar string, OverwriteVar bool) bool {
 
 	cret := xSetenv(VariableVar, ValueVar, OverwriteVar)
-
 	return cret
 }
 

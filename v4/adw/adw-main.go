@@ -32,7 +32,6 @@ var xIsInitialized func() bool
 func IsInitialized() bool {
 
 	cret := xIsInitialized()
-
 	return cret
 }
 

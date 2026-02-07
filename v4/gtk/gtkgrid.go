@@ -182,7 +182,6 @@ var xGridGetBaselineRow func(uintptr) int
 func (x *Grid) GetBaselineRow() int {
 
 	cret := xGridGetBaselineRow(x.GoPointer())
-
 	return cret
 }
 
@@ -210,7 +209,6 @@ var xGridGetColumnHomogeneous func(uintptr) bool
 func (x *Grid) GetColumnHomogeneous() bool {
 
 	cret := xGridGetColumnHomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -220,7 +218,6 @@ var xGridGetColumnSpacing func(uintptr) uint
 func (x *Grid) GetColumnSpacing() uint {
 
 	cret := xGridGetColumnSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -232,7 +229,6 @@ var xGridGetRowBaselinePosition func(uintptr, int) BaselinePosition
 func (x *Grid) GetRowBaselinePosition(RowVar int) BaselinePosition {
 
 	cret := xGridGetRowBaselinePosition(x.GoPointer(), RowVar)
-
 	return cret
 }
 
@@ -242,7 +238,6 @@ var xGridGetRowHomogeneous func(uintptr) bool
 func (x *Grid) GetRowHomogeneous() bool {
 
 	cret := xGridGetRowHomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -252,7 +247,6 @@ var xGridGetRowSpacing func(uintptr) uint
 func (x *Grid) GetRowSpacing() uint {
 
 	cret := xGridGetRowSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -537,7 +531,6 @@ func (x *Grid) GetAccessibleParent() *AccessibleBase {
 func (x *Grid) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -563,7 +556,6 @@ func (x *Grid) GetAtContext() *ATContext {
 func (x *Grid) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -603,7 +595,6 @@ func (x *Grid) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Grid) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -780,7 +771,6 @@ func (x *Grid) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Val
 func (x *Grid) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -788,7 +778,6 @@ func (x *Grid) GetBuildableId() string {
 func (x *Grid) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

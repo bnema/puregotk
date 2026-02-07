@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -347,15 +346,13 @@ var xNewDialogWithButtons func(uintptr, uintptr, DialogFlags, uintptr, ...interf
 func NewDialogWithButtons(TitleVar *string, ParentVar *Window, FlagsVar DialogFlags, FirstButtonTextVar *string, varArgs ...interface{}) *Dialog {
 	var cls *Dialog
 
-	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
 
-	FirstButtonTextVarPtr, FirstButtonTextVarBytes := core.NullableStringToPtr(FirstButtonTextVar)
+	FirstButtonTextVarPtr := core.GStrdupNullable(FirstButtonTextVar)
+	defer core.GFreeNullable(FirstButtonTextVarPtr)
 
 	cret := xNewDialogWithButtons(TitleVarPtr, ParentVar.GoPointer(), FlagsVar, FirstButtonTextVarPtr, varArgs...)
-
-	runtime.KeepAlive(TitleVarBytes)
-
-	runtime.KeepAlive(FirstButtonTextVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -463,7 +460,6 @@ var xDialogGetResponseForWidget func(uintptr, uintptr) int
 func (x *Dialog) GetResponseForWidget(WidgetVar *Widget) int {
 
 	cret := xDialogGetResponseForWidget(x.GoPointer(), WidgetVar.GoPointer())
-
 	return cret
 }
 
@@ -673,7 +669,6 @@ func (x *Dialog) GetAccessibleParent() *AccessibleBase {
 func (x *Dialog) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -699,7 +694,6 @@ func (x *Dialog) GetAtContext() *ATContext {
 func (x *Dialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -739,7 +733,6 @@ func (x *Dialog) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Dialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -916,7 +909,6 @@ func (x *Dialog) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, V
 func (x *Dialog) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

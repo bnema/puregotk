@@ -104,7 +104,6 @@ var xCellAreaClassListCellProperties func(uintptr, *uint) uintptr
 func (x *CellAreaClass) ListCellProperties(NPropertiesVar *uint) uintptr {
 
 	cret := xCellAreaClassListCellProperties(x.GoPointer(), NPropertiesVar)
-
 	return cret
 }
 
@@ -1081,7 +1080,6 @@ var xCellAreaActivate func(uintptr, uintptr, uintptr, *gdk.Rectangle, CellRender
 func (x *CellArea) Activate(ContextVar *CellAreaContext, WidgetVar *Widget, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState, EditOnlyVar bool) bool {
 
 	cret := xCellAreaActivate(x.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), CellAreaVar, FlagsVar, EditOnlyVar)
-
 	return cret
 }
 
@@ -1094,7 +1092,6 @@ var xCellAreaActivateCell func(uintptr, uintptr, uintptr, uintptr, *gdk.Rectangl
 func (x *CellArea) ActivateCell(WidgetVar *Widget, RendererVar *CellRenderer, EventVar *gdk.Event, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState) bool {
 
 	cret := xCellAreaActivateCell(x.GoPointer(), WidgetVar.GoPointer(), RendererVar.GoPointer(), EventVar.GoPointer(), CellAreaVar, FlagsVar)
-
 	return cret
 }
 
@@ -1169,7 +1166,6 @@ var xCellAreaAttributeGetColumn func(uintptr, uintptr, string) int
 func (x *CellArea) AttributeGetColumn(RendererVar *CellRenderer, AttributeVar string) int {
 
 	cret := xCellAreaAttributeGetColumn(x.GoPointer(), RendererVar.GoPointer(), AttributeVar)
-
 	return cret
 }
 
@@ -1280,7 +1276,6 @@ var xCellAreaEvent func(uintptr, uintptr, uintptr, uintptr, *gdk.Rectangle, Cell
 func (x *CellArea) Event(ContextVar *CellAreaContext, WidgetVar *Widget, EventVar *gdk.Event, CellAreaVar *gdk.Rectangle, FlagsVar CellRendererState) int {
 
 	cret := xCellAreaEvent(x.GoPointer(), ContextVar.GoPointer(), WidgetVar.GoPointer(), EventVar.GoPointer(), CellAreaVar, FlagsVar)
-
 	return cret
 }
 
@@ -1296,7 +1291,6 @@ var xCellAreaFocus func(uintptr, DirectionType) bool
 func (x *CellArea) Focus(DirectionVar DirectionType) bool {
 
 	cret := xCellAreaFocus(x.GoPointer(), DirectionVar)
-
 	return cret
 }
 
@@ -1387,7 +1381,6 @@ var xCellAreaGetCurrentPathString func(uintptr) string
 func (x *CellArea) GetCurrentPathString() string {
 
 	cret := xCellAreaGetCurrentPathString(x.GoPointer())
-
 	return cret
 }
 
@@ -1473,7 +1466,6 @@ var xCellAreaGetFocusSiblings func(uintptr, uintptr) *glib.List
 func (x *CellArea) GetFocusSiblings(RendererVar *CellRenderer) *glib.List {
 
 	cret := xCellAreaGetFocusSiblings(x.GoPointer(), RendererVar.GoPointer())
-
 	return cret
 }
 
@@ -1558,7 +1550,6 @@ var xCellAreaGetRequestMode func(uintptr) SizeRequestMode
 func (x *CellArea) GetRequestMode() SizeRequestMode {
 
 	cret := xCellAreaGetRequestMode(x.GoPointer())
-
 	return cret
 }
 
@@ -1568,7 +1559,6 @@ var xCellAreaHasRenderer func(uintptr, uintptr) bool
 func (x *CellArea) HasRenderer(RendererVar *CellRenderer) bool {
 
 	cret := xCellAreaHasRenderer(x.GoPointer(), RendererVar.GoPointer())
-
 	return cret
 }
 
@@ -1590,7 +1580,6 @@ var xCellAreaIsActivatable func(uintptr) bool
 func (x *CellArea) IsActivatable() bool {
 
 	cret := xCellAreaIsActivatable(x.GoPointer())
-
 	return cret
 }
 
@@ -1601,7 +1590,6 @@ var xCellAreaIsFocusSibling func(uintptr, uintptr, uintptr) bool
 func (x *CellArea) IsFocusSibling(RendererVar *CellRenderer, SiblingVar *CellRenderer) bool {
 
 	cret := xCellAreaIsFocusSibling(x.GoPointer(), RendererVar.GoPointer(), SiblingVar.GoPointer())
-
 	return cret
 }
 
@@ -1800,7 +1788,6 @@ func (x *CellArea) ConnectRemoveEditable(cb *func(CellArea, uintptr, uintptr)) u
 func (x *CellArea) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -1854,7 +1841,6 @@ func (x *CellArea) GetArea() *CellArea {
 func (x *CellArea) GetCells() *glib.List {
 
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-
 	return cret
 }
 

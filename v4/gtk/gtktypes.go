@@ -45,7 +45,6 @@ var xNewBitsetEmpty func() *Bitset
 func NewBitsetEmpty() *Bitset {
 
 	cret := xNewBitsetEmpty()
-
 	return cret
 }
 
@@ -55,7 +54,6 @@ var xNewBitsetRange func(uint, uint) *Bitset
 func NewBitsetRange(StartVar uint, NItemsVar uint) *Bitset {
 
 	cret := xNewBitsetRange(StartVar, NItemsVar)
-
 	return cret
 }
 
@@ -65,7 +63,6 @@ var xBitsetAdd func(uintptr, uint) bool
 func (x *Bitset) Add(ValueVar uint) bool {
 
 	cret := xBitsetAdd(x.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -105,7 +102,6 @@ var xBitsetContains func(uintptr, uint) bool
 func (x *Bitset) Contains(ValueVar uint) bool {
 
 	cret := xBitsetContains(x.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -115,7 +111,6 @@ var xBitsetCopy func(uintptr) *Bitset
 func (x *Bitset) Copy() *Bitset {
 
 	cret := xBitsetCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -141,7 +136,6 @@ var xBitsetEquals func(uintptr, *Bitset) bool
 func (x *Bitset) Equals(OtherVar *Bitset) bool {
 
 	cret := xBitsetEquals(x.GoPointer(), OtherVar)
-
 	return cret
 }
 
@@ -153,7 +147,6 @@ var xBitsetGetMaximum func(uintptr) uint
 func (x *Bitset) GetMaximum() uint {
 
 	cret := xBitsetGetMaximum(x.GoPointer())
-
 	return cret
 }
 
@@ -165,7 +158,6 @@ var xBitsetGetMinimum func(uintptr) uint
 func (x *Bitset) GetMinimum() uint {
 
 	cret := xBitsetGetMinimum(x.GoPointer())
-
 	return cret
 }
 
@@ -177,7 +169,6 @@ var xBitsetGetNth func(uintptr, uint) uint
 func (x *Bitset) GetNth(NthVar uint) uint {
 
 	cret := xBitsetGetNth(x.GoPointer(), NthVar)
-
 	return cret
 }
 
@@ -194,7 +185,6 @@ var xBitsetGetSize func(uintptr) uint64
 func (x *Bitset) GetSize() uint64 {
 
 	cret := xBitsetGetSize(x.GoPointer())
-
 	return cret
 }
 
@@ -209,7 +199,6 @@ var xBitsetGetSizeInRange func(uintptr, uint, uint) uint64
 func (x *Bitset) GetSizeInRange(FirstVar uint, LastVar uint) uint64 {
 
 	cret := xBitsetGetSizeInRange(x.GoPointer(), FirstVar, LastVar)
-
 	return cret
 }
 
@@ -233,7 +222,6 @@ var xBitsetIsEmpty func(uintptr) bool
 func (x *Bitset) IsEmpty() bool {
 
 	cret := xBitsetIsEmpty(x.GoPointer())
-
 	return cret
 }
 
@@ -243,7 +231,6 @@ var xBitsetRef func(uintptr) *Bitset
 func (x *Bitset) Ref() *Bitset {
 
 	cret := xBitsetRef(x.GoPointer())
-
 	return cret
 }
 
@@ -253,7 +240,6 @@ var xBitsetRemove func(uintptr, uint) bool
 func (x *Bitset) Remove(ValueVar uint) bool {
 
 	cret := xBitsetRemove(x.GoPointer(), ValueVar)
-
 	return cret
 }
 
@@ -409,7 +395,6 @@ var xNewScrollInfo func() *ScrollInfo
 func NewScrollInfo() *ScrollInfo {
 
 	cret := xNewScrollInfo()
-
 	return cret
 }
 
@@ -419,7 +404,6 @@ var xScrollInfoGetEnableHorizontal func(uintptr) bool
 func (x *ScrollInfo) GetEnableHorizontal() bool {
 
 	cret := xScrollInfoGetEnableHorizontal(x.GoPointer())
-
 	return cret
 }
 
@@ -429,7 +413,6 @@ var xScrollInfoGetEnableVertical func(uintptr) bool
 func (x *ScrollInfo) GetEnableVertical() bool {
 
 	cret := xScrollInfoGetEnableVertical(x.GoPointer())
-
 	return cret
 }
 
@@ -439,7 +422,6 @@ var xScrollInfoRef func(uintptr) *ScrollInfo
 func (x *ScrollInfo) Ref() *ScrollInfo {
 
 	cret := xScrollInfoRef(x.GoPointer())
-
 	return cret
 }
 

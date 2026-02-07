@@ -202,7 +202,6 @@ func (x *ToastOverlay) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ToastOverlay) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -228,7 +227,6 @@ func (x *ToastOverlay) GetAtContext() *gtk.ATContext {
 func (x *ToastOverlay) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -268,7 +266,6 @@ func (x *ToastOverlay) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ToastOverlay) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -445,7 +442,6 @@ func (x *ToastOverlay) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessib
 func (x *ToastOverlay) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

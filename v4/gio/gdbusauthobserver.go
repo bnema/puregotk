@@ -118,7 +118,6 @@ var xDBusAuthObserverAllowMechanism func(uintptr, string) bool
 func (x *DBusAuthObserver) AllowMechanism(MechanismVar string) bool {
 
 	cret := xDBusAuthObserverAllowMechanism(x.GoPointer(), MechanismVar)
-
 	return cret
 }
 
@@ -128,7 +127,6 @@ var xDBusAuthObserverAuthorizeAuthenticatedPeer func(uintptr, uintptr, uintptr) 
 func (x *DBusAuthObserver) AuthorizeAuthenticatedPeer(StreamVar *IOStream, CredentialsVar *Credentials) bool {
 
 	cret := xDBusAuthObserverAuthorizeAuthenticatedPeer(x.GoPointer(), StreamVar.GoPointer(), CredentialsVar.GoPointer())
-
 	return cret
 }
 

@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -188,7 +187,6 @@ var xAboutDialogGetArtists func(uintptr) []string
 func (x *AboutDialog) GetArtists() []string {
 
 	cret := xAboutDialogGetArtists(x.GoPointer())
-
 	return cret
 }
 
@@ -199,7 +197,6 @@ var xAboutDialogGetAuthors func(uintptr) []string
 func (x *AboutDialog) GetAuthors() []string {
 
 	cret := xAboutDialogGetAuthors(x.GoPointer())
-
 	return cret
 }
 
@@ -209,7 +206,6 @@ var xAboutDialogGetComments func(uintptr) string
 func (x *AboutDialog) GetComments() string {
 
 	cret := xAboutDialogGetComments(x.GoPointer())
-
 	return cret
 }
 
@@ -219,7 +215,6 @@ var xAboutDialogGetCopyright func(uintptr) string
 func (x *AboutDialog) GetCopyright() string {
 
 	cret := xAboutDialogGetCopyright(x.GoPointer())
-
 	return cret
 }
 
@@ -230,7 +225,6 @@ var xAboutDialogGetDocumenters func(uintptr) []string
 func (x *AboutDialog) GetDocumenters() []string {
 
 	cret := xAboutDialogGetDocumenters(x.GoPointer())
-
 	return cret
 }
 
@@ -240,7 +234,6 @@ var xAboutDialogGetLicense func(uintptr) string
 func (x *AboutDialog) GetLicense() string {
 
 	cret := xAboutDialogGetLicense(x.GoPointer())
-
 	return cret
 }
 
@@ -250,7 +243,6 @@ var xAboutDialogGetLicenseType func(uintptr) License
 func (x *AboutDialog) GetLicenseType() License {
 
 	cret := xAboutDialogGetLicenseType(x.GoPointer())
-
 	return cret
 }
 
@@ -277,7 +269,6 @@ var xAboutDialogGetLogoIconName func(uintptr) string
 func (x *AboutDialog) GetLogoIconName() string {
 
 	cret := xAboutDialogGetLogoIconName(x.GoPointer())
-
 	return cret
 }
 
@@ -287,7 +278,6 @@ var xAboutDialogGetProgramName func(uintptr) string
 func (x *AboutDialog) GetProgramName() string {
 
 	cret := xAboutDialogGetProgramName(x.GoPointer())
-
 	return cret
 }
 
@@ -297,7 +287,6 @@ var xAboutDialogGetSystemInformation func(uintptr) string
 func (x *AboutDialog) GetSystemInformation() string {
 
 	cret := xAboutDialogGetSystemInformation(x.GoPointer())
-
 	return cret
 }
 
@@ -308,7 +297,6 @@ var xAboutDialogGetTranslatorCredits func(uintptr) string
 func (x *AboutDialog) GetTranslatorCredits() string {
 
 	cret := xAboutDialogGetTranslatorCredits(x.GoPointer())
-
 	return cret
 }
 
@@ -318,7 +306,6 @@ var xAboutDialogGetVersion func(uintptr) string
 func (x *AboutDialog) GetVersion() string {
 
 	cret := xAboutDialogGetVersion(x.GoPointer())
-
 	return cret
 }
 
@@ -328,7 +315,6 @@ var xAboutDialogGetWebsite func(uintptr) string
 func (x *AboutDialog) GetWebsite() string {
 
 	cret := xAboutDialogGetWebsite(x.GoPointer())
-
 	return cret
 }
 
@@ -338,7 +324,6 @@ var xAboutDialogGetWebsiteLabel func(uintptr) string
 func (x *AboutDialog) GetWebsiteLabel() string {
 
 	cret := xAboutDialogGetWebsiteLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -349,7 +334,6 @@ var xAboutDialogGetWrapLicense func(uintptr) bool
 func (x *AboutDialog) GetWrapLicense() bool {
 
 	cret := xAboutDialogGetWrapLicense(x.GoPointer())
-
 	return cret
 }
 
@@ -380,11 +364,10 @@ var xAboutDialogSetComments func(uintptr, uintptr)
 // This should be a short string of one or two lines.
 func (x *AboutDialog) SetComments(CommentsVar *string) {
 
-	CommentsVarPtr, CommentsVarBytes := core.NullableStringToPtr(CommentsVar)
+	CommentsVarPtr := core.GStrdupNullable(CommentsVar)
+	defer core.GFreeNullable(CommentsVarPtr)
 
 	xAboutDialogSetComments(x.GoPointer(), CommentsVarPtr)
-
-	runtime.KeepAlive(CommentsVarBytes)
 
 }
 
@@ -395,11 +378,10 @@ var xAboutDialogSetCopyright func(uintptr, uintptr)
 // This should be a short string of one or two lines.
 func (x *AboutDialog) SetCopyright(CopyrightVar *string) {
 
-	CopyrightVarPtr, CopyrightVarBytes := core.NullableStringToPtr(CopyrightVar)
+	CopyrightVarPtr := core.GStrdupNullable(CopyrightVar)
+	defer core.GFreeNullable(CopyrightVarPtr)
 
 	xAboutDialogSetCopyright(x.GoPointer(), CopyrightVarPtr)
-
-	runtime.KeepAlive(CopyrightVarBytes)
 
 }
 
@@ -421,11 +403,10 @@ var xAboutDialogSetLicense func(uintptr, uintptr)
 // If `license` is `NULL`, the license page is hidden.
 func (x *AboutDialog) SetLicense(LicenseVar *string) {
 
-	LicenseVarPtr, LicenseVarBytes := core.NullableStringToPtr(LicenseVar)
+	LicenseVarPtr := core.GStrdupNullable(LicenseVar)
+	defer core.GFreeNullable(LicenseVarPtr)
 
 	xAboutDialogSetLicense(x.GoPointer(), LicenseVarPtr)
-
-	runtime.KeepAlive(LicenseVarBytes)
 
 }
 
@@ -456,11 +437,10 @@ var xAboutDialogSetLogoIconName func(uintptr, uintptr)
 // Sets the icon name to be displayed as logo in the about dialog.
 func (x *AboutDialog) SetLogoIconName(IconNameVar *string) {
 
-	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
 
 	xAboutDialogSetLogoIconName(x.GoPointer(), IconNameVarPtr)
-
-	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -472,11 +452,10 @@ var xAboutDialogSetProgramName func(uintptr, uintptr)
 // by `g_get_application_name()` is used.
 func (x *AboutDialog) SetProgramName(NameVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xAboutDialogSetProgramName(x.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -491,11 +470,10 @@ var xAboutDialogSetSystemInformation func(uintptr, uintptr)
 // See [property@Gtk.AboutDialog:system-information].
 func (x *AboutDialog) SetSystemInformation(SystemInformationVar *string) {
 
-	SystemInformationVarPtr, SystemInformationVarBytes := core.NullableStringToPtr(SystemInformationVar)
+	SystemInformationVarPtr := core.GStrdupNullable(SystemInformationVar)
+	defer core.GFreeNullable(SystemInformationVarPtr)
 
 	xAboutDialogSetSystemInformation(x.GoPointer(), SystemInformationVarPtr)
-
-	runtime.KeepAlive(SystemInformationVarBytes)
 
 }
 
@@ -523,11 +501,10 @@ var xAboutDialogSetTranslatorCredits func(uintptr, uintptr)
 // is untranslated and omit translator credits.
 func (x *AboutDialog) SetTranslatorCredits(TranslatorCreditsVar *string) {
 
-	TranslatorCreditsVarPtr, TranslatorCreditsVarBytes := core.NullableStringToPtr(TranslatorCreditsVar)
+	TranslatorCreditsVarPtr := core.GStrdupNullable(TranslatorCreditsVar)
+	defer core.GFreeNullable(TranslatorCreditsVarPtr)
 
 	xAboutDialogSetTranslatorCredits(x.GoPointer(), TranslatorCreditsVarPtr)
-
-	runtime.KeepAlive(TranslatorCreditsVarBytes)
 
 }
 
@@ -536,11 +513,10 @@ var xAboutDialogSetVersion func(uintptr, uintptr)
 // Sets the version string to display in the about dialog.
 func (x *AboutDialog) SetVersion(VersionVar *string) {
 
-	VersionVarPtr, VersionVarBytes := core.NullableStringToPtr(VersionVar)
+	VersionVarPtr := core.GStrdupNullable(VersionVar)
+	defer core.GFreeNullable(VersionVarPtr)
 
 	xAboutDialogSetVersion(x.GoPointer(), VersionVarPtr)
-
-	runtime.KeepAlive(VersionVarBytes)
 
 }
 
@@ -549,11 +525,10 @@ var xAboutDialogSetWebsite func(uintptr, uintptr)
 // Sets the URL to use for the website link.
 func (x *AboutDialog) SetWebsite(WebsiteVar *string) {
 
-	WebsiteVarPtr, WebsiteVarBytes := core.NullableStringToPtr(WebsiteVar)
+	WebsiteVarPtr := core.GStrdupNullable(WebsiteVar)
+	defer core.GFreeNullable(WebsiteVarPtr)
 
 	xAboutDialogSetWebsite(x.GoPointer(), WebsiteVarPtr)
-
-	runtime.KeepAlive(WebsiteVarBytes)
 
 }
 
@@ -979,7 +954,6 @@ func (x *AboutDialog) GetAccessibleParent() *AccessibleBase {
 func (x *AboutDialog) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -1005,7 +979,6 @@ func (x *AboutDialog) GetAtContext() *ATContext {
 func (x *AboutDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -1045,7 +1018,6 @@ func (x *AboutDialog) GetNextAccessibleSibling() *AccessibleBase {
 func (x *AboutDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1222,7 +1194,6 @@ func (x *AboutDialog) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 func (x *AboutDialog) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

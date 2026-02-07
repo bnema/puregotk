@@ -87,7 +87,6 @@ var xSliceListModelGetOffset func(uintptr) uint
 func (x *SliceListModel) GetOffset() uint {
 
 	cret := xSliceListModelGetOffset(x.GoPointer())
-
 	return cret
 }
 
@@ -97,7 +96,6 @@ var xSliceListModelGetSize func(uintptr) uint
 func (x *SliceListModel) GetSize() uint {
 
 	cret := xSliceListModelGetSize(x.GoPointer())
-
 	return cret
 }
 
@@ -202,7 +200,6 @@ func (x *SliceListModel) GetPropertySize() uint {
 func (x *SliceListModel) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
-
 	return cret
 }
 
@@ -217,7 +214,6 @@ func (x *SliceListModel) GetItem(PositionVar uint) uintptr {
 func (x *SliceListModel) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
-
 	return cret
 }
 
@@ -229,7 +225,6 @@ func (x *SliceListModel) GetItemType() types.GType {
 func (x *SliceListModel) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
-
 	return cret
 }
 

@@ -321,7 +321,6 @@ func (x *Cancellable) Connect(CallbackVar *gobject.Callback, DataVar uintptr, Da
 	}
 
 	cret := xCancellableConnect(x.GoPointer(), CallbackVarRef, DataVar, DataDestroyFuncVarRef)
-
 	return cret
 }
 
@@ -365,7 +364,6 @@ var xCancellableGetFd func(uintptr) int
 func (x *Cancellable) GetFd() int {
 
 	cret := xCancellableGetFd(x.GoPointer())
-
 	return cret
 }
 
@@ -375,7 +373,6 @@ var xCancellableIsCancelled func(uintptr) bool
 func (x *Cancellable) IsCancelled() bool {
 
 	cret := xCancellableIsCancelled(x.GoPointer())
-
 	return cret
 }
 
@@ -407,7 +404,6 @@ var xCancellableMakePollfd func(uintptr, *glib.PollFD) bool
 func (x *Cancellable) MakePollfd(PollfdVar *glib.PollFD) bool {
 
 	cret := xCancellableMakePollfd(x.GoPointer(), PollfdVar)
-
 	return cret
 }
 
@@ -491,7 +487,6 @@ func (x *Cancellable) SetErrorIfCancelled() (bool, error) {
 	var cerr *glib.Error
 
 	cret := xCancellableSetErrorIfCancelled(x.GoPointer())
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -513,7 +508,6 @@ var xCancellableSourceNew func(uintptr) *glib.Source
 func (x *Cancellable) SourceNew() *glib.Source {
 
 	cret := xCancellableSourceNew(x.GoPointer())
-
 	return cret
 }
 

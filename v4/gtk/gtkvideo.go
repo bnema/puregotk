@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -101,11 +100,10 @@ var xNewVideoForFilename func(uintptr) uintptr
 func NewVideoForFilename(FilenameVar *string) *Video {
 	var cls *Video
 
-	FilenameVarPtr, FilenameVarBytes := core.NullableStringToPtr(FilenameVar)
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
 
 	cret := xNewVideoForFilename(FilenameVarPtr)
-
-	runtime.KeepAlive(FilenameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -142,11 +140,10 @@ var xNewVideoForResource func(uintptr) uintptr
 func NewVideoForResource(ResourcePathVar *string) *Video {
 	var cls *Video
 
-	ResourcePathVarPtr, ResourcePathVarBytes := core.NullableStringToPtr(ResourcePathVar)
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
 
 	cret := xNewVideoForResource(ResourcePathVarPtr)
-
-	runtime.KeepAlive(ResourcePathVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -163,7 +160,6 @@ var xVideoGetAutoplay func(uintptr) bool
 func (x *Video) GetAutoplay() bool {
 
 	cret := xVideoGetAutoplay(x.GoPointer())
-
 	return cret
 }
 
@@ -193,7 +189,6 @@ var xVideoGetGraphicsOffload func(uintptr) GraphicsOffloadEnabled
 func (x *Video) GetGraphicsOffload() GraphicsOffloadEnabled {
 
 	cret := xVideoGetGraphicsOffload(x.GoPointer())
-
 	return cret
 }
 
@@ -203,7 +198,6 @@ var xVideoGetLoop func(uintptr) bool
 func (x *Video) GetLoop() bool {
 
 	cret := xVideoGetLoop(x.GoPointer())
-
 	return cret
 }
 
@@ -250,11 +244,10 @@ var xVideoSetFilename func(uintptr, uintptr)
 // This is a utility function that calls gtk_video_set_file(),
 func (x *Video) SetFilename(FilenameVar *string) {
 
-	FilenameVarPtr, FilenameVarBytes := core.NullableStringToPtr(FilenameVar)
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
 
 	xVideoSetFilename(x.GoPointer(), FilenameVarPtr)
-
-	runtime.KeepAlive(FilenameVarBytes)
 
 }
 
@@ -301,11 +294,10 @@ var xVideoSetResource func(uintptr, uintptr)
 // This is a utility function that calls [method@Gtk.Video.set_file].
 func (x *Video) SetResource(ResourcePathVar *string) {
 
-	ResourcePathVarPtr, ResourcePathVarBytes := core.NullableStringToPtr(ResourcePathVar)
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
 
 	xVideoSetResource(x.GoPointer(), ResourcePathVarPtr)
-
-	runtime.KeepAlive(ResourcePathVarBytes)
 
 }
 
@@ -389,7 +381,6 @@ func (x *Video) GetAccessibleParent() *AccessibleBase {
 func (x *Video) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -415,7 +406,6 @@ func (x *Video) GetAtContext() *ATContext {
 func (x *Video) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -455,7 +445,6 @@ func (x *Video) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Video) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -632,7 +621,6 @@ func (x *Video) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 func (x *Video) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

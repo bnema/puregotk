@@ -99,7 +99,6 @@ var xTabBarGetAutohide func(uintptr) bool
 func (x *TabBar) GetAutohide() bool {
 
 	cret := xTabBarGetAutohide(x.GoPointer())
-
 	return cret
 }
 
@@ -126,7 +125,6 @@ var xTabBarGetExpandTabs func(uintptr) bool
 func (x *TabBar) GetExpandTabs() bool {
 
 	cret := xTabBarGetExpandTabs(x.GoPointer())
-
 	return cret
 }
 
@@ -136,7 +134,6 @@ var xTabBarGetExtraDragPreferredAction func(uintptr) gdk.DragAction
 func (x *TabBar) GetExtraDragPreferredAction() gdk.DragAction {
 
 	cret := xTabBarGetExtraDragPreferredAction(x.GoPointer())
-
 	return cret
 }
 
@@ -146,7 +143,6 @@ var xTabBarGetExtraDragPreload func(uintptr) bool
 func (x *TabBar) GetExtraDragPreload() bool {
 
 	cret := xTabBarGetExtraDragPreload(x.GoPointer())
-
 	return cret
 }
 
@@ -156,7 +152,6 @@ var xTabBarGetInverted func(uintptr) bool
 func (x *TabBar) GetInverted() bool {
 
 	cret := xTabBarGetInverted(x.GoPointer())
-
 	return cret
 }
 
@@ -168,7 +163,6 @@ var xTabBarGetIsOverflowing func(uintptr) bool
 func (x *TabBar) GetIsOverflowing() bool {
 
 	cret := xTabBarGetIsOverflowing(x.GoPointer())
-
 	return cret
 }
 
@@ -197,7 +191,6 @@ var xTabBarGetTabsRevealed func(uintptr) bool
 func (x *TabBar) GetTabsRevealed() bool {
 
 	cret := xTabBarGetTabsRevealed(x.GoPointer())
-
 	return cret
 }
 
@@ -534,7 +527,6 @@ func (x *TabBar) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *TabBar) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -560,7 +552,6 @@ func (x *TabBar) GetAtContext() *gtk.ATContext {
 func (x *TabBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -600,7 +591,6 @@ func (x *TabBar) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *TabBar) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -777,7 +767,6 @@ func (x *TabBar) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleStat
 func (x *TabBar) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

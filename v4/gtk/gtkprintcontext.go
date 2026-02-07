@@ -139,7 +139,6 @@ var xPrintContextGetCairoContext func(uintptr) *cairo.Context
 func (x *PrintContext) GetCairoContext() *cairo.Context {
 
 	cret := xPrintContextGetCairoContext(x.GoPointer())
-
 	return cret
 }
 
@@ -150,7 +149,6 @@ var xPrintContextGetDpiX func(uintptr) float64
 func (x *PrintContext) GetDpiX() float64 {
 
 	cret := xPrintContextGetDpiX(x.GoPointer())
-
 	return cret
 }
 
@@ -161,7 +159,6 @@ var xPrintContextGetDpiY func(uintptr) float64
 func (x *PrintContext) GetDpiY() float64 {
 
 	cret := xPrintContextGetDpiY(x.GoPointer())
-
 	return cret
 }
 
@@ -172,7 +169,6 @@ var xPrintContextGetHardMargins func(uintptr, *float64, *float64, *float64, *flo
 func (x *PrintContext) GetHardMargins(TopVar *float64, BottomVar *float64, LeftVar *float64, RightVar *float64) bool {
 
 	cret := xPrintContextGetHardMargins(x.GoPointer(), TopVar, BottomVar, LeftVar, RightVar)
-
 	return cret
 }
 
@@ -182,7 +178,6 @@ var xPrintContextGetHeight func(uintptr) float64
 func (x *PrintContext) GetHeight() float64 {
 
 	cret := xPrintContextGetHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -228,7 +223,6 @@ var xPrintContextGetWidth func(uintptr) float64
 func (x *PrintContext) GetWidth() float64 {
 
 	cret := xPrintContextGetWidth(x.GoPointer())
-
 	return cret
 }
 

@@ -3,7 +3,6 @@ package gio
 
 import (
 	"fmt"
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -659,11 +658,10 @@ var xNewSettingsFull func(*SettingsSchema, uintptr, uintptr) uintptr
 func NewSettingsFull(SchemaVar *SettingsSchema, BackendVar *SettingsBackend, PathVar *string) *Settings {
 	var cls *Settings
 
-	PathVarPtr, PathVarBytes := core.NullableStringToPtr(PathVar)
+	PathVarPtr := core.GStrdupNullable(PathVar)
+	defer core.GFreeNullable(PathVarPtr)
 
 	cret := xNewSettingsFull(SchemaVar, BackendVar.GoPointer(), PathVarPtr)
-
-	runtime.KeepAlive(PathVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -954,7 +952,6 @@ var xSettingsGetBoolean func(uintptr, string) bool
 func (x *Settings) GetBoolean(KeyVar string) bool {
 
 	cret := xSettingsGetBoolean(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1008,7 +1005,6 @@ var xSettingsGetDefaultValue func(uintptr, string) *glib.Variant
 func (x *Settings) GetDefaultValue(KeyVar string) *glib.Variant {
 
 	cret := xSettingsGetDefaultValue(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1023,7 +1019,6 @@ var xSettingsGetDouble func(uintptr, string) float64
 func (x *Settings) GetDouble(KeyVar string) float64 {
 
 	cret := xSettingsGetDouble(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1044,7 +1039,6 @@ var xSettingsGetEnum func(uintptr, string) int
 func (x *Settings) GetEnum(KeyVar string) int {
 
 	cret := xSettingsGetEnum(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1065,7 +1059,6 @@ var xSettingsGetFlags func(uintptr, string) uint
 func (x *Settings) GetFlags(KeyVar string) uint {
 
 	cret := xSettingsGetFlags(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1079,7 +1072,6 @@ var xSettingsGetHasUnapplied func(uintptr) bool
 func (x *Settings) GetHasUnapplied() bool {
 
 	cret := xSettingsGetHasUnapplied(x.GoPointer())
-
 	return cret
 }
 
@@ -1094,7 +1086,6 @@ var xSettingsGetInt func(uintptr, string) int
 func (x *Settings) GetInt(KeyVar string) int {
 
 	cret := xSettingsGetInt(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1109,7 +1100,6 @@ var xSettingsGetInt64 func(uintptr, string) int64
 func (x *Settings) GetInt64(KeyVar string) int64 {
 
 	cret := xSettingsGetInt64(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1160,7 +1150,6 @@ func (x *Settings) GetMapped(KeyVar string, MappingVar *SettingsGetMapping, User
 	}
 
 	cret := xSettingsGetMapped(x.GoPointer(), KeyVar, MappingVarRef, UserDataVar)
-
 	return cret
 }
 
@@ -1170,7 +1159,6 @@ var xSettingsGetRange func(uintptr, string) *glib.Variant
 func (x *Settings) GetRange(KeyVar string) *glib.Variant {
 
 	cret := xSettingsGetRange(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1185,7 +1173,6 @@ var xSettingsGetString func(uintptr, string) string
 func (x *Settings) GetString(KeyVar string) string {
 
 	cret := xSettingsGetString(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1198,7 +1185,6 @@ var xSettingsGetStrv func(uintptr, string) []string
 func (x *Settings) GetStrv(KeyVar string) []string {
 
 	cret := xSettingsGetStrv(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1214,7 +1200,6 @@ var xSettingsGetUint func(uintptr, string) uint
 func (x *Settings) GetUint(KeyVar string) uint {
 
 	cret := xSettingsGetUint(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1230,7 +1215,6 @@ var xSettingsGetUint64 func(uintptr, string) uint64
 func (x *Settings) GetUint64(KeyVar string) uint64 {
 
 	cret := xSettingsGetUint64(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1257,7 +1241,6 @@ var xSettingsGetUserValue func(uintptr, string) *glib.Variant
 func (x *Settings) GetUserValue(KeyVar string) *glib.Variant {
 
 	cret := xSettingsGetUserValue(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1270,7 +1253,6 @@ var xSettingsGetValue func(uintptr, string) *glib.Variant
 func (x *Settings) GetValue(KeyVar string) *glib.Variant {
 
 	cret := xSettingsGetValue(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -1280,7 +1262,6 @@ var xSettingsIsWritable func(uintptr, string) bool
 func (x *Settings) IsWritable(NameVar string) bool {
 
 	cret := xSettingsIsWritable(x.GoPointer(), NameVar)
-
 	return cret
 }
 
@@ -1300,7 +1281,6 @@ var xSettingsListChildren func(uintptr) []string
 func (x *Settings) ListChildren() []string {
 
 	cret := xSettingsListChildren(x.GoPointer())
-
 	return cret
 }
 
@@ -1317,7 +1297,6 @@ var xSettingsListKeys func(uintptr) []string
 func (x *Settings) ListKeys() []string {
 
 	cret := xSettingsListKeys(x.GoPointer())
-
 	return cret
 }
 
@@ -1328,7 +1307,6 @@ var xSettingsRangeCheck func(uintptr, string, *glib.Variant) bool
 func (x *Settings) RangeCheck(KeyVar string, ValueVar *glib.Variant) bool {
 
 	cret := xSettingsRangeCheck(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1373,7 +1351,6 @@ var xSettingsSet func(uintptr, string, string, ...interface{}) bool
 func (x *Settings) Set(KeyVar string, FormatVar string, varArgs ...interface{}) bool {
 
 	cret := xSettingsSet(x.GoPointer(), KeyVar, FormatVar, varArgs...)
-
 	return cret
 }
 
@@ -1388,7 +1365,6 @@ var xSettingsSetBoolean func(uintptr, string, bool) bool
 func (x *Settings) SetBoolean(KeyVar string, ValueVar bool) bool {
 
 	cret := xSettingsSetBoolean(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1403,7 +1379,6 @@ var xSettingsSetDouble func(uintptr, string, float64) bool
 func (x *Settings) SetDouble(KeyVar string, ValueVar float64) bool {
 
 	cret := xSettingsSetDouble(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1422,7 +1397,6 @@ var xSettingsSetEnum func(uintptr, string, int) bool
 func (x *Settings) SetEnum(KeyVar string, ValueVar int) bool {
 
 	cret := xSettingsSetEnum(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1442,7 +1416,6 @@ var xSettingsSetFlags func(uintptr, string, uint) bool
 func (x *Settings) SetFlags(KeyVar string, ValueVar uint) bool {
 
 	cret := xSettingsSetFlags(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1457,7 +1430,6 @@ var xSettingsSetInt func(uintptr, string, int) bool
 func (x *Settings) SetInt(KeyVar string, ValueVar int) bool {
 
 	cret := xSettingsSetInt(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1472,7 +1444,6 @@ var xSettingsSetInt64 func(uintptr, string, int64) bool
 func (x *Settings) SetInt64(KeyVar string, ValueVar int64) bool {
 
 	cret := xSettingsSetInt64(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1487,7 +1458,6 @@ var xSettingsSetString func(uintptr, string, string) bool
 func (x *Settings) SetString(KeyVar string, ValueVar string) bool {
 
 	cret := xSettingsSetString(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1503,7 +1473,6 @@ var xSettingsSetStrv func(uintptr, string, []string) bool
 func (x *Settings) SetStrv(KeyVar string, ValueVar []string) bool {
 
 	cret := xSettingsSetStrv(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1519,7 +1488,6 @@ var xSettingsSetUint func(uintptr, string, uint) bool
 func (x *Settings) SetUint(KeyVar string, ValueVar uint) bool {
 
 	cret := xSettingsSetUint(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1535,7 +1503,6 @@ var xSettingsSetUint64 func(uintptr, string, uint64) bool
 func (x *Settings) SetUint64(KeyVar string, ValueVar uint64) bool {
 
 	cret := xSettingsSetUint64(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1551,7 +1518,6 @@ var xSettingsSetValue func(uintptr, string, *glib.Variant) bool
 func (x *Settings) SetValue(KeyVar string, ValueVar *glib.Variant) bool {
 
 	cret := xSettingsSetValue(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -1889,7 +1855,6 @@ var xSettingsListRelocatableSchemas func() []string
 func SettingsListRelocatableSchemas() []string {
 
 	cret := xSettingsListRelocatableSchemas()
-
 	return cret
 }
 
@@ -1899,7 +1864,6 @@ var xSettingsListSchemas func() []string
 func SettingsListSchemas() []string {
 
 	cret := xSettingsListSchemas()
-
 	return cret
 }
 

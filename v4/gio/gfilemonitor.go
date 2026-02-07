@@ -240,7 +240,6 @@ var xFileMonitorCancel func(uintptr) bool
 func (x *FileMonitor) Cancel() bool {
 
 	cret := xFileMonitorCancel(x.GoPointer())
-
 	return cret
 }
 
@@ -265,7 +264,6 @@ var xFileMonitorIsCancelled func(uintptr) bool
 func (x *FileMonitor) IsCancelled() bool {
 
 	cret := xFileMonitorIsCancelled(x.GoPointer())
-
 	return cret
 }
 

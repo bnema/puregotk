@@ -66,7 +66,6 @@ var xNewError func(Quark, int, string, ...interface{}) *Error
 func NewError(DomainVar Quark, CodeVar int, FormatVar string, varArgs ...interface{}) *Error {
 
 	cret := xNewError(DomainVar, CodeVar, FormatVar, varArgs...)
-
 	return cret
 }
 
@@ -79,7 +78,6 @@ var xNewErrorLiteral func(Quark, int, string) *Error
 func NewErrorLiteral(DomainVar Quark, CodeVar int, MessageVar string) *Error {
 
 	cret := xNewErrorLiteral(DomainVar, CodeVar, MessageVar)
-
 	return cret
 }
 
@@ -90,7 +88,6 @@ var xNewErrorValist func(Quark, int, string, []interface{}) *Error
 func NewErrorValist(DomainVar Quark, CodeVar int, FormatVar string, ArgsVar []interface{}) *Error {
 
 	cret := xNewErrorValist(DomainVar, CodeVar, FormatVar, ArgsVar)
-
 	return cret
 }
 
@@ -100,7 +97,6 @@ var xErrorCopy func(uintptr) *Error
 func (x *Error) Copy() *Error {
 
 	cret := xErrorCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -128,7 +124,6 @@ var xErrorMatches func(uintptr, Quark, int) bool
 func (x *Error) Matches(DomainVar Quark, CodeVar int) bool {
 
 	cret := xErrorMatches(x.GoPointer(), DomainVar, CodeVar)
-
 	return cret
 }
 
@@ -140,7 +135,6 @@ func ClearError() error {
 	var cerr *Error
 
 	xClearError()
-
 	if cerr == nil {
 		return nil
 	}
@@ -201,7 +195,6 @@ func ErrorDomainRegister(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, 
 	}
 
 	cret := xErrorDomainRegister(ErrorTypeNameVar, ErrorTypePrivateSizeVar, ErrorTypeInitVarRef, ErrorTypeCopyVarRef, ErrorTypeClearVarRef)
-
 	return cret
 }
 
@@ -272,7 +265,6 @@ func ErrorDomainRegisterStatic(ErrorTypeNameVar string, ErrorTypePrivateSizeVar 
 	}
 
 	cret := xErrorDomainRegisterStatic(ErrorTypeNameVar, ErrorTypePrivateSizeVar, ErrorTypeInitVarRef, ErrorTypeCopyVarRef, ErrorTypeClearVarRef)
-
 	return cret
 }
 

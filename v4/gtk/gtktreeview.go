@@ -599,7 +599,6 @@ var xTreeViewAppendColumn func(uintptr, uintptr) int
 func (x *TreeView) AppendColumn(ColumnVar *TreeViewColumn) int {
 
 	cret := xTreeViewAppendColumn(x.GoPointer(), ColumnVar.GoPointer())
-
 	return cret
 }
 
@@ -618,7 +617,6 @@ var xTreeViewCollapseRow func(uintptr, *TreePath) bool
 func (x *TreeView) CollapseRow(PathVar *TreePath) bool {
 
 	cret := xTreeViewCollapseRow(x.GoPointer(), PathVar)
-
 	return cret
 }
 
@@ -742,7 +740,6 @@ var xTreeViewExpandRow func(uintptr, *TreePath, bool) bool
 func (x *TreeView) ExpandRow(PathVar *TreePath, OpenAllVar bool) bool {
 
 	cret := xTreeViewExpandRow(x.GoPointer(), PathVar, OpenAllVar)
-
 	return cret
 }
 
@@ -762,7 +759,6 @@ var xTreeViewGetActivateOnSingleClick func(uintptr) bool
 func (x *TreeView) GetActivateOnSingleClick() bool {
 
 	cret := xTreeViewGetActivateOnSingleClick(x.GoPointer())
-
 	return cret
 }
 
@@ -824,7 +820,6 @@ var xTreeViewGetColumns func(uintptr) *glib.List
 func (x *TreeView) GetColumns() *glib.List {
 
 	cret := xTreeViewGetColumns(x.GoPointer())
-
 	return cret
 }
 
@@ -851,7 +846,6 @@ var xTreeViewGetDestRowAtPos func(uintptr, int, int, **TreePath, *TreeViewDropPo
 func (x *TreeView) GetDestRowAtPos(DragXVar int, DragYVar int, PathVar **TreePath, PosVar *TreeViewDropPosition) bool {
 
 	cret := xTreeViewGetDestRowAtPos(x.GoPointer(), DragXVar, DragYVar, PathVar, PosVar)
-
 	return cret
 }
 
@@ -871,7 +865,6 @@ var xTreeViewGetEnableSearch func(uintptr) bool
 func (x *TreeView) GetEnableSearch() bool {
 
 	cret := xTreeViewGetEnableSearch(x.GoPointer())
-
 	return cret
 }
 
@@ -881,7 +874,6 @@ var xTreeViewGetEnableTreeLines func(uintptr) bool
 func (x *TreeView) GetEnableTreeLines() bool {
 
 	cret := xTreeViewGetEnableTreeLines(x.GoPointer())
-
 	return cret
 }
 
@@ -910,7 +902,6 @@ var xTreeViewGetFixedHeightMode func(uintptr) bool
 func (x *TreeView) GetFixedHeightMode() bool {
 
 	cret := xTreeViewGetFixedHeightMode(x.GoPointer())
-
 	return cret
 }
 
@@ -920,7 +911,6 @@ var xTreeViewGetGridLines func(uintptr) TreeViewGridLines
 func (x *TreeView) GetGridLines() TreeViewGridLines {
 
 	cret := xTreeViewGetGridLines(x.GoPointer())
-
 	return cret
 }
 
@@ -930,7 +920,6 @@ var xTreeViewGetHeadersClickable func(uintptr) bool
 func (x *TreeView) GetHeadersClickable() bool {
 
 	cret := xTreeViewGetHeadersClickable(x.GoPointer())
-
 	return cret
 }
 
@@ -940,7 +929,6 @@ var xTreeViewGetHeadersVisible func(uintptr) bool
 func (x *TreeView) GetHeadersVisible() bool {
 
 	cret := xTreeViewGetHeadersVisible(x.GoPointer())
-
 	return cret
 }
 
@@ -950,7 +938,6 @@ var xTreeViewGetHoverExpand func(uintptr) bool
 func (x *TreeView) GetHoverExpand() bool {
 
 	cret := xTreeViewGetHoverExpand(x.GoPointer())
-
 	return cret
 }
 
@@ -960,7 +947,6 @@ var xTreeViewGetHoverSelection func(uintptr) bool
 func (x *TreeView) GetHoverSelection() bool {
 
 	cret := xTreeViewGetHoverSelection(x.GoPointer())
-
 	return cret
 }
 
@@ -971,7 +957,6 @@ var xTreeViewGetLevelIndentation func(uintptr) int
 func (x *TreeView) GetLevelIndentation() int {
 
 	cret := xTreeViewGetLevelIndentation(x.GoPointer())
-
 	return cret
 }
 
@@ -999,7 +984,6 @@ var xTreeViewGetNColumns func(uintptr) uint
 func (x *TreeView) GetNColumns() uint {
 
 	cret := xTreeViewGetNColumns(x.GoPointer())
-
 	return cret
 }
 
@@ -1024,7 +1008,6 @@ var xTreeViewGetPathAtPos func(uintptr, int, int, **TreePath, **TreeViewColumn, 
 func (x *TreeView) GetPathAtPos(XVar int, YVar int, PathVar **TreePath, ColumnVar **TreeViewColumn, CellXVar *int, CellYVar *int) bool {
 
 	cret := xTreeViewGetPathAtPos(x.GoPointer(), XVar, YVar, PathVar, ColumnVar, CellXVar, CellYVar)
-
 	return cret
 }
 
@@ -1035,7 +1018,6 @@ var xTreeViewGetReorderable func(uintptr) bool
 func (x *TreeView) GetReorderable() bool {
 
 	cret := xTreeViewGetReorderable(x.GoPointer())
-
 	return cret
 }
 
@@ -1045,7 +1027,6 @@ var xTreeViewGetRowSeparatorFunc func(uintptr) uintptr
 func (x *TreeView) GetRowSeparatorFunc() uintptr {
 
 	cret := xTreeViewGetRowSeparatorFunc(x.GoPointer())
-
 	return cret
 }
 
@@ -1057,7 +1038,6 @@ var xTreeViewGetRubberBanding func(uintptr) bool
 func (x *TreeView) GetRubberBanding() bool {
 
 	cret := xTreeViewGetRubberBanding(x.GoPointer())
-
 	return cret
 }
 
@@ -1067,7 +1047,6 @@ var xTreeViewGetSearchColumn func(uintptr) int
 func (x *TreeView) GetSearchColumn() int {
 
 	cret := xTreeViewGetSearchColumn(x.GoPointer())
-
 	return cret
 }
 
@@ -1096,7 +1075,6 @@ var xTreeViewGetSearchEqualFunc func(uintptr) uintptr
 func (x *TreeView) GetSearchEqualFunc() uintptr {
 
 	cret := xTreeViewGetSearchEqualFunc(x.GoPointer())
-
 	return cret
 }
 
@@ -1123,7 +1101,6 @@ var xTreeViewGetShowExpanders func(uintptr) bool
 func (x *TreeView) GetShowExpanders() bool {
 
 	cret := xTreeViewGetShowExpanders(x.GoPointer())
-
 	return cret
 }
 
@@ -1134,7 +1111,6 @@ var xTreeViewGetTooltipColumn func(uintptr) int
 func (x *TreeView) GetTooltipColumn() int {
 
 	cret := xTreeViewGetTooltipColumn(x.GoPointer())
-
 	return cret
 }
 
@@ -1154,7 +1130,6 @@ var xTreeViewGetTooltipContext func(uintptr, int, int, bool, **TreeModel, **Tree
 func (x *TreeView) GetTooltipContext(XVar int, YVar int, KeyboardTipVar bool, ModelVar **TreeModel, PathVar **TreePath, IterVar *TreeIter) bool {
 
 	cret := xTreeViewGetTooltipContext(x.GoPointer(), XVar, YVar, KeyboardTipVar, ModelVar, PathVar, IterVar)
-
 	return cret
 }
 
@@ -1167,7 +1142,6 @@ var xTreeViewGetVisibleRange func(uintptr, **TreePath, **TreePath) bool
 func (x *TreeView) GetVisibleRange(StartPathVar **TreePath, EndPathVar **TreePath) bool {
 
 	cret := xTreeViewGetVisibleRange(x.GoPointer(), StartPathVar, EndPathVar)
-
 	return cret
 }
 
@@ -1193,7 +1167,6 @@ var xTreeViewInsertColumn func(uintptr, uintptr, int) int
 func (x *TreeView) InsertColumn(ColumnVar *TreeViewColumn, PositionVar int) int {
 
 	cret := xTreeViewInsertColumn(x.GoPointer(), ColumnVar.GoPointer(), PositionVar)
-
 	return cret
 }
 
@@ -1207,7 +1180,6 @@ var xTreeViewInsertColumnWithAttributes func(uintptr, int, string, uintptr, ...i
 func (x *TreeView) InsertColumnWithAttributes(PositionVar int, TitleVar string, CellVar *CellRenderer, varArgs ...interface{}) int {
 
 	cret := xTreeViewInsertColumnWithAttributes(x.GoPointer(), PositionVar, TitleVar, CellVar.GoPointer(), varArgs...)
-
 	return cret
 }
 
@@ -1252,7 +1224,6 @@ func (x *TreeView) InsertColumnWithDataFunc(PositionVar int, TitleVar string, Ce
 	}
 
 	cret := xTreeViewInsertColumnWithDataFunc(x.GoPointer(), PositionVar, TitleVar, CellVar.GoPointer(), FuncVarRef, DataVar, DnotifyVarRef)
-
 	return cret
 }
 
@@ -1278,7 +1249,6 @@ var xTreeViewIsBlankAtPos func(uintptr, int, int, **TreePath, **TreeViewColumn, 
 func (x *TreeView) IsBlankAtPos(XVar int, YVar int, PathVar **TreePath, ColumnVar **TreeViewColumn, CellXVar *int, CellYVar *int) bool {
 
 	cret := xTreeViewIsBlankAtPos(x.GoPointer(), XVar, YVar, PathVar, ColumnVar, CellXVar, CellYVar)
-
 	return cret
 }
 
@@ -1289,7 +1259,6 @@ var xTreeViewIsRubberBandingActive func(uintptr) bool
 func (x *TreeView) IsRubberBandingActive() bool {
 
 	cret := xTreeViewIsRubberBandingActive(x.GoPointer())
-
 	return cret
 }
 
@@ -1333,7 +1302,6 @@ var xTreeViewRemoveColumn func(uintptr, uintptr) int
 func (x *TreeView) RemoveColumn(ColumnVar *TreeViewColumn) int {
 
 	cret := xTreeViewRemoveColumn(x.GoPointer(), ColumnVar.GoPointer())
-
 	return cret
 }
 
@@ -1352,7 +1320,6 @@ var xTreeViewRowExpanded func(uintptr, *TreePath) bool
 func (x *TreeView) RowExpanded(PathVar *TreePath) bool {
 
 	cret := xTreeViewRowExpanded(x.GoPointer(), PathVar)
-
 	return cret
 }
 
@@ -2533,7 +2500,6 @@ func (x *TreeView) GetAccessibleParent() *AccessibleBase {
 func (x *TreeView) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -2559,7 +2525,6 @@ func (x *TreeView) GetAtContext() *ATContext {
 func (x *TreeView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -2599,7 +2564,6 @@ func (x *TreeView) GetNextAccessibleSibling() *AccessibleBase {
 func (x *TreeView) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -2776,7 +2740,6 @@ func (x *TreeView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *TreeView) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -2789,7 +2752,6 @@ func (x *TreeView) GetBuildableId() string {
 func (x *TreeView) GetBorder(BorderVar *Border) bool {
 
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
-
 	return cret
 }
 
@@ -2812,7 +2774,6 @@ func (x *TreeView) GetHadjustment() *Adjustment {
 func (x *TreeView) GetHscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
-
 	return cret
 }
 
@@ -2835,7 +2796,6 @@ func (x *TreeView) GetVadjustment() *Adjustment {
 func (x *TreeView) GetVscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
-
 	return cret
 }
 

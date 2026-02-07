@@ -82,7 +82,6 @@ var xNewDateTime func(*TimeZone, int, int, int, int, int, float64) *DateTime
 func NewDateTime(TzVar *TimeZone, YearVar int, MonthVar int, DayVar int, HourVar int, MinuteVar int, SecondsVar float64) *DateTime {
 
 	cret := xNewDateTime(TzVar, YearVar, MonthVar, DayVar, HourVar, MinuteVar, SecondsVar)
-
 	return cret
 }
 
@@ -134,7 +133,6 @@ var xNewDateTimeFromIso8601 func(string, *TimeZone) *DateTime
 func NewDateTimeFromIso8601(TextVar string, DefaultTzVar *TimeZone) *DateTime {
 
 	cret := xNewDateTimeFromIso8601(TextVar, DefaultTzVar)
-
 	return cret
 }
 
@@ -155,7 +153,6 @@ var xNewDateTimeFromTimevalLocal func(*TimeVal) *DateTime
 func NewDateTimeFromTimevalLocal(TvVar *TimeVal) *DateTime {
 
 	cret := xNewDateTimeFromTimevalLocal(TvVar)
-
 	return cret
 }
 
@@ -174,7 +171,6 @@ var xNewDateTimeFromTimevalUtc func(*TimeVal) *DateTime
 func NewDateTimeFromTimevalUtc(TvVar *TimeVal) *DateTime {
 
 	cret := xNewDateTimeFromTimevalUtc(TvVar)
-
 	return cret
 }
 
@@ -194,7 +190,6 @@ var xNewDateTimeFromUnixLocal func(int64) *DateTime
 func NewDateTimeFromUnixLocal(TVar int64) *DateTime {
 
 	cret := xNewDateTimeFromUnixLocal(TVar)
-
 	return cret
 }
 
@@ -214,7 +209,6 @@ var xNewDateTimeFromUnixLocalUsec func(int64) *DateTime
 func NewDateTimeFromUnixLocalUsec(UsecsVar int64) *DateTime {
 
 	cret := xNewDateTimeFromUnixLocalUsec(UsecsVar)
-
 	return cret
 }
 
@@ -233,7 +227,6 @@ var xNewDateTimeFromUnixUtc func(int64) *DateTime
 func NewDateTimeFromUnixUtc(TVar int64) *DateTime {
 
 	cret := xNewDateTimeFromUnixUtc(TVar)
-
 	return cret
 }
 
@@ -252,7 +245,6 @@ var xNewDateTimeFromUnixUtcUsec func(int64) *DateTime
 func NewDateTimeFromUnixUtcUsec(UsecsVar int64) *DateTime {
 
 	cret := xNewDateTimeFromUnixUtcUsec(UsecsVar)
-
 	return cret
 }
 
@@ -266,7 +258,6 @@ var xNewDateTimeLocal func(int, int, int, int, int, float64) *DateTime
 func NewDateTimeLocal(YearVar int, MonthVar int, DayVar int, HourVar int, MinuteVar int, SecondsVar float64) *DateTime {
 
 	cret := xNewDateTimeLocal(YearVar, MonthVar, DayVar, HourVar, MinuteVar, SecondsVar)
-
 	return cret
 }
 
@@ -284,7 +275,6 @@ var xNewDateTimeNow func(*TimeZone) *DateTime
 func NewDateTimeNow(TzVar *TimeZone) *DateTime {
 
 	cret := xNewDateTimeNow(TzVar)
-
 	return cret
 }
 
@@ -298,7 +288,6 @@ var xNewDateTimeNowLocal func() *DateTime
 func NewDateTimeNowLocal() *DateTime {
 
 	cret := xNewDateTimeNowLocal()
-
 	return cret
 }
 
@@ -311,7 +300,6 @@ var xNewDateTimeNowUtc func() *DateTime
 func NewDateTimeNowUtc() *DateTime {
 
 	cret := xNewDateTimeNowUtc()
-
 	return cret
 }
 
@@ -325,7 +313,6 @@ var xNewDateTimeUtc func(int, int, int, int, int, float64) *DateTime
 func NewDateTimeUtc(YearVar int, MonthVar int, DayVar int, HourVar int, MinuteVar int, SecondsVar float64) *DateTime {
 
 	cret := xNewDateTimeUtc(YearVar, MonthVar, DayVar, HourVar, MinuteVar, SecondsVar)
-
 	return cret
 }
 
@@ -335,7 +322,6 @@ var xDateTimeAdd func(uintptr, TimeSpan) *DateTime
 func (x *DateTime) Add(TimespanVar TimeSpan) *DateTime {
 
 	cret := xDateTimeAdd(x.GoPointer(), TimespanVar)
-
 	return cret
 }
 
@@ -346,7 +332,6 @@ var xDateTimeAddDays func(uintptr, int) *DateTime
 func (x *DateTime) AddDays(DaysVar int) *DateTime {
 
 	cret := xDateTimeAddDays(x.GoPointer(), DaysVar)
-
 	return cret
 }
 
@@ -357,7 +342,6 @@ var xDateTimeAddFull func(uintptr, int, int, int, int, int, float64) *DateTime
 func (x *DateTime) AddFull(YearsVar int, MonthsVar int, DaysVar int, HoursVar int, MinutesVar int, SecondsVar float64) *DateTime {
 
 	cret := xDateTimeAddFull(x.GoPointer(), YearsVar, MonthsVar, DaysVar, HoursVar, MinutesVar, SecondsVar)
-
 	return cret
 }
 
@@ -368,7 +352,6 @@ var xDateTimeAddHours func(uintptr, int) *DateTime
 func (x *DateTime) AddHours(HoursVar int) *DateTime {
 
 	cret := xDateTimeAddHours(x.GoPointer(), HoursVar)
-
 	return cret
 }
 
@@ -379,7 +362,6 @@ var xDateTimeAddMinutes func(uintptr, int) *DateTime
 func (x *DateTime) AddMinutes(MinutesVar int) *DateTime {
 
 	cret := xDateTimeAddMinutes(x.GoPointer(), MinutesVar)
-
 	return cret
 }
 
@@ -395,7 +377,6 @@ var xDateTimeAddMonths func(uintptr, int) *DateTime
 func (x *DateTime) AddMonths(MonthsVar int) *DateTime {
 
 	cret := xDateTimeAddMonths(x.GoPointer(), MonthsVar)
-
 	return cret
 }
 
@@ -406,7 +387,6 @@ var xDateTimeAddSeconds func(uintptr, float64) *DateTime
 func (x *DateTime) AddSeconds(SecondsVar float64) *DateTime {
 
 	cret := xDateTimeAddSeconds(x.GoPointer(), SecondsVar)
-
 	return cret
 }
 
@@ -417,7 +397,6 @@ var xDateTimeAddWeeks func(uintptr, int) *DateTime
 func (x *DateTime) AddWeeks(WeeksVar int) *DateTime {
 
 	cret := xDateTimeAddWeeks(x.GoPointer(), WeeksVar)
-
 	return cret
 }
 
@@ -431,7 +410,6 @@ var xDateTimeAddYears func(uintptr, int) *DateTime
 func (x *DateTime) AddYears(YearsVar int) *DateTime {
 
 	cret := xDateTimeAddYears(x.GoPointer(), YearsVar)
-
 	return cret
 }
 
@@ -442,7 +420,6 @@ var xDateTimeCompare func(uintptr, uintptr) int
 func (x *DateTime) Compare(Dt2Var uintptr) int {
 
 	cret := xDateTimeCompare(x.GoPointer(), Dt2Var)
-
 	return cret
 }
 
@@ -454,7 +431,6 @@ var xDateTimeDifference func(uintptr, *DateTime) TimeSpan
 func (x *DateTime) Difference(BeginVar *DateTime) TimeSpan {
 
 	cret := xDateTimeDifference(x.GoPointer(), BeginVar)
-
 	return cret
 }
 
@@ -467,7 +443,6 @@ var xDateTimeEqual func(uintptr, uintptr) bool
 func (x *DateTime) Equal(Dt2Var uintptr) bool {
 
 	cret := xDateTimeEqual(x.GoPointer(), Dt2Var)
-
 	return cret
 }
 
@@ -600,7 +575,6 @@ var xDateTimeFormat func(uintptr, string) string
 func (x *DateTime) Format(FormatVar string) string {
 
 	cret := xDateTimeFormat(x.GoPointer(), FormatVar)
-
 	return cret
 }
 
@@ -614,7 +588,6 @@ var xDateTimeFormatIso8601 func(uintptr) string
 func (x *DateTime) FormatIso8601() string {
 
 	cret := xDateTimeFormatIso8601(x.GoPointer())
-
 	return cret
 }
 
@@ -625,7 +598,6 @@ var xDateTimeGetDayOfMonth func(uintptr) int
 func (x *DateTime) GetDayOfMonth() int {
 
 	cret := xDateTimeGetDayOfMonth(x.GoPointer())
-
 	return cret
 }
 
@@ -636,7 +608,6 @@ var xDateTimeGetDayOfWeek func(uintptr) int
 func (x *DateTime) GetDayOfWeek() int {
 
 	cret := xDateTimeGetDayOfWeek(x.GoPointer())
-
 	return cret
 }
 
@@ -647,7 +618,6 @@ var xDateTimeGetDayOfYear func(uintptr) int
 func (x *DateTime) GetDayOfYear() int {
 
 	cret := xDateTimeGetDayOfYear(x.GoPointer())
-
 	return cret
 }
 
@@ -657,7 +627,6 @@ var xDateTimeGetHour func(uintptr) int
 func (x *DateTime) GetHour() int {
 
 	cret := xDateTimeGetHour(x.GoPointer())
-
 	return cret
 }
 
@@ -667,7 +636,6 @@ var xDateTimeGetMicrosecond func(uintptr) int
 func (x *DateTime) GetMicrosecond() int {
 
 	cret := xDateTimeGetMicrosecond(x.GoPointer())
-
 	return cret
 }
 
@@ -677,7 +645,6 @@ var xDateTimeGetMinute func(uintptr) int
 func (x *DateTime) GetMinute() int {
 
 	cret := xDateTimeGetMinute(x.GoPointer())
-
 	return cret
 }
 
@@ -688,7 +655,6 @@ var xDateTimeGetMonth func(uintptr) int
 func (x *DateTime) GetMonth() int {
 
 	cret := xDateTimeGetMonth(x.GoPointer())
-
 	return cret
 }
 
@@ -698,7 +664,6 @@ var xDateTimeGetSecond func(uintptr) int
 func (x *DateTime) GetSecond() int {
 
 	cret := xDateTimeGetSecond(x.GoPointer())
-
 	return cret
 }
 
@@ -709,7 +674,6 @@ var xDateTimeGetSeconds func(uintptr) float64
 func (x *DateTime) GetSeconds() float64 {
 
 	cret := xDateTimeGetSeconds(x.GoPointer())
-
 	return cret
 }
 
@@ -719,7 +683,6 @@ var xDateTimeGetTimezone func(uintptr) *TimeZone
 func (x *DateTime) GetTimezone() *TimeZone {
 
 	cret := xDateTimeGetTimezone(x.GoPointer())
-
 	return cret
 }
 
@@ -734,7 +697,6 @@ var xDateTimeGetTimezoneAbbreviation func(uintptr) string
 func (x *DateTime) GetTimezoneAbbreviation() string {
 
 	cret := xDateTimeGetTimezoneAbbreviation(x.GoPointer())
-
 	return cret
 }
 
@@ -751,7 +713,6 @@ var xDateTimeGetUtcOffset func(uintptr) TimeSpan
 func (x *DateTime) GetUtcOffset() TimeSpan {
 
 	cret := xDateTimeGetUtcOffset(x.GoPointer())
-
 	return cret
 }
 
@@ -791,7 +752,6 @@ var xDateTimeGetWeekNumberingYear func(uintptr) int
 func (x *DateTime) GetWeekNumberingYear() int {
 
 	cret := xDateTimeGetWeekNumberingYear(x.GoPointer())
-
 	return cret
 }
 
@@ -815,7 +775,6 @@ var xDateTimeGetWeekOfYear func(uintptr) int
 func (x *DateTime) GetWeekOfYear() int {
 
 	cret := xDateTimeGetWeekOfYear(x.GoPointer())
-
 	return cret
 }
 
@@ -825,7 +784,6 @@ var xDateTimeGetYear func(uintptr) int
 func (x *DateTime) GetYear() int {
 
 	cret := xDateTimeGetYear(x.GoPointer())
-
 	return cret
 }
 
@@ -844,7 +802,6 @@ var xDateTimeHash func(uintptr) uint
 func (x *DateTime) Hash() uint {
 
 	cret := xDateTimeHash(x.GoPointer())
-
 	return cret
 }
 
@@ -855,7 +812,6 @@ var xDateTimeIsDaylightSavings func(uintptr) bool
 func (x *DateTime) IsDaylightSavings() bool {
 
 	cret := xDateTimeIsDaylightSavings(x.GoPointer())
-
 	return cret
 }
 
@@ -865,7 +821,6 @@ var xDateTimeRef func(uintptr) *DateTime
 func (x *DateTime) Ref() *DateTime {
 
 	cret := xDateTimeRef(x.GoPointer())
-
 	return cret
 }
 
@@ -879,7 +834,6 @@ var xDateTimeToLocal func(uintptr) *DateTime
 func (x *DateTime) ToLocal() *DateTime {
 
 	cret := xDateTimeToLocal(x.GoPointer())
-
 	return cret
 }
 
@@ -901,7 +855,6 @@ var xDateTimeToTimeval func(uintptr, *TimeVal) bool
 func (x *DateTime) ToTimeval(TvVar *TimeVal) bool {
 
 	cret := xDateTimeToTimeval(x.GoPointer(), TvVar)
-
 	return cret
 }
 
@@ -916,7 +869,6 @@ var xDateTimeToTimezone func(uintptr, *TimeZone) *DateTime
 func (x *DateTime) ToTimezone(TzVar *TimeZone) *DateTime {
 
 	cret := xDateTimeToTimezone(x.GoPointer(), TzVar)
-
 	return cret
 }
 
@@ -930,7 +882,6 @@ var xDateTimeToUnix func(uintptr) int64
 func (x *DateTime) ToUnix() int64 {
 
 	cret := xDateTimeToUnix(x.GoPointer())
-
 	return cret
 }
 
@@ -943,7 +894,6 @@ var xDateTimeToUnixUsec func(uintptr) int64
 func (x *DateTime) ToUnixUsec() int64 {
 
 	cret := xDateTimeToUnixUsec(x.GoPointer())
-
 	return cret
 }
 
@@ -957,7 +907,6 @@ var xDateTimeToUtc func(uintptr) *DateTime
 func (x *DateTime) ToUtc() *DateTime {
 
 	cret := xDateTimeToUtc(x.GoPointer())
-
 	return cret
 }
 

@@ -201,7 +201,6 @@ func (x *ShortcutsDialog) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ShortcutsDialog) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -227,7 +226,6 @@ func (x *ShortcutsDialog) GetAtContext() *gtk.ATContext {
 func (x *ShortcutsDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -267,7 +265,6 @@ func (x *ShortcutsDialog) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ShortcutsDialog) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -444,7 +441,6 @@ func (x *ShortcutsDialog) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acces
 func (x *ShortcutsDialog) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

@@ -2,7 +2,6 @@
 package pango
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -292,7 +291,6 @@ func (x *FontMap) AddFontFile(FilenameVar string) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xFontMapAddFontFile(x.GoPointer(), FilenameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -373,7 +371,6 @@ var xFontMapGetSerial func(uintptr) uint
 func (x *FontMap) GetSerial() uint {
 
 	cret := xFontMapGetSerial(x.GoPointer())
-
 	return cret
 }
 
@@ -437,11 +434,10 @@ var xFontMapReloadFont func(uintptr, uintptr, float64, uintptr, uintptr) uintptr
 func (x *FontMap) ReloadFont(FontVar *Font, ScaleVar float64, ContextVar *Context, VariationsVar *string) *Font {
 	var cls *Font
 
-	VariationsVarPtr, VariationsVarBytes := core.NullableStringToPtr(VariationsVar)
+	VariationsVarPtr := core.GStrdupNullable(VariationsVar)
+	defer core.GFreeNullable(VariationsVarPtr)
 
 	cret := xFontMapReloadFont(x.GoPointer(), FontVar.GoPointer(), ScaleVar, ContextVar.GoPointer(), VariationsVarPtr)
-
-	runtime.KeepAlive(VariationsVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -482,7 +478,6 @@ func (x *FontMap) GetPropertyNItems() uint {
 func (x *FontMap) GetItem(PositionVar uint) uintptr {
 
 	cret := gio.XGListModelGetItem(x.GoPointer(), PositionVar)
-
 	return cret
 }
 
@@ -497,7 +492,6 @@ func (x *FontMap) GetItem(PositionVar uint) uintptr {
 func (x *FontMap) GetItemType() types.GType {
 
 	cret := gio.XGListModelGetItemType(x.GoPointer())
-
 	return cret
 }
 
@@ -509,7 +503,6 @@ func (x *FontMap) GetItemType() types.GType {
 func (x *FontMap) GetNItems() uint {
 
 	cret := gio.XGListModelGetNItems(x.GoPointer())
-
 	return cret
 }
 

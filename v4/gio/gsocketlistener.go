@@ -449,7 +449,6 @@ func (x *SocketListener) AddAddress(AddressVar *SocketAddress, TypeVar SocketTyp
 	var cerr *glib.Error
 
 	cret := xSocketListenerAddAddress(x.GoPointer(), AddressVar.GoPointer(), TypeVar, ProtocolVar, SourceObjectVar.GoPointer(), EffectiveAddressVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -481,7 +480,6 @@ func (x *SocketListener) AddAnyInetPort(SourceObjectVar *gobject.Object) (uint16
 	var cerr *glib.Error
 
 	cret := xSocketListenerAddAnyInetPort(x.GoPointer(), SourceObjectVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -515,7 +513,6 @@ func (x *SocketListener) AddInetPort(PortVar uint16, SourceObjectVar *gobject.Ob
 	var cerr *glib.Error
 
 	cret := xSocketListenerAddInetPort(x.GoPointer(), PortVar, SourceObjectVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -545,7 +542,6 @@ func (x *SocketListener) AddSocket(SocketVar *Socket, SourceObjectVar *gobject.O
 	var cerr *glib.Error
 
 	cret := xSocketListenerAddSocket(x.GoPointer(), SocketVar.GoPointer(), SourceObjectVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

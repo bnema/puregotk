@@ -393,7 +393,6 @@ func (x *PrintOperationPreviewBase) EndPreview() {
 func (x *PrintOperationPreviewBase) IsSelected(PageNrVar int) bool {
 
 	cret := XGtkPrintOperationPreviewIsSelected(x.GoPointer(), PageNrVar)
-
 	return cret
 }
 

@@ -48,7 +48,6 @@ var xRGBACopy func(uintptr) *RGBA
 func (x *RGBA) Copy() *RGBA {
 
 	cret := xRGBACopy(x.GoPointer())
-
 	return cret
 }
 
@@ -58,7 +57,6 @@ var xRGBAEqual func(uintptr, uintptr) bool
 func (x *RGBA) Equal(P2Var uintptr) bool {
 
 	cret := xRGBAEqual(x.GoPointer(), P2Var)
-
 	return cret
 }
 
@@ -78,7 +76,6 @@ var xRGBAHash func(uintptr) uint
 func (x *RGBA) Hash() uint {
 
 	cret := xRGBAHash(x.GoPointer())
-
 	return cret
 }
 
@@ -90,7 +87,6 @@ var xRGBAIsClear func(uintptr) bool
 func (x *RGBA) IsClear() bool {
 
 	cret := xRGBAIsClear(x.GoPointer())
-
 	return cret
 }
 
@@ -103,7 +99,6 @@ var xRGBAIsOpaque func(uintptr) bool
 func (x *RGBA) IsOpaque() bool {
 
 	cret := xRGBAIsOpaque(x.GoPointer())
-
 	return cret
 }
 
@@ -132,7 +127,6 @@ var xRGBAParse func(uintptr, string) bool
 func (x *RGBA) Parse(SpecVar string) bool {
 
 	cret := xRGBAParse(x.GoPointer(), SpecVar)
-
 	return cret
 }
 
@@ -154,7 +148,6 @@ var xRGBAToString func(uintptr) string
 func (x *RGBA) ToString() string {
 
 	cret := xRGBAToString(x.GoPointer())
-
 	return cret
 }
 

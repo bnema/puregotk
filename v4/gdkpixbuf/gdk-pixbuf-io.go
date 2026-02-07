@@ -143,7 +143,6 @@ var xPixbufFormatCopy func(uintptr) *PixbufFormat
 func (x *PixbufFormat) Copy() *PixbufFormat {
 
 	cret := xPixbufFormatCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -163,7 +162,6 @@ var xPixbufFormatGetDescription func(uintptr) string
 func (x *PixbufFormat) GetDescription() string {
 
 	cret := xPixbufFormatGetDescription(x.GoPointer())
-
 	return cret
 }
 
@@ -174,7 +172,6 @@ var xPixbufFormatGetExtensions func(uintptr) []string
 func (x *PixbufFormat) GetExtensions() []string {
 
 	cret := xPixbufFormatGetExtensions(x.GoPointer())
-
 	return cret
 }
 
@@ -187,7 +184,6 @@ var xPixbufFormatGetLicense func(uintptr) string
 func (x *PixbufFormat) GetLicense() string {
 
 	cret := xPixbufFormatGetLicense(x.GoPointer())
-
 	return cret
 }
 
@@ -197,7 +193,6 @@ var xPixbufFormatGetMimeTypes func(uintptr) []string
 func (x *PixbufFormat) GetMimeTypes() []string {
 
 	cret := xPixbufFormatGetMimeTypes(x.GoPointer())
-
 	return cret
 }
 
@@ -207,7 +202,6 @@ var xPixbufFormatGetName func(uintptr) string
 func (x *PixbufFormat) GetName() string {
 
 	cret := xPixbufFormatGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -219,7 +213,6 @@ var xPixbufFormatIsDisabled func(uintptr) bool
 func (x *PixbufFormat) IsDisabled() bool {
 
 	cret := xPixbufFormatIsDisabled(x.GoPointer())
-
 	return cret
 }
 
@@ -232,7 +225,6 @@ var xPixbufFormatIsSaveOptionSupported func(uintptr, string) bool
 func (x *PixbufFormat) IsSaveOptionSupported(OptionKeyVar string) bool {
 
 	cret := xPixbufFormatIsSaveOptionSupported(x.GoPointer(), OptionKeyVar)
-
 	return cret
 }
 
@@ -246,7 +238,6 @@ var xPixbufFormatIsScalable func(uintptr) bool
 func (x *PixbufFormat) IsScalable() bool {
 
 	cret := xPixbufFormatIsScalable(x.GoPointer())
-
 	return cret
 }
 
@@ -256,7 +247,6 @@ var xPixbufFormatIsWritable func(uintptr) bool
 func (x *PixbufFormat) IsWritable() bool {
 
 	cret := xPixbufFormatIsWritable(x.GoPointer())
-
 	return cret
 }
 

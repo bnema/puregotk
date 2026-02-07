@@ -230,7 +230,6 @@ func (c *ConverterOutputStream) SetGoPointer(ptr uintptr) {
 func (x *ConverterOutputStream) CanPoll() bool {
 
 	cret := XGPollableOutputStreamCanPoll(x.GoPointer())
-
 	return cret
 }
 
@@ -248,7 +247,6 @@ func (x *ConverterOutputStream) CanPoll() bool {
 func (x *ConverterOutputStream) CreateSource(CancellableVar *Cancellable) *glib.Source {
 
 	cret := XGPollableOutputStreamCreateSource(x.GoPointer(), CancellableVar.GoPointer())
-
 	return cret
 }
 
@@ -266,7 +264,6 @@ func (x *ConverterOutputStream) CreateSource(CancellableVar *Cancellable) *glib.
 func (x *ConverterOutputStream) IsWritable() bool {
 
 	cret := XGPollableOutputStreamIsWritable(x.GoPointer())
-
 	return cret
 }
 
@@ -292,7 +289,6 @@ func (x *ConverterOutputStream) WriteNonblocking(BufferVar []byte, CountVar uint
 	var cerr *glib.Error
 
 	cret := XGPollableOutputStreamWriteNonblocking(x.GoPointer(), BufferVar, CountVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -323,7 +319,6 @@ func (x *ConverterOutputStream) WritevNonblocking(VectorsVar []OutputVector, NVe
 	var cerr *glib.Error
 
 	cret := XGPollableOutputStreamWritevNonblocking(x.GoPointer(), VectorsVar, NVectorsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

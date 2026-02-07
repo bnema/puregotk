@@ -30,7 +30,6 @@ var xSequenceAppend func(uintptr, uintptr) *SequenceIter
 func (x *Sequence) Append(DataVar uintptr) *SequenceIter {
 
 	cret := xSequenceAppend(x.GoPointer(), DataVar)
-
 	return cret
 }
 
@@ -76,7 +75,6 @@ var xSequenceGetBeginIter func(uintptr) *SequenceIter
 func (x *Sequence) GetBeginIter() *SequenceIter {
 
 	cret := xSequenceGetBeginIter(x.GoPointer())
-
 	return cret
 }
 
@@ -86,7 +84,6 @@ var xSequenceGetEndIter func(uintptr) *SequenceIter
 func (x *Sequence) GetEndIter() *SequenceIter {
 
 	cret := xSequenceGetEndIter(x.GoPointer())
-
 	return cret
 }
 
@@ -97,7 +94,6 @@ var xSequenceGetIterAtPos func(uintptr, int) *SequenceIter
 func (x *Sequence) GetIterAtPos(PosVar int) *SequenceIter {
 
 	cret := xSequenceGetIterAtPos(x.GoPointer(), PosVar)
-
 	return cret
 }
 
@@ -109,7 +105,6 @@ var xSequenceGetLength func(uintptr) int
 func (x *Sequence) GetLength() int {
 
 	cret := xSequenceGetLength(x.GoPointer())
-
 	return cret
 }
 
@@ -145,7 +140,6 @@ func (x *Sequence) InsertSorted(DataVar uintptr, CmpFuncVar *CompareDataFunc, Cm
 	}
 
 	cret := xSequenceInsertSorted(x.GoPointer(), DataVar, CmpFuncVarRef, CmpDataVar)
-
 	return cret
 }
 
@@ -181,7 +175,6 @@ func (x *Sequence) InsertSortedIter(DataVar uintptr, IterCmpVar *SequenceIterCom
 	}
 
 	cret := xSequenceInsertSortedIter(x.GoPointer(), DataVar, IterCmpVarRef, CmpDataVar)
-
 	return cret
 }
 
@@ -195,7 +188,6 @@ var xSequenceIsEmpty func(uintptr) bool
 func (x *Sequence) IsEmpty() bool {
 
 	cret := xSequenceIsEmpty(x.GoPointer())
-
 	return cret
 }
 
@@ -232,7 +224,6 @@ func (x *Sequence) Lookup(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataV
 	}
 
 	cret := xSequenceLookup(x.GoPointer(), DataVar, CmpFuncVarRef, CmpDataVar)
-
 	return cret
 }
 
@@ -266,7 +257,6 @@ func (x *Sequence) LookupIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFu
 	}
 
 	cret := xSequenceLookupIter(x.GoPointer(), DataVar, IterCmpVarRef, CmpDataVar)
-
 	return cret
 }
 
@@ -276,7 +266,6 @@ var xSequencePrepend func(uintptr, uintptr) *SequenceIter
 func (x *Sequence) Prepend(DataVar uintptr) *SequenceIter {
 
 	cret := xSequencePrepend(x.GoPointer(), DataVar)
-
 	return cret
 }
 
@@ -313,7 +302,6 @@ func (x *Sequence) Search(DataVar uintptr, CmpFuncVar *CompareDataFunc, CmpDataV
 	}
 
 	cret := xSequenceSearch(x.GoPointer(), DataVar, CmpFuncVarRef, CmpDataVar)
-
 	return cret
 }
 
@@ -350,7 +338,6 @@ func (x *Sequence) SearchIter(DataVar uintptr, IterCmpVar *SequenceIterCompareFu
 	}
 
 	cret := xSequenceSearchIter(x.GoPointer(), DataVar, IterCmpVarRef, CmpDataVar)
-
 	return cret
 }
 
@@ -432,7 +419,6 @@ var xSequenceIterCompare func(uintptr, *SequenceIter) int
 func (x *SequenceIter) Compare(BVar *SequenceIter) int {
 
 	cret := xSequenceIterCompare(x.GoPointer(), BVar)
-
 	return cret
 }
 
@@ -442,7 +428,6 @@ var xSequenceIterGetPosition func(uintptr) int
 func (x *SequenceIter) GetPosition() int {
 
 	cret := xSequenceIterGetPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -452,7 +437,6 @@ var xSequenceIterGetSequence func(uintptr) *Sequence
 func (x *SequenceIter) GetSequence() *Sequence {
 
 	cret := xSequenceIterGetSequence(x.GoPointer())
-
 	return cret
 }
 
@@ -462,7 +446,6 @@ var xSequenceIterIsBegin func(uintptr) bool
 func (x *SequenceIter) IsBegin() bool {
 
 	cret := xSequenceIterIsBegin(x.GoPointer())
-
 	return cret
 }
 
@@ -472,7 +455,6 @@ var xSequenceIterIsEnd func(uintptr) bool
 func (x *SequenceIter) IsEnd() bool {
 
 	cret := xSequenceIterIsEnd(x.GoPointer())
-
 	return cret
 }
 
@@ -485,7 +467,6 @@ var xSequenceIterMove func(uintptr, int) *SequenceIter
 func (x *SequenceIter) Move(DeltaVar int) *SequenceIter {
 
 	cret := xSequenceIterMove(x.GoPointer(), DeltaVar)
-
 	return cret
 }
 
@@ -496,7 +477,6 @@ var xSequenceIterNext func(uintptr) *SequenceIter
 func (x *SequenceIter) Next() *SequenceIter {
 
 	cret := xSequenceIterNext(x.GoPointer())
-
 	return cret
 }
 
@@ -507,7 +487,6 @@ var xSequenceIterPrev func(uintptr) *SequenceIter
 func (x *SequenceIter) Prev() *SequenceIter {
 
 	cret := xSequenceIterPrev(x.GoPointer())
-
 	return cret
 }
 
@@ -543,7 +522,6 @@ var xSequenceGet func(*SequenceIter) uintptr
 func SequenceGet(IterVar *SequenceIter) uintptr {
 
 	cret := xSequenceGet(IterVar)
-
 	return cret
 }
 
@@ -553,7 +531,6 @@ var xSequenceInsertBefore func(*SequenceIter, uintptr) *SequenceIter
 func SequenceInsertBefore(IterVar *SequenceIter, DataVar uintptr) *SequenceIter {
 
 	cret := xSequenceInsertBefore(IterVar, DataVar)
-
 	return cret
 }
 
@@ -596,7 +573,6 @@ var xSequenceRangeGetMidpoint func(*SequenceIter, *SequenceIter) *SequenceIter
 func SequenceRangeGetMidpoint(BeginVar *SequenceIter, EndVar *SequenceIter) *SequenceIter {
 
 	cret := xSequenceRangeGetMidpoint(BeginVar, EndVar)
-
 	return cret
 }
 

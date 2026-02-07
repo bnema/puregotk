@@ -46,7 +46,6 @@ var xNewStrvBuilder func() *StrvBuilder
 func NewStrvBuilder() *StrvBuilder {
 
 	cret := xNewStrvBuilder()
-
 	return cret
 }
 
@@ -91,7 +90,6 @@ var xStrvBuilderEnd func(uintptr) []string
 func (x *StrvBuilder) End() []string {
 
 	cret := xStrvBuilderEnd(x.GoPointer())
-
 	return cret
 }
 
@@ -102,7 +100,6 @@ var xStrvBuilderRef func(uintptr) *StrvBuilder
 func (x *StrvBuilder) Ref() *StrvBuilder {
 
 	cret := xStrvBuilderRef(x.GoPointer())
-
 	return cret
 }
 
@@ -152,7 +149,6 @@ var xStrvBuilderUnrefToStrv func(uintptr) []string
 func (x *StrvBuilder) UnrefToStrv() []string {
 
 	cret := xStrvBuilderUnrefToStrv(x.GoPointer())
-
 	return cret
 }
 

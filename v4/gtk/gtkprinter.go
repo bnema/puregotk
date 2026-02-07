@@ -157,7 +157,6 @@ var xPrinterAcceptsPdf func(uintptr) bool
 func (x *Printer) AcceptsPdf() bool {
 
 	cret := xPrinterAcceptsPdf(x.GoPointer())
-
 	return cret
 }
 
@@ -168,7 +167,6 @@ var xPrinterAcceptsPs func(uintptr) bool
 func (x *Printer) AcceptsPs() bool {
 
 	cret := xPrinterAcceptsPs(x.GoPointer())
-
 	return cret
 }
 
@@ -178,7 +176,6 @@ var xPrinterCompare func(uintptr, uintptr) int
 func (x *Printer) Compare(BVar *Printer) int {
 
 	cret := xPrinterCompare(x.GoPointer(), BVar.GoPointer())
-
 	return cret
 }
 
@@ -188,7 +185,6 @@ var xPrinterGetBackend func(uintptr) *PrintBackend
 func (x *Printer) GetBackend() *PrintBackend {
 
 	cret := xPrinterGetBackend(x.GoPointer())
-
 	return cret
 }
 
@@ -206,7 +202,6 @@ var xPrinterGetCapabilities func(uintptr) PrintCapabilities
 func (x *Printer) GetCapabilities() PrintCapabilities {
 
 	cret := xPrinterGetCapabilities(x.GoPointer())
-
 	return cret
 }
 
@@ -232,7 +227,6 @@ var xPrinterGetDescription func(uintptr) string
 func (x *Printer) GetDescription() string {
 
 	cret := xPrinterGetDescription(x.GoPointer())
-
 	return cret
 }
 
@@ -249,7 +243,6 @@ var xPrinterGetHardMargins func(uintptr, *float64, *float64, *float64, *float64)
 func (x *Printer) GetHardMargins(TopVar *float64, BottomVar *float64, LeftVar *float64, RightVar *float64) bool {
 
 	cret := xPrinterGetHardMargins(x.GoPointer(), TopVar, BottomVar, LeftVar, RightVar)
-
 	return cret
 }
 
@@ -266,7 +259,6 @@ var xPrinterGetHardMarginsForPaperSize func(uintptr, *PaperSize, *float64, *floa
 func (x *Printer) GetHardMarginsForPaperSize(PaperSizeVar *PaperSize, TopVar *float64, BottomVar *float64, LeftVar *float64, RightVar *float64) bool {
 
 	cret := xPrinterGetHardMarginsForPaperSize(x.GoPointer(), PaperSizeVar, TopVar, BottomVar, LeftVar, RightVar)
-
 	return cret
 }
 
@@ -276,7 +268,6 @@ var xPrinterGetIconName func(uintptr) string
 func (x *Printer) GetIconName() string {
 
 	cret := xPrinterGetIconName(x.GoPointer())
-
 	return cret
 }
 
@@ -286,7 +277,6 @@ var xPrinterGetJobCount func(uintptr) int
 func (x *Printer) GetJobCount() int {
 
 	cret := xPrinterGetJobCount(x.GoPointer())
-
 	return cret
 }
 
@@ -296,7 +286,6 @@ var xPrinterGetLocation func(uintptr) string
 func (x *Printer) GetLocation() string {
 
 	cret := xPrinterGetLocation(x.GoPointer())
-
 	return cret
 }
 
@@ -306,7 +295,6 @@ var xPrinterGetName func(uintptr) string
 func (x *Printer) GetName() string {
 
 	cret := xPrinterGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -317,7 +305,6 @@ var xPrinterGetStateMessage func(uintptr) string
 func (x *Printer) GetStateMessage() string {
 
 	cret := xPrinterGetStateMessage(x.GoPointer())
-
 	return cret
 }
 
@@ -327,7 +314,6 @@ var xPrinterHasDetails func(uintptr) bool
 func (x *Printer) HasDetails() bool {
 
 	cret := xPrinterHasDetails(x.GoPointer())
-
 	return cret
 }
 
@@ -337,7 +323,6 @@ var xPrinterIsAcceptingJobs func(uintptr) bool
 func (x *Printer) IsAcceptingJobs() bool {
 
 	cret := xPrinterIsAcceptingJobs(x.GoPointer())
-
 	return cret
 }
 
@@ -348,7 +333,6 @@ var xPrinterIsActive func(uintptr) bool
 func (x *Printer) IsActive() bool {
 
 	cret := xPrinterIsActive(x.GoPointer())
-
 	return cret
 }
 
@@ -358,7 +342,6 @@ var xPrinterIsDefault func(uintptr) bool
 func (x *Printer) IsDefault() bool {
 
 	cret := xPrinterIsDefault(x.GoPointer())
-
 	return cret
 }
 
@@ -371,7 +354,6 @@ var xPrinterIsPaused func(uintptr) bool
 func (x *Printer) IsPaused() bool {
 
 	cret := xPrinterIsPaused(x.GoPointer())
-
 	return cret
 }
 
@@ -383,7 +365,6 @@ var xPrinterIsVirtual func(uintptr) bool
 func (x *Printer) IsVirtual() bool {
 
 	cret := xPrinterIsVirtual(x.GoPointer())
-
 	return cret
 }
 
@@ -397,7 +378,6 @@ var xPrinterListPapers func(uintptr) *glib.List
 func (x *Printer) ListPapers() *glib.List {
 
 	cret := xPrinterListPapers(x.GoPointer())
-
 	return cret
 }
 

@@ -84,7 +84,6 @@ var xNewDate func() *Date
 func NewDate() *Date {
 
 	cret := xNewDate()
-
 	return cret
 }
 
@@ -98,7 +97,6 @@ var xNewDateDmy func(DateDay, DateMonth, DateYear) *Date
 func NewDateDmy(DayVar DateDay, MonthVar DateMonth, YearVar DateYear) *Date {
 
 	cret := xNewDateDmy(DayVar, MonthVar, YearVar)
-
 	return cret
 }
 
@@ -112,7 +110,6 @@ var xNewDateJulian func(uint32) *Date
 func NewDateJulian(JulianDayVar uint32) *Date {
 
 	cret := xNewDateJulian(JulianDayVar)
-
 	return cret
 }
 
@@ -184,7 +181,6 @@ var xDateCompare func(uintptr, *Date) int
 func (x *Date) Compare(RhsVar *Date) int {
 
 	cret := xDateCompare(x.GoPointer(), RhsVar)
-
 	return cret
 }
 
@@ -196,7 +192,6 @@ var xDateCopy func(uintptr) *Date
 func (x *Date) Copy() *Date {
 
 	cret := xDateCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -208,7 +203,6 @@ var xDateDaysBetween func(uintptr, *Date) int
 func (x *Date) DaysBetween(Date2Var *Date) int {
 
 	cret := xDateDaysBetween(x.GoPointer(), Date2Var)
-
 	return cret
 }
 
@@ -227,7 +221,6 @@ var xDateGetDay func(uintptr) DateDay
 func (x *Date) GetDay() DateDay {
 
 	cret := xDateGetDay(x.GoPointer())
-
 	return cret
 }
 
@@ -238,7 +231,6 @@ var xDateGetDayOfYear func(uintptr) uint
 func (x *Date) GetDayOfYear() uint {
 
 	cret := xDateGetDayOfYear(x.GoPointer())
-
 	return cret
 }
 
@@ -249,7 +241,6 @@ var xDateGetIso8601WeekOfYear func(uintptr) uint
 func (x *Date) GetIso8601WeekOfYear() uint {
 
 	cret := xDateGetIso8601WeekOfYear(x.GoPointer())
-
 	return cret
 }
 
@@ -262,7 +253,6 @@ var xDateGetJulian func(uintptr) uint32
 func (x *Date) GetJulian() uint32 {
 
 	cret := xDateGetJulian(x.GoPointer())
-
 	return cret
 }
 
@@ -274,7 +264,6 @@ var xDateGetMondayWeekOfYear func(uintptr) uint
 func (x *Date) GetMondayWeekOfYear() uint {
 
 	cret := xDateGetMondayWeekOfYear(x.GoPointer())
-
 	return cret
 }
 
@@ -284,7 +273,6 @@ var xDateGetMonth func(uintptr) DateMonth
 func (x *Date) GetMonth() DateMonth {
 
 	cret := xDateGetMonth(x.GoPointer())
-
 	return cret
 }
 
@@ -296,7 +284,6 @@ var xDateGetSundayWeekOfYear func(uintptr) uint
 func (x *Date) GetSundayWeekOfYear() uint {
 
 	cret := xDateGetSundayWeekOfYear(x.GoPointer())
-
 	return cret
 }
 
@@ -313,7 +300,6 @@ var xDateGetWeekOfYear func(uintptr, DateWeekday) uint
 func (x *Date) GetWeekOfYear(FirstDayOfWeekVar DateWeekday) uint {
 
 	cret := xDateGetWeekOfYear(x.GoPointer(), FirstDayOfWeekVar)
-
 	return cret
 }
 
@@ -323,7 +309,6 @@ var xDateGetWeekday func(uintptr) DateWeekday
 func (x *Date) GetWeekday() DateWeekday {
 
 	cret := xDateGetWeekday(x.GoPointer())
-
 	return cret
 }
 
@@ -333,7 +318,6 @@ var xDateGetYear func(uintptr) DateYear
 func (x *Date) GetYear() DateYear {
 
 	cret := xDateGetYear(x.GoPointer())
-
 	return cret
 }
 
@@ -344,7 +328,6 @@ var xDateIsFirstOfMonth func(uintptr) bool
 func (x *Date) IsFirstOfMonth() bool {
 
 	cret := xDateIsFirstOfMonth(x.GoPointer())
-
 	return cret
 }
 
@@ -355,7 +338,6 @@ var xDateIsLastOfMonth func(uintptr) bool
 func (x *Date) IsLastOfMonth() bool {
 
 	cret := xDateIsLastOfMonth(x.GoPointer())
-
 	return cret
 }
 
@@ -537,7 +519,6 @@ var xDateValid func(uintptr) bool
 func (x *Date) Valid() bool {
 
 	cret := xDateValid(x.GoPointer())
-
 	return cret
 }
 
@@ -666,7 +647,6 @@ var xDateGetDaysInMonth func(DateMonth, DateYear) byte
 func DateGetDaysInMonth(MonthVar DateMonth, YearVar DateYear) byte {
 
 	cret := xDateGetDaysInMonth(MonthVar, YearVar)
-
 	return cret
 }
 
@@ -682,7 +662,6 @@ var xDateGetMondayWeeksInYear func(DateYear) byte
 func DateGetMondayWeeksInYear(YearVar DateYear) byte {
 
 	cret := xDateGetMondayWeeksInYear(YearVar)
-
 	return cret
 }
 
@@ -698,7 +677,6 @@ var xDateGetSundayWeeksInYear func(DateYear) byte
 func DateGetSundayWeeksInYear(YearVar DateYear) byte {
 
 	cret := xDateGetSundayWeeksInYear(YearVar)
-
 	return cret
 }
 
@@ -716,7 +694,6 @@ var xDateGetWeeksInYear func(DateYear, DateWeekday) byte
 func DateGetWeeksInYear(YearVar DateYear, FirstDayOfWeekVar DateWeekday) byte {
 
 	cret := xDateGetWeeksInYear(YearVar, FirstDayOfWeekVar)
-
 	return cret
 }
 
@@ -731,7 +708,6 @@ var xDateIsLeapYear func(DateYear) bool
 func DateIsLeapYear(YearVar DateYear) bool {
 
 	cret := xDateIsLeapYear(YearVar)
-
 	return cret
 }
 
@@ -753,7 +729,6 @@ var xDateStrftime func(string, uint, string, *Date) uint
 func DateStrftime(SVar string, SlenVar uint, FormatVar string, DateVar *Date) uint {
 
 	cret := xDateStrftime(SVar, SlenVar, FormatVar, DateVar)
-
 	return cret
 }
 
@@ -764,7 +739,6 @@ var xDateValidDay func(DateDay) bool
 func DateValidDay(DayVar DateDay) bool {
 
 	cret := xDateValidDay(DayVar)
-
 	return cret
 }
 
@@ -776,7 +750,6 @@ var xDateValidDmy func(DateDay, DateMonth, DateYear) bool
 func DateValidDmy(DayVar DateDay, MonthVar DateMonth, YearVar DateYear) bool {
 
 	cret := xDateValidDmy(DayVar, MonthVar, YearVar)
-
 	return cret
 }
 
@@ -787,7 +760,6 @@ var xDateValidJulian func(uint32) bool
 func DateValidJulian(JulianDateVar uint32) bool {
 
 	cret := xDateValidJulian(JulianDateVar)
-
 	return cret
 }
 
@@ -798,7 +770,6 @@ var xDateValidMonth func(DateMonth) bool
 func DateValidMonth(MonthVar DateMonth) bool {
 
 	cret := xDateValidMonth(MonthVar)
-
 	return cret
 }
 
@@ -809,7 +780,6 @@ var xDateValidWeekday func(DateWeekday) bool
 func DateValidWeekday(WeekdayVar DateWeekday) bool {
 
 	cret := xDateValidWeekday(WeekdayVar)
-
 	return cret
 }
 
@@ -820,7 +790,6 @@ var xDateValidYear func(DateYear) bool
 func DateValidYear(YearVar DateYear) bool {
 
 	cret := xDateValidYear(YearVar)
-
 	return cret
 }
 

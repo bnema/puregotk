@@ -12,7 +12,6 @@ var xGtypeGetType func() types.GType
 func GtypeGetType() types.GType {
 
 	cret := xGtypeGetType()
-
 	return cret
 }
 
@@ -23,7 +22,6 @@ var xPointerTypeRegisterStatic func(string) types.GType
 func PointerTypeRegisterStatic(NameVar string) types.GType {
 
 	cret := xPointerTypeRegisterStatic(NameVar)
-
 	return cret
 }
 
@@ -36,7 +34,6 @@ var xStrdupValueContents func(*Value) string
 func StrdupValueContents(ValueVar *Value) string {
 
 	cret := xStrdupValueContents(ValueVar)
-
 	return cret
 }
 

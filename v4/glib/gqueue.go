@@ -68,7 +68,6 @@ var xQueueCopy func(uintptr) *Queue
 func (x *Queue) Copy() *Queue {
 
 	cret := xQueueCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -89,7 +88,6 @@ var xQueueFind func(uintptr, uintptr) *List
 func (x *Queue) Find(DataVar uintptr) *List {
 
 	cret := xQueueFind(x.GoPointer(), DataVar)
-
 	return cret
 }
 
@@ -118,7 +116,6 @@ func (x *Queue) FindCustom(DataVar uintptr, FuncVar *CompareFunc) *List {
 	}
 
 	cret := xQueueFindCustom(x.GoPointer(), DataVar, FuncVarRef)
-
 	return cret
 }
 
@@ -198,7 +195,6 @@ var xQueueGetLength func(uintptr) uint
 func (x *Queue) GetLength() uint {
 
 	cret := xQueueGetLength(x.GoPointer())
-
 	return cret
 }
 
@@ -208,7 +204,6 @@ var xQueueIndex func(uintptr, uintptr) int
 func (x *Queue) Index(DataVar uintptr) int {
 
 	cret := xQueueIndex(x.GoPointer(), DataVar)
-
 	return cret
 }
 
@@ -300,7 +295,6 @@ var xQueueIsEmpty func(uintptr) bool
 func (x *Queue) IsEmpty() bool {
 
 	cret := xQueueIsEmpty(x.GoPointer())
-
 	return cret
 }
 
@@ -310,7 +304,6 @@ var xQueueLinkIndex func(uintptr, *List) int
 func (x *Queue) LinkIndex(LinkVar *List) int {
 
 	cret := xQueueLinkIndex(x.GoPointer(), LinkVar)
-
 	return cret
 }
 
@@ -320,7 +313,6 @@ var xQueuePeekHead func(uintptr) uintptr
 func (x *Queue) PeekHead() uintptr {
 
 	cret := xQueuePeekHead(x.GoPointer())
-
 	return cret
 }
 
@@ -330,7 +322,6 @@ var xQueuePeekHeadLink func(uintptr) *List
 func (x *Queue) PeekHeadLink() *List {
 
 	cret := xQueuePeekHeadLink(x.GoPointer())
-
 	return cret
 }
 
@@ -340,7 +331,6 @@ var xQueuePeekNth func(uintptr, uint) uintptr
 func (x *Queue) PeekNth(NVar uint) uintptr {
 
 	cret := xQueuePeekNth(x.GoPointer(), NVar)
-
 	return cret
 }
 
@@ -350,7 +340,6 @@ var xQueuePeekNthLink func(uintptr, uint) *List
 func (x *Queue) PeekNthLink(NVar uint) *List {
 
 	cret := xQueuePeekNthLink(x.GoPointer(), NVar)
-
 	return cret
 }
 
@@ -360,7 +349,6 @@ var xQueuePeekTail func(uintptr) uintptr
 func (x *Queue) PeekTail() uintptr {
 
 	cret := xQueuePeekTail(x.GoPointer())
-
 	return cret
 }
 
@@ -370,7 +358,6 @@ var xQueuePeekTailLink func(uintptr) *List
 func (x *Queue) PeekTailLink() *List {
 
 	cret := xQueuePeekTailLink(x.GoPointer())
-
 	return cret
 }
 
@@ -380,7 +367,6 @@ var xQueuePopHead func(uintptr) uintptr
 func (x *Queue) PopHead() uintptr {
 
 	cret := xQueuePopHead(x.GoPointer())
-
 	return cret
 }
 
@@ -390,7 +376,6 @@ var xQueuePopHeadLink func(uintptr) *List
 func (x *Queue) PopHeadLink() *List {
 
 	cret := xQueuePopHeadLink(x.GoPointer())
-
 	return cret
 }
 
@@ -400,7 +385,6 @@ var xQueuePopNth func(uintptr, uint) uintptr
 func (x *Queue) PopNth(NVar uint) uintptr {
 
 	cret := xQueuePopNth(x.GoPointer(), NVar)
-
 	return cret
 }
 
@@ -410,7 +394,6 @@ var xQueuePopNthLink func(uintptr, uint) *List
 func (x *Queue) PopNthLink(NVar uint) *List {
 
 	cret := xQueuePopNthLink(x.GoPointer(), NVar)
-
 	return cret
 }
 
@@ -420,7 +403,6 @@ var xQueuePopTail func(uintptr) uintptr
 func (x *Queue) PopTail() uintptr {
 
 	cret := xQueuePopTail(x.GoPointer())
-
 	return cret
 }
 
@@ -430,7 +412,6 @@ var xQueuePopTailLink func(uintptr) *List
 func (x *Queue) PopTailLink() *List {
 
 	cret := xQueuePopTailLink(x.GoPointer())
-
 	return cret
 }
 
@@ -494,7 +475,6 @@ var xQueueRemove func(uintptr, uintptr) bool
 func (x *Queue) Remove(DataVar uintptr) bool {
 
 	cret := xQueueRemove(x.GoPointer(), DataVar)
-
 	return cret
 }
 
@@ -504,7 +484,6 @@ var xQueueRemoveAll func(uintptr, uintptr) uint
 func (x *Queue) RemoveAll(DataVar uintptr) uint {
 
 	cret := xQueueRemoveAll(x.GoPointer(), DataVar)
-
 	return cret
 }
 

@@ -17,7 +17,6 @@ var xVulkanErrorQuark func() glib.Quark
 func VulkanErrorQuark() glib.Quark {
 
 	cret := xVulkanErrorQuark()
-
 	return cret
 }
 

@@ -2,8 +2,6 @@
 package gtk
 
 import (
-	"runtime"
-
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gdk"
@@ -52,11 +50,10 @@ var xNewPageSetupUnixDialog func(uintptr, uintptr) uintptr
 func NewPageSetupUnixDialog(TitleVar *string, ParentVar *Window) *PageSetupUnixDialog {
 	var cls *PageSetupUnixDialog
 
-	TitleVarPtr, TitleVarBytes := core.NullableStringToPtr(TitleVar)
+	TitleVarPtr := core.GStrdupNullable(TitleVar)
+	defer core.GFreeNullable(TitleVarPtr)
 
 	cret := xNewPageSetupUnixDialog(TitleVarPtr, ParentVar.GoPointer())
-
-	runtime.KeepAlive(TitleVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -167,7 +164,6 @@ func (x *PageSetupUnixDialog) GetAccessibleParent() *AccessibleBase {
 func (x *PageSetupUnixDialog) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -193,7 +189,6 @@ func (x *PageSetupUnixDialog) GetAtContext() *ATContext {
 func (x *PageSetupUnixDialog) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -233,7 +228,6 @@ func (x *PageSetupUnixDialog) GetNextAccessibleSibling() *AccessibleBase {
 func (x *PageSetupUnixDialog) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -410,7 +404,6 @@ func (x *PageSetupUnixDialog) UpdateStateValue(NStatesVar int, StatesVar []Acces
 func (x *PageSetupUnixDialog) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

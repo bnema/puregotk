@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -187,11 +186,10 @@ var xNewCheckButtonWithLabel func(uintptr) uintptr
 func NewCheckButtonWithLabel(LabelVar *string) *CheckButton {
 	var cls *CheckButton
 
-	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
 
 	cret := xNewCheckButtonWithLabel(LabelVarPtr)
-
-	runtime.KeepAlive(LabelVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -208,11 +206,10 @@ var xNewCheckButtonWithMnemonic func(uintptr) uintptr
 func NewCheckButtonWithMnemonic(LabelVar *string) *CheckButton {
 	var cls *CheckButton
 
-	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
 
 	cret := xNewCheckButtonWithMnemonic(LabelVarPtr)
-
-	runtime.KeepAlive(LabelVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -229,7 +226,6 @@ var xCheckButtonGetActive func(uintptr) bool
 func (x *CheckButton) GetActive() bool {
 
 	cret := xCheckButtonGetActive(x.GoPointer())
-
 	return cret
 }
 
@@ -256,7 +252,6 @@ var xCheckButtonGetInconsistent func(uintptr) bool
 func (x *CheckButton) GetInconsistent() bool {
 
 	cret := xCheckButtonGetInconsistent(x.GoPointer())
-
 	return cret
 }
 
@@ -266,7 +261,6 @@ var xCheckButtonGetLabel func(uintptr) string
 func (x *CheckButton) GetLabel() string {
 
 	cret := xCheckButtonGetLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -276,7 +270,6 @@ var xCheckButtonGetUseUnderline func(uintptr) bool
 func (x *CheckButton) GetUseUnderline() bool {
 
 	cret := xCheckButtonGetUseUnderline(x.GoPointer())
-
 	return cret
 }
 
@@ -348,11 +341,10 @@ var xCheckButtonSetLabel func(uintptr, uintptr)
 // [method@Gtk.CheckButton.set_use_underline] for details on this behavior.
 func (x *CheckButton) SetLabel(LabelVar *string) {
 
-	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
 
 	xCheckButtonSetLabel(x.GoPointer(), LabelVarPtr)
-
-	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -555,7 +547,6 @@ func (x *CheckButton) GetAccessibleParent() *AccessibleBase {
 func (x *CheckButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -581,7 +572,6 @@ func (x *CheckButton) GetAtContext() *ATContext {
 func (x *CheckButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -621,7 +611,6 @@ func (x *CheckButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *CheckButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -795,7 +784,6 @@ func (x *CheckButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSta
 func (x *CheckButton) GetActionName() string {
 
 	cret := XGtkActionableGetActionName(x.GoPointer())
-
 	return cret
 }
 
@@ -803,7 +791,6 @@ func (x *CheckButton) GetActionName() string {
 func (x *CheckButton) GetActionTargetValue() *glib.Variant {
 
 	cret := XGtkActionableGetActionTargetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -822,11 +809,10 @@ func (x *CheckButton) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *CheckButton) SetActionName(ActionNameVar *string) {
 
-	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
 
 	XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
-	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -887,7 +873,6 @@ func (x *CheckButton) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *CheckButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

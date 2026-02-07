@@ -38,7 +38,6 @@ var xMemChunkAlloc func(uintptr) uintptr
 func (x *MemChunk) Alloc() uintptr {
 
 	cret := xMemChunkAlloc(x.GoPointer())
-
 	return cret
 }
 
@@ -47,7 +46,6 @@ var xMemChunkAlloc0 func(uintptr) uintptr
 func (x *MemChunk) Alloc0() uintptr {
 
 	cret := xMemChunkAlloc0(x.GoPointer())
-
 	return cret
 }
 

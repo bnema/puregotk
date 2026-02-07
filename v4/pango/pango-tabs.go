@@ -38,7 +38,6 @@ var xNewTabArray func(int, bool) *TabArray
 func NewTabArray(InitialSizeVar int, PositionsInPixelsVar bool) *TabArray {
 
 	cret := xNewTabArray(InitialSizeVar, PositionsInPixelsVar)
-
 	return cret
 }
 
@@ -51,7 +50,6 @@ var xNewTabArrayWithPositions func(int, bool, TabAlign, int, ...interface{}) *Ta
 func NewTabArrayWithPositions(SizeVar int, PositionsInPixelsVar bool, FirstAlignmentVar TabAlign, FirstPositionVar int, varArgs ...interface{}) *TabArray {
 
 	cret := xNewTabArrayWithPositions(SizeVar, PositionsInPixelsVar, FirstAlignmentVar, FirstPositionVar, varArgs...)
-
 	return cret
 }
 
@@ -61,7 +59,6 @@ var xTabArrayCopy func(uintptr) *TabArray
 func (x *TabArray) Copy() *TabArray {
 
 	cret := xTabArrayCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -87,7 +84,6 @@ var xTabArrayGetDecimalPoint func(uintptr, int) uint32
 func (x *TabArray) GetDecimalPoint(TabIndexVar int) uint32 {
 
 	cret := xTabArrayGetDecimalPoint(x.GoPointer(), TabIndexVar)
-
 	return cret
 }
 
@@ -98,7 +94,6 @@ var xTabArrayGetPositionsInPixels func(uintptr) bool
 func (x *TabArray) GetPositionsInPixels() bool {
 
 	cret := xTabArrayGetPositionsInPixels(x.GoPointer())
-
 	return cret
 }
 
@@ -108,7 +103,6 @@ var xTabArrayGetSize func(uintptr) int
 func (x *TabArray) GetSize() int {
 
 	cret := xTabArrayGetSize(x.GoPointer())
-
 	return cret
 }
 
@@ -213,7 +207,6 @@ var xTabArrayToString func(uintptr) string
 func (x *TabArray) ToString() string {
 
 	cret := xTabArrayToString(x.GoPointer())
-
 	return cret
 }
 
@@ -252,7 +245,6 @@ var xTabArrayFromString func(string) *TabArray
 func TabArrayFromString(TextVar string) *TabArray {
 
 	cret := xTabArrayFromString(TextVar)
-
 	return cret
 }
 

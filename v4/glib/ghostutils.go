@@ -19,7 +19,6 @@ var xHostnameIsAsciiEncoded func(string) bool
 func HostnameIsAsciiEncoded(HostnameVar string) bool {
 
 	cret := xHostnameIsAsciiEncoded(HostnameVar)
-
 	return cret
 }
 
@@ -32,7 +31,6 @@ var xHostnameIsIpAddress func(string) bool
 func HostnameIsIpAddress(HostnameVar string) bool {
 
 	cret := xHostnameIsIpAddress(HostnameVar)
-
 	return cret
 }
 
@@ -48,7 +46,6 @@ var xHostnameIsNonAscii func(string) bool
 func HostnameIsNonAscii(HostnameVar string) bool {
 
 	cret := xHostnameIsNonAscii(HostnameVar)
-
 	return cret
 }
 
@@ -60,7 +57,6 @@ var xHostnameToAscii func(string) string
 func HostnameToAscii(HostnameVar string) string {
 
 	cret := xHostnameToAscii(HostnameVar)
-
 	return cret
 }
 
@@ -76,7 +72,6 @@ var xHostnameToUnicode func(string) string
 func HostnameToUnicode(HostnameVar string) string {
 
 	cret := xHostnameToUnicode(HostnameVar)
-
 	return cret
 }
 

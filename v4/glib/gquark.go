@@ -2,8 +2,6 @@
 package glib
 
 import (
-	"runtime"
-
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 )
@@ -48,12 +46,10 @@ var xInternStaticString func(uintptr) string
 // variables in C++.
 func InternStaticString(StringVar *string) string {
 
-	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+	StringVarPtr := core.GStrdupNullable(StringVar)
+	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xInternStaticString(StringVarPtr)
-
-	runtime.KeepAlive(StringVarBytes)
-
 	return cret
 }
 
@@ -68,12 +64,10 @@ var xInternString func(uintptr) string
 // variables in C++.
 func InternString(StringVar *string) string {
 
-	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+	StringVarPtr := core.GStrdupNullable(StringVar)
+	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xInternString(StringVarPtr)
-
-	runtime.KeepAlive(StringVarBytes)
-
 	return cret
 }
 
@@ -97,12 +91,10 @@ var xQuarkFromStaticString func(uintptr) Quark
 // variables in C++.
 func QuarkFromStaticString(StringVar *string) Quark {
 
-	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+	StringVarPtr := core.GStrdupNullable(StringVar)
+	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xQuarkFromStaticString(StringVarPtr)
-
-	runtime.KeepAlive(StringVarBytes)
-
 	return cret
 }
 
@@ -117,12 +109,10 @@ var xQuarkFromString func(uintptr) Quark
 // variables in C++.
 func QuarkFromString(StringVar *string) Quark {
 
-	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+	StringVarPtr := core.GStrdupNullable(StringVar)
+	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xQuarkFromString(StringVarPtr)
-
-	runtime.KeepAlive(StringVarBytes)
-
 	return cret
 }
 
@@ -132,7 +122,6 @@ var xQuarkToString func(Quark) string
 func QuarkToString(QuarkVar Quark) string {
 
 	cret := xQuarkToString(QuarkVar)
-
 	return cret
 }
 
@@ -148,12 +137,10 @@ var xQuarkTryString func(uintptr) Quark
 // running.
 func QuarkTryString(StringVar *string) Quark {
 
-	StringVarPtr, StringVarBytes := core.NullableStringToPtr(StringVar)
+	StringVarPtr := core.GStrdupNullable(StringVar)
+	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xQuarkTryString(StringVarPtr)
-
-	runtime.KeepAlive(StringVarBytes)
-
 	return cret
 }
 

@@ -131,7 +131,6 @@ var xSqueezerGetAllowNone func(uintptr) bool
 func (x *Squeezer) GetAllowNone() bool {
 
 	cret := xSqueezerGetAllowNone(x.GoPointer())
-
 	return cret
 }
 
@@ -141,7 +140,6 @@ var xSqueezerGetHomogeneous func(uintptr) bool
 func (x *Squeezer) GetHomogeneous() bool {
 
 	cret := xSqueezerGetHomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -151,7 +149,6 @@ var xSqueezerGetInterpolateSize func(uintptr) bool
 func (x *Squeezer) GetInterpolateSize() bool {
 
 	cret := xSqueezerGetInterpolateSize(x.GoPointer())
-
 	return cret
 }
 
@@ -197,7 +194,6 @@ var xSqueezerGetSwitchThresholdPolicy func(uintptr) FoldThresholdPolicy
 func (x *Squeezer) GetSwitchThresholdPolicy() FoldThresholdPolicy {
 
 	cret := xSqueezerGetSwitchThresholdPolicy(x.GoPointer())
-
 	return cret
 }
 
@@ -207,7 +203,6 @@ var xSqueezerGetTransitionDuration func(uintptr) uint
 func (x *Squeezer) GetTransitionDuration() uint {
 
 	cret := xSqueezerGetTransitionDuration(x.GoPointer())
-
 	return cret
 }
 
@@ -221,7 +216,6 @@ var xSqueezerGetTransitionRunning func(uintptr) bool
 func (x *Squeezer) GetTransitionRunning() bool {
 
 	cret := xSqueezerGetTransitionRunning(x.GoPointer())
-
 	return cret
 }
 
@@ -231,7 +225,6 @@ var xSqueezerGetTransitionType func(uintptr) SqueezerTransitionType
 func (x *Squeezer) GetTransitionType() SqueezerTransitionType {
 
 	cret := xSqueezerGetTransitionType(x.GoPointer())
-
 	return cret
 }
 
@@ -258,7 +251,6 @@ var xSqueezerGetXalign func(uintptr) float32
 func (x *Squeezer) GetXalign() float32 {
 
 	cret := xSqueezerGetXalign(x.GoPointer())
-
 	return cret
 }
 
@@ -268,7 +260,6 @@ var xSqueezerGetYalign func(uintptr) float32
 func (x *Squeezer) GetYalign() float32 {
 
 	cret := xSqueezerGetYalign(x.GoPointer())
-
 	return cret
 }
 
@@ -597,7 +588,6 @@ func (x *Squeezer) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *Squeezer) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -623,7 +613,6 @@ func (x *Squeezer) GetAtContext() *gtk.ATContext {
 func (x *Squeezer) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -663,7 +652,6 @@ func (x *Squeezer) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *Squeezer) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -840,7 +828,6 @@ func (x *Squeezer) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSt
 func (x *Squeezer) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -848,7 +835,6 @@ func (x *Squeezer) GetBuildableId() string {
 func (x *Squeezer) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 
@@ -899,7 +885,6 @@ var xSqueezerPageGetEnabled func(uintptr) bool
 func (x *SqueezerPage) GetEnabled() bool {
 
 	cret := xSqueezerPageGetEnabled(x.GoPointer())
-
 	return cret
 }
 

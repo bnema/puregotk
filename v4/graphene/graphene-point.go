@@ -56,7 +56,6 @@ var xPointAlloc func() *Point
 func PointAlloc() *Point {
 
 	cret := xPointAlloc()
-
 	return cret
 }
 
@@ -66,7 +65,6 @@ var xPointDistance func(uintptr, *Point, *float32, *float32) float32
 func (x *Point) Distance(BVar *Point, DXVar *float32, DYVar *float32) float32 {
 
 	cret := xPointDistance(x.GoPointer(), BVar, DXVar, DYVar)
-
 	return cret
 }
 
@@ -81,7 +79,6 @@ var xPointEqual func(uintptr, *Point) bool
 func (x *Point) Equal(BVar *Point) bool {
 
 	cret := xPointEqual(x.GoPointer(), BVar)
-
 	return cret
 }
 
@@ -102,7 +99,6 @@ var xPointInit func(uintptr, float32, float32) *Point
 func (x *Point) Init(XVar float32, YVar float32) *Point {
 
 	cret := xPointInit(x.GoPointer(), XVar, YVar)
-
 	return cret
 }
 
@@ -112,7 +108,6 @@ var xPointInitFromPoint func(uintptr, *Point) *Point
 func (x *Point) InitFromPoint(SrcVar *Point) *Point {
 
 	cret := xPointInitFromPoint(x.GoPointer(), SrcVar)
-
 	return cret
 }
 
@@ -122,7 +117,6 @@ var xPointInitFromVec2 func(uintptr, *Vec2) *Point
 func (x *Point) InitFromVec2(SrcVar *Vec2) *Point {
 
 	cret := xPointInitFromVec2(x.GoPointer(), SrcVar)
-
 	return cret
 }
 
@@ -143,7 +137,6 @@ var xPointNear func(uintptr, *Point, float32) bool
 func (x *Point) Near(BVar *Point, EpsilonVar float32) bool {
 
 	cret := xPointNear(x.GoPointer(), BVar, EpsilonVar)
-
 	return cret
 }
 
@@ -163,7 +156,6 @@ var xPointZero func() *Point
 func PointZero() *Point {
 
 	cret := xPointZero()
-
 	return cret
 }
 

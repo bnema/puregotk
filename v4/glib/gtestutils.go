@@ -2,7 +2,6 @@
 package glib
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -98,7 +97,6 @@ var xTestLogBufferPop func(uintptr) *TestLogMsg
 func (x *TestLogBuffer) Pop() *TestLogMsg {
 
 	cret := xTestLogBufferPop(x.GoPointer())
-
 	return cret
 }
 
@@ -387,15 +385,13 @@ var xAssertionMessageExpr func(uintptr, string, int, string, uintptr)
 // g_assert() and g_assert_not_reached() macros.
 func AssertionMessageExpr(DomainVar *string, FileVar string, LineVar int, FuncVar string, ExprVar *string) {
 
-	DomainVarPtr, DomainVarBytes := core.NullableStringToPtr(DomainVar)
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
 
-	ExprVarPtr, ExprVarBytes := core.NullableStringToPtr(ExprVar)
+	ExprVarPtr := core.GStrdupNullable(ExprVar)
+	defer core.GFreeNullable(ExprVarPtr)
 
 	xAssertionMessageExpr(DomainVarPtr, FileVar, LineVar, FuncVar, ExprVarPtr)
-
-	runtime.KeepAlive(DomainVarBytes)
-
-	runtime.KeepAlive(ExprVarBytes)
 
 }
 
@@ -407,16 +403,13 @@ var xStrcmp0 func(uintptr, uintptr) int
 // Comparing two `NULL` pointers returns 0.
 func Strcmp0(Str1Var *string, Str2Var *string) int {
 
-	Str1VarPtr, Str1VarBytes := core.NullableStringToPtr(Str1Var)
+	Str1VarPtr := core.GStrdupNullable(Str1Var)
+	defer core.GFreeNullable(Str1VarPtr)
 
-	Str2VarPtr, Str2VarBytes := core.NullableStringToPtr(Str2Var)
+	Str2VarPtr := core.GStrdupNullable(Str2Var)
+	defer core.GFreeNullable(Str2VarPtr)
 
 	cret := xStrcmp0(Str1VarPtr, Str2VarPtr)
-
-	runtime.KeepAlive(Str1VarBytes)
-
-	runtime.KeepAlive(Str2VarBytes)
-
 	return cret
 }
 
@@ -666,7 +659,6 @@ var xTestBuildFilename func(TestFileType, string, ...interface{}) string
 func TestBuildFilename(FileTypeVar TestFileType, FirstPathVar string, varArgs ...interface{}) string {
 
 	cret := xTestBuildFilename(FileTypeVar, FirstPathVar, varArgs...)
-
 	return cret
 }
 
@@ -737,7 +729,6 @@ func TestCreateCase(TestNameVar string, DataSizeVar uint, TestDataVar uintptr, D
 	}
 
 	cret := xTestCreateCase(TestNameVar, DataSizeVar, TestDataVar, DataSetupVarRef, DataTestVarRef, DataTeardownVarRef)
-
 	return cret
 }
 
@@ -747,7 +738,6 @@ var xTestCreateSuite func(string) *TestSuite
 func TestCreateSuite(SuiteNameVar string) *TestSuite {
 
 	cret := xTestCreateSuite(SuiteNameVar)
-
 	return cret
 }
 
@@ -805,11 +795,10 @@ var xTestExpectMessage func(uintptr, LogLevelFlags, string)
 // expected via [func@GLib.test_expect_message] then they will be ignored.
 func TestExpectMessage(LogDomainVar *string, LogLevelVar LogLevelFlags, PatternVar string) {
 
-	LogDomainVarPtr, LogDomainVarBytes := core.NullableStringToPtr(LogDomainVar)
+	LogDomainVarPtr := core.GStrdupNullable(LogDomainVar)
+	defer core.GFreeNullable(LogDomainVarPtr)
 
 	xTestExpectMessage(LogDomainVarPtr, LogLevelVar, PatternVar)
-
-	runtime.KeepAlive(LogDomainVarBytes)
 
 }
 
@@ -870,7 +859,6 @@ var xTestFailed func() bool
 func TestFailed() bool {
 
 	cret := xTestFailed()
-
 	return cret
 }
 
@@ -884,7 +872,6 @@ var xTestGetDir func(TestFileType) string
 func TestGetDir(FileTypeVar TestFileType) string {
 
 	cret := xTestGetDir(FileTypeVar)
-
 	return cret
 }
 
@@ -905,7 +892,6 @@ var xTestGetFilename func(TestFileType, string, ...interface{}) string
 func TestGetFilename(FileTypeVar TestFileType, FirstPathVar string, varArgs ...interface{}) string {
 
 	cret := xTestGetFilename(FileTypeVar, FirstPathVar, varArgs...)
-
 	return cret
 }
 
@@ -922,7 +908,6 @@ var xTestGetPath func() string
 func TestGetPath() string {
 
 	cret := xTestGetPath()
-
 	return cret
 }
 
@@ -932,7 +917,6 @@ var xTestGetRoot func() *TestSuite
 func TestGetRoot() *TestSuite {
 
 	cret := xTestGetRoot()
-
 	return cret
 }
 
@@ -951,11 +935,10 @@ var xTestIncomplete func(uintptr)
 // If not called from inside a test, this function does nothing.
 func TestIncomplete(MsgVar *string) {
 
-	MsgVarPtr, MsgVarBytes := core.NullableStringToPtr(MsgVar)
+	MsgVarPtr := core.GStrdupNullable(MsgVar)
+	defer core.GFreeNullable(MsgVarPtr)
 
 	xTestIncomplete(MsgVarPtr)
-
-	runtime.KeepAlive(MsgVarBytes)
 
 }
 
@@ -1088,7 +1071,6 @@ var xTestLogTypeName func(TestLogType) string
 func TestLogTypeName(LogTypeVar TestLogType) string {
 
 	cret := xTestLogTypeName(LogTypeVar)
-
 	return cret
 }
 
@@ -1180,7 +1162,6 @@ var xTestRandDouble func() float64
 func TestRandDouble() float64 {
 
 	cret := xTestRandDouble()
-
 	return cret
 }
 
@@ -1192,7 +1173,6 @@ var xTestRandDoubleRange func(float64, float64) float64
 func TestRandDoubleRange(RangeStartVar float64, RangeEndVar float64) float64 {
 
 	cret := xTestRandDoubleRange(RangeStartVar, RangeEndVar)
-
 	return cret
 }
 
@@ -1210,7 +1190,6 @@ var xTestRandInt func() int32
 func TestRandInt() int32 {
 
 	cret := xTestRandInt()
-
 	return cret
 }
 
@@ -1222,7 +1201,6 @@ var xTestRandIntRange func(int32, int32) int32
 func TestRandIntRange(BeginVar int32, EndVar int32) int32 {
 
 	cret := xTestRandIntRange(BeginVar, EndVar)
-
 	return cret
 }
 
@@ -1265,7 +1243,6 @@ var xTestRun func() int
 func TestRun() int {
 
 	cret := xTestRun()
-
 	return cret
 }
 
@@ -1283,7 +1260,6 @@ var xTestRunSuite func(*TestSuite) int
 func TestRunSuite(SuiteVar *TestSuite) int {
 
 	cret := xTestRunSuite(SuiteVar)
-
 	return cret
 }
 
@@ -1322,11 +1298,10 @@ var xTestSkip func(uintptr)
 // If not called from inside a test, this function does nothing.
 func TestSkip(MsgVar *string) {
 
-	MsgVarPtr, MsgVarBytes := core.NullableStringToPtr(MsgVar)
+	MsgVarPtr := core.GStrdupNullable(MsgVar)
+	defer core.GFreeNullable(MsgVarPtr)
 
 	xTestSkip(MsgVarPtr)
-
-	runtime.KeepAlive(MsgVarBytes)
 
 }
 
@@ -1348,7 +1323,6 @@ var xTestSubprocess func() bool
 func TestSubprocess() bool {
 
 	cret := xTestSubprocess()
-
 	return cret
 }
 
@@ -1391,7 +1365,6 @@ var xTestTimerElapsed func() float64
 func TestTimerElapsed() float64 {
 
 	cret := xTestTimerElapsed()
-
 	return cret
 }
 
@@ -1401,7 +1374,6 @@ var xTestTimerLast func() float64
 func TestTimerLast() float64 {
 
 	cret := xTestTimerLast()
-
 	return cret
 }
 
@@ -1467,7 +1439,6 @@ var xTestTrapFork func(uint64, TestTrapFlags) bool
 func TestTrapFork(UsecTimeoutVar uint64, TestTrapFlagsVar TestTrapFlags) bool {
 
 	cret := xTestTrapFork(UsecTimeoutVar, TestTrapFlagsVar)
-
 	return cret
 }
 
@@ -1477,7 +1448,6 @@ var xTestTrapHasPassed func() bool
 func TestTrapHasPassed() bool {
 
 	cret := xTestTrapHasPassed()
-
 	return cret
 }
 
@@ -1487,7 +1457,6 @@ var xTestTrapReachedTimeout func() bool
 func TestTrapReachedTimeout() bool {
 
 	cret := xTestTrapReachedTimeout()
-
 	return cret
 }
 
@@ -1500,11 +1469,10 @@ var xTestTrapSubprocess func(uintptr, uint64, TestSubprocessFlags)
 // for full details.
 func TestTrapSubprocess(TestPathVar *string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
 
-	TestPathVarPtr, TestPathVarBytes := core.NullableStringToPtr(TestPathVar)
+	TestPathVarPtr := core.GStrdupNullable(TestPathVar)
+	defer core.GFreeNullable(TestPathVarPtr)
 
 	xTestTrapSubprocess(TestPathVarPtr, UsecTimeoutVar, TestFlagsVar)
-
-	runtime.KeepAlive(TestPathVarBytes)
 
 }
 
@@ -1603,11 +1571,10 @@ var xTestTrapSubprocessWithEnvp func(uintptr, []string, uint64, TestSubprocessFl
 // ```
 func TestTrapSubprocessWithEnvp(TestPathVar *string, EnvpVar []string, UsecTimeoutVar uint64, TestFlagsVar TestSubprocessFlags) {
 
-	TestPathVarPtr, TestPathVarBytes := core.NullableStringToPtr(TestPathVar)
+	TestPathVarPtr := core.GStrdupNullable(TestPathVar)
+	defer core.GFreeNullable(TestPathVarPtr)
 
 	xTestTrapSubprocessWithEnvp(TestPathVarPtr, EnvpVar, UsecTimeoutVar, TestFlagsVar)
-
-	runtime.KeepAlive(TestPathVarBytes)
 
 }
 

@@ -197,7 +197,6 @@ func (x *ColorChooserBase) GetRgba(ColorVar *gdk.RGBA) {
 func (x *ColorChooserBase) GetUseAlpha() bool {
 
 	cret := XGtkColorChooserGetUseAlpha(x.GoPointer())
-
 	return cret
 }
 

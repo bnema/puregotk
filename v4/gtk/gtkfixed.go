@@ -113,7 +113,6 @@ var xFixedGetChildTransform func(uintptr, uintptr) *gsk.Transform
 func (x *Fixed) GetChildTransform(WidgetVar *Widget) *gsk.Transform {
 
 	cret := xFixedGetChildTransform(x.GoPointer(), WidgetVar.GoPointer())
-
 	return cret
 }
 
@@ -204,7 +203,6 @@ func (x *Fixed) GetAccessibleParent() *AccessibleBase {
 func (x *Fixed) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -230,7 +228,6 @@ func (x *Fixed) GetAtContext() *ATContext {
 func (x *Fixed) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -270,7 +267,6 @@ func (x *Fixed) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Fixed) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -447,7 +443,6 @@ func (x *Fixed) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 func (x *Fixed) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

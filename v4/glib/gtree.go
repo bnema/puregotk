@@ -60,7 +60,6 @@ func NewTree(KeyCompareFuncVar *CompareFunc) *Tree {
 	}
 
 	cret := xNewTree(KeyCompareFuncVarRef)
-
 	return cret
 }
 
@@ -117,7 +116,6 @@ func NewTreeFull(KeyCompareFuncVar *CompareDataFunc, KeyCompareDataVar uintptr, 
 	}
 
 	cret := xNewTreeFull(KeyCompareFuncVarRef, KeyCompareDataVar, KeyDestroyFuncVarRef, ValueDestroyFuncVarRef)
-
 	return cret
 }
 
@@ -143,7 +141,6 @@ func NewTreeWithData(KeyCompareFuncVar *CompareDataFunc, KeyCompareDataVar uintp
 	}
 
 	cret := xNewTreeWithData(KeyCompareFuncVarRef, KeyCompareDataVar)
-
 	return cret
 }
 
@@ -233,7 +230,6 @@ var xTreeHeight func(uintptr) int
 func (x *Tree) Height() int {
 
 	cret := xTreeHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -267,7 +263,6 @@ var xTreeInsertNode func(uintptr, uintptr, uintptr) *TreeNode
 func (x *Tree) InsertNode(KeyVar uintptr, ValueVar uintptr) *TreeNode {
 
 	cret := xTreeInsertNode(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -279,7 +274,6 @@ var xTreeLookup func(uintptr, uintptr) uintptr
 func (x *Tree) Lookup(KeyVar uintptr) uintptr {
 
 	cret := xTreeLookup(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -292,7 +286,6 @@ var xTreeLookupExtended func(uintptr, uintptr, *uintptr, *uintptr) bool
 func (x *Tree) LookupExtended(LookupKeyVar uintptr, OrigKeyVar *uintptr, ValueVar *uintptr) bool {
 
 	cret := xTreeLookupExtended(x.GoPointer(), LookupKeyVar, OrigKeyVar, ValueVar)
-
 	return cret
 }
 
@@ -304,7 +297,6 @@ var xTreeLookupNode func(uintptr, uintptr) *TreeNode
 func (x *Tree) LookupNode(KeyVar uintptr) *TreeNode {
 
 	cret := xTreeLookupNode(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -319,7 +311,6 @@ var xTreeLowerBound func(uintptr, uintptr) *TreeNode
 func (x *Tree) LowerBound(KeyVar uintptr) *TreeNode {
 
 	cret := xTreeLowerBound(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -329,7 +320,6 @@ var xTreeNnodes func(uintptr) int
 func (x *Tree) Nnodes() int {
 
 	cret := xTreeNnodes(x.GoPointer())
-
 	return cret
 }
 
@@ -340,7 +330,6 @@ var xTreeNodeFirst func(uintptr) *TreeNode
 func (x *Tree) NodeFirst() *TreeNode {
 
 	cret := xTreeNodeFirst(x.GoPointer())
-
 	return cret
 }
 
@@ -351,7 +340,6 @@ var xTreeNodeLast func(uintptr) *TreeNode
 func (x *Tree) NodeLast() *TreeNode {
 
 	cret := xTreeNodeLast(x.GoPointer())
-
 	return cret
 }
 
@@ -363,7 +351,6 @@ var xTreeRef func(uintptr) *Tree
 func (x *Tree) Ref() *Tree {
 
 	cret := xTreeRef(x.GoPointer())
-
 	return cret
 }
 
@@ -382,7 +369,6 @@ var xTreeRemove func(uintptr, uintptr) bool
 func (x *Tree) Remove(KeyVar uintptr) bool {
 
 	cret := xTreeRemove(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -420,7 +406,6 @@ var xTreeReplaceNode func(uintptr, uintptr, uintptr) *TreeNode
 func (x *Tree) ReplaceNode(KeyVar uintptr, ValueVar uintptr) *TreeNode {
 
 	cret := xTreeReplaceNode(x.GoPointer(), KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -453,7 +438,6 @@ func (x *Tree) Search(SearchFuncVar *CompareFunc, UserDataVar uintptr) uintptr {
 	}
 
 	cret := xTreeSearch(x.GoPointer(), SearchFuncVarRef, UserDataVar)
-
 	return cret
 }
 
@@ -486,7 +470,6 @@ func (x *Tree) SearchNode(SearchFuncVar *CompareFunc, UserDataVar uintptr) *Tree
 	}
 
 	cret := xTreeSearchNode(x.GoPointer(), SearchFuncVarRef, UserDataVar)
-
 	return cret
 }
 
@@ -499,7 +482,6 @@ var xTreeSteal func(uintptr, uintptr) bool
 func (x *Tree) Steal(KeyVar uintptr) bool {
 
 	cret := xTreeSteal(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -552,7 +534,6 @@ var xTreeUpperBound func(uintptr, uintptr) *TreeNode
 func (x *Tree) UpperBound(KeyVar uintptr) *TreeNode {
 
 	cret := xTreeUpperBound(x.GoPointer(), KeyVar)
-
 	return cret
 }
 
@@ -571,7 +552,6 @@ var xTreeNodeKey func(uintptr) uintptr
 func (x *TreeNode) Key() uintptr {
 
 	cret := xTreeNodeKey(x.GoPointer())
-
 	return cret
 }
 
@@ -582,7 +562,6 @@ var xTreeNodeNext func(uintptr) *TreeNode
 func (x *TreeNode) Next() *TreeNode {
 
 	cret := xTreeNodeNext(x.GoPointer())
-
 	return cret
 }
 
@@ -593,7 +572,6 @@ var xTreeNodePrevious func(uintptr) *TreeNode
 func (x *TreeNode) Previous() *TreeNode {
 
 	cret := xTreeNodePrevious(x.GoPointer())
-
 	return cret
 }
 
@@ -603,7 +581,6 @@ var xTreeNodeValue func(uintptr) uintptr
 func (x *TreeNode) Value() uintptr {
 
 	cret := xTreeNodeValue(x.GoPointer())
-
 	return cret
 }
 

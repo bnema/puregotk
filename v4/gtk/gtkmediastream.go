@@ -472,7 +472,6 @@ var xMediaStreamGetDuration func(uintptr) int64
 func (x *MediaStream) GetDuration() int64 {
 
 	cret := xMediaStreamGetDuration(x.GoPointer())
-
 	return cret
 }
 
@@ -482,7 +481,6 @@ var xMediaStreamGetEnded func(uintptr) bool
 func (x *MediaStream) GetEnded() bool {
 
 	cret := xMediaStreamGetEnded(x.GoPointer())
-
 	return cret
 }
 
@@ -505,7 +503,6 @@ var xMediaStreamGetError func(uintptr) *glib.Error
 func (x *MediaStream) GetError() *glib.Error {
 
 	cret := xMediaStreamGetError(x.GoPointer())
-
 	return cret
 }
 
@@ -517,7 +514,6 @@ var xMediaStreamGetLoop func(uintptr) bool
 func (x *MediaStream) GetLoop() bool {
 
 	cret := xMediaStreamGetLoop(x.GoPointer())
-
 	return cret
 }
 
@@ -529,7 +525,6 @@ var xMediaStreamGetMuted func(uintptr) bool
 func (x *MediaStream) GetMuted() bool {
 
 	cret := xMediaStreamGetMuted(x.GoPointer())
-
 	return cret
 }
 
@@ -539,7 +534,6 @@ var xMediaStreamGetPlaying func(uintptr) bool
 func (x *MediaStream) GetPlaying() bool {
 
 	cret := xMediaStreamGetPlaying(x.GoPointer())
-
 	return cret
 }
 
@@ -549,7 +543,6 @@ var xMediaStreamGetTimestamp func(uintptr) int64
 func (x *MediaStream) GetTimestamp() int64 {
 
 	cret := xMediaStreamGetTimestamp(x.GoPointer())
-
 	return cret
 }
 
@@ -561,7 +554,6 @@ var xMediaStreamGetVolume func(uintptr) float64
 func (x *MediaStream) GetVolume() float64 {
 
 	cret := xMediaStreamGetVolume(x.GoPointer())
-
 	return cret
 }
 
@@ -571,7 +563,6 @@ var xMediaStreamHasAudio func(uintptr) bool
 func (x *MediaStream) HasAudio() bool {
 
 	cret := xMediaStreamHasAudio(x.GoPointer())
-
 	return cret
 }
 
@@ -581,7 +572,6 @@ var xMediaStreamHasVideo func(uintptr) bool
 func (x *MediaStream) HasVideo() bool {
 
 	cret := xMediaStreamHasVideo(x.GoPointer())
-
 	return cret
 }
 
@@ -593,7 +583,6 @@ var xMediaStreamIsPrepared func(uintptr) bool
 func (x *MediaStream) IsPrepared() bool {
 
 	cret := xMediaStreamIsPrepared(x.GoPointer())
-
 	return cret
 }
 
@@ -611,7 +600,6 @@ var xMediaStreamIsSeekable func(uintptr) bool
 func (x *MediaStream) IsSeekable() bool {
 
 	cret := xMediaStreamIsSeekable(x.GoPointer())
-
 	return cret
 }
 
@@ -621,7 +609,6 @@ var xMediaStreamIsSeeking func(uintptr) bool
 func (x *MediaStream) IsSeeking() bool {
 
 	cret := xMediaStreamIsSeeking(x.GoPointer())
-
 	return cret
 }
 
@@ -1066,7 +1053,6 @@ func (x *MediaStream) GetCurrentImage() *gdk.PaintableBase {
 func (x *MediaStream) GetFlags() gdk.PaintableFlags {
 
 	cret := gdk.XGdkPaintableGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -1090,7 +1076,6 @@ func (x *MediaStream) GetFlags() gdk.PaintableFlags {
 func (x *MediaStream) GetIntrinsicAspectRatio() float64 {
 
 	cret := gdk.XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
-
 	return cret
 }
 
@@ -1107,7 +1092,6 @@ func (x *MediaStream) GetIntrinsicAspectRatio() float64 {
 func (x *MediaStream) GetIntrinsicHeight() int {
 
 	cret := gdk.XGdkPaintableGetIntrinsicHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -1124,7 +1108,6 @@ func (x *MediaStream) GetIntrinsicHeight() int {
 func (x *MediaStream) GetIntrinsicWidth() int {
 
 	cret := gdk.XGdkPaintableGetIntrinsicWidth(x.GoPointer())
-
 	return cret
 }
 

@@ -248,7 +248,6 @@ func (x *ProxyBase) ConnectFinish(ResultVar AsyncResult) (*IOStream, error) {
 func (x *ProxyBase) SupportsHostname() bool {
 
 	cret := XGProxySupportsHostname(x.GoPointer())
-
 	return cret
 }
 

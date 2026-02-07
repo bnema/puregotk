@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -142,11 +141,10 @@ var xNewPictureForFilename func(uintptr) uintptr
 func NewPictureForFilename(FilenameVar *string) *Picture {
 	var cls *Picture
 
-	FilenameVarPtr, FilenameVarBytes := core.NullableStringToPtr(FilenameVar)
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
 
 	cret := xNewPictureForFilename(FilenameVarPtr)
-
-	runtime.KeepAlive(FilenameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -208,11 +206,10 @@ var xNewPictureForResource func(uintptr) uintptr
 func NewPictureForResource(ResourcePathVar *string) *Picture {
 	var cls *Picture
 
-	ResourcePathVarPtr, ResourcePathVarBytes := core.NullableStringToPtr(ResourcePathVar)
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
 
 	cret := xNewPictureForResource(ResourcePathVarPtr)
-
-	runtime.KeepAlive(ResourcePathVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -231,7 +228,6 @@ var xPictureGetAlternativeText func(uintptr) string
 func (x *Picture) GetAlternativeText() string {
 
 	cret := xPictureGetAlternativeText(x.GoPointer())
-
 	return cret
 }
 
@@ -241,7 +237,6 @@ var xPictureGetCanShrink func(uintptr) bool
 func (x *Picture) GetCanShrink() bool {
 
 	cret := xPictureGetCanShrink(x.GoPointer())
-
 	return cret
 }
 
@@ -253,7 +248,6 @@ var xPictureGetContentFit func(uintptr) ContentFit
 func (x *Picture) GetContentFit() ContentFit {
 
 	cret := xPictureGetContentFit(x.GoPointer())
-
 	return cret
 }
 
@@ -283,7 +277,6 @@ var xPictureGetKeepAspectRatio func(uintptr) bool
 func (x *Picture) GetKeepAspectRatio() bool {
 
 	cret := xPictureGetKeepAspectRatio(x.GoPointer())
-
 	return cret
 }
 
@@ -315,11 +308,10 @@ var xPictureSetAlternativeText func(uintptr, uintptr)
 // If the picture cannot be described textually, set this property to %NULL.
 func (x *Picture) SetAlternativeText(AlternativeTextVar *string) {
 
-	AlternativeTextVarPtr, AlternativeTextVarBytes := core.NullableStringToPtr(AlternativeTextVar)
+	AlternativeTextVarPtr := core.GStrdupNullable(AlternativeTextVar)
+	defer core.GFreeNullable(AlternativeTextVarPtr)
 
 	xPictureSetAlternativeText(x.GoPointer(), AlternativeTextVarPtr)
-
-	runtime.KeepAlive(AlternativeTextVarBytes)
 
 }
 
@@ -384,11 +376,10 @@ var xPictureSetFilename func(uintptr, uintptr)
 //	[method@Gtk.Image.set_from_paintable].
 func (x *Picture) SetFilename(FilenameVar *string) {
 
-	FilenameVarPtr, FilenameVarBytes := core.NullableStringToPtr(FilenameVar)
+	FilenameVarPtr := core.GStrdupNullable(FilenameVar)
+	defer core.GFreeNullable(FilenameVarPtr)
 
 	xPictureSetFilename(x.GoPointer(), FilenameVarPtr)
-
-	runtime.KeepAlive(FilenameVarBytes)
 
 }
 
@@ -442,11 +433,10 @@ var xPictureSetResource func(uintptr, uintptr)
 // This is a utility function that calls [method@Gtk.Picture.set_file].
 func (x *Picture) SetResource(ResourcePathVar *string) {
 
-	ResourcePathVarPtr, ResourcePathVarBytes := core.NullableStringToPtr(ResourcePathVar)
+	ResourcePathVarPtr := core.GStrdupNullable(ResourcePathVar)
+	defer core.GFreeNullable(ResourcePathVarPtr)
 
 	xPictureSetResource(x.GoPointer(), ResourcePathVarPtr)
-
-	runtime.KeepAlive(ResourcePathVarBytes)
 
 }
 
@@ -549,7 +539,6 @@ func (x *Picture) GetAccessibleParent() *AccessibleBase {
 func (x *Picture) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -575,7 +564,6 @@ func (x *Picture) GetAtContext() *ATContext {
 func (x *Picture) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -615,7 +603,6 @@ func (x *Picture) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Picture) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -792,7 +779,6 @@ func (x *Picture) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, 
 func (x *Picture) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

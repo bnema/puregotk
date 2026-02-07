@@ -183,7 +183,6 @@ func (x *ProxyResolverBase) SetGoPointer(ptr uintptr) {
 func (x *ProxyResolverBase) IsSupported() bool {
 
 	cret := XGProxyResolverIsSupported(x.GoPointer())
-
 	return cret
 }
 
@@ -206,7 +205,6 @@ func (x *ProxyResolverBase) Lookup(UriVar string, CancellableVar *Cancellable) (
 	var cerr *glib.Error
 
 	cret := XGProxyResolverLookup(x.GoPointer(), UriVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -229,7 +227,6 @@ func (x *ProxyResolverBase) LookupFinish(ResultVar AsyncResult) ([]string, error
 	var cerr *glib.Error
 
 	cret := XGProxyResolverLookupFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

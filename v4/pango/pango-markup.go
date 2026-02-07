@@ -19,7 +19,6 @@ func MarkupParserFinish(ContextVar *glib.MarkupParseContext, AttrListVar **AttrL
 	var cerr *glib.Error
 
 	cret := xMarkupParserFinish(ContextVar, AttrListVar, TextVar, AccelCharVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -54,7 +53,6 @@ var xMarkupParserNew func(uint32) *glib.MarkupParseContext
 func MarkupParserNew(AccelMarkerVar uint32) *glib.MarkupParseContext {
 
 	cret := xMarkupParserNew(AccelMarkerVar)
-
 	return cret
 }
 
@@ -81,7 +79,6 @@ func ParseMarkup(MarkupTextVar string, LengthVar int, AccelMarkerVar uint32, Att
 	var cerr *glib.Error
 
 	cret := xParseMarkup(MarkupTextVar, LengthVar, AccelMarkerVar, AttrListVar, TextVar, AccelCharVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

@@ -39,8 +39,7 @@ type CallbackParam struct {
 }
 
 // NullableStringParam holds metadata for nullable string parameters that need
-// runtime.KeepAlive to prevent GC from collecting the backing memory before
-// the C function returns.
+// temporary C-owned string allocation with g_strdup/g_free.
 type NullableStringParam struct {
 	// Name is the parameter name (e.g., "DataDirectoryVar")
 	Name string
@@ -57,7 +56,7 @@ type funcArgsTemplate struct {
 	// Callbacks tracks callback parameters for proper closure generation
 	Callbacks []CallbackParam
 
-	// NullableStrings tracks nullable string parameters that need runtime.KeepAlive
+	// NullableStrings tracks nullable string parameters that need temporary C strings
 	NullableStrings []NullableStringParam
 
 	// UsesNullableHelper indicates nullable string handling that needs core import.
@@ -180,13 +179,14 @@ func (f *funcArgsTemplate) AddAPI(t string, n string, k Kind, ns string, nullabl
 			}
 		} else if ctx == ArgsFromGoToC && nullable && isStringType(t) {
 			// Nullable strings differ based on direction. For Go->C we need a *string API type
-			// and pass a pointer (or nil) to C. For C->Go we keep the string as-is.
-			// We track these parameters for runtime.KeepAlive to prevent GC issues.
+			// and pass a nullable C pointer to C. For C->Go we keep the string as-is.
+			// We track these parameters so templates can allocate/free a temporary
+			// C-owned copy via g_strdup/g_free around each call.
 			f.UsesNullableHelper = true
 			t = "*string"
 			c = fmt.Sprintf("%sPtr", n)
 			cRef = c
-			// Track this parameter for keepalive generation
+			// Track this parameter for temp C allocation/free generation
 			f.NullableStrings = append(f.NullableStrings, NullableStringParam{Name: n})
 		}
 

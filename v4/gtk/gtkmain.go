@@ -61,7 +61,6 @@ var xGetDefaultLanguage func() *pango.Language
 func GetDefaultLanguage() *pango.Language {
 
 	cret := xGetDefaultLanguage()
-
 	return cret
 }
 
@@ -98,7 +97,6 @@ var xGetLocaleDirection func() TextDirection
 func GetLocaleDirection() TextDirection {
 
 	cret := xGetLocaleDirection()
-
 	return cret
 }
 
@@ -146,7 +144,6 @@ var xInitCheck func() bool
 func InitCheck() bool {
 
 	cret := xInitCheck()
-
 	return cret
 }
 
@@ -158,7 +155,6 @@ var xIsInitialized func() bool
 func IsInitialized() bool {
 
 	cret := xIsInitialized()
-
 	return cret
 }
 

@@ -153,7 +153,6 @@ var xTreeExpanderGetHideExpander func(uintptr) bool
 func (x *TreeExpander) GetHideExpander() bool {
 
 	cret := xTreeExpanderGetHideExpander(x.GoPointer())
-
 	return cret
 }
 
@@ -163,7 +162,6 @@ var xTreeExpanderGetIndentForDepth func(uintptr) bool
 func (x *TreeExpander) GetIndentForDepth() bool {
 
 	cret := xTreeExpanderGetIndentForDepth(x.GoPointer())
-
 	return cret
 }
 
@@ -173,7 +171,6 @@ var xTreeExpanderGetIndentForIcon func(uintptr) bool
 func (x *TreeExpander) GetIndentForIcon() bool {
 
 	cret := xTreeExpanderGetIndentForIcon(x.GoPointer())
-
 	return cret
 }
 
@@ -368,7 +365,6 @@ func (x *TreeExpander) GetAccessibleParent() *AccessibleBase {
 func (x *TreeExpander) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -394,7 +390,6 @@ func (x *TreeExpander) GetAtContext() *ATContext {
 func (x *TreeExpander) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -434,7 +429,6 @@ func (x *TreeExpander) GetNextAccessibleSibling() *AccessibleBase {
 func (x *TreeExpander) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -611,7 +605,6 @@ func (x *TreeExpander) UpdateStateValue(NStatesVar int, StatesVar []AccessibleSt
 func (x *TreeExpander) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

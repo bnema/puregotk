@@ -2,7 +2,6 @@
 package glib
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -177,7 +176,6 @@ var xNewKeyFile func() *KeyFile
 func NewKeyFile() *KeyFile {
 
 	cret := xNewKeyFile()
-
 	return cret
 }
 
@@ -206,7 +204,6 @@ func (x *KeyFile) GetBoolean(GroupNameVar string, KeyVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xKeyFileGetBoolean(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -226,7 +223,6 @@ func (x *KeyFile) GetBooleanList(GroupNameVar string, KeyVar string, LengthVar *
 	var cerr *Error
 
 	cret := xKeyFileGetBooleanList(x.GoPointer(), GroupNameVar, KeyVar, LengthVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -248,16 +244,13 @@ var xKeyFileGetComment func(uintptr, uintptr, uintptr, **Error) string
 func (x *KeyFile) GetComment(GroupNameVar *string, KeyVar *string) (string, error) {
 	var cerr *Error
 
-	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
 
-	KeyVarPtr, KeyVarBytes := core.NullableStringToPtr(KeyVar)
+	KeyVarPtr := core.GStrdupNullable(KeyVar)
+	defer core.GFreeNullable(KeyVarPtr)
 
 	cret := xKeyFileGetComment(x.GoPointer(), GroupNameVarPtr, KeyVarPtr, &cerr)
-
-	runtime.KeepAlive(GroupNameVarBytes)
-
-	runtime.KeepAlive(KeyVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -276,7 +269,6 @@ func (x *KeyFile) GetDouble(GroupNameVar string, KeyVar string) (float64, error)
 	var cerr *Error
 
 	cret := xKeyFileGetDouble(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -296,7 +288,6 @@ func (x *KeyFile) GetDoubleList(GroupNameVar string, KeyVar string, LengthVar *u
 	var cerr *Error
 
 	cret := xKeyFileGetDoubleList(x.GoPointer(), GroupNameVar, KeyVar, LengthVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -313,7 +304,6 @@ var xKeyFileGetGroups func(uintptr, *uint) []string
 func (x *KeyFile) GetGroups(LengthVar *uint) []string {
 
 	cret := xKeyFileGetGroups(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -328,7 +318,6 @@ func (x *KeyFile) GetInt64(GroupNameVar string, KeyVar string) (int64, error) {
 	var cerr *Error
 
 	cret := xKeyFileGetInt64(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -349,7 +338,6 @@ func (x *KeyFile) GetInteger(GroupNameVar string, KeyVar string) (int, error) {
 	var cerr *Error
 
 	cret := xKeyFileGetInteger(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -370,7 +358,6 @@ func (x *KeyFile) GetIntegerList(GroupNameVar string, KeyVar string, LengthVar *
 	var cerr *Error
 
 	cret := xKeyFileGetIntegerList(x.GoPointer(), GroupNameVar, KeyVar, LengthVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -389,7 +376,6 @@ func (x *KeyFile) GetKeys(GroupNameVar string, LengthVar *uint) ([]string, error
 	var cerr *Error
 
 	cret := xKeyFileGetKeys(x.GoPointer(), GroupNameVar, LengthVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -410,12 +396,10 @@ var xKeyFileGetLocaleForKey func(uintptr, string, string, uintptr) string
 // this function.
 func (x *KeyFile) GetLocaleForKey(GroupNameVar string, KeyVar string, LocaleVar *string) string {
 
-	LocaleVarPtr, LocaleVarBytes := core.NullableStringToPtr(LocaleVar)
+	LocaleVarPtr := core.GStrdupNullable(LocaleVar)
+	defer core.GFreeNullable(LocaleVarPtr)
 
 	cret := xKeyFileGetLocaleForKey(x.GoPointer(), GroupNameVar, KeyVar, LocaleVarPtr)
-
-	runtime.KeepAlive(LocaleVarBytes)
-
 	return cret
 }
 
@@ -440,12 +424,10 @@ var xKeyFileGetLocaleString func(uintptr, string, string, uintptr, **Error) stri
 func (x *KeyFile) GetLocaleString(GroupNameVar string, KeyVar string, LocaleVar *string) (string, error) {
 	var cerr *Error
 
-	LocaleVarPtr, LocaleVarBytes := core.NullableStringToPtr(LocaleVar)
+	LocaleVarPtr := core.GStrdupNullable(LocaleVar)
+	defer core.GFreeNullable(LocaleVarPtr)
 
 	cret := xKeyFileGetLocaleString(x.GoPointer(), GroupNameVar, KeyVar, LocaleVarPtr, &cerr)
-
-	runtime.KeepAlive(LocaleVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -476,12 +458,10 @@ var xKeyFileGetLocaleStringList func(uintptr, string, string, uintptr, *uint, **
 func (x *KeyFile) GetLocaleStringList(GroupNameVar string, KeyVar string, LocaleVar *string, LengthVar *uint) ([]string, error) {
 	var cerr *Error
 
-	LocaleVarPtr, LocaleVarBytes := core.NullableStringToPtr(LocaleVar)
+	LocaleVarPtr := core.GStrdupNullable(LocaleVar)
+	defer core.GFreeNullable(LocaleVarPtr)
 
 	cret := xKeyFileGetLocaleStringList(x.GoPointer(), GroupNameVar, KeyVar, LocaleVarPtr, LengthVar, &cerr)
-
-	runtime.KeepAlive(LocaleVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -495,7 +475,6 @@ var xKeyFileGetStartGroup func(uintptr) string
 func (x *KeyFile) GetStartGroup() string {
 
 	cret := xKeyFileGetStartGroup(x.GoPointer())
-
 	return cret
 }
 
@@ -513,7 +492,6 @@ func (x *KeyFile) GetString(GroupNameVar string, KeyVar string) (string, error) 
 	var cerr *Error
 
 	cret := xKeyFileGetString(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -532,7 +510,6 @@ func (x *KeyFile) GetStringList(GroupNameVar string, KeyVar string, LengthVar *u
 	var cerr *Error
 
 	cret := xKeyFileGetStringList(x.GoPointer(), GroupNameVar, KeyVar, LengthVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -551,7 +528,6 @@ func (x *KeyFile) GetUint64(GroupNameVar string, KeyVar string) (uint64, error) 
 	var cerr *Error
 
 	cret := xKeyFileGetUint64(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -572,7 +548,6 @@ func (x *KeyFile) GetValue(GroupNameVar string, KeyVar string) (string, error) {
 	var cerr *Error
 
 	cret := xKeyFileGetValue(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -586,7 +561,6 @@ var xKeyFileHasGroup func(uintptr, string) bool
 func (x *KeyFile) HasGroup(GroupNameVar string) bool {
 
 	cret := xKeyFileHasGroup(x.GoPointer(), GroupNameVar)
-
 	return cret
 }
 
@@ -607,7 +581,6 @@ func (x *KeyFile) HasKey(GroupNameVar string, KeyVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xKeyFileHasKey(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -625,7 +598,6 @@ func (x *KeyFile) LoadFromBytes(BytesVar *Bytes, FlagsVar KeyFileFlags) (bool, e
 	var cerr *Error
 
 	cret := xKeyFileLoadFromBytes(x.GoPointer(), BytesVar, FlagsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -642,7 +614,6 @@ func (x *KeyFile) LoadFromData(DataVar string, LengthVar uint, FlagsVar KeyFileF
 	var cerr *Error
 
 	cret := xKeyFileLoadFromData(x.GoPointer(), DataVar, LengthVar, FlagsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -665,7 +636,6 @@ func (x *KeyFile) LoadFromDataDirs(FileVar string, FullPathVar *string, FlagsVar
 	var cerr *Error
 
 	cret := xKeyFileLoadFromDataDirs(x.GoPointer(), FileVar, FullPathVar, FlagsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -694,7 +664,6 @@ func (x *KeyFile) LoadFromDirs(FileVar string, SearchDirsVar []string, FullPathV
 	var cerr *Error
 
 	cret := xKeyFileLoadFromDirs(x.GoPointer(), FileVar, SearchDirsVar, FullPathVar, FlagsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -716,7 +685,6 @@ func (x *KeyFile) LoadFromFile(FileVar string, FlagsVar KeyFileFlags) (bool, err
 	var cerr *Error
 
 	cret := xKeyFileLoadFromFile(x.GoPointer(), FileVar, FlagsVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -730,7 +698,6 @@ var xKeyFileRef func(uintptr) *KeyFile
 func (x *KeyFile) Ref() *KeyFile {
 
 	cret := xKeyFileRef(x.GoPointer())
-
 	return cret
 }
 
@@ -744,16 +711,13 @@ var xKeyFileRemoveComment func(uintptr, uintptr, uintptr, **Error) bool
 func (x *KeyFile) RemoveComment(GroupNameVar *string, KeyVar *string) (bool, error) {
 	var cerr *Error
 
-	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
 
-	KeyVarPtr, KeyVarBytes := core.NullableStringToPtr(KeyVar)
+	KeyVarPtr := core.GStrdupNullable(KeyVar)
+	defer core.GFreeNullable(KeyVarPtr)
 
 	cret := xKeyFileRemoveComment(x.GoPointer(), GroupNameVarPtr, KeyVarPtr, &cerr)
-
-	runtime.KeepAlive(GroupNameVarBytes)
-
-	runtime.KeepAlive(KeyVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -769,7 +733,6 @@ func (x *KeyFile) RemoveGroup(GroupNameVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xKeyFileRemoveGroup(x.GoPointer(), GroupNameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -784,7 +747,6 @@ func (x *KeyFile) RemoveKey(GroupNameVar string, KeyVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xKeyFileRemoveKey(x.GoPointer(), GroupNameVar, KeyVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -808,7 +770,6 @@ func (x *KeyFile) SaveToFile(FilenameVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xKeyFileSaveToFile(x.GoPointer(), FilenameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -856,16 +817,13 @@ var xKeyFileSetComment func(uintptr, uintptr, uintptr, string, **Error) bool
 func (x *KeyFile) SetComment(GroupNameVar *string, KeyVar *string, CommentVar string) (bool, error) {
 	var cerr *Error
 
-	GroupNameVarPtr, GroupNameVarBytes := core.NullableStringToPtr(GroupNameVar)
+	GroupNameVarPtr := core.GStrdupNullable(GroupNameVar)
+	defer core.GFreeNullable(GroupNameVarPtr)
 
-	KeyVarPtr, KeyVarBytes := core.NullableStringToPtr(KeyVar)
+	KeyVarPtr := core.GStrdupNullable(KeyVar)
+	defer core.GFreeNullable(KeyVarPtr)
 
 	cret := xKeyFileSetComment(x.GoPointer(), GroupNameVarPtr, KeyVarPtr, CommentVar, &cerr)
-
-	runtime.KeepAlive(GroupNameVarBytes)
-
-	runtime.KeepAlive(KeyVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1027,7 +985,6 @@ func (x *KeyFile) ToData(LengthVar *uint) (string, error) {
 	var cerr *Error
 
 	cret := xKeyFileToData(x.GoPointer(), LengthVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

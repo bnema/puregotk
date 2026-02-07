@@ -411,7 +411,6 @@ var xMenuAttributeIterGetName func(uintptr) string
 func (x *MenuAttributeIter) GetName() string {
 
 	cret := xMenuAttributeIterGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -435,7 +434,6 @@ var xMenuAttributeIterGetNext func(uintptr, *string, **glib.Variant) bool
 func (x *MenuAttributeIter) GetNext(OutNameVar *string, ValueVar **glib.Variant) bool {
 
 	cret := xMenuAttributeIterGetNext(x.GoPointer(), OutNameVar, ValueVar)
-
 	return cret
 }
 
@@ -447,7 +445,6 @@ var xMenuAttributeIterGetValue func(uintptr) *glib.Variant
 func (x *MenuAttributeIter) GetValue() *glib.Variant {
 
 	cret := xMenuAttributeIterGetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -465,7 +462,6 @@ var xMenuAttributeIterNext func(uintptr) bool
 func (x *MenuAttributeIter) Next() bool {
 
 	cret := xMenuAttributeIterNext(x.GoPointer())
-
 	return cret
 }
 
@@ -506,7 +502,6 @@ var xMenuLinkIterGetName func(uintptr) string
 func (x *MenuLinkIter) GetName() string {
 
 	cret := xMenuLinkIterGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -529,7 +524,6 @@ var xMenuLinkIterGetNext func(uintptr, *string, **MenuModel) bool
 func (x *MenuLinkIter) GetNext(OutLinkVar *string, ValueVar **MenuModel) bool {
 
 	cret := xMenuLinkIterGetNext(x.GoPointer(), OutLinkVar, ValueVar)
-
 	return cret
 }
 
@@ -564,7 +558,6 @@ var xMenuLinkIterNext func(uintptr) bool
 func (x *MenuLinkIter) Next() bool {
 
 	cret := xMenuLinkIterNext(x.GoPointer())
-
 	return cret
 }
 
@@ -737,7 +730,6 @@ var xMenuModelGetItemAttribute func(uintptr, int, string, string, ...interface{}
 func (x *MenuModel) GetItemAttribute(ItemIndexVar int, AttributeVar string, FormatStringVar string, varArgs ...interface{}) bool {
 
 	cret := xMenuModelGetItemAttribute(x.GoPointer(), ItemIndexVar, AttributeVar, FormatStringVar, varArgs...)
-
 	return cret
 }
 
@@ -757,7 +749,6 @@ var xMenuModelGetItemAttributeValue func(uintptr, int, string, *glib.VariantType
 func (x *MenuModel) GetItemAttributeValue(ItemIndexVar int, AttributeVar string, ExpectedTypeVar *glib.VariantType) *glib.Variant {
 
 	cret := xMenuModelGetItemAttributeValue(x.GoPointer(), ItemIndexVar, AttributeVar, ExpectedTypeVar)
-
 	return cret
 }
 
@@ -787,7 +778,6 @@ var xMenuModelGetNItems func(uintptr) int
 func (x *MenuModel) GetNItems() int {
 
 	cret := xMenuModelGetNItems(x.GoPointer())
-
 	return cret
 }
 
@@ -800,7 +790,6 @@ var xMenuModelIsMutable func(uintptr) bool
 func (x *MenuModel) IsMutable() bool {
 
 	cret := xMenuModelIsMutable(x.GoPointer())
-
 	return cret
 }
 

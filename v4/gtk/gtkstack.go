@@ -2,8 +2,6 @@
 package gtk
 
 import (
-	"runtime"
-
 	"github.com/jwijenbergh/purego"
 	"github.com/jwijenbergh/puregotk/pkg/core"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
@@ -184,11 +182,10 @@ var xStackAddNamed func(uintptr, uintptr, uintptr) uintptr
 func (x *Stack) AddNamed(ChildVar *Widget, NameVar *string) *StackPage {
 	var cls *StackPage
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	cret := xStackAddNamed(x.GoPointer(), ChildVar.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -209,11 +206,10 @@ var xStackAddTitled func(uintptr, uintptr, uintptr, string) uintptr
 func (x *Stack) AddTitled(ChildVar *Widget, NameVar *string, TitleVar string) *StackPage {
 	var cls *StackPage
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	cret := xStackAddTitled(x.GoPointer(), ChildVar.GoPointer(), NameVarPtr, TitleVar)
-
-	runtime.KeepAlive(NameVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -249,7 +245,6 @@ var xStackGetHhomogeneous func(uintptr) bool
 func (x *Stack) GetHhomogeneous() bool {
 
 	cret := xStackGetHhomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -260,7 +255,6 @@ var xStackGetInterpolateSize func(uintptr) bool
 func (x *Stack) GetInterpolateSize() bool {
 
 	cret := xStackGetInterpolateSize(x.GoPointer())
-
 	return cret
 }
 
@@ -308,7 +302,6 @@ var xStackGetTransitionDuration func(uintptr) uint
 func (x *Stack) GetTransitionDuration() uint {
 
 	cret := xStackGetTransitionDuration(x.GoPointer())
-
 	return cret
 }
 
@@ -319,7 +312,6 @@ var xStackGetTransitionRunning func(uintptr) bool
 func (x *Stack) GetTransitionRunning() bool {
 
 	cret := xStackGetTransitionRunning(x.GoPointer())
-
 	return cret
 }
 
@@ -330,7 +322,6 @@ var xStackGetTransitionType func(uintptr) StackTransitionType
 func (x *Stack) GetTransitionType() StackTransitionType {
 
 	cret := xStackGetTransitionType(x.GoPointer())
-
 	return cret
 }
 
@@ -340,7 +331,6 @@ var xStackGetVhomogeneous func(uintptr) bool
 func (x *Stack) GetVhomogeneous() bool {
 
 	cret := xStackGetVhomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -371,7 +361,6 @@ var xStackGetVisibleChildName func(uintptr) string
 func (x *Stack) GetVisibleChildName() string {
 
 	cret := xStackGetVisibleChildName(x.GoPointer())
-
 	return cret
 }
 
@@ -637,7 +626,6 @@ func (x *Stack) GetAccessibleParent() *AccessibleBase {
 func (x *Stack) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -663,7 +651,6 @@ func (x *Stack) GetAtContext() *ATContext {
 func (x *Stack) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -703,7 +690,6 @@ func (x *Stack) GetNextAccessibleSibling() *AccessibleBase {
 func (x *Stack) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -880,7 +866,6 @@ func (x *Stack) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, Va
 func (x *Stack) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -924,7 +909,6 @@ var xStackPageGetIconName func(uintptr) string
 func (x *StackPage) GetIconName() string {
 
 	cret := xStackPageGetIconName(x.GoPointer())
-
 	return cret
 }
 
@@ -934,7 +918,6 @@ var xStackPageGetName func(uintptr) string
 func (x *StackPage) GetName() string {
 
 	cret := xStackPageGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -944,7 +927,6 @@ var xStackPageGetNeedsAttention func(uintptr) bool
 func (x *StackPage) GetNeedsAttention() bool {
 
 	cret := xStackPageGetNeedsAttention(x.GoPointer())
-
 	return cret
 }
 
@@ -954,7 +936,6 @@ var xStackPageGetTitle func(uintptr) string
 func (x *StackPage) GetTitle() string {
 
 	cret := xStackPageGetTitle(x.GoPointer())
-
 	return cret
 }
 
@@ -964,7 +945,6 @@ var xStackPageGetUseUnderline func(uintptr) bool
 func (x *StackPage) GetUseUnderline() bool {
 
 	cret := xStackPageGetUseUnderline(x.GoPointer())
-
 	return cret
 }
 
@@ -977,7 +957,6 @@ var xStackPageGetVisible func(uintptr) bool
 func (x *StackPage) GetVisible() bool {
 
 	cret := xStackPageGetVisible(x.GoPointer())
-
 	return cret
 }
 
@@ -1191,7 +1170,6 @@ func (x *StackPage) GetAccessibleParent() *AccessibleBase {
 func (x *StackPage) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -1217,7 +1195,6 @@ func (x *StackPage) GetAtContext() *ATContext {
 func (x *StackPage) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -1257,7 +1234,6 @@ func (x *StackPage) GetNextAccessibleSibling() *AccessibleBase {
 func (x *StackPage) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 

@@ -33,7 +33,6 @@ var xAsyncQueueLength func(uintptr) int
 func (x *AsyncQueue) Length() int {
 
 	cret := xAsyncQueueLength(x.GoPointer())
-
 	return cret
 }
 
@@ -52,7 +51,6 @@ var xAsyncQueueLengthUnlocked func(uintptr) int
 func (x *AsyncQueue) LengthUnlocked() int {
 
 	cret := xAsyncQueueLengthUnlocked(x.GoPointer())
-
 	return cret
 }
 
@@ -80,7 +78,6 @@ var xAsyncQueuePop func(uintptr) uintptr
 func (x *AsyncQueue) Pop() uintptr {
 
 	cret := xAsyncQueuePop(x.GoPointer())
-
 	return cret
 }
 
@@ -93,7 +90,6 @@ var xAsyncQueuePopUnlocked func(uintptr) uintptr
 func (x *AsyncQueue) PopUnlocked() uintptr {
 
 	cret := xAsyncQueuePopUnlocked(x.GoPointer())
-
 	return cret
 }
 
@@ -225,7 +221,6 @@ var xAsyncQueueRef func(uintptr) *AsyncQueue
 func (x *AsyncQueue) Ref() *AsyncQueue {
 
 	cret := xAsyncQueueRef(x.GoPointer())
-
 	return cret
 }
 
@@ -244,7 +239,6 @@ var xAsyncQueueRemove func(uintptr, uintptr) bool
 func (x *AsyncQueue) Remove(ItemVar uintptr) bool {
 
 	cret := xAsyncQueueRemove(x.GoPointer(), ItemVar)
-
 	return cret
 }
 
@@ -256,7 +250,6 @@ var xAsyncQueueRemoveUnlocked func(uintptr, uintptr) bool
 func (x *AsyncQueue) RemoveUnlocked(ItemVar uintptr) bool {
 
 	cret := xAsyncQueueRemoveUnlocked(x.GoPointer(), ItemVar)
-
 	return cret
 }
 
@@ -351,7 +344,6 @@ var xAsyncQueueTimedPop func(uintptr, *TimeVal) uintptr
 func (x *AsyncQueue) TimedPop(EndTimeVar *TimeVal) uintptr {
 
 	cret := xAsyncQueueTimedPop(x.GoPointer(), EndTimeVar)
-
 	return cret
 }
 
@@ -369,7 +361,6 @@ var xAsyncQueueTimedPopUnlocked func(uintptr, *TimeVal) uintptr
 func (x *AsyncQueue) TimedPopUnlocked(EndTimeVar *TimeVal) uintptr {
 
 	cret := xAsyncQueueTimedPopUnlocked(x.GoPointer(), EndTimeVar)
-
 	return cret
 }
 
@@ -382,7 +373,6 @@ var xAsyncQueueTimeoutPop func(uintptr, uint64) uintptr
 func (x *AsyncQueue) TimeoutPop(TimeoutVar uint64) uintptr {
 
 	cret := xAsyncQueueTimeoutPop(x.GoPointer(), TimeoutVar)
-
 	return cret
 }
 
@@ -397,7 +387,6 @@ var xAsyncQueueTimeoutPopUnlocked func(uintptr, uint64) uintptr
 func (x *AsyncQueue) TimeoutPopUnlocked(TimeoutVar uint64) uintptr {
 
 	cret := xAsyncQueueTimeoutPopUnlocked(x.GoPointer(), TimeoutVar)
-
 	return cret
 }
 
@@ -408,7 +397,6 @@ var xAsyncQueueTryPop func(uintptr) uintptr
 func (x *AsyncQueue) TryPop() uintptr {
 
 	cret := xAsyncQueueTryPop(x.GoPointer())
-
 	return cret
 }
 
@@ -421,7 +409,6 @@ var xAsyncQueueTryPopUnlocked func(uintptr) uintptr
 func (x *AsyncQueue) TryPopUnlocked() uintptr {
 
 	cret := xAsyncQueueTryPopUnlocked(x.GoPointer())
-
 	return cret
 }
 
@@ -470,7 +457,6 @@ var xAsyncQueueNew func() *AsyncQueue
 func AsyncQueueNew() *AsyncQueue {
 
 	cret := xAsyncQueueNew()
-
 	return cret
 }
 
@@ -497,7 +483,6 @@ func AsyncQueueNewFull(ItemFreeFuncVar *DestroyNotify) *AsyncQueue {
 	}
 
 	cret := xAsyncQueueNewFull(ItemFreeFuncVarRef)
-
 	return cret
 }
 

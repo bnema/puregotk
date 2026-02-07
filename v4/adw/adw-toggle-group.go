@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -93,7 +92,6 @@ var xToggleGetEnabled func(uintptr) bool
 func (x *Toggle) GetEnabled() bool {
 
 	cret := xToggleGetEnabled(x.GoPointer())
-
 	return cret
 }
 
@@ -103,7 +101,6 @@ var xToggleGetIconName func(uintptr) string
 func (x *Toggle) GetIconName() string {
 
 	cret := xToggleGetIconName(x.GoPointer())
-
 	return cret
 }
 
@@ -113,7 +110,6 @@ var xToggleGetIndex func(uintptr) uint
 func (x *Toggle) GetIndex() uint {
 
 	cret := xToggleGetIndex(x.GoPointer())
-
 	return cret
 }
 
@@ -123,7 +119,6 @@ var xToggleGetLabel func(uintptr) string
 func (x *Toggle) GetLabel() string {
 
 	cret := xToggleGetLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -133,7 +128,6 @@ var xToggleGetName func(uintptr) string
 func (x *Toggle) GetName() string {
 
 	cret := xToggleGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -143,7 +137,6 @@ var xToggleGetTooltip func(uintptr) string
 func (x *Toggle) GetTooltip() string {
 
 	cret := xToggleGetTooltip(x.GoPointer())
-
 	return cret
 }
 
@@ -153,7 +146,6 @@ var xToggleGetUseUnderline func(uintptr) bool
 func (x *Toggle) GetUseUnderline() bool {
 
 	cret := xToggleGetUseUnderline(x.GoPointer())
-
 	return cret
 }
 
@@ -188,11 +180,10 @@ var xToggleSetIconName func(uintptr, uintptr)
 // [property@Toggle:child] is set.
 func (x *Toggle) SetIconName(IconNameVar *string) {
 
-	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
 
 	xToggleSetIconName(x.GoPointer(), IconNameVarPtr)
-
-	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -205,11 +196,10 @@ var xToggleSetLabel func(uintptr, uintptr)
 // reader.
 func (x *Toggle) SetLabel(LabelVar *string) {
 
-	LabelVarPtr, LabelVarBytes := core.NullableStringToPtr(LabelVar)
+	LabelVarPtr := core.GStrdupNullable(LabelVar)
+	defer core.GFreeNullable(LabelVarPtr)
 
 	xToggleSetLabel(x.GoPointer(), LabelVarPtr)
-
-	runtime.KeepAlive(LabelVarBytes)
 
 }
 
@@ -222,11 +212,10 @@ var xToggleSetName func(uintptr, uintptr)
 // See [property@ToggleGroup:active-name].
 func (x *Toggle) SetName(NameVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xToggleSetName(x.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -551,7 +540,6 @@ var xToggleGroupGetActive func(uintptr) uint
 func (x *ToggleGroup) GetActive() uint {
 
 	cret := xToggleGroupGetActive(x.GoPointer())
-
 	return cret
 }
 
@@ -565,7 +553,6 @@ var xToggleGroupGetActiveName func(uintptr) string
 func (x *ToggleGroup) GetActiveName() string {
 
 	cret := xToggleGroupGetActiveName(x.GoPointer())
-
 	return cret
 }
 
@@ -576,7 +563,6 @@ var xToggleGroupGetCanShrink func(uintptr) bool
 func (x *ToggleGroup) GetCanShrink() bool {
 
 	cret := xToggleGroupGetCanShrink(x.GoPointer())
-
 	return cret
 }
 
@@ -586,7 +572,6 @@ var xToggleGroupGetHomogeneous func(uintptr) bool
 func (x *ToggleGroup) GetHomogeneous() bool {
 
 	cret := xToggleGroupGetHomogeneous(x.GoPointer())
-
 	return cret
 }
 
@@ -596,7 +581,6 @@ var xToggleGroupGetNToggles func(uintptr) uint
 func (x *ToggleGroup) GetNToggles() uint {
 
 	cret := xToggleGroupGetNToggles(x.GoPointer())
-
 	return cret
 }
 
@@ -693,11 +677,10 @@ var xToggleGroupSetActiveName func(uintptr, uintptr)
 // If @name is `NULL`, unset the current active toggle instead.
 func (x *ToggleGroup) SetActiveName(NameVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xToggleGroupSetActiveName(x.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 
@@ -876,7 +859,6 @@ func (x *ToggleGroup) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ToggleGroup) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -902,7 +884,6 @@ func (x *ToggleGroup) GetAtContext() *gtk.ATContext {
 func (x *ToggleGroup) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -942,7 +923,6 @@ func (x *ToggleGroup) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ToggleGroup) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1119,7 +1099,6 @@ func (x *ToggleGroup) UpdateStateValue(NStatesVar int, StatesVar []gtk.Accessibl
 func (x *ToggleGroup) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -1127,7 +1106,6 @@ func (x *ToggleGroup) GetBuildableId() string {
 func (x *ToggleGroup) GetOrientation() gtk.Orientation {
 
 	cret := gtk.XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

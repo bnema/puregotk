@@ -188,7 +188,6 @@ var xWindowGroupListWindows func(uintptr) *glib.List
 func (x *WindowGroup) ListWindows() *glib.List {
 
 	cret := xWindowGroupListWindows(x.GoPointer())
-
 	return cret
 }
 

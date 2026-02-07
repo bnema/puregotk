@@ -2,7 +2,6 @@
 package gio
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -467,7 +466,6 @@ var xMountOperationGetAnonymous func(uintptr) bool
 func (x *MountOperation) GetAnonymous() bool {
 
 	cret := xMountOperationGetAnonymous(x.GoPointer())
-
 	return cret
 }
 
@@ -477,7 +475,6 @@ var xMountOperationGetChoice func(uintptr) int
 func (x *MountOperation) GetChoice() int {
 
 	cret := xMountOperationGetChoice(x.GoPointer())
-
 	return cret
 }
 
@@ -487,7 +484,6 @@ var xMountOperationGetDomain func(uintptr) string
 func (x *MountOperation) GetDomain() string {
 
 	cret := xMountOperationGetDomain(x.GoPointer())
-
 	return cret
 }
 
@@ -498,7 +494,6 @@ var xMountOperationGetIsTcryptHiddenVolume func(uintptr) bool
 func (x *MountOperation) GetIsTcryptHiddenVolume() bool {
 
 	cret := xMountOperationGetIsTcryptHiddenVolume(x.GoPointer())
-
 	return cret
 }
 
@@ -509,7 +504,6 @@ var xMountOperationGetIsTcryptSystemVolume func(uintptr) bool
 func (x *MountOperation) GetIsTcryptSystemVolume() bool {
 
 	cret := xMountOperationGetIsTcryptSystemVolume(x.GoPointer())
-
 	return cret
 }
 
@@ -519,7 +513,6 @@ var xMountOperationGetPassword func(uintptr) string
 func (x *MountOperation) GetPassword() string {
 
 	cret := xMountOperationGetPassword(x.GoPointer())
-
 	return cret
 }
 
@@ -529,7 +522,6 @@ var xMountOperationGetPasswordSave func(uintptr) PasswordSave
 func (x *MountOperation) GetPasswordSave() PasswordSave {
 
 	cret := xMountOperationGetPasswordSave(x.GoPointer())
-
 	return cret
 }
 
@@ -539,7 +531,6 @@ var xMountOperationGetPim func(uintptr) uint
 func (x *MountOperation) GetPim() uint {
 
 	cret := xMountOperationGetPim(x.GoPointer())
-
 	return cret
 }
 
@@ -549,7 +540,6 @@ var xMountOperationGetUsername func(uintptr) string
 func (x *MountOperation) GetUsername() string {
 
 	cret := xMountOperationGetUsername(x.GoPointer())
-
 	return cret
 }
 
@@ -585,11 +575,10 @@ var xMountOperationSetDomain func(uintptr, uintptr)
 // Sets the mount operation's domain.
 func (x *MountOperation) SetDomain(DomainVar *string) {
 
-	DomainVarPtr, DomainVarBytes := core.NullableStringToPtr(DomainVar)
+	DomainVarPtr := core.GStrdupNullable(DomainVar)
+	defer core.GFreeNullable(DomainVarPtr)
 
 	xMountOperationSetDomain(x.GoPointer(), DomainVarPtr)
-
-	runtime.KeepAlive(DomainVarBytes)
 
 }
 
@@ -616,11 +605,10 @@ var xMountOperationSetPassword func(uintptr, uintptr)
 // Sets the mount operation's password to @password.
 func (x *MountOperation) SetPassword(PasswordVar *string) {
 
-	PasswordVarPtr, PasswordVarBytes := core.NullableStringToPtr(PasswordVar)
+	PasswordVarPtr := core.GStrdupNullable(PasswordVar)
+	defer core.GFreeNullable(PasswordVarPtr)
 
 	xMountOperationSetPassword(x.GoPointer(), PasswordVarPtr)
-
-	runtime.KeepAlive(PasswordVarBytes)
 
 }
 
@@ -647,11 +635,10 @@ var xMountOperationSetUsername func(uintptr, uintptr)
 // Sets the user name within @op to @username.
 func (x *MountOperation) SetUsername(UsernameVar *string) {
 
-	UsernameVarPtr, UsernameVarBytes := core.NullableStringToPtr(UsernameVar)
+	UsernameVarPtr := core.GStrdupNullable(UsernameVar)
+	defer core.GFreeNullable(UsernameVarPtr)
 
 	xMountOperationSetUsername(x.GoPointer(), UsernameVarPtr)
-
-	runtime.KeepAlive(UsernameVarBytes)
 
 }
 

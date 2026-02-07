@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -118,7 +117,6 @@ var xEntryRowGetActivatesDefault func(uintptr) bool
 func (x *EntryRow) GetActivatesDefault() bool {
 
 	cret := xEntryRowGetActivatesDefault(x.GoPointer())
-
 	return cret
 }
 
@@ -128,7 +126,6 @@ var xEntryRowGetAttributes func(uintptr) *pango.AttrList
 func (x *EntryRow) GetAttributes() *pango.AttrList {
 
 	cret := xEntryRowGetAttributes(x.GoPointer())
-
 	return cret
 }
 
@@ -138,7 +135,6 @@ var xEntryRowGetEnableEmojiCompletion func(uintptr) bool
 func (x *EntryRow) GetEnableEmojiCompletion() bool {
 
 	cret := xEntryRowGetEnableEmojiCompletion(x.GoPointer())
-
 	return cret
 }
 
@@ -148,7 +144,6 @@ var xEntryRowGetInputHints func(uintptr) gtk.InputHints
 func (x *EntryRow) GetInputHints() gtk.InputHints {
 
 	cret := xEntryRowGetInputHints(x.GoPointer())
-
 	return cret
 }
 
@@ -158,7 +153,6 @@ var xEntryRowGetInputPurpose func(uintptr) gtk.InputPurpose
 func (x *EntryRow) GetInputPurpose() gtk.InputPurpose {
 
 	cret := xEntryRowGetInputPurpose(x.GoPointer())
-
 	return cret
 }
 
@@ -168,7 +162,6 @@ var xEntryRowGetMaxLength func(uintptr) int
 func (x *EntryRow) GetMaxLength() int {
 
 	cret := xEntryRowGetMaxLength(x.GoPointer())
-
 	return cret
 }
 
@@ -178,7 +171,6 @@ var xEntryRowGetShowApplyButton func(uintptr) bool
 func (x *EntryRow) GetShowApplyButton() bool {
 
 	cret := xEntryRowGetShowApplyButton(x.GoPointer())
-
 	return cret
 }
 
@@ -188,7 +180,6 @@ var xEntryRowGetTextLength func(uintptr) uint
 func (x *EntryRow) GetTextLength() uint {
 
 	cret := xEntryRowGetTextLength(x.GoPointer())
-
 	return cret
 }
 
@@ -200,7 +191,6 @@ var xEntryRowGrabFocusWithoutSelecting func(uintptr) bool
 func (x *EntryRow) GrabFocusWithoutSelecting() bool {
 
 	cret := xEntryRowGrabFocusWithoutSelecting(x.GoPointer())
-
 	return cret
 }
 
@@ -510,7 +500,6 @@ func (x *EntryRow) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *EntryRow) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -536,7 +525,6 @@ func (x *EntryRow) GetAtContext() *gtk.ATContext {
 func (x *EntryRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -576,7 +564,6 @@ func (x *EntryRow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *EntryRow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -750,7 +737,6 @@ func (x *EntryRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleSt
 func (x *EntryRow) GetActionName() string {
 
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
-
 	return cret
 }
 
@@ -758,7 +744,6 @@ func (x *EntryRow) GetActionName() string {
 func (x *EntryRow) GetActionTargetValue() *glib.Variant {
 
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -777,11 +762,10 @@ func (x *EntryRow) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *EntryRow) SetActionName(ActionNameVar *string) {
 
-	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
 
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
-	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -842,7 +826,6 @@ func (x *EntryRow) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *EntryRow) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -885,7 +868,6 @@ func (x *EntryRow) GetBuildableId() string {
 func (x *EntryRow) DelegateGetAccessiblePlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -926,7 +908,6 @@ func (x *EntryRow) FinishDelegate() {
 func (x *EntryRow) GetAlignment() float32 {
 
 	cret := gtk.XGtkEditableGetAlignment(x.GoPointer())
-
 	return cret
 }
 
@@ -941,7 +922,6 @@ func (x *EntryRow) GetAlignment() float32 {
 func (x *EntryRow) GetChars(StartPosVar int, EndPosVar int) string {
 
 	cret := gtk.XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -967,7 +947,6 @@ func (x *EntryRow) GetDelegate() *gtk.EditableBase {
 func (x *EntryRow) GetEditable() bool {
 
 	cret := gtk.XGtkEditableGetEditable(x.GoPointer())
-
 	return cret
 }
 
@@ -975,7 +954,6 @@ func (x *EntryRow) GetEditable() bool {
 func (x *EntryRow) GetEnableUndo() bool {
 
 	cret := gtk.XGtkEditableGetEnableUndo(x.GoPointer())
-
 	return cret
 }
 
@@ -983,7 +961,6 @@ func (x *EntryRow) GetEnableUndo() bool {
 func (x *EntryRow) GetMaxWidthChars() int {
 
 	cret := gtk.XGtkEditableGetMaxWidthChars(x.GoPointer())
-
 	return cret
 }
 
@@ -994,7 +971,6 @@ func (x *EntryRow) GetMaxWidthChars() int {
 func (x *EntryRow) GetPosition() int {
 
 	cret := gtk.XGtkEditableGetPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -1008,7 +984,6 @@ func (x *EntryRow) GetPosition() int {
 func (x *EntryRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := gtk.XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -1018,7 +993,6 @@ func (x *EntryRow) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 func (x *EntryRow) GetText() string {
 
 	cret := gtk.XGtkEditableGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -1027,7 +1001,6 @@ func (x *EntryRow) GetText() string {
 func (x *EntryRow) GetWidthChars() int {
 
 	cret := gtk.XGtkEditableGetWidthChars(x.GoPointer())
-
 	return cret
 }
 

@@ -45,7 +45,6 @@ var xColumnViewRowGetAccessibleDescription func(uintptr) string
 func (x *ColumnViewRow) GetAccessibleDescription() string {
 
 	cret := xColumnViewRowGetAccessibleDescription(x.GoPointer())
-
 	return cret
 }
 
@@ -55,7 +54,6 @@ var xColumnViewRowGetAccessibleLabel func(uintptr) string
 func (x *ColumnViewRow) GetAccessibleLabel() string {
 
 	cret := xColumnViewRowGetAccessibleLabel(x.GoPointer())
-
 	return cret
 }
 
@@ -66,7 +64,6 @@ var xColumnViewRowGetActivatable func(uintptr) bool
 func (x *ColumnViewRow) GetActivatable() bool {
 
 	cret := xColumnViewRowGetActivatable(x.GoPointer())
-
 	return cret
 }
 
@@ -77,7 +74,6 @@ var xColumnViewRowGetFocusable func(uintptr) bool
 func (x *ColumnViewRow) GetFocusable() bool {
 
 	cret := xColumnViewRowGetFocusable(x.GoPointer())
-
 	return cret
 }
 
@@ -108,7 +104,6 @@ var xColumnViewRowGetPosition func(uintptr) uint
 func (x *ColumnViewRow) GetPosition() uint {
 
 	cret := xColumnViewRowGetPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -121,7 +116,6 @@ var xColumnViewRowGetSelectable func(uintptr) bool
 func (x *ColumnViewRow) GetSelectable() bool {
 
 	cret := xColumnViewRowGetSelectable(x.GoPointer())
-
 	return cret
 }
 
@@ -134,7 +128,6 @@ var xColumnViewRowGetSelected func(uintptr) bool
 func (x *ColumnViewRow) GetSelected() bool {
 
 	cret := xColumnViewRowGetSelected(x.GoPointer())
-
 	return cret
 }
 

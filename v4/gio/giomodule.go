@@ -63,7 +63,6 @@ var xIoExtensionPointImplement func(string, types.GType, string, int) *IOExtensi
 func IoExtensionPointImplement(ExtensionPointNameVar string, TypeVar types.GType, ExtensionNameVar string, PriorityVar int) *IOExtension {
 
 	cret := xIoExtensionPointImplement(ExtensionPointNameVar, TypeVar, ExtensionNameVar, PriorityVar)
-
 	return cret
 }
 
@@ -73,7 +72,6 @@ var xIoExtensionPointLookup func(string) *IOExtensionPoint
 func IoExtensionPointLookup(NameVar string) *IOExtensionPoint {
 
 	cret := xIoExtensionPointLookup(NameVar)
-
 	return cret
 }
 
@@ -83,7 +81,6 @@ var xIoExtensionPointRegister func(string) *IOExtensionPoint
 func IoExtensionPointRegister(NameVar string) *IOExtensionPoint {
 
 	cret := xIoExtensionPointRegister(NameVar)
-
 	return cret
 }
 
@@ -97,7 +94,6 @@ var xIoModulesLoadAllInDirectory func(string) *glib.List
 func IoModulesLoadAllInDirectory(DirnameVar string) *glib.List {
 
 	cret := xIoModulesLoadAllInDirectory(DirnameVar)
-
 	return cret
 }
 
@@ -111,7 +107,6 @@ var xIoModulesLoadAllInDirectoryWithScope func(string, *IOModuleScope) *glib.Lis
 func IoModulesLoadAllInDirectoryWithScope(DirnameVar string, ScopeVar *IOModuleScope) *glib.List {
 
 	cret := xIoModulesLoadAllInDirectoryWithScope(DirnameVar, ScopeVar)
-
 	return cret
 }
 
@@ -313,7 +308,6 @@ var xIOModuleQuery func() []string
 func IOModuleQuery() []string {
 
 	cret := xIOModuleQuery()
-
 	return cret
 }
 

@@ -30,7 +30,6 @@ var xTestListAllTypes func(*uint) uintptr
 func TestListAllTypes(NTypesVar *uint) uintptr {
 
 	cret := xTestListAllTypes(NTypesVar)
-
 	return cret
 }
 

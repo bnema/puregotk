@@ -69,7 +69,6 @@ var xGestureZoomGetScaleDelta func(uintptr) float64
 func (x *GestureZoom) GetScaleDelta() float64 {
 
 	cret := xGestureZoomGetScaleDelta(x.GoPointer())
-
 	return cret
 }
 

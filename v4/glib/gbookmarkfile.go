@@ -2,7 +2,6 @@
 package glib
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -72,7 +71,6 @@ var xNewBookmarkFile func() *BookmarkFile
 func NewBookmarkFile() *BookmarkFile {
 
 	cret := xNewBookmarkFile()
-
 	return cret
 }
 
@@ -102,15 +100,13 @@ var xBookmarkFileAddApplication func(uintptr, string, uintptr, uintptr)
 // If no bookmark for @uri is found, one is created.
 func (x *BookmarkFile) AddApplication(UriVar string, NameVar *string, ExecVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
-	ExecVarPtr, ExecVarBytes := core.NullableStringToPtr(ExecVar)
+	ExecVarPtr := core.GStrdupNullable(ExecVar)
+	defer core.GFreeNullable(ExecVarPtr)
 
 	xBookmarkFileAddApplication(x.GoPointer(), UriVar, NameVarPtr, ExecVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
-
-	runtime.KeepAlive(ExecVarBytes)
 
 }
 
@@ -132,7 +128,6 @@ var xBookmarkFileCopy func(uintptr) *BookmarkFile
 func (x *BookmarkFile) Copy() *BookmarkFile {
 
 	cret := xBookmarkFileCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -155,7 +150,6 @@ func (x *BookmarkFile) GetAdded(UriVar string) (int, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetAdded(x.GoPointer(), UriVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -173,7 +167,6 @@ func (x *BookmarkFile) GetAddedDateTime(UriVar string) (*DateTime, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetAddedDateTime(x.GoPointer(), UriVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -200,7 +193,6 @@ func (x *BookmarkFile) GetAppInfo(UriVar string, NameVar string, ExecVar *string
 	var cerr *Error
 
 	cret := xBookmarkFileGetAppInfo(x.GoPointer(), UriVar, NameVar, ExecVar, CountVar, StampVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -227,7 +219,6 @@ func (x *BookmarkFile) GetApplicationInfo(UriVar string, NameVar string, ExecVar
 	var cerr *Error
 
 	cret := xBookmarkFileGetApplicationInfo(x.GoPointer(), UriVar, NameVar, ExecVar, CountVar, StampVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -246,7 +237,6 @@ func (x *BookmarkFile) GetApplications(UriVar string, LengthVar *uint) ([]string
 	var cerr *Error
 
 	cret := xBookmarkFileGetApplications(x.GoPointer(), UriVar, LengthVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -264,7 +254,6 @@ func (x *BookmarkFile) GetDescription(UriVar string) (string, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetDescription(x.GoPointer(), UriVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -285,7 +274,6 @@ func (x *BookmarkFile) GetGroups(UriVar string, LengthVar *uint) ([]string, erro
 	var cerr *Error
 
 	cret := xBookmarkFileGetGroups(x.GoPointer(), UriVar, LengthVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -303,7 +291,6 @@ func (x *BookmarkFile) GetIcon(UriVar string, HrefVar *string, MimeTypeVar *stri
 	var cerr *Error
 
 	cret := xBookmarkFileGetIcon(x.GoPointer(), UriVar, HrefVar, MimeTypeVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -323,7 +310,6 @@ func (x *BookmarkFile) GetIsPrivate(UriVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetIsPrivate(x.GoPointer(), UriVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -343,7 +329,6 @@ func (x *BookmarkFile) GetMimeType(UriVar string) (string, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetMimeType(x.GoPointer(), UriVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -361,7 +346,6 @@ func (x *BookmarkFile) GetModified(UriVar string) (int, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetModified(x.GoPointer(), UriVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -379,7 +363,6 @@ func (x *BookmarkFile) GetModifiedDateTime(UriVar string) (*DateTime, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetModifiedDateTime(x.GoPointer(), UriVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -393,7 +376,6 @@ var xBookmarkFileGetSize func(uintptr) int
 func (x *BookmarkFile) GetSize() int {
 
 	cret := xBookmarkFileGetSize(x.GoPointer())
-
 	return cret
 }
 
@@ -408,12 +390,10 @@ var xBookmarkFileGetTitle func(uintptr, uintptr, **Error) string
 func (x *BookmarkFile) GetTitle(UriVar *string) (string, error) {
 	var cerr *Error
 
-	UriVarPtr, UriVarBytes := core.NullableStringToPtr(UriVar)
+	UriVarPtr := core.GStrdupNullable(UriVar)
+	defer core.GFreeNullable(UriVarPtr)
 
 	cret := xBookmarkFileGetTitle(x.GoPointer(), UriVarPtr, &cerr)
-
-	runtime.KeepAlive(UriVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -429,7 +409,6 @@ var xBookmarkFileGetUris func(uintptr, *uint) []string
 func (x *BookmarkFile) GetUris(LengthVar *uint) []string {
 
 	cret := xBookmarkFileGetUris(x.GoPointer(), LengthVar)
-
 	return cret
 }
 
@@ -443,7 +422,6 @@ func (x *BookmarkFile) GetVisited(UriVar string) (int, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetVisited(x.GoPointer(), UriVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -461,7 +439,6 @@ func (x *BookmarkFile) GetVisitedDateTime(UriVar string) (*DateTime, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileGetVisitedDateTime(x.GoPointer(), UriVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -480,7 +457,6 @@ func (x *BookmarkFile) HasApplication(UriVar string, NameVar string) (bool, erro
 	var cerr *Error
 
 	cret := xBookmarkFileHasApplication(x.GoPointer(), UriVar, NameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -499,7 +475,6 @@ func (x *BookmarkFile) HasGroup(UriVar string, GroupVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileHasGroup(x.GoPointer(), UriVar, GroupVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -513,7 +488,6 @@ var xBookmarkFileHasItem func(uintptr, string) bool
 func (x *BookmarkFile) HasItem(UriVar string) bool {
 
 	cret := xBookmarkFileHasItem(x.GoPointer(), UriVar)
-
 	return cret
 }
 
@@ -526,7 +500,6 @@ func (x *BookmarkFile) LoadFromData(DataVar []byte, LengthVar uint) (bool, error
 	var cerr *Error
 
 	cret := xBookmarkFileLoadFromData(x.GoPointer(), DataVar, LengthVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -545,7 +518,6 @@ func (x *BookmarkFile) LoadFromDataDirs(FileVar string, FullPathVar *string) (bo
 	var cerr *Error
 
 	cret := xBookmarkFileLoadFromDataDirs(x.GoPointer(), FileVar, FullPathVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -562,7 +534,6 @@ func (x *BookmarkFile) LoadFromFile(FilenameVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileLoadFromFile(x.GoPointer(), FilenameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -581,12 +552,10 @@ var xBookmarkFileMoveItem func(uintptr, string, uintptr, **Error) bool
 func (x *BookmarkFile) MoveItem(OldUriVar string, NewUriVar *string) (bool, error) {
 	var cerr *Error
 
-	NewUriVarPtr, NewUriVarBytes := core.NullableStringToPtr(NewUriVar)
+	NewUriVarPtr := core.GStrdupNullable(NewUriVar)
+	defer core.GFreeNullable(NewUriVarPtr)
 
 	cret := xBookmarkFileMoveItem(x.GoPointer(), OldUriVar, NewUriVarPtr, &cerr)
-
-	runtime.KeepAlive(NewUriVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -608,7 +577,6 @@ func (x *BookmarkFile) RemoveApplication(UriVar string, NameVar string) (bool, e
 	var cerr *Error
 
 	cret := xBookmarkFileRemoveApplication(x.GoPointer(), UriVar, NameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -629,7 +597,6 @@ func (x *BookmarkFile) RemoveGroup(UriVar string, GroupVar string) (bool, error)
 	var cerr *Error
 
 	cret := xBookmarkFileRemoveGroup(x.GoPointer(), UriVar, GroupVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -644,7 +611,6 @@ func (x *BookmarkFile) RemoveItem(UriVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileRemoveItem(x.GoPointer(), UriVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -708,7 +674,6 @@ func (x *BookmarkFile) SetAppInfo(UriVar string, NameVar string, ExecVar string,
 	var cerr *Error
 
 	cret := xBookmarkFileSetAppInfo(x.GoPointer(), UriVar, NameVar, ExecVar, CountVar, StampVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -749,7 +714,6 @@ func (x *BookmarkFile) SetApplicationInfo(UriVar string, NameVar string, ExecVar
 	var cerr *Error
 
 	cret := xBookmarkFileSetApplicationInfo(x.GoPointer(), UriVar, NameVar, ExecVar, CountVar, StampVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -766,11 +730,10 @@ var xBookmarkFileSetDescription func(uintptr, uintptr, string)
 // If a bookmark for @uri cannot be found then it is created.
 func (x *BookmarkFile) SetDescription(UriVar *string, DescriptionVar string) {
 
-	UriVarPtr, UriVarBytes := core.NullableStringToPtr(UriVar)
+	UriVarPtr := core.GStrdupNullable(UriVar)
+	defer core.GFreeNullable(UriVarPtr)
 
 	xBookmarkFileSetDescription(x.GoPointer(), UriVarPtr, DescriptionVar)
-
-	runtime.KeepAlive(UriVarBytes)
 
 }
 
@@ -795,11 +758,10 @@ var xBookmarkFileSetIcon func(uintptr, string, uintptr, string)
 // If no bookmark for @uri is found one is created.
 func (x *BookmarkFile) SetIcon(UriVar string, HrefVar *string, MimeTypeVar string) {
 
-	HrefVarPtr, HrefVarBytes := core.NullableStringToPtr(HrefVar)
+	HrefVarPtr := core.GStrdupNullable(HrefVar)
+	defer core.GFreeNullable(HrefVarPtr)
 
 	xBookmarkFileSetIcon(x.GoPointer(), UriVar, HrefVarPtr, MimeTypeVar)
-
-	runtime.KeepAlive(HrefVarBytes)
 
 }
 
@@ -867,11 +829,10 @@ var xBookmarkFileSetTitle func(uintptr, uintptr, string)
 // If a bookmark for @uri cannot be found then it is created.
 func (x *BookmarkFile) SetTitle(UriVar *string, TitleVar string) {
 
-	UriVarPtr, UriVarBytes := core.NullableStringToPtr(UriVar)
+	UriVarPtr := core.GStrdupNullable(UriVar)
+	defer core.GFreeNullable(UriVarPtr)
 
 	xBookmarkFileSetTitle(x.GoPointer(), UriVarPtr, TitleVar)
-
-	runtime.KeepAlive(UriVarBytes)
 
 }
 
@@ -916,7 +877,6 @@ func (x *BookmarkFile) ToData(LengthVar *uint) (uintptr, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileToData(x.GoPointer(), LengthVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -932,7 +892,6 @@ func (x *BookmarkFile) ToFile(FilenameVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xBookmarkFileToFile(x.GoPointer(), FilenameVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

@@ -998,7 +998,6 @@ func (x *DriveBase) SetGoPointer(ptr uintptr) {
 func (x *DriveBase) CanEject() bool {
 
 	cret := XGDriveCanEject(x.GoPointer())
-
 	return cret
 }
 
@@ -1006,7 +1005,6 @@ func (x *DriveBase) CanEject() bool {
 func (x *DriveBase) CanPollForMedia() bool {
 
 	cret := XGDriveCanPollForMedia(x.GoPointer())
-
 	return cret
 }
 
@@ -1014,7 +1012,6 @@ func (x *DriveBase) CanPollForMedia() bool {
 func (x *DriveBase) CanStart() bool {
 
 	cret := XGDriveCanStart(x.GoPointer())
-
 	return cret
 }
 
@@ -1022,7 +1019,6 @@ func (x *DriveBase) CanStart() bool {
 func (x *DriveBase) CanStartDegraded() bool {
 
 	cret := XGDriveCanStartDegraded(x.GoPointer())
-
 	return cret
 }
 
@@ -1030,7 +1026,6 @@ func (x *DriveBase) CanStartDegraded() bool {
 func (x *DriveBase) CanStop() bool {
 
 	cret := XGDriveCanStop(x.GoPointer())
-
 	return cret
 }
 
@@ -1050,7 +1045,6 @@ func (x *DriveBase) EjectFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGDriveEjectFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1073,7 +1067,6 @@ func (x *DriveBase) EjectWithOperationFinish(ResultVar AsyncResult) (bool, error
 	var cerr *glib.Error
 
 	cret := XGDriveEjectWithOperationFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1087,7 +1080,6 @@ func (x *DriveBase) EjectWithOperationFinish(ResultVar AsyncResult) (bool, error
 func (x *DriveBase) EnumerateIdentifiers() []string {
 
 	cret := XGDriveEnumerateIdentifiers(x.GoPointer())
-
 	return cret
 }
 
@@ -1111,7 +1103,6 @@ func (x *DriveBase) GetIcon() *IconBase {
 func (x *DriveBase) GetIdentifier(KindVar string) string {
 
 	cret := XGDriveGetIdentifier(x.GoPointer(), KindVar)
-
 	return cret
 }
 
@@ -1119,7 +1110,6 @@ func (x *DriveBase) GetIdentifier(KindVar string) string {
 func (x *DriveBase) GetName() string {
 
 	cret := XGDriveGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -1127,7 +1117,6 @@ func (x *DriveBase) GetName() string {
 func (x *DriveBase) GetSortKey() string {
 
 	cret := XGDriveGetSortKey(x.GoPointer())
-
 	return cret
 }
 
@@ -1135,7 +1124,6 @@ func (x *DriveBase) GetSortKey() string {
 func (x *DriveBase) GetStartStopType() DriveStartStopType {
 
 	cret := XGDriveGetStartStopType(x.GoPointer())
-
 	return cret
 }
 
@@ -1160,7 +1148,6 @@ func (x *DriveBase) GetSymbolicIcon() *IconBase {
 func (x *DriveBase) GetVolumes() *glib.List {
 
 	cret := XGDriveGetVolumes(x.GoPointer())
-
 	return cret
 }
 
@@ -1170,7 +1157,6 @@ func (x *DriveBase) GetVolumes() *glib.List {
 func (x *DriveBase) HasMedia() bool {
 
 	cret := XGDriveHasMedia(x.GoPointer())
-
 	return cret
 }
 
@@ -1178,7 +1164,6 @@ func (x *DriveBase) HasMedia() bool {
 func (x *DriveBase) HasVolumes() bool {
 
 	cret := XGDriveHasVolumes(x.GoPointer())
-
 	return cret
 }
 
@@ -1186,7 +1171,6 @@ func (x *DriveBase) HasVolumes() bool {
 func (x *DriveBase) IsMediaCheckAutomatic() bool {
 
 	cret := XGDriveIsMediaCheckAutomatic(x.GoPointer())
-
 	return cret
 }
 
@@ -1194,7 +1178,6 @@ func (x *DriveBase) IsMediaCheckAutomatic() bool {
 func (x *DriveBase) IsMediaRemovable() bool {
 
 	cret := XGDriveIsMediaRemovable(x.GoPointer())
-
 	return cret
 }
 
@@ -1203,7 +1186,6 @@ func (x *DriveBase) IsMediaRemovable() bool {
 func (x *DriveBase) IsRemovable() bool {
 
 	cret := XGDriveIsRemovable(x.GoPointer())
-
 	return cret
 }
 
@@ -1223,7 +1205,6 @@ func (x *DriveBase) PollForMediaFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGDrivePollForMediaFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1247,7 +1228,6 @@ func (x *DriveBase) StartFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGDriveStartFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1271,7 +1251,6 @@ func (x *DriveBase) StopFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGDriveStopFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

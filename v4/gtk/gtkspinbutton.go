@@ -280,7 +280,6 @@ var xSpinButtonGetActivatesDefault func(uintptr) bool
 func (x *SpinButton) GetActivatesDefault() bool {
 
 	cret := xSpinButtonGetActivatesDefault(x.GoPointer())
-
 	return cret
 }
 
@@ -307,7 +306,6 @@ var xSpinButtonGetClimbRate func(uintptr) float64
 func (x *SpinButton) GetClimbRate() float64 {
 
 	cret := xSpinButtonGetClimbRate(x.GoPointer())
-
 	return cret
 }
 
@@ -317,7 +315,6 @@ var xSpinButtonGetDigits func(uintptr) uint
 func (x *SpinButton) GetDigits() uint {
 
 	cret := xSpinButtonGetDigits(x.GoPointer())
-
 	return cret
 }
 
@@ -339,7 +336,6 @@ var xSpinButtonGetNumeric func(uintptr) bool
 func (x *SpinButton) GetNumeric() bool {
 
 	cret := xSpinButtonGetNumeric(x.GoPointer())
-
 	return cret
 }
 
@@ -360,7 +356,6 @@ var xSpinButtonGetSnapToTicks func(uintptr) bool
 func (x *SpinButton) GetSnapToTicks() bool {
 
 	cret := xSpinButtonGetSnapToTicks(x.GoPointer())
-
 	return cret
 }
 
@@ -372,7 +367,6 @@ var xSpinButtonGetUpdatePolicy func(uintptr) SpinButtonUpdatePolicy
 func (x *SpinButton) GetUpdatePolicy() SpinButtonUpdatePolicy {
 
 	cret := xSpinButtonGetUpdatePolicy(x.GoPointer())
-
 	return cret
 }
 
@@ -382,7 +376,6 @@ var xSpinButtonGetValue func(uintptr) float64
 func (x *SpinButton) GetValue() float64 {
 
 	cret := xSpinButtonGetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -392,7 +385,6 @@ var xSpinButtonGetValueAsInt func(uintptr) int
 func (x *SpinButton) GetValueAsInt() int {
 
 	cret := xSpinButtonGetValueAsInt(x.GoPointer())
-
 	return cret
 }
 
@@ -404,7 +396,6 @@ var xSpinButtonGetWrap func(uintptr) bool
 func (x *SpinButton) GetWrap() bool {
 
 	cret := xSpinButtonGetWrap(x.GoPointer())
-
 	return cret
 }
 
@@ -905,7 +896,6 @@ func (x *SpinButton) GetAccessibleParent() *AccessibleBase {
 func (x *SpinButton) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -931,7 +921,6 @@ func (x *SpinButton) GetAtContext() *ATContext {
 func (x *SpinButton) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -971,7 +960,6 @@ func (x *SpinButton) GetNextAccessibleSibling() *AccessibleBase {
 func (x *SpinButton) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1148,7 +1136,6 @@ func (x *SpinButton) UpdateStateValue(NStatesVar int, StatesVar []AccessibleStat
 func (x *SpinButton) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -1221,7 +1208,6 @@ func (x *SpinButton) StartEditing(EventVar *gdk.Event) {
 func (x *SpinButton) DelegateGetAccessiblePlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkEditableDelegateGetAccessiblePlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1262,7 +1248,6 @@ func (x *SpinButton) FinishDelegate() {
 func (x *SpinButton) GetAlignment() float32 {
 
 	cret := XGtkEditableGetAlignment(x.GoPointer())
-
 	return cret
 }
 
@@ -1277,7 +1262,6 @@ func (x *SpinButton) GetAlignment() float32 {
 func (x *SpinButton) GetChars(StartPosVar int, EndPosVar int) string {
 
 	cret := XGtkEditableGetChars(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -1303,7 +1287,6 @@ func (x *SpinButton) GetDelegate() *EditableBase {
 func (x *SpinButton) GetEditable() bool {
 
 	cret := XGtkEditableGetEditable(x.GoPointer())
-
 	return cret
 }
 
@@ -1311,7 +1294,6 @@ func (x *SpinButton) GetEditable() bool {
 func (x *SpinButton) GetEnableUndo() bool {
 
 	cret := XGtkEditableGetEnableUndo(x.GoPointer())
-
 	return cret
 }
 
@@ -1319,7 +1301,6 @@ func (x *SpinButton) GetEnableUndo() bool {
 func (x *SpinButton) GetMaxWidthChars() int {
 
 	cret := XGtkEditableGetMaxWidthChars(x.GoPointer())
-
 	return cret
 }
 
@@ -1330,7 +1311,6 @@ func (x *SpinButton) GetMaxWidthChars() int {
 func (x *SpinButton) GetPosition() int {
 
 	cret := XGtkEditableGetPosition(x.GoPointer())
-
 	return cret
 }
 
@@ -1344,7 +1324,6 @@ func (x *SpinButton) GetPosition() int {
 func (x *SpinButton) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 
 	cret := XGtkEditableGetSelectionBounds(x.GoPointer(), StartPosVar, EndPosVar)
-
 	return cret
 }
 
@@ -1354,7 +1333,6 @@ func (x *SpinButton) GetSelectionBounds(StartPosVar *int, EndPosVar *int) bool {
 func (x *SpinButton) GetText() string {
 
 	cret := XGtkEditableGetText(x.GoPointer())
-
 	return cret
 }
 
@@ -1363,7 +1341,6 @@ func (x *SpinButton) GetText() string {
 func (x *SpinButton) GetWidthChars() int {
 
 	cret := XGtkEditableGetWidthChars(x.GoPointer())
-
 	return cret
 }
 
@@ -1480,7 +1457,6 @@ func (x *SpinButton) SetWidthChars(NCharsVar int) {
 func (x *SpinButton) GetOrientation() Orientation {
 
 	cret := XGtkOrientableGetOrientation(x.GoPointer())
-
 	return cret
 }
 

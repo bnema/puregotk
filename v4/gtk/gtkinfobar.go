@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"unsafe"
 
 	"github.com/jwijenbergh/purego"
@@ -141,11 +140,10 @@ var xNewInfoBarWithButtons func(uintptr, ...interface{}) uintptr
 func NewInfoBarWithButtons(FirstButtonTextVar *string, varArgs ...interface{}) *InfoBar {
 	var cls *InfoBar
 
-	FirstButtonTextVarPtr, FirstButtonTextVarBytes := core.NullableStringToPtr(FirstButtonTextVar)
+	FirstButtonTextVarPtr := core.GStrdupNullable(FirstButtonTextVar)
+	defer core.GFreeNullable(FirstButtonTextVarPtr)
 
 	cret := xNewInfoBarWithButtons(FirstButtonTextVarPtr, varArgs...)
-
-	runtime.KeepAlive(FirstButtonTextVarBytes)
 
 	if cret == 0 {
 		return nil
@@ -221,7 +219,6 @@ var xInfoBarGetMessageType func(uintptr) MessageType
 func (x *InfoBar) GetMessageType() MessageType {
 
 	cret := xInfoBarGetMessageType(x.GoPointer())
-
 	return cret
 }
 
@@ -231,7 +228,6 @@ var xInfoBarGetRevealed func(uintptr) bool
 func (x *InfoBar) GetRevealed() bool {
 
 	cret := xInfoBarGetRevealed(x.GoPointer())
-
 	return cret
 }
 
@@ -241,7 +237,6 @@ var xInfoBarGetShowCloseButton func(uintptr) bool
 func (x *InfoBar) GetShowCloseButton() bool {
 
 	cret := xInfoBarGetShowCloseButton(x.GoPointer())
-
 	return cret
 }
 
@@ -477,7 +472,6 @@ func (x *InfoBar) GetAccessibleParent() *AccessibleBase {
 func (x *InfoBar) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -503,7 +497,6 @@ func (x *InfoBar) GetAtContext() *ATContext {
 func (x *InfoBar) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -543,7 +536,6 @@ func (x *InfoBar) GetNextAccessibleSibling() *AccessibleBase {
 func (x *InfoBar) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -720,7 +712,6 @@ func (x *InfoBar) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState, 
 func (x *InfoBar) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

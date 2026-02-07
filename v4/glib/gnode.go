@@ -46,7 +46,6 @@ var xNodeChildIndex func(uintptr, uintptr) int
 func (x *Node) ChildIndex(DataVar uintptr) int {
 
 	cret := xNodeChildIndex(x.GoPointer(), DataVar)
-
 	return cret
 }
 
@@ -58,7 +57,6 @@ var xNodeChildPosition func(uintptr, *Node) int
 func (x *Node) ChildPosition(ChildVar *Node) int {
 
 	cret := xNodeChildPosition(x.GoPointer(), ChildVar)
-
 	return cret
 }
 
@@ -95,7 +93,6 @@ var xNodeCopy func(uintptr) *Node
 func (x *Node) Copy() *Node {
 
 	cret := xNodeCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -120,7 +117,6 @@ func (x *Node) CopyDeep(CopyFuncVar *CopyFunc, DataVar uintptr) *Node {
 	}
 
 	cret := xNodeCopyDeep(x.GoPointer(), CopyFuncVarRef, DataVar)
-
 	return cret
 }
 
@@ -133,7 +129,6 @@ var xNodeDepth func(uintptr) uint
 func (x *Node) Depth() uint {
 
 	cret := xNodeDepth(x.GoPointer())
-
 	return cret
 }
 
@@ -153,7 +148,6 @@ var xNodeFind func(uintptr, TraverseType, TraverseFlags, uintptr) *Node
 func (x *Node) Find(OrderVar TraverseType, FlagsVar TraverseFlags, DataVar uintptr) *Node {
 
 	cret := xNodeFind(x.GoPointer(), OrderVar, FlagsVar, DataVar)
-
 	return cret
 }
 
@@ -163,7 +157,6 @@ var xNodeFindChild func(uintptr, TraverseFlags, uintptr) *Node
 func (x *Node) FindChild(FlagsVar TraverseFlags, DataVar uintptr) *Node {
 
 	cret := xNodeFindChild(x.GoPointer(), FlagsVar, DataVar)
-
 	return cret
 }
 
@@ -174,7 +167,6 @@ var xNodeFirstSibling func(uintptr) *Node
 func (x *Node) FirstSibling() *Node {
 
 	cret := xNodeFirstSibling(x.GoPointer())
-
 	return cret
 }
 
@@ -184,7 +176,6 @@ var xNodeGetRoot func(uintptr) *Node
 func (x *Node) GetRoot() *Node {
 
 	cret := xNodeGetRoot(x.GoPointer())
-
 	return cret
 }
 
@@ -194,7 +185,6 @@ var xNodeInsert func(uintptr, int, *Node) *Node
 func (x *Node) Insert(PositionVar int, NodeVar *Node) *Node {
 
 	cret := xNodeInsert(x.GoPointer(), PositionVar, NodeVar)
-
 	return cret
 }
 
@@ -204,7 +194,6 @@ var xNodeInsertAfter func(uintptr, *Node, *Node) *Node
 func (x *Node) InsertAfter(SiblingVar *Node, NodeVar *Node) *Node {
 
 	cret := xNodeInsertAfter(x.GoPointer(), SiblingVar, NodeVar)
-
 	return cret
 }
 
@@ -214,7 +203,6 @@ var xNodeInsertBefore func(uintptr, *Node, *Node) *Node
 func (x *Node) InsertBefore(SiblingVar *Node, NodeVar *Node) *Node {
 
 	cret := xNodeInsertBefore(x.GoPointer(), SiblingVar, NodeVar)
-
 	return cret
 }
 
@@ -226,7 +214,6 @@ var xNodeIsAncestor func(uintptr, *Node) bool
 func (x *Node) IsAncestor(DescendantVar *Node) bool {
 
 	cret := xNodeIsAncestor(x.GoPointer(), DescendantVar)
-
 	return cret
 }
 
@@ -236,7 +223,6 @@ var xNodeLastChild func(uintptr) *Node
 func (x *Node) LastChild() *Node {
 
 	cret := xNodeLastChild(x.GoPointer())
-
 	return cret
 }
 
@@ -247,7 +233,6 @@ var xNodeLastSibling func(uintptr) *Node
 func (x *Node) LastSibling() *Node {
 
 	cret := xNodeLastSibling(x.GoPointer())
-
 	return cret
 }
 
@@ -261,7 +246,6 @@ var xNodeMaxHeight func(uintptr) uint
 func (x *Node) MaxHeight() uint {
 
 	cret := xNodeMaxHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -271,7 +255,6 @@ var xNodeNChildren func(uintptr) uint
 func (x *Node) NChildren() uint {
 
 	cret := xNodeNChildren(x.GoPointer())
-
 	return cret
 }
 
@@ -281,7 +264,6 @@ var xNodeNNodes func(uintptr, TraverseFlags) uint
 func (x *Node) NNodes(FlagsVar TraverseFlags) uint {
 
 	cret := xNodeNNodes(x.GoPointer(), FlagsVar)
-
 	return cret
 }
 
@@ -293,7 +275,6 @@ var xNodeNthChild func(uintptr, uint) *Node
 func (x *Node) NthChild(NVar uint) *Node {
 
 	cret := xNodeNthChild(x.GoPointer(), NVar)
-
 	return cret
 }
 
@@ -303,7 +284,6 @@ var xNodePrepend func(uintptr, *Node) *Node
 func (x *Node) Prepend(NodeVar *Node) *Node {
 
 	cret := xNodePrepend(x.GoPointer(), NodeVar)
-
 	return cret
 }
 

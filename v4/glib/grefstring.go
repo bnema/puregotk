@@ -21,7 +21,6 @@ var xRefStringAcquire func(string) string
 func RefStringAcquire(StrVar string) string {
 
 	cret := xRefStringAcquire(StrVar)
-
 	return cret
 }
 
@@ -36,7 +35,6 @@ var xRefStringEqual func(string, string) bool
 func RefStringEqual(Str1Var string, Str2Var string) bool {
 
 	cret := xRefStringEqual(Str1Var, Str2Var)
-
 	return cret
 }
 
@@ -46,7 +44,6 @@ var xRefStringLength func(string) uint
 func RefStringLength(StrVar string) uint {
 
 	cret := xRefStringLength(StrVar)
-
 	return cret
 }
 
@@ -57,7 +54,6 @@ var xRefStringNew func(string) string
 func RefStringNew(StrVar string) string {
 
 	cret := xRefStringNew(StrVar)
-
 	return cret
 }
 
@@ -72,7 +68,6 @@ var xRefStringNewIntern func(string) string
 func RefStringNewIntern(StrVar string) string {
 
 	cret := xRefStringNewIntern(StrVar)
-
 	return cret
 }
 
@@ -86,7 +81,6 @@ var xRefStringNewLen func(string, int) string
 func RefStringNewLen(StrVar string, LenVar int) string {
 
 	cret := xRefStringNewLen(StrVar, LenVar)
-
 	return cret
 }
 

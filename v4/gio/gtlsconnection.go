@@ -201,7 +201,6 @@ var xTlsChannelBindingErrorQuark func() glib.Quark
 func TlsChannelBindingErrorQuark() glib.Quark {
 
 	cret := xTlsChannelBindingErrorQuark()
-
 	return cret
 }
 
@@ -211,7 +210,6 @@ var xTlsErrorQuark func() glib.Quark
 func TlsErrorQuark() glib.Quark {
 
 	cret := xTlsErrorQuark()
-
 	return cret
 }
 
@@ -245,7 +243,6 @@ var xTlsConnectionEmitAcceptCertificate func(uintptr, uintptr, TlsCertificateFla
 func (x *TlsConnection) EmitAcceptCertificate(PeerCertVar *TlsCertificate, ErrorsVar TlsCertificateFlags) bool {
 
 	cret := xTlsConnectionEmitAcceptCertificate(x.GoPointer(), PeerCertVar.GoPointer(), ErrorsVar)
-
 	return cret
 }
 
@@ -286,7 +283,6 @@ func (x *TlsConnection) GetChannelBindingData(TypeVar TlsChannelBindingType, Dat
 	var cerr *glib.Error
 
 	cret := xTlsConnectionGetChannelBindingData(x.GoPointer(), TypeVar, DataVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -307,7 +303,6 @@ var xTlsConnectionGetCiphersuiteName func(uintptr) string
 func (x *TlsConnection) GetCiphersuiteName() string {
 
 	cret := xTlsConnectionGetCiphersuiteName(x.GoPointer())
-
 	return cret
 }
 
@@ -360,7 +355,6 @@ var xTlsConnectionGetNegotiatedProtocol func(uintptr) string
 func (x *TlsConnection) GetNegotiatedProtocol() string {
 
 	cret := xTlsConnectionGetNegotiatedProtocol(x.GoPointer())
-
 	return cret
 }
 
@@ -393,7 +387,6 @@ var xTlsConnectionGetPeerCertificateErrors func(uintptr) TlsCertificateFlags
 func (x *TlsConnection) GetPeerCertificateErrors() TlsCertificateFlags {
 
 	cret := xTlsConnectionGetPeerCertificateErrors(x.GoPointer())
-
 	return cret
 }
 
@@ -406,7 +399,6 @@ var xTlsConnectionGetProtocolVersion func(uintptr) TlsProtocolVersion
 func (x *TlsConnection) GetProtocolVersion() TlsProtocolVersion {
 
 	cret := xTlsConnectionGetProtocolVersion(x.GoPointer())
-
 	return cret
 }
 
@@ -417,7 +409,6 @@ var xTlsConnectionGetRehandshakeMode func(uintptr) TlsRehandshakeMode
 func (x *TlsConnection) GetRehandshakeMode() TlsRehandshakeMode {
 
 	cret := xTlsConnectionGetRehandshakeMode(x.GoPointer())
-
 	return cret
 }
 
@@ -429,7 +420,6 @@ var xTlsConnectionGetRequireCloseNotify func(uintptr) bool
 func (x *TlsConnection) GetRequireCloseNotify() bool {
 
 	cret := xTlsConnectionGetRequireCloseNotify(x.GoPointer())
-
 	return cret
 }
 
@@ -440,7 +430,6 @@ var xTlsConnectionGetUseSystemCertdb func(uintptr) bool
 func (x *TlsConnection) GetUseSystemCertdb() bool {
 
 	cret := xTlsConnectionGetUseSystemCertdb(x.GoPointer())
-
 	return cret
 }
 
@@ -481,7 +470,6 @@ func (x *TlsConnection) Handshake(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xTlsConnectionHandshake(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -522,7 +510,6 @@ func (x *TlsConnection) HandshakeFinish(ResultVar AsyncResult) (bool, error) {
 	var cerr *glib.Error
 
 	cret := xTlsConnectionHandshakeFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

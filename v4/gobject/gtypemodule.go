@@ -259,7 +259,6 @@ var xTypeModuleRegisterEnum func(uintptr, string, []EnumValue) types.GType
 func (x *TypeModule) RegisterEnum(NameVar string, ConstStaticValuesVar []EnumValue) types.GType {
 
 	cret := xTypeModuleRegisterEnum(x.GoPointer(), NameVar, ConstStaticValuesVar)
-
 	return cret
 }
 
@@ -278,7 +277,6 @@ var xTypeModuleRegisterFlags func(uintptr, string, []FlagsValue) types.GType
 func (x *TypeModule) RegisterFlags(NameVar string, ConstStaticValuesVar []FlagsValue) types.GType {
 
 	cret := xTypeModuleRegisterFlags(x.GoPointer(), NameVar, ConstStaticValuesVar)
-
 	return cret
 }
 
@@ -301,7 +299,6 @@ var xTypeModuleRegisterType func(uintptr, types.GType, string, *TypeInfo, TypeFl
 func (x *TypeModule) RegisterType(ParentTypeVar types.GType, TypeNameVar string, TypeInfoVar *TypeInfo, FlagsVar TypeFlags) types.GType {
 
 	cret := xTypeModuleRegisterType(x.GoPointer(), ParentTypeVar, TypeNameVar, TypeInfoVar, FlagsVar)
-
 	return cret
 }
 
@@ -336,7 +333,6 @@ var xTypeModuleUse func(uintptr) bool
 func (x *TypeModule) Use() bool {
 
 	cret := xTypeModuleUse(x.GoPointer())
-
 	return cret
 }
 

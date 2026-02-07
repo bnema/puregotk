@@ -2,7 +2,6 @@
 package adw
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -113,7 +112,6 @@ var xButtonRowGetEndIconName func(uintptr) string
 func (x *ButtonRow) GetEndIconName() string {
 
 	cret := xButtonRowGetEndIconName(x.GoPointer())
-
 	return cret
 }
 
@@ -123,7 +121,6 @@ var xButtonRowGetStartIconName func(uintptr) string
 func (x *ButtonRow) GetStartIconName() string {
 
 	cret := xButtonRowGetStartIconName(x.GoPointer())
-
 	return cret
 }
 
@@ -132,11 +129,10 @@ var xButtonRowSetEndIconName func(uintptr, uintptr)
 // Sets the end icon name for @self.
 func (x *ButtonRow) SetEndIconName(IconNameVar *string) {
 
-	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
 
 	xButtonRowSetEndIconName(x.GoPointer(), IconNameVarPtr)
-
-	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -145,11 +141,10 @@ var xButtonRowSetStartIconName func(uintptr, uintptr)
 // Sets the start icon name for @self.
 func (x *ButtonRow) SetStartIconName(IconNameVar *string) {
 
-	IconNameVarPtr, IconNameVarBytes := core.NullableStringToPtr(IconNameVar)
+	IconNameVarPtr := core.GStrdupNullable(IconNameVar)
+	defer core.GFreeNullable(IconNameVarPtr)
 
 	xButtonRowSetStartIconName(x.GoPointer(), IconNameVarPtr)
-
-	runtime.KeepAlive(IconNameVarBytes)
 
 }
 
@@ -257,7 +252,6 @@ func (x *ButtonRow) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *ButtonRow) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -283,7 +277,6 @@ func (x *ButtonRow) GetAtContext() *gtk.ATContext {
 func (x *ButtonRow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -323,7 +316,6 @@ func (x *ButtonRow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *ButtonRow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -497,7 +489,6 @@ func (x *ButtonRow) UpdateStateValue(NStatesVar int, StatesVar []gtk.AccessibleS
 func (x *ButtonRow) GetActionName() string {
 
 	cret := gtk.XGtkActionableGetActionName(x.GoPointer())
-
 	return cret
 }
 
@@ -505,7 +496,6 @@ func (x *ButtonRow) GetActionName() string {
 func (x *ButtonRow) GetActionTargetValue() *glib.Variant {
 
 	cret := gtk.XGtkActionableGetActionTargetValue(x.GoPointer())
-
 	return cret
 }
 
@@ -524,11 +514,10 @@ func (x *ButtonRow) GetActionTargetValue() *glib.Variant {
 // associated with the window.
 func (x *ButtonRow) SetActionName(ActionNameVar *string) {
 
-	ActionNameVarPtr, ActionNameVarBytes := core.NullableStringToPtr(ActionNameVar)
+	ActionNameVarPtr := core.GStrdupNullable(ActionNameVar)
+	defer core.GFreeNullable(ActionNameVarPtr)
 
 	gtk.XGtkActionableSetActionName(x.GoPointer(), ActionNameVarPtr)
-
-	runtime.KeepAlive(ActionNameVarBytes)
 
 }
 
@@ -589,7 +578,6 @@ func (x *ButtonRow) SetDetailedActionName(DetailedActionNameVar string) {
 func (x *ButtonRow) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

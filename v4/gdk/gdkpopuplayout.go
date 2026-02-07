@@ -74,7 +74,6 @@ var xNewPopupLayout func(*Rectangle, Gravity, Gravity) *PopupLayout
 func NewPopupLayout(AnchorRectVar *Rectangle, RectAnchorVar Gravity, SurfaceAnchorVar Gravity) *PopupLayout {
 
 	cret := xNewPopupLayout(AnchorRectVar, RectAnchorVar, SurfaceAnchorVar)
-
 	return cret
 }
 
@@ -84,7 +83,6 @@ var xPopupLayoutCopy func(uintptr) *PopupLayout
 func (x *PopupLayout) Copy() *PopupLayout {
 
 	cret := xPopupLayoutCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -94,7 +92,6 @@ var xPopupLayoutEqual func(uintptr, *PopupLayout) bool
 func (x *PopupLayout) Equal(OtherVar *PopupLayout) bool {
 
 	cret := xPopupLayoutEqual(x.GoPointer(), OtherVar)
-
 	return cret
 }
 
@@ -104,7 +101,6 @@ var xPopupLayoutGetAnchorHints func(uintptr) AnchorHints
 func (x *PopupLayout) GetAnchorHints() AnchorHints {
 
 	cret := xPopupLayoutGetAnchorHints(x.GoPointer())
-
 	return cret
 }
 
@@ -114,7 +110,6 @@ var xPopupLayoutGetAnchorRect func(uintptr) *Rectangle
 func (x *PopupLayout) GetAnchorRect() *Rectangle {
 
 	cret := xPopupLayoutGetAnchorRect(x.GoPointer())
-
 	return cret
 }
 
@@ -133,7 +128,6 @@ var xPopupLayoutGetRectAnchor func(uintptr) Gravity
 func (x *PopupLayout) GetRectAnchor() Gravity {
 
 	cret := xPopupLayoutGetRectAnchor(x.GoPointer())
-
 	return cret
 }
 
@@ -152,7 +146,6 @@ var xPopupLayoutGetSurfaceAnchor func(uintptr) Gravity
 func (x *PopupLayout) GetSurfaceAnchor() Gravity {
 
 	cret := xPopupLayoutGetSurfaceAnchor(x.GoPointer())
-
 	return cret
 }
 
@@ -162,7 +155,6 @@ var xPopupLayoutRef func(uintptr) *PopupLayout
 func (x *PopupLayout) Ref() *PopupLayout {
 
 	cret := xPopupLayoutRef(x.GoPointer())
-
 	return cret
 }
 

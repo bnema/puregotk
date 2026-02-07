@@ -62,7 +62,6 @@ var xMatrixCopy func(uintptr) *Matrix
 func (x *Matrix) Copy() *Matrix {
 
 	cret := xMatrixCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -85,7 +84,6 @@ var xMatrixGetFontScaleFactor func(uintptr) float64
 func (x *Matrix) GetFontScaleFactor() float64 {
 
 	cret := xMatrixGetFontScaleFactor(x.GoPointer())
-
 	return cret
 }
 
@@ -117,7 +115,6 @@ var xMatrixGetSlantRatio func(uintptr) float64
 func (x *Matrix) GetSlantRatio() float64 {
 
 	cret := xMatrixGetSlantRatio(x.GoPointer())
-
 	return cret
 }
 

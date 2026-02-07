@@ -231,6 +231,8 @@ func GoString(c uintptr) string {
 var (
 	xGStrdup    func(string) uintptr
 	gstrdupOnce sync.Once
+	xGFree      func(uintptr)
+	gfreeOnce   sync.Once
 )
 
 // GStrdup allocates a C-owned copy of a Go string using g_strdup.
@@ -258,6 +260,34 @@ func GStrdupNullable(s *string) uintptr {
 		return 0
 	}
 	return GStrdup(*s)
+}
+
+// GFree frees memory allocated by GLib allocation APIs (for example g_strdup).
+// Passing 0 is a no-op.
+func GFree(ptr uintptr) {
+	if ptr == 0 {
+		return
+	}
+	gfreeOnce.Do(func() {
+		var libs []uintptr
+		for _, libPath := range GetPaths("GLIB") {
+			lib, err := purego.Dlopen(libPath, purego.RTLD_NOW|purego.RTLD_GLOBAL)
+			if err != nil {
+				continue
+			}
+			libs = append(libs, lib)
+		}
+		PuregoSafeRegister(&xGFree, libs, "g_free")
+	})
+	xGFree(ptr)
+}
+
+// GFreeNullable frees a nullable GLib-allocated pointer.
+func GFreeNullable(ptr uintptr) {
+	if ptr == 0 {
+		return
+	}
+	GFree(ptr)
 }
 
 // NullableStringToPtr converts a nullable Go string to a uintptr suitable for C calls.

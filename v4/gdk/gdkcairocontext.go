@@ -42,7 +42,6 @@ var xCairoContextCairoCreate func(uintptr) *cairo.Context
 func (x *CairoContext) CairoCreate() *cairo.Context {
 
 	cret := xCairoContextCairoCreate(x.GoPointer())
-
 	return cret
 }
 

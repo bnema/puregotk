@@ -98,7 +98,6 @@ var xSpringAnimationCalculateValue func(uintptr, uint) float64
 func (x *SpringAnimation) CalculateValue(TimeVar uint) float64 {
 
 	cret := xSpringAnimationCalculateValue(x.GoPointer(), TimeVar)
-
 	return cret
 }
 
@@ -113,7 +112,6 @@ var xSpringAnimationCalculateVelocity func(uintptr, uint) float64
 func (x *SpringAnimation) CalculateVelocity(TimeVar uint) float64 {
 
 	cret := xSpringAnimationCalculateVelocity(x.GoPointer(), TimeVar)
-
 	return cret
 }
 
@@ -123,7 +121,6 @@ var xSpringAnimationGetClamp func(uintptr) bool
 func (x *SpringAnimation) GetClamp() bool {
 
 	cret := xSpringAnimationGetClamp(x.GoPointer())
-
 	return cret
 }
 
@@ -133,7 +130,6 @@ var xSpringAnimationGetEpsilon func(uintptr) float64
 func (x *SpringAnimation) GetEpsilon() float64 {
 
 	cret := xSpringAnimationGetEpsilon(x.GoPointer())
-
 	return cret
 }
 
@@ -145,7 +141,6 @@ var xSpringAnimationGetEstimatedDuration func(uintptr) uint
 func (x *SpringAnimation) GetEstimatedDuration() uint {
 
 	cret := xSpringAnimationGetEstimatedDuration(x.GoPointer())
-
 	return cret
 }
 
@@ -155,7 +150,6 @@ var xSpringAnimationGetInitialVelocity func(uintptr) float64
 func (x *SpringAnimation) GetInitialVelocity() float64 {
 
 	cret := xSpringAnimationGetInitialVelocity(x.GoPointer())
-
 	return cret
 }
 
@@ -165,7 +159,6 @@ var xSpringAnimationGetSpringParams func(uintptr) *SpringParams
 func (x *SpringAnimation) GetSpringParams() *SpringParams {
 
 	cret := xSpringAnimationGetSpringParams(x.GoPointer())
-
 	return cret
 }
 
@@ -175,7 +168,6 @@ var xSpringAnimationGetValueFrom func(uintptr) float64
 func (x *SpringAnimation) GetValueFrom() float64 {
 
 	cret := xSpringAnimationGetValueFrom(x.GoPointer())
-
 	return cret
 }
 
@@ -185,7 +177,6 @@ var xSpringAnimationGetValueTo func(uintptr) float64
 func (x *SpringAnimation) GetValueTo() float64 {
 
 	cret := xSpringAnimationGetValueTo(x.GoPointer())
-
 	return cret
 }
 
@@ -195,7 +186,6 @@ var xSpringAnimationGetVelocity func(uintptr) float64
 func (x *SpringAnimation) GetVelocity() float64 {
 
 	cret := xSpringAnimationGetVelocity(x.GoPointer())
-
 	return cret
 }
 

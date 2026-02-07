@@ -455,7 +455,6 @@ var xResolverErrorQuark func() glib.Quark
 func ResolverErrorQuark() glib.Quark {
 
 	cret := xResolverErrorQuark()
-
 	return cret
 }
 
@@ -500,7 +499,6 @@ var xResolverGetTimeout func(uintptr) uint
 func (x *Resolver) GetTimeout() uint {
 
 	cret := xResolverGetTimeout(x.GoPointer())
-
 	return cret
 }
 
@@ -519,7 +517,6 @@ func (x *Resolver) LookupByAddress(AddressVar *InetAddress, CancellableVar *Canc
 	var cerr *glib.Error
 
 	cret := xResolverLookupByAddress(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -565,7 +562,6 @@ func (x *Resolver) LookupByAddressFinish(ResultVar AsyncResult) (string, error) 
 	var cerr *glib.Error
 
 	cret := xResolverLookupByAddressFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -602,7 +598,6 @@ func (x *Resolver) LookupByName(HostnameVar string, CancellableVar *Cancellable)
 	var cerr *glib.Error
 
 	cret := xResolverLookupByName(x.GoPointer(), HostnameVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -649,7 +644,6 @@ func (x *Resolver) LookupByNameFinish(ResultVar AsyncResult) (*glib.List, error)
 	var cerr *glib.Error
 
 	cret := xResolverLookupByNameFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -666,7 +660,6 @@ func (x *Resolver) LookupByNameWithFlags(HostnameVar string, FlagsVar ResolverNa
 	var cerr *glib.Error
 
 	cret := xResolverLookupByNameWithFlags(x.GoPointer(), HostnameVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -713,7 +706,6 @@ func (x *Resolver) LookupByNameWithFlagsFinish(ResultVar AsyncResult) (*glib.Lis
 	var cerr *glib.Error
 
 	cret := xResolverLookupByNameWithFlagsFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -737,7 +729,6 @@ func (x *Resolver) LookupRecords(RrnameVar string, RecordTypeVar ResolverRecordT
 	var cerr *glib.Error
 
 	cret := xResolverLookupRecords(x.GoPointer(), RrnameVar, RecordTypeVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -786,7 +777,6 @@ func (x *Resolver) LookupRecordsFinish(ResultVar AsyncResult) (*glib.List, error
 	var cerr *glib.Error
 
 	cret := xResolverLookupRecordsFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -821,7 +811,6 @@ func (x *Resolver) LookupService(ServiceVar string, ProtocolVar string, DomainVa
 	var cerr *glib.Error
 
 	cret := xResolverLookupService(x.GoPointer(), ServiceVar, ProtocolVar, DomainVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -869,7 +858,6 @@ func (x *Resolver) LookupServiceFinish(ResultVar AsyncResult) (*glib.List, error
 	var cerr *glib.Error
 
 	cret := xResolverLookupServiceFinish(x.GoPointer(), ResultVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

@@ -112,7 +112,6 @@ var xPreferencesWindowGetCanNavigateBack func(uintptr) bool
 func (x *PreferencesWindow) GetCanNavigateBack() bool {
 
 	cret := xPreferencesWindowGetCanNavigateBack(x.GoPointer())
-
 	return cret
 }
 
@@ -122,7 +121,6 @@ var xPreferencesWindowGetSearchEnabled func(uintptr) bool
 func (x *PreferencesWindow) GetSearchEnabled() bool {
 
 	cret := xPreferencesWindowGetSearchEnabled(x.GoPointer())
-
 	return cret
 }
 
@@ -149,7 +147,6 @@ var xPreferencesWindowGetVisiblePageName func(uintptr) string
 func (x *PreferencesWindow) GetVisiblePageName() string {
 
 	cret := xPreferencesWindowGetVisiblePageName(x.GoPointer())
-
 	return cret
 }
 
@@ -159,7 +156,6 @@ var xPreferencesWindowPopSubpage func(uintptr) bool
 func (x *PreferencesWindow) PopSubpage() bool {
 
 	cret := xPreferencesWindowPopSubpage(x.GoPointer())
-
 	return cret
 }
 
@@ -375,7 +371,6 @@ func (x *PreferencesWindow) GetAccessibleParent() *gtk.AccessibleBase {
 func (x *PreferencesWindow) GetAccessibleRole() gtk.AccessibleRole {
 
 	cret := gtk.XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -401,7 +396,6 @@ func (x *PreferencesWindow) GetAtContext() *gtk.ATContext {
 func (x *PreferencesWindow) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := gtk.XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -441,7 +435,6 @@ func (x *PreferencesWindow) GetNextAccessibleSibling() *gtk.AccessibleBase {
 func (x *PreferencesWindow) GetPlatformState(StateVar gtk.AccessiblePlatformState) bool {
 
 	cret := gtk.XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -618,7 +611,6 @@ func (x *PreferencesWindow) UpdateStateValue(NStatesVar int, StatesVar []gtk.Acc
 func (x *PreferencesWindow) GetBuildableId() string {
 
 	cret := gtk.XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 

@@ -333,7 +333,6 @@ var xLayoutManagerGetRequestMode func(uintptr) SizeRequestMode
 func (x *LayoutManager) GetRequestMode() SizeRequestMode {
 
 	cret := xLayoutManagerGetRequestMode(x.GoPointer())
-
 	return cret
 }
 

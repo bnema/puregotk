@@ -184,7 +184,6 @@ var xIconViewGetActivateOnSingleClick func(uintptr) bool
 func (x *IconView) GetActivateOnSingleClick() bool {
 
 	cret := xIconViewGetActivateOnSingleClick(x.GoPointer())
-
 	return cret
 }
 
@@ -197,7 +196,6 @@ var xIconViewGetCellRect func(uintptr, *TreePath, uintptr, *gdk.Rectangle) bool
 func (x *IconView) GetCellRect(PathVar *TreePath, CellVar *CellRenderer, RectVar *gdk.Rectangle) bool {
 
 	cret := xIconViewGetCellRect(x.GoPointer(), PathVar, CellVar.GoPointer(), RectVar)
-
 	return cret
 }
 
@@ -207,7 +205,6 @@ var xIconViewGetColumnSpacing func(uintptr) int
 func (x *IconView) GetColumnSpacing() int {
 
 	cret := xIconViewGetColumnSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -217,7 +214,6 @@ var xIconViewGetColumns func(uintptr) int
 func (x *IconView) GetColumns() int {
 
 	cret := xIconViewGetColumns(x.GoPointer())
-
 	return cret
 }
 
@@ -231,7 +227,6 @@ var xIconViewGetCursor func(uintptr, **TreePath, **CellRenderer) bool
 func (x *IconView) GetCursor(PathVar **TreePath, CellVar **CellRenderer) bool {
 
 	cret := xIconViewGetCursor(x.GoPointer(), PathVar, CellVar)
-
 	return cret
 }
 
@@ -241,7 +236,6 @@ var xIconViewGetDestItemAtPos func(uintptr, int, int, **TreePath, *IconViewDropP
 func (x *IconView) GetDestItemAtPos(DragXVar int, DragYVar int, PathVar **TreePath, PosVar *IconViewDropPosition) bool {
 
 	cret := xIconViewGetDestItemAtPos(x.GoPointer(), DragXVar, DragYVar, PathVar, PosVar)
-
 	return cret
 }
 
@@ -260,7 +254,6 @@ var xIconViewGetItemAtPos func(uintptr, int, int, **TreePath, **CellRenderer) bo
 func (x *IconView) GetItemAtPos(XVar int, YVar int, PathVar **TreePath, CellVar **CellRenderer) bool {
 
 	cret := xIconViewGetItemAtPos(x.GoPointer(), XVar, YVar, PathVar, CellVar)
-
 	return cret
 }
 
@@ -271,7 +264,6 @@ var xIconViewGetItemColumn func(uintptr, *TreePath) int
 func (x *IconView) GetItemColumn(PathVar *TreePath) int {
 
 	cret := xIconViewGetItemColumn(x.GoPointer(), PathVar)
-
 	return cret
 }
 
@@ -282,7 +274,6 @@ var xIconViewGetItemOrientation func(uintptr) Orientation
 func (x *IconView) GetItemOrientation() Orientation {
 
 	cret := xIconViewGetItemOrientation(x.GoPointer())
-
 	return cret
 }
 
@@ -292,7 +283,6 @@ var xIconViewGetItemPadding func(uintptr) int
 func (x *IconView) GetItemPadding() int {
 
 	cret := xIconViewGetItemPadding(x.GoPointer())
-
 	return cret
 }
 
@@ -303,7 +293,6 @@ var xIconViewGetItemRow func(uintptr, *TreePath) int
 func (x *IconView) GetItemRow(PathVar *TreePath) int {
 
 	cret := xIconViewGetItemRow(x.GoPointer(), PathVar)
-
 	return cret
 }
 
@@ -313,7 +302,6 @@ var xIconViewGetItemWidth func(uintptr) int
 func (x *IconView) GetItemWidth() int {
 
 	cret := xIconViewGetItemWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -323,7 +311,6 @@ var xIconViewGetMargin func(uintptr) int
 func (x *IconView) GetMargin() int {
 
 	cret := xIconViewGetMargin(x.GoPointer())
-
 	return cret
 }
 
@@ -333,7 +320,6 @@ var xIconViewGetMarkupColumn func(uintptr) int
 func (x *IconView) GetMarkupColumn() int {
 
 	cret := xIconViewGetMarkupColumn(x.GoPointer())
-
 	return cret
 }
 
@@ -361,7 +347,6 @@ var xIconViewGetPathAtPos func(uintptr, int, int) *TreePath
 func (x *IconView) GetPathAtPos(XVar int, YVar int) *TreePath {
 
 	cret := xIconViewGetPathAtPos(x.GoPointer(), XVar, YVar)
-
 	return cret
 }
 
@@ -371,7 +356,6 @@ var xIconViewGetPixbufColumn func(uintptr) int
 func (x *IconView) GetPixbufColumn() int {
 
 	cret := xIconViewGetPixbufColumn(x.GoPointer())
-
 	return cret
 }
 
@@ -382,7 +366,6 @@ var xIconViewGetReorderable func(uintptr) bool
 func (x *IconView) GetReorderable() bool {
 
 	cret := xIconViewGetReorderable(x.GoPointer())
-
 	return cret
 }
 
@@ -392,7 +375,6 @@ var xIconViewGetRowSpacing func(uintptr) int
 func (x *IconView) GetRowSpacing() int {
 
 	cret := xIconViewGetRowSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -418,7 +400,6 @@ var xIconViewGetSelectedItems func(uintptr) *glib.List
 func (x *IconView) GetSelectedItems() *glib.List {
 
 	cret := xIconViewGetSelectedItems(x.GoPointer())
-
 	return cret
 }
 
@@ -428,7 +409,6 @@ var xIconViewGetSelectionMode func(uintptr) SelectionMode
 func (x *IconView) GetSelectionMode() SelectionMode {
 
 	cret := xIconViewGetSelectionMode(x.GoPointer())
-
 	return cret
 }
 
@@ -438,7 +418,6 @@ var xIconViewGetSpacing func(uintptr) int
 func (x *IconView) GetSpacing() int {
 
 	cret := xIconViewGetSpacing(x.GoPointer())
-
 	return cret
 }
 
@@ -448,7 +427,6 @@ var xIconViewGetTextColumn func(uintptr) int
 func (x *IconView) GetTextColumn() int {
 
 	cret := xIconViewGetTextColumn(x.GoPointer())
-
 	return cret
 }
 
@@ -459,7 +437,6 @@ var xIconViewGetTooltipColumn func(uintptr) int
 func (x *IconView) GetTooltipColumn() int {
 
 	cret := xIconViewGetTooltipColumn(x.GoPointer())
-
 	return cret
 }
 
@@ -478,7 +455,6 @@ var xIconViewGetTooltipContext func(uintptr, int, int, bool, **TreeModel, **Tree
 func (x *IconView) GetTooltipContext(XVar int, YVar int, KeyboardTipVar bool, ModelVar **TreeModel, PathVar **TreePath, IterVar *TreeIter) bool {
 
 	cret := xIconViewGetTooltipContext(x.GoPointer(), XVar, YVar, KeyboardTipVar, ModelVar, PathVar, IterVar)
-
 	return cret
 }
 
@@ -491,7 +467,6 @@ var xIconViewGetVisibleRange func(uintptr, **TreePath, **TreePath) bool
 func (x *IconView) GetVisibleRange(StartPathVar **TreePath, EndPathVar **TreePath) bool {
 
 	cret := xIconViewGetVisibleRange(x.GoPointer(), StartPathVar, EndPathVar)
-
 	return cret
 }
 
@@ -511,7 +486,6 @@ var xIconViewPathIsSelected func(uintptr, *TreePath) bool
 func (x *IconView) PathIsSelected(PathVar *TreePath) bool {
 
 	cret := xIconViewPathIsSelected(x.GoPointer(), PathVar)
-
 	return cret
 }
 
@@ -1416,7 +1390,6 @@ func (x *IconView) GetAccessibleParent() *AccessibleBase {
 func (x *IconView) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -1442,7 +1415,6 @@ func (x *IconView) GetAtContext() *ATContext {
 func (x *IconView) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -1482,7 +1454,6 @@ func (x *IconView) GetNextAccessibleSibling() *AccessibleBase {
 func (x *IconView) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1659,7 +1630,6 @@ func (x *IconView) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *IconView) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -1713,7 +1683,6 @@ func (x *IconView) GetArea() *CellArea {
 func (x *IconView) GetCells() *glib.List {
 
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-
 	return cret
 }
 
@@ -1785,7 +1754,6 @@ func (x *IconView) SetCellDataFunc(CellVar *CellRenderer, FuncVar *CellLayoutDat
 func (x *IconView) GetBorder(BorderVar *Border) bool {
 
 	cret := XGtkScrollableGetBorder(x.GoPointer(), BorderVar)
-
 	return cret
 }
 
@@ -1808,7 +1776,6 @@ func (x *IconView) GetHadjustment() *Adjustment {
 func (x *IconView) GetHscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetHscrollPolicy(x.GoPointer())
-
 	return cret
 }
 
@@ -1831,7 +1798,6 @@ func (x *IconView) GetVadjustment() *Adjustment {
 func (x *IconView) GetVscrollPolicy() ScrollablePolicy {
 
 	cret := XGtkScrollableGetVscrollPolicy(x.GoPointer())
-
 	return cret
 }
 

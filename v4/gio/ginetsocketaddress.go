@@ -112,7 +112,6 @@ var xInetSocketAddressGetFlowinfo func(uintptr) uint32
 func (x *InetSocketAddress) GetFlowinfo() uint32 {
 
 	cret := xInetSocketAddressGetFlowinfo(x.GoPointer())
-
 	return cret
 }
 
@@ -122,7 +121,6 @@ var xInetSocketAddressGetPort func(uintptr) uint16
 func (x *InetSocketAddress) GetPort() uint16 {
 
 	cret := xInetSocketAddressGetPort(x.GoPointer())
-
 	return cret
 }
 
@@ -135,7 +133,6 @@ var xInetSocketAddressGetScopeId func(uintptr) uint32
 func (x *InetSocketAddress) GetScopeId() uint32 {
 
 	cret := xInetSocketAddressGetScopeId(x.GoPointer())
-
 	return cret
 }
 
@@ -253,7 +250,6 @@ func (x *InetSocketAddress) ProxyEnumerate() *SocketAddressEnumerator {
 func (x *InetSocketAddress) ToString() string {
 
 	cret := XGSocketConnectableToString(x.GoPointer())
-
 	return cret
 }
 

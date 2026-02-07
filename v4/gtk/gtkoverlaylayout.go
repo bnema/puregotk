@@ -104,7 +104,6 @@ var xOverlayLayoutChildGetClipOverlay func(uintptr) bool
 func (x *OverlayLayoutChild) GetClipOverlay() bool {
 
 	cret := xOverlayLayoutChildGetClipOverlay(x.GoPointer())
-
 	return cret
 }
 
@@ -114,7 +113,6 @@ var xOverlayLayoutChildGetMeasure func(uintptr) bool
 func (x *OverlayLayoutChild) GetMeasure() bool {
 
 	cret := xOverlayLayoutChildGetMeasure(x.GoPointer())
-
 	return cret
 }
 

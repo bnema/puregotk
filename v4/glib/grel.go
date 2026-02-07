@@ -63,7 +63,6 @@ var xRelationCount func(uintptr, uintptr, int) int
 func (x *Relation) Count(KeyVar uintptr, FieldVar int) int {
 
 	cret := xRelationCount(x.GoPointer(), KeyVar, FieldVar)
-
 	return cret
 }
 
@@ -74,7 +73,6 @@ var xRelationDelete func(uintptr, uintptr, int) int
 func (x *Relation) Delete(KeyVar uintptr, FieldVar int) int {
 
 	cret := xRelationDelete(x.GoPointer(), KeyVar, FieldVar)
-
 	return cret
 }
 
@@ -97,7 +95,6 @@ var xRelationExists func(uintptr, ...interface{}) bool
 func (x *Relation) Exists(varArgs ...interface{}) bool {
 
 	cret := xRelationExists(x.GoPointer(), varArgs...)
-
 	return cret
 }
 
@@ -168,7 +165,6 @@ var xRelationSelect func(uintptr, uintptr, int) *Tuples
 func (x *Relation) Select(KeyVar uintptr, FieldVar int) *Tuples {
 
 	cret := xRelationSelect(x.GoPointer(), KeyVar, FieldVar)
-
 	return cret
 }
 
@@ -206,7 +202,6 @@ var xTuplesIndex func(uintptr, int, int) uintptr
 func (x *Tuples) Index(IndexVar int, FieldVar int) uintptr {
 
 	cret := xTuplesIndex(x.GoPointer(), IndexVar, FieldVar)
-
 	return cret
 }
 

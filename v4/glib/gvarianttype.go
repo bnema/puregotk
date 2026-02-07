@@ -2,7 +2,6 @@
 package glib
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -221,7 +220,6 @@ var xNewVariantType func(string) *VariantType
 func NewVariantType(TypeStringVar string) *VariantType {
 
 	cret := xNewVariantType(TypeStringVar)
-
 	return cret
 }
 
@@ -234,7 +232,6 @@ var xNewVariantTypeArray func(*VariantType) *VariantType
 func NewVariantTypeArray(ElementVar *VariantType) *VariantType {
 
 	cret := xNewVariantTypeArray(ElementVar)
-
 	return cret
 }
 
@@ -247,7 +244,6 @@ var xNewVariantTypeDictEntry func(*VariantType, *VariantType) *VariantType
 func NewVariantTypeDictEntry(KeyVar *VariantType, ValueVar *VariantType) *VariantType {
 
 	cret := xNewVariantTypeDictEntry(KeyVar, ValueVar)
-
 	return cret
 }
 
@@ -260,7 +256,6 @@ var xNewVariantTypeMaybe func(*VariantType) *VariantType
 func NewVariantTypeMaybe(ElementVar *VariantType) *VariantType {
 
 	cret := xNewVariantTypeMaybe(ElementVar)
-
 	return cret
 }
 
@@ -275,7 +270,6 @@ var xNewVariantTypeTuple func(uintptr, int) *VariantType
 func NewVariantTypeTuple(ItemsVar uintptr, LengthVar int) *VariantType {
 
 	cret := xNewVariantTypeTuple(ItemsVar, LengthVar)
-
 	return cret
 }
 
@@ -288,7 +282,6 @@ var xVariantTypeCopy func(uintptr) *VariantType
 func (x *VariantType) Copy() *VariantType {
 
 	cret := xVariantTypeCopy(x.GoPointer())
-
 	return cret
 }
 
@@ -301,7 +294,6 @@ var xVariantTypeDupString func(uintptr) string
 func (x *VariantType) DupString() string {
 
 	cret := xVariantTypeDupString(x.GoPointer())
-
 	return cret
 }
 
@@ -313,7 +305,6 @@ var xVariantTypeElement func(uintptr) *VariantType
 func (x *VariantType) Element() *VariantType {
 
 	cret := xVariantTypeElement(x.GoPointer())
-
 	return cret
 }
 
@@ -332,7 +323,6 @@ var xVariantTypeEqual func(uintptr, uintptr) bool
 func (x *VariantType) Equal(Type2Var uintptr) bool {
 
 	cret := xVariantTypeEqual(x.GoPointer(), Type2Var)
-
 	return cret
 }
 
@@ -355,7 +345,6 @@ var xVariantTypeFirst func(uintptr) *VariantType
 func (x *VariantType) First() *VariantType {
 
 	cret := xVariantTypeFirst(x.GoPointer())
-
 	return cret
 }
 
@@ -383,7 +372,6 @@ var xVariantTypeGetStringLength func(uintptr) uint
 func (x *VariantType) GetStringLength() uint {
 
 	cret := xVariantTypeGetStringLength(x.GoPointer())
-
 	return cret
 }
 
@@ -397,7 +385,6 @@ var xVariantTypeHash func(uintptr) uint
 func (x *VariantType) Hash() uint {
 
 	cret := xVariantTypeHash(x.GoPointer())
-
 	return cret
 }
 
@@ -413,7 +400,6 @@ var xVariantTypeIsArray func(uintptr) bool
 func (x *VariantType) IsArray() bool {
 
 	cret := xVariantTypeIsArray(x.GoPointer())
-
 	return cret
 }
 
@@ -431,7 +417,6 @@ var xVariantTypeIsBasic func(uintptr) bool
 func (x *VariantType) IsBasic() bool {
 
 	cret := xVariantTypeIsBasic(x.GoPointer())
-
 	return cret
 }
 
@@ -448,7 +433,6 @@ var xVariantTypeIsContainer func(uintptr) bool
 func (x *VariantType) IsContainer() bool {
 
 	cret := xVariantTypeIsContainer(x.GoPointer())
-
 	return cret
 }
 
@@ -467,7 +451,6 @@ var xVariantTypeIsDefinite func(uintptr) bool
 func (x *VariantType) IsDefinite() bool {
 
 	cret := xVariantTypeIsDefinite(x.GoPointer())
-
 	return cret
 }
 
@@ -483,7 +466,6 @@ var xVariantTypeIsDictEntry func(uintptr) bool
 func (x *VariantType) IsDictEntry() bool {
 
 	cret := xVariantTypeIsDictEntry(x.GoPointer())
-
 	return cret
 }
 
@@ -499,7 +481,6 @@ var xVariantTypeIsMaybe func(uintptr) bool
 func (x *VariantType) IsMaybe() bool {
 
 	cret := xVariantTypeIsMaybe(x.GoPointer())
-
 	return cret
 }
 
@@ -513,7 +494,6 @@ var xVariantTypeIsSubtypeOf func(uintptr, *VariantType) bool
 func (x *VariantType) IsSubtypeOf(SupertypeVar *VariantType) bool {
 
 	cret := xVariantTypeIsSubtypeOf(x.GoPointer(), SupertypeVar)
-
 	return cret
 }
 
@@ -530,7 +510,6 @@ var xVariantTypeIsTuple func(uintptr) bool
 func (x *VariantType) IsTuple() bool {
 
 	cret := xVariantTypeIsTuple(x.GoPointer())
-
 	return cret
 }
 
@@ -540,7 +519,6 @@ var xVariantTypeIsVariant func(uintptr) bool
 func (x *VariantType) IsVariant() bool {
 
 	cret := xVariantTypeIsVariant(x.GoPointer())
-
 	return cret
 }
 
@@ -554,7 +532,6 @@ var xVariantTypeKey func(uintptr) *VariantType
 func (x *VariantType) Key() *VariantType {
 
 	cret := xVariantTypeKey(x.GoPointer())
-
 	return cret
 }
 
@@ -572,7 +549,6 @@ var xVariantTypeNItems func(uintptr) uint
 func (x *VariantType) NItems() uint {
 
 	cret := xVariantTypeNItems(x.GoPointer())
-
 	return cret
 }
 
@@ -592,7 +568,6 @@ var xVariantTypeNext func(uintptr) *VariantType
 func (x *VariantType) Next() *VariantType {
 
 	cret := xVariantTypeNext(x.GoPointer())
-
 	return cret
 }
 
@@ -607,7 +582,6 @@ var xVariantTypePeekString func(uintptr) string
 func (x *VariantType) PeekString() string {
 
 	cret := xVariantTypePeekString(x.GoPointer())
-
 	return cret
 }
 
@@ -619,7 +593,6 @@ var xVariantTypeValue func(uintptr) *VariantType
 func (x *VariantType) Value() *VariantType {
 
 	cret := xVariantTypeValue(x.GoPointer())
-
 	return cret
 }
 
@@ -628,7 +601,6 @@ var xVariantTypeChecked func(string) *VariantType
 func VariantTypeChecked(TypeStringVar string) *VariantType {
 
 	cret := xVariantTypeChecked(TypeStringVar)
-
 	return cret
 }
 
@@ -637,7 +609,6 @@ var xVariantTypeStringGetDepth func(string) uint
 func VariantTypeStringGetDepth(TypeStringVar string) uint {
 
 	cret := xVariantTypeStringGetDepth(TypeStringVar)
-
 	return cret
 }
 
@@ -651,7 +622,6 @@ var xVariantTypeStringIsValid func(string) bool
 func VariantTypeStringIsValid(TypeStringVar string) bool {
 
 	cret := xVariantTypeStringIsValid(TypeStringVar)
-
 	return cret
 }
 
@@ -673,12 +643,10 @@ var xVariantTypeStringScan func(string, uintptr, *string) bool
 // see [func@GLib.VariantType.string_is_valid].
 func VariantTypeStringScan(StringVar string, LimitVar *string, EndptrVar *string) bool {
 
-	LimitVarPtr, LimitVarBytes := core.NullableStringToPtr(LimitVar)
+	LimitVarPtr := core.GStrdupNullable(LimitVar)
+	defer core.GFreeNullable(LimitVarPtr)
 
 	cret := xVariantTypeStringScan(StringVar, LimitVarPtr, EndptrVar)
-
-	runtime.KeepAlive(LimitVarBytes)
-
 	return cret
 }
 

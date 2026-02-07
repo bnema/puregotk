@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -275,7 +274,6 @@ var xComboBoxGetActive func(uintptr) int
 func (x *ComboBox) GetActive() int {
 
 	cret := xComboBoxGetActive(x.GoPointer())
-
 	return cret
 }
 
@@ -297,7 +295,6 @@ var xComboBoxGetActiveId func(uintptr) string
 func (x *ComboBox) GetActiveId() string {
 
 	cret := xComboBoxGetActiveId(x.GoPointer())
-
 	return cret
 }
 
@@ -309,7 +306,6 @@ var xComboBoxGetActiveIter func(uintptr, *TreeIter) bool
 func (x *ComboBox) GetActiveIter(IterVar *TreeIter) bool {
 
 	cret := xComboBoxGetActiveIter(x.GoPointer(), IterVar)
-
 	return cret
 }
 
@@ -320,7 +316,6 @@ var xComboBoxGetButtonSensitivity func(uintptr) SensitivityType
 func (x *ComboBox) GetButtonSensitivity() SensitivityType {
 
 	cret := xComboBoxGetButtonSensitivity(x.GoPointer())
-
 	return cret
 }
 
@@ -348,7 +343,6 @@ var xComboBoxGetEntryTextColumn func(uintptr) int
 func (x *ComboBox) GetEntryTextColumn() int {
 
 	cret := xComboBoxGetEntryTextColumn(x.GoPointer())
-
 	return cret
 }
 
@@ -358,7 +352,6 @@ var xComboBoxGetHasEntry func(uintptr) bool
 func (x *ComboBox) GetHasEntry() bool {
 
 	cret := xComboBoxGetHasEntry(x.GoPointer())
-
 	return cret
 }
 
@@ -369,7 +362,6 @@ var xComboBoxGetIdColumn func(uintptr) int
 func (x *ComboBox) GetIdColumn() int {
 
 	cret := xComboBoxGetIdColumn(x.GoPointer())
-
 	return cret
 }
 
@@ -396,7 +388,6 @@ var xComboBoxGetPopupFixedWidth func(uintptr) bool
 func (x *ComboBox) GetPopupFixedWidth() bool {
 
 	cret := xComboBoxGetPopupFixedWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -406,7 +397,6 @@ var xComboBoxGetRowSeparatorFunc func(uintptr) uintptr
 func (x *ComboBox) GetRowSeparatorFunc() uintptr {
 
 	cret := xComboBoxGetRowSeparatorFunc(x.GoPointer())
-
 	return cret
 }
 
@@ -472,12 +462,10 @@ var xComboBoxSetActiveId func(uintptr, uintptr) bool
 // and returns %FALSE.
 func (x *ComboBox) SetActiveId(ActiveIdVar *string) bool {
 
-	ActiveIdVarPtr, ActiveIdVarBytes := core.NullableStringToPtr(ActiveIdVar)
+	ActiveIdVarPtr := core.GStrdupNullable(ActiveIdVar)
+	defer core.GFreeNullable(ActiveIdVarPtr)
 
 	cret := xComboBoxSetActiveId(x.GoPointer(), ActiveIdVarPtr)
-
-	runtime.KeepAlive(ActiveIdVarBytes)
-
 	return cret
 }
 
@@ -1004,7 +992,6 @@ func (x *ComboBox) GetAccessibleParent() *AccessibleBase {
 func (x *ComboBox) GetAccessibleRole() AccessibleRole {
 
 	cret := XGtkAccessibleGetAccessibleRole(x.GoPointer())
-
 	return cret
 }
 
@@ -1030,7 +1017,6 @@ func (x *ComboBox) GetAtContext() *ATContext {
 func (x *ComboBox) GetBounds(XVar *int, YVar *int, WidthVar *int, HeightVar *int) bool {
 
 	cret := XGtkAccessibleGetBounds(x.GoPointer(), XVar, YVar, WidthVar, HeightVar)
-
 	return cret
 }
 
@@ -1070,7 +1056,6 @@ func (x *ComboBox) GetNextAccessibleSibling() *AccessibleBase {
 func (x *ComboBox) GetPlatformState(StateVar AccessiblePlatformState) bool {
 
 	cret := XGtkAccessibleGetPlatformState(x.GoPointer(), StateVar)
-
 	return cret
 }
 
@@ -1247,7 +1232,6 @@ func (x *ComboBox) UpdateStateValue(NStatesVar int, StatesVar []AccessibleState,
 func (x *ComboBox) GetBuildableId() string {
 
 	cret := XGtkBuildableGetBuildableId(x.GoPointer())
-
 	return cret
 }
 
@@ -1331,7 +1315,6 @@ func (x *ComboBox) GetArea() *CellArea {
 func (x *ComboBox) GetCells() *glib.List {
 
 	cret := XGtkCellLayoutGetCells(x.GoPointer())
-
 	return cret
 }
 

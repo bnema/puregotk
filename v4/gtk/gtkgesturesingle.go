@@ -57,7 +57,6 @@ var xGestureSingleGetButton func(uintptr) uint
 func (x *GestureSingle) GetButton() uint {
 
 	cret := xGestureSingleGetButton(x.GoPointer())
-
 	return cret
 }
 
@@ -68,7 +67,6 @@ var xGestureSingleGetCurrentButton func(uintptr) uint
 func (x *GestureSingle) GetCurrentButton() uint {
 
 	cret := xGestureSingleGetCurrentButton(x.GoPointer())
-
 	return cret
 }
 
@@ -81,7 +79,6 @@ var xGestureSingleGetCurrentSequence func(uintptr) *gdk.EventSequence
 func (x *GestureSingle) GetCurrentSequence() *gdk.EventSequence {
 
 	cret := xGestureSingleGetCurrentSequence(x.GoPointer())
-
 	return cret
 }
 
@@ -93,7 +90,6 @@ var xGestureSingleGetExclusive func(uintptr) bool
 func (x *GestureSingle) GetExclusive() bool {
 
 	cret := xGestureSingleGetExclusive(x.GoPointer())
-
 	return cret
 }
 
@@ -103,7 +99,6 @@ var xGestureSingleGetTouchOnly func(uintptr) bool
 func (x *GestureSingle) GetTouchOnly() bool {
 
 	cret := xGestureSingleGetTouchOnly(x.GoPointer())
-
 	return cret
 }
 

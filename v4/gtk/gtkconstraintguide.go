@@ -2,7 +2,6 @@
 package gtk
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -89,7 +88,6 @@ var xConstraintGuideGetName func(uintptr) string
 func (x *ConstraintGuide) GetName() string {
 
 	cret := xConstraintGuideGetName(x.GoPointer())
-
 	return cret
 }
 
@@ -108,7 +106,6 @@ var xConstraintGuideGetStrength func(uintptr) ConstraintStrength
 func (x *ConstraintGuide) GetStrength() ConstraintStrength {
 
 	cret := xConstraintGuideGetStrength(x.GoPointer())
-
 	return cret
 }
 
@@ -143,11 +140,10 @@ var xConstraintGuideSetName func(uintptr, uintptr)
 // The name is useful for debugging purposes.
 func (x *ConstraintGuide) SetName(NameVar *string) {
 
-	NameVarPtr, NameVarBytes := core.NullableStringToPtr(NameVar)
+	NameVarPtr := core.GStrdupNullable(NameVar)
+	defer core.GFreeNullable(NameVarPtr)
 
 	xConstraintGuideSetName(x.GoPointer(), NameVarPtr)
-
-	runtime.KeepAlive(NameVarBytes)
 
 }
 

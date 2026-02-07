@@ -2,7 +2,6 @@
 package gio
 
 import (
-	"runtime"
 	"structs"
 	"unsafe"
 
@@ -494,7 +493,6 @@ func (x *Socket) Bind(AddressVar *SocketAddress, AllowReuseVar bool) (bool, erro
 	var cerr *glib.Error
 
 	cret := xSocketBind(x.GoPointer(), AddressVar.GoPointer(), AllowReuseVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -511,7 +509,6 @@ func (x *Socket) CheckConnectResult() (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSocketCheckConnectResult(x.GoPointer())
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -554,7 +551,6 @@ func (x *Socket) Close() (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSocketClose(x.GoPointer())
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -584,7 +580,6 @@ var xSocketConditionCheck func(uintptr, glib.IOCondition) glib.IOCondition
 func (x *Socket) ConditionCheck(ConditionVar glib.IOCondition) glib.IOCondition {
 
 	cret := xSocketConditionCheck(x.GoPointer(), ConditionVar)
-
 	return cret
 }
 
@@ -610,7 +605,6 @@ func (x *Socket) ConditionTimedWait(ConditionVar glib.IOCondition, TimeoutUsVar 
 	var cerr *glib.Error
 
 	cret := xSocketConditionTimedWait(x.GoPointer(), ConditionVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -634,7 +628,6 @@ func (x *Socket) ConditionWait(ConditionVar glib.IOCondition, CancellableVar *Ca
 	var cerr *glib.Error
 
 	cret := xSocketConditionWait(x.GoPointer(), ConditionVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -664,7 +657,6 @@ func (x *Socket) Connect(AddressVar *SocketAddress, CancellableVar *Cancellable)
 	var cerr *glib.Error
 
 	cret := xSocketConnect(x.GoPointer(), AddressVar.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -714,7 +706,6 @@ var xSocketCreateSource func(uintptr, glib.IOCondition, uintptr) *glib.Source
 func (x *Socket) CreateSource(ConditionVar glib.IOCondition, CancellableVar *Cancellable) *glib.Source {
 
 	cret := xSocketCreateSource(x.GoPointer(), ConditionVar, CancellableVar.GoPointer())
-
 	return cret
 }
 
@@ -735,7 +726,6 @@ var xSocketGetAvailableBytes func(uintptr) int
 func (x *Socket) GetAvailableBytes() int {
 
 	cret := xSocketGetAvailableBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -746,7 +736,6 @@ var xSocketGetBlocking func(uintptr) bool
 func (x *Socket) GetBlocking() bool {
 
 	cret := xSocketGetBlocking(x.GoPointer())
-
 	return cret
 }
 
@@ -758,7 +747,6 @@ var xSocketGetBroadcast func(uintptr) bool
 func (x *Socket) GetBroadcast() bool {
 
 	cret := xSocketGetBroadcast(x.GoPointer())
-
 	return cret
 }
 
@@ -808,7 +796,6 @@ var xSocketGetFamily func(uintptr) SocketFamily
 func (x *Socket) GetFamily() SocketFamily {
 
 	cret := xSocketGetFamily(x.GoPointer())
-
 	return cret
 }
 
@@ -822,7 +809,6 @@ var xSocketGetFd func(uintptr) int
 func (x *Socket) GetFd() int {
 
 	cret := xSocketGetFd(x.GoPointer())
-
 	return cret
 }
 
@@ -833,7 +819,6 @@ var xSocketGetKeepalive func(uintptr) bool
 func (x *Socket) GetKeepalive() bool {
 
 	cret := xSocketGetKeepalive(x.GoPointer())
-
 	return cret
 }
 
@@ -844,7 +829,6 @@ var xSocketGetListenBacklog func(uintptr) int
 func (x *Socket) GetListenBacklog() int {
 
 	cret := xSocketGetListenBacklog(x.GoPointer())
-
 	return cret
 }
 
@@ -879,7 +863,6 @@ var xSocketGetMulticastLoopback func(uintptr) bool
 func (x *Socket) GetMulticastLoopback() bool {
 
 	cret := xSocketGetMulticastLoopback(x.GoPointer())
-
 	return cret
 }
 
@@ -890,7 +873,6 @@ var xSocketGetMulticastTtl func(uintptr) uint
 func (x *Socket) GetMulticastTtl() uint {
 
 	cret := xSocketGetMulticastTtl(x.GoPointer())
-
 	return cret
 }
 
@@ -913,7 +895,6 @@ func (x *Socket) GetOption(LevelVar int, OptnameVar int, ValueVar *int) (bool, e
 	var cerr *glib.Error
 
 	cret := xSocketGetOption(x.GoPointer(), LevelVar, OptnameVar, ValueVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -928,7 +909,6 @@ var xSocketGetProtocol func(uintptr) SocketProtocol
 func (x *Socket) GetProtocol() SocketProtocol {
 
 	cret := xSocketGetProtocol(x.GoPointer())
-
 	return cret
 }
 
@@ -960,7 +940,6 @@ var xSocketGetSocketType func(uintptr) SocketType
 func (x *Socket) GetSocketType() SocketType {
 
 	cret := xSocketGetSocketType(x.GoPointer())
-
 	return cret
 }
 
@@ -971,7 +950,6 @@ var xSocketGetTimeout func(uintptr) uint
 func (x *Socket) GetTimeout() uint {
 
 	cret := xSocketGetTimeout(x.GoPointer())
-
 	return cret
 }
 
@@ -982,7 +960,6 @@ var xSocketGetTtl func(uintptr) uint
 func (x *Socket) GetTtl() uint {
 
 	cret := xSocketGetTtl(x.GoPointer())
-
 	return cret
 }
 
@@ -992,7 +969,6 @@ var xSocketIsClosed func(uintptr) bool
 func (x *Socket) IsClosed() bool {
 
 	cret := xSocketIsClosed(x.GoPointer())
-
 	return cret
 }
 
@@ -1008,7 +984,6 @@ var xSocketIsConnected func(uintptr) bool
 func (x *Socket) IsConnected() bool {
 
 	cret := xSocketIsConnected(x.GoPointer())
-
 	return cret
 }
 
@@ -1031,12 +1006,10 @@ var xSocketJoinMulticastGroup func(uintptr, uintptr, bool, uintptr, **glib.Error
 func (x *Socket) JoinMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bool, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	IfaceVarPtr, IfaceVarBytes := core.NullableStringToPtr(IfaceVar)
+	IfaceVarPtr := core.GStrdupNullable(IfaceVar)
+	defer core.GFreeNullable(IfaceVarPtr)
 
 	cret := xSocketJoinMulticastGroup(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar, IfaceVarPtr, &cerr)
-
-	runtime.KeepAlive(IfaceVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1064,12 +1037,10 @@ var xSocketJoinMulticastGroupSsm func(uintptr, uintptr, uintptr, uintptr, **glib
 func (x *Socket) JoinMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	IfaceVarPtr, IfaceVarBytes := core.NullableStringToPtr(IfaceVar)
+	IfaceVarPtr := core.GStrdupNullable(IfaceVar)
+	defer core.GFreeNullable(IfaceVarPtr)
 
 	cret := xSocketJoinMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), IfaceVarPtr, &cerr)
-
-	runtime.KeepAlive(IfaceVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1091,12 +1062,10 @@ var xSocketLeaveMulticastGroup func(uintptr, uintptr, bool, uintptr, **glib.Erro
 func (x *Socket) LeaveMulticastGroup(GroupVar *InetAddress, SourceSpecificVar bool, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	IfaceVarPtr, IfaceVarBytes := core.NullableStringToPtr(IfaceVar)
+	IfaceVarPtr := core.GStrdupNullable(IfaceVar)
+	defer core.GFreeNullable(IfaceVarPtr)
 
 	cret := xSocketLeaveMulticastGroup(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar, IfaceVarPtr, &cerr)
-
-	runtime.KeepAlive(IfaceVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1115,12 +1084,10 @@ var xSocketLeaveMulticastGroupSsm func(uintptr, uintptr, uintptr, uintptr, **gli
 func (x *Socket) LeaveMulticastGroupSsm(GroupVar *InetAddress, SourceSpecificVar *InetAddress, IfaceVar *string) (bool, error) {
 	var cerr *glib.Error
 
-	IfaceVarPtr, IfaceVarBytes := core.NullableStringToPtr(IfaceVar)
+	IfaceVarPtr := core.GStrdupNullable(IfaceVar)
+	defer core.GFreeNullable(IfaceVarPtr)
 
 	cret := xSocketLeaveMulticastGroupSsm(x.GoPointer(), GroupVar.GoPointer(), SourceSpecificVar.GoPointer(), IfaceVarPtr, &cerr)
-
-	runtime.KeepAlive(IfaceVarBytes)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1142,7 +1109,6 @@ func (x *Socket) Listen() (bool, error) {
 	var cerr *glib.Error
 
 	cret := xSocketListen(x.GoPointer())
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1179,7 +1145,6 @@ func (x *Socket) Receive(BufferVar *[]byte, SizeVar uint, CancellableVar *Cancel
 	var cerr *glib.Error
 
 	cret := xSocketReceive(x.GoPointer(), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1202,7 +1167,6 @@ func (x *Socket) ReceiveBytes(SizeVar uint, TimeoutUsVar int64, CancellableVar *
 	var cerr *glib.Error
 
 	cret := xSocketReceiveBytes(x.GoPointer(), SizeVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1230,7 +1194,6 @@ func (x *Socket) ReceiveBytesFrom(AddressVar **SocketAddress, SizeVar uint, Time
 	var cerr *glib.Error
 
 	cret := xSocketReceiveBytesFrom(x.GoPointer(), AddressVar, SizeVar, TimeoutUsVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1251,7 +1214,6 @@ func (x *Socket) ReceiveFrom(AddressVar **SocketAddress, BufferVar *[]byte, Size
 	var cerr *glib.Error
 
 	cret := xSocketReceiveFrom(x.GoPointer(), AddressVar, BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1324,7 +1286,6 @@ func (x *Socket) ReceiveMessage(AddressVar **SocketAddress, VectorsVar []InputVe
 	var cerr *glib.Error
 
 	cret := xSocketReceiveMessage(x.GoPointer(), AddressVar, VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1386,7 +1347,6 @@ func (x *Socket) ReceiveMessages(MessagesVar []InputMessage, NumMessagesVar uint
 	var cerr *glib.Error
 
 	cret := xSocketReceiveMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1403,7 +1363,6 @@ func (x *Socket) ReceiveWithBlocking(BufferVar *[]byte, SizeVar uint, BlockingVa
 	var cerr *glib.Error
 
 	cret := xSocketReceiveWithBlocking(x.GoPointer(), BufferVar, SizeVar, BlockingVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1431,7 +1390,6 @@ func (x *Socket) Send(BufferVar []byte, SizeVar uint, CancellableVar *Cancellabl
 	var cerr *glib.Error
 
 	cret := xSocketSend(x.GoPointer(), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1487,7 +1445,6 @@ func (x *Socket) SendMessage(AddressVar *SocketAddress, VectorsVar []OutputVecto
 	var cerr *glib.Error
 
 	cret := xSocketSendMessage(x.GoPointer(), AddressVar.GoPointer(), VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1508,7 +1465,6 @@ func (x *Socket) SendMessageWithTimeout(AddressVar *SocketAddress, VectorsVar []
 	var cerr *glib.Error
 
 	cret := xSocketSendMessageWithTimeout(x.GoPointer(), AddressVar.GoPointer(), VectorsVar, NumVectorsVar, MessagesVar, NumMessagesVar, FlagsVar, TimeoutUsVar, BytesWrittenVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1556,7 +1512,6 @@ func (x *Socket) SendMessages(MessagesVar []OutputMessage, NumMessagesVar uint, 
 	var cerr *glib.Error
 
 	cret := xSocketSendMessages(x.GoPointer(), MessagesVar, NumMessagesVar, FlagsVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1575,7 +1530,6 @@ func (x *Socket) SendTo(AddressVar *SocketAddress, BufferVar []byte, SizeVar uin
 	var cerr *glib.Error
 
 	cret := xSocketSendTo(x.GoPointer(), AddressVar.GoPointer(), BufferVar, SizeVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1592,7 +1546,6 @@ func (x *Socket) SendWithBlocking(BufferVar []byte, SizeVar uint, BlockingVar bo
 	var cerr *glib.Error
 
 	cret := xSocketSendWithBlocking(x.GoPointer(), BufferVar, SizeVar, BlockingVar, CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1702,7 +1655,6 @@ func (x *Socket) SetOption(LevelVar int, OptnameVar int, ValueVar int) (bool, er
 	var cerr *glib.Error
 
 	cret := xSocketSetOption(x.GoPointer(), LevelVar, OptnameVar, ValueVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1768,7 +1720,6 @@ func (x *Socket) Shutdown(ShutdownReadVar bool, ShutdownWriteVar bool) (bool, er
 	var cerr *glib.Error
 
 	cret := xSocketShutdown(x.GoPointer(), ShutdownReadVar, ShutdownWriteVar, &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1790,7 +1741,6 @@ var xSocketSpeaksIpv4 func(uintptr) bool
 func (x *Socket) SpeaksIpv4() bool {
 
 	cret := xSocketSpeaksIpv4(x.GoPointer())
-
 	return cret
 }
 
@@ -2000,7 +1950,6 @@ func (x *Socket) Init(CancellableVar *Cancellable) (bool, error) {
 	var cerr *glib.Error
 
 	cret := XGInitableInit(x.GoPointer(), CancellableVar.GoPointer(), &cerr)
-
 	if cerr == nil {
 		return cret, nil
 	}

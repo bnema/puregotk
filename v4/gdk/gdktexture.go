@@ -50,7 +50,6 @@ var xTextureErrorQuark func() glib.Quark
 func TextureErrorQuark() glib.Quark {
 
 	cret := xTextureErrorQuark()
-
 	return cret
 }
 
@@ -292,7 +291,6 @@ var xTextureGetColorState func(uintptr) *ColorState
 func (x *Texture) GetColorState() *ColorState {
 
 	cret := xTextureGetColorState(x.GoPointer())
-
 	return cret
 }
 
@@ -310,7 +308,6 @@ var xTextureGetFormat func(uintptr) MemoryFormat
 func (x *Texture) GetFormat() MemoryFormat {
 
 	cret := xTextureGetFormat(x.GoPointer())
-
 	return cret
 }
 
@@ -320,7 +317,6 @@ var xTextureGetHeight func(uintptr) int
 func (x *Texture) GetHeight() int {
 
 	cret := xTextureGetHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -330,7 +326,6 @@ var xTextureGetWidth func(uintptr) int
 func (x *Texture) GetWidth() int {
 
 	cret := xTextureGetWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -346,7 +341,6 @@ var xTextureSaveToPng func(uintptr, string) bool
 func (x *Texture) SaveToPng(FilenameVar string) bool {
 
 	cret := xTextureSaveToPng(x.GoPointer(), FilenameVar)
-
 	return cret
 }
 
@@ -369,7 +363,6 @@ var xTextureSaveToPngBytes func(uintptr) *glib.Bytes
 func (x *Texture) SaveToPngBytes() *glib.Bytes {
 
 	cret := xTextureSaveToPngBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -381,7 +374,6 @@ var xTextureSaveToTiff func(uintptr, string) bool
 func (x *Texture) SaveToTiff(FilenameVar string) bool {
 
 	cret := xTextureSaveToTiff(x.GoPointer(), FilenameVar)
-
 	return cret
 }
 
@@ -402,7 +394,6 @@ var xTextureSaveToTiffBytes func(uintptr) *glib.Bytes
 func (x *Texture) SaveToTiffBytes() *glib.Bytes {
 
 	cret := xTextureSaveToTiffBytes(x.GoPointer())
-
 	return cret
 }
 
@@ -511,7 +502,6 @@ func (x *Texture) GetCurrentImage() *PaintableBase {
 func (x *Texture) GetFlags() PaintableFlags {
 
 	cret := XGdkPaintableGetFlags(x.GoPointer())
-
 	return cret
 }
 
@@ -535,7 +525,6 @@ func (x *Texture) GetFlags() PaintableFlags {
 func (x *Texture) GetIntrinsicAspectRatio() float64 {
 
 	cret := XGdkPaintableGetIntrinsicAspectRatio(x.GoPointer())
-
 	return cret
 }
 
@@ -552,7 +541,6 @@ func (x *Texture) GetIntrinsicAspectRatio() float64 {
 func (x *Texture) GetIntrinsicHeight() int {
 
 	cret := XGdkPaintableGetIntrinsicHeight(x.GoPointer())
-
 	return cret
 }
 
@@ -569,7 +557,6 @@ func (x *Texture) GetIntrinsicHeight() int {
 func (x *Texture) GetIntrinsicWidth() int {
 
 	cret := XGdkPaintableGetIntrinsicWidth(x.GoPointer())
-
 	return cret
 }
 
@@ -620,7 +607,6 @@ func (x *Texture) Snapshot(SnapshotVar *Snapshot, WidthVar float64, HeightVar fl
 func (x *Texture) Equal(Icon2Var gio.Icon) bool {
 
 	cret := gio.XGIconEqual(x.GoPointer(), Icon2Var.GoPointer())
-
 	return cret
 }
 
@@ -628,7 +614,6 @@ func (x *Texture) Equal(Icon2Var gio.Icon) bool {
 func (x *Texture) Hash() uint {
 
 	cret := gio.XGIconHash(x.GoPointer())
-
 	return cret
 }
 
@@ -640,7 +625,6 @@ func (x *Texture) Hash() uint {
 func (x *Texture) Serialize() *glib.Variant {
 
 	cret := gio.XGIconSerialize(x.GoPointer())
-
 	return cret
 }
 
@@ -663,7 +647,6 @@ func (x *Texture) Serialize() *glib.Variant {
 func (x *Texture) ToString() string {
 
 	cret := gio.XGIconToString(x.GoPointer())
-
 	return cret
 }
 
