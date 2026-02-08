@@ -32,6 +32,8 @@ type CallbackParam struct {
 	TypeName string
 	// PureTypes are the pure argument types for the closure
 	PureTypes []string
+	// CallArgs are expressions used when invoking cbFn from closure args
+	CallArgs []string
 	// RetRaw is the return type for the closure (e.g., "bool")
 	RetRaw string
 	// Nullable indicates if the callback can be nil
@@ -358,12 +360,22 @@ func (f *funcArgsTemplate) Add(p Parameter, ins string, ns string, kinds KindMap
 			}
 
 			qualifiedPureTypes := qualifyCallbackTypes(cbArgs.Pure.Types, cbNs, ns)
+			callArgs := make([]string, len(qualifiedPureTypes))
+			for i := range qualifiedPureTypes {
+				callArgs[i] = fmt.Sprintf("arg%d", i)
+				if qualifiedPureTypes[i] == "string" {
+					// C callback string parameters are char* pointers in ABI.
+					qualifiedPureTypes[i] = "uintptr"
+					callArgs[i] = fmt.Sprintf("core.GoString(arg%d)", i)
+				}
+			}
 			qualifiedRetRaw := qualifyCallbackType(retRaw, cbNs, ns)
 
 			f.Callbacks = append(f.Callbacks, CallbackParam{
 				Name:      varName,
 				TypeName:  strings.TrimPrefix(goType, "*"),
 				PureTypes: qualifiedPureTypes,
+				CallArgs:  callArgs,
 				RetRaw:    qualifiedRetRaw,
 				Nullable:  p.Nullable,
 			})

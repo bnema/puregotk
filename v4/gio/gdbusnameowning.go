@@ -79,9 +79,9 @@ func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, 
 		if cbRefPtr, ok := glib.GetCallback(BusAcquiredHandlerVarPtr); ok {
 			BusAcquiredHandlerVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *BusAcquiredHandlerVar
-				cbFn(arg0, arg1, arg2)
+				cbFn(arg0, core.GoString(arg1), arg2)
 			}
 			BusAcquiredHandlerVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(BusAcquiredHandlerVarPtr, BusAcquiredHandlerVarRef, BusAcquiredHandlerVar)
@@ -94,9 +94,9 @@ func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, 
 		if cbRefPtr, ok := glib.GetCallback(NameAcquiredHandlerVarPtr); ok {
 			NameAcquiredHandlerVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *NameAcquiredHandlerVar
-				cbFn(arg0, arg1, arg2)
+				cbFn(arg0, core.GoString(arg1), arg2)
 			}
 			NameAcquiredHandlerVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(NameAcquiredHandlerVarPtr, NameAcquiredHandlerVarRef, NameAcquiredHandlerVar)
@@ -109,9 +109,9 @@ func BusOwnName(BusTypeVar BusType, NameVar string, FlagsVar BusNameOwnerFlags, 
 		if cbRefPtr, ok := glib.GetCallback(NameLostHandlerVarPtr); ok {
 			NameLostHandlerVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *NameLostHandlerVar
-				cbFn(arg0, arg1, arg2)
+				cbFn(arg0, core.GoString(arg1), arg2)
 			}
 			NameLostHandlerVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(NameLostHandlerVarPtr, NameLostHandlerVarRef, NameLostHandlerVar)
@@ -149,9 +149,9 @@ func BusOwnNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Flags
 		if cbRefPtr, ok := glib.GetCallback(NameAcquiredHandlerVarPtr); ok {
 			NameAcquiredHandlerVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *NameAcquiredHandlerVar
-				cbFn(arg0, arg1, arg2)
+				cbFn(arg0, core.GoString(arg1), arg2)
 			}
 			NameAcquiredHandlerVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(NameAcquiredHandlerVarPtr, NameAcquiredHandlerVarRef, NameAcquiredHandlerVar)
@@ -164,9 +164,9 @@ func BusOwnNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Flags
 		if cbRefPtr, ok := glib.GetCallback(NameLostHandlerVarPtr); ok {
 			NameLostHandlerVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *NameLostHandlerVar
-				cbFn(arg0, arg1, arg2)
+				cbFn(arg0, core.GoString(arg1), arg2)
 			}
 			NameLostHandlerVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(NameLostHandlerVarPtr, NameLostHandlerVarRef, NameLostHandlerVar)

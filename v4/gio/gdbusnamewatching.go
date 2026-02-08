@@ -75,9 +75,9 @@ func BusWatchName(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFla
 		if cbRefPtr, ok := glib.GetCallback(NameAppearedHandlerVarPtr); ok {
 			NameAppearedHandlerVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) {
 				cbFn := *NameAppearedHandlerVar
-				cbFn(arg0, arg1, arg2, arg3)
+				cbFn(arg0, core.GoString(arg1), core.GoString(arg2), arg3)
 			}
 			NameAppearedHandlerVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(NameAppearedHandlerVarPtr, NameAppearedHandlerVarRef, NameAppearedHandlerVar)
@@ -90,9 +90,9 @@ func BusWatchName(BusTypeVar BusType, NameVar string, FlagsVar BusNameWatcherFla
 		if cbRefPtr, ok := glib.GetCallback(NameVanishedHandlerVarPtr); ok {
 			NameVanishedHandlerVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *NameVanishedHandlerVar
-				cbFn(arg0, arg1, arg2)
+				cbFn(arg0, core.GoString(arg1), arg2)
 			}
 			NameVanishedHandlerVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(NameVanishedHandlerVarPtr, NameVanishedHandlerVarRef, NameVanishedHandlerVar)
@@ -130,9 +130,9 @@ func BusWatchNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Fla
 		if cbRefPtr, ok := glib.GetCallback(NameAppearedHandlerVarPtr); ok {
 			NameAppearedHandlerVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) {
 				cbFn := *NameAppearedHandlerVar
-				cbFn(arg0, arg1, arg2, arg3)
+				cbFn(arg0, core.GoString(arg1), core.GoString(arg2), arg3)
 			}
 			NameAppearedHandlerVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(NameAppearedHandlerVarPtr, NameAppearedHandlerVarRef, NameAppearedHandlerVar)
@@ -145,9 +145,9 @@ func BusWatchNameOnConnection(ConnectionVar *DBusConnection, NameVar string, Fla
 		if cbRefPtr, ok := glib.GetCallback(NameVanishedHandlerVarPtr); ok {
 			NameVanishedHandlerVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) {
 				cbFn := *NameVanishedHandlerVar
-				cbFn(arg0, arg1, arg2)
+				cbFn(arg0, core.GoString(arg1), arg2)
 			}
 			NameVanishedHandlerVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(NameVanishedHandlerVarPtr, NameVanishedHandlerVarRef, NameVanishedHandlerVar)

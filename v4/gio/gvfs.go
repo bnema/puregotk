@@ -620,9 +620,9 @@ func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc,
 		if cbRefPtr, ok := glib.GetCallback(UriFuncVarPtr); ok {
 			UriFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) uintptr {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) uintptr {
 				cbFn := *UriFuncVar
-				return cbFn(arg0, arg1, arg2)
+				return cbFn(arg0, core.GoString(arg1), arg2)
 			}
 			UriFuncVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(UriFuncVarPtr, UriFuncVarRef, UriFuncVar)
@@ -650,9 +650,9 @@ func (x *Vfs) RegisterUriScheme(SchemeVar string, UriFuncVar *VfsFileLookupFunc,
 		if cbRefPtr, ok := glib.GetCallback(ParseNameFuncVarPtr); ok {
 			ParseNameFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 uintptr) uintptr {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr) uintptr {
 				cbFn := *ParseNameFuncVar
-				return cbFn(arg0, arg1, arg2)
+				return cbFn(arg0, core.GoString(arg1), arg2)
 			}
 			ParseNameFuncVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(ParseNameFuncVarPtr, ParseNameFuncVarRef, ParseNameFuncVar)

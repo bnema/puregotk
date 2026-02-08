@@ -1711,9 +1711,9 @@ func (x *TreeView) SetSearchEqualFunc(SearchEqualFuncVar *TreeViewSearchEqualFun
 		if cbRefPtr, ok := glib.GetCallback(SearchEqualFuncVarPtr); ok {
 			SearchEqualFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 int, arg2 string, arg3 *TreeIter, arg4 uintptr) bool {
+			fcb := func(arg0 uintptr, arg1 int, arg2 uintptr, arg3 *TreeIter, arg4 uintptr) bool {
 				cbFn := *SearchEqualFuncVar
-				return cbFn(arg0, arg1, arg2, arg3, arg4)
+				return cbFn(arg0, arg1, core.GoString(arg2), arg3, arg4)
 			}
 			SearchEqualFuncVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(SearchEqualFuncVarPtr, SearchEqualFuncVarRef, SearchEqualFuncVar)

@@ -1579,9 +1579,9 @@ func (x *DBusConnection) SignalSubscribe(SenderVar *string, InterfaceNameVar *st
 		if cbRefPtr, ok := glib.GetCallback(CallbackVarPtr); ok {
 			CallbackVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 string, arg4 string, arg5 *glib.Variant, arg6 uintptr) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr, arg4 uintptr, arg5 *glib.Variant, arg6 uintptr) {
 				cbFn := *CallbackVar
-				cbFn(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+				cbFn(arg0, core.GoString(arg1), core.GoString(arg2), core.GoString(arg3), core.GoString(arg4), arg5, arg6)
 			}
 			CallbackVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(CallbackVarPtr, CallbackVarRef, CallbackVar)

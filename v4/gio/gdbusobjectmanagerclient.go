@@ -241,9 +241,9 @@ func NewDBusObjectManagerClientForBusSync(BusTypeVar BusType, FlagsVar DBusObjec
 		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeFuncVarPtr); ok {
 			GetProxyTypeFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 uintptr) types.GType {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) types.GType {
 				cbFn := *GetProxyTypeFuncVar
-				return cbFn(arg0, arg1, arg2, arg3)
+				return cbFn(arg0, core.GoString(arg1), core.GoString(arg2), arg3)
 			}
 			GetProxyTypeFuncVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(GetProxyTypeFuncVarPtr, GetProxyTypeFuncVarRef, GetProxyTypeFuncVar)
@@ -296,9 +296,9 @@ func NewDBusObjectManagerClientSync(ConnectionVar *DBusConnection, FlagsVar DBus
 		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeFuncVarPtr); ok {
 			GetProxyTypeFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 uintptr) types.GType {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) types.GType {
 				cbFn := *GetProxyTypeFuncVar
-				return cbFn(arg0, arg1, arg2, arg3)
+				return cbFn(arg0, core.GoString(arg1), core.GoString(arg2), arg3)
 			}
 			GetProxyTypeFuncVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(GetProxyTypeFuncVarPtr, GetProxyTypeFuncVarRef, GetProxyTypeFuncVar)
@@ -743,9 +743,9 @@ func DBusObjectManagerClientNew(ConnectionVar *DBusConnection, FlagsVar DBusObje
 		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeFuncVarPtr); ok {
 			GetProxyTypeFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 uintptr) types.GType {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) types.GType {
 				cbFn := *GetProxyTypeFuncVar
-				return cbFn(arg0, arg1, arg2, arg3)
+				return cbFn(arg0, core.GoString(arg1), core.GoString(arg2), arg3)
 			}
 			GetProxyTypeFuncVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(GetProxyTypeFuncVarPtr, GetProxyTypeFuncVarRef, GetProxyTypeFuncVar)
@@ -805,9 +805,9 @@ func DBusObjectManagerClientNewForBus(BusTypeVar BusType, FlagsVar DBusObjectMan
 		if cbRefPtr, ok := glib.GetCallback(GetProxyTypeFuncVarPtr); ok {
 			GetProxyTypeFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 string, arg3 uintptr) types.GType {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uintptr, arg3 uintptr) types.GType {
 				cbFn := *GetProxyTypeFuncVar
-				return cbFn(arg0, arg1, arg2, arg3)
+				return cbFn(arg0, core.GoString(arg1), core.GoString(arg2), arg3)
 			}
 			GetProxyTypeFuncVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(GetProxyTypeFuncVarPtr, GetProxyTypeFuncVarRef, GetProxyTypeFuncVar)

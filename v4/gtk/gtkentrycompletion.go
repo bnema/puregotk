@@ -291,9 +291,9 @@ func (x *EntryCompletion) SetMatchFunc(FuncVar *EntryCompletionMatchFunc, FuncDa
 		if cbRefPtr, ok := glib.GetCallback(FuncVarPtr); ok {
 			FuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 *TreeIter, arg3 uintptr) bool {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 *TreeIter, arg3 uintptr) bool {
 				cbFn := *FuncVar
-				return cbFn(arg0, arg1, arg2, arg3)
+				return cbFn(arg0, core.GoString(arg1), arg2, arg3)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)

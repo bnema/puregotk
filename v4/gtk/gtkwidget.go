@@ -373,9 +373,9 @@ func (x *WidgetClass) InstallAction(ActionNameVar string, ParameterTypeVar *stri
 		if cbRefPtr, ok := glib.GetCallback(ActivateVarPtr); ok {
 			ActivateVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 uintptr, arg1 string, arg2 *glib.Variant) {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 *glib.Variant) {
 				cbFn := *ActivateVar
-				cbFn(arg0, arg1, arg2)
+				cbFn(arg0, core.GoString(arg1), arg2)
 			}
 			ActivateVarRef = purego.NewCallback(fcb)
 			glib.SaveCallbackWithClosure(ActivateVarPtr, ActivateVarRef, ActivateVar)

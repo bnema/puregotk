@@ -329,9 +329,9 @@ func (x *OptionContext) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr
 		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
 			FuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 string, arg1 uintptr) string {
+			fcb := func(arg0 uintptr, arg1 uintptr) string {
 				cbFn := *FuncVar
-				return cbFn(arg0, arg1)
+				return cbFn(core.GoString(arg0), arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
 			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
@@ -579,9 +579,9 @@ func (x *OptionGroup) SetTranslateFunc(FuncVar *TranslateFunc, DataVar uintptr, 
 		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
 			FuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 string, arg1 uintptr) string {
+			fcb := func(arg0 uintptr, arg1 uintptr) string {
 				cbFn := *FuncVar
-				return cbFn(arg0, arg1)
+				return cbFn(core.GoString(arg0), arg1)
 			}
 			FuncVarRef = purego.NewCallback(fcb)
 			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)

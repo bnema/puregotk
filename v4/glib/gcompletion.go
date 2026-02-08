@@ -137,9 +137,9 @@ func (x *Completion) SetCompare(StrncmpFuncVar *CompletionStrncmpFunc) {
 		if cbRefPtr, ok := GetCallback(StrncmpFuncVarPtr); ok {
 			StrncmpFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 string, arg1 string, arg2 uint) int {
+			fcb := func(arg0 uintptr, arg1 uintptr, arg2 uint) int {
 				cbFn := *StrncmpFuncVar
-				return cbFn(arg0, arg1, arg2)
+				return cbFn(core.GoString(arg0), core.GoString(arg1), arg2)
 			}
 			StrncmpFuncVarRef = purego.NewCallback(fcb)
 			SaveCallbackWithClosure(StrncmpFuncVarPtr, StrncmpFuncVarRef, StrncmpFuncVar)

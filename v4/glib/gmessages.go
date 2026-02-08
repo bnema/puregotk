@@ -354,9 +354,9 @@ func LogSetDefaultHandler(LogFuncVar *LogFunc, UserDataVar uintptr) uintptr {
 		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
 			LogFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
+			fcb := func(arg0 uintptr, arg1 LogLevelFlags, arg2 uintptr, arg3 uintptr) {
 				cbFn := *LogFuncVar
-				cbFn(arg0, arg1, arg2, arg3)
+				cbFn(core.GoString(arg0), arg1, core.GoString(arg2), arg3)
 			}
 			LogFuncVarRef = purego.NewCallback(fcb)
 			SaveCallbackWithClosure(LogFuncVarPtr, LogFuncVarRef, LogFuncVar)
@@ -442,9 +442,9 @@ func LogSetHandler(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFuncVar 
 		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
 			LogFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
+			fcb := func(arg0 uintptr, arg1 LogLevelFlags, arg2 uintptr, arg3 uintptr) {
 				cbFn := *LogFuncVar
-				cbFn(arg0, arg1, arg2, arg3)
+				cbFn(core.GoString(arg0), arg1, core.GoString(arg2), arg3)
 			}
 			LogFuncVarRef = purego.NewCallback(fcb)
 			SaveCallbackWithClosure(LogFuncVarPtr, LogFuncVarRef, LogFuncVar)
@@ -475,9 +475,9 @@ func LogSetHandlerFull(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFunc
 		if cbRefPtr, ok := GetCallback(LogFuncVarPtr); ok {
 			LogFuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 string, arg1 LogLevelFlags, arg2 string, arg3 uintptr) {
+			fcb := func(arg0 uintptr, arg1 LogLevelFlags, arg2 uintptr, arg3 uintptr) {
 				cbFn := *LogFuncVar
-				cbFn(arg0, arg1, arg2, arg3)
+				cbFn(core.GoString(arg0), arg1, core.GoString(arg2), arg3)
 			}
 			LogFuncVarRef = purego.NewCallback(fcb)
 			SaveCallbackWithClosure(LogFuncVarPtr, LogFuncVarRef, LogFuncVar)
@@ -1052,9 +1052,9 @@ func SetPrintHandler(FuncVar *PrintFunc) uintptr {
 		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
 			FuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 string) {
+			fcb := func(arg0 uintptr) {
 				cbFn := *FuncVar
-				cbFn(arg0)
+				cbFn(core.GoString(arg0))
 			}
 			FuncVarRef = purego.NewCallback(fcb)
 			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
@@ -1090,9 +1090,9 @@ func SetPrinterrHandler(FuncVar *PrintFunc) uintptr {
 		if cbRefPtr, ok := GetCallback(FuncVarPtr); ok {
 			FuncVarRef = cbRefPtr
 		} else {
-			fcb := func(arg0 string) {
+			fcb := func(arg0 uintptr) {
 				cbFn := *FuncVar
-				cbFn(arg0)
+				cbFn(core.GoString(arg0))
 			}
 			FuncVarRef = purego.NewCallback(fcb)
 			SaveCallbackWithClosure(FuncVarPtr, FuncVarRef, FuncVar)
