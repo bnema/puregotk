@@ -14,10 +14,14 @@ var callbacks = struct {
 	refs              map[uintptr]uintptr
 	closures          map[uintptr]interface{}
 	handlerToCallback map[uint]uintptr
+	sourceToCallback  map[uint]uintptr
+	callbackRefCount  map[uintptr]int
 }{
 	refs:              make(map[uintptr]uintptr),
 	closures:          make(map[uintptr]interface{}),
 	handlerToCallback: make(map[uint]uintptr),
+	sourceToCallback:  make(map[uint]uintptr),
+	callbackRefCount:  make(map[uintptr]int),
 }
 
 // GetCallback retrives a callback reference by value.
@@ -44,6 +48,9 @@ func SaveCallbackWithClosure(cbPtr uintptr, refPtr uintptr, closure interface{})
 	callbacks.Lock()
 	callbacks.refs[cbPtr] = refPtr
 	callbacks.closures[cbPtr] = closure
+	if _, ok := callbacks.callbackRefCount[cbPtr]; !ok {
+		callbacks.callbackRefCount[cbPtr] = 1
+	}
 	callbacks.Unlock()
 }
 
@@ -52,26 +59,130 @@ func SaveCallbackWithClosure(cbPtr uintptr, refPtr uintptr, closure interface{})
 // Users should not need to call this.
 func RemoveCallback(cbPtr uintptr) {
 	callbacks.Lock()
+	for handlerID, mappedCbPtr := range callbacks.handlerToCallback {
+		if mappedCbPtr == cbPtr {
+			delete(callbacks.handlerToCallback, handlerID)
+		}
+	}
+	for sourceID, mappedCbPtr := range callbacks.sourceToCallback {
+		if mappedCbPtr == cbPtr {
+			delete(callbacks.sourceToCallback, sourceID)
+		}
+	}
 	delete(callbacks.refs, cbPtr)
 	delete(callbacks.closures, cbPtr)
+	delete(callbacks.callbackRefCount, cbPtr)
 	callbacks.Unlock()
+}
+
+// acquireCallbackRef increments callbackRefCount for cbPtr.
+// Caller must hold callbacks.Lock().
+func acquireCallbackRef(cbPtr uintptr) {
+	callbacks.callbackRefCount[cbPtr]++
+}
+
+func hasCallbackMappings(cbPtr uintptr) bool {
+	for _, mappedCbPtr := range callbacks.handlerToCallback {
+		if mappedCbPtr == cbPtr {
+			return true
+		}
+	}
+	for _, mappedCbPtr := range callbacks.sourceToCallback {
+		if mappedCbPtr == cbPtr {
+			return true
+		}
+	}
+	return false
+}
+
+// releaseCallbackRef decrements callbackRefCount for cbPtr and removes callback
+// data when it reaches zero.
+// Caller must hold callbacks.Lock().
+// Handler/source mappings to cbPtr are expected to be removed or replaced by
+// the caller (RemoveCallbackByHandler, RemoveCallbackBySource,
+// SaveHandlerMapping, SaveSourceMapping).
+func releaseCallbackRef(cbPtr uintptr) {
+	count, ok := callbacks.callbackRefCount[cbPtr]
+	if !ok {
+		return
+	}
+
+	count--
+	if count > 0 {
+		callbacks.callbackRefCount[cbPtr] = count
+		return
+	}
+
+	delete(callbacks.callbackRefCount, cbPtr)
+	delete(callbacks.refs, cbPtr)
+	delete(callbacks.closures, cbPtr)
 }
 
 // SaveHandlerMapping records a signal handler ID → callback pointer mapping
 // so that DisconnectSignal can clean up the callback registry.
 func SaveHandlerMapping(handlerID uint, cbPtr uintptr) {
+	if handlerID == 0 {
+		return
+	}
+
 	callbacks.Lock()
+	defer callbacks.Unlock()
+	if prevCbPtr, ok := callbacks.handlerToCallback[handlerID]; ok {
+		if prevCbPtr == cbPtr {
+			return
+		}
+		releaseCallbackRef(prevCbPtr)
+		if !hasCallbackMappings(prevCbPtr) {
+			releaseCallbackRef(prevCbPtr)
+		}
+	}
 	callbacks.handlerToCallback[handlerID] = cbPtr
-	callbacks.Unlock()
+	acquireCallbackRef(cbPtr)
 }
 
 // RemoveCallbackByHandler removes a callback from the registry using a signal handler ID.
 func RemoveCallbackByHandler(handlerID uint) {
 	callbacks.Lock()
 	if cbPtr, ok := callbacks.handlerToCallback[handlerID]; ok {
-		delete(callbacks.refs, cbPtr)
-		delete(callbacks.closures, cbPtr)
 		delete(callbacks.handlerToCallback, handlerID)
+		releaseCallbackRef(cbPtr)
+		if !hasCallbackMappings(cbPtr) {
+			releaseCallbackRef(cbPtr)
+		}
+	}
+	callbacks.Unlock()
+}
+
+// SaveSourceMapping records a source ID -> callback pointer mapping.
+func SaveSourceMapping(sourceID uint, cbPtr uintptr) {
+	if sourceID == 0 {
+		return
+	}
+
+	callbacks.Lock()
+	defer callbacks.Unlock()
+	if prevCbPtr, ok := callbacks.sourceToCallback[sourceID]; ok {
+		if prevCbPtr == cbPtr {
+			return
+		}
+		releaseCallbackRef(prevCbPtr)
+		if !hasCallbackMappings(prevCbPtr) {
+			releaseCallbackRef(prevCbPtr)
+		}
+	}
+	callbacks.sourceToCallback[sourceID] = cbPtr
+	acquireCallbackRef(cbPtr)
+}
+
+// RemoveCallbackBySource removes a callback mapping using a source ID.
+func RemoveCallbackBySource(sourceID uint) {
+	callbacks.Lock()
+	if cbPtr, ok := callbacks.sourceToCallback[sourceID]; ok {
+		delete(callbacks.sourceToCallback, sourceID)
+		releaseCallbackRef(cbPtr)
+		if !hasCallbackMappings(cbPtr) {
+			releaseCallbackRef(cbPtr)
+		}
 	}
 	callbacks.Unlock()
 }

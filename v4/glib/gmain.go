@@ -1716,6 +1716,9 @@ func ChildWatchAdd(PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr) uin
 	}
 
 	cret := xChildWatchAdd(PidVar, FunctionVarRef, DataVar)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
@@ -1779,6 +1782,9 @@ func ChildWatchAddFull(PriorityVar int, PidVar Pid, FunctionVar *ChildWatchFunc,
 	}
 
 	cret := xChildWatchAddFull(PriorityVar, PidVar, FunctionVarRef, DataVar, NotifyVarRef)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
@@ -1948,6 +1954,9 @@ func IdleAdd(FunctionVar *SourceFunc, DataVar uintptr) uint {
 	}
 
 	cret := xIdleAdd(FunctionVarRef, DataVar)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
@@ -2000,6 +2009,9 @@ func IdleAddFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, Noti
 	}
 
 	cret := xIdleAddFull(PriorityVar, FunctionVarRef, DataVar, NotifyVarRef)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
@@ -2033,6 +2045,9 @@ func IdleAddOnce(FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
 	}
 
 	cret := xIdleAddOnce(FunctionVarRef, DataVar)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
@@ -2266,6 +2281,9 @@ var xSourceRemove func(uint) bool
 func SourceRemove(TagVar uint) bool {
 
 	cret := xSourceRemove(TagVar)
+	if cret {
+		RemoveCallbackBySource(TagVar)
+	}
 	return cret
 }
 
@@ -2371,6 +2389,9 @@ func TimeoutAdd(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint
 	}
 
 	cret := xTimeoutAdd(IntervalVar, FunctionVarRef, DataVar)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
@@ -2437,6 +2458,9 @@ func TimeoutAddFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, 
 	}
 
 	cret := xTimeoutAddFull(PriorityVar, IntervalVar, FunctionVarRef, DataVar, NotifyVarRef)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
@@ -2467,6 +2491,9 @@ func TimeoutAddOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintp
 	}
 
 	cret := xTimeoutAddOnce(IntervalVar, FunctionVarRef, DataVar)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
@@ -2513,6 +2540,9 @@ func TimeoutAddSeconds(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintpt
 	}
 
 	cret := xTimeoutAddSeconds(IntervalVar, FunctionVarRef, DataVar)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
@@ -2591,6 +2621,9 @@ func TimeoutAddSecondsFull(PriorityVar int, IntervalVar uint, FunctionVar *Sourc
 	}
 
 	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, FunctionVarRef, DataVar, NotifyVarRef)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
@@ -2616,6 +2649,9 @@ func TimeoutAddSecondsOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVa
 	}
 
 	cret := xTimeoutAddSecondsOnce(IntervalVar, FunctionVarRef, DataVar)
+	if FunctionVar != nil {
+		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
+	}
 	return cret
 }
 
