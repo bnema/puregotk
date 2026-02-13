@@ -1040,6 +1040,7 @@ func IoAddWatch(ChannelVar *IOChannel, ConditionVar IOCondition, FuncVar *IOFunc
 	}
 
 	cret := xIoAddWatch(ChannelVar, ConditionVar, FuncVarRef, UserDataVar)
+
 	return cret
 }
 
@@ -1084,6 +1085,7 @@ func IoAddWatchFull(ChannelVar *IOChannel, PriorityVar int, ConditionVar IOCondi
 	}
 
 	cret := xIoAddWatchFull(ChannelVar, PriorityVar, ConditionVar, FuncVarRef, UserDataVar, NotifyVarRef)
+
 	return cret
 }
 
@@ -1093,6 +1095,7 @@ var xIoChannelErrorFromErrno func(int) IOChannelError
 func IoChannelErrorFromErrno(EnVar int) IOChannelError {
 
 	cret := xIoChannelErrorFromErrno(EnVar)
+
 	return cret
 }
 
@@ -1115,6 +1118,7 @@ var xIoCreateWatch func(*IOChannel, IOCondition) *Source
 func IoCreateWatch(ChannelVar *IOChannel, ConditionVar IOCondition) *Source {
 
 	cret := xIoCreateWatch(ChannelVar, ConditionVar)
+
 	return cret
 }
 

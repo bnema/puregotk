@@ -38,6 +38,7 @@ var xAccess func(string, int) int
 func Access(FilenameVar string, ModeVar int) int {
 
 	cret := xAccess(FilenameVar, ModeVar)
+
 	return cret
 }
 
@@ -50,6 +51,7 @@ var xChdir func(string) int
 func Chdir(PathVar string) int {
 
 	cret := xChdir(PathVar)
+
 	return cret
 }
 
@@ -68,6 +70,7 @@ var xChmod func(string, int) int
 func Chmod(FilenameVar string, ModeVar int) int {
 
 	cret := xChmod(FilenameVar, ModeVar)
+
 	return cret
 }
 
@@ -94,6 +97,7 @@ func Close(FdVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xClose(FdVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -125,6 +129,7 @@ var xCreat func(string, int) int
 func Creat(FilenameVar string, ModeVar int) int {
 
 	cret := xCreat(FilenameVar, ModeVar)
+
 	return cret
 }
 
@@ -156,6 +161,7 @@ var xFopen func(string, string) uintptr
 func Fopen(FilenameVar string, ModeVar string) uintptr {
 
 	cret := xFopen(FilenameVar, ModeVar)
+
 	return cret
 }
 
@@ -171,6 +177,7 @@ var xFreopen func(string, string, uintptr) uintptr
 func Freopen(FilenameVar string, ModeVar string, StreamVar uintptr) uintptr {
 
 	cret := xFreopen(FilenameVar, ModeVar, StreamVar)
+
 	return cret
 }
 
@@ -187,6 +194,7 @@ var xFsync func(int) int
 func Fsync(FdVar int) int {
 
 	cret := xFsync(FdVar)
+
 	return cret
 }
 
@@ -202,6 +210,7 @@ var xLstat func(string, *StatBuf) int
 func Lstat(FilenameVar string, BufVar *StatBuf) int {
 
 	cret := xLstat(FilenameVar, BufVar)
+
 	return cret
 }
 
@@ -215,6 +224,7 @@ var xMkdir func(string, int) int
 func Mkdir(FilenameVar string, ModeVar int) int {
 
 	cret := xMkdir(FilenameVar, ModeVar)
+
 	return cret
 }
 
@@ -241,6 +251,7 @@ var xOpen func(string, int, int) int
 func Open(FilenameVar string, FlagsVar int, ModeVar int) int {
 
 	cret := xOpen(FilenameVar, FlagsVar, ModeVar)
+
 	return cret
 }
 
@@ -265,6 +276,7 @@ var xRemove func(string) int
 func Remove(FilenameVar string) int {
 
 	cret := xRemove(FilenameVar)
+
 	return cret
 }
 
@@ -279,6 +291,7 @@ var xRename func(string, string) int
 func Rename(OldfilenameVar string, NewfilenameVar string) int {
 
 	cret := xRename(OldfilenameVar, NewfilenameVar)
+
 	return cret
 }
 
@@ -292,6 +305,7 @@ var xRmdir func(string) int
 func Rmdir(FilenameVar string) int {
 
 	cret := xRmdir(FilenameVar)
+
 	return cret
 }
 
@@ -320,6 +334,7 @@ var xStat func(string, *StatBuf) int
 func Stat(FilenameVar string, BufVar *StatBuf) int {
 
 	cret := xStat(FilenameVar, BufVar)
+
 	return cret
 }
 
@@ -336,6 +351,7 @@ var xUnlink func(string) int
 func Unlink(FilenameVar string) int {
 
 	cret := xUnlink(FilenameVar)
+
 	return cret
 }
 
@@ -349,6 +365,7 @@ var xUtime func(string, uintptr) int
 func Utime(FilenameVar string, UtbVar uintptr) int {
 
 	cret := xUtime(FilenameVar, UtbVar)
+
 	return cret
 }
 

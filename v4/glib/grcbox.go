@@ -14,6 +14,7 @@ var xAtomicRcBoxAcquire func(uintptr) uintptr
 func AtomicRcBoxAcquire(MemBlockVar uintptr) uintptr {
 
 	cret := xAtomicRcBoxAcquire(MemBlockVar)
+
 	return cret
 }
 
@@ -30,6 +31,7 @@ var xAtomicRcBoxAlloc func(uint) uintptr
 func AtomicRcBoxAlloc(BlockSizeVar uint) uintptr {
 
 	cret := xAtomicRcBoxAlloc(BlockSizeVar)
+
 	return cret
 }
 
@@ -48,6 +50,7 @@ var xAtomicRcBoxAlloc0 func(uint) uintptr
 func AtomicRcBoxAlloc0(BlockSizeVar uint) uintptr {
 
 	cret := xAtomicRcBoxAlloc0(BlockSizeVar)
+
 	return cret
 }
 
@@ -59,6 +62,7 @@ var xAtomicRcBoxDup func(uint, uintptr) uintptr
 func AtomicRcBoxDup(BlockSizeVar uint, MemBlockVar uintptr) uintptr {
 
 	cret := xAtomicRcBoxDup(BlockSizeVar, MemBlockVar)
+
 	return cret
 }
 
@@ -68,6 +72,7 @@ var xAtomicRcBoxGetSize func(uintptr) uint
 func AtomicRcBoxGetSize(MemBlockVar uintptr) uint {
 
 	cret := xAtomicRcBoxGetSize(MemBlockVar)
+
 	return cret
 }
 
@@ -122,6 +127,7 @@ var xRcBoxAcquire func(uintptr) uintptr
 func RcBoxAcquire(MemBlockVar uintptr) uintptr {
 
 	cret := xRcBoxAcquire(MemBlockVar)
+
 	return cret
 }
 
@@ -138,6 +144,7 @@ var xRcBoxAlloc func(uint) uintptr
 func RcBoxAlloc(BlockSizeVar uint) uintptr {
 
 	cret := xRcBoxAlloc(BlockSizeVar)
+
 	return cret
 }
 
@@ -156,6 +163,7 @@ var xRcBoxAlloc0 func(uint) uintptr
 func RcBoxAlloc0(BlockSizeVar uint) uintptr {
 
 	cret := xRcBoxAlloc0(BlockSizeVar)
+
 	return cret
 }
 
@@ -167,6 +175,7 @@ var xRcBoxDup func(uint, uintptr) uintptr
 func RcBoxDup(BlockSizeVar uint, MemBlockVar uintptr) uintptr {
 
 	cret := xRcBoxDup(BlockSizeVar, MemBlockVar)
+
 	return cret
 }
 
@@ -176,6 +185,7 @@ var xRcBoxGetSize func(uintptr) uint
 func RcBoxGetSize(MemBlockVar uintptr) uint {
 
 	cret := xRcBoxGetSize(MemBlockVar)
+
 	return cret
 }
 

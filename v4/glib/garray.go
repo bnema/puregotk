@@ -387,6 +387,7 @@ var xArrayNewTake func(uintptr, uint, bool, uint) uintptr
 func ArrayNewTake(DataVar uintptr, LenVar uint, ClearVar bool, ElementSizeVar uint) uintptr {
 
 	cret := xArrayNewTake(DataVar, LenVar, ClearVar, ElementSizeVar)
+
 	return cret
 }
 
@@ -414,6 +415,7 @@ var xArrayNewTakeZeroTerminated func(uintptr, bool, uint) uintptr
 func ArrayNewTakeZeroTerminated(DataVar uintptr, ClearVar bool, ElementSizeVar uint) uintptr {
 
 	cret := xArrayNewTakeZeroTerminated(DataVar, ClearVar, ElementSizeVar)
+
 	return cret
 }
 
@@ -424,6 +426,7 @@ var xByteArrayAppend func([]byte, []byte, uint) uintptr
 func ByteArrayAppend(ArrayVar []byte, DataVar []byte, LenVar uint) uintptr {
 
 	cret := xByteArrayAppend(ArrayVar, DataVar, LenVar)
+
 	return cret
 }
 
@@ -436,6 +439,7 @@ var xByteArrayFree func([]byte, bool) uintptr
 func ByteArrayFree(ArrayVar []byte, FreeSegmentVar bool) uintptr {
 
 	cret := xByteArrayFree(ArrayVar, FreeSegmentVar)
+
 	return cret
 }
 
@@ -453,6 +457,7 @@ var xByteArrayFreeToBytes func([]byte) *Bytes
 func ByteArrayFreeToBytes(ArrayVar []byte) *Bytes {
 
 	cret := xByteArrayFreeToBytes(ArrayVar)
+
 	return cret
 }
 
@@ -462,6 +467,7 @@ var xByteArrayNew func() uintptr
 func ByteArrayNew() uintptr {
 
 	cret := xByteArrayNew()
+
 	return cret
 }
 
@@ -478,6 +484,7 @@ var xByteArrayNewTake func([]byte, uint) uintptr
 func ByteArrayNewTake(DataVar []byte, LenVar uint) uintptr {
 
 	cret := xByteArrayNewTake(DataVar, LenVar)
+
 	return cret
 }
 
@@ -488,6 +495,7 @@ var xByteArrayPrepend func([]byte, []byte, uint) uintptr
 func ByteArrayPrepend(ArrayVar []byte, DataVar []byte, LenVar uint) uintptr {
 
 	cret := xByteArrayPrepend(ArrayVar, DataVar, LenVar)
+
 	return cret
 }
 
@@ -498,6 +506,7 @@ var xByteArrayRef func([]byte) uintptr
 func ByteArrayRef(ArrayVar []byte) uintptr {
 
 	cret := xByteArrayRef(ArrayVar)
+
 	return cret
 }
 
@@ -508,6 +517,7 @@ var xByteArrayRemoveIndex func([]byte, uint) uintptr
 func ByteArrayRemoveIndex(ArrayVar []byte, IndexVar uint) uintptr {
 
 	cret := xByteArrayRemoveIndex(ArrayVar, IndexVar)
+
 	return cret
 }
 
@@ -520,6 +530,7 @@ var xByteArrayRemoveIndexFast func([]byte, uint) uintptr
 func ByteArrayRemoveIndexFast(ArrayVar []byte, IndexVar uint) uintptr {
 
 	cret := xByteArrayRemoveIndexFast(ArrayVar, IndexVar)
+
 	return cret
 }
 
@@ -530,6 +541,7 @@ var xByteArrayRemoveRange func([]byte, uint, uint) uintptr
 func ByteArrayRemoveRange(ArrayVar []byte, IndexVar uint, LengthVar uint) uintptr {
 
 	cret := xByteArrayRemoveRange(ArrayVar, IndexVar, LengthVar)
+
 	return cret
 }
 
@@ -539,6 +551,7 @@ var xByteArraySetSize func([]byte, uint) uintptr
 func ByteArraySetSize(ArrayVar []byte, LengthVar uint) uintptr {
 
 	cret := xByteArraySetSize(ArrayVar, LengthVar)
+
 	return cret
 }
 
@@ -551,6 +564,7 @@ var xByteArraySizedNew func(uint) uintptr
 func ByteArraySizedNew(ReservedSizeVar uint) uintptr {
 
 	cret := xByteArraySizedNew(ReservedSizeVar)
+
 	return cret
 }
 
@@ -620,6 +634,7 @@ var xByteArraySteal func([]byte, *uint) uintptr
 func ByteArraySteal(ArrayVar []byte, LenVar *uint) uintptr {
 
 	cret := xByteArraySteal(ArrayVar, LenVar)
+
 	return cret
 }
 
@@ -648,6 +663,7 @@ var xPtrArrayFind func([]uintptr, uintptr, *uint) bool
 func PtrArrayFind(HaystackVar []uintptr, NeedleVar uintptr, IndexVar *uint) bool {
 
 	cret := xPtrArrayFind(HaystackVar, NeedleVar, IndexVar)
+
 	return cret
 }
 
@@ -680,6 +696,7 @@ func PtrArrayFindWithEqualFunc(HaystackVar []uintptr, NeedleVar uintptr, EqualFu
 	}
 
 	cret := xPtrArrayFindWithEqualFunc(HaystackVar, NeedleVar, EqualFuncVarRef, IndexVar)
+
 	return cret
 }
 
@@ -735,6 +752,7 @@ func PtrArrayNewFromArray(DataVar []uintptr, LenVar uint, CopyFuncVar *CopyFunc,
 	}
 
 	cret := xPtrArrayNewFromArray(DataVar, LenVar, CopyFuncVarRef, CopyFuncUserDataVar, ElementFreeFuncVarRef)
+
 	return cret
 }
 
@@ -786,6 +804,7 @@ func PtrArrayNewFromNullTerminatedArray(DataVar []uintptr, CopyFuncVar *CopyFunc
 	}
 
 	cret := xPtrArrayNewFromNullTerminatedArray(DataVar, CopyFuncVarRef, CopyFuncUserDataVar, ElementFreeFuncVarRef)
+
 	return cret
 }
 
@@ -825,6 +844,7 @@ func PtrArrayNewTake(DataVar []uintptr, LenVar uint, ElementFreeFuncVar *Destroy
 	}
 
 	cret := xPtrArrayNewTake(DataVar, LenVar, ElementFreeFuncVarRef)
+
 	return cret
 }
 
@@ -867,6 +887,7 @@ func PtrArrayNewTakeNullTerminated(DataVar []uintptr, ElementFreeFuncVar *Destro
 	}
 
 	cret := xPtrArrayNewTakeNullTerminated(DataVar, ElementFreeFuncVarRef)
+
 	return cret
 }
 

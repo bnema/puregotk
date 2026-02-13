@@ -135,6 +135,7 @@ func ClearError() error {
 	var cerr *Error
 
 	xClearError()
+
 	if cerr == nil {
 		return nil
 	}
@@ -195,6 +196,7 @@ func ErrorDomainRegister(ErrorTypeNameVar string, ErrorTypePrivateSizeVar uint, 
 	}
 
 	cret := xErrorDomainRegister(ErrorTypeNameVar, ErrorTypePrivateSizeVar, ErrorTypeInitVarRef, ErrorTypeCopyVarRef, ErrorTypeClearVarRef)
+
 	return cret
 }
 
@@ -265,6 +267,7 @@ func ErrorDomainRegisterStatic(ErrorTypeNameVar string, ErrorTypePrivateSizeVar 
 	}
 
 	cret := xErrorDomainRegisterStatic(ErrorTypeNameVar, ErrorTypePrivateSizeVar, ErrorTypeInitVarRef, ErrorTypeCopyVarRef, ErrorTypeClearVarRef)
+
 	return cret
 }
 

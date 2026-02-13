@@ -53,6 +53,7 @@ var xAtomicRefCountCompare func(int, int) bool
 func AtomicRefCountCompare(ArcVar int, ValVar int) bool {
 
 	cret := xAtomicRefCountCompare(ArcVar, ValVar)
+
 	return cret
 }
 
@@ -66,6 +67,7 @@ var xAtomicRefCountDec func(int) bool
 func AtomicRefCountDec(ArcVar int) bool {
 
 	cret := xAtomicRefCountDec(ArcVar)
+
 	return cret
 }
 
@@ -93,6 +95,7 @@ var xRefCountCompare func(int, int) bool
 func RefCountCompare(RcVar int, ValVar int) bool {
 
 	cret := xRefCountCompare(RcVar, ValVar)
+
 	return cret
 }
 
@@ -106,6 +109,7 @@ var xRefCountDec func(int) bool
 func RefCountDec(RcVar int) bool {
 
 	cret := xRefCountDec(RcVar)
+
 	return cret
 }
 

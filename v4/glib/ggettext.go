@@ -18,6 +18,7 @@ func Dcgettext(DomainVar *string, MsgidVar string, CategoryVar int) string {
 	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDcgettext(DomainVarPtr, MsgidVar, CategoryVar)
+
 	return cret
 }
 
@@ -61,6 +62,7 @@ func Dgettext(DomainVar *string, MsgidVar string) string {
 	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDgettext(DomainVarPtr, MsgidVar)
+
 	return cret
 }
 
@@ -78,6 +80,7 @@ func Dngettext(DomainVar *string, MsgidVar string, MsgidPluralVar string, NVar u
 	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDngettext(DomainVarPtr, MsgidVar, MsgidPluralVar, NVar)
+
 	return cret
 }
 
@@ -102,6 +105,7 @@ func Dpgettext(DomainVar *string, MsgctxtidVar string, MsgidoffsetVar uint) stri
 	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDpgettext(DomainVarPtr, MsgctxtidVar, MsgidoffsetVar)
+
 	return cret
 }
 
@@ -123,6 +127,7 @@ func Dpgettext2(DomainVar *string, ContextVar string, MsgidVar string) string {
 	defer core.GFreeNullable(DomainVarPtr)
 
 	cret := xDpgettext2(DomainVarPtr, ContextVar, MsgidVar)
+
 	return cret
 }
 
@@ -132,6 +137,7 @@ var xStripContext func(string, string) string
 func StripContext(MsgidVar string, MsgvalVar string) string {
 
 	cret := xStripContext(MsgidVar, MsgvalVar)
+
 	return cret
 }
 

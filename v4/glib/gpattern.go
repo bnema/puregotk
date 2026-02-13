@@ -147,6 +147,7 @@ func PatternMatch(PspecVar *PatternSpec, StringLengthVar uint, StringVar string,
 	defer core.GFreeNullable(StringReversedVarPtr)
 
 	cret := xPatternMatch(PspecVar, StringLengthVar, StringVar, StringReversedVarPtr)
+
 	return cret
 }
 
@@ -161,6 +162,7 @@ var xPatternMatchSimple func(string, string) bool
 func PatternMatchSimple(PatternVar string, StringVar string) bool {
 
 	cret := xPatternMatchSimple(PatternVar, StringVar)
+
 	return cret
 }
 
@@ -174,6 +176,7 @@ var xPatternMatchString func(*PatternSpec, string) bool
 func PatternMatchString(PspecVar *PatternSpec, StringVar string) bool {
 
 	cret := xPatternMatchString(PspecVar, StringVar)
+
 	return cret
 }
 

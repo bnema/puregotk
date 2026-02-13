@@ -457,6 +457,7 @@ var xAsyncQueueNew func() *AsyncQueue
 func AsyncQueueNew() *AsyncQueue {
 
 	cret := xAsyncQueueNew()
+
 	return cret
 }
 
@@ -483,6 +484,7 @@ func AsyncQueueNewFull(ItemFreeFuncVar *DestroyNotify) *AsyncQueue {
 	}
 
 	cret := xAsyncQueueNewFull(ItemFreeFuncVarRef)
+
 	return cret
 }
 

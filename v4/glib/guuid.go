@@ -19,6 +19,7 @@ var xUuidStringIsValid func(string) bool
 func UuidStringIsValid(StrVar string) bool {
 
 	cret := xUuidStringIsValid(StrVar)
+
 	return cret
 }
 
@@ -30,6 +31,7 @@ var xUuidStringRandom func() string
 func UuidStringRandom() string {
 
 	cret := xUuidStringRandom()
+
 	return cret
 }
 

@@ -647,6 +647,7 @@ var xDateGetDaysInMonth func(DateMonth, DateYear) byte
 func DateGetDaysInMonth(MonthVar DateMonth, YearVar DateYear) byte {
 
 	cret := xDateGetDaysInMonth(MonthVar, YearVar)
+
 	return cret
 }
 
@@ -662,6 +663,7 @@ var xDateGetMondayWeeksInYear func(DateYear) byte
 func DateGetMondayWeeksInYear(YearVar DateYear) byte {
 
 	cret := xDateGetMondayWeeksInYear(YearVar)
+
 	return cret
 }
 
@@ -677,6 +679,7 @@ var xDateGetSundayWeeksInYear func(DateYear) byte
 func DateGetSundayWeeksInYear(YearVar DateYear) byte {
 
 	cret := xDateGetSundayWeeksInYear(YearVar)
+
 	return cret
 }
 
@@ -694,6 +697,7 @@ var xDateGetWeeksInYear func(DateYear, DateWeekday) byte
 func DateGetWeeksInYear(YearVar DateYear, FirstDayOfWeekVar DateWeekday) byte {
 
 	cret := xDateGetWeeksInYear(YearVar, FirstDayOfWeekVar)
+
 	return cret
 }
 
@@ -708,6 +712,7 @@ var xDateIsLeapYear func(DateYear) bool
 func DateIsLeapYear(YearVar DateYear) bool {
 
 	cret := xDateIsLeapYear(YearVar)
+
 	return cret
 }
 
@@ -729,6 +734,7 @@ var xDateStrftime func(string, uint, string, *Date) uint
 func DateStrftime(SVar string, SlenVar uint, FormatVar string, DateVar *Date) uint {
 
 	cret := xDateStrftime(SVar, SlenVar, FormatVar, DateVar)
+
 	return cret
 }
 
@@ -739,6 +745,7 @@ var xDateValidDay func(DateDay) bool
 func DateValidDay(DayVar DateDay) bool {
 
 	cret := xDateValidDay(DayVar)
+
 	return cret
 }
 
@@ -750,6 +757,7 @@ var xDateValidDmy func(DateDay, DateMonth, DateYear) bool
 func DateValidDmy(DayVar DateDay, MonthVar DateMonth, YearVar DateYear) bool {
 
 	cret := xDateValidDmy(DayVar, MonthVar, YearVar)
+
 	return cret
 }
 
@@ -760,6 +768,7 @@ var xDateValidJulian func(uint32) bool
 func DateValidJulian(JulianDateVar uint32) bool {
 
 	cret := xDateValidJulian(JulianDateVar)
+
 	return cret
 }
 
@@ -770,6 +779,7 @@ var xDateValidMonth func(DateMonth) bool
 func DateValidMonth(MonthVar DateMonth) bool {
 
 	cret := xDateValidMonth(MonthVar)
+
 	return cret
 }
 
@@ -780,6 +790,7 @@ var xDateValidWeekday func(DateWeekday) bool
 func DateValidWeekday(WeekdayVar DateWeekday) bool {
 
 	cret := xDateValidWeekday(WeekdayVar)
+
 	return cret
 }
 
@@ -790,6 +801,7 @@ var xDateValidYear func(DateYear) bool
 func DateValidYear(YearVar DateYear) bool {
 
 	cret := xDateValidYear(YearVar)
+
 	return cret
 }
 
