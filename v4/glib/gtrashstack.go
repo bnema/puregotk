@@ -41,6 +41,7 @@ var xTrashStackHeight func(**TrashStack) uint
 func TrashStackHeight(StackPVar **TrashStack) uint {
 
 	cret := xTrashStackHeight(StackPVar)
+
 	return cret
 }
 
@@ -51,6 +52,7 @@ var xTrashStackPeek func(**TrashStack) uintptr
 func TrashStackPeek(StackPVar **TrashStack) uintptr {
 
 	cret := xTrashStackPeek(StackPVar)
+
 	return cret
 }
 
@@ -60,6 +62,7 @@ var xTrashStackPop func(**TrashStack) uintptr
 func TrashStackPop(StackPVar **TrashStack) uintptr {
 
 	cret := xTrashStackPop(StackPVar)
+
 	return cret
 }
 

@@ -50,6 +50,7 @@ func InternStaticString(StringVar *string) string {
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xInternStaticString(StringVarPtr)
+
 	return cret
 }
 
@@ -68,6 +69,7 @@ func InternString(StringVar *string) string {
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xInternString(StringVarPtr)
+
 	return cret
 }
 
@@ -95,6 +97,7 @@ func QuarkFromStaticString(StringVar *string) Quark {
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xQuarkFromStaticString(StringVarPtr)
+
 	return cret
 }
 
@@ -113,6 +116,7 @@ func QuarkFromString(StringVar *string) Quark {
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xQuarkFromString(StringVarPtr)
+
 	return cret
 }
 
@@ -122,6 +126,7 @@ var xQuarkToString func(Quark) string
 func QuarkToString(QuarkVar Quark) string {
 
 	cret := xQuarkToString(QuarkVar)
+
 	return cret
 }
 
@@ -141,6 +146,7 @@ func QuarkTryString(StringVar *string) Quark {
 	defer core.GFreeNullable(StringVarPtr)
 
 	cret := xQuarkTryString(StringVarPtr)
+
 	return cret
 }
 

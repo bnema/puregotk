@@ -1716,9 +1716,7 @@ func ChildWatchAdd(PidVar Pid, FunctionVar *ChildWatchFunc, DataVar uintptr) uin
 	}
 
 	cret := xChildWatchAdd(PidVar, FunctionVarRef, DataVar)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+
 	return cret
 }
 
@@ -1782,9 +1780,7 @@ func ChildWatchAddFull(PriorityVar int, PidVar Pid, FunctionVar *ChildWatchFunc,
 	}
 
 	cret := xChildWatchAddFull(PriorityVar, PidVar, FunctionVarRef, DataVar, NotifyVarRef)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+
 	return cret
 }
 
@@ -1833,6 +1829,7 @@ var xChildWatchSourceNew func(Pid) *Source
 func ChildWatchSourceNew(PidVar Pid) *Source {
 
 	cret := xChildWatchSourceNew(PidVar)
+
 	return cret
 }
 
@@ -1899,6 +1896,7 @@ var xGetMonotonicTime func() int64
 func GetMonotonicTime() int64 {
 
 	cret := xGetMonotonicTime()
+
 	return cret
 }
 
@@ -1915,6 +1913,7 @@ var xGetRealTime func() int64
 func GetRealTime() int64 {
 
 	cret := xGetRealTime()
+
 	return cret
 }
 
@@ -1937,26 +1936,9 @@ var xIdleAdd func(uintptr, uintptr) uint
 // thread is running that main context. You can do these steps manually if you
 // need greater control or to use a custom main context.
 func IdleAdd(FunctionVar *SourceFunc, DataVar uintptr) uint {
-
-	var FunctionVarRef uintptr
-	if FunctionVar != nil {
-		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
-		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
-			FunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) bool {
-				cbFn := *FunctionVar
-				return cbFn(arg0)
-			}
-			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
-		}
-	}
-
-	cret := xIdleAdd(FunctionVarRef, DataVar)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+	trampolineCb, userData := registerSourceFunc(FunctionVar, false)
+	cret := xIdleAdd(trampolineCb, userData)
+	saveSourceTrampolineMapping(cret, userData)
 	return cret
 }
 
@@ -1977,22 +1959,7 @@ var xIdleAddFull func(int, uintptr, uintptr, uintptr) uint
 // thread is running that main context. You can do these steps manually if you
 // need greater control or to use a custom main context.
 func IdleAddFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
-
-	var FunctionVarRef uintptr
-	if FunctionVar != nil {
-		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
-		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
-			FunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) bool {
-				cbFn := *FunctionVar
-				return cbFn(arg0)
-			}
-			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
-		}
-	}
-
+	trampolineCb, userData := registerSourceFunc(FunctionVar, false)
 	var NotifyVarRef uintptr
 	if NotifyVar != nil {
 		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
@@ -2007,11 +1974,8 @@ func IdleAddFull(PriorityVar int, FunctionVar *SourceFunc, DataVar uintptr, Noti
 			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
-
-	cret := xIdleAddFull(PriorityVar, FunctionVarRef, DataVar, NotifyVarRef)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+	cret := xIdleAddFull(PriorityVar, trampolineCb, userData, NotifyVarRef)
+	saveSourceTrampolineMapping(cret, userData)
 	return cret
 }
 
@@ -2028,26 +1992,9 @@ var xIdleAddOnce func(uintptr, uintptr) uint
 //
 // This function otherwise behaves like [func@GLib.idle_add].
 func IdleAddOnce(FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
-
-	var FunctionVarRef uintptr
-	if FunctionVar != nil {
-		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
-		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
-			FunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *FunctionVar
-				cbFn(arg0)
-			}
-			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
-		}
-	}
-
-	cret := xIdleAddOnce(FunctionVarRef, DataVar)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+	trampolineCb, userData := registerSourceOnceFunc(FunctionVar)
+	cret := xIdleAddOnce(trampolineCb, userData)
+	saveSourceTrampolineMapping(cret, userData)
 	return cret
 }
 
@@ -2057,6 +2004,7 @@ var xIdleRemoveByData func(uintptr) bool
 func IdleRemoveByData(DataVar uintptr) bool {
 
 	cret := xIdleRemoveByData(DataVar)
+
 	return cret
 }
 
@@ -2073,6 +2021,7 @@ var xIdleSourceNew func() *Source
 func IdleSourceNew() *Source {
 
 	cret := xIdleSourceNew()
+
 	return cret
 }
 
@@ -2087,6 +2036,7 @@ var xMainContextDefault func() *MainContext
 func MainContextDefault() *MainContext {
 
 	cret := xMainContextDefault()
+
 	return cret
 }
 
@@ -2107,6 +2057,7 @@ var xMainContextGetThreadDefault func() *MainContext
 func MainContextGetThreadDefault() *MainContext {
 
 	cret := xMainContextGetThreadDefault()
+
 	return cret
 }
 
@@ -2125,6 +2076,7 @@ var xMainContextRefThreadDefault func() *MainContext
 func MainContextRefThreadDefault() *MainContext {
 
 	cret := xMainContextRefThreadDefault()
+
 	return cret
 }
 
@@ -2134,6 +2086,7 @@ var xMainCurrentSource func() *Source
 func MainCurrentSource() *Source {
 
 	cret := xMainCurrentSource()
+
 	return cret
 }
 
@@ -2251,6 +2204,7 @@ var xMainDepth func() int
 func MainDepth() int {
 
 	cret := xMainDepth()
+
 	return cret
 }
 
@@ -2281,8 +2235,10 @@ var xSourceRemove func(uint) bool
 func SourceRemove(TagVar uint) bool {
 
 	cret := xSourceRemove(TagVar)
+
 	if cret {
 		RemoveCallbackBySource(TagVar)
+		removeSourceTrampolineBySourceID(TagVar)
 	}
 	return cret
 }
@@ -2297,6 +2253,7 @@ var xSourceRemoveByFuncsUserData func(*SourceFuncs, uintptr) bool
 func SourceRemoveByFuncsUserData(FuncsVar *SourceFuncs, UserDataVar uintptr) bool {
 
 	cret := xSourceRemoveByFuncsUserData(FuncsVar, UserDataVar)
+
 	return cret
 }
 
@@ -2309,6 +2266,7 @@ var xSourceRemoveByUserData func(uintptr) bool
 func SourceRemoveByUserData(UserDataVar uintptr) bool {
 
 	cret := xSourceRemoveByUserData(UserDataVar)
+
 	return cret
 }
 
@@ -2372,26 +2330,9 @@ var xTimeoutAdd func(uint, uintptr, uintptr) uint
 // The interval given is in terms of monotonic time, not wall clock
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAdd(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint {
-
-	var FunctionVarRef uintptr
-	if FunctionVar != nil {
-		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
-		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
-			FunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) bool {
-				cbFn := *FunctionVar
-				return cbFn(arg0)
-			}
-			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
-		}
-	}
-
-	cret := xTimeoutAdd(IntervalVar, FunctionVarRef, DataVar)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+	trampolineCb, userData := registerSourceFunc(FunctionVar, false)
+	cret := xTimeoutAdd(IntervalVar, trampolineCb, userData)
+	saveSourceTrampolineMapping(cret, userData)
 	return cret
 }
 
@@ -2426,22 +2367,7 @@ var xTimeoutAddFull func(int, uint, uintptr, uintptr, uintptr) uint
 // The interval given is in terms of monotonic time, not wall clock time.
 // See [func@GLib.get_monotonic_time].
 func TimeoutAddFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
-
-	var FunctionVarRef uintptr
-	if FunctionVar != nil {
-		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
-		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
-			FunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) bool {
-				cbFn := *FunctionVar
-				return cbFn(arg0)
-			}
-			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
-		}
-	}
-
+	trampolineCb, userData := registerSourceFunc(FunctionVar, false)
 	var NotifyVarRef uintptr
 	if NotifyVar != nil {
 		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
@@ -2456,11 +2382,8 @@ func TimeoutAddFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, 
 			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
-
-	cret := xTimeoutAddFull(PriorityVar, IntervalVar, FunctionVarRef, DataVar, NotifyVarRef)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+	cret := xTimeoutAddFull(PriorityVar, IntervalVar, trampolineCb, userData, NotifyVarRef)
+	saveSourceTrampolineMapping(cret, userData)
 	return cret
 }
 
@@ -2474,26 +2397,9 @@ var xTimeoutAddOnce func(uint, uintptr, uintptr) uint
 //
 // This function otherwise behaves like [func@GLib.timeout_add].
 func TimeoutAddOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
-
-	var FunctionVarRef uintptr
-	if FunctionVar != nil {
-		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
-		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
-			FunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *FunctionVar
-				cbFn(arg0)
-			}
-			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
-		}
-	}
-
-	cret := xTimeoutAddOnce(IntervalVar, FunctionVarRef, DataVar)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+	trampolineCb, userData := registerSourceOnceFunc(FunctionVar)
+	cret := xTimeoutAddOnce(IntervalVar, trampolineCb, userData)
+	saveSourceTrampolineMapping(cret, userData)
 	return cret
 }
 
@@ -2523,26 +2429,9 @@ var xTimeoutAddSeconds func(uint, uintptr, uintptr) uint
 // The interval given is in terms of monotonic time, not wall clock
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSeconds(IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr) uint {
-
-	var FunctionVarRef uintptr
-	if FunctionVar != nil {
-		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
-		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
-			FunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) bool {
-				cbFn := *FunctionVar
-				return cbFn(arg0)
-			}
-			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
-		}
-	}
-
-	cret := xTimeoutAddSeconds(IntervalVar, FunctionVarRef, DataVar)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+	trampolineCb, userData := registerSourceFunc(FunctionVar, false)
+	cret := xTimeoutAddSeconds(IntervalVar, trampolineCb, userData)
+	saveSourceTrampolineMapping(cret, userData)
 	return cret
 }
 
@@ -2589,22 +2478,7 @@ var xTimeoutAddSecondsFull func(int, uint, uintptr, uintptr, uintptr) uint
 // The interval given is in terms of monotonic time, not wall clock
 // time. See [func@GLib.get_monotonic_time].
 func TimeoutAddSecondsFull(PriorityVar int, IntervalVar uint, FunctionVar *SourceFunc, DataVar uintptr, NotifyVar *DestroyNotify) uint {
-
-	var FunctionVarRef uintptr
-	if FunctionVar != nil {
-		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
-		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
-			FunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) bool {
-				cbFn := *FunctionVar
-				return cbFn(arg0)
-			}
-			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
-		}
-	}
-
+	trampolineCb, userData := registerSourceFunc(FunctionVar, false)
 	var NotifyVarRef uintptr
 	if NotifyVar != nil {
 		NotifyVarPtr := uintptr(unsafe.Pointer(NotifyVar))
@@ -2619,11 +2493,8 @@ func TimeoutAddSecondsFull(PriorityVar int, IntervalVar uint, FunctionVar *Sourc
 			SaveCallbackWithClosure(NotifyVarPtr, NotifyVarRef, NotifyVar)
 		}
 	}
-
-	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, FunctionVarRef, DataVar, NotifyVarRef)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+	cret := xTimeoutAddSecondsFull(PriorityVar, IntervalVar, trampolineCb, userData, NotifyVarRef)
+	saveSourceTrampolineMapping(cret, userData)
 	return cret
 }
 
@@ -2632,26 +2503,9 @@ var xTimeoutAddSecondsOnce func(uint, uintptr, uintptr) uint
 // This function behaves like [func@GLib.timeout_add_once] but with a range in
 // seconds.
 func TimeoutAddSecondsOnce(IntervalVar uint, FunctionVar *SourceOnceFunc, DataVar uintptr) uint {
-
-	var FunctionVarRef uintptr
-	if FunctionVar != nil {
-		FunctionVarPtr := uintptr(unsafe.Pointer(FunctionVar))
-		if cbRefPtr, ok := GetCallback(FunctionVarPtr); ok {
-			FunctionVarRef = cbRefPtr
-		} else {
-			fcb := func(arg0 uintptr) {
-				cbFn := *FunctionVar
-				cbFn(arg0)
-			}
-			FunctionVarRef = purego.NewCallback(fcb)
-			SaveCallbackWithClosure(FunctionVarPtr, FunctionVarRef, FunctionVar)
-		}
-	}
-
-	cret := xTimeoutAddSecondsOnce(IntervalVar, FunctionVarRef, DataVar)
-	if FunctionVar != nil {
-		SaveSourceMapping(cret, uintptr(unsafe.Pointer(FunctionVar)))
-	}
+	trampolineCb, userData := registerSourceOnceFunc(FunctionVar)
+	cret := xTimeoutAddSecondsOnce(IntervalVar, trampolineCb, userData)
+	saveSourceTrampolineMapping(cret, userData)
 	return cret
 }
 
@@ -2668,6 +2522,7 @@ var xTimeoutSourceNew func(uint) *Source
 func TimeoutSourceNew(IntervalVar uint) *Source {
 
 	cret := xTimeoutSourceNew(IntervalVar)
+
 	return cret
 }
 
@@ -2687,6 +2542,7 @@ var xTimeoutSourceNewSeconds func(uint) *Source
 func TimeoutSourceNewSeconds(IntervalVar uint) *Source {
 
 	cret := xTimeoutSourceNewSeconds(IntervalVar)
+
 	return cret
 }
 

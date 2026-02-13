@@ -410,6 +410,7 @@ func Strcmp0(Str1Var *string, Str2Var *string) int {
 	defer core.GFreeNullable(Str2VarPtr)
 
 	cret := xStrcmp0(Str1VarPtr, Str2VarPtr)
+
 	return cret
 }
 
@@ -659,6 +660,7 @@ var xTestBuildFilename func(TestFileType, string, ...interface{}) string
 func TestBuildFilename(FileTypeVar TestFileType, FirstPathVar string, varArgs ...interface{}) string {
 
 	cret := xTestBuildFilename(FileTypeVar, FirstPathVar, varArgs...)
+
 	return cret
 }
 
@@ -729,6 +731,7 @@ func TestCreateCase(TestNameVar string, DataSizeVar uint, TestDataVar uintptr, D
 	}
 
 	cret := xTestCreateCase(TestNameVar, DataSizeVar, TestDataVar, DataSetupVarRef, DataTestVarRef, DataTeardownVarRef)
+
 	return cret
 }
 
@@ -738,6 +741,7 @@ var xTestCreateSuite func(string) *TestSuite
 func TestCreateSuite(SuiteNameVar string) *TestSuite {
 
 	cret := xTestCreateSuite(SuiteNameVar)
+
 	return cret
 }
 
@@ -859,6 +863,7 @@ var xTestFailed func() bool
 func TestFailed() bool {
 
 	cret := xTestFailed()
+
 	return cret
 }
 
@@ -872,6 +877,7 @@ var xTestGetDir func(TestFileType) string
 func TestGetDir(FileTypeVar TestFileType) string {
 
 	cret := xTestGetDir(FileTypeVar)
+
 	return cret
 }
 
@@ -892,6 +898,7 @@ var xTestGetFilename func(TestFileType, string, ...interface{}) string
 func TestGetFilename(FileTypeVar TestFileType, FirstPathVar string, varArgs ...interface{}) string {
 
 	cret := xTestGetFilename(FileTypeVar, FirstPathVar, varArgs...)
+
 	return cret
 }
 
@@ -908,6 +915,7 @@ var xTestGetPath func() string
 func TestGetPath() string {
 
 	cret := xTestGetPath()
+
 	return cret
 }
 
@@ -917,6 +925,7 @@ var xTestGetRoot func() *TestSuite
 func TestGetRoot() *TestSuite {
 
 	cret := xTestGetRoot()
+
 	return cret
 }
 
@@ -1071,6 +1080,7 @@ var xTestLogTypeName func(TestLogType) string
 func TestLogTypeName(LogTypeVar TestLogType) string {
 
 	cret := xTestLogTypeName(LogTypeVar)
+
 	return cret
 }
 
@@ -1162,6 +1172,7 @@ var xTestRandDouble func() float64
 func TestRandDouble() float64 {
 
 	cret := xTestRandDouble()
+
 	return cret
 }
 
@@ -1173,6 +1184,7 @@ var xTestRandDoubleRange func(float64, float64) float64
 func TestRandDoubleRange(RangeStartVar float64, RangeEndVar float64) float64 {
 
 	cret := xTestRandDoubleRange(RangeStartVar, RangeEndVar)
+
 	return cret
 }
 
@@ -1190,6 +1202,7 @@ var xTestRandInt func() int32
 func TestRandInt() int32 {
 
 	cret := xTestRandInt()
+
 	return cret
 }
 
@@ -1201,6 +1214,7 @@ var xTestRandIntRange func(int32, int32) int32
 func TestRandIntRange(BeginVar int32, EndVar int32) int32 {
 
 	cret := xTestRandIntRange(BeginVar, EndVar)
+
 	return cret
 }
 
@@ -1243,6 +1257,7 @@ var xTestRun func() int
 func TestRun() int {
 
 	cret := xTestRun()
+
 	return cret
 }
 
@@ -1260,6 +1275,7 @@ var xTestRunSuite func(*TestSuite) int
 func TestRunSuite(SuiteVar *TestSuite) int {
 
 	cret := xTestRunSuite(SuiteVar)
+
 	return cret
 }
 
@@ -1323,6 +1339,7 @@ var xTestSubprocess func() bool
 func TestSubprocess() bool {
 
 	cret := xTestSubprocess()
+
 	return cret
 }
 
@@ -1365,6 +1382,7 @@ var xTestTimerElapsed func() float64
 func TestTimerElapsed() float64 {
 
 	cret := xTestTimerElapsed()
+
 	return cret
 }
 
@@ -1374,6 +1392,7 @@ var xTestTimerLast func() float64
 func TestTimerLast() float64 {
 
 	cret := xTestTimerLast()
+
 	return cret
 }
 
@@ -1439,6 +1458,7 @@ var xTestTrapFork func(uint64, TestTrapFlags) bool
 func TestTrapFork(UsecTimeoutVar uint64, TestTrapFlagsVar TestTrapFlags) bool {
 
 	cret := xTestTrapFork(UsecTimeoutVar, TestTrapFlagsVar)
+
 	return cret
 }
 
@@ -1448,6 +1468,7 @@ var xTestTrapHasPassed func() bool
 func TestTrapHasPassed() bool {
 
 	cret := xTestTrapHasPassed()
+
 	return cret
 }
 
@@ -1457,6 +1478,7 @@ var xTestTrapReachedTimeout func() bool
 func TestTrapReachedTimeout() bool {
 
 	cret := xTestTrapReachedTimeout()
+
 	return cret
 }
 

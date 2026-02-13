@@ -211,6 +211,7 @@ var xThreadPoolGetMaxIdleTime func() uint
 func ThreadPoolGetMaxIdleTime() uint {
 
 	cret := xThreadPoolGetMaxIdleTime()
+
 	return cret
 }
 
@@ -220,6 +221,7 @@ var xThreadPoolGetMaxUnusedThreads func() int
 func ThreadPoolGetMaxUnusedThreads() int {
 
 	cret := xThreadPoolGetMaxUnusedThreads()
+
 	return cret
 }
 
@@ -229,6 +231,7 @@ var xThreadPoolGetNumUnusedThreads func() uint
 func ThreadPoolGetNumUnusedThreads() uint {
 
 	cret := xThreadPoolGetNumUnusedThreads()
+
 	return cret
 }
 

@@ -58,6 +58,7 @@ var xPoll func(*PollFD, uint, int) int
 func Poll(FdsVar *PollFD, NfdsVar uint, TimeoutVar int) int {
 
 	cret := xPoll(FdsVar, NfdsVar, TimeoutVar)
+
 	return cret
 }
 

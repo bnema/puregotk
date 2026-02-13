@@ -2735,6 +2735,7 @@ var xVariantIsObjectPath func(string) bool
 func VariantIsObjectPath(StringVar string) bool {
 
 	cret := xVariantIsObjectPath(StringVar)
+
 	return cret
 }
 
@@ -2749,6 +2750,7 @@ var xVariantIsSignature func(string) bool
 func VariantIsSignature(StringVar string) bool {
 
 	cret := xVariantIsSignature(StringVar)
+
 	return cret
 }
 
@@ -2800,6 +2802,7 @@ func VariantParse(TypeVar *VariantType, TextVar string, LimitVar *string, Endptr
 	defer core.GFreeNullable(EndptrVarPtr)
 
 	cret := xVariantParse(TypeVar, TextVar, LimitVarPtr, EndptrVarPtr, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2845,6 +2848,7 @@ var xVariantParseErrorPrintContext func(*Error, string) string
 func VariantParseErrorPrintContext(ErrorVar *Error, SourceStrVar string) string {
 
 	cret := xVariantParseErrorPrintContext(ErrorVar, SourceStrVar)
+
 	return cret
 }
 

@@ -177,6 +177,7 @@ func SpawnAsync(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []string,
 	defer core.GFreeNullable(WorkingDirectoryVarPtr)
 
 	cret := xSpawnAsync(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, ChildPidVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -212,6 +213,7 @@ func SpawnAsyncWithFds(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []
 	defer core.GFreeNullable(WorkingDirectoryVarPtr)
 
 	cret := xSpawnAsyncWithFds(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, ChildPidVar, StdinFdVar, StdoutFdVar, StderrFdVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -245,6 +247,7 @@ func SpawnAsyncWithPipes(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar 
 	defer core.GFreeNullable(WorkingDirectoryVarPtr)
 
 	cret := xSpawnAsyncWithPipes(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, ChildPidVar, StandardInputVar, StandardOutputVar, StandardErrorVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -470,6 +473,7 @@ func SpawnAsyncWithPipesAndFds(WorkingDirectoryVar *string, ArgvVar []string, En
 	defer core.GFreeNullable(WorkingDirectoryVarPtr)
 
 	cret := xSpawnAsyncWithPipesAndFds(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, StdinFdVar, StdoutFdVar, StderrFdVar, SourceFdsVar, TargetFdsVar, NFdsVar, ChildPidOutVar, StdinPipeOutVar, StdoutPipeOutVar, StderrPipeOutVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -491,6 +495,7 @@ func SpawnCheckExitStatus(WaitStatusVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xSpawnCheckExitStatus(WaitStatusVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -543,6 +548,7 @@ func SpawnCheckWaitStatus(WaitStatusVar int) (bool, error) {
 	var cerr *Error
 
 	cret := xSpawnCheckWaitStatus(WaitStatusVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -578,6 +584,7 @@ func SpawnCommandLineAsync(CommandLineVar string) (bool, error) {
 	var cerr *Error
 
 	cret := xSpawnCommandLineAsync(CommandLineVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -620,6 +627,7 @@ func SpawnCommandLineSync(CommandLineVar string, StandardOutputVar *[]byte, Stan
 	var cerr *Error
 
 	cret := xSpawnCommandLineSync(CommandLineVar, StandardOutputVar, StandardErrorVar, WaitStatusVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -674,6 +682,7 @@ func SpawnSync(WorkingDirectoryVar *string, ArgvVar []string, EnvpVar []string, 
 	defer core.GFreeNullable(WorkingDirectoryVarPtr)
 
 	cret := xSpawnSync(WorkingDirectoryVarPtr, ArgvVar, EnvpVar, FlagsVar, ChildSetupVarRef, UserDataVar, StandardOutputVar, StandardErrorVar, WaitStatusVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}

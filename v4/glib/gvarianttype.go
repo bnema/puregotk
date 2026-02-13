@@ -601,6 +601,7 @@ var xVariantTypeChecked func(string) *VariantType
 func VariantTypeChecked(TypeStringVar string) *VariantType {
 
 	cret := xVariantTypeChecked(TypeStringVar)
+
 	return cret
 }
 
@@ -609,6 +610,7 @@ var xVariantTypeStringGetDepth func(string) uint
 func VariantTypeStringGetDepth(TypeStringVar string) uint {
 
 	cret := xVariantTypeStringGetDepth(TypeStringVar)
+
 	return cret
 }
 
@@ -622,6 +624,7 @@ var xVariantTypeStringIsValid func(string) bool
 func VariantTypeStringIsValid(TypeStringVar string) bool {
 
 	cret := xVariantTypeStringIsValid(TypeStringVar)
+
 	return cret
 }
 
@@ -647,6 +650,7 @@ func VariantTypeStringScan(StringVar string, LimitVar *string, EndptrVar *string
 	defer core.GFreeNullable(LimitVarPtr)
 
 	cret := xVariantTypeStringScan(StringVar, LimitVarPtr, EndptrVar)
+
 	return cret
 }
 

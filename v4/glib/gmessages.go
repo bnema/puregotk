@@ -263,6 +263,7 @@ var xLogGetAlwaysFatal func() LogLevelFlags
 func LogGetAlwaysFatal() LogLevelFlags {
 
 	cret := xLogGetAlwaysFatal()
+
 	return cret
 }
 
@@ -280,6 +281,7 @@ var xLogGetDebugEnabled func() bool
 func LogGetDebugEnabled() bool {
 
 	cret := xLogGetDebugEnabled()
+
 	return cret
 }
 
@@ -317,6 +319,7 @@ var xLogSetAlwaysFatal func(LogLevelFlags) LogLevelFlags
 func LogSetAlwaysFatal(FatalMaskVar LogLevelFlags) LogLevelFlags {
 
 	cret := xLogSetAlwaysFatal(FatalMaskVar)
+
 	return cret
 }
 
@@ -364,6 +367,7 @@ func LogSetDefaultHandler(LogFuncVar *LogFunc, UserDataVar uintptr) uintptr {
 	}
 
 	cret := xLogSetDefaultHandler(LogFuncVarRef, UserDataVar)
+
 	return cret
 }
 
@@ -386,6 +390,7 @@ var xLogSetFatalMask func(string, LogLevelFlags) LogLevelFlags
 func LogSetFatalMask(LogDomainVar string, FatalMaskVar LogLevelFlags) LogLevelFlags {
 
 	cret := xLogSetFatalMask(LogDomainVar, FatalMaskVar)
+
 	return cret
 }
 
@@ -455,6 +460,7 @@ func LogSetHandler(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFuncVar 
 	defer core.GFreeNullable(LogDomainVarPtr)
 
 	cret := xLogSetHandler(LogDomainVarPtr, LogLevelsVar, LogFuncVarRef, UserDataVar)
+
 	return cret
 }
 
@@ -503,6 +509,7 @@ func LogSetHandlerFull(LogDomainVar *string, LogLevelsVar LogLevelFlags, LogFunc
 	defer core.GFreeNullable(LogDomainVarPtr)
 
 	cret := xLogSetHandlerFull(LogDomainVarPtr, LogLevelsVar, LogFuncVarRef, UserDataVar, DestroyVarRef)
+
 	return cret
 }
 
@@ -736,6 +743,7 @@ var xLogWriterDefault func(LogLevelFlags, []LogField, uint, uintptr) LogWriterOu
 func LogWriterDefault(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 
 	cret := xLogWriterDefault(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
+
 	return cret
 }
 
@@ -816,6 +824,7 @@ func LogWriterDefaultWouldDrop(LogLevelVar LogLevelFlags, LogDomainVar *string) 
 	defer core.GFreeNullable(LogDomainVarPtr)
 
 	cret := xLogWriterDefaultWouldDrop(LogLevelVar, LogDomainVarPtr)
+
 	return cret
 }
 
@@ -835,6 +844,7 @@ var xLogWriterFormatFields func(LogLevelFlags, []LogField, uint, bool) string
 func LogWriterFormatFields(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UseColorVar bool) string {
 
 	cret := xLogWriterFormatFields(LogLevelVar, FieldsVar, NFieldsVar, UseColorVar)
+
 	return cret
 }
 
@@ -852,6 +862,7 @@ var xLogWriterIsJournald func(int) bool
 func LogWriterIsJournald(OutputFdVar int) bool {
 
 	cret := xLogWriterIsJournald(OutputFdVar)
+
 	return cret
 }
 
@@ -871,6 +882,7 @@ var xLogWriterJournald func(LogLevelFlags, []LogField, uint, uintptr) LogWriterO
 func LogWriterJournald(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 
 	cret := xLogWriterJournald(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
+
 	return cret
 }
 
@@ -896,6 +908,7 @@ var xLogWriterStandardStreams func(LogLevelFlags, []LogField, uint, uintptr) Log
 func LogWriterStandardStreams(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 
 	cret := xLogWriterStandardStreams(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
+
 	return cret
 }
 
@@ -908,6 +921,7 @@ var xLogWriterSupportsColor func(int) bool
 func LogWriterSupportsColor(OutputFdVar int) bool {
 
 	cret := xLogWriterSupportsColor(OutputFdVar)
+
 	return cret
 }
 
@@ -928,6 +942,7 @@ var xLogWriterSyslog func(LogLevelFlags, []LogField, uint, uintptr) LogWriterOut
 func LogWriterSyslog(LogLevelVar LogLevelFlags, FieldsVar []LogField, NFieldsVar uint, UserDataVar uintptr) LogWriterOutput {
 
 	cret := xLogWriterSyslog(LogLevelVar, FieldsVar, NFieldsVar, UserDataVar)
+
 	return cret
 }
 
@@ -1008,6 +1023,7 @@ var xPrintfStringUpperBound func(string, []interface{}) uint
 func PrintfStringUpperBound(FormatVar string, ArgsVar []interface{}) uint {
 
 	cret := xPrintfStringUpperBound(FormatVar, ArgsVar)
+
 	return cret
 }
 
@@ -1062,6 +1078,7 @@ func SetPrintHandler(FuncVar *PrintFunc) uintptr {
 	}
 
 	cret := xSetPrintHandler(FuncVarRef)
+
 	return cret
 }
 
@@ -1100,6 +1117,7 @@ func SetPrinterrHandler(FuncVar *PrintFunc) uintptr {
 	}
 
 	cret := xSetPrinterrHandler(FuncVarRef)
+
 	return cret
 }
 

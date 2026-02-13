@@ -2097,6 +2097,7 @@ var xCondNew func() *Cond
 func CondNew() *Cond {
 
 	cret := xCondNew()
+
 	return cret
 }
 
@@ -2109,6 +2110,7 @@ var xGetNumProcessors func() uint
 func GetNumProcessors() uint {
 
 	cret := xGetNumProcessors()
+
 	return cret
 }
 
@@ -2118,6 +2120,7 @@ var xMutexNew func() *Mutex
 func MutexNew() *Mutex {
 
 	cret := xMutexNew()
+
 	return cret
 }
 
@@ -2153,6 +2156,7 @@ var xOnceInitEnter func(uintptr) bool
 func OnceInitEnter(LocationVar uintptr) bool {
 
 	cret := xOnceInitEnter(LocationVar)
+
 	return cret
 }
 
@@ -2161,6 +2165,7 @@ var xOnceInitEnterImpl func(uint) bool
 func OnceInitEnterImpl(LocationVar uint) bool {
 
 	cret := xOnceInitEnterImpl(LocationVar)
+
 	return cret
 }
 
@@ -2186,6 +2191,7 @@ var xOnceInitEnterPointer func(uintptr) bool
 func OnceInitEnterPointer(LocationVar uintptr) bool {
 
 	cret := xOnceInitEnterPointer(LocationVar)
+
 	return cret
 }
 
@@ -2242,6 +2248,7 @@ func PrivateNew(NotifyVar *DestroyNotify) *Private {
 	}
 
 	cret := xPrivateNew(NotifyVarRef)
+
 	return cret
 }
 
@@ -2278,6 +2285,7 @@ func ThreadCreate(FuncVar *ThreadFunc, DataVar uintptr, JoinableVar bool) (*Thre
 	}
 
 	cret := xThreadCreate(FuncVarRef, DataVar, JoinableVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2307,6 +2315,7 @@ func ThreadCreateFull(FuncVar *ThreadFunc, DataVar uintptr, StackSizeVar uint, J
 	}
 
 	cret := xThreadCreateFull(FuncVarRef, DataVar, StackSizeVar, JoinableVar, BoundVar, PriorityVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -2375,6 +2384,7 @@ var xThreadGetInitialized func() bool
 func ThreadGetInitialized() bool {
 
 	cret := xThreadGetInitialized()
+
 	return cret
 }
 
@@ -2430,6 +2440,7 @@ var xThreadSelf func() *Thread
 func ThreadSelf() *Thread {
 
 	cret := xThreadSelf()
+
 	return cret
 }
 

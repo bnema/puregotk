@@ -277,6 +277,7 @@ var xPathBufEqual func(uintptr, uintptr) bool
 func PathBufEqual(V1Var uintptr, V2Var uintptr) bool {
 
 	cret := xPathBufEqual(V1Var, V2Var)
+
 	return cret
 }
 

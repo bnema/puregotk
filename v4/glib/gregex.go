@@ -1504,6 +1504,7 @@ func RegexCheckReplacement(ReplacementVar string, HasReferencesVar *bool) (bool,
 	var cerr *Error
 
 	cret := xRegexCheckReplacement(ReplacementVar, HasReferencesVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1521,6 +1522,7 @@ var xRegexEscapeNul func(string, int) string
 func RegexEscapeNul(StringVar string, LengthVar int) string {
 
 	cret := xRegexEscapeNul(StringVar, LengthVar)
+
 	return cret
 }
 
@@ -1536,6 +1538,7 @@ var xRegexEscapeString func(string, int) string
 func RegexEscapeString(StringVar string, LengthVar int) string {
 
 	cret := xRegexEscapeString(StringVar, LengthVar)
+
 	return cret
 }
 
@@ -1554,6 +1557,7 @@ var xRegexMatchSimple func(string, string, RegexCompileFlags, RegexMatchFlags) b
 func RegexMatchSimple(PatternVar string, StringVar string, CompileOptionsVar RegexCompileFlags, MatchOptionsVar RegexMatchFlags) bool {
 
 	cret := xRegexMatchSimple(PatternVar, StringVar, CompileOptionsVar, MatchOptionsVar)
+
 	return cret
 }
 
@@ -1589,6 +1593,7 @@ var xRegexSplitSimple func(string, string, RegexCompileFlags, RegexMatchFlags) [
 func RegexSplitSimple(PatternVar string, StringVar string, CompileOptionsVar RegexCompileFlags, MatchOptionsVar RegexMatchFlags) []string {
 
 	cret := xRegexSplitSimple(PatternVar, StringVar, CompileOptionsVar, MatchOptionsVar)
+
 	return cret
 }
 

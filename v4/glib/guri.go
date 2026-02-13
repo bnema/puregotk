@@ -619,6 +619,7 @@ func UriBuild(FlagsVar UriFlags, SchemeVar string, UserinfoVar *string, HostVar 
 	defer core.GFreeNullable(FragmentVarPtr)
 
 	cret := xUriBuild(FlagsVar, SchemeVar, UserinfoVarPtr, HostVarPtr, PortVar, PathVar, QueryVarPtr, FragmentVarPtr)
+
 	return cret
 }
 
@@ -653,6 +654,7 @@ func UriBuildWithUser(FlagsVar UriFlags, SchemeVar string, UserVar *string, Pass
 	defer core.GFreeNullable(FragmentVarPtr)
 
 	cret := xUriBuildWithUser(FlagsVar, SchemeVar, UserVarPtr, PasswordVarPtr, AuthParamsVarPtr, HostVarPtr, PortVar, PathVar, QueryVarPtr, FragmentVarPtr)
+
 	return cret
 }
 
@@ -675,6 +677,7 @@ func UriEscapeBytes(UnescapedVar []byte, LengthVar uint, ReservedCharsAllowedVar
 	defer core.GFreeNullable(ReservedCharsAllowedVarPtr)
 
 	cret := xUriEscapeBytes(UnescapedVar, LengthVar, ReservedCharsAllowedVarPtr)
+
 	return cret
 }
 
@@ -694,6 +697,7 @@ func UriEscapeString(UnescapedVar string, ReservedCharsAllowedVar *string, Allow
 	defer core.GFreeNullable(ReservedCharsAllowedVarPtr)
 
 	cret := xUriEscapeString(UnescapedVar, ReservedCharsAllowedVarPtr, AllowUtf8Var)
+
 	return cret
 }
 
@@ -711,6 +715,7 @@ func UriIsValid(UriStringVar string, FlagsVar UriFlags) (bool, error) {
 	var cerr *Error
 
 	cret := xUriIsValid(UriStringVar, FlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -752,6 +757,7 @@ func UriJoin(FlagsVar UriFlags, SchemeVar *string, UserinfoVar *string, HostVar 
 	defer core.GFreeNullable(FragmentVarPtr)
 
 	cret := xUriJoin(FlagsVar, SchemeVarPtr, UserinfoVarPtr, HostVarPtr, PortVar, PathVar, QueryVarPtr, FragmentVarPtr)
+
 	return cret
 }
 
@@ -790,6 +796,7 @@ func UriJoinWithUser(FlagsVar UriFlags, SchemeVar *string, UserVar *string, Pass
 	defer core.GFreeNullable(FragmentVarPtr)
 
 	cret := xUriJoinWithUser(FlagsVar, SchemeVarPtr, UserVarPtr, PasswordVarPtr, AuthParamsVarPtr, HostVarPtr, PortVar, PathVar, QueryVarPtr, FragmentVarPtr)
+
 	return cret
 }
 
@@ -802,6 +809,7 @@ func UriParse(UriStringVar string, FlagsVar UriFlags) (*Uri, error) {
 	var cerr *Error
 
 	cret := xUriParse(UriStringVar, FlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -839,6 +847,7 @@ func UriParseParams(ParamsVar string, LengthVar int, SeparatorsVar string, Flags
 	var cerr *Error
 
 	cret := xUriParseParams(ParamsVar, LengthVar, SeparatorsVar, FlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -858,6 +867,7 @@ var xUriParseScheme func(string) string
 func UriParseScheme(UriVar string) string {
 
 	cret := xUriParseScheme(UriVar)
+
 	return cret
 }
 
@@ -876,6 +886,7 @@ var xUriPeekScheme func(string) string
 func UriPeekScheme(UriVar string) string {
 
 	cret := xUriPeekScheme(UriVar)
+
 	return cret
 }
 
@@ -895,6 +906,7 @@ func UriResolveRelative(BaseUriStringVar *string, UriRefVar string, FlagsVar Uri
 	defer core.GFreeNullable(BaseUriStringVarPtr)
 
 	cret := xUriResolveRelative(BaseUriStringVarPtr, UriRefVar, FlagsVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -924,6 +936,7 @@ func UriSplit(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, UserinfoVa
 	var cerr *Error
 
 	cret := xUriSplit(UriRefVar, FlagsVar, SchemeVar, UserinfoVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -943,6 +956,7 @@ func UriSplitNetwork(UriStringVar string, FlagsVar UriFlags, SchemeVar *string, 
 	var cerr *Error
 
 	cret := xUriSplitNetwork(UriStringVar, FlagsVar, SchemeVar, HostVar, PortVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -967,6 +981,7 @@ func UriSplitWithUser(UriRefVar string, FlagsVar UriFlags, SchemeVar *string, Us
 	var cerr *Error
 
 	cret := xUriSplitWithUser(UriRefVar, FlagsVar, SchemeVar, UserVar, PasswordVar, AuthParamsVar, HostVar, PortVar, PathVar, QueryVar, FragmentVar, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -993,6 +1008,7 @@ func UriUnescapeBytes(EscapedStringVar string, LengthVar int, IllegalCharactersV
 	defer core.GFreeNullable(IllegalCharactersVarPtr)
 
 	cret := xUriUnescapeBytes(EscapedStringVar, LengthVar, IllegalCharactersVarPtr, &cerr)
+
 	if cerr == nil {
 		return cret, nil
 	}
@@ -1024,6 +1040,7 @@ func UriUnescapeSegment(EscapedStringVar *string, EscapedStringEndVar *string, I
 	defer core.GFreeNullable(IllegalCharactersVarPtr)
 
 	cret := xUriUnescapeSegment(EscapedStringVarPtr, EscapedStringEndVarPtr, IllegalCharactersVarPtr)
+
 	return cret
 }
 
@@ -1042,6 +1059,7 @@ func UriUnescapeString(EscapedStringVar string, IllegalCharactersVar *string) st
 	defer core.GFreeNullable(IllegalCharactersVarPtr)
 
 	cret := xUriUnescapeString(EscapedStringVar, IllegalCharactersVarPtr)
+
 	return cret
 }
 

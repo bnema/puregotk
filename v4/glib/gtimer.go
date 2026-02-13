@@ -126,6 +126,7 @@ var xTimeValFromIso8601 func(string, *TimeVal) bool
 func TimeValFromIso8601(IsoDateVar string, TimeVar *TimeVal) bool {
 
 	cret := xTimeValFromIso8601(IsoDateVar, TimeVar)
+
 	return cret
 }
 

@@ -207,6 +207,7 @@ var xHookDestroy func(*HookList, uint) bool
 func HookDestroy(HookListVar *HookList, HookIdVar uint) bool {
 
 	cret := xHookDestroy(HookListVar, HookIdVar)
+
 	return cret
 }
 

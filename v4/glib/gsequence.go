@@ -522,6 +522,7 @@ var xSequenceGet func(*SequenceIter) uintptr
 func SequenceGet(IterVar *SequenceIter) uintptr {
 
 	cret := xSequenceGet(IterVar)
+
 	return cret
 }
 
@@ -531,6 +532,7 @@ var xSequenceInsertBefore func(*SequenceIter, uintptr) *SequenceIter
 func SequenceInsertBefore(IterVar *SequenceIter, DataVar uintptr) *SequenceIter {
 
 	cret := xSequenceInsertBefore(IterVar, DataVar)
+
 	return cret
 }
 
@@ -573,6 +575,7 @@ var xSequenceRangeGetMidpoint func(*SequenceIter, *SequenceIter) *SequenceIter
 func SequenceRangeGetMidpoint(BeginVar *SequenceIter, EndVar *SequenceIter) *SequenceIter {
 
 	cret := xSequenceRangeGetMidpoint(BeginVar, EndVar)
+
 	return cret
 }
 

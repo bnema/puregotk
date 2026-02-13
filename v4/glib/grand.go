@@ -145,6 +145,7 @@ var xRandomDouble func() float64
 func RandomDouble() float64 {
 
 	cret := xRandomDouble()
+
 	return cret
 }
 
@@ -155,6 +156,7 @@ var xRandomDoubleRange func(float64, float64) float64
 func RandomDoubleRange(BeginVar float64, EndVar float64) float64 {
 
 	cret := xRandomDoubleRange(BeginVar, EndVar)
+
 	return cret
 }
 
@@ -165,6 +167,7 @@ var xRandomInt func() uint32
 func RandomInt() uint32 {
 
 	cret := xRandomInt()
+
 	return cret
 }
 
@@ -175,6 +178,7 @@ var xRandomIntRange func(int32, int32) int32
 func RandomIntRange(BeginVar int32, EndVar int32) int32 {
 
 	cret := xRandomIntRange(BeginVar, EndVar)
+
 	return cret
 }
 
