@@ -7,8 +7,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/jwijenbergh/puregotk/pkg/gir/pass"
-	"github.com/jwijenbergh/puregotk/pkg/gir/util"
+	"codeberg.org/puregotk/puregotk/pkg/gir/pass"
+	"codeberg.org/puregotk/puregotk/pkg/gir/util"
 )
 
 //go:generate go run gen.go
@@ -33,7 +33,7 @@ func main() {
 		return nil
 	})
 
-	cmd := exec.Command("go", "list", "-m", "-f", "{{.Dir}}", "github.com/jwijenbergh/puregotk")
+	cmd := exec.Command("go", "list", "-m", "-f", "{{.Dir}}", "codeberg.org/puregotk/puregotk")
 	output, err := cmd.Output()
 	if err != nil {
 		panic("puregotk dependency not found: " + err.Error())

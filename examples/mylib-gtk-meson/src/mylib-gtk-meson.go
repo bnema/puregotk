@@ -5,8 +5,8 @@ package main
 import (
 	_ "embed"
 
-	"github.com/jwijenbergh/puregotk/v4/gio"
-	"github.com/jwijenbergh/puregotk/v4/glib"
+	"codeberg.org/puregotk/puregotk/v4/gio"
+	"codeberg.org/puregotk/puregotk/v4/glib"
 	"github.com/pojntfx/go-gettext/pkg/i18n"
 )
 

@@ -4,18 +4,16 @@ import (
 	"runtime"
 	"unsafe"
 
-	"github.com/jwijenbergh/puregotk/v4/adw"
-	"github.com/jwijenbergh/puregotk/v4/glib"
-	"github.com/jwijenbergh/puregotk/v4/gobject"
-	"github.com/jwijenbergh/puregotk/v4/gobject/types"
-	"github.com/jwijenbergh/puregotk/v4/gtk"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/glib"
+	"codeberg.org/puregotk/puregotk/v4/gobject"
+	"codeberg.org/puregotk/puregotk/v4/gobject/types"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
 import "C"
 
-var (
-	gTypeMyLibGtkMesonMainApplicationWindow gobject.Type
-)
+var gTypeMyLibGtkMesonMainApplicationWindow gobject.Type
 
 //export mylib_gtk_meson_main_application_window_get_type
 func mylib_gtk_meson_main_application_window_get_type() C.ulong {
