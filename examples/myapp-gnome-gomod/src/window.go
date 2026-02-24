@@ -6,17 +6,15 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/jwijenbergh/puregotk/examples/mylib-gtk-meson-go/mylibgtkmeson"
-	"github.com/jwijenbergh/puregotk/v4/adw"
-	"github.com/jwijenbergh/puregotk/v4/glib"
-	"github.com/jwijenbergh/puregotk/v4/gobject"
-	"github.com/jwijenbergh/puregotk/v4/gtk"
+	"codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go/mylibgtkmeson"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/glib"
+	"codeberg.org/puregotk/puregotk/v4/gobject"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 	. "github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
-var (
-	gTypeWindow gobject.Type
-)
+var gTypeWindow gobject.Type
 
 type Window struct {
 	adw.ApplicationWindow

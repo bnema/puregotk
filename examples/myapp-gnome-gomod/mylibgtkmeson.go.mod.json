@@ -27,11 +27,11 @@
     "url": "https://proxy.golang.org/github.com/goccy/go-yaml/@v/v1.18.0.zip"
   },
   {
-    "dest": "vendor/github.com/jwijenbergh/purego",
+    "dest": "vendor/codeberg.org/puregotk/purego",
     "sha256": "aa4903b6c7333843f77e6012d68c89846462f4755fe6201a4069e69547d1000e",
     "strip-components": 3,
     "type": "archive",
-    "url": "https://proxy.golang.org/github.com/jwijenbergh/purego/@v/v0.0.0-20251017112123-b71757b9ba42.zip"
+    "url": "https://proxy.golang.org/codeberg.org/puregotk/purego/@v/v0.0.0-20251017112123-b71757b9ba42.zip"
   },
   {
     "dest": "vendor/golang.org/x/mod",

@@ -5,11 +5,32 @@
     "type": "file"
   },
   {
-    "dest": "vendor/github.com/pojntfx/go-gettext",
-    "sha256": "a1e286161e04c4d7f02cd3ef9185df7be7ccf85daf9349a0974ed42746827fb4",
+    "dest": "vendor/codeberg.org/puregotk/puregotk",
+    "sha256": "4cbae69a06f5b3cde67d5d3396bab061ce11a60e4c0cdba475fc590b3719c6ea",
     "strip-components": 3,
     "type": "archive",
-    "url": "https://proxy.golang.org/github.com/pojntfx/go-gettext/@v/v0.2.0.zip"
+    "url": "https://proxy.golang.org/codeberg.org/puregotk/puregotk/@v/v0.0.0-20260224102311-59dc2ea18838.zip"
+  },
+  {
+    "dest": "vendor/codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go",
+    "sha256": "b1d2da4493fb7691fe5bad26d17a13793e731acb1be6af10aeae9f23a22704eb",
+    "strip-components": 5,
+    "type": "archive",
+    "url": "https://proxy.golang.org/codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go/@v/v0.0.0-20260224102311-59dc2ea18838.zip"
+  },
+  {
+    "dest": "vendor/github.com/pojntfx/go-gettext",
+    "sha256": "1729b4288776c82afba161bacbcc0498373031273b7aac2e2a03ac9f5d0bdf59",
+    "strip-components": 3,
+    "type": "archive",
+    "url": "https://proxy.golang.org/github.com/pojntfx/go-gettext/@v/v0.3.0.zip"
+  },
+  {
+    "dest": "vendor/codeberg.org/puregotk/purego",
+    "sha256": "0d5fb9e11934b151ac357a9c0660e4dcd287d2f93db0829356415f6e6a8ef84b",
+    "strip-components": 3,
+    "type": "archive",
+    "url": "https://proxy.golang.org/codeberg.org/puregotk/purego/@v/v0.0.0-20260224095105-2513c838cb80.zip"
   },
   {
     "dest": "vendor/github.com/dennwc/flatpak-go-mod",

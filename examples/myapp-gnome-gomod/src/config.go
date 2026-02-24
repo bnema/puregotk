@@ -5,6 +5,4 @@ const (
 	GettextPackage = "myapp-gnome-gomod"
 )
 
-var (
-	LocaleDir = "/usr/share/locale"
-)
+var LocaleDir = "/usr/share/locale"

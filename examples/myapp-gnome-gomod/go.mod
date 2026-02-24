@@ -1,23 +1,24 @@
-module github.com/jwijenbergh/puregotk/examples/myapp-gnome-gomod
+module codeberg.org/puregotk/puregotk/examples/myapp-gnome-gomod
 
 go 1.25.0
 
 tool github.com/dennwc/flatpak-go-mod
 
 require (
-	github.com/jwijenbergh/puregotk v0.0.0-00010101000000-000000000000
-	github.com/jwijenbergh/puregotk/examples/mylib-gtk-meson-go v0.0.0-00010101000000-000000000000
-	github.com/pojntfx/go-gettext v0.2.0
+	codeberg.org/puregotk/puregotk v0.0.0-20260224102311-59dc2ea18838
+	codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go v0.0.0-20260224102311-59dc2ea18838
+	github.com/pojntfx/go-gettext v0.3.0
 )
 
 require (
-	github.com/dennwc/flatpak-go-mod v0.1.1-0.20251127123506-956509dd96ba // indirect
-	github.com/goccy/go-yaml v1.18.0 // indirect
+	codeberg.org/puregotk/purego v0.0.0-20260224095105-2513c838cb80 // indirect
+	github.com/dennwc/flatpak-go-mod v0.1.0 // indirect
+	github.com/fatih/color v1.10.0 // indirect
+	github.com/goccy/go-yaml v1.12.0 // indirect
 	github.com/jwijenbergh/purego v0.0.0-20251017112123-b71757b9ba42 // indirect
-	golang.org/x/mod v0.30.0 // indirect
-)
-
-replace (
-	github.com/jwijenbergh/puregotk v0.0.0-00010101000000-000000000000 => ../..
-	github.com/jwijenbergh/puregotk/examples/mylib-gtk-meson-go v0.0.0-00010101000000-000000000000 => ../mylib-gtk-meson-go
+	github.com/mattn/go-colorable v0.1.8 // indirect
+	github.com/mattn/go-isatty v0.0.12 // indirect
+	golang.org/x/mod v0.16.0 // indirect
+	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )

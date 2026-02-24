@@ -23,7 +23,7 @@
         {
           "type": "dir",
           "path": "../..",
-          "dest": "vendor/github.com/jwijenbergh/puregotk"
+          "dest": "vendor/codeberg.org/puregotk/puregotk"
         },
         { "type": "dir", "path": "../mylib-gtk-meson/" },
         "mylibgtkmeson.go.mod.json"
@@ -42,12 +42,12 @@
         {
           "type": "dir",
           "path": "../..",
-          "dest": "vendor/github.com/jwijenbergh/puregotk"
+          "dest": "vendor/codeberg.org/puregotk/puregotk"
         },
         {
           "type": "dir",
           "path": "../mylib-gtk-meson-go",
-          "dest": "vendor/github.com/jwijenbergh/puregotk/examples/mylib-gtk-meson-go"
+          "dest": "vendor/codeberg.org/puregotk/puregotk/examples/mylib-gtk-meson-go"
         },
         "go.mod.json"
       ]
