@@ -3,7 +3,7 @@ package types
 import (
 	"strings"
 
-	"github.com/jwijenbergh/puregotk/internal/gir/util"
+	"codeberg.org/puregotk/puregotk/internal/gir/util"
 )
 
 type Kind int8

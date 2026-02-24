@@ -1,6 +1,6 @@
 package util
 
-import "github.com/jwijenbergh/puregotk/internal/gir/util"
+import "codeberg.org/puregotk/puregotk/internal/gir/util"
 
 var (
 	ConvertArgs              = util.ConvertArgs

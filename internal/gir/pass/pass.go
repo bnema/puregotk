@@ -10,8 +10,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/jwijenbergh/puregotk/internal/gir/types"
-	"github.com/jwijenbergh/puregotk/internal/gir/util"
+	"codeberg.org/puregotk/puregotk/internal/gir/types"
+	"codeberg.org/puregotk/puregotk/internal/gir/util"
 )
 
 type Pass struct {

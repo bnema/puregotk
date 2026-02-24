@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/jwijenbergh/puregotk/internal/gir/util"
+	"codeberg.org/puregotk/puregotk/internal/gir/util"
 )
 
 type argsTemplate struct {

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/jwijenbergh/purego"
+	"codeberg.org/puregotk/purego"
 )
 
 func unrefCallback(fnPtr interface{}) error {

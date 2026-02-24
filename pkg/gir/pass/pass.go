@@ -1,6 +1,6 @@
 package pass
 
-import "github.com/jwijenbergh/puregotk/internal/gir/pass"
+import "codeberg.org/puregotk/puregotk/internal/gir/pass"
 
 type (
 	Pass = pass.Pass
